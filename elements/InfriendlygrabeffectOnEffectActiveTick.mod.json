@@ -1,0 +1,7 @@
+{
+  "_fv": 43,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"entity_haspotioneffect\"><field name=\"potion\">CUSTOM:Infriendlygrab</field><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></value><statement name=\"DO0\"><block type=\"controls_if\"><value name=\"IF0\"><block type=\"math_binary_ops\"><field name=\"OP\">EQ</field><value name=\"A\"><block type=\"entity_potioneffectremaining\"><field name=\"potion\">CUSTOM:Infriendlygrabeffect</field><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></value><value name=\"B\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value></block></value><statement name=\"DO0\"><block type=\"entity_set_gamemode\"><field name=\"gamemode\">SURVIVAL</field><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></statement></block></statement></block></next></block></xml>"
+  }
+}

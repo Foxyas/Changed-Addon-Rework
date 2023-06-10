@@ -1,0 +1,226 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 200,
+    "height": 187,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 4,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "disablePlacement": {
+            "fixedValue": false,
+            "name": "UnifuserguiDisableItemstackPlacementslot0"
+          },
+          "id": 0,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 128,
+          "y": 71
+        }
+      },
+      {
+        "type": "outputslot",
+        "data": {
+          "id": 3,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 268,
+          "y": 83
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_10_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show10porcentbar"
+          },
+          "x": 181,
+          "y": 33
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_25_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show25porcentbar"
+          },
+          "x": 181,
+          "y": 33
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_50_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show50porcentbar"
+          },
+          "x": 181,
+          "y": 33
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_75_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show75porcentbar"
+          },
+          "x": 181,
+          "y": 33
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_90_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show90porcentbar"
+          },
+          "x": 181,
+          "y": 33
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "barr_full.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showfullbar"
+          },
+          "x": 181,
+          "y": 33
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_0_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show0porcentbar"
+          },
+          "x": 181,
+          "y": 33
+        }
+      },
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "disablePlacement": {
+            "fixedValue": false,
+            "name": "UnifuserguiDisableItemstackPlacement"
+          },
+          "id": 2,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 163,
+          "y": 83
+        }
+      },
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "disablePlacement": {
+            "fixedValue": false
+          },
+          "id": 1,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 128,
+          "y": 96
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_blockstartinfo",
+          "text": {
+            "fixedValue": "",
+            "name": "Blockstartinfo"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 119,
+          "y": 33
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_full",
+          "text": {
+            "fixedValue": "Full"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "IfBlockisfull"
+          },
+          "x": 267,
+          "y": 105
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "dusts.png",
+          "use1Xscale": false,
+          "x": 129,
+          "y": 73
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "syringe_withlitixcamonia_screen.png",
+          "use1Xscale": false,
+          "x": 164,
+          "y": 84
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 35,
+      "sy": 25,
+      "ox": 10,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

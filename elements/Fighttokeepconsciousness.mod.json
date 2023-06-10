@@ -1,0 +1,12 @@
+{
+  "_fv": 43,
+  "_type": "gamerule",
+  "definition": {
+    "type": "Logic",
+    "displayName": "Fight to keep consciousness",
+    "description": "Allow the Fight to keep consciousness minigame (overwrite keep consciousness like a perm on)",
+    "category": "PLAYER",
+    "defaultValueLogic": false,
+    "defaultValueNumber": 0
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 200,
+    "height": 100,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": false,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "button",
+        "data": {
+          "name": "button_struggle",
+          "text": "struggle",
+          "onClick": {
+            "name": "StruggleButtonClickevent"
+          },
+          "displayCondition": {
+            "name": "Showstrugglebutton"
+          },
+          "width": 67,
+          "height": 20,
+          "x": 179,
+          "y": 106
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_breakfree",
+          "text": "breakfree",
+          "onClick": {
+            "name": "Breakfreebutton"
+          },
+          "displayCondition": {
+            "name": "Showbreakfreebutton"
+          },
+          "width": 72,
+          "height": 20,
+          "x": 177,
+          "y": 131
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_grabclickgui_value",
+          "text": {
+            "fixedValue": "",
+            "name": "GrabclickguiValue"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 181,
+          "y": 92
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

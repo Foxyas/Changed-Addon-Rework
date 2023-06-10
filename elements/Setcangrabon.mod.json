@@ -1,0 +1,12 @@
+{
+  "_fv": 43,
+  "_type": "keybind",
+  "definition": {
+    "triggerKey": "F14",
+    "keyBindingName": "Set Grab on",
+    "keyBindingCategoryKey": "grab_gui",
+    "onKeyPressed": {
+      "name": "SetcangrabonOnKeyPressed"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "_fv": 43,
+  "_type": "achievement",
+  "definition": {
+    "achievementName": "Changed Addon ",
+    "achievementDescription": "you downloaded the addon mod changed by Foxyas",
+    "achievementIcon": {
+      "value": "CUSTOM:Changedbook"
+    },
+    "background": "Default",
+    "disableDisplay": false,
+    "showPopup": true,
+    "announceToChat": false,
+    "hideIfNotCompleted": false,
+    "rewardLoot": [],
+    "rewardRecipes": [],
+    "rewardFunction": "No function",
+    "rewardXP": 0,
+    "achievementType": "task",
+    "parent": {
+      "value": "No parent: root"
+    },
+    "triggerxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"custom_trigger\" x=\"61\" y=\"55\"><next><block type=\"advancement_trigger\" deletable=\"false\"></block></next></block></xml>"
+  }
+}

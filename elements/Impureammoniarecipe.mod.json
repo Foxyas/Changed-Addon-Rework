@@ -1,0 +1,48 @@
+{
+  "_fv": 43,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "recipeRetstackSize": 3,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": true,
+    "recipeSlots": [
+      {
+        "value": "TAG:flowers"
+      },
+      {
+        "value": "TAG:changed_addon:meat"
+      },
+      {
+        "value": "TAG:flowers"
+      },
+      {
+        "value": "TAG:changed_addon:meat"
+      },
+      {
+        "value": "TAG:forge:seeds"
+      },
+      {
+        "value": "Items.DYE#15"
+      },
+      {
+        "value": "TAG:flowers"
+      },
+      {
+        "value": "TAG:changed_addon:meat"
+      },
+      {
+        "value": "TAG:flowers"
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:Inpureammonia"
+    },
+    "name": "impureammoniarecipe",
+    "namespace": "mod"
+  }
+}

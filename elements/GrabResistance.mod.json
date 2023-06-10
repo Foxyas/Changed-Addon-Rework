@@ -1,0 +1,21 @@
+{
+  "_fv": 43,
+  "_type": "enchantment",
+  "definition": {
+    "name": "Grab Resistance",
+    "type": "ARMOR_CHEST",
+    "rarity": "RARE",
+    "minLevel": 1,
+    "maxLevel": 4,
+    "damageModifier": 0,
+    "compatibleEnchantments": [],
+    "excludeEnchantments": false,
+    "compatibleItems": [],
+    "excludeItems": false,
+    "isTreasureEnchantment": false,
+    "isCurse": false,
+    "isAllowedOnBooks": true,
+    "canGenerateInLootTables": true,
+    "canVillagerTrade": true
+  }
+}

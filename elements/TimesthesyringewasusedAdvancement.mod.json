@@ -1,0 +1,25 @@
+{
+  "_fv": 43,
+  "_type": "achievement",
+  "definition": {
+    "achievementName": "Confused indecision?",
+    "achievementDescription": "you used a litixcamonia syringe more than 32 times either you are unlucky or you are indecisive about your humanity holy!",
+    "achievementIcon": {
+      "value": "CUSTOM:Syringewithlitixcammonia"
+    },
+    "background": "Default",
+    "disableDisplay": false,
+    "showPopup": true,
+    "announceToChat": false,
+    "hideIfNotCompleted": true,
+    "rewardLoot": [],
+    "rewardRecipes": [],
+    "rewardFunction": "No function",
+    "rewardXP": 0,
+    "achievementType": "challenge",
+    "parent": {
+      "value": "CUSTOM:Untransfuradvancement2"
+    },
+    "triggerxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"custom_trigger\" x=\"29\" y=\"33\"><next><block type=\"advancement_trigger\" deletable=\"false\"></block></next></block></xml>"
+  }
+}

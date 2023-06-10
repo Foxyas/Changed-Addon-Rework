@@ -1,0 +1,137 @@
+{
+  "_fv": 43,
+  "_type": "block",
+  "definition": {
+    "texture": "deep_ore_test_texture",
+    "textureTop": "",
+    "textureLeft": "",
+    "textureFront": "",
+    "textureRight": "",
+    "textureBack": "",
+    "renderType": 10,
+    "customModelName": "Normal",
+    "rotationMode": 0,
+    "enablePitch": false,
+    "emissiveRendering": false,
+    "displayFluidOverlay": false,
+    "itemTexture": "",
+    "particleTexture": "",
+    "tintType": "No tint",
+    "isItemTinted": false,
+    "hasTransparency": false,
+    "connectedSides": false,
+    "transparencyType": "SOLID",
+    "disableOffset": false,
+    "boundingBoxes": [
+      {
+        "mx": 0.0,
+        "my": 0.0,
+        "mz": 0.0,
+        "Mx": 16.0,
+        "My": 16.0,
+        "Mz": 16.0,
+        "subtract": false
+      }
+    ],
+    "name": "Generator",
+    "specialInfo": [
+      "W.I.P"
+    ],
+    "hardness": 5.0,
+    "resistance": 40.0,
+    "hasGravity": false,
+    "isWaterloggable": false,
+    "creativeTab": {
+      "value": "No creative tab entry"
+    },
+    "destroyTool": "pickaxe",
+    "customDrop": {
+      "value": ""
+    },
+    "dropAmount": 1,
+    "useLootTableForDrops": false,
+    "requiresCorrectTool": false,
+    "enchantPowerBonus": 0.0,
+    "plantsGrowOn": false,
+    "canRedstoneConnect": true,
+    "lightOpacity": 15,
+    "material": {
+      "value": "ROCK"
+    },
+    "tickRate": 1,
+    "tickRandomly": false,
+    "isReplaceable": false,
+    "canProvidePower": true,
+    "emittedRedstonePower": {
+      "fixedValue": 15.0
+    },
+    "colorOnMap": "DEFAULT",
+    "creativePickItem": {
+      "value": ""
+    },
+    "offsetType": "NONE",
+    "aiPathNodeType": "DEFAULT",
+    "flammability": 0,
+    "fireSpreadSpeed": 0,
+    "isLadder": false,
+    "slipperiness": 0.6,
+    "speedFactor": 1.0,
+    "jumpFactor": 1.0,
+    "reactionToPushing": "NORMAL",
+    "isNotColidable": false,
+    "isCustomSoundType": false,
+    "soundOnStep": {
+      "value": "METAL"
+    },
+    "breakSound": {
+      "value": ""
+    },
+    "fallSound": {
+      "value": ""
+    },
+    "hitSound": {
+      "value": ""
+    },
+    "placeSound": {
+      "value": ""
+    },
+    "stepSound": {
+      "value": ""
+    },
+    "luminance": 0,
+    "unbreakable": false,
+    "breakHarvestLevel": 2,
+    "isBonemealable": false,
+    "hasInventory": true,
+    "guiBoundTo": "<NONE>",
+    "openGUIOnRightClick": false,
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "inventoryDropWhenDestroyed": true,
+    "inventoryComparatorPower": true,
+    "inventoryOutSlotIDs": [],
+    "inventoryInSlotIDs": [],
+    "hasEnergyStorage": true,
+    "energyInitial": 0,
+    "energyCapacity": 50000,
+    "energyMaxReceive": 5000,
+    "energyMaxExtract": 5000,
+    "isFluidTank": false,
+    "fluidCapacity": 8000,
+    "fluidRestrictions": [],
+    "onRightClicked": {
+      "name": "GeneratorOnBlockRightClicked"
+    },
+    "onTickUpdate": {
+      "name": "GeneratorUpdateTick"
+    },
+    "spawnWorldTypes": [],
+    "restrictionBiomes": [],
+    "blocksToReplace": [],
+    "generationShape": "UNIFORM",
+    "frequencyPerChunks": 1,
+    "frequencyOnChunk": 1,
+    "minGenerateHeight": -1,
+    "maxGenerateHeight": 0
+  }
+}

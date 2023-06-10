@@ -1,0 +1,48 @@
+{
+  "_fv": 43,
+  "_type": "item",
+  "definition": {
+    "renderType": 0,
+    "texture": "new_liticammonia_syringe",
+    "customModelName": "Normal",
+    "name": "Syringe with LitixCamonia",
+    "rarity": "COMMON",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "stackSize": 32,
+    "enchantability": 0,
+    "useDuration": 20,
+    "toolType": 1.0,
+    "damageCount": 0,
+    "recipeRemainder": {
+      "value": "CUSTOM:Syringe"
+    },
+    "destroyAnyBlock": false,
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "enableMeleeDamage": false,
+    "damageVsEntity": 0.0,
+    "specialInfo": [],
+    "hasGlow": false,
+    "guiBoundTo": "<NONE>",
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "onEntityHitWith": {
+      "name": "SyringewithlitixcammoniaLivingEntityIsHitWithItem"
+    },
+    "onFinishUsingItem": {
+      "name": "SyringewithlitixcammoniaPlayerFinishesUsingItem"
+    },
+    "isFood": true,
+    "nutritionalValue": 4,
+    "saturation": 3.0,
+    "eatResultItem": {
+      "value": ""
+    },
+    "isMeat": false,
+    "isAlwaysEdible": true,
+    "animation": "drink"
+  }
+}

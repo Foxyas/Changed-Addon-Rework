@@ -1,0 +1,31 @@
+{
+  "_fv": 43,
+  "_type": "tool",
+  "definition": {
+    "renderType": 0,
+    "texture": "painite_shovel_v2",
+    "customModelName": "Normal",
+    "name": "Painite Shovel",
+    "specialInfo": [],
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "toolType": "Spade",
+    "harvestLevel": 5,
+    "efficiency": 12.0,
+    "attackSpeed": 1.2000000000000002,
+    "enchantability": 30,
+    "damageVsEntity": 5.5,
+    "usageCount": 3026,
+    "blocksAffected": [],
+    "hasGlow": false,
+    "repairItems": [
+      {
+        "value": "CUSTOM:Painite"
+      }
+    ],
+    "immuneToFire": true,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false
+  }
+}

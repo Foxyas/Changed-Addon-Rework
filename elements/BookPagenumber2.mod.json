@@ -1,0 +1,206 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 418,
+    "height": 180,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_to_purify_the_latex_syringes_jus",
+          "text": {
+            "fixedValue": "Before you transfur yourself, you need to purify the latex syringes in a purif"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 10,
+          "y": 36
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "to_do_with_syring.png",
+          "use1Xscale": true,
+          "x": 246,
+          "y": 57
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_close",
+          "text": "close",
+          "onClick": {
+            "name": "Closemenu"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 364,
+          "y": 182
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_untransfur_items",
+          "text": {
+            "fixedValue": "cure you of your latex form."
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 10,
+          "y": 81
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_i_was_about_to_forget_but_we_cre",
+          "text": {
+            "fixedValue": "-ier by placing the syringe in the slot to purify. If you are unsure about per"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 10,
+          "y": 47
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_this_item_can_make_you_back_for",
+          "text": {
+            "fixedValue": "manently losing your humanity, you can craft"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 10,
+          "y": 58
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_the_recipe_for_the_main_item_sho",
+          "text": {
+            "fixedValue": " Litixcamonia. Litixcamonia can be injected to"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 5,
+          "y": 69
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_back",
+          "text": "back",
+          "onClick": {
+            "name": "Openpage1"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 369,
+          "y": 161
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_next",
+          "text": "next",
+          "onClick": {
+            "name": "Openpage4"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 313,
+          "y": 182
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_click_on_the_litixcamonia_recipe",
+          "text": {
+            "fixedValue": "Click on the Litixcamonia recipe for details "
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 8,
+          "y": 93
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_on_how_to_craft_with_litixcamon",
+          "text": {
+            "fixedValue": " on how to craft with Litixcamonia."
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 4,
+          "y": 101
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_20221106_142902",
+          "image": "litixcamoniarecipe_new.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "Openpage3"
+          },
+          "x": 10,
+          "y": 111
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_click_here",
+          "text": {
+            "fixedValue": "CLICK HERE"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "x": 78,
+          "y": 128
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

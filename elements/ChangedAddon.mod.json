@@ -1,0 +1,11 @@
+{
+  "_fv": 43,
+  "_type": "tab",
+  "definition": {
+    "name": "Changed Addon",
+    "icon": {
+      "value": "CUSTOM:Changedbook"
+    },
+    "showSearch": true
+  }
+}

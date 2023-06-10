@@ -1,0 +1,186 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 200,
+    "height": 168,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": -5,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "disablePlacement": {
+            "fixedValue": false
+          },
+          "id": 0,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 136,
+          "y": 78
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_catlyzergui_value",
+          "text": {
+            "fixedValue": "",
+            "name": "CatlyzerguiValue"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 120,
+          "y": 43
+        }
+      },
+      {
+        "type": "outputslot",
+        "data": {
+          "id": 1,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 266,
+          "y": 78
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_10_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show10porcentbar"
+          },
+          "x": 181,
+          "y": 54
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_25_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show25porcentbar"
+          },
+          "x": 181,
+          "y": 54
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_50_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show50porcentbar"
+          },
+          "x": 181,
+          "y": 54
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_75_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show75porcentbar"
+          },
+          "x": 181,
+          "y": 54
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_90_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show90porcentbar"
+          },
+          "x": 181,
+          "y": 54
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "barr_full.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showfullbar"
+          },
+          "x": 181,
+          "y": 54
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_0_percent.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Show0porcentbar"
+          },
+          "x": 181,
+          "y": 54
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_blockstartinfo",
+          "text": {
+            "fixedValue": "",
+            "name": "Blockstartinfo"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 120,
+          "y": 55
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_full",
+          "text": {
+            "fixedValue": "Full"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "IfBlockisfull"
+          },
+          "x": 265,
+          "y": 100
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 30,
+      "sy": 27,
+      "ox": 30,
+      "oy": 25,
+      "snapOnGrid": true
+    }
+  }
+}

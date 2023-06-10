@@ -1,0 +1,21 @@
+{
+  "_fv": 43,
+  "_type": "potion",
+  "definition": {
+    "potionName": "Potion of LitixCamonia",
+    "splashName": "Splash Potion of LitixCamonia",
+    "lingeringName": "Lingering Potion of LitixCamonia",
+    "arrowName": "Arrow of LitixCamonia",
+    "effects": [
+      {
+        "effect": {
+          "value": "CUSTOM:Untransfur"
+        },
+        "duration": 2700,
+        "amplifier": 0,
+        "ambient": false,
+        "showParticles": true
+      }
+    ]
+  }
+}

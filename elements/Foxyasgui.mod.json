@@ -1,0 +1,150 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 345,
+    "height": 177,
+    "inventoryOffsetX": -76,
+    "inventoryOffsetY": 6,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_hello_im_foxyas_i_dont_want_to",
+          "text": {
+            "fixedValue": "hello I'm Foxyas I don't want to assimilate you i am friendly so"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 46,
+          "y": 36
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_pls_dont_kill_me",
+          "text": {
+            "fixedValue": "pls dont kill me i can trade orange juice with you i just need 2"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 46,
+          "y": 50
+        }
+      },
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "disablePlacement": {
+            "fixedValue": false,
+            "name": "FoxyasguiDisableItemstackPlacement"
+          },
+          "id": 0,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 240,
+          "y": 132
+        }
+      },
+      {
+        "type": "outputslot",
+        "data": {
+          "id": 2,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 299,
+          "y": 167
+        }
+      },
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": "Items.GLASS_BOTTLE"
+          },
+          "disablePlacement": {
+            "fixedValue": false
+          },
+          "id": 1,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 278,
+          "y": 132
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_trade",
+          "text": "Trade",
+          "onClick": {
+            "name": "Trade"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 233,
+          "y": 166
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_i_just_need_2_oranges_and_one_gl",
+          "text": {
+            "fixedValue": "oranges and one glass bottle for that"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 46,
+          "y": 64
+        }
+      },
+      {
+        "type": "textfield",
+        "data": {
+          "placeholder": "",
+          "name": "Deals",
+          "width": 120,
+          "height": 20,
+          "x": 74,
+          "y": 97
+        }
+      }
+    ],
+    "onOpen": {
+      "name": "FoxyasguiThisGUIIsOpened"
+    },
+    "onTick": {
+      "name": "FoxyasguiWhileThisGUIIsOpenTick"
+    },
+    "onClosed": {
+      "name": "FoxyasguiThisGUIIsClosed"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "_fv": 43,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "recipeRetstackSize": 16,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "recipeSlots": [
+      {
+        "value": ""
+      },
+      {
+        "value": "Items.SLIME_BALL"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "Items.SLIME_BALL"
+      },
+      {
+        "value": "CUSTOM:Unlatexbase"
+      },
+      {
+        "value": "Items.SLIME_BALL"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "Items.SLIME_BALL"
+      },
+      {
+        "value": ""
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:LatexInsulator"
+    },
+    "name": "latexinsulatorrecipe",
+    "namespace": "mod"
+  }
+}

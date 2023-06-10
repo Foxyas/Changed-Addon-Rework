@@ -1,0 +1,22 @@
+{
+  "_fv": 43,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Blasting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 20.0,
+    "cookingTime": 100,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "blastingInputStack": {
+      "value": "CUSTOM:PainiteOre"
+    },
+    "blastingReturnStack": {
+      "value": "CUSTOM:Painite"
+    },
+    "name": "blastpainite",
+    "namespace": "mod"
+  }
+}

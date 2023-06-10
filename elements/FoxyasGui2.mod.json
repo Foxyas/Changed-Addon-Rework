@@ -1,0 +1,124 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 205,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_oh_human_why_but_if_you_really",
+          "text": {
+            "fixedValue": "oh human, why? but if you really want"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 115,
+          "y": 42
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_it_i_can_do_it",
+          "text": {
+            "fixedValue": "it i can do it"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 116,
+          "y": 54
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_deal",
+          "text": "deal",
+          "onClick": {
+            "name": "FoxyasDeal"
+          },
+          "displayCondition": {
+            "name": "IfplayerHaveDealFalse"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 246,
+          "y": 69
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_it_i_can_do_it1",
+          "text": {
+            "fixedValue": "are you sure?"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "IfplayerhaveDealTrue"
+          },
+          "x": 119,
+          "y": 73
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_no",
+          "text": "no",
+          "onClick": {
+            "name": "FoxyasDealNo"
+          },
+          "displayCondition": {
+            "name": "IfplayerhaveDealTrue"
+          },
+          "width": 35,
+          "height": 20,
+          "x": 159,
+          "y": 88
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_aa",
+          "text": "yes",
+          "onClick": {
+            "name": "FoxyasDealYes"
+          },
+          "displayCondition": {
+            "name": "IfplayerhaveDealTrue"
+          },
+          "width": 35,
+          "height": 20,
+          "x": 117,
+          "y": 88
+        }
+      }
+    ],
+    "onOpen": {
+      "name": "FoxyasGui2ThisGUIIsOpened"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

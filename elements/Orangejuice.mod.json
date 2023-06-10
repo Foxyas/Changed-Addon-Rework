@@ -1,0 +1,42 @@
+{
+  "_fv": 43,
+  "_type": "item",
+  "definition": {
+    "renderType": 0,
+    "texture": "new_orange_juice",
+    "customModelName": "Normal",
+    "name": "Orange juice",
+    "rarity": "COMMON",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "stackSize": 64,
+    "enchantability": 0,
+    "useDuration": 28,
+    "toolType": 1.0,
+    "damageCount": 0,
+    "recipeRemainder": {
+      "value": ""
+    },
+    "destroyAnyBlock": false,
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "enableMeleeDamage": false,
+    "damageVsEntity": 0.0,
+    "specialInfo": [],
+    "hasGlow": false,
+    "guiBoundTo": "<NONE>",
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "isFood": true,
+    "nutritionalValue": 8,
+    "saturation": 1.0,
+    "eatResultItem": {
+      "value": "Items.GLASS_BOTTLE"
+    },
+    "isMeat": false,
+    "isAlwaysEdible": true,
+    "animation": "drink"
+  }
+}

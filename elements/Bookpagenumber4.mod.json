@@ -1,0 +1,141 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 400,
+    "height": 220,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "image",
+        "data": {
+          "image": "way.png",
+          "use1Xscale": true,
+          "x": 17,
+          "y": 13
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "way_2.png",
+          "use1Xscale": true,
+          "x": 17,
+          "y": 116
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_correct_way",
+          "text": {
+            "fixedValue": "correct way"
+          },
+          "color": {
+            "value": -16711936,
+            "falpha": 0.0
+          },
+          "x": 137,
+          "y": 194
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_incorrect_way",
+          "text": {
+            "fixedValue": "incorrectly way"
+          },
+          "color": {
+            "value": -3407872,
+            "falpha": 0.0
+          },
+          "x": 126,
+          "y": 42
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_with_the_latex_syringe_just_use",
+          "text": {
+            "fixedValue": "With the latex syringe just use it"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 227,
+          "y": 16
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_in_the_rank_right_mouse_button",
+          "text": {
+            "fixedValue": "in IV rank (right mouse button)"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 226,
+          "y": 27
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_close",
+          "text": "close",
+          "onClick": {
+            "name": "Closemenu"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 347,
+          "y": 199
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_back",
+          "text": "back",
+          "onClick": {
+            "name": "Openpage2"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 294,
+          "y": 199
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_secreta",
+          "image": "secreta.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "Openpagesecret"
+          },
+          "x": 223,
+          "y": 42
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

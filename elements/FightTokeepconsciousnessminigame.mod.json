@@ -1,0 +1,81 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 200,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "button",
+        "data": {
+          "name": "button_fight",
+          "text": "           Fight            ",
+          "onClick": {
+            "name": "Fightforyourconscience"
+          },
+          "width": 166,
+          "height": 20,
+          "x": 131,
+          "y": 109
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_give_up",
+          "text": "     give up      ",
+          "onClick": {
+            "name": "Giveup"
+          },
+          "width": 166,
+          "height": 20,
+          "x": 131,
+          "y": 173
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_fast_you_only_have_4_seconds",
+          "text": {
+            "fixedValue": "FAST!!! YOU ONLY HAVE 4 SECONDS"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 132,
+          "y": 46
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_fight_tokeepconsciousnessmi",
+          "text": {
+            "fixedValue": "",
+            "name": "FightTokeepconsciousnessminigameValue"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 188,
+          "y": 90
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

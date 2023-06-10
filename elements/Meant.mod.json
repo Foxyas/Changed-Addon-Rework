@@ -1,0 +1,45 @@
+{
+  "_fv": 43,
+  "_type": "tag",
+  "definition": {
+    "type": "Items",
+    "items": [
+      {
+        "value": "Items.PORKCHOP"
+      },
+      {
+        "value": "Items.BEEF"
+      },
+      {
+        "value": "Items.CHICKEN"
+      },
+      {
+        "value": "Items.ROTTEN_FLESH"
+      },
+      {
+        "value": "Items.RABBIT"
+      },
+      {
+        "value": "Items.MUTTON"
+      },
+      {
+        "value": "Items.FISH#2"
+      },
+      {
+        "value": "Items.FISH#0"
+      },
+      {
+        "value": "Items.FISH#1"
+      },
+      {
+        "value": "Items.FISH#3"
+      }
+    ],
+    "blocks": [],
+    "functions": [],
+    "entities": [],
+    "biomes": [],
+    "name": "meat",
+    "namespace": "mod"
+  }
+}

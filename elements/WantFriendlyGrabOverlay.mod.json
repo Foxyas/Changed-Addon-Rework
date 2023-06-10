@@ -1,0 +1,45 @@
+{
+  "_fv": 43,
+  "_type": "overlay",
+  "definition": {
+    "priority": "NORMAL",
+    "components": [
+      {
+        "type": "image",
+        "data": {
+          "image": "dont_want_friendly_grab.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowWantFriendlygrabfalse"
+          },
+          "x": 1,
+          "y": 148
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "want_friendly_grab.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowWantFriendlygrabtrue"
+          },
+          "x": 1,
+          "y": 148
+        }
+      }
+    ],
+    "baseTexture": "",
+    "overlayTarget": "Ingame",
+    "displayCondition": {
+      "name": "WantFriendlyGrabOverlayDisplayOverlayIngame"
+    },
+    "gridSettings": {
+      "sx": 20,
+      "sy": 20,
+      "ox": 40,
+      "oy": 15,
+      "snapOnGrid": true
+    }
+  }
+}

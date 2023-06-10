@@ -1,0 +1,12 @@
+{
+  "_fv": 43,
+  "_type": "keybind",
+  "definition": {
+    "triggerKey": "B",
+    "keyBindingName": "Open Grab Escape/Concience Fight Gui",
+    "keyBindingCategoryKey": "grab_gui",
+    "onKeyPressed": {
+      "name": "OpengrabescapeguiOnKeyPressed"
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "_fv": 43,
+  "_type": "armor",
+  "definition": {
+    "enableHelmet": true,
+    "textureHelmet": "painite_helmet_v2",
+    "enableBody": true,
+    "textureBody": "painite_chestplate_v2",
+    "enableLeggings": true,
+    "textureLeggings": "painite_leggings_v2",
+    "enableBoots": true,
+    "textureBoots": "painite_boots_v2",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "armorTextureFile": "painite_armor_texture_v2_",
+    "helmetName": "Painite Helmet",
+    "bodyName": "Painite Chestplate",
+    "leggingsName": "Painite Leggings",
+    "bootsName": "Painite Boots",
+    "helmetSpecialInfo": [],
+    "bodySpecialInfo": [],
+    "leggingsSpecialInfo": [],
+    "bootsSpecialInfo": [],
+    "helmetModelName": "Default",
+    "helmetModelPart": "Helmet",
+    "helmetModelTexture": "From armor",
+    "bodyModelName": "Default",
+    "bodyModelPart": "Body",
+    "armsModelPartL": "Arms L",
+    "armsModelPartR": "Arms R",
+    "bodyModelTexture": "From armor",
+    "leggingsModelName": "Default",
+    "leggingsModelPartL": "Leggings L",
+    "leggingsModelPartR": "Leggings R",
+    "leggingsModelTexture": "From armor",
+    "bootsModelName": "Default",
+    "bootsModelPartL": "Boots L",
+    "bootsModelPartR": "Boots R",
+    "bootsModelTexture": "From armor",
+    "helmetItemRenderType": 0,
+    "helmetItemCustomModelName": "Normal",
+    "bodyItemRenderType": 0,
+    "bodyItemCustomModelName": "Normal",
+    "leggingsItemRenderType": 0,
+    "leggingsItemCustomModelName": "Normal",
+    "bootsItemRenderType": 0,
+    "bootsItemCustomModelName": "Normal",
+    "helmetImmuneToFire": true,
+    "bodyImmuneToFire": true,
+    "leggingsImmuneToFire": true,
+    "bootsImmuneToFire": true,
+    "maxDamage": 45,
+    "damageValueHelmet": 6,
+    "damageValueBody": 10,
+    "damageValueLeggings": 8,
+    "damageValueBoots": 6,
+    "enchantability": 50,
+    "toughness": 3.9999999999999996,
+    "knockbackResistance": 0.2,
+    "equipSound": {
+      "value": "item.armor.equip_netherite"
+    },
+    "repairItems": [
+      {
+        "value": "CUSTOM:Painite"
+      }
+    ]
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 176,
+    "height": 150,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": false,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "image",
+        "data": {
+          "image": "grab_radial_menu.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "ShowNoOrganicGrabRadial"
+          },
+          "x": 151,
+          "y": 61
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_grab_radial__white.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "ShowOrganicGrabRadial"
+          },
+          "x": 151,
+          "y": 61
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_form_overlay.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowOrganicGrabRadial"
+          },
+          "x": 186,
+          "y": 71
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "cant_grab_icon_outline.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Shocantgrabicon"
+          },
+          "x": 186,
+          "y": 71
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "can_grab_icon_outline.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showcangrabicon"
+          },
+          "x": 186,
+          "y": 71
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_hitbox_16x16",
+          "image": "hitbox_16x16.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "SetcangrabonOnKeyPressed"
+          },
+          "x": 186,
+          "y": 71
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "canassimilation_outline.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showassimilationicon"
+          },
+          "x": 222,
+          "y": 70
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "cantassimilation_outline.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showassimilationoffbutton"
+          },
+          "x": 222,
+          "y": 70
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendlymodeicon.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowfriendlymodeIcon"
+          },
+          "x": 248,
+          "y": 98
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendlymodeofficon.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showfriendlymodeofficon"
+          },
+          "x": 248,
+          "y": 98
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_friendly_mode_off_v2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowOrganicFriendlyModeOff"
+          },
+          "x": 248,
+          "y": 98
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_friendly_mode_on_v2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowOrganicFriendlyModeon"
+          },
+          "x": 248,
+          "y": 98
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_hitbox_16x161",
+          "image": "hitbox_16x16.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "ActiveFriendlyModeOnKeyPressed"
+          },
+          "x": 248,
+          "y": 97
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_hitbox_16x162",
+          "image": "hitbox_16x16.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "SetassimilatonOnKeyPressed"
+          },
+          "x": 222,
+          "y": 70
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

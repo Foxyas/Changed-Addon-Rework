@@ -1,0 +1,54 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 200,
+    "height": 99,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_generatorgui_value",
+          "text": {
+            "fixedValue": "",
+            "name": "GeneratorguiValue"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 117,
+          "y": 85
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_generatorgui_value_2",
+          "text": {
+            "fixedValue": "",
+            "name": "GeneratorguiValue2"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 162,
+          "y": 137
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

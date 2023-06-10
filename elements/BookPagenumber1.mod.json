@@ -1,0 +1,203 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 423,
+    "height": 180,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "button",
+        "data": {
+          "name": "button_next",
+          "text": "next",
+          "onClick": {
+            "name": "Openpage2"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 357,
+          "y": 179
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_close",
+          "text": "close",
+          "onClick": {
+            "name": "Closemenu"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 303,
+          "y": 179
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_look_i_will_explain_some_simple",
+          "text": {
+            "fixedValue": "Hello, I will explain some simple information about the Changed experiment."
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 15,
+          "y": 34
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_first_you_have_to_have_a_latex_b",
+          "text": {
+            "fixedValue": "First, you need to get a latex base it drops from the latex beings or can be cra"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 5,
+          "y": 44
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_latex_beings",
+          "text": {
+            "fixedValue": "-fted."
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 6,
+          "y": 54
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "pixil-frame-0_6.png",
+          "use1Xscale": true,
+          "x": 5,
+          "y": 103
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_the_craft",
+          "text": {
+            "fixedValue": "The Craft"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 110,
+          "y": 109
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_after_obtaining_a_latex_base_yo",
+          "text": {
+            "fixedValue": "After obtaining a latex base, you can make a latex syringe with a blood s"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 39,
+          "y": 54
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_syringe_with_your_own_blood_and",
+          "text": {
+            "fixedValue": "-yringe with your own blood and a latex base in an infuser."
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 6,
+          "y": 65
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_to_make_a_syringe_you_can_take_a",
+          "text": {
+            "fixedValue": "To make a syringe you "
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 312,
+          "y": 65
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_can_take_a_glass_bottle_and_an_i",
+          "text": {
+            "fixedValue": "can take a glass bottle and an iron nugget in a shapeless pattern. "
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 6,
+          "y": 76
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_recipes_for_each_latex_will_var",
+          "text": {
+            "fixedValue": " Recipes for each latex will vary."
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 2,
+          "y": 86
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "unlatexbase_buttonv2.png",
+          "use1Xscale": false,
+          "x": 125,
+          "y": 141
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 19,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

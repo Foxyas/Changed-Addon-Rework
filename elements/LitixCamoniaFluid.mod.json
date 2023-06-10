@@ -1,0 +1,49 @@
+{
+  "_fv": 43,
+  "_type": "fluid",
+  "definition": {
+    "name": "Litix Camonia Fluid",
+    "bucketName": "LitixCamonia Bucket",
+    "textureStill": "24",
+    "textureFlowing": "24",
+    "tintType": "No tint",
+    "canMultiply": false,
+    "flowRate": 5,
+    "levelDecrease": 1,
+    "slopeFindDistance": 4,
+    "spawnParticles": false,
+    "dripParticle": {
+      "value": "EXPLOSION_NORMAL"
+    },
+    "flowStrength": 1.0,
+    "luminosity": 0,
+    "density": 1000,
+    "viscosity": 1000,
+    "temperature": 300,
+    "type": "WATER",
+    "generateBucket": true,
+    "textureBucket": "new_ammonia_bucket",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "emptySound": {
+      "value": "item.bucket.empty"
+    },
+    "rarity": "COMMON",
+    "specialInfo": [],
+    "resistance": 100.0,
+    "luminance": 0,
+    "lightOpacity": 1,
+    "emissiveRendering": false,
+    "tickRate": 10,
+    "flammability": 0,
+    "fireSpreadSpeed": 0,
+    "colorOnMap": "DEFAULT",
+    "onTickUpdate": {
+      "name": "LitixCamoniaFluidUpdateTick"
+    },
+    "onEntityCollides": {
+      "name": "LitixCamoniaFluidMobplayerCollidesBlock"
+    }
+  }
+}

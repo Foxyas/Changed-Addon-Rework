@@ -1,0 +1,121 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 176,
+    "height": 150,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": false,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "image",
+        "data": {
+          "image": "grab_radial_menu.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "ShowNoOrganicGrabRadial"
+          },
+          "x": 151,
+          "y": 62
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_grab_radial__white.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "ShowOrganicGrabRadial"
+          },
+          "x": 151,
+          "y": 63
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_back",
+          "text": "back",
+          "onClick": {
+            "name": "OpenGrabRadialOnKeyPressed"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 189,
+          "y": 110
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_friendly_mode_off_v2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowOrganicFriendlyModeOff"
+          },
+          "x": 221,
+          "y": 73
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_friendly_mode_on_v2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowOrganicFriendlyModeon"
+          },
+          "x": 221,
+          "y": 73
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_friendlymodeicon",
+          "image": "hitbox_16x16.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "ActiveFriendlyModeOnKeyPressed"
+          },
+          "x": 221,
+          "y": 73
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendlymodeofficon.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showfriendlymodeofficon"
+          },
+          "x": 221,
+          "y": 73
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendlymodeicon.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowfriendlymodeIcon"
+          },
+          "x": 221,
+          "y": 73
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

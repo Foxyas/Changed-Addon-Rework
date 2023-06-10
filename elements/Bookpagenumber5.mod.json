@@ -1,0 +1,117 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 420,
+    "height": 204,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "image",
+        "data": {
+          "image": "untransfurrecipe.png",
+          "use1Xscale": false,
+          "x": 7,
+          "y": 23
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "potwithlitixcamoniarecipe.png",
+          "use1Xscale": false,
+          "x": 6,
+          "y": 118
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_unifuser",
+          "text": {
+            "fixedValue": "unifuser"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 12,
+          "y": 37
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_unifuser1",
+          "text": {
+            "fixedValue": "unifuser"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 12,
+          "y": 144
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_back",
+          "text": "Back",
+          "onClick": {
+            "name": "Openpage3"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 358,
+          "y": 185
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "unlatexbase_craft.png",
+          "use1Xscale": true,
+          "x": 216,
+          "y": 143
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_craft_table",
+          "text": {
+            "fixedValue": "craft table"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 218,
+          "y": 130
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "catalyzeddna_recipe.png",
+          "use1Xscale": false,
+          "x": 212,
+          "y": 33
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

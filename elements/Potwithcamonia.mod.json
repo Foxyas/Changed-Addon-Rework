@@ -1,0 +1,45 @@
+{
+  "_fv": 43,
+  "_type": "item",
+  "definition": {
+    "renderType": 0,
+    "texture": "pot_with_litixcamonia_rework",
+    "customModelName": "Normal",
+    "name": "Pot with camonia",
+    "rarity": "COMMON",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "stackSize": 64,
+    "enchantability": 0,
+    "useDuration": 32,
+    "toolType": 1.0,
+    "damageCount": 0,
+    "recipeRemainder": {
+      "value": "Items.GLASS_BOTTLE"
+    },
+    "destroyAnyBlock": false,
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "enableMeleeDamage": false,
+    "damageVsEntity": 0.0,
+    "specialInfo": [],
+    "hasGlow": false,
+    "guiBoundTo": "<NONE>",
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "onFinishUsingItem": {
+      "name": "PotwithcamoniaPlayerFinishesUsingItem"
+    },
+    "isFood": true,
+    "nutritionalValue": 4,
+    "saturation": 2.0,
+    "eatResultItem": {
+      "value": "Items.GLASS_BOTTLE"
+    },
+    "isMeat": false,
+    "isAlwaysEdible": true,
+    "animation": "drink"
+  }
+}

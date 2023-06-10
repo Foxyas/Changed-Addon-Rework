@@ -1,0 +1,18 @@
+{
+  "_fv": 43,
+  "_type": "tag",
+  "definition": {
+    "type": "Items",
+    "items": [
+      {
+        "value": "CUSTOM:Syringe"
+      }
+    ],
+    "blocks": [],
+    "functions": [],
+    "entities": [],
+    "biomes": [],
+    "name": "syringes",
+    "namespace": "mod"
+  }
+}

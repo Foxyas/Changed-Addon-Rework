@@ -1,0 +1,7 @@
+{
+  "_fv": 43,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"entity_send_chat\"><value name=\"text\"><block type=\"text_join\"><mutation items=\"5\"/><value name=\"ADD0\"><block type=\"text\"><field name=\"TEXT\">§fTransfur gui is</field></block></value><value name=\"ADD1\"><block type=\"variables_get_logic\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" has_entity=\"true\" is_player_var=\"true\"/><field name=\"VAR\">global:visibleaddongui</field><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></value><value name=\"ADD2\"><block type=\"text\"><field name=\"TEXT\"> </field></block></value><value name=\"ADD3\"><block type=\"text\"><field name=\"TEXT\">§r§bHuman gui is </field></block></value><value name=\"ADD4\"><block type=\"variables_get_logic\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" has_entity=\"true\" is_player_var=\"true\"/><field name=\"VAR\">global:visiblehumanaddongui</field><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></value></block></value><value name=\"entity\"><block type=\"entity_from_deps\"/></value><value name=\"actbar\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value></block></next></block></xml>"
+  }
+}

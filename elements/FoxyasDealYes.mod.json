@@ -1,0 +1,7 @@
+{
+  "_fv": 43,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"0\" y=\"0\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"entity_nbt_logic_set\"><value name=\"entity\"><block type=\"entity_from_deps\"/></value><value name=\"tagName\"><block type=\"text\"><field name=\"TEXT\">Deal</field></block></value><value name=\"tagValue\"><block type=\"logic_boolean\"><field name=\"BOOL\">FALSE</field></block></value><next><block type=\"entity_execute_command\"><value name=\"command\"><block type=\"text\"><field name=\"TEXT\">transfur @s changed:form_light_latex_wolf/male</field></block></value><value name=\"entity\"><block type=\"entity_from_deps\"/></value><next><block type=\"entity_close_gui\"><value name=\"entity\"><block type=\"entity_from_deps\"/></value><next><block type=\"entity_add_achievement\"><field name=\"achievement\">CUSTOM:FriendlyTransfur</field><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></next></block></next></block></next></block></next></block></xml>"
+  }
+}

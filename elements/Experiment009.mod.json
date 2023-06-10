@@ -1,0 +1,130 @@
+{
+  "_fv": 43,
+  "_type": "livingentity",
+  "definition": {
+    "mobName": "Experiment 009",
+    "mobLabel": "",
+    "mobModelName": "Modeljack_model",
+    "mobModelTexture": "jackmodeltexture.png",
+    "mobModelGlowTexture": "",
+    "solidBoundingBox": {
+      "fixedValue": false
+    },
+    "modelWidth": 0.6,
+    "modelHeight": 1.9000000000000001,
+    "modelShadowSize": 0.5,
+    "mountedYOffset": 0.0,
+    "hasSpawnEgg": true,
+    "spawnEggBaseColor": {
+      "value": -1,
+      "falpha": 0.0
+    },
+    "spawnEggDotColor": {
+      "value": -2697514,
+      "falpha": 0.0
+    },
+    "creativeTab": {
+      "value": "No creative tab entry"
+    },
+    "isBoss": true,
+    "bossBarColor": "WHITE",
+    "bossBarType": "PROGRESS",
+    "equipmentMainHand": {
+      "value": ""
+    },
+    "equipmentOffHand": {
+      "value": ""
+    },
+    "equipmentHelmet": {
+      "value": ""
+    },
+    "equipmentBody": {
+      "value": ""
+    },
+    "equipmentLeggings": {
+      "value": ""
+    },
+    "equipmentBoots": {
+      "value": ""
+    },
+    "mobBehaviourType": "Mob",
+    "mobCreatureType": "UNDEFINED",
+    "attackStrength": 10,
+    "attackKnockback": 0.2,
+    "knockbackResistance": 0.5,
+    "movementSpeed": 0.3,
+    "stepHeight": 0.6,
+    "armorBaseValue": 40.0,
+    "trackingRange": 64,
+    "followRange": 16,
+    "health": 100,
+    "xpAmount": 0,
+    "waterMob": false,
+    "flyingMob": false,
+    "guiBoundTo": "<NONE>",
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "disableCollisions": false,
+    "ridable": false,
+    "canControlForward": false,
+    "canControlStrafe": false,
+    "immuneToFire": false,
+    "immuneToArrows": false,
+    "immuneToFallDamage": true,
+    "immuneToCactus": false,
+    "immuneToDrowning": false,
+    "immuneToLightning": false,
+    "immuneToPotions": true,
+    "immuneToPlayer": false,
+    "immuneToExplosion": false,
+    "immuneToTrident": false,
+    "immuneToAnvil": false,
+    "immuneToWither": false,
+    "immuneToDragonBreath": false,
+    "mobDrop": {
+      "value": ""
+    },
+    "livingSound": {
+      "value": ""
+    },
+    "hurtSound": {
+      "value": "entity.generic.hurt"
+    },
+    "deathSound": {
+      "value": "entity.generic.death"
+    },
+    "stepSound": {
+      "value": ""
+    },
+    "whenMobDies": {
+      "name": "Experiment009EntityDies"
+    },
+    "onMobTickUpdate": {
+      "name": "Experiment009OnEntityTickUpdate"
+    },
+    "onInitialSpawn": {
+      "name": "Experiment009OnInitialEntitySpawn"
+    },
+    "hasAI": true,
+    "aiBase": "(none)",
+    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"0\" y=\"0\"><next><block type=\"leap_at_target\"><field name=\"speed\">0.5</field><field name=\"condition\">Ifplayerishighofentity,Ifplayerishighofentity</field><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayerMP</field><field name=\"condition\">null,null</field><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayer</field><field name=\"condition\">null,null</field><next><block type=\"attack_entity\"><field name=\"insight\">TRUE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityMonster</field><field name=\"condition\">null,null</field><next><block type=\"attack_on_collide\"><field name=\"speed\">1.5</field><field name=\"longmemory\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"attack_action\"><field name=\"callhelp\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"wander\"><field name=\"speed\">1</field><field name=\"condition\">null,null</field><next><block type=\"doors_open\"><field name=\"condition\">null,null</field><next><block type=\"doors_close\"><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">Ifplayerareinwater,null</field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
+    "breedable": false,
+    "tameable": false,
+    "breedTriggerItems": [],
+    "ranged": false,
+    "rangedAttackItem": {
+      "value": ""
+    },
+    "rangedItemType": "Default item",
+    "rangedAttackInterval": 20,
+    "rangedAttackRadius": 10.0,
+    "spawnThisMob": false,
+    "doesDespawnWhenIdle": false,
+    "spawningProbability": 20,
+    "mobSpawningType": "monster",
+    "minNumberOfMobsPerGroup": 4,
+    "maxNumberOfMobsPerGroup": 4,
+    "restrictionBiomes": [],
+    "spawnInDungeons": false
+  }
+}
