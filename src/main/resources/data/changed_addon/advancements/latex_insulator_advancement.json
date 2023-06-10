@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:latex_insulator"
+    },
+    "title": {
+      "translate": "advancements.latex_insulator_advancement.title"
+    },
+    "description": {
+      "translate": "advancements.latex_insulator_advancement.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "latex_insulator_advancement": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:latex_insulator"
+          ]
+        }
+      }
+    }
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

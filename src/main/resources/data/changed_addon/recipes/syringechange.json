@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed_addon:syringe"
+    }
+  ],
+  "result": {
+    "item": "changed:syringe",
+    "count": 1
+  }
+}

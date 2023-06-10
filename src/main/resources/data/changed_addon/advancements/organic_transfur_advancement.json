@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:bone"
+    },
+    "title": {
+      "translate": "advancements.organic_transfur_advancement.title"
+    },
+    "description": {
+      "translate": "advancements.organic_transfur_advancement.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "organic_transfur_advancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "minecraft:changed/transfur"
+}

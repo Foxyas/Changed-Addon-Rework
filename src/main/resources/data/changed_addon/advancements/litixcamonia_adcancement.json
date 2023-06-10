@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:litix_camonia"
+    },
+    "title": {
+      "translate": "advancements.litixcamonia_adcancement.title"
+    },
+    "description": {
+      "translate": "advancements.litixcamonia_adcancement.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "litixcamonia_adcancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:unifuser_advancement"
+}

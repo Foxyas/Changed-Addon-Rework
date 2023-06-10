@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/latexinsulatoranimationtexture",
+    "up": "changed_addon:blocks/latexinsulatoranimationtexture",
+    "north": "changed_addon:blocks/latexinsulatoranimationtexture",
+    "east": "changed_addon:blocks/latexinsulatoranimationtexture",
+    "south": "changed_addon:blocks/latexinsulatoranimationtexture",
+    "west": "changed_addon:blocks/latexinsulatoranimationtexture",
+    "particle": "changed_addon:blocks/latexinsulatoranimationtexture"
+  }
+}

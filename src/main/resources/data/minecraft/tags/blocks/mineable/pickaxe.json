@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "changed_addon:painite_ore",
+    "changed_addon:painite_block",
+    "changed_addon:catlyzer",
+    "changed_addon:unifuser",
+    "changed_addon:generator"
+  ]
+}

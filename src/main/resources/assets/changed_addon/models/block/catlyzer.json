@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/catlyzer_button",
+    "up": "changed_addon:blocks/catlyzer_ofical_animation_texture",
+    "north": "changed_addon:blocks/catlyzer_sides",
+    "east": "changed_addon:blocks/catlyzer_sides",
+    "south": "changed_addon:blocks/catlyzer_sides",
+    "west": "changed_addon:blocks/catlyzer_sides",
+    "particle": "changed_addon:blocks/catlyzer_button"
+  }
+}

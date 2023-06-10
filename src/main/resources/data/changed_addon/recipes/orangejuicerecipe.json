@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "changed:orange"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:orangejuice",
+    "count": 1
+  }
+}

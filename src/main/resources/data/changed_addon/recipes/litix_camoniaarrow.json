@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " 1 ",
+    "345",
+    " 7 "
+  ],
+  "key": {
+    "1": {
+      "item": "changed_addon:unlatexbase"
+    },
+    "3": {
+      "item": "changed_addon:unlatexbase"
+    },
+    "4": {
+      "item": "minecraft:arrow"
+    },
+    "5": {
+      "item": "changed_addon:unlatexbase"
+    },
+    "7": {
+      "item": "changed_addon:unlatexbase"
+    }
+  },
+  "result": {
+    "item": "minecraft:tipped_arrow",
+    "nbt": "{Potion:\"changed_addon:litixcamoniaeffect\"}",
+    "count": 1
+  }
+}

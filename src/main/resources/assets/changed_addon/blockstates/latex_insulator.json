@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "changed_addon:block/latex_insulator"
+    }
+  }
+}

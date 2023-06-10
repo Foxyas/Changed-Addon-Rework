@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed_addon:painite_block"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:painite",
+    "count": 9
+  }
+}

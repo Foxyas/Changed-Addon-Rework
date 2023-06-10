@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:syringewithlitixcammonia"
+    },
+    "title": {
+      "translate": "advancements.timesthesyringewasuseadvancement_3.title"
+    },
+    "description": {
+      "translate": "advancements.timesthesyringewasuseadvancement_3.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "timesthesyringewasuseadvancement_3": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:timesthesyringewasuseadvancement_2"
+}

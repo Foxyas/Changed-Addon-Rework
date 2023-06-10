@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:syringewithlitixcammonia"
+    },
+    "title": {
+      "translate": "advancements.untransfuradvancement_2.title"
+    },
+    "description": {
+      "translate": "advancements.untransfuradvancement_2.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "untransfuradvancement_2": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:untransfuritemadvancement"
+}

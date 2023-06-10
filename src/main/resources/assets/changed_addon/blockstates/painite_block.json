@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "changed_addon:block/painite_block"
+    }
+  }
+}

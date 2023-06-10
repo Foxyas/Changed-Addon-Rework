@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "0",
+    "1",
+    "2"
+  ],
+  "key": {
+    "0": {
+      "item": "changed_addon:syringewithlitixcammonia"
+    },
+    "1": {
+      "item": "changed_addon:litix_camonia"
+    },
+    "2": {
+      "item": "changed_addon:latex_insulator"
+    }
+  },
+  "result": {
+    "item": "changed_addon:descontrol_syringe",
+    "count": 1
+  }
+}

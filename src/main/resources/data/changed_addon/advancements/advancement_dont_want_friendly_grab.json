@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:dev_item_2"
+    },
+    "title": {
+      "translate": "advancements.advancement_dont_want_friendly_grab.title"
+    },
+    "description": {
+      "translate": "advancements.advancement_dont_want_friendly_grab.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "advancement_dont_want_friendly_grab": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:furry_friend"
+}

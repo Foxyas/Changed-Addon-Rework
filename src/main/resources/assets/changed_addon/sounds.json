@@ -1,0 +1,47 @@
+{
+  "grab_start_sound": {
+    "subtitle": "subtitles.grab_start_sound",
+    "sounds": [
+      {
+        "name": "changed_addon:grabstartsound",
+        "stream": false
+      }
+    ]
+  },
+  "grab_release": {
+    "subtitle": "subtitles.grab_release",
+    "sounds": [
+      {
+        "name": "changed_addon:breakfreebutton",
+        "stream": false
+      }
+    ]
+  },
+  "enter_in_friendly_grab": {
+    "subtitle": "subtitles.enter_in_friendly_grab",
+    "sounds": [
+      {
+        "name": "changed_addon:ingrabsound",
+        "stream": false
+      }
+    ]
+  },
+  "experiment009_theme": {
+    "subtitle": "subtitles.experiment009_theme",
+    "sounds": [
+      {
+        "name": "changed_addon:jack_phase_1",
+        "stream": false
+      }
+    ]
+  },
+  "experiment009_theme_phase2": {
+    "subtitle": "subtitles.experiment009_theme_phase2",
+    "sounds": [
+      {
+        "name": "changed_addon:jack_phase_2",
+        "stream": false
+      }
+    ]
+  }
+}

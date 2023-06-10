@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:syringewithlitixcammonia"
+    },
+    "title": {
+      "translate": "advancements.over_dose.title"
+    },
+    "description": {
+      "translate": "advancements.over_dose.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "over_dose": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:timesthesyringewasuseadvancement_3"
+}

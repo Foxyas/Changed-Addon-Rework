@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    {
+      "item": "changed_addon:ammoniaparticle"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:unlatexbase",
+    "count": 2
+  }
+}

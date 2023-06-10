@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:unifuser"
+    },
+    "title": {
+      "translate": "advancements.unifuser_advancement.title"
+    },
+    "description": {
+      "translate": "advancements.unifuser_advancement.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "unifuser_advancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

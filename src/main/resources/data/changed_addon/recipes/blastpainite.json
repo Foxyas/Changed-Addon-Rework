@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "experience": 20,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "changed_addon:painite_ore"
+  },
+  "result": "changed_addon:painite"
+}

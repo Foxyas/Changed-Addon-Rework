@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed:dark_latex_goo"
+    },
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:changedbook",
+    "count": 1
+  }
+}

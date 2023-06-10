@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "title": {
+      "translate": "advancements.ammoniapoweradvancement.title"
+    },
+    "description": {
+      "translate": "advancements.ammoniapoweradvancement.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "ammoniapoweradvancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:catlyzer_advancement"
+}

@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="Academic Free License v3.0"
+
+[[mods]]
+modId="changed_addon"
+version="2.2.5"
+displayName="Changed Addon"
+credits="LTXProgrammer for Changed mod"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/"
+logoFile="logo.png"
+authors="Foxyas"
+description="this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus"
+
+[[dependencies.changed_addon]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.2]"
+    ordering="NONE"
+    side="BOTH"
+
+
+[[dependencies.changed_addon]]
+    modId="changed"
+    mandatory=true
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
+
+

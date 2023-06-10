@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " 1 ",
+    "345",
+    " 7 "
+  ],
+  "key": {
+    "1": {
+      "item": "minecraft:slime_ball"
+    },
+    "3": {
+      "item": "minecraft:slime_ball"
+    },
+    "4": {
+      "item": "changed_addon:unlatexbase"
+    },
+    "5": {
+      "item": "minecraft:slime_ball"
+    },
+    "7": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "item": "changed_addon:latex_insulator",
+    "count": 16
+  }
+}

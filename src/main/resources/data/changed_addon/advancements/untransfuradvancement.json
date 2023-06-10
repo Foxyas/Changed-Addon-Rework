@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:potwithcamonia"
+    },
+    "title": {
+      "translate": "advancements.untransfuradvancement.title"
+    },
+    "description": {
+      "translate": "advancements.untransfuradvancement.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "untransfuradvancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:untransfuritemadvancement"
+}

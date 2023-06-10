@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:dev_item_4"
+    },
+    "title": {
+      "translate": "advancements.hug.title"
+    },
+    "description": {
+      "translate": "advancements.hug.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "hug": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:furry_friend"
+}
