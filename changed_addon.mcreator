@@ -5514,6 +5514,18 @@
           }
         ]
       }
+    },
+    {
+      "name": "ChangedAddonDuctMecanic",
+      "type": "gamerule",
+      "sortid": 287,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "changed_addon_duct_mecanic",
+      "metadata": {
+        "files": [],
+        "type": "logic"
+      }
     }
   ],
   "variable_elements": [
@@ -5763,6 +5775,7 @@
       "gui.changed_addon.book_pagenumber_1.button_close": "close",
       "enchantment.changed_addon.solvent": "Solvent",
       "advancements.untransfuritemadvancement.descr": "you made one untransfur item",
+      "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
       "item.changed_addon.painite_armor_leggings": "Painite Leggings",
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon",
@@ -5916,6 +5929,7 @@
       "effect.changed_addon.untransfur": "untransfur",
       "gui.changed_addon.grab_radial_menugrab.button_back": "back",
       "gui.changed_addon.book_pagenumber_1.label_infuse_itself_guides_you_with_it": "infuse itself guides you with its recipes",
+      "gamerule.changedAddonDuctMecanic.description": "allow you use the Changed Addon Duct Mecanic (Default off)",
       "death.attack.concience_lose.player": "%1$s lose your concience by %2$s",
       "gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for": "manently losing your humanity, you can craft",
       "block.changed_addon.painite_block": "Block of Painite",
@@ -5949,7 +5963,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.2.5",
+    "version": "2.2.6",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
