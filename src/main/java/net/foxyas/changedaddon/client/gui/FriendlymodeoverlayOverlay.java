@@ -24,6 +24,8 @@ import net.foxyas.changedaddon.procedures.ShowOrganicOverLayProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeonProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeOffProcedure;
 import net.foxyas.changedaddon.procedures.ShocantgrabiconProcedure;
+import net.foxyas.changedaddon.procedures.IfFriendlyTransfuronProcedure;
+import net.foxyas.changedaddon.procedures.IfFriendlyTransfuroffProcedure;
 import net.foxyas.changedaddon.procedures.FriendlymodeoverlayDisplayOverlayIngameProcedure;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -58,19 +60,19 @@ public class FriendlymodeoverlayOverlay {
 			if (FriendlymodeoverlayDisplayOverlayIngameProcedure.execute(entity)) {
 				if (ShowassimilationiconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/canassimilation.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 78, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 38, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowassimilationoffbuttonProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/assimilation_off_icon.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 78, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 38, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowcangrabiconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/cangrabicon.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 38, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 18, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShocantgrabiconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/cantgrabicon.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 38, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 18, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowfriendlymodeIconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendlymodeicon.png"));
@@ -82,7 +84,7 @@ public class FriendlymodeoverlayOverlay {
 				}
 				if (ShowOrganicOverLayProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_form_overlay.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 38, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 18, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowOrganicFriendlyModeonProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_on_v2.png"));
@@ -91,6 +93,14 @@ public class FriendlymodeoverlayOverlay {
 				if (ShowOrganicFriendlyModeOffProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_off_v2.png"));
 					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 58, 0, 0, 16, 16, 16, 16);
+				}
+				if (IfFriendlyTransfuronProcedure.execute(entity)) {
+					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_true.png"));
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 78, 0, 0, 16, 16, 16, 16);
+				}
+				if (IfFriendlyTransfuroffProcedure.execute(entity)) {
+					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_false.png"));
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 78, 0, 0, 16, 16, 16, 16);
 				}
 			}
 			RenderSystem.depthMask(true);

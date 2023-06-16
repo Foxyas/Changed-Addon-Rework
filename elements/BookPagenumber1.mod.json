@@ -190,6 +190,15 @@
           "x": 125,
           "y": 141
         }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "latex_base.png",
+          "use1Xscale": false,
+          "x": 125,
+          "y": 141
+        }
       }
     ],
     "gridSettings": {

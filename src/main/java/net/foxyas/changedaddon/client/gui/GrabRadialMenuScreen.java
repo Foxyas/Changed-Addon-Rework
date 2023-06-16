@@ -21,6 +21,8 @@ import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeonProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeOffProcedure;
 import net.foxyas.changedaddon.procedures.ShowNoOrganicGrabRadialProcedure;
 import net.foxyas.changedaddon.procedures.ShocantgrabiconProcedure;
+import net.foxyas.changedaddon.procedures.IfFriendlyTransfuronProcedure;
+import net.foxyas.changedaddon.procedures.IfFriendlyTransfuroffProcedure;
 import net.foxyas.changedaddon.network.GrabRadialMenuButtonMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -37,6 +39,7 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 	ImageButton imagebutton_hitbox_16x16;
 	ImageButton imagebutton_hitbox_16x161;
 	ImageButton imagebutton_hitbox_16x162;
+	ImageButton imagebutton_hitbox_16x163;
 
 	public GrabRadialMenuScreen(GrabRadialMenuMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -105,6 +108,14 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_on_v2.png"));
 			this.blit(ms, this.leftPos + 122, this.topPos + 53, 0, 0, 16, 16, 16, 16);
 		}
+		if (IfFriendlyTransfuronProcedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_true.png"));
+			this.blit(ms, this.leftPos + 120, this.topPos + 86, 0, 0, 16, 16, 16, 16);
+		}
+		if (IfFriendlyTransfuroffProcedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_false.png"));
+			this.blit(ms, this.leftPos + 120, this.topPos + 86, 0, 0, 16, 16, 16, 16);
+		}
 		RenderSystem.disableBlend();
 	}
 
@@ -160,5 +171,13 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		});
 		guistate.put("button:imagebutton_hitbox_16x162", imagebutton_hitbox_16x162);
 		this.addRenderableWidget(imagebutton_hitbox_16x162);
+		imagebutton_hitbox_16x163 = new ImageButton(this.leftPos + 120, this.topPos + 86, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x163.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(3, x, y, z));
+				GrabRadialMenuButtonMessage.handleButtonAction(entity, 3, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_hitbox_16x163", imagebutton_hitbox_16x163);
+		this.addRenderableWidget(imagebutton_hitbox_16x163);
 	}
 }

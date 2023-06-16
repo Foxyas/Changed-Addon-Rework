@@ -19,6 +19,7 @@ import net.foxyas.changedaddon.world.inventory.GrabRadialMenugrabMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenuMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenuFriendlyMenu;
 import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
+import net.foxyas.changedaddon.world.inventory.FriendlyTransfurGuiMenu;
 import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
 import net.foxyas.changedaddon.world.inventory.FoxyasGui2Menu;
 import net.foxyas.changedaddon.world.inventory.FightTokeepconsciousnessminigameMenu;
@@ -51,6 +52,7 @@ public class ChangedAddonModMenus {
 	public static final MenuType<GrabRadialMenugrabMenu> GRAB_RADIAL_MENUGRAB = register("grab_radial_menugrab", (id, inv, extraData) -> new GrabRadialMenugrabMenu(id, inv, extraData));
 	public static final MenuType<GrabRadialMenuFriendlyMenu> GRAB_RADIAL_MENU_FRIENDLY = register("grab_radial_menu_friendly", (id, inv, extraData) -> new GrabRadialMenuFriendlyMenu(id, inv, extraData));
 	public static final MenuType<FoxyasGui2Menu> FOXYAS_GUI_2 = register("foxyas_gui_2", (id, inv, extraData) -> new FoxyasGui2Menu(id, inv, extraData));
+	public static final MenuType<FriendlyTransfurGuiMenu> FRIENDLY_TRANSFUR_GUI = register("friendly_transfur_gui", (id, inv, extraData) -> new FriendlyTransfurGuiMenu(id, inv, extraData));
 
 	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
 		MenuType<T> menuType = new MenuType<T>(containerFactory);

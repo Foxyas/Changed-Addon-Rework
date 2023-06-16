@@ -62,6 +62,9 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unlatexbase_buttonv2.png"));
 		this.blit(ms, this.leftPos + 123, this.topPos + 111, 0, 0, 16, 16, 16, 16);
 
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/latex_base.png"));
+		this.blit(ms, this.leftPos + 123, this.topPos + 111, 0, 0, 16, 16, 16, 16);
+
 		RenderSystem.disableBlend();
 	}
 

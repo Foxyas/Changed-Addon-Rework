@@ -180,6 +180,43 @@
           "x": 222,
           "y": 70
         }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_hitbox_16x163",
+          "image": "hitbox_16x16.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "SetFriendlyTransfur"
+          },
+          "x": 246,
+          "y": 131
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendly_transfur_true.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfFriendlyTransfuron"
+          },
+          "x": 246,
+          "y": 131
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendly_transfur_false.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfFriendlyTransfuroff"
+          },
+          "x": 246,
+          "y": 131
+        }
       }
     ],
     "gridSettings": {

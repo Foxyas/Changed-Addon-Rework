@@ -13,7 +13,7 @@
             "name": "Showassimilationicon"
           },
           "x": 1,
-          "y": 198
+          "y": 158
         }
       },
       {
@@ -25,7 +25,7 @@
             "name": "Showassimilationoffbutton"
           },
           "x": 1,
-          "y": 198
+          "y": 158
         }
       },
       {
@@ -37,7 +37,7 @@
             "name": "Showcangrabicon"
           },
           "x": 1,
-          "y": 158
+          "y": 138
         }
       },
       {
@@ -49,7 +49,7 @@
             "name": "Shocantgrabicon"
           },
           "x": 1,
-          "y": 158
+          "y": 138
         }
       },
       {
@@ -85,7 +85,7 @@
             "name": "ShowOrganicOverLay"
           },
           "x": 1,
-          "y": 158
+          "y": 138
         }
       },
       {
@@ -110,6 +110,30 @@
           },
           "x": 1,
           "y": 178
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendly_transfur_true.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfFriendlyTransfuron"
+          },
+          "x": 1,
+          "y": 198
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendly_transfur_false.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfFriendlyTransfuroff"
+          },
+          "x": 1,
+          "y": 198
         }
       }
     ],

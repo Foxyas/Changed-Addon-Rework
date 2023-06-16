@@ -18,6 +18,7 @@ import net.foxyas.changedaddon.client.gui.GrabRadialMenugrabScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenuScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenuFriendlyScreen;
 import net.foxyas.changedaddon.client.gui.GeneratorguiScreen;
+import net.foxyas.changedaddon.client.gui.FriendlyTransfurGuiScreen;
 import net.foxyas.changedaddon.client.gui.FoxyasguiScreen;
 import net.foxyas.changedaddon.client.gui.FoxyasGui2Screen;
 import net.foxyas.changedaddon.client.gui.FightTokeepconsciousnessminigameScreen;
@@ -49,6 +50,7 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.GRAB_RADIAL_MENUGRAB, GrabRadialMenugrabScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.GRAB_RADIAL_MENU_FRIENDLY, GrabRadialMenuFriendlyScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.FOXYAS_GUI_2, FoxyasGui2Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.FRIENDLY_TRANSFUR_GUI, FriendlyTransfurGuiScreen::new);
 		});
 	}
 }
