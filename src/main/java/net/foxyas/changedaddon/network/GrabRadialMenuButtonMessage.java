@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenuMenu;
 import net.foxyas.changedaddon.procedures.SetcangrabonOnKeyPressedProcedure;
 import net.foxyas.changedaddon.procedures.SetassimilatonOnKeyPressedProcedure;
-import net.foxyas.changedaddon.procedures.SetFriendlyTransfurProcedure;
 import net.foxyas.changedaddon.procedures.ActiveFriendlyModeOnKeyPressedProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -76,10 +75,6 @@ public class GrabRadialMenuButtonMessage {
 		if (buttonID == 2) {
 
 			SetassimilatonOnKeyPressedProcedure.execute(entity);
-		}
-		if (buttonID == 3) {
-
-			SetFriendlyTransfurProcedure.execute(entity);
 		}
 	}
 

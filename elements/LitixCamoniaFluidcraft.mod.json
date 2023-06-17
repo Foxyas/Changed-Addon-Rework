@@ -15,15 +15,6 @@
         "value": ""
       },
       {
-        "value": ""
-      },
-      {
-        "value": ""
-      },
-      {
-        "value": ""
-      },
-      {
         "value": "CUSTOM:LitixCamonia"
       },
       {
@@ -33,7 +24,16 @@
         "value": ""
       },
       {
-        "value": "Items.WATER_BUCKET"
+        "value": "Items.POTIONITEM"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "Items.BUCKET"
       },
       {
         "value": ""

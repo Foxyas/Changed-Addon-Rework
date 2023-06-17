@@ -18,8 +18,8 @@
           "displayCondition": {
             "name": "ShowNoOrganicGrabRadial"
           },
-          "x": 151,
-          "y": 61
+          "x": 150,
+          "y": 62
         }
       },
       {
@@ -30,8 +30,8 @@
           "displayCondition": {
             "name": "ShowOrganicGrabRadial"
           },
-          "x": 151,
-          "y": 61
+          "x": 149,
+          "y": 63
         }
       },
       {
@@ -54,7 +54,7 @@
           "displayCondition": {
             "name": "Shocantgrabicon"
           },
-          "x": 186,
+          "x": 187,
           "y": 71
         }
       },
@@ -66,7 +66,7 @@
           "displayCondition": {
             "name": "Showcangrabicon"
           },
-          "x": 186,
+          "x": 187,
           "y": 71
         }
       },
@@ -79,32 +79,32 @@
           "onClick": {
             "name": "SetcangrabonOnKeyPressed"
           },
-          "x": 186,
+          "x": 187,
           "y": 71
         }
       },
       {
         "type": "image",
         "data": {
-          "image": "canassimilation_outline.png",
+          "image": "assimilation.png",
           "use1Xscale": false,
           "displayCondition": {
             "name": "Showassimilationicon"
           },
-          "x": 222,
-          "y": 70
+          "x": 221,
+          "y": 71
         }
       },
       {
         "type": "image",
         "data": {
-          "image": "cantassimilation_outline.png",
+          "image": "grab_overlay_v2.png",
           "use1Xscale": false,
           "displayCondition": {
             "name": "Showassimilationoffbutton"
           },
-          "x": 222,
-          "y": 70
+          "x": 221,
+          "y": 71
         }
       },
       {
@@ -165,7 +165,7 @@
             "name": "ActiveFriendlyModeOnKeyPressed"
           },
           "x": 248,
-          "y": 97
+          "y": 98
         }
       },
       {
@@ -177,21 +177,8 @@
           "onClick": {
             "name": "SetassimilatonOnKeyPressed"
           },
-          "x": 222,
-          "y": 70
-        }
-      },
-      {
-        "type": "imagebutton",
-        "data": {
-          "name": "imagebutton_hitbox_16x163",
-          "image": "hitbox_16x16.png",
-          "hoveredImage": "",
-          "onClick": {
-            "name": "SetFriendlyTransfur"
-          },
-          "x": 246,
-          "y": 131
+          "x": 221,
+          "y": 71
         }
       },
       {
@@ -200,10 +187,10 @@
           "image": "friendly_transfur_true.png",
           "use1Xscale": false,
           "displayCondition": {
-            "name": "IfFriendlyTransfuron"
+            "name": "ShowGrabInFriendlyModeOn"
           },
-          "x": 246,
-          "y": 131
+          "x": 187,
+          "y": 70
         }
       },
       {
@@ -212,18 +199,18 @@
           "image": "friendly_transfur_false.png",
           "use1Xscale": false,
           "displayCondition": {
-            "name": "IfFriendlyTransfuroff"
+            "name": "ShowGrabInFriendlyModeoff"
           },
-          "x": 246,
-          "y": 131
+          "x": 187,
+          "y": 70
         }
       }
     ],
     "gridSettings": {
       "sx": 18,
-      "sy": 18,
+      "sy": 22,
       "ox": 11,
-      "oy": 15,
+      "oy": 20,
       "snapOnGrid": false
     }
   }

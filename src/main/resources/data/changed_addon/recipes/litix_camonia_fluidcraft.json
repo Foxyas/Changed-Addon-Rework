@@ -5,7 +5,11 @@
       "item": "changed_addon:litix_camonia"
     },
     {
-      "item": "minecraft:water_bucket"
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"minecraft:water\"}"
+    },
+    {
+      "item": "minecraft:bucket"
     }
   ],
   "result": {

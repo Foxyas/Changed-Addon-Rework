@@ -7,7 +7,7 @@
       {
         "type": "image",
         "data": {
-          "image": "canassimilation.png",
+          "image": "assimilation.png",
           "use1Xscale": false,
           "displayCondition": {
             "name": "Showassimilationicon"
@@ -19,7 +19,7 @@
       {
         "type": "image",
         "data": {
-          "image": "assimilation_off_icon.png",
+          "image": "grab_overlay_v2.png",
           "use1Xscale": false,
           "displayCondition": {
             "name": "Showassimilationoffbutton"
@@ -118,10 +118,10 @@
           "image": "friendly_transfur_true.png",
           "use1Xscale": false,
           "displayCondition": {
-            "name": "IfFriendlyTransfuron"
+            "name": "ShowGrabInFriendlyModeOn"
           },
           "x": 1,
-          "y": 198
+          "y": 138
         }
       },
       {
@@ -130,10 +130,10 @@
           "image": "friendly_transfur_false.png",
           "use1Xscale": false,
           "displayCondition": {
-            "name": "IfFriendlyTransfuroff"
+            "name": "ShowGrabInFriendlyModeoff"
           },
           "x": 1,
-          "y": 198
+          "y": 138
         }
       }
     ],

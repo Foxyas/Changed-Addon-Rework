@@ -45,15 +45,8 @@ public class SetassimilatonOnKeyPressedProcedure {
 								capability.syncPlayerVariables(entity);
 							});
 						}
-						{
-							boolean _setval = false;
-							entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-								capability.FriendlyTransfur = _setval;
-								capability.syncPlayerVariables(entity);
-							});
-						}
 						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("when activating assimilation you deactivated Friendly grab and Friendly Transfur mode"), false);
+							_player.displayClientMessage(new TextComponent("when activating assimilation you deactivated Friendly grab mode"), false);
 					}
 					if (!(entity instanceof ServerPlayer _plr2 && _plr2.level instanceof ServerLevel
 							&& _plr2.getAdvancements().getOrStartProgress(_plr2.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {

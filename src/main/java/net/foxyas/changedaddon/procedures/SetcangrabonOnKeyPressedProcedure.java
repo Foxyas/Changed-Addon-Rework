@@ -37,26 +37,8 @@ public class SetcangrabonOnKeyPressedProcedure {
 							capability.syncPlayerVariables(entity);
 						});
 					}
-					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true) {
-						{
-							boolean _setval = false;
-							entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-								capability.Friendly_mode = _setval;
-								capability.syncPlayerVariables(entity);
-							});
-						}
-						{
-							boolean _setval = false;
-							entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-								capability.FriendlyTransfur = _setval;
-								capability.syncPlayerVariables(entity);
-							});
-						}
-						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("when activating Grab you deactivated Friendly grab and Friendly Transfur mode"), false);
-					}
-					if (!(entity instanceof ServerPlayer _plr2 && _plr2.level instanceof ServerLevel
-							&& _plr2.getAdvancements().getOrStartProgress(_plr2.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:grabthem"))).isDone())) {
+					if (!(entity instanceof ServerPlayer _plr1 && _plr1.level instanceof ServerLevel
+							&& _plr1.getAdvancements().getOrStartProgress(_plr1.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:grabthem"))).isDone())) {
 						if (entity instanceof ServerPlayer _player) {
 							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:grabthem"));
 							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);

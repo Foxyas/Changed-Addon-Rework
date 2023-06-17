@@ -2645,7 +2645,7 @@
       "type": "recipe",
       "sortid": 152,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "litix_camonia_fluidcraft",
       "metadata": {
         "files": [
@@ -2663,33 +2663,6 @@
       "metadata": {
         "files": [
           "src/main/resources/data/changed_addon/recipes/empty_spray_recipe.json"
-        ]
-      }
-    },
-    {
-      "name": "LitxcamoniaBrokenevent",
-      "type": "procedure",
-      "sortid": 154,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "litxcamonia_brokenevent",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/LitxcamoniaBrokeneventProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "itemstack",
-            "type": "itemstack"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
         ]
       }
     },
@@ -2712,6 +2685,18 @@
           {
             "name": "sourceentity",
             "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
           },
           {
             "name": "world",
@@ -5552,65 +5537,6 @@
       }
     },
     {
-      "name": "SetFriendlyTransfur",
-      "type": "procedure",
-      "sortid": 289,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "set_friendly_transfur",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SetFriendlyTransfurProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
-      "name": "IfFriendlyTransfuron",
-      "type": "procedure",
-      "sortid": 290,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "if_friendly_transfuron",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/IfFriendlyTransfuronProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
-      "name": "IfFriendlyTransfuroff",
-      "type": "procedure",
-      "sortid": 291,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "if_friendly_transfuroff",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/IfFriendlyTransfuroffProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
       "name": "FriendlyTransfurGuino",
       "type": "procedure",
       "sortid": 292,
@@ -5668,6 +5594,69 @@
           "src/main/java/net/foxyas/changedaddon/network/FriendlyTransfurGuiButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/FriendlyTransfurGuiMenu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/FriendlyTransfurGuiScreen.java"
+        ]
+      }
+    },
+    {
+      "name": "LitixCamoniaSprayBroke",
+      "type": "procedure",
+      "sortid": 295,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "litix_camonia_spray_broke",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LitixCamoniaSprayBrokeProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ShowGrabInFriendlyModeoff",
+      "type": "procedure",
+      "sortid": 296,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "show_grab_in_friendly_modeoff",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ShowGrabInFriendlyModeoffProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ShowGrabInFriendlyModeOn",
+      "type": "procedure",
+      "sortid": 297,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "show_grab_in_friendly_mode_on",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ShowGrabInFriendlyModeOnProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
         ]
       }
     }
@@ -5816,12 +5805,6 @@
       "type": "logic",
       "scope": "player_lifetime",
       "value": "false"
-    },
-    {
-      "name": "FriendlyTransfur",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "false"
     }
   ],
   "sound_elements": [
@@ -5868,22 +5851,22 @@
   ],
   "language_map": {
     "en_us": {
-      "gui.changed_addon.book_pagenumber_2.label_to_purify_the_latex_syringes_jus": "Before you transfur yourself, you need to purify the latex syringes in a purif",
-      "advancements.grabthem.title": "Grab them!",
       "advancements.latex_insulator_advancement.descr": "let\u0027s isolate this gooey infection",
-      "entity.changed_addon.prototype": "Prototype",
-      "gui.changed_addon.book_pagenumber_1.label_you_just_go_need_create_an_infus": "you just go need create an infuser",
+      "advancements.grabthem.title": "Grab them!",
+      "gui.changed_addon.book_pagenumber_2.label_to_purify_the_latex_syringes_jus": "Before you transfur yourself, you need to purify the latex syringes in a purif",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
+      "gui.changed_addon.book_pagenumber_1.label_you_just_go_need_create_an_infus": "you just go need create an infuser",
+      "entity.changed_addon.prototype": "Prototype",
       "advancements.furry_friend.title": "Furry Friend",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "LitixCamonia",
-      "gui.changed_addon.book_pagenumber_1.label_both_the_inventory_and_the_craft": "both the inventory and the craft table",
       "gui.changed_addon.book_pagenumber_1.label_recipes_for_each_latex_will_var": " Recipes for each latex will vary.",
-      "advancements.untransfuradvancement_2.descr": "you untransfur with the syringe of litixcamonia",
+      "gui.changed_addon.book_pagenumber_1.label_both_the_inventory_and_the_craft": "both the inventory and the craft table",
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
-      "advancements.ammoniacraft.descr": "you craft one ammonia powder",
+      "advancements.untransfuradvancement_2.descr": "you untransfur with the syringe of litixcamonia",
       "advancements.litixcamonia_adcancement.title": "Litixcamonia!?",
+      "advancements.ammoniacraft.descr": "you craft one ammonia powder",
       "item.changed_addon.painite_pickaxe": "Painite Pickaxe",
       "advancements.unifuser_advancement.descr": "you craft or get a Unifisuer",
       "gui.changed_addon.grab_radial_menu_friendly.button_back": "back",
@@ -5923,15 +5906,15 @@
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.book_pagenumber_1.label_syringe_with_your_own_blood_and": "-yringe with your own blood and a latex base in an infuser.",
       "gui.changed_addon.book_pagenumber_1.button_close": "close",
-      "enchantment.changed_addon.solvent": "Solvent",
+      "enchantment.changed_addon.solvent": "Latex Solvent",
       "advancements.untransfuritemadvancement.descr": "you made one untransfur item",
       "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
       "item.changed_addon.painite_armor_leggings": "Painite Leggings",
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon",
-      "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catlyzer",
+      "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic transfur",
       "gui.changed_addon.catlyzergui.button_start_craft": "start craft",

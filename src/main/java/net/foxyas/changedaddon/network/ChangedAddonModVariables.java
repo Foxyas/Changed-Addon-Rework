@@ -84,7 +84,6 @@ public class ChangedAddonModVariables {
 			clone.human_Form = original.human_Form;
 			clone.reset_transfur_advancements = original.reset_transfur_advancements;
 			clone.enter_in_duct = original.enter_in_duct;
-			clone.FriendlyTransfur = original.FriendlyTransfur;
 			if (!event.isWasDeath()) {
 				clone.times_the_syringe_was_used = original.times_the_syringe_was_used;
 				clone.grab_escape = original.grab_escape;
@@ -151,7 +150,6 @@ public class ChangedAddonModVariables {
 		public boolean reset_transfur_advancements = false;
 		public boolean enter_in_duct = false;
 		public boolean act_cooldown = false;
-		public boolean FriendlyTransfur = false;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -184,7 +182,6 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("reset_transfur_advancements", reset_transfur_advancements);
 			nbt.putBoolean("enter_in_duct", enter_in_duct);
 			nbt.putBoolean("act_cooldown", act_cooldown);
-			nbt.putBoolean("FriendlyTransfur", FriendlyTransfur);
 			return nbt;
 		}
 
@@ -214,7 +211,6 @@ public class ChangedAddonModVariables {
 			reset_transfur_advancements = nbt.getBoolean("reset_transfur_advancements");
 			enter_in_duct = nbt.getBoolean("enter_in_duct");
 			act_cooldown = nbt.getBoolean("act_cooldown");
-			FriendlyTransfur = nbt.getBoolean("FriendlyTransfur");
 		}
 	}
 
@@ -263,7 +259,6 @@ public class ChangedAddonModVariables {
 					variables.reset_transfur_advancements = message.data.reset_transfur_advancements;
 					variables.enter_in_duct = message.data.enter_in_duct;
 					variables.act_cooldown = message.data.act_cooldown;
-					variables.FriendlyTransfur = message.data.FriendlyTransfur;
 				}
 			});
 			context.setPacketHandled(true);

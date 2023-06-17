@@ -72,119 +72,133 @@ public class PlayerRightClickInDuctProcedure {
 									});
 								}
 								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0, false, false));
+									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 							}
 						} else {
 							if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))) == (blockstate.getBlock().getStateDefinition().getProperty("vented") instanceof BooleanProperty _withbp18
 									? blockstate.setValue(_withbp18, true)
 									: blockstate)) {
-								if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("up") instanceof BooleanProperty _withbp22 ? blockstate.setValue(_withbp22, true) : blockstate)
-										&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("down") instanceof BooleanProperty _withbp26 ? blockstate.setValue(_withbp26, true) : blockstate)) {
-									if ((entity.getDirection()) == Direction.EAST) {
-										if ((world.getBlockState(new BlockPos(entity.getX() + 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
-											{
-												Entity _ent = entity;
-												_ent.teleportTo((entity.getX() + 0.7), (entity.getY()), (entity.getZ()));
-												if (_ent instanceof ServerPlayer _serverPlayer)
-													_serverPlayer.connection.teleport((entity.getX() + 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
-											}
-											if (world instanceof Level _level) {
-												if (!_level.isClientSide()) {
-													_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
-												} else {
-													_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+								if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.FADIGE.get()) : false)) {
+									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("up") instanceof BooleanProperty _withbp23 ? blockstate.setValue(_withbp23, true) : blockstate)
+											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("down") instanceof BooleanProperty _withbp27 ? blockstate.setValue(_withbp27, true) : blockstate)) {
+										if ((entity.getDirection()) == Direction.EAST) {
+											if ((world.getBlockState(new BlockPos(entity.getX() + 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
+												{
+													Entity _ent = entity;
+													_ent.teleportTo((entity.getX() + 0.7), (entity.getY()), (entity.getZ()));
+													if (_ent instanceof ServerPlayer _serverPlayer)
+														_serverPlayer.connection.teleport((entity.getX() + 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
 												}
+												if (world instanceof Level _level) {
+													if (!_level.isClientSide()) {
+														_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
+													} else {
+														_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+													}
+												}
+												if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+													_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+											}
+										}
+										if ((entity.getDirection()) == Direction.WEST) {
+											if ((world.getBlockState(new BlockPos(entity.getX() - 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
+												{
+													Entity _ent = entity;
+													_ent.teleportTo((entity.getX() - 0.7), (entity.getY()), (entity.getZ()));
+													if (_ent instanceof ServerPlayer _serverPlayer)
+														_serverPlayer.connection.teleport((entity.getX() - 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+												}
+												if (world instanceof Level _level) {
+													if (!_level.isClientSide()) {
+														_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
+													} else {
+														_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+													}
+												}
+												if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+													_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 											}
 										}
 									}
-									if ((entity.getDirection()) == Direction.WEST) {
-										if ((world.getBlockState(new BlockPos(entity.getX() - 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
-											{
-												Entity _ent = entity;
-												_ent.teleportTo((entity.getX() - 0.7), (entity.getY()), (entity.getZ()));
-												if (_ent instanceof ServerPlayer _serverPlayer)
-													_serverPlayer.connection.teleport((entity.getX() - 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
-											}
-											if (world instanceof Level _level) {
-												if (!_level.isClientSide()) {
-													_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
-												} else {
-													_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("north") instanceof BooleanProperty _withbp57 ? blockstate.setValue(_withbp57, true) : blockstate)
+											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("south") instanceof BooleanProperty _withbp61 ? blockstate.setValue(_withbp61, true) : blockstate)) {
+										if ((entity.getDirection()) == Direction.EAST) {
+											if ((world.getBlockState(new BlockPos(entity.getX() + 0.7, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
+												{
+													Entity _ent = entity;
+													_ent.teleportTo((entity.getX() + 1), (entity.getY()), (entity.getZ()));
+													if (_ent instanceof ServerPlayer _serverPlayer)
+														_serverPlayer.connection.teleport((entity.getX() + 1), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
 												}
+												if (world instanceof Level _level) {
+													if (!_level.isClientSide()) {
+														_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
+													} else {
+														_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+													}
+												}
+												if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+													_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+											}
+										}
+										if ((entity.getDirection()) == Direction.WEST) {
+											if ((world.getBlockState(new BlockPos(entity.getX() - 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
+												{
+													Entity _ent = entity;
+													_ent.teleportTo((entity.getX() - 0.7), (entity.getY()), (entity.getZ()));
+													if (_ent instanceof ServerPlayer _serverPlayer)
+														_serverPlayer.connection.teleport((entity.getX() - 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+												}
+												if (world instanceof Level _level) {
+													if (!_level.isClientSide()) {
+														_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
+													} else {
+														_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+													}
+												}
+												if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+													_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 											}
 										}
 									}
-								}
-								if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("north") instanceof BooleanProperty _withbp54 ? blockstate.setValue(_withbp54, true) : blockstate)
-										&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("south") instanceof BooleanProperty _withbp58 ? blockstate.setValue(_withbp58, true) : blockstate)) {
-									if ((entity.getDirection()) == Direction.EAST) {
-										if ((world.getBlockState(new BlockPos(entity.getX() + 0.7, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
-											{
-												Entity _ent = entity;
-												_ent.teleportTo((entity.getX() + 1), (entity.getY()), (entity.getZ()));
-												if (_ent instanceof ServerPlayer _serverPlayer)
-													_serverPlayer.connection.teleport((entity.getX() + 1), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
-											}
-											if (world instanceof Level _level) {
-												if (!_level.isClientSide()) {
-													_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
-												} else {
-													_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("east") instanceof BooleanProperty _withbp91 ? blockstate.setValue(_withbp91, true) : blockstate)
+											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("west") instanceof BooleanProperty _withbp95 ? blockstate.setValue(_withbp95, true) : blockstate)) {
+										if ((entity.getDirection()) == Direction.SOUTH) {
+											if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ() + 1))).getBlock() == Blocks.AIR) {
+												{
+													Entity _ent = entity;
+													_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() + 0.7));
+													if (_ent instanceof ServerPlayer _serverPlayer)
+														_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() + 0.7), _ent.getYRot(), _ent.getXRot());
 												}
+												if (world instanceof Level _level) {
+													if (!_level.isClientSide()) {
+														_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
+													} else {
+														_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+													}
+												}
+												if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+													_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 											}
 										}
-									}
-									if ((entity.getDirection()) == Direction.WEST) {
-										if ((world.getBlockState(new BlockPos(entity.getX() - 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
-											{
-												Entity _ent = entity;
-												_ent.teleportTo((entity.getX() - 0.7), (entity.getY()), (entity.getZ()));
-												if (_ent instanceof ServerPlayer _serverPlayer)
-													_serverPlayer.connection.teleport((entity.getX() - 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
-											}
-											if (world instanceof Level _level) {
-												if (!_level.isClientSide()) {
-													_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
-												} else {
-													_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+										if ((entity.getDirection()) == Direction.NORTH) {
+											if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ() - 1))).getBlock() == Blocks.AIR) {
+												{
+													Entity _ent = entity;
+													_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() - 0.7));
+													if (_ent instanceof ServerPlayer _serverPlayer)
+														_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() - 0.7), _ent.getYRot(), _ent.getXRot());
 												}
-											}
-										}
-									}
-								}
-								if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("east") instanceof BooleanProperty _withbp86 ? blockstate.setValue(_withbp86, true) : blockstate)
-										&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("west") instanceof BooleanProperty _withbp90 ? blockstate.setValue(_withbp90, true) : blockstate)) {
-									if ((entity.getDirection()) == Direction.SOUTH) {
-										if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ() + 1))).getBlock() == Blocks.AIR) {
-											{
-												Entity _ent = entity;
-												_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() + 0.7));
-												if (_ent instanceof ServerPlayer _serverPlayer)
-													_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() + 0.7), _ent.getYRot(), _ent.getXRot());
-											}
-											if (world instanceof Level _level) {
-												if (!_level.isClientSide()) {
-													_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
-												} else {
-													_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+												if (world instanceof Level _level) {
+													if (!_level.isClientSide()) {
+														_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
+													} else {
+														_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
+													}
 												}
-											}
-										}
-									}
-									if ((entity.getDirection()) == Direction.NORTH) {
-										if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ() - 1))).getBlock() == Blocks.AIR) {
-											{
-												Entity _ent = entity;
-												_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() - 0.7));
-												if (_ent instanceof ServerPlayer _serverPlayer)
-													_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() - 0.7), _ent.getYRot(), _ent.getXRot());
-											}
-											if (world instanceof Level _level) {
-												if (!_level.isClientSide()) {
-													_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1);
-												} else {
-													_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 2, 1, false);
-												}
+												if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+													_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 											}
 										}
 									}

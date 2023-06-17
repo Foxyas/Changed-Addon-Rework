@@ -26,7 +26,7 @@ public class FriendlyTransfurGuinoProcedure {
 					if (!(entityiterator == entity)) {
 						if ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
 								&& (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true
-								&& (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).FriendlyTransfur == true) {
+								&& (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).can_grab == true) {
 							if (entityiterator instanceof Player _player && !_player.level.isClientSide())
 								_player.displayClientMessage(new TextComponent("they didn't want dont want"), true);
 							if (entity instanceof Player _player)

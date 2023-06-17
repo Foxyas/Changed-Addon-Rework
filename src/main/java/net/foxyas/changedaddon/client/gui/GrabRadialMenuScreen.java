@@ -20,9 +20,9 @@ import net.foxyas.changedaddon.procedures.ShowOrganicGrabRadialProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeonProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeOffProcedure;
 import net.foxyas.changedaddon.procedures.ShowNoOrganicGrabRadialProcedure;
+import net.foxyas.changedaddon.procedures.ShowGrabInFriendlyModeoffProcedure;
+import net.foxyas.changedaddon.procedures.ShowGrabInFriendlyModeOnProcedure;
 import net.foxyas.changedaddon.procedures.ShocantgrabiconProcedure;
-import net.foxyas.changedaddon.procedures.IfFriendlyTransfuronProcedure;
-import net.foxyas.changedaddon.procedures.IfFriendlyTransfuroffProcedure;
 import net.foxyas.changedaddon.network.GrabRadialMenuButtonMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -39,7 +39,6 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 	ImageButton imagebutton_hitbox_16x16;
 	ImageButton imagebutton_hitbox_16x161;
 	ImageButton imagebutton_hitbox_16x162;
-	ImageButton imagebutton_hitbox_16x163;
 
 	public GrabRadialMenuScreen(GrabRadialMenuMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -66,11 +65,11 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		RenderSystem.defaultBlendFunc();
 		if (ShowNoOrganicGrabRadialProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/grab_radial_menu.png"));
-			this.blit(ms, this.leftPos + 25, this.topPos + 16, 0, 0, 122, 118, 122, 118);
+			this.blit(ms, this.leftPos + 24, this.topPos + 17, 0, 0, 122, 118, 122, 118);
 		}
 		if (ShowOrganicGrabRadialProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_grab_radial__white.png"));
-			this.blit(ms, this.leftPos + 25, this.topPos + 16, 0, 0, 122, 118, 122, 118);
+			this.blit(ms, this.leftPos + 23, this.topPos + 18, 0, 0, 122, 118, 122, 118);
 		}
 		if (ShowOrganicGrabRadialProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_form_overlay.png"));
@@ -78,19 +77,19 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		}
 		if (ShocantgrabiconProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/cant_grab_icon_outline.png"));
-			this.blit(ms, this.leftPos + 60, this.topPos + 26, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 61, this.topPos + 26, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowcangrabiconProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/can_grab_icon_outline.png"));
-			this.blit(ms, this.leftPos + 60, this.topPos + 26, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 61, this.topPos + 26, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowassimilationiconProcedure.execute(entity)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/canassimilation_outline.png"));
-			this.blit(ms, this.leftPos + 96, this.topPos + 25, 0, 0, 16, 16, 16, 16);
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/assimilation.png"));
+			this.blit(ms, this.leftPos + 95, this.topPos + 26, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowassimilationoffbuttonProcedure.execute(entity)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/cantassimilation_outline.png"));
-			this.blit(ms, this.leftPos + 96, this.topPos + 25, 0, 0, 16, 16, 16, 16);
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/grab_overlay_v2.png"));
+			this.blit(ms, this.leftPos + 95, this.topPos + 26, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowfriendlymodeIconProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendlymodeicon.png"));
@@ -108,13 +107,13 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_on_v2.png"));
 			this.blit(ms, this.leftPos + 122, this.topPos + 53, 0, 0, 16, 16, 16, 16);
 		}
-		if (IfFriendlyTransfuronProcedure.execute(entity)) {
+		if (ShowGrabInFriendlyModeOnProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_true.png"));
-			this.blit(ms, this.leftPos + 120, this.topPos + 86, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 61, this.topPos + 25, 0, 0, 18, 18, 18, 18);
 		}
-		if (IfFriendlyTransfuroffProcedure.execute(entity)) {
+		if (ShowGrabInFriendlyModeoffProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_false.png"));
-			this.blit(ms, this.leftPos + 120, this.topPos + 86, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 61, this.topPos + 25, 0, 0, 18, 18, 18, 18);
 		}
 		RenderSystem.disableBlend();
 	}
@@ -147,7 +146,7 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		imagebutton_hitbox_16x16 = new ImageButton(this.leftPos + 60, this.topPos + 26, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x16.png"), 16, 32, e -> {
+		imagebutton_hitbox_16x16 = new ImageButton(this.leftPos + 61, this.topPos + 26, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x16.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(0, x, y, z));
 				GrabRadialMenuButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -155,7 +154,7 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		});
 		guistate.put("button:imagebutton_hitbox_16x16", imagebutton_hitbox_16x16);
 		this.addRenderableWidget(imagebutton_hitbox_16x16);
-		imagebutton_hitbox_16x161 = new ImageButton(this.leftPos + 122, this.topPos + 52, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x161.png"), 16, 32, e -> {
+		imagebutton_hitbox_16x161 = new ImageButton(this.leftPos + 122, this.topPos + 53, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x161.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(1, x, y, z));
 				GrabRadialMenuButtonMessage.handleButtonAction(entity, 1, x, y, z);
@@ -163,7 +162,7 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		});
 		guistate.put("button:imagebutton_hitbox_16x161", imagebutton_hitbox_16x161);
 		this.addRenderableWidget(imagebutton_hitbox_16x161);
-		imagebutton_hitbox_16x162 = new ImageButton(this.leftPos + 96, this.topPos + 25, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x162.png"), 16, 32, e -> {
+		imagebutton_hitbox_16x162 = new ImageButton(this.leftPos + 95, this.topPos + 26, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x162.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(2, x, y, z));
 				GrabRadialMenuButtonMessage.handleButtonAction(entity, 2, x, y, z);
@@ -171,13 +170,5 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		});
 		guistate.put("button:imagebutton_hitbox_16x162", imagebutton_hitbox_16x162);
 		this.addRenderableWidget(imagebutton_hitbox_16x162);
-		imagebutton_hitbox_16x163 = new ImageButton(this.leftPos + 120, this.topPos + 86, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x163.png"), 16, 32, e -> {
-			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(3, x, y, z));
-				GrabRadialMenuButtonMessage.handleButtonAction(entity, 3, x, y, z);
-			}
-		});
-		guistate.put("button:imagebutton_hitbox_16x163", imagebutton_hitbox_16x163);
-		this.addRenderableWidget(imagebutton_hitbox_16x163);
 	}
 }

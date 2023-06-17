@@ -29,13 +29,13 @@ public class EmptySprayRightclickedOnBlockProcedure {
 								entity.level.clip(new ClipContext(entity.getEyePosition(1f), entity.getEyePosition(1f).add(entity.getViewVector(1f).scale(5)), ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, entity)).getBlockPos().getZ()))
 						.createLegacyBlock()).getBlock() == ChangedAddonModBlocks.LITIX_CAMONIA_FLUID.get()) {
 			if (entity instanceof Player _player) {
+				ItemStack _stktoremove = new ItemStack(ChangedAddonModItems.EMPTY_SPRAY.get());
+				_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
+			}
+			if (entity instanceof Player _player) {
 				ItemStack _setstack = new ItemStack(ChangedAddonModItems.LITIX_CAMONIA_SPRAY.get());
 				_setstack.setCount(1);
 				ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
-			}
-			if (entity instanceof Player _player) {
-				ItemStack _stktoremove = new ItemStack(ChangedAddonModItems.EMPTY_SPRAY.get());
-				_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
 			}
 		}
 	}

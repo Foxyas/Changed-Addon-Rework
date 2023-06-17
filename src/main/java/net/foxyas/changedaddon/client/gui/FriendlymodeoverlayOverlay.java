@@ -23,9 +23,9 @@ import net.foxyas.changedaddon.procedures.ShowassimilationiconProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicOverLayProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeonProcedure;
 import net.foxyas.changedaddon.procedures.ShowOrganicFriendlyModeOffProcedure;
+import net.foxyas.changedaddon.procedures.ShowGrabInFriendlyModeoffProcedure;
+import net.foxyas.changedaddon.procedures.ShowGrabInFriendlyModeOnProcedure;
 import net.foxyas.changedaddon.procedures.ShocantgrabiconProcedure;
-import net.foxyas.changedaddon.procedures.IfFriendlyTransfuronProcedure;
-import net.foxyas.changedaddon.procedures.IfFriendlyTransfuroffProcedure;
 import net.foxyas.changedaddon.procedures.FriendlymodeoverlayDisplayOverlayIngameProcedure;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -59,11 +59,11 @@ public class FriendlymodeoverlayOverlay {
 			RenderSystem.setShaderColor(1, 1, 1, 1);
 			if (FriendlymodeoverlayDisplayOverlayIngameProcedure.execute(entity)) {
 				if (ShowassimilationiconProcedure.execute(entity)) {
-					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/canassimilation.png"));
+					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/assimilation.png"));
 					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 38, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowassimilationoffbuttonProcedure.execute(entity)) {
-					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/assimilation_off_icon.png"));
+					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/grab_overlay_v2.png"));
 					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 38, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowcangrabiconProcedure.execute(entity)) {
@@ -94,13 +94,13 @@ public class FriendlymodeoverlayOverlay {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_off_v2.png"));
 					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 58, 0, 0, 16, 16, 16, 16);
 				}
-				if (IfFriendlyTransfuronProcedure.execute(entity)) {
+				if (ShowGrabInFriendlyModeOnProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_true.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 78, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 18, 0, 0, 18, 18, 18, 18);
 				}
-				if (IfFriendlyTransfuroffProcedure.execute(entity)) {
+				if (ShowGrabInFriendlyModeoffProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_false.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 78, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -212, posY + 18, 0, 0, 18, 18, 18, 18);
 				}
 			}
 			RenderSystem.depthMask(true);

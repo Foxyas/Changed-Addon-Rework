@@ -94,9 +94,9 @@ public class GrabProcedureProcedure {
 										return false;
 									}
 								}.checkGamemode(entityiterator) || (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true)) {
-									if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == false) {
+									if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).can_grab == true) {
 										if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
-											if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).can_grab == true) {
+											if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == false) {
 												if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.GRAB_RESISTANCE.get(),
 														(entityiterator instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY)) < 4) {
 													{
@@ -287,13 +287,13 @@ public class GrabProcedureProcedure {
 													if (entity instanceof Player _player && !_player.level.isClientSide())
 														_player.displayClientMessage(new TextComponent("They are very resistant to being grabbed, so you can't grab them"), true);
 												}
+											} else {
+												FriendlyGrabProcedure.execute(world, x, y, z, entity);
 											}
 										} else {
 											if (entity instanceof Player _player && !_player.level.isClientSide())
 												_player.displayClientMessage(new TextComponent("you are organic so you cant grab"), true);
 										}
-									} else {
-										FriendlyGrabProcedure.execute(world, x, y, z, entity);
 									}
 								} else {
 									if (entity instanceof Player _player && !_player.level.isClientSide())
