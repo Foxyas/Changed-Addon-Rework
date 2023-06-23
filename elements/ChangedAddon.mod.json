@@ -6,6 +6,6 @@
     "icon": {
       "value": "CUSTOM:Changedbook"
     },
-    "showSearch": true
+    "showSearch": false
   }
 }

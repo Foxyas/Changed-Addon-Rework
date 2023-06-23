@@ -10,13 +10,13 @@
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
-    "stackSize": 32,
+    "stackSize": 1,
     "enchantability": 0,
     "useDuration": 20,
     "toolType": 1.0,
-    "damageCount": 0,
+    "damageCount": 2,
     "recipeRemainder": {
-      "value": "CUSTOM:Syringe"
+      "value": ""
     },
     "destroyAnyBlock": false,
     "immuneToFire": false,

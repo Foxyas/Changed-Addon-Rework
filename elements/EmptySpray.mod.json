@@ -32,9 +32,6 @@
     "onRightClickedInAir": {
       "name": "EmptySprayRightclickedOnBlock"
     },
-    "onRightClickedOnBlock": {
-      "name": "EmptySprayRightclickedOnBlock"
-    },
     "isFood": false,
     "nutritionalValue": 4,
     "saturation": 0.3,

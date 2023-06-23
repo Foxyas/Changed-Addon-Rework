@@ -1,0 +1,43 @@
+package net.foxyas.changedaddon.procedures;
+
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.event.entity.living.LivingEvent;
+
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.tags.TagKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+
+import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+
+import javax.annotation.Nullable;
+
+@Mod.EventBusSubscriber
+public class EntityLatexSolventOnEffectActiveTickProcedure {
+	@SubscribeEvent
+	public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
+		execute(event, event.getEntityLiving());
+	}
+
+	public static void execute(Entity entity) {
+		execute(null, entity);
+	}
+
+	private static void execute(@Nullable Event event, Entity entity) {
+		if (entity == null)
+			return;
+		if (entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) : false) {
+			if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
+				if (entity instanceof LivingEntity _entity)
+					_entity.hurt(new DamageSource("latex_solvent").bypassArmor(),
+							(float) ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()).getAmplifier() : 0) == 0
+									? 0.5
+									: (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()).getAmplifier() : 0) + 1));
+			}
+		}
+	}
+}

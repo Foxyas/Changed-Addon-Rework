@@ -80,6 +80,10 @@ public class TickPlayerAreinDuctProcedure {
 						_player.getAbilities().mayfly = false;
 						_player.onUpdateAbilities();
 					}
+					if (entity instanceof Player _player) {
+						_player.getAbilities().flying = false;
+						_player.onUpdateAbilities();
+					}
 				}
 			}
 		}

@@ -145,7 +145,7 @@ public class ChangedAddonModVariables {
 		public String LatexEntitySummon = "\"\"";
 		public double GrabEscapeClick = 0.0;
 		public boolean organic_transfur = false;
-		public boolean organic_overlay = true;
+		public boolean organic_overlay = false;
 		public boolean human_Form = true;
 		public boolean reset_transfur_advancements = false;
 		public boolean enter_in_duct = false;

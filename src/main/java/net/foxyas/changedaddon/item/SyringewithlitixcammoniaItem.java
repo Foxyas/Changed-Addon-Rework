@@ -15,7 +15,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class SyringewithlitixcammoniaItem extends Item {
 	public SyringewithlitixcammoniaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(32).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(3f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(2).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(3f).alwaysEat()
 
 				.build()));
 	}
@@ -44,7 +44,7 @@ public class SyringewithlitixcammoniaItem extends Item {
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-		SyringewithlitixcammoniaLivingEntityIsHitWithItemProcedure.execute(entity);
+		SyringewithlitixcammoniaLivingEntityIsHitWithItemProcedure.execute(entity, sourceentity, itemstack);
 		return retval;
 	}
 }

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.LevelAccessor;
@@ -16,7 +17,7 @@ import net.minecraft.client.Minecraft;
 import java.util.Random;
 
 public class LitixCamoniaSprayRightclickedOnBlockProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
+	public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate, Entity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
 		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, itemstack) != 0) {
@@ -41,19 +42,26 @@ public class LitixCamoniaSprayRightclickedOnBlockProcedure {
 					return false;
 				}
 			}.checkGamemode(entity))) {
-				{
-					ItemStack _ist = itemstack;
-					if (_ist.hurt(1, new Random(), null)) {
-						_ist.shrink(1);
-						_ist.setDamageValue(0);
+				if (!(blockstate == (new Object() {
+					public BlockState with(BlockState _bs, String _property, String _newValue) {
+						Property<?> _prop = _bs.getBlock().getStateDefinition().getProperty(_property);
+						return _prop instanceof EnumProperty _ep && _ep.getValue(_newValue).isPresent() ? _bs.setValue(_ep, (Enum) _ep.getValue(_newValue).get()) : _bs;
 					}
-				}
-				{
-					String _value = "neutral";
-					BlockPos _pos = new BlockPos(x, y, z);
-					BlockState _bs = world.getBlockState(_pos);
-					if (_bs.getBlock().getStateDefinition().getProperty("covered_with") instanceof EnumProperty _enumProp && _enumProp.getValue(_value).isPresent())
-						world.setBlock(_pos, _bs.setValue(_enumProp, (Enum) _enumProp.getValue(_value).get()), 3);
+				}.with(blockstate, "covered_with", "neutral")))) {
+					{
+						ItemStack _ist = itemstack;
+						if (_ist.hurt(1, new Random(), null)) {
+							_ist.shrink(1);
+							_ist.setDamageValue(0);
+						}
+					}
+					{
+						String _value = "neutral";
+						BlockPos _pos = new BlockPos(x, y, z);
+						BlockState _bs = world.getBlockState(_pos);
+						if (_bs.getBlock().getStateDefinition().getProperty("covered_with") instanceof EnumProperty _enumProp && _enumProp.getValue(_value).isPresent())
+							world.setBlock(_pos, _bs.setValue(_enumProp, (Enum) _enumProp.getValue(_value).get()), 3);
+					}
 				}
 			} else {
 				{

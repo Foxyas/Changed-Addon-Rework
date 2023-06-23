@@ -2514,6 +2514,10 @@
         ],
         "dependencies": [
           {
+            "name": "blockstate",
+            "type": "blockstate"
+          },
+          {
             "name": "entity",
             "type": "entity"
           },
@@ -3907,6 +3911,14 @@
           {
             "name": "entity",
             "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
           }
         ]
       }
@@ -5075,33 +5087,6 @@
       }
     },
     {
-      "name": "TransFursExtraDetails",
-      "type": "procedure",
-      "sortid": 267,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "trans_furs_extra_details",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/TransFursExtraDetailsProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "text",
-            "type": "string"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      }
-    },
-    {
       "name": "DescontrolSyringePlayerFinishesUsingItem",
       "type": "procedure",
       "sortid": 268,
@@ -5659,6 +5644,103 @@
           }
         ]
       }
+    },
+    {
+      "name": "TransfursExtraSoundDetails",
+      "type": "procedure",
+      "sortid": 298,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfurs_extra_sound_details",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TransfursExtraSoundDetailsProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "text",
+            "type": "string"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LatexSolvent",
+      "type": "potioneffect",
+      "sortid": 301,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_solvent",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/potion/LatexSolventMobEffect.java"
+        ]
+      }
+    },
+    {
+      "name": "LatexSolventOnEffectActiveTick",
+      "type": "procedure",
+      "sortid": 302,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_solvent_on_effect_active_tick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexSolventOnEffectActiveTickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LatexSolventEffectExpires",
+      "type": "procedure",
+      "sortid": 303,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_solvent_effect_expires",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexSolventEffectExpiresProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EntityLatexSolventOnEffectActiveTick",
+      "type": "procedure",
+      "sortid": 304,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "entity_latex_solvent_on_effect_active_tick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/EntityLatexSolventOnEffectActiveTickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -5780,7 +5862,7 @@
       "name": "organic_overlay",
       "type": "logic",
       "scope": "player_persistent",
-      "value": "true"
+      "value": "false"
     },
     {
       "name": "human_Form",
@@ -5958,6 +6040,7 @@
       "fluid.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
       "gui.changed_addon.bookpagenumber_4.label_incorrect_way": "incorrectly way",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
+      "effect.changed_addon.latex_solvent": "Latex Solvent",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
       "advancements.hug.descr": "you won or gave a §chug§r in an organic transfur",
       "gui.changed_addon.grabclickgui.button_struggle": "struggle",
@@ -6050,7 +6133,7 @@
       "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "oranges and one glass bottle for that",
       "item.changed_addon.ammonia": "Ammonia Powder",
       "advancements.latex_insulator_advancement.title": "Latex Insulator",
-      "key.categories.grab_gui": "grab keys",
+      "key.categories.grab_gui": "Grab KeyBinds",
       "gui.changed_addon.bookpagenumber_5.label_unifuser1": "unifuser",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.label_fast_you_only_have_4_seconds": "FAST!!! YOU ONLY HAVE 4 SECONDS",
       "gui.changed_addon.bookpagenumber_4.label_with_the_latex_syringe_just_use": "With the latex syringe just use it",
@@ -6099,7 +6182,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.2.7",
+    "version": "2.2.8",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
