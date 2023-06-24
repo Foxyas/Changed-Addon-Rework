@@ -42,33 +42,32 @@ public class SyringewithlitixcammoniaLivingEntityIsHitWithItemProcedure {
 			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 				_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.UNTRANSFUR.get(), 400, 0, false, false));
 		}
-		if ((itemstack).getDamageValue() == (itemstack).getMaxDamage() - 1) {
-			if (sourceentity instanceof Player _player) {
-				ItemStack _setstack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:syringe")));
-				_setstack.setCount(1);
-				ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
-			}
-			{
-				Entity _ent = sourceentity;
-				if (!_ent.level.isClientSide() && _ent.getServer() != null)
-					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:sword1 player @a ~ ~ ~ 1");
-			}
-			if (sourceentity instanceof Player _player) {
-				ItemStack _stktoremove = itemstack;
-				_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
-			}
-		} else {
-			if (!(new Object() {
-				public boolean checkGamemode(Entity _ent) {
-					if (_ent instanceof ServerPlayer _serverPlayer) {
-						return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-					} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-						return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-								&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-					}
-					return false;
+		if (!(new Object() {
+			public boolean checkGamemode(Entity _ent) {
+				if (_ent instanceof ServerPlayer _serverPlayer) {
+					return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+				} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+					return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 				}
-			}.checkGamemode(sourceentity))) {
+				return false;
+			}
+		}.checkGamemode(sourceentity))) {
+			if ((itemstack).getDamageValue() == (itemstack).getMaxDamage() - 1) {
+				if (sourceentity instanceof Player _player) {
+					ItemStack _setstack = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:syringe")));
+					_setstack.setCount(1);
+					ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
+				}
+				{
+					Entity _ent = sourceentity;
+					if (!_ent.level.isClientSide() && _ent.getServer() != null)
+						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:sword1 player @a ~ ~ ~ 1");
+				}
+				if (sourceentity instanceof Player _player) {
+					ItemStack _stktoremove = itemstack;
+					_player.getInventory().clearOrCountMatchingItems(p -> _stktoremove.getItem() == p.getItem(), 1, _player.inventoryMenu.getCraftSlots());
+				}
+			} else {
 				{
 					ItemStack _ist = itemstack;
 					if (_ist.hurt(1, new Random(), null)) {
@@ -81,12 +80,12 @@ public class SyringewithlitixcammoniaLivingEntityIsHitWithItemProcedure {
 					if (!_ent.level.isClientSide() && _ent.getServer() != null)
 						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:sword1 player @a ~ ~ ~ 1");
 				}
-			} else {
-				{
-					Entity _ent = sourceentity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:sword1 player @a ~ ~ ~ 1");
-				}
+			}
+		} else {
+			{
+				Entity _ent = sourceentity;
+				if (!_ent.level.isClientSide() && _ent.getServer() != null)
+					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:sword1 player @a ~ ~ ~ 1");
 			}
 		}
 	}
