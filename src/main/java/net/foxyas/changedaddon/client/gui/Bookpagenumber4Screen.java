@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.Minecraft;
 
@@ -28,7 +27,6 @@ public class Bookpagenumber4Screen extends AbstractContainerScreen<Bookpagenumbe
 	private final Player entity;
 	Button button_close;
 	Button button_back;
-	ImageButton imagebutton_secreta;
 
 	public Bookpagenumber4Screen(Bookpagenumber4Menu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -115,13 +113,5 @@ public class Bookpagenumber4Screen extends AbstractContainerScreen<Bookpagenumbe
 		});
 		guistate.put("button:button_back", button_back);
 		this.addRenderableWidget(button_back);
-		imagebutton_secreta = new ImageButton(this.leftPos + 209, this.topPos + 32, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_secreta.png"), 16, 32, e -> {
-			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber4ButtonMessage(2, x, y, z));
-				Bookpagenumber4ButtonMessage.handleButtonAction(entity, 2, x, y, z);
-			}
-		});
-		guistate.put("button:imagebutton_secreta", imagebutton_secreta);
-		this.addRenderableWidget(imagebutton_secreta);
 	}
 }

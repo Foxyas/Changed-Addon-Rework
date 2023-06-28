@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
@@ -18,8 +19,13 @@ import net.foxyas.changedaddon.procedures.Show50porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show25porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show10porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show0porcentbarProcedure;
+import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesProcedure;
+import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesPage1Procedure;
+import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipes2Procedure;
 import net.foxyas.changedaddon.procedures.IfBlockisfullProcedure;
 import net.foxyas.changedaddon.procedures.BlockstartinfoProcedure;
+import net.foxyas.changedaddon.network.UnifuserguiButtonMessage;
+import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.HashMap;
 
@@ -31,6 +37,8 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
+	ImageButton imagebutton_litixcamoniabutton;
+	ImageButton imagebutton_hitbox_88x17;
 
 	public UnifuserguiScreen(UnifuserguiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -94,6 +102,30 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/syringe_withlitixcamonia_screen.png"));
 		this.blit(ms, this.leftPos + 50, this.topPos + 57, 0, 0, 16, 16, 16, 16);
 
+		if (IfShowUnifuserRecipesProcedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserextragui.png"));
+			this.blit(ms, this.leftPos + -111, this.topPos + 0, 0, 0, 110, 187, 110, 187);
+		}
+		if (IfShowUnifuserRecipesPage1Procedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurrecipe.png"));
+			this.blit(ms, this.leftPos + -106, this.topPos + 6, 0, 0, 100, 46, 100, 46);
+		}
+		if (IfShowUnifuserRecipesPage1Procedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/potwithlitixcamoniarecipe.png"));
+			this.blit(ms, this.leftPos + -106, this.topPos + 56, 0, 0, 100, 45, 100, 45);
+		}
+		if (IfShowUnifuserRecipesPage1Procedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamoniarecipe_new.png"));
+			this.blit(ms, this.leftPos + -106, this.topPos + 104, 0, 0, 100, 47, 100, 47);
+		}
+		if (IfShowUnifuserRecipes2Procedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/multiplylitixcamoniarecipe.png"));
+			this.blit(ms, this.leftPos + -106, this.topPos + 6, 0, 0, 100, 47, 100, 47);
+		}
+		if (IfShowUnifuserRecipesProcedure.execute(entity)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/small_gray_bar.png"));
+			this.blit(ms, this.leftPos + -102, this.topPos + 162, 0, 0, 88, 20, 88, 20);
+		}
 		RenderSystem.disableBlend();
 	}
 
@@ -118,6 +150,8 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 				BlockstartinfoProcedure.execute(world, x, y, z), 5, 6, -12829636);
 		if (IfBlockisfullProcedure.execute(world, x, y, z))
 			this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.unifusergui.label_full"), 153, 78, -12829636);
+		if (IfShowUnifuserRecipesProcedure.execute(entity))
+			this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.unifusergui.label_next"), -83, 168, -1);
 	}
 
 	@Override
@@ -130,5 +164,27 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
+		imagebutton_litixcamoniabutton = new ImageButton(this.leftPos + 91, this.topPos + 83, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_litixcamoniabutton.png"), 20, 36, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(0, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 0, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_litixcamoniabutton", imagebutton_litixcamoniabutton);
+		this.addRenderableWidget(imagebutton_litixcamoniabutton);
+		imagebutton_hitbox_88x17 = new ImageButton(this.leftPos + -102, this.topPos + 162, 88, 17, 0, 0, 17, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_88x17.png"), 88, 34, e -> {
+			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(1, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
+			}
+		}) {
+			@Override
+			public void render(PoseStack ms, int gx, int gy, float ticks) {
+				if (IfShowUnifuserRecipesProcedure.execute(entity))
+					super.render(ms, gx, gy, ticks);
+			}
+		};
+		guistate.put("button:imagebutton_hitbox_88x17", imagebutton_hitbox_88x17);
+		this.addRenderableWidget(imagebutton_hitbox_88x17);
 	}
 }

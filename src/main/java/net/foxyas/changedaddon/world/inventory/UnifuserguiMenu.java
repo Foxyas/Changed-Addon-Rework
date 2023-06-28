@@ -99,9 +99,9 @@ public class UnifuserguiMenu extends AbstractContainerMenu implements Supplier<M
 		}));
 		for (int si = 0; si < 3; ++si)
 			for (int sj = 0; sj < 9; ++sj)
-				this.addSlot(new Slot(inv, sj + (si + 1) * 9, 12 + 8 + sj * 18, 14 + 84 + si * 18));
+				this.addSlot(new Slot(inv, sj + (si + 1) * 9, 12 + 8 + sj * 18, 21 + 84 + si * 18));
 		for (int si = 0; si < 9; ++si)
-			this.addSlot(new Slot(inv, si, 12 + 8 + si * 18, 14 + 142));
+			this.addSlot(new Slot(inv, si, 12 + 8 + si * 18, 21 + 142));
 	}
 
 	@Override

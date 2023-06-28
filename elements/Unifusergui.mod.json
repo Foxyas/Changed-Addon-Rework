@@ -6,7 +6,7 @@
     "width": 200,
     "height": 187,
     "inventoryOffsetX": 0,
-    "inventoryOffsetY": 4,
+    "inventoryOffsetY": 11,
     "renderBgLayer": true,
     "doesPauseGame": false,
     "components": [
@@ -212,6 +212,125 @@
           "use1Xscale": false,
           "x": 164,
           "y": 84
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_litixcamoniabutton",
+          "image": "recipe_buttom_normal.png",
+          "hoveredImage": "recipe_buttom_selected.png",
+          "onClick": {
+            "name": "ShowUnifuserRecipes"
+          },
+          "x": 205,
+          "y": 110
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "unifuserextragui.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 2,
+          "y": 27
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "untransfurrecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipesPage1"
+          },
+          "x": 7,
+          "y": 33
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "potwithlitixcamoniarecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipesPage1"
+          },
+          "x": 7,
+          "y": 83
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "litixcamoniarecipe_new.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipesPage1"
+          },
+          "x": 7,
+          "y": 131
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "multiplylitixcamoniarecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes2"
+          },
+          "x": 7,
+          "y": 33
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_next",
+          "text": {
+            "fixedValue": "next page"
+          },
+          "color": {
+            "value": -1,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 30,
+          "y": 195
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "small_gray_bar.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 11,
+          "y": 189
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_hitbox_88x17",
+          "image": "hitbox_88x17.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "SetRecipePage"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 11,
+          "y": 189
         }
       }
     ],

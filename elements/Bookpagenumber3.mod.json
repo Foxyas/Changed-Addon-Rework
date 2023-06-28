@@ -183,14 +183,14 @@
         "data": {
           "name": "label_for_turn_on_the_catlyzer_and_uni",
           "text": {
-            "fixedValue": "For turn on the catlyzer and unifuser is Shift+Click"
+            "fixedValue": "For turn on or off the catlyzer and unifuser is Shift+Click"
           },
           "color": {
             "value": -16777216,
             "falpha": 0.0
           },
-          "x": 9,
-          "y": 193
+          "x": 8,
+          "y": 209
         }
       },
       {

@@ -96,203 +96,217 @@ public class GrabProcedureProcedure {
 								}.checkGamemode(entityiterator) || (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true)) {
 									if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).can_grab == true) {
 										if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
-											if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == false) {
-												if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.GRAB_RESISTANCE.get(),
-														(entityiterator instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY)) < 4) {
-													{
-														Entity _ent = entityiterator;
-														_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ()));
-														if (_ent instanceof ServerPlayer _serverPlayer)
-															_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
-													}
-													if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100000, 1, false, false));
-													if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100000, 4, false, false));
-													if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.GRABEFFECT.get(), 100000, 4, false, false));
-													if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.GRABEFFECT.get(), 100000, 4, false, false));
-													if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100000, 4, false, false));
-													if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100000, 4, false, false));
-													if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
-													if (world instanceof Level _level) {
-														if (!_level.isClientSide()) {
-															_level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:grab_start_sound")),
-																	SoundSource.NEUTRAL, 2, 1);
-														} else {
-															_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:grab_start_sound")), SoundSource.NEUTRAL,
-																	2, 1, false);
+											if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_dark_latex_pup")) {
+												if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == false) {
+													if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.GRAB_RESISTANCE.get(),
+															(entityiterator instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY)) < 4) {
+														{
+															Entity _ent = entityiterator;
+															_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ()));
+															if (_ent instanceof ServerPlayer _serverPlayer)
+																_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
 														}
-													}
-													{
-														if (entityiterator instanceof ServerPlayer _ent) {
-															BlockPos _bpos = new BlockPos(x, y, z);
-															NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
-																@Override
-																public Component getDisplayName() {
-																	return new TextComponent("Grabclickgui");
-																}
-
-																@Override
-																public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-																	return new GrabclickguiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
-																}
-															}, _bpos);
-														}
-													}
-													new Object() {
-														private int ticks = 0;
-														private float waitTicks;
-														private LevelAccessor world;
-
-														public void start(LevelAccessor world, int waitTicks) {
-															this.waitTicks = waitTicks;
-															MinecraftForge.EVENT_BUS.register(this);
-															this.world = world;
-														}
-
-														@SubscribeEvent
-														public void tick(TickEvent.ServerTickEvent event) {
-															if (event.phase == TickEvent.Phase.END) {
-																this.ticks += 1;
-																if (this.ticks >= this.waitTicks)
-																	run();
+														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100000, 1, false, false));
+														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100000, 4, false, false));
+														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.GRABEFFECT.get(), 100000, 4, false, false));
+														if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.GRABEFFECT.get(), 100000, 4, false, false));
+														if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100000, 4, false, false));
+														if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100000, 4, false, false));
+														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
+														if (world instanceof Level _level) {
+															if (!_level.isClientSide()) {
+																_level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:grab_start_sound")),
+																		SoundSource.NEUTRAL, 2, 1);
+															} else {
+																_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:grab_start_sound")),
+																		SoundSource.NEUTRAL, 2, 1, false);
 															}
 														}
+														{
+															if (entityiterator instanceof ServerPlayer _ent) {
+																BlockPos _bpos = new BlockPos(x, y, z);
+																NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
+																	@Override
+																	public Component getDisplayName() {
+																		return new TextComponent("Grabclickgui");
+																	}
 
-														private void run() {
-															if (entityiterator instanceof Zombie || entityiterator instanceof Husk || entityiterator instanceof Villager || entityiterator instanceof Vindicator || entityiterator instanceof Evoker
-																	|| entityiterator instanceof ZombieVillager || entityiterator instanceof Illusioner || entityiterator instanceof Piglin || entityiterator instanceof ZombifiedPiglin
-																	|| entityiterator instanceof Pillager || entityiterator instanceof PiglinBrute || entityiterator instanceof Skeleton || entityiterator instanceof WitherSkeleton
-																	|| entityiterator instanceof Witch || entityiterator instanceof WanderingTrader) {
-																if (entityiterator instanceof LivingEntity _entity)
-																	_entity.hurt(new DamageSource("assimilation").bypassArmor(), 100);
-																if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																	_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 7200, 1, false, false));
-																if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																	_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 7200, 1, false, false));
-																if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																	_entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 7200, 4, false, false));
-																if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																	_entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 7200, 1, false, false));
-																if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																	_entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 7200, 4, false, false));
-																if (entity instanceof LivingEntity _entity)
-																	_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-																if (entity instanceof LivingEntity _entity)
-																	_entity.removeEffect(MobEffects.WEAKNESS);
-																if (entity instanceof LivingEntity _entity)
-																	_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
-																if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																	_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
-															} else if (entityiterator instanceof Player || entityiterator instanceof ServerPlayer) {
-																if ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).escape_progress >= (entityiterator
-																		.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).GrabEscapeClick) {
+																	@Override
+																	public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+																		return new GrabclickguiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+																	}
+																}, _bpos);
+															}
+														}
+														new Object() {
+															private int ticks = 0;
+															private float waitTicks;
+															private LevelAccessor world;
+
+															public void start(LevelAccessor world, int waitTicks) {
+																this.waitTicks = waitTicks;
+																MinecraftForge.EVENT_BUS.register(this);
+																this.world = world;
+															}
+
+															@SubscribeEvent
+															public void tick(TickEvent.ServerTickEvent event) {
+																if (event.phase == TickEvent.Phase.END) {
+																	this.ticks += 1;
+																	if (this.ticks >= this.waitTicks)
+																		run();
+																}
+															}
+
+															private void run() {
+																if (entityiterator instanceof Zombie || entityiterator instanceof Husk || entityiterator instanceof Villager || entityiterator instanceof Vindicator || entityiterator instanceof Evoker
+																		|| entityiterator instanceof ZombieVillager || entityiterator instanceof Illusioner || entityiterator instanceof Piglin || entityiterator instanceof ZombifiedPiglin
+																		|| entityiterator instanceof Pillager || entityiterator instanceof PiglinBrute || entityiterator instanceof Skeleton || entityiterator instanceof WitherSkeleton
+																		|| entityiterator instanceof Witch || entityiterator instanceof WanderingTrader) {
+																	if (entityiterator instanceof LivingEntity _entity)
+																		_entity.hurt(new DamageSource("assimilation").bypassArmor(), 100);
+																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																		_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 7200, 1, false, false));
+																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																		_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 7200, 1, false, false));
+																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																		_entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 7200, 4, false, false));
+																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																		_entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 7200, 1, false, false));
+																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																		_entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 7200, 4, false, false));
+																	if (entity instanceof LivingEntity _entity)
+																		_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+																	if (entity instanceof LivingEntity _entity)
+																		_entity.removeEffect(MobEffects.WEAKNESS);
+																	if (entity instanceof LivingEntity _entity)
+																		_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
 																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 																		_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
-																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																		_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1, false, false));
-																	for (int index0 = 0; index0 < 4; index0++) {
-																		entity.setDeltaMovement(new Vec3(0, 0, 0));
-																	}
-																	if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																		_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 1, false, false));
-																	new Object() {
-																		private int ticks = 0;
-																		private float waitTicks;
-																		private LevelAccessor world;
-
-																		public void start(LevelAccessor world, int waitTicks) {
-																			this.waitTicks = waitTicks;
-																			MinecraftForge.EVENT_BUS.register(this);
-																			this.world = world;
+																} else if (entityiterator instanceof Player || entityiterator instanceof ServerPlayer) {
+																	if ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+																			.orElse(new ChangedAddonModVariables.PlayerVariables())).escape_progress >= (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+																					.orElse(new ChangedAddonModVariables.PlayerVariables())).GrabEscapeClick) {
+																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																			_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
+																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																			_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1, false, false));
+																		for (int index0 = 0; index0 < 4; index0++) {
+																			entity.setDeltaMovement(new Vec3(0, 0, 0));
 																		}
+																		if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																			_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 100, 1, false, false));
+																		new Object() {
+																			private int ticks = 0;
+																			private float waitTicks;
+																			private LevelAccessor world;
 
-																		@SubscribeEvent
-																		public void tick(TickEvent.ServerTickEvent event) {
-																			if (event.phase == TickEvent.Phase.END) {
-																				this.ticks += 1;
-																				if (this.ticks >= this.waitTicks)
-																					run();
+																			public void start(LevelAccessor world, int waitTicks) {
+																				this.waitTicks = waitTicks;
+																				MinecraftForge.EVENT_BUS.register(this);
+																				this.world = world;
 																			}
-																		}
 
-																		private void run() {
-																			if (entity instanceof LivingEntity _entity)
-																				_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-																			if (entity instanceof LivingEntity _entity)
-																				_entity.removeEffect(MobEffects.WEAKNESS);
-																			MinecraftForge.EVENT_BUS.unregister(this);
-																		}
-																	}.start(world, 80);
-																	if (entity instanceof LivingEntity _entity)
-																		_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
-																	if (entityiterator instanceof LivingEntity _entity)
-																		_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
-																	if (entityiterator instanceof LivingEntity _entity)
-																		_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-																	if (entityiterator instanceof LivingEntity _entity)
-																		_entity.removeEffect(MobEffects.WEAKNESS);
-																} else {
-																	if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).assmilation == false) {
-																		{
-																			Entity _ent = entityiterator;
-																			if (!_ent.level.isClientSide() && _ent.getServer() != null)
-																				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), ("transfur @s "
-																						+ (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
-																		}
-																	} else {
+																			@SubscribeEvent
+																			public void tick(TickEvent.ServerTickEvent event) {
+																				if (event.phase == TickEvent.Phase.END) {
+																					this.ticks += 1;
+																					if (this.ticks >= this.waitTicks)
+																						run();
+																				}
+																			}
+
+																			private void run() {
+																				if (entity instanceof LivingEntity _entity)
+																					_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+																				if (entity instanceof LivingEntity _entity)
+																					_entity.removeEffect(MobEffects.WEAKNESS);
+																				MinecraftForge.EVENT_BUS.unregister(this);
+																			}
+																		}.start(world, 80);
+																		if (entity instanceof LivingEntity _entity)
+																			_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
 																		if (entityiterator instanceof LivingEntity _entity)
-																			_entity.hurt(new DamageSource("assimilation").bypassArmor(), 100);
+																			_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
+																		if (entityiterator instanceof LivingEntity _entity)
+																			_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+																		if (entityiterator instanceof LivingEntity _entity)
+																			_entity.removeEffect(MobEffects.WEAKNESS);
+																	} else {
+																		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).assmilation == false) {
+																			{
+																				Entity _ent = entityiterator;
+																				if (!_ent.level.isClientSide() && _ent.getServer() != null)
+																					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), ("transfur @s "
+																							+ (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
+																			}
+																		} else {
+																			if (entityiterator instanceof LivingEntity _entity)
+																				_entity.hurt(new DamageSource("assimilation").bypassArmor(), 100);
+																			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																				_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 7200, 1, false, false));
+																			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																				_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 7200, 1, false, false));
+																			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																				_entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 7200, 4, false, false));
+																			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																				_entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 7200, 1, false, false));
+																			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+																				_entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 7200, 4, false, false));
+																		}
+																		if (entity instanceof LivingEntity _entity)
+																			_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+																		if (entity instanceof LivingEntity _entity)
+																			_entity.removeEffect(MobEffects.WEAKNESS);
 																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																			_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 7200, 1, false, false));
-																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																			_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 7200, 1, false, false));
-																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																			_entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, 7200, 4, false, false));
-																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																			_entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 7200, 1, false, false));
-																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																			_entity.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 7200, 4, false, false));
+																			_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
+																		if (entity instanceof LivingEntity _entity)
+																			_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
+																		if (entityiterator instanceof LivingEntity _entity)
+																			_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
+																		if (entityiterator instanceof LivingEntity _entity)
+																			_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+																		if (entityiterator instanceof LivingEntity _entity)
+																			_entity.removeEffect(MobEffects.WEAKNESS);
 																	}
-																	if (entity instanceof LivingEntity _entity)
-																		_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-																	if (entity instanceof LivingEntity _entity)
-																		_entity.removeEffect(MobEffects.WEAKNESS);
-																	if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-																		_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
-																	if (entity instanceof LivingEntity _entity)
-																		_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
-																	if (entityiterator instanceof LivingEntity _entity)
-																		_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
-																	if (entityiterator instanceof LivingEntity _entity)
-																		_entity.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-																	if (entityiterator instanceof LivingEntity _entity)
-																		_entity.removeEffect(MobEffects.WEAKNESS);
 																}
+																MinecraftForge.EVENT_BUS.unregister(this);
 															}
-															MinecraftForge.EVENT_BUS.unregister(this);
-														}
-													}.start(world, (int) (80 + EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.GRAB_RESISTANCE.get(),
-															(entityiterator instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY)) * 7));
+														}.start(world, (int) (80 + EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.GRAB_RESISTANCE.get(),
+																(entityiterator instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.CHEST) : ItemStack.EMPTY)) * 7));
+													} else {
+														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, false, false));
+														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
+														if (entity instanceof Player _player && !_player.level.isClientSide())
+															_player.displayClientMessage(new TextComponent("They are very resistant to being grabbed, so you can't grab them"), true);
+													}
 												} else {
-													if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, false, false));
-													if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-														_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
+													FriendlyGrabProcedure.execute(world, x, y, z, entity);
+												}
+											} else {
+												if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 													if (entity instanceof Player _player && !_player.level.isClientSide())
-														_player.displayClientMessage(new TextComponent("They are very resistant to being grabbed, so you can't grab them"), true);
+														_player.displayClientMessage(new TextComponent("you are so small for grab"), true);
+												}
+											}
+										} else {
+											if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == false) {
+												if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
+													if (entity instanceof Player _player && !_player.level.isClientSide())
+														_player.displayClientMessage(new TextComponent("you are organic so you cant grab"), true);
 												}
 											} else {
 												FriendlyGrabProcedure.execute(world, x, y, z, entity);
 											}
-										} else {
-											if (entity instanceof Player _player && !_player.level.isClientSide())
-												_player.displayClientMessage(new TextComponent("you are organic so you cant grab"), true);
 										}
 									}
 								} else {

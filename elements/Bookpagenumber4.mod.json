@@ -115,19 +115,6 @@
           "x": 294,
           "y": 199
         }
-      },
-      {
-        "type": "imagebutton",
-        "data": {
-          "name": "imagebutton_secreta",
-          "image": "secreta.png",
-          "hoveredImage": "",
-          "onClick": {
-            "name": "Openpagesecret"
-          },
-          "x": 223,
-          "y": 42
-        }
       }
     ],
     "gridSettings": {

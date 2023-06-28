@@ -64,10 +64,10 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		this.blit(ms, this.leftPos + 2, this.topPos + 2, 0, 0, 200, 94, 200, 94);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniapowderrecipe.png"));
-		this.blit(ms, this.leftPos + 3, this.topPos + 99, 0, 0, 200, 77, 200, 77);
+		this.blit(ms, this.leftPos + 3, this.topPos + 99, 0, 0, 200, 90, 200, 90);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniarecipe.png"));
-		this.blit(ms, this.leftPos + 206, this.topPos + 76, 0, 0, 200, 78, 200, 78);
+		this.blit(ms, this.leftPos + 206, this.topPos + 76, 0, 0, 200, 90, 200, 90);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unlatexbase_buttonv2.png"));
 		this.blit(ms, this.leftPos + 17, this.topPos + 72, 0, 0, 16, 16, 16, 16);
@@ -97,7 +97,7 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_unifuser"), 8, 5, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_catlyzer"), 8, 106, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_catlyzer1"), 212, 81, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_for_turn_on_the_catlyzer_and_uni"), 4, 183, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_for_turn_on_the_catlyzer_and_uni"), 3, 199, -16777216);
 	}
 
 	@Override

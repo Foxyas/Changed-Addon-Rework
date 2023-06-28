@@ -4,9 +4,9 @@
   "definition": {
     "type": 1,
     "width": 200,
-    "height": 168,
+    "height": 170,
     "inventoryOffsetX": 0,
-    "inventoryOffsetY": -5,
+    "inventoryOffsetY": 2,
     "renderBgLayer": true,
     "doesPauseGame": false,
     "components": [
@@ -173,6 +173,67 @@
           "x": 265,
           "y": 100
         }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "unifuserextragui.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 2,
+          "y": 28
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "catalyzeddna_recipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "x": 6,
+          "y": 35
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_knowledge_book",
+          "image": "recipe_buttom_normal.png",
+          "hoveredImage": "recipe_buttom_selected.png",
+          "onClick": {
+            "name": "ShowUnifuserRecipes"
+          },
+          "x": 204,
+          "y": 102
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ammoniapowderrecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "x": 6,
+          "y": 82
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ammoniarecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "x": 6,
+          "y": 129
+        }
       }
     ],
     "gridSettings": {
@@ -180,7 +241,7 @@
       "sy": 27,
       "ox": 30,
       "oy": 25,
-      "snapOnGrid": true
+      "snapOnGrid": false
     }
   }
 }
