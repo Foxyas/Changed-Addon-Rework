@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.procedures.TogglehumanaddonguiProcedure;
 import net.foxyas.changedaddon.procedures.TogglealladdonguiProcedure;
 import net.foxyas.changedaddon.procedures.ToggleaddonguiprocedureProcedure;
 import net.foxyas.changedaddon.procedures.ToggleOrganicOverlayProcedure;
+import net.foxyas.changedaddon.procedures.RecipeResetProcedure;
 import net.foxyas.changedaddon.procedures.InforesettransfuradvancementProcedure;
 import net.foxyas.changedaddon.procedures.InfoonlytransfuraddonguiProcedure;
 import net.foxyas.changedaddon.procedures.InfoonlyhumanaddonguiProcedure;
@@ -31,7 +32,19 @@ public class ChangedaddoncommandrootCommand {
 	public static void registerCommand(RegisterCommandsEvent event) {
 		event.getDispatcher().register(Commands.literal("changed_addon")
 
-				.then(Commands.literal("toggle_reset_transfur_advancement").then(Commands.literal("info").executes(arguments -> {
+				.then(Commands.literal("RecipesReset").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					RecipeResetProcedure.execute(entity);
+					return 0;
+				})).then(Commands.literal("toggle_reset_transfur_advancement").then(Commands.literal("info").executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();

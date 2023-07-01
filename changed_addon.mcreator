@@ -5915,6 +5915,58 @@
         ]
       },
       "path": "~/CatlyzerAndUnifuserRecipeBook"
+    },
+    {
+      "name": "RecipeReset",
+      "type": "procedure",
+      "sortid": 316,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "recipe_reset",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/RecipeResetProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/new gui procedures"
+    },
+    {
+      "name": "RecipeProgress",
+      "type": "procedure",
+      "sortid": 317,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "recipe_progress",
+      "metadata": {
+        "return_type": "string",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/RecipeProgressProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -6125,22 +6177,22 @@
   ],
   "language_map": {
     "en_us": {
-      "advancements.latex_insulator_advancement.descr": "let\u0027s isolate this gooey infection",
-      "advancements.grabthem.title": "Grab them!",
       "gui.changed_addon.book_pagenumber_2.label_to_purify_the_latex_syringes_jus": "Before you transfur yourself, you need to purify the latex syringes in a purif",
-      "death.attack.OverDose": "%1$s get a §4OverDose§r",
-      "gui.changed_addon.book_pagenumber_1.label_you_just_go_need_create_an_infus": "you just go need create an infuser",
+      "advancements.grabthem.title": "Grab them!",
+      "advancements.latex_insulator_advancement.descr": "let\u0027s isolate this gooey infection",
       "entity.changed_addon.prototype": "Prototype",
+      "gui.changed_addon.book_pagenumber_1.label_you_just_go_need_create_an_infus": "you just go need create an infuser",
+      "death.attack.OverDose": "%1$s get a §4OverDose§r",
       "advancements.furry_friend.title": "Furry Friend",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "LitixCamonia",
-      "gui.changed_addon.book_pagenumber_1.label_recipes_for_each_latex_will_var": " Recipes for each latex will vary.",
       "gui.changed_addon.book_pagenumber_1.label_both_the_inventory_and_the_craft": "both the inventory and the craft table",
+      "gui.changed_addon.book_pagenumber_1.label_recipes_for_each_latex_will_var": " Recipes for each latex will vary.",
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.untransfuradvancement_2.descr": "you untransfur with the syringe of litixcamonia",
-      "advancements.litixcamonia_adcancement.title": "Litixcamonia!?",
       "advancements.ammoniacraft.descr": "you craft one ammonia powder",
+      "advancements.litixcamonia_adcancement.title": "Litixcamonia!?",
       "item.changed_addon.painite_pickaxe": "Painite Pickaxe",
       "advancements.unifuser_advancement.descr": "you craft or get a Unifisuer",
       "gui.changed_addon.grab_radial_menu_friendly.button_back": "back",
@@ -6188,8 +6240,8 @@
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon",
-      "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catlyzer",
       "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
+      "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catlyzer",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic transfur",
       "gui.changed_addon.catlyzergui.button_start_craft": "start craft",
@@ -6383,7 +6435,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.2.9",
+    "version": "2.3.0",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
