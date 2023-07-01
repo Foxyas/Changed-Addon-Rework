@@ -7,7 +7,7 @@
     "height": 187,
     "inventoryOffsetX": 0,
     "inventoryOffsetY": 11,
-    "renderBgLayer": true,
+    "renderBgLayer": false,
     "doesPauseGame": false,
     "components": [
       {
@@ -39,90 +39,6 @@
           "dropItemsWhenNotBound": true,
           "x": 268,
           "y": 83
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_10_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show10porcentbar"
-          },
-          "x": 181,
-          "y": 33
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_25_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show25porcentbar"
-          },
-          "x": 181,
-          "y": 33
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_50_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show50porcentbar"
-          },
-          "x": 181,
-          "y": 33
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_75_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show75porcentbar"
-          },
-          "x": 181,
-          "y": 33
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_90_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show90porcentbar"
-          },
-          "x": 181,
-          "y": 33
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "barr_full.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Showfullbar"
-          },
-          "x": 181,
-          "y": 33
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_0_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show0porcentbar"
-          },
-          "x": 181,
-          "y": 33
         }
       },
       {
@@ -174,8 +90,8 @@
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 119,
-          "y": 33
+          "x": 123,
+          "y": 37
         }
       },
       {
@@ -197,24 +113,6 @@
         }
       },
       {
-        "type": "image",
-        "data": {
-          "image": "dusts.png",
-          "use1Xscale": false,
-          "x": 129,
-          "y": 73
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "syringe_withlitixcamonia_screen.png",
-          "use1Xscale": false,
-          "x": 164,
-          "y": 84
-        }
-      },
-      {
         "type": "imagebutton",
         "data": {
           "name": "imagebutton_litixcamoniabutton",
@@ -223,8 +121,8 @@
           "onClick": {
             "name": "ShowUnifuserRecipes"
           },
-          "x": 205,
-          "y": 110
+          "x": 203,
+          "y": 107
         }
       },
       {
@@ -330,15 +228,142 @@
             "name": "IfShowUnifuserRecipes"
           },
           "x": 11,
-          "y": 189
+          "y": 190
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "unifusergui_new.png",
+          "use1Xscale": false,
+          "x": 113,
+          "y": 27
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_10_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show10porcentbar"
+          },
+          "x": 198,
+          "y": 76
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_25_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show25porcentbar"
+          },
+          "x": 198,
+          "y": 76
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_50_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show50porcentbar"
+          },
+          "x": 198,
+          "y": 76
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_75_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show75porcentbar"
+          },
+          "x": 198,
+          "y": 76
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_90_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show90porcentbar"
+          },
+          "x": 198,
+          "y": 76
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_0_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show0porcentbar"
+          },
+          "x": 198,
+          "y": 76
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "barr_full.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Showfullbar"
+          },
+          "x": 198,
+          "y": 76
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_recipe_progress",
+          "text": {
+            "fixedValue": "",
+            "name": "RecipeProgress"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 203,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "dusts.png",
+          "use1Xscale": false,
+          "x": 129,
+          "y": 73
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "syringe_withlitixcamonia_screen.png",
+          "use1Xscale": false,
+          "x": 164,
+          "y": 84
         }
       }
     ],
     "gridSettings": {
-      "sx": 35,
-      "sy": 25,
-      "ox": 10,
-      "oy": 15,
+      "sx": 50,
+      "sy": 50,
+      "ox": 1,
+      "oy": 1,
       "snapOnGrid": false
     }
   }

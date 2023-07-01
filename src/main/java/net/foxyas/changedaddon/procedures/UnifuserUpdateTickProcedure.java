@@ -213,7 +213,7 @@ public class UnifuserUpdateTickProcedure {
 								return blockEntity.getTileData().getDouble(tag);
 							return -1;
 						}
-					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 200) {
+					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
@@ -226,7 +226,7 @@ public class UnifuserUpdateTickProcedure {
 											return blockEntity.getTileData().getDouble(tag);
 										return -1;
 									}
-								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 1));
+								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 0.5));
 							if (world instanceof Level _level)
 								_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 						}
@@ -249,7 +249,7 @@ public class UnifuserUpdateTickProcedure {
 							return blockEntity.getTileData().getDouble(tag);
 						return -1;
 					}
-				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 200) {
+				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 100) {
 					if ((new Object() {
 						public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 							BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -405,7 +405,7 @@ public class UnifuserUpdateTickProcedure {
 								return blockEntity.getTileData().getDouble(tag);
 							return -1;
 						}
-					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 200) {
+					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
@@ -418,7 +418,7 @@ public class UnifuserUpdateTickProcedure {
 											return blockEntity.getTileData().getDouble(tag);
 										return -1;
 									}
-								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 1));
+								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 0.5));
 							if (world instanceof Level _level)
 								_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 						}
@@ -441,7 +441,7 @@ public class UnifuserUpdateTickProcedure {
 							return blockEntity.getTileData().getDouble(tag);
 						return -1;
 					}
-				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 200) {
+				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 100) {
 					if ((new Object() {
 						public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 							BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -629,7 +629,7 @@ public class UnifuserUpdateTickProcedure {
 								return blockEntity.getTileData().getDouble(tag);
 							return -1;
 						}
-					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 250) {
+					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
@@ -642,7 +642,7 @@ public class UnifuserUpdateTickProcedure {
 											return blockEntity.getTileData().getDouble(tag);
 										return -1;
 									}
-								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 1));
+								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 0.25));
 							if (world instanceof Level _level)
 								_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 						}
@@ -665,7 +665,7 @@ public class UnifuserUpdateTickProcedure {
 							return blockEntity.getTileData().getDouble(tag);
 						return -1;
 					}
-				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 250) {
+				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 100) {
 					if ((new Object() {
 						public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 							BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -837,7 +837,7 @@ public class UnifuserUpdateTickProcedure {
 								return blockEntity.getTileData().getDouble(tag);
 							return -1;
 						}
-					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 250) {
+					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
@@ -850,7 +850,7 @@ public class UnifuserUpdateTickProcedure {
 											return blockEntity.getTileData().getDouble(tag);
 										return -1;
 									}
-								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 1));
+								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 0.3));
 							if (world instanceof Level _level)
 								_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 						}
@@ -873,7 +873,7 @@ public class UnifuserUpdateTickProcedure {
 							return blockEntity.getTileData().getDouble(tag);
 						return -1;
 					}
-				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 225) {
+				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 100) {
 					if ((new Object() {
 						public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 							BlockEntity blockEntity = world.getBlockEntity(pos);

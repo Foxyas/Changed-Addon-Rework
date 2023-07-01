@@ -19,6 +19,7 @@ import net.foxyas.changedaddon.procedures.Show50porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show25porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show10porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show0porcentbarProcedure;
+import net.foxyas.changedaddon.procedures.RecipeProgressProcedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesProcedure;
 import net.foxyas.changedaddon.procedures.IfShowCatlyzerRecipePage1Procedure;
 import net.foxyas.changedaddon.procedures.IfBlockisfullProcedure;
@@ -66,34 +67,6 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.setShaderTexture(0, texture);
 		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
-		if (Show10porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_10_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 19, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show25porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_25_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 19, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show50porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_50_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 19, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show75porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_75_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 19, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show90porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_90_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 19, 0, 0, 64, 64, 64, 64);
-		}
-		if (ShowfullbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/barr_full.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 19, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show0porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_0_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 19, 0, 0, 64, 64, 64, 64);
-		}
 		if (IfShowUnifuserRecipesProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserextragui.png"));
 			this.blit(ms, this.leftPos + -111, this.topPos + -7, 0, 0, 110, 187, 110, 187);
@@ -109,6 +82,42 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniarecipe.png"));
 			this.blit(ms, this.leftPos + -107, this.topPos + 94, 0, 0, 100, 45, 100, 45);
+		}
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/catlyzergui_new.png"));
+		this.blit(ms, this.leftPos + 0, this.topPos + 0, 0, 0, 200, 170, 200, 170);
+
+		if (Show0porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_0_percent.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show10porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_10_percent.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show25porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_25_percent.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show25porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_25_percent.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show50porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_50_percent.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show75porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_75_percent.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show90porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_90_percent.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
+		}
+		if (ShowfullbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/barr_full.png"));
+			this.blit(ms, this.leftPos + 82, this.topPos + 39, 0, 0, 32, 32, 32, 32);
 		}
 		RenderSystem.disableBlend();
 	}
@@ -137,6 +146,9 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 				BlockstartinfoProcedure.execute(world, x, y, z), 6, 20, -12829636);
 		if (IfBlockisfullProcedure.execute(world, x, y, z))
 			this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.catlyzergui.label_full"), 151, 65, -12829636);
+		this.font.draw(poseStack,
+
+				RecipeProgressProcedure.execute(world, x, y, z), 88, 37, -12829636);
 	}
 
 	@Override
@@ -149,7 +161,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		imagebutton_knowledge_book = new ImageButton(this.leftPos + 90, this.topPos + 67, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_knowledge_book.png"), 20, 36, e -> {
+		imagebutton_knowledge_book = new ImageButton(this.leftPos + 89, this.topPos + 65, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_knowledge_book.png"), 20, 36, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(0, x, y, z));
 				CatlyzerguiButtonMessage.handleButtonAction(entity, 0, x, y, z);

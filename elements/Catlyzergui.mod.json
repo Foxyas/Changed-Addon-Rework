@@ -57,90 +57,6 @@
         }
       },
       {
-        "type": "image",
-        "data": {
-          "image": "bar_10_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show10porcentbar"
-          },
-          "x": 181,
-          "y": 54
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_25_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show25porcentbar"
-          },
-          "x": 181,
-          "y": 54
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_50_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show50porcentbar"
-          },
-          "x": 181,
-          "y": 54
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_75_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show75porcentbar"
-          },
-          "x": 181,
-          "y": 54
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_90_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show90porcentbar"
-          },
-          "x": 181,
-          "y": 54
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "barr_full.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Showfullbar"
-          },
-          "x": 181,
-          "y": 54
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "bar_0_percent.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "Show0porcentbar"
-          },
-          "x": 181,
-          "y": 54
-        }
-      },
-      {
         "type": "label",
         "data": {
           "name": "label_proc_blockstartinfo",
@@ -207,8 +123,8 @@
           "onClick": {
             "name": "ShowUnifuserRecipes"
           },
-          "x": 204,
-          "y": 102
+          "x": 203,
+          "y": 100
         }
       },
       {
@@ -233,6 +149,127 @@
           },
           "x": 6,
           "y": 129
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "catlyzergui_new.png",
+          "use1Xscale": false,
+          "x": 113,
+          "y": 35
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_0_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show0porcentbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_10_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show10porcentbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_25_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show25porcentbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_25_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show25porcentbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_50_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show50porcentbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_75_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show75porcentbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "bar_90_percent.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Show90porcentbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "barr_full.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "Showfullbar"
+          },
+          "x": 196,
+          "y": 74
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_recipe_progress",
+          "text": {
+            "fixedValue": "",
+            "name": "RecipeProgress"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 202,
+          "y": 72
         }
       }
     ],

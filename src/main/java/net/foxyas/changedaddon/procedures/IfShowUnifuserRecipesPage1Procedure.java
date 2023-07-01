@@ -9,7 +9,8 @@ public class IfShowUnifuserRecipesPage1Procedure {
 		if (entity == null)
 			return false;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).ShowRecipes == true
-				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UnifuserRecipePage == 1) {
+				&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UnifuserRecipePage == 1
+						|| (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UnifuserRecipePage == 0)) {
 			return true;
 		}
 		return false;

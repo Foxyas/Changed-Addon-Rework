@@ -9,7 +9,8 @@ public class IfShowCatlyzerRecipePage1Procedure {
 		if (entity == null)
 			return false;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).ShowRecipes == true
-				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).CatlyzerRecipePage == 1) {
+				&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).CatlyzerRecipePage == 1
+						|| (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).CatlyzerRecipePage == 0)) {
 			return true;
 		}
 		return false;

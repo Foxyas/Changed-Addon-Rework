@@ -205,7 +205,7 @@ public class CatlyzerUpdateTickProcedure {
 								return blockEntity.getTileData().getDouble(tag);
 							return -1;
 						}
-					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 200) {
+					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
@@ -218,7 +218,7 @@ public class CatlyzerUpdateTickProcedure {
 											return blockEntity.getTileData().getDouble(tag);
 										return -1;
 									}
-								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 1));
+								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 0.5));
 							if (world instanceof Level _level)
 								_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 						}
@@ -241,7 +241,7 @@ public class CatlyzerUpdateTickProcedure {
 							return blockEntity.getTileData().getDouble(tag);
 						return -1;
 					}
-				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 200) {
+				}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 100) {
 					if ((new Object() {
 						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -585,7 +585,7 @@ public class CatlyzerUpdateTickProcedure {
 										return blockEntity.getTileData().getDouble(tag);
 									return -1;
 								}
-							}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 5));
+							}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 2.5));
 						if (world instanceof Level _level)
 							_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 					}
@@ -624,7 +624,7 @@ public class CatlyzerUpdateTickProcedure {
 								return blockEntity.getTileData().getDouble(tag);
 							return -1;
 						}
-					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 200) {
+					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 100) {
 						if ((new Object() {
 							public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 								BlockEntity blockEntity = world.getBlockEntity(pos);

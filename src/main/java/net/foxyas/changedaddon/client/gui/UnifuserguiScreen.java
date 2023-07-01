@@ -19,6 +19,7 @@ import net.foxyas.changedaddon.procedures.Show50porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show25porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show10porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show0porcentbarProcedure;
+import net.foxyas.changedaddon.procedures.RecipeProgressProcedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesProcedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesPage1Procedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipes2Procedure;
@@ -51,8 +52,6 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		this.imageHeight = 187;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/unifusergui.png");
-
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(ms);
@@ -65,43 +64,6 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShaderTexture(0, texture);
-		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
-		if (Show10porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_10_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 6, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show25porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_25_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 6, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show50porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_50_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 6, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show75porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_75_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 6, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show90porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_90_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 6, 0, 0, 64, 64, 64, 64);
-		}
-		if (ShowfullbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/barr_full.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 6, 0, 0, 64, 64, 64, 64);
-		}
-		if (Show0porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_0_percent.png"));
-			this.blit(ms, this.leftPos + 67, this.topPos + 6, 0, 0, 64, 64, 64, 64);
-		}
-
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));
-		this.blit(ms, this.leftPos + 15, this.topPos + 46, 0, 0, 16, 16, 16, 16);
-
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/syringe_withlitixcamonia_screen.png"));
-		this.blit(ms, this.leftPos + 50, this.topPos + 57, 0, 0, 16, 16, 16, 16);
-
 		if (IfShowUnifuserRecipesProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserextragui.png"));
 			this.blit(ms, this.leftPos + -111, this.topPos + 0, 0, 0, 110, 187, 110, 187);
@@ -126,6 +88,45 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/small_gray_bar.png"));
 			this.blit(ms, this.leftPos + -102, this.topPos + 162, 0, 0, 88, 20, 88, 20);
 		}
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifusergui_new.png"));
+		this.blit(ms, this.leftPos + 0, this.topPos + 0, 0, 0, 200, 187, 200, 187);
+
+		if (Show10porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_10_percent.png"));
+			this.blit(ms, this.leftPos + 84, this.topPos + 49, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show25porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_25_percent.png"));
+			this.blit(ms, this.leftPos + 84, this.topPos + 49, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show50porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_50_percent.png"));
+			this.blit(ms, this.leftPos + 84, this.topPos + 49, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show75porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_75_percent.png"));
+			this.blit(ms, this.leftPos + 84, this.topPos + 49, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show90porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_90_percent.png"));
+			this.blit(ms, this.leftPos + 84, this.topPos + 49, 0, 0, 32, 32, 32, 32);
+		}
+		if (Show0porcentbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_0_percent.png"));
+			this.blit(ms, this.leftPos + 84, this.topPos + 49, 0, 0, 32, 32, 32, 32);
+		}
+		if (ShowfullbarProcedure.execute(world, x, y, z)) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/barr_full.png"));
+			this.blit(ms, this.leftPos + 84, this.topPos + 49, 0, 0, 32, 32, 32, 32);
+		}
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));
+		this.blit(ms, this.leftPos + 15, this.topPos + 46, 0, 0, 16, 16, 16, 16);
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/syringe_withlitixcamonia_screen.png"));
+		this.blit(ms, this.leftPos + 50, this.topPos + 57, 0, 0, 16, 16, 16, 16);
+
 		RenderSystem.disableBlend();
 	}
 
@@ -147,11 +148,14 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		this.font.draw(poseStack,
 
-				BlockstartinfoProcedure.execute(world, x, y, z), 5, 6, -12829636);
+				BlockstartinfoProcedure.execute(world, x, y, z), 9, 10, -12829636);
 		if (IfBlockisfullProcedure.execute(world, x, y, z))
 			this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.unifusergui.label_full"), 153, 78, -12829636);
 		if (IfShowUnifuserRecipesProcedure.execute(entity))
 			this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.unifusergui.label_next"), -83, 168, -1);
+		this.font.draw(poseStack,
+
+				RecipeProgressProcedure.execute(world, x, y, z), 89, 47, -12829636);
 	}
 
 	@Override
@@ -164,7 +168,7 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		imagebutton_litixcamoniabutton = new ImageButton(this.leftPos + 91, this.topPos + 83, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_litixcamoniabutton.png"), 20, 36, e -> {
+		imagebutton_litixcamoniabutton = new ImageButton(this.leftPos + 89, this.topPos + 80, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_litixcamoniabutton.png"), 20, 36, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(0, x, y, z));
 				UnifuserguiButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -172,7 +176,7 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		});
 		guistate.put("button:imagebutton_litixcamoniabutton", imagebutton_litixcamoniabutton);
 		this.addRenderableWidget(imagebutton_litixcamoniabutton);
-		imagebutton_hitbox_88x17 = new ImageButton(this.leftPos + -102, this.topPos + 162, 88, 17, 0, 0, 17, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_88x17.png"), 88, 34, e -> {
+		imagebutton_hitbox_88x17 = new ImageButton(this.leftPos + -102, this.topPos + 163, 88, 17, 0, 0, 17, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_88x17.png"), 88, 34, e -> {
 			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(1, x, y, z));
 				UnifuserguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
