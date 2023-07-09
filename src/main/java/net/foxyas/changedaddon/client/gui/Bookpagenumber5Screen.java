@@ -65,7 +65,7 @@ public class Bookpagenumber5Screen extends AbstractContainerScreen<Bookpagenumbe
 		this.blit(ms, this.leftPos + 212, this.topPos + 125, 0, 0, 121, 64, 121, 64);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/catalyzeddna_recipe.png"));
-		this.blit(ms, this.leftPos + 208, this.topPos + 15, 0, 0, 200, 77, 200, 77);
+		this.blit(ms, this.leftPos + 208, this.topPos + 15, 0, 0, 200, 90, 200, 90);
 
 		RenderSystem.disableBlend();
 	}

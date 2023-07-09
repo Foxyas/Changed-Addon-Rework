@@ -72,7 +72,7 @@ public class FriendlyGrabProcedure {
 							}
 						} else {
 							if (entity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("they are organic so you \u00A7chug\u00A7r they"), true);
+								_player.displayClientMessage(new TextComponent("you are organic so you \u00A7chug\u00A7r they"), true);
 							if (entityiterator instanceof Player _player && !_player.level.isClientSide())
 								_player.displayClientMessage(new TextComponent((entity.getDisplayName().getString() + " \u00A7chug\u00A7r you")), true);
 							if (entity instanceof ServerPlayer _player) {

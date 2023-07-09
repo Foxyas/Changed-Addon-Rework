@@ -2,7 +2,7 @@
   "_fv": 43,
   "_type": "potioneffect",
   "definition": {
-    "effectName": "untransfur",
+    "effectName": "Untransfur",
     "icon": "untransfur.png",
     "color": {
       "value": -1,

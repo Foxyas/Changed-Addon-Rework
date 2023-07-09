@@ -6,6 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffect;
 
+import net.foxyas.changedaddon.procedures.LatexSolventEffectStartedappliedProcedure;
 import net.foxyas.changedaddon.procedures.LatexSolventEffectExpiresProcedure;
 
 public class LatexSolventMobEffect extends MobEffect {
@@ -20,7 +21,7 @@ public class LatexSolventMobEffect extends MobEffect {
 
 	@Override
 	public void addAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
-		LatexSolventEffectExpiresProcedure.execute(entity);
+		LatexSolventEffectStartedappliedProcedure.execute(entity);
 	}
 
 	@Override

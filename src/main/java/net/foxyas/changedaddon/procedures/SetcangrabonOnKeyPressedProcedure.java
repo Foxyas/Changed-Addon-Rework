@@ -58,7 +58,7 @@ public class SetcangrabonOnKeyPressedProcedure {
 						_player.displayClientMessage(new TextComponent("you are organic you cant use grab"), true);
 				}
 				{
-					boolean _setval = false;
+					boolean _setval = true;
 					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 						capability.can_grab = _setval;
 						capability.syncPlayerVariables(entity);

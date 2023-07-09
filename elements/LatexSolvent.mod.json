@@ -14,7 +14,7 @@
     "renderStatusInInventory": true,
     "renderStatusInHUD": true,
     "onStarted": {
-      "name": "LatexSolventEffectExpires"
+      "name": "LatexSolventEffectStartedapplied"
     },
     "onExpired": {
       "name": "LatexSolventEffectExpires"

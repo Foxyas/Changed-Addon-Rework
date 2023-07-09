@@ -154,7 +154,7 @@ public class RightclickFriendlyGrabProcedure {
 						if (sourceentity instanceof Player _player && !_player.level.isClientSide())
 							_player.displayClientMessage(new TextComponent("you are organic so you just \u00A7chug\u00A7r they"), true);
 						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent((ForgeRegistries.ENTITIES.getKey(sourceentity.getType()).toString() + " \u00A7chug\u00A7r you")), true);
+							_player.displayClientMessage(new TextComponent((sourceentity.getDisplayName().getString() + " \u00A7chug\u00A7r you")), true);
 						if (entity instanceof ServerPlayer _player) {
 							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
 							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
