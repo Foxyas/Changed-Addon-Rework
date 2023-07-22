@@ -28,6 +28,7 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 	private final Player entity;
 	EditBox Deals;
 	Button button_trade;
+	Button button_i_want_be_transfured_by_you;
 
 	public FoxyasguiScreen(FoxyasguiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -94,7 +95,7 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		Deals = new EditBox(this.font, this.leftPos + 33, this.topPos + 65, 120, 20, new TranslatableComponent("gui.changed_addon.foxyasgui.Deals"));
+		Deals = new EditBox(this.font, this.leftPos + 218, this.topPos + 34, 120, 20, new TranslatableComponent("gui.changed_addon.foxyasgui.Deals"));
 		Deals.setMaxLength(32767);
 		guistate.put("text:Deals", Deals);
 		this.addWidget(this.Deals);
@@ -106,5 +107,13 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 		});
 		guistate.put("button:button_trade", button_trade);
 		this.addRenderableWidget(button_trade);
+		button_i_want_be_transfured_by_you = new Button(this.leftPos + 12, this.topPos + 70, 165, 20, new TranslatableComponent("gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you"), e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FoxyasguiButtonMessage(1, x, y, z));
+				FoxyasguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
+			}
+		});
+		guistate.put("button:button_i_want_be_transfured_by_you", button_i_want_be_transfured_by_you);
+		this.addRenderableWidget(button_i_want_be_transfured_by_you);
 	}
 }

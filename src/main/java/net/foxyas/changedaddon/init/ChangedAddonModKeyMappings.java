@@ -21,6 +21,7 @@ import net.foxyas.changedaddon.network.SetcangrabonMessage;
 import net.foxyas.changedaddon.network.SetassimilatonMessage;
 import net.foxyas.changedaddon.network.OpengrabescapeguiMessage;
 import net.foxyas.changedaddon.network.OpenGrabRadialMessage;
+import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
 import net.foxyas.changedaddon.network.GrabKeybindMessage;
 import net.foxyas.changedaddon.network.FriendlyGraboffMessage;
 import net.foxyas.changedaddon.network.ActiveFriendlyModeMessage;
@@ -36,6 +37,7 @@ public class ChangedAddonModKeyMappings {
 	public static final KeyMapping SETCANGRABON = new KeyMapping("key.changed_addon.setcangrabon", GLFW.GLFW_KEY_F14, "key.categories.grab_gui");
 	public static final KeyMapping WANTFRIENDLYGRAB = new KeyMapping("key.changed_addon.wantfriendlygrab", GLFW.GLFW_KEY_I, "key.categories.grab_gui");
 	public static final KeyMapping OPEN_GRAB_RADIAL = new KeyMapping("key.changed_addon.open_grab_radial", GLFW.GLFW_KEY_H, "key.categories.grab_gui");
+	public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_O, "key.categories.grab_gui");
 
 	@SubscribeEvent
 	public static void registerKeyBindings(FMLClientSetupEvent event) {
@@ -47,6 +49,7 @@ public class ChangedAddonModKeyMappings {
 		ClientRegistry.registerKeyBinding(SETCANGRABON);
 		ClientRegistry.registerKeyBinding(WANTFRIENDLYGRAB);
 		ClientRegistry.registerKeyBinding(OPEN_GRAB_RADIAL);
+		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -100,6 +103,12 @@ public class ChangedAddonModKeyMappings {
 					if (event.getAction() == GLFW.GLFW_PRESS) {
 						ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenGrabRadialMessage(0, 0));
 						OpenGrabRadialMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+					}
+				}
+				if (event.getKey() == OPEN_EXTRA_DETAILS.getKey().getValue()) {
+					if (event.getAction() == GLFW.GLFW_PRESS) {
+						ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenExtraDetailsMessage(0, 0));
+						OpenExtraDetailsMessage.pressAction(Minecraft.getInstance().player, 0, 0);
 					}
 				}
 			}

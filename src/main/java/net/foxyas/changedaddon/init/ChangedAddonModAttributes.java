@@ -23,7 +23,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonModAttributes {
 	public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, ChangedAddonMod.MODID);
-	public static final RegistryObject<Attribute> LATEXRESISTANCE = ATTRIBUTES.register("latexresistance", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latexresistance", 0, 0, 20)).setSyncable(true));
+	public static final RegistryObject<Attribute> LATEXRESISTANCE = ATTRIBUTES.register("latexresistance", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latexresistance", 0, 0, 100)).setSyncable(true));
 
 	@SubscribeEvent
 	public static void register(FMLConstructModEvent event) {

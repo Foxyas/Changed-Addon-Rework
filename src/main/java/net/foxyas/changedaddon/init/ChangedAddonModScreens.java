@@ -12,11 +12,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraft.client.gui.screens.MenuScreens;
 
 import net.foxyas.changedaddon.client.gui.UnifuserguiScreen;
+import net.foxyas.changedaddon.client.gui.TranfurSoundsGuiScreen;
 import net.foxyas.changedaddon.client.gui.PagesecretScreen;
 import net.foxyas.changedaddon.client.gui.GrabclickguiScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenugrabScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenuScreen;
-import net.foxyas.changedaddon.client.gui.GrabRadialMenuFriendlyScreen;
 import net.foxyas.changedaddon.client.gui.GeneratorguiScreen;
 import net.foxyas.changedaddon.client.gui.FriendlyTransfurGuiScreen;
 import net.foxyas.changedaddon.client.gui.FoxyasguiScreen;
@@ -48,9 +48,9 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.FIGHT_TOKEEPCONSCIOUSNESSMINIGAME, FightTokeepconsciousnessminigameScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.GRAB_RADIAL_MENU, GrabRadialMenuScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.GRAB_RADIAL_MENUGRAB, GrabRadialMenugrabScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.GRAB_RADIAL_MENU_FRIENDLY, GrabRadialMenuFriendlyScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.FOXYAS_GUI_2, FoxyasGui2Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.FRIENDLY_TRANSFUR_GUI, FriendlyTransfurGuiScreen::new);
+			MenuScreens.register(ChangedAddonModMenus.TRANFUR_SOUNDS_GUI, TranfurSoundsGuiScreen::new);
 		});
 	}
 }

@@ -15,6 +15,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.BlockItem;
 
 import net.foxyas.changedaddon.item.UnlatexbaseItem;
+import net.foxyas.changedaddon.item.UnifuserblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.SyringewithlitixcammoniaItem;
 import net.foxyas.changedaddon.item.SyringeItem;
 import net.foxyas.changedaddon.item.SpawneggoffoxyasItem;
@@ -31,6 +32,7 @@ import net.foxyas.changedaddon.item.LitixCamoniaSprayItem;
 import net.foxyas.changedaddon.item.LitixCamoniaItem;
 import net.foxyas.changedaddon.item.LitixCamoniaFluidItem;
 import net.foxyas.changedaddon.item.InpureammoniaItem;
+import net.foxyas.changedaddon.item.HazardSuitItem;
 import net.foxyas.changedaddon.item.Experiment009dnaItem;
 import net.foxyas.changedaddon.item.EmptySprayItem;
 import net.foxyas.changedaddon.item.DevitemItem;
@@ -39,8 +41,10 @@ import net.foxyas.changedaddon.item.DevItem4Item;
 import net.foxyas.changedaddon.item.DevItem2Item;
 import net.foxyas.changedaddon.item.DescontrolSyringeItem;
 import net.foxyas.changedaddon.item.ChangedbookItem;
+import net.foxyas.changedaddon.item.CatlyzerblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.CatalyzeddnaItem;
 import net.foxyas.changedaddon.item.AmmoniaparticleItem;
+import net.foxyas.changedaddon.item.AmmoniaParticlesJeiIllustrativeItem;
 import net.foxyas.changedaddon.item.AmmoniaItem;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -89,6 +93,13 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> EXPERIMENT_009_SPAWN_EGG = REGISTRY.register("experiment_009_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_009, -1, -2697514, new Item.Properties().tab(null)));
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_SPAWN_EGG = REGISTRY.register("experiment_009_phase_2_spawn_egg",
 			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2, -1, -6316129, new Item.Properties().tab(null)));
+	public static final RegistryObject<Item> CATLYZERBLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("catlyzerblock_illustrative_item", () -> new CatlyzerblockIllustrativeItemItem());
+	public static final RegistryObject<Item> UNIFUSERBLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("unifuserblock_illustrative_item", () -> new UnifuserblockIllustrativeItemItem());
+	public static final RegistryObject<Item> AMMONIA_PARTICLES_JEI_ILLUSTRATIVE = REGISTRY.register("ammonia_particles_jei_illustrative", () -> new AmmoniaParticlesJeiIllustrativeItem());
+	public static final RegistryObject<Item> HAZARD_SUIT_HELMET = REGISTRY.register("hazard_suit_helmet", () -> new HazardSuitItem.Helmet());
+	public static final RegistryObject<Item> HAZARD_SUIT_CHESTPLATE = REGISTRY.register("hazard_suit_chestplate", () -> new HazardSuitItem.Chestplate());
+	public static final RegistryObject<Item> HAZARD_SUIT_LEGGINGS = REGISTRY.register("hazard_suit_leggings", () -> new HazardSuitItem.Leggings());
+	public static final RegistryObject<Item> HAZARD_SUIT_BOOTS = REGISTRY.register("hazard_suit_boots", () -> new HazardSuitItem.Boots());
 
 	private static RegistryObject<Item> block(RegistryObject<Block> block, CreativeModeTab tab) {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));

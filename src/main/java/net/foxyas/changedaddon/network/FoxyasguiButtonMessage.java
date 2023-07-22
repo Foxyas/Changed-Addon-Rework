@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
 import net.foxyas.changedaddon.procedures.TradeProcedure;
+import net.foxyas.changedaddon.procedures.OpenFoxyasGui2Procedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -65,6 +66,10 @@ public class FoxyasguiButtonMessage {
 		if (buttonID == 0) {
 
 			TradeProcedure.execute(entity);
+		}
+		if (buttonID == 1) {
+
+			OpenFoxyasGui2Procedure.execute(world, x, y, z, entity);
 		}
 	}
 

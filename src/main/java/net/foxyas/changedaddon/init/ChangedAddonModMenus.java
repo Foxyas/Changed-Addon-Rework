@@ -13,11 +13,11 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
+import net.foxyas.changedaddon.world.inventory.TranfurSoundsGuiMenu;
 import net.foxyas.changedaddon.world.inventory.PagesecretMenu;
 import net.foxyas.changedaddon.world.inventory.GrabclickguiMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenugrabMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenuMenu;
-import net.foxyas.changedaddon.world.inventory.GrabRadialMenuFriendlyMenu;
 import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
 import net.foxyas.changedaddon.world.inventory.FriendlyTransfurGuiMenu;
 import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
@@ -50,9 +50,9 @@ public class ChangedAddonModMenus {
 	public static final MenuType<FightTokeepconsciousnessminigameMenu> FIGHT_TOKEEPCONSCIOUSNESSMINIGAME = register("fight_tokeepconsciousnessminigame", (id, inv, extraData) -> new FightTokeepconsciousnessminigameMenu(id, inv, extraData));
 	public static final MenuType<GrabRadialMenuMenu> GRAB_RADIAL_MENU = register("grab_radial_menu", (id, inv, extraData) -> new GrabRadialMenuMenu(id, inv, extraData));
 	public static final MenuType<GrabRadialMenugrabMenu> GRAB_RADIAL_MENUGRAB = register("grab_radial_menugrab", (id, inv, extraData) -> new GrabRadialMenugrabMenu(id, inv, extraData));
-	public static final MenuType<GrabRadialMenuFriendlyMenu> GRAB_RADIAL_MENU_FRIENDLY = register("grab_radial_menu_friendly", (id, inv, extraData) -> new GrabRadialMenuFriendlyMenu(id, inv, extraData));
 	public static final MenuType<FoxyasGui2Menu> FOXYAS_GUI_2 = register("foxyas_gui_2", (id, inv, extraData) -> new FoxyasGui2Menu(id, inv, extraData));
 	public static final MenuType<FriendlyTransfurGuiMenu> FRIENDLY_TRANSFUR_GUI = register("friendly_transfur_gui", (id, inv, extraData) -> new FriendlyTransfurGuiMenu(id, inv, extraData));
+	public static final MenuType<TranfurSoundsGuiMenu> TRANFUR_SOUNDS_GUI = register("tranfur_sounds_gui", (id, inv, extraData) -> new TranfurSoundsGuiMenu(id, inv, extraData));
 
 	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
 		MenuType<T> menuType = new MenuType<T>(containerFactory);

@@ -1,0 +1,12 @@
+{
+  "_fv": 43,
+  "_type": "keybind",
+  "definition": {
+    "triggerKey": "O",
+    "keyBindingName": "Open Transfur Extra",
+    "keyBindingCategoryKey": "grab_gui",
+    "onKeyPressed": {
+      "name": "OpenTranfurExtra"
+    }
+  }
+}

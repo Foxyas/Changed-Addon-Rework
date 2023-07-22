@@ -4774,21 +4774,6 @@
       }
     },
     {
-      "name": "GrabRadialMenuFriendly",
-      "type": "gui",
-      "sortid": 253,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grab_radial_menu_friendly",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/world/inventory/GrabRadialMenuFriendlyMenu.java",
-          "src/main/java/net/foxyas/changedaddon/client/gui/GrabRadialMenuFriendlyScreen.java",
-          "src/main/java/net/foxyas/changedaddon/network/GrabRadialMenuFriendlyButtonMessage.java"
-        ]
-      }
-    },
-    {
       "name": "OpenGrabRafialMenuFriendly",
       "type": "procedure",
       "sortid": 254,
@@ -4799,28 +4784,7 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/procedures/OpenGrabRafialMenuFriendlyProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
+        "dependencies": []
       }
     },
     {
@@ -6015,6 +5979,691 @@
           }
         ]
       }
+    },
+    {
+      "name": "OpenExtraDetails",
+      "type": "keybind",
+      "sortid": 320,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "open_extra_details",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/network/OpenExtraDetailsMessage.java"
+        ]
+      }
+    },
+    {
+      "name": "PlaySoundhiss",
+      "type": "procedure",
+      "sortid": 321,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_soundhiss",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundhissProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "PlaySoundMeow",
+      "type": "procedure",
+      "sortid": 322,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_sound_meow",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundMeowProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "PlaySoundPurreow",
+      "type": "procedure",
+      "sortid": 323,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_sound_purreow",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundPurreowProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "PlaySoundPurr",
+      "type": "procedure",
+      "sortid": 324,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_sound_purr",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundPurrProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "PlaySoundgrowl",
+      "type": "procedure",
+      "sortid": 325,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_soundgrowl",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundgrowlProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "PlaySoundbark",
+      "type": "procedure",
+      "sortid": 326,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_soundbark",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundbarkProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "PlaySoundhowl",
+      "type": "procedure",
+      "sortid": 327,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_soundhowl",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundhowlProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "ReturnTypeTransfurSound",
+      "type": "procedure",
+      "sortid": 328,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "return_type_transfur_sound",
+      "metadata": {
+        "return_type": "string",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ReturnTypeTransfurSoundProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "IfDogLatex",
+      "type": "procedure",
+      "sortid": 329,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "if_dog_latex",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IfDogLatexProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "IfCatlatex",
+      "type": "procedure",
+      "sortid": 330,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "if_catlatex",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IfCatlatexProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "TranfurSoundsGui",
+      "type": "gui",
+      "sortid": 331,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "tranfur_sounds_gui",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/world/inventory/TranfurSoundsGuiMenu.java",
+          "src/main/java/net/foxyas/changedaddon/network/TranfurSoundsGuiButtonMessage.java",
+          "src/main/java/net/foxyas/changedaddon/client/gui/TranfurSoundsGuiScreen.java"
+        ]
+      }
+    },
+    {
+      "name": "OpenTranfurExtra",
+      "type": "procedure",
+      "sortid": 332,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "open_tranfur_extra",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/OpenTranfurExtraProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "OpenFoxyasGui2",
+      "type": "procedure",
+      "sortid": 333,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "open_foxyas_gui_2",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/OpenFoxyasGui2Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CooldownReset",
+      "type": "procedure",
+      "sortid": 334,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "cooldown_reset",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/CooldownResetProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "CatlyzerblockIllustrativeItem",
+      "type": "item",
+      "sortid": 335,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "catlyzerblock_illustrative_item",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/CatlyzerblockIllustrativeItemItem.java",
+          "src/main/resources/assets/changed_addon/models/item/catlyzerblock_illustrative_item.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "UnifuserblockIllustrativeItem",
+      "type": "item",
+      "sortid": 336,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "unifuserblock_illustrative_item",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/UnifuserblockIllustrativeItemItem.java",
+          "src/main/resources/assets/changed_addon/models/item/unifuserblock_illustrative_item.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "PotWithLitixCamoniaRecipe",
+      "type": "recipe",
+      "sortid": 337,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "pot_with_litix_camonia_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/potwithlitixcamonia_jeirecipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "LitixCamoniajeirecipe",
+      "type": "recipe",
+      "sortid": 338,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "litix_camoniajeirecipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/litix_camoniajeirecipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "MultiLitixCamoniaJeiRecipe",
+      "type": "recipe",
+      "sortid": 339,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "multi_litix_camonia_jei_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/multi_litix_camonia_jei_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "SyringewithlitixcamoniajeiRecipe",
+      "type": "recipe",
+      "sortid": 340,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "syringewithlitixcamoniajei_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/syringewithlitixcamoniajei_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "AmmoniaParticlejeiRecipe",
+      "type": "recipe",
+      "sortid": 341,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ammonia_particlejei_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/ammonia_particlejei_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "AmmoniaPowderJeiRecipe",
+      "type": "recipe",
+      "sortid": 342,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ammonia_powder_jei_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/ammonia_powder_jei_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "BloodTypesSyringe",
+      "type": "tag",
+      "sortid": 343,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "blood_types_syringe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/items/bloodtype_syringe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "CatalyzeddnaJeiRecipe",
+      "type": "recipe",
+      "sortid": 344,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "catalyzeddna_jei_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/catalyzeddna_jei_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "AmmoniaParticlesJeiIllustrative",
+      "type": "item",
+      "sortid": 345,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ammonia_particles_jei_illustrative",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/AmmoniaParticlesJeiIllustrativeItem.java",
+          "src/main/resources/assets/changed_addon/models/item/ammonia_particles_jei_illustrative.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "HazardSuit",
+      "type": "armor",
+      "sortid": 346,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "hazard_suit",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/HazardSuitItem.java",
+          "src/main/resources/assets/changed_addon/models/item/hazard_suit_helmet.json",
+          "src/main/resources/assets/changed_addon/models/item/hazard_suit_boots.json",
+          "src/main/resources/assets/changed_addon/models/item/hazard_suit_leggings.json",
+          "src/main/resources/assets/changed_addon/models/item/hazard_suit_chestplate.json"
+        ]
+      },
+      "path": "~/new armor"
+    },
+    {
+      "name": "TickHazardArmorFeature",
+      "type": "procedure",
+      "sortid": 347,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "tick_hazard_armor_feature",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TickHazardArmorFeatureProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "HazardbootsRecipe",
+      "type": "recipe",
+      "sortid": 348,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "hazardboots_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/hazardboots_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "HazardLegginsRecipe",
+      "type": "recipe",
+      "sortid": 349,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "hazard_leggins_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/hazard_leggins_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "HazardChestplateRecipe",
+      "type": "recipe",
+      "sortid": 350,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "hazard_chestplate_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/hazardchestplate_recipe.json"
+        ]
+      },
+      "path": "~/new recipes"
+    },
+    {
+      "name": "Hazardhelmetrecipe",
+      "type": "recipe",
+      "sortid": 351,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "hazardhelmetrecipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/hazardhelmetrecipe.json"
+        ]
+      },
+      "path": "~/new recipes"
     }
   ],
   "variable_elements": [
@@ -6225,6 +6874,7 @@
   ],
   "language_map": {
     "en_us": {
+      "item.changed_addon.hazard_suit_boots": "Hazard Boots",
       "gui.changed_addon.book_pagenumber_2.label_to_purify_the_latex_syringes_jus": "Before you transfur yourself, you need to purify the latex syringes in a purif",
       "advancements.grabthem.title": "Grab them!",
       "advancements.latex_insulator_advancement.descr": "let\u0027s isolate this gooey infection",
@@ -6269,6 +6919,7 @@
       "entity.changed_addon.experiment_009": "Experiment 009",
       "gui.changed_addon.book_pagenumber_2.label_click_on_the_litixcamonia_recipe": "Click on the Litixcamonia recipe for details ",
       "item.changed_addon.painite": "Painite",
+      "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "gui.changed_addon.book_pagenumber_2.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
       "gui.changed_addon.bookpagenumber_4.label_correct_way": "correct way",
@@ -6277,6 +6928,7 @@
       "effect.changed_addon.grabeffect": "in grab effect",
       "subtitles.enter_in_friendly_grab": "Player Being Friendly Grab",
       "item.changed_addon.painite_armor_helmet": "Painite Helmet",
+      "gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you": "i want be transfured by you",
       "attribute.changed_addon.latexresistance": "Latex Resistance",
       "gui.changed_addon.pagesecret.button_close": "close",
       "gui.changed_addon.grabclickgui.label_number": "number",
@@ -6297,6 +6949,7 @@
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
       "gui.changed_addon.bookpagenumber_4.label_in_the_rank_right_mouse_button": "in IV rank (right mouse button)",
       "advancements.untransfuradvancement_2.title": "I don\u0027t think it\u0027s that permanent!!",
+      "gui.changed_addon.tranfur_sounds_gui.label_transfursounds": "TransfurSounds",
       "gui.changed_addon.bookpagenumber_3.label_this_item_can_make_you_back_for": "this item can make you back for human stage",
       "changed_addon.compact_disc.title.experiment_009": "§n§4Demoleculated §r§n§b Experiment",
       "gui.changed_addon.foxyas_gui_2.button_aa": "yes",
@@ -6304,6 +6957,7 @@
       "advancements.grabthem.descr": "you active your grab ",
       "subtitles.in_grab_sound": "Player being grabbed",
       "gui.changed_addon.book_pagenumber_1.button_next": "next",
+      "item.changed_addon.ammonia_particles_jei_illustrative": "16 Ammonia Particles ",
       "item.changed_addon.painite_sword": "Painite Sword",
       "gui.changed_addon.foxyasgui.button_trade": "Trade",
       "gui.changed_addon.bookpagenumber_5.label_unifuser": "unifuser",
@@ -6333,6 +6987,7 @@
       "key.changed_addon.setassimilaton": "Active or Deactivate Assimilation",
       "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "fluid.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
+      "item.changed_addon.unifuserblock_illustrative_item": "IN Unifuser Block Illustrative Item",
       "gui.changed_addon.bookpagenumber_4.label_incorrect_way": "incorrectly way",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
       "effect.changed_addon.latex_solvent": "Latex Solvent",
@@ -6363,6 +7018,7 @@
       "key.changed_addon.friendly_graboff": "Friendly Graboff",
       "advancements.foxyas_advancement.title": "§4YOU MONSTER",
       "advancements.dn_astudyisafantasticthingadvancement.title": "DNA study is a fantastic thing",
+      "item.changed_addon.hazard_suit_chestplate": "Hazard  Chestplate",
       "gui.changed_addon.book_pagenumber_1.label_can_take_a_glass_bottle_and_an_i": "can take a glass bottle and an iron nugget in a shapeless pattern. ",
       "gui.changed_addon.unifusergui.label_next": "next page",
       "gui.changed_addon.book_pagenumber_1.label_after_you_craft_or_have_the_late": "go need craft a latex syringe but first you will have to have a blood syringe",
@@ -6377,6 +7033,7 @@
       "death.attack.assimilation": "%1$s was assimilated",
       "item.changed_addon.devitem_3": "Dev item",
       "advancements.advancement_dont_want_friendly_grab.descr": "(disable your friendly grab) you don\u0027t want to be covered in goo",
+      "item.changed_addon.hazard_suit_leggings": "Hazard Leggings",
       "effect.changed_addon.fadige": "Fatigue",
       "gui.changed_addon.book_pagenumber_2.label_below": " below",
       "key.changed_addon.grab_keybind": "grab",
@@ -6384,6 +7041,7 @@
       "gui.changed_addon.bookpagenumber_3.label_blast_fornec": "blast furnace",
       "gui.changed_addon.book_pagenumber_1.label_latex_beings": "-fted.",
       "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
+      "item.changed_addon.catlyzerblock_illustrative_item": "IN Catlyzer Block Illustrative Item",
       "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
       "gui.changed_addon.bookpagenumber_3.label_for_turn_on_the_catlyzer_and_uni": "For turn on or off the catlyzer and unifuser is Shift+Click",
       "gui.changed_addon.bookpagenumber_5.label_craft_table": "craft table",
@@ -6405,10 +7063,12 @@
       "gui.changed_addon.bookpagenumber_3.label_mmeat": "m\u003dmeat",
       "subtitles.experiment009_theme_phase2": "Experiment 009 Phase 2 Music Theme",
       "block.changed_addon.catlyzer": "Catlyzer",
+      "gui.changed_addon.tranfur_sounds_gui.button_r": "Reset",
       "advancements.unifuser_advancement.title": "A Unifuser? What does do?",
       "item.changed_addon.foxyas_spawn_egg": "Foxyas Spawn Egg",
       "gui.changed_addon.book_pagenumber_2.label_on_how_to_craft_with_litixcamon": " on how to craft with Litixcamonia.",
       "gui.changed_addon.book_pagenumber_2.button_next": "next",
+      "gui.changed_addon.foxyasgui.button_deals": "deals",
       "item.changed_addon.painite_armor_boots": "Painite Boots",
       "advancements.dn_astudyisafantasticthingadvancement.descr": "you made one inpure ammonia",
       "item.changed_addon.syringewithlitixcammonia": "Syringe with LitixCamonia",
@@ -6430,6 +7090,7 @@
       "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "oranges and one glass bottle for that",
       "item.changed_addon.ammonia": "Ammonia Powder",
       "advancements.latex_insulator_advancement.title": "Latex Insulator",
+      "key.changed_addon.open_extra_details": "Open Transfur Extra",
       "key.categories.grab_gui": "Grab KeyBinds",
       "gui.changed_addon.bookpagenumber_5.label_unifuser1": "unifuser",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.label_fast_you_only_have_4_seconds": "FAST!!! YOU ONLY HAVE 4 SECONDS",
@@ -6437,9 +7098,15 @@
       "gui.changed_addon.bookpagenumber_3.label_catlyzer1": "Catlyzer",
       "advancements.catlyzer_advancement.title": "A Catlyzer? What is this?",
       "item.minecraft.splash_potion.effect.litixcamoniaeffect": "Splash Potion of LitixCamonia",
+      "gui.changed_addon.tranfur_sounds_gui.button_6": "hiss",
       "advancements.ammoniapoweradvancement.title": "Ammonia Particles",
+      "gui.changed_addon.tranfur_sounds_gui.button_7": "purreow",
       "item.changed_addon.descontrol_syringe": "Syringe of Descontrol",
+      "gui.changed_addon.tranfur_sounds_gui.button_2": "Meow",
       "item.minecraft.potion.effect.litixcamoniaeffect": "Potion of LitixCamonia",
+      "gui.changed_addon.tranfur_sounds_gui.button_3": "growl",
+      "gui.changed_addon.tranfur_sounds_gui.button_4": "bark",
+      "gui.changed_addon.tranfur_sounds_gui.button_5": "howl",
       "advancements.potwithlitixcamonia_advancement.title": "yummy?",
       "item.changed_addon.changedbook": "Experience book",
       "effect.changed_addon.untransfur": "Untransfur",
@@ -6461,6 +7128,7 @@
       "gui.changed_addon.bookpagenumber_4.button_back": "back",
       "gamerule.fight_to_keep_consciousness": "Fight to keep consciousness",
       "gui.changed_addon.book_pagenumber_2.label_i_was_about_to_forget_but_we_cre": "-ier by placing the syringe in the slot to purify. If you are unsure about per",
+      "gui.changed_addon.tranfur_sounds_gui.button_1": "Purr",
       "gui.changed_addon.book_pagenumber_1.label_for_that_just_use_a_syringe_on_y": "for that just use a syringe on you to draw your blood but first you need craft"
     }
   },
@@ -6478,13 +7146,21 @@
       {
         "name": "CatlyzerAndUnifuserRecipeBook",
         "children": []
+      },
+      {
+        "name": "TransfurSounds",
+        "children": []
+      },
+      {
+        "name": "new armor",
+        "children": []
       }
     ]
   },
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.3.1",
+    "version": "2.3.3",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",

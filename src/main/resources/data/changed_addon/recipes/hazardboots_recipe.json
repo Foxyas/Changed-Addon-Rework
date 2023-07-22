@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    " 7 "
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:leather"
+    },
+    "1": {
+      "item": "changed_addon:unlatexbase"
+    },
+    "2": {
+      "item": "minecraft:leather"
+    },
+    "3": {
+      "item": "minecraft:leather"
+    },
+    "4": {
+      "item": "minecraft:leather_boots"
+    },
+    "5": {
+      "item": "minecraft:leather"
+    },
+    "7": {
+      "item": "minecraft:black_dye"
+    }
+  },
+  "result": {
+    "item": "changed_addon:hazard_suit_boots",
+    "count": 1
+  }
+}

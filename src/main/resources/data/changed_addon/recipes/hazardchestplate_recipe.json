@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:black_dye"
+    },
+    "1": {
+      "item": "minecraft:yellow_dye"
+    },
+    "2": {
+      "item": "minecraft:black_dye"
+    },
+    "3": {
+      "item": "changed_addon:unlatexbase"
+    },
+    "4": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "5": {
+      "item": "changed_addon:unlatexbase"
+    },
+    "6": {
+      "item": "minecraft:leather"
+    },
+    "7": {
+      "item": "minecraft:yellow_dye"
+    },
+    "8": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "changed_addon:hazard_suit_chestplate",
+    "count": 1
+  }
+}

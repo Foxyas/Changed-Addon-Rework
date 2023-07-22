@@ -34,7 +34,7 @@ public class LatexResistancetickProcedure {
 		AttributeInstance attributeInstance = ((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXRESISTANCE.get());
 		double LatexResistence_local_var = attributeInstance.getValue();
 		float TransfurProgress_local_var = (float) LatexResistence_local_var;
-		if (((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXRESISTANCE.get()).getBaseValue() > 0) {
+		if (((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXRESISTANCE.get()).getValue() > 0) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
 				if (new Object() {
 					public double getValue() {

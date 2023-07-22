@@ -125,8 +125,22 @@
           "name": "Deals",
           "width": 120,
           "height": 20,
-          "x": 74,
-          "y": 97
+          "x": 259,
+          "y": 66
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_i_want_be_transfured_by_you",
+          "text": "i want be transfured by you",
+          "onClick": {
+            "name": "OpenFoxyasGui2"
+          },
+          "width": 165,
+          "height": 20,
+          "x": 53,
+          "y": 102
         }
       }
     ],
