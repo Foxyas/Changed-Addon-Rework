@@ -1,6 +1,6 @@
 {
   "type": "minecraft:smelting",
-  "experience": 2.1,
+  "experience": 3,
   "cookingtime": 200,
   "ingredient": {
     "item": "changed_addon:painite_ore"

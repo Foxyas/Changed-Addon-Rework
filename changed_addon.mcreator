@@ -2044,19 +2044,6 @@
       }
     },
     {
-      "name": "Smeltpainite",
-      "type": "recipe",
-      "sortid": 130,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "smeltpainite",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/smeltpainite.json"
-        ]
-      }
-    },
-    {
       "name": "Blastpainite",
       "type": "recipe",
       "sortid": 131,
@@ -6664,6 +6651,46 @@
         ]
       },
       "path": "~/new recipes"
+    },
+    {
+      "name": "SetCoolDownOff",
+      "type": "procedure",
+      "sortid": 352,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "set_cool_down_off",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SetCoolDownOffProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "Ifplayerarenttransfur",
+      "type": "procedure",
+      "sortid": 353,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ifplayerarenttransfur",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IfplayerarenttransfurProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -7160,7 +7187,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.3.3",
+    "version": "2.3.5",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",

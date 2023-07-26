@@ -1,7 +1,10 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.minecraftforge.registries.ForgeRegistries;
+
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ArmorMaterial;
@@ -9,6 +12,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
 
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
@@ -32,12 +36,12 @@ public abstract class HazardSuitItem extends ArmorItem {
 
 			@Override
 			public SoundEvent getEquipSound() {
-				return null;
+				return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.armor.equip_leather"));
 			}
 
 			@Override
 			public Ingredient getRepairIngredient() {
-				return Ingredient.of();
+				return Ingredient.of(new ItemStack(Items.LEATHER), new ItemStack(Items.IRON_INGOT));
 			}
 
 			@Override

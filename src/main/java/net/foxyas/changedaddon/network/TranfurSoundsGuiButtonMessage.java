@@ -12,6 +12,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.TranfurSoundsGuiMenu;
+import net.foxyas.changedaddon.procedures.SetCoolDownOffProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundhowlProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundhissProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundgrowlProcedure;
@@ -19,7 +20,6 @@ import net.foxyas.changedaddon.procedures.PlaySoundbarkProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundPurreowProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundPurrProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundMeowProcedure;
-import net.foxyas.changedaddon.procedures.CooldownResetProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -99,7 +99,7 @@ public class TranfurSoundsGuiButtonMessage {
 		}
 		if (buttonID == 7) {
 
-			CooldownResetProcedure.execute(entity);
+			SetCoolDownOffProcedure.execute(entity);
 		}
 	}
 

@@ -3,7 +3,7 @@
   "_type": "armor",
   "definition": {
     "enableHelmet": true,
-    "textureHelmet": "gas_mask",
+    "textureHelmet": "hazadhelmet",
     "enableBody": true,
     "textureBody": "hazard_chestplate",
     "enableLeggings": true,
@@ -59,8 +59,15 @@
     "toughness": 0.0,
     "knockbackResistance": 0.0,
     "equipSound": {
-      "value": ""
+      "value": "item.armor.equip_leather"
     },
-    "repairItems": []
+    "repairItems": [
+      {
+        "value": "Items.LEATHER"
+      },
+      {
+        "value": "Items.IRON_INGOT"
+      }
+    ]
   }
 }

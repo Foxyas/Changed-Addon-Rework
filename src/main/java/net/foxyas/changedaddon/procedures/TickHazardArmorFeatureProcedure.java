@@ -36,7 +36,7 @@ public class TickHazardArmorFeatureProcedure {
 				Entity _ent = entity;
 				if (!_ent.level.isClientSide() && _ent.getServer() != null)
 					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-							("attribute @s " + "changed_addon:latexresistance " + "modifier add 944c27ef-1695-4da7-80bf-da8d53b46624 \"Hazard Armor Buff\" " + 0.15 + " add"));
+							("attribute @s " + "changed_addon:latexresistance " + "modifier add 944c27ef-1695-4da7-80bf-da8d53b46624 \"Hazard Armor Buff\" " + 0.05 + " add"));
 			}
 		} else {
 			{
@@ -50,7 +50,7 @@ public class TickHazardArmorFeatureProcedure {
 				Entity _ent = entity;
 				if (!_ent.level.isClientSide() && _ent.getServer() != null)
 					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-							("attribute @s " + "changed_addon:latexresistance " + "modifier add 8ef509fc-b39a-4240-a344-9eea9a3e897c \"Hazard Armor Buff\" " + 0.35 + " add"));
+							("attribute @s " + "changed_addon:latexresistance " + "modifier add 8ef509fc-b39a-4240-a344-9eea9a3e897c \"Hazard Armor Buff\" " + 0.2 + " add"));
 			}
 		} else {
 			{
@@ -64,7 +64,7 @@ public class TickHazardArmorFeatureProcedure {
 				Entity _ent = entity;
 				if (!_ent.level.isClientSide() && _ent.getServer() != null)
 					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-							("attribute @s " + "changed_addon:latexresistance " + "modifier add 17c0d810-400f-4ddd-b66d-a98c90d419ba \"Hazard Armor Buff\" " + 0.2 + " add"));
+							("attribute @s " + "changed_addon:latexresistance " + "modifier add 17c0d810-400f-4ddd-b66d-a98c90d419ba \"Hazard Armor Buff\" " + 0.1 + " add"));
 			}
 		} else {
 			{
@@ -78,7 +78,7 @@ public class TickHazardArmorFeatureProcedure {
 				Entity _ent = entity;
 				if (!_ent.level.isClientSide() && _ent.getServer() != null)
 					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-							("attribute @s " + "changed_addon:latexresistance " + "modifier add ed6d2bc5-0f9c-4d91-8d4e-f249727fcc39 \"Hazard Armor Buff\" " + 0.1 + " add"));
+							("attribute @s " + "changed_addon:latexresistance " + "modifier add ed6d2bc5-0f9c-4d91-8d4e-f249727fcc39 \"Hazard Armor Buff\" " + 0.05 + " add"));
 			}
 		} else {
 			{

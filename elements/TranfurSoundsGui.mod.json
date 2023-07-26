@@ -179,7 +179,7 @@
           "name": "button_r",
           "text": "Reset",
           "onClick": {
-            "name": "CooldownReset"
+            "name": "SetCoolDownOff"
           },
           "displayCondition": {
             "name": "CooldownReset"

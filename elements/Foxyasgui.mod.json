@@ -137,6 +137,9 @@
           "onClick": {
             "name": "OpenFoxyasGui2"
           },
+          "displayCondition": {
+            "name": "Ifplayerarenttransfur"
+          },
           "width": 165,
           "height": 20,
           "x": 53,
