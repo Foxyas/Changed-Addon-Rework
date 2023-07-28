@@ -66,7 +66,7 @@ public class PlaySoundhowlProcedure {
 							}
 							MinecraftForge.EVENT_BUS.unregister(this);
 						}
-					}.start(world, 60);
+					}.start(world, 120);
 				}
 			}
 		}

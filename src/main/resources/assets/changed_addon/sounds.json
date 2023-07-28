@@ -43,5 +43,27 @@
         "stream": false
       }
     ]
+  },
+  "armor_equip": {
+    "subtitle": "subtitles.armor_equip",
+    "sounds": [
+      {
+        "name": "changed_addon:equip3",
+        "stream": false
+      },
+      {
+        "name": "changed_addon:equip2",
+        "stream": false
+      }
+    ]
+  },
+  "warn": {
+    "subtitle": "subtitles.warn",
+    "sounds": [
+      {
+        "name": "changed_addon:warn",
+        "stream": false
+      }
+    ]
   }
 }
