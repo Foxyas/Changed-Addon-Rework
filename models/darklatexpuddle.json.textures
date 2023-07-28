@@ -1,0 +1,10 @@
+{
+  "mappings": {
+    "default": {
+      "map": {
+        "1": "darklatexpuddle_texture"
+      },
+      "name": "default"
+    }
+  }
+}

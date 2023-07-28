@@ -176,18 +176,18 @@
       {
         "type": "button",
         "data": {
-          "name": "button_r",
-          "text": "Reset",
+          "name": "button_cooldown",
+          "text": "Cooldown Reset",
           "onClick": {
             "name": "SetCoolDownOff"
           },
           "displayCondition": {
             "name": "CooldownReset"
           },
-          "width": 40,
+          "width": 77,
           "height": 20,
-          "x": 194,
-          "y": 51
+          "x": 173,
+          "y": 50
         }
       }
     ],

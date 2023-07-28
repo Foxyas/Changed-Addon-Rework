@@ -1,0 +1,31 @@
+{
+  "_fv": 43,
+  "_type": "tool",
+  "definition": {
+    "renderType": 0,
+    "texture": "painite_hoe",
+    "customModelName": "Normal",
+    "name": "Painite Hoe",
+    "specialInfo": [],
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "toolType": "Hoe",
+    "harvestLevel": 5,
+    "efficiency": 15.0,
+    "attackSpeed": 2.0,
+    "enchantability": 30,
+    "damageVsEntity": 3.0,
+    "usageCount": 3046,
+    "blocksAffected": [],
+    "hasGlow": false,
+    "repairItems": [
+      {
+        "value": "CUSTOM:Painite"
+      }
+    ],
+    "immuneToFire": true,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false
+  }
+}

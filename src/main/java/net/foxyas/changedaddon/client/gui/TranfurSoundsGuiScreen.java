@@ -38,7 +38,7 @@ public class TranfurSoundsGuiScreen extends AbstractContainerScreen<TranfurSound
 	Button button_5;
 	Button button_6;
 	Button button_7;
-	Button button_r;
+	Button button_cooldown;
 
 	public TranfurSoundsGuiScreen(TranfurSoundsGuiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -199,7 +199,7 @@ public class TranfurSoundsGuiScreen extends AbstractContainerScreen<TranfurSound
 		};
 		guistate.put("button:button_7", button_7);
 		this.addRenderableWidget(button_7);
-		button_r = new Button(this.leftPos + 68, this.topPos + 6, 40, 20, new TranslatableComponent("gui.changed_addon.tranfur_sounds_gui.button_r"), e -> {
+		button_cooldown = new Button(this.leftPos + 47, this.topPos + 5, 77, 20, new TranslatableComponent("gui.changed_addon.tranfur_sounds_gui.button_cooldown"), e -> {
 			if (CooldownResetProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TranfurSoundsGuiButtonMessage(7, x, y, z));
 				TranfurSoundsGuiButtonMessage.handleButtonAction(entity, 7, x, y, z);
@@ -211,7 +211,7 @@ public class TranfurSoundsGuiScreen extends AbstractContainerScreen<TranfurSound
 					super.render(ms, gx, gy, ticks);
 			}
 		};
-		guistate.put("button:button_r", button_r);
-		this.addRenderableWidget(button_r);
+		guistate.put("button:button_cooldown", button_cooldown);
+		this.addRenderableWidget(button_cooldown);
 	}
 }

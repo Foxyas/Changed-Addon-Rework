@@ -24,6 +24,7 @@ import net.foxyas.changedaddon.item.PainiteSwordItem;
 import net.foxyas.changedaddon.item.PainiteShovelItem;
 import net.foxyas.changedaddon.item.PainitePickaxeItem;
 import net.foxyas.changedaddon.item.PainiteItem;
+import net.foxyas.changedaddon.item.PainiteHoeItem;
 import net.foxyas.changedaddon.item.PainiteAxeItem;
 import net.foxyas.changedaddon.item.PainiteArmorItem;
 import net.foxyas.changedaddon.item.OrangejuiceItem;
@@ -67,6 +68,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> PAINITE_PICKAXE = REGISTRY.register("painite_pickaxe", () -> new PainitePickaxeItem());
 	public static final RegistryObject<Item> PAINITE_AXE = REGISTRY.register("painite_axe", () -> new PainiteAxeItem());
 	public static final RegistryObject<Item> PAINITE_SHOVEL = REGISTRY.register("painite_shovel", () -> new PainiteShovelItem());
+	public static final RegistryObject<Item> PAINITE_HOE = REGISTRY.register("painite_hoe", () -> new PainiteHoeItem());
 	public static final RegistryObject<Item> PAINITE_ARMOR_HELMET = REGISTRY.register("painite_armor_helmet", () -> new PainiteArmorItem.Helmet());
 	public static final RegistryObject<Item> PAINITE_ARMOR_CHESTPLATE = REGISTRY.register("painite_armor_chestplate", () -> new PainiteArmorItem.Chestplate());
 	public static final RegistryObject<Item> PAINITE_ARMOR_LEGGINGS = REGISTRY.register("painite_armor_leggings", () -> new PainiteArmorItem.Leggings());
@@ -85,6 +87,11 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> UNIFUSER = block(ChangedAddonModBlocks.UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> LUNARROSE_HELMET = REGISTRY.register("lunarrose_helmet", () -> new LunarroseItem.Helmet());
 	public static final RegistryObject<Item> EXPERIMENT_009DNA = REGISTRY.register("experiment_009dna", () -> new Experiment009dnaItem());
+	public static final RegistryObject<Item> HAZARD_SUIT_HELMET = REGISTRY.register("hazard_suit_helmet", () -> new HazardSuitItem.Helmet());
+	public static final RegistryObject<Item> HAZARD_SUIT_CHESTPLATE = REGISTRY.register("hazard_suit_chestplate", () -> new HazardSuitItem.Chestplate());
+	public static final RegistryObject<Item> HAZARD_SUIT_LEGGINGS = REGISTRY.register("hazard_suit_leggings", () -> new HazardSuitItem.Leggings());
+	public static final RegistryObject<Item> HAZARD_SUIT_BOOTS = REGISTRY.register("hazard_suit_boots", () -> new HazardSuitItem.Boots());
+	public static final RegistryObject<Item> DARKLATEXPUDDLE = block(ChangedAddonModBlocks.DARKLATEXPUDDLE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> DEVITEM = REGISTRY.register("devitem", () -> new DevitemItem());
 	public static final RegistryObject<Item> GENERATOR = block(ChangedAddonModBlocks.GENERATOR, null);
 	public static final RegistryObject<Item> DEV_ITEM_2 = REGISTRY.register("dev_item_2", () -> new DevItem2Item());
@@ -96,10 +103,6 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> CATLYZERBLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("catlyzerblock_illustrative_item", () -> new CatlyzerblockIllustrativeItemItem());
 	public static final RegistryObject<Item> UNIFUSERBLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("unifuserblock_illustrative_item", () -> new UnifuserblockIllustrativeItemItem());
 	public static final RegistryObject<Item> AMMONIA_PARTICLES_JEI_ILLUSTRATIVE = REGISTRY.register("ammonia_particles_jei_illustrative", () -> new AmmoniaParticlesJeiIllustrativeItem());
-	public static final RegistryObject<Item> HAZARD_SUIT_HELMET = REGISTRY.register("hazard_suit_helmet", () -> new HazardSuitItem.Helmet());
-	public static final RegistryObject<Item> HAZARD_SUIT_CHESTPLATE = REGISTRY.register("hazard_suit_chestplate", () -> new HazardSuitItem.Chestplate());
-	public static final RegistryObject<Item> HAZARD_SUIT_LEGGINGS = REGISTRY.register("hazard_suit_leggings", () -> new HazardSuitItem.Leggings());
-	public static final RegistryObject<Item> HAZARD_SUIT_BOOTS = REGISTRY.register("hazard_suit_boots", () -> new HazardSuitItem.Boots());
 
 	private static RegistryObject<Item> block(RegistryObject<Block> block, CreativeModeTab tab) {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));

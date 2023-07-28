@@ -4,7 +4,7 @@
   "definition": {
     "name": "Latex Solvent",
     "type": "WEAPON",
-    "rarity": "RARE",
+    "rarity": "VERY_RARE",
     "minLevel": 1,
     "maxLevel": 3,
     "damageModifier": 0,

@@ -1,0 +1,21 @@
+{
+  "_fv": 43,
+  "_type": "tag",
+  "definition": {
+    "type": "Blocks",
+    "items": [],
+    "blocks": [
+      {
+        "value": "CUSTOM:LatexInsulator"
+      },
+      {
+        "value": "CUSTOM:Darklatexpuddle"
+      }
+    ],
+    "functions": [],
+    "entities": [],
+    "biomes": [],
+    "name": "latex_non_replaceable",
+    "namespace": "changed"
+  }
+}

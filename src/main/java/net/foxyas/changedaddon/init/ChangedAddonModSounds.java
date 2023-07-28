@@ -23,6 +23,8 @@ public class ChangedAddonModSounds {
 		REGISTRY.put(new ResourceLocation("changed_addon", "enter_in_friendly_grab"), new SoundEvent(new ResourceLocation("changed_addon", "enter_in_friendly_grab")));
 		REGISTRY.put(new ResourceLocation("changed_addon", "experiment009_theme"), new SoundEvent(new ResourceLocation("changed_addon", "experiment009_theme")));
 		REGISTRY.put(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), new SoundEvent(new ResourceLocation("changed_addon", "experiment009_theme_phase2")));
+		REGISTRY.put(new ResourceLocation("changed_addon", "armor_equip"), new SoundEvent(new ResourceLocation("changed_addon", "armor_equip")));
+		REGISTRY.put(new ResourceLocation("changed_addon", "warn"), new SoundEvent(new ResourceLocation("changed_addon", "warn")));
 	}
 
 	@SubscribeEvent

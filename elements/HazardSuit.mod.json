@@ -59,7 +59,7 @@
     "toughness": 0.0,
     "knockbackResistance": 0.0,
     "equipSound": {
-      "value": "item.armor.equip_leather"
+      "value": "CUSTOM:armor_equip"
     },
     "repairItems": [
       {

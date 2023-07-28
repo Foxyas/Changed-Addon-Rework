@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "changed_addon:block/darklatexpuddle"
+    },
+    "facing=east": {
+      "model": "changed_addon:block/darklatexpuddle",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "changed_addon:block/darklatexpuddle",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "changed_addon:block/darklatexpuddle",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "changed_addon:custom/darklatexpuddle",
+  "textures": {
+    "all": "changed_addon:blocks/darklatexpuddle_texture",
+    "particle": "changed_addon:blocks/darklatexpuddle_texture",
+    "1": "changed_addon:blocks/darklatexpuddle_texture"
+  }
+}

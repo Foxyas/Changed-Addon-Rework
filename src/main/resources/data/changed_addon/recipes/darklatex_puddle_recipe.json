@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012"
+  ],
+  "key": {
+    "0": {
+      "item": "changed:dark_latex_goo"
+    },
+    "1": {
+      "item": "changed:latex_base"
+    },
+    "2": {
+      "item": "changed:dark_latex_goo"
+    }
+  },
+  "result": {
+    "item": "changed_addon:darklatexpuddle",
+    "count": 1
+  }
+}

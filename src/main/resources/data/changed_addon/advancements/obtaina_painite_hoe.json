@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "obtaina_painite_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:painite_hoe"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 15
+  },
+  "parent": "minecraft:husbandry/obtain_netherite_hoe"
+}

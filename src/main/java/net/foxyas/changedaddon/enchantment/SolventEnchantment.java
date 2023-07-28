@@ -7,7 +7,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 
 public class SolventEnchantment extends Enchantment {
 	public SolventEnchantment(EquipmentSlot... slots) {
-		super(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, slots);
+		super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.WEAPON, slots);
 	}
 
 	@Override

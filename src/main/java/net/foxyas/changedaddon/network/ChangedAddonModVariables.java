@@ -87,6 +87,7 @@ public class ChangedAddonModVariables {
 			clone.ShowRecipes = original.ShowRecipes;
 			clone.UnifuserRecipePage = original.UnifuserRecipePage;
 			clone.CatlyzerRecipePage = original.CatlyzerRecipePage;
+			clone.aredarklatex = original.aredarklatex;
 			if (!event.isWasDeath()) {
 				clone.times_the_syringe_was_used = original.times_the_syringe_was_used;
 				clone.grab_escape = original.grab_escape;
@@ -156,6 +157,7 @@ public class ChangedAddonModVariables {
 		public boolean ShowRecipes = false;
 		public double UnifuserRecipePage = 1.0;
 		public double CatlyzerRecipePage = 1.0;
+		public boolean aredarklatex = false;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -191,6 +193,7 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("ShowRecipes", ShowRecipes);
 			nbt.putDouble("UnifuserRecipePage", UnifuserRecipePage);
 			nbt.putDouble("CatlyzerRecipePage", CatlyzerRecipePage);
+			nbt.putBoolean("aredarklatex", aredarklatex);
 			return nbt;
 		}
 
@@ -223,6 +226,7 @@ public class ChangedAddonModVariables {
 			ShowRecipes = nbt.getBoolean("ShowRecipes");
 			UnifuserRecipePage = nbt.getDouble("UnifuserRecipePage");
 			CatlyzerRecipePage = nbt.getDouble("CatlyzerRecipePage");
+			aredarklatex = nbt.getBoolean("aredarklatex");
 		}
 	}
 
@@ -274,6 +278,7 @@ public class ChangedAddonModVariables {
 					variables.ShowRecipes = message.data.ShowRecipes;
 					variables.UnifuserRecipePage = message.data.UnifuserRecipePage;
 					variables.CatlyzerRecipePage = message.data.CatlyzerRecipePage;
+					variables.aredarklatex = message.data.aredarklatex;
 				}
 			});
 			context.setPacketHandled(true);
