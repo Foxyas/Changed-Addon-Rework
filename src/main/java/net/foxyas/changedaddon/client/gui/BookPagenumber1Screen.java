@@ -27,6 +27,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 	private final Player entity;
 	Button button_next;
 	Button button_close;
+	Button button_changed_addon_overlays;
 
 	public BookPagenumber1Screen(BookPagenumber1Menu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -93,6 +94,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_to_make_a_syringe_you_can_take_a"), 310, 35, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_can_take_a_glass_bottle_and_an_i"), 4, 46, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_recipes_for_each_latex_will_var"), 0, 56, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays"), 13, 160, -1);
 	}
 
 	@Override
@@ -121,5 +123,13 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		});
 		guistate.put("button:button_close", button_close);
 		this.addRenderableWidget(button_close);
+		button_changed_addon_overlays = new Button(this.leftPos + 4, this.topPos + 153, 145, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.button_changed_addon_overlays"), e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber1ButtonMessage(2, x, y, z));
+				BookPagenumber1ButtonMessage.handleButtonAction(entity, 2, x, y, z);
+			}
+		});
+		guistate.put("button:button_changed_addon_overlays", button_changed_addon_overlays);
+		this.addRenderableWidget(button_changed_addon_overlays);
 	}
 }

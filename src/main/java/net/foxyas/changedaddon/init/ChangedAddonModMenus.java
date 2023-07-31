@@ -27,6 +27,8 @@ import net.foxyas.changedaddon.world.inventory.CatlyzerguiMenu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber5Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber4Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber3Menu;
+import net.foxyas.changedaddon.world.inventory.BookPagenumber7Menu;
+import net.foxyas.changedaddon.world.inventory.BookPagenumber6Menu;
 import net.foxyas.changedaddon.world.inventory.BookPagenumber2Menu;
 import net.foxyas.changedaddon.world.inventory.BookPagenumber1Menu;
 
@@ -53,6 +55,8 @@ public class ChangedAddonModMenus {
 	public static final MenuType<FoxyasGui2Menu> FOXYAS_GUI_2 = register("foxyas_gui_2", (id, inv, extraData) -> new FoxyasGui2Menu(id, inv, extraData));
 	public static final MenuType<FriendlyTransfurGuiMenu> FRIENDLY_TRANSFUR_GUI = register("friendly_transfur_gui", (id, inv, extraData) -> new FriendlyTransfurGuiMenu(id, inv, extraData));
 	public static final MenuType<TranfurSoundsGuiMenu> TRANFUR_SOUNDS_GUI = register("tranfur_sounds_gui", (id, inv, extraData) -> new TranfurSoundsGuiMenu(id, inv, extraData));
+	public static final MenuType<BookPagenumber6Menu> BOOK_PAGENUMBER_6 = register("book_pagenumber_6", (id, inv, extraData) -> new BookPagenumber6Menu(id, inv, extraData));
+	public static final MenuType<BookPagenumber7Menu> BOOK_PAGENUMBER_7 = register("book_pagenumber_7", (id, inv, extraData) -> new BookPagenumber7Menu(id, inv, extraData));
 
 	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
 		MenuType<T> menuType = new MenuType<T>(containerFactory);

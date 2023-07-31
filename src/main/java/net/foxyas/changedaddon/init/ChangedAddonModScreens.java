@@ -26,6 +26,8 @@ import net.foxyas.changedaddon.client.gui.CatlyzerguiScreen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber5Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber4Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber3Screen;
+import net.foxyas.changedaddon.client.gui.BookPagenumber7Screen;
+import net.foxyas.changedaddon.client.gui.BookPagenumber6Screen;
 import net.foxyas.changedaddon.client.gui.BookPagenumber2Screen;
 import net.foxyas.changedaddon.client.gui.BookPagenumber1Screen;
 
@@ -51,6 +53,8 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.FOXYAS_GUI_2, FoxyasGui2Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.FRIENDLY_TRANSFUR_GUI, FriendlyTransfurGuiScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.TRANFUR_SOUNDS_GUI, TranfurSoundsGuiScreen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOK_PAGENUMBER_6, BookPagenumber6Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOK_PAGENUMBER_7, BookPagenumber7Screen::new);
 		});
 	}
 }

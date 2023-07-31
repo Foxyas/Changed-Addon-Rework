@@ -71,31 +71,31 @@ public class TranfurSoundsGuiButtonMessage {
 			return;
 		if (buttonID == 0) {
 
-			PlaySoundPurrProcedure.execute(world, x, y, z, entity);
+			PlaySoundPurrProcedure.execute(world, entity);
 		}
 		if (buttonID == 1) {
 
-			PlaySoundMeowProcedure.execute(world, x, y, z, entity);
+			PlaySoundMeowProcedure.execute(world, entity);
 		}
 		if (buttonID == 2) {
 
-			PlaySoundgrowlProcedure.execute(world, x, y, z, entity);
+			PlaySoundgrowlProcedure.execute(world, entity);
 		}
 		if (buttonID == 3) {
 
-			PlaySoundbarkProcedure.execute(world, x, y, z, entity);
+			PlaySoundbarkProcedure.execute(world, entity);
 		}
 		if (buttonID == 4) {
 
-			PlaySoundhowlProcedure.execute(world, x, y, z, entity);
+			PlaySoundhowlProcedure.execute(world, entity);
 		}
 		if (buttonID == 5) {
 
-			PlaySoundhissProcedure.execute(world, x, y, z, entity);
+			PlaySoundhissProcedure.execute(world, entity);
 		}
 		if (buttonID == 6) {
 
-			PlaySoundPurreowProcedure.execute(world, x, y, z, entity);
+			PlaySoundPurreowProcedure.execute(world, entity);
 		}
 		if (buttonID == 7) {
 

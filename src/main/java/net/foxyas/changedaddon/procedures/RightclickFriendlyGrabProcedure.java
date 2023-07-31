@@ -31,6 +31,7 @@ import net.minecraft.advancements.Advancement;
 import net.foxyas.changedaddon.world.inventory.FriendlyTransfurGuiMenu;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 
 import javax.annotation.Nullable;
 
@@ -77,34 +78,99 @@ public class RightclickFriendlyGrabProcedure {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true
 						&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
 						&& (sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
-					if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).wantfriendlygrab == true) {
-						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
-							{
-								Entity _ent = sourceentity;
-								_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ()));
-								if (_ent instanceof ServerPlayer _serverPlayer)
-									_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
-							}
-							if (sourceentity instanceof ServerPlayer _player)
-								_player.setGameMode(GameType.SPECTATOR);
-							if (sourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-								_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRABEFFECT.get(), 50, 0, false, false));
-							if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-								_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRAB.get(), 10000000, 0, false, false));
-							if (sourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-								_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRAB.get(), 10000000, 0, false, false));
-							if (world instanceof Level _level) {
-								if (!_level.isClientSide()) {
-									_level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 1, 1);
-								} else {
-									_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 1, 1, false);
+					if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.ALLOW_PLAYER_GRAB) == true) {
+						if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).wantfriendlygrab == true) {
+							if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
+								{
+									Entity _ent = sourceentity;
+									_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ()));
+									if (_ent instanceof ServerPlayer _serverPlayer)
+										_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+								}
+								if (sourceentity instanceof ServerPlayer _player)
+									_player.setGameMode(GameType.SPECTATOR);
+								if (sourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRABEFFECT.get(), 50, 0, false, false));
+								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRAB.get(), 10000000, 0, false, false));
+								if (sourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRAB.get(), 10000000, 0, false, false));
+								if (world instanceof Level _level) {
+									if (!_level.isClientSide()) {
+										_level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 1, 1);
+									} else {
+										_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:enter_in_friendly_grab")), SoundSource.NEUTRAL, 1, 1, false);
+									}
+								}
+							} else {
+								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent("they are organic so you just \u00A7chug\u00A7r they"), true);
+								if (entity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent((ForgeRegistries.ENTITIES.getKey(sourceentity.getType()).toString() + " \u00A7chug\u00A7r you")), true);
+								if (entity instanceof ServerPlayer _player) {
+									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+									if (!_ap.isDone()) {
+										Iterator _iterator = _ap.getRemainingCriteria().iterator();
+										while (_iterator.hasNext())
+											_player.getAdvancements().award(_adv, (String) _iterator.next());
+									}
+								}
+								if (sourceentity instanceof ServerPlayer _player) {
+									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+									if (!_ap.isDone()) {
+										Iterator _iterator = _ap.getRemainingCriteria().iterator();
+										while (_iterator.hasNext())
+											_player.getAdvancements().award(_adv, (String) _iterator.next());
+									}
 								}
 							}
 						} else {
+							if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
+								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent("You dont want be and do a Friendly Grab Active your \"Want Friendly Grab\""), false);
+							}
+						}
+					} else {
+						if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 							if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("they are organic so you just \u00A7chug\u00A7r they"), true);
+								_player.displayClientMessage(new TextComponent("FriendlyGrab Is \u00A74Disabled\u00A7r in this World!"), true);
+						}
+					}
+				}
+				if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true
+						&& (sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
+						&& (sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).can_grab == true
+						&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
+					if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.ALLOW_PLAYER_GRAB) == true) {
+						if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
+							if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).wantfriendlygrab == true) {
+								{
+									if (entity instanceof ServerPlayer _ent) {
+										BlockPos _bpos = new BlockPos(x, y, z);
+										NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
+											@Override
+											public Component getDisplayName() {
+												return new TextComponent("FriendlyTransfurGui");
+											}
+
+											@Override
+											public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+												return new FriendlyTransfurGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+											}
+										}, _bpos);
+									}
+								}
+							} else {
+								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent("they dont want"), true);
+							}
+						} else {
+							if (sourceentity instanceof Player _player && !_player.level.isClientSide())
+								_player.displayClientMessage(new TextComponent("you are organic so you just \u00A7chug\u00A7r they"), true);
 							if (entity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent((ForgeRegistries.ENTITIES.getKey(sourceentity.getType()).toString() + " \u00A7chug\u00A7r you")), true);
+								_player.displayClientMessage(new TextComponent((sourceentity.getDisplayName().getString() + " \u00A7chug\u00A7r you")), true);
 							if (entity instanceof ServerPlayer _player) {
 								Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
 								AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -127,58 +193,7 @@ public class RightclickFriendlyGrabProcedure {
 					} else {
 						if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 							if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("You dont want be and do a Friendly Grab Active your \"Want Friendly Grab\""), false);
-						}
-					}
-				}
-				if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true
-						&& (sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
-						&& (sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).can_grab == true
-						&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
-					if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
-						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).wantfriendlygrab == true) {
-							{
-								if (entity instanceof ServerPlayer _ent) {
-									BlockPos _bpos = new BlockPos(x, y, z);
-									NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
-										@Override
-										public Component getDisplayName() {
-											return new TextComponent("FriendlyTransfurGui");
-										}
-
-										@Override
-										public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-											return new FriendlyTransfurGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
-										}
-									}, _bpos);
-								}
-							}
-						} else {
-							if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("they dont want"), true);
-						}
-					} else {
-						if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("you are organic so you just \u00A7chug\u00A7r they"), true);
-						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent((sourceentity.getDisplayName().getString() + " \u00A7chug\u00A7r you")), true);
-						if (entity instanceof ServerPlayer _player) {
-							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
-							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-							if (!_ap.isDone()) {
-								Iterator _iterator = _ap.getRemainingCriteria().iterator();
-								while (_iterator.hasNext())
-									_player.getAdvancements().award(_adv, (String) _iterator.next());
-							}
-						}
-						if (sourceentity instanceof ServerPlayer _player) {
-							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
-							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-							if (!_ap.isDone()) {
-								Iterator _iterator = _ap.getRemainingCriteria().iterator();
-								while (_iterator.hasNext())
-									_player.getAdvancements().award(_adv, (String) _iterator.next());
-							}
+								_player.displayClientMessage(new TextComponent("FriendlyGrab Is \u00A74Disabled\u00A7r in this World!"), true);
 						}
 					}
 				}

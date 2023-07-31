@@ -199,6 +199,35 @@
           "x": 125,
           "y": 141
         }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_changed_addon_overlays",
+          "text": "",
+          "onClick": {
+            "name": "Openpage6"
+          },
+          "width": 145,
+          "height": 20,
+          "x": 6,
+          "y": 183
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_changed_addon_overlays",
+          "text": {
+            "fixedValue": "Changed Addon Overlays?"
+          },
+          "color": {
+            "value": -1,
+            "falpha": 0.0
+          },
+          "x": 15,
+          "y": 190
+        }
       }
     ],
     "gridSettings": {

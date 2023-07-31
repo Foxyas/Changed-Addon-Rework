@@ -15,7 +15,7 @@ import net.minecraft.core.BlockPos;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 
 public class PlaySoundbarkProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+	public static void execute(LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
@@ -24,9 +24,9 @@ public class PlaySoundbarkProcedure {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).act_cooldown == false) {
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
-							_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.ambient")), SoundSource.NEUTRAL, 2, 1);
+							_level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.ambient")), SoundSource.PLAYERS, 2, 1);
 						} else {
-							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.ambient")), SoundSource.NEUTRAL, 2, 1, false);
+							_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.wolf.ambient")), SoundSource.PLAYERS, 2, 1, false);
 						}
 					}
 					{
@@ -66,7 +66,7 @@ public class PlaySoundbarkProcedure {
 							}
 							MinecraftForge.EVENT_BUS.unregister(this);
 						}
-					}.start(world, 60);
+					}.start(world, 10);
 				}
 			}
 		}

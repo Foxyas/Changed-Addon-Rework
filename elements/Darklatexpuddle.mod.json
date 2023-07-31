@@ -21,7 +21,7 @@
     "hasTransparency": true,
     "connectedSides": false,
     "transparencyType": "SOLID",
-    "disableOffset": false,
+    "disableOffset": true,
     "boundingBoxes": [
       {
         "mx": 6.0,
@@ -74,7 +74,7 @@
       "value": ""
     },
     "dropAmount": 1,
-    "useLootTableForDrops": true,
+    "useLootTableForDrops": false,
     "requiresCorrectTool": false,
     "enchantPowerBonus": 0.0,
     "plantsGrowOn": false,
@@ -99,7 +99,7 @@
     "flammability": 0,
     "fireSpreadSpeed": 0,
     "isLadder": false,
-    "slipperiness": 0.4,
+    "slipperiness": 0.6,
     "speedFactor": 1.0,
     "jumpFactor": 1.0,
     "reactionToPushing": "DESTROY",

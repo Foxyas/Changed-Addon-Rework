@@ -9,11 +9,13 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.decoration.GlowItemFrame;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.tags.TagKey;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +36,7 @@ public class DarklatexpuddleFeatureProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame)) {
+		if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame || entity instanceof ThrownExperienceBottle || entity instanceof ExperienceOrb)) {
 			if (!(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).contains("dark_latex")) {
 				if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")) {
 					if (new Object() {
@@ -66,7 +68,7 @@ public class DarklatexpuddleFeatureProcedure {
 			List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(20 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
 			for (Entity entityiterator : _entfound) {
 				if (!(entityiterator == entity)) {
-					if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame)) {
+					if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame || entity instanceof ThrownExperienceBottle || entity instanceof ExperienceOrb)) {
 						if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")) {
 							if (!(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).contains("dark_latex")) {
 								if (entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
