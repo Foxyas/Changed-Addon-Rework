@@ -6942,6 +6942,19 @@
         "files": [],
         "type": "logic"
       }
+    },
+    {
+      "name": "ObtainPainite",
+      "type": "achievement",
+      "sortid": 359,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "obtain_painite",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/obtain_painite.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -7015,7 +7028,7 @@
       "name": "visiblehumanaddongui",
       "type": "logic",
       "scope": "player_persistent",
-      "value": "true"
+      "value": "false"
     },
     {
       "name": "LatexForm_ProgressTransfur",
@@ -7364,6 +7377,7 @@
       "advancements.advancement_dont_want_friendly_grab.descr": "(disable your friendly grab) you don\u0027t want to be covered in goo",
       "item.changed_addon.hazard_suit_leggings": "Hazard Leggings",
       "effect.changed_addon.fadige": "Fatigue",
+      "advancements.obtain_painite.title": "Isn\u0027t that redstone!?",
       "gui.changed_addon.book_pagenumber_2.label_below": " below",
       "key.changed_addon.grab_keybind": "grab",
       "gui.changed_addon.tranfur_sounds_gui.button_cooldown": "Cooldown Reset",
@@ -7415,7 +7429,7 @@
       "gui.changed_addon.bookpagenumber_3.label_below": " below",
       "entity.changed_addon.foxyas": "Foxyas",
       "advancements.assimilatethem.title": "Assimilate them!",
-      "advancements.obtaina_painite_hoe.descr": "Make A Painite Hoe",
+      "advancements.obtaina_painite_hoe.descr": "you did an Painite Hoe congratulations you have a dedication §n§o§b BEYOND THE LIMIT§r",
       "subtitles.experiment009_theme": "Experiment 009 Music Theme",
       "gui.changed_addon.grabclickgui.label_escape_progress": "Escape Progress",
       "item.changed_addon.lunarrose_helmet": "Lunar Rose",
@@ -7457,6 +7471,7 @@
       "gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for": "manently losing your humanity, you can craft",
       "block.changed_addon.painite_block": "Block of Painite",
       "gui.changed_addon.book_pagenumber_7.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
+      "advancements.obtain_painite.descr": "Obtain Painite",
       "gui.changed_addon.book_pagenumber_7.label_normaltransfur_grab_mode_o": "-\u003e Those are Organic Friendl-",
       "item.changed_addon.orangejuice": "Orange juice",
       "gui.changed_addon.book_pagenumber_6.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
@@ -7505,11 +7520,11 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.3.7",
+    "version": "2.3.8",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
-    "license": "Academic Free License v3.0",
+    "license": "MIT License",
     "disableForgeVersionCheck": true,
     "serverSideOnly": false,
     "updateURL": "https://raw.githubusercontent.com/Foxyas/check-mods-update/main/Changed-Addon-Update-Check",
@@ -7525,5 +7540,5 @@
     "modElementsPackage": "net.foxyas.changedaddon",
     "lockBaseModFiles": false
   },
-  "mcreatorVersion": 202300223515
+  "mcreatorVersion": 202300224119
 }

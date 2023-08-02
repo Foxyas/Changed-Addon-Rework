@@ -3,7 +3,12 @@ package net.foxyas.changedaddon.procedures;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,8 +28,12 @@ public class PainiteOreBlockDestroyedByPlayerProcedure {
 				return false;
 			}
 		}.checkGamemode(entity))) {
-			if (world instanceof Level _level && !_level.isClientSide())
-				_level.addFreshEntity(new ExperienceOrb(_level, x, y, z, 35));
+			if (!(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0)) {
+				if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().getLevel() : 0) >= 4) {
+					if (world instanceof Level _level && !_level.isClientSide())
+						_level.addFreshEntity(new ExperienceOrb(_level, x, y, z, 35));
+				}
+			}
 		}
 	}
 }

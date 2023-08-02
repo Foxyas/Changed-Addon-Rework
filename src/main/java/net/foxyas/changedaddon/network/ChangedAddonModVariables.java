@@ -141,7 +141,7 @@ public class ChangedAddonModVariables {
 		public double escape_progress = 0;
 		public boolean wantfriendlygrab = true;
 		public boolean showwarns = true;
-		public boolean visiblehumanaddongui = true;
+		public boolean visiblehumanaddongui = false;
 		public String LatexForm_ProgressTransfur = "\"\"";
 		public double Progress_Transfur_Number = 0;
 		public double consciousness_fight_progress = 0;
