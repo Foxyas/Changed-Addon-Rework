@@ -51,13 +51,13 @@
     "leggingsImmuneToFire": true,
     "bootsImmuneToFire": true,
     "maxDamage": 45,
-    "damageValueHelmet": 6,
-    "damageValueBody": 10,
-    "damageValueLeggings": 8,
-    "damageValueBoots": 6,
+    "damageValueHelmet": 4,
+    "damageValueBody": 9,
+    "damageValueLeggings": 7,
+    "damageValueBoots": 4,
     "enchantability": 50,
     "toughness": 3.9999999999999996,
-    "knockbackResistance": 0.2,
+    "knockbackResistance": 0.15,
     "equipSound": {
       "value": "item.armor.equip_netherite"
     },

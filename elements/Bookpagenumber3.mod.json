@@ -130,7 +130,7 @@
         "data": {
           "name": "label_catlyzer",
           "text": {
-            "fixedValue": "Catlyzer"
+            "fixedValue": "Catalyzer"
           },
           "color": {
             "value": -12829636,
@@ -154,7 +154,7 @@
         "data": {
           "name": "label_catlyzer1",
           "text": {
-            "fixedValue": "Catlyzer"
+            "fixedValue": "Catalyzer"
           },
           "color": {
             "value": -12829636,
@@ -183,7 +183,7 @@
         "data": {
           "name": "label_for_turn_on_the_catlyzer_and_uni",
           "text": {
-            "fixedValue": "For turn on or off the catlyzer and unifuser is Shift+Click"
+            "fixedValue": "For turn on or off the catalyzer and unifuser is Shift+Click"
           },
           "color": {
             "value": -16777216,

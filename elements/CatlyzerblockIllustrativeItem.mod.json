@@ -5,7 +5,7 @@
     "renderType": 0,
     "texture": "catlyzershowrecipeitem",
     "customModelName": "Normal",
-    "name": "IN Catlyzer Block Illustrative Item",
+    "name": "IN Catalyzer Block Illustrative Item",
     "rarity": "RARE",
     "creativeTab": {
       "value": "No creative tab entry"
@@ -25,7 +25,7 @@
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
     "specialInfo": [
-      "Catlyzer Block Illustrative Item for a Jei Support Cant Get in Survival"
+      "Catalyzer Block Illustrative Item for a Jei Support Cant Get in Survival"
     ],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",

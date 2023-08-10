@@ -3,15 +3,15 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Beyond Dedication",
-    "achievementDescription": "you did an Painite Hoe congratulations you have a dedication §n§o§b BEYOND THE LIMIT§r",
+    "achievementDescription": "You did an Painite Hoe congratulations you have a dedication §n§o§b BEYOND THE LIMIT§r",
     "achievementIcon": {
       "value": "CUSTOM:PainiteHoe"
     },
     "background": "Default",
-    "disableDisplay": true,
+    "disableDisplay": false,
     "showPopup": true,
     "announceToChat": true,
-    "hideIfNotCompleted": false,
+    "hideIfNotCompleted": true,
     "rewardLoot": [],
     "rewardRecipes": [],
     "rewardFunction": "No function",

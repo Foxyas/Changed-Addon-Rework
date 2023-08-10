@@ -1,4 +1,19 @@
 {
+  "display": {
+    "icon": {
+      "item": "changed_addon:painite_hoe"
+    },
+    "title": {
+      "translate": "advancements.obtaina_painite_hoe.title"
+    },
+    "description": {
+      "translate": "advancements.obtaina_painite_hoe.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
   "criteria": {
     "obtaina_painite_hoe": {
       "trigger": "minecraft:inventory_changed",

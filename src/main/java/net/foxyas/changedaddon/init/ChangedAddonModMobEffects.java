@@ -12,6 +12,7 @@ import net.minecraft.world.effect.MobEffect;
 
 import net.foxyas.changedaddon.potion.UntransfurMobEffect;
 import net.foxyas.changedaddon.potion.LatexSolventMobEffect;
+import net.foxyas.changedaddon.potion.LatexContaminationMobEffect;
 import net.foxyas.changedaddon.potion.InfriendlygrabeffectMobEffect;
 import net.foxyas.changedaddon.potion.InfriendlygrabMobEffect;
 import net.foxyas.changedaddon.potion.GrabeffectMobEffect;
@@ -26,4 +27,5 @@ public class ChangedAddonModMobEffects {
 	public static final RegistryObject<MobEffect> INFRIENDLYGRAB = REGISTRY.register("infriendlygrab", () -> new InfriendlygrabMobEffect());
 	public static final RegistryObject<MobEffect> INFRIENDLYGRABEFFECT = REGISTRY.register("infriendlygrabeffect", () -> new InfriendlygrabeffectMobEffect());
 	public static final RegistryObject<MobEffect> LATEX_SOLVENT = REGISTRY.register("latex_solvent", () -> new LatexSolventMobEffect());
+	public static final RegistryObject<MobEffect> LATEX_CONTAMINATION = REGISTRY.register("latex_contamination", () -> new LatexContaminationMobEffect());
 }

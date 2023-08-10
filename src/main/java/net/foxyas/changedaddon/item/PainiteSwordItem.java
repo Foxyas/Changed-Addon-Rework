@@ -22,7 +22,7 @@ public class PainiteSwordItem extends SwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 5f;
+				return 4.5f;
 			}
 
 			public int getLevel() {

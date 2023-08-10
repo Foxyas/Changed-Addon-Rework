@@ -14,7 +14,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class DescontrolSyringeItem extends Item {
 	public DescontrolSyringeItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(32).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(4).saturationMod(3f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(16).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(4).saturationMod(3f).alwaysEat()
 
 				.build()));
 	}

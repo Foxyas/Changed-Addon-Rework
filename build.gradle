@@ -60,6 +60,11 @@ mixin {
 }
 
 repositories {
+	// Mod Location
+    flatDir {
+        dirs 'libs'
+    }
+
     maven {
         name = "Changed"
         url = "https://raw.githubusercontent.com/LtxProgrammer/Changed-Minecraft-Mod/master/mcmodsrepo/"
@@ -81,7 +86,7 @@ dependencies {
     implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.11.3")
     compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192")
-
+    //implementation files('libs/output.jar')
 }
 
 tasks.withType(JavaCompile).configureEach {

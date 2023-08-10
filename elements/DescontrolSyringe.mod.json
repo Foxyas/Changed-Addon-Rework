@@ -10,7 +10,7 @@
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
-    "stackSize": 32,
+    "stackSize": 16,
     "enchantability": 0,
     "useDuration": 32,
     "toolType": 1.0,

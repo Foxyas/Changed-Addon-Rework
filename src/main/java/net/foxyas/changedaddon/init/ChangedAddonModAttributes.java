@@ -24,6 +24,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 public class ChangedAddonModAttributes {
 	public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, ChangedAddonMod.MODID);
 	public static final RegistryObject<Attribute> LATEXRESISTANCE = ATTRIBUTES.register("latexresistance", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latexresistance", 0, 0, 100)).setSyncable(true));
+	public static final RegistryObject<Attribute> LATEXINFECTION = ATTRIBUTES.register("latexinfection", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latexinfection", 0, 0, 100)).setSyncable(true));
 
 	@SubscribeEvent
 	public static void register(FMLConstructModEvent event) {
@@ -35,6 +36,7 @@ public class ChangedAddonModAttributes {
 	@SubscribeEvent
 	public static void addAttributes(EntityAttributeModificationEvent event) {
 		event.add(EntityType.PLAYER, LATEXRESISTANCE.get());
+		event.add(EntityType.PLAYER, LATEXINFECTION.get());
 	}
 
 	@Mod.EventBusSubscriber
@@ -44,6 +46,7 @@ public class ChangedAddonModAttributes {
 			Player oldP = event.getOriginal();
 			Player newP = (Player) event.getEntity();
 			newP.getAttribute(LATEXRESISTANCE.get()).setBaseValue(oldP.getAttribute(LATEXRESISTANCE.get()).getBaseValue());
+			newP.getAttribute(LATEXINFECTION.get()).setBaseValue(oldP.getAttribute(LATEXINFECTION.get()).getBaseValue());
 		}
 	}
 }

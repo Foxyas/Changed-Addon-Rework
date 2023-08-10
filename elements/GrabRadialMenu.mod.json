@@ -13,7 +13,7 @@
       {
         "type": "image",
         "data": {
-          "image": "grab_radial_menu.png",
+          "image": "goo-radialmenu.png",
           "use1Xscale": true,
           "displayCondition": {
             "name": "ShowNoOrganicGrabRadial"
@@ -25,7 +25,7 @@
       {
         "type": "image",
         "data": {
-          "image": "organic_grab_radial__white.png",
+          "image": "organic-radialmenu.png",
           "use1Xscale": true,
           "displayCondition": {
             "name": "ShowOrganicGrabRadial"

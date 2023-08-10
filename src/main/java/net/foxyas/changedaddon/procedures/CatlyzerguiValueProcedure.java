@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 
 public class CatlyzerguiValueProcedure {
 	public static String execute(LevelAccessor world, double x, double y, double z) {
-		return "nitrogen power = " + (new Object() {
+		return "Nitrogen Power = " + (new Object() {
 			public double getValue(LevelAccessor world, BlockPos pos, String tag) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
 				if (blockEntity != null)

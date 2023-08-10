@@ -1,0 +1,141 @@
+{
+  "_fv": 43,
+  "_type": "overlay",
+  "definition": {
+    "priority": "NORMAL",
+    "components": [
+      {
+        "type": "image",
+        "data": {
+          "image": "assimilation.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showassimilationicon"
+          },
+          "x": 6,
+          "y": 161
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendly_transfur_false.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowGrabInFriendlyModeoff"
+          },
+          "x": 6,
+          "y": 142
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendly_transfur_true.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowGrabInFriendlyModeOn"
+          },
+          "x": 6,
+          "y": 142
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "grab_overlay_v2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showassimilationoffbutton"
+          },
+          "x": 6,
+          "y": 161
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendlymodeicon.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowfriendlymodeIcon"
+          },
+          "x": 6,
+          "y": 179
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "friendlymodeofficon.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showfriendlymodeofficon"
+          },
+          "x": 6,
+          "y": 179
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "can_grab_icon_outline.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Showcangrabicon"
+          },
+          "x": 6,
+          "y": 143
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "cant_grab_icon_outline.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Shocantgrabicon"
+          },
+          "x": 6,
+          "y": 143
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_friendly_mode_off_v2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowOrganicFriendlyModeOff"
+          },
+          "x": 6,
+          "y": 179
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "organic_friendly_mode_on_v2.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "ShowOrganicFriendlyModeon"
+          },
+          "x": 6,
+          "y": 179
+        }
+      }
+    ],
+    "baseTexture": "",
+    "overlayTarget": "Ingame",
+    "displayCondition": {
+      "name": "FriendlymodeoverlayDisplayOverlayIngame"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 15,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

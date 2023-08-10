@@ -95,7 +95,7 @@ public class CatlyzerBlockEntity extends RandomizableContainerBlockEntity implem
 
 	@Override
 	public Component getDisplayName() {
-		return new TextComponent("Catlyzer");
+		return new TextComponent("Catalyzer");
 	}
 
 	@Override

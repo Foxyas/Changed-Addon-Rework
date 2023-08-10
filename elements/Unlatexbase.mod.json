@@ -5,7 +5,7 @@
     "renderType": 0,
     "texture": "unlatex_base",
     "customModelName": "Normal",
-    "name": "Unlatexbase",
+    "name": "Anti-Latex Base",
     "rarity": "COMMON",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"

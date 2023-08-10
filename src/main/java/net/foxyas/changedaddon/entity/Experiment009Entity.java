@@ -39,6 +39,7 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.foxyas.changedaddon.procedures.IfplayerishighofentityProcedure;
 import net.foxyas.changedaddon.procedures.IfplayerareinwaterProcedure;
+import net.foxyas.changedaddon.procedures.IflatexentityProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009OnInitialEntitySpawnProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009OnEntityTickUpdateProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009EntityDiesProcedure;
@@ -92,7 +93,17 @@ public class Experiment009Entity extends Monster {
 		});
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
 		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, Monster.class, true, false));
+		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, Monster.class, true, false) {
+			@Override
+			public boolean canUse() {
+				double x = Experiment009Entity.this.getX();
+				double y = Experiment009Entity.this.getY();
+				double z = Experiment009Entity.this.getZ();
+				Entity entity = Experiment009Entity.this;
+				Level world = Experiment009Entity.this.level;
+				return super.canUse() && IflatexentityProcedure.execute(entity);
+			}
+		});
 		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.5, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
@@ -196,7 +207,7 @@ public class Experiment009Entity extends Monster {
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 100);
 		builder = builder.add(Attributes.ARMOR, 40);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 10);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.5);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 0.2);

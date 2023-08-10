@@ -92,7 +92,7 @@ public class DarklatexpuddleBlockEntity extends RandomizableContainerBlockEntity
 
 	@Override
 	public Component getDisplayName() {
-		return new TextComponent("Darklatexpuddle");
+		return new TextComponent("Dark Latex Puddle");
 	}
 
 	@Override

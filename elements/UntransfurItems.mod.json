@@ -1,0 +1,21 @@
+{
+  "_fv": 43,
+  "_type": "tag",
+  "definition": {
+    "type": "Items",
+    "items": [
+      {
+        "value": "CUSTOM:Syringewithlitixcammonia"
+      },
+      {
+        "value": "CUSTOM:Potwithcamonia"
+      }
+    ],
+    "blocks": [],
+    "functions": [],
+    "entities": [],
+    "biomes": [],
+    "name": "untransfur_items",
+    "namespace": "mod"
+  }
+}

@@ -6,6 +6,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,10 +29,12 @@ public class PainiteOreBlockDestroyedByPlayerProcedure {
 				return false;
 			}
 		}.checkGamemode(entity))) {
-			if (!(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0)) {
-				if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().getLevel() : 0) >= 4) {
-					if (world instanceof Level _level && !_level.isClientSide())
-						_level.addFreshEntity(new ExperienceOrb(_level, x, y, z, 35));
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof PickaxeItem) {
+				if (!(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0)) {
+					if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().getLevel() : 0) >= 4) {
+						if (world instanceof Level _level && !_level.isClientSide())
+							_level.addFreshEntity(new ExperienceOrb(_level, x, y, z, 35));
+					}
 				}
 			}
 		}

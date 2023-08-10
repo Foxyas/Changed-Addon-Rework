@@ -864,9 +864,6 @@
       "locked_code": false,
       "registry_name": "friendly_grab",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/FriendlyGrabProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
@@ -1346,19 +1343,6 @@
             "name": "entity",
             "type": "entity"
           }
-        ]
-      }
-    },
-    {
-      "name": "Friendlymodeoverlay",
-      "type": "overlay",
-      "sortid": 101,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "friendlymodeoverlay",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/client/gui/FriendlymodeoverlayOverlay.java"
         ]
       }
     },
@@ -3436,19 +3420,6 @@
             "name": "entity",
             "type": "entity"
           }
-        ]
-      }
-    },
-    {
-      "name": "WantFriendlyGrabOverlay",
-      "type": "overlay",
-      "sortid": 185,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "want_friendly_grab_overlay",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/client/gui/WantFriendlyGrabOverlayOverlay.java"
         ]
       }
     },
@@ -6955,6 +6926,245 @@
           "src/main/resources/data/changed_addon/advancements/obtain_painite.json"
         ]
       }
+    },
+    {
+      "name": "Dolatexinfection",
+      "type": "gamerule",
+      "sortid": 360,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "dolatexinfection",
+      "metadata": {
+        "files": [],
+        "type": "logic"
+      }
+    },
+    {
+      "name": "Dolatexinfectiontick",
+      "type": "procedure",
+      "sortid": 361,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "dolatexinfectiontick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/DolatexinfectiontickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UntransfurItems",
+      "type": "tag",
+      "sortid": 362,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "untransfur_items",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/items/untransfur_items.json"
+        ]
+      }
+    },
+    {
+      "name": "HazarArmorItemTip",
+      "type": "procedure",
+      "sortid": 363,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "hazar_armor_item_tip",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/HazarArmorItemTipProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PainiteItemInInventoryTick",
+      "type": "procedure",
+      "sortid": 364,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "painite_item_in_inventory_tick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PainiteItemInInventoryTickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LatexInfection",
+      "type": "attribute",
+      "sortid": 365,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latexinfection",
+      "metadata": {
+        "files": []
+      }
+    },
+    {
+      "name": "LatexInfectionTick",
+      "type": "procedure",
+      "sortid": 366,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_infection_tick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexInfectionTickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LatexContamination",
+      "type": "potioneffect",
+      "sortid": 367,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_contamination",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/potion/LatexContaminationMobEffect.java"
+        ]
+      }
+    },
+    {
+      "name": "LatexContaminationEffectStartedapplied",
+      "type": "procedure",
+      "sortid": 368,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_contamination_effect_startedapplied",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexContaminationEffectStartedappliedProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LatexContaminationEffectExpires",
+      "type": "procedure",
+      "sortid": 369,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_contamination_effect_expires",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexContaminationEffectExpiresProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReturnMaxTransfurTolerance",
+      "type": "procedure",
+      "sortid": 370,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "return_max_transfur_tolerance",
+      "metadata": {
+        "return_type": "number",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ReturnMaxTransfurToleranceProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "GrabModeOverlays",
+      "type": "overlay",
+      "sortid": 371,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "grab_mode_overlays",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/gui/GrabModeOverlaysOverlay.java"
+        ]
+      },
+      "path": "~/OverLays"
+    },
+    {
+      "name": "Experiment009latexdmg",
+      "type": "procedure",
+      "sortid": 372,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "experiment_009latexdmg",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009latexdmgProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Iflatexentity",
+      "type": "procedure",
+      "sortid": 373,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "iflatexentity",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IflatexentityProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -6998,7 +7208,7 @@
       "name": "visibleaddongui",
       "type": "logic",
       "scope": "player_persistent",
-      "value": "true"
+      "value": "false"
     },
     {
       "name": "grab_escape",
@@ -7125,6 +7335,12 @@
       "type": "logic",
       "scope": "player_persistent",
       "value": "false"
+    },
+    {
+      "name": "MaxTransfurTolerance",
+      "type": "number",
+      "scope": "map",
+      "value": "0"
     }
   ],
   "sound_elements": [
@@ -7203,8 +7419,8 @@
       "item.changed_addon.litix_camonia": "LitixCamonia",
       "gui.changed_addon.book_pagenumber_1.label_both_the_inventory_and_the_craft": "both the inventory and the craft table",
       "gui.changed_addon.book_pagenumber_1.label_recipes_for_each_latex_will_var": " Recipes for each latex will vary.",
-      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.untransfuradvancement_2.descr": "you untransfur with the syringe of litixcamonia",
+      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.ammoniacraft.descr": "you craft one ammonia powder",
       "advancements.litixcamonia_adcancement.title": "Litixcamonia!?",
       "item.changed_addon.painite_pickaxe": "Painite Pickaxe",
@@ -7219,16 +7435,17 @@
       "gui.changed_addon.book_pagenumber_1.button_changed_addon_overlays": "",
       "advancements.changedaddon_advancement.title": "Changed Addon ",
       "key.changed_addon.setcangrabon": "Set Grab on",
+      "gamerule.dolatexinfection": "do latex infection",
       "gamerule.fighttokeepconsciousness.description": "Allow the Fight to keep consciousness minigame (overwrite keep consciousness like a perm on)",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "unifuser",
       "item.changed_addon.dev_item_4": "Dev item",
       "gui.changed_addon.bookpagenumber_3.button_close": "close",
       "item.changed_addon.dev_item_2": "Dev item",
       "effect.changed_addon.infriendlygrabeffect": "Friendly Grab Host",
-      "effect.changed_addon.infriendlygrab": "In Friendly Grab",
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
-      "block.changed_addon.latex_insulator": "Latex Insulator",
+      "effect.changed_addon.infriendlygrab": "In Friendly Grab",
       "gui.changed_addon.book_pagenumber_7.label_ansfur_modes": "-ansfur modes (need Friendly-",
+      "block.changed_addon.latex_insulator": "Latex Insulator",
       "gui.changed_addon.book_pagenumber_6.label_mode_on": "-mode on) This Will change t-",
       "gui.changed_addon.book_pagenumber_1.label_first_you_have_to_have_a_latex_b": "First, you need to get a latex base it drops from the latex beings or can be cra",
       "item.changed_addon.painite_axe": "Painite Axe",
@@ -7245,7 +7462,7 @@
       "gui.changed_addon.bookpagenumber_4.label_correct_way": "correct way",
       "item.changed_addon.litix_camonia_fluid_bucket": "LitixCamonia Bucket",
       "gamerule.allowPlayerGrab.description": "Allow Players Use the Grab Feature",
-      "item.changed_addon.potwithcamonia": "Pot with camonia",
+      "item.changed_addon.potwithcamonia": "Pot with LitixCamonia",
       "effect.changed_addon.grabeffect": "in grab effect",
       "subtitles.enter_in_friendly_grab": "Player Being Friendly Grab",
       "gui.changed_addon.book_pagenumber_6.label_normaltransfur_grab_mode_o": "-\u003e Normal/Transfur Grab mod-",
@@ -7259,6 +7476,7 @@
       "gui.changed_addon.book_pagenumber_1.label_syringe_with_your_own_blood_and": "-yringe with your own blood and a latex base in an infuser.",
       "gui.changed_addon.book_pagenumber_1.button_close": "close",
       "gui.changed_addon.book_pagenumber_6.label_assimilation_grab_mode": "-\u003e Assimilation grab mode",
+      "attribute.changed_addon.latexinfection": "Latex Infection",
       "enchantment.changed_addon.solvent": "Latex Solvent",
       "advancements.untransfuritemadvancement.descr": "you made one untransfur item",
       "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
@@ -7267,7 +7485,8 @@
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon",
       "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
-      "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catlyzer",
+      "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
+      "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic transfur",
       "gui.changed_addon.catlyzergui.button_start_craft": "start craft",
@@ -7300,7 +7519,7 @@
       "item.changed_addon.spawneggoffoxyas": "Spawn egg of Foxyas",
       "item.changed_addon.experiment_009dna": "Experiment 009 DNA",
       "gui.changed_addon.book_pagenumber_7.label_all_overlays_can_be_turned_on_by": "All overlays can be turned on by ",
-      "item.changed_addon.unlatexbase": "Unlatexbase",
+      "item.changed_addon.unlatexbase": "Anti-Latex Base",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.book_pagenumber_6.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
       "gui.changed_addon.bookpagenumber_4.button_close": "close",
@@ -7309,7 +7528,7 @@
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
       "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
-      "item.changed_addon.ammoniaparticle": "Ammonia particle",
+      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "item.changed_addon.prototype_spawn_egg": "Prototype Spawn Egg",
       "block.changed_addon.painite_ore": "Deepslate Painite Ore",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
@@ -7328,7 +7547,7 @@
       "advancements.hug.descr": "you won or gave a §chug§r in an organic transfur",
       "gui.changed_addon.grabclickgui.button_struggle": "struggle",
       "gui.changed_addon.bookpagenumber_3.button_next": "next",
-      "advancements.catlyzer_advancement.descr": "you craft or get a Catlyzer",
+      "advancements.catlyzer_advancement.descr": "you craft or get a Catalyzer",
       "gui.changed_addon.book_pagenumber_1.label_after_obtaining_a_latex_base_yo": "After obtaining a latex base, you can make a latex syringe with a blood s",
       "gui.changed_addon.book_pagenumber_2.button_close": "close",
       "key.changed_addon.active_friendly_mode": "Active Friendly Mode",
@@ -7337,7 +7556,7 @@
       "gui.changed_addon.bookpagenumber_3.button_back": "back",
       "gui.changed_addon.foxyas_gui_2.button_no": "no",
       "gui.changed_addon.book_pagenumber_1.label_to_make_a_syringe_you_can_take_a": "To make a syringe you ",
-      "block.changed_addon.darklatexpuddle": "Darklatexpuddle",
+      "block.changed_addon.darklatexpuddle": "Dark Latex Puddle",
       "gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho": " Litixcamonia. Litixcamonia can be injected to",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
       "gui.changed_addon.bookpagenumber_3.label_i_was_about_to_forget_but_we_cre": "I was about to forget but we created litix cammonia item made from ammonia",
@@ -7359,6 +7578,7 @@
       "gui.changed_addon.book_pagenumber_1.label_can_take_a_glass_bottle_and_an_i": "can take a glass bottle and an iron nugget in a shapeless pattern. ",
       "gui.changed_addon.unifusergui.label_next": "next page",
       "subtitles.warn": "Warn Sound",
+      "gamerule.dolatexinfection.description": "this makes the latex infection in the player rise after being attacked",
       "gui.changed_addon.book_pagenumber_7.button_close": "Back",
       "gui.changed_addon.book_pagenumber_1.label_after_you_craft_or_have_the_late": "go need craft a latex syringe but first you will have to have a blood syringe",
       "block.changed_addon.unifuser": "Unifuser",
@@ -7377,7 +7597,7 @@
       "advancements.advancement_dont_want_friendly_grab.descr": "(disable your friendly grab) you don\u0027t want to be covered in goo",
       "item.changed_addon.hazard_suit_leggings": "Hazard Leggings",
       "effect.changed_addon.fadige": "Fatigue",
-      "advancements.obtain_painite.title": "Isn\u0027t that redstone!?",
+      "advancements.obtain_painite.title": "Isn\u0027t redstone!?",
       "gui.changed_addon.book_pagenumber_2.label_below": " below",
       "key.changed_addon.grab_keybind": "grab",
       "gui.changed_addon.tranfur_sounds_gui.button_cooldown": "Cooldown Reset",
@@ -7385,12 +7605,12 @@
       "gui.changed_addon.bookpagenumber_3.label_blast_fornec": "blast furnace",
       "gui.changed_addon.book_pagenumber_1.label_latex_beings": "-fted.",
       "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
-      "item.changed_addon.catlyzerblock_illustrative_item": "IN Catlyzer Block Illustrative Item",
+      "item.changed_addon.catlyzerblock_illustrative_item": "IN Catalyzer Block Illustrative Item",
       "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
-      "gui.changed_addon.bookpagenumber_3.label_for_turn_on_the_catlyzer_and_uni": "For turn on or off the catlyzer and unifuser is Shift+Click",
+      "gui.changed_addon.bookpagenumber_3.label_for_turn_on_the_catlyzer_and_uni": "For turn on or off the catalyzer and unifuser is Shift+Click",
       "gui.changed_addon.bookpagenumber_5.label_craft_table": "craft table",
-      "item.changed_addon.impureammonia": "impure ammonia",
-      "advancements.potwithlitixcamonia_advancement.descr": "you drink a litixcamonia liquid the taste is not bad but not too much good",
+      "item.changed_addon.impureammonia": "Impure Ammonia",
+      "advancements.potwithlitixcamonia_advancement.descr": "you drank a liquid made from the dilution of litixcamonia the taste is not bad besides it tastes like cherry!",
       "advancements.timesthesyringewasused_advancement.descr": "you used a litixcamonia syringe more than 32 times either you are unlucky or you are indecisive about your humanity holy!",
       "advancements.furry_friend.descr": "do you have a friendly furry nearby",
       "gui.changed_addon.book_pagenumber_7.button_next": "Next",
@@ -7408,7 +7628,7 @@
       "gui.changed_addon.bookpagenumber_3.label_mmeat": "m\u003dmeat",
       "subtitles.experiment009_theme_phase2": "Experiment 009 Phase 2 Music Theme",
       "gui.changed_addon.book_pagenumber_7.label_a_command": "A changed_addon Command",
-      "block.changed_addon.catlyzer": "Catlyzer",
+      "block.changed_addon.catlyzer": "Catalyzer",
       "gui.changed_addon.tranfur_sounds_gui.button_r": "Reset",
       "gamerule.allowPlayerGrab": "Allow Player Grab",
       "advancements.unifuser_advancement.title": "A Unifuser? What does do?",
@@ -7429,7 +7649,7 @@
       "gui.changed_addon.bookpagenumber_3.label_below": " below",
       "entity.changed_addon.foxyas": "Foxyas",
       "advancements.assimilatethem.title": "Assimilate them!",
-      "advancements.obtaina_painite_hoe.descr": "you did an Painite Hoe congratulations you have a dedication §n§o§b BEYOND THE LIMIT§r",
+      "advancements.obtaina_painite_hoe.descr": "You did an Painite Hoe congratulations you have a dedication §n§o§b BEYOND THE LIMIT§r",
       "subtitles.experiment009_theme": "Experiment 009 Music Theme",
       "gui.changed_addon.grabclickgui.label_escape_progress": "Escape Progress",
       "item.changed_addon.lunarrose_helmet": "Lunar Rose",
@@ -7449,8 +7669,8 @@
       "gui.changed_addon.bookpagenumber_5.label_unifuser1": "unifuser",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.label_fast_you_only_have_4_seconds": "FAST!!! YOU ONLY HAVE 4 SECONDS",
       "gui.changed_addon.bookpagenumber_4.label_with_the_latex_syringe_just_use": "With the latex syringe just use it",
-      "gui.changed_addon.bookpagenumber_3.label_catlyzer1": "Catlyzer",
-      "advancements.catlyzer_advancement.title": "A Catlyzer? What is this?",
+      "gui.changed_addon.bookpagenumber_3.label_catlyzer1": "Catalyzer",
+      "advancements.catlyzer_advancement.title": "A Catalyzer? What is this?",
       "item.minecraft.splash_potion.effect.litixcamoniaeffect": "Splash Potion of LitixCamonia",
       "gui.changed_addon.tranfur_sounds_gui.button_6": "hiss",
       "advancements.ammoniapoweradvancement.title": "Ammonia Particles",
@@ -7473,7 +7693,7 @@
       "gui.changed_addon.book_pagenumber_7.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "advancements.obtain_painite.descr": "Obtain Painite",
       "gui.changed_addon.book_pagenumber_7.label_normaltransfur_grab_mode_o": "-\u003e Those are Organic Friendl-",
-      "item.changed_addon.orangejuice": "Orange juice",
+      "item.changed_addon.orangejuice": "Orange Juice",
       "gui.changed_addon.book_pagenumber_6.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
       "subtitles.grab_release": "Player release from grab",
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",
@@ -7514,21 +7734,25 @@
       {
         "name": "new armor",
         "children": []
+      },
+      {
+        "name": "OverLays",
+        "children": []
       }
     ]
   },
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.3.8",
-    "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus",
+    "version": "2.4",
+    "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
     "license": "MIT License",
     "disableForgeVersionCheck": true,
     "serverSideOnly": false,
     "updateURL": "https://raw.githubusercontent.com/Foxyas/check-mods-update/main/Changed-Addon-Update-Check",
-    "modPicture": "mod_icon_v2",
+    "modPicture": "mod-icon",
     "requiredMods": [
       "changed"
     ],

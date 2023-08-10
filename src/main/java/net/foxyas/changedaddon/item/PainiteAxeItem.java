@@ -22,7 +22,7 @@ public class PainiteAxeItem extends AxeItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 9f;
+				return 8.5f;
 			}
 
 			public int getLevel() {

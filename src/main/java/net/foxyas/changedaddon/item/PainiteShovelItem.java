@@ -22,7 +22,7 @@ public class PainiteShovelItem extends ShovelItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 3.5f;
+				return 4.75f;
 			}
 
 			public int getLevel() {

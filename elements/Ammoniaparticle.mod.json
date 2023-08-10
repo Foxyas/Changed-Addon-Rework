@@ -5,7 +5,7 @@
     "renderType": 0,
     "texture": "23",
     "customModelName": "Normal",
-    "name": "Ammonia particle",
+    "name": "Ammonia Particle",
     "rarity": "COMMON",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"

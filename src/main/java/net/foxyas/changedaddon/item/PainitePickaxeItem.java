@@ -22,7 +22,7 @@ public class PainitePickaxeItem extends PickaxeItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 4.5f;
+				return 4.75f;
 			}
 
 			public int getLevel() {

@@ -4,14 +4,14 @@ license="MIT License"
 
 [[mods]]
 modId="changed_addon"
-version="2.3.8"
+version="2.4"
 displayName="Changed Addon"
 credits="LTXProgrammer for Changed mod"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/"
 updateJSONURL="https://raw.githubusercontent.com/Foxyas/check-mods-update/main/Changed-Addon-Update-Check"
 logoFile="logo.png"
 authors="Foxyas"
-description="this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus"
+description="this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus "
 
 [[dependencies.changed_addon]]
     modId="minecraft"

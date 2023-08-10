@@ -64,11 +64,11 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		if (ShowNoOrganicGrabRadialProcedure.execute(entity)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/grab_radial_menu.png"));
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/goo-radialmenu.png"));
 			this.blit(ms, this.leftPos + 24, this.topPos + 17, 0, 0, 122, 118, 122, 118);
 		}
 		if (ShowOrganicGrabRadialProcedure.execute(entity)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_grab_radial__white.png"));
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic-radialmenu.png"));
 			this.blit(ms, this.leftPos + 23, this.topPos + 18, 0, 0, 122, 118, 122, 118);
 		}
 		if (ShowOrganicGrabRadialProcedure.execute(entity)) {

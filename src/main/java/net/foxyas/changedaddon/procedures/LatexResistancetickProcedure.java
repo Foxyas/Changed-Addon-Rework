@@ -31,6 +31,7 @@ public class LatexResistancetickProcedure {
 	private static void execute(@Nullable Event event, Entity entity) {
 		if (entity == null)
 			return;
+		double TransfurProgress = 0;
 		AttributeInstance attributeInstance = ((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXRESISTANCE.get());
 		double LatexResistence_local_var = attributeInstance.getValue();
 		float TransfurProgress_local_var = (float) LatexResistence_local_var;

@@ -367,39 +367,20 @@ public class CatlyzerUpdateTickProcedure {
 								return blockEntity.getTileData().getDouble(tag);
 							return -1;
 						}
-					}.getValue(world, new BlockPos(x, y, z), "nitrogen_power") >= 50) {
-						if (new Object() {
-							public double getValue(LevelAccessor world, BlockPos pos, String tag) {
-								BlockEntity blockEntity = world.getBlockEntity(pos);
-								if (blockEntity != null)
-									return blockEntity.getTileData().getDouble(tag);
-								return -1;
-							}
-						}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
-							if (!world.isClientSide()) {
-								BlockPos _bp = new BlockPos(x, y, z);
-								BlockEntity _blockEntity = world.getBlockEntity(_bp);
-								BlockState _bs = world.getBlockState(_bp);
-								if (_blockEntity != null)
-									_blockEntity.getTileData().putDouble("recipe_progress", (new Object() {
-										public double getValue(LevelAccessor world, BlockPos pos, String tag) {
-											BlockEntity blockEntity = world.getBlockEntity(pos);
-											if (blockEntity != null)
-												return blockEntity.getTileData().getDouble(tag);
-											return -1;
-										}
-									}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 2));
-								if (world instanceof Level _level)
-									_level.sendBlockUpdated(_bp, _bs, _bs, 3);
-							}
-						}
-					} else {
+					}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
 							BlockState _bs = world.getBlockState(_bp);
 							if (_blockEntity != null)
-								_blockEntity.getTileData().putDouble("recipe_progress", 0);
+								_blockEntity.getTileData().putDouble("recipe_progress", (new Object() {
+									public double getValue(LevelAccessor world, BlockPos pos, String tag) {
+										BlockEntity blockEntity = world.getBlockEntity(pos);
+										if (blockEntity != null)
+											return blockEntity.getTileData().getDouble(tag);
+										return -1;
+									}
+								}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + 2.5));
 							if (world instanceof Level _level)
 								_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 						}
