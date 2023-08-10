@@ -47,8 +47,8 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		this.y = container.y;
 		this.z = container.z;
 		this.entity = container.entity;
-		this.imageWidth = 176;
-		this.imageHeight = 150;
+		this.imageWidth = 158;
+		this.imageHeight = 158;
 	}
 
 	@Override
@@ -64,56 +64,56 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		if (ShowNoOrganicGrabRadialProcedure.execute(entity)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/goo-radialmenu.png"));
-			this.blit(ms, this.leftPos + 24, this.topPos + 17, 0, 0, 122, 118, 122, 118);
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/new-goograbradialmenu.png"));
+			this.blit(ms, this.leftPos + 0, this.topPos + 0, 0, 0, 158, 158, 158, 158);
 		}
 		if (ShowOrganicGrabRadialProcedure.execute(entity)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic-radialmenu.png"));
-			this.blit(ms, this.leftPos + 23, this.topPos + 18, 0, 0, 122, 118, 122, 118);
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/new-organicgrabradialmenu.png"));
+			this.blit(ms, this.leftPos + 0, this.topPos + 0, 0, 0, 158, 158, 158, 158);
 		}
 		if (ShowOrganicGrabRadialProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_form_overlay.png"));
-			this.blit(ms, this.leftPos + 60, this.topPos + 26, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 95, this.topPos + 15, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShocantgrabiconProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/cant_grab_icon_outline.png"));
-			this.blit(ms, this.leftPos + 61, this.topPos + 26, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 46, this.topPos + 17, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowcangrabiconProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/can_grab_icon_outline.png"));
-			this.blit(ms, this.leftPos + 61, this.topPos + 26, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 46, this.topPos + 17, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowassimilationiconProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/assimilation.png"));
-			this.blit(ms, this.leftPos + 95, this.topPos + 26, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 94, this.topPos + 15, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowassimilationoffbuttonProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/grab_overlay_v2.png"));
-			this.blit(ms, this.leftPos + 95, this.topPos + 26, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 94, this.topPos + 15, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowfriendlymodeIconProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendlymodeicon.png"));
-			this.blit(ms, this.leftPos + 122, this.topPos + 53, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 128, this.topPos + 51, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowfriendlymodeofficonProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendlymodeofficon.png"));
-			this.blit(ms, this.leftPos + 122, this.topPos + 53, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 128, this.topPos + 51, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowOrganicFriendlyModeOffProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_off_v2.png"));
-			this.blit(ms, this.leftPos + 122, this.topPos + 53, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 128, this.topPos + 51, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowOrganicFriendlyModeonProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_on_v2.png"));
-			this.blit(ms, this.leftPos + 122, this.topPos + 53, 0, 0, 16, 16, 16, 16);
+			this.blit(ms, this.leftPos + 128, this.topPos + 51, 0, 0, 16, 16, 16, 16);
 		}
 		if (ShowGrabInFriendlyModeOnProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_true.png"));
-			this.blit(ms, this.leftPos + 61, this.topPos + 25, 0, 0, 18, 18, 18, 18);
+			this.blit(ms, this.leftPos + 45, this.topPos + 15, 0, 0, 18, 18, 18, 18);
 		}
 		if (ShowGrabInFriendlyModeoffProcedure.execute(entity)) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_false.png"));
-			this.blit(ms, this.leftPos + 61, this.topPos + 25, 0, 0, 18, 18, 18, 18);
+			this.blit(ms, this.leftPos + 45, this.topPos + 15, 0, 0, 18, 18, 18, 18);
 		}
 		RenderSystem.disableBlend();
 	}
@@ -146,7 +146,7 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		imagebutton_hitbox_16x16 = new ImageButton(this.leftPos + 61, this.topPos + 26, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x16.png"), 16, 32, e -> {
+		imagebutton_hitbox_16x16 = new ImageButton(this.leftPos + 46, this.topPos + 17, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x16.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(0, x, y, z));
 				GrabRadialMenuButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -154,7 +154,7 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		});
 		guistate.put("button:imagebutton_hitbox_16x16", imagebutton_hitbox_16x16);
 		this.addRenderableWidget(imagebutton_hitbox_16x16);
-		imagebutton_hitbox_16x161 = new ImageButton(this.leftPos + 122, this.topPos + 53, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x161.png"), 16, 32, e -> {
+		imagebutton_hitbox_16x161 = new ImageButton(this.leftPos + 128, this.topPos + 51, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x161.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(1, x, y, z));
 				GrabRadialMenuButtonMessage.handleButtonAction(entity, 1, x, y, z);
@@ -162,7 +162,7 @@ public class GrabRadialMenuScreen extends AbstractContainerScreen<GrabRadialMenu
 		});
 		guistate.put("button:imagebutton_hitbox_16x161", imagebutton_hitbox_16x161);
 		this.addRenderableWidget(imagebutton_hitbox_16x161);
-		imagebutton_hitbox_16x162 = new ImageButton(this.leftPos + 95, this.topPos + 26, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x162.png"), 16, 32, e -> {
+		imagebutton_hitbox_16x162 = new ImageButton(this.leftPos + 94, this.topPos + 15, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x162.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabRadialMenuButtonMessage(2, x, y, z));
 				GrabRadialMenuButtonMessage.handleButtonAction(entity, 2, x, y, z);

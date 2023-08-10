@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "oh sure",
-    "achievementDescription": "(enable your friendly grab) you want to be covered in goo",
+    "achievementDescription": "You (enable your friendly grab) you want to be covered in goo",
     "achievementIcon": {
       "value": "CUSTOM:Devitem3"
     },

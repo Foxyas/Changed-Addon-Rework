@@ -50,6 +50,8 @@ public class FriendlyGraboffOnKeyPressedProcedure {
 									_entity.removeEffect(ChangedAddonModMobEffects.INFRIENDLYGRAB.get());
 								if (entityiterator instanceof LivingEntity _entity)
 									_entity.removeEffect(ChangedAddonModMobEffects.INFRIENDLYGRAB.get());
+								if (entity instanceof LivingEntity _entity)
+									_entity.removeEffect(ChangedAddonModMobEffects.INFRIENDLYGRABEFFECT.get());
 								if (entityiterator instanceof LivingEntity _entity)
 									_entity.removeEffect(ChangedAddonModMobEffects.INFRIENDLYGRABEFFECT.get());
 								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
@@ -109,6 +111,8 @@ public class FriendlyGraboffOnKeyPressedProcedure {
 								if (entityiterator instanceof LivingEntity _entity)
 									_entity.removeEffect(ChangedAddonModMobEffects.INFRIENDLYGRAB.get());
 								if (entity instanceof LivingEntity _entity)
+									_entity.removeEffect(ChangedAddonModMobEffects.INFRIENDLYGRABEFFECT.get());
+								if (entityiterator instanceof LivingEntity _entity)
 									_entity.removeEffect(ChangedAddonModMobEffects.INFRIENDLYGRABEFFECT.get());
 								if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
 									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 0, false, false));

@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Latex Insulator",
-    "achievementDescription": "let's isolate this gooey infection",
+    "achievementDescription": "Let's isolate this gooey infection",
     "achievementIcon": {
       "value": "CUSTOM:LatexInsulator"
     },

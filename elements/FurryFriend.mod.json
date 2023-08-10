@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Furry Friend",
-    "achievementDescription": "do you have a friendly furry nearby",
+    "achievementDescription": "Do you have a friendly furry nearby",
     "achievementIcon": {
       "value": "CUSTOM:Devitem"
     },

@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Untransfur!?",
-    "achievementDescription": "you made one untransfur item",
+    "achievementDescription": "You made one untransfur item",
     "achievementIcon": {
       "value": "CUSTOM:Syringewithlitixcammonia"
     },

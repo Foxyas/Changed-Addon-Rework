@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Friendly Transfur",
-    "achievementDescription": "you turned host to Foxyas",
+    "achievementDescription": "You get Transfured by Foxyas",
     "achievementIcon": {
       "value": "CUSTOM:Devitem"
     },

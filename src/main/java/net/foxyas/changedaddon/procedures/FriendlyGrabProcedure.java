@@ -53,7 +53,7 @@ public class FriendlyGrabProcedure {
 									if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRABEFFECT.get(), 50, 0, false, false));
 									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRAB.get(), 10000000, 0, false, false));
+										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRAB.get(), 100, 0, false, false));
 									if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.INFRIENDLYGRAB.get(), 10000000, 0, false, false));
 									if (world instanceof Level _level) {

@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "a different kind of ammonia!?",
-    "achievementDescription": "you craft one ammonia powder",
+    "achievementDescription": "You craft one Ammonia Powder",
     "achievementIcon": {
       "value": "CUSTOM:Ammonia"
     },

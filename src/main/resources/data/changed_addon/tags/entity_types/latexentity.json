@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+  	"changed:latex_bee",
     "changed:behemoth_hand_left",
     "changed:behemoth_hand_right",
     "changed:behemoth_head",
