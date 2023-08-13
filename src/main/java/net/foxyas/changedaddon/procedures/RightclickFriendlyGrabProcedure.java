@@ -144,7 +144,8 @@ public class RightclickFriendlyGrabProcedure {
 						&& (sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).can_grab == true
 						&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
 					if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.ALLOW_PLAYER_GRAB) == true) {
-						if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
+						if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false
+								&& !((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:special")) {
 							if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).wantfriendlygrab == true) {
 								{
 									if (entity instanceof ServerPlayer _ent) {
@@ -167,8 +168,13 @@ public class RightclickFriendlyGrabProcedure {
 									_player.displayClientMessage(new TextComponent("they dont want"), true);
 							}
 						} else {
-							if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("you are organic so you just \u00A7chug\u00A7r they"), true);
+							if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == true) {
+								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent("you are organic so you just \u00A7chug\u00A7r they"), true);
+							} else {
+								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent("You are unable to transfur so you just \u00A7chug\u00A7r they"), true);
+							}
 							if (entity instanceof Player _player && !_player.level.isClientSide())
 								_player.displayClientMessage(new TextComponent((sourceentity.getDisplayName().getString() + " \u00A7chug\u00A7r you")), true);
 							if (entity instanceof ServerPlayer _player) {

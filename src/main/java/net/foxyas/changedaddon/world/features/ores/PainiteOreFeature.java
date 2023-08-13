@@ -30,6 +30,7 @@ import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.Holder;
 
+import net.foxyas.changedaddon.procedures.PainiteOreAdditionalGenerationConditionProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 
 import java.util.Set;
@@ -45,7 +46,7 @@ public class PainiteOreFeature extends OreFeature {
 		FEATURE = new PainiteOreFeature();
 		CONFIGURED_FEATURE = FeatureUtils.register("changed_addon:painite_ore", FEATURE, new OreConfiguration(PainiteOreFeatureRuleTest.INSTANCE, ChangedAddonModBlocks.PAINITE_ORE.get().defaultBlockState(), 4));
 		PLACED_FEATURE = PlacementUtils.register("changed_addon:painite_ore", CONFIGURED_FEATURE,
-				List.of(CountPlacement.of(4), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(-55), VerticalAnchor.absolute(-15)), BiomeFilter.biome()));
+				List.of(CountPlacement.of(1), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(-45)), BiomeFilter.biome()));
 		return FEATURE;
 	}
 
@@ -63,6 +64,11 @@ public class PainiteOreFeature extends OreFeature {
 	public boolean place(FeaturePlaceContext<OreConfiguration> context) {
 		WorldGenLevel world = context.level();
 		if (!generate_dimensions.contains(world.getLevel().dimension()))
+			return false;
+		int x = context.origin().getX();
+		int y = context.origin().getY();
+		int z = context.origin().getZ();
+		if (!PainiteOreAdditionalGenerationConditionProcedure.execute(world, x, y, z))
 			return false;
 		return super.place(context);
 	}

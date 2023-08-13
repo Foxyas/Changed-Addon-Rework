@@ -26,24 +26,6 @@
       }
     ]
   },
-  "experiment009_theme": {
-    "subtitle": "subtitles.experiment009_theme",
-    "sounds": [
-      {
-        "name": "changed_addon:jack_phase_1",
-        "stream": false
-      }
-    ]
-  },
-  "experiment009_theme_phase2": {
-    "subtitle": "subtitles.experiment009_theme_phase2",
-    "sounds": [
-      {
-        "name": "changed_addon:jack_phase_2",
-        "stream": false
-      }
-    ]
-  },
   "armor_equip": {
     "subtitle": "subtitles.armor_equip",
     "sounds": [
@@ -62,6 +44,24 @@
     "sounds": [
       {
         "name": "changed_addon:warn",
+        "stream": false
+      }
+    ]
+  },
+  "experiment009_theme": {
+    "subtitle": "subtitles.experiment009_theme",
+    "sounds": [
+      {
+        "name": "changed_addon:jack_phase_1",
+        "stream": false
+      }
+    ]
+  },
+  "experiment009_theme_phase2": {
+    "subtitle": "subtitles.experiment009_theme_phase2",
+    "sounds": [
+      {
+        "name": "changed_addon:jack_phase_2",
         "stream": false
       }
     ]

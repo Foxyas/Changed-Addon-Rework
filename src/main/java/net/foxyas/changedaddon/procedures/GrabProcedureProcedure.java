@@ -227,7 +227,9 @@ public class GrabProcedureProcedure {
 																					if (entityiterator instanceof LivingEntity _entity)
 																						_entity.removeEffect(MobEffects.WEAKNESS);
 																				} else {
-																					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).assmilation == false) {
+																					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).assmilation == false
+																							&& !((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm)
+																									.startsWith("changed:special")) {
 																						{
 																							Entity _ent = entityiterator;
 																							if (!_ent.level.isClientSide() && _ent.getServer() != null)

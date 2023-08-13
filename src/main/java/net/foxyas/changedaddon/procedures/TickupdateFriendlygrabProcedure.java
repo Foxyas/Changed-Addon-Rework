@@ -16,6 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.client.Minecraft;
 
@@ -88,12 +89,16 @@ public class TickupdateFriendlygrabProcedure {
 								TransLate = KeyBind.replace("key.keyboard.unknown", "Not-Set");
 							} else if (KeyBind.contains("key.keyboard.semicolon")) {
 								TransLate = KeyBind.replace("key.keyboard.semicolon", "\u00E7");
+							} else if (KeyBind.contains("key.keyboard.key.ctrl")) {
+								TransLate = KeyBind.replace("key.keyboard.key.ctrl", "Ctrl +");
+							} else if (KeyBind.contains("key.keyboard.key.shift")) {
+								TransLate = KeyBind.replace("key.keyboard.key.shift", "Shift + ");
 							} else {
 								TransLate = KeyBind.replace("key.keyboard", "");
 							}
 							TransLate = TransLate.replace(".", "");
-							TransfurText = "\u00A7fYou are Friendly Grabing Sneek and Press (key) for grab off they";
-							HumanText = "\u00A7bYou are in Friendly Grab Press (key) for Graboff";
+							TransfurText = new TranslatableComponent("translation.FriendlyGrab.TransfurText").getString();
+							HumanText = new TranslatableComponent("translation.FriendlyGrab.HumanText").getString();
 							{
 								Entity _ent = entity;
 								_ent.teleportTo((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()));

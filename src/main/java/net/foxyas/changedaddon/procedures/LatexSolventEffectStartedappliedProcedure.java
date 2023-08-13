@@ -17,7 +17,7 @@ public class LatexSolventEffectStartedappliedProcedure {
 			Entity _ent = entity;
 			if (!_ent.level.isClientSide() && _ent.getServer() != null)
 				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-						("attribute @s " + "changed_addon:latexresistance " + "modifier add 1-0-0-0-0 \"Solvent Effect Attribute Change\" " + LatexSolvent_level + " add"));
+						("attribute @s " + "changed_addon:latexresistance " + "modifier add f9ff3894-a234-4994-ac8f-d84f45d1827c \"Solvent Effect Attribute Change\" " + LatexSolvent_level + " add"));
 		}
 	}
 }

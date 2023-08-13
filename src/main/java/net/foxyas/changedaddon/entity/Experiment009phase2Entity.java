@@ -69,7 +69,17 @@ public class Experiment009phase2Entity extends Monster {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(1, new LeapAtTargetGoal(this, (float) 0.5) {
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, false, false));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Monster.class, true, false));
+		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.8, true) {
+			@Override
+			protected double getAttackReachSqr(LivingEntity entity) {
+				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
+			}
+		});
+		this.targetSelector.addGoal(5, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(6, new LeapAtTargetGoal(this, (float) 0.5) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009phase2Entity.this.getX();
@@ -90,16 +100,6 @@ public class Experiment009phase2Entity extends Monster {
 				return super.canContinueToUse() && IfplayerishighofentityProcedure.execute(entity);
 			}
 		});
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, Monster.class, true, false));
-		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.8, true) {
-			@Override
-			protected double getAttackReachSqr(LivingEntity entity) {
-				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
-			}
-		});
-		this.targetSelector.addGoal(6, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(8, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(9, new OpenDoorGoal(this, false));

@@ -82,11 +82,11 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_to_purify_the_latex_syringes_jus"), 5, 6, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_untransfur_items"), 5, 51, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_untransfur_items"), 4, 49, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_i_was_about_to_forget_but_we_cre"), 5, 17, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for"), 5, 28, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho"), 0, 39, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_click_on_the_litixcamonia_recipe"), 3, 63, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_click_on_the_litixcamonia_recipe"), 3, 61, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_on_how_to_craft_with_litixcamon"), 0, 71, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_click_here"), 73, 98, -16777216);
 	}

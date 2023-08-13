@@ -66,6 +66,10 @@ repositories {
     }
 
     maven {
+        url "https://cursemaven.com"
+    }
+
+    maven {
         name = "Changed"
         url = "https://raw.githubusercontent.com/LtxProgrammer/Changed-Minecraft-Mod/master/mcmodsrepo/"
     }
@@ -84,8 +88,12 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.2.0'
     implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.11.3")
+    implementation fg.deobf("curse.maven:advanced-xray-256256:3712732")
+    implementation fg.deobf("curse.maven:lightspeedmod-821790:4594803")
+    implementation fg.deobf("curse.maven:forge-carpet-547361:3930877")
     compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192")
+    
     //implementation files('libs/output.jar')
 }
 

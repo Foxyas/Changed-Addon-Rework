@@ -88,7 +88,8 @@ public class Bookpagenumber5Screen extends AbstractContainerScreen<Bookpagenumbe
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_5.label_unifuser"), 8, 19, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_5.label_unifuser1"), 8, 126, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_5.label_craft_table"), 214, 112, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_5.label_craft_table"), 212, 115, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_5.label_catalyzer"), 351, 19, -12829636);
 	}
 
 	@Override

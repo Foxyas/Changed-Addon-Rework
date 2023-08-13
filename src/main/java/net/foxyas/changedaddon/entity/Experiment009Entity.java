@@ -70,7 +70,27 @@ public class Experiment009Entity extends Monster {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(1, new LeapAtTargetGoal(this, (float) 0.5) {
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, false, false));
+		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Monster.class, true, false) {
+			@Override
+			public boolean canUse() {
+				double x = Experiment009Entity.this.getX();
+				double y = Experiment009Entity.this.getY();
+				double z = Experiment009Entity.this.getZ();
+				Entity entity = Experiment009Entity.this;
+				Level world = Experiment009Entity.this.level;
+				return super.canUse() && IflatexentityProcedure.execute(entity);
+			}
+		});
+		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, false) {
+			@Override
+			protected double getAttackReachSqr(LivingEntity entity) {
+				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
+			}
+		});
+		this.targetSelector.addGoal(5, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(6, new LeapAtTargetGoal(this, (float) 0.5) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009Entity.this.getX();
@@ -91,26 +111,6 @@ public class Experiment009Entity extends Monster {
 				return super.canContinueToUse() && IfplayerishighofentityProcedure.execute(entity);
 			}
 		});
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, Monster.class, true, false) {
-			@Override
-			public boolean canUse() {
-				double x = Experiment009Entity.this.getX();
-				double y = Experiment009Entity.this.getY();
-				double z = Experiment009Entity.this.getZ();
-				Entity entity = Experiment009Entity.this;
-				Level world = Experiment009Entity.this.level;
-				return super.canUse() && IflatexentityProcedure.execute(entity);
-			}
-		});
-		this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.5, false) {
-			@Override
-			protected double getAttackReachSqr(LivingEntity entity) {
-				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
-			}
-		});
-		this.targetSelector.addGoal(6, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(8, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(9, new OpenDoorGoal(this, false));

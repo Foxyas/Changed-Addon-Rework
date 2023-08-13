@@ -43,7 +43,7 @@
         "data": {
           "name": "label_look_i_will_explain_some_simple",
           "text": {
-            "fixedValue": "Hello, I will explain some simple information about the Changed experiment."
+            "fixedValue": "Hello, I will explain some simple information about the Changed Mod."
           },
           "color": {
             "value": -12829636,
@@ -112,13 +112,13 @@
         "data": {
           "name": "label_after_obtaining_a_latex_base_yo",
           "text": {
-            "fixedValue": "After obtaining a latex base, you can make a latex syringe with a blood s"
+            "fixedValue": " After obtaining a latex base, you can make a latex syringe with a blood s"
           },
           "color": {
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 39,
+          "x": 36,
           "y": 54
         }
       },
@@ -172,14 +172,14 @@
         "data": {
           "name": "label_recipes_for_each_latex_will_var",
           "text": {
-            "fixedValue": " Recipes for each latex will vary."
+            "fixedValue": " Recipes for each latex will vary but all recipes are in infuser gui."
           },
           "color": {
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 2,
-          "y": 86
+          "x": 1,
+          "y": 87
         }
       },
       {

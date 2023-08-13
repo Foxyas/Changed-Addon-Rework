@@ -25,7 +25,7 @@ public class SpawneggoffoxyasItem extends Item {
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		SpawneggoffoxyasRightclickedProcedure.execute(world, x, y, z);
+		SpawneggoffoxyasRightclickedProcedure.execute(world, x, y, z, entity, itemstack);
 		return ar;
 	}
 }

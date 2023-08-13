@@ -59,8 +59,8 @@
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 10,
-          "y": 81
+          "x": 9,
+          "y": 79
         }
       },
       {
@@ -98,7 +98,7 @@
         "data": {
           "name": "label_the_recipe_for_the_main_item_sho",
           "text": {
-            "fixedValue": " Litixcamonia. Litixcamonia can be injected to"
+            "fixedValue": " LitixCamonia. LitixCamonia can be injected to"
           },
           "color": {
             "value": -12829636,
@@ -141,14 +141,14 @@
         "data": {
           "name": "label_click_on_the_litixcamonia_recipe",
           "text": {
-            "fixedValue": "Click on the Litixcamonia recipe for details "
+            "fixedValue": "Click on the LitixCamonia recipe for details "
           },
           "color": {
             "value": -12829636,
             "falpha": 0.0
           },
           "x": 8,
-          "y": 93
+          "y": 91
         }
       },
       {

@@ -89,11 +89,11 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_first_you_have_to_have_a_latex_b"), 3, 14, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_latex_beings"), 4, 24, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_the_craft"), 108, 79, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_after_obtaining_a_latex_base_yo"), 37, 24, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_after_obtaining_a_latex_base_yo"), 34, 24, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_syringe_with_your_own_blood_and"), 4, 35, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_to_make_a_syringe_you_can_take_a"), 310, 35, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_can_take_a_glass_bottle_and_an_i"), 4, 46, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_recipes_for_each_latex_will_var"), 0, 56, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_recipes_for_each_latex_will_var"), -1, 57, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays"), 13, 160, -1);
 	}
 

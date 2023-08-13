@@ -33,7 +33,7 @@
         "data": {
           "name": "label_unifuser",
           "text": {
-            "fixedValue": "unifuser"
+            "fixedValue": "Unifuser"
           },
           "color": {
             "value": -12829636,
@@ -48,7 +48,7 @@
         "data": {
           "name": "label_unifuser1",
           "text": {
-            "fixedValue": "unifuser"
+            "fixedValue": "Unifuser"
           },
           "color": {
             "value": -12829636,
@@ -86,14 +86,14 @@
         "data": {
           "name": "label_craft_table",
           "text": {
-            "fixedValue": "craft table"
+            "fixedValue": "Crafting-table"
           },
           "color": {
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 218,
-          "y": 130
+          "x": 216,
+          "y": 133
         }
       },
       {
@@ -103,6 +103,21 @@
           "use1Xscale": false,
           "x": 212,
           "y": 33
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_catalyzer",
+          "text": {
+            "fixedValue": "Catalyzer"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 355,
+          "y": 37
         }
       }
     ],

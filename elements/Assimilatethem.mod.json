@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Assimilate them!",
-    "achievementDescription": "you activated the assimilation",
+    "achievementDescription": "You activated the assimilation",
     "achievementIcon": {
       "value": "CUSTOM:Changedbook"
     },

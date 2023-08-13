@@ -3,7 +3,7 @@
   "_type": "armor",
   "definition": {
     "enableHelmet": true,
-    "textureHelmet": "hazadhelmet",
+    "textureHelmet": "hazard-helmet",
     "enableBody": true,
     "textureBody": "hazard_chestplate",
     "enableLeggings": true,

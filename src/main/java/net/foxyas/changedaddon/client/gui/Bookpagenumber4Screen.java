@@ -97,7 +97,7 @@ public class Bookpagenumber4Screen extends AbstractContainerScreen<Bookpagenumbe
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_close = new Button(this.leftPos + 333, this.topPos + 189, 51, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_4.button_close"), e -> {
+		button_close = new Button(this.leftPos + 332, this.topPos + 188, 51, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_4.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber4ButtonMessage(0, x, y, z));
 				Bookpagenumber4ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -105,7 +105,7 @@ public class Bookpagenumber4Screen extends AbstractContainerScreen<Bookpagenumbe
 		});
 		guistate.put("button:button_close", button_close);
 		this.addRenderableWidget(button_close);
-		button_back = new Button(this.leftPos + 280, this.topPos + 189, 46, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_4.button_back"), e -> {
+		button_back = new Button(this.leftPos + 279, this.topPos + 188, 46, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_4.button_back"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber4ButtonMessage(1, x, y, z));
 				Bookpagenumber4ButtonMessage.handleButtonAction(entity, 1, x, y, z);

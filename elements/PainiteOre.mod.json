@@ -133,9 +133,12 @@
       }
     ],
     "generationShape": "UNIFORM",
-    "frequencyPerChunks": 4,
+    "frequencyPerChunks": 1,
     "frequencyOnChunk": 4,
-    "minGenerateHeight": -55,
-    "maxGenerateHeight": -15
+    "minGenerateHeight": -60,
+    "maxGenerateHeight": -45,
+    "generateCondition": {
+      "name": "PainiteOreAdditionalGenerationCondition"
+    }
   }
 }

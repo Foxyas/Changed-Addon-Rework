@@ -7,8 +7,10 @@ public class IfplayerishighofentityProcedure {
 	public static boolean execute(Entity entity) {
 		if (entity == null)
 			return false;
-		if (entity.getY() < (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY()) {
-			return true;
+		if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null)) {
+			if (entity.getY() < (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY()) {
+				return true;
+			}
 		}
 		return false;
 	}
