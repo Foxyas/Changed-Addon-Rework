@@ -1,0 +1,21 @@
+{
+  "_fv": 43,
+  "_type": "particle",
+  "definition": {
+    "texture": "solvent-particle_16x16.png",
+    "animate": false,
+    "frameDuration": 1,
+    "width": 0.3,
+    "height": 0.30000000000000004,
+    "scale": 1.0,
+    "speedFactor": 0.05,
+    "gravity": 0.1,
+    "maxAge": 10,
+    "maxAgeDiff": 10,
+    "angularVelocity": 0.0,
+    "angularAcceleration": 0.0,
+    "canCollide": true,
+    "alwaysShow": false,
+    "renderType": "TRANSLUCENT"
+  }
+}

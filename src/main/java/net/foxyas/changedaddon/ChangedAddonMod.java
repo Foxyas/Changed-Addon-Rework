@@ -28,6 +28,7 @@ import net.minecraft.network.FriendlyByteBuf;
 
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModPotions;
+import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModFluids;
@@ -60,6 +61,8 @@ public class ChangedAddonMod {
 		ChangedAddonModEnchantments.REGISTRY.register(bus);
 		ChangedAddonModMobEffects.REGISTRY.register(bus);
 		ChangedAddonModPotions.REGISTRY.register(bus);
+
+		ChangedAddonModParticleTypes.REGISTRY.register(bus);
 
 		ChangedAddonModFluids.REGISTRY.register(bus);
 	}

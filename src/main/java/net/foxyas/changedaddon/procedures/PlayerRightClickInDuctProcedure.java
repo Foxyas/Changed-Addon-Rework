@@ -11,12 +11,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
@@ -73,21 +75,24 @@ public class PlayerRightClickInDuctProcedure {
 								}
 								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+							} else {
+								if (entity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent("You are too tired for this"), true);
 							}
 						} else {
-							if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))) == (blockstate.getBlock().getStateDefinition().getProperty("vented") instanceof BooleanProperty _withbp18
-									? blockstate.setValue(_withbp18, true)
+							if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))) == (blockstate.getBlock().getStateDefinition().getProperty("vented") instanceof BooleanProperty _withbp19
+									? blockstate.setValue(_withbp19, true)
 									: blockstate)) {
 								if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.FADIGE.get()) : false)) {
-									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("up") instanceof BooleanProperty _withbp23 ? blockstate.setValue(_withbp23, true) : blockstate)
-											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("down") instanceof BooleanProperty _withbp27 ? blockstate.setValue(_withbp27, true) : blockstate)) {
+									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("up") instanceof BooleanProperty _withbp24 ? blockstate.setValue(_withbp24, true) : blockstate)
+											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("down") instanceof BooleanProperty _withbp28 ? blockstate.setValue(_withbp28, true) : blockstate)) {
 										if ((entity.getDirection()) == Direction.EAST) {
 											if ((world.getBlockState(new BlockPos(entity.getX() + 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
 												{
 													Entity _ent = entity;
-													_ent.teleportTo((entity.getX() + 0.7), (entity.getY()), (entity.getZ()));
+													_ent.teleportTo((entity.getX() + 0.65), (entity.getY()), (entity.getZ()));
 													if (_ent instanceof ServerPlayer _serverPlayer)
-														_serverPlayer.connection.teleport((entity.getX() + 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+														_serverPlayer.connection.teleport((entity.getX() + 0.65), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
 												}
 												if (world instanceof Level _level) {
 													if (!_level.isClientSide()) {
@@ -104,9 +109,9 @@ public class PlayerRightClickInDuctProcedure {
 											if ((world.getBlockState(new BlockPos(entity.getX() - 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
 												{
 													Entity _ent = entity;
-													_ent.teleportTo((entity.getX() - 0.7), (entity.getY()), (entity.getZ()));
+													_ent.teleportTo((entity.getX() - 0.65), (entity.getY()), (entity.getZ()));
 													if (_ent instanceof ServerPlayer _serverPlayer)
-														_serverPlayer.connection.teleport((entity.getX() - 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+														_serverPlayer.connection.teleport((entity.getX() - 0.65), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
 												}
 												if (world instanceof Level _level) {
 													if (!_level.isClientSide()) {
@@ -120,15 +125,15 @@ public class PlayerRightClickInDuctProcedure {
 											}
 										}
 									}
-									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("north") instanceof BooleanProperty _withbp57 ? blockstate.setValue(_withbp57, true) : blockstate)
-											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("south") instanceof BooleanProperty _withbp61 ? blockstate.setValue(_withbp61, true) : blockstate)) {
+									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("north") instanceof BooleanProperty _withbp58 ? blockstate.setValue(_withbp58, true) : blockstate)
+											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("south") instanceof BooleanProperty _withbp62 ? blockstate.setValue(_withbp62, true) : blockstate)) {
 										if ((entity.getDirection()) == Direction.EAST) {
-											if ((world.getBlockState(new BlockPos(entity.getX() + 0.7, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
+											if ((world.getBlockState(new BlockPos(entity.getX() + 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
 												{
 													Entity _ent = entity;
-													_ent.teleportTo((entity.getX() + 1), (entity.getY()), (entity.getZ()));
+													_ent.teleportTo((entity.getX() + 0.65), (entity.getY()), (entity.getZ()));
 													if (_ent instanceof ServerPlayer _serverPlayer)
-														_serverPlayer.connection.teleport((entity.getX() + 1), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+														_serverPlayer.connection.teleport((entity.getX() + 0.65), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
 												}
 												if (world instanceof Level _level) {
 													if (!_level.isClientSide()) {
@@ -145,9 +150,9 @@ public class PlayerRightClickInDuctProcedure {
 											if ((world.getBlockState(new BlockPos(entity.getX() - 1, entity.getY(), entity.getZ()))).getBlock() == Blocks.AIR) {
 												{
 													Entity _ent = entity;
-													_ent.teleportTo((entity.getX() - 0.7), (entity.getY()), (entity.getZ()));
+													_ent.teleportTo((entity.getX() - 0.65), (entity.getY()), (entity.getZ()));
 													if (_ent instanceof ServerPlayer _serverPlayer)
-														_serverPlayer.connection.teleport((entity.getX() - 0.7), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+														_serverPlayer.connection.teleport((entity.getX() - 0.65), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
 												}
 												if (world instanceof Level _level) {
 													if (!_level.isClientSide()) {
@@ -161,15 +166,15 @@ public class PlayerRightClickInDuctProcedure {
 											}
 										}
 									}
-									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("east") instanceof BooleanProperty _withbp91 ? blockstate.setValue(_withbp91, true) : blockstate)
-											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("west") instanceof BooleanProperty _withbp95 ? blockstate.setValue(_withbp95, true) : blockstate)) {
+									if (blockstate == (blockstate.getBlock().getStateDefinition().getProperty("east") instanceof BooleanProperty _withbp92 ? blockstate.setValue(_withbp92, true) : blockstate)
+											&& blockstate == (blockstate.getBlock().getStateDefinition().getProperty("west") instanceof BooleanProperty _withbp96 ? blockstate.setValue(_withbp96, true) : blockstate)) {
 										if ((entity.getDirection()) == Direction.SOUTH) {
 											if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ() + 1))).getBlock() == Blocks.AIR) {
 												{
 													Entity _ent = entity;
-													_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() + 0.7));
+													_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() + 0.65));
 													if (_ent instanceof ServerPlayer _serverPlayer)
-														_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() + 0.7), _ent.getYRot(), _ent.getXRot());
+														_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() + 0.65), _ent.getYRot(), _ent.getXRot());
 												}
 												if (world instanceof Level _level) {
 													if (!_level.isClientSide()) {
@@ -186,9 +191,9 @@ public class PlayerRightClickInDuctProcedure {
 											if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ() - 1))).getBlock() == Blocks.AIR) {
 												{
 													Entity _ent = entity;
-													_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() - 0.7));
+													_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ() - 0.65));
 													if (_ent instanceof ServerPlayer _serverPlayer)
-														_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() - 0.7), _ent.getYRot(), _ent.getXRot());
+														_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ() - 0.65), _ent.getYRot(), _ent.getXRot());
 												}
 												if (world instanceof Level _level) {
 													if (!_level.isClientSide()) {
@@ -202,6 +207,9 @@ public class PlayerRightClickInDuctProcedure {
 											}
 										}
 									}
+								} else {
+									if (entity instanceof Player _player && !_player.level.isClientSide())
+										_player.displayClientMessage(new TextComponent("You are too tired for this"), true);
 								}
 							}
 						}

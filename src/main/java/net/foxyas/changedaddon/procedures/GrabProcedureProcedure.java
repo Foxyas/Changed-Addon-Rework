@@ -328,11 +328,11 @@ public class GrabProcedureProcedure {
 										}
 									} else {
 										if (entity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent("you cant grab them"), true);
+											_player.displayClientMessage(new TextComponent("You cant grab them"), true);
 									}
 								} else {
 									if (entity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent("you are too tired for this"), true);
+										_player.displayClientMessage(new TextComponent("You are too tired for this"), true);
 								}
 							}
 						}

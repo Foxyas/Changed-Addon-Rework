@@ -271,7 +271,7 @@ public class ChangedAddonModVariables {
 		public boolean assmilation = false;
 		public boolean Friendly_mode = false;
 		public double times_the_syringe_was_used = 0;
-		public boolean visibleaddongui = false;
+		public boolean visibleaddongui = true;
 		public boolean grab_escape = false;
 		public double escape_progress = 0;
 		public boolean wantfriendlygrab = true;

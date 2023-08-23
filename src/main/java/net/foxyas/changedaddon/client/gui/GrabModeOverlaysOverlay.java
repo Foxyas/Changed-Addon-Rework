@@ -39,12 +39,20 @@ public class GrabModeOverlaysOverlay {
 			int w = event.getWindow().getGuiScaledWidth();
 			int h = event.getWindow().getGuiScaledHeight();
 			int posX = 5;
-			int posY = h / 2;
+			int posY = h;
 			/* 
-			 *  posY-numero = cima
-			 *  posY+numero = baixo
-			 *  h/2 = Y Do meio da tela 
-			 *  w/2 = X Do meio da tela
+			 *  posY-numero = up
+			 *  posY+numero = down
+			 *  h/2 = Y mid of screen 
+			 *  w/2 = X mid of screen
+			 *  with h/2
+			 *	61 = 44 + 17
+			 *	44 = 27 + 17
+			 *	27 = area base cool :D
+			 *	without h/2
+			 *	89
+			 *	78
+			 *	61 <-> 59
 			*/
 			Level world = null;
 			double x = 0;
@@ -66,47 +74,47 @@ public class GrabModeOverlaysOverlay {
 			if (FriendlymodeoverlayDisplayOverlayIngameProcedure.execute(entity)) {
 				if (ShowassimilationiconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/assimilation.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -44, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 78, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowGrabInFriendlyModeoffProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_false.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -25, 0, 0, 18, 18, 18, 18);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 98, 0, 0, 18, 18, 18, 18);
 				}
 				if (ShowGrabInFriendlyModeOnProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendly_transfur_true.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -25, 0, 0, 18, 18, 18, 18);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 98, 0, 0, 18, 18, 18, 18);
 				}
 				if (ShowassimilationoffbuttonProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/grab_overlay_v2.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -44, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 78, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowfriendlymodeIconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendlymodeicon.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - -61, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - 61, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowfriendlymodeofficonProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/friendlymodeofficon.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - -61, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - 61, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowcangrabiconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/can_grab_icon_outline.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - -27, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - 95, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShocantgrabiconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/cant_grab_icon_outline.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -27, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 95, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowOrganicFriendlyModeOffProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_off_v2.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -61, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 61, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowOrganicFriendlyModeonProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_friendly_mode_on_v2.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -61, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 61, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowOrganicOverLayProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/organic_form_overlay.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - -44, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - 78, 0, 0, 16, 16, 16, 16);
 				}
 
 			}
@@ -127,7 +135,7 @@ public class GrabModeOverlaysOverlay {
 			int w = event.getWindow().getGuiScaledWidth();
 			int h = event.getWindow().getGuiScaledHeight();
 			int posX = 5;
-			int posY = h / 2;
+			int posY = h;
 			Level world = null;
 			double x = 0;
 			double y = 0;
@@ -148,11 +156,11 @@ public class GrabModeOverlaysOverlay {
 			if (WantFriendlyGrabOverlayDisplayOverlayIngameProcedure.execute(entity)) {
 				if (ShowWantFriendlygrabfalseProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dont_want_friendly_grab.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - -61, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 61, 0, 0, 16, 16, 16, 16);
 				}
 				if (ShowWantFriendlygrabtrueProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/want_friendly_grab.png"));
-					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - -61, 0, 0, 16, 16, 16, 16);
+					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX, posY - 61, 0, 0, 16, 16, 16, 16);
 				}
 			}
 			RenderSystem.depthMask(true);

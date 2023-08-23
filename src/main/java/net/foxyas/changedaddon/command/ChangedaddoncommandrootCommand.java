@@ -17,13 +17,17 @@ import net.foxyas.changedaddon.procedures.TogglehumanaddonguiProcedure;
 import net.foxyas.changedaddon.procedures.TogglealladdonguiProcedure;
 import net.foxyas.changedaddon.procedures.ToggleaddonguiprocedureProcedure;
 import net.foxyas.changedaddon.procedures.ToggleOrganicOverlayProcedure;
+import net.foxyas.changedaddon.procedures.SetmaxTransfurToleranceProcedure;
+import net.foxyas.changedaddon.procedures.SetDefaultValueProcedure;
 import net.foxyas.changedaddon.procedures.RecipeResetProcedure;
 import net.foxyas.changedaddon.procedures.InforesettransfuradvancementProcedure;
 import net.foxyas.changedaddon.procedures.InfoonlytransfuraddonguiProcedure;
 import net.foxyas.changedaddon.procedures.InfoonlyhumanaddonguiProcedure;
 import net.foxyas.changedaddon.procedures.InfoaddonwarnsProcedure;
 import net.foxyas.changedaddon.procedures.InfoaddonguiProcedure;
+import net.foxyas.changedaddon.procedures.GetmaxTransfurToleranceProcedure;
 
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 
 @Mod.EventBusSubscriber
@@ -32,7 +36,43 @@ public class ChangedaddoncommandrootCommand {
 	public static void registerCommand(RegisterCommandsEvent event) {
 		event.getDispatcher().register(Commands.literal("changed_addon")
 
-				.then(Commands.literal("RecipesReset").executes(arguments -> {
+				.then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					SetmaxTransfurToleranceProcedure.execute(arguments, entity);
+					return 0;
+				})).then(Commands.literal("Default").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					SetDefaultValueProcedure.execute(entity);
+					return 0;
+				}))).then(Commands.literal("GetMaxTransfurTolerance").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					GetmaxTransfurToleranceProcedure.execute(entity);
+					return 0;
+				})).then(Commands.literal("RecipesReset").executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();

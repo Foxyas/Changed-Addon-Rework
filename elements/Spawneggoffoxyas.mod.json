@@ -29,7 +29,7 @@
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
-    "onRightClickedInAir": {
+    "onRightClickedOnBlock": {
       "name": "SpawneggoffoxyasRightclicked"
     },
     "isFood": false,

@@ -4,12 +4,16 @@
   "definition": {
     "name": "Latex Solvent",
     "type": "WEAPON",
-    "rarity": "VERY_RARE",
+    "rarity": "RARE",
     "minLevel": 1,
-    "maxLevel": 3,
+    "maxLevel": 5,
     "damageModifier": 0,
-    "compatibleEnchantments": [],
-    "excludeEnchantments": false,
+    "compatibleEnchantments": [
+      {
+        "value": "FIRE_ASPECT"
+      }
+    ],
+    "excludeEnchantments": true,
     "compatibleItems": [],
     "excludeItems": false,
     "isTreasureEnchantment": false,

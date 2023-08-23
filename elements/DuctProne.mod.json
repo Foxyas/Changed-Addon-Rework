@@ -1,0 +1,15 @@
+{
+  "_fv": 43,
+  "_type": "keybind",
+  "definition": {
+    "triggerKey": "V",
+    "keyBindingName": "Duct Prone",
+    "keyBindingCategoryKey": "grab_gui",
+    "onKeyPressed": {
+      "name": "DuctProneOnKeyPressed"
+    },
+    "onKeyReleased": {
+      "name": "DuctProneOnKeyReleased"
+    }
+  }
+}

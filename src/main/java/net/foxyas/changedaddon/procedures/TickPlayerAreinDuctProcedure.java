@@ -9,7 +9,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
@@ -37,6 +36,7 @@ public class TickPlayerAreinDuctProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
+		boolean canwork = false;
 		if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.CHANGED_ADDON_DUCT_MECANIC) == true) {
 			if (!((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))).getBlock() == ForgeRegistries.BLOCKS.getValue(new ResourceLocation("changed:duct")))) {
 				{
@@ -48,8 +48,6 @@ public class TickPlayerAreinDuctProcedure {
 				}
 			}
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).enter_in_duct == true) {
-				entity.setSwimming(true);
-				entity.setPose(Pose.SWIMMING);
 				if (entity instanceof Player _player) {
 					_player.getAbilities().mayfly = true;
 					_player.onUpdateAbilities();

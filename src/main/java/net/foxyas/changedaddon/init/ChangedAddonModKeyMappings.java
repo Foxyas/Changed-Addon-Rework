@@ -24,6 +24,7 @@ import net.foxyas.changedaddon.network.OpenGrabRadialMessage;
 import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
 import net.foxyas.changedaddon.network.GrabKeybindMessage;
 import net.foxyas.changedaddon.network.FriendlyGraboffMessage;
+import net.foxyas.changedaddon.network.DuctProneMessage;
 import net.foxyas.changedaddon.network.ActiveFriendlyModeMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -38,6 +39,8 @@ public class ChangedAddonModKeyMappings {
 	public static final KeyMapping WANTFRIENDLYGRAB = new KeyMapping("key.changed_addon.wantfriendlygrab", GLFW.GLFW_KEY_I, "key.categories.grab_gui");
 	public static final KeyMapping OPEN_GRAB_RADIAL = new KeyMapping("key.changed_addon.open_grab_radial", GLFW.GLFW_KEY_H, "key.categories.grab_gui");
 	public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_O, "key.categories.grab_gui");
+	public static final KeyMapping DUCT_PRONE = new KeyMapping("key.changed_addon.duct_prone", GLFW.GLFW_KEY_V, "key.categories.grab_gui");
+	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
 	public static void registerKeyBindings(FMLClientSetupEvent event) {
@@ -50,6 +53,7 @@ public class ChangedAddonModKeyMappings {
 		ClientRegistry.registerKeyBinding(WANTFRIENDLYGRAB);
 		ClientRegistry.registerKeyBinding(OPEN_GRAB_RADIAL);
 		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
+		ClientRegistry.registerKeyBinding(DUCT_PRONE);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -109,6 +113,17 @@ public class ChangedAddonModKeyMappings {
 					if (event.getAction() == GLFW.GLFW_PRESS) {
 						ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenExtraDetailsMessage(0, 0));
 						OpenExtraDetailsMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+					}
+				}
+				if (event.getKey() == DUCT_PRONE.getKey().getValue()) {
+					if (event.getAction() == GLFW.GLFW_PRESS) {
+						ChangedAddonMod.PACKET_HANDLER.sendToServer(new DuctProneMessage(0, 0));
+						DuctProneMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+						DUCT_PRONE_LASTPRESS = System.currentTimeMillis();
+					} else if (event.getAction() == GLFW.GLFW_RELEASE) {
+						int dt = (int) (System.currentTimeMillis() - DUCT_PRONE_LASTPRESS);
+						ChangedAddonMod.PACKET_HANDLER.sendToServer(new DuctProneMessage(1, dt));
+						DuctProneMessage.pressAction(Minecraft.getInstance().player, 1, dt);
 					}
 				}
 			}

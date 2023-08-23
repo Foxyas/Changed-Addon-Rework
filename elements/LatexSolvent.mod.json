@@ -16,6 +16,9 @@
     "onStarted": {
       "name": "LatexSolventEffectStartedapplied"
     },
+    "onActiveTick": {
+      "name": "LatexSolventOnActiveTick"
+    },
     "onExpired": {
       "name": "LatexSolventEffectExpires"
     }

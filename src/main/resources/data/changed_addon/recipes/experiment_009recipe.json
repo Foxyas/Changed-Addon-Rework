@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
+	"NAN",
     "LTP",
-    "U  ",
-    "   "
+    "UAA"
   ],
   "key": {
     "T": {
@@ -20,11 +20,19 @@
     
     "P":{
     	"item": "changed_addon:experiment_009dna"
+    },
+    
+    "A":{
+    	"item": "changed_addon:painite_block"
+    },
+    
+    "N":{
+		"item": "minecraft:netherite_block"
     }
     
   },
   "result": {
-    "item": "changed_addon:experiment_009_spawn_egg",
+    "item": "changed_addon:experiment_009_spawnegg",
     "count": 1
   }
 }

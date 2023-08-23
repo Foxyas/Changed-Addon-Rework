@@ -1,13 +1,10 @@
 
 package net.foxyas.changedaddon.item;
 
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 
 import net.foxyas.changedaddon.procedures.SpawneggoffoxyasRightclickedProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
@@ -18,14 +15,9 @@ public class SpawneggoffoxyasItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-		ItemStack itemstack = ar.getObject();
-		double x = entity.getX();
-		double y = entity.getY();
-		double z = entity.getZ();
-
-		SpawneggoffoxyasRightclickedProcedure.execute(world, x, y, z, entity, itemstack);
-		return ar;
+	public InteractionResult useOn(UseOnContext context) {
+		super.useOn(context);
+		SpawneggoffoxyasRightclickedProcedure.execute(context.getLevel(), context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), context.getClickedFace(), context.getPlayer(), context.getItemInHand());
+		return InteractionResult.SUCCESS;
 	}
 }

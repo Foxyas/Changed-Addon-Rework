@@ -71,15 +71,14 @@ public class Experiment009phase2Entity extends Monster {
 		super.registerGoals();
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Monster.class, true, false));
-		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.8, true) {
+		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.8, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
-		this.targetSelector.addGoal(5, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(6, new LeapAtTargetGoal(this, (float) 0.5) {
+		this.targetSelector.addGoal(4, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(5, new LeapAtTargetGoal(this, (float) 0.5) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009phase2Entity.this.getX();
@@ -100,11 +99,11 @@ public class Experiment009phase2Entity extends Monster {
 				return super.canContinueToUse() && IfplayerishighofentityProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(8, new OpenDoorGoal(this, true));
-		this.goalSelector.addGoal(9, new OpenDoorGoal(this, false));
-		this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(11, new FloatGoal(this) {
+		this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1));
+		this.goalSelector.addGoal(7, new OpenDoorGoal(this, true));
+		this.goalSelector.addGoal(8, new OpenDoorGoal(this, false));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(10, new FloatGoal(this) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009phase2Entity.this.getX();
@@ -140,6 +139,8 @@ public class Experiment009phase2Entity extends Monster {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
+			return false;
+		if (source == DamageSource.FALL)
 			return false;
 		if (source == DamageSource.DROWN)
 			return false;
@@ -199,7 +200,7 @@ public class Experiment009phase2Entity extends Monster {
 		builder = builder.add(Attributes.MAX_HEALTH, 300);
 		builder = builder.add(Attributes.ARMOR, 40);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 64);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 2);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 0.3);
 		return builder;

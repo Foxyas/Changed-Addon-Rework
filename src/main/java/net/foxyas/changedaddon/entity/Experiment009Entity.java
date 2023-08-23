@@ -39,7 +39,6 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.foxyas.changedaddon.procedures.IfplayerishighofentityProcedure;
 import net.foxyas.changedaddon.procedures.IfplayerareinwaterProcedure;
-import net.foxyas.changedaddon.procedures.IflatexentityProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009OnInitialEntitySpawnProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009OnEntityTickUpdateProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009EntityDiesProcedure;
@@ -72,25 +71,14 @@ public class Experiment009Entity extends Monster {
 		super.registerGoals();
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.targetSelector.addGoal(3, new NearestAttackableTargetGoal(this, Monster.class, true, false) {
-			@Override
-			public boolean canUse() {
-				double x = Experiment009Entity.this.getX();
-				double y = Experiment009Entity.this.getY();
-				double z = Experiment009Entity.this.getZ();
-				Entity entity = Experiment009Entity.this;
-				Level world = Experiment009Entity.this.level;
-				return super.canUse() && IflatexentityProcedure.execute(entity);
-			}
-		});
-		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.5, false) {
+		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.5, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
-		this.targetSelector.addGoal(5, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(6, new LeapAtTargetGoal(this, (float) 0.5) {
+		this.targetSelector.addGoal(4, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(5, new LeapAtTargetGoal(this, (float) 0.5) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009Entity.this.getX();
@@ -111,11 +99,11 @@ public class Experiment009Entity extends Monster {
 				return super.canContinueToUse() && IfplayerishighofentityProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(8, new OpenDoorGoal(this, true));
-		this.goalSelector.addGoal(9, new OpenDoorGoal(this, false));
-		this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(11, new FloatGoal(this) {
+		this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1));
+		this.goalSelector.addGoal(7, new OpenDoorGoal(this, true));
+		this.goalSelector.addGoal(8, new OpenDoorGoal(this, false));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(10, new FloatGoal(this) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009Entity.this.getX();
@@ -173,7 +161,7 @@ public class Experiment009Entity extends Monster {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		Experiment009OnEntityTickUpdateProcedure.execute(this);
+		Experiment009OnEntityTickUpdateProcedure.execute(this.level, this);
 	}
 
 	@Override
@@ -208,7 +196,7 @@ public class Experiment009Entity extends Monster {
 		builder = builder.add(Attributes.MAX_HEALTH, 100);
 		builder = builder.add(Attributes.ARMOR, 40);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 64);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.5);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 0.2);
 		return builder;
