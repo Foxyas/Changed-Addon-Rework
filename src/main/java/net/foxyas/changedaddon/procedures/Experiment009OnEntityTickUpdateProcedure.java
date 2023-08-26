@@ -1,11 +1,14 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraftforge.common.ForgeMod;
+
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
@@ -21,17 +24,6 @@ public class Experiment009OnEntityTickUpdateProcedure {
 		if (entity == null)
 			return;
 		Entity TpTarget = null;
-		if (entity.isInWater()) {
-			if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == (null))) {
-				if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater())) {
-					if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY() >= entity.getY()) {
-						if (entity instanceof Mob _entity)
-							_entity.getNavigation().moveTo(((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX()), ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY()),
-									((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ()), 1);
-					}
-				}
-			}
-		}
 		if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 20, 20, 20), e -> true).isEmpty()) {
 			TpTarget = (Entity) world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 20, 20, 20), e -> true).stream().sorted(new Object() {
 				Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
@@ -40,6 +32,15 @@ public class Experiment009OnEntityTickUpdateProcedure {
 			}.compareDistOf((entity.getX()), (entity.getY()), (entity.getZ()))).findFirst().orElse(null);
 		} else {
 			TpTarget = null;
+		}
+		if (entity.isInWater()) {
+			if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == (null))) {
+				if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater() && entity.isInWater()) {
+					((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(4);
+				} else if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater()) && entity.isInWater()) {
+					((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(4);
+				}
+			}
 		}
 		if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == (null)) {
 			if (entity.getPersistentData().getDouble("BossTp") >= 5) {

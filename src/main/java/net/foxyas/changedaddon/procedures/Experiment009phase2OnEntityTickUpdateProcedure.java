@@ -1,10 +1,11 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.minecraft.world.scores.criteria.ObjectiveCriteria;
-import net.minecraft.world.scores.Scoreboard;
-import net.minecraft.world.scores.Objective;
+import net.minecraftforge.common.ForgeMod;
+
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.entity.player.Player;
@@ -15,7 +16,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.client.Minecraft;
 
@@ -25,11 +25,12 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 	public static void execute(LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
+		Entity TpTarget = null;
 		double randown = 0;
 		double Pz = 0;
 		double Px = 0;
 		double Py = 0;
-		Entity TpTarget = null;
+		BlockState a = Blocks.AIR.defaultBlockState();
 		entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 1));
 		if (entity.getPersistentData().getDouble("IA") >= 100) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 175) {
@@ -48,25 +49,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 						entityToSpawn.setVisualOnly(true);
 						_level.addFreshEntity(entityToSpawn);
 					}
-					{
-						Entity _ent = entity;
-						Scoreboard _sc = _ent.getLevel().getScoreboard();
-						Objective _so = _sc.getObjective("boss");
-						if (_so == null)
-							_so = _sc.addObjective("boss", ObjectiveCriteria.DUMMY, new TextComponent("boss"), ObjectiveCriteria.RenderType.INTEGER);
-						_sc.getOrCreatePlayerScore(_ent.getScoreboardName(), _so).setScore(0);
-					}
-				}
-			}
-		}
-		if (entity.isInWater()) {
-			if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == (null))) {
-				if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater())) {
-					if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY() >= entity.getY()) {
-						if (entity instanceof Mob _entity)
-							_entity.getNavigation().moveTo(((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX()), ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY()),
-									((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ()), 1);
-					}
+					entity.getPersistentData().putDouble("IA", 0);
 				}
 			}
 		}
@@ -122,6 +105,15 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 		} else {
 			if (entity.getPersistentData().getDouble("BossTp") >= 5) {
 				entity.getPersistentData().putDouble("BossTp", 0);
+			}
+		}
+		if (entity.isInWater()) {
+			if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == (null))) {
+				if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater() && entity.isInWater()) {
+					((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(4);
+				} else if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater()) && entity.isInWater()) {
+					((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(4);
+				}
 			}
 		}
 	}
