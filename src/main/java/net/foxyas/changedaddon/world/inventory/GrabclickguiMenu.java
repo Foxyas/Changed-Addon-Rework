@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
+import net.foxyas.changedaddon.procedures.GrabclickguiThisGUIIsOpenedProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonModMenus;
 
 import java.util.function.Supplier;
@@ -39,6 +40,8 @@ public class GrabclickguiMenu extends AbstractContainerMenu implements Supplier<
 			this.y = pos.getY();
 			this.z = pos.getZ();
 		}
+
+		GrabclickguiThisGUIIsOpenedProcedure.execute(entity);
 	}
 
 	@Override

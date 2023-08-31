@@ -61,6 +61,9 @@
         }
       }
     ],
+    "onOpen": {
+      "name": "GrabclickguiThisGUIIsOpened"
+    },
     "gridSettings": {
       "sx": 18,
       "sy": 18,

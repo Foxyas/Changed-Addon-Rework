@@ -101,6 +101,9 @@ public class ChangedAddonModVariables {
 				clone.consciousness_fight_progress = original.consciousness_fight_progress;
 				clone.concience_Fight = original.concience_Fight;
 				clone.act_cooldown = original.act_cooldown;
+				clone.isFriendlyGrabbing = original.isFriendlyGrabbing;
+				clone.FriendlyGrabKeybind = original.FriendlyGrabKeybind;
+				clone.FriendlyGrabbing = original.FriendlyGrabbing;
 			}
 		}
 
@@ -266,7 +269,7 @@ public class ChangedAddonModVariables {
 
 	public static class PlayerVariables {
 		public boolean transfur = false;
-		public String LatexForm = "\"\"";
+		public String LatexForm = "any";
 		public boolean can_grab = false;
 		public boolean assmilation = false;
 		public boolean Friendly_mode = false;
@@ -277,11 +280,11 @@ public class ChangedAddonModVariables {
 		public boolean wantfriendlygrab = true;
 		public boolean showwarns = true;
 		public boolean visiblehumanaddongui = false;
-		public String LatexForm_ProgressTransfur = "\"\"";
+		public String LatexForm_ProgressTransfur = "any";
 		public double Progress_Transfur_Number = 0;
 		public double consciousness_fight_progress = 0;
 		public boolean concience_Fight = false;
-		public String LatexEntitySummon = "\"\"";
+		public String LatexEntitySummon = "any";
 		public double GrabEscapeClick = 0.0;
 		public boolean organic_transfur = false;
 		public boolean organic_overlay = false;
@@ -293,6 +296,9 @@ public class ChangedAddonModVariables {
 		public double UnifuserRecipePage = 1.0;
 		public double CatlyzerRecipePage = 1.0;
 		public boolean aredarklatex = false;
+		public boolean isFriendlyGrabbing = false;
+		public String FriendlyGrabKeybind = "";
+		public String FriendlyGrabbing = "";
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -329,6 +335,9 @@ public class ChangedAddonModVariables {
 			nbt.putDouble("UnifuserRecipePage", UnifuserRecipePage);
 			nbt.putDouble("CatlyzerRecipePage", CatlyzerRecipePage);
 			nbt.putBoolean("aredarklatex", aredarklatex);
+			nbt.putBoolean("isFriendlyGrabbing", isFriendlyGrabbing);
+			nbt.putString("FriendlyGrabKeybind", FriendlyGrabKeybind);
+			nbt.putString("FriendlyGrabbing", FriendlyGrabbing);
 			return nbt;
 		}
 
@@ -362,6 +371,9 @@ public class ChangedAddonModVariables {
 			UnifuserRecipePage = nbt.getDouble("UnifuserRecipePage");
 			CatlyzerRecipePage = nbt.getDouble("CatlyzerRecipePage");
 			aredarklatex = nbt.getBoolean("aredarklatex");
+			isFriendlyGrabbing = nbt.getBoolean("isFriendlyGrabbing");
+			FriendlyGrabKeybind = nbt.getString("FriendlyGrabKeybind");
+			FriendlyGrabbing = nbt.getString("FriendlyGrabbing");
 		}
 	}
 
@@ -414,6 +426,9 @@ public class ChangedAddonModVariables {
 					variables.UnifuserRecipePage = message.data.UnifuserRecipePage;
 					variables.CatlyzerRecipePage = message.data.CatlyzerRecipePage;
 					variables.aredarklatex = message.data.aredarklatex;
+					variables.isFriendlyGrabbing = message.data.isFriendlyGrabbing;
+					variables.FriendlyGrabKeybind = message.data.FriendlyGrabKeybind;
+					variables.FriendlyGrabbing = message.data.FriendlyGrabbing;
 				}
 			});
 			context.setPacketHandled(true);

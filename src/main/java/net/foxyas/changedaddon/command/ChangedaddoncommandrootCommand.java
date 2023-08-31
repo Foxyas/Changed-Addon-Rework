@@ -18,6 +18,7 @@ import net.foxyas.changedaddon.procedures.TogglealladdonguiProcedure;
 import net.foxyas.changedaddon.procedures.ToggleaddonguiprocedureProcedure;
 import net.foxyas.changedaddon.procedures.ToggleOrganicOverlayProcedure;
 import net.foxyas.changedaddon.procedures.SetmaxTransfurToleranceProcedure;
+import net.foxyas.changedaddon.procedures.SetTransfurProgressCommandProcedure;
 import net.foxyas.changedaddon.procedures.SetDefaultValueProcedure;
 import net.foxyas.changedaddon.procedures.RecipeResetProcedure;
 import net.foxyas.changedaddon.procedures.InforesettransfuradvancementProcedure;
@@ -26,6 +27,7 @@ import net.foxyas.changedaddon.procedures.InfoonlyhumanaddonguiProcedure;
 import net.foxyas.changedaddon.procedures.InfoaddonwarnsProcedure;
 import net.foxyas.changedaddon.procedures.InfoaddonguiProcedure;
 import net.foxyas.changedaddon.procedures.GetmaxTransfurToleranceProcedure;
+import net.foxyas.changedaddon.procedures.AddTransfurProgressCommandProcedure;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -36,7 +38,31 @@ public class ChangedaddoncommandrootCommand {
 	public static void registerCommand(RegisterCommandsEvent event) {
 		event.getDispatcher().register(Commands.literal("changed_addon")
 
-				.then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
+				.then(Commands.literal("SetTransfurProgress").then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					AddTransfurProgressCommandProcedure.execute(arguments, entity);
+					return 0;
+				})).then(Commands.literal("set").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					SetTransfurProgressCommandProcedure.execute(arguments, entity);
+					return 0;
+				})))).then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();

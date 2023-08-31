@@ -12,6 +12,9 @@
     "isBad": false,
     "isBenefitical": false,
     "renderStatusInInventory": true,
-    "renderStatusInHUD": true
+    "renderStatusInHUD": true,
+    "onActiveTick": {
+      "name": "InfriendlygrabOnEffectActiveTick"
+    }
   }
 }

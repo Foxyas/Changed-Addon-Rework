@@ -924,18 +924,6 @@
             "type": "entity"
           },
           {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
             "name": "world",
             "type": "world"
           }
@@ -7270,6 +7258,9 @@
       "locked_code": false,
       "registry_name": "latex_solvent_on_active_tick",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexSolventOnActiveTickProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -7528,6 +7519,123 @@
           }
         ]
       }
+    },
+    {
+      "name": "GrabclickguiThisGUIIsOpened",
+      "type": "procedure",
+      "sortid": 388,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "grabclickgui_this_gui_is_opened",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/GrabclickguiThisGUIIsOpenedProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ifleavetheworld",
+      "type": "procedure",
+      "sortid": 389,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ifleavetheworld",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IfleavetheworldProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetFriendlyGrabKeyBindProcedure",
+      "type": "procedure",
+      "sortid": 392,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "set_friendly_grab_key_bind_procedure",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SetFriendlyGrabKeyBindProcedureProcedure.java"
+        ],
+        "dependencies": []
+      }
+    },
+    {
+      "name": "SetTransfurProgressCommand",
+      "type": "procedure",
+      "sortid": 393,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "set_transfur_progress_command",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SetTransfurProgressCommandProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AddTransfurProgressCommand",
+      "type": "procedure",
+      "sortid": 394,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "add_transfur_progress_command",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/AddTransfurProgressCommandProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InfriendlygrabOnEffectActiveTick",
+      "type": "procedure",
+      "sortid": 395,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "infriendlygrab_on_effect_active_tick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/InfriendlygrabOnEffectActiveTickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -7541,7 +7649,7 @@
       "name": "LatexForm",
       "type": "string",
       "scope": "player_persistent",
-      "value": "\"\""
+      "value": "any"
     },
     {
       "name": "can_grab",
@@ -7607,7 +7715,7 @@
       "name": "LatexForm_ProgressTransfur",
       "type": "string",
       "scope": "player_persistent",
-      "value": "\"\""
+      "value": "any"
     },
     {
       "name": "Progress_Transfur_Number",
@@ -7631,7 +7739,7 @@
       "name": "LatexEntitySummon",
       "type": "string",
       "scope": "player_persistent",
-      "value": "\"\""
+      "value": "any"
     },
     {
       "name": "GrabEscapeClick",
@@ -7704,6 +7812,24 @@
       "type": "number",
       "scope": "map",
       "value": "0"
+    },
+    {
+      "name": "isFriendlyGrabbing",
+      "type": "logic",
+      "scope": "player_lifetime",
+      "value": "false"
+    },
+    {
+      "name": "FriendlyGrabKeybind",
+      "type": "string",
+      "scope": "player_lifetime",
+      "value": ""
+    },
+    {
+      "name": "FriendlyGrabbing",
+      "type": "string",
+      "scope": "player_lifetime",
+      "value": ""
     }
   ],
   "sound_elements": [
@@ -7877,6 +8003,7 @@
       "subtitles.grab_start_sound": "Player just got grabbed",
       "advancements.foxyas_advancement.descr": "§4THOSE BASTARDS,THEY KILL FOXYAS",
       "gui.changed_addon.book_pagenumber_2.label_untransfur_items": "cure you of your latex form.",
+      "gamerule.useNewFriendlyGrab": "Changed Addon New Friendly Grab",
       "gui.changed_addon.foxyasgui.label_hello_im_foxyas_i_dont_want_to": "hello I\u0027m Foxyas I don\u0027t want to assimilate you i am friendly so",
       "gui.changed_addon.foxyasgui.Deals": "",
       "gui.changed_addon.book_pagenumber_7.label_friendly_modes": "-iendly modes (If Human this-",
@@ -7958,6 +8085,7 @@
       "gui.changed_addon.foxyasgui.label_pls_dont_kill_me": "pls dont kill me i can trade orange juice with you i just need 2",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.button_give_up": "     give up      ",
       "enchantment.changed_addon.grab_resistance": "Grab Resistance",
+      "gamerule.changedAddonNewFriendlyGrab.description": "this is a new friendly grab that is less buggy but is VERY different from normal",
       "death.attack.assimilation": "%1$s was assimilated",
       "item.changed_addon.devitem_3": "Dev item",
       "advancements.advancement_dont_want_friendly_grab.descr": "You (disable your friendly grab) you don\u0027t want to be covered in goo",
@@ -7967,6 +8095,7 @@
       "translation.FriendlyGrab.HumanText": "§bYou are in Friendly Grab Press (key) for leave",
       "gui.changed_addon.book_pagenumber_2.label_below": " below",
       "key.changed_addon.grab_keybind": "grab",
+      "gamerule.changedAddonNewFriendlyGrab": "Changed Addon New Friendly Grab",
       "gui.changed_addon.tranfur_sounds_gui.button_cooldown": "Cooldown Reset",
       "key.changed_addon.duct_prone": "Duct Prone",
       "advancements.hug.title": "§cHug",
@@ -8003,6 +8132,7 @@
       "gui.changed_addon.book_pagenumber_6.label_e_only_for_player": "-e (only for players)",
       "gui.changed_addon.book_pagenumber_6.label_friendly_modes": "-iendly modes (If Human this-",
       "item.changed_addon.foxyas_spawn_egg": "Foxyas Spawn Egg",
+      "gamerule.useNewFriendlyGrab.description": "When Active This gamerule will make the player use the \"New Friendly Grab\" Instead of old WARN this is a W-I-P FEATURE SO USE AT YOUR OWN RISK (warning Right Click Friendly Grab will not work if true ok)",
       "gui.changed_addon.book_pagenumber_2.label_on_how_to_craft_with_litixcamon": " on how to craft with Litixcamonia.",
       "gui.changed_addon.book_pagenumber_2.button_next": "next",
       "gui.changed_addon.book_pagenumber_6.button_next": "Next",
@@ -8112,7 +8242,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.4.4",
+    "version": "2.4.5",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
