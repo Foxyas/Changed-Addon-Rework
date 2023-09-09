@@ -23,7 +23,7 @@ public class LitixCamoniaFluidMobplayerCollidesBlockProcedure {
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("you are immune to this fluid"), true);
+						_player.displayClientMessage(new TextComponent("You are immune to this fluid"), true);
 				}
 			}
 		} else {

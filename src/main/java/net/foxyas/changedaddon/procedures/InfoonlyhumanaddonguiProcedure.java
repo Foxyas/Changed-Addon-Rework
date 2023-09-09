@@ -11,7 +11,7 @@ public class InfoonlyhumanaddonguiProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof Player _player && !_player.level.isClientSide())
-			_player.displayClientMessage(new TextComponent(("\u00A7bHuman gui is " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).visiblehumanaddongui)),
-					true);
+			_player.displayClientMessage(new TextComponent(("\u00A7bHuman gui is:" + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).visiblehumanaddongui)),
+					(true));
 	}
 }

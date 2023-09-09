@@ -122,9 +122,9 @@ public class RightclickFriendlyGrabProcedure {
 										}
 									} else {
 										if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent("they are organic so you just \u00A7chug\u00A7r they"), true);
+											_player.displayClientMessage(new TextComponent("They are organic so you just \u00A7chug\u00A7r them"), true);
 										if (entity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent((ForgeRegistries.ENTITIES.getKey(sourceentity.getType()).toString() + " \u00A7chug\u00A7r you")), true);
+											_player.displayClientMessage(new TextComponent((ForgeRegistries.ENTITIES.getKey(sourceentity.getType()).toString() + " \u00A7cHug\u00A7r you")), true);
 										if (entity instanceof ServerPlayer _player) {
 											Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
 											AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -153,18 +153,18 @@ public class RightclickFriendlyGrabProcedure {
 							} else {
 								if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 									if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent("You dont want be and do a Friendly Grab Active your \"Want Friendly Grab\""), false);
+										_player.displayClientMessage(new TextComponent("Your Friendly Grab is disabled"), false);
 								}
 							}
 						} else {
 							if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-									_player.displayClientMessage(new TextComponent("FriendlyGrab Is \u00A74Disabled\u00A7r in this World!"), true);
+									_player.displayClientMessage(new TextComponent("Friendly Grabbing is \u00A74disabled\u00A7r in this world!"), true);
 							}
 						}
 					} else if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).isFriendlyGrabbing == true) {
 						if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("You are already In a Friendly Grabbing"), false);
+							_player.displayClientMessage(new TextComponent("You are already in a Friendly Grabbing"), false);
 					} else {
 						if (sourceentity instanceof Player _player && !_player.level.isClientSide())
 							_player.displayClientMessage(new TextComponent("They are already Friendly Grabbing"), true);
@@ -196,18 +196,18 @@ public class RightclickFriendlyGrabProcedure {
 								}
 							} else {
 								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-									_player.displayClientMessage(new TextComponent("they dont want"), true);
+									_player.displayClientMessage(new TextComponent("They don't want to be Friendly Grabbed"), true);
 							}
 						} else {
 							if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == true) {
 								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-									_player.displayClientMessage(new TextComponent("you are organic so you just \u00A7chug\u00A7r they"), true);
+									_player.displayClientMessage(new TextComponent("You are organic so you just \u00A7chug\u00A7r them"), true);
 							} else {
 								if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-									_player.displayClientMessage(new TextComponent("You are unable to transfur so you just \u00A7chug\u00A7r they"), true);
+									_player.displayClientMessage(new TextComponent("You are unable to transfur so you just \u00A7chug\u00A7r them"), true);
 							}
 							if (entity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent((sourceentity.getDisplayName().getString() + " \u00A7chug\u00A7r you")), true);
+								_player.displayClientMessage(new TextComponent((sourceentity.getDisplayName().getString() + " \u00A7cHug\u00A7r you")), true);
 							if (entity instanceof ServerPlayer _player) {
 								Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
 								AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -230,7 +230,7 @@ public class RightclickFriendlyGrabProcedure {
 					} else {
 						if ((sourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 							if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("FriendlyGrab Is \u00A74Disabled\u00A7r in this World!"), true);
+								_player.displayClientMessage(new TextComponent("Friendly Grabbing is \u00A74disabled\u00A7r in this world!"), true);
 						}
 					}
 				}

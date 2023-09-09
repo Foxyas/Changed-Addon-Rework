@@ -20,21 +20,12 @@ public class ActiveFriendlyModeOnKeyPressedProcedure {
 					});
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("Friendly mode activated"), true);
+					_player.displayClientMessage(new TextComponent("Friendly Grab Activated"), (true));
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).assmilation == true) {
-					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("when activating friendly mode you deactivated assimilation and grab mode"), false);
 					{
 						boolean _setval = false;
 						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 							capability.assmilation = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-					{
-						boolean _setval = false;
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.can_grab = _setval;
 							capability.syncPlayerVariables(entity);
 						});
 					}
@@ -48,12 +39,12 @@ public class ActiveFriendlyModeOnKeyPressedProcedure {
 					});
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("Friendly mode deactivated"), true);
+					_player.displayClientMessage(new TextComponent("Friendly Grab Deactivated"), (true));
 			}
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("You aren't a Latex"), true);
+					_player.displayClientMessage(new TextComponent("You aren't a latex creature..."), (true));
 			}
 		}
 	}

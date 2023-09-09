@@ -12,6 +12,6 @@ public class InforesettransfuradvancementProcedure {
 			return;
 		if (entity instanceof Player _player && !_player.level.isClientSide())
 			_player.displayClientMessage(
-					new TextComponent(("reset transfur progress is " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements)), true);
+					new TextComponent(("Reset transfur progress is:" + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements)), (true));
 	}
 }

@@ -47,7 +47,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 								});
 							}
 							if (entity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("when activating assimilation you deactivated Friendly grab mode"), false);
+								_player.displayClientMessage(new TextComponent("Activating assimilation deactivates Friendly Grab"), false);
 						}
 						if (!(entity instanceof ServerPlayer _plr2 && _plr2.level instanceof ServerLevel
 								&& _plr2.getAdvancements().getOrStartProgress(_plr2.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {
@@ -67,7 +67,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 				} else {
 					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("you are organic cant assimilate"), true);
+							_player.displayClientMessage(new TextComponent("Cannot assimilate as a organic latex creature"), true);
 					}
 					{
 						boolean _setval = false;
@@ -80,7 +80,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("You only have the assimilation mode because you are in a Special Transfur"), true);
+						_player.displayClientMessage(new TextComponent("Only assimilation is allowed with a special transfur"), true);
 				}
 				{
 					boolean _setval = true;
@@ -98,7 +98,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 						});
 					}
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("when activating assimilation you deactivated Friendly grab mode"), false);
+						_player.displayClientMessage(new TextComponent("Activating assimilation deactivates Friendly Grab"), false);
 				}
 				if (!(entity instanceof ServerPlayer _plr8 && _plr8.level instanceof ServerLevel
 						&& _plr8.getAdvancements().getOrStartProgress(_plr8.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {
@@ -116,7 +116,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("You aren't a Latex"), true);
+					_player.displayClientMessage(new TextComponent("You aren't a latex creature..."), true);
 			}
 		}
 	}

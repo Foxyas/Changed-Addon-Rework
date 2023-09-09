@@ -9,7 +9,7 @@ public class GiveupProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof Player _player && !_player.level.isClientSide())
-			_player.displayClientMessage(new TextComponent("\u00A74you give up \u00A7r\u00A77enjoy your new body as much as you can"), true);
+			_player.displayClientMessage(new TextComponent("\u00A74You gave up trying to resist."), (true));
 		if (entity instanceof Player _player)
 			_player.closeContainer();
 	}

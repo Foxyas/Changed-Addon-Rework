@@ -55,7 +55,7 @@ public class SetcangrabonOnKeyPressedProcedure {
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("you are organic you cant use grab"), true);
+						_player.displayClientMessage(new TextComponent("Cannot grab as a organic latex creature"), true);
 				}
 				{
 					boolean _setval = true;
@@ -68,7 +68,7 @@ public class SetcangrabonOnKeyPressedProcedure {
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("You aren't a Latex"), true);
+					_player.displayClientMessage(new TextComponent("You aren't a latex creature..."), true);
 			}
 		}
 	}
