@@ -2,7 +2,7 @@
   "_fv": 43,
   "_type": "achievement",
   "definition": {
-    "achievementName": "A Catalyzer? What is this?",
+    "achievementName": "A Catalyzer?",
     "achievementDescription": "You craft or get a Catalyzer",
     "achievementIcon": {
       "value": "CUSTOM:Catlyzer"

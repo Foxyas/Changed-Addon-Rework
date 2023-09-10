@@ -5,6 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
@@ -29,7 +30,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 							});
 						}
 						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("Assimilation deactivated"), true);
+							_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.assimilation.off").getString())), true);
 					} else {
 						{
 							boolean _setval = true;
@@ -47,10 +48,10 @@ public class SetassimilatonOnKeyPressedProcedure {
 								});
 							}
 							if (entity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("when activating assimilation you deactivated Friendly grab mode"), false);
+								_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.assimilation.when_on").getString())), false);
 						}
-						if (!(entity instanceof ServerPlayer _plr2 && _plr2.level instanceof ServerLevel
-								&& _plr2.getAdvancements().getOrStartProgress(_plr2.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {
+						if (!(entity instanceof ServerPlayer _plr4 && _plr4.level instanceof ServerLevel
+								&& _plr4.getAdvancements().getOrStartProgress(_plr4.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {
 							if (entity instanceof ServerPlayer _player) {
 								Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"));
 								AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -62,12 +63,12 @@ public class SetassimilatonOnKeyPressedProcedure {
 							}
 						}
 						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("Assimilation activated"), true);
+							_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.assimilation.on").getString())), true);
 					}
 				} else {
 					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 						if (entity instanceof Player _player && !_player.level.isClientSide())
-							_player.displayClientMessage(new TextComponent("you are organic cant assimilate"), true);
+							_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.when_is.organic").getString())), true);
 					}
 					{
 						boolean _setval = false;
@@ -80,7 +81,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("You only have the assimilation mode because you are in a Special Transfur"), true);
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.assimilation.when_customtransfur").getString())), true);
 				}
 				{
 					boolean _setval = true;
@@ -98,10 +99,10 @@ public class SetassimilatonOnKeyPressedProcedure {
 						});
 					}
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("when activating assimilation you deactivated Friendly grab mode"), false);
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.when_not.transfur").getString())), false);
 				}
-				if (!(entity instanceof ServerPlayer _plr8 && _plr8.level instanceof ServerLevel
-						&& _plr8.getAdvancements().getOrStartProgress(_plr8.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {
+				if (!(entity instanceof ServerPlayer _plr14 && _plr14.level instanceof ServerLevel
+						&& _plr14.getAdvancements().getOrStartProgress(_plr14.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {
 					if (entity instanceof ServerPlayer _player) {
 						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"));
 						AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -116,7 +117,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("You aren't a Latex"), true);
+					_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.when_not.transfur").getString())), true);
 			}
 		}
 	}

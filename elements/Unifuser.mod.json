@@ -4,10 +4,10 @@
   "definition": {
     "texture": "unfuser_bottom",
     "textureTop": "unfuser_oficial_animation_texture",
-    "textureLeft": "unfuser_sides",
-    "textureFront": "unfuser_sides",
-    "textureRight": "unfuser_sides",
-    "textureBack": "unfuser_sides",
+    "textureLeft": "unifuser_sidea",
+    "textureFront": "unifuser_front",
+    "textureRight": "unifuser_sidea",
+    "textureBack": "newunifuser_back",
     "renderType": 10,
     "customModelName": "Normal",
     "rotationMode": 1,
@@ -35,7 +35,7 @@
     ],
     "name": "Unifuser",
     "specialInfo": [],
-    "hardness": 20.0,
+    "hardness": 5.0,
     "resistance": 10.0,
     "hasGravity": false,
     "isWaterloggable": false,
@@ -52,7 +52,7 @@
     "enchantPowerBonus": 0.0,
     "plantsGrowOn": false,
     "canRedstoneConnect": false,
-    "lightOpacity": 15,
+    "lightOpacity": 0,
     "material": {
       "value": "ROCK"
     },
@@ -103,12 +103,18 @@
     "hasInventory": true,
     "guiBoundTo": "Unifusergui",
     "openGUIOnRightClick": false,
-    "inventorySize": 9,
+    "inventorySize": 4,
     "inventoryStackSize": 64,
     "inventoryDropWhenDestroyed": true,
     "inventoryComparatorPower": true,
-    "inventoryOutSlotIDs": [],
-    "inventoryInSlotIDs": [],
+    "inventoryOutSlotIDs": [
+      3
+    ],
+    "inventoryInSlotIDs": [
+      0,
+      1,
+      2
+    ],
     "hasEnergyStorage": false,
     "energyInitial": 0,
     "energyCapacity": 400000,

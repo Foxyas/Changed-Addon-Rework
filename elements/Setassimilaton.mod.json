@@ -3,7 +3,7 @@
   "_type": "keybind",
   "definition": {
     "triggerKey": "F13",
-    "keyBindingName": "Active or Deactivate Assimilation",
+    "keyBindingName": "Toggle Assimilation",
     "keyBindingCategoryKey": "grab_gui",
     "onKeyPressed": {
       "name": "SetassimilatonOnKeyPressed"

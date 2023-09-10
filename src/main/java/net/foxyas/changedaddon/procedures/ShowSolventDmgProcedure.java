@@ -9,6 +9,8 @@ import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.BowItem;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.Screen;
@@ -36,23 +38,41 @@ public class ShowSolventDmgProcedure {
 			return;
 		double EnchantLevel = 0;
 		double math = 0;
+		double othermath = 0;
 		EnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), itemstack);
+		if (EnchantLevel == 0) {
+			othermath = 1;
+		} else {
+			othermath = EnchantLevel + 1;
+		}
 		if (EnchantLevel == 1) {
-			math = 1;
+			math = 0.5;
+		} else if (EnchantLevel == 0) {
+			math = 0.5;
 		} else if (EnchantLevel == 2) {
-			math = 1.5;
+			math = 1;
 		} else if (EnchantLevel == 3) {
-			math = 2;
+			math = 1.5;
 		} else if (EnchantLevel == 4) {
+			math = 2;
+		} else if (EnchantLevel == 5) {
 			math = 2.5;
 		} else {
-			math = EnchantLevel * 0.5 + 0.5;
+			math = EnchantLevel / 2;
 		}
-		if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), itemstack) != 0) {
-			if (Screen.hasShiftDown()) {
-				tooltip.add(new TextComponent(("\u00A7r\u00A7n\u00A7e+" + math + "\u00A7r \u00A7nLatex Solvent Damage")));
-			} else {
-				tooltip.add(new TextComponent("Press \u00A7e<Shift>\u00A7r for show tooltip"));
+		if (!(itemstack.getItem() instanceof BowItem) && !(itemstack.getItem() instanceof CrossbowItem)) {
+			if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), itemstack) != 0) {
+				if (Screen.hasShiftDown() && Screen.hasAltDown()) {
+					tooltip.add(new TextComponent(("\u00A7r\u00A76+" + othermath + "\u00A7r \u00A7nLatex Solvent Effect")));
+				}
+				if (Screen.hasShiftDown()) {
+					tooltip.add(new TextComponent(("\u00A7r\u00A7e+" + math + "\u00A7r \u00A7nLatex Solvent Damage")));
+					if (!Screen.hasAltDown()) {
+						tooltip.add(new TextComponent("Press \u00A7e<Alt>\u00A7r for show advanced tooltip"));
+					}
+				} else {
+					tooltip.add(new TextComponent("Press \u00A7e<Shift>\u00A7r for show tooltip"));
+				}
 			}
 		}
 	}

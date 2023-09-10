@@ -1,38 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "0 2",
-    "345",
-    "678"
-  ],
-  "key": {
-    "0": {
-      "item": "changed_addon:painite"
-    },
-    "2": {
-      "item": "changed_addon:painite"
-    },
-    "3": {
-      "item": "changed_addon:painite"
-    },
-    "4": {
-      "item": "changed_addon:painite"
-    },
-    "5": {
-      "item": "changed_addon:painite"
-    },
-    "6": {
-      "item": "changed_addon:painite"
-    },
-    "7": {
-      "item": "changed_addon:painite"
-    },
-    "8": {
-      "item": "changed_addon:painite"
-    }
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_chestplate"
+  },
+  "addition": {
+    "item": "changed_addon:painite"
   },
   "result": {
-    "item": "changed_addon:painite_armor_chestplate",
-    "count": 1
+    "item": "changed_addon:painite_armor_chestplate"
   }
 }

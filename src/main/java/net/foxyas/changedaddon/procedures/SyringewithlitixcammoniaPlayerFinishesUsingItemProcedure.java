@@ -18,6 +18,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.advancements.AdvancementProgress;
@@ -38,7 +39,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 					_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("for some reason this seems to have slowed effect"), true);
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.untransfur.sloweffect").getString())), true);
 				}
 			} else {
 				{
@@ -103,8 +104,8 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 					if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 						_entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
 				}
-				if (!(entity instanceof ServerPlayer _plr9 && _plr9.level instanceof ServerLevel
-						&& _plr9.getAdvancements().getOrStartProgress(_plr9.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
+				if (!(entity instanceof ServerPlayer _plr10 && _plr10.level instanceof ServerLevel
+						&& _plr10.getAdvancements().getOrStartProgress(_plr10.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
 					if (entity instanceof ServerPlayer _player) {
 						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"));
 						AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -119,7 +120,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("no effect"), true);
+					_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.untransfur.no_effect").getString())), true);
 			}
 		}
 		{

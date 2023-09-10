@@ -5,7 +5,7 @@
     "renderType": 0,
     "texture": "foxyasentityspawnegg",
     "customModelName": "Normal",
-    "name": "Spawn egg of Foxyas",
+    "name": "Foxyas Spawn Egg",
     "rarity": "COMMON",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
@@ -40,6 +40,6 @@
     },
     "isMeat": false,
     "isAlwaysEdible": false,
-    "animation": "none"
+    "animation": "block"
   }
 }

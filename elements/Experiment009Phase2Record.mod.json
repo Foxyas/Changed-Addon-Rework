@@ -1,0 +1,21 @@
+{
+  "_fv": 43,
+  "_type": "musicdisc",
+  "definition": {
+    "name": "Experiment 009 Phase 2 Theme Music Disc",
+    "texture": "experiment009_phase2",
+    "description": "mrepicishere777-[Storyswap Color] - Virtue's Vengeance (Cover)",
+    "creativeTab": {
+      "value": "No creative tab entry"
+    },
+    "specialInfo": [
+      "You did"
+    ],
+    "hasGlow": true,
+    "music": {
+      "value": "CUSTOM:experiment009_theme_phase2"
+    },
+    "lengthInTicks": 100,
+    "analogOutput": 0
+  }
+}

@@ -34,11 +34,15 @@ import net.foxyas.changedaddon.item.LitixCamoniaItem;
 import net.foxyas.changedaddon.item.LitixCamoniaFluidItem;
 import net.foxyas.changedaddon.item.InpureammoniaItem;
 import net.foxyas.changedaddon.item.HazardSuitItem;
+import net.foxyas.changedaddon.item.Experiment009recordItem;
 import net.foxyas.changedaddon.item.Experiment009dnaItem;
 import net.foxyas.changedaddon.item.Experiment009SpawneggItem;
+import net.foxyas.changedaddon.item.Experiment009Phase2RecordItem;
 import net.foxyas.changedaddon.item.EmptySprayItem;
 import net.foxyas.changedaddon.item.DevitemItem;
+import net.foxyas.changedaddon.item.Devitem5Item;
 import net.foxyas.changedaddon.item.Devitem3Item;
+import net.foxyas.changedaddon.item.Devitem1Item;
 import net.foxyas.changedaddon.item.DevItem4Item;
 import net.foxyas.changedaddon.item.DevItem2Item;
 import net.foxyas.changedaddon.item.DescontrolSyringeItem;
@@ -100,11 +104,15 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> DEV_ITEM_4 = REGISTRY.register("dev_item_4", () -> new DevItem4Item());
 	public static final RegistryObject<Item> EXPERIMENT_009_SPAWN_EGG = REGISTRY.register("experiment_009_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_009, -1, -2697514, new Item.Properties().tab(null)));
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_SPAWN_EGG = REGISTRY.register("experiment_009_phase_2_spawn_egg",
-			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2, -1, -6316129, new Item.Properties().tab(null)));
+			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2, -1, -16737895, new Item.Properties().tab(null)));
 	public static final RegistryObject<Item> CATLYZERBLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("catlyzerblock_illustrative_item", () -> new CatlyzerblockIllustrativeItemItem());
 	public static final RegistryObject<Item> UNIFUSERBLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("unifuserblock_illustrative_item", () -> new UnifuserblockIllustrativeItemItem());
 	public static final RegistryObject<Item> AMMONIA_PARTICLES_JEI_ILLUSTRATIVE = REGISTRY.register("ammonia_particles_jei_illustrative", () -> new AmmoniaParticlesJeiIllustrativeItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_SPAWNEGG = REGISTRY.register("experiment_009_spawnegg", () -> new Experiment009SpawneggItem());
+	public static final RegistryObject<Item> DEVITEM_1 = REGISTRY.register("devitem_1", () -> new Devitem1Item());
+	public static final RegistryObject<Item> DEVITEM_5 = REGISTRY.register("devitem_5", () -> new Devitem5Item());
+	public static final RegistryObject<Item> EXPERIMENT_009_RECORD = REGISTRY.register("experiment_009_record", () -> new Experiment009recordItem());
+	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_RECORD = REGISTRY.register("experiment_009_phase_2_record", () -> new Experiment009Phase2RecordItem());
 
 	private static RegistryObject<Item> block(RegistryObject<Block> block, CreativeModeTab tab) {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));

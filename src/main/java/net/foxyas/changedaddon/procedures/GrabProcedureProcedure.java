@@ -28,6 +28,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
@@ -51,7 +52,7 @@ public class GrabProcedureProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		DamageSource assimilation = new DamageSource("generic");
+		DamageSource assimilation = null;
 		{
 			final Vec3 _center = new Vec3(x, y, z);
 			List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(3 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
@@ -243,6 +244,10 @@ public class GrabProcedureProcedure {
 																								_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), ("transfur @s " + (entity
 																										.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
 																						}
+																						if (entity instanceof Player _player)
+																							_player.getFoodData().setFoodLevel((int) ((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) - 4));
+																						if (entity instanceof Player _player)
+																							_player.getFoodData().setSaturation((float) ((entity instanceof Player _plr ? _plr.getFoodData().getSaturationLevel() : 0) - 4));
 																					} else {
 																						entityiterator.hurt(((new DamageSource("assimilation")).bypassArmor()), 100);
 																						if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
@@ -297,7 +302,7 @@ public class GrabProcedureProcedure {
 																			if (entityiterator instanceof LivingEntity _entity)
 																				_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
 																			if (entityiterator instanceof Player _player && !_player.level.isClientSide())
-																				_player.displayClientMessage(new TextComponent("The person who are grabbing you \u00A74Died\u00A7r before They could do anything!!"), true);
+																				_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.event.grab.when.you.die").getString())), true);
 																		}
 																	} else {
 																		if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
@@ -311,7 +316,7 @@ public class GrabProcedureProcedure {
 																		if (entityiterator instanceof LivingEntity _entity)
 																			_entity.removeEffect(ChangedAddonModMobEffects.GRABEFFECT.get());
 																		if (entity instanceof Player _player && !_player.level.isClientSide())
-																			_player.displayClientMessage(new TextComponent("The person you were grabbing \u00A74Died\u00A7r before you could do anything!!"), true);
+																			_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.event.grab.when.entity.die").getString())), true);
 																	}
 																	MinecraftForge.EVENT_BUS.unregister(this);
 																}
@@ -323,7 +328,7 @@ public class GrabProcedureProcedure {
 															if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 																_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 300, 1, false, false));
 															if (entity instanceof Player _player && !_player.level.isClientSide())
-																_player.displayClientMessage(new TextComponent("They are very resistant to being grabbed, so you can't grab them"), true);
+																_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.event.grab.when.grab.immune").getString())), true);
 														}
 													} else {
 														FriendlyGrabProcedure.execute(world, x, y, z, entity);
@@ -331,14 +336,14 @@ public class GrabProcedureProcedure {
 												} else {
 													if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 														if (entity instanceof Player _player && !_player.level.isClientSide())
-															_player.displayClientMessage(new TextComponent("you are so small for grab"), true);
+															_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.event.grab.when.small").getString())), true);
 													}
 												}
 											} else {
 												if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == false) {
 													if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 														if (entity instanceof Player _player && !_player.level.isClientSide())
-															_player.displayClientMessage(new TextComponent("you are organic so you cant grab"), true);
+															_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.when_is.organic.grab").getString())), true);
 													}
 												} else {
 													FriendlyGrabProcedure.execute(world, x, y, z, entity);
@@ -346,19 +351,39 @@ public class GrabProcedureProcedure {
 											}
 										}
 									} else {
-										if (entity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent("You cant grab them"), true);
+										if (new Object() {
+											public boolean checkGamemode(Entity _ent) {
+												if (_ent instanceof ServerPlayer _serverPlayer) {
+													return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+												} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+													return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+															&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+												}
+												return false;
+											}
+										}.checkGamemode(entityiterator)) {
+											if (entity instanceof Player _player && !_player.level.isClientSide())
+												_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.grab.when.cant").getString())), true);
+										}
+										if ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
+												&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true) {
+											FriendlyGrabProcedure.execute(world, x, y, z, entity);
+										} else if ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
+												&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == false) {
+											if (entity instanceof Player _player && !_player.level.isClientSide())
+												_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.grab.when.cant").getString())), true);
+										}
 									}
 								} else {
 									if (entity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent("You are too tired for this"), true);
+										_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.grab.tired").getString())), true);
 								}
 							}
 						}
 					} else {
 						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 							if (entity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent("Grab Is \u00A74Disabled\u00A7r in this World!"), true);
+								_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.feature.grab.isoff").getString())), true);
 						}
 					}
 				}

@@ -1,12 +1,12 @@
 {
   "parent": "block/cube",
   "textures": {
-    "down": "changed_addon:blocks/deep_ore_test_texture",
-    "up": "changed_addon:blocks/deep_ore_test_texture",
-    "north": "changed_addon:blocks/deep_ore_test_texture",
-    "east": "changed_addon:blocks/deep_ore_test_texture",
-    "south": "changed_addon:blocks/deep_ore_test_texture",
-    "west": "changed_addon:blocks/deep_ore_test_texture",
-    "particle": "changed_addon:blocks/deep_ore_test_texture"
+    "down": "changed_addon:blocks/generator",
+    "up": "changed_addon:blocks/generator",
+    "north": "changed_addon:blocks/generator",
+    "east": "changed_addon:blocks/generator",
+    "south": "changed_addon:blocks/generator",
+    "west": "changed_addon:blocks/generator",
+    "particle": "changed_addon:blocks/generator"
   }
 }

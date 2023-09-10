@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Ammonia Particles",
-    "achievementDescription": "You crafted Ammonia Particles congratulations",
+    "achievementDescription": "Craft a ammonia particle",
     "achievementIcon": {
       "value": "CUSTOM:Ammoniaparticle"
     },

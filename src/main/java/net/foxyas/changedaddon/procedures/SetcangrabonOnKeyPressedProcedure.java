@@ -5,6 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
@@ -28,7 +29,7 @@ public class SetcangrabonOnKeyPressedProcedure {
 						});
 					}
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("Grab deactivated"), true);
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.grab.off").getString())), true);
 				} else {
 					{
 						boolean _setval = true;
@@ -37,8 +38,8 @@ public class SetcangrabonOnKeyPressedProcedure {
 							capability.syncPlayerVariables(entity);
 						});
 					}
-					if (!(entity instanceof ServerPlayer _plr1 && _plr1.level instanceof ServerLevel
-							&& _plr1.getAdvancements().getOrStartProgress(_plr1.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:grabthem"))).isDone())) {
+					if (!(entity instanceof ServerPlayer _plr2 && _plr2.level instanceof ServerLevel
+							&& _plr2.getAdvancements().getOrStartProgress(_plr2.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:grabthem"))).isDone())) {
 						if (entity instanceof ServerPlayer _player) {
 							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:grabthem"));
 							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -50,12 +51,12 @@ public class SetcangrabonOnKeyPressedProcedure {
 						}
 					}
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("Grab activated"), true);
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.grab.on").getString())), true);
 				}
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent("you are organic you cant use grab"), true);
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.when_is.organic.grab").getString())), true);
 				}
 				{
 					boolean _setval = true;
@@ -68,7 +69,7 @@ public class SetcangrabonOnKeyPressedProcedure {
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("You aren't a Latex"), true);
+					_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.when_not.transfur").getString())), true);
 			}
 		}
 	}

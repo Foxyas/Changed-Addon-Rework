@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.block;
 
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,7 +20,7 @@ import net.foxyas.changedaddon.procedures.PainiteOreBlockDestroyedByExplosionPro
 
 public class PainiteOreBlock extends Block {
 	public PainiteOreBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(20f, 25f).requiresCorrectToolForDrops());
+		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(20f, 25f).requiresCorrectToolForDrops());
 	}
 
 	@Override

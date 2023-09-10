@@ -59,7 +59,7 @@ public class WantfriendlygrabOnKeyPressedProcedure {
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("You are a latex"), true);
+					_player.displayClientMessage(new TextComponent("You are a latex creature"), true);
 			}
 		}
 	}

@@ -68,7 +68,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/painite_armor_texture_v2__layer_1.png";
+			return "changed_addon:textures/models/armor/newpainite_armor__layer_1.png";
 		}
 	}
 
@@ -79,7 +79,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/painite_armor_texture_v2__layer_1.png";
+			return "changed_addon:textures/models/armor/newpainite_armor__layer_1.png";
 		}
 	}
 
@@ -90,7 +90,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/painite_armor_texture_v2__layer_2.png";
+			return "changed_addon:textures/models/armor/newpainite_armor__layer_2.png";
 		}
 	}
 
@@ -101,7 +101,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/painite_armor_texture_v2__layer_1.png";
+			return "changed_addon:textures/models/armor/newpainite_armor__layer_1.png";
 		}
 	}
 }

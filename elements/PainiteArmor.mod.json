@@ -3,17 +3,17 @@
   "_type": "armor",
   "definition": {
     "enableHelmet": true,
-    "textureHelmet": "painite_helmet_v2",
+    "textureHelmet": "new_painite_helmet",
     "enableBody": true,
-    "textureBody": "painite_chestplate_v2",
+    "textureBody": "new_painite_chestplate",
     "enableLeggings": true,
-    "textureLeggings": "painite_leggings_v2",
+    "textureLeggings": "new_panite_leggins",
     "enableBoots": true,
-    "textureBoots": "painite_boots_v2",
+    "textureBoots": "new_painite_boots",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
-    "armorTextureFile": "painite_armor_texture_v2_",
+    "armorTextureFile": "newpainite_armor_",
     "helmetName": "Painite Helmet",
     "bodyName": "Painite Chestplate",
     "leggingsName": "Painite Leggings",

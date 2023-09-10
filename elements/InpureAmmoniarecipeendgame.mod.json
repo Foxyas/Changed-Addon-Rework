@@ -1,0 +1,48 @@
+{
+  "_fv": 43,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "recipeRetstackSize": 20,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "recipeSlots": [
+      {
+        "value": "TAG:flowers"
+      },
+      {
+        "value": "Items.ENDER_PEARL"
+      },
+      {
+        "value": "TAG:flowers"
+      },
+      {
+        "value": "Items.ENDER_PEARL"
+      },
+      {
+        "value": "Items.DYE#15"
+      },
+      {
+        "value": "Items.ENDER_PEARL"
+      },
+      {
+        "value": "TAG:flowers"
+      },
+      {
+        "value": "Items.ENDER_PEARL"
+      },
+      {
+        "value": "TAG:flowers"
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:Inpureammonia"
+    },
+    "name": "inpure_ammoniarecipeendgame",
+    "namespace": "mod"
+  }
+}

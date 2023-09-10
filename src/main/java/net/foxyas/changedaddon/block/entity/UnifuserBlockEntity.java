@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
 import io.netty.buffer.Unpooled;
 
 public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
+	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(4, ItemStack.EMPTY);
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public UnifuserBlockEntity(BlockPos position, BlockState state) {
@@ -110,6 +110,8 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
 	@Override
 	public boolean canPlaceItem(int index, ItemStack stack) {
+		if (index == 3)
+			return false;
 		return true;
 	}
 
@@ -125,6 +127,12 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
 	@Override
 	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+		if (index == 0)
+			return false;
+		if (index == 1)
+			return false;
+		if (index == 2)
+			return false;
 		return true;
 	}
 

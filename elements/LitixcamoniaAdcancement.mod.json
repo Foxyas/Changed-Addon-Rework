@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Litix-Camonia!?",
-    "achievementDescription": "You made a litixcamonia congratulations",
+    "achievementDescription": "Craft A Litix-Camonia",
     "achievementIcon": {
       "value": "CUSTOM:LitixCamonia"
     },

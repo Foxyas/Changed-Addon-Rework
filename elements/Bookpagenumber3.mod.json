@@ -68,7 +68,7 @@
         "type": "button",
         "data": {
           "name": "button_close",
-          "text": "close",
+          "text": "Close",
           "onClick": {
             "name": "Closemenu"
           },
@@ -82,7 +82,7 @@
         "type": "button",
         "data": {
           "name": "button_back",
-          "text": "back",
+          "text": "Back",
           "onClick": {
             "name": "Openpage2"
           },
@@ -168,7 +168,7 @@
         "type": "button",
         "data": {
           "name": "button_next",
-          "text": "next",
+          "text": "Next",
           "onClick": {
             "name": "Openbookpage5"
           },

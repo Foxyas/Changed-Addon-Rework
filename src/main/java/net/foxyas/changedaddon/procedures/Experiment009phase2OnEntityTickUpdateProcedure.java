@@ -53,6 +53,13 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 				}
 			}
 		}
+		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 175) {
+			{
+				Entity _ent = entity;
+				if (!_ent.level.isClientSide() && _ent.getServer() != null)
+					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "particle dust_color_transition 0 0.57 0.82 1 0 0.69 0.78 ~ ~1 ~ 0.2 0.5 0.2 -0 10");
+			}
+		}
 		if (!world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 20, 20, 20), e -> true).isEmpty()) {
 			TpTarget = (Entity) world.getEntitiesOfClass(Player.class, AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 20, 20, 20), e -> true).stream().sorted(new Object() {
 				Comparator<Entity> compareDistOf(double _x, double _y, double _z) {

@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "plants"
+    },
+    {
+      "tag": "changed_addon:meat"
+    },
+    {
+      "tag": "plants"
+    },
+    {
+      "tag": "changed_addon:meat"
+    },
+    {
+      "tag": "forge:seeds"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "tag": "plants"
+    },
+    {
+      "tag": "changed_addon:meat"
+    },
+    {
+      "tag": "plants"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:impureammonia",
+    "count": 3
+  }
+}

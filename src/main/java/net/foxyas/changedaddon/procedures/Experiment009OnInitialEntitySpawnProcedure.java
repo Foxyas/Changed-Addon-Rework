@@ -20,9 +20,9 @@ public class Experiment009OnInitialEntitySpawnProcedure {
 		}
 		if (world instanceof Level _level) {
 			if (!_level.isClientSide()) {
-				_level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:experiment009_theme")), SoundSource.HOSTILE, 200, 1);
+				_level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:experiment009_theme")), SoundSource.HOSTILE, 20, 1);
 			} else {
-				_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:experiment009_theme")), SoundSource.HOSTILE, 200, 1, false);
+				_level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:experiment009_theme")), SoundSource.HOSTILE, 20, 1, false);
 			}
 		}
 	}

@@ -10,7 +10,7 @@
     "background": "Default",
     "disableDisplay": false,
     "showPopup": true,
-    "announceToChat": false,
+    "announceToChat": true,
     "hideIfNotCompleted": true,
     "rewardLoot": [],
     "rewardRecipes": [],

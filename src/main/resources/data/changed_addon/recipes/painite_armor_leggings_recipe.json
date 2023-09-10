@@ -1,35 +1,12 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "012",
-    "3 5",
-    "6 8"
-  ],
-  "key": {
-    "0": {
-      "item": "changed_addon:painite"
-    },
-    "1": {
-      "item": "changed_addon:painite"
-    },
-    "2": {
-      "item": "changed_addon:painite"
-    },
-    "3": {
-      "item": "changed_addon:painite"
-    },
-    "5": {
-      "item": "changed_addon:painite"
-    },
-    "6": {
-      "item": "changed_addon:painite"
-    },
-    "8": {
-      "item": "changed_addon:painite"
-    }
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_leggings"
+  },
+  "addition": {
+    "item": "changed_addon:painite"
   },
   "result": {
-    "item": "changed_addon:painite_armor_leggings",
-    "count": 1
+    "item": "changed_addon:painite_armor_leggings"
   }
 }

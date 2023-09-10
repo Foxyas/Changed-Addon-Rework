@@ -3,10 +3,10 @@
   "textures": {
     "down": "changed_addon:blocks/unfuser_bottom",
     "up": "changed_addon:blocks/unfuser_oficial_animation_texture",
-    "north": "changed_addon:blocks/unfuser_sides",
-    "east": "changed_addon:blocks/unfuser_sides",
-    "south": "changed_addon:blocks/unfuser_sides",
-    "west": "changed_addon:blocks/unfuser_sides",
+    "north": "changed_addon:blocks/unifuser_front",
+    "east": "changed_addon:blocks/unifuser_sidea",
+    "south": "changed_addon:blocks/newunifuser_back",
+    "west": "changed_addon:blocks/unifuser_sidea",
     "particle": "changed_addon:blocks/unfuser_bottom"
   }
 }

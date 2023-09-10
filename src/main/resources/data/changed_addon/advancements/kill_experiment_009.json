@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:experiment_009_spawnegg"
+    },
+    "title": {
+      "translate": "advancements.kill_experiment_009.title"
+    },
+    "description": {
+      "translate": "advancements.kill_experiment_009.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "kill_experiment_009": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:devitem_1"
+    },
+    "title": {
+      "translate": "advancements.friendly_kitty.title"
+    },
+    "description": {
+      "translate": "advancements.friendly_kitty.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "friendly_kitty": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 15
+  },
+  "parent": "changed_addon:furry_friend"
+}

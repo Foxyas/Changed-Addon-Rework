@@ -3,7 +3,7 @@
   "_type": "keybind",
   "definition": {
     "triggerKey": "F15",
-    "keyBindingName": "Active Friendly Mode",
+    "keyBindingName": "Toggle Friendly Mode",
     "keyBindingCategoryKey": "grab_gui",
     "onKeyPressed": {
       "name": "ActiveFriendlyModeOnKeyPressed"

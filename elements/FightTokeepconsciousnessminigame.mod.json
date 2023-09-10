@@ -43,7 +43,7 @@
         "data": {
           "name": "label_fast_you_only_have_4_seconds",
           "text": {
-            "fixedValue": "FAST!!! YOU ONLY HAVE 4 SECONDS"
+            "fixedValue": "You only got 4 seconds, HURRY!"
           },
           "color": {
             "value": -12829636,

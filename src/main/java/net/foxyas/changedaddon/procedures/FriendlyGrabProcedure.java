@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.advancements.AdvancementProgress;
@@ -38,6 +39,74 @@ public class FriendlyGrabProcedure {
 						.collect(Collectors.toList());
 				for (Entity entityiterator : _entfound) {
 					if (!(entityiterator == entity)) {
+						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
+								&& (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
+							if (!(entityiterator == entity)) {
+								if (entity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.friendlygrab.you_hug").getString())), true);
+								if (entityiterator instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent(("" + (new TranslatableComponent("changedaddon.friendlygrab.hug").getString()).replace("entity", entity.getDisplayName().getString()))), true);
+								if (entity instanceof ServerPlayer _player) {
+									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+									if (!_ap.isDone()) {
+										Iterator _iterator = _ap.getRemainingCriteria().iterator();
+										while (_iterator.hasNext())
+											_player.getAdvancements().award(_adv, (String) _iterator.next());
+									}
+								}
+								if (entityiterator instanceof ServerPlayer _player) {
+									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+									if (!_ap.isDone()) {
+										Iterator _iterator = _ap.getRemainingCriteria().iterator();
+										while (_iterator.hasNext())
+											_player.getAdvancements().award(_adv, (String) _iterator.next());
+									}
+								}
+								if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
+										&& ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_white_latex_wolf")) {
+									if (entityiterator instanceof ServerPlayer _player) {
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+										if (!_ap.isDone()) {
+											Iterator _iterator = _ap.getRemainingCriteria().iterator();
+											while (_iterator.hasNext())
+												_player.getAdvancements().award(_adv, (String) _iterator.next());
+										}
+									}
+									if (entity instanceof ServerPlayer _player) {
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+										if (!_ap.isDone()) {
+											Iterator _iterator = _ap.getRemainingCriteria().iterator();
+											while (_iterator.hasNext())
+												_player.getAdvancements().award(_adv, (String) _iterator.next());
+										}
+									}
+								} else if (((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
+										&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_white_latex_wolf")) {
+									if (entityiterator instanceof ServerPlayer _player) {
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+										if (!_ap.isDone()) {
+											Iterator _iterator = _ap.getRemainingCriteria().iterator();
+											while (_iterator.hasNext())
+												_player.getAdvancements().award(_adv, (String) _iterator.next());
+										}
+									}
+									if (entity instanceof ServerPlayer _player) {
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+										if (!_ap.isDone()) {
+											Iterator _iterator = _ap.getRemainingCriteria().iterator();
+											while (_iterator.hasNext())
+												_player.getAdvancements().award(_adv, (String) _iterator.next());
+										}
+									}
+								}
+							}
+						}
 						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true
 								&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
 								&& (entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false
@@ -86,13 +155,13 @@ public class FriendlyGrabProcedure {
 										}
 									} else {
 										if (entity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent("They don't want to be friendly grabbed"), true);
+											_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.friendlygrab.dont_want").getString())), true);
 									}
 								} else {
 									if (entity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent("you are organic so you \u00A7chug\u00A7r they"), true);
+										_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.friendlygrab.you_hug.organic").getString())), true);
 									if (entityiterator instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent((entity.getDisplayName().getString() + " \u00A7chug\u00A7r you")), true);
+										_player.displayClientMessage(new TextComponent(("" + (new TranslatableComponent("changedaddon.friendlygrab.hug").getString()).replace("entity", entity.getDisplayName().getString()))), true);
 									if (entity instanceof ServerPlayer _player) {
 										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -120,7 +189,7 @@ public class FriendlyGrabProcedure {
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("You are already Friendly Grabbing"), false);
+					_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.friendlygrab.alreadyin").getString())), false);
 			}
 		}
 	}

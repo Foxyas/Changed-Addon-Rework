@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/painite_helmet_v2"
+    "layer0": "changed_addon:items/new_painite_helmet"
   }
 }

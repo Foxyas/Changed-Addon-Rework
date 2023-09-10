@@ -2,44 +2,21 @@
   "_fv": 43,
   "_type": "recipe",
   "definition": {
-    "recipeType": "Crafting",
+    "recipeType": "Smithing",
     "recipeRetstackSize": 1,
-    "group": "",
+    "group": "painite",
     "cookingBookCategory": "MISC",
     "xpReward": 0.0,
     "cookingTime": 200,
     "craftingBookCategory": "MISC",
     "recipeShapeless": false,
-    "recipeSlots": [
-      {
-        "value": "CUSTOM:Painite"
-      },
-      {
-        "value": "CUSTOM:Painite"
-      },
-      {
-        "value": "CUSTOM:Painite"
-      },
-      {
-        "value": "CUSTOM:Painite"
-      },
-      {
-        "value": ""
-      },
-      {
-        "value": "CUSTOM:Painite"
-      },
-      {
-        "value": ""
-      },
-      {
-        "value": ""
-      },
-      {
-        "value": ""
-      }
-    ],
-    "recipeReturnStack": {
+    "smithingInputStack": {
+      "value": "Items.NETHERITE_HELMET"
+    },
+    "smithingInputAdditionStack": {
+      "value": "CUSTOM:Painite"
+    },
+    "smithingReturnStack": {
       "value": "CUSTOM:PainiteArmor.helmet"
     },
     "name": "painite_armor_helmet_recipe",

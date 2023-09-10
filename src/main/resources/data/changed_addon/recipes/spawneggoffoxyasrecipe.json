@@ -1,16 +1,30 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "0",
-    "1"
+	"535",
+    "212",
+    "646"
   ],
   "key": {
-    "0": {
-      "item": "minecraft:totem_of_undying"
-    },
     "1": {
       "item": "changed:latex_base"
+    },
+    "2": {
+      "item": "changed:white_latex_goo"
+    },
+    "3": {
+      "item": "minecraft:emerald_block"
+    },
+    "4": {
+      "item": "minecraft:sweet_berries"
+    },
+    "5": {
+      "item": "minecraft:snowball"
+    },
+    "6": {
+      "item": "changed:orange"
     }
+    
   },
   "result": {
     "item": "changed_addon:spawneggoffoxyas",

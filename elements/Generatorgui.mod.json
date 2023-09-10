@@ -22,8 +22,8 @@
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 117,
-          "y": 85
+          "x": 118,
+          "y": 81
         }
       },
       {
@@ -38,8 +38,45 @@
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 162,
-          "y": 137
+          "x": 125,
+          "y": 147
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "on.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Ifisturnon"
+          },
+          "x": 284,
+          "y": 144
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "off.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "Ifisturnoff"
+          },
+          "x": 284,
+          "y": 144
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_hitbox_16x16",
+          "image": "hitbox_16x16.png",
+          "hoveredImage": "",
+          "onClick": {
+            "name": "GeneratorOnBlockRightClicked"
+          },
+          "x": 284,
+          "y": 144
         }
       }
     ],

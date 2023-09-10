@@ -20,6 +20,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
@@ -122,9 +123,10 @@ public class RightclickFriendlyGrabProcedure {
 										}
 									} else {
 										if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent("they are organic so you just \u00A7chug\u00A7r they"), true);
+											_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.friendlygrab.Human.you_hug.organic").getString())), true);
 										if (entity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent((ForgeRegistries.ENTITIES.getKey(sourceentity.getType()).toString() + " \u00A7chug\u00A7r you")), true);
+											_player.displayClientMessage(
+													new TextComponent(("" + (new TranslatableComponent("changedaddon.friendlygrab.you_hug").getString()).replace("entity", ForgeRegistries.ENTITIES.getKey(sourceentity.getType()).toString()))), true);
 										if (entity instanceof ServerPlayer _player) {
 											Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
 											AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
