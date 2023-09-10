@@ -1,0 +1,59 @@
+{
+  "_fv": 43,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 145,
+    "height": 102,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "button",
+        "data": {
+          "name": "button_back",
+          "text": "Back",
+          "onClick": {
+            "name": "Openpage2"
+          },
+          "width": 46,
+          "height": 20,
+          "x": 180,
+          "y": 48
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_close",
+          "text": "Close",
+          "onClick": {
+            "name": "Closemenu"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 231,
+          "y": 48
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "unlatexbase_craft.png",
+          "use1Xscale": true,
+          "x": 153,
+          "y": 88
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

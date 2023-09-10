@@ -28,8 +28,14 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 	private final Player entity;
 	Button button_close;
 	Button button_back;
-	Button button_next;
-	ImageButton imagebutton_20221106_142902;
+	ImageButton imagebutton_ammoniabutton;
+	ImageButton imagebutton_impureammoniawithslot;
+	ImageButton imagebutton_unlatexbasebutton_slot;
+	ImageButton imagebutton_ammoniaparticle_slot;
+	ImageButton imagebutton_potiwhtlitixcamonia_slot;
+	ImageButton imagebutton_syringewithlitixcamonia_slot;
+	ImageButton imagebutton_litixcamoniabutton;
+	ImageButton imagebutton_catalyzed_dna_slot;
 
 	public BookPagenumber2Screen(BookPagenumber2Menu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -38,8 +44,8 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 		this.y = container.y;
 		this.z = container.z;
 		this.entity = container.entity;
-		this.imageWidth = 418;
-		this.imageHeight = 180;
+		this.imageWidth = 270;
+		this.imageHeight = 144;
 	}
 
 	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/book_pagenumber_2.png");
@@ -58,10 +64,6 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.setShaderTexture(0, texture);
 		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
-
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/to_do_with_syring.png"));
-		this.blit(ms, this.leftPos + 241, this.topPos + 27, 0, 0, 171, 76, 171, 76);
-
 		RenderSystem.disableBlend();
 	}
 
@@ -81,14 +83,15 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_to_purify_the_latex_syringes_jus"), 5, 6, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_untransfur_items"), 4, 49, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_i_was_about_to_forget_but_we_cre"), 5, 17, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for"), 5, 28, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho"), 0, 39, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_click_on_the_litixcamonia_recipe"), 3, 61, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_on_how_to_craft_with_litixcamon"), 0, 71, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_click_here"), 73, 98, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_ammonia"), 36, 17, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe"), 3, 3, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_impure_ammonia"), 35, 36, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_anti_latex_base"), 35, 56, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_ammonia_particle"), 35, 76, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_pot_with_litixcamonia"), 35, 94, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_syringe_with_litixcamonia"), 35, 114, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_litixcamonia"), 150, 16, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_catalyzed_dna"), 150, 36, -12829636);
 	}
 
 	@Override
@@ -101,7 +104,7 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_close = new Button(this.leftPos + 359, this.topPos + 152, 51, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.button_close"), e -> {
+		button_close = new Button(this.leftPos + 215, this.topPos + -21, 51, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(0, x, y, z));
 				BookPagenumber2ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -109,7 +112,7 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 		});
 		guistate.put("button:button_close", button_close);
 		this.addRenderableWidget(button_close);
-		button_back = new Button(this.leftPos + 364, this.topPos + 131, 46, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.button_back"), e -> {
+		button_back = new Button(this.leftPos + 165, this.topPos + -21, 46, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.button_back"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(1, x, y, z));
 				BookPagenumber2ButtonMessage.handleButtonAction(entity, 1, x, y, z);
@@ -117,21 +120,69 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 		});
 		guistate.put("button:button_back", button_back);
 		this.addRenderableWidget(button_back);
-		button_next = new Button(this.leftPos + 308, this.topPos + 152, 46, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.button_next"), e -> {
+		imagebutton_ammoniabutton = new ImageButton(this.leftPos + 16, this.topPos + 13, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_ammoniabutton.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(2, x, y, z));
 				BookPagenumber2ButtonMessage.handleButtonAction(entity, 2, x, y, z);
 			}
 		});
-		guistate.put("button:button_next", button_next);
-		this.addRenderableWidget(button_next);
-		imagebutton_20221106_142902 = new ImageButton(this.leftPos + 5, this.topPos + 81, 200, 94, 0, 0, 94, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_20221106_142902.png"), 200, 188, e -> {
+		guistate.put("button:imagebutton_ammoniabutton", imagebutton_ammoniabutton);
+		this.addRenderableWidget(imagebutton_ammoniabutton);
+		imagebutton_impureammoniawithslot = new ImageButton(this.leftPos + 16, this.topPos + 33, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_impureammoniawithslot.png"), 16, 32, e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(3, x, y, z));
 				BookPagenumber2ButtonMessage.handleButtonAction(entity, 3, x, y, z);
 			}
 		});
-		guistate.put("button:imagebutton_20221106_142902", imagebutton_20221106_142902);
-		this.addRenderableWidget(imagebutton_20221106_142902);
+		guistate.put("button:imagebutton_impureammoniawithslot", imagebutton_impureammoniawithslot);
+		this.addRenderableWidget(imagebutton_impureammoniawithslot);
+		imagebutton_unlatexbasebutton_slot = new ImageButton(this.leftPos + 16, this.topPos + 53, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_unlatexbasebutton_slot.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(4, x, y, z));
+				BookPagenumber2ButtonMessage.handleButtonAction(entity, 4, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_unlatexbasebutton_slot", imagebutton_unlatexbasebutton_slot);
+		this.addRenderableWidget(imagebutton_unlatexbasebutton_slot);
+		imagebutton_ammoniaparticle_slot = new ImageButton(this.leftPos + 16, this.topPos + 72, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_ammoniaparticle_slot.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(5, x, y, z));
+				BookPagenumber2ButtonMessage.handleButtonAction(entity, 5, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_ammoniaparticle_slot", imagebutton_ammoniaparticle_slot);
+		this.addRenderableWidget(imagebutton_ammoniaparticle_slot);
+		imagebutton_potiwhtlitixcamonia_slot = new ImageButton(this.leftPos + 16, this.topPos + 91, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_potiwhtlitixcamonia_slot.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(6, x, y, z));
+				BookPagenumber2ButtonMessage.handleButtonAction(entity, 6, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_potiwhtlitixcamonia_slot", imagebutton_potiwhtlitixcamonia_slot);
+		this.addRenderableWidget(imagebutton_potiwhtlitixcamonia_slot);
+		imagebutton_syringewithlitixcamonia_slot = new ImageButton(this.leftPos + 16, this.topPos + 111, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_syringewithlitixcamonia_slot.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(7, x, y, z));
+				BookPagenumber2ButtonMessage.handleButtonAction(entity, 7, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_syringewithlitixcamonia_slot", imagebutton_syringewithlitixcamonia_slot);
+		this.addRenderableWidget(imagebutton_syringewithlitixcamonia_slot);
+		imagebutton_litixcamoniabutton = new ImageButton(this.leftPos + 132, this.topPos + 13, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_litixcamoniabutton.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(8, x, y, z));
+				BookPagenumber2ButtonMessage.handleButtonAction(entity, 8, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_litixcamoniabutton", imagebutton_litixcamoniabutton);
+		this.addRenderableWidget(imagebutton_litixcamoniabutton);
+		imagebutton_catalyzed_dna_slot = new ImageButton(this.leftPos + 132, this.topPos + 33, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_catalyzed_dna_slot.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(9, x, y, z));
+				BookPagenumber2ButtonMessage.handleButtonAction(entity, 9, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_catalyzed_dna_slot", imagebutton_catalyzed_dna_slot);
+		this.addRenderableWidget(imagebutton_catalyzed_dna_slot);
 	}
 }

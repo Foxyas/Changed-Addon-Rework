@@ -11,7 +11,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModAttributes;
-import net.foxyas.changedaddon.ChangedAddonMod;
 
 import javax.annotation.Nullable;
 
@@ -32,9 +31,9 @@ public class HazarArmorItemTipProcedure {
 		AttributeModifier HazardArmor = null;
 		AttributeModifier HazardArmor2 = null;
 		AttributeModifier HazardArmor3 = null;
-		HazardArmor = new AttributeModifier(UUID.fromString("0-0-0-0-0"), ChangedAddonMod.MODID + "." + "Hazard Armor Buff", 0.2, AttributeModifier.Operation.ADDITION);
-		HazardArmor2 = new AttributeModifier(UUID.fromString("0-0-0-0-1"), ChangedAddonMod.MODID + "." + "Hazard Armor Buff", 0.15, AttributeModifier.Operation.ADDITION);
-		HazardArmor3 = new AttributeModifier(UUID.fromString("0-0-0-0-2"), ChangedAddonMod.MODID + "." + "Hazard Armor Buff", 0.05, AttributeModifier.Operation.ADDITION);
+		HazardArmor = new AttributeModifier(UUID.fromString("0-0-0-0-0"), "Hazard Armor Buff", 0.2, AttributeModifier.Operation.ADDITION);
+		HazardArmor2 = new AttributeModifier(UUID.fromString("0-0-0-0-1"), "Hazard Armor Buff", 0.15, AttributeModifier.Operation.ADDITION);
+		HazardArmor3 = new AttributeModifier(UUID.fromString("0-0-0-0-2"), "Hazard Armor Buff", 0.05, AttributeModifier.Operation.ADDITION);
 		if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.HEAD) {
 			if (itemstack.getItem() == ChangedAddonModItems.HAZARD_SUIT_HELMET.get()) {
 				_event.addModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(), HazardArmor3);

@@ -3,195 +3,278 @@
   "_type": "gui",
   "definition": {
     "type": 0,
-    "width": 418,
-    "height": 180,
+    "width": 270,
+    "height": 144,
     "inventoryOffsetX": 0,
     "inventoryOffsetY": 0,
     "renderBgLayer": true,
     "doesPauseGame": false,
     "components": [
       {
-        "type": "label",
-        "data": {
-          "name": "label_to_purify_the_latex_syringes_jus",
-          "text": {
-            "fixedValue": "Before you transfur yourself, you need to purify the latex syringes in a purif"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 10,
-          "y": 36
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "to_do_with_syring.png",
-          "use1Xscale": true,
-          "x": 246,
-          "y": 57
-        }
-      },
-      {
         "type": "button",
         "data": {
           "name": "button_close",
-          "text": "close",
+          "text": "Close",
           "onClick": {
             "name": "Closemenu"
           },
           "width": 51,
           "height": 20,
-          "x": 364,
-          "y": 182
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_untransfur_items",
-          "text": {
-            "fixedValue": "cure you of your latex form."
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 9,
-          "y": 79
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_i_was_about_to_forget_but_we_cre",
-          "text": {
-            "fixedValue": "-ier by placing the syringe in the slot to purify. If you are unsure about per"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 10,
-          "y": 47
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_this_item_can_make_you_back_for",
-          "text": {
-            "fixedValue": "manently losing your humanity, you can craft"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 10,
-          "y": 58
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_the_recipe_for_the_main_item_sho",
-          "text": {
-            "fixedValue": " LitixCamonia. LitixCamonia can be injected to"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 5,
-          "y": 69
+          "x": 294,
+          "y": 27
         }
       },
       {
         "type": "button",
         "data": {
           "name": "button_back",
-          "text": "back",
+          "text": "Back",
           "onClick": {
             "name": "Openpage1"
           },
           "width": 46,
           "height": 20,
-          "x": 369,
-          "y": 161
+          "x": 244,
+          "y": 27
         }
       },
       {
-        "type": "button",
+        "type": "label",
         "data": {
-          "name": "button_next",
-          "text": "next",
+          "name": "label_ammonia",
+          "text": {
+            "fixedValue": "Ammonia powder"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 115,
+          "y": 65
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_ammoniabutton",
+          "image": "ammoniabutton.png",
+          "hoveredImage": "selectedammoniabutton.png",
           "onClick": {
-            "name": "Openpage4"
+            "name": "Openbookpage5"
           },
-          "width": 46,
-          "height": 20,
-          "x": 313,
-          "y": 182
+          "x": 95,
+          "y": 61
         }
       },
       {
         "type": "label",
         "data": {
-          "name": "label_click_on_the_litixcamonia_recipe",
+          "name": "label_click_in_item_for_recipe",
           "text": {
-            "fixedValue": "Click on the LitixCamonia recipe for details "
+            "fixedValue": "CLICK IN ITEM FOR RECIPE"
           },
           "color": {
-            "value": -12829636,
+            "value": -16777216,
             "falpha": 0.0
           },
-          "x": 8,
-          "y": 91
+          "x": 82,
+          "y": 51
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_impureammoniawithslot",
+          "image": "impureammoniawithslot.png",
+          "hoveredImage": "selectedimpureammoniabutton.png",
+          "onClick": {
+            "name": "OpenBookRecipe3"
+          },
+          "x": 95,
+          "y": 81
         }
       },
       {
         "type": "label",
         "data": {
-          "name": "label_on_how_to_craft_with_litixcamon",
+          "name": "label_impure_ammonia",
           "text": {
-            "fixedValue": " on how to craft with Litixcamonia."
+            "fixedValue": "Impure Ammonia"
           },
           "color": {
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 4,
+          "x": 114,
+          "y": 84
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_anti_latex_base",
+          "text": {
+            "fixedValue": "Anti Latex Base"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 114,
+          "y": 104
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_unlatexbasebutton_slot",
+          "image": "unlatexbasebutton_slot.png",
+          "hoveredImage": "unlatexbasebutton_slot_selected.png",
+          "onClick": {
+            "name": "OpenBookRecipe4"
+          },
+          "x": 95,
           "y": 101
         }
       },
       {
         "type": "imagebutton",
         "data": {
-          "name": "imagebutton_20221106_142902",
-          "image": "litixcamoniarecipe_new.png",
-          "hoveredImage": "",
+          "name": "imagebutton_ammoniaparticle_slot",
+          "image": "ammoniaparticle_slot.png",
+          "hoveredImage": "ammonia_particles_slot_selected.png",
           "onClick": {
-            "name": "Openpage3"
+            "name": "OpenBookRecipe2"
           },
-          "x": 10,
-          "y": 111
+          "x": 95,
+          "y": 120
         }
       },
       {
         "type": "label",
         "data": {
-          "name": "label_click_here",
+          "name": "label_ammonia_particle",
           "text": {
-            "fixedValue": "CLICK HERE"
+            "fixedValue": "Ammonia Particle"
           },
           "color": {
-            "value": -16777216,
+            "value": -12829636,
             "falpha": 0.0
           },
-          "x": 78,
-          "y": 128
+          "x": 114,
+          "y": 124
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_potiwhtlitixcamonia_slot",
+          "image": "potiwhtlitixcamonia_slot.png",
+          "hoveredImage": "potwithlitixcamonia_slot_selected.png",
+          "onClick": {
+            "name": "OpenBookRecipe"
+          },
+          "x": 95,
+          "y": 139
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_pot_with_litixcamonia",
+          "text": {
+            "fixedValue": "Pot With Litix-Camonia"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 114,
+          "y": 142
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_syringe_with_litixcamonia",
+          "text": {
+            "fixedValue": "Syringe With Litix-Camonia"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 114,
+          "y": 162
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_syringewithlitixcamonia_slot",
+          "image": "syringewithlitixcamonia_slot.png",
+          "hoveredImage": "syringewithlitixcamonia_slot_selected.png",
+          "onClick": {
+            "name": "OpenBookRecipe5"
+          },
+          "x": 95,
+          "y": 159
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_litixcamoniabutton",
+          "image": "litixcamonia_slot.png",
+          "hoveredImage": "litixcamonia_slot_selected.png",
+          "onClick": {
+            "name": "Openpage3"
+          },
+          "x": 211,
+          "y": 61
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_litixcamonia",
+          "text": {
+            "fixedValue": "Litix-Camonia"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 229,
+          "y": 64
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_catalyzed_dna_slot",
+          "image": "catalyzed_dna_slot.png",
+          "hoveredImage": "catalyzer_dna_slot_selected.png",
+          "onClick": {
+            "name": "Openpage4"
+          },
+          "x": 211,
+          "y": 81
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_catalyzed_dna",
+          "text": {
+            "fixedValue": "Catalyzed DNA"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 229,
+          "y": 84
         }
       }
     ],

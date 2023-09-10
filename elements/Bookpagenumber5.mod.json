@@ -3,106 +3,91 @@
   "_type": "gui",
   "definition": {
     "type": 0,
-    "width": 420,
-    "height": 204,
+    "width": 270,
+    "height": 144,
     "inventoryOffsetX": 0,
     "inventoryOffsetY": 0,
     "renderBgLayer": true,
     "doesPauseGame": false,
     "components": [
       {
-        "type": "image",
-        "data": {
-          "image": "untransfurrecipe.png",
-          "use1Xscale": false,
-          "x": 7,
-          "y": 23
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "potwithlitixcamoniarecipe.png",
-          "use1Xscale": false,
-          "x": 6,
-          "y": 118
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_unifuser",
-          "text": {
-            "fixedValue": "Unifuser"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 12,
-          "y": 37
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_unifuser1",
-          "text": {
-            "fixedValue": "Unifuser"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 12,
-          "y": 144
-        }
-      },
-      {
         "type": "button",
         "data": {
           "name": "button_back",
           "text": "Back",
           "onClick": {
-            "name": "Openpage3"
+            "name": "Openpage2"
           },
           "width": 46,
           "height": 20,
-          "x": 358,
-          "y": 185
+          "x": 243,
+          "y": 27
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_close",
+          "text": "Close",
+          "onClick": {
+            "name": "Closemenu"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 294,
+          "y": 27
         }
       },
       {
         "type": "image",
         "data": {
-          "image": "unlatexbase_craft.png",
-          "use1Xscale": true,
-          "x": 216,
-          "y": 143
+          "image": "catalyzer_screen.png",
+          "use1Xscale": false,
+          "x": 113,
+          "y": 81
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ammoniaparticle_slot.png",
+          "use1Xscale": false,
+          "x": 136,
+          "y": 125
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ammoniabutton.png",
+          "use1Xscale": false,
+          "x": 266,
+          "y": 125
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_recipe_buttom_normal",
+          "image": "recipe_buttom_normal.png",
+          "hoveredImage": "recipe_buttom_selected.png",
+          "x": 204,
+          "y": 145
         }
       },
       {
         "type": "label",
         "data": {
-          "name": "label_craft_table",
+          "name": "label_16",
           "text": {
-            "fixedValue": "Crafting-table"
+            "fixedValue": "16"
           },
           "color": {
-            "value": -12829636,
+            "value": -1,
             "falpha": 0.0
           },
-          "x": 216,
-          "y": 133
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "catalyzeddna_recipe.png",
-          "use1Xscale": false,
-          "x": 212,
-          "y": 33
+          "x": 139,
+          "y": 148
         }
       },
       {
@@ -113,11 +98,11 @@
             "fixedValue": "Catalyzer"
           },
           "color": {
-            "value": -12829636,
+            "value": -16777216,
             "falpha": 0.0
           },
-          "x": 355,
-          "y": 37
+          "x": 123,
+          "y": 91
         }
       }
     ],

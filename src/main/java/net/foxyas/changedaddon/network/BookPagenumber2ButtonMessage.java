@@ -15,6 +15,12 @@ import net.foxyas.changedaddon.world.inventory.BookPagenumber2Menu;
 import net.foxyas.changedaddon.procedures.Openpage4Procedure;
 import net.foxyas.changedaddon.procedures.Openpage3Procedure;
 import net.foxyas.changedaddon.procedures.Openpage1Procedure;
+import net.foxyas.changedaddon.procedures.Openbookpage5Procedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipeProcedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipe5Procedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipe4Procedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipe3Procedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipe2Procedure;
 import net.foxyas.changedaddon.procedures.ClosemenuProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -75,11 +81,35 @@ public class BookPagenumber2ButtonMessage {
 		}
 		if (buttonID == 2) {
 
-			Openpage4Procedure.execute(world, x, y, z, entity);
+			Openbookpage5Procedure.execute(world, x, y, z, entity);
 		}
 		if (buttonID == 3) {
 
+			OpenBookRecipe3Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 4) {
+
+			OpenBookRecipe4Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 5) {
+
+			OpenBookRecipe2Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 6) {
+
+			OpenBookRecipeProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 7) {
+
+			OpenBookRecipe5Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 8) {
+
 			Openpage3Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 9) {
+
+			Openpage4Procedure.execute(world, x, y, z, entity);
 		}
 	}
 

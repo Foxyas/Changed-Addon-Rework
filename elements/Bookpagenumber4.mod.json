@@ -3,117 +3,112 @@
   "_type": "gui",
   "definition": {
     "type": 0,
-    "width": 400,
-    "height": 220,
+    "width": 270,
+    "height": 144,
     "inventoryOffsetX": 0,
     "inventoryOffsetY": 0,
     "renderBgLayer": true,
     "doesPauseGame": false,
     "components": [
       {
-        "type": "image",
+        "type": "button",
         "data": {
-          "image": "way.png",
-          "use1Xscale": true,
-          "x": 17,
-          "y": 13
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "way_2.png",
-          "use1Xscale": true,
-          "x": 17,
-          "y": 116
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_correct_way",
-          "text": {
-            "fixedValue": "correct way"
+          "name": "button_close",
+          "text": "Close",
+          "onClick": {
+            "name": "Closemenu"
           },
-          "color": {
-            "value": -16711936,
-            "falpha": 0.0
-          },
-          "x": 137,
-          "y": 194
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_incorrect_way",
-          "text": {
-            "fixedValue": "incorrectly way"
-          },
-          "color": {
-            "value": -3407872,
-            "falpha": 0.0
-          },
-          "x": 126,
-          "y": 42
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_with_the_latex_syringe_just_use",
-          "text": {
-            "fixedValue": "With the latex syringe just use it"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 227,
-          "y": 16
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_in_the_rank_right_mouse_button",
-          "text": {
-            "fixedValue": "in IV rank (right mouse button)"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 226,
+          "width": 51,
+          "height": 20,
+          "x": 294,
           "y": 27
         }
       },
       {
         "type": "button",
         "data": {
-          "name": "button_close",
-          "text": "close",
-          "onClick": {
-            "name": "Closemenu"
-          },
-          "width": 51,
-          "height": 20,
-          "x": 346,
-          "y": 198
-        }
-      },
-      {
-        "type": "button",
-        "data": {
           "name": "button_back",
-          "text": "back",
+          "text": "Back",
           "onClick": {
             "name": "Openpage2"
           },
           "width": 46,
           "height": 20,
-          "x": 293,
-          "y": 198
+          "x": 244,
+          "y": 27
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "catalyzer_screen.png",
+          "use1Xscale": false,
+          "x": 113,
+          "y": 79
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_n_any_latex_or_blood_syringe",
+          "text": {
+            "fixedValue": "N = ANY LATEX OR BLOOD SYRINGE"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "x": 96,
+          "y": 60
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_n",
+          "text": {
+            "fixedValue": "N"
+          },
+          "color": {
+            "value": -16729089,
+            "falpha": 0.0
+          },
+          "x": 141,
+          "y": 126
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "catalyzed_dna_slot.png",
+          "use1Xscale": false,
+          "x": 266,
+          "y": 123
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_recipe_buttom_normal",
+          "image": "recipe_buttom_normal.png",
+          "hoveredImage": "recipe_buttom_selected.png",
+          "x": 202,
+          "y": 143
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_catalyzer",
+          "text": {
+            "fixedValue": "Catalyzer"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "x": 125,
+          "y": 89
         }
       }
     ],

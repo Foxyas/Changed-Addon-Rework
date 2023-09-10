@@ -32,7 +32,7 @@
 	</classpathentry>
 	<classpathentry kind="output" path="bin/default"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17/"/>
-	<classpathentry sourcepath="C:/Users/User/Downloads/MCreator.2023.1.Windows.64bit 2/workspaces/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.9_mapped_official_1.18.2/forge-1.18.2-40.2.9_mapped_official_1.18.2-sources.jar" kind="lib" path="C:/Users/User/Downloads/MCreator.2023.1.Windows.64bit 2/workspaces/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.9_mapped_official_1.18.2/forge-1.18.2-40.2.9_mapped_official_1.18.2.jar">
+	<classpathentry sourcepath="C:/Users/User/Downloads/MCreator.2023.1.Windows.64bit 2/workspaces/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.10_mapped_official_1.18.2/forge-1.18.2-40.2.10_mapped_official_1.18.2-sources.jar" kind="lib" path="C:/Users/User/Downloads/MCreator.2023.1.Windows.64bit 2/workspaces/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.10_mapped_official_1.18.2/forge-1.18.2-40.2.10_mapped_official_1.18.2.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -42,7 +42,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlloader/1.18.2-40.2.9/39239b65fa08c5adc132e5bad8b9b179b586fc0f/fmlloader-1.18.2-40.2.9-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlloader/1.18.2-40.2.9/e28c507d43289c3b74c6416563f66fa4d7d8b46b/fmlloader-1.18.2-40.2.9.jar">
+	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlloader/1.18.2-40.2.10/3fa1ceb7bb4ddfd1135d455c88a31de7567e4f60/fmlloader-1.18.2-40.2.10-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlloader/1.18.2-40.2.10/bf8adf960205f8d3fde11b0af72e58841525d87e/fmlloader-1.18.2-40.2.10.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -137,7 +137,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.18.2-40.2.9/feb17b8f1e4e8971bd41494213a9cc4b3095ec71/fmlcore-1.18.2-40.2.9-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.18.2-40.2.9/b906edb362c2314b1d23155e078e62abc2b9e58f/fmlcore-1.18.2-40.2.9.jar">
+	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.18.2-40.2.10/a8d84457516e16479173800bbaff2297d9358be5/fmlcore-1.18.2-40.2.10-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/fmlcore/1.18.2-40.2.10/2740cecca3412910901af50695e3b5bcc719549/fmlcore-1.18.2-40.2.10.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -212,17 +212,17 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.18.2-40.2.9/ea3987af32a013757efb1d513a6bd7db604c8ae4/javafmllanguage-1.18.2-40.2.9-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.18.2-40.2.9/f8c2ae274ba0d39da23d0c173982e53f0b14d66d/javafmllanguage-1.18.2-40.2.9.jar">
+	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.18.2-40.2.10/2afa492b65c281db0f7b9dfb8697b484ecf46648/javafmllanguage-1.18.2-40.2.10-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/javafmllanguage/1.18.2-40.2.10/8d0a7f3d415287356917a4440fec657f2642711d/javafmllanguage-1.18.2-40.2.10.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.18.2-40.2.9/8f8b011a32e43eddc640434a1d8e37bacd949209/lowcodelanguage-1.18.2-40.2.9-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.18.2-40.2.9/14d7918b04a606bfe7b8ab2bfdb0850552ccccbd/lowcodelanguage-1.18.2-40.2.9.jar">
+	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.18.2-40.2.10/9a15b3af6202d0ccc0baea86f410638fa0f476c/lowcodelanguage-1.18.2-40.2.10-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/lowcodelanguage/1.18.2-40.2.10/db214162f7ec443023f743bd235eb24b871cb5db/lowcodelanguage-1.18.2-40.2.10.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.18.2-40.2.9/155d37e5c33ff459616c197e1591c3151ce96fc6/mclanguage-1.18.2-40.2.9-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.18.2-40.2.9/64203f2c80bfd98df8054e4ba9dfbdf4976b677a/mclanguage-1.18.2-40.2.9.jar">
+	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.18.2-40.2.10/519f5b12a7519a6ed20e3f560ef962003b7edcd8/mclanguage-1.18.2-40.2.10-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/mclanguage/1.18.2-40.2.10/ffbd80ded955115e3fda16e691acc132f4e88ef6/mclanguage-1.18.2-40.2.10.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>

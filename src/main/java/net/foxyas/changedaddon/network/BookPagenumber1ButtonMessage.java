@@ -66,15 +66,15 @@ public class BookPagenumber1ButtonMessage {
 			return;
 		if (buttonID == 0) {
 
-			Openpage2Procedure.execute(world, x, y, z, entity);
+			ClosemenuProcedure.execute(entity);
 		}
 		if (buttonID == 1) {
 
-			ClosemenuProcedure.execute(entity);
+			Openpage6Procedure.execute(world, x, y, z, entity);
 		}
 		if (buttonID == 2) {
 
-			Openpage6Procedure.execute(world, x, y, z, entity);
+			Openpage2Procedure.execute(world, x, y, z, entity);
 		}
 	}
 

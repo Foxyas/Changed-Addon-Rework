@@ -3,81 +3,13 @@
   "_type": "gui",
   "definition": {
     "type": 0,
-    "width": 418,
-    "height": 220,
+    "width": 270,
+    "height": 144,
     "inventoryOffsetX": 0,
     "inventoryOffsetY": 0,
     "renderBgLayer": true,
     "doesPauseGame": false,
     "components": [
-      {
-        "type": "image",
-        "data": {
-          "image": "craft4.png",
-          "use1Xscale": true,
-          "x": 211,
-          "y": 14
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_fflowers",
-          "text": {
-            "fixedValue": "f=flowers"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 288,
-          "y": 17
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_mmeat",
-          "text": {
-            "fixedValue": "m=meat"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 253,
-          "y": 16
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_sseed",
-          "text": {
-            "fixedValue": "s=seed"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 216,
-          "y": 16
-        }
-      },
-      {
-        "type": "button",
-        "data": {
-          "name": "button_close",
-          "text": "Close",
-          "onClick": {
-            "name": "Closemenu"
-          },
-          "width": 51,
-          "height": 20,
-          "x": 366,
-          "y": 40
-        }
-      },
       {
         "type": "button",
         "data": {
@@ -88,17 +20,8 @@
           },
           "width": 46,
           "height": 20,
-          "x": 371,
-          "y": 15
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "litixcamoniarecipe.png",
-          "use1Xscale": false,
-          "x": 7,
-          "y": 12
+          "x": 244,
+          "y": 26
         }
       },
       {
@@ -112,94 +35,92 @@
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 13,
-          "y": 15
+          "x": 124,
+          "y": 78
         }
       },
       {
         "type": "image",
         "data": {
-          "image": "ammoniapowderrecipe.png",
+          "image": "unifuserscreen.png",
           "use1Xscale": false,
-          "x": 8,
-          "y": 109
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_catlyzer",
-          "text": {
-            "fixedValue": "Catalyzer"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 13,
-          "y": 116
+          "x": 114,
+          "y": 68
         }
       },
       {
         "type": "image",
         "data": {
-          "image": "ammoniarecipe.png",
+          "image": "litixcamonia_slot.png",
           "use1Xscale": false,
-          "x": 211,
-          "y": 86
+          "x": 269,
+          "y": 125
         }
       },
       {
-        "type": "label",
+        "type": "image",
         "data": {
-          "name": "label_catlyzer1",
-          "text": {
-            "fixedValue": "Catalyzer"
-          },
-          "color": {
-            "value": -12829636,
-            "falpha": 0.0
-          },
-          "x": 217,
-          "y": 91
+          "image": "unlatexbasebutton_slot.png",
+          "use1Xscale": false,
+          "x": 129,
+          "y": 138
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ammoniabutton.png",
+          "use1Xscale": false,
+          "x": 129,
+          "y": 113
         }
       },
       {
         "type": "button",
         "data": {
-          "name": "button_next",
-          "text": "Next",
+          "name": "button_close",
+          "text": "Close",
           "onClick": {
-            "name": "Openbookpage5"
+            "name": "Closemenu"
           },
-          "width": 46,
+          "width": 51,
           "height": 20,
-          "x": 361,
-          "y": 201
+          "x": 294,
+          "y": 26
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_recipe_buttom_normal",
+          "image": "recipe_buttom_normal.png",
+          "hoveredImage": "recipe_buttom_selected.png",
+          "x": 210,
+          "y": 148
         }
       },
       {
         "type": "label",
         "data": {
-          "name": "label_for_turn_on_the_catlyzer_and_uni",
+          "name": "label_or",
           "text": {
-            "fixedValue": "For turn on or off the catalyzer and unifuser is Shift+Click"
+            "fixedValue": "OR"
           },
           "color": {
-            "value": -16777216,
+            "value": -12829636,
             "falpha": 0.0
           },
-          "x": 8,
-          "y": 209
+          "x": 150,
+          "y": 111
         }
       },
       {
         "type": "image",
         "data": {
-          "image": "unlatexbase_buttonv2.png",
+          "image": "litixcamonia_slot.png",
           "use1Xscale": false,
-          "x": 22,
-          "y": 82
+          "x": 165,
+          "y": 105
         }
       }
     ],

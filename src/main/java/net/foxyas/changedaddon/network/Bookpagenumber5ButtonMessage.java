@@ -12,7 +12,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber5Menu;
-import net.foxyas.changedaddon.procedures.Openpage3Procedure;
+import net.foxyas.changedaddon.procedures.Openpage2Procedure;
+import net.foxyas.changedaddon.procedures.ClosemenuProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -64,7 +65,11 @@ public class Bookpagenumber5ButtonMessage {
 			return;
 		if (buttonID == 0) {
 
-			Openpage3Procedure.execute(world, x, y, z, entity);
+			Openpage2Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 1) {
+
+			ClosemenuProcedure.execute(entity);
 		}
 	}
 

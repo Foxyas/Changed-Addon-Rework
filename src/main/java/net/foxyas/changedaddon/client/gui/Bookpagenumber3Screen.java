@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.Minecraft;
 
@@ -25,9 +26,9 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
-	Button button_close;
 	Button button_back;
-	Button button_next;
+	Button button_close;
+	ImageButton imagebutton_recipe_buttom_normal;
 
 	public Bookpagenumber3Screen(Bookpagenumber3Menu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -36,8 +37,8 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		this.y = container.y;
 		this.z = container.z;
 		this.entity = container.entity;
-		this.imageWidth = 418;
-		this.imageHeight = 220;
+		this.imageWidth = 270;
+		this.imageHeight = 144;
 	}
 
 	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/bookpagenumber_3.png");
@@ -57,20 +58,20 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		RenderSystem.setShaderTexture(0, texture);
 		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/craft4.png"));
-		this.blit(ms, this.leftPos + 206, this.topPos + 4, 0, 0, 150, 70, 150, 70);
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserscreen.png"));
+		this.blit(ms, this.leftPos + 35, this.topPos + 20, 0, 0, 200, 104, 200, 104);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamoniarecipe.png"));
-		this.blit(ms, this.leftPos + 2, this.topPos + 2, 0, 0, 200, 94, 200, 94);
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamonia_slot.png"));
+		this.blit(ms, this.leftPos + 190, this.topPos + 77, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniapowderrecipe.png"));
-		this.blit(ms, this.leftPos + 3, this.topPos + 99, 0, 0, 200, 90, 200, 90);
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unlatexbasebutton_slot.png"));
+		this.blit(ms, this.leftPos + 50, this.topPos + 90, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniarecipe.png"));
-		this.blit(ms, this.leftPos + 206, this.topPos + 76, 0, 0, 200, 90, 200, 90);
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniabutton.png"));
+		this.blit(ms, this.leftPos + 50, this.topPos + 65, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unlatexbase_buttonv2.png"));
-		this.blit(ms, this.leftPos + 17, this.topPos + 72, 0, 0, 16, 16, 16, 16);
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamonia_slot.png"));
+		this.blit(ms, this.leftPos + 86, this.topPos + 57, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.disableBlend();
 	}
@@ -91,13 +92,8 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_fflowers"), 283, 7, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_mmeat"), 248, 6, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_sseed"), 211, 6, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_unifuser"), 8, 5, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_catlyzer"), 8, 106, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_catlyzer1"), 212, 81, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_for_turn_on_the_catlyzer_and_uni"), 3, 199, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_unifuser"), 45, 30, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_or"), 71, 63, -12829636);
 	}
 
 	@Override
@@ -110,29 +106,25 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_close = new Button(this.leftPos + 361, this.topPos + 30, 51, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.button_close"), e -> {
+		button_back = new Button(this.leftPos + 165, this.topPos + -22, 46, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.button_back"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber3ButtonMessage(0, x, y, z));
 				Bookpagenumber3ButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
 		});
-		guistate.put("button:button_close", button_close);
-		this.addRenderableWidget(button_close);
-		button_back = new Button(this.leftPos + 366, this.topPos + 5, 46, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.button_back"), e -> {
+		guistate.put("button:button_back", button_back);
+		this.addRenderableWidget(button_back);
+		button_close = new Button(this.leftPos + 215, this.topPos + -22, 51, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber3ButtonMessage(1, x, y, z));
 				Bookpagenumber3ButtonMessage.handleButtonAction(entity, 1, x, y, z);
 			}
 		});
-		guistate.put("button:button_back", button_back);
-		this.addRenderableWidget(button_back);
-		button_next = new Button(this.leftPos + 356, this.topPos + 191, 46, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.button_next"), e -> {
-			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber3ButtonMessage(2, x, y, z));
-				Bookpagenumber3ButtonMessage.handleButtonAction(entity, 2, x, y, z);
-			}
+		guistate.put("button:button_close", button_close);
+		this.addRenderableWidget(button_close);
+		imagebutton_recipe_buttom_normal = new ImageButton(this.leftPos + 131, this.topPos + 100, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_recipe_buttom_normal.png"), 20, 36, e -> {
 		});
-		guistate.put("button:button_next", button_next);
-		this.addRenderableWidget(button_next);
+		guistate.put("button:imagebutton_recipe_buttom_normal", imagebutton_recipe_buttom_normal);
+		this.addRenderableWidget(imagebutton_recipe_buttom_normal);
 	}
 }

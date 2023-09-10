@@ -17,8 +17,9 @@ import javax.annotation.Nullable;
 public class Experiment009IsHurtProcedure {
 	@SubscribeEvent
 	public static void onEntityAttacked(LivingHurtEvent event) {
-		if (event != null && event.getEntity() != null) {
-			execute(event, event.getEntity());
+		Entity entity = event.getEntity();
+		if (event != null && entity != null) {
+			execute(event, entity);
 		}
 	}
 

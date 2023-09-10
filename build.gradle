@@ -86,7 +86,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.2.0'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.10'
     implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.12")
     implementation fg.deobf("curse.maven:advanced-xray-256256:3712732")
     implementation fg.deobf("curse.maven:lightspeedmod-821790:4594803")

@@ -24,6 +24,11 @@ import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
 import net.foxyas.changedaddon.world.inventory.FoxyasGui2Menu;
 import net.foxyas.changedaddon.world.inventory.FightTokeepconsciousnessminigameMenu;
 import net.foxyas.changedaddon.world.inventory.CatlyzerguiMenu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage9Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage8Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage7Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage6Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage10Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber5Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber4Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber3Menu;
@@ -57,6 +62,11 @@ public class ChangedAddonModMenus {
 	public static final MenuType<TranfurSoundsGuiMenu> TRANFUR_SOUNDS_GUI = register("tranfur_sounds_gui", (id, inv, extraData) -> new TranfurSoundsGuiMenu(id, inv, extraData));
 	public static final MenuType<BookPagenumber6Menu> BOOK_PAGENUMBER_6 = register("book_pagenumber_6", (id, inv, extraData) -> new BookPagenumber6Menu(id, inv, extraData));
 	public static final MenuType<BookPagenumber7Menu> BOOK_PAGENUMBER_7 = register("book_pagenumber_7", (id, inv, extraData) -> new BookPagenumber7Menu(id, inv, extraData));
+	public static final MenuType<Bookrecipepage6Menu> BOOKRECIPEPAGE_6 = register("bookrecipepage_6", (id, inv, extraData) -> new Bookrecipepage6Menu(id, inv, extraData));
+	public static final MenuType<Bookrecipepage7Menu> BOOKRECIPEPAGE_7 = register("bookrecipepage_7", (id, inv, extraData) -> new Bookrecipepage7Menu(id, inv, extraData));
+	public static final MenuType<Bookrecipepage8Menu> BOOKRECIPEPAGE_8 = register("bookrecipepage_8", (id, inv, extraData) -> new Bookrecipepage8Menu(id, inv, extraData));
+	public static final MenuType<Bookrecipepage9Menu> BOOKRECIPEPAGE_9 = register("bookrecipepage_9", (id, inv, extraData) -> new Bookrecipepage9Menu(id, inv, extraData));
+	public static final MenuType<Bookrecipepage10Menu> BOOKRECIPEPAGE_10 = register("bookrecipepage_10", (id, inv, extraData) -> new Bookrecipepage10Menu(id, inv, extraData));
 
 	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
 		MenuType<T> menuType = new MenuType<T>(containerFactory);

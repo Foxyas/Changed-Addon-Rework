@@ -23,6 +23,11 @@ import net.foxyas.changedaddon.client.gui.FoxyasguiScreen;
 import net.foxyas.changedaddon.client.gui.FoxyasGui2Screen;
 import net.foxyas.changedaddon.client.gui.FightTokeepconsciousnessminigameScreen;
 import net.foxyas.changedaddon.client.gui.CatlyzerguiScreen;
+import net.foxyas.changedaddon.client.gui.Bookrecipepage9Screen;
+import net.foxyas.changedaddon.client.gui.Bookrecipepage8Screen;
+import net.foxyas.changedaddon.client.gui.Bookrecipepage7Screen;
+import net.foxyas.changedaddon.client.gui.Bookrecipepage6Screen;
+import net.foxyas.changedaddon.client.gui.Bookrecipepage10Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber5Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber4Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber3Screen;
@@ -55,6 +60,11 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.TRANFUR_SOUNDS_GUI, TranfurSoundsGuiScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOK_PAGENUMBER_6, BookPagenumber6Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOK_PAGENUMBER_7, BookPagenumber7Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_6, Bookrecipepage6Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_7, Bookrecipepage7Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_8, Bookrecipepage8Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_9, Bookrecipepage9Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_10, Bookrecipepage10Screen::new);
 		});
 	}
 }
