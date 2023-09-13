@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "changed_addon:items/latex-totem_golden"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "changed_addon:transfur_totem_glowtick": 0.5
+      },
+      "model": "changed_addon:item/transfur_totem_0"
+    }
+  ]
+}

@@ -55,10 +55,10 @@ public class TranfurSoundsGuiScreen extends AbstractContainerScreen<TranfurSound
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(ms);
 		super.render(ms, mouseX, mouseY, partialTicks);
-		this.renderTooltip(ms, mouseX, mouseY);
 		if (FoxyasGuiEntityDisplayProcedure.execute(entity) instanceof LivingEntity livingEntity) {
 			InventoryScreen.renderEntityInInventory(this.leftPos + 89, this.topPos + 133, 30, (float) Math.atan((this.leftPos + 89 - mouseX) / 40.0), (float) Math.atan((this.topPos + 83 - mouseY) / 40.0), livingEntity);
 		}
+		this.renderTooltip(ms, mouseX, mouseY);
 	}
 
 	@Override

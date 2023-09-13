@@ -47,6 +47,10 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		this.renderBackground(ms);
 		super.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
+		if (mouseX > leftPos + 143 && mouseX < leftPos + 167 && mouseY > topPos + 43 && mouseY < topPos + 67)
+			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.tooltip_show_the_recipes_of_changed_addo3"), mouseX, mouseY);
+		if (mouseX > leftPos + 152 && mouseX < leftPos + 176 && mouseY > topPos + 17 && mouseY < topPos + 41)
+			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.tooltip_will_show_information_about_chan"), mouseX, mouseY);
 	}
 
 	@Override
@@ -75,6 +79,8 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_empty"), 152, 51, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_empty1"), 161, 24, -16777216);
 	}
 
 	@Override

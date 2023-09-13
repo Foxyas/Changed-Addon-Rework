@@ -19,5 +19,14 @@
       "trigger": "minecraft:impossible"
     }
   },
+  "rewards": {
+    "experience": 0,
+    "recipes": [
+      "changed_addon:unifuser_recipe",
+      "changed_addon:catlyzerrecipe",
+      "changed_addon:unlatexbaserecipe",
+      "changed_addon:latexinsulatorrecipe"
+    ]
+  },
   "parent": "changed_addon:changedaddon_advancement"
 }

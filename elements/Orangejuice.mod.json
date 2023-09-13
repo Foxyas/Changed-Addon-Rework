@@ -1,10 +1,12 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "new_orange_juice",
     "customModelName": "Normal",
+    "customProperties": {},
+    "states": [],
     "name": "Orange Juice",
     "rarity": "COMMON",
     "creativeTab": {

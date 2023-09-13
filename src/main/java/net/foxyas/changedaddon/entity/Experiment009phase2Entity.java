@@ -69,6 +69,7 @@ public class Experiment009phase2Entity extends Monster {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, false, false));
 		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.8, false) {

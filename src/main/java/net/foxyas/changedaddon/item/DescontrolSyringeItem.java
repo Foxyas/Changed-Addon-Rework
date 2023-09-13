@@ -31,7 +31,7 @@ public class DescontrolSyringeItem extends Item {
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		DescontrolSyringePlayerFinishesUsingItemProcedure.execute(entity);
+		DescontrolSyringePlayerFinishesUsingItemProcedure.execute(world, x, y, z, entity);
 		return retval;
 	}
 }

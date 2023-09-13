@@ -37,7 +37,7 @@ public class SyringewithlitixcammoniaItem extends Item {
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure.execute(world, entity);
+		SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure.execute(world, x, y, z, entity);
 		return retval;
 	}
 

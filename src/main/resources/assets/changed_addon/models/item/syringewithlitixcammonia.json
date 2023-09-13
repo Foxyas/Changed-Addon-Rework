@@ -2,5 +2,13 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "changed_addon:items/new_liticammonia_syringe"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.5
+      },
+      "model": "changed_addon:item/syringewithlitixcammonia_0"
+    }
+  ]
 }

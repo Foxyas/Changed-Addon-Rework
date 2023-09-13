@@ -65,5 +65,14 @@
         "stream": false
       }
     ]
+  },
+  "untransfursound": {
+    "subtitle": "subtitles.untransfursound",
+    "sounds": [
+      {
+        "name": "changed_addon:healing",
+        "stream": false
+      }
+    ]
   }
 }

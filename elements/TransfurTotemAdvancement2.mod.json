@@ -1,0 +1,25 @@
+{
+  "_fv": 47,
+  "_type": "achievement",
+  "definition": {
+    "achievementName": "§bSalvation§r§5 of A §fGooey §r§4Curse",
+    "achievementDescription": "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem",
+    "achievementIcon": {
+      "value": "CUSTOM:TransfurTotem"
+    },
+    "background": "Default",
+    "disableDisplay": false,
+    "showPopup": true,
+    "announceToChat": false,
+    "hideIfNotCompleted": true,
+    "rewardLoot": [],
+    "rewardRecipes": [],
+    "rewardFunction": "No function",
+    "rewardXP": 250,
+    "achievementType": "challenge",
+    "parent": {
+      "value": "CUSTOM:TransfurTotemAdvancement1"
+    },
+    "triggerxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"custom_trigger\" x=\"34\" y=\"30\"><next><block type=\"advancement_trigger\" deletable=\"false\"></block></next></block></xml>"
+  }
+}

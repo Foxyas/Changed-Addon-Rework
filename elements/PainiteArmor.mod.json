@@ -1,5 +1,5 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "armor",
   "definition": {
     "enableHelmet": true,
@@ -51,19 +51,22 @@
     "leggingsImmuneToFire": true,
     "bootsImmuneToFire": true,
     "maxDamage": 45,
-    "damageValueHelmet": 4,
-    "damageValueBody": 9,
-    "damageValueLeggings": 7,
-    "damageValueBoots": 4,
+    "damageValueHelmet": 3,
+    "damageValueBody": 8,
+    "damageValueLeggings": 6,
+    "damageValueBoots": 3,
     "enchantability": 50,
-    "toughness": 3.9999999999999996,
-    "knockbackResistance": 0.15,
+    "toughness": 3.0,
+    "knockbackResistance": 0.1,
     "equipSound": {
       "value": "item.armor.equip_netherite"
     },
     "repairItems": [
       {
         "value": "CUSTOM:Painite"
+      },
+      {
+        "value": "Items.NETHERITE_INGOT"
       }
     ]
   }

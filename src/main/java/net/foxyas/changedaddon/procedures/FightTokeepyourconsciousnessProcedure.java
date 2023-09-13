@@ -50,7 +50,8 @@ public class FightTokeepyourconsciousnessProcedure {
 			if (!(((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur).equals("changed:form_latex_crystal_wolf")
 					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur).equals("changed:form_latex_crystal_wolf_horned")
 					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur).equals("changed:form_latex_beifeng")
-					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur).equals("changed:form_aerosol_latex_wolf"))) {
+					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur).equals("changed:form_aerosol_latex_wolf")
+					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur).equals("changed:form_white_latex_wolf"))) {
 				if (ReturnMaxTransfurToleranceProcedure.execute() > 1) {
 					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute() * 0.8) {
 						{
@@ -97,91 +98,105 @@ public class FightTokeepyourconsciousnessProcedure {
 							});
 						}
 						SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
-						new Object() {
-							private int ticks = 0;
-							private float waitTicks;
-							private LevelAccessor world;
+						if (entity.isAlive()) {
+							new Object() {
+								private int ticks = 0;
+								private float waitTicks;
+								private LevelAccessor world;
 
-							public void start(LevelAccessor world, int waitTicks) {
-								this.waitTicks = waitTicks;
-								MinecraftForge.EVENT_BUS.register(this);
-								this.world = world;
-							}
-
-							@SubscribeEvent
-							public void tick(TickEvent.ServerTickEvent event) {
-								if (event.phase == TickEvent.Phase.END) {
-									this.ticks += 1;
-									if (this.ticks >= this.waitTicks)
-										run();
+								public void start(LevelAccessor world, int waitTicks) {
+									this.waitTicks = waitTicks;
+									MinecraftForge.EVENT_BUS.register(this);
+									this.world = world;
 								}
-							}
 
-							private void run() {
-								if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).consciousness_fight_progress >= 25) {
-									if (entity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.fight_concience.success").getString())), true);
-									{
-										boolean _setval = false;
-										entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-											capability.concience_Fight = _setval;
-											capability.syncPlayerVariables(entity);
-										});
+								@SubscribeEvent
+								public void tick(TickEvent.ServerTickEvent event) {
+									if (event.phase == TickEvent.Phase.END) {
+										this.ticks += 1;
+										if (this.ticks >= this.waitTicks)
+											run();
 									}
-									{
-										double _setval = 0;
-										entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-											capability.consciousness_fight_progress = _setval;
-											capability.syncPlayerVariables(entity);
-										});
-									}
-								} else {
-									{
-										double _setval = 0;
-										entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-											capability.consciousness_fight_progress = _setval;
-											capability.syncPlayerVariables(entity);
-										});
-									}
-									{
-										boolean _setval = false;
-										entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-											capability.concience_Fight = _setval;
-											capability.syncPlayerVariables(entity);
-										});
-									}
-									if (entity.isAlive()) {
+								}
+
+								private void run() {
+									if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).consciousness_fight_progress >= 25) {
 										if (entity instanceof Player _player && !_player.level.isClientSide())
-											_player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
+											_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.fight_concience.success").getString())), true);
 										{
-											Entity _ent = entity;
-											if (!_ent.level.isClientSide() && _ent.getServer() != null)
-												_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
+											boolean _setval = false;
+											entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+												capability.concience_Fight = _setval;
+												capability.syncPlayerVariables(entity);
+											});
 										}
 										{
-											Entity _ent = entity;
-											if (!_ent.level.isClientSide() && _ent.getServer() != null)
-												_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-														("summon " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon + " ~ ~ ~"));
+											double _setval = 0;
+											entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+												capability.consciousness_fight_progress = _setval;
+												capability.syncPlayerVariables(entity);
+											});
 										}
-										if (entity instanceof LivingEntity _entity)
-											_entity.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
+									} else {
+										{
+											double _setval = 0;
+											entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+												capability.consciousness_fight_progress = _setval;
+												capability.syncPlayerVariables(entity);
+											});
+										}
+										{
+											boolean _setval = false;
+											entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+												capability.concience_Fight = _setval;
+												capability.syncPlayerVariables(entity);
+											});
+										}
+										if (entity.isAlive()) {
+											if (entity instanceof Player _player && !_player.level.isClientSide())
+												_player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
+											{
+												Entity _ent = entity;
+												if (!_ent.level.isClientSide() && _ent.getServer() != null)
+													_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
+											}
+											{
+												Entity _ent = entity;
+												if (!_ent.level.isClientSide() && _ent.getServer() != null)
+													_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
+															("summon " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon + " ~ ~ ~"));
+											}
+											if (entity instanceof LivingEntity _entity)
+												_entity.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
+										}
 									}
+									MinecraftForge.EVENT_BUS.unregister(this);
 								}
-								MinecraftForge.EVENT_BUS.unregister(this);
-							}
-						}.start(world, (int) (20 * 4));
+							}.start(world, (int) (20 * 4));
+						}
 					}
 				}
 			} else {
-				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= 18) {
-					{
-						Entity _ent = entity;
-						if (!_ent.level.isClientSide() && _ent.getServer() != null)
-							_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-									("transfur @s " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur));
+				if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur).equals("changed:form_white_latex_wolf")) {
+					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= 5) {
+						{
+							Entity _ent = entity;
+							if (!_ent.level.isClientSide() && _ent.getServer() != null)
+								_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
+										("transfur @s " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur));
+						}
+						SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
 					}
-					SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
+				} else {
+					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute() * 0.5) {
+						{
+							Entity _ent = entity;
+							if (!_ent.level.isClientSide() && _ent.getServer() != null)
+								_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
+										("transfur @s " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur));
+						}
+						SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
+					}
 				}
 			}
 		}

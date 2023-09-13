@@ -12,6 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraft.client.gui.screens.MenuScreens;
 
 import net.foxyas.changedaddon.client.gui.UnifuserguiScreen;
+import net.foxyas.changedaddon.client.gui.TransfurTotemGuiScreen;
 import net.foxyas.changedaddon.client.gui.TranfurSoundsGuiScreen;
 import net.foxyas.changedaddon.client.gui.PagesecretScreen;
 import net.foxyas.changedaddon.client.gui.GrabclickguiScreen;
@@ -65,6 +66,7 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_8, Bookrecipepage8Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_9, Bookrecipepage9Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_10, Bookrecipepage10Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.TRANSFUR_TOTEM_GUI, TransfurTotemGuiScreen::new);
 		});
 	}
 }

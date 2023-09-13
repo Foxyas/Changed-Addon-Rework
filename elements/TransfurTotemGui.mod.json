@@ -1,0 +1,62 @@
+{
+  "_fv": 47,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 125,
+    "height": 70,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": -12,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_transfur_totem_button",
+          "image": "transfur_totem_button.png",
+          "hoveredImage": "transfur_totem_button_selected.png",
+          "x": 205,
+          "y": 122
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_link_your_form",
+          "text": {
+            "fixedValue": "Want link your form?"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "x": 157,
+          "y": 91
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_press_the_totem_icon",
+          "text": {
+            "fixedValue": " (Press the Totem Icon)"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "x": 151,
+          "y": 103
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

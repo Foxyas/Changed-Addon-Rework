@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:transfur_totem"
+    },
+    "title": {
+      "translate": "advancements.transfur_totem_advancement_2.title"
+    },
+    "description": {
+      "translate": "advancements.transfur_totem_advancement_2.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "transfur_totem_advancement_2": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "parent": "changed_addon:transfur_totem_advancement_1"
+}

@@ -25,5 +25,10 @@ public class Experiment009phase2EntityDiesProcedure {
 			if (!_ent.level.isClientSide() && _ent.getServer() != null)
 				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "summon minecraft:item ~ ~ ~ {Item:{id:\"changed_addon:experiment_009_record\",Count:1},Glowing:1b,Age:-32768s}");
 		}
+		{
+			Entity _ent = entity;
+			if (!_ent.level.isClientSide() && _ent.getServer() != null)
+				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "summon minecraft:item ~ ~ ~ {Item:{id:\"changed_addon:transfur_totem\",Count:1},Glowing:1b,Age:-32768s}");
+		}
 	}
 }

@@ -19,7 +19,7 @@ public class UntransfurMobEffect extends MobEffect {
 
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amplifier) {
-		UntransfurOnEffectActiveTickProcedure.execute(entity.level, entity);
+		UntransfurOnEffectActiveTickProcedure.execute(entity.level, entity.getX(), entity.getY(), entity.getZ(), entity);
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.resources.ResourceLocation;
@@ -84,13 +83,8 @@ public class PainiteOreFeature extends OreFeature {
 			Registry.register(Registry.RULE_TEST, new ResourceLocation("changed_addon:painite_ore_match"), CUSTOM_MATCH);
 		}
 
-		private List<Block> base_blocks = null;
-
-		public boolean test(BlockState blockAt, Random random) {
-			if (base_blocks == null) {
-				base_blocks = List.of(Blocks.DEEPSLATE);
-			}
-			return base_blocks.contains(blockAt.getBlock());
+		public boolean test(BlockState blockstate, Random random) {
+			return List.of(Blocks.DEEPSLATE).contains(blockstate.getBlock());
 		}
 
 		protected RuleTestType<?> getType() {

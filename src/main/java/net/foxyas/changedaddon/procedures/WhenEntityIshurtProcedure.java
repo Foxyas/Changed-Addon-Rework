@@ -35,7 +35,7 @@ public class WhenEntityIshurtProcedure {
 	}
 
 	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, DamageSource damagesource, Entity entity) {
-		if (damagesource == null || entity == null)
+		if (entity == null)
 			return;
 		if (damagesource.getMsgId().equals("latex_solvent")) {
 			if (world instanceof Level _level) {

@@ -1,5 +1,5 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "achievement",
   "definition": {
     "achievementName": "DNA study is a fantastic thing",
@@ -13,7 +13,12 @@
     "announceToChat": false,
     "hideIfNotCompleted": true,
     "rewardLoot": [],
-    "rewardRecipes": [],
+    "rewardRecipes": [
+      "UnifuserRecipe",
+      "Catlyzerrecipe",
+      "Unlatexbaserecipe",
+      "Latexinsulatorrecipe"
+    ],
     "rewardFunction": "No function",
     "rewardXP": 0,
     "achievementType": "task",

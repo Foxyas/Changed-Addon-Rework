@@ -1,7 +1,7 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "procedure",
   "definition": {
-    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">item_destroyed</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"compare_mcitems\"><value name=\"a\"><block type=\"itemstack_to_mcitem\"></block></value><value name=\"b\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:LitixCamoniaSpray</field></block></value></block></value><statement name=\"DO0\"><block type=\"entity_add_item\"><value name=\"amount\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:EmptySpray</field></block></value><value name=\"entity\"><block type=\"entity_from_deps\"></block></value></block></statement></block></next></block></xml>"
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">item_destroyed</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"compare_mcitems\"><value name=\"a\"><block type=\"itemstack_to_mcitem\"/></value><value name=\"b\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:LitixCamoniaSpray</field></block></value></block></value><statement name=\"DO0\"><block type=\"entity_add_item\"><value name=\"amount\"><block type=\"math_number\"><field name=\"NUM\">1</field></block></value><value name=\"item\"><block type=\"mcitem_all\"><field name=\"value\">CUSTOM:EmptySpray</field></block></value><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></statement></block></next></block></xml>"
   }
 }

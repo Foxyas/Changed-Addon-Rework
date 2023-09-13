@@ -1,5 +1,5 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "gui",
   "definition": {
     "type": 0,
@@ -50,6 +50,62 @@
           "height": 20,
           "x": 119,
           "y": 121
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_show_the_recipes_of_changed_addo3",
+          "text": {
+            "fixedValue": "Show The Recipes Of Changed Addon Mod"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 257,
+          "y": 118
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_empty",
+          "text": {
+            "fixedValue": "?"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "x": 266,
+          "y": 126
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_empty1",
+          "text": {
+            "fixedValue": "?"
+          },
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "x": 275,
+          "y": 99
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_will_show_information_about_chan",
+          "text": {
+            "fixedValue": "Will Show Information about Changed Addon Overlays"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 266,
+          "y": 92
         }
       }
     ],

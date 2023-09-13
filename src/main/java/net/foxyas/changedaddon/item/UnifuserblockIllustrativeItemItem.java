@@ -19,6 +19,6 @@ public class UnifuserblockIllustrativeItemItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TextComponent("Unifuser Block Illustrative Item for a Jei Support Cant Get in Survival"));
+		list.add(new TextComponent("Unifuser Block Illustrative Item for a Jei Support"));
 	}
 }

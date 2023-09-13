@@ -1,10 +1,12 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "spraywithammonia",
     "customModelName": "Normal",
+    "customProperties": {},
+    "states": [],
     "name": "LitixCamonia Spray",
     "rarity": "COMMON",
     "creativeTab": {

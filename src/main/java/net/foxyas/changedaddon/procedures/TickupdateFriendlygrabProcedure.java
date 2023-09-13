@@ -88,11 +88,20 @@ public class TickupdateFriendlygrabProcedure {
 								}
 							}.checkGamemode(entityFriendlyGrabbing)) && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
 						if (!(entity == entityFriendlyGrabbing)) {
-							{
-								Entity _ent = entity;
-								if (!_ent.level.isClientSide() && _ent.getServer() != null)
-									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-											("spectate " + entityFriendlyGrabbing.getDisplayName().getString() + " " + entity.getDisplayName().getString()));
+							if (true) {
+								{
+									Entity _ent = entity;
+									if (!_ent.level.isClientSide() && _ent.getServer() != null)
+										_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
+												("spectate " + entityFriendlyGrabbing.getDisplayName().getString() + " " + entity.getDisplayName().getString()));
+								}
+							} else if (entity.getX() != entityFriendlyGrabbing.getX() && entity.getY() != entityFriendlyGrabbing.getY() && entity.getZ() != entityFriendlyGrabbing.getZ()) {
+								{
+									Entity _ent = entity;
+									_ent.teleportTo((entityFriendlyGrabbing.getX()), (entityFriendlyGrabbing.getY()), (entityFriendlyGrabbing.getZ()));
+									if (_ent instanceof ServerPlayer _serverPlayer)
+										_serverPlayer.connection.teleport((entityFriendlyGrabbing.getX()), (entityFriendlyGrabbing.getY()), (entityFriendlyGrabbing.getZ()), _ent.getYRot(), _ent.getXRot());
+								}
 							}
 						}
 						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {

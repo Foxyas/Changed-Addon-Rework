@@ -1,10 +1,29 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "new_liticammonia_syringe",
     "customModelName": "Normal",
+    "customProperties": {},
+    "states": [
+      {
+        "renderType": 0,
+        "texture": "newlitixcamonia_almost_fully",
+        "customModelName": "Normal",
+        "stateMap": [
+          {
+            "property": {
+              "min": 0.0,
+              "max": 1.0,
+              "name": "damage",
+              "type": "number"
+            },
+            "value": 0.5
+          }
+        ]
+      }
+    ],
     "name": "Syringe with Litix-Camonia",
     "rarity": "COMMON",
     "creativeTab": {

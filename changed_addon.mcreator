@@ -578,7 +578,8 @@
       "metadata": {
         "files": [
           "src/main/resources/assets/changed_addon/models/item/syringewithlitixcammonia.json",
-          "src/main/java/net/foxyas/changedaddon/item/SyringewithlitixcammoniaItem.java"
+          "src/main/java/net/foxyas/changedaddon/item/SyringewithlitixcammoniaItem.java",
+          "src/main/resources/assets/changed_addon/models/item/syringewithlitixcammonia_0.json"
         ]
       }
     },
@@ -766,6 +767,18 @@
             "type": "entity"
           },
           {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
             "name": "world",
             "type": "world"
           }
@@ -787,6 +800,18 @@
           {
             "name": "entity",
             "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
           },
           {
             "name": "world",
@@ -3696,9 +3721,6 @@
       "locked_code": true,
       "registry_name": "set_player_trans_fur_progress_for_0",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SetPlayerTransFurProgressFor0Procedure.java"
-        ],
         "dependencies": []
       }
     },
@@ -4639,19 +4661,6 @@
       }
     },
     {
-      "name": "OpenGrabRadial",
-      "type": "keybind",
-      "sortid": 246,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "open_grab_radial",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/OpenGrabRadialMessage.java"
-        ]
-      }
-    },
-    {
       "name": "Ifplayerareorganic",
       "type": "procedure",
       "sortid": 247,
@@ -5040,6 +5049,22 @@
           {
             "name": "entity",
             "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
           }
         ]
       }
@@ -6674,12 +6699,19 @@
       "locked_code": false,
       "registry_name": "darklatexpuddle",
       "metadata": {
+        "return_type": "logic",
         "files": [
           "src/main/java/net/foxyas/changedaddon/block/entity/DarklatexpuddleBlockEntity.java",
           "src/main/resources/assets/changed_addon/blockstates/darklatexpuddle.json",
           "src/main/java/net/foxyas/changedaddon/block/DarklatexpuddleBlock.java",
           "src/main/resources/assets/changed_addon/models/block/darklatexpuddle.json",
           "src/main/resources/assets/changed_addon/models/item/darklatexpuddle.json"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
         ]
       }
     },
@@ -6796,6 +6828,12 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/BookPagenumber6Menu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/BookPagenumber6Screen.java",
           "src/main/java/net/foxyas/changedaddon/network/BookPagenumber6ButtonMessage.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
         ]
       }
     },
@@ -7097,9 +7135,6 @@
       "registry_name": "return_max_transfur_tolerance",
       "metadata": {
         "return_type": "number",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ReturnMaxTransfurToleranceProcedure.java"
-        ],
         "dependencies": []
       }
     },
@@ -7303,9 +7338,6 @@
       "locked_code": true,
       "registry_name": "setmax_transfur_tolerance",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SetmaxTransfurToleranceProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "arguments",
@@ -7419,9 +7451,6 @@
       "locked_code": true,
       "registry_name": "set_default_value",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SetDefaultValueProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
@@ -7553,9 +7582,6 @@
       "locked_code": true,
       "registry_name": "set_friendly_grab_key_bind_procedure",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SetFriendlyGrabKeyBindProcedureProcedure.java"
-        ],
         "dependencies": []
       }
     },
@@ -7787,6 +7813,18 @@
           {
             "name": "entity",
             "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
           },
           {
             "name": "world",
@@ -8240,6 +8278,24 @@
           "src/main/java/net/foxyas/changedaddon/network/Bookrecipepage9ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/Bookrecipepage9Menu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookrecipepage9Screen.java"
+        ],
+        "dependencies": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
         ]
       }
     },
@@ -8255,6 +8311,256 @@
           "src/main/java/net/foxyas/changedaddon/network/Bookrecipepage10ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/Bookrecipepage10Menu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookrecipepage10Screen.java"
+        ]
+      }
+    },
+    {
+      "name": "TransfurTotemMakeItemGlow",
+      "type": "procedure",
+      "sortid": 426,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_make_item_glow",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TransfurTotemMakeItemGlowProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TransfurTotemRightclicked",
+      "type": "procedure",
+      "sortid": 427,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_rightclicked",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TransfurTotemRightclickedProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TransfurTotemGui",
+      "type": "gui",
+      "sortid": 428,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_gui",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/gui/TransfurTotemGuiScreen.java",
+          "src/main/java/net/foxyas/changedaddon/world/inventory/TransfurTotemGuiMenu.java"
+        ]
+      }
+    },
+    {
+      "name": "TransfurTotem",
+      "type": "item",
+      "sortid": 429,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/TransfurTotemItem.java",
+          "src/main/resources/assets/changed_addon/models/item/transfur_totem.json",
+          "src/main/resources/assets/changed_addon/models/item/transfur_totem_0.json"
+        ]
+      }
+    },
+    {
+      "name": "TransfurTotemItemInInventoryTick",
+      "type": "procedure",
+      "sortid": 430,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_item_in_inventory_tick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TransfurTotemItemInInventoryTickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TransfurTotemEntityRightClick",
+      "type": "procedure",
+      "sortid": 431,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_entity_right_click",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TransfurTotemEntityRightClickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ShowTransfurTotemItemtip",
+      "type": "procedure",
+      "sortid": 432,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "show_transfur_totem_itemtip",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ShowTransfurTotemItemtipProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "tooltip",
+            "type": "tooltip"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OpenGrabRadial",
+      "type": "keybind",
+      "sortid": 433,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "open_grab_radial",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/network/OpenGrabRadialMessage.java"
+        ]
+      }
+    },
+    {
+      "name": "TransfurTotemAdvancement1",
+      "type": "achievement",
+      "sortid": 434,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_advancement_1",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/transfur_totem_advancement_1.json"
+        ]
+      },
+      "path": "~/Advancements"
+    },
+    {
+      "name": "TransfurTotemAdvancement2",
+      "type": "achievement",
+      "sortid": 435,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_advancement_2",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/transfur_totem_advancement_2.json"
+        ]
+      },
+      "path": "~/Advancements"
+    },
+    {
+      "name": "TransfurTotemItemInInventory",
+      "type": "procedure",
+      "sortid": 436,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "transfur_totem_item_in_inventory",
+      "metadata": {
+        "return_type": "number",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TransfurTotemItemInInventoryProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
         ]
       }
     }
@@ -8451,6 +8757,12 @@
       "type": "string",
       "scope": "player_lifetime",
       "value": ""
+    },
+    {
+      "name": "transfurs_accepted",
+      "type": "file",
+      "scope": "global",
+      "value": "new File(\"\")"
     }
   ],
   "sound_elements": [
@@ -8510,6 +8822,14 @@
       ],
       "category": "neutral",
       "subtitle": "Experiment 009 Phase 2 Music Theme"
+    },
+    {
+      "name": "untransfursound",
+      "files": [
+        "healing"
+      ],
+      "category": "neutral",
+      "subtitle": "Untransfurmization"
     }
   ],
   "language_map": {
@@ -8521,6 +8841,7 @@
       "advancements.furry_friend.title": "Furry Friend",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
+      "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_both_the_inventory_and_the_craft": "both the inventory and the craft table",
@@ -8528,17 +8849,18 @@
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "You aren\u0027t affected by this fluid",
+      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
-      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
+      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "key.changed_addon.setcangrabon": "Toggle Grab on",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
       "gui.changed_addon.bookpagenumber_4.label_n": "N",
       "effect.changed_addon.infriendlygrabeffect": "Friendly Grab Host",
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
+      "gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon": " (Press the Totem Icon)",
       "gui.changed_addon.book_pagenumber_6.label_mode_on": "-mode on) This Will change t-",
       "block.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
       "gui.changed_addon.book_pagenumber_7.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
@@ -8549,20 +8871,22 @@
       "gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants": "F \u003d ANY FLOWERS OR PLANTS",
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
-      "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
+      "advancements.transfur_totem_advancement_1.descr": "You use a latex totem to transfur or untransfur",
       "advancements.gneticsdefying_friendship.descr": "You hugged a \"genetics enemy\"",
+      "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "gui.changed_addon.book_pagenumber_2.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
-      "attribute.changed_addon.latexresistance": "Latex Resistance",
-      "gui.changed_addon.pagesecret.button_close": "close",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
+      "gui.changed_addon.pagesecret.button_close": "close",
+      "attribute.changed_addon.latexresistance": "Latex Resistance",
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
       "item.changed_addon.painite_armor_leggings": "Painite Leggings",
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
+      "gui.changed_addon.book_pagenumber_1.label_empty1": "?",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
@@ -8592,12 +8916,13 @@
       "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
+      "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
-      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
+      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
+      "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
       "gui.changed_addon.book_pagenumber_2.label_ammonia_particle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.button_back": "Back",
@@ -8609,8 +8934,8 @@
       "gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho": " LitixCamonia. LitixCamonia can be injected to",
       "gui.changed_addon.bookrecipepage_10.label_f3": "F",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
-      "advancements.advancement_want_friendly_grab.descr": "You (enable your friendly grab) you want to be covered in goo",
       "advancements.obtaina_painite_hoe.title": "Beyond Dedication",
+      "advancements.advancement_want_friendly_grab.descr": "You (enable your friendly grab) you want to be covered in goo",
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
       "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
@@ -8652,10 +8977,11 @@
       "key.changed_addon.grab_keybind": "grab",
       "gui.changed_addon.bookpagenumber_3.label_blast_fornec": "blast furnace",
       "gui.changed_addon.book_pagenumber_1.label_latex_beings": "-fted.",
+      "gui.changed_addon.book_pagenumber_1.tooltip_will_show_information_about_chan": "Will Show Information about Changed Addon Overlays",
       "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
       "item.changed_addon.catlyzerblock_illustrative_item": "IN Catalyzer Block Illustrative Item",
-      "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
       "gui.changed_addon.bookpagenumber_5.label_craft_table": "Crafting-table",
+      "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
       "item.changed_addon.impureammonia": "Impure Ammonia",
       "advancements.timesthesyringewasused_advancement.descr": "You used a Litix-Camonia Syringe more than 32 times you are indecisive about your humanity holy!",
       "item.changed_addon.experiment_009_record.desc": "TryIgnitioHD-HYPERDEATH | StorySwap (DEVILOVANIA but swapped)",
@@ -8664,20 +8990,20 @@
       "gui.changed_addon.bookrecipepage_9.button_back": "Back",
       "gui.changed_addon.book_pagenumber_7.button_next": "Next",
       "gamerule.fight_to_keep_consciousness.description": "allow the Fight to keep consciousness minigame",
-      "death.attack.concience_lose": "%1$s lose your concience",
       "gui.changed_addon.bookrecipepage_6.label_catalyzer": "Catalyzer",
+      "death.attack.concience_lose": "%1$s lose your concience",
       "key.changed_addon.wantfriendlygrab": "Want friendly grab",
       "item.minecraft.tipped_arrow.effect.litixcamoniaeffect": "Arrow of LitixCamonia",
-      "subtitles.experiment009_theme_phase2": "Experiment 009 Phase 2 Music Theme",
       "gui.changed_addon.book_pagenumber_7.label_a_command": "A changed_addon Command",
+      "subtitles.experiment009_theme_phase2": "Experiment 009 Phase 2 Music Theme",
       "block.changed_addon.catlyzer": "Catalyzer",
       "gui.changed_addon.book_pagenumber_1.button_changedmc_crafts": "Changed:MC Recipes",
       "gui.changed_addon.tranfur_sounds_gui.button_r": "Reset",
       "changedaddon.assimilation.when_customtransfur": "Only assimilation is allowed with a special transfur",
       "advancements.unifuser_advancement.title": "A Unifuser?",
       "gamerule.useNewFriendlyGrab.description": "When Active This gamerule will make the player use the \"New Friendly Grab\" Instead of old WARN this is a W-I-P FEATURE SO USE AT YOUR OWN RISK (warning Right Click Friendly Grab will not work if true ok)",
-      "advancements.friendly_kitty.descr": "Sleeping in a bed beside a bed of a cat transfur with friendly mode on",
       "changedaddon.event.grab.when.small": "You\u0027re too small to grab",
+      "advancements.friendly_kitty.descr": "Sleeping in a bed beside a bed of a cat transfur with friendly mode on",
       "gui.changed_addon.bookrecipepage_6.label_unifuser": "Unifuser",
       "changedaddon.untransfur.sloweffect": "For some reason this seems to have slowed effect",
       "item.changed_addon.syringewithlitixcammonia": "Syringe with Litix-Camonia",
@@ -8690,6 +9016,7 @@
       "advancements.orange_juice_is_yummy.title": "Orange Juice Is Yummy",
       "item.changed_addon.syringe": "Medical Syringe",
       "gui.changed_addon.book_pagenumber_7.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
+      "advancements.transfur_totem_advancement_2.descr": "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem",
       "advancements.over_dose.descr": "Well it wasn\u0027t §4cancer§r but i §4warned you",
       "gui.changed_addon.book_pagenumber_2.button_back": "Back",
       "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "oranges and one glass bottle for that",
@@ -8714,6 +9041,7 @@
       "death.attack.concience_lose.player": "%1$s lose your concience by %2$s",
       "gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for": "manently losing your humanity, you can craft",
       "changedaddon.event.grab.when.you.die": "The person who was grabbing you §4Died§r before They could do anything!!",
+      "item.changed_addon.transfur_totem": "Latex Totem",
       "item.changed_addon.orangejuice": "Orange Juice",
       "advancements.obtain_painite_armo_with_protection.descr": "Become a legend by donning a Painite armor set with Protection 4. Monsters may try, but you\u0027re unbreakable (well, almost)!",
       "gui.changed_addon.book_pagenumber_6.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
@@ -8765,6 +9093,7 @@
       "gui.changed_addon.book_pagenumber_1.label_first_you_have_to_have_a_latex_b": "First, you need to get a latex base it drops from the latex beings or can be cra",
       "item.changed_addon.painite_axe": "Painite Axe",
       "advancements.ammoniapoweradvancement.descr": "Craft a ammonia particle",
+      "gui.changed_addon.book_pagenumber_1.tooltip_show_the_recipes_of_changed_addo3": "Show The Recipes Of Changed Addon Mod",
       "gui.changed_addon.bookpagenumber_4.label_correct_way": "correct way",
       "item.changed_addon.litix_camonia_fluid_bucket": "LitixCamonia Bucket",
       "gamerule.allowPlayerGrab.description": "Allow Players Use the Grab Feature",
@@ -8822,6 +9151,7 @@
       "gui.changed_addon.bookpagenumber_4.label_incorrect_way": "incorrectly way",
       "effect.changed_addon.latex_solvent": "Latex Solvent",
       "gui.changed_addon.book_pagenumber_6.button_close": "Back",
+      "advancements.transfur_totem_advancement_1.title": "Total control",
       "gui.changed_addon.book_pagenumber_7.label_e_only_for_player": "-y modes",
       "advancements.hug.descr": "You won or gave a §chug§r§a in an organic transfur",
       "gui.changed_addon.grabclickgui.button_struggle": "struggle",
@@ -8889,6 +9219,7 @@
       "changedaddon.friendlygrab.dont_want": "They don\u0027t want to be friendly grabbed",
       "gui.changed_addon.bookpagenumber_3.label_mmeat": "m\u003dmeat",
       "gui.changed_addon.bookrecipepage_8.label_m_meet": "M \u003d ANY MEET",
+      "subtitles.untransfursound": "Untransfurmization",
       "gamerule.allowPlayerGrab": "Allow Player Grab",
       "gui.changed_addon.bookrecipepage_10.label_f_flowers_or_plants": "F \u003d ANY FLOWERS OR PLANTS",
       "gui.changed_addon.book_pagenumber_6.label_e_only_for_player": "-e (only for players)",
@@ -8938,6 +9269,7 @@
       "advancements.obtain_painite.descr": "Obtain Painite",
       "gui.changed_addon.book_pagenumber_7.label_normaltransfur_grab_mode_o": "-\u003e Those are Organic Friendl-",
       "gui.changed_addon.bookrecipepage_8.label_catalyzer": "Catalyzer",
+      "gui.changed_addon.book_pagenumber_1.label_empty": "?",
       "subtitles.grab_release": "Player release from grab",
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
       "gui.changed_addon.grabclickgui.button_breakfree": "breakfree",
@@ -8996,7 +9328,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon",
-    "version": "2.4.6",
+    "version": "2.4.7",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
@@ -9016,5 +9348,5 @@
     "modElementsPackage": "net.foxyas.changedaddon",
     "lockBaseModFiles": false
   },
-  "mcreatorVersion": 202300224119
+  "mcreatorVersion": 202300336712
 }

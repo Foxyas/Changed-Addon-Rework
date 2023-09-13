@@ -4,6 +4,7 @@ package net.foxyas.changedaddon.item;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ArmorMaterial;
@@ -26,7 +27,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 			@Override
 			public int getDefenseForSlot(EquipmentSlot slot) {
-				return new int[]{4, 7, 9, 4}[slot.getIndex()];
+				return new int[]{3, 6, 8, 3}[slot.getIndex()];
 			}
 
 			@Override
@@ -41,7 +42,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 			@Override
 			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(ChangedAddonModItems.PAINITE.get()));
+				return Ingredient.of(new ItemStack(ChangedAddonModItems.PAINITE.get()), new ItemStack(Items.NETHERITE_INGOT));
 			}
 
 			@Override
@@ -51,12 +52,12 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 			@Override
 			public float getToughness() {
-				return 4f;
+				return 3f;
 			}
 
 			@Override
 			public float getKnockbackResistance() {
-				return 0.15f;
+				return 0.1f;
 			}
 		}, slot, properties);
 	}

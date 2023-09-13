@@ -1,7 +1,7 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "procedure",
   "definition": {
-    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"entity_add_achievement\"><field name=\"achievement\">CUSTOM:ObtainPainite</field><value name=\"entity\"><block type=\"entity_from_deps\"></block></value></block></next></block></xml>"
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"entity_add_achievement\"><field name=\"achievement\">CUSTOM:ObtainPainite</field><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></next></block></xml>"
   }
 }

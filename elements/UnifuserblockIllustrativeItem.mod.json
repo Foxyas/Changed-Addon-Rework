@@ -1,10 +1,12 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "item",
   "definition": {
     "renderType": 0,
     "texture": "unifusershowrecipeitem",
     "customModelName": "Normal",
+    "customProperties": {},
+    "states": [],
     "name": "IN Unifuser Block Illustrative Item",
     "rarity": "RARE",
     "creativeTab": {
@@ -25,7 +27,7 @@
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
     "specialInfo": [
-      "Unifuser Block Illustrative Item for a Jei Support Cant Get in Survival"
+      "Unifuser Block Illustrative Item for a Jei Support"
     ],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",

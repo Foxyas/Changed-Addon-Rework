@@ -1,7 +1,7 @@
 {
-  "_fv": 43,
+  "_fv": 47,
   "_type": "procedure",
   "definition": {
-    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"entity_send_chat\"><value name=\"text\"><block type=\"get_localized_text\"><value name=\"key\"><block type=\"text\"><field name=\"TEXT\">changedaddon.fight_concience.give_up</field></block></value></block></value><value name=\"entity\"><block type=\"entity_from_deps\"></block></value><value name=\"actbar\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value><next><block type=\"entity_close_gui\"><value name=\"entity\"><block type=\"entity_from_deps\"></block></value></block></next></block></next></block><block type=\"text\" x=\"366\" y=\"77\"><field name=\"TEXT\">§4you give up §r§7enjoy your new body as much as you can</field></block></xml>"
+    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"entity_send_chat\"><value name=\"text\"><block type=\"get_localized_text\"><value name=\"key\"><block type=\"text\"><field name=\"TEXT\">changedaddon.fight_concience.give_up</field></block></value></block></value><value name=\"entity\"><block type=\"entity_from_deps\"/></value><value name=\"actbar\"><block type=\"logic_boolean\"><field name=\"BOOL\">TRUE</field></block></value><next><block type=\"entity_close_gui\"><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></next></block></next></block><block type=\"text\" x=\"366\" y=\"77\"><field name=\"TEXT\">§4you give up §r§7enjoy your new body as much as you can</field></block></xml>"
   }
 }

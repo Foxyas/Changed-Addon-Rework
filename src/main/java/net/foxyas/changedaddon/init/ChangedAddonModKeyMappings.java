@@ -121,19 +121,6 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping OPEN_GRAB_RADIAL = new KeyMapping("key.changed_addon.open_grab_radial", GLFW.GLFW_KEY_H, "key.categories.grab_gui") {
-		private boolean isDownOld = false;
-
-		@Override
-		public void setDown(boolean isDown) {
-			super.setDown(isDown);
-			if (isDownOld != isDown && isDown) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenGrabRadialMessage(0, 0));
-				OpenGrabRadialMessage.pressAction(Minecraft.getInstance().player, 0, 0);
-			}
-			isDownOld = isDown;
-		}
-	};
 	public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_O, "key.categories.grab_gui") {
 		private boolean isDownOld = false;
 
@@ -165,6 +152,19 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
+	public static final KeyMapping OPEN_GRAB_RADIAL = new KeyMapping("key.changed_addon.open_grab_radial", GLFW.GLFW_KEY_H, "key.categories.grab_gui") {
+		private boolean isDownOld = false;
+
+		@Override
+		public void setDown(boolean isDown) {
+			super.setDown(isDown);
+			if (isDownOld != isDown && isDown) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenGrabRadialMessage(0, 0));
+				OpenGrabRadialMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+			}
+			isDownOld = isDown;
+		}
+	};
 	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
@@ -176,9 +176,9 @@ public class ChangedAddonModKeyMappings {
 		ClientRegistry.registerKeyBinding(OPENGRABESCAPEGUI);
 		ClientRegistry.registerKeyBinding(SETCANGRABON);
 		ClientRegistry.registerKeyBinding(WANTFRIENDLYGRAB);
-		ClientRegistry.registerKeyBinding(OPEN_GRAB_RADIAL);
 		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
 		ClientRegistry.registerKeyBinding(DUCT_PRONE);
+		ClientRegistry.registerKeyBinding(OPEN_GRAB_RADIAL);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -193,9 +193,9 @@ public class ChangedAddonModKeyMappings {
 				OPENGRABESCAPEGUI.consumeClick();
 				SETCANGRABON.consumeClick();
 				WANTFRIENDLYGRAB.consumeClick();
-				OPEN_GRAB_RADIAL.consumeClick();
 				OPEN_EXTRA_DETAILS.consumeClick();
 				DUCT_PRONE.consumeClick();
+				OPEN_GRAB_RADIAL.consumeClick();
 			}
 		}
 	}

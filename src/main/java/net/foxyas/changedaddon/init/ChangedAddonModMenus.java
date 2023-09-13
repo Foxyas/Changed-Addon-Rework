@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
+import net.foxyas.changedaddon.world.inventory.TransfurTotemGuiMenu;
 import net.foxyas.changedaddon.world.inventory.TranfurSoundsGuiMenu;
 import net.foxyas.changedaddon.world.inventory.PagesecretMenu;
 import net.foxyas.changedaddon.world.inventory.GrabclickguiMenu;
@@ -67,6 +68,7 @@ public class ChangedAddonModMenus {
 	public static final MenuType<Bookrecipepage8Menu> BOOKRECIPEPAGE_8 = register("bookrecipepage_8", (id, inv, extraData) -> new Bookrecipepage8Menu(id, inv, extraData));
 	public static final MenuType<Bookrecipepage9Menu> BOOKRECIPEPAGE_9 = register("bookrecipepage_9", (id, inv, extraData) -> new Bookrecipepage9Menu(id, inv, extraData));
 	public static final MenuType<Bookrecipepage10Menu> BOOKRECIPEPAGE_10 = register("bookrecipepage_10", (id, inv, extraData) -> new Bookrecipepage10Menu(id, inv, extraData));
+	public static final MenuType<TransfurTotemGuiMenu> TRANSFUR_TOTEM_GUI = register("transfur_totem_gui", (id, inv, extraData) -> new TransfurTotemGuiMenu(id, inv, extraData));
 
 	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
 		MenuType<T> menuType = new MenuType<T>(containerFactory);
