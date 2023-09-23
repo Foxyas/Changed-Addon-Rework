@@ -20,6 +20,6 @@ public class SolventEnchantment extends Enchantment {
 
 	@Override
 	protected boolean checkCompatibility(Enchantment ench) {
-		return this != ench && !List.of(Enchantments.FIRE_ASPECT).contains(ench);
+		return this != ench && !List.of(Enchantments.SHARPNESS).contains(ench);
 	}
 }

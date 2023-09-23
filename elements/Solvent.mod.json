@@ -10,7 +10,7 @@
     "damageModifier": 0,
     "compatibleEnchantments": [
       {
-        "value": "FIRE_ASPECT"
+        "value": "SHARPNESS"
       }
     ],
     "excludeEnchantments": true,

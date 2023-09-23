@@ -20,9 +20,7 @@ public class GrabeffectMobEffect extends MobEffect {
 
 	@Override
 	public void addAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
-		GrabeffectEffectStartedappliedProcedure.execute(
-
-		);
+		GrabeffectEffectStartedappliedProcedure.execute();
 	}
 
 	@Override

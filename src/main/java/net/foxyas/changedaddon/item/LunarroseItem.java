@@ -22,7 +22,7 @@ import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.procedures.HyperFlowerProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-import net.foxyas.changedaddon.client.model.ModelHyper_Flower;
+import net.foxyas.changedaddon.client.model.ModelNewHyperFlower;
 
 import java.util.Map;
 import java.util.Collections;
@@ -32,7 +32,7 @@ public abstract class LunarroseItem extends ArmorItem {
 		super(new ArmorMaterial() {
 			@Override
 			public int getDurabilityForSlot(EquipmentSlot slot) {
-				return new int[]{13, 15, 16, 11}[slot.getIndex()] * 25;
+				return new int[]{13, 15, 16, 11}[slot.getIndex()] * 100;
 			}
 
 			@Override
@@ -42,7 +42,7 @@ public abstract class LunarroseItem extends ArmorItem {
 
 			@Override
 			public int getEnchantmentValue() {
-				return 25;
+				return 100;
 			}
 
 			@Override
@@ -82,8 +82,8 @@ public abstract class LunarroseItem extends ArmorItem {
 				@Override
 				public HumanoidModel getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
 					HumanoidModel armorModel = new HumanoidModel(new ModelPart(Collections.emptyList(),
-							Map.of("head", new ModelHyper_Flower(Minecraft.getInstance().getEntityModels().bakeLayer(ModelHyper_Flower.LAYER_LOCATION)).Lunar_Rose_model, "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body",
-									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm",
+							Map.of("head", new ModelNewHyperFlower(Minecraft.getInstance().getEntityModels().bakeLayer(ModelNewHyperFlower.LAYER_LOCATION)).HyperFlowerModel, "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+									"body", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_arm", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_arm",
 									new ModelPart(Collections.emptyList(), Collections.emptyMap()), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg",
 									new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
 					armorModel.crouching = living.isShiftKeyDown();
@@ -96,7 +96,7 @@ public abstract class LunarroseItem extends ArmorItem {
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/entities/finished_moon_rose_fix.png";
+			return "changed_addon:textures/entities/new_moon_rose.png";
 		}
 
 		@Override

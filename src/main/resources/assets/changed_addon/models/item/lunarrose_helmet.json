@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/lunar-flower"
+    "layer0": "changed_addon:items/new_lunar_rose_icon"
   }
 }

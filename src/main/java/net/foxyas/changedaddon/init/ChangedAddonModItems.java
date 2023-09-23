@@ -99,7 +99,6 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> LITIX_CAMONIA_FLUID_BUCKET = REGISTRY.register("litix_camonia_fluid_bucket", () -> new LitixCamoniaFluidItem());
 	public static final RegistryObject<Item> CATLYZER = block(ChangedAddonModBlocks.CATLYZER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> UNIFUSER = block(ChangedAddonModBlocks.UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> LUNARROSE_HELMET = REGISTRY.register("lunarrose_helmet", () -> new LunarroseItem.Helmet());
 	public static final RegistryObject<Item> EXPERIMENT_009DNA = REGISTRY.register("experiment_009dna", () -> new Experiment009dnaItem());
 	public static final RegistryObject<Item> HAZARD_SUIT_HELMET = REGISTRY.register("hazard_suit_helmet", () -> new HazardSuitItem.Helmet());
 	public static final RegistryObject<Item> HAZARD_SUIT_CHESTPLATE = REGISTRY.register("hazard_suit_chestplate", () -> new HazardSuitItem.Chestplate());
@@ -123,6 +122,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> EXPERIMENT_009_RECORD = REGISTRY.register("experiment_009_record", () -> new Experiment009recordItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_RECORD = REGISTRY.register("experiment_009_phase_2_record", () -> new Experiment009Phase2RecordItem());
 	public static final RegistryObject<Item> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", () -> new TransfurTotemItem());
+	public static final RegistryObject<Item> LUNARROSE_HELMET = REGISTRY.register("lunarrose_helmet", () -> new LunarroseItem.Helmet());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

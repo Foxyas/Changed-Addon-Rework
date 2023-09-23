@@ -5,8 +5,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageSource;
 
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 import net.foxyas.changedaddon.entity.Experiment009Entity;
@@ -19,19 +19,19 @@ public class Experiment009IsHurtProcedure {
 	public static void onEntityAttacked(LivingHurtEvent event) {
 		Entity entity = event.getEntity();
 		if (event != null && entity != null) {
-			execute(event, entity);
+			execute(event, event.getSource(), entity);
 		}
 	}
 
-	public static void execute(Entity entity) {
-		execute(null, entity);
+	public static void execute(DamageSource damagesource, Entity entity) {
+		execute(null, damagesource, entity);
 	}
 
-	private static void execute(@Nullable Event event, Entity entity) {
+	private static void execute(@Nullable Event event, DamageSource damagesource, Entity entity) {
 		if (entity == null)
 			return;
 		if (entity instanceof Experiment009phase2Entity || entity instanceof Experiment009Entity) {
-			if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null) {
+			if ((damagesource) == DamageSource.IN_WALL) {
 				entity.getPersistentData().putDouble("BossTp", (1 + entity.getPersistentData().getDouble("BossTp")));
 			}
 		}

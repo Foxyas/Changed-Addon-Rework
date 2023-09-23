@@ -1,7 +1,5 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.minecraftforge.common.ForgeMod;
-
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,11 +24,20 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 		if (entity == null)
 			return;
 		Entity TpTarget = null;
+		BlockState a = Blocks.AIR.defaultBlockState();
 		double randown = 0;
 		double Pz = 0;
 		double Px = 0;
 		double Py = 0;
-		BlockState a = Blocks.AIR.defaultBlockState();
+		double motionZ = 0;
+		double deltaZ = 0;
+		double distance = 0;
+		double deltaX = 0;
+		double motionY = 0;
+		double deltaY = 0;
+		double motionX = 0;
+		double maxSpeed = 0;
+		double speed = 0;
 		entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 1));
 		if (entity.getPersistentData().getDouble("IA") >= 100) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 175) {
@@ -116,11 +123,33 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 		}
 		if (entity.isInWater()) {
 			if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == (null))) {
-				if ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater() && entity.isInWater()) {
-					((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(4);
-				} else if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).isInWater()) && entity.isInWater()) {
-					((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(4);
+				deltaX = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX() - entity.getX();
+				deltaY = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY() - entity.getY();
+				deltaZ = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ() - entity.getZ();
+				distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+			}
+			if (distance > 0) {
+				speed = 0.04;
+				motionX = deltaX / distance * speed;
+				motionY = deltaY / distance * speed;
+				motionZ = deltaZ / distance * speed;
+				maxSpeed = 0.2;
+				if (motionX > maxSpeed) {
+					motionX = maxSpeed;
 				}
+				if (motionY > maxSpeed) {
+					motionY = maxSpeed;
+				}
+				if (motionZ > maxSpeed) {
+					motionZ = maxSpeed;
+				}
+				{
+					Entity _ent = entity;
+					if (!_ent.level.isClientSide() && _ent.getServer() != null)
+						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
+								("execute as " + entity.getStringUUID() + " at @s run tp @s ~ ~ ~ facing entity " + (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getStringUUID()));
+				}
+				entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
 			}
 		}
 	}
