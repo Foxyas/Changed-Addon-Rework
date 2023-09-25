@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
@@ -39,6 +40,8 @@ import net.minecraft.nbt.CompoundTag;
 
 import net.foxyas.changedaddon.procedures.IfplayerishighofentityProcedure;
 import net.foxyas.changedaddon.procedures.IfplayerareinwaterProcedure;
+import net.foxyas.changedaddon.procedures.IfnotInWaterProcedure;
+import net.foxyas.changedaddon.procedures.IfInWaterProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009phase2OnInitialEntitySpawnProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009phase2OnEntityTickUpdateProcedure;
 import net.foxyas.changedaddon.procedures.Experiment009phase2EntityDiesProcedure;
@@ -100,11 +103,52 @@ public class Experiment009phase2Entity extends Monster {
 				return super.canContinueToUse() && IfplayerishighofentityProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(7, new OpenDoorGoal(this, true));
-		this.goalSelector.addGoal(8, new OpenDoorGoal(this, false));
-		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(10, new FloatGoal(this) {
+		this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1, 40) {
+			@Override
+			public boolean canUse() {
+				double x = Experiment009phase2Entity.this.getX();
+				double y = Experiment009phase2Entity.this.getY();
+				double z = Experiment009phase2Entity.this.getZ();
+				Entity entity = Experiment009phase2Entity.this;
+				Level world = Experiment009phase2Entity.this.level;
+				return super.canUse() && IfInWaterProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = Experiment009phase2Entity.this.getX();
+				double y = Experiment009phase2Entity.this.getY();
+				double z = Experiment009phase2Entity.this.getZ();
+				Entity entity = Experiment009phase2Entity.this;
+				Level world = Experiment009phase2Entity.this.level;
+				return super.canContinueToUse() && IfInWaterProcedure.execute(entity);
+			}
+		});
+		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1) {
+			@Override
+			public boolean canUse() {
+				double x = Experiment009phase2Entity.this.getX();
+				double y = Experiment009phase2Entity.this.getY();
+				double z = Experiment009phase2Entity.this.getZ();
+				Entity entity = Experiment009phase2Entity.this;
+				Level world = Experiment009phase2Entity.this.level;
+				return super.canUse() && IfnotInWaterProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = Experiment009phase2Entity.this.getX();
+				double y = Experiment009phase2Entity.this.getY();
+				double z = Experiment009phase2Entity.this.getZ();
+				Entity entity = Experiment009phase2Entity.this;
+				Level world = Experiment009phase2Entity.this.level;
+				return super.canContinueToUse() && IfnotInWaterProcedure.execute(entity);
+			}
+		});
+		this.goalSelector.addGoal(8, new OpenDoorGoal(this, true));
+		this.goalSelector.addGoal(9, new OpenDoorGoal(this, false));
+		this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(11, new FloatGoal(this) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009phase2Entity.this.getX();

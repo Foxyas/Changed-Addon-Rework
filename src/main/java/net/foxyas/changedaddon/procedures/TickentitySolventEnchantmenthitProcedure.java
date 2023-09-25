@@ -47,19 +47,19 @@ public class TickentitySolventEnchantmenthitProcedure {
 		damage_amount = amount;
 		SolventDmg = new DamageSource("latex_solvent");
 		if (EnchantLevel == 1) {
-			math = 1;
-		} else if (EnchantLevel == 0) {
-			math = 0.5;
-		} else if (EnchantLevel == 2) {
 			math = 1.5;
-		} else if (EnchantLevel == 3) {
-			math = 2;
-		} else if (EnchantLevel == 4) {
-			math = 2.5;
-		} else if (EnchantLevel == 5) {
+		} else if (EnchantLevel == 0) {
+			math = 1.5;
+		} else if (EnchantLevel == 2) {
 			math = 3;
+		} else if (EnchantLevel == 3) {
+			math = 4;
+		} else if (EnchantLevel == 4) {
+			math = 4.5;
+		} else if (EnchantLevel == 5) {
+			math = 5;
 		} else {
-			math = EnchantLevel * 0.5 + 0.5;
+			math = EnchantLevel - 0.5;
 		}
 		if (!((immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof BowItem)
 				&& !((immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof CrossbowItem)) {

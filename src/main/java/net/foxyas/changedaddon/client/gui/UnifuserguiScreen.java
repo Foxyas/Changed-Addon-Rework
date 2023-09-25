@@ -38,8 +38,8 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
-	ImageButton imagebutton_litixcamoniabutton;
 	ImageButton imagebutton_hitbox_88x17;
+	ImageButton imagebutton_recipe_buttom_normal;
 
 	public UnifuserguiScreen(UnifuserguiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -168,18 +168,10 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		imagebutton_litixcamoniabutton = new ImageButton(this.leftPos + 89, this.topPos + 80, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_litixcamoniabutton.png"), 20, 36, e -> {
-			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(0, x, y, z));
-				UnifuserguiButtonMessage.handleButtonAction(entity, 0, x, y, z);
-			}
-		});
-		guistate.put("button:imagebutton_litixcamoniabutton", imagebutton_litixcamoniabutton);
-		this.addRenderableWidget(imagebutton_litixcamoniabutton);
 		imagebutton_hitbox_88x17 = new ImageButton(this.leftPos + -102, this.topPos + 163, 88, 17, 0, 0, 17, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_88x17.png"), 88, 34, e -> {
 			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(1, x, y, z));
-				UnifuserguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(0, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
 		}) {
 			@Override
@@ -190,5 +182,13 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		};
 		guistate.put("button:imagebutton_hitbox_88x17", imagebutton_hitbox_88x17);
 		this.addRenderableWidget(imagebutton_hitbox_88x17);
+		imagebutton_recipe_buttom_normal = new ImageButton(this.leftPos + 90, this.topPos + 80, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_recipe_buttom_normal.png"), 20, 36, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(1, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_recipe_buttom_normal", imagebutton_recipe_buttom_normal);
+		this.addRenderableWidget(imagebutton_recipe_buttom_normal);
 	}
 }

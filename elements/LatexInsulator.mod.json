@@ -61,9 +61,9 @@
     "enchantPowerBonus": 0.0,
     "plantsGrowOn": false,
     "canRedstoneConnect": false,
-    "lightOpacity": 5,
+    "lightOpacity": 0,
     "material": {
-      "value": "ROCK"
+      "value": "CLAY"
     },
     "tickRate": 10,
     "tickRandomly": false,
@@ -86,7 +86,7 @@
     "fireSpreadSpeed": 0,
     "isLadder": false,
     "slipperiness": 0.6,
-    "speedFactor": 1.0,
+    "speedFactor": 0.7999999999999999,
     "jumpFactor": 1.0,
     "reactionToPushing": "NORMAL",
     "isNotColidable": false,

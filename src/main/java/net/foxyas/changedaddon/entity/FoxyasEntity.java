@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
@@ -31,6 +32,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.Packet;
 
+import net.foxyas.changedaddon.procedures.IfnotInWaterProcedure;
+import net.foxyas.changedaddon.procedures.IfInWaterProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasRightClickedOnEntityProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasOnEntityTickUpdateProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasEntityDiesProcedure;
@@ -66,12 +69,53 @@ public class FoxyasEntity extends Monster {
 		});
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, ServerPlayer.class, (float) 6));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, (float) 6));
-		this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1));
-		this.targetSelector.addGoal(7, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(9, new FloatGoal(this));
-		this.goalSelector.addGoal(10, new OpenDoorGoal(this, true));
-		this.goalSelector.addGoal(11, new OpenDoorGoal(this, false));
+		this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1) {
+			@Override
+			public boolean canUse() {
+				double x = FoxyasEntity.this.getX();
+				double y = FoxyasEntity.this.getY();
+				double z = FoxyasEntity.this.getZ();
+				Entity entity = FoxyasEntity.this;
+				Level world = FoxyasEntity.this.level;
+				return super.canUse() && IfnotInWaterProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = FoxyasEntity.this.getX();
+				double y = FoxyasEntity.this.getY();
+				double z = FoxyasEntity.this.getZ();
+				Entity entity = FoxyasEntity.this;
+				Level world = FoxyasEntity.this.level;
+				return super.canContinueToUse() && IfnotInWaterProcedure.execute(entity);
+			}
+		});
+		this.goalSelector.addGoal(7, new RandomSwimmingGoal(this, 1, 40) {
+			@Override
+			public boolean canUse() {
+				double x = FoxyasEntity.this.getX();
+				double y = FoxyasEntity.this.getY();
+				double z = FoxyasEntity.this.getZ();
+				Entity entity = FoxyasEntity.this;
+				Level world = FoxyasEntity.this.level;
+				return super.canUse() && IfInWaterProcedure.execute(entity);
+			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = FoxyasEntity.this.getX();
+				double y = FoxyasEntity.this.getY();
+				double z = FoxyasEntity.this.getZ();
+				Entity entity = FoxyasEntity.this;
+				Level world = FoxyasEntity.this.level;
+				return super.canContinueToUse() && IfInWaterProcedure.execute(entity);
+			}
+		});
+		this.targetSelector.addGoal(8, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(10, new FloatGoal(this));
+		this.goalSelector.addGoal(11, new OpenDoorGoal(this, true));
+		this.goalSelector.addGoal(12, new OpenDoorGoal(this, false));
 	}
 
 	@Override

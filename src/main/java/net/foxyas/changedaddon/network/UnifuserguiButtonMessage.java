@@ -65,11 +65,11 @@ public class UnifuserguiButtonMessage {
 			return;
 		if (buttonID == 0) {
 
-			ShowUnifuserRecipesProcedure.execute(entity);
+			SetRecipePageProcedure.execute(world, x, y, z, entity);
 		}
 		if (buttonID == 1) {
 
-			SetRecipePageProcedure.execute(world, x, y, z, entity);
+			ShowUnifuserRecipesProcedure.execute(entity);
 		}
 	}
 

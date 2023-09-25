@@ -113,19 +113,6 @@
         }
       },
       {
-        "type": "imagebutton",
-        "data": {
-          "name": "imagebutton_litixcamoniabutton",
-          "image": "recipe_buttom_normal.png",
-          "hoveredImage": "recipe_buttom_selected.png",
-          "onClick": {
-            "name": "ShowUnifuserRecipes"
-          },
-          "x": 203,
-          "y": 107
-        }
-      },
-      {
         "type": "image",
         "data": {
           "image": "unifuserextragui.png",
@@ -356,6 +343,19 @@
           "use1Xscale": false,
           "x": 164,
           "y": 84
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_recipe_buttom_normal",
+          "image": "recipe_buttom_normal.png",
+          "hoveredImage": "recipe_buttom_selected.png",
+          "onClick": {
+            "name": "ShowUnifuserRecipes"
+          },
+          "x": 204,
+          "y": 107
         }
       }
     ],
