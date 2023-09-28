@@ -193,13 +193,13 @@ public class Experiment009Entity extends Monster {
 	@Override
 	public void die(DamageSource source) {
 		super.die(source);
-		Experiment009EntityDiesProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+		Experiment009EntityDiesProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), source.getEntity());
 	}
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
 		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		Experiment009OnInitialEntitySpawnProcedure.execute(world, this);
+		Experiment009OnInitialEntitySpawnProcedure.execute(this);
 		return retval;
 	}
 
