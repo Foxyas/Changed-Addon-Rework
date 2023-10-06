@@ -34,12 +34,8 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
 
-import java.io.File;
-
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonModVariables {
-	public static File transfurs_accepted = new File("");
-
 	@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
 		ChangedAddonMod.addNetworkMessage(SavedDataSyncMessage.class, SavedDataSyncMessage::buffer, SavedDataSyncMessage::new, SavedDataSyncMessage::handler);

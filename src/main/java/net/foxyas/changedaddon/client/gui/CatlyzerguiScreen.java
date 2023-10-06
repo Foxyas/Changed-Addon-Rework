@@ -39,6 +39,9 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 	private final int x, y, z;
 	private final Player entity;
 	ImageButton imagebutton_knowledge_book;
+	ImageButton imagebutton_20221106_142902;
+	ImageButton imagebutton_impureammoniawithslot;
+	ImageButton imagebutton_catalyzed_dna_slot;
 
 	public CatlyzerguiScreen(CatlyzerguiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -58,6 +61,19 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		this.renderBackground(ms);
 		super.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
+		if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
+			if (mouseX > leftPos + -60 && mouseX < leftPos + -36 && mouseY > topPos + 147 && mouseY < topPos + 171)
+				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c"), mouseX, mouseY);
+		if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
+			if (mouseX > leftPos + -84 && mouseX < leftPos + -60 && mouseY > topPos + 147 && mouseY < topPos + 171)
+				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_partic"), mouseX, mouseY);
+		if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
+			if (mouseX > leftPos + -108 && mouseX < leftPos + -84 && mouseY > topPos + 147 && mouseY < topPos + 171)
+				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder"), mouseX, mouseY);
+		if (mouseX > leftPos + 18 && mouseX < leftPos + 42 && mouseY > topPos + 40 && mouseY < topPos + 64)
+			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe"), mouseX, mouseY);
+		if (mouseX > leftPos + 87 && mouseX < leftPos + 111 && mouseY > topPos + 61 && mouseY < topPos + 85)
+			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipes"), mouseX, mouseY);
 	}
 
 	@Override
@@ -173,5 +189,35 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		});
 		guistate.put("button:imagebutton_knowledge_book", imagebutton_knowledge_book);
 		this.addRenderableWidget(imagebutton_knowledge_book);
+		imagebutton_20221106_142902 = new ImageButton(this.leftPos + -104, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_20221106_142902.png"), 16, 32, e -> {
+		}) {
+			@Override
+			public void render(PoseStack ms, int gx, int gy, float ticks) {
+				if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
+					super.render(ms, gx, gy, ticks);
+			}
+		};
+		guistate.put("button:imagebutton_20221106_142902", imagebutton_20221106_142902);
+		this.addRenderableWidget(imagebutton_20221106_142902);
+		imagebutton_impureammoniawithslot = new ImageButton(this.leftPos + -80, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_impureammoniawithslot.png"), 16, 32, e -> {
+		}) {
+			@Override
+			public void render(PoseStack ms, int gx, int gy, float ticks) {
+				if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
+					super.render(ms, gx, gy, ticks);
+			}
+		};
+		guistate.put("button:imagebutton_impureammoniawithslot", imagebutton_impureammoniawithslot);
+		this.addRenderableWidget(imagebutton_impureammoniawithslot);
+		imagebutton_catalyzed_dna_slot = new ImageButton(this.leftPos + -56, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_catalyzed_dna_slot.png"), 16, 32, e -> {
+		}) {
+			@Override
+			public void render(PoseStack ms, int gx, int gy, float ticks) {
+				if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
+					super.render(ms, gx, gy, ticks);
+			}
+		};
+		guistate.put("button:imagebutton_catalyzed_dna_slot", imagebutton_catalyzed_dna_slot);
+		this.addRenderableWidget(imagebutton_catalyzed_dna_slot);
 	}
 }

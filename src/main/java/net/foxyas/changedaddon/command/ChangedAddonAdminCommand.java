@@ -11,13 +11,16 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.Direction;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.Commands;
 
 import net.foxyas.changedaddon.procedures.SetmaxTransfurToleranceProcedure;
 import net.foxyas.changedaddon.procedures.SetTransfurProgressCommandProcedure;
+import net.foxyas.changedaddon.procedures.SetPlayerTransfurProgressCommandProcedure;
 import net.foxyas.changedaddon.procedures.SetDefaultValueProcedure;
 import net.foxyas.changedaddon.procedures.GetmaxTransfurToleranceProcedure;
 import net.foxyas.changedaddon.procedures.AddTransfurProgressCommandProcedure;
+import net.foxyas.changedaddon.procedures.AddPlayerTransfurProgressProcedure;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 
@@ -50,7 +53,31 @@ public class ChangedAddonAdminCommand {
 
 					SetTransfurProgressCommandProcedure.execute(arguments, entity);
 					return 0;
-				})))).then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
+				})))).then(Commands.literal("SetPlayerTransfurProgress").then(Commands.argument("Target", EntityArgument.player()).then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					AddPlayerTransfurProgressProcedure.execute(arguments, entity);
+					return 0;
+				})).then(Commands.literal("set").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					SetPlayerTransfurProgressCommandProcedure.execute(arguments, entity);
+					return 0;
+				}))))).then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
