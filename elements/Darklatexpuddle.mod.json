@@ -100,7 +100,7 @@
     "fireSpreadSpeed": 0,
     "isLadder": false,
     "slipperiness": 0.6,
-    "speedFactor": 1.0,
+    "speedFactor": 0.8,
     "jumpFactor": 1.0,
     "reactionToPushing": "DESTROY",
     "isNotColidable": false,

@@ -280,6 +280,128 @@
           "x": 137,
           "y": 80
         }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_20221106_142902",
+          "image": "ammoniabutton.png",
+          "hoveredImage": "selectedammoniabutton.png",
+          "onClick": {
+            "name": "Openbookpage5"
+          },
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "x": 9,
+          "y": 187
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_impureammoniawithslot",
+          "image": "ammoniaparticle_slot.png",
+          "hoveredImage": "ammonia_particles_slot_selected.png",
+          "onClick": {
+            "name": "OpenBookRecipe2"
+          },
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "x": 33,
+          "y": 187
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_catalyzed_dna_slot",
+          "image": "catalyzed_dna_slot.png",
+          "hoveredImage": "catalyzer_dna_slot_selected.png",
+          "onClick": {
+            "name": "Openpage4"
+          },
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "x": 57,
+          "y": 187
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_recipe_of_syringe_with_c",
+          "text": {
+            "fixedValue": "Display Recipe of Syringe with Catalyzed DNA"
+          },
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 53,
+          "y": 182
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_recipe_of_ammonia_partic",
+          "text": {
+            "fixedValue": "Display Recipe of Ammonia Particles"
+          },
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 29,
+          "y": 182
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_recipe_of_ammonia_powder",
+          "text": {
+            "fixedValue": "Display Recipe Of Ammonia Powder"
+          },
+          "displayCondition": {
+            "name": "IfShowCatlyzerRecipePage1"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 5,
+          "y": 182
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_put_the_powders_or_syringe",
+          "text": {
+            "fixedValue": "Put The Powders or Syringe"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 132,
+          "y": 75
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_recipes",
+          "text": {
+            "fixedValue": "Display Recipes"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 201,
+          "y": 96
+        }
       }
     ],
     "gridSettings": {

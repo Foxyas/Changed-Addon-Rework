@@ -11,7 +11,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/Checkifplayeraretransfur.java"
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "Grabeffect",
@@ -134,7 +135,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/changedaddon_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "GrabProcedure",
@@ -504,7 +506,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/orange_juice_is_yummy.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Opennewworldwithmymod",
@@ -636,7 +639,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/orangejuicerecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Inpureammonia",
@@ -676,7 +680,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/impureammoniarecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Unlatexbaserecipe",
@@ -689,7 +694,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/unlatexbaserecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Syringe",
@@ -716,7 +722,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/medicalsyringerecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PotwithcamoniaPlayerFinishesUsingItem",
@@ -1034,7 +1041,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/furry_friend.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Devitem",
@@ -1048,7 +1056,8 @@
           "src/main/resources/assets/changed_addon/models/item/devitem.json",
           "src/main/java/net/foxyas/changedaddon/item/DevitemItem.java"
         ]
-      }
+      },
+      "path": "~/AdvancementsItems"
     },
     {
       "name": "Untransfuradvancement",
@@ -1061,7 +1070,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/untransfuradvancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Untransfuradvancement2",
@@ -1074,7 +1084,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/untransfuradvancement_2.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "TimesthesyringewasusedAdvancement",
@@ -1087,7 +1098,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/timesthesyringewasused_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Timesthesyringewasuseadvancement2",
@@ -1100,7 +1112,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/timesthesyringewasuseadvancement_2.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Timesthesyringewasuseadvancement3",
@@ -1113,7 +1126,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/timesthesyringewasuseadvancement_3.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "LitixcamoniaAdcancement",
@@ -1126,7 +1140,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/litixcamonia_adcancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Ammoniapoweradvancement",
@@ -1139,7 +1154,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/ammoniapoweradvancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Ammoniacraft",
@@ -1152,7 +1168,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/ammoniacraft.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Grabthem",
@@ -1165,7 +1182,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/grabthem.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Assimilatethem",
@@ -1178,7 +1196,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/assimilatethem.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "DNAstudyisafantasticthingadvancement",
@@ -1191,7 +1210,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/dn_astudyisafantasticthingadvancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Untransfuritemadvancement",
@@ -1204,7 +1224,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/untransfuritemadvancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "AmmoniaparticleItemIsCraftedsmelted",
@@ -1624,7 +1645,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/latex_insulator_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Showbreakfreebutton",
@@ -1759,7 +1781,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/latexinsulatorrecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Painite",
@@ -1819,7 +1842,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_ore_block_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteBlockOreRecipe",
@@ -1832,7 +1856,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_block_ore_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteOreSmelting",
@@ -1845,7 +1870,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_ore_smelting.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainitePickaxe",
@@ -1914,7 +1940,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_pickaxe_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteAxeRecipe",
@@ -1927,7 +1954,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_axe_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteSwordRecipe",
@@ -1940,7 +1968,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_sword_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteShovelRecipe",
@@ -1953,7 +1982,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_shovel_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteArmor",
@@ -1983,7 +2013,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_armor_helmet_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteArmorBodyRecipe",
@@ -1996,7 +2027,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_armor_body_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteArmorLeggingsRecipe",
@@ -2009,7 +2041,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_armor_leggings_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteArmorBootsRecipe",
@@ -2022,7 +2055,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_armor_boots_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "CheckPlayerLatexForm",
@@ -2035,7 +2069,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/CheckPlayerLatexForm.java"
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "PainiteOrePrope",
@@ -2061,7 +2096,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/blastpainite.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Ifplayeraretransfur",
@@ -2239,7 +2275,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/spawneggoffoxyasrecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "FoxyasAdvancement",
@@ -2252,7 +2289,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/foxyas_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "FoxyasEntityDies",
@@ -2299,7 +2337,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/prototypespawneggrecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "GeneratorEmittedRedstonePower",
@@ -2506,7 +2545,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/bookrecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "LitixCamoniaSprayRightclickedOnBlock",
@@ -2662,7 +2702,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/litix_camonia_fluidcraft.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "EmptySprayRecipe",
@@ -2675,7 +2716,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/empty_spray_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "RightclickFriendlyGrab",
@@ -3152,9 +3194,6 @@
       "locked_code": false,
       "registry_name": "unifuser_update_tick",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/UnifuserUpdateTickProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "x",
@@ -3259,7 +3298,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/syringechange.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Syringestag",
@@ -3285,7 +3325,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/catlyzerrecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "UnifuserRecipe",
@@ -3298,7 +3339,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/unifuser_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Syringechange2",
@@ -3311,7 +3353,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/syringechange_2.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Bookpagenumber5",
@@ -3499,7 +3542,8 @@
           "src/main/java/net/foxyas/changedaddon/item/DevItem2Item.java",
           "src/main/resources/assets/changed_addon/models/item/dev_item_2.json"
         ]
-      }
+      },
+      "path": "~/AdvancementsItems"
     },
     {
       "name": "Devitem3",
@@ -3513,7 +3557,8 @@
           "src/main/java/net/foxyas/changedaddon/item/Devitem3Item.java",
           "src/main/resources/assets/changed_addon/models/item/devitem_3.json"
         ]
-      }
+      },
+      "path": "~/AdvancementsItems"
     },
     {
       "name": "AdvancementWantFriendlyGrab",
@@ -3526,7 +3571,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/advancement_want_friendly_grab.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "AdvancementDontWantFriendlyGrab",
@@ -3539,7 +3585,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/advancement_dont_want_friendly_grab.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "UnifuserAdvancement",
@@ -3552,7 +3599,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/unifuser_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "CatlyzerAdvancement",
@@ -3565,7 +3613,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/catlyzer_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Tooglewarns",
@@ -3697,7 +3746,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/SetplayerTransfurprogress.java"
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "SetPlayerTransFurProgressFor0",
@@ -3841,7 +3891,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/potwithlitixcamonia_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "OverDose",
@@ -3854,7 +3905,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/over_dose.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "GrabEscapeNeedClicks",
@@ -4068,7 +4120,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/organic_transfur_advancement.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "DevItem4",
@@ -4082,7 +4135,8 @@
           "src/main/java/net/foxyas/changedaddon/item/DevItem4Item.java",
           "src/main/resources/assets/changed_addon/models/item/dev_item_4.json"
         ]
-      }
+      },
+      "path": "~/AdvancementsItems"
     },
     {
       "name": "Hug",
@@ -4095,7 +4149,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/hug.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Toggleresettransfuradvancements",
@@ -4217,7 +4272,7 @@
           "src/main/resources/data/changed_addon/recipes/litix_camoniaarrow.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "Experiment009",
@@ -4432,7 +4487,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/experiment_009recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Catalyzeddna",
@@ -5286,7 +5342,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/friendly_transfur.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "DescontrolSyringerecipe",
@@ -5299,7 +5356,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/descontrol_syringerecipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "FoxyasguiThisGUIIsOpened",
@@ -5852,9 +5910,6 @@
       "locked_code": false,
       "registry_name": "recipe_reset",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/RecipeResetProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
@@ -6309,7 +6364,7 @@
           "src/main/resources/assets/changed_addon/models/item/catlyzerblock_illustrative_item.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "UnifuserblockIllustrativeItem",
@@ -6324,7 +6379,7 @@
           "src/main/resources/assets/changed_addon/models/item/unifuserblock_illustrative_item.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "PotWithLitixCamoniaRecipe",
@@ -6338,7 +6393,7 @@
           "src/main/resources/data/changed_addon/recipes/potwithlitixcamonia_jeirecipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "LitixCamoniajeirecipe",
@@ -6352,7 +6407,7 @@
           "src/main/resources/data/changed_addon/recipes/litix_camoniajeirecipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "MultiLitixCamoniaJeiRecipe",
@@ -6366,7 +6421,7 @@
           "src/main/resources/data/changed_addon/recipes/multi_litix_camonia_jei_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "SyringewithlitixcamoniajeiRecipe",
@@ -6380,7 +6435,7 @@
           "src/main/resources/data/changed_addon/recipes/syringewithlitixcamoniajei_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "AmmoniaParticlejeiRecipe",
@@ -6394,7 +6449,7 @@
           "src/main/resources/data/changed_addon/recipes/ammonia_particlejei_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "AmmoniaPowderJeiRecipe",
@@ -6408,7 +6463,7 @@
           "src/main/resources/data/changed_addon/recipes/ammonia_powder_jei_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "BloodTypesSyringe",
@@ -6422,7 +6477,7 @@
           "src/main/resources/data/changed_addon/tags/items/bloodtype_syringe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "CatalyzeddnaJeiRecipe",
@@ -6436,7 +6491,7 @@
           "src/main/resources/data/changed_addon/recipes/catalyzeddna_jei_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "AmmoniaParticlesJeiIllustrative",
@@ -6451,7 +6506,7 @@
           "src/main/resources/assets/changed_addon/models/item/ammonia_particles_jei_illustrative.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "HazardSuit",
@@ -6497,7 +6552,7 @@
           "src/main/resources/data/changed_addon/recipes/hazardboots_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "HazardLegginsRecipe",
@@ -6511,7 +6566,7 @@
           "src/main/resources/data/changed_addon/recipes/hazard_leggins_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "HazardChestplateRecipe",
@@ -6525,7 +6580,7 @@
           "src/main/resources/data/changed_addon/recipes/hazardchestplate_recipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "Hazardhelmetrecipe",
@@ -6539,7 +6594,7 @@
           "src/main/resources/data/changed_addon/recipes/hazardhelmetrecipe.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "SetCoolDownOff",
@@ -6606,7 +6661,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/obtaina_painite_hoe.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "PainiteBeaconFeature",
@@ -6632,7 +6688,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/painite_hoe_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "DarklatexpuddleFeature",
@@ -6779,7 +6836,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/darklatex_puddle_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "PainiteblockTag",
@@ -6935,7 +6993,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/obtain_painite.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Dolatexinfection",
@@ -7644,7 +7703,8 @@
           "src/main/resources/assets/changed_addon/models/item/devitem_1.json",
           "src/main/java/net/foxyas/changedaddon/item/Devitem1Item.java"
         ]
-      }
+      },
+      "path": "~/AdvancementsItems"
     },
     {
       "name": "FriendlyKitty",
@@ -7657,7 +7717,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/friendly_kitty.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "FriendlyKittyProcedure",
@@ -7694,7 +7755,8 @@
           "src/main/java/net/foxyas/changedaddon/item/Devitem5Item.java",
           "src/main/resources/assets/changed_addon/models/item/devitem_5.json"
         ]
-      }
+      },
+      "path": "~/AdvancementsItems"
     },
     {
       "name": "GneticsdefyingFriendship",
@@ -7707,7 +7769,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/gneticsdefying_friendship.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "Ifisturnon",
@@ -7861,7 +7924,7 @@
           "src/main/resources/data/changed_addon/recipes/inpure_ammoniarecipeendgame.json"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "Impureammoniarecipeplant",
@@ -7874,7 +7937,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/impureammoniarecipeplant.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Plant",
@@ -8563,7 +8627,7 @@
           "src/main/java/net/foxyas/changedaddon/recipes/brewing/UntransfurPotionRecipeBrewingRecipe.java"
         ]
       },
-      "path": "~/new recipes"
+      "path": "~/Recipes"
     },
     {
       "name": "IfInWater",
@@ -8676,6 +8740,88 @@
           {
             "name": "entity",
             "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AddPlayerTransfurProgress",
+      "type": "procedure",
+      "sortid": 448,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "add_player_transfur_progress",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetPlayerTransfurProgressCommand",
+      "type": "procedure",
+      "sortid": 449,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "set_player_transfur_progress_command",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SetPlayerTransfurProgressCommandProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LatexVariantAgeincrease",
+      "type": "procedure",
+      "sortid": 450,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_variant_ageincrease",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexVariantAgeincreaseProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
           }
         ]
       }
@@ -8873,12 +9019,6 @@
       "type": "string",
       "scope": "player_lifetime",
       "value": ""
-    },
-    {
-      "name": "transfurs_accepted",
-      "type": "file",
-      "scope": "global",
-      "value": "new File(\"\")"
     }
   ],
   "sound_elements": [
@@ -8965,11 +9105,12 @@
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "You aren\u0027t affected by this fluid",
+      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
-      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
+      "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
       "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
+      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "key.changed_addon.setcangrabon": "Toggle Grab on",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
@@ -8977,6 +9118,7 @@
       "effect.changed_addon.infriendlygrabeffect": "Friendly Grab Host",
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
       "gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon": " (Press the Totem Icon)",
+      "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe1": "Display Litix-Camonia Recipe",
       "gui.changed_addon.book_pagenumber_6.label_mode_on": "-mode on) This Will change t-",
       "block.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
       "gui.changed_addon.book_pagenumber_7.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
@@ -8988,14 +9130,14 @@
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
       "advancements.transfur_totem_advancement_1.descr": "You use a latex totem to transfur or untransfur",
-      "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "advancements.gneticsdefying_friendship.descr": "You hugged a \"genetics enemy\"",
+      "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "gui.changed_addon.book_pagenumber_2.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
-      "attribute.changed_addon.latexresistance": "Latex Resistance",
-      "gui.changed_addon.pagesecret.button_close": "close",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
+      "gui.changed_addon.pagesecret.button_close": "close",
+      "attribute.changed_addon.latexresistance": "Latex Resistance",
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
@@ -9003,8 +9145,10 @@
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
       "gui.changed_addon.book_pagenumber_1.label_empty1": "?",
+      "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.label_full": "Full",
+      "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
       "gui.changed_addon.bookpagenumber_4.label_in_the_rank_right_mouse_button": "in IV rank (right mouse button)",
       "advancements.getfull_painite_armor.descr": "Gather a full set of Painite armor and show those monsters how to upgrade your style. Time to have §4fun§5 with your newfound protection!",
@@ -9026,19 +9170,21 @@
       "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.book_pagenumber_6.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
+      "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
       "gui.changed_addon.bookpagenumber_3.label_to_purify_the_latex_syringes_jus": "to purify the latex syringes just craft a purifier and follow this example",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
-      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
+      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
+      "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
-      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
+      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
+      "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe": "Display Litix-Camonia Recipe",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
       "gui.changed_addon.book_pagenumber_2.label_ammonia_particle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.button_back": "Back",
@@ -9050,8 +9196,8 @@
       "gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho": " LitixCamonia. LitixCamonia can be injected to",
       "gui.changed_addon.bookrecipepage_10.label_f3": "F",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
-      "advancements.advancement_want_friendly_grab.descr": "You (enable your friendly grab) you want to be covered in goo",
       "advancements.obtaina_painite_hoe.title": "Beyond Dedication",
+      "advancements.advancement_want_friendly_grab.descr": "You (enable your friendly grab) you want to be covered in goo",
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
       "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
@@ -9076,7 +9222,7 @@
       "block.changed_addon.unifuser": "Unifuser",
       "death.attack.latex_solvent": "%1$s was dissolved",
       "gui.changed_addon.book_pagenumber_7.label_organiccant_grab": "Organic/Cant Grab",
-      "gui.changed_addon.book_pagenumber_7.label_assimilation_grab_mode": "-\u003e organic/cant Grab",
+      "gui.changed_addon.book_pagenumber_7.label_assimilation_grab_mode": "-\u003e Organic/cant Grab",
       "item.changed_addon.experiment_009_record": "Experiment 009 Theme Music Disc",
       "gui.changed_addon.bookrecipepage_7.label_catalyzer": "Catalyzer",
       "item.changed_addon.experiment_009_phase_2_spawn_egg": "Experiment 009 Phase 2 Spawn Egg",
@@ -9096,8 +9242,8 @@
       "gui.changed_addon.book_pagenumber_1.tooltip_will_show_information_about_chan": "Will Show Information about Changed Addon Overlays",
       "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
       "item.changed_addon.catlyzerblock_illustrative_item": "IN Catalyzer Block Illustrative Item",
-      "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
       "gui.changed_addon.bookpagenumber_5.label_craft_table": "Crafting-table",
+      "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
       "item.changed_addon.impureammonia": "Impure Ammonia",
       "advancements.timesthesyringewasused_advancement.descr": "You used a Litix-Camonia Syringe more than 32 times you are indecisive about your humanity holy!",
       "item.changed_addon.experiment_009_record.desc": "TryIgnitioHD-HYPERDEATH | StorySwap (DEVILOVANIA but swapped)",
@@ -9108,6 +9254,7 @@
       "gamerule.fight_to_keep_consciousness.description": "allow the Fight to keep consciousness minigame",
       "death.attack.concience_lose": "%1$s lose your concience",
       "gui.changed_addon.bookrecipepage_6.label_catalyzer": "Catalyzer",
+      "gui.changed_addon.unifusergui.tooltip_place_the_powders": "Place the Powders",
       "key.changed_addon.wantfriendlygrab": "Want friendly grab",
       "item.minecraft.tipped_arrow.effect.litixcamoniaeffect": "Arrow of LitixCamonia",
       "gui.changed_addon.book_pagenumber_7.label_a_command": "A changed_addon Command",
@@ -9154,6 +9301,7 @@
       "gui.changed_addon.bookrecipepage_6.label_16": "16",
       "effect.changed_addon.untransfur": "Untransfur",
       "gui.changed_addon.grab_radial_menugrab.button_back": "back",
+      "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder": "Display Recipe Of Ammonia Powder",
       "death.attack.concience_lose.player": "%1$s lose your concience by %2$s",
       "gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for": "manently losing your humanity, you can craft",
       "changedaddon.event.grab.when.you.die": "The person who was grabbing you §4Died§r before They could do anything!!",
@@ -9191,7 +9339,7 @@
       "changedaddon.grab.tired": "You are too tired to grab",
       "gui.changed_addon.book_pagenumber_1.label_the_syringe_craft_is_just_an_iro": "the syringe craft is just an iron nugget ",
       "block.changed_addon.generator": "Generator",
-      "gui.changed_addon.book_pagenumber_1.button_changed_addon_overlays": "Changed Addon Overlays",
+      "gui.changed_addon.book_pagenumber_1.button_changed_addon_overlays": "Changed Addon HUD",
       "advancements.changedaddon_advancement.title": "Changed Addon ",
       "gamerule.dolatexinfection": "do latex infection",
       "gamerule.fighttokeepconsciousness.description": "Allow the Fight to keep consciousness minigame (overwrite keep consciousness like a perm on)",
@@ -9226,11 +9374,13 @@
       "attribute.changed_addon.latexinfection": "Latex Infection",
       "advancements.untransfuritemadvancement.descr": "You made one untransfur item",
       "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
+      "gui.changed_addon.unifusergui.label_3": "+3",
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon",
       "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
       "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic transfur",
       "gui.changed_addon.bookrecipepage_10.label_s_seeds": "S \u003d ANY SEEDS",
+      "gui.changed_addon.unifusergui.tooltip_place_a_syringe_with_dna": "Place a Syringe with DNA",
       "gui.changed_addon.catlyzergui.button_start_craft": "start craft",
       "advancements.untransfuradvancement_2.title": "I don\u0027t think it\u0027s that permanent!!",
       "changed_addon.compact_disc.title.experiment_009": "§n§4Demoleculated §r§n§b Experiment",
@@ -9247,6 +9397,7 @@
       "gui.changed_addon.book_pagenumber_2.label_untransfur_items": "cure you of your latex form.",
       "gamerule.useNewFriendlyGrab": "Changed Addon New Friendly Grab",
       "gui.changed_addon.bookrecipepage_7.button_close": "Close",
+      "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_partic": "Display Recipe of Ammonia Particles",
       "gui.changed_addon.foxyasgui.label_hello_im_foxyas_i_dont_want_to": "hello I\u0027m Foxyas I don\u0027t want to assimilate you i am friendly so",
       "changedaddon.assimilation.on": "Assimilation activated",
       "item.changed_addon.experiment_009dna": "Experiment 009 DNA",
@@ -9279,6 +9430,7 @@
       "key.changed_addon.active_friendly_mode": "Toggle Friendly Mode",
       "gui.changed_addon.pagesecret.label_after_an_experiment_with_catalyz": "after an experiment with catalyzed dna a bit of blood and an \"unlatexbase\" ",
       "changedaddon.event.grab.when.grab.immune": "They are very resistant to being grabbed, so you can\u0027t grab them",
+      "gui.changed_addon.unifusergui.tooltip_display_recipes": "Display Recipes",
       "gui.changed_addon.foxyas_gui_2.button_no": "no",
       "gui.changed_addon.book_pagenumber_1.label_to_make_a_syringe_you_can_take_a": "To make a syringe you ",
       "changedaddon.assimilation.off": "Assimilation deactivated",
@@ -9293,8 +9445,9 @@
       "advancements.dn_astudyisafantasticthingadvancement.title": "DNA study is a fantastic thing",
       "item.changed_addon.hazard_suit_chestplate": "Hazard  Chestplate",
       "gui.changed_addon.book_pagenumber_1.label_can_take_a_glass_bottle_and_an_i": "can take a glass bottle and an iron nugget in a shapeless pattern. ",
-      "gui.changed_addon.unifusergui.label_next": "next page",
+      "gui.changed_addon.unifusergui.label_next": "Next Page ",
       "gamerule.dolatexinfection.description": "this makes the latex infection in the player rise after being attacked",
+      "gui.changed_addon.unifusergui.tooltip_put_the_second_ingredient": "Put the second ingredient",
       "gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it": "it i can do it",
       "subtitles.armor_equip": "Armor Equip",
       "gui.changed_addon.bookrecipepage_10.label_m_meet": "M \u003d ANY MEET",
@@ -9326,6 +9479,7 @@
       "gui.changed_addon.fight_tokeepconsciousnessminigame.button_fight": "           Fight            ",
       "gui.changed_addon.catlyzergui.label_full": "Full",
       "item.changed_addon.painite_shovel": "Painite Shovel",
+      "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_multiplier": "Display Litix-Camonia Multiplier Recipe",
       "gui.changed_addon.book_pagenumber_1.label_or_can_be_crafted": "or can be crafted after you craft or have the latex base you just",
       "gui.changed_addon.unifusergui.button_empty": "next",
       "gui.changed_addon.bookpagenumber_3.label_sseed": "s\u003dseed",
@@ -9392,6 +9546,7 @@
       "advancements.getfull_painite_armor.title": "Laughing in the Face of Danger",
       "gui.changed_addon.bookpagenumber_3.label_the_recipe_for_the_main_item_sho": "the recipe for the main item should be found",
       "gui.changed_addon.book_pagenumber_2.label_i_was_about_to_forget_but_we_cre": "-ier by placing the syringe in the slot to purify. If you are unsure about per",
+      "gui.changed_addon.unifusergui.label_next_page": "Next Page",
       "gui.changed_addon.book_pagenumber_1.label_for_that_just_use_a_syringe_on_y": "for that just use a syringe on you to draw your blood but first you need craft"
     }
   },
@@ -9399,7 +9554,7 @@
     "name": "~",
     "children": [
       {
-        "name": "new recipes",
+        "name": "Recipes",
         "children": []
       },
       {
@@ -9428,6 +9583,18 @@
       },
       {
         "name": "advancements",
+        "children": []
+      },
+      {
+        "name": "AdvancementsItems",
+        "children": []
+      },
+      {
+        "name": "CustomCode",
+        "children": []
+      },
+      {
+        "name": "RecipeCategorys",
         "children": []
       }
     ]

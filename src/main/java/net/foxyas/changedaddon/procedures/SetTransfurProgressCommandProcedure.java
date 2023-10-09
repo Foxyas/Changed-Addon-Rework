@@ -12,7 +12,6 @@ public class SetTransfurProgressCommandProcedure {
 		if (entity == null)
 			return;
 		double Number = 0;
-		Entity EntityTarget = null;
 		Number = DoubleArgumentType.getDouble(arguments, "Number");
 		if (entity == entity) {
 			CompoundTag dataIndex1 = new CompoundTag();

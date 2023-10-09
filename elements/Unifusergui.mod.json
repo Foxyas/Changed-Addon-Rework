@@ -127,100 +127,6 @@
       {
         "type": "image",
         "data": {
-          "image": "untransfurrecipe.png",
-          "use1Xscale": true,
-          "displayCondition": {
-            "name": "IfShowUnifuserRecipesPage1"
-          },
-          "x": 7,
-          "y": 33
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "potwithlitixcamoniarecipe.png",
-          "use1Xscale": true,
-          "displayCondition": {
-            "name": "IfShowUnifuserRecipesPage1"
-          },
-          "x": 7,
-          "y": 83
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "litixcamoniarecipe_new.png",
-          "use1Xscale": true,
-          "displayCondition": {
-            "name": "IfShowUnifuserRecipesPage1"
-          },
-          "x": 7,
-          "y": 131
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "multiplylitixcamoniarecipe.png",
-          "use1Xscale": true,
-          "displayCondition": {
-            "name": "IfShowUnifuserRecipes2"
-          },
-          "x": 7,
-          "y": 33
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_next",
-          "text": {
-            "fixedValue": "next page"
-          },
-          "color": {
-            "value": -1,
-            "falpha": 0.0
-          },
-          "displayCondition": {
-            "name": "IfShowUnifuserRecipes"
-          },
-          "x": 30,
-          "y": 195
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "small_gray_bar.png",
-          "use1Xscale": false,
-          "displayCondition": {
-            "name": "IfShowUnifuserRecipes"
-          },
-          "x": 11,
-          "y": 189
-        }
-      },
-      {
-        "type": "imagebutton",
-        "data": {
-          "name": "imagebutton_hitbox_88x17",
-          "image": "hitbox_88x17.png",
-          "hoveredImage": "",
-          "onClick": {
-            "name": "SetRecipePage"
-          },
-          "displayCondition": {
-            "name": "IfShowUnifuserRecipes"
-          },
-          "x": 11,
-          "y": 190
-        }
-      },
-      {
-        "type": "image",
-        "data": {
           "image": "unifusergui_new.png",
           "use1Xscale": false,
           "x": 113,
@@ -356,6 +262,298 @@
           },
           "x": 204,
           "y": 107
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_place_the_powders",
+          "text": {
+            "fixedValue": "Place the Powders"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 124,
+          "y": 68
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_place_a_syringe_with_dna",
+          "text": {
+            "fixedValue": "Place a Syringe with DNA"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 159,
+          "y": 80
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_put_the_second_ingredient",
+          "text": {
+            "fixedValue": "Put the second ingredient"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 124,
+          "y": 92
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_litixcamonia_slot",
+          "image": "litixcamonia_slot.png",
+          "hoveredImage": "litixcamonia_slot_selected.png",
+          "onClick": {
+            "name": "Openpage3"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 11,
+          "y": 34
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_litixcamonia_recipe",
+          "text": {
+            "fixedValue": "Display Litix-Camonia Recipe"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 7,
+          "y": 30
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_pot_with_litixcamonia_r",
+          "text": {
+            "fixedValue": "Display Pot With Litix-Camonia Recipe"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 31,
+          "y": 30
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_potiwhtlitixcamonia_slot",
+          "image": "potiwhtlitixcamonia_slot.png",
+          "hoveredImage": "potwithlitixcamonia_slot_selected.png",
+          "onClick": {
+            "name": "OpenBookRecipe"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 34,
+          "y": 34
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_syringewithlitixcamonia_slot",
+          "image": "syringewithlitixcamonia_slot.png",
+          "hoveredImage": "syringewithlitixcamonia_slot_selected.png",
+          "onClick": {
+            "name": "OpenBookRecipe5"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 58,
+          "y": 34
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_litixcamonia_recipe1",
+          "text": {
+            "fixedValue": "Display Litix-Camonia Recipe"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 55,
+          "y": 30
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_litixcamonia_slot1",
+          "image": "litixcamonia_slot.png",
+          "hoveredImage": "litixcamonia_slot_selected.png",
+          "onClick": {
+            "name": "Openpage3"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 81,
+          "y": 34
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_3",
+          "text": {
+            "fixedValue": "+3"
+          },
+          "color": {
+            "value": -1,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 87,
+          "y": 41
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_litixcamonia_multiplier",
+          "text": {
+            "fixedValue": "Display Litix-Camonia Multiplier Recipe"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 79,
+          "y": 30
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "litixcamoniadisplayrecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipesPage1"
+          },
+          "x": 5,
+          "y": 61
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "litixcamoniamultiplierrecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipesPage1"
+          },
+          "x": 5,
+          "y": 115
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "small_gray_bar.png",
+          "use1Xscale": false,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 11,
+          "y": 185
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_next_page",
+          "text": {
+            "fixedValue": "Next Page"
+          },
+          "color": {
+            "value": -1,
+            "falpha": 0.0
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 31,
+          "y": 192
+        }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_hitbox_88x17",
+          "image": "small_gray_bar.png",
+          "hoveredImage": "small_selected_gray_bar.png",
+          "onClick": {
+            "name": "SetRecipePage"
+          },
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes"
+          },
+          "x": 11,
+          "y": 185
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "syringelitixcamoniadisplayrecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes2"
+          },
+          "x": 5,
+          "y": 61
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "potwithlitixcamoniadisplayrecipe.png",
+          "use1Xscale": true,
+          "displayCondition": {
+            "name": "IfShowUnifuserRecipes2"
+          },
+          "x": 5,
+          "y": 115
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_display_recipes",
+          "text": {
+            "fixedValue": "Display Recipes"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 202,
+          "y": 103
         }
       }
     ],

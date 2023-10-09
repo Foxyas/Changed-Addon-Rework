@@ -28,7 +28,7 @@
         "type": "button",
         "data": {
           "name": "button_changed_addon_overlays",
-          "text": "Changed Addon Overlays",
+          "text": "Changed Addon HUD",
           "onClick": {
             "name": "Openpage6"
           },

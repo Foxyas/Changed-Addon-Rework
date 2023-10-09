@@ -190,6 +190,10 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		guistate.put("button:imagebutton_knowledge_book", imagebutton_knowledge_book);
 		this.addRenderableWidget(imagebutton_knowledge_book);
 		imagebutton_20221106_142902 = new ImageButton(this.leftPos + -104, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_20221106_142902.png"), 16, 32, e -> {
+			if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(1, x, y, z));
+				CatlyzerguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
+			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
@@ -200,6 +204,10 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		guistate.put("button:imagebutton_20221106_142902", imagebutton_20221106_142902);
 		this.addRenderableWidget(imagebutton_20221106_142902);
 		imagebutton_impureammoniawithslot = new ImageButton(this.leftPos + -80, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_impureammoniawithslot.png"), 16, 32, e -> {
+			if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(2, x, y, z));
+				CatlyzerguiButtonMessage.handleButtonAction(entity, 2, x, y, z);
+			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
@@ -210,6 +218,10 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		guistate.put("button:imagebutton_impureammoniawithslot", imagebutton_impureammoniawithslot);
 		this.addRenderableWidget(imagebutton_impureammoniawithslot);
 		imagebutton_catalyzed_dna_slot = new ImageButton(this.leftPos + -56, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_catalyzed_dna_slot.png"), 16, 32, e -> {
+			if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(3, x, y, z));
+				CatlyzerguiButtonMessage.handleButtonAction(entity, 3, x, y, z);
+			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {

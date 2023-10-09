@@ -203,6 +203,10 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		guistate.put("button:imagebutton_recipe_buttom_normal", imagebutton_recipe_buttom_normal);
 		this.addRenderableWidget(imagebutton_recipe_buttom_normal);
 		imagebutton_litixcamonia_slot = new ImageButton(this.leftPos + -102, this.topPos + 7, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_litixcamonia_slot.png"), 16, 32, e -> {
+			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(1, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
+			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
@@ -213,6 +217,10 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		guistate.put("button:imagebutton_litixcamonia_slot", imagebutton_litixcamonia_slot);
 		this.addRenderableWidget(imagebutton_litixcamonia_slot);
 		imagebutton_potiwhtlitixcamonia_slot = new ImageButton(this.leftPos + -79, this.topPos + 7, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_potiwhtlitixcamonia_slot.png"), 16, 32, e -> {
+			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(2, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 2, x, y, z);
+			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
@@ -223,6 +231,10 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		guistate.put("button:imagebutton_potiwhtlitixcamonia_slot", imagebutton_potiwhtlitixcamonia_slot);
 		this.addRenderableWidget(imagebutton_potiwhtlitixcamonia_slot);
 		imagebutton_syringewithlitixcamonia_slot = new ImageButton(this.leftPos + -55, this.topPos + 7, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_syringewithlitixcamonia_slot.png"), 16, 32, e -> {
+			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(3, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 3, x, y, z);
+			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
@@ -233,6 +245,10 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		guistate.put("button:imagebutton_syringewithlitixcamonia_slot", imagebutton_syringewithlitixcamonia_slot);
 		this.addRenderableWidget(imagebutton_syringewithlitixcamonia_slot);
 		imagebutton_litixcamonia_slot1 = new ImageButton(this.leftPos + -32, this.topPos + 7, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_litixcamonia_slot1.png"), 16, 32, e -> {
+			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(4, x, y, z));
+				UnifuserguiButtonMessage.handleButtonAction(entity, 4, x, y, z);
+			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
@@ -242,7 +258,7 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		};
 		guistate.put("button:imagebutton_litixcamonia_slot1", imagebutton_litixcamonia_slot1);
 		this.addRenderableWidget(imagebutton_litixcamonia_slot1);
-		imagebutton_hitbox_88x17 = new ImageButton(this.leftPos + -102, this.topPos + 160, 88, 17, 0, 0, 17, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_88x17.png"), 88, 34, e -> {
+		imagebutton_hitbox_88x17 = new ImageButton(this.leftPos + -102, this.topPos + 158, 88, 20, 0, 0, 20, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_88x17.png"), 88, 40, e -> {
 			if (IfShowUnifuserRecipesProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new UnifuserguiButtonMessage(5, x, y, z));
 				UnifuserguiButtonMessage.handleButtonAction(entity, 5, x, y, z);

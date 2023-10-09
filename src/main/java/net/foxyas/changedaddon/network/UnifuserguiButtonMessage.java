@@ -14,6 +14,9 @@ import net.minecraft.core.BlockPos;
 import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
 import net.foxyas.changedaddon.procedures.ShowUnifuserRecipesProcedure;
 import net.foxyas.changedaddon.procedures.SetRecipePageProcedure;
+import net.foxyas.changedaddon.procedures.Openpage3Procedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipeProcedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipe5Procedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -66,6 +69,22 @@ public class UnifuserguiButtonMessage {
 		if (buttonID == 0) {
 
 			ShowUnifuserRecipesProcedure.execute(entity);
+		}
+		if (buttonID == 1) {
+
+			Openpage3Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 2) {
+
+			OpenBookRecipeProcedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 3) {
+
+			OpenBookRecipe5Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 4) {
+
+			Openpage3Procedure.execute(world, x, y, z, entity);
 		}
 		if (buttonID == 5) {
 

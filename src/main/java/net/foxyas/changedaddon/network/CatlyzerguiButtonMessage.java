@@ -13,6 +13,9 @@ import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.CatlyzerguiMenu;
 import net.foxyas.changedaddon.procedures.ShowUnifuserRecipesProcedure;
+import net.foxyas.changedaddon.procedures.Openpage4Procedure;
+import net.foxyas.changedaddon.procedures.Openbookpage5Procedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipe2Procedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -65,6 +68,18 @@ public class CatlyzerguiButtonMessage {
 		if (buttonID == 0) {
 
 			ShowUnifuserRecipesProcedure.execute(entity);
+		}
+		if (buttonID == 1) {
+
+			Openbookpage5Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 2) {
+
+			OpenBookRecipe2Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 3) {
+
+			Openpage4Procedure.execute(world, x, y, z, entity);
 		}
 	}
 
