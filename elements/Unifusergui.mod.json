@@ -271,6 +271,9 @@
           "text": {
             "fixedValue": "Place the Powders"
           },
+          "displayCondition": {
+            "name": "IfisEmpty"
+          },
           "width": 24,
           "height": 24,
           "x": 124,
@@ -284,6 +287,9 @@
           "text": {
             "fixedValue": "Place a Syringe with DNA"
           },
+          "displayCondition": {
+            "name": "IfisEmpty3"
+          },
           "width": 24,
           "height": 24,
           "x": 159,
@@ -296,6 +302,9 @@
           "name": "tooltip_put_the_second_ingredient",
           "text": {
             "fixedValue": "Put the second ingredient"
+          },
+          "displayCondition": {
+            "name": "Ifisempty2"
           },
           "width": 24,
           "height": 24,

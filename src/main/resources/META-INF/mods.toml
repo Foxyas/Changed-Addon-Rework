@@ -4,8 +4,8 @@ license="MIT License"
 
 [[mods]]
 modId="changed_addon"
-version="2.5"
-displayName="Changed Addon"
+version="2.5.1"
+displayName="Changed Addon Plus"
 credits="LTXProgrammer for Changed mod"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/"
 updateJSONURL="https://raw.githubusercontent.com/Foxyas/check-mods-update/main/Changed-Addon-Update-Check"

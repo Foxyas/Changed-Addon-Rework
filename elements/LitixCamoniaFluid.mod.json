@@ -4,8 +4,8 @@
   "definition": {
     "name": "Litix Camonia Fluid",
     "bucketName": "LitixCamonia Bucket",
-    "textureStill": "24",
-    "textureFlowing": "24",
+    "textureStill": "ammoniafluid",
+    "textureFlowing": "ammoniafluid",
     "tintType": "No tint",
     "canMultiply": false,
     "flowRate": 5,
@@ -33,12 +33,12 @@
     "specialInfo": [],
     "resistance": 100.0,
     "luminance": 0,
-    "lightOpacity": 1,
+    "lightOpacity": 0,
     "emissiveRendering": false,
     "tickRate": 10,
     "flammability": 0,
     "fireSpreadSpeed": 0,
-    "colorOnMap": "DEFAULT",
+    "colorOnMap": "SNOW",
     "onTickUpdate": {
       "name": "LitixCamoniaFluidUpdateTick"
     },

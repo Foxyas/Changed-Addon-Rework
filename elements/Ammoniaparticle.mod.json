@@ -3,7 +3,7 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "23",
+    "texture": "ammoniaparticle",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],

@@ -1,12 +1,14 @@
 
 package net.foxyas.changedaddon.block;
 
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
@@ -19,9 +21,14 @@ import java.util.Random;
 
 public class LitixCamoniaFluidBlock extends LiquidBlock {
 	public LitixCamoniaFluidBlock() {
-		super(() -> (FlowingFluid) ChangedAddonModFluids.LITIX_CAMONIA_FLUID.get(), BlockBehaviour.Properties.of(Material.WATER).strength(100f)
+		super(() -> (FlowingFluid) ChangedAddonModFluids.LITIX_CAMONIA_FLUID.get(), BlockBehaviour.Properties.of(Material.WATER, MaterialColor.SNOW).strength(100f)
 
 		);
+	}
+
+	@Override
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+		return true;
 	}
 
 	@Override

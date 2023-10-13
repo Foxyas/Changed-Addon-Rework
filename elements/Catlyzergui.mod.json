@@ -384,6 +384,9 @@
           "text": {
             "fixedValue": "Put The Powders or Syringe"
           },
+          "displayCondition": {
+            "name": "IfisEmpty"
+          },
           "width": 24,
           "height": 24,
           "x": 132,

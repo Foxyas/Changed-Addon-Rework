@@ -25,7 +25,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/GrabeffectMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "Fadige",
@@ -38,7 +39,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/FadigeMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "GrabeffectOnEffectActiveTick",
@@ -73,7 +75,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GrabeffectTick",
@@ -108,7 +111,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GrabeffectEffectStartedapplied",
@@ -122,7 +126,8 @@
           "src/main/java/net/foxyas/changedaddon/procedures/GrabeffectEffectStartedappliedProcedure.java"
         ],
         "dependencies": []
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ChangedaddonAdvancement",
@@ -171,7 +176,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GrabKeybind",
@@ -184,7 +190,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/GrabKeybindMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "Showstrugglebutton",
@@ -204,7 +211,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Breakfreebutton",
@@ -227,7 +235,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Grabclickgui",
@@ -242,7 +251,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/GrabclickguiScreen.java",
           "src/main/java/net/foxyas/changedaddon/network/GrabclickguiButtonMessage.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "GrabclickguiThisGUIIsClosed",
@@ -277,7 +287,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "StruggleButtonClickevent",
@@ -296,7 +307,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Orangejuice",
@@ -310,7 +322,8 @@
           "src/main/java/net/foxyas/changedaddon/item/OrangejuiceItem.java",
           "src/main/resources/assets/changed_addon/models/item/orangejuice.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Changedbook",
@@ -324,7 +337,8 @@
           "src/main/resources/assets/changed_addon/models/item/changedbook.json",
           "src/main/java/net/foxyas/changedaddon/item/ChangedbookItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "BookPagenumber1",
@@ -339,7 +353,8 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/BookPagenumber1Menu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/BookPagenumber1Screen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "BookPagenumber2",
@@ -354,7 +369,8 @@
           "src/main/java/net/foxyas/changedaddon/network/BookPagenumber2ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/BookPagenumber2Screen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Openpage2",
@@ -389,7 +405,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Openpage1",
@@ -424,7 +441,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Bookpagenumber3",
@@ -439,7 +457,8 @@
           "src/main/java/net/foxyas/changedaddon/network/Bookpagenumber3ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookpagenumber3Screen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Openpage3",
@@ -474,7 +493,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Closemenu",
@@ -493,7 +513,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OrangeJuiceIsYummy",
@@ -530,7 +551,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ChangedAddon",
@@ -555,7 +577,8 @@
           "src/main/resources/assets/changed_addon/models/item/ammonia.json",
           "src/main/java/net/foxyas/changedaddon/item/AmmoniaItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "LitixCamonia",
@@ -569,7 +592,8 @@
           "src/main/resources/assets/changed_addon/models/item/litix_camonia.json",
           "src/main/java/net/foxyas/changedaddon/item/LitixCamoniaItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Syringewithlitixcammonia",
@@ -584,7 +608,8 @@
           "src/main/java/net/foxyas/changedaddon/item/SyringewithlitixcammoniaItem.java",
           "src/main/resources/assets/changed_addon/models/item/syringewithlitixcammonia_0.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Potwithcamonia",
@@ -598,7 +623,8 @@
           "src/main/java/net/foxyas/changedaddon/item/PotwithcamoniaItem.java",
           "src/main/resources/assets/changed_addon/models/item/potwithcamonia.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Ammoniaparticle",
@@ -612,7 +638,8 @@
           "src/main/resources/assets/changed_addon/models/item/ammoniaparticle.json",
           "src/main/java/net/foxyas/changedaddon/item/AmmoniaparticleItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Unlatexbase",
@@ -626,7 +653,8 @@
           "src/main/java/net/foxyas/changedaddon/item/UnlatexbaseItem.java",
           "src/main/resources/assets/changed_addon/models/item/unlatexbase.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Orangejuicerecipe",
@@ -654,7 +682,8 @@
           "src/main/java/net/foxyas/changedaddon/item/InpureammoniaItem.java",
           "src/main/resources/assets/changed_addon/models/item/impureammonia.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Meant",
@@ -667,7 +696,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/meat.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Impureammoniarecipe",
@@ -709,7 +739,8 @@
           "src/main/resources/assets/changed_addon/models/item/syringe.json",
           "src/main/java/net/foxyas/changedaddon/item/SyringeItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Medicalsyringerecipe",
@@ -742,7 +773,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Untransfur",
@@ -755,7 +787,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/UntransfurMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "UntransfurOnEffectActiveTick",
@@ -790,7 +823,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SyringewithlitixcammoniaPlayerFinishesUsingItem",
@@ -825,7 +859,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SetassimilatonOnKeyPressed",
@@ -844,7 +879,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Setassimilaton",
@@ -857,7 +893,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/SetassimilatonMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "ActiveFriendlyModeOnKeyPressed",
@@ -876,7 +913,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ActiveFriendlyMode",
@@ -889,7 +927,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/ActiveFriendlyModeMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "FriendlyGrab",
@@ -924,7 +963,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Infriendlygrab",
@@ -937,7 +977,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/InfriendlygrabMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "TickupdateFriendlygrab",
@@ -960,7 +1001,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Infriendlygrabeffect",
@@ -973,7 +1015,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/InfriendlygrabeffectMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "FriendlyGraboffOnKeyPressed",
@@ -996,7 +1039,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FriendlyGraboff",
@@ -1009,7 +1053,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/FriendlyGraboffMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "InfriendlygrabeffectOnEffectActiveTick",
@@ -1028,7 +1073,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FurryFriend",
@@ -1057,7 +1103,7 @@
           "src/main/java/net/foxyas/changedaddon/item/DevitemItem.java"
         ]
       },
-      "path": "~/AdvancementsItems"
+      "path": "~/Not Function Items"
     },
     {
       "name": "Untransfuradvancement",
@@ -1244,7 +1290,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "AmmoniaItemIsCraftedsmelted",
@@ -1263,7 +1310,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "InpureammoniaItemIsCraftedsmelted",
@@ -1282,7 +1330,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LitixCamoniaItemIsCraftedsmelted",
@@ -1301,7 +1350,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Smalltickupdate",
@@ -1324,7 +1374,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FriendlymodeoverlayDisplayOverlayIngame",
@@ -1344,7 +1395,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Showassimilationicon",
@@ -1364,7 +1416,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Showassimilationoffbutton",
@@ -1384,7 +1437,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Shocantgrabicon",
@@ -1404,7 +1458,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Showcangrabicon",
@@ -1424,7 +1479,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Showfriendlymodeofficon",
@@ -1444,7 +1500,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowfriendlymodeIcon",
@@ -1464,7 +1521,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpengrabescapeguiOnKeyPressed",
@@ -1499,7 +1557,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Opengrabescapegui",
@@ -1512,7 +1571,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/OpengrabescapeguiMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "Toggleaddonguiprocedure",
@@ -1535,7 +1595,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Openpage4",
@@ -1570,7 +1631,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Bookpagenumber4",
@@ -1585,7 +1647,8 @@
           "src/main/java/net/foxyas/changedaddon/network/Bookpagenumber4ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookpagenumber4Screen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "LatexInsulator",
@@ -1601,7 +1664,8 @@
           "src/main/java/net/foxyas/changedaddon/block/LatexInsulatorBlock.java",
           "src/main/resources/assets/changed_addon/models/block/latex_insulator.json"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "LatexInsulatorUpdateTick",
@@ -1632,7 +1696,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexInsulatorAdvancement",
@@ -1666,7 +1731,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Pagesecret",
@@ -1681,7 +1747,8 @@
           "src/main/java/net/foxyas/changedaddon/network/PagesecretButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/PagesecretMenu.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Openpagesecret",
@@ -1716,7 +1783,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GrabclickguiValue",
@@ -1736,7 +1804,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SetcangrabonOnKeyPressed",
@@ -1755,7 +1824,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Setcangrabon",
@@ -1768,7 +1838,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/SetcangrabonMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "Latexinsulatorrecipe",
@@ -1796,7 +1867,8 @@
           "src/main/resources/assets/changed_addon/models/item/painite.json",
           "src/main/java/net/foxyas/changedaddon/item/PainiteItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "PainiteOre",
@@ -1813,7 +1885,8 @@
           "src/main/resources/assets/changed_addon/blockstates/painite_ore.json",
           "src/main/java/net/foxyas/changedaddon/block/PainiteOreBlock.java"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "PainiteBlock",
@@ -1829,7 +1902,8 @@
           "src/main/resources/assets/changed_addon/models/item/painite_block.json",
           "src/main/resources/assets/changed_addon/models/block/painite_block.json"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "PainiteOreBlockRecipe",
@@ -1885,7 +1959,8 @@
           "src/main/resources/assets/changed_addon/models/item/painite_pickaxe.json",
           "src/main/java/net/foxyas/changedaddon/item/PainitePickaxeItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "PainiteAxe",
@@ -1899,7 +1974,8 @@
           "src/main/java/net/foxyas/changedaddon/item/PainiteAxeItem.java",
           "src/main/resources/assets/changed_addon/models/item/painite_axe.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "PainiteSword",
@@ -1913,7 +1989,8 @@
           "src/main/resources/assets/changed_addon/models/item/painite_sword.json",
           "src/main/java/net/foxyas/changedaddon/item/PainiteSwordItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "PainiteShovel",
@@ -1927,7 +2004,8 @@
           "src/main/java/net/foxyas/changedaddon/item/PainiteShovelItem.java",
           "src/main/resources/assets/changed_addon/models/item/painite_shovel.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "PainitePickaxeRecipe",
@@ -2000,7 +2078,8 @@
           "src/main/resources/assets/changed_addon/models/item/painite_armor_boots.json",
           "src/main/resources/assets/changed_addon/models/item/painite_armor_helmet.json"
         ]
-      }
+      },
+      "path": "~/Armors"
     },
     {
       "name": "PainiteArmorHelmetRecipe",
@@ -2083,7 +2162,8 @@
         "files": [
           "src/main/resources/data/changed_addon/loot_tables/blocks/painite_ore.json"
         ]
-      }
+      },
+      "path": "~/Blocks/Blocks Loot"
     },
     {
       "name": "Blastpainite",
@@ -2117,7 +2197,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasRightClickedOnEntity",
@@ -2156,7 +2237,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Foxyas",
@@ -2171,7 +2253,8 @@
           "src/main/java/net/foxyas/changedaddon/entity/FoxyasEntity.java",
           "src/main/java/net/foxyas/changedaddon/client/renderer/FoxyasRenderer.java"
         ]
-      }
+      },
+      "path": "~/Entity"
     },
     {
       "name": "Trade",
@@ -2190,7 +2273,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Foxyasgui",
@@ -2205,7 +2289,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/FoxyasguiScreen.java",
           "src/main/java/net/foxyas/changedaddon/network/FoxyasguiButtonMessage.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "SpawneggoffoxyasRightclicked",
@@ -2248,7 +2333,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Spawneggoffoxyas",
@@ -2262,7 +2348,8 @@
           "src/main/java/net/foxyas/changedaddon/item/SpawneggoffoxyasItem.java",
           "src/main/resources/assets/changed_addon/models/item/spawneggoffoxyas.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Spawneggoffoxyasrecipe",
@@ -2309,7 +2396,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Prototype",
@@ -2324,7 +2412,8 @@
           "src/main/java/net/foxyas/changedaddon/client/renderer/PrototypeRenderer.java",
           "src/main/resources/assets/changed_addon/models/item/prototype_spawn_egg.json"
         ]
-      }
+      },
+      "path": "~/Entity"
     },
     {
       "name": "Prototypespawneggrecipe",
@@ -2370,7 +2459,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GeneratorOnBlockRightClicked",
@@ -2405,7 +2495,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Generator",
@@ -2422,7 +2513,8 @@
           "src/main/java/net/foxyas/changedaddon/block/entity/GeneratorBlockEntity.java",
           "src/main/java/net/foxyas/changedaddon/block/GeneratorBlock.java"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "GeneratorUpdateTick",
@@ -2453,7 +2545,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GeneratorguiValue",
@@ -2485,7 +2578,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GeneratorguiValue2",
@@ -2517,7 +2611,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Generatorgui",
@@ -2532,7 +2627,8 @@
           "src/main/java/net/foxyas/changedaddon/network/GeneratorguiButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/GeneratorguiMenu.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Bookrecipe",
@@ -2589,7 +2685,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LitixCamoniaSpray",
@@ -2603,7 +2700,8 @@
           "src/main/java/net/foxyas/changedaddon/item/LitixCamoniaSprayItem.java",
           "src/main/resources/assets/changed_addon/models/item/litix_camonia_spray.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "EmptySprayRightclickedOnBlock",
@@ -2626,7 +2724,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "EmptySpray",
@@ -2640,7 +2739,8 @@
           "src/main/java/net/foxyas/changedaddon/item/EmptySprayItem.java",
           "src/main/resources/assets/changed_addon/models/item/empty_spray.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "LitixCamoniaFluidUpdateTick",
@@ -2671,7 +2771,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LitixCamoniaFluid",
@@ -2689,7 +2790,8 @@
           "src/main/resources/assets/changed_addon/models/block/litix_camonia_fluid.json",
           "src/main/resources/assets/changed_addon/blockstates/litix_camonia_fluid.json"
         ]
-      }
+      },
+      "path": "~/Blocks/Fluid Block"
     },
     {
       "name": "LitixCamoniaFluidcraft",
@@ -2756,7 +2858,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Catlyzer",
@@ -2773,7 +2876,8 @@
           "src/main/resources/assets/changed_addon/models/item/catlyzer.json",
           "src/main/resources/assets/changed_addon/blockstates/catlyzer.json"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "CatlyzerUpdateTick",
@@ -2804,7 +2908,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "CatlyzerguiValue",
@@ -2836,7 +2941,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Catlyzergui",
@@ -2851,7 +2957,8 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/CatlyzerguiMenu.java",
           "src/main/java/net/foxyas/changedaddon/network/CatlyzerguiButtonMessage.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Show10porcentbar",
@@ -2883,7 +2990,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Show25porcentbar",
@@ -2916,7 +3024,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Show50porcentbar",
@@ -2949,7 +3057,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Show75porcentbar",
@@ -2982,7 +3090,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Show90porcentbar",
@@ -3015,7 +3123,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Showfullbar",
@@ -3048,7 +3156,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Show0porcentbar",
@@ -3081,7 +3189,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "CatlyzerOnBlockRightClicked",
@@ -3117,7 +3225,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Unifuser",
@@ -3134,7 +3242,8 @@
           "src/main/resources/assets/changed_addon/blockstates/unifuser.json",
           "src/main/resources/assets/changed_addon/models/item/unifuser.json"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "Unifusergui",
@@ -3149,7 +3258,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/UnifuserguiScreen.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/UnifuserguiMenu.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "UnifuserOnBlockRightClicked",
@@ -3184,7 +3294,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "UnifuserUpdateTick",
@@ -3212,7 +3323,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "UnifuserguiDisableItemstackPlacement",
@@ -3233,7 +3345,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "UnifuserguiDisableItemstackPlacementslot0",
@@ -3253,7 +3365,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Blockstartinfo",
@@ -3285,7 +3398,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Syringechange",
@@ -3312,7 +3426,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/syringes.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Catlyzerrecipe",
@@ -3369,7 +3484,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookpagenumber5Screen.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/Bookpagenumber5Menu.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Openbookpage5",
@@ -3404,7 +3520,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "IfBlockisfull",
@@ -3436,7 +3553,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "WantFriendlyGrabOverlayDisplayOverlayIngame",
@@ -3456,7 +3574,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowWantFriendlygrabtrue",
@@ -3476,7 +3595,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowWantFriendlygrabfalse",
@@ -3496,7 +3616,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "WantfriendlygrabOnKeyPressed",
@@ -3515,7 +3636,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Wantfriendlygrab",
@@ -3528,7 +3650,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/WantfriendlygrabMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "DevItem2",
@@ -3543,7 +3666,7 @@
           "src/main/resources/assets/changed_addon/models/item/dev_item_2.json"
         ]
       },
-      "path": "~/AdvancementsItems"
+      "path": "~/Not Function Items"
     },
     {
       "name": "Devitem3",
@@ -3558,7 +3681,7 @@
           "src/main/resources/assets/changed_addon/models/item/devitem_3.json"
         ]
       },
-      "path": "~/AdvancementsItems"
+      "path": "~/Not Function Items"
     },
     {
       "name": "AdvancementWantFriendlyGrab",
@@ -3637,7 +3760,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GiveBlockCraftAdvancement",
@@ -3660,7 +3784,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Togglehumanaddongui",
@@ -3683,7 +3808,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Togglealladdongui",
@@ -3706,7 +3832,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "HyperFlower",
@@ -3733,7 +3860,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SetplayerTransfurprogress",
@@ -3758,7 +3886,8 @@
       "registry_name": "set_player_trans_fur_progress_for_0",
       "metadata": {
         "dependencies": []
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "Fighttokeepconsciousness",
@@ -3770,7 +3899,8 @@
       "metadata": {
         "files": [],
         "type": "logic"
-      }
+      },
+      "path": "~/GameRules"
     },
     {
       "name": "FightTokeepyourconsciousness",
@@ -3805,7 +3935,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FightTokeepconsciousnessminigameValue",
@@ -3825,7 +3956,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FightTokeepconsciousnessminigame",
@@ -3840,7 +3972,8 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/FightTokeepconsciousnessminigameMenu.java",
           "src/main/java/net/foxyas/changedaddon/network/FightTokeepconsciousnessminigameButtonMessage.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Fightforyourconscience",
@@ -3859,7 +3992,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Giveup",
@@ -3878,7 +4012,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "PotwithlitixcamoniaAdvancement",
@@ -3925,7 +4060,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SyringewithlitixcammoniaLivingEntityIsHitWithItem",
@@ -3952,7 +4088,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Infoaddongui",
@@ -3971,7 +4108,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Infoonlyhumanaddongui",
@@ -3990,7 +4128,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Infoonlytransfuraddongui",
@@ -4009,7 +4148,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Infoaddonwarns",
@@ -4028,7 +4168,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowOrganicFriendlyModeon",
@@ -4048,7 +4189,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowOrganicFriendlyModeOff",
@@ -4068,7 +4210,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowOrganicOverLay",
@@ -4088,7 +4231,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LitixCamoniaFluidMobplayerCollidesBlock",
@@ -4107,7 +4251,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OrganicTransfurAdvancement",
@@ -4136,7 +4281,7 @@
           "src/main/resources/assets/changed_addon/models/item/dev_item_4.json"
         ]
       },
-      "path": "~/AdvancementsItems"
+      "path": "~/Not Function Items"
     },
     {
       "name": "Hug",
@@ -4173,7 +4318,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Inforesettransfuradvancement",
@@ -4192,7 +4338,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Changedaddoncommandroot",
@@ -4205,7 +4352,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/command/ChangedaddoncommandrootCommand.java"
         ]
-      }
+      },
+      "path": "~/commands"
     },
     {
       "name": "ToggleOrganicOverlay",
@@ -4228,7 +4376,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexInsulatorEntityCollidesInTheBlock",
@@ -4247,7 +4396,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LitixCamoniaeffect",
@@ -4258,7 +4408,8 @@
       "registry_name": "litixcamoniaeffect",
       "metadata": {
         "files": []
-      }
+      },
+      "path": "~/effects/Potion Effects"
     },
     {
       "name": "LitixCamoniaarrow",
@@ -4287,7 +4438,8 @@
           "src/main/java/net/foxyas/changedaddon/client/renderer/Experiment009Renderer.java",
           "src/main/java/net/foxyas/changedaddon/entity/Experiment009Entity.java"
         ]
-      }
+      },
+      "path": "~/Entity"
     },
     {
       "name": "Experiment009OnInitialEntitySpawn",
@@ -4306,7 +4458,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009phase2OnInitialEntitySpawn",
@@ -4329,7 +4482,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009phase2",
@@ -4344,7 +4498,8 @@
           "src/main/resources/assets/changed_addon/models/item/experiment_009_phase_2_spawn_egg.json",
           "src/main/java/net/foxyas/changedaddon/entity/Experiment009phase2Entity.java"
         ]
-      }
+      },
+      "path": "~/Entity"
     },
     {
       "name": "Experiment009EntityDies",
@@ -4379,7 +4534,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009phase2EntityDies",
@@ -4398,7 +4554,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009phase2OnEntityTickUpdate",
@@ -4421,7 +4578,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerishighofentity",
@@ -4441,7 +4599,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerislowofentity",
@@ -4461,7 +4620,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009LootDrop",
@@ -4474,7 +4634,8 @@
         "files": [
           "src/main/resources/data/changed_addon/loot_tables/entities/experiment_009_phase_2.json"
         ]
-      }
+      },
+      "path": "~/Entity/Entity Loot"
     },
     {
       "name": "Experiment009recipe",
@@ -4502,7 +4663,8 @@
           "src/main/resources/assets/changed_addon/models/item/catalyzeddna.json",
           "src/main/java/net/foxyas/changedaddon/item/CatalyzeddnaItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "PainiteOreBlockDestroyedByPlayer",
@@ -4537,7 +4699,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "PainiteOreBlockDestroyedByExplosion",
@@ -4568,7 +4731,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GrabRadialMenu",
@@ -4583,7 +4747,8 @@
           "src/main/java/net/foxyas/changedaddon/network/GrabRadialMenuButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/GrabRadialMenuScreen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "ShowOrganicGrabRadial",
@@ -4603,7 +4768,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerarentorganic",
@@ -4622,7 +4788,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerarentorganic2",
@@ -4641,7 +4808,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowNoOrganicGrabRadial",
@@ -4661,7 +4829,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpenGrabRadialOnKeyPressed",
@@ -4696,7 +4865,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerareorganic",
@@ -4715,7 +4885,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerareorganic2",
@@ -4734,7 +4905,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerarentorganic3",
@@ -4753,7 +4925,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifplayerarentorganic4",
@@ -4772,7 +4945,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GrabRadialMenugrab",
@@ -4787,7 +4961,8 @@
           "src/main/java/net/foxyas/changedaddon/network/GrabRadialMenugrabButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/GrabRadialMenugrabScreen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "OpenGrabRafialMenuFriendly",
@@ -4801,7 +4976,8 @@
           "src/main/java/net/foxyas/changedaddon/procedures/OpenGrabRafialMenuFriendlyProcedure.java"
         ],
         "dependencies": []
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpenGrabRadialMenuGrabs",
@@ -4836,7 +5012,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009dna",
@@ -4850,7 +5027,8 @@
           "src/main/resources/assets/changed_addon/models/item/experiment_009dna.json",
           "src/main/java/net/foxyas/changedaddon/item/Experiment009dnaItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Experiment009Structureloot",
@@ -4863,7 +5041,8 @@
         "files": [
           "src/main/resources/data/changed_addon/loot_tables/chests/experiment_009_loot.json"
         ]
-      }
+      },
+      "path": "~/Structures/Structure Loot"
     },
     {
       "name": "UnifuserBlockAdded",
@@ -4894,7 +5073,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DestroyStructureExperiment009Loot",
@@ -4907,7 +5087,8 @@
         "files": [
           "src/main/resources/data/changed_addon/loot_tables/chests/destroy_structure_experiment_009_loot.json"
         ]
-      }
+      },
+      "path": "~/Structures/Structure Loot"
     },
     {
       "name": "DestroyExperiment009Structure",
@@ -4920,7 +5101,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/world/features/DestroyExperiment009StructureFeature.java"
         ]
-      }
+      },
+      "path": "~/Structures"
     },
     {
       "name": "Experiment009Structure",
@@ -4933,7 +5115,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/world/features/Experiment009StructureFeature.java"
         ]
-      }
+      },
+      "path": "~/Structures"
     },
     {
       "name": "GrabResistance",
@@ -4946,7 +5129,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/enchantment/GrabResistanceEnchantment.java"
         ]
-      }
+      },
+      "path": "~/Enchants"
     },
     {
       "name": "Ifplayerareinwater",
@@ -4966,7 +5150,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009OnEntityTickUpdate",
@@ -4989,7 +5174,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SmallEntityTickUpdate",
@@ -5008,7 +5194,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TickPlayerAreinDuct",
@@ -5031,7 +5218,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "PlayerRightClickInDuct",
@@ -5070,7 +5258,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DescontrolSyringePlayerFinishesUsingItem",
@@ -5105,7 +5294,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DescontrolSyringe",
@@ -5119,7 +5309,8 @@
           "src/main/java/net/foxyas/changedaddon/item/DescontrolSyringeItem.java",
           "src/main/resources/assets/changed_addon/models/item/descontrol_syringe.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "FoxyasguiDisableItemstackPlacement",
@@ -5139,7 +5330,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasGuiEntityDisplay",
@@ -5159,7 +5351,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasguiWhileThisGUIIsOpenTick",
@@ -5198,7 +5391,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasGui2",
@@ -5213,7 +5407,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/FoxyasGui2Screen.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/FoxyasGui2Menu.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "FoxyasDeal",
@@ -5232,7 +5427,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "IfplayerhaveDealTrue",
@@ -5252,7 +5448,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasDealNo",
@@ -5271,7 +5468,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "IfplayerHaveDealFalse",
@@ -5291,7 +5489,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasDealYes",
@@ -5310,7 +5509,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasGui2ThisGUIIsOpened",
@@ -5329,7 +5529,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FriendlyTransfur",
@@ -5376,7 +5577,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasguiThisGUIIsClosed",
@@ -5395,7 +5597,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FoxyasOnEntityTickUpdate",
@@ -5418,7 +5621,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexEntitysTag",
@@ -5431,7 +5635,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/entity_types/latexentity.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Solvent",
@@ -5444,7 +5649,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/enchantment/SolventEnchantment.java"
         ]
-      }
+      },
+      "path": "~/Enchants"
     },
     {
       "name": "TickentitySolventEnchantmenthit",
@@ -5471,7 +5677,8 @@
             "type": "number"
           }
         ]
-      }
+      },
+      "path": "~/Enchants"
     },
     {
       "name": "ChangedAddonDuctMecanic",
@@ -5483,7 +5690,8 @@
       "metadata": {
         "files": [],
         "type": "logic"
-      }
+      },
+      "path": "~/GameRules"
     },
     {
       "name": "FriendlyTransfurGuitext",
@@ -5507,7 +5715,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FriendlyTransfurGuino",
@@ -5530,7 +5739,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FriendlyTransfurGuiyes",
@@ -5553,7 +5763,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "FriendlyTransfurGui",
@@ -5568,7 +5779,8 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/FriendlyTransfurGuiMenu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/FriendlyTransfurGuiScreen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "LitixCamoniaSprayBroke",
@@ -5591,7 +5803,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowGrabInFriendlyModeoff",
@@ -5611,7 +5824,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowGrabInFriendlyModeOn",
@@ -5631,7 +5845,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TransfursExtraSoundDetails",
@@ -5658,7 +5873,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexSolvent",
@@ -5671,7 +5887,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/LatexSolventMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "LatexSolventOnEffectActiveTick",
@@ -5690,7 +5907,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexSolventEffectExpires",
@@ -5709,7 +5927,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "EntityLatexSolventOnEffectActiveTick",
@@ -5728,7 +5947,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowUnifuserRecipes",
@@ -5917,7 +6137,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "RecipeProgress",
@@ -5949,7 +6169,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexResistancetick",
@@ -5968,7 +6189,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexResistance",
@@ -5979,7 +6201,8 @@
       "registry_name": "latexresistance",
       "metadata": {
         "files": []
-      }
+      },
+      "path": "~/Attributes"
     },
     {
       "name": "LatexSolventEffectStartedapplied",
@@ -5998,7 +6221,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpenExtraDetails",
@@ -6011,7 +6235,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/OpenExtraDetailsMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "PlaySoundhiss",
@@ -6257,7 +6482,8 @@
           "src/main/java/net/foxyas/changedaddon/network/TranfurSoundsGuiButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/TranfurSoundsGuiScreen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "OpenTranfurExtra",
@@ -6328,7 +6554,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "CooldownReset",
@@ -6364,7 +6591,7 @@
           "src/main/resources/assets/changed_addon/models/item/catlyzerblock_illustrative_item.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/Not Function Items"
     },
     {
       "name": "UnifuserblockIllustrativeItem",
@@ -6379,7 +6606,7 @@
           "src/main/resources/assets/changed_addon/models/item/unifuserblock_illustrative_item.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/Not Function Items"
     },
     {
       "name": "PotWithLitixCamoniaRecipe",
@@ -6477,7 +6704,7 @@
           "src/main/resources/data/changed_addon/tags/items/bloodtype_syringe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/Tags"
     },
     {
       "name": "CatalyzeddnaJeiRecipe",
@@ -6524,7 +6751,7 @@
           "src/main/resources/assets/changed_addon/models/item/hazard_suit_chestplate.json"
         ]
       },
-      "path": "~/new armor"
+      "path": "~/Armors"
     },
     {
       "name": "TickHazardArmorFeature",
@@ -6538,7 +6765,8 @@
           "src/main/java/net/foxyas/changedaddon/procedures/TickHazardArmorFeatureProcedure.java"
         ],
         "dependencies": []
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "HazardbootsRecipe",
@@ -6634,7 +6862,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "PainiteHoe",
@@ -6648,7 +6877,8 @@
           "src/main/resources/assets/changed_addon/models/item/painite_hoe.json",
           "src/main/java/net/foxyas/changedaddon/item/PainiteHoeItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "ObtainaPainiteHoe",
@@ -6675,7 +6905,8 @@
         "files": [
           "src/main/resources/data/minecraft/tags/blocks/beacon_base_blocks.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "PainiteHoeRecipe",
@@ -6724,7 +6955,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Darklatexpuddle",
@@ -6748,7 +6980,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "BlockthatareLatexImmune",
@@ -6761,7 +6994,8 @@
         "files": [
           "src/main/resources/data/changed/tags/blocks/latex_non_replaceable.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "DarklatexpuddleBlockAdded",
@@ -6792,7 +7026,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DarklatexpuddleUpdateTick",
@@ -6823,7 +7058,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DarkLatexPuddlerecipe",
@@ -6850,7 +7086,8 @@
         "files": [
           "src/main/resources/data/forge/tags/blocks/needs_netherite_tool.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "BookPagenumber6",
@@ -6871,7 +7108,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Openpage6",
@@ -6906,7 +7144,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "BookPagenumber7",
@@ -6921,7 +7160,8 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/BookPagenumber7Menu.java",
           "src/main/java/net/foxyas/changedaddon/network/BookPagenumber7ButtonMessage.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Openpage7",
@@ -6956,7 +7196,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "AllowPlayerGrab",
@@ -6968,7 +7209,8 @@
       "metadata": {
         "files": [],
         "type": "logic"
-      }
+      },
+      "path": "~/GameRules"
     },
     {
       "name": "GiveBookOnStart",
@@ -6980,7 +7222,8 @@
       "metadata": {
         "files": [],
         "type": "logic"
-      }
+      },
+      "path": "~/GameRules"
     },
     {
       "name": "ObtainPainite",
@@ -7006,7 +7249,8 @@
       "metadata": {
         "files": [],
         "type": "logic"
-      }
+      },
+      "path": "~/GameRules"
     },
     {
       "name": "Dolatexinfectiontick",
@@ -7029,7 +7273,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "UntransfurItems",
@@ -7042,7 +7287,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/untransfur_items.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "HazarArmorItemTip",
@@ -7061,7 +7307,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "PainiteItemInInventoryTick",
@@ -7080,7 +7327,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexInfection",
@@ -7091,7 +7339,8 @@
       "registry_name": "latexinfection",
       "metadata": {
         "files": []
-      }
+      },
+      "path": "~/Attributes"
     },
     {
       "name": "LatexInfectionTick",
@@ -7110,7 +7359,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexContamination",
@@ -7123,7 +7373,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/LatexContaminationMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "LatexContaminationEffectStartedapplied",
@@ -7142,7 +7393,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexContaminationEffectExpires",
@@ -7161,7 +7413,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ReturnMaxTransfurTolerance",
@@ -7173,7 +7426,8 @@
       "metadata": {
         "return_type": "number",
         "dependencies": []
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "GrabModeOverlays",
@@ -7210,7 +7464,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Iflatexentity",
@@ -7242,7 +7497,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "PainiteOreAdditionalGenerationCondition",
@@ -7274,7 +7530,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009IsHurt",
@@ -7297,7 +7554,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SolventParticle",
@@ -7311,7 +7569,8 @@
           "src/main/java/net/foxyas/changedaddon/client/particle/SolventParticleParticle.java",
           "src/main/resources/assets/changed_addon/particles/solvent_particle.json"
         ]
-      }
+      },
+      "path": "~/Particles"
     },
     {
       "name": "LatexSolventOnActiveTick",
@@ -7346,7 +7605,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowSolventDmg",
@@ -7369,7 +7629,8 @@
             "type": "tooltip"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SetmaxTransfurTolerance",
@@ -7389,7 +7650,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "GetmaxTransfurTolerance",
@@ -7408,7 +7670,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DuctProneOnKeyPressed",
@@ -7427,7 +7690,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DuctProneOnKeyReleased",
@@ -7446,7 +7710,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "DuctProne",
@@ -7459,7 +7724,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/DuctProneMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "CommandSetmaxTransfurTolerance",
@@ -7482,7 +7748,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SetDefaultValue",
@@ -7498,7 +7765,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "Experiment009Spawnegg",
@@ -7512,7 +7780,8 @@
           "src/main/resources/assets/changed_addon/models/item/experiment_009_spawnegg.json",
           "src/main/java/net/foxyas/changedaddon/item/Experiment009SpawneggItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Experiment009SpawneggRightclickedOnBlock",
@@ -7555,7 +7824,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifnotexperiment009",
@@ -7575,7 +7845,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GrabclickguiThisGUIIsOpened",
@@ -7594,7 +7865,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Ifleavetheworld",
@@ -7613,7 +7885,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SetFriendlyGrabKeyBindProcedure",
@@ -7624,7 +7897,8 @@
       "registry_name": "set_friendly_grab_key_bind_procedure",
       "metadata": {
         "dependencies": []
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "SetTransfurProgressCommand",
@@ -7647,7 +7921,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "AddTransfurProgressCommand",
@@ -7670,7 +7945,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "InfriendlygrabOnEffectActiveTick",
@@ -7689,7 +7965,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Devitem1",
@@ -7704,7 +7981,7 @@
           "src/main/java/net/foxyas/changedaddon/item/Devitem1Item.java"
         ]
       },
-      "path": "~/AdvancementsItems"
+      "path": "~/Not Function Items"
     },
     {
       "name": "FriendlyKitty",
@@ -7741,7 +8018,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Devitem5",
@@ -7756,7 +8034,7 @@
           "src/main/resources/assets/changed_addon/models/item/devitem_5.json"
         ]
       },
-      "path": "~/AdvancementsItems"
+      "path": "~/Not Function Items"
     },
     {
       "name": "GneticsdefyingFriendship",
@@ -7803,7 +8081,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Ifisturnoff",
@@ -7836,7 +8114,7 @@
           }
         ]
       },
-      "path": "~/new gui procedures"
+      "path": "~/GUI Procedures"
     },
     {
       "name": "SleepWithUntransfurEffect",
@@ -7871,7 +8149,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "WhenEntityIshurt",
@@ -7910,7 +8189,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "InpureAmmoniarecipeendgame",
@@ -7951,7 +8231,8 @@
         "files": [
           "src/main/resources/data/minecraft/tags/items/plants.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "GetfullPainiteArmor",
@@ -7998,7 +8279,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "GetPainiteArmorWithProtection",
@@ -8017,7 +8299,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009record",
@@ -8031,7 +8314,8 @@
           "src/main/resources/assets/changed_addon/models/item/experiment_009_record.json",
           "src/main/java/net/foxyas/changedaddon/item/Experiment009recordItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Experiment009Phase2Record",
@@ -8045,7 +8329,8 @@
           "src/main/java/net/foxyas/changedaddon/item/Experiment009Phase2RecordItem.java",
           "src/main/resources/assets/changed_addon/models/item/experiment_009_phase_2_record.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "KillExperiment009",
@@ -8058,7 +8343,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/kill_experiment_009.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "KillExperiment009Procedure",
@@ -8081,7 +8367,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Bookrecipepage6",
@@ -8096,7 +8383,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookrecipepage6Screen.java",
           "src/main/java/net/foxyas/changedaddon/network/Bookrecipepage6ButtonMessage.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Bookrecipepage7",
@@ -8111,7 +8399,8 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/Bookrecipepage7Menu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookrecipepage7Screen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "OpenBookRecipe",
@@ -8146,7 +8435,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpenBookRecipe2",
@@ -8181,7 +8471,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpenBookRecipe3",
@@ -8216,7 +8507,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Bookrecipepage8",
@@ -8231,7 +8523,8 @@
           "src/main/java/net/foxyas/changedaddon/network/Bookrecipepage8ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookrecipepage8Screen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "OpenBookRecipe4",
@@ -8266,7 +8559,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpenBookRecipe5",
@@ -8301,7 +8595,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Bookrecipepage9",
@@ -8334,7 +8629,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "Bookrecipepage10",
@@ -8349,7 +8645,8 @@
           "src/main/java/net/foxyas/changedaddon/world/inventory/Bookrecipepage10Menu.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/Bookrecipepage10Screen.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "TransfurTotemMakeItemGlow",
@@ -8369,7 +8666,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TransfurTotemRightclicked",
@@ -8408,7 +8706,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TransfurTotemGui",
@@ -8422,7 +8721,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/TransfurTotemGuiScreen.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/TransfurTotemGuiMenu.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "TransfurTotem",
@@ -8437,7 +8737,8 @@
           "src/main/resources/assets/changed_addon/models/item/transfur_totem.json",
           "src/main/resources/assets/changed_addon/models/item/transfur_totem_0.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "TransfurTotemItemInInventoryTick",
@@ -8476,7 +8777,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TransfurTotemEntityRightClick",
@@ -8515,7 +8817,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ShowTransfurTotemItemtip",
@@ -8538,7 +8841,8 @@
             "type": "tooltip"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "OpenGrabRadial",
@@ -8551,7 +8855,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/OpenGrabRadialMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "TransfurTotemAdvancement1",
@@ -8599,7 +8904,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Lunarrose",
@@ -8613,7 +8919,8 @@
           "src/main/resources/assets/changed_addon/models/item/lunarrose_helmet.json",
           "src/main/java/net/foxyas/changedaddon/item/LunarroseItem.java"
         ]
-      }
+      },
+      "path": "~/Armors"
     },
     {
       "name": "UntransfurPotionRecipe",
@@ -8647,7 +8954,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "IfnotInWater",
@@ -8667,7 +8975,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ChangedAddonAdmin",
@@ -8680,7 +8989,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/command/ChangedAddonAdminCommand.java"
         ]
-      }
+      },
+      "path": "~/commands"
     },
     {
       "name": "MusicPlayer",
@@ -8703,7 +9013,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009EntityIsHurt",
@@ -8726,7 +9037,8 @@
             "type": "number"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment009die",
@@ -8742,7 +9054,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "AddPlayerTransfurProgress",
@@ -8762,7 +9075,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "SetPlayerTransfurProgressCommand",
@@ -8785,7 +9099,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LatexVariantAgeincrease",
@@ -8824,7 +9139,108 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "IfisEmpty",
+      "type": "procedure",
+      "sortid": 452,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ifis_empty",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IfisEmptyProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/GUI Procedures"
+    },
+    {
+      "name": "Ifisempty2",
+      "type": "procedure",
+      "sortid": 453,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ifisempty_2",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Ifisempty2Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/GUI Procedures"
+    },
+    {
+      "name": "IfisEmpty3",
+      "type": "procedure",
+      "sortid": 454,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ifis_empty_3",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IfisEmpty3Procedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/GUI Procedures"
+    },
+    {
+      "name": "SprayDurability",
+      "type": "procedure",
+      "sortid": 455,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "spray_durability",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SprayDurabilityProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "tooltip",
+            "type": "tooltip"
+          }
+        ]
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "PainiteGeneration",
+      "type": "gamerule",
+      "sortid": 456,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "painite_generation",
+      "metadata": {
+        "files": [],
+        "type": "logic"
+      },
+      "path": "~/GameRules"
     }
   ],
   "variable_elements": [
@@ -9105,12 +9521,12 @@
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "changedaddon.untransfur.Immune.fluid": "You aren\u0027t affected by this fluid",
       "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
+      "changedaddon.untransfur.Immune.fluid": "You aren\u0027t affected by this fluid",
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
-      "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
       "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
+      "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "key.changed_addon.setcangrabon": "Toggle Grab on",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
@@ -9130,14 +9546,14 @@
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
       "advancements.transfur_totem_advancement_1.descr": "You use a latex totem to transfur or untransfur",
-      "advancements.gneticsdefying_friendship.descr": "You hugged a \"genetics enemy\"",
       "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
+      "advancements.gneticsdefying_friendship.descr": "You hugged a \"genetics enemy\"",
       "gui.changed_addon.book_pagenumber_2.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
-      "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
-      "gui.changed_addon.pagesecret.button_close": "close",
       "attribute.changed_addon.latexresistance": "Latex Resistance",
+      "gui.changed_addon.pagesecret.button_close": "close",
+      "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
@@ -9145,8 +9561,8 @@
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
       "gui.changed_addon.book_pagenumber_1.label_empty1": "?",
-      "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
+      "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
@@ -9174,15 +9590,15 @@
       "gui.changed_addon.bookpagenumber_3.label_to_purify_the_latex_syringes_jus": "to purify the latex syringes just craft a purifier and follow this example",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
-      "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
+      "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
       "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
+      "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
-      "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
       "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
+      "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe": "Display Litix-Camonia Recipe",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
@@ -9196,13 +9612,14 @@
       "gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho": " LitixCamonia. LitixCamonia can be injected to",
       "gui.changed_addon.bookrecipepage_10.label_f3": "F",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
-      "advancements.obtaina_painite_hoe.title": "Beyond Dedication",
       "advancements.advancement_want_friendly_grab.descr": "You (enable your friendly grab) you want to be covered in goo",
+      "advancements.obtaina_painite_hoe.title": "Beyond Dedication",
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
       "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
       "gui.changed_addon.friendly_transfur_gui.button_no1": "yes",
       "advancements.untransfuradvancement.title": "I don\u0027t think it\u0027s that permanent!!",
+      "gamerule.painiteGeneration.description": "Activate the generation of painite ore",
       "changedaddon.friendlygrab.hug": "entity §chug§r you",
       "item.changed_addon.experiment_009_spawnegg": "Experiment 009 SpawnEgg",
       "advancements.over_dose.title": "OverDose",
@@ -9242,8 +9659,8 @@
       "gui.changed_addon.book_pagenumber_1.tooltip_will_show_information_about_chan": "Will Show Information about Changed Addon Overlays",
       "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
       "item.changed_addon.catlyzerblock_illustrative_item": "IN Catalyzer Block Illustrative Item",
-      "gui.changed_addon.bookpagenumber_5.label_craft_table": "Crafting-table",
       "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
+      "gui.changed_addon.bookpagenumber_5.label_craft_table": "Crafting-table",
       "item.changed_addon.impureammonia": "Impure Ammonia",
       "advancements.timesthesyringewasused_advancement.descr": "You used a Litix-Camonia Syringe more than 32 times you are indecisive about your humanity holy!",
       "item.changed_addon.experiment_009_record.desc": "TryIgnitioHD-HYPERDEATH | StorySwap (DEVILOVANIA but swapped)",
@@ -9376,7 +9793,7 @@
       "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
       "gui.changed_addon.unifusergui.label_3": "+3",
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
-      "itemGroup.tabchanged_addon": "Changed Addon",
+      "itemGroup.tabchanged_addon": "Changed Addon Plus",
       "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
       "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic transfur",
       "gui.changed_addon.bookrecipepage_10.label_s_seeds": "S \u003d ANY SEEDS",
@@ -9518,6 +9935,7 @@
       "advancements.kill_experiment_009.descr": "You kill Experiment009 Good Job",
       "item.changed_addon.ammonia": "Ammonia Powder",
       "key.categories.grab_gui": "Grab KeyBinds",
+      "gamerule.painiteGeneration": "Painite Generation",
       "gui.changed_addon.book_pagenumber_2.label_catalyzed_dna": "Catalyzed DNA",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.label_fast_you_only_have_4_seconds": "You only got 4 seconds, HURRY!",
       "changedaddon.friendlygrab.you_hug": "You §chug§r them",
@@ -9558,7 +9976,7 @@
         "children": []
       },
       {
-        "name": "new gui procedures",
+        "name": "GUI Procedures",
         "children": []
       },
       {
@@ -9570,7 +9988,7 @@
         "children": []
       },
       {
-        "name": "new armor",
+        "name": "Armors",
         "children": []
       },
       {
@@ -9578,7 +9996,7 @@
         "children": []
       },
       {
-        "name": "jei",
+        "name": "Jei Suport",
         "children": []
       },
       {
@@ -9586,7 +10004,7 @@
         "children": []
       },
       {
-        "name": "AdvancementsItems",
+        "name": "Not Function Items",
         "children": []
       },
       {
@@ -9594,15 +10012,95 @@
         "children": []
       },
       {
-        "name": "RecipeCategorys",
+        "name": "Recipe Categorys",
+        "children": []
+      },
+      {
+        "name": "GameRules",
+        "children": []
+      },
+      {
+        "name": "Items",
+        "children": []
+      },
+      {
+        "name": "Attributes",
+        "children": []
+      },
+      {
+        "name": "Structures",
+        "children": [
+          {
+            "name": "Structure Loot",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "effects",
+        "children": [
+          {
+            "name": "Potion Effects",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Guis",
+        "children": []
+      },
+      {
+        "name": "Keybinds",
+        "children": []
+      },
+      {
+        "name": "Blocks",
+        "children": [
+          {
+            "name": "Blocks Loot",
+            "children": []
+          },
+          {
+            "name": "Fluid Block",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Tags",
+        "children": []
+      },
+      {
+        "name": "commands",
+        "children": []
+      },
+      {
+        "name": "Entity",
+        "children": [
+          {
+            "name": "Entity Loot",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Enchants",
+        "children": []
+      },
+      {
+        "name": "Particles",
+        "children": []
+      },
+      {
+        "name": "Procedures",
         "children": []
       }
     ]
   },
   "workspaceSettings": {
     "modid": "changed_addon",
-    "modName": "Changed Addon",
-    "version": "2.5",
+    "modName": "Changed Addon Plus",
+    "version": "2.5.1",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",

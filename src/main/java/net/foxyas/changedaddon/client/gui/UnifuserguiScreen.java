@@ -20,6 +20,9 @@ import net.foxyas.changedaddon.procedures.Show25porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show10porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show0porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.RecipeProgressProcedure;
+import net.foxyas.changedaddon.procedures.Ifisempty2Procedure;
+import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
+import net.foxyas.changedaddon.procedures.IfisEmpty3Procedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesProcedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesPage1Procedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipes2Procedure;
@@ -61,12 +64,15 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		this.renderBackground(ms);
 		super.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
-		if (mouseX > leftPos + 10 && mouseX < leftPos + 34 && mouseY > topPos + 41 && mouseY < topPos + 65)
-			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.unifusergui.tooltip_place_the_powders"), mouseX, mouseY);
-		if (mouseX > leftPos + 45 && mouseX < leftPos + 69 && mouseY > topPos + 53 && mouseY < topPos + 77)
-			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.unifusergui.tooltip_place_a_syringe_with_dna"), mouseX, mouseY);
-		if (mouseX > leftPos + 10 && mouseX < leftPos + 34 && mouseY > topPos + 65 && mouseY < topPos + 89)
-			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.unifusergui.tooltip_put_the_second_ingredient"), mouseX, mouseY);
+		if (IfisEmptyProcedure.execute(entity))
+			if (mouseX > leftPos + 10 && mouseX < leftPos + 34 && mouseY > topPos + 41 && mouseY < topPos + 65)
+				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.unifusergui.tooltip_place_the_powders"), mouseX, mouseY);
+		if (IfisEmpty3Procedure.execute(entity))
+			if (mouseX > leftPos + 45 && mouseX < leftPos + 69 && mouseY > topPos + 53 && mouseY < topPos + 77)
+				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.unifusergui.tooltip_place_a_syringe_with_dna"), mouseX, mouseY);
+		if (Ifisempty2Procedure.execute(entity))
+			if (mouseX > leftPos + 10 && mouseX < leftPos + 34 && mouseY > topPos + 65 && mouseY < topPos + 89)
+				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.unifusergui.tooltip_put_the_second_ingredient"), mouseX, mouseY);
 		if (IfShowUnifuserRecipesProcedure.execute(entity))
 			if (mouseX > leftPos + -106 && mouseX < leftPos + -82 && mouseY > topPos + 3 && mouseY < topPos + 27)
 				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe"), mouseX, mouseY);

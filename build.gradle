@@ -96,6 +96,7 @@ dependencies {
     implementation fg.deobf("curse.maven:roughly-enough-items-310111:4774383") //Jei But better
     implementation fg.deobf("curse.maven:cloth-config-348521:4633387") // REI mod dependence
     implementation fg.deobf("curse.maven:architectury-api-419699:4521465") //REI mod dependence
+    implementation fg.deobf("curse.maven:spark-361579:4505375") // Spark
     
     compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192:api") //Jei Api
     runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.0.192") //Jei Mod

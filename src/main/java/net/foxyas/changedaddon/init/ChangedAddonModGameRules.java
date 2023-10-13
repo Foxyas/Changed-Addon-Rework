@@ -15,4 +15,5 @@ public class ChangedAddonModGameRules {
 	public static final GameRules.Key<GameRules.BooleanValue> ALLOW_PLAYER_GRAB = GameRules.register("allowPlayerGrab", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 	public static final GameRules.Key<GameRules.BooleanValue> GIVE_BOOK_ON_START = GameRules.register("giveBookOnStart", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final GameRules.Key<GameRules.BooleanValue> DOLATEXINFECTION = GameRules.register("dolatexinfection", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
+	public static final GameRules.Key<GameRules.BooleanValue> PAINITE_GENERATION = GameRules.register("painiteGeneration", GameRules.Category.UPDATES, GameRules.BooleanValue.create(true));
 }

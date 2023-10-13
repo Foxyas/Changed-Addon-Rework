@@ -20,6 +20,7 @@ import net.foxyas.changedaddon.procedures.Show25porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show10porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.Show0porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.RecipeProgressProcedure;
+import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesProcedure;
 import net.foxyas.changedaddon.procedures.IfShowCatlyzerRecipePage1Procedure;
 import net.foxyas.changedaddon.procedures.IfBlockisfullProcedure;
@@ -70,8 +71,9 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
 			if (mouseX > leftPos + -108 && mouseX < leftPos + -84 && mouseY > topPos + 147 && mouseY < topPos + 171)
 				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder"), mouseX, mouseY);
-		if (mouseX > leftPos + 18 && mouseX < leftPos + 42 && mouseY > topPos + 40 && mouseY < topPos + 64)
-			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe"), mouseX, mouseY);
+		if (IfisEmptyProcedure.execute(entity))
+			if (mouseX > leftPos + 18 && mouseX < leftPos + 42 && mouseY > topPos + 40 && mouseY < topPos + 64)
+				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe"), mouseX, mouseY);
 		if (mouseX > leftPos + 87 && mouseX < leftPos + 111 && mouseY > topPos + 61 && mouseY < topPos + 85)
 			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipes"), mouseX, mouseY);
 	}
