@@ -3305,6 +3305,9 @@
       "locked_code": false,
       "registry_name": "unifuser_update_tick",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/UnifuserUpdateTickProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "x",
@@ -6130,6 +6133,9 @@
       "locked_code": false,
       "registry_name": "recipe_reset",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/RecipeResetProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9048,6 +9054,9 @@
       "locked_code": false,
       "registry_name": "experiment_009die",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009dieProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9065,6 +9074,9 @@
       "locked_code": false,
       "registry_name": "add_player_transfur_progress",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/AddPlayerTransfurProgressProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "arguments",
@@ -9855,6 +9867,7 @@
       "gui.changed_addon.bookpagenumber_3.label_i_was_about_to_forget_but_we_cre": "I was about to forget but we created litix cammonia item made from ammonia",
       "changedaddon.untransfur.descontrol": "You got rid of the control of the latex creature that was attached to you maybe he wants to take control back so better RUN",
       "changedaddon.assimilation.when_on": "Activating assimilation deactivates Friendly Mode",
+      "gamerule.doGrabNeedLook.description": "When players need to look at the target to grab",
       "gui.changed_addon.book_pagenumber_6.label_ansfur_modes": "-ansfur modes (need Friendly-",
       "advancements.assimilatethem.descr": "You activated the assimilation",
       "advancements.timesthesyringewasuseadvancement_3.descr": "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!",
@@ -9863,6 +9876,7 @@
       "item.changed_addon.hazard_suit_chestplate": "Hazard  Chestplate",
       "gui.changed_addon.book_pagenumber_1.label_can_take_a_glass_bottle_and_an_i": "can take a glass bottle and an iron nugget in a shapeless pattern. ",
       "gui.changed_addon.unifusergui.label_next": "Next Page ",
+      "gamerule.doGrabNeedLook": "Grab Need Look ",
       "gamerule.dolatexinfection.description": "this makes the latex infection in the player rise after being attacked",
       "gui.changed_addon.unifusergui.tooltip_put_the_second_ingredient": "Put the second ingredient",
       "gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it": "it i can do it",

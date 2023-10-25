@@ -30,6 +30,8 @@ public class EmptySprayRightclickedOnBlockProcedure {
 					if (_entity instanceof Player _player)
 						_player.getInventory().setChanged();
 				}
+				if (entity instanceof LivingEntity _entity)
+					_entity.swing(InteractionHand.MAIN_HAND, true);
 			} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.EMPTY_SPRAY.get()) {
 				if (entity instanceof LivingEntity _entity) {
 					ItemStack _setstack = new ItemStack(ChangedAddonModItems.LITIX_CAMONIA_SPRAY.get());
@@ -38,6 +40,8 @@ public class EmptySprayRightclickedOnBlockProcedure {
 					if (_entity instanceof Player _player)
 						_player.getInventory().setChanged();
 				}
+				if (entity instanceof LivingEntity _entity)
+					_entity.swing(InteractionHand.OFF_HAND, true);
 			}
 		}
 	}

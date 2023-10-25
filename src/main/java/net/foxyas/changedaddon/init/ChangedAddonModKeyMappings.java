@@ -43,7 +43,7 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping SETASSIMILATON = new KeyMapping("key.changed_addon.setassimilaton", GLFW.GLFW_KEY_F13, "key.categories.grab_gui") {
+	public static final KeyMapping SETASSIMILATON = new KeyMapping("key.changed_addon.setassimilaton", GLFW.GLFW_KEY_UNKNOWN, "key.categories.grab_gui") {
 		private boolean isDownOld = false;
 
 		@Override
@@ -56,7 +56,7 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping ACTIVE_FRIENDLY_MODE = new KeyMapping("key.changed_addon.active_friendly_mode", GLFW.GLFW_KEY_F15, "key.categories.grab_gui") {
+	public static final KeyMapping ACTIVE_FRIENDLY_MODE = new KeyMapping("key.changed_addon.active_friendly_mode", GLFW.GLFW_KEY_UNKNOWN, "key.categories.grab_gui") {
 		private boolean isDownOld = false;
 
 		@Override
@@ -95,7 +95,7 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping SETCANGRABON = new KeyMapping("key.changed_addon.setcangrabon", GLFW.GLFW_KEY_F14, "key.categories.grab_gui") {
+	public static final KeyMapping SETCANGRABON = new KeyMapping("key.changed_addon.setcangrabon", GLFW.GLFW_KEY_UNKNOWN, "key.categories.grab_gui") {
 		private boolean isDownOld = false;
 
 		@Override

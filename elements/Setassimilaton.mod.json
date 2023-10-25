@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "F13",
+    "triggerKey": "NONE",
     "keyBindingName": "Toggle Assimilation",
     "keyBindingCategoryKey": "grab_gui",
     "onKeyPressed": {

@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "F14",
+    "triggerKey": "NONE",
     "keyBindingName": "Toggle Grab on",
     "keyBindingCategoryKey": "grab_gui",
     "onKeyPressed": {

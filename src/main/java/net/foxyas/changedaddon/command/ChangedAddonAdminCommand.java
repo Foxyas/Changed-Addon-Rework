@@ -28,7 +28,7 @@ import com.mojang.brigadier.arguments.DoubleArgumentType;
 public class ChangedAddonAdminCommand {
 	@SubscribeEvent
 	public static void registerCommand(RegisterCommandsEvent event) {
-		event.getDispatcher().register(Commands.literal("changed_addon_admin").requires(s -> s.hasPermission(2))
+		event.getDispatcher().register(Commands.literal("changed-addon-admin").requires(s -> s.hasPermission(2))
 				.then(Commands.literal("SetTransfurProgress").then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();

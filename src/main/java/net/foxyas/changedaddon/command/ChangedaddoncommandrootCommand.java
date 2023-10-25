@@ -30,7 +30,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 public class ChangedaddoncommandrootCommand {
 	@SubscribeEvent
 	public static void registerCommand(RegisterCommandsEvent event) {
-		event.getDispatcher().register(Commands.literal("changed_addon")
+		event.getDispatcher().register(Commands.literal("changed-addon")
 
 				.then(Commands.literal("RecipesReset").executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();

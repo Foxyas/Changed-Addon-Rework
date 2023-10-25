@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "F15",
+    "triggerKey": "NONE",
     "keyBindingName": "Toggle Friendly Mode",
     "keyBindingCategoryKey": "grab_gui",
     "onKeyPressed": {

@@ -15,7 +15,7 @@ public class SetplayerTransfurprogress {
 		Player player = event.player;
 		ProcessTransfur.getPlayerTransfurProgress(player);
 		player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-			capability.LatexForm_ProgressTransfur = ProcessTransfur.getPlayerTransfurProgress(player).type().toString();
+			capability.LatexForm_ProgressTransfur = ProcessTransfur.getPlayerTransfurProgress(player).variant().toString();
 			capability.syncPlayerVariables(player);
 		});
 		{
