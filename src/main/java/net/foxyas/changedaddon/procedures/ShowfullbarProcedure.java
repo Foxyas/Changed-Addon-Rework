@@ -13,7 +13,7 @@ public class ShowfullbarProcedure {
 					return blockEntity.getTileData().getDouble(tag);
 				return -1;
 			}
-		}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 100) {
+		}.getValue(world, new BlockPos(x, y, z), "recipe_progress") >= 98) {
 			return true;
 		}
 		return false;

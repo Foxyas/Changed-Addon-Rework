@@ -75,7 +75,7 @@ public class UnifuserUpdateTickProcedure {
 									return blockEntity.getTileData().getDouble(tag);
 								return -1;
 							}
-						}.getValue(world, new BlockPos(x, y, z), "recipe_progress")) - 25));
+						}.getValue(world, new BlockPos(x, y, z), "recipe_progress")) - 5));
 					if (world instanceof Level _level)
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}

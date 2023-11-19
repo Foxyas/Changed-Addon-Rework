@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "changed_addon:destroy_research_lab",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 301,
+    "separation": 193,
+    "salt": 94082646
+  }
+}

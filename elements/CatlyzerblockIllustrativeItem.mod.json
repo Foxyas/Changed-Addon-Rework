@@ -27,7 +27,8 @@
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
     "specialInfo": [
-      "Catalyzer Block Illustrative Item for a Jei Support"
+      "Catalyzer Block Illustrative Item for a Jei Support",
+      "This mean that craft is in a Catalyzer Craft Style"
     ],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",

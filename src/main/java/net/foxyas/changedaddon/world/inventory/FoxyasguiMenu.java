@@ -5,9 +5,6 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.TickEvent;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
@@ -23,7 +20,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.procedures.FoxyasguiWhileThisGUIIsOpenTickProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasguiThisGUIIsOpenedProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasguiThisGUIIsClosedProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasguiDisableItemstackPlacementProcedure;
@@ -33,7 +29,6 @@ import java.util.function.Supplier;
 import java.util.Map;
 import java.util.HashMap;
 
-@Mod.EventBusSubscriber
 public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map<Integer, Slot>> {
 	public final static HashMap<String, Object> guistate = new HashMap<>();
 	public final Level world;
@@ -86,7 +81,7 @@ public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map
 					});
 			}
 		}
-		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 200, 101) {
+		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 209, 107) {
 			private final int slot = 0;
 
 			@Override
@@ -94,7 +89,7 @@ public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map
 				return !FoxyasguiDisableItemstackPlacementProcedure.execute(itemstack);
 			}
 		}));
-		this.customSlots.put(2, this.addSlot(new SlotItemHandler(internal, 2, 259, 136) {
+		this.customSlots.put(2, this.addSlot(new SlotItemHandler(internal, 2, 302, 125) {
 			private final int slot = 2;
 
 			@Override
@@ -102,7 +97,7 @@ public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map
 				return false;
 			}
 		}));
-		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 238, 101) {
+		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 209, 146) {
 			private final int slot = 1;
 
 			@Override
@@ -265,18 +260,5 @@ public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map
 
 	public Map<Integer, Slot> get() {
 		return customSlots;
-	}
-
-	@SubscribeEvent
-	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		Player entity = event.player;
-		if (event.phase == TickEvent.Phase.END && entity.containerMenu instanceof FoxyasguiMenu) {
-			Level world = entity.level;
-			double x = entity.getX();
-			double y = entity.getY();
-			double z = entity.getZ();
-
-			FoxyasguiWhileThisGUIIsOpenTickProcedure.execute(world, x, y, z, entity, guistate);
-		}
 	}
 }

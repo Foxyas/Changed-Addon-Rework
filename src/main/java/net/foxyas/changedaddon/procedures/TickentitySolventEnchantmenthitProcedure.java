@@ -19,6 +19,7 @@ import net.minecraft.core.Registry;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.entity.Experiment009Entity;
 
 import javax.annotation.Nullable;
 
@@ -72,6 +73,8 @@ public class TickentitySolventEnchantmenthitProcedure {
 				}
 				if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), (immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0) {
 					if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
+						entity.hurt(SolventDmg, (float) (amount + math));
+					} else if (entity instanceof Experiment009Entity) {
 						entity.hurt(SolventDmg, (float) (amount + math));
 					}
 				}

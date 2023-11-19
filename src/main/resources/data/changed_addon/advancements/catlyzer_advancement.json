@@ -16,7 +16,20 @@
   },
   "criteria": {
     "catlyzer_advancement": {
-      "trigger": "minecraft:impossible"
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:catlyzer"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
     }
   },
   "parent": "changed_addon:changedaddon_advancement"

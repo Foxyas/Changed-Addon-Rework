@@ -20,7 +20,7 @@ public class Show90porcentbarProcedure {
 					return blockEntity.getTileData().getDouble(tag);
 				return -1;
 			}
-		}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 100) {
+		}.getValue(world, new BlockPos(x, y, z), "recipe_progress") < 95) {
 			return true;
 		}
 		return false;
