@@ -18,8 +18,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Holder;
 
 import net.foxyas.changedaddon.world.features.ores.PainiteOreFeature;
-import net.foxyas.changedaddon.world.features.Experiment009StructureFeature;
-import net.foxyas.changedaddon.world.features.DestroyExperiment009StructureFeature;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -33,10 +31,6 @@ public class ChangedAddonModFeatures {
 	private static final List<FeatureRegistration> FEATURE_REGISTRATIONS = new ArrayList<>();
 	public static final RegistryObject<Feature<?>> PAINITE_ORE = register("painite_ore", PainiteOreFeature::feature,
 			new FeatureRegistration(GenerationStep.Decoration.UNDERGROUND_ORES, PainiteOreFeature.GENERATE_BIOMES, PainiteOreFeature::placedFeature));
-	public static final RegistryObject<Feature<?>> DESTROY_EXPERIMENT_009_STRUCTURE = register("destroy_experiment_009_structure", DestroyExperiment009StructureFeature::feature,
-			new FeatureRegistration(GenerationStep.Decoration.SURFACE_STRUCTURES, DestroyExperiment009StructureFeature.GENERATE_BIOMES, DestroyExperiment009StructureFeature::placedFeature));
-	public static final RegistryObject<Feature<?>> EXPERIMENT_009_STRUCTURE = register("experiment_009_structure", Experiment009StructureFeature::feature,
-			new FeatureRegistration(GenerationStep.Decoration.SURFACE_STRUCTURES, Experiment009StructureFeature.GENERATE_BIOMES, Experiment009StructureFeature::placedFeature));
 
 	private static RegistryObject<Feature<?>> register(String registryname, Supplier<Feature<?>> feature, FeatureRegistration featureRegistration) {
 		FEATURE_REGISTRATIONS.add(featureRegistration);

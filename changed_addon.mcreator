@@ -1,20 +1,6 @@
 {
   "mod_elements": [
     {
-      "name": "Checkifplayeraretransfur",
-      "type": "code",
-      "sortid": 35,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "checkifplayeraretransfur",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/Checkifplayeraretransfur.java"
-        ]
-      },
-      "path": "~/CustomCode"
-    },
-    {
       "name": "Grabeffect",
       "type": "potioneffect",
       "sortid": 36,
@@ -2138,20 +2124,6 @@
       "path": "~/Recipes"
     },
     {
-      "name": "CheckPlayerLatexForm",
-      "type": "code",
-      "sortid": 130,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "check_player_latex_form",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/CheckPlayerLatexForm.java"
-        ]
-      },
-      "path": "~/CustomCode"
-    },
-    {
       "name": "PainiteOrePrope",
       "type": "loottable",
       "sortid": 131,
@@ -2949,7 +2921,7 @@
       "type": "gui",
       "sortid": 158,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "catlyzergui",
       "metadata": {
         "files": [
@@ -3250,7 +3222,7 @@
       "type": "gui",
       "sortid": 167,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "unifusergui",
       "metadata": {
         "files": [
@@ -3865,20 +3837,6 @@
         ]
       },
       "path": "~/Procedures"
-    },
-    {
-      "name": "SetplayerTransfurprogress",
-      "type": "code",
-      "sortid": 197,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "setplayer_transfurprogress",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/SetplayerTransfurprogress.java"
-        ]
-      },
-      "path": "~/CustomCode"
     },
     {
       "name": "SetPlayerTransFurProgressFor0",
@@ -5094,34 +5052,6 @@
       "path": "~/Structures/Structure Loot"
     },
     {
-      "name": "DestroyExperiment009Structure",
-      "type": "structure",
-      "sortid": 257,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "destroy_experiment_009_structure",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/world/features/DestroyExperiment009StructureFeature.java"
-        ]
-      },
-      "path": "~/Structures"
-    },
-    {
-      "name": "Experiment009Structure",
-      "type": "structure",
-      "sortid": 258,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "experiment_009_structure",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/world/features/Experiment009StructureFeature.java"
-        ]
-      },
-      "path": "~/Structures"
-    },
-    {
       "name": "GrabResistance",
       "type": "enchantment",
       "sortid": 259,
@@ -5306,11 +5236,11 @@
       "sortid": 10,
       "compiles": true,
       "locked_code": false,
-      "registry_name": "descontrol_syringe",
+      "registry_name": "diffusion_syrine",
       "metadata": {
         "files": [
           "src/main/java/net/foxyas/changedaddon/item/DescontrolSyringeItem.java",
-          "src/main/resources/assets/changed_addon/models/item/descontrol_syringe.json"
+          "src/main/resources/assets/changed_addon/models/item/diffusion_syrine.json"
         ]
       },
       "path": "~/Items"
@@ -9122,9 +9052,6 @@
       "locked_code": false,
       "registry_name": "latex_variant_ageincrease",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/LatexVariantAgeincreaseProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9253,6 +9180,135 @@
         "type": "logic"
       },
       "path": "~/GameRules"
+    },
+    {
+      "name": "Researchlaboratory",
+      "type": "restructure",
+      "sortid": 458,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "researchlaboratory",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/worldgen/configured_structure_feature/research_lab.json",
+          "src/main/resources/data/changed_addon/worldgen/structure_set/research_lab.json",
+          "src/main/resources/data/changed_addon/worldgen/template_pool/research_lab.json"
+        ]
+      },
+      "path": "~/Structures"
+    },
+    {
+      "name": "Researchlaboratorydestroyed",
+      "type": "restructure",
+      "sortid": 457,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "researchlaboratorydestroyed",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/worldgen/configured_structure_feature/destroy_research_lab.json",
+          "src/main/resources/data/changed_addon/worldgen/structure_set/destroy_research_lab.json",
+          "src/main/resources/data/changed_addon/worldgen/template_pool/destroy_research_lab.json"
+        ]
+      },
+      "path": "~/Structures"
+    },
+    {
+      "name": "Beehivefloor",
+      "type": "recipe",
+      "sortid": 459,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "beehivefloor",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/beehivefloor.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "Beehivewall",
+      "type": "recipe",
+      "sortid": 460,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "beehivewall",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/beehivewall.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "BeehiveRoof",
+      "type": "recipe",
+      "sortid": 461,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "beehive_roof",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/beehive_roof.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "BeehiveCorner",
+      "type": "recipe",
+      "sortid": 462,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "beehive_corner",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/beehive_corner.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "Beehivebed",
+      "type": "recipe",
+      "sortid": 463,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "beehivebed",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/beehivebed.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "CustomCodeBackUp",
+      "type": "code",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "custom_code_back_up",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/CustomCodeBackUp.java"
+        ]
+      },
+      "path": "~/BackUpCode"
+    },
+    {
+      "name": "LatexCreature",
+      "type": "tag",
+      "sortid": 464,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "latex_creature",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/entity_types/changed_creature.json"
+        ]
+      },
+      "path": "~/Tags"
     }
   ],
   "variable_elements": [
@@ -9447,6 +9503,12 @@
       "type": "string",
       "scope": "player_lifetime",
       "value": ""
+    },
+    {
+      "name": "LatexInfectionCooldown",
+      "type": "number",
+      "scope": "player_lifetime",
+      "value": "0.0"
     }
   ],
   "sound_elements": [
@@ -9496,7 +9558,7 @@
       "files": [
         "jack_phase_1"
       ],
-      "category": "neutral",
+      "category": "record",
       "subtitle": "Experiment 009 Music Theme"
     },
     {
@@ -9504,7 +9566,7 @@
       "files": [
         "jack_phase_2"
       ],
-      "category": "neutral",
+      "category": "record",
       "subtitle": "Experiment 009 Phase 2 Music Theme"
     },
     {
@@ -9518,8 +9580,8 @@
   ],
   "language_map": {
     "en_us": {
-      "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "gui.changed_addon.book_pagenumber_7.label_ab": "-ab)",
+      "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
       "advancements.friendly_kitty.title": "Friendly Kitty",
       "advancements.furry_friend.title": "Furry Friend",
@@ -9533,12 +9595,12 @@
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "You aren\u0027t affected by this fluid",
+      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
-      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
+      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "key.changed_addon.setcangrabon": "Toggle Grab on",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
@@ -9558,14 +9620,14 @@
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
       "advancements.transfur_totem_advancement_1.descr": "You use a latex totem to transfur or untransfur",
-      "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "advancements.gneticsdefying_friendship.descr": "You hugged a \"genetics enemy\"",
+      "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "gui.changed_addon.book_pagenumber_2.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
-      "attribute.changed_addon.latexresistance": "Latex Resistance",
-      "gui.changed_addon.pagesecret.button_close": "close",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
+      "gui.changed_addon.pagesecret.button_close": "close",
+      "attribute.changed_addon.latexresistance": "Latex Resistance",
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
@@ -9573,8 +9635,8 @@
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
       "gui.changed_addon.book_pagenumber_1.label_empty1": "?",
-      "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
+      "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
@@ -9599,18 +9661,19 @@
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.book_pagenumber_6.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
+      "item.changed_addon.diffusion_syrine": "Latex-Diffusion Syringe ",
       "gui.changed_addon.bookpagenumber_3.label_to_purify_the_latex_syringes_jus": "to purify the latex syringes just craft a purifier and follow this example",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
-      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
+      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
+      "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
-      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
+      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe": "Display Litix-Camonia Recipe",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
@@ -9623,9 +9686,10 @@
       "gui.changed_addon.bookrecipepage_10.label_f2": "F",
       "gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho": " LitixCamonia. LitixCamonia can be injected to",
       "gui.changed_addon.bookrecipepage_10.label_f3": "F",
+      "changed_addon.latex_totem.notvalid": "Totem reacted §cnegatively§r to your §bDNA§r",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
-      "advancements.advancement_want_friendly_grab.descr": "You (enable your friendly grab) you want to be covered in goo",
       "advancements.obtaina_painite_hoe.title": "Beyond Dedication",
+      "advancements.advancement_want_friendly_grab.descr": "You (enable your friendly grab) you want to be covered in goo",
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
       "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
@@ -9642,7 +9706,7 @@
       "gui.changed_addon.bookrecipepage_10.label_m2": "M",
       "subtitles.warn": "Warn Sound",
       "gui.changed_addon.bookrecipepage_6.label_p": "P",
-      "item.changed_addon.experiment_009_phase_2_record.desc": "mrepicishere777-[Storyswap Color] - Virtue\u0027s Vengeance (Cover)",
+      "item.changed_addon.experiment_009_phase_2_record.desc": "Bruhassass-[Song That Might Play When You Fight Sans In Hard Mode [REMASTERED]]",
       "changedaddon.feature.grab.isoff": "Grab Is §4Disabled§r in this World!",
       "gui.changed_addon.book_pagenumber_7.button_close": "Back",
       "gui.changed_addon.bookrecipepage_9.button_close": "Close",
@@ -9745,7 +9809,7 @@
       "changedaddon.grab.off": "Grab deactivated",
       "item.changed_addon.devitem": "Dev item",
       "gamerule.fighttokeepconsciousness": "Fight to keep consciousness",
-      "advancements.organic_transfur_advancement.title": "Organic!!",
+      "advancements.organic_transfur_advancement.title": "Organic And Fluffy!!",
       "gui.changed_addon.bookpagenumber_4.button_back": "Back",
       "gamerule.fight_to_keep_consciousness": "Fight to keep consciousness",
       "gui.changed_addon.tranfur_sounds_gui.button_1": "Purr",
@@ -9797,6 +9861,7 @@
       "gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you": "i want be transfured by you",
       "gui.changed_addon.book_pagenumber_1.label_syringe_with_your_own_blood_and": "-yringe with your own blood and a latex base in an infuser.",
       "gui.changed_addon.book_pagenumber_1.button_close": "Close",
+      "changedaddon.untransfur.diffusion": "You unfuse with the latex creature that was attached to you maybe he wants to fuse back so better RUN",
       "changedaddon.when_is.organic": "You cannot assimilate as a organic latex creature",
       "gui.changed_addon.book_pagenumber_2.label_syringe_with_litixcamonia": "Syringe With Litix-Camonia",
       "gui.changed_addon.book_pagenumber_6.label_assimilation_grab_mode": "-\u003e Assimilation grab mode",
@@ -9807,7 +9872,7 @@
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon Plus",
       "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
-      "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic transfur",
+      "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic form",
       "gui.changed_addon.bookrecipepage_10.label_s_seeds": "S \u003d ANY SEEDS",
       "gui.changed_addon.unifusergui.tooltip_place_a_syringe_with_dna": "Place a Syringe with DNA",
       "gui.changed_addon.catlyzergui.button_start_craft": "start craft",
@@ -9847,7 +9912,7 @@
       "gui.changed_addon.bookpagenumber_4.label_incorrect_way": "incorrectly way",
       "effect.changed_addon.latex_solvent": "Latex Solvent",
       "gui.changed_addon.book_pagenumber_6.button_close": "Back",
-      "advancements.transfur_totem_advancement_1.title": "Total control",
+      "advancements.transfur_totem_advancement_1.title": "In Total Control",
       "gui.changed_addon.book_pagenumber_7.label_e_only_for_player": "-y modes",
       "advancements.hug.descr": "You won or gave a §chug§r§a in an organic transfur",
       "gui.changed_addon.grabclickgui.button_struggle": "struggle",
@@ -9865,7 +9930,6 @@
       "changedaddon.assimilation.off": "Assimilation deactivated",
       "block.changed_addon.darklatexpuddle": "Dark Latex Puddle",
       "gui.changed_addon.bookpagenumber_3.label_i_was_about_to_forget_but_we_cre": "I was about to forget but we created litix cammonia item made from ammonia",
-      "changedaddon.untransfur.descontrol": "You got rid of the control of the latex creature that was attached to you maybe he wants to take control back so better RUN",
       "changedaddon.assimilation.when_on": "Activating assimilation deactivates Friendly Mode",
       "gamerule.doGrabNeedLook.description": "When players need to look at the target to grab",
       "gui.changed_addon.book_pagenumber_6.label_ansfur_modes": "-ansfur modes (need Friendly-",
@@ -9956,7 +10020,6 @@
       "advancements.catlyzer_advancement.title": "A Catalyzer?",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer1": "Catalyzer",
       "gui.changed_addon.bookpagenumber_4.label_catalyzer": "Catalyzer",
-      "item.changed_addon.descontrol_syringe": "Latex-Descontrol Syringe ",
       "gui.changed_addon.bookrecipepage_8.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "advancements.potwithlitixcamonia_advancement.title": "yummy?",
       "gui.changed_addon.bookrecipepage_10.label_m": "M",
@@ -10108,13 +10171,17 @@
       {
         "name": "Procedures",
         "children": []
+      },
+      {
+        "name": "BackUpCode",
+        "children": []
       }
     ]
   },
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon Plus",
-    "version": "2.5.1",
+    "version": "2.5.2",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",

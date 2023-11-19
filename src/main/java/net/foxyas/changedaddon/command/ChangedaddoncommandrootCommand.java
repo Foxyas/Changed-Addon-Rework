@@ -92,19 +92,7 @@ public class ChangedaddoncommandrootCommand {
 
 					InfoaddonwarnsProcedure.execute(entity);
 					return 0;
-				}))).then(Commands.literal("toggle_addon_gui").then(Commands.literal("transfur_gui").then(Commands.literal("info").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
-					double x = arguments.getSource().getPosition().x();
-					double y = arguments.getSource().getPosition().y();
-					double z = arguments.getSource().getPosition().z();
-					Entity entity = arguments.getSource().getEntity();
-					if (entity == null)
-						entity = FakePlayerFactory.getMinecraft(world);
-					Direction direction = entity.getDirection();
-
-					InfoonlytransfuraddonguiProcedure.execute(entity);
-					return 0;
-				})).then(Commands.literal("organic_overlay").then(Commands.argument("turn", BoolArgumentType.bool()).executes(arguments -> {
+				}))).then(Commands.literal("toggle_addon_gui").then(Commands.literal("organic_transfur_overlay").then(Commands.argument("turn", BoolArgumentType.bool()).executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
@@ -116,7 +104,19 @@ public class ChangedaddoncommandrootCommand {
 
 					ToggleOrganicOverlayProcedure.execute(arguments, entity);
 					return 0;
-				}))).then(Commands.argument("turn", BoolArgumentType.bool()).executes(arguments -> {
+				}))).then(Commands.literal("transfur_gui").then(Commands.literal("info").executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					InfoonlytransfuraddonguiProcedure.execute(entity);
+					return 0;
+				})).then(Commands.argument("turn", BoolArgumentType.bool()).executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();

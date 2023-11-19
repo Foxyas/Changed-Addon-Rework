@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.client.Minecraft;
 
+import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 
@@ -36,8 +37,8 @@ public class DolatexinfectiontickProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
-		double PlayerTransfurProgress = 0;
 		boolean CanWork = false;
+		double PlayerTransfurProgress = 0;
 		if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION) == true) {
 			float Player_TransfurProgress = new Object() {
 				public float getValue() {
@@ -78,16 +79,49 @@ public class DolatexinfectiontickProcedure {
 					}
 					return false;
 				}
-			}.checkGamemode(entity)) && !(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) : false) && Player_TransfurProgress > 0) {
+			}.checkGamemode(entity)) && !(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) : false) && Player_TransfurProgress > 0
+					&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
 				CanWork = true;
 			} else {
 				CanWork = false;
 			}
-			if (CanWork == true) {
+			if (CanWork == true && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown <= 0) {
 				CompoundTag dataIndex2 = new CompoundTag();
 				entity.saveWithoutId(dataIndex2);
 				dataIndex2.putFloat("TransfurProgress", Player_TransfurProgress + mathnumber);
 				entity.load(dataIndex2);
+				{
+					double _setval = 4;
+					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+						capability.LatexInfectionCooldown = _setval;
+						capability.syncPlayerVariables(entity);
+					});
+				}
+			} else if (CanWork == true && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown > 0) {
+				{
+					double _setval = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown - 1;
+					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+						capability.LatexInfectionCooldown = _setval;
+						capability.syncPlayerVariables(entity);
+					});
+				}
+			} else if (CanWork == false && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown > 0) {
+				{
+					double _setval = 0;
+					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+						capability.LatexInfectionCooldown = _setval;
+						capability.syncPlayerVariables(entity);
+					});
+				}
+			}
+		} else if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION) == false
+				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown > 0) {
+			{
+				double _setval = 0;
+				entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+					capability.LatexInfectionCooldown = _setval;
+					capability.syncPlayerVariables(entity);
+				});
 			}
 		}
 	}

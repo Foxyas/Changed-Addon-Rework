@@ -53,7 +53,7 @@
     "sounds": [
       {
         "name": "changed_addon:jack_phase_1",
-        "stream": false
+        "stream": true
       }
     ]
   },
@@ -62,7 +62,7 @@
     "sounds": [
       {
         "name": "changed_addon:jack_phase_2",
-        "stream": false
+        "stream": true
       }
     ]
   },

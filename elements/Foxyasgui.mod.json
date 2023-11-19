@@ -55,8 +55,8 @@
             "fixedValue": false
           },
           "dropItemsWhenNotBound": true,
-          "x": 240,
-          "y": 132
+          "x": 249,
+          "y": 138
         }
       },
       {
@@ -67,8 +67,8 @@
             "fixedValue": false
           },
           "dropItemsWhenNotBound": true,
-          "x": 299,
-          "y": 167
+          "x": 342,
+          "y": 156
         }
       },
       {
@@ -85,8 +85,8 @@
             "fixedValue": false
           },
           "dropItemsWhenNotBound": true,
-          "x": 278,
-          "y": 132
+          "x": 249,
+          "y": 177
         }
       },
       {
@@ -99,8 +99,8 @@
           },
           "width": 51,
           "height": 20,
-          "x": 233,
-          "y": 166
+          "x": 276,
+          "y": 155
         }
       },
       {
@@ -119,17 +119,6 @@
         }
       },
       {
-        "type": "textfield",
-        "data": {
-          "placeholder": "",
-          "name": "Deals",
-          "width": 120,
-          "height": 20,
-          "x": 259,
-          "y": 66
-        }
-      },
-      {
         "type": "button",
         "data": {
           "name": "button_i_want_be_transfured_by_you",
@@ -142,16 +131,13 @@
           },
           "width": 165,
           "height": 20,
-          "x": 53,
-          "y": 102
+          "x": 129,
+          "y": 95
         }
       }
     ],
     "onOpen": {
       "name": "FoxyasguiThisGUIIsOpened"
-    },
-    "onTick": {
-      "name": "FoxyasguiWhileThisGUIIsOpenTick"
     },
     "onClosed": {
       "name": "FoxyasguiThisGUIIsClosed"

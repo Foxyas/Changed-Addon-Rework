@@ -1,0 +1,9 @@
+{
+  "group": "beehive_recipes",
+  "type": "minecraft:stonecutting",
+  "count": 4,
+  "ingredient": {
+    "item": "minecraft:honeycomb_block"
+  },
+  "result": "changed:beehive_floor"
+}

@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "changed_addon:research_lab",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 103,
+    "separation": 97,
+    "salt": 94082617
+  }
+}

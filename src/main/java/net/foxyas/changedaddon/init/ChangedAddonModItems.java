@@ -74,7 +74,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> LITIX_CAMONIA = REGISTRY.register("litix_camonia", () -> new LitixCamoniaItem());
 	public static final RegistryObject<Item> SYRINGE = REGISTRY.register("syringe", () -> new SyringeItem());
 	public static final RegistryObject<Item> CATALYZEDDNA = REGISTRY.register("catalyzeddna", () -> new CatalyzeddnaItem());
-	public static final RegistryObject<Item> DESCONTROL_SYRINGE = REGISTRY.register("descontrol_syringe", () -> new DescontrolSyringeItem());
+	public static final RegistryObject<Item> DIFFUSION_SYRINE = REGISTRY.register("diffusion_syrine", () -> new DescontrolSyringeItem());
 	public static final RegistryObject<Item> SYRINGEWITHLITIXCAMMONIA = REGISTRY.register("syringewithlitixcammonia", () -> new SyringewithlitixcammoniaItem());
 	public static final RegistryObject<Item> POTWITHCAMONIA = REGISTRY.register("potwithcamonia", () -> new PotwithcamoniaItem());
 	public static final RegistryObject<Item> ORANGEJUICE = REGISTRY.register("orangejuice", () -> new OrangejuiceItem());

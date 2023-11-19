@@ -20,5 +20,6 @@ public class UnifuserblockIllustrativeItemItem extends Item {
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		list.add(new TextComponent("Unifuser Block Illustrative Item for a Jei Support"));
+		list.add(new TextComponent("This mean that craft is in a Unifuser Craft Style"));
 	}
 }

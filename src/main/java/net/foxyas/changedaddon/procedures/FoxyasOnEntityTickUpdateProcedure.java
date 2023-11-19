@@ -29,7 +29,7 @@ public class FoxyasOnEntityTickUpdateProcedure {
 			for (Entity entityiterator : _entfound) {
 				if (entityiterator.getPersistentData().getBoolean("FoxyasGui_open") == true) {
 					if (entity instanceof Mob _entity)
-						_entity.getNavigation().moveTo((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()), 1);
+						_entity.getNavigation().moveTo((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()), 0.8);
 				}
 			}
 		}

@@ -11,6 +11,10 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.Minecraft;
 
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.core.BlockPos;
+
 import net.foxyas.changedaddon.world.inventory.CatlyzerguiMenu;
 import net.foxyas.changedaddon.procedures.ShowfullbarProcedure;
 import net.foxyas.changedaddon.procedures.Show90porcentbarProcedure;
@@ -105,37 +109,27 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/catlyzergui_new.png"));
 		this.blit(ms, this.leftPos + 0, this.topPos + 0, 0, 0, 200, 170, 200, 170);
 
-		if (Show0porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_0_percent.png"));
+		double math = 0;
+		double progress = 0;
+		math = 100 / 32;
+		progress = (new Object() {
+			public double getValue(LevelAccessor world, BlockPos pos, String tag) {
+				BlockEntity blockEntity = world.getBlockEntity(pos);
+				if (blockEntity != null)
+					return blockEntity.getTileData().getDouble(tag);
+				return -1;
+			}
+		}.getValue(world, new BlockPos(x, y, z), "recipe_progress")) / 3.125;
+
+		int progressint = (int) progress;
+		
+		if (true) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/empty_bar.png"));
 			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
 		}
-		if (Show10porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_10_percent.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
-		}
-		if (Show25porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_25_percent.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
-		}
-		if (Show25porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_25_percent.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
-		}
-		if (Show50porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_50_percent.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
-		}
-		if (Show75porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_75_percent.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
-		}
-		if (Show90porcentbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_90_percent.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
-		}
-		if (ShowfullbarProcedure.execute(world, x, y, z)) {
-			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/barr_full.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, 32, 32, 32, 32);
+				if (true) {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_full.png"));
+			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, progressint, 32, progressint, 32);
 		}
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));

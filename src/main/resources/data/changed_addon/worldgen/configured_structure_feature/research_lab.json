@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:village",
+  "config": {
+    "start_pool": "changed_addon:research_lab",
+    "size": 1
+  },
+  "biomes": [
+    "minecraft:sunflower_plains",
+    "minecraft:snowy_plains",
+    "minecraft:plains",
+    "minecraft:savanna"
+  ],
+  "adapt_noise": true,
+  "spawn_overrides": {}
+}

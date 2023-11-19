@@ -1,0 +1,37 @@
+{
+  "_fv": 47,
+  "_type": "restructure",
+  "definition": {
+    "restrictBiomes": [
+      {
+        "value": "plains"
+      },
+      {
+        "value": "snowy_tundra"
+      },
+      {
+        "value": "mutated_plains"
+      },
+      {
+        "value": "savanna"
+      }
+    ],
+    "structureStep": "Fluid springs",
+    "terrainAdaptation": "Beard box",
+    "startHeightmap": "MOTION BLOCKING",
+    "structureRotation": false,
+    "expansionHack": false,
+    "jigsawSize": 1,
+    "absoluteHeight": 0,
+    "distanceFromCenter": 32,
+    "minSpacingSeparation": 193,
+    "maxSpacingSeparation": 300,
+    "selectedStructure": "destroy_research_lab",
+    "structuresWeight": 1,
+    "structureSetPlacement": "Random spread",
+    "templatesWeight": 1,
+    "typeElement": "Single pool element",
+    "typeProjection": "Rigid",
+    "adaptNoise": true
+  }
+}

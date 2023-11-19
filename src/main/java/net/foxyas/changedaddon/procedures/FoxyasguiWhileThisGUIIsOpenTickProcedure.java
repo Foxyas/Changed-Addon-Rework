@@ -27,21 +27,23 @@ public class FoxyasguiWhileThisGUIIsOpenTickProcedure {
 		if (entity == null || guistate == null)
 			return;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
-			if ((guistate.containsKey("text:Deals") ? ((EditBox) guistate.get("text:Deals")).getValue() : "").equals("i want be transfured by you")) {
-				{
-					if (entity instanceof ServerPlayer _ent) {
-						BlockPos _bpos = new BlockPos(x, y, z);
-						NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
-							@Override
-							public Component getDisplayName() {
-								return new TextComponent("FoxyasGui2");
-							}
+			if (world.isClientSide()) {
+				if ((guistate.containsKey("text:Deals") ? ((EditBox) guistate.get("text:Deals")).getValue() : "").equals("i want be transfured by you")) {
+					{
+						if (entity instanceof ServerPlayer _ent) {
+							BlockPos _bpos = new BlockPos(x, y, z);
+							NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
+								@Override
+								public Component getDisplayName() {
+									return new TextComponent("FoxyasGui2");
+								}
 
-							@Override
-							public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-								return new FoxyasGui2Menu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
-							}
-						}, _bpos);
+								@Override
+								public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+									return new FoxyasGui2Menu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+								}
+							}, _bpos);
+						}
 					}
 				}
 			}

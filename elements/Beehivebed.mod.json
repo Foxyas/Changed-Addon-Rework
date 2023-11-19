@@ -1,0 +1,22 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Stone cutting",
+    "recipeRetstackSize": 4,
+    "group": "beehive_recipes",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "stoneCuttingInputStack": {
+      "value": "Blocks.HONEYCOMB_BLOCK"
+    },
+    "stoneCuttingReturnStack": {
+      "value": "Blocks.HONEYCOMB_BLOCK"
+    },
+    "name": "beehivebed",
+    "namespace": "mod"
+  }
+}

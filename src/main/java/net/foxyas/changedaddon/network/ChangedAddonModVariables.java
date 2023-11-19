@@ -104,6 +104,7 @@ public class ChangedAddonModVariables {
 				clone.isFriendlyGrabbing = original.isFriendlyGrabbing;
 				clone.FriendlyGrabKeybind = original.FriendlyGrabKeybind;
 				clone.FriendlyGrabbing = original.FriendlyGrabbing;
+				clone.LatexInfectionCooldown = original.LatexInfectionCooldown;
 			}
 		}
 
@@ -299,6 +300,7 @@ public class ChangedAddonModVariables {
 		public boolean isFriendlyGrabbing = false;
 		public String FriendlyGrabKeybind = "";
 		public String FriendlyGrabbing = "";
+		public double LatexInfectionCooldown = 0.0;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -338,6 +340,7 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("isFriendlyGrabbing", isFriendlyGrabbing);
 			nbt.putString("FriendlyGrabKeybind", FriendlyGrabKeybind);
 			nbt.putString("FriendlyGrabbing", FriendlyGrabbing);
+			nbt.putDouble("LatexInfectionCooldown", LatexInfectionCooldown);
 			return nbt;
 		}
 
@@ -374,6 +377,7 @@ public class ChangedAddonModVariables {
 			isFriendlyGrabbing = nbt.getBoolean("isFriendlyGrabbing");
 			FriendlyGrabKeybind = nbt.getString("FriendlyGrabKeybind");
 			FriendlyGrabbing = nbt.getString("FriendlyGrabbing");
+			LatexInfectionCooldown = nbt.getDouble("LatexInfectionCooldown");
 		}
 	}
 
@@ -429,6 +433,7 @@ public class ChangedAddonModVariables {
 					variables.isFriendlyGrabbing = message.data.isFriendlyGrabbing;
 					variables.FriendlyGrabKeybind = message.data.FriendlyGrabKeybind;
 					variables.FriendlyGrabbing = message.data.FriendlyGrabbing;
+					variables.LatexInfectionCooldown = message.data.LatexInfectionCooldown;
 				}
 			});
 			context.setPacketHandled(true);

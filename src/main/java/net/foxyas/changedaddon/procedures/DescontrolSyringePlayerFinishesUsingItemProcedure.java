@@ -103,7 +103,7 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
 				}
 			}
 			if (entity instanceof Player _player && !_player.level.isClientSide())
-				_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.untransfur.descontrol").getString())), true);
+				_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.untransfur.diffusion").getString())), true);
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
 					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:untransfursound")), SoundSource.NEUTRAL, 1, 1);

@@ -15,17 +15,17 @@ public class ToggleOrganicOverlayProcedure {
 		if (entity == null)
 			return;
 		if (BoolArgumentType.getBool(arguments, "turn") == true) {
-			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == true) {
+			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_overlay == true) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed,already has this value"), false);
+					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed, it already had that value"), false);
 			} else {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
 					_player.displayClientMessage(new TextComponent("You Enabled the Organic Transfur Overlay of Changed Addon"), false);
 			}
 		} else {
-			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == false) {
+			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_overlay == false) {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed,already has this value"), false);
+					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed, it already had that value"), false);
 			} else {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
 					_player.displayClientMessage(new TextComponent("You Disabled the Organic Transfur Overlay of Changed Addon"), false);

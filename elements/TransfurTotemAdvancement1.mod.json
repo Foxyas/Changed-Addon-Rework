@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "achievement",
   "definition": {
-    "achievementName": "Total control",
+    "achievementName": "In Total Control",
     "achievementDescription": "You use a latex totem to transfur or untransfur",
     "achievementIcon": {
       "value": "CUSTOM:TransfurTotem"
