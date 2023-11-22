@@ -90,7 +90,7 @@ public abstract class HazardSuitItem extends ArmorItem {
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/hazard_armor__layer_2.png";
+			return "changed_addon:textures/entities/hazardarmor_legs.png";
 		}
 	}
 
@@ -101,7 +101,7 @@ public abstract class HazardSuitItem extends ArmorItem {
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/hazard_armor__layer_1.png";
+			return "changed_addon:textures/entities/hazardarmor_boots.png";
 		}
 	}
 }
