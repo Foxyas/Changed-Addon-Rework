@@ -38,7 +38,7 @@ public class AddonLatexVariant {
 	public static final LatexVariant<LightLatexWolfMale> ADDON_LIGHT_LATEX_WOLF = register(LatexVariant.Builder.of(ChangedEntities.LIGHT_LATEX_WOLF_MALE)
           	.groundSpeed(1.05F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).additionalHealth(6).build(new ResourceLocation("changed_addon", "form_light_latex_wolf")));
 	public static final LatexVariant<LatexSnowLeopardMale> ADDON_SNOW_LEOPARD = register(LatexVariant.Builder.of(ChangedEntities.LATEX_SNOW_LEOPARD_MALE)
-          	.groundSpeed(1.08F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).additionalHealth(6).build(new ResourceLocation("changed_addon", "form_latex_snow_leopard")));
+          	.groundSpeed(1.08F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_leopard")));
 
     private static <T extends LatexEntity> LatexVariant<T> register(LatexVariant<T> variant) {
         return LatexVariant.register(variant);
