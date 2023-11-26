@@ -99,7 +99,7 @@ public class SetassimilatonOnKeyPressedProcedure {
 						});
 					}
 					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.when_not.transfur").getString())), false);
+						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.assimilation.when_on").getString())), false);
 				}
 				if (!(entity instanceof ServerPlayer _plr14 && _plr14.level instanceof ServerLevel
 						&& _plr14.getAdvancements().getOrStartProgress(_plr14.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:assimilatethem"))).isDone())) {

@@ -2692,6 +2692,18 @@
             "type": "entity"
           },
           {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
             "name": "world",
             "type": "world"
           }
@@ -9612,6 +9624,14 @@
       ],
       "category": "neutral",
       "subtitle": "Untransfurmization"
+    },
+    {
+      "name": "spray.sound",
+      "files": [
+        "spraysound"
+      ],
+      "category": "block",
+      "subtitle": "Using Spray"
     }
   ],
   "language_map": {
@@ -9659,6 +9679,7 @@
       "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "advancements.gneticsdefying_friendship.descr": "You hugged a \"genetics enemy\"",
       "gui.changed_addon.book_pagenumber_2.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
+      "subtitles.spray.sound": "Using Spray",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
       "attribute.changed_addon.latexresistance": "Latex Resistance",
@@ -10217,7 +10238,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon Plus",
-    "version": "2.5.2",
+    "version": "2.5.2-b",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",

@@ -31,7 +31,7 @@ public class EmptySprayItem extends Item {
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		EmptySprayRightclickedOnBlockProcedure.execute(world, entity);
+		EmptySprayRightclickedOnBlockProcedure.execute(world, x, y, z, entity);
 		return ar;
 	}
 }

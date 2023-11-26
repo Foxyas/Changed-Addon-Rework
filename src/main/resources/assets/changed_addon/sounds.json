@@ -74,5 +74,14 @@
         "stream": false
       }
     ]
+  },
+  "spray.sound": {
+    "subtitle": "subtitles.spray.sound",
+    "sounds": [
+      {
+        "name": "changed_addon:spraysound",
+        "stream": false
+      }
+    ]
   }
 }
