@@ -32,7 +32,7 @@
 	</classpathentry>
 	<classpathentry kind="output" path="bin/default"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17/"/>
-	<classpathentry sourcepath="C:/Users/User/Downloads/MCreator.2023.1.Windows.64bit 2/workspaces/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.10_mapped_official_1.18.2/forge-1.18.2-40.2.10_mapped_official_1.18.2-sources.jar" kind="lib" path="C:/Users/User/Downloads/MCreator.2023.1.Windows.64bit 2/workspaces/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.10_mapped_official_1.18.2/forge-1.18.2-40.2.10_mapped_official_1.18.2-recomp.jar">
+	<classpathentry sourcepath="C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.10_mapped_official_1.18.2/forge-1.18.2-40.2.10_mapped_official_1.18.2-sources.jar" kind="lib" path="C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.10_mapped_official_1.18.2/forge-1.18.2-40.2.10_mapped_official_1.18.2.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -152,7 +152,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/coremods/5.0.2/eaf5c5d7d2a7962d59cd19099f96d39c1c5d4a8d/coremods-5.0.2-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/coremods/5.0.2/ca04eeee6c3764c151b2a2efa675057a7531acc4/coremods-5.0.2.jar">
+	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/coremods/5.0.3/8b51ae548629422ecf99668157daa50edd4eca5f/coremods-5.0.3-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/net.minecraftforge/coremods/5.0.3/25795913e9de905b22ccca803fe61e475e999ddf/coremods-5.0.3.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
