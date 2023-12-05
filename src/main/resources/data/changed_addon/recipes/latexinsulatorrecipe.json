@@ -7,19 +7,19 @@
   ],
   "key": {
     "1": {
-      "item": "minecraft:slime_ball"
+      "tag": "changed_addon:gooey"
     },
     "3": {
-      "item": "minecraft:slime_ball"
+      "tag": "changed_addon:gooey"
     },
     "4": {
       "item": "changed_addon:unlatexbase"
     },
     "5": {
-      "item": "minecraft:slime_ball"
+      "tag": "changed_addon:gooey"
     },
     "7": {
-      "item": "minecraft:slime_ball"
+      "tag": "changed_addon:gooey"
     }
   },
   "result": {

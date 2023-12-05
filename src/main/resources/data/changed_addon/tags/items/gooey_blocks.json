@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:slime_block",
+    "changed:white_latex_block",
+    "changed:dark_latex_block"
+  ]
+}

@@ -3,7 +3,7 @@
   "_type": "recipe",
   "definition": {
     "recipeType": "Crafting",
-    "recipeRetstackSize": 20,
+    "recipeRetstackSize": 64,
     "group": "",
     "cookingBookCategory": "MISC",
     "xpReward": 0.0,
@@ -12,28 +12,28 @@
     "recipeShapeless": false,
     "recipeSlots": [
       {
-        "value": ""
-      },
-      {
-        "value": "TAG:changed_addon:gooey"
-      },
-      {
-        "value": ""
-      },
-      {
-        "value": "TAG:changed_addon:gooey"
+        "value": "TAG:changed_addon:gooey_blocks"
       },
       {
         "value": "CUSTOM:Unlatexbase"
       },
       {
-        "value": "TAG:changed_addon:gooey"
+        "value": "TAG:changed_addon:gooey_blocks"
       },
       {
         "value": ""
       },
       {
-        "value": "TAG:changed_addon:gooey"
+        "value": "TAG:changed_addon:gooey_blocks"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": ""
       },
       {
         "value": ""
@@ -42,7 +42,7 @@
     "recipeReturnStack": {
       "value": "CUSTOM:LatexInsulator"
     },
-    "name": "latexinsulatorrecipe",
+    "name": "latexinsulatoralt",
     "namespace": "mod"
   }
 }

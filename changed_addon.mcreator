@@ -9218,8 +9218,8 @@
       "metadata": {
         "files": [
           "src/main/resources/data/changed_addon/worldgen/configured_structure_feature/research_lab.json",
-          "src/main/resources/data/changed_addon/worldgen/structure_set/research_lab.json",
-          "src/main/resources/data/changed_addon/worldgen/template_pool/research_lab.json"
+          "src/main/resources/data/changed_addon/worldgen/template_pool/research_lab.json",
+          "src/main/resources/data/changed_addon/worldgen/structure_set/research_lab.json"
         ]
       },
       "path": "~/Structures"
@@ -9234,8 +9234,8 @@
       "metadata": {
         "files": [
           "src/main/resources/data/changed_addon/worldgen/configured_structure_feature/destroy_research_lab.json",
-          "src/main/resources/data/changed_addon/worldgen/structure_set/destroy_research_lab.json",
-          "src/main/resources/data/changed_addon/worldgen/template_pool/destroy_research_lab.json"
+          "src/main/resources/data/changed_addon/worldgen/template_pool/destroy_research_lab.json",
+          "src/main/resources/data/changed_addon/worldgen/structure_set/destroy_research_lab.json"
         ]
       },
       "path": "~/Structures"
@@ -9357,6 +9357,48 @@
         ]
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "Gooeyblocks",
+      "type": "tag",
+      "sortid": 466,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "gooeyblocks",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/items/gooey_blocks.json"
+        ]
+      },
+      "path": "~/Tags"
+    },
+    {
+      "name": "Gooey",
+      "type": "tag",
+      "sortid": 467,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "gooey",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/items/gooey.json"
+        ]
+      },
+      "path": "~/Tags"
+    },
+    {
+      "name": "Latexinsulatoralt",
+      "type": "recipe",
+      "sortid": 468,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latexinsulatoralt",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/latexinsulatoralt.json"
+        ]
+      },
+      "path": "~/Recipes"
     }
   ],
   "variable_elements": [
@@ -10238,7 +10280,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon Plus",
-    "version": "2.5.2-b",
+    "version": "2.5.3",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
