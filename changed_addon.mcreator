@@ -2217,7 +2217,7 @@
       "type": "livingentity",
       "sortid": 24,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "foxyas",
       "metadata": {
         "files": [
@@ -9313,6 +9313,7 @@
     {
       "name": "CustomCodeBackUp",
       "type": "code",
+      "sortid": 470,
       "compiles": true,
       "locked_code": true,
       "registry_name": "custom_code_back_up",
@@ -9399,6 +9400,19 @@
         ]
       },
       "path": "~/Recipes"
+    },
+    {
+      "name": "ChangedAddonModelsRegister",
+      "type": "code",
+      "sortid": 469,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "changed_addon_models_register",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/ChangedAddonModelsRegister.java"
+        ]
+      }
     }
   ],
   "variable_elements": [

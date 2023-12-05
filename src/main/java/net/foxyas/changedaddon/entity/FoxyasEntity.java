@@ -1,6 +1,10 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.LatexType;
+import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.util.Color3;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -62,7 +66,7 @@ import javax.annotation.Nonnull;
 
 import io.netty.buffer.Unpooled;
 
-public class FoxyasEntity extends Monster {
+public class FoxyasEntity extends LatexEntity {
 	public FoxyasEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.FOXYAS.get(), world);
 	}
@@ -73,6 +77,21 @@ public class FoxyasEntity extends Monster {
 		xpReward = 10;
 		setNoAi(false);
 		setPersistenceRequired();
+	}
+
+	@Override
+	public Color3 getHairColor(int i) {
+		return Color3.getColor("#ffffff");
+	}
+
+	@Override
+	public LatexType getLatexType() {
+		return LatexType.NEUTRAL;
+	}
+
+	@Override
+	public TransfurMode getTransfurMode() {
+		return TransfurMode.REPLICATION;
 	}
 
 	@Override
@@ -139,6 +158,11 @@ public class FoxyasEntity extends Monster {
 		this.goalSelector.addGoal(10, new FloatGoal(this));
 		this.goalSelector.addGoal(11, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(12, new OpenDoorGoal(this, false));
+	}
+
+	@Override
+	public Color3 getDripColor() {
+		return Color3.getColor("#ffffff");
 	}
 
 	@Override

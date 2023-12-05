@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.variants;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.FoxyasEntity;
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.ability.HoldEntityAbility;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -39,6 +41,9 @@ public class AddonLatexVariant {
           	.groundSpeed(1.05F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).scares(List.of()).additionalHealth(6).build(new ResourceLocation("changed_addon", "form_light_latex_wolf")));
 	public static final LatexVariant<LatexSnowLeopardMale> ADDON_SNOW_LEOPARD = register(LatexVariant.Builder.of(ChangedEntities.LATEX_SNOW_LEOPARD_MALE)
           	.groundSpeed(1.08F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).scares(List.of()).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_leopard")));
+    public static final LatexVariant<FoxyasEntity> ADDON_LATEX_SNOW_FOX = register(LatexVariant.Builder.of(ChangedAddonModEntities.FOXYAS)
+            .groundSpeed(1.08F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).scares(List.of()).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_fox")));
+
 
     private static <T extends LatexEntity> LatexVariant<T> register(LatexVariant<T> variant) {
         return LatexVariant.register(variant);
