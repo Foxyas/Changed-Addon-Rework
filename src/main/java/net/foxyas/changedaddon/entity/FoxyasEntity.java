@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.ltxprogrammer.changed.entity.HairStyle;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -66,6 +67,10 @@ import javax.annotation.Nonnull;
 
 import io.netty.buffer.Unpooled;
 
+import java.util.List;
+
+import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
+
 public class FoxyasEntity extends LatexEntity {
 	public FoxyasEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.FOXYAS.get(), world);
@@ -91,8 +96,21 @@ public class FoxyasEntity extends LatexEntity {
 
 	@Override
 	public TransfurMode getTransfurMode() {
-		return TransfurMode.REPLICATION;
+		return TransfurMode.NONE;
 	}
+
+	@Override
+	public HairStyle getDefaultHairStyle() {
+		return BALD.get();
+	}
+
+	@Override
+	public @Nullable List<HairStyle> getValidHairStyles() {
+		return HairStyle.Collection.MALE.getStyles();
+	}
+
+
+
 
 	@Override
 	public Packet<?> getAddEntityPacket() {

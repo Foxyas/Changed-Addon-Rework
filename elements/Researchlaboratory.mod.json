@@ -24,7 +24,7 @@
     "jigsawSize": 1,
     "absoluteHeight": 0,
     "distanceFromCenter": 32,
-    "minSpacingSeparation": 75,
+    "minSpacingSeparation": 10,
     "maxSpacingSeparation": 95,
     "selectedStructure": "research_lab",
     "structuresWeight": 1,

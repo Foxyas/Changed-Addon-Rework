@@ -24,7 +24,7 @@
     "jigsawSize": 1,
     "absoluteHeight": 0,
     "distanceFromCenter": 32,
-    "minSpacingSeparation": 90,
+    "minSpacingSeparation": 30,
     "maxSpacingSeparation": 160,
     "selectedStructure": "destroy_research_lab",
     "structuresWeight": 1,
