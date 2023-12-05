@@ -122,19 +122,21 @@ public class ModelSnowFox extends LatexHumanoidModel<FoxyasEntity> implements La
         PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(20, 44).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, CubeDeformation.NONE)
                 .texOffs(32, 0).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.2F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
 
+		/*
 		PartDefinition RightPawBeans = RightArm.addOrReplaceChild("RightPawBeans", CubeListBuilder.create().texOffs(0, 19).addBox(-1.0F, -0.5F, 0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F))
 				.texOffs(32, 26).addBox(-0.5F, -0.5F, -1.125F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F))
 				.texOffs(24, 32).addBox(-1.775F, -0.5F, -0.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F))
 				.texOffs(20, 32).addBox(0.8F, -0.5F, -0.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)), PartPose.offset(-1.0F, 9.475F, -0.75F));
-
+		*/
         PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(36, 44).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, CubeDeformation.NONE)
                 .texOffs(44, 12).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.2F)), PartPose.offset(5.0F, 2.0F, 0.0F));
                 
+		/*
 		PartDefinition LeftPawBeans = LeftArm.addOrReplaceChild("LeftPawBeans", CubeListBuilder.create().texOffs(0, 19).mirror().addBox(-1.0F, -0.5F, 0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F)).mirror(false)
 				.texOffs(32, 26).mirror().addBox(-0.5F, -0.5F, -1.125F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
 				.texOffs(24, 32).mirror().addBox(0.775F, -0.5F, -0.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
 				.texOffs(20, 32).mirror().addBox(-1.8F, -0.5F, -0.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false), PartPose.offset(1.0F, 9.475F, -0.75F));
-		
+		*/
         PartDefinition RightLeg = partdefinition.addOrReplaceChild("RightLeg", CubeListBuilder.create(), PartPose.offset(-2.25F, 12.0F, 0.0F));
 
         PartDefinition leg_fur_r1 = RightLeg.addOrReplaceChild("leg_fur_r1", CubeListBuilder.create().texOffs(60, 18).addBox(-2.0F, -6.7987F, -2.9677F, 4.0F, 6.0F, 4.0F, new CubeDeformation(0.2F))
