@@ -10,9 +10,9 @@ import net.foxyas.changedaddon.client.model.ModelSnowFox;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.client.model.ModelFoxyasModel;
 
-public class FoxyasRenderer extends LatexHumanoidRenderer<FoxyasEntity,ModelSnowFox, ArmorLatexWolfModel<FoxyasEntity>> {
+public class FoxyasRenderer extends LatexHumanoidRenderer<FoxyasEntity,ModelSnowFox, ArmorLatexWolfModel.RemodelMale<FoxyasEntity>> {
 	public FoxyasRenderer(EntityRendererProvider.Context context) {
-		super(context, new ModelSnowFox(context.bakeLayer(ModelSnowFox.LAYER_LOCATION)),ArmorLatexWolfModel::new,ArmorLatexWolfModel.INNER_ARMOR,ArmorLatexWolfModel.OUTER_ARMOR, 0.5f);
+		super(context, new ModelSnowFox(context.bakeLayer(ModelSnowFox.LAYER_LOCATION)),ArmorLatexWolfModel.RemodelMale::new,ArmorLatexWolfModel.RemodelMale.INNER_ARMOR,ArmorLatexWolfModel.RemodelMale.OUTER_ARMOR, 0.5f);
 	}
 
 	@Override

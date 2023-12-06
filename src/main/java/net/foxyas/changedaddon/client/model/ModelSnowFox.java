@@ -55,6 +55,7 @@ public class ModelSnowFox extends LatexHumanoidModel<FoxyasEntity> implements La
         this.LeftLeg = root.getChild("LeftLeg");
         this.Tail = Torso.getChild("Tail");
         animator = of(this).addPreset(AnimatorPresets.wolfLike(Head, Torso, LeftArm, RightArm, Tail, List.of(), LeftLeg, RightLeg)).hipOffset(0.0f);
+
     }
 
     @Override
