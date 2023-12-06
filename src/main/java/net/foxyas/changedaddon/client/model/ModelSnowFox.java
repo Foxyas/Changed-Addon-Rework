@@ -7,6 +7,7 @@ package net.foxyas.changedaddon.client.model;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
 import net.ltxprogrammer.changed.client.renderer.model.LightLatexWolfMaleModel;
@@ -55,7 +56,8 @@ public class ModelSnowFox extends LatexHumanoidModel<FoxyasEntity> implements La
         this.LeftLeg = root.getChild("LeftLeg");
         this.Tail = Torso.getChild("Tail");
         animator = of(this).addPreset(AnimatorPresets.wolfLike(Head, Torso, LeftArm, RightArm, Tail, List.of(), LeftLeg, RightLeg)).hipOffset(0.0f);
-		
+
+		
     }
     
     public static LayerDefinition createBodyLayer() {
@@ -148,9 +150,14 @@ public class ModelSnowFox extends LatexHumanoidModel<FoxyasEntity> implements La
     public void prepareMobModel (FoxyasEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
    	 }
-   	 
-        
-		@Override
+
+    public PoseStack getPlacementCorrectors(CorrectorType type) {
+        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        if (type.isArm())
+            corrector.translate(-0.025f, -0.04f, 0.1f);
+        return corrector;
+    }
+		@Override
     	public void setupHand() {
         animator.setupHand();
     	}
@@ -172,6 +179,7 @@ public class ModelSnowFox extends LatexHumanoidModel<FoxyasEntity> implements La
         public ModelPart getTorso() {
         return Torso;
         }
+
 
 
     @Override
