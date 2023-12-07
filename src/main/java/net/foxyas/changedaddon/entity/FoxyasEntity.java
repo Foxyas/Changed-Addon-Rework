@@ -105,7 +105,10 @@ public class FoxyasEntity extends LatexEntity {
 		return HairStyle.Collection.MALE.getStyles();
 	}
 
-
+	@Override
+	public Color3 getDripColor() {
+		return Color3.getColor("#ffffff");
+	}
 
 	@Override
 	public Packet<?> getAddEntityPacket() {
@@ -176,10 +179,7 @@ public class FoxyasEntity extends LatexEntity {
 	*/
 	}
 
-	@Override
-	public Color3 getDripColor() {
-		return Color3.getColor("#ffffff");
-	}
+
 
 	@Override
 	public MobType getMobType() {
