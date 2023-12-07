@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.world.entity.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -34,11 +35,6 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.InteractionResult;
@@ -111,7 +107,6 @@ public class FoxyasEntity extends LatexEntity {
 
 
 
-
 	@Override
 	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
@@ -120,6 +115,8 @@ public class FoxyasEntity extends LatexEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		/*
+
 		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
 		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
@@ -176,6 +173,7 @@ public class FoxyasEntity extends LatexEntity {
 		this.goalSelector.addGoal(10, new FloatGoal(this));
 		this.goalSelector.addGoal(11, new OpenDoorGoal(this, true));
 		this.goalSelector.addGoal(12, new OpenDoorGoal(this, false));
+	*/
 	}
 
 	@Override
