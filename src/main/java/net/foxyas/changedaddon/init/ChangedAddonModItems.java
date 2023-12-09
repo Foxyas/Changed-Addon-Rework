@@ -123,6 +123,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_RECORD = REGISTRY.register("experiment_009_phase_2_record", () -> new Experiment009Phase2RecordItem());
 	public static final RegistryObject<Item> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", () -> new TransfurTotemItem());
 	public static final RegistryObject<Item> LUNARROSE_HELMET = REGISTRY.register("lunarrose_helmet", () -> new LunarroseItem.Helmet());
+	public static final RegistryObject<Item> LATEX_SNOW_FOX_SPAWN_EGG = REGISTRY.register("latex_snow_fox_spawn_egg",
+			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX, -1, -11974327, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+	public static final RegistryObject<Item> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = REGISTRY.register("latex_snow_fox_female_spawn_egg",
+			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE, -1, -11974327, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

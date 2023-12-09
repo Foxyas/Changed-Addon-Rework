@@ -10,6 +10,8 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.foxyas.changedaddon.client.renderer.PrototypeRenderer;
+import net.foxyas.changedaddon.client.renderer.LatexSnowFoxRenderer;
+import net.foxyas.changedaddon.client.renderer.LatexSnowFoxFemaleRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009phase2Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009Renderer;
@@ -22,5 +24,7 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.FOXYAS.get(), FoxyasRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_009.get(), Experiment009Renderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Renderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX.get(), LatexSnowFoxRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleRenderer::new);
 	}
 }

@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Entity;
 
@@ -32,6 +33,13 @@ public class FoxyasOnEntityTickUpdateProcedure {
 						_entity.getNavigation().moveTo((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()), 0.8);
 				}
 			}
+		}
+		if (entity.isInWater() && entity.isUnderWater() && !entity.isOnGround()) {
+			entity.setPose(Pose.SWIMMING);
+		} else if (entity.isInWater() && !entity.isUnderWater() && entity.isOnGround()) {
+			entity.setPose(Pose.STANDING);
+		} else if (!entity.isInWater() && !entity.isUnderWater() && entity.isOnGround()) {
+			entity.setPose(Pose.STANDING);
 		}
 		if (entity.isInWater()) {
 			if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == (null))) {

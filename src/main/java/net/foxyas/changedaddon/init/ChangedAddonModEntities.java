@@ -17,6 +17,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
 import net.foxyas.changedaddon.entity.PrototypeEntity;
+import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
+import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 import net.foxyas.changedaddon.entity.Experiment009Entity;
@@ -39,6 +41,14 @@ public class ChangedAddonModEntities {
 					.sized(0.6f, 1.9f));
 	public static final RegistryObject<EntityType<Experiment009phase2Entity>> EXPERIMENT_009_PHASE_2 = register("experiment_009_phase_2", EntityType.Builder.<Experiment009phase2Entity>of(Experiment009phase2Entity::new, MobCategory.MONSTER)
 			.setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009phase2Entity::new).fireImmune().sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<LatexSnowFoxEntity>> LATEX_SNOW_FOX = register("latex_snow_fox",
+			EntityType.Builder.<LatexSnowFoxEntity>of(LatexSnowFoxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnowFoxEntity::new)
+
+					.sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<LatexSnowFoxFemaleEntity>> LATEX_SNOW_FOX_FEMALE = register("latex_snow_fox_female",
+			EntityType.Builder.<LatexSnowFoxFemaleEntity>of(LatexSnowFoxFemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnowFoxFemaleEntity::new)
+
+					.sized(0.6f, 1.9f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -51,6 +61,8 @@ public class ChangedAddonModEntities {
 			FoxyasEntity.init();
 			Experiment009Entity.init();
 			Experiment009phase2Entity.init();
+			LatexSnowFoxEntity.init();
+			LatexSnowFoxFemaleEntity.init();
 		});
 	}
 
@@ -60,5 +72,7 @@ public class ChangedAddonModEntities {
 		event.put(FOXYAS.get(), FoxyasEntity.createAttributes().build());
 		event.put(EXPERIMENT_009.get(), Experiment009Entity.createAttributes().build());
 		event.put(EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Entity.createAttributes().build());
+		event.put(LATEX_SNOW_FOX.get(), LatexSnowFoxEntity.createAttributes().build());
+		event.put(LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleEntity.createAttributes().build());
 	}
 }

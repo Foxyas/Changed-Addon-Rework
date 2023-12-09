@@ -4,7 +4,7 @@ package net.foxyas.changedaddon.client.model;
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
-import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
+import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
@@ -33,7 +33,7 @@ import java.util.List;
 
 import static net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator.*;
 
-public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> implements LatexHumanoidModelInterface<LatexSnowFoxEntity,ModelSnowFox> {
+public class ModelFemaleSnowFox extends LatexHumanoidModel<LatexSnowFoxFemaleEntity> implements LatexHumanoidModelInterface<LatexSnowFoxFemaleEntity,ModelFemaleSnowFox> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "snowfox"), "main");
 
@@ -44,9 +44,9 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-    private final LatexAnimator<LatexSnowFoxEntity, ModelSnowFox> animator;
+    private final LatexAnimator<LatexSnowFoxFemaleEntity, ModelFemaleSnowFox> animator;
 
-    public ModelSnowFox(ModelPart root) {
+    public ModelFemaleSnowFox(ModelPart root) {
         super(root);
         this.Head = root.getChild("Head");
         this.Torso = root.getChild("Torso");
@@ -84,6 +84,11 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
                 .texOffs(28, 28).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.2F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition Tail = Torso.addOrReplaceChild("Tail", CubeListBuilder.create(), PartPose.offset(0.0F, 11.0F, 0.0F));
+
+		PartDefinition Breasts = Torso.addOrReplaceChild("Breasts", CubeListBuilder.create().texOffs(64, 5).addBox(-4.25F, -2.25F, -1.0F, 4.0F, 4.0F, 2.0F, new CubeDeformation(0.0F))
+		.texOffs(76, 5).addBox(0.25F, -2.25F, -1.0F, 4.0F, 4.0F, 2.0F, new CubeDeformation(0.0F))
+		.texOffs(76, 11).addBox(0.25F, -2.25F, -1.0F, 4.0F, 4.0F, 2.0F, new CubeDeformation(0.2F))
+		.texOffs(76, 17).addBox(-4.25F, -2.25F, -1.0F, 4.0F, 4.0F, 2.0F, new CubeDeformation(0.2F)), PartPose.offsetAndRotation(0.0F, 2.5F, -2.0F, -0.4363F, 0.0F, 0.0F));
 
         PartDefinition lower_fur_r1 = Tail.addOrReplaceChild("lower_fur_r1", CubeListBuilder.create().texOffs(68, 38).addBox(-1.5F, 0.1914F, -1.4483F, 3.0F, 6.0F, 3.0F, new CubeDeformation(0.2F))
                 .texOffs(64, 68).addBox(-1.5F, 0.1914F, -1.4483F, 3.0F, 6.0F, 3.0F, CubeDeformation.NONE), PartPose.offsetAndRotation(0.0F, 2.125F, 6.0F, 1.4835F, 0.0F, 0.0F));
@@ -147,7 +152,7 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
     }
 
     @Override
-    public void prepareMobModel (LatexSnowFoxEntity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public void prepareMobModel (LatexSnowFoxFemaleEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
    	 }
 
@@ -164,7 +169,7 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
 
 
     @Override
-    public void setupAnim(@NotNull LatexSnowFoxEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull LatexSnowFoxFemaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         }
 
@@ -193,7 +198,9 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
     }
     
         @Override
-        public LatexAnimator<LatexSnowFoxEntity, ModelSnowFox> getAnimator() {
+        public LatexAnimator<LatexSnowFoxFemaleEntity, ModelFemaleSnowFox> getAnimator() {
        	 return animator;
         }
 }
+
+

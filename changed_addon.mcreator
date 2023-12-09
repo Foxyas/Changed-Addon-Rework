@@ -2217,13 +2217,13 @@
       "type": "livingentity",
       "sortid": 24,
       "compiles": true,
-      "locked_code": true,
+      "locked_code": false,
       "registry_name": "foxyas",
       "metadata": {
         "files": [
-          "src/main/resources/assets/changed_addon/models/item/foxyas_spawn_egg.json",
           "src/main/java/net/foxyas/changedaddon/entity/FoxyasEntity.java",
-          "src/main/java/net/foxyas/changedaddon/client/renderer/FoxyasRenderer.java"
+          "src/main/java/net/foxyas/changedaddon/client/renderer/FoxyasRenderer.java",
+          "src/main/resources/assets/changed_addon/models/item/foxyas_spawn_egg.json"
         ]
       },
       "path": "~/Entity"
@@ -3238,9 +3238,9 @@
       "registry_name": "unifusergui",
       "metadata": {
         "files": [
-          "src/main/java/net/foxyas/changedaddon/network/UnifuserguiButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/UnifuserguiScreen.java",
-          "src/main/java/net/foxyas/changedaddon/world/inventory/UnifuserguiMenu.java"
+          "src/main/java/net/foxyas/changedaddon/world/inventory/UnifuserguiMenu.java",
+          "src/main/java/net/foxyas/changedaddon/network/UnifuserguiButtonMessage.java"
         ]
       },
       "path": "~/Guis"
@@ -9412,6 +9412,77 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/ChangedAddonModelsRegister.java"
         ]
+      },
+      "path": "~/CustomCode"
+    },
+    {
+      "name": "AdvancementTriggers",
+      "type": "procedure",
+      "sortid": 471,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "advancement_triggers",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/AdvancementTriggersProcedure.java"
+        ],
+        "dependencies": []
+      },
+      "path": "~/CustomCode"
+    },
+    {
+      "name": "ReturnPlayerName",
+      "type": "procedure",
+      "sortid": 472,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "return_player_name",
+      "metadata": {
+        "return_type": "string",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ReturnPlayerNameProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "LatexSnowFox",
+      "type": "livingentity",
+      "sortid": 473,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "latex_snow_fox",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/LatexSnowFoxRenderer.java",
+          "src/main/resources/assets/changed_addon/models/item/latex_snow_fox_spawn_egg.json",
+          "src/main/java/net/foxyas/changedaddon/entity/LatexSnowFoxEntity.java"
+        ]
+      }
+    },
+    {
+      "name": "LatexSnowFoxFemale",
+      "type": "livingentity",
+      "sortid": 474,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "latex_snow_fox_female",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/entity/LatexSnowFoxFemaleEntity.java",
+          "src/main/java/net/foxyas/changedaddon/client/renderer/LatexSnowFoxFemaleRenderer.java",
+          "src/main/resources/assets/changed_addon/models/item/latex_snow_fox_female_spawn_egg.json"
+        ]
       }
     }
   ],
@@ -9736,6 +9807,7 @@
       "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
       "gui.changed_addon.book_pagenumber_2.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
       "subtitles.spray.sound": "Using Spray",
+      "item.changed_addon.latex_snow_fox_spawn_egg": "Latex Snow Fox Spawn Egg",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
@@ -9785,6 +9857,7 @@
       "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
+      "entity.changed_addon.latex_snow_fox_female": "Female Latex Snow Fox",
       "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
       "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
@@ -10009,6 +10082,7 @@
       "changedaddon.assimilation.on": "Assimilation activated",
       "item.changed_addon.experiment_009dna": "Experiment 009 DNA",
       "gui.changed_addon.book_pagenumber_7.label_all_overlays_can_be_turned_on_by": "All overlays can be turned on by ",
+      "entity.changed_addon.latex_snow_fox": "Latex Snow Fox",
       "item.changed_addon.unlatexbase": "Anti-Latex Base",
       "gui.changed_addon.bookpagenumber_4.button_close": "Close",
       "item.changed_addon.experiment_009_spawn_egg": "Experiment 009 Spawn Egg",
@@ -10046,6 +10120,7 @@
       "changedaddon.assimilation.when_on": "Activating assimilation deactivates Friendly Mode",
       "gamerule.doGrabNeedLook.description": "When players need to look at the target to grab",
       "gui.changed_addon.book_pagenumber_6.label_ansfur_modes": "-ansfur modes (need Friendly-",
+      "item.changed_addon.latex_snow_fox_female_spawn_egg": "Female Latex Snow Fox Spawn Egg",
       "advancements.assimilatethem.descr": "You activated the assimilation",
       "advancements.timesthesyringewasuseadvancement_3.descr": "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!",
       "advancements.foxyas_advancement.title": "§4YOU MONSTER",

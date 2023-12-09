@@ -154,18 +154,6 @@ public class SmalltickupdateProcedure {
 				});
 			}
 		}
-		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
-				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == true) {
-			if (entity instanceof ServerPlayer _player) {
-				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:organic_transfur_advancement"));
-				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-				if (!_ap.isDone()) {
-					Iterator _iterator = _ap.getRemainingCriteria().iterator();
-					while (_iterator.hasNext())
-						_player.getAdvancements().award(_adv, (String) _iterator.next());
-				}
-			}
-		}
 		OrganicSwingbuff = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba758"), "organic_swin_buff", 0.3, AttributeModifier.Operation.ADDITION);
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
 				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == true) {

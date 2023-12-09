@@ -2,7 +2,10 @@ package net.foxyas.changedaddon.variants;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
+import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
+import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.HoldEntityAbility;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -17,10 +20,11 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AddonLatexVariant {
-    //public static UseItemMode ABO = UseItemMode.create("ABO",false,true,true,true,true); 
+    //public static UseItemMode ABO = UseItemMode.create("ABO",false,true,true,true,true);
 	//this is For Not Show The Hot Bar
 	//.itemUseMode(ABO)
     public static final LatexVariant<LightLatexWolfOrganic> ADDON_ORGANIC_LIGHT_LATEX_WOLF = register(LatexVariant.Builder.of(LatexVariant.LIGHT_LATEX_WOLF_ORGANIC, ChangedEntities.LIGHT_LATEX_WOLF_ORGANIC)
@@ -41,9 +45,8 @@ public class AddonLatexVariant {
           	.groundSpeed(1.05F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).scares(List.of()).additionalHealth(6).build(new ResourceLocation("changed_addon", "form_light_latex_wolf")));
 	public static final LatexVariant<LatexSnowLeopardMale> ADDON_SNOW_LEOPARD = register(LatexVariant.Builder.of(ChangedEntities.LATEX_SNOW_LEOPARD_MALE)
           	.groundSpeed(1.08F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).scares(List.of()).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_leopard")));
-    public static final LatexVariant<FoxyasEntity> ADDON_LATEX_SNOW_FOX = register(LatexVariant.Builder.of(ChangedAddonModEntities.FOXYAS)
-            .groundSpeed(1.08F).swimSpeed(1.0F).transfurMode(TransfurMode.NONE).scares(List.of()).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_fox")));
-
+    public static final GenderedVariant<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> ADDON_LATEX_SNOW_FOX = LatexVariant.register(GenderedVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX, ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
+            .groundSpeed(1.04F).swimSpeed(1.0F).addAbility(ChangedAbilities.SWITCH_TRANSFUR_MODE).scares(List.of()).additionalHealth(6).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_latex_snow_fox")));
 
     private static <T extends LatexEntity> LatexVariant<T> register(LatexVariant<T> variant) {
         return LatexVariant.register(variant);
