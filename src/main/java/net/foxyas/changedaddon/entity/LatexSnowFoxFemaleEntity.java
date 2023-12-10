@@ -42,7 +42,7 @@ import java.util.Set;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 @Mod.EventBusSubscriber
-public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEntity {
+public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEntity,PowderSnowWalkable {
 	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("snowy_plains"), new ResourceLocation("snowy_taiga"), new ResourceLocation("snowy_beach"));
 
 	@SubscribeEvent
@@ -63,7 +63,7 @@ public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEnt
 	}
 	@Override
 	public Color3 getHairColor(int i) {
-		return Color3.getColor("#ffffff");
+		return Color3.getColor("#E5E5E5");
 	}
 
 	@Override
@@ -119,6 +119,7 @@ public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEnt
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		/*
 		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
@@ -129,6 +130,7 @@ public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEnt
 		this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(5, new FloatGoal(this));
+		*/
 	}
 
 	@Override
