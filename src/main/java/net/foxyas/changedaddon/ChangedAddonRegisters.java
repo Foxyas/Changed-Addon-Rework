@@ -62,8 +62,8 @@ import net.foxyas.changedaddon.item.AmmoniaParticlesJeiIllustrativeItem;
 import net.foxyas.changedaddon.item.AmmoniaItem;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
+@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonRegisters extends ChangedAddonModItems {
-	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
 	public static final RegistryObject<Item> LATEX_SNOW_FOX_SPAWN_EGG = REGISTRY.register("latex_snow_fox_spawn_egg",
     () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX, -1, -11974327, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 	public static final RegistryObject<Item> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = REGISTRY.register("latex_snow_fox_female_spawn_egg",
