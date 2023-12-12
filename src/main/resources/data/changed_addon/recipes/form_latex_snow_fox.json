@@ -1,0 +1,20 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:sweet_berries"
+    },
+    {
+      "item": "minecraft:snowball"
+    }
+    
+  ],
+  "gendered": true,
+  "form": "changed_addon:form_latex_snow_fox"
+}
