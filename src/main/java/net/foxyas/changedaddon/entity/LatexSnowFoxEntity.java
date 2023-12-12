@@ -65,6 +65,10 @@ public class LatexSnowFoxEntity extends LatexEntity implements GenderedEntity,Po
 	public Color3 getHairColor(int i) {
 		return Color3.getColor("#E5E5E5");
 	}
+	
+	@Override
+    public int getTicksRequiredToFreeze() { return 700; }
+
 
 	@Override
 	public LatexType getLatexType() {

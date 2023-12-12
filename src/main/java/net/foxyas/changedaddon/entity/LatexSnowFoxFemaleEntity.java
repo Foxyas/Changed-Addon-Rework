@@ -105,6 +105,9 @@ public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEnt
 		}
 		return color;
 	}
+	
+	@Override
+    public int getTicksRequiredToFreeze() { return 700; }
 
 	@Override
 	public Gender getGender() {

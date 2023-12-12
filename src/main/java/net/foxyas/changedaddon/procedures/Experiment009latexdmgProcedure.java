@@ -37,24 +37,26 @@ public class Experiment009latexdmgProcedure {
 		if (sourceentity instanceof Experiment009Entity) {
 			if (entity instanceof Player) {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
-					float Math = 0.8f;
-					float PlayerTransfurProgress = new Object() {
-						public float getValue() {
-							CompoundTag dataIndex0 = new CompoundTag();
-							entity.saveWithoutId(dataIndex0);
-							return dataIndex0.getFloat("TransfurProgress");
-						}
-					}.getValue();
-					CompoundTag dataIndex1 = new CompoundTag();
-					entity.saveWithoutId(dataIndex1);
-					dataIndex1.putFloat("TransfurProgress", PlayerTransfurProgress + Math);
-					entity.load(dataIndex1);
-					CompoundTag dataIndex2 = new CompoundTag();
-					entity.saveWithoutId(dataIndex2);
-					dataIndex2.putString("TransfurProgressType", "changed:form_light_latex_wolf/male");
-					entity.load(dataIndex2);
-					if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-						_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get(), 200, 2, false, true));
+					if (!(entity instanceof LivingEntity _livEnt ? _livEnt.isBlocking() : false)) {
+						float Math = 0.8f;
+						float PlayerTransfurProgress = new Object() {
+							public float getValue() {
+								CompoundTag dataIndex0 = new CompoundTag();
+								entity.saveWithoutId(dataIndex0);
+								return dataIndex0.getFloat("TransfurProgress");
+							}
+						}.getValue();
+						CompoundTag dataIndex1 = new CompoundTag();
+						entity.saveWithoutId(dataIndex1);
+						dataIndex1.putFloat("TransfurProgress", PlayerTransfurProgress + Math);
+						entity.load(dataIndex1);
+						CompoundTag dataIndex3 = new CompoundTag();
+						entity.saveWithoutId(dataIndex3);
+						dataIndex3.putString("TransfurProgressType", "changed:form_light_latex_wolf/male");
+						entity.load(dataIndex3);
+						if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+							_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get(), 200, 2, false, true));
+					}
 				}
 			}
 		}

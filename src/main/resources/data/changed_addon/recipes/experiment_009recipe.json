@@ -3,7 +3,7 @@
   "pattern": [
 	"NAN",
     "LTP",
-    "UAA"
+    "UCD"
   ],
   "key": {
     "T": {
@@ -23,12 +23,21 @@
     },
     
     "A":{
-    	"item": "changed_addon:painite_block"
+    	"item": "minecraft:diamond_block"
     },
     
     "N":{
-		"item": "minecraft:netherite_block"
+		"item": "changed_addon:painite_block"
+    },
+    
+    "C":{
+		"item": "minecraft:gold_block"
+    },
+    
+    "D":{
+		"item": "minecraft:iron_block"
     }
+
     
   },
   "result": {
