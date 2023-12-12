@@ -86,11 +86,7 @@ public class MusicPlayerProcedure {
 								}
 							}.compareDistOf((entity.getX()), (entity.getY()), (entity.getZ()))).findFirst().orElse(null)).isAlive()) {
 						if (isExperiment009ThemePlaying) {
-							{
-								Entity _ent = entity;
-								if (!_ent.level.isClientSide() && _ent.getServer() != null)
-									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme_phase2");
-							}
+							musicManager.stopPlaying();
 						}
 					}
 				} else if (!world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 32, 32, 32), e -> true).isEmpty()) {
@@ -123,30 +119,9 @@ public class MusicPlayerProcedure {
 								}
 							}.compareDistOf((entity.getX()), (entity.getY()), (entity.getZ()))).findFirst().orElse(null)).isAlive()) {
 						if (isExperiment009Phase2ThemePlaying) {
-							{
-								Entity _ent = entity;
-								if (!_ent.level.isClientSide() && _ent.getServer() != null)
-									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme");
-							}
+							musicManager.stopPlaying();
 						}
 					}
-				}
-			}
-		}
-		if (!(!world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 32, 32, 32), e -> true).isEmpty())) {
-			if (isExperiment009ThemePlaying) {
-				{
-					Entity _ent = entity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme");
-				}
-			}
-		} else if (!(!world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3((entity.getX()), (entity.getY()), (entity.getZ())), 32, 32, 32), e -> true).isEmpty())) {
-			if (isExperiment009Phase2ThemePlaying) {
-				{
-					Entity _ent = entity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme_phase2");
 				}
 			}
 		}
