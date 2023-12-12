@@ -7,3 +7,17 @@
         "+ Now the musics is a sound with music categorized and plays repeatedly if the entity is still alive and within a 32-block area.",
         "+ Experiment 009 now spills latex when hit if the damage amount is more than 4 (only a visual effect).",
         "+ Bug Fixes and texture improvements."                                                                                                }
+
+
+# Change Log dobf 2.5.3
+       "version": "2.5",
+       "date": "2023-12-12",
+       "changes":{
+          "+ Latex Snow Fox male/female model
+	   + Latex Snow Fox male/female Transfur stats
+	   + Latex Snow Fox male/female Transfur
+	   + Latex Snow Fox Texture male/female
+	   + Latex Snow Fox male/female Infuser recipe
+	   + Tweaks with the Music Player
+	   + Tweaks with the advancements"
+	  }       
