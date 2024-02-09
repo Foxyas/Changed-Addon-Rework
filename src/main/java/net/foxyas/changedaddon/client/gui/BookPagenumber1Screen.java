@@ -26,7 +26,6 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 	private final int x, y, z;
 	private final Player entity;
 	Button button_close;
-	Button button_changed_addon_overlays;
 	Button button_changed_addon_recipes;
 
 	public BookPagenumber1Screen(BookPagenumber1Menu container, Inventory inventory, Component text) {
@@ -47,10 +46,8 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		this.renderBackground(ms);
 		super.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
-		if (mouseX > leftPos + 143 && mouseX < leftPos + 167 && mouseY > topPos + 43 && mouseY < topPos + 67)
+		if (mouseX > leftPos + 4 && mouseX < leftPos + 28 && mouseY > topPos + 30 && mouseY < topPos + 54)
 			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.tooltip_show_the_recipes_of_changed_addo3"), mouseX, mouseY);
-		if (mouseX > leftPos + 152 && mouseX < leftPos + 176 && mouseY > topPos + 17 && mouseY < topPos + 41)
-			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.tooltip_will_show_information_about_chan"), mouseX, mouseY);
 	}
 
 	@Override
@@ -79,8 +76,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_empty"), 152, 51, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_empty1"), 161, 24, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_empty"), 14, 36, -16777216);
 	}
 
 	@Override
@@ -101,18 +97,10 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		});
 		guistate.put("button:button_close", button_close);
 		this.addRenderableWidget(button_close);
-		button_changed_addon_overlays = new Button(this.leftPos + 5, this.topPos + 19, 145, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.button_changed_addon_overlays"), e -> {
+		button_changed_addon_recipes = new Button(this.leftPos + 33, this.topPos + 32, 134, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.button_changed_addon_recipes"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber1ButtonMessage(1, x, y, z));
 				BookPagenumber1ButtonMessage.handleButtonAction(entity, 1, x, y, z);
-			}
-		});
-		guistate.put("button:button_changed_addon_overlays", button_changed_addon_overlays);
-		this.addRenderableWidget(button_changed_addon_overlays);
-		button_changed_addon_recipes = new Button(this.leftPos + 5, this.topPos + 46, 134, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.button_changed_addon_recipes"), e -> {
-			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber1ButtonMessage(2, x, y, z));
-				BookPagenumber1ButtonMessage.handleButtonAction(entity, 2, x, y, z);
 			}
 		});
 		guistate.put("button:button_changed_addon_recipes", button_changed_addon_recipes);

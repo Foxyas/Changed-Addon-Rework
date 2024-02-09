@@ -166,20 +166,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "GrabKeybind",
-      "type": "keybind",
-      "sortid": 43,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grab_keybind",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/GrabKeybindMessage.java"
-        ]
-      },
-      "path": "~/Keybinds"
-    },
-    {
       "name": "Showstrugglebutton",
       "type": "procedure",
       "sortid": 44,
@@ -335,8 +321,8 @@
       "registry_name": "book_pagenumber_1",
       "metadata": {
         "files": [
-          "src/main/java/net/foxyas/changedaddon/network/BookPagenumber1ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/BookPagenumber1Menu.java",
+          "src/main/java/net/foxyas/changedaddon/network/BookPagenumber1ButtonMessage.java",
           "src/main/java/net/foxyas/changedaddon/client/gui/BookPagenumber1Screen.java"
         ]
       },
@@ -1942,8 +1928,8 @@
       "registry_name": "painite_pickaxe",
       "metadata": {
         "files": [
-          "src/main/resources/assets/changed_addon/models/item/painite_pickaxe.json",
-          "src/main/java/net/foxyas/changedaddon/item/PainitePickaxeItem.java"
+          "src/main/java/net/foxyas/changedaddon/item/PainitePickaxeItem.java",
+          "src/main/resources/assets/changed_addon/models/item/painite_pickaxe.json"
         ]
       },
       "path": "~/Items"
@@ -1957,8 +1943,8 @@
       "registry_name": "painite_axe",
       "metadata": {
         "files": [
-          "src/main/java/net/foxyas/changedaddon/item/PainiteAxeItem.java",
-          "src/main/resources/assets/changed_addon/models/item/painite_axe.json"
+          "src/main/resources/assets/changed_addon/models/item/painite_axe.json",
+          "src/main/java/net/foxyas/changedaddon/item/PainiteAxeItem.java"
         ]
       },
       "path": "~/Items"
@@ -1972,8 +1958,8 @@
       "registry_name": "painite_sword",
       "metadata": {
         "files": [
-          "src/main/resources/assets/changed_addon/models/item/painite_sword.json",
-          "src/main/java/net/foxyas/changedaddon/item/PainiteSwordItem.java"
+          "src/main/java/net/foxyas/changedaddon/item/PainiteSwordItem.java",
+          "src/main/resources/assets/changed_addon/models/item/painite_sword.json"
         ]
       },
       "path": "~/Items"
@@ -1992,48 +1978,6 @@
         ]
       },
       "path": "~/Items"
-    },
-    {
-      "name": "PainitePickaxeRecipe",
-      "type": "recipe",
-      "sortid": 122,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_pickaxe_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_pickaxe_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
-    },
-    {
-      "name": "PainiteAxeRecipe",
-      "type": "recipe",
-      "sortid": 123,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_axe_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_axe_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
-    },
-    {
-      "name": "PainiteSwordRecipe",
-      "type": "recipe",
-      "sortid": 124,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_sword_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_sword_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
     },
     {
       "name": "PainiteShovelRecipe",
@@ -2059,69 +2003,13 @@
       "metadata": {
         "files": [
           "src/main/resources/assets/changed_addon/models/item/painite_armor_chestplate.json",
-          "src/main/resources/assets/changed_addon/models/item/painite_armor_leggings.json",
           "src/main/java/net/foxyas/changedaddon/item/PainiteArmorItem.java",
+          "src/main/resources/assets/changed_addon/models/item/painite_armor_helmet.json",
           "src/main/resources/assets/changed_addon/models/item/painite_armor_boots.json",
-          "src/main/resources/assets/changed_addon/models/item/painite_armor_helmet.json"
+          "src/main/resources/assets/changed_addon/models/item/painite_armor_leggings.json"
         ]
       },
       "path": "~/Armors"
-    },
-    {
-      "name": "PainiteArmorHelmetRecipe",
-      "type": "recipe",
-      "sortid": 126,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_armor_helmet_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_armor_helmet_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
-    },
-    {
-      "name": "PainiteArmorBodyRecipe",
-      "type": "recipe",
-      "sortid": 127,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_armor_body_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_armor_body_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
-    },
-    {
-      "name": "PainiteArmorLeggingsRecipe",
-      "type": "recipe",
-      "sortid": 128,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_armor_leggings_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_armor_leggings_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
-    },
-    {
-      "name": "PainiteArmorBootsRecipe",
-      "type": "recipe",
-      "sortid": 129,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_armor_boots_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_armor_boots_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
     },
     {
       "name": "PainiteOrePrope",
@@ -4479,9 +4367,9 @@
       "registry_name": "experiment_009_phase_2",
       "metadata": {
         "files": [
+          "src/main/java/net/foxyas/changedaddon/entity/Experiment009phase2Entity.java",
           "src/main/java/net/foxyas/changedaddon/client/renderer/Experiment009phase2Renderer.java",
-          "src/main/resources/assets/changed_addon/models/item/experiment_009_phase_2_spawn_egg.json",
-          "src/main/java/net/foxyas/changedaddon/entity/Experiment009phase2Entity.java"
+          "src/main/resources/assets/changed_addon/models/item/experiment_009_phase_2_spawn_egg.json"
         ]
       },
       "path": "~/Entity"
@@ -8805,20 +8693,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "OpenGrabRadial",
-      "type": "keybind",
-      "sortid": 433,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "open_grab_radial",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/OpenGrabRadialMessage.java"
-        ]
-      },
-      "path": "~/Keybinds"
-    },
-    {
       "name": "TransfurTotemAdvancement1",
       "type": "achievement",
       "sortid": 434,
@@ -9512,6 +9386,126 @@
         ]
       },
       "path": "~/Tags"
+    },
+    {
+      "name": "Dazed",
+      "type": "livingentity",
+      "sortid": 477,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "dazed",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/DazedRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/DazedEntity.java"
+        ]
+      },
+      "path": "~/CustomCode/entitys"
+    },
+    {
+      "name": "LatexTotemKeepConcience",
+      "type": "procedure",
+      "sortid": 478,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "latex_totem_keep_concience",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexTotemKeepConcienceProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaethinPropertyValueProvider",
+      "type": "procedure",
+      "sortid": 479,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "laethin_property_value_provider",
+      "metadata": {
+        "return_type": "number",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LaethinPropertyValueProviderProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Laethin",
+      "type": "item",
+      "sortid": 480,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "laethin",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/LaethinItem.java",
+          "src/main/resources/assets/changed_addon/models/item/laethin_0.json",
+          "src/main/resources/assets/changed_addon/models/item/laethin.json"
+        ]
+      }
+    },
+    {
+      "name": "LaethinSyringe",
+      "type": "item",
+      "sortid": 481,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "laethin_syringe",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/LaethinSyringeItem.java",
+          "src/main/resources/assets/changed_addon/models/item/laethin_syringe_0.json",
+          "src/main/resources/assets/changed_addon/models/item/laethin_syringe.json"
+        ]
+      }
+    },
+    {
+      "name": "LaethinSyringePlayerFinishesUsingItem",
+      "type": "procedure",
+      "sortid": 482,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "laethin_syringe_player_finishes_using_item",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LaethinSyringePlayerFinishesUsingItemProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -9881,7 +9875,7 @@
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "key.changed_addon.opengrabescapegui": "Open Grab Escape/Concience Fight Gui",
+      "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
       "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
       "advancements.advancement_dont_want_friendly_grab.title": "no thanks",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
@@ -9943,7 +9937,7 @@
       "translation.FriendlyGrab.HumanText": "§bYou are in Friendly Grab Press (key) for leave",
       "changedaddon.friendlygrab.alreadyin": "You are already Friendly Grabbing",
       "changedaddon.untransfur.no_effect": "No effect",
-      "key.changed_addon.grab_keybind": "grab",
+      "entity.changed_addon.dazed": "Dazed Latex",
       "gui.changed_addon.bookpagenumber_3.label_blast_fornec": "blast furnace",
       "gui.changed_addon.book_pagenumber_1.label_latex_beings": "-fted.",
       "gui.changed_addon.book_pagenumber_1.tooltip_will_show_information_about_chan": "Will Show Information about Changed Addon Overlays",
@@ -9977,6 +9971,7 @@
       "gui.changed_addon.bookrecipepage_6.label_unifuser": "Unifuser",
       "changedaddon.untransfur.sloweffect": "For some reason this seems to have slowed effect",
       "item.changed_addon.syringewithlitixcammonia": "Syringe with Litix-Camonia",
+      "item.changed_addon.laethin_syringe": "Laethin Syringe",
       "gui.changed_addon.bookpagenumber_3.label_below": " below",
       "gui.changed_addon.bookrecipepage_8.button_close": "Close",
       "advancements.obtaina_painite_hoe.descr": "You did an Painite Hoe congratulations you have a dedication §n§o§b BEYOND THE LIMIT§r",
@@ -10040,6 +10035,7 @@
       "gui.changed_addon.bookrecipepage_7.label_16": "16",
       "advancements.ammoniacraft.descr": "You craft one Ammonia Powder",
       "item.changed_addon.painite_pickaxe": "Painite Pickaxe",
+      "item.changed_addon.latex_dazed_spawn_egg": "Latex Dazed Spawn Egg",
       "advancements.unifuser_advancement.descr": "You craft or get a Unifisuer",
       "gui.changed_addon.grab_radial_menu_friendly.button_back": "back",
       "gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it1": "are you sure?",
@@ -10092,7 +10088,6 @@
       "gui.changed_addon.catlyzergui.button_start_craft": "start craft",
       "advancements.untransfuradvancement_2.title": "I don\u0027t think it\u0027s that permanent!!",
       "changed_addon.compact_disc.title.experiment_009": "§n§4Demoleculated §r§n§b Experiment",
-      "key.changed_addon.open_grab_radial": "Open Grab Radial",
       "subtitles.in_grab_sound": "Player being grabbed",
       "gui.changed_addon.foxyasgui.button_trade": "Trade",
       "item.changed_addon.painite_sword": "Painite Sword",
@@ -10116,6 +10111,7 @@
       "item.changed_addon.experiment_009_spawn_egg": "Experiment 009 Spawn Egg",
       "gui.changed_addon.bookpagenumber_5.button_close": "Close",
       "gui.changed_addon.bookrecipepage_9.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
+      "item.changed_addon.laethin": "Laethin",
       "changedaddon.friendlymode.when_on": "Activating Friendly mode deactivates assimilation",
       "gui.changed_addon.bookrecipepage_7.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "item.changed_addon.prototype_spawn_egg": "Prototype Spawn Egg",

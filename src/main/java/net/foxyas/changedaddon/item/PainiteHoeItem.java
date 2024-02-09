@@ -7,7 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.HoeItem;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 
 public class PainiteHoeItem extends HoeItem {
@@ -36,6 +35,6 @@ public class PainiteHoeItem extends HoeItem {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of(new ItemStack(ChangedAddonModItems.PAINITE.get()));
 			}
-		}, 0, -2f, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).fireResistant());
+		}, 0, -2f, new Item.Properties().tab(null).fireResistant());
 	}
 }

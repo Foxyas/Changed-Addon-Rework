@@ -11,7 +11,7 @@
     "enableBoots": true,
     "textureBoots": "new_painite_boots",
     "creativeTab": {
-      "value": "CUSTOM:ChangedAddon"
+      "value": "No creative tab entry"
     },
     "armorTextureFile": "newpainite_armor_",
     "helmetName": "Painite Helmet",

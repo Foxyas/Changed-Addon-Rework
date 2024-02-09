@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "changed_addon:items/laethinsyringe"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "changed_addon:laethin_syringe_type": 1
+      },
+      "model": "changed_addon:item/laethin_syringe_0"
+    }
+  ]
+}

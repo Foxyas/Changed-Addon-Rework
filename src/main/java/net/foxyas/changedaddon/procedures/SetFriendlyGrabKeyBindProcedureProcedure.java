@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.platform.InputConstants;
 
 @Mod.EventBusSubscriber(modid = "changed_addon", bus = Bus.FORGE)
-public class SetFriendlyGrabKeyBindProcedureProcedure {
+public class SetFriendlyGrabKeyBindProcedureProcedure {/*
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -89,5 +89,5 @@ class SetFriendlyGrabKeyBindProcedureServer {
                 });
       		  }
      	 }
-    }
+    }*/
 }

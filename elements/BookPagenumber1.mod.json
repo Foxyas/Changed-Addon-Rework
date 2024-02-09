@@ -27,20 +27,6 @@
       {
         "type": "button",
         "data": {
-          "name": "button_changed_addon_overlays",
-          "text": "Changed Addon HUD",
-          "onClick": {
-            "name": "Openpage6"
-          },
-          "width": 145,
-          "height": 20,
-          "x": 119,
-          "y": 94
-        }
-      },
-      {
-        "type": "button",
-        "data": {
           "name": "button_changed_addon_recipes",
           "text": "Changed Addon Recipes",
           "onClick": {
@@ -48,8 +34,8 @@
           },
           "width": 134,
           "height": 20,
-          "x": 119,
-          "y": 121
+          "x": 147,
+          "y": 107
         }
       },
       {
@@ -61,8 +47,8 @@
           },
           "width": 24,
           "height": 24,
-          "x": 257,
-          "y": 118
+          "x": 118,
+          "y": 105
         }
       },
       {
@@ -76,36 +62,8 @@
             "value": -16777216,
             "falpha": 0.0
           },
-          "x": 266,
-          "y": 126
-        }
-      },
-      {
-        "type": "label",
-        "data": {
-          "name": "label_empty1",
-          "text": {
-            "fixedValue": "?"
-          },
-          "color": {
-            "value": -16777216,
-            "falpha": 0.0
-          },
-          "x": 275,
-          "y": 99
-        }
-      },
-      {
-        "type": "tooltip",
-        "data": {
-          "name": "tooltip_will_show_information_about_chan",
-          "text": {
-            "fixedValue": "Will Show Information about Changed Addon Overlays"
-          },
-          "width": 24,
-          "height": 24,
-          "x": 266,
-          "y": 92
+          "x": 128,
+          "y": 111
         }
       }
     ],

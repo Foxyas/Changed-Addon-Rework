@@ -12,7 +12,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.BookPagenumber1Menu;
-import net.foxyas.changedaddon.procedures.Openpage6Procedure;
 import net.foxyas.changedaddon.procedures.Openpage2Procedure;
 import net.foxyas.changedaddon.procedures.ClosemenuProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -69,10 +68,6 @@ public class BookPagenumber1ButtonMessage {
 			ClosemenuProcedure.execute(entity);
 		}
 		if (buttonID == 1) {
-
-			Openpage6Procedure.execute(world, x, y, z, entity);
-		}
-		if (buttonID == 2) {
 
 			Openpage2Procedure.execute(world, x, y, z, entity);
 		}

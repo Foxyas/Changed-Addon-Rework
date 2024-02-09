@@ -76,6 +76,10 @@ public class TickentitySolventEnchantmenthitProcedure {
 						entity.hurt(SolventDmg, (float) (amount + math));
 					} else if (entity instanceof Experiment009Entity) {
 						entity.hurt(SolventDmg, (float) (amount + math));
+					} else if (entity instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
+						if (!entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex")))) {
+							entity.hurt(SolventDmg, (float) (amount + math));
+						}
 					}
 				}
 			}

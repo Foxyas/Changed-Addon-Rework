@@ -14,7 +14,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 
 public abstract class PainiteArmorItem extends ArmorItem {
@@ -64,7 +63,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 	public static class Helmet extends PainiteArmorItem {
 		public Helmet() {
-			super(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).fireResistant());
+			super(EquipmentSlot.HEAD, new Item.Properties().tab(null).fireResistant());
 		}
 
 		@Override
@@ -75,7 +74,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 	public static class Chestplate extends PainiteArmorItem {
 		public Chestplate() {
-			super(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).fireResistant());
+			super(EquipmentSlot.CHEST, new Item.Properties().tab(null).fireResistant());
 		}
 
 		@Override
@@ -86,7 +85,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 	public static class Leggings extends PainiteArmorItem {
 		public Leggings() {
-			super(EquipmentSlot.LEGS, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).fireResistant());
+			super(EquipmentSlot.LEGS, new Item.Properties().tab(null).fireResistant());
 		}
 
 		@Override
@@ -97,7 +96,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 	public static class Boots extends PainiteArmorItem {
 		public Boots() {
-			super(EquipmentSlot.FEET, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).fireResistant());
+			super(EquipmentSlot.FEET, new Item.Properties().tab(null).fireResistant());
 		}
 
 		@Override

@@ -73,16 +73,15 @@ public class Experiment009Entity extends Monster {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, ServerPlayer.class, false, false));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.5, false) {
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, Player.class, false, false));
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
 		});
-		this.targetSelector.addGoal(4, new HurtByTargetGoal(this));
-		this.goalSelector.addGoal(5, new LeapAtTargetGoal(this, (float) 0.5) {
+		this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
+		this.goalSelector.addGoal(4, new LeapAtTargetGoal(this, (float) 0.5) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009Entity.this.getX();
@@ -103,7 +102,7 @@ public class Experiment009Entity extends Monster {
 				return super.canContinueToUse() && IfplayerishighofentityProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1, 40) {
+		this.goalSelector.addGoal(5, new RandomSwimmingGoal(this, 1, 40) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009Entity.this.getX();
@@ -124,7 +123,7 @@ public class Experiment009Entity extends Monster {
 				return super.canContinueToUse() && IfInWaterProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1) {
+		this.goalSelector.addGoal(6, new RandomStrollGoal(this, 1) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009Entity.this.getX();
@@ -145,10 +144,10 @@ public class Experiment009Entity extends Monster {
 				return super.canContinueToUse() && IfnotInWaterProcedure.execute(entity);
 			}
 		});
-		this.goalSelector.addGoal(8, new OpenDoorGoal(this, true));
-		this.goalSelector.addGoal(9, new OpenDoorGoal(this, false));
-		this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-		this.goalSelector.addGoal(11, new FloatGoal(this) {
+		this.goalSelector.addGoal(7, new OpenDoorGoal(this, true));
+		this.goalSelector.addGoal(8, new OpenDoorGoal(this, false));
+		this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
+		this.goalSelector.addGoal(10, new FloatGoal(this) {
 			@Override
 			public boolean canUse() {
 				double x = Experiment009Entity.this.getX();

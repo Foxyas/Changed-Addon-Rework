@@ -71,7 +71,7 @@ public class GrabModeOverlaysOverlay {
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 			RenderSystem.setShaderColor(1, 1, 1, 1);
-			if (FriendlymodeoverlayDisplayOverlayIngameProcedure.execute(entity)) {
+			if (false/*FriendlymodeoverlayDisplayOverlayIngameProcedure.execute(entity)*/) {
 				if (ShowassimilationiconProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/assimilation.png"));
 					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 78, 0, 0, 16, 16, 16, 16);
@@ -153,7 +153,7 @@ public class GrabModeOverlaysOverlay {
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 			RenderSystem.setShaderColor(1, 1, 1, 1);
-			if (WantFriendlyGrabOverlayDisplayOverlayIngameProcedure.execute(entity)) {
+			if (false/*WantFriendlyGrabOverlayDisplayOverlayIngameProcedure.execute(entity)*/) {
 				if (ShowWantFriendlygrabfalseProcedure.execute(entity)) {
 					RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dont_want_friendly_grab.png"));
 					Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX , posY - 61, 0, 0, 16, 16, 16, 16);

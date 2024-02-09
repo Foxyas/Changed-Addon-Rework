@@ -87,7 +87,7 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.2.14' //Forge Version
-    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.12.1") //Changed
+    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.13") //Changed
     implementation fg.deobf("curse.maven:advanced-xray-256256:3712732")	//Xray Ores
     implementation fg.deobf("curse.maven:lightspeedmod-821790:4594803") //Speed Up The Start of The Game
     implementation fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon

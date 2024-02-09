@@ -5,7 +5,11 @@ import net.foxyas.changedaddon.client.model.ModelFemaleSnowFox;
 import net.foxyas.changedaddon.client.model.ModelSnowFox;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexWolfModel;
+import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
+import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexFemaleWolfModel;
+import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexFemaleWolfModel;
+import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -13,13 +17,15 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.client.model.ModelFoxyasModel;
 
-public class LatexSnowFoxFemaleRenderer extends LatexHumanoidRenderer<LatexSnowFoxFemaleEntity, ModelFemaleSnowFox, ArmorLatexWolfModel.RemodelFemale<LatexSnowFoxFemaleEntity>> {
+public class LatexSnowFoxFemaleRenderer extends LatexHumanoidRenderer<LatexSnowFoxFemaleEntity, ModelFemaleSnowFox, ArmorLatexFemaleWolfModel<LatexSnowFoxFemaleEntity>> {
 	public LatexSnowFoxFemaleRenderer(EntityRendererProvider.Context context) {
-		super(context, new ModelFemaleSnowFox(context.bakeLayer(ModelSnowFox.LAYER_LOCATION)),ArmorLatexWolfModel.RemodelFemale::new,ArmorLatexWolfModel.RemodelFemale.INNER_ARMOR,ArmorLatexWolfModel.RemodelFemale.OUTER_ARMOR, 0.5f);
+		super(context, new ModelFemaleSnowFox(context.bakeLayer(ModelFemaleSnowFox.LAYER_LOCATION)),ArmorLatexFemaleWolfModel::new,ArmorLatexFemaleWolfModel.INNER_ARMOR,ArmorLatexFemaleWolfModel.OUTER_ARMOR, 0.5f);
+		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(LatexSnowFoxFemaleEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/latexsnowfoxfemale.png");
+		return new ResourceLocation("changed_addon:textures/entities/latex_snowfox_female_new.png");
 	}
 }

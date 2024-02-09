@@ -20,9 +20,7 @@ import net.foxyas.changedaddon.network.WantfriendlygrabMessage;
 import net.foxyas.changedaddon.network.SetcangrabonMessage;
 import net.foxyas.changedaddon.network.SetassimilatonMessage;
 import net.foxyas.changedaddon.network.OpengrabescapeguiMessage;
-import net.foxyas.changedaddon.network.OpenGrabRadialMessage;
 import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
-import net.foxyas.changedaddon.network.GrabKeybindMessage;
 import net.foxyas.changedaddon.network.FriendlyGraboffMessage;
 import net.foxyas.changedaddon.network.DuctProneMessage;
 import net.foxyas.changedaddon.network.ActiveFriendlyModeMessage;
@@ -30,19 +28,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class ChangedAddonModKeyMappings {
-	public static final KeyMapping GRAB_KEYBIND = new KeyMapping("key.changed_addon.grab_keybind", GLFW.GLFW_KEY_G, "key.categories.grab_gui") {
-		private boolean isDownOld = false;
-
-		@Override
-		public void setDown(boolean isDown) {
-			super.setDown(isDown);
-			if (isDownOld != isDown && isDown) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GrabKeybindMessage(0, 0));
-				GrabKeybindMessage.pressAction(Minecraft.getInstance().player, 0, 0);
-			}
-			isDownOld = isDown;
-		}
-	};
 	public static final KeyMapping SETASSIMILATON = new KeyMapping("key.changed_addon.setassimilaton", GLFW.GLFW_KEY_UNKNOWN, "key.categories.grab_gui") {
 		private boolean isDownOld = false;
 
@@ -152,24 +137,10 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping OPEN_GRAB_RADIAL = new KeyMapping("key.changed_addon.open_grab_radial", GLFW.GLFW_KEY_H, "key.categories.grab_gui") {
-		private boolean isDownOld = false;
-
-		@Override
-		public void setDown(boolean isDown) {
-			super.setDown(isDown);
-			if (isDownOld != isDown && isDown) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenGrabRadialMessage(0, 0));
-				OpenGrabRadialMessage.pressAction(Minecraft.getInstance().player, 0, 0);
-			}
-			isDownOld = isDown;
-		}
-	};
 	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
 	public static void registerKeyBindings(FMLClientSetupEvent event) {
-		ClientRegistry.registerKeyBinding(GRAB_KEYBIND);
 		ClientRegistry.registerKeyBinding(SETASSIMILATON);
 		ClientRegistry.registerKeyBinding(ACTIVE_FRIENDLY_MODE);
 		ClientRegistry.registerKeyBinding(FRIENDLY_GRABOFF);
@@ -178,7 +149,6 @@ public class ChangedAddonModKeyMappings {
 		ClientRegistry.registerKeyBinding(WANTFRIENDLYGRAB);
 		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
 		ClientRegistry.registerKeyBinding(DUCT_PRONE);
-		ClientRegistry.registerKeyBinding(OPEN_GRAB_RADIAL);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -186,7 +156,6 @@ public class ChangedAddonModKeyMappings {
 		@SubscribeEvent
 		public static void onClientTick(TickEvent.ClientTickEvent event) {
 			if (Minecraft.getInstance().screen == null) {
-				GRAB_KEYBIND.consumeClick();
 				SETASSIMILATON.consumeClick();
 				ACTIVE_FRIENDLY_MODE.consumeClick();
 				FRIENDLY_GRABOFF.consumeClick();
@@ -195,7 +164,6 @@ public class ChangedAddonModKeyMappings {
 				WANTFRIENDLYGRAB.consumeClick();
 				OPEN_EXTRA_DETAILS.consumeClick();
 				DUCT_PRONE.consumeClick();
-				OPEN_GRAB_RADIAL.consumeClick();
 			}
 		}
 	}

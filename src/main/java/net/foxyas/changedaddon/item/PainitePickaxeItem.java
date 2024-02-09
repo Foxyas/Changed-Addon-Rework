@@ -7,7 +7,6 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 
 public class PainitePickaxeItem extends PickaxeItem {
@@ -36,6 +35,6 @@ public class PainitePickaxeItem extends PickaxeItem {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of(new ItemStack(ChangedAddonModItems.PAINITE.get()));
 			}
-		}, 1, -2.8f, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).fireResistant());
+		}, 1, -2.8f, new Item.Properties().tab(null).fireResistant());
 	}
 }
