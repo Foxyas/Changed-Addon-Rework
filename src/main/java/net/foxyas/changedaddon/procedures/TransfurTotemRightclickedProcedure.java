@@ -28,6 +28,7 @@ public class TransfurTotemRightclickedProcedure {
 		if (!entity.isShiftKeyDown()) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
 				if (!(itemstack.getOrCreateTag().getString("form")).isEmpty()) {
+					SummonDripParticlesProcedure.execute(entity);
 					{
 						Entity _ent = entity;
 						if (!_ent.level.isClientSide() && _ent.getServer() != null)

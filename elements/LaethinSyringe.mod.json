@@ -55,14 +55,14 @@
     "onFinishUsingItem": {
       "name": "LaethinSyringePlayerFinishesUsingItem"
     },
-    "isFood": false,
-    "nutritionalValue": 4,
-    "saturation": 0.3,
+    "isFood": true,
+    "nutritionalValue": 1,
+    "saturation": 20.0,
     "eatResultItem": {
       "value": ""
     },
     "isMeat": false,
-    "isAlwaysEdible": false,
+    "isAlwaysEdible": true,
     "animation": "drink"
   }
 }

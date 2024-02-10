@@ -13,8 +13,6 @@ public class LatexTotemKeepConcienceProcedure {
 	public static void execute(ProcessTransfur.KeepConsciousEvent event) {
 		if (event.player == null)
 			return;
-		if (true) {
-			event.shouldKeepConscious = true;
-		}
+			new ProcessTransfur.KeepConsciousEvent(event.player, true);
 	}
 }

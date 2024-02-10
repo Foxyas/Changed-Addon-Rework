@@ -41,13 +41,23 @@ public class UntransfurOnEffectActiveTickProcedure {
 				entity.hurt(DamageSource.GENERIC, entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()).getAmplifier() : 0);
 			}
 		}
-		if ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()).getDuration() : 0) == 1) {
+		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress >= 100) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
+				SummonDripParticlesProcedure.execute(entity);
 				{
 					Entity _ent = entity;
 					if (!_ent.level.isClientSide() && _ent.getServer() != null)
 						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
 				}
+				{
+					double _setval = 0;
+					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+						capability.UntransfurProgress = _setval;
+						capability.syncPlayerVariables(entity);
+					});
+				}
+				if (entity instanceof LivingEntity _entity)
+					_entity.removeEffect(ChangedAddonModMobEffects.UNTRANSFUR.get());
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == true) {
 					new Object() {
 						private int ticks = 0;

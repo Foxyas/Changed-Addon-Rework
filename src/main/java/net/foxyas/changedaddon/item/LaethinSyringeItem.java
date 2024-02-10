@@ -6,6 +6,7 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.entity.LivingEntity;
 
 import net.foxyas.changedaddon.procedures.LaethinSyringePlayerFinishesUsingItemProcedure;
@@ -13,7 +14,9 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class LaethinSyringeItem extends Item {
 	public LaethinSyringeItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(1).saturationMod(20f).alwaysEat()
+
+				.build()));
 	}
 
 	@Override

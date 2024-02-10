@@ -94,6 +94,7 @@ public class ChangedAddonModVariables {
 			clone.UnifuserRecipePage = original.UnifuserRecipePage;
 			clone.CatlyzerRecipePage = original.CatlyzerRecipePage;
 			clone.aredarklatex = original.aredarklatex;
+			clone.UntransfurProgress = original.UntransfurProgress;
 			if (!event.isWasDeath()) {
 				clone.times_the_syringe_was_used = original.times_the_syringe_was_used;
 				clone.grab_escape = original.grab_escape;
@@ -301,6 +302,7 @@ public class ChangedAddonModVariables {
 		public String FriendlyGrabKeybind = "";
 		public String FriendlyGrabbing = "";
 		public double LatexInfectionCooldown = 0.0;
+		public double UntransfurProgress = 0.0;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -341,6 +343,7 @@ public class ChangedAddonModVariables {
 			nbt.putString("FriendlyGrabKeybind", FriendlyGrabKeybind);
 			nbt.putString("FriendlyGrabbing", FriendlyGrabbing);
 			nbt.putDouble("LatexInfectionCooldown", LatexInfectionCooldown);
+			nbt.putDouble("UntransfurProgress", UntransfurProgress);
 			return nbt;
 		}
 
@@ -378,6 +381,7 @@ public class ChangedAddonModVariables {
 			FriendlyGrabKeybind = nbt.getString("FriendlyGrabKeybind");
 			FriendlyGrabbing = nbt.getString("FriendlyGrabbing");
 			LatexInfectionCooldown = nbt.getDouble("LatexInfectionCooldown");
+			UntransfurProgress = nbt.getDouble("UntransfurProgress");
 		}
 	}
 
@@ -434,6 +438,7 @@ public class ChangedAddonModVariables {
 					variables.FriendlyGrabKeybind = message.data.FriendlyGrabKeybind;
 					variables.FriendlyGrabbing = message.data.FriendlyGrabbing;
 					variables.LatexInfectionCooldown = message.data.LatexInfectionCooldown;
+					variables.UntransfurProgress = message.data.UntransfurProgress;
 				}
 			});
 			context.setPacketHandled(true);

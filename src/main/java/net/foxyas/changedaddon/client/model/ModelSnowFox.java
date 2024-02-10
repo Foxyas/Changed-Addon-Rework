@@ -159,7 +159,7 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
     public PoseStack getPlacementCorrectors(CorrectorType type) {
         PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
-            corrector.translate(-0.02f, 0.1f, 0.12f);
+            corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
     }
 		@Override

@@ -40,7 +40,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 		double speed = 0;
 		entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 1));
 		if (entity.getPersistentData().getDouble("IA") >= 100) {
-			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 175) {
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 200) {
 				if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null)) {
 					{
 						Entity _ent = entity;

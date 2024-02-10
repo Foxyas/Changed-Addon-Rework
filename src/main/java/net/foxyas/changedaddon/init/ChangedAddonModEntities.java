@@ -36,12 +36,6 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<FoxyasEntity>of(FoxyasEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FoxyasEntity::new)
 
 					.sized(0.6f, 1.9f));
-	public static final RegistryObject<EntityType<Experiment009Entity>> EXPERIMENT_009 = register("experiment_009",
-			EntityType.Builder.<Experiment009Entity>of(Experiment009Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009Entity::new)
-
-					.sized(0.6f, 1.9f));
-	public static final RegistryObject<EntityType<Experiment009phase2Entity>> EXPERIMENT_009_PHASE_2 = register("experiment_009_phase_2", EntityType.Builder.<Experiment009phase2Entity>of(Experiment009phase2Entity::new, MobCategory.MONSTER)
-			.setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009phase2Entity::new).fireImmune().sized(0.6f, 1.9f));
 	public static final RegistryObject<EntityType<LatexSnowFoxEntity>> LATEX_SNOW_FOX = register("latex_snow_fox",
 			EntityType.Builder.<LatexSnowFoxEntity>of(LatexSnowFoxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnowFoxEntity::new)
 
@@ -54,6 +48,12 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<DazedEntity>of(DazedEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(DazedEntity::new)
 
 					.sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<Experiment009Entity>> EXPERIMENT_009 = register("experiment_009",
+			EntityType.Builder.<Experiment009Entity>of(Experiment009Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009Entity::new)
+
+					.sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<Experiment009phase2Entity>> EXPERIMENT_009_PHASE_2 = register("experiment_009_phase_2", EntityType.Builder.<Experiment009phase2Entity>of(Experiment009phase2Entity::new, MobCategory.MONSTER)
+			.setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009phase2Entity::new).fireImmune().sized(0.6f, 1.9f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -64,11 +64,11 @@ public class ChangedAddonModEntities {
 		event.enqueueWork(() -> {
 			PrototypeEntity.init();
 			FoxyasEntity.init();
-			Experiment009Entity.init();
-			Experiment009phase2Entity.init();
 			LatexSnowFoxEntity.init();
 			LatexSnowFoxFemaleEntity.init();
 			DazedEntity.init();
+			Experiment009Entity.init();
+			Experiment009phase2Entity.init();
 		});
 	}
 
@@ -76,10 +76,10 @@ public class ChangedAddonModEntities {
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
 		event.put(PROTOTYPE.get(), PrototypeEntity.createAttributes().build());
 		event.put(FOXYAS.get(), FoxyasEntity.createAttributes().build());
-		event.put(EXPERIMENT_009.get(), Experiment009Entity.createAttributes().build());
-		event.put(EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Entity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX.get(), LatexSnowFoxEntity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleEntity.createAttributes().build());
 		event.put(DAZED.get(), DazedEntity.createAttributes().build());
+		event.put(EXPERIMENT_009.get(), Experiment009Entity.createAttributes().build());
+		event.put(EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Entity.createAttributes().build());
 	}
 }
