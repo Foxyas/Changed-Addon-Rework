@@ -7,20 +7,20 @@
   ],
   "key": {
     "0": {
-      "item": "changed_addon:litix_camonia"
+      "item": "changed_addon:laethin"
     },
     "4": {
       "item": "changed_addon:unifuserblock_illustrative_item"
     },
     "5": {
-      "item": "minecraft:air"
+      "tag": "changed_addon:bloodtype_syringe"
     },
     "6": {
-      "item": "changed_addon:laethin"
+      "tag": "changed_addon:gooey"
     }
   },
   "result": {
-    "item": "changed_addon:litix_camonia",
-    "count": 3
+    "item": "changed_addon:laethin_syringe",
+    "count": 1
   }
 }

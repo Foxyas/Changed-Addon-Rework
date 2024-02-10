@@ -38,7 +38,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 			return;
 		DamageSource UntransfurFail = null;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
-			if (Math.random() > 0.45) {
+			if (Math.random() >= 0.45) {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == true) {
 					if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 						_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
@@ -130,7 +130,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 						}
 					}
 				}
-			} else if (Math.random() <= 0.45) {
+			} else if (Math.random() < 0.45) {
 				UntransfurFail = new DamageSource("UnTransfurFail");
 				UntransfurFail.bypassArmor();
 				entity.hurt(UntransfurFail, 15);

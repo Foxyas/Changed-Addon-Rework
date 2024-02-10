@@ -1936,20 +1936,6 @@
       "path": "~/Items"
     },
     {
-      "name": "PainiteShovelRecipe",
-      "type": "recipe",
-      "sortid": 124,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_shovel_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_shovel_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
-    },
-    {
       "name": "PainiteArmor",
       "type": "armor",
       "sortid": 125,
@@ -4321,6 +4307,18 @@
             "type": "entity"
           },
           {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
             "name": "world",
             "type": "world"
           }
@@ -6603,20 +6601,6 @@
       "path": "~/Items"
     },
     {
-      "name": "ObtainaPainiteHoe",
-      "type": "achievement",
-      "sortid": 334,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "obtaina_painite_hoe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/advancements/obtaina_painite_hoe.json"
-        ]
-      },
-      "path": "~/advancements"
-    },
-    {
       "name": "PainiteBeaconFeature",
       "type": "tag",
       "sortid": 335,
@@ -6629,20 +6613,6 @@
         ]
       },
       "path": "~/Tags"
-    },
-    {
-      "name": "PainiteHoeRecipe",
-      "type": "recipe",
-      "sortid": 336,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_hoe_recipe",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/recipes/painite_hoe_recipe.json"
-        ]
-      },
-      "path": "~/Recipes"
     },
     {
       "name": "DarklatexpuddleFeature",
@@ -7277,10 +7247,6 @@
           {
             "name": "entity",
             "type": "entity"
-          },
-          {
-            "name": "immediatesourceentity",
-            "type": "entity"
           }
         ]
       },
@@ -7900,34 +7866,6 @@
       "path": "~/Tags"
     },
     {
-      "name": "GetfullPainiteArmor",
-      "type": "achievement",
-      "sortid": 397,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "getfull_painite_armor",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/advancements/getfull_painite_armor.json"
-        ]
-      },
-      "path": "~/advancements"
-    },
-    {
-      "name": "ObtainPainiteArmoWithProtection",
-      "type": "achievement",
-      "sortid": 398,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "obtain_painite_armo_with_protection",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/advancements/obtain_painite_armo_with_protection.json"
-        ]
-      },
-      "path": "~/advancements"
-    },
-    {
       "name": "Getfullpainitearmorprocedure",
       "type": "procedure",
       "sortid": 399,
@@ -7938,12 +7876,7 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/procedures/GetfullpainitearmorprocedureProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       },
       "path": "~/Procedures"
     },
@@ -7958,12 +7891,7 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/procedures/GetPainiteArmorWithProtectionProcedure.java"
         ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
+        "dependencies": []
       },
       "path": "~/Procedures"
     },
@@ -9335,7 +9263,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/laethin_craft.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "LaethinCraftwhite",
@@ -9348,7 +9277,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/laethin_craftwhite.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "SummonDripParticles",
@@ -9362,7 +9292,8 @@
           "src/main/java/net/foxyas/changedaddon/procedures/SummonDripParticlesProcedure.java"
         ],
         "dependencies": []
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "UntransfurProgress",
@@ -9421,6 +9352,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "JeiLaethingSyringe",
+      "type": "recipe",
+      "sortid": 466,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "jei_laething_syringe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/jei_laething_syringe.json"
+        ]
+      },
+      "path": "~/Recipes"
     }
   ],
   "variable_elements": [
@@ -9706,8 +9651,8 @@
   ],
   "language_map": {
     "en_us": {
-      "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "gui.changed_addon.book_pagenumber_7.label_ab": "-ab)",
+      "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
@@ -9719,12 +9664,12 @@
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "You aren\u0027t affected by this fluid",
+      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
-      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
+      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "key.changed_addon.setcangrabon": "Toggle Grab on",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
@@ -9750,9 +9695,9 @@
       "item.changed_addon.latex_snow_fox_spawn_egg": "Latex Snow Fox Spawn Egg",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
-      "attribute.changed_addon.latexresistance": "Latex Resistance",
-      "gui.changed_addon.pagesecret.button_close": "close",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
+      "gui.changed_addon.pagesecret.button_close": "close",
+      "attribute.changed_addon.latexresistance": "Latex Resistance",
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
@@ -9760,13 +9705,12 @@
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
       "gui.changed_addon.book_pagenumber_1.label_empty1": "?",
-      "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
+      "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
       "gui.changed_addon.bookpagenumber_4.label_in_the_rank_right_mouse_button": "in IV rank (right mouse button)",
-      "advancements.getfull_painite_armor.descr": "Gather a full set of Painite armor and show those monsters how to upgrade your style. Time to have §4fun§5 with your newfound protection!",
       "gui.changed_addon.tranfur_sounds_gui.label_transfursounds": "TransfurSounds",
       "gui.changed_addon.bookpagenumber_3.label_this_item_can_make_you_back_for": "this item can make you back for human stage",
       "gui.changed_addon.foxyas_gui_2.button_aa": "yes",
@@ -9790,15 +9734,15 @@
       "gui.changed_addon.bookpagenumber_3.label_to_purify_the_latex_syringes_jus": "to purify the latex syringes just craft a purifier and follow this example",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
-      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
+      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
       "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
+      "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
       "entity.changed_addon.latex_snow_fox_female": "Female Latex Snow Fox",
-      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
+      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe": "Display Litix-Camonia Recipe",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
@@ -9813,7 +9757,6 @@
       "gui.changed_addon.bookrecipepage_10.label_f3": "F",
       "changed_addon.latex_totem.notvalid": "Totem reacted §cnegatively§r to your §bDNA§r",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
-      "advancements.obtaina_painite_hoe.title": "Beyond Dedication",
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
       "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
@@ -9835,7 +9778,6 @@
       "gui.changed_addon.book_pagenumber_7.button_close": "Back",
       "gui.changed_addon.bookrecipepage_9.button_close": "Close",
       "gui.changed_addon.book_pagenumber_1.label_after_you_craft_or_have_the_late": "go need craft a latex syringe but first you will have to have a blood syringe",
-      "advancements.obtain_painite_armo_with_protection.title": "Painite Plus Plus",
       "block.changed_addon.unifuser": "Unifuser",
       "death.attack.latex_solvent": "%1$s was dissolved",
       "gui.changed_addon.book_pagenumber_7.label_organiccant_grab": "Organic/Cant Grab",
@@ -9857,8 +9799,8 @@
       "gui.changed_addon.book_pagenumber_1.tooltip_will_show_information_about_chan": "Will Show Information about Changed Addon Overlays",
       "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
       "item.changed_addon.catlyzerblock_illustrative_item": "IN Catalyzer Block Illustrative Item",
-      "gui.changed_addon.bookpagenumber_5.label_craft_table": "Crafting-table",
       "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
+      "gui.changed_addon.bookpagenumber_5.label_craft_table": "Crafting-table",
       "item.changed_addon.impureammonia": "Impure Ammonia",
       "advancements.timesthesyringewasused_advancement.descr": "You used a Litix-Camonia Syringe more than 32 times you are indecisive about your humanity holy!",
       "item.changed_addon.experiment_009_record.desc": "TryIgnitioHD-HYPERDEATH | StorySwap (DEVILOVANIA but swapped)",
@@ -9886,7 +9828,6 @@
       "item.changed_addon.laethin_syringe": "Laethin Syringe",
       "gui.changed_addon.bookpagenumber_3.label_below": " below",
       "gui.changed_addon.bookrecipepage_8.button_close": "Close",
-      "advancements.obtaina_painite_hoe.descr": "You did an Painite Hoe congratulations you have a dedication §n§o§b BEYOND THE LIMIT§r",
       "subtitles.experiment009_theme": "Experiment 009 Music Theme",
       "gui.changed_addon.book_pagenumber_7.label_mode_on": "-mode on) This Will change t-",
       "item.changed_addon.lunarrose_helmet": "Lunar Rose",
@@ -9922,7 +9863,6 @@
       "changedaddon.event.grab.when.you.die": "The person who was grabbing you §4Died§r before They could do anything!!",
       "item.changed_addon.transfur_totem": "Latex Totem",
       "item.changed_addon.orangejuice": "Orange Juice",
-      "advancements.obtain_painite_armo_with_protection.descr": "Become a legend by donning a Painite armor set with Protection 4. Monsters may try, but you\u0027re unbreakable (well, almost)!",
       "gui.changed_addon.book_pagenumber_6.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",
       "changedaddon.friendlygrab.you_hug.organic": "You are organic so you §chug§r them",
@@ -10160,7 +10100,6 @@
       "subtitles.grab_release": "Player release from grab",
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
       "gui.changed_addon.grabclickgui.button_breakfree": "breakfree",
-      "advancements.getfull_painite_armor.title": "Laughing in the Face of Danger",
       "gui.changed_addon.bookpagenumber_3.label_the_recipe_for_the_main_item_sho": "the recipe for the main item should be found",
       "gui.changed_addon.book_pagenumber_2.label_i_was_about_to_forget_but_we_cre": "-ier by placing the syringe in the slot to purify. If you are unsure about per",
       "gui.changed_addon.unifusergui.label_next_page": "Next Page",

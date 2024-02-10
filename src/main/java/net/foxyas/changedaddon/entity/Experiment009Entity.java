@@ -8,6 +8,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -182,9 +183,13 @@ public class Experiment009Entity extends Monster {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
+		if (source.getDirectEntity() instanceof AbstractArrow)
+			return false;
 		if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
 			return false;
 		if (source == DamageSource.FALL)
+			return false;
+		if (source.getMsgId().equals("trident"))
 			return false;
 		return super.hurt(source, amount);
 	}

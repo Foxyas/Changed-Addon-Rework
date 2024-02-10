@@ -2,7 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "0  ",
-    " 45"
+    " 45",
+    "6  "
   ],
   "key": {
     "0": {
@@ -13,6 +14,9 @@
     },
     "5": {
       "tag": "changed_addon:bloodtype_syringe"
+    },
+    "6": {
+      "item": "changed_addon:laethin"
     }
   },
   "result": {

@@ -12,10 +12,7 @@
     "recipeShapeless": false,
     "recipeSlots": [
       {
-        "value": ""
-      },
-      {
-        "value": "CUSTOM:Painite"
+        "value": "CUSTOM:Laethin"
       },
       {
         "value": ""
@@ -24,25 +21,28 @@
         "value": ""
       },
       {
-        "value": "Items.STICK"
-      },
-      {
         "value": ""
       },
       {
-        "value": ""
+        "value": "CUSTOM:UnifuserblockIllustrativeItem"
       },
       {
-        "value": "Items.STICK"
+        "value": "TAG:changed_addon:bloodtype_syringe"
+      },
+      {
+        "value": "TAG:changed_addon:gooey"
+      },
+      {
+        "value": ""
       },
       {
         "value": ""
       }
     ],
     "recipeReturnStack": {
-      "value": "CUSTOM:PainiteShovel"
+      "value": "CUSTOM:LaethinSyringe"
     },
-    "name": "painite_shovel_recipe",
+    "name": "jei_laething_syringe",
     "namespace": "mod"
   }
 }
