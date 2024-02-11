@@ -276,6 +276,34 @@
           "x": 229,
           "y": 84
         }
+      },
+      {
+        "type": "imagebutton",
+        "data": {
+          "name": "imagebutton_laething_syringe_slot",
+          "image": "laething_syringe_slot.png",
+          "hoveredImage": "laething_syringe_slot_selected.png",
+          "onClick": {
+            "name": "OpenBookRecipe11"
+          },
+          "x": 211,
+          "y": 100
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_laeting_syringe",
+          "text": {
+            "fixedValue": "Laeting Syringe"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 229,
+          "y": 103
+        }
       }
     ],
     "gridSettings": {

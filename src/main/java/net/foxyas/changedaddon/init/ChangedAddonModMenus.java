@@ -33,6 +33,7 @@ import net.foxyas.changedaddon.world.inventory.Bookrecipepage10Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber5Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber4Menu;
 import net.foxyas.changedaddon.world.inventory.Bookpagenumber3Menu;
+import net.foxyas.changedaddon.world.inventory.BookRecipePage11Menu;
 import net.foxyas.changedaddon.world.inventory.BookPagenumber7Menu;
 import net.foxyas.changedaddon.world.inventory.BookPagenumber6Menu;
 import net.foxyas.changedaddon.world.inventory.BookPagenumber2Menu;
@@ -69,6 +70,7 @@ public class ChangedAddonModMenus {
 	public static final MenuType<Bookrecipepage9Menu> BOOKRECIPEPAGE_9 = register("bookrecipepage_9", (id, inv, extraData) -> new Bookrecipepage9Menu(id, inv, extraData));
 	public static final MenuType<Bookrecipepage10Menu> BOOKRECIPEPAGE_10 = register("bookrecipepage_10", (id, inv, extraData) -> new Bookrecipepage10Menu(id, inv, extraData));
 	public static final MenuType<TransfurTotemGuiMenu> TRANSFUR_TOTEM_GUI = register("transfur_totem_gui", (id, inv, extraData) -> new TransfurTotemGuiMenu(id, inv, extraData));
+	public static final MenuType<BookRecipePage11Menu> BOOK_RECIPE_PAGE_11 = register("book_recipe_page_11", (id, inv, extraData) -> new BookRecipePage11Menu(id, inv, extraData));
 
 	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
 		MenuType<T> menuType = new MenuType<T>(containerFactory);

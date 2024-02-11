@@ -32,6 +32,7 @@ import net.foxyas.changedaddon.client.gui.Bookrecipepage10Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber5Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber4Screen;
 import net.foxyas.changedaddon.client.gui.Bookpagenumber3Screen;
+import net.foxyas.changedaddon.client.gui.BookRecipePage11Screen;
 import net.foxyas.changedaddon.client.gui.BookPagenumber7Screen;
 import net.foxyas.changedaddon.client.gui.BookPagenumber6Screen;
 import net.foxyas.changedaddon.client.gui.BookPagenumber2Screen;
@@ -67,6 +68,7 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_9, Bookrecipepage9Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_10, Bookrecipepage10Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.TRANSFUR_TOTEM_GUI, TransfurTotemGuiScreen::new);
+			MenuScreens.register(ChangedAddonModMenus.BOOK_RECIPE_PAGE_11, BookRecipePage11Screen::new);
 		});
 	}
 }

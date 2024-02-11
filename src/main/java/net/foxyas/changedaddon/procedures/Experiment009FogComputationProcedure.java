@@ -29,7 +29,7 @@ import java.util.Comparator;
 import com.mojang.blaze3d.shaders.FogShape;
 
 @Mod.EventBusSubscriber(value = {Dist.CLIENT})
-public class TestProcedure {
+public class Experiment009FogComputationProcedure {
 	@SubscribeEvent
 	public static void renderFog(EntityViewRenderEvent.RenderFogEvent event) {
 		try {
@@ -79,33 +79,35 @@ public class TestProcedure {
 					return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 				}
 			}.compareDistOf(x, y, z)).findFirst().orElse(null)) == (null))) {
-				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-					_renderFogEvent.setFogShape(FogShape.SPHERE);
-				}
-				deltaX = ((Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-						return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+				if (entity.getPersistentData().getBoolean("NoAI") == false) {
+					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+						_renderFogEvent.setFogShape(FogShape.SPHERE);
 					}
-				}.compareDistOf(x, y, z)).findFirst().orElse(null)).getX() - entity.getX();
-				deltaY = ((Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-						return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+					deltaX = ((Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+						}
+					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getX() - entity.getX();
+					deltaY = ((Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+						}
+					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getY() - entity.getY();
+					deltaZ = ((Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+						}
+					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getZ() - entity.getZ();
+					distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+						_renderFogEvent.setNearPlaneDistance(1);
+						_renderFogEvent.setFarPlaneDistance((float) Math.max(10, distance));
 					}
-				}.compareDistOf(x, y, z)).findFirst().orElse(null)).getY() - entity.getY();
-				deltaZ = ((Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-						return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
+						_fogColors.setRed(0 / 255.0F);
+						_fogColors.setGreen(0 / 255.0F);
+						_fogColors.setBlue(0 / 255.0F);
 					}
-				}.compareDistOf(x, y, z)).findFirst().orElse(null)).getZ() - entity.getZ();
-				distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-					_renderFogEvent.setNearPlaneDistance(1);
-					_renderFogEvent.setFarPlaneDistance((float) Math.max(10, distance));
-				}
-				if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-					_fogColors.setRed(0 / 255.0F);
-					_fogColors.setGreen(0 / 255.0F);
-					_fogColors.setBlue(0 / 255.0F);
 				}
 			}
 			if (!(((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
@@ -113,33 +115,35 @@ public class TestProcedure {
 					return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 				}
 			}.compareDistOf(x, y, z)).findFirst().orElse(null)) == (null))) {
-				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-					_renderFogEvent.setFogShape(FogShape.SPHERE);
-				}
-				deltaX = ((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-						return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+				if (entity.getPersistentData().getBoolean("NoAI") == false) {
+					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+						_renderFogEvent.setFogShape(FogShape.SPHERE);
 					}
-				}.compareDistOf(x, y, z)).findFirst().orElse(null)).getX() - entity.getX();
-				deltaY = ((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-						return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+					deltaX = ((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+						}
+					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getX() - entity.getX();
+					deltaY = ((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+						}
+					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getY() - entity.getY();
+					deltaZ = ((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+						Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+							return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+						}
+					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getZ() - entity.getZ();
+					distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+						_renderFogEvent.setNearPlaneDistance(1);
+						_renderFogEvent.setFarPlaneDistance((float) Math.max(10, distance));
 					}
-				}.compareDistOf(x, y, z)).findFirst().orElse(null)).getY() - entity.getY();
-				deltaZ = ((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-					Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-						return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
+						_fogColors.setRed(0 / 255.0F);
+						_fogColors.setGreen(0 / 255.0F);
+						_fogColors.setBlue(0 / 255.0F);
 					}
-				}.compareDistOf(x, y, z)).findFirst().orElse(null)).getZ() - entity.getZ();
-				distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-					_renderFogEvent.setNearPlaneDistance(1);
-					_renderFogEvent.setFarPlaneDistance((float) Math.max(10, distance));
-				}
-				if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-					_fogColors.setRed(0 / 255.0F);
-					_fogColors.setGreen(0 / 255.0F);
-					_fogColors.setBlue(0 / 255.0F);
 				}
 			}
 		}

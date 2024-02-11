@@ -72,14 +72,13 @@ public class TickentitySolventEnchantmenthitProcedure {
 					}
 				}
 				if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), (immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0) {
-					if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
-						entity.hurt(SolventDmg, (float) (amount + math));
-					} else if (entity instanceof Experiment009Entity) {
-						entity.hurt(SolventDmg, (float) (amount + math));
-					} else if (entity instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
+					if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity"))) || entity instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
 						if (!entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex")))) {
 							entity.hurt(SolventDmg, (float) (amount + math));
 						}
+					}
+					if (entity instanceof Experiment009Entity) {
+						entity.hurt(SolventDmg, (float) (amount + math));
 					}
 				}
 			}

@@ -33,6 +33,10 @@ public class Experiment009IsHurtProcedure {
 		if (entity instanceof Experiment009phase2Entity || entity instanceof Experiment009Entity) {
 			if ((damagesource) == DamageSource.IN_WALL) {
 				entity.getPersistentData().putDouble("BossTp", (1 + entity.getPersistentData().getDouble("BossTp")));
+			} else if ((damagesource) == DamageSource.LIGHTNING_BOLT) {
+				if (event != null && event.isCancelable()) {
+					event.setCanceled(true);
+				}
 			}
 		}
 	}

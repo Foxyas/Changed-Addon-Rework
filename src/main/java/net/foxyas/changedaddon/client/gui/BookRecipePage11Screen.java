@@ -12,8 +12,8 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.Minecraft;
 
-import net.foxyas.changedaddon.world.inventory.Bookrecipepage9Menu;
-import net.foxyas.changedaddon.network.Bookrecipepage9ButtonMessage;
+import net.foxyas.changedaddon.world.inventory.BookRecipePage11Menu;
+import net.foxyas.changedaddon.network.BookRecipePage11ButtonMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.HashMap;
@@ -21,8 +21,8 @@ import java.util.HashMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-public class Bookrecipepage9Screen extends AbstractContainerScreen<Bookrecipepage9Menu> {
-	private final static HashMap<String, Object> guistate = Bookrecipepage9Menu.guistate;
+public class BookRecipePage11Screen extends AbstractContainerScreen<BookRecipePage11Menu> {
+	private final static HashMap<String, Object> guistate = BookRecipePage11Menu.guistate;
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
@@ -30,7 +30,7 @@ public class Bookrecipepage9Screen extends AbstractContainerScreen<Bookrecipepag
 	Button button_close;
 	ImageButton imagebutton_recipe_buttom_normal;
 
-	public Bookrecipepage9Screen(Bookrecipepage9Menu container, Inventory inventory, Component text) {
+	public BookRecipePage11Screen(BookRecipePage11Menu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
 		this.world = container.world;
 		this.x = container.x;
@@ -41,7 +41,7 @@ public class Bookrecipepage9Screen extends AbstractContainerScreen<Bookrecipepag
 		this.imageHeight = 144;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/bookrecipepage_9.png");
+	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/book_recipe_page_11.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -61,14 +61,11 @@ public class Bookrecipepage9Screen extends AbstractContainerScreen<Bookrecipepag
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserscreen.png"));
 		this.blit(ms, this.leftPos + 34, this.topPos + 23, 0, 0, 200, 104, 200, 104);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamonia_slot.png"));
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_white_slot.png"));
 		this.blit(ms, this.leftPos + 49, this.topPos + 68, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/syringewithlitixcamonia_slot.png"));
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_syringe_slot.png"));
 		this.blit(ms, this.leftPos + 189, this.topPos + 80, 0, 0, 16, 16, 16, 16);
-
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_white_slot.png"));
-		this.blit(ms, this.leftPos + 49, this.topPos + 93, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.disableBlend();
 	}
@@ -89,9 +86,11 @@ public class Bookrecipepage9Screen extends AbstractContainerScreen<Bookrecipepag
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_9.label_unifuser"), 45, 35, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_9.label_pany_potion"), 7, 9, -256);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_9.label_p"), 90, 83, -256);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_unifuser"), 45, 35, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_pany_potion"), 7, 9, -256);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_p"), 90, 83, -256);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_g_any_gooey_item"), 168, 9, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_g"), 54, 97, -12829636);
 	}
 
 	@Override
@@ -104,18 +103,18 @@ public class Bookrecipepage9Screen extends AbstractContainerScreen<Bookrecipepag
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_back = new Button(this.leftPos + 164, this.topPos + -21, 46, 20, new TranslatableComponent("gui.changed_addon.bookrecipepage_9.button_back"), e -> {
+		button_back = new Button(this.leftPos + 164, this.topPos + -21, 46, 20, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.button_back"), e -> {
 			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookrecipepage9ButtonMessage(0, x, y, z));
-				Bookrecipepage9ButtonMessage.handleButtonAction(entity, 0, x, y, z);
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookRecipePage11ButtonMessage(0, x, y, z));
+				BookRecipePage11ButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
 		});
 		guistate.put("button:button_back", button_back);
 		this.addRenderableWidget(button_back);
-		button_close = new Button(this.leftPos + 215, this.topPos + -21, 51, 20, new TranslatableComponent("gui.changed_addon.bookrecipepage_9.button_close"), e -> {
+		button_close = new Button(this.leftPos + 215, this.topPos + -21, 51, 20, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.button_close"), e -> {
 			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookrecipepage9ButtonMessage(1, x, y, z));
-				Bookrecipepage9ButtonMessage.handleButtonAction(entity, 1, x, y, z);
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookRecipePage11ButtonMessage(1, x, y, z));
+				BookRecipePage11ButtonMessage.handleButtonAction(entity, 1, x, y, z);
 			}
 		});
 		guistate.put("button:button_close", button_close);

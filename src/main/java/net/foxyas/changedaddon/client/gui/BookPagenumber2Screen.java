@@ -36,6 +36,7 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 	ImageButton imagebutton_syringewithlitixcamonia_slot;
 	ImageButton imagebutton_litixcamoniabutton;
 	ImageButton imagebutton_catalyzed_dna_slot;
+	ImageButton imagebutton_laething_syringe_slot;
 
 	public BookPagenumber2Screen(BookPagenumber2Menu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -92,6 +93,7 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_syringe_with_litixcamonia"), 35, 114, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_litixcamonia"), 150, 16, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_catalyzed_dna"), 150, 36, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_laeting_syringe"), 150, 55, -12829636);
 	}
 
 	@Override
@@ -184,5 +186,13 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 		});
 		guistate.put("button:imagebutton_catalyzed_dna_slot", imagebutton_catalyzed_dna_slot);
 		this.addRenderableWidget(imagebutton_catalyzed_dna_slot);
+		imagebutton_laething_syringe_slot = new ImageButton(this.leftPos + 132, this.topPos + 52, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_laething_syringe_slot.png"), 16, 32, e -> {
+			if (true) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber2ButtonMessage(10, x, y, z));
+				BookPagenumber2ButtonMessage.handleButtonAction(entity, 10, x, y, z);
+			}
+		});
+		guistate.put("button:imagebutton_laething_syringe_slot", imagebutton_laething_syringe_slot);
+		this.addRenderableWidget(imagebutton_laething_syringe_slot);
 	}
 }

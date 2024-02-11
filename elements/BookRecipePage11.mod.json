@@ -48,24 +48,6 @@
         }
       },
       {
-        "type": "image",
-        "data": {
-          "image": "litixcamonia_slot.png",
-          "use1Xscale": false,
-          "x": 128,
-          "y": 116
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "syringewithlitixcamonia_slot.png",
-          "use1Xscale": false,
-          "x": 268,
-          "y": 128
-        }
-      },
-      {
         "type": "imagebutton",
         "data": {
           "name": "imagebutton_recipe_buttom_normal",
@@ -126,7 +108,46 @@
           "image": "laething_white_slot.png",
           "use1Xscale": false,
           "x": 128,
-          "y": 141
+          "y": 116
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_g_any_gooey_item",
+          "text": {
+            "fixedValue": "G = Any Gooey Item"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 247,
+          "y": 57
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_g",
+          "text": {
+            "fixedValue": "G"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 133,
+          "y": 145
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "laething_syringe_slot.png",
+          "use1Xscale": false,
+          "x": 268,
+          "y": 128
         }
       }
     ],

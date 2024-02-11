@@ -110,8 +110,8 @@
             "value": -12829636,
             "falpha": 0.0
           },
-          "x": 150,
-          "y": 111
+          "x": 149,
+          "y": 98
         }
       },
       {
@@ -119,8 +119,17 @@
         "data": {
           "image": "litixcamonia_slot.png",
           "use1Xscale": false,
-          "x": 165,
-          "y": 105
+          "x": 164,
+          "y": 84
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "laething_white_slot.png",
+          "use1Xscale": false,
+          "x": 164,
+          "y": 104
         }
       }
     ],

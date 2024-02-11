@@ -71,7 +71,10 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		this.blit(ms, this.leftPos + 50, this.topPos + 65, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamonia_slot.png"));
-		this.blit(ms, this.leftPos + 86, this.topPos + 57, 0, 0, 16, 16, 16, 16);
+		this.blit(ms, this.leftPos + 85, this.topPos + 36, 0, 0, 16, 16, 16, 16);
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_white_slot.png"));
+		this.blit(ms, this.leftPos + 85, this.topPos + 56, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.disableBlend();
 	}
@@ -93,7 +96,7 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_unifuser"), 45, 30, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_or"), 71, 63, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_or"), 70, 50, -12829636);
 	}
 
 	@Override

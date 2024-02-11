@@ -21,6 +21,7 @@ import net.foxyas.changedaddon.procedures.OpenBookRecipe5Procedure;
 import net.foxyas.changedaddon.procedures.OpenBookRecipe4Procedure;
 import net.foxyas.changedaddon.procedures.OpenBookRecipe3Procedure;
 import net.foxyas.changedaddon.procedures.OpenBookRecipe2Procedure;
+import net.foxyas.changedaddon.procedures.OpenBookRecipe11Procedure;
 import net.foxyas.changedaddon.procedures.ClosemenuProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -110,6 +111,10 @@ public class BookPagenumber2ButtonMessage {
 		if (buttonID == 9) {
 
 			Openpage4Procedure.execute(world, x, y, z, entity);
+		}
+		if (buttonID == 10) {
+
+			OpenBookRecipe11Procedure.execute(world, x, y, z, entity);
 		}
 	}
 
