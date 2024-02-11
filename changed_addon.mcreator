@@ -9185,7 +9185,8 @@
             "type": "itemstack"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Laethin",
@@ -9200,7 +9201,8 @@
           "src/main/resources/assets/changed_addon/models/item/laethin_0.json",
           "src/main/resources/assets/changed_addon/models/item/laethin.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "LaethinSyringe",
@@ -9215,7 +9217,8 @@
           "src/main/resources/assets/changed_addon/models/item/laethin_syringe_0.json",
           "src/main/resources/assets/changed_addon/models/item/laethin_syringe.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "LaethinSyringePlayerFinishesUsingItem",
@@ -9250,7 +9253,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "LaethinCraft",
@@ -9312,7 +9316,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "JeiLaethingSyringe",
@@ -9406,9 +9411,6 @@
       "locked_code": false,
       "registry_name": "experiment_009_fog_computation",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009FogComputationProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9435,7 +9437,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     }
   ],
   "variable_elements": [
