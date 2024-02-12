@@ -28,7 +28,7 @@ public class WantfriendlygrabOnKeyPressedProcedure {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
 					_player.displayClientMessage(new TextComponent("\u00A74(Can Friendly grab off) \u00A7rYou dont want to be friendly grabbed"), true);
 				if (entity instanceof ServerPlayer _player) {
-					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:advancement_dont_want_friendly_grab"));
+					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 					if (!_ap.isDone()) {
 						Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -47,7 +47,7 @@ public class WantfriendlygrabOnKeyPressedProcedure {
 				if (entity instanceof Player _player && !_player.level.isClientSide())
 					_player.displayClientMessage(new TextComponent("\u00A72(Can Friendly grab on) \u00A7rYou want to be friendly grabbed"), true);
 				if (entity instanceof ServerPlayer _player) {
-					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:advancement_want_friendly_grab"));
+					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 					if (!_ap.isDone()) {
 						Iterator _iterator = _ap.getRemainingCriteria().iterator();

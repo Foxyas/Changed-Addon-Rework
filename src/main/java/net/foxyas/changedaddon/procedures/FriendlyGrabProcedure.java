@@ -47,7 +47,7 @@ public class FriendlyGrabProcedure {
 								if (entityiterator instanceof Player _player && !_player.level.isClientSide())
 									_player.displayClientMessage(new TextComponent(("" + (new TranslatableComponent("changedaddon.friendlygrab.hug").getString()).replace("entity", entity.getDisplayName().getString()))), true);
 								if (entity instanceof ServerPlayer _player) {
-									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 									if (!_ap.isDone()) {
 										Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -56,7 +56,7 @@ public class FriendlyGrabProcedure {
 									}
 								}
 								if (entityiterator instanceof ServerPlayer _player) {
-									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+									Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 									AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 									if (!_ap.isDone()) {
 										Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -67,7 +67,7 @@ public class FriendlyGrabProcedure {
 								if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
 										&& ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_white_latex_wolf")) {
 									if (entityiterator instanceof ServerPlayer _player) {
-										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -76,7 +76,7 @@ public class FriendlyGrabProcedure {
 										}
 									}
 									if (entity instanceof ServerPlayer _player) {
-										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -87,7 +87,7 @@ public class FriendlyGrabProcedure {
 								} else if (((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
 										&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_white_latex_wolf")) {
 									if (entityiterator instanceof ServerPlayer _player) {
-										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -96,7 +96,7 @@ public class FriendlyGrabProcedure {
 										}
 									}
 									if (entity instanceof ServerPlayer _player) {
-										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gneticsdefying_friendship"));
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -163,7 +163,7 @@ public class FriendlyGrabProcedure {
 									if (entityiterator instanceof Player _player && !_player.level.isClientSide())
 										_player.displayClientMessage(new TextComponent(("" + (new TranslatableComponent("changedaddon.friendlygrab.hug").getString()).replace("entity", entity.getDisplayName().getString()))), true);
 									if (entity instanceof ServerPlayer _player) {
-										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -172,7 +172,7 @@ public class FriendlyGrabProcedure {
 										}
 									}
 									if (entityiterator instanceof ServerPlayer _player) {
-										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:hug"));
+										Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
 										AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 										if (!_ap.isDone()) {
 											Iterator _iterator = _ap.getRemainingCriteria().iterator();
