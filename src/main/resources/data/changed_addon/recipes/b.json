@@ -1,0 +1,18 @@
+{
+  "type": "changed_addon:jei_unifuser",
+  "ingredients": [
+    {
+      "item": "changed_addon:litix_camonia"
+    },
+    {
+      "item": "changed_addon:litix_camonia"
+    },
+    {
+      "item": "changed_addon:litix_camonia"
+    }
+  ],
+  "output": {
+    "item": "changed_addon:syringewithlitixcammonia",
+    "count": 1
+  }
+}

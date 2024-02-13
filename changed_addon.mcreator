@@ -9443,6 +9443,32 @@
         ]
       },
       "path": "~/Procedures"
+    },
+    {
+      "name": "A",
+      "type": "recipe",
+      "sortid": 470,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "a",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/a.json"
+        ]
+      }
+    },
+    {
+      "name": "B",
+      "type": "recipe",
+      "sortid": 471,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "b",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/b.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
