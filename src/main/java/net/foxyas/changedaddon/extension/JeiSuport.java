@@ -321,10 +321,10 @@ import net.minecraftforge.fml.common.Mod;
 
         @Override
         public void setRecipe(IRecipeLayoutBuilder builder, JeiUnifuserRecipe recipe, IFocusGroup focuses) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 15, 45).addIngredients(recipe.getIngredients().get(0));
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 155, 57).addItemStack(recipe.getResultItem());
-            builder.addSlot(RecipeIngredientRole.INPUT, 50, 57).addIngredients(recipe.getIngredients().get(2));
-            builder.addSlot(RecipeIngredientRole.INPUT, 15, 70).addIngredients(recipe.getIngredients().get(1));
+            builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipe.getIngredients().get(0));
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 18).addItemStack(recipe.getResultItem());
+            builder.addSlot(RecipeIngredientRole.INPUT, 37, 18).addIngredients(recipe.getIngredients().get(2));
+            builder.addSlot(RecipeIngredientRole.INPUT, 1, 36).addIngredients(recipe.getIngredients().get(1));
         }
     }
 

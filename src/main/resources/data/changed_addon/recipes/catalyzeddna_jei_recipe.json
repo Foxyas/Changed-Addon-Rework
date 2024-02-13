@@ -1,17 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "01"
-  ],
-  "key": {
-    "0": {
+  "type": "changed_addon:jei_catalyzer",
+  "ingredients": [
+    {
       "tag": "changed_addon:bloodtype_syringe"
-    },
-    "1": {
-      "item": "changed_addon:catlyzerblock_illustrative_item"
-    }
-  },
-  "result": {
+    }  
+  ],
+  "output": {
     "item": "changed_addon:catalyzeddna",
     "count": 1
   }

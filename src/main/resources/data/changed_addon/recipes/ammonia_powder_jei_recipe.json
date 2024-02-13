@@ -1,17 +1,11 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "01"
+  "type": "changed_addon:jei_catalyzer",
+  "ingredients": [
+    {
+      "item": "changed_addon:ammoniaparticle"
+    }  
   ],
-  "key": {
-    "0": {
-      "item": "changed_addon:ammonia_particles_jei_illustrative"
-    },
-    "1": {
-      "item": "changed_addon:catlyzerblock_illustrative_item"
-    }
-  },
-  "result": {
+  "output": {
     "item": "changed_addon:ammonia",
     "count": 1
   }

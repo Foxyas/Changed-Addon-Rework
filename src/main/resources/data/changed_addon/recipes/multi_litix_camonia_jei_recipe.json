@@ -1,25 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "0  ",
-    " 45",
-    "6  "
-  ],
-  "key": {
-    "0": {
+  "type": "changed_addon:jei_unifuser",
+  "ingredients": [
+    {
       "item": "changed_addon:litix_camonia"
     },
-    "4": {
-      "item": "changed_addon:unifuserblock_illustrative_item"
-    },
-    "5": {
-      "item": "minecraft:air"
-    },
-    "6": {
+    {
       "item": "changed_addon:laethin"
-    }
-  },
-  "result": {
+    },
+    {
+      "item": "minecraft:air"
+    }    
+  ],
+  "output": {
     "item": "changed_addon:litix_camonia",
     "count": 3
   }

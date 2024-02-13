@@ -1,25 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "0  ",
-    " 45",
-    "6  "
-  ],
-  "key": {
-    "0": {
+  "type": "changed_addon:jei_unifuser",
+  "ingredients": [
+    {
       "item": "changed_addon:laethin"
     },
-    "4": {
-      "item": "changed_addon:unifuserblock_illustrative_item"
-    },
-    "5": {
-      "tag": "changed_addon:bloodtype_syringe"
-    },
-    "6": {
+    {
       "tag": "changed_addon:gooey"
-    }
-  },
-  "result": {
+    },
+    {
+      "tag": "changed_addon:bloodtype_syringe"
+    }    
+  ],
+  "output": {
     "item": "changed_addon:laethin_syringe",
     "count": 1
   }
