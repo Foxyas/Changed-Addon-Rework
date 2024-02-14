@@ -28,4 +28,10 @@ description="this is a remastered version of my mod addon hope you like it If yo
     ordering="NONE"
     side="BOTH"
 
+[[dependencies.changed_addon]]
+    modId="jei"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
 

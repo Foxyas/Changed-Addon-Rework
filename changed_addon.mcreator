@@ -985,20 +985,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "FriendlyGraboff",
-      "type": "keybind",
-      "sortid": 75,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "friendly_graboff",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/FriendlyGraboffMessage.java"
-        ]
-      },
-      "path": "~/Keybinds"
-    },
-    {
       "name": "InfriendlygrabeffectOnEffectActiveTick",
       "type": "procedure",
       "sortid": 76,
@@ -3415,20 +3401,6 @@
         ]
       },
       "path": "~/Procedures"
-    },
-    {
-      "name": "Wantfriendlygrab",
-      "type": "keybind",
-      "sortid": 180,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "wantfriendlygrab",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/WantfriendlygrabMessage.java"
-        ]
-      },
-      "path": "~/Keybinds"
     },
     {
       "name": "DevItem2",
@@ -6354,7 +6326,7 @@
           "src/main/resources/data/changed_addon/recipes/litix_camoniajeirecipe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/JeiRecipes"
     },
     {
       "name": "MultiLitixCamoniaJeiRecipe",
@@ -6368,7 +6340,7 @@
           "src/main/resources/data/changed_addon/recipes/multi_litix_camonia_jei_recipe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/JeiRecipes"
     },
     {
       "name": "SyringewithlitixcamoniajeiRecipe",
@@ -6382,7 +6354,7 @@
           "src/main/resources/data/changed_addon/recipes/syringewithlitixcamoniajei_recipe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/JeiRecipes"
     },
     {
       "name": "AmmoniaParticlejeiRecipe",
@@ -6396,7 +6368,7 @@
           "src/main/resources/data/changed_addon/recipes/ammonia_particlejei_recipe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/JeiRecipes"
     },
     {
       "name": "AmmoniaPowderJeiRecipe",
@@ -6410,7 +6382,7 @@
           "src/main/resources/data/changed_addon/recipes/ammonia_powder_jei_recipe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/JeiRecipes"
     },
     {
       "name": "BloodTypesSyringe",
@@ -6438,7 +6410,7 @@
           "src/main/resources/data/changed_addon/recipes/catalyzeddna_jei_recipe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/JeiRecipes"
     },
     {
       "name": "AmmoniaParticlesJeiIllustrative",
@@ -9332,7 +9304,7 @@
           "src/main/resources/data/changed_addon/recipes/jei_laething_syringe.json"
         ]
       },
-      "path": "~/Recipes"
+      "path": "~/JeiRecipes"
     },
     {
       "name": "BookRecipePage11",
@@ -9891,7 +9863,6 @@
       "item.changed_addon.experiment_009_spawnegg": "Experiment 009 SpawnEgg",
       "advancements.over_dose.title": "OverDose",
       "gui.changed_addon.book_pagenumber_2.label_pot_with_litixcamonia": "Pot With Litix-Camonia",
-      "key.changed_addon.friendly_graboff": "Friendly Graboff",
       "item.changed_addon.painite_hoe": "Painite Hoe",
       "gui.changed_addon.bookrecipepage_10.label_m1": "M",
       "gui.changed_addon.bookrecipepage_10.label_m2": "M",
@@ -9918,7 +9889,7 @@
       "translation.FriendlyGrab.HumanText": "§bYou are in Friendly Grab Press (key) for leave",
       "changedaddon.friendlygrab.alreadyin": "You are already Friendly Grabbing",
       "changedaddon.untransfur.no_effect": "No effect",
-      "entity.changed_addon.dazed": "Dazed",
+      "entity.changed_addon.dazed": "Dazed Latex",
       "gui.changed_addon.bookrecipepage_9.label_g_any_gooey_item": "G \u003d Any Gooey Item",
       "gui.changed_addon.bookpagenumber_3.label_blast_fornec": "blast furnace",
       "gui.changed_addon.book_pagenumber_1.label_latex_beings": "-fted.",
@@ -9937,7 +9908,6 @@
       "death.attack.concience_lose": "%1$s lose your concience",
       "gui.changed_addon.bookrecipepage_6.label_catalyzer": "Catalyzer",
       "gui.changed_addon.unifusergui.tooltip_place_the_powders": "Place the Powders",
-      "key.changed_addon.wantfriendlygrab": "Want friendly grab",
       "item.minecraft.tipped_arrow.effect.litixcamoniaeffect": "Arrow of LitixCamonia",
       "gui.changed_addon.book_pagenumber_7.label_a_command": "A changed_addon Command",
       "subtitles.experiment009_theme_phase2": "Experiment 009 Phase 2 Music Theme",
@@ -10267,7 +10237,7 @@
         "children": []
       },
       {
-        "name": "Jei Suport",
+        "name": "JeiRecipes",
         "children": []
       },
       {
@@ -10398,7 +10368,9 @@
     ],
     "dependencies": [],
     "dependants": [],
-    "mcreatorDependencies": [],
+    "mcreatorDependencies": [
+      "jei"
+    ],
     "currentGenerator": "forge-1.18.2",
     "credits": "LTXProgrammer for Changed mod",
     "modElementsPackage": "net.foxyas.changedaddon",

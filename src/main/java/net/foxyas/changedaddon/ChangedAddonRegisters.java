@@ -26,6 +26,6 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 class ChangedAddonFacilityPieces extends FacilityPieces {
 	static {
-		FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:experiment_009_facility_pieace"),  new ResourceLocation("changed_addon:chests/destroy_structure_experiment_009_loot")));
+		FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:experiment_009_facility_piece"),  new ResourceLocation("changed_addon:chests/destroy_structure_experiment_009_loot")));
 	}
 }

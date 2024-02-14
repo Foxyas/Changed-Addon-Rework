@@ -73,7 +73,7 @@ repositories {
         name = "Changed"
         url = "https://raw.githubusercontent.com/LtxProgrammer/Changed-Minecraft-Mod/master/mcmodsrepo/"
     }
-   maven {
+  /* maven {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
@@ -82,7 +82,7 @@ repositories {
         // location of a maven mirror for JEI files, as a fallback
         name = "ModMaven"
         url = "https://modmaven.dev"
-    }
+    }*/
 }
 
 dependencies {
@@ -104,8 +104,8 @@ dependencies {
     implementation fg.deobf("curse.maven:configured-457570:4462832") //Configured (Confing options in game)
     
     
-    compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281:api") //Jei Api
-    runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281") //Jei Mod
+   // compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281:api") //Jei Api
+  //  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281") //Jei Mod
     
     //implementation files('libs/output.jar')
 }
