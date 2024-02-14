@@ -23,6 +23,7 @@ import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
 
 import javax.annotation.Nullable;
 
@@ -52,7 +53,36 @@ public class TransfurTotemEntityRightClickProcedure {
 					if (entity instanceof Player) {
 						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
 							if (a.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get() && (a.getOrCreateTag().getString("form")).isEmpty()) {
-								if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
+								if (ChangedAddonConfigsConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
+									if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
+										if (sourceentity instanceof Player _player)
+											_player.getCooldowns().addCooldown(a.getItem(), 20);
+										if (world.isClientSide())
+											Minecraft.getInstance().gameRenderer.displayItemActivation(a);
+										a.getOrCreateTag().putString("form", ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
+										if (world instanceof Level _level) {
+											if (!_level.isClientSide()) {
+												_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
+											} else {
+												_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
+											}
+										}
+									} else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form")) {
+										if (sourceentity instanceof Player _player)
+											_player.getCooldowns().addCooldown(a.getItem(), 50);
+										if (world.isClientSide())
+											Minecraft.getInstance().gameRenderer.displayItemActivation(a);
+										if (world instanceof Level _level) {
+											if (!_level.isClientSide()) {
+												_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0);
+											} else {
+												_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0, false);
+											}
+										}
+										if (entity instanceof Player _player && !_player.level.isClientSide())
+											_player.displayClientMessage(new TextComponent((new TranslatableComponent("changed_addon.latex_totem.notvalid").getString())), true);
+									}
+								} else {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(a.getItem(), 20);
 									if (world.isClientSide())
@@ -65,23 +95,38 @@ public class TransfurTotemEntityRightClickProcedure {
 											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
 										}
 									}
-								} else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form")) {
-									if (sourceentity instanceof Player _player)
-										_player.getCooldowns().addCooldown(a.getItem(), 50);
-									if (world.isClientSide())
-										Minecraft.getInstance().gameRenderer.displayItemActivation(a);
-									if (world instanceof Level _level) {
-										if (!_level.isClientSide()) {
-											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0);
-										} else {
-											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0, false);
-										}
-									}
-									if (entity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent((new TranslatableComponent("changed_addon.latex_totem.notvalid").getString())), true);
 								}
 							} else if (b.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get() && (b.getOrCreateTag().getString("form")).isEmpty()) {
-								if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
+								if (ChangedAddonConfigsConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
+									if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
+										if (sourceentity instanceof Player _player)
+											_player.getCooldowns().addCooldown(b.getItem(), 20);
+										if (world.isClientSide())
+											Minecraft.getInstance().gameRenderer.displayItemActivation(b);
+										b.getOrCreateTag().putString("form", ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
+										if (world instanceof Level _level) {
+											if (!_level.isClientSide()) {
+												_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
+											} else {
+												_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
+											}
+										}
+									} else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form")) {
+										if (sourceentity instanceof Player _player)
+											_player.getCooldowns().addCooldown(b.getItem(), 50);
+										if (world.isClientSide())
+											Minecraft.getInstance().gameRenderer.displayItemActivation(b);
+										if (world instanceof Level _level) {
+											if (!_level.isClientSide()) {
+												_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0);
+											} else {
+												_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0, false);
+											}
+										}
+										if (entity instanceof Player _player && !_player.level.isClientSide())
+											_player.displayClientMessage(new TextComponent((new TranslatableComponent("changed_addon.latex_totem.notvalid").getString())), true);
+									}
+								} else {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(b.getItem(), 20);
 									if (world.isClientSide())
@@ -94,20 +139,6 @@ public class TransfurTotemEntityRightClickProcedure {
 											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
 										}
 									}
-								} else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form")) {
-									if (sourceentity instanceof Player _player)
-										_player.getCooldowns().addCooldown(b.getItem(), 50);
-									if (world.isClientSide())
-										Minecraft.getInstance().gameRenderer.displayItemActivation(b);
-									if (world instanceof Level _level) {
-										if (!_level.isClientSide()) {
-											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0);
-										} else {
-											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.zombie.attack_iron_door")), SoundSource.NEUTRAL, 1, 0, false);
-										}
-									}
-									if (entity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent((new TranslatableComponent("changed_addon.latex_totem.notvalid").getString())), true);
 								}
 							}
 						}

@@ -2,7 +2,8 @@
   "type": "changed_addon:jei_catalyzer",
   "ingredients": [
     {
-      "item": "changed_addon:ammoniaparticle"
+      "item": "changed_addon:ammoniaparticle",
+      "count": 16
     }  
   ],
   "output": {

@@ -100,6 +100,8 @@ dependencies {
     implementation fg.deobf("curse.maven:hardcore-revival-274036:3830873") //HardCore Survival
     implementation fg.deobf("curse.maven:balm-531761:4442615") //Balm API need for HardCore Survival
     implementation fg.deobf("curse.maven:appleskin-248787:4770822") //AppleSkin
+    implementation fg.deobf("curse.maven:catalogue-459701:3803098") //Catalogue (Better Mod menu)
+    implementation fg.deobf("curse.maven:configured-457570:4462832") //Configured (Confing options in game)
     
     
     compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281:api") //Jei Api

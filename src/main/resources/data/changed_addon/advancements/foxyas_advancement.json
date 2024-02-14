@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "changed_addon:deleted_mod_element"
+  "parent": "changed_addon:changedaddon_advancement"
 }

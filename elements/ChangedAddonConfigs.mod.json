@@ -1,0 +1,33 @@
+{
+  "_fv": 47,
+  "_type": "config",
+  "definition": {
+    "pools": [
+      {
+        "category": "Latex Totem",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "allow latex totem to have all Latex Variants",
+            "vardisplay": "No Latex Totem Limitations",
+            "varname": "accept_all_variants",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Dazed"
+          }
+        ]
+      }
+    ],
+    "file": "ChangedAddon-Server",
+    "configType": 1
+  }
+}

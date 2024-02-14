@@ -104,7 +104,7 @@ public class DazedEntity extends LatexEntity {
 		Color3 color = Color3.getColor("#ffffff");
 		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#ffffff");;
 		} else {
-			color = Color3.getColor("#e0e0e0");
+			color = Color3.getColor("#CFCFCF");
 		}
 		return color;
 	}

@@ -1,0 +1,34 @@
+{
+  "_fv": 47,
+  "_type": "config",
+  "definition": {
+    "pools": [
+      {
+        "category": "MusicPlayer",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "allow the music player to play boss themes",
+            "vardisplay": "Music Player",
+            "varname": "musicplayer",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Dazed"
+          }
+        ]
+      }
+    ],
+    "file": "ChangedAddon-Client",
+    "configType": 2,
+    "name": "changed_addon_client_configs"
+  }
+}

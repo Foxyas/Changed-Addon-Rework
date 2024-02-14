@@ -8,7 +8,7 @@
       "item": "changed_addon:laethin"
     },
     {
-      "item": "minecraft:air"
+      "tag": "minecraft:air"
     }    
   ],
   "output": {
