@@ -4,23 +4,23 @@
       "item": "changed_addon:devitem"
     },
     "title": {
-      "translate": "advancements.friendly_transfur.title"
+      "translate": "advancements.gooey_friend.title"
     },
     "description": {
-      "translate": "advancements.friendly_transfur.descr"
+      "translate": "advancements.gooey_friend.descr"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": false,
-    "hidden": true
+    "hidden": false
   },
   "criteria": {
-    "friendly_transfur": {
+    "gooey_friend": {
       "trigger": "minecraft:impossible"
     }
   },
   "rewards": {
-    "experience": 150
+    "experience": 5
   },
-  "parent": "changed_addon:gooey_friend"
+  "parent": "changed_addon:changedaddon_advancement"
 }

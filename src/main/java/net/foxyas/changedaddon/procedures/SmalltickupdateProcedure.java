@@ -4,7 +4,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
@@ -27,7 +26,6 @@ import net.foxyas.changedaddon.entity.FoxyasEntity;
 import javax.annotation.Nullable;
 
 import java.util.stream.Collectors;
-import java.util.UUID;
 import java.util.List;
 import java.util.Iterator;
 import java.util.Comparator;
@@ -55,20 +53,9 @@ public class SmalltickupdateProcedure {
 			List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(4 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
 			for (Entity entityiterator : _entfound) {
 				if (!(entityiterator == entity)) {
-					if ((entityiterator.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Friendly_mode == true) {
-						if (entity instanceof ServerPlayer _player) {
-							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
-							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-							if (!_ap.isDone()) {
-								Iterator _iterator = _ap.getRemainingCriteria().iterator();
-								while (_iterator.hasNext())
-									_player.getAdvancements().award(_adv, (String) _iterator.next());
-							}
-						}
-					}
 					if (entityiterator instanceof FoxyasEntity) {
 						if (entity instanceof ServerPlayer _player) {
-							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:deleted_mod_element"));
+							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gooey_friend"));
 							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 							if (!_ap.isDone()) {
 								Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -153,16 +140,6 @@ public class SmalltickupdateProcedure {
 					capability.syncPlayerVariables(entity);
 				});
 			}
-		}
-		OrganicSwingbuff = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba758"), "organic_swin_buff", 0.3, AttributeModifier.Operation.ADDITION);
-		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
-				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == true) {
-			if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_latex_beifeng")) {
-				if (!(((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).hasModifier(OrganicSwingbuff)))
-					((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).addTransientModifier(OrganicSwingbuff);
-			}
-		} else {
-			((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).removeModifier(OrganicSwingbuff);
 		}
 	}
 }

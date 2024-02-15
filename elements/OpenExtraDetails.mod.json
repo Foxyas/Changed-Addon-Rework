@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "O",
+    "triggerKey": "J",
     "keyBindingName": "Open Transfur Extra",
     "keyBindingCategoryKey": "grab_gui",
     "onKeyPressed": {
