@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GeneratorUpdateTickProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z) {
+		double distance = 0;
 		if ((new Object() {
 			public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
