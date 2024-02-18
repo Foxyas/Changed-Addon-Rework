@@ -9,15 +9,6 @@
         "data": {
           "image": "untransfurprogress.png",
           "use1Xscale": false,
-          "x": 0,
-          "y": 0
-        }
-      },
-      {
-        "type": "image",
-        "data": {
-          "image": "untransfurprogress.png",
-          "use1Xscale": false,
           "x": 8,
           "y": 193
         }

@@ -16,6 +16,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
+import net.foxyas.changedaddon.entity.PuroKindFemaleEntity;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
@@ -59,6 +60,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<PuroKindEntity>of(PuroKindEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PuroKindEntity::new)
 
 					.sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<PuroKindFemaleEntity>> PURO_KIND_FEMALE = register("puro_kind_female",
+			EntityType.Builder.<PuroKindFemaleEntity>of(PuroKindFemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PuroKindFemaleEntity::new)
+
+					.sized(0.6f, 1.9f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -75,6 +80,7 @@ public class ChangedAddonModEntities {
 			Experiment009Entity.init();
 			Experiment009phase2Entity.init();
 			PuroKindEntity.init();
+			PuroKindFemaleEntity.init();
 		});
 	}
 
@@ -88,5 +94,6 @@ public class ChangedAddonModEntities {
 		event.put(EXPERIMENT_009.get(), Experiment009Entity.createAttributes().build());
 		event.put(EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Entity.createAttributes().build());
 		event.put(PURO_KIND.get(), PuroKindEntity.createAttributes().build());
+		event.put(PURO_KIND_FEMALE.get(), PuroKindFemaleEntity.createAttributes().build());
 	}
 }

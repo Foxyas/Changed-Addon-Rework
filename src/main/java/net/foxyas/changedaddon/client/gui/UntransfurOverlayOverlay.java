@@ -18,6 +18,7 @@ import net.minecraft.client.Minecraft;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.network.chat.TextComponent;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class UntransfurOverlayOverlay {
@@ -45,23 +46,36 @@ public class UntransfurOverlayOverlay {
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 			RenderSystem.setShaderColor(1, 1, 1, 1);
-			double progressUTF = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress;
-			double progress = progressUTF / 8.33;
-			int progressint = (int)progress;
 
+			double progress = 0;
+			int intprogress = 0;
+			double aprogress = 0;
+			boolean canshow = false;
+			canshow = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress > 0;
+			progress = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress;
+			aprogress = progress / 3.57;
+			intprogress = (int) aprogress;
 
-
-			boolean canshow = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress > 0);
-
-			if  (canshow){
-				
+			
+			
+			if (canshow) {
 				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress.png"));
-				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -103, posY + 36, 0, 0, 14, 5, 14, 5);
+				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX - 510, posY - 73, 0, 0, 14, 5, 14, 5);
 
 				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress_full.png"));
-				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + -102, posY + 37, 0, 0, progressint, 3, progressint, 3);
+				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX - 509, posY - 74, 0, 0, intprogress, 3, intprogress, 3);
+				
+
+				Minecraft.getInstance().font.draw(event.getMatrixStack(), intprogress + "%", posX + -508, posY + -105, -1);
+
 
 			}
+ 					else {
+				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress.png"));
+				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + 5, posY - 30, 0, 0, 14, 5, 14, 5);		
+
+					 }
+
 			RenderSystem.depthMask(true);
 			RenderSystem.defaultBlendFunc();
 			RenderSystem.enableDepthTest();
