@@ -3,6 +3,7 @@ package net.foxyas.changedaddon;
 import net.foxyas.changedaddon.client.model.DazedLatexModel;
 import net.foxyas.changedaddon.client.model.ModelFemaleSnowFox;
 import net.foxyas.changedaddon.client.model.ModelSnowFox;
+import net.foxyas.changedaddon.client.model.PuroKindModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,5 +16,6 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(ModelSnowFox.LAYER_LOCATION, ModelSnowFox::createBodyLayer);
 		event.registerLayerDefinition(ModelFemaleSnowFox.LAYER_LOCATION, ModelFemaleSnowFox::createBodyLayer);
 		event.registerLayerDefinition(DazedLatexModel.LAYER_LOCATION, DazedLatexModel::createBodyLayer);
+		event.registerLayerDefinition(PuroKindModel.LAYER_LOCATION, PuroKindModel::createBodyLayer);
 	}
 }

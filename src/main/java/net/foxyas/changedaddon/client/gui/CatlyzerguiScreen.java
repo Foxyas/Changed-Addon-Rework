@@ -119,7 +119,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 					return blockEntity.getTileData().getDouble(tag);
 				return -1;
 			}
-		}.getValue(world, new BlockPos(x, y, z), "recipe_progress")) / 3.125;
+		}.getValue(world, new BlockPos(x, y, z), "recipe_progress")) / 3.57;
 
 		int progressint = (int) progress;
 		
@@ -129,7 +129,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		}
 				if (true) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_full.png"));
-			this.blit(ms, this.leftPos + 83, this.topPos + 37, 0, 0, progressint, 32, progressint, 32);
+			this.blit(ms, this.leftPos + 83+2, this.topPos + 37, 0, 0, progressint, 8, progressint, 8);
 		}
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));

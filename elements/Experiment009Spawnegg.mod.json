@@ -10,7 +10,7 @@
     "name": "Experiment 009 SpawnEgg",
     "rarity": "RARE",
     "creativeTab": {
-      "value": "No creative tab entry"
+      "value": "CUSTOM:ChangedAddon"
     },
     "stackSize": 4,
     "enchantability": 0,
