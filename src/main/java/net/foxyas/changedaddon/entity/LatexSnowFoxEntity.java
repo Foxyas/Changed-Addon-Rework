@@ -103,7 +103,7 @@ public class LatexSnowFoxEntity extends LatexEntity implements GenderedEntity,Po
 	@Override
 	public Color3 getDripColor() {
 		Color3 color = Color3.getColor("#ffffff");
-		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#ffffff");;
+		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#ffffff");
 		} else {
 			color = Color3.getColor("#e0e0e0");
 		}

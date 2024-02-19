@@ -1,0 +1,23 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:dark_latex_goo"
+    },
+    {
+      "item": "changed:dark_latex_goo"
+    },
+    {
+      "item": "changed:lab_book"
+    },
+    {
+      "item": "changed:dark_latex_mask"
+    }
+    
+  ],
+  "gendered": true,
+  "form": "changed_addon:form_latex_puro_kind"
+}

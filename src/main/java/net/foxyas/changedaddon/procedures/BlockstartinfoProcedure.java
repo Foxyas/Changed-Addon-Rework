@@ -24,6 +24,6 @@ public class BlockstartinfoProcedure {
 		}.getValue(world, new BlockPos(x, y, z), "start_recipe")) == true) {
 			return block + " is activated";
 		}
-		return block + "is deactivated";
+		return block + " is deactivated";
 	}
 }

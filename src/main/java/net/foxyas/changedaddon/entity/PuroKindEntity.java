@@ -87,9 +87,9 @@ public class PuroKindEntity extends AbstractDarkLatexWolf {
 	@Override
 	public Color3 getDripColor() {
 		Color3 color = Color3.getColor("#000000");
-		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#000000");;
+		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#393939");
 		} else {
-			color = Color3.getColor("#151515");
+			color = Color3.getColor("#303030");
 		}
 		return color;
 	}

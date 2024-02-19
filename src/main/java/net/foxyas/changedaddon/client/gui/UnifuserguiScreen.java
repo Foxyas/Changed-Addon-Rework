@@ -126,7 +126,7 @@ public class UnifuserguiScreen extends AbstractContainerScreen<UnifuserguiMenu> 
 		}
 		if (true) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_full.png"));
-			this.blit(ms, this.leftPos + 84+2, this.topPos + 57+2, 0, 0, progressint, 9, progressint, 9);
+			this.blit(ms, this.leftPos + 84+2, this.topPos + 57+2, 0, 0, progressint, 8, progressint, 8);
 		}
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));

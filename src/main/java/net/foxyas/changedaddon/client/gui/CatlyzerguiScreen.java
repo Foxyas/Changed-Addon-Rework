@@ -129,7 +129,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 		}
 				if (true) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_full.png"));
-			this.blit(ms, this.leftPos + 83+2, this.topPos + 46+2, 0, 0, progressint, 9, progressint, 9);
+			this.blit(ms, this.leftPos + 83+2, this.topPos + 46+2, 0, 0, progressint, 8, progressint, 8);
 		}
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));

@@ -53,28 +53,23 @@ public class UntransfurOverlayOverlay {
 			boolean canshow = false;
 			canshow = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress > 0;
 			progress = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress;
-			aprogress = progress / 3.57;
+			aprogress = progress / 8.33;
 			intprogress = (int) aprogress;
 
 			
 			
 			if (canshow) {
 				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress.png"));
-				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX - 510, posY - 73, 0, 0, 14, 5, 14, 5);
+				Minecraft.getInstance().gui.blit(event.getMatrixStack(), 10, posY - 73, 0, 0, 14, 5, 14, 5);
 
 				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress_full.png"));
-				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX - 509, posY - 74, 0, 0, intprogress, 3, intprogress, 3);
+				Minecraft.getInstance().gui.blit(event.getMatrixStack(), 11, posY - 72, 0, 0, intprogress, 3, intprogress, 3);
 				
 
-				Minecraft.getInstance().font.draw(event.getMatrixStack(), intprogress + "%", posX + -508, posY + -105, -1);
+				Minecraft.getInstance().font.draw(event.getMatrixStack(), intprogress + "%", 9, posY + -105, -1);
 
 
 			}
- 					else {
-				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress.png"));
-				Minecraft.getInstance().gui.blit(event.getMatrixStack(), posX + 5, posY - 30, 0, 0, 14, 5, 14, 5);		
-
-					 }
 
 			RenderSystem.depthMask(true);
 			RenderSystem.defaultBlendFunc();
