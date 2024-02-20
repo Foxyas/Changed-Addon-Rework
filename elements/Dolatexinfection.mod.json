@@ -3,7 +3,7 @@
   "_type": "gamerule",
   "definition": {
     "type": "Logic",
-    "displayName": "do latex infection",
+    "displayName": "Do Latex Infection",
     "description": "this makes the latex infection in the player rise after being attacked",
     "category": "PLAYER",
     "defaultValueLogic": false,

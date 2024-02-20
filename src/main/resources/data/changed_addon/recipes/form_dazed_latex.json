@@ -1,0 +1,23 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:quartz"
+    },
+    {
+      "item": "changed_addon:painite"
+    }
+    
+  ],
+  "gendered": false,
+  "form": "changed_addon:form_dazed_latex"
+}

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/ammoniapowder"
+    "layer0": "changed_addon:items/new_ammonia"
   }
 }

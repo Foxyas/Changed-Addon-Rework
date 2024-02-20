@@ -1,25 +1,17 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "0  ",
-    " 45",
-    "6  "
-  ],
-  "key": {
-    "0": {
+  "type": "changed_addon:jei_unifuser",
+  "ingredients": [
+    {
       "item": "changed_addon:litix_camonia"
     },
-    "4": {
-      "item": "changed_addon:unifuserblock_illustrative_item"
-    },
-    "5": {
-      "item": "changed_addon:catalyzeddna"
-    },
-    "6": {
+    {
       "item": "minecraft:potion"
-    }
-  },
-  "result": {
+    },
+    {
+      "item": "changed_addon:catalyzeddna"
+    }    
+  ],
+  "output": {
     "item": "changed_addon:potwithcamonia",
     "count": 1
   }
