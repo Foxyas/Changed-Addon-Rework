@@ -11,11 +11,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import net.foxyas.changedaddon.enchantment.SolventEnchantment;
-import net.foxyas.changedaddon.enchantment.GrabResistanceEnchantment;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 public class ChangedAddonModEnchantments {
 	public static final DeferredRegister<Enchantment> REGISTRY = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, ChangedAddonMod.MODID);
-	public static final RegistryObject<Enchantment> GRAB_RESISTANCE = REGISTRY.register("grab_resistance", () -> new GrabResistanceEnchantment());
 	public static final RegistryObject<Enchantment> SOLVENT = REGISTRY.register("solvent", () -> new SolventEnchantment());
 }
