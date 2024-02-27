@@ -8492,7 +8492,7 @@
       "type": "procedure",
       "sortid": 428,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "music_player",
       "metadata": {
         "files": [
@@ -9643,22 +9643,6 @@
       ],
       "category": "neutral",
       "subtitle": "Player just got grabbed"
-    },
-    {
-      "name": "grab_release",
-      "files": [
-        "breakfreebutton"
-      ],
-      "category": "neutral",
-      "subtitle": "Player release from grab"
-    },
-    {
-      "name": "enter_in_friendly_grab",
-      "files": [
-        "ingrabsound"
-      ],
-      "category": "neutral",
-      "subtitle": "Player Being Friendly Grab"
     },
     {
       "name": "armor_equip",

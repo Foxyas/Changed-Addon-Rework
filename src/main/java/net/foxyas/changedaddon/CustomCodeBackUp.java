@@ -1,5 +1,13 @@
 /*
+// command backup
+"/particle dust_color_transition 1 0 0 2 0.54 0 0 ~ ~1 ~ 0.2 0.5 0.2 -0 101 force"
+
+
+
+
 //AddonLatexVariant
+
+
 
 package net.foxyas.changedaddon.variants;
 

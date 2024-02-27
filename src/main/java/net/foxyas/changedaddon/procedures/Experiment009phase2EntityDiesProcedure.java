@@ -12,11 +12,6 @@ public class Experiment009phase2EntityDiesProcedure {
 		{
 			Entity _ent = entity;
 			if (!_ent.level.isClientSide() && _ent.getServer() != null)
-				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme_phase2");
-		}
-		{
-			Entity _ent = entity;
-			if (!_ent.level.isClientSide() && _ent.getServer() != null)
 				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
 						"summon minecraft:item ~ ~ ~ {Item:{id:\"changed_addon:experiment_009_phase_2_record\",Count:1},Glowing:1b,Age:-32768s}");
 		}

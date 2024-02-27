@@ -45,6 +45,8 @@ public class Experiment009EntityDiesProcedure {
 			}
 
 			private void run() {
+				if (world instanceof ServerLevel _level)
+					_level.sendParticles(ParticleTypes.FLASH, x, (y + 1), z, 20, 1, 0.5, 1, 1);
 				if (world instanceof ServerLevel _level) {
 					Entity entityToSpawn = new Experiment009phase2Entity(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2.get(), _level);
 					entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
@@ -52,8 +54,6 @@ public class Experiment009EntityDiesProcedure {
 						_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 					world.addFreshEntity(entityToSpawn);
 				}
-				if (world instanceof ServerLevel _level)
-					_level.sendParticles(ParticleTypes.FLASH, x, (y + 1), z, 20, 1, 0.5, 1, 1);
 				MinecraftForge.EVENT_BUS.unregister(this);
 			}
 		}.start(world, 40);

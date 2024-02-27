@@ -92,6 +92,7 @@ dependencies {
     implementation fg.deobf("curse.maven:lightspeedmod-821790:4594803") //Speed Up The Start of The Game
     implementation fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon
     implementation fg.deobf("curse.maven:rubidium-574856:4494903") //Fps Bost 
+    implementation fg.deobf("curse.maven:oculus-581495:4578744") //Shaders :D
     implementation fg.deobf("curse.maven:custom-player-models-439870:4840534") //Custom Player Models
   //implementation fg.deobf("curse.maven:roughly-enough-items-310111:4774383") //Jei But better
   //implementation fg.deobf("curse.maven:cloth-config-348521:4633387") // REI mod dependence
