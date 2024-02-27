@@ -19,8 +19,6 @@ public class ChangedAddonModSounds {
 	public static Map<ResourceLocation, SoundEvent> REGISTRY = new HashMap<>();
 	static {
 		REGISTRY.put(new ResourceLocation("changed_addon", "grab_start_sound"), new SoundEvent(new ResourceLocation("changed_addon", "grab_start_sound")));
-		REGISTRY.put(new ResourceLocation("changed_addon", "grab_release"), new SoundEvent(new ResourceLocation("changed_addon", "grab_release")));
-		REGISTRY.put(new ResourceLocation("changed_addon", "enter_in_friendly_grab"), new SoundEvent(new ResourceLocation("changed_addon", "enter_in_friendly_grab")));
 		REGISTRY.put(new ResourceLocation("changed_addon", "armor_equip"), new SoundEvent(new ResourceLocation("changed_addon", "armor_equip")));
 		REGISTRY.put(new ResourceLocation("changed_addon", "warn"), new SoundEvent(new ResourceLocation("changed_addon", "warn")));
 		REGISTRY.put(new ResourceLocation("changed_addon", "experiment009_theme"), new SoundEvent(new ResourceLocation("changed_addon", "experiment009_theme")));

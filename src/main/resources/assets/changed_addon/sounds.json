@@ -8,24 +8,6 @@
       }
     ]
   },
-  "grab_release": {
-    "subtitle": "subtitles.grab_release",
-    "sounds": [
-      {
-        "name": "changed_addon:breakfreebutton",
-        "stream": false
-      }
-    ]
-  },
-  "enter_in_friendly_grab": {
-    "subtitle": "subtitles.enter_in_friendly_grab",
-    "sounds": [
-      {
-        "name": "changed_addon:ingrabsound",
-        "stream": false
-      }
-    ]
-  },
   "armor_equip": {
     "subtitle": "subtitles.armor_equip",
     "sounds": [
