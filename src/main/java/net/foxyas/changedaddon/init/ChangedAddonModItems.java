@@ -73,8 +73,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> UNLATEXBASE = REGISTRY.register("unlatexbase", () -> new UnlatexbaseItem());
 	public static final RegistryObject<Item> LATEX_INSULATOR = block(ChangedAddonModBlocks.LATEX_INSULATOR, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> IMPUREAMMONIA = REGISTRY.register("impureammonia", () -> new InpureammoniaItem());
-	public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", () -> new AmmoniaCompressedItem());
 	public static final RegistryObject<Item> AMMONIAPARTICLE = REGISTRY.register("ammoniaparticle", () -> new AmmoniaparticleItem());
+	public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", () -> new AmmoniaCompressedItem());
 	public static final RegistryObject<Item> AMMONIA = REGISTRY.register("ammonia", () -> new AmmoniaItem());
 	public static final RegistryObject<Item> LITIX_CAMONIA = REGISTRY.register("litix_camonia", () -> new LitixCamoniaItem());
 	public static final RegistryObject<Item> LAETHIN = REGISTRY.register("laethin", () -> new LaethinItem());
