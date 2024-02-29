@@ -73,6 +73,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> UNLATEXBASE = REGISTRY.register("unlatexbase", () -> new UnlatexbaseItem());
 	public static final RegistryObject<Item> LATEX_INSULATOR = block(ChangedAddonModBlocks.LATEX_INSULATOR, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> IMPUREAMMONIA = REGISTRY.register("impureammonia", () -> new InpureammoniaItem());
+	public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", () -> new AmmoniaCompressedItem());
 	public static final RegistryObject<Item> AMMONIAPARTICLE = REGISTRY.register("ammoniaparticle", () -> new AmmoniaparticleItem());
 	public static final RegistryObject<Item> AMMONIA = REGISTRY.register("ammonia", () -> new AmmoniaItem());
 	public static final RegistryObject<Item> LITIX_CAMONIA = REGISTRY.register("litix_camonia", () -> new LitixCamoniaItem());
@@ -96,14 +97,15 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> LITIX_CAMONIA_FLUID_BUCKET = REGISTRY.register("litix_camonia_fluid_bucket", () -> new LitixCamoniaFluidItem());
 	public static final RegistryObject<Item> CATLYZER = block(ChangedAddonModBlocks.CATLYZER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> UNIFUSER = block(ChangedAddonModBlocks.UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> EXPERIMENT_009DNA = REGISTRY.register("experiment_009dna", () -> new Experiment009dnaItem());
 	public static final RegistryObject<Item> HAZARD_SUIT_HELMET = REGISTRY.register("hazard_suit_helmet", () -> new HazardSuitItem.Helmet());
 	public static final RegistryObject<Item> HAZARD_SUIT_CHESTPLATE = REGISTRY.register("hazard_suit_chestplate", () -> new HazardSuitItem.Chestplate());
 	public static final RegistryObject<Item> HAZARD_SUIT_LEGGINGS = REGISTRY.register("hazard_suit_leggings", () -> new HazardSuitItem.Leggings());
 	public static final RegistryObject<Item> HAZARD_SUIT_BOOTS = REGISTRY.register("hazard_suit_boots", () -> new HazardSuitItem.Boots());
 	public static final RegistryObject<Item> DARKLATEXPUDDLE = block(ChangedAddonModBlocks.DARKLATEXPUDDLE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", () -> new TransfurTotemItem());
 	public static final RegistryObject<Item> LUNARROSE_HELMET = REGISTRY.register("lunarrose_helmet", () -> new LunarroseItem.Helmet());
+	public static final RegistryObject<Item> EXPERIMENT_009DNA = REGISTRY.register("experiment_009dna", () -> new Experiment009dnaItem());
+	public static final RegistryObject<Item> EXPERIMENT_009_SPAWNEGG = REGISTRY.register("experiment_009_spawnegg", () -> new Experiment009SpawneggItem());
+	public static final RegistryObject<Item> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", () -> new TransfurTotemItem());
 	public static final RegistryObject<Item> DEVITEM = REGISTRY.register("devitem", () -> new DevitemItem());
 	public static final RegistryObject<Item> PAINITE_PICKAXE = REGISTRY.register("painite_pickaxe", () -> new PainitePickaxeItem());
 	public static final RegistryObject<Item> PAINITE_AXE = REGISTRY.register("painite_axe", () -> new PainiteAxeItem());
@@ -124,12 +126,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> UNIFUSERBLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("unifuserblock_illustrative_item", () -> new UnifuserblockIllustrativeItemItem());
 	public static final RegistryObject<Item> AMMONIA_PARTICLES_JEI_ILLUSTRATIVE = REGISTRY.register("ammonia_particles_jei_illustrative", () -> new AmmoniaParticlesJeiIllustrativeItem());
 	public static final RegistryObject<Item> PAINITE_HOE = REGISTRY.register("painite_hoe", () -> new PainiteHoeItem());
-	public static final RegistryObject<Item> EXPERIMENT_009_SPAWNEGG = REGISTRY.register("experiment_009_spawnegg", () -> new Experiment009SpawneggItem());
 	public static final RegistryObject<Item> DEVITEM_1 = REGISTRY.register("devitem_1", () -> new Devitem1Item());
 	public static final RegistryObject<Item> DEVITEM_5 = REGISTRY.register("devitem_5", () -> new Devitem5Item());
 	public static final RegistryObject<Item> EXPERIMENT_009_RECORD = REGISTRY.register("experiment_009_record", () -> new Experiment009recordItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_RECORD = REGISTRY.register("experiment_009_phase_2_record", () -> new Experiment009Phase2RecordItem());
-	public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", () -> new AmmoniaCompressedItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

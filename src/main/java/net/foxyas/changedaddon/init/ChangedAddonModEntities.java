@@ -46,16 +46,16 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<LatexSnowFoxFemaleEntity>of(LatexSnowFoxFemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnowFoxFemaleEntity::new)
 
 					.sized(0.6f, 1.9f));
-	public static final RegistryObject<EntityType<DazedEntity>> DAZED = register("dazed",
-			EntityType.Builder.<DazedEntity>of(DazedEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(DazedEntity::new)
-
-					.sized(0.6f, 1.9f));
 	public static final RegistryObject<EntityType<Experiment009Entity>> EXPERIMENT_009 = register("experiment_009",
 			EntityType.Builder.<Experiment009Entity>of(Experiment009Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009Entity::new)
 
 					.sized(0.6f, 1.9f));
 	public static final RegistryObject<EntityType<Experiment009phase2Entity>> EXPERIMENT_009_PHASE_2 = register("experiment_009_phase_2", EntityType.Builder.<Experiment009phase2Entity>of(Experiment009phase2Entity::new, MobCategory.MONSTER)
 			.setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009phase2Entity::new).fireImmune().sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<DazedEntity>> DAZED = register("dazed",
+			EntityType.Builder.<DazedEntity>of(DazedEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(DazedEntity::new)
+
+					.sized(0.6f, 1.9f));
 	public static final RegistryObject<EntityType<PuroKindEntity>> PURO_KIND = register("puro_kind",
 			EntityType.Builder.<PuroKindEntity>of(PuroKindEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PuroKindEntity::new)
 
@@ -76,9 +76,9 @@ public class ChangedAddonModEntities {
 			FoxyasEntity.init();
 			LatexSnowFoxEntity.init();
 			LatexSnowFoxFemaleEntity.init();
-			DazedEntity.init();
 			Experiment009Entity.init();
 			Experiment009phase2Entity.init();
+			DazedEntity.init();
 			PuroKindEntity.init();
 			PuroKindFemaleEntity.init();
 		});
@@ -90,9 +90,9 @@ public class ChangedAddonModEntities {
 		event.put(FOXYAS.get(), FoxyasEntity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX.get(), LatexSnowFoxEntity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleEntity.createAttributes().build());
-		event.put(DAZED.get(), DazedEntity.createAttributes().build());
 		event.put(EXPERIMENT_009.get(), Experiment009Entity.createAttributes().build());
 		event.put(EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Entity.createAttributes().build());
+		event.put(DAZED.get(), DazedEntity.createAttributes().build());
 		event.put(PURO_KIND.get(), PuroKindEntity.createAttributes().build());
 		event.put(PURO_KIND_FEMALE.get(), PuroKindFemaleEntity.createAttributes().build());
 	}

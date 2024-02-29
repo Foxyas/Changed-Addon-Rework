@@ -27,9 +27,9 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.FOXYAS.get(), FoxyasRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX.get(), LatexSnowFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleRenderer::new);
-		event.registerEntityRenderer(ChangedAddonModEntities.DAZED.get(), DazedRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_009.get(), Experiment009Renderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Renderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.DAZED.get(), DazedRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND.get(), PuroKindRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND_FEMALE.get(), PuroKindFemaleRenderer::new);
 	}

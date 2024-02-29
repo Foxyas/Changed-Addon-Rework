@@ -28,7 +28,6 @@
       }
     ],
     "file": "ChangedAddon-Client",
-    "configType": 2,
-    "name": "changed_addon_client_configs"
+    "configType": 2
   }
 }
