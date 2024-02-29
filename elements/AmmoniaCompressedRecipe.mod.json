@@ -1,0 +1,48 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "recipeSlots": [
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      },
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      },
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      },
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      },
+      {
+        "value": ""
+      },
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      },
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      },
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      },
+      {
+        "value": "CUSTOM:Ammoniaparticle"
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:AmmoniaCompressed"
+    },
+    "name": "ammonia_compressed_recipe",
+    "namespace": "mod"
+  }
+}

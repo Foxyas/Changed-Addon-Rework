@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "3 5",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "1": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "2": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "3": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "5": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "6": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "7": {
+      "item": "changed_addon:ammoniaparticle"
+    },
+    "8": {
+      "item": "changed_addon:ammoniaparticle"
+    }
+  },
+  "result": {
+    "item": "changed_addon:ammonia_compressed",
+    "count": 1
+  }
+}

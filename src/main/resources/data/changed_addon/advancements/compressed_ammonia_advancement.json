@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:ammonia_compressed"
+    },
+    "title": {
+      "translate": "advancements.compressed_ammonia_advancement.title"
+    },
+    "description": {
+      "translate": "advancements.compressed_ammonia_advancement.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "compressed_ammonia_advancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:ammoniapoweradvancement"
+}

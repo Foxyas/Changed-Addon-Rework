@@ -97,6 +97,8 @@ public class MusicPlayerProcedure {
 					if (isExperiment009Phase2ThemePlaying){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 					}
+				} else if (!Phase2isclose && isExperiment009Phase2ThemePlaying){
+					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 				}
 			} else if (Phase1isclose && canwork) {
 				Minecraft minecraft = Minecraft.getInstance();
@@ -110,6 +112,8 @@ public class MusicPlayerProcedure {
 					if (!Experiment009.isAlive()){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
 					}
+				} else if (Phase1isclose && isExperiment009ThemePlaying){
+					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
 				}
 			}
 		}

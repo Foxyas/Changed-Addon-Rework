@@ -16,8 +16,7 @@ public class PuroKindFemaleRenderer extends LatexHumanoidRenderer<PuroKindFemale
 	public PuroKindFemaleRenderer(EntityRendererProvider.Context context) {
 		super(context, new PuroKindFemaleModel(context.bakeLayer(PuroKindFemaleModel.LAYER_LOCATION)),ArmorLatexMaleWolfModel::new,ArmorLatexMaleWolfModel.INNER_ARMOR,ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
-		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.parseHex("#242424")),
-				CustomEyesLayer.fixedIfNotDarkLatexOverride(Color3.WHITE)));
+		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.parseHex("#242424")),CustomEyesLayer::glowingIrisColor));
 	}
 
 

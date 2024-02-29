@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "changed_addon:ammoniapoweradvancement"
+  "parent": "changed_addon:compressed_ammonia_advancement"
 }

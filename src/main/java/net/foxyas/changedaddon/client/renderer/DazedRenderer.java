@@ -10,12 +10,16 @@ import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfM
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-	public class DazedRenderer extends LatexHumanoidRenderer<DazedEntity, DazedLatexModel, ArmorLatexMaleWolfModel<DazedEntity>> {
+
+import static net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer.fixedColorGlowing;
+import static net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer.irisColor;
+
+public class DazedRenderer extends LatexHumanoidRenderer<DazedEntity, DazedLatexModel, ArmorLatexMaleWolfModel<DazedEntity>> {
 		public DazedRenderer(EntityRendererProvider.Context context) {
 			super(context, new DazedLatexModel(context.bakeLayer(DazedLatexModel.LAYER_LOCATION)),
 					ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
 			this.addLayer(new LatexParticlesLayer<>(this, getModel()));
-			this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.DARK),CustomEyesLayer::irisColor));
+			this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.DARK),CustomEyesLayer::glowingIrisColor));
 		}
 
 

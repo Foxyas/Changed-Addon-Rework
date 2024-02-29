@@ -9427,6 +9427,69 @@
         ]
       },
       "path": "~/CustomCode/entitys"
+    },
+    {
+      "name": "AmmoniaCompressed",
+      "type": "item",
+      "sortid": 479,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ammonia_compressed",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/AmmoniaCompressedItem.java",
+          "src/main/resources/assets/changed_addon/models/item/ammonia_compressed.json"
+        ]
+      },
+      "path": "~/Items"
+    },
+    {
+      "name": "AmmoniaCompressedRecipe",
+      "type": "recipe",
+      "sortid": 480,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ammonia_compressed_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/ammonia_compressed_recipe.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "CompressedAmmoniaAdvancement",
+      "type": "achievement",
+      "sortid": 481,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "compressed_ammonia_advancement",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/compressed_ammonia_advancement.json"
+        ]
+      },
+      "path": "~/advancements"
+    },
+    {
+      "name": "AmmoniaCompressedItemIsCraftedsmelted",
+      "type": "procedure",
+      "sortid": 482,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "ammonia_compressed_item_is_craftedsmelted",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/AmmoniaCompressedItemIsCraftedsmeltedProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/Procedures"
     }
   ],
   "variable_elements": [
@@ -9637,14 +9700,6 @@
   ],
   "sound_elements": [
     {
-      "name": "grab_start_sound",
-      "files": [
-        "grabstartsound"
-      ],
-      "category": "neutral",
-      "subtitle": "Player just got grabbed"
-    },
-    {
       "name": "armor_equip",
       "files": [
         "equip3",
@@ -9808,6 +9863,7 @@
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
+      "advancements.compressed_ammonia_advancement.title": "Compressed!!",
       "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
       "gui.changed_addon.friendly_transfur_gui.button_no1": "yes",
       "advancements.untransfuradvancement.title": "I don\u0027t think it\u0027s that permanent!!",
@@ -9843,6 +9899,7 @@
       "changedaddon.friendlygrab.alreadyin": "You are already Friendly Grabbing",
       "changedaddon.untransfur.no_effect": "No effect",
       "entity.changed_addon.dazed": "Dazed Latex",
+      "item.changed_addon.ammonia_compressed": "Ammonia Compressed",
       "gui.changed_addon.bookrecipepage_9.label_g_any_gooey_item": "G \u003d Any Gooey Item",
       "gui.changed_addon.bookpagenumber_3.label_blast_fornec": "blast furnace",
       "gui.changed_addon.book_pagenumber_1.label_latex_beings": "-fted.",
@@ -9886,6 +9943,7 @@
       "gui.changed_addon.book_pagenumber_7.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
       "advancements.transfur_totem_advancement_2.descr": "§b Be Saved From a Gooey and Miserable Life By Holding a Latex Totem",
       "advancements.over_dose.descr": "Well it wasn\u0027t §4cancer§r but i §4warned you",
+      "advancements.compressed_ammonia_advancement.descr": "You craft a Ammonia Compressed",
       "gui.changed_addon.book_pagenumber_2.button_back": "Back",
       "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "oranges and one glass bottle for that",
       "advancements.latex_insulator_advancement.title": "Latex Insulator",
@@ -10147,7 +10205,7 @@
       "gui.changed_addon.bookrecipepage_10.label_m": "M",
       "changedaddon.friendlygrab.Human.you_hug.organic": "They are organic so you just §chug§r them",
       "gui.changed_addon.bookrecipepage_10.label_s": "S",
-      "item.changed_addon.changedbook": "Experience book",
+      "item.changed_addon.changedbook": "Guide Book",
       "gui.changed_addon.bookpagenumber_5.label_16": "16",
       "gui.changed_addon.book_pagenumber_1.label_infuse_itself_guides_you_with_it": "infuse itself guides you with its recipes",
       "gamerule.changedAddonDuctMecanic.description": "allow you use the Changed Addon Duct Mecanic (Default off)",

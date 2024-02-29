@@ -18,7 +18,7 @@
     "rewardXP": 0,
     "achievementType": "task",
     "parent": {
-      "value": "CUSTOM:Ammoniapoweradvancement"
+      "value": "CUSTOM:CompressedAmmoniaAdvancement"
     },
     "triggerxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"custom_trigger\" x=\"16\" y=\"50\"><next><block type=\"advancement_trigger\" deletable=\"false\"></block></next></block></xml>"
   }

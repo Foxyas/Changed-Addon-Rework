@@ -3,16 +3,16 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "experiencebook_of_changed",
+    "texture": "ammonia_compressed",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "Guide Book",
-    "rarity": "RARE",
+    "name": "Ammonia Compressed",
+    "rarity": "COMMON",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
-    "stackSize": 1,
+    "stackSize": 64,
     "enchantability": 0,
     "useDuration": 0,
     "toolType": 1.0,
@@ -26,15 +26,13 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInfo": [
-      "§7Information about Changed:MC And ChangedAddon"
-    ],
+    "specialInfo": [],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
-    "onRightClickedInAir": {
-      "name": "Openpage1"
+    "onCrafted": {
+      "name": "AmmoniaCompressedItemIsCraftedsmelted"
     },
     "isFood": false,
     "nutritionalValue": 4,

@@ -63,6 +63,7 @@ import net.foxyas.changedaddon.item.CatalyzeddnaItem;
 import net.foxyas.changedaddon.item.AmmoniaparticleItem;
 import net.foxyas.changedaddon.item.AmmoniaParticlesJeiIllustrativeItem;
 import net.foxyas.changedaddon.item.AmmoniaItem;
+import net.foxyas.changedaddon.item.AmmoniaCompressedItem;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -128,6 +129,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> DEVITEM_5 = REGISTRY.register("devitem_5", () -> new Devitem5Item());
 	public static final RegistryObject<Item> EXPERIMENT_009_RECORD = REGISTRY.register("experiment_009_record", () -> new Experiment009recordItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_RECORD = REGISTRY.register("experiment_009_phase_2_record", () -> new Experiment009Phase2RecordItem());
+	public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", () -> new AmmoniaCompressedItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

@@ -1,13 +1,4 @@
 {
-  "grab_start_sound": {
-    "subtitle": "subtitles.grab_start_sound",
-    "sounds": [
-      {
-        "name": "changed_addon:grabstartsound",
-        "stream": false
-      }
-    ]
-  },
   "armor_equip": {
     "subtitle": "subtitles.armor_equip",
     "sounds": [
