@@ -20,15 +20,15 @@
       "falpha": 0.0
     },
     "spawnEggDotColor": {
-      "value": -10092544,
+      "value": -16724788,
       "falpha": 0.0
     },
     "creativeTab": {
       "value": "No creative tab entry"
     },
     "isBoss": true,
-    "bossBarColor": "WHITE",
-    "bossBarType": "PROGRESS",
+    "bossBarColor": "BLUE",
+    "bossBarType": "NOTCHED_6",
     "equipmentMainHand": {
       "value": ""
     },
@@ -50,11 +50,11 @@
     "mobBehaviourType": "Mob",
     "mobCreatureType": "UNDEFINED",
     "attackStrength": 24,
-    "attackKnockback": 0.30000000000000004,
-    "knockbackResistance": 2.0,
-    "movementSpeed": 0.3,
+    "attackKnockback": 1.5,
+    "knockbackResistance": 1.0,
+    "movementSpeed": 0.29,
     "stepHeight": 0.6,
-    "armorBaseValue": 24.0,
+    "armorBaseValue": 25.0,
     "trackingRange": 128,
     "followRange": 64,
     "health": 300,
@@ -71,7 +71,7 @@
     "immuneToFire": true,
     "immuneToArrows": true,
     "immuneToFallDamage": true,
-    "immuneToCactus": false,
+    "immuneToCactus": true,
     "immuneToDrowning": true,
     "immuneToLightning": true,
     "immuneToPotions": true,
@@ -107,7 +107,7 @@
     },
     "hasAI": true,
     "aiBase": "(none)",
-    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayer</field><field name=\"condition\">null,null</field><next><block type=\"attack_on_collide\"><field name=\"speed\">1.8</field><field name=\"longmemory\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"attack_action\"><field name=\"callhelp\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"leap_at_target\"><field name=\"speed\">0.5</field><field name=\"condition\">Ifplayerishighofentity,Ifplayerishighofentity</field><next><block type=\"swim\"><field name=\"speed\">1</field><field name=\"condition\">IfInWater,IfInWater</field><next><block type=\"wander\"><field name=\"speed\">1</field><field name=\"condition\">IfnotInWater,IfnotInWater</field><next><block type=\"doors_open\"><field name=\"condition\">null,null</field><next><block type=\"doors_close\"><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">Ifplayerareinwater,null</field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
+    "aixml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"aitasks_container\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"attack_entity\"><field name=\"insight\">FALSE</field><field name=\"nearby\">FALSE</field><field name=\"entity\">EntityPlayer</field><field name=\"condition\">null,null</field><next><block type=\"attack_on_collide\"><field name=\"speed\">1.25</field><field name=\"longmemory\">TRUE</field><field name=\"condition\">null,null</field><next><block type=\"attack_action\"><field name=\"callhelp\">FALSE</field><field name=\"condition\">null,null</field><next><block type=\"leap_at_target\"><field name=\"speed\">0.5</field><field name=\"condition\">Ifplayerishighofentity,Ifplayerishighofentity</field><next><block type=\"swim\"><field name=\"speed\">1</field><field name=\"condition\">IfInWater,IfInWater</field><next><block type=\"wander\"><field name=\"speed\">1</field><field name=\"condition\">IfnotInWater,IfnotInWater</field><next><block type=\"doors_open\"><field name=\"condition\">null,null</field><next><block type=\"doors_close\"><field name=\"condition\">null,null</field><next><block type=\"look_around\"><field name=\"condition\">null,null</field><next><block type=\"swim_in_water\"><field name=\"condition\">Ifplayerareinwater,null</field></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></next></block></xml>",
     "breedable": false,
     "tameable": false,
     "breedTriggerItems": [],

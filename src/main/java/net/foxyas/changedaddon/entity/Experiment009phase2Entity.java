@@ -51,7 +51,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import javax.annotation.Nullable;
 
 public class Experiment009phase2Entity extends Monster {
-	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.WHITE, ServerBossEvent.BossBarOverlay.PROGRESS);
+	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 
 	public Experiment009phase2Entity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2.get(), world);
@@ -75,7 +75,7 @@ public class Experiment009phase2Entity extends Monster {
 		super.registerGoals();
 		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.8, false) {
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, true) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
@@ -189,6 +189,8 @@ public class Experiment009phase2Entity extends Monster {
 			return false;
 		if (source == DamageSource.FALL)
 			return false;
+		if (source == DamageSource.CACTUS)
+			return false;
 		if (source == DamageSource.DROWN)
 			return false;
 		if (source == DamageSource.LIGHTNING_BOLT)
@@ -245,13 +247,13 @@ public class Experiment009phase2Entity extends Monster {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.29);
 		builder = builder.add(Attributes.MAX_HEALTH, 300);
-		builder = builder.add(Attributes.ARMOR, 24);
+		builder = builder.add(Attributes.ARMOR, 25);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 24);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 64);
-		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 2);
-		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 0.3);
+		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 1);
+		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1.5);
 		return builder;
 	}
 }

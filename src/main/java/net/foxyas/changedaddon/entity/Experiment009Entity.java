@@ -51,7 +51,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import javax.annotation.Nullable;
 
 public class Experiment009Entity extends Monster {
-	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.WHITE, ServerBossEvent.BossBarOverlay.PROGRESS);
+	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.WHITE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 
 	public Experiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.EXPERIMENT_009.get(), world);
@@ -75,7 +75,7 @@ public class Experiment009Entity extends Monster {
 		super.registerGoals();
 		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
@@ -241,13 +241,13 @@ public class Experiment009Entity extends Monster {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.28);
 		builder = builder.add(Attributes.MAX_HEALTH, 125);
 		builder = builder.add(Attributes.ARMOR, 40);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 64);
-		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.5);
-		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 0.5);
+		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.4);
+		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
 		return builder;
 	}
 }

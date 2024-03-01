@@ -18,6 +18,7 @@ import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009phase2Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.DazedRenderer;
+import net.foxyas.changedaddon.client.renderer.BunyRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ChangedAddonModEntityRenderers {
@@ -32,5 +33,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.DAZED.get(), DazedRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND.get(), PuroKindRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND_FEMALE.get(), PuroKindFemaleRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.BUNY.get(), BunyRenderer::new);
 	}
 }

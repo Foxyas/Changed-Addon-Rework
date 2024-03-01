@@ -66,7 +66,7 @@ public class UntransfurOverlayOverlay {
 				Minecraft.getInstance().gui.blit(event.getMatrixStack(), 11, posY - 72, 0, 0, intprogress, 3, intprogress, 3);
 				
 
-				Minecraft.getInstance().font.draw(event.getMatrixStack(), intprogress + "%", 9, posY + -105, -1);
+				//Minecraft.getInstance().font.draw(event.getMatrixStack(), intprogress + "%", 9, posY + -105, -1);
 
 
 			}

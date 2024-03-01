@@ -25,6 +25,7 @@ import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 import net.foxyas.changedaddon.entity.Experiment009Entity;
 import net.foxyas.changedaddon.entity.DazedEntity;
+import net.foxyas.changedaddon.entity.BunyEntity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -64,6 +65,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<PuroKindFemaleEntity>of(PuroKindFemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PuroKindFemaleEntity::new)
 
 					.sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<BunyEntity>> BUNY = register("buny",
+			EntityType.Builder.<BunyEntity>of(BunyEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(BunyEntity::new)
+
+					.sized(0.6f, 1.9f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -81,6 +86,7 @@ public class ChangedAddonModEntities {
 			DazedEntity.init();
 			PuroKindEntity.init();
 			PuroKindFemaleEntity.init();
+			BunyEntity.init();
 		});
 	}
 
@@ -95,5 +101,6 @@ public class ChangedAddonModEntities {
 		event.put(DAZED.get(), DazedEntity.createAttributes().build());
 		event.put(PURO_KIND.get(), PuroKindEntity.createAttributes().build());
 		event.put(PURO_KIND_FEMALE.get(), PuroKindFemaleEntity.createAttributes().build());
+		event.put(BUNY.get(), BunyEntity.createAttributes().build());
 	}
 }
