@@ -1,0 +1,25 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "minecraft:golden_carrot"
+    },
+    {
+      "item": "minecraft:rabbit"
+    },
+    {
+      "item": "minecraft:rabbit_foot"
+    },
+    {
+      "item": "minecraft:rabbit_hide"
+    },
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    }
+  ],
+  "gendered": false,
+  "form": "changed_addon:form_buny"
+}

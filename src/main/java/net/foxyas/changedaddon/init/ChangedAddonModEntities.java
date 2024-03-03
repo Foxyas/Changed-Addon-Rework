@@ -16,6 +16,8 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
+import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
+import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
 import net.foxyas.changedaddon.entity.PuroKindFemaleEntity;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
@@ -69,6 +71,16 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<BunyEntity>of(BunyEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(BunyEntity::new)
 
 					.sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<SnowLeopardMaleOrganicEntity>> SNOW_LEOPARD_MALE_ORGANIC = register("snow_leopard_male_organic",
+			EntityType.Builder.<SnowLeopardMaleOrganicEntity>of(SnowLeopardMaleOrganicEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(SnowLeopardMaleOrganicEntity::new)
+
+					.sized(0.6f, 1.9f));
+	public static final RegistryObject<EntityType<SnowLeopardFemaleOrganicEntity>> SNOW_LEOPARD_FEMALE_ORGANIC = register("snow_leopard_female_organic",
+			EntityType.Builder.<SnowLeopardFemaleOrganicEntity>of(SnowLeopardFemaleOrganicEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(SnowLeopardFemaleOrganicEntity::new)
+
+					.sized(0.6f, 1.9f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -87,6 +99,8 @@ public class ChangedAddonModEntities {
 			PuroKindEntity.init();
 			PuroKindFemaleEntity.init();
 			BunyEntity.init();
+			SnowLeopardMaleOrganicEntity.init();
+			SnowLeopardFemaleOrganicEntity.init();
 		});
 	}
 
@@ -102,5 +116,7 @@ public class ChangedAddonModEntities {
 		event.put(PURO_KIND.get(), PuroKindEntity.createAttributes().build());
 		event.put(PURO_KIND_FEMALE.get(), PuroKindFemaleEntity.createAttributes().build());
 		event.put(BUNY.get(), BunyEntity.createAttributes().build());
+		event.put(SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicEntity.createAttributes().build());
+		event.put(SNOW_LEOPARD_FEMALE_ORGANIC.get(), SnowLeopardFemaleOrganicEntity.createAttributes().build());
 	}
 }
