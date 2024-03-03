@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.client.model;
 import net.foxyas.changedaddon.entity.BunyEntity;
-import net.foxyas.changedaddon.entity.BunyEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;

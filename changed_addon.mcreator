@@ -9181,8 +9181,7 @@
           "src/main/java/net/foxyas/changedaddon/procedures/SummonDripParticlesProcedure.java"
         ],
         "dependencies": []
-      },
-      "path": "~/CustomCode"
+      }
     },
     {
       "name": "UntransfurProgress",
@@ -9512,8 +9511,7 @@
             "type": "entity"
           }
         ]
-      },
-      "path": "~/CustomCode"
+      }
     },
     {
       "name": "Buny",
@@ -9542,7 +9540,8 @@
           "src/main/java/net/foxyas/changedaddon/client/renderer/SnowLeopardMaleOrganicRenderer.java",
           "src/main/java/net/foxyas/changedaddon/entity/SnowLeopardMaleOrganicEntity.java"
         ]
-      }
+      },
+      "path": "~/CustomCode/entitys"
     },
     {
       "name": "SnowLeopardFemaleOrganic",
@@ -9556,7 +9555,8 @@
           "src/main/java/net/foxyas/changedaddon/entity/SnowLeopardFemaleOrganicEntity.java",
           "src/main/java/net/foxyas/changedaddon/client/renderer/SnowLeopardFemaleOrganicRenderer.java"
         ]
-      }
+      },
+      "path": "~/CustomCode/entitys"
     }
   ],
   "variable_elements": [
@@ -10029,7 +10029,7 @@
       "changedaddon.when_not.transfur": "You aren\u0027t a latex creature",
       "changedaddon.untransfur.fail": "the syringe doesn\u0027t seem to have worked",
       "gui.changed_addon.tranfur_sounds_gui.button_5": "howl",
-      "entity.changed_addon.buny": "Buny",
+      "entity.changed_addon.buny": "Bnuy",
       "gui.changed_addon.bookrecipepage_6.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "gui.changed_addon.bookrecipepage_6.label_16": "16",
       "gui.changed_addon.book_recipe_page_11.button_back": "Back",
@@ -10162,6 +10162,7 @@
       "gui.changed_addon.book_pagenumber_7.label_e_only_for_player": "-y modes",
       "gui.changed_addon.grabclickgui.button_struggle": "struggle",
       "gui.changed_addon.bookpagenumber_3.button_next": "Next",
+      "item.changed_addon.organic_snow_leopard_female_spawn_egg": "Organic Snow Leopard Female Spawn Egg",
       "advancements.catlyzer_advancement.descr": "You craft or get a Catalyzer",
       "gui.changed_addon.bookpagenumber_3.label_or": "OR",
       "gui.changed_addon.book_pagenumber_1.label_after_obtaining_a_latex_base_yo": " After obtaining a latex base, you can make a latex syringe with a blood s",
@@ -10195,13 +10196,14 @@
       "item.changed_addon.experiment_009_phase_2_record": "Experiment 009 Phase 2 Theme Music Disc",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.button_give_up": "     give up      ",
       "gamerule.changedAddonNewFriendlyGrab.description": "this is a new friendly grab that is less buggy but is VERY different from normal",
+      "item.changed_addon.organic_snow_leopard_male_spawn_egg": "Organic Snow Leopard Male Spawn Egg",
       "death.attack.assimilation": "%1$s was assimilated",
       "item.changed_addon.devitem_3": "Dev item",
       "item.changed_addon.devitem_5": "Devitem 5",
       "item.changed_addon.hazard_suit_leggings": "Hazard Leggings",
       "gui.changed_addon.bookpagenumber_4.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "advancements.obtain_painite.title": "Isn\u0027t redstone!?",
-      "item.changed_addon.buny_spawn_egg": "Buny Spawn Egg",
+      "item.changed_addon.buny_spawn_egg": "Bnuy Spawn Egg",
       "item.changed_addon.puro_kind_female_spawn_egg": "Puro Kind Female Spawn Egg",
       "item.changed_addon.devitem_1": "Devitem 1",
       "gui.changed_addon.bookrecipepage_8.label_f3": "F",

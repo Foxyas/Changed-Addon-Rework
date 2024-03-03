@@ -1,6 +1,12 @@
 
 package net.foxyas.changedaddon.client.renderer;
 
+import net.foxyas.changedaddon.client.model.OrganicSnowLeopardMaleModel;
+import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
+import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
+import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleCatModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
@@ -10,10 +16,12 @@ import net.minecraft.client.model.HumanoidModel;
 
 import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
 
-public class SnowLeopardMaleOrganicRenderer extends HumanoidMobRenderer<SnowLeopardMaleOrganicEntity, HumanoidModel<SnowLeopardMaleOrganicEntity>> {
+public class SnowLeopardMaleOrganicRenderer extends LatexHumanoidRenderer<SnowLeopardMaleOrganicEntity, OrganicSnowLeopardMaleModel, ArmorLatexMaleCatModel<SnowLeopardMaleOrganicEntity>> {
 	public SnowLeopardMaleOrganicRenderer(EntityRendererProvider.Context context) {
-		super(context, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER)), 0.5f);
-		this.addLayer(new HumanoidArmorLayer(this, new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
+		super(context, new OrganicSnowLeopardMaleModel(context.bakeLayer(OrganicSnowLeopardMaleModel.LAYER_LOCATION)),
+				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
+		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColor));
 	}
 
 	@Override
