@@ -75,7 +75,7 @@ public class Experiment009Entity extends Monster {
 		super.registerGoals();
 		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, false) {
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.5, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
@@ -246,7 +246,7 @@ public class Experiment009Entity extends Monster {
 		builder = builder.add(Attributes.ARMOR, 40);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 64);
-		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.4);
+		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.5);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
 		return builder;
 	}

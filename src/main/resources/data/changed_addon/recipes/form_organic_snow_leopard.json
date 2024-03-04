@@ -16,10 +16,10 @@
     {
       "item": "minecraft:snowball"
     },
-     {
+    {
       "item": "minecraft:bone"
     }
   ],
   "gendered": true,
-  "form": "changed_addon:form_snow_leopard"
+  "form": "changed:form_latex_snow_leopard"
 }

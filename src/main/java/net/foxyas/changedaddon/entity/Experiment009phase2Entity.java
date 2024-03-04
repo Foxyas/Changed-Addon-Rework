@@ -75,7 +75,7 @@ public class Experiment009phase2Entity extends Monster {
 		super.registerGoals();
 		this.getNavigation().getNodeEvaluator().setCanOpenDoors(true);
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, Player.class, false, false));
-		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25, true) {
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.7, true) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
@@ -247,10 +247,10 @@ public class Experiment009phase2Entity extends Monster {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.29);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 300);
 		builder = builder.add(Attributes.ARMOR, 25);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 24);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 20);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 64);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 1);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1.5);

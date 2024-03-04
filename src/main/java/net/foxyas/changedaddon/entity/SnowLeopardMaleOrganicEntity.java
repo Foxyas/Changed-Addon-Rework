@@ -5,6 +5,7 @@ import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.HairStyle;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -73,7 +74,10 @@ public class SnowLeopardMaleOrganicEntity extends AbstractSnowLeopard {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-
+	@Override
+	protected boolean targetSelectorTest(LivingEntity livingEntity) {
+		return false;
+	}
 
 	@Override
 	protected void registerGoals() {
