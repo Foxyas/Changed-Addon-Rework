@@ -130,7 +130,7 @@ public class LaethinSyringePlayerFinishesUsingItemProcedure {
 						}
 					}
 				}
-			} else if (Math.random() <= 0.01) {
+			} else {
 				UntransfurFail = new DamageSource("UnTransfurFail");
 				UntransfurFail.bypassArmor();
 				entity.hurt(UntransfurFail, 15);

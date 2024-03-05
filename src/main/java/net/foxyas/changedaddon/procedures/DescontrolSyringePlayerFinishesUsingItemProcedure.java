@@ -32,81 +32,7 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
 		if (entity == null)
 			return;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
-			{
-				String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).replace("form_", "");
-				entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.LatexEntitySummon = _setval;
-					capability.syncPlayerVariables(entity);
-				});
-			}
-			{
-				String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).replace("/", "_");
-				entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.LatexEntitySummon = _setval;
-					capability.syncPlayerVariables(entity);
-				});
-			}
-			if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).startsWith("changed_addon:latex_puro_kind")
-					&& (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).contains("_male")
-							|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).contains("_female"))) {
-				{
-					String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).replace("_female", "");
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexEntitySummon = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-				{
-					String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).replace("_male", "");
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexEntitySummon = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-				{
-					String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).replace("latex_", "");
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexEntitySummon = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-			}
-			if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).startsWith("changed_addon:latex_snow_fox")
-					&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).contains("_male")) {
-				{
-					String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).replace("_male", "");
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexEntitySummon = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-			}
-			if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).startsWith("changed_addon:form_dazed_latex")
-					&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).contains("_latex")) {
-				{
-					String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).replace("_latex", "");
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexEntitySummon = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-				if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).startsWith("changed_addon:form_dazed")
-						&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).contains("form_")) {
-					{
-						String _setval = ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon).replace("form_", "");
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.LatexEntitySummon = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-				}
-			}
-			{
-				Entity _ent = entity;
-				if (!_ent.level.isClientSide() && _ent.getServer() != null)
-					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-							("summon " + (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexEntitySummon + " ~ ~ ~"));
-			}
+			SummonEntityProcedure.execute((Level) world, (Player) entity);
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == true) {
 				{
 					Entity _ent = entity;
@@ -145,8 +71,8 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
 				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 					_entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
 			}
-			if (!(entity instanceof ServerPlayer _plr7 && _plr7.level instanceof ServerLevel
-					&& _plr7.getAdvancements().getOrStartProgress(_plr7.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
+			if (!(entity instanceof ServerPlayer _plr6 && _plr6.level instanceof ServerLevel
+					&& _plr6.getAdvancements().getOrStartProgress(_plr6.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
 				if (entity instanceof ServerPlayer _player) {
 					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"));
 					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);

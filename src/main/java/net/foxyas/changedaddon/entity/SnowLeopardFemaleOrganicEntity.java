@@ -1,11 +1,16 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.HairStyle;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -29,7 +34,7 @@ import java.util.List;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class SnowLeopardFemaleOrganicEntity extends AbstractSnowLeopard {
+public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameLatexEntity {
 	public SnowLeopardFemaleOrganicEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC.get(), world);
 	}
@@ -42,11 +47,47 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractSnowLeopard {
 		setPersistenceRequired();
 	}
 
+	public InteractionResult SnowLeopard(Player player, InteractionHand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
+		if (this.level.isClientSide) {
+			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+		} else {
+			if (!this.isTame() && this.isTameItem(itemstack)) {
+				if (!player.getAbilities().instabuild) {
+					itemstack.shrink(1);
+				}
+				boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+
+				if (!istransfur && this.random.nextInt(3) == 0) { // One in 3 chance
+					this.tame(player);
+					this.navigation.stop();
+					this.setTarget(null);
+					this.level.broadcastEntityEvent(this, (byte)7);
+				} else if(istransfur && this.random.nextInt(6) == 0) {
+					this.tame(player);
+					this.navigation.stop();
+					this.setTarget(null);
+					this.level.broadcastEntityEvent(this, (byte)7);
+				} else {
+					this.level.broadcastEntityEvent(this, (byte)6);
+				}
+
+				return InteractionResult.SUCCESS;
+			}
+
+			return super.mobInteract(player, hand);
+		}
+	}
+
+	@Override
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+		return SnowLeopard(player,hand);
+	}
 
 	@Override
 	public TransfurMode getTransfurMode() {
-		double random = level.random.nextDouble();
-		if (random > 5) {return TransfurMode.ABSORPTION;}
+		if (level.random.nextInt() > 5) {return TransfurMode.ABSORPTION;}
 		return TransfurMode.REPLICATION;
 	}
 
