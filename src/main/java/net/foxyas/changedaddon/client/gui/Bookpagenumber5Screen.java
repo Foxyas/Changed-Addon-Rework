@@ -61,11 +61,11 @@ public class Bookpagenumber5Screen extends AbstractContainerScreen<Bookpagenumbe
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/catalyzer_screen.png"));
 		this.blit(ms, this.leftPos + 34, this.topPos + 33, 0, 0, 200, 86, 200, 86);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniaparticle_slot.png"));
-		this.blit(ms, this.leftPos + 57, this.topPos + 77, 0, 0, 16, 16, 16, 16);
-
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniabutton.png"));
 		this.blit(ms, this.leftPos + 187, this.topPos + 77, 0, 0, 16, 16, 16, 16);
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammonia_compressed_icon.png"));
+		this.blit(ms, this.leftPos + 57, this.topPos + 77, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.disableBlend();
 	}
@@ -86,7 +86,6 @@ public class Bookpagenumber5Screen extends AbstractContainerScreen<Bookpagenumbe
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_5.label_16"), 60, 100, -1);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_5.label_catalyzer"), 44, 43, -16777216);
 	}
 

@@ -50,15 +50,6 @@
       {
         "type": "image",
         "data": {
-          "image": "ammoniaparticle_slot.png",
-          "use1Xscale": false,
-          "x": 136,
-          "y": 125
-        }
-      },
-      {
-        "type": "image",
-        "data": {
           "image": "ammoniabutton.png",
           "use1Xscale": false,
           "x": 266,
@@ -78,21 +69,6 @@
       {
         "type": "label",
         "data": {
-          "name": "label_16",
-          "text": {
-            "fixedValue": "16"
-          },
-          "color": {
-            "value": -1,
-            "falpha": 0.0
-          },
-          "x": 139,
-          "y": 148
-        }
-      },
-      {
-        "type": "label",
-        "data": {
           "name": "label_catalyzer",
           "text": {
             "fixedValue": "Catalyzer"
@@ -103,6 +79,15 @@
           },
           "x": 123,
           "y": 91
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "ammonia_compressed_icon.png",
+          "use1Xscale": false,
+          "x": 136,
+          "y": 125
         }
       }
     ],
