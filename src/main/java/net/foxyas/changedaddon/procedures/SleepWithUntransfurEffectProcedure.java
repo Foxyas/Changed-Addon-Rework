@@ -9,9 +9,11 @@ import net.minecraftforge.common.MinecraftForge;
 
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 
 import javax.annotation.Nullable;
 
@@ -51,12 +53,16 @@ public class SleepWithUntransfurEffectProcedure {
 
 			private void run() {
 				if (world instanceof Level _lvl0 && _lvl0.isDay()) {
-					{
-						double _setval = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress + 50;
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.UntransfurProgress = _setval;
-							capability.syncPlayerVariables(entity);
-						});
+					if (entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()) : false) {
+						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
+							{
+								double _setval = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress + 50;
+								entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+									capability.UntransfurProgress = _setval;
+									capability.syncPlayerVariables(entity);
+								});
+							}
+						}
 					}
 				}
 				MinecraftForge.EVENT_BUS.unregister(this);
