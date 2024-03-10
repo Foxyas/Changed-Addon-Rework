@@ -22,7 +22,7 @@ public abstract class LitixCamoniaFluidFluid extends ForgeFlowingFluid {
 					.sound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty"))))
 			.explosionResistance(100f)
 
-			.bucket(ChangedAddonModItems.LITIX_CAMONIA_FLUID_BUCKET).block(() -> (LiquidBlock) ChangedAddonModBlocks.LITIX_CAMONIA_FLUID.get());
+			.slopeFindDistance(2).bucket(ChangedAddonModItems.LITIX_CAMONIA_FLUID_BUCKET).block(() -> (LiquidBlock) ChangedAddonModBlocks.LITIX_CAMONIA_FLUID.get());
 
 	private LitixCamoniaFluidFluid() {
 		super(PROPERTIES);

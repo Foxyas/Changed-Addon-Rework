@@ -5,24 +5,6 @@
     "type": "Items",
     "items": [
       {
-        "value": "Blocks.TALLGRASS"
-      },
-      {
-        "value": "Blocks.TALLGRASS#0"
-      },
-      {
-        "value": "Blocks.TALLGRASS#1"
-      },
-      {
-        "value": "Blocks.TALLGRASS#2"
-      },
-      {
-        "value": "Blocks.DOUBLE_PLANT#2"
-      },
-      {
-        "value": "Blocks.SEAGRASS"
-      },
-      {
         "value": "Blocks.SAPLING#0"
       },
       {
@@ -44,9 +26,6 @@
         "value": "Blocks.REEDS"
       },
       {
-        "value": "Blocks.LEAVES"
-      },
-      {
         "value": "Blocks.LEAVES#0"
       },
       {
@@ -59,9 +38,6 @@
         "value": "Blocks.LEAVES#3"
       },
       {
-        "value": "Blocks.LEAVES2"
-      },
-      {
         "value": "Blocks.LEAVES2#0"
       },
       {
@@ -72,6 +48,18 @@
       },
       {
         "value": "Blocks.FLOWERING_AZALEA_LEAVES"
+      },
+      {
+        "value": "Blocks.TALLGRASS#1"
+      },
+      {
+        "value": "Blocks.TALLGRASS#2"
+      },
+      {
+        "value": "Blocks.SEAGRASS"
+      },
+      {
+        "value": "Blocks.DEADBUSH"
       },
       {
         "value": "Blocks.YELLOW_FLOWER"
@@ -117,9 +105,6 @@
       },
       {
         "value": "Blocks.DOUBLE_PLANT#1"
-      },
-      {
-        "value": "Blocks.DOUBLE_PLANT#3"
       },
       {
         "value": "Blocks.DOUBLE_PLANT#4"

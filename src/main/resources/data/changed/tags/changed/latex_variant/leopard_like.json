@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "changed_addon:form_organic_snow_leopard/male",
-    "changed_addon:form_organic_snow_leopard/female"
+    "changed_addon:form_biosynth_snow_leopard/male",
+    "changed_addon:form_biosynth_snow_leopard/female"
   ]
 }

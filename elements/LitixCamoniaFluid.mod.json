@@ -10,7 +10,7 @@
     "canMultiply": false,
     "flowRate": 5,
     "levelDecrease": 1,
-    "slopeFindDistance": 4,
+    "slopeFindDistance": 2,
     "spawnParticles": false,
     "dripParticle": {
       "value": "EXPLOSION_NORMAL"
