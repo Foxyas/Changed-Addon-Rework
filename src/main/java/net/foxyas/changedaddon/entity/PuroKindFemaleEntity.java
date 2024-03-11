@@ -54,10 +54,10 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf {
 		return HairStyle.Collection.getAll();
 	}
 
-	@Override
+	/*@Override
 	public LatexType getLatexType() {
 		return LatexType.DARK_LATEX;
-	}
+	}*/
 
 	@Override
 	public Color3 getHairColor(int layer) {

@@ -16,6 +16,7 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
@@ -62,14 +63,14 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 				if (entity.isAlive()) {
 					IAATTACK = Math.random();
 					if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 200) {
-						if (IAATTACK >= 0.5) {
-							if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null)) {
-								deltaX = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX() - entity.getX();
-								deltaY = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY() - entity.getY();
-								deltaZ = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ() - entity.getZ();
-								distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-								entity.getPersistentData().putDouble("IA", 0);
-								if (distance >= 5) {
+						if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null)) {
+							deltaX = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX() - entity.getX();
+							deltaY = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY() - entity.getY();
+							deltaZ = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ() - entity.getZ();
+							distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+							entity.getPersistentData().putDouble("IA", 0);
+							if (distance >= 4) {
+								if (IAATTACK > 0.5) {
 									{
 										Entity _ent = entity;
 										_ent.teleportTo(((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX()), ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY()),
@@ -92,6 +93,8 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 												.collect(Collectors.toList());
 										for (Entity entityiterator : _entfound) {
 											if (!(entityiterator == entity)) {
+												if (entityiterator instanceof Player _player && !_player.level.isClientSide())
+													_player.displayClientMessage(new TextComponent("\u00A7l\u00A7o\u00A73You CANT ESCAPE FROM ME!!"), true);
 												entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
 													@Override
 													public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
@@ -124,69 +127,116 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 									}
 									world.addParticle(ParticleTypes.FLASH, (entity.getX()), (entity.getY()), (entity.getZ()), 0, 1, 0);
 									entity.getPersistentData().putDouble("IA", 0);
+								} else {
+									{
+										Entity _ent = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null);
+										_ent.teleportTo((entity.getX()), (entity.getY()), (entity.getZ()));
+										if (_ent instanceof ServerPlayer _serverPlayer)
+											_serverPlayer.connection.teleport((entity.getX()), (entity.getY()), (entity.getZ()), _ent.getYRot(), _ent.getXRot());
+									}
+									if (entity.isAlive()) {
+										if (world instanceof ServerLevel _level) {
+											LightningBolt entityToSpawn = EntityType.LIGHTNING_BOLT.create(_level);
+											entityToSpawn.moveTo(Vec3.atBottomCenterOf(new BlockPos(entity.getX(), entity.getY(), entity.getZ())));
+											entityToSpawn.setVisualOnly(true);
+											_level.addFreshEntity(entityToSpawn);
+										}
+									}
+									{
+										final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
+										List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2, 2, 2), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+												.collect(Collectors.toList());
+										for (Entity entityiterator : _entfound) {
+											if (!(entityiterator == entity)) {
+												if (entityiterator instanceof Player _player && !_player.level.isClientSide())
+													_player.displayClientMessage(new TextComponent("\u00A7o\u00A73Come Back Here \u00A7lNOW!"), true);
+												entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
+													@Override
+													public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+														Component _attackerName = null;
+														Component _entityName = _livingEntity.getDisplayName();
+														Component _itemName = null;
+														Entity _attacker = this.getEntity();
+														ItemStack _itemStack = ItemStack.EMPTY;
+														if (_attacker != null) {
+															_attackerName = _attacker.getDisplayName();
+														}
+														if (_attacker instanceof LivingEntity _livingAttacker) {
+															_itemStack = _livingAttacker.getMainHandItem();
+														}
+														if (!_itemStack.isEmpty() && _itemStack.hasCustomHoverName()) {
+															_itemName = _itemStack.getDisplayName();
+														}
+														if (_attacker != null && _itemName != null) {
+															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+														} else if (_attacker != null) {
+															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+														} else {
+															return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+														}
+													}
+												})), (float) 1.5);
+												entityiterator.setDeltaMovement(new Vec3(0, (-1), 0));
+											}
+										}
+									}
+									world.addParticle(ParticleTypes.FLASH, (entity.getX()), (entity.getY()), (entity.getZ()), 0, 1, 0);
+									entity.getPersistentData().putDouble("IA", 0);
 								}
 							}
-						} else if (IAATTACK < 0.55) {
-							if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null)) {
-								entity.getPersistentData().putDouble("IA", 0);
-								deltaX = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX() - entity.getX();
-								deltaY = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY() - entity.getY();
-								deltaZ = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ() - entity.getZ();
-								distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-								if (distance < 2) {
-									int horizontalRadiusHemiTop = (int) 3 - 1;
-									int verticalRadiusHemiTop = (int) 1;
-									int yIterationsHemiTop = verticalRadiusHemiTop;
-									for (int i = 0; i < yIterationsHemiTop; i++) {
-										if (i == verticalRadiusHemiTop) {
-											continue;
-										}
-										for (int xi = -horizontalRadiusHemiTop; xi <= horizontalRadiusHemiTop; xi++) {
-											for (int zi = -horizontalRadiusHemiTop; zi <= horizontalRadiusHemiTop; zi++) {
-												double distanceSq = (xi * xi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop) + (i * i) / (double) (verticalRadiusHemiTop * verticalRadiusHemiTop)
-														+ (zi * zi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop);
-												if (distanceSq <= 1.0) {
-													{
-														final Vec3 _center = new Vec3(x + xi, y + i, z + zi);
-														List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(1, 2, 1), e -> true).stream()
-																.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
-														for (Entity entityiterator : _entfound) {
-															if (!(entityiterator == entity)) {
-																entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
-																	@Override
-																	public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
-																		Component _attackerName = null;
-																		Component _entityName = _livingEntity.getDisplayName();
-																		Component _itemName = null;
-																		Entity _attacker = this.getEntity();
-																		ItemStack _itemStack = ItemStack.EMPTY;
-																		if (_attacker != null) {
-																			_attackerName = _attacker.getDisplayName();
-																		}
-																		if (_attacker instanceof LivingEntity _livingAttacker) {
-																			_itemStack = _livingAttacker.getMainHandItem();
-																		}
-																		if (!_itemStack.isEmpty() && _itemStack.hasCustomHoverName()) {
-																			_itemName = _itemStack.getDisplayName();
-																		}
-																		if (_attacker != null && _itemName != null) {
-																			return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
-																		} else if (_attacker != null) {
-																			return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
-																		} else {
-																			return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
-																		}
+							if (distance <= 2) {
+								int horizontalRadiusHemiTop = (int) 3 - 1;
+								int verticalRadiusHemiTop = (int) 1;
+								int yIterationsHemiTop = verticalRadiusHemiTop;
+								for (int i = 0; i < yIterationsHemiTop; i++) {
+									if (i == verticalRadiusHemiTop) {
+										continue;
+									}
+									for (int xi = -horizontalRadiusHemiTop; xi <= horizontalRadiusHemiTop; xi++) {
+										for (int zi = -horizontalRadiusHemiTop; zi <= horizontalRadiusHemiTop; zi++) {
+											double distanceSq = (xi * xi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop) + (i * i) / (double) (verticalRadiusHemiTop * verticalRadiusHemiTop)
+													+ (zi * zi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop);
+											if (distanceSq <= 1.0) {
+												{
+													final Vec3 _center = new Vec3(x + xi, y + i, z + zi);
+													List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(1, 2, 1), e -> true).stream()
+															.sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
+													for (Entity entityiterator : _entfound) {
+														if (!(entityiterator == entity)) {
+															entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
+																@Override
+																public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+																	Component _attackerName = null;
+																	Component _entityName = _livingEntity.getDisplayName();
+																	Component _itemName = null;
+																	Entity _attacker = this.getEntity();
+																	ItemStack _itemStack = ItemStack.EMPTY;
+																	if (_attacker != null) {
+																		_attackerName = _attacker.getDisplayName();
 																	}
-																})), (float) 2.5);
-																entityiterator.setDeltaMovement(new Vec3(0, 1.5, 0));
-																world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.5, 0);
-																if (entity.isAlive()) {
-																	if (world instanceof ServerLevel _level) {
-																		LightningBolt entityToSpawn = EntityType.LIGHTNING_BOLT.create(_level);
-																		entityToSpawn.moveTo(Vec3.atBottomCenterOf(new BlockPos(x + xi, y + i, z + zi)));
-																		entityToSpawn.setVisualOnly(true);
-																		_level.addFreshEntity(entityToSpawn);
+																	if (_attacker instanceof LivingEntity _livingAttacker) {
+																		_itemStack = _livingAttacker.getMainHandItem();
 																	}
+																	if (!_itemStack.isEmpty() && _itemStack.hasCustomHoverName()) {
+																		_itemName = _itemStack.getDisplayName();
+																	}
+																	if (_attacker != null && _itemName != null) {
+																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+																	} else if (_attacker != null) {
+																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+																	} else {
+																		return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+																	}
+																}
+															})), (float) 2.5);
+															entityiterator.setDeltaMovement(new Vec3(0, 1.5, 0));
+															world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.5, 0);
+															if (entity.isAlive()) {
+																if (world instanceof ServerLevel _level) {
+																	LightningBolt entityToSpawn = EntityType.LIGHTNING_BOLT.create(_level);
+																	entityToSpawn.moveTo(Vec3.atBottomCenterOf(new BlockPos(x + xi, y + i, z + zi)));
+																	entityToSpawn.setVisualOnly(true);
+																	_level.addFreshEntity(entityToSpawn);
 																}
 															}
 														}
@@ -428,7 +478,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 					distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 				}
 				if (distance > 0) {
-					speed = 0.04;
+					speed = 0.07;
 					motionX = deltaX / distance * speed;
 					motionY = deltaY / distance * speed;
 					motionZ = deltaZ / distance * speed;

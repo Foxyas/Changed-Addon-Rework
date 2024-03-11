@@ -38,7 +38,8 @@ public class DarklatexpuddleFeatureProcedure {
 			return;
 		if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame || entity instanceof ThrownExperienceBottle || entity instanceof ExperienceOrb)) {
 			if (!(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).contains("dark_latex")) {
-				if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")) {
+				if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
+						&& !((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("puro_kind")) {
 					if (new Object() {
 						public double getValue(LevelAccessor world, BlockPos pos, String tag) {
 							BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -72,7 +73,7 @@ public class DarklatexpuddleFeatureProcedure {
 						if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")) {
 							if (!(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).contains("dark_latex")) {
 								if (entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
-									if ((ForgeRegistries.ENTITIES.getKey(entityiterator.getType()).toString()).contains("dark_latex")) {
+									if ((ForgeRegistries.ENTITIES.getKey(entityiterator.getType()).toString()).contains("dark_latex") || entityiterator instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
 										if (entityiterator instanceof Mob _entity)
 											_entity.getNavigation().moveTo(x, y, z, 0.3);
 									}

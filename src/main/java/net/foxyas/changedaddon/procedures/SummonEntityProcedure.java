@@ -24,7 +24,9 @@ public class SummonEntityProcedure {
 			double y = player.getY();
 			double z = player.getZ();
 			LatexVariantInstance instance = ProcessTransfur.getPlayerLatexVariant(player);
+			if (instance != null){
 			LatexEntity fakeEntity = instance.getLatexEntity();
+			
 			Entity entityToSpawn = fakeEntity;
 			entityToSpawn.moveTo(x, y, z, 0, 0);
 			entityToSpawn.setYBodyRot(0);
@@ -33,6 +35,7 @@ public class SummonEntityProcedure {
 			if (!_ent.level.isClientSide() && _ent.getServer() != null)
 				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), ("summon " + ForgeRegistries.ENTITIES.getKey(entityToSpawn.getType()).toString() + " ~ ~ ~"));
 
+			}
 		}
 
 	}

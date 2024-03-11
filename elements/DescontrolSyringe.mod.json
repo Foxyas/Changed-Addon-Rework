@@ -35,8 +35,8 @@
       "name": "DescontrolSyringePlayerFinishesUsingItem"
     },
     "isFood": true,
-    "nutritionalValue": 4,
-    "saturation": 3.0,
+    "nutritionalValue": 2,
+    "saturation": 10.0,
     "eatResultItem": {
       "value": ""
     },

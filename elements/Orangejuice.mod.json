@@ -33,7 +33,7 @@
     "inventoryStackSize": 64,
     "isFood": true,
     "nutritionalValue": 8,
-    "saturation": 1.0,
+    "saturation": 1.125,
     "eatResultItem": {
       "value": "Items.GLASS_BOTTLE"
     },

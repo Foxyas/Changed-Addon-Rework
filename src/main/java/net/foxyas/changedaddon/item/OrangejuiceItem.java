@@ -15,7 +15,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class OrangejuiceItem extends Item {
 	public OrangejuiceItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(8).saturationMod(1f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(8).saturationMod(1.125f).alwaysEat()
 
 				.build()));
 	}

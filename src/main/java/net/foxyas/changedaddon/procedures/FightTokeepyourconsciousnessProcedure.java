@@ -145,12 +145,12 @@ public class FightTokeepyourconsciousnessProcedure {
 										if (entity.isAlive()) {
 											if (entity instanceof Player _player && !_player.level.isClientSide())
 												_player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
+											SummonEntityProcedure.execute((Level) world, (Player) entity);
 											{
 												Entity _ent = entity;
 												if (!_ent.level.isClientSide() && _ent.getServer() != null)
 													_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
 											}
-											SummonEntityProcedure.execute((Level) world, (Player) entity);
 											if (entity instanceof LivingEntity _entity)
 												_entity.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
 										}
@@ -181,7 +181,7 @@ public class FightTokeepyourconsciousnessProcedure {
 							}
 						}
 					} else {
-						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute() * 0.9) {
+						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute() * 0.8) {
 							{
 								Entity _ent = entity;
 								if (!_ent.level.isClientSide() && _ent.getServer() != null)
