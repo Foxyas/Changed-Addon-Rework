@@ -38,6 +38,11 @@ public class Experiment009IsHurtProcedure {
 					event.setCanceled(true);
 				}
 			}
+			if (damagesource.isProjectile()) {
+				if (event != null && event.isCancelable()) {
+					event.setCanceled(true);
+				}
+			}
 		}
 	}
 }

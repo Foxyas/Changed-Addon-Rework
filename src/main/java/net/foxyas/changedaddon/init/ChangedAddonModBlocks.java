@@ -15,6 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraft.world.level.block.Block;
 
 import net.foxyas.changedaddon.block.UnifuserBlock;
+import net.foxyas.changedaddon.block.SignalBlockBlock;
 import net.foxyas.changedaddon.block.PainiteOreBlock;
 import net.foxyas.changedaddon.block.PainiteBlockBlock;
 import net.foxyas.changedaddon.block.LitixCamoniaFluidBlock;
@@ -34,6 +35,7 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> UNIFUSER = REGISTRY.register("unifuser", () -> new UnifuserBlock());
 	public static final RegistryObject<Block> DARKLATEXPUDDLE = REGISTRY.register("darklatexpuddle", () -> new DarklatexpuddleBlock());
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
+	public static final RegistryObject<Block> SIGNAL_BLOCK = REGISTRY.register("signal_block", () -> new SignalBlockBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

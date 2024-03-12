@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/signal_block_pulse_texture",
+    "up": "changed_addon:blocks/signal_block_pulse_texture",
+    "north": "changed_addon:blocks/signal_block_pulse_texture",
+    "east": "changed_addon:blocks/signal_block_pulse_texture",
+    "south": "changed_addon:blocks/signal_block_pulse_texture",
+    "west": "changed_addon:blocks/signal_block_pulse_texture",
+    "particle": "changed_addon:blocks/signal_block_pulse_texture"
+  }
+}

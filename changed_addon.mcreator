@@ -9568,6 +9568,107 @@
         "dependencies": []
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "SignalBlock",
+      "type": "block",
+      "sortid": 462,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "signal_block",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/block/SignalBlockBlock.java",
+          "src/main/resources/assets/changed_addon/blockstates/signal_block.json",
+          "src/main/resources/assets/changed_addon/models/block/signal_block.json",
+          "src/main/resources/assets/changed_addon/models/item/signal_block.json"
+        ]
+      }
+    },
+    {
+      "name": "SignalBlockFeature",
+      "type": "procedure",
+      "sortid": 463,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "signal_block_feature",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SignalBlockFeatureProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SignalCatcherOnPlayerStoppedUsing",
+      "type": "procedure",
+      "sortid": 464,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "signal_catcher_on_player_stopped_using",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SignalCatcherOnPlayerStoppedUsingProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "time",
+            "type": "number"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SignalCatcher",
+      "type": "item",
+      "sortid": 465,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "signal_catcher",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/SignalCatcherItem.java",
+          "src/main/resources/assets/changed_addon/models/item/signal_catcher.json"
+        ]
+      }
+    },
+    {
+      "name": "SignalCatcherRecipe",
+      "type": "recipe",
+      "sortid": 466,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "signal_catcher_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/signal_catcher_recipe.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -9830,38 +9931,39 @@
   "language_map": {
     "en_us": {
       "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
-      "gui.changed_addon.book_pagenumber_7.label_ab": "-ab)",
       "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
+      "gui.changed_addon.book_pagenumber_7.label_ab": "-ab)",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
-      "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
+      "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_both_the_inventory_and_the_craft": "both the inventory and the craft table",
-      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
+      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
+      "item.changed_addon.signal_catcher": "Signal Catcher",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
       "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
+      "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
-      "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
       "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
+      "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
       "gui.changed_addon.bookpagenumber_4.label_n": "N",
-      "entity.changed_addon.latex_snow_fox_male": "Male Latex Snow Fox",
       "effect.changed_addon.infriendlygrabeffect": "Friendly Grab Host",
+      "entity.changed_addon.latex_snow_fox_male": "Male Latex Snow Fox",
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
       "gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon": " (Press the Totem Icon)",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe1": "Display Litix-Camonia Recipe",
       "gui.changed_addon.book_pagenumber_6.label_mode_on": "-mode on) This Will change t-",
       "block.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
       "gui.changed_addon.book_pagenumber_7.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
-      "gui.changed_addon.bookpagenumber_3.label_fflowers": "f\u003dflowers",
       "entity.changed_addon.experiment_009": "Experiment 009",
+      "gui.changed_addon.bookpagenumber_3.label_fflowers": "f\u003dflowers",
       "gui.changed_addon.bookrecipepage_8.label_s_seeds": "S \u003d ANY SEEDS",
       "gui.changed_addon.book_pagenumber_2.label_click_on_the_litixcamonia_recipe": "Click on the LitixCamonia recipe for details ",
       "gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants": "F \u003d ANY FLOWERS OR PLANTS",
@@ -9874,9 +9976,9 @@
       "subtitles.spray.sound": "Using Spray",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
-      "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
-      "gui.changed_addon.pagesecret.button_close": "close",
       "attribute.changed_addon.latexresistance": "Latex Resistance",
+      "gui.changed_addon.pagesecret.button_close": "close",
+      "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
@@ -9884,8 +9986,8 @@
       "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
       "gui.changed_addon.book_pagenumber_1.label_empty1": "?",
-      "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
+      "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
@@ -9901,8 +10003,8 @@
       "gui.changed_addon.book_pagenumber_1.button_next": "next",
       "item.changed_addon.ammonia_particles_jei_illustrative": "16 Ammonia Particles ",
       "gui.changed_addon.bookpagenumber_5.label_unifuser": "Unifuser",
-      "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
       "gui.changed_addon.bookrecipepage_9.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
+      "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
       "gui.changed_addon.book_recipe_page_11.label_g": "G",
       "gui.changed_addon.foxyasgui.Deals": "",
       "gui.changed_addon.book_pagenumber_7.label_friendly_modes": "-iendly modes (If Human this-",
@@ -9916,17 +10018,17 @@
       "gui.changed_addon.bookpagenumber_3.label_to_purify_the_latex_syringes_jus": "to purify the latex syringes just craft a purifier and follow this example",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
-      "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
+      "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
       "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
+      "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
       "entity.changed_addon.snow_leopard_female_organic": "Female BioSynth Snow Leopard",
       "gui.changed_addon.book_recipe_page_11.label_p": "L",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
       "entity.changed_addon.latex_snow_fox_female": "Female Latex Snow Fox",
-      "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
       "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
+      "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe": "Display Litix-Camonia Recipe",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
@@ -9974,6 +10076,7 @@
       "gui.changed_addon.bookpagenumber_5.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "gui.changed_addon.book_pagenumber_2.label_laeting_syringe": "Laeting Syringe",
       "changedaddon.fight_concience.success": "You §2Maintained!!! §rYour Conscience Good Job",
+      "block.changed_addon.signal_block": "Signal Block",
       "effect.changed_addon.fadige": "Fatigue",
       "translation.FriendlyGrab.HumanText": "§bYou are in Friendly Grab Press (key) for leave",
       "changedaddon.friendlygrab.alreadyin": "You are already Friendly Grabbing",
