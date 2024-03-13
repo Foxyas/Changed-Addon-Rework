@@ -42,7 +42,7 @@ public class SignalCatcherItem extends Item {
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		SignalBlockFeatureProcedure.execute(world, x, y, z, entity);
+		SignalBlockFeatureProcedure.execute(world, x, y, z, entity, itemstack);
 		return retval;
 	}
 

@@ -195,6 +195,8 @@ public class Experiment009phase2Entity extends Monster {
 			return false;
 		if (source == DamageSource.LIGHTNING_BOLT)
 			return false;
+		if (source.isExplosion())
+			return false;
 		if (source.getMsgId().equals("trident"))
 			return false;
 		return super.hurt(source, amount);
