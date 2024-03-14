@@ -2,11 +2,11 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "B",
-    "keyBindingName": "Concience Fight Gui",
+    "triggerKey": "C",
+    "keyBindingName": "Leap Key",
     "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {
-      "name": "OpengrabescapeguiOnKeyPressed"
+      "name": "Leap"
     }
   }
 }

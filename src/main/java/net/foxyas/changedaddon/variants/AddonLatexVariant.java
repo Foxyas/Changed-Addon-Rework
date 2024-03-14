@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.variants;
 
+//import net.foxyas.changedaddon.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ChangedAddonRegisters;
 import net.foxyas.changedaddon.client.model.DazedLatexModel;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
@@ -18,7 +20,7 @@ import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraftforge.fml.common.Mod;
-
+import net.foxyas.changedaddon.ChangedAddonRegisters;
 import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.world.entity.monster.Creeper;

@@ -18,12 +18,13 @@ import net.minecraft.client.KeyMapping;
 
 import net.foxyas.changedaddon.network.OpengrabescapeguiMessage;
 import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
+import net.foxyas.changedaddon.network.LeapKeyMessage;
 import net.foxyas.changedaddon.network.DuctProneMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class ChangedAddonModKeyMappings {
-	public static final KeyMapping OPENGRABESCAPEGUI = new KeyMapping("key.changed_addon.opengrabescapegui", GLFW.GLFW_KEY_B, "key.categories.grab_gui") {
+	public static final KeyMapping OPENGRABESCAPEGUI = new KeyMapping("key.changed_addon.opengrabescapegui", GLFW.GLFW_KEY_B, "key.categories.changed_addon") {
 		private boolean isDownOld = false;
 
 		@Override
@@ -36,7 +37,7 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_J, "key.categories.grab_gui") {
+	public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_J, "key.categories.changed_addon") {
 		private boolean isDownOld = false;
 
 		@Override
@@ -49,7 +50,7 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping DUCT_PRONE = new KeyMapping("key.changed_addon.duct_prone", GLFW.GLFW_KEY_V, "key.categories.grab_gui") {
+	public static final KeyMapping DUCT_PRONE = new KeyMapping("key.changed_addon.duct_prone", GLFW.GLFW_KEY_V, "key.categories.changed_addon") {
 		private boolean isDownOld = false;
 
 		@Override
@@ -67,6 +68,19 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
+	public static final KeyMapping LEAP_KEY = new KeyMapping("key.changed_addon.leap_key", GLFW.GLFW_KEY_C, "key.categories.changed_addon") {
+		private boolean isDownOld = false;
+
+		@Override
+		public void setDown(boolean isDown) {
+			super.setDown(isDown);
+			if (isDownOld != isDown && isDown) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new LeapKeyMessage(0, 0));
+				LeapKeyMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+			}
+			isDownOld = isDown;
+		}
+	};
 	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
@@ -74,6 +88,7 @@ public class ChangedAddonModKeyMappings {
 		ClientRegistry.registerKeyBinding(OPENGRABESCAPEGUI);
 		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
 		ClientRegistry.registerKeyBinding(DUCT_PRONE);
+		ClientRegistry.registerKeyBinding(LEAP_KEY);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -84,6 +99,7 @@ public class ChangedAddonModKeyMappings {
 				OPENGRABESCAPEGUI.consumeClick();
 				OPEN_EXTRA_DETAILS.consumeClick();
 				DUCT_PRONE.consumeClick();
+				LEAP_KEY.consumeClick();
 			}
 		}
 	}

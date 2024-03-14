@@ -4,7 +4,7 @@
   "definition": {
     "triggerKey": "V",
     "keyBindingName": "Duct Prone",
-    "keyBindingCategoryKey": "grab_gui",
+    "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {
       "name": "DuctProneOnKeyPressed"
     },

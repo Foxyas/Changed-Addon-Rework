@@ -4,7 +4,7 @@
   "definition": {
     "triggerKey": "J",
     "keyBindingName": "Open Transfur Extra",
-    "keyBindingCategoryKey": "grab_gui",
+    "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {
       "name": "OpenTranfurExtra"
     }
