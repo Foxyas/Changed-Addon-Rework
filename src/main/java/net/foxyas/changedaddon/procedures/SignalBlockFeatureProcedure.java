@@ -1,10 +1,15 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraftforge.registries.ForgeRegistries;
+
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.core.BlockPos;
 
@@ -40,6 +45,20 @@ public class SignalBlockFeatureProcedure {
 									itemstack.getOrCreateTag().putDouble("y", Math.floor(y + sy));
 									itemstack.getOrCreateTag().putDouble("z", Math.floor(z + sz));
 									itemstack.getOrCreateTag().putBoolean("set", true);
+									if (world instanceof Level _level) {
+										if (!_level.isClientSide()) {
+											_level.playSound(null, new BlockPos(x + sx, y + sy, z + sz), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.deactivate")), SoundSource.BLOCKS, (float) 1.5, 0);
+										} else {
+											_level.playLocalSound((x + sx), (y + sy), (z + sz), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.deactivate")), SoundSource.BLOCKS, (float) 1.5, 0, false);
+										}
+									}
+									if (world instanceof Level _level) {
+										if (!_level.isClientSide()) {
+											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.activate")), SoundSource.PLAYERS, (float) 1.5, 0);
+										} else {
+											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.activate")), SoundSource.PLAYERS, (float) 1.5, 0, false);
+										}
+									}
 								}
 								break;
 							}
@@ -66,6 +85,20 @@ public class SignalBlockFeatureProcedure {
 									itemstack.getOrCreateTag().putDouble("y", Math.floor(y + sy));
 									itemstack.getOrCreateTag().putDouble("z", Math.floor(z + sz));
 									itemstack.getOrCreateTag().putBoolean("set", true);
+									if (world instanceof Level _level) {
+										if (!_level.isClientSide()) {
+											_level.playSound(null, new BlockPos(x + sx, y + sy, z + sz), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.deactivate")), SoundSource.BLOCKS, (float) 1.5, 0);
+										} else {
+											_level.playLocalSound((x + sx), (y + sy), (z + sz), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.deactivate")), SoundSource.BLOCKS, (float) 1.5, 0, false);
+										}
+									}
+									if (world instanceof Level _level) {
+										if (!_level.isClientSide()) {
+											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.activate")), SoundSource.PLAYERS, (float) 1.5, 0);
+										} else {
+											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.conduit.activate")), SoundSource.PLAYERS, (float) 1.5, 0, false);
+										}
+									}
 								}
 								break;
 							}
