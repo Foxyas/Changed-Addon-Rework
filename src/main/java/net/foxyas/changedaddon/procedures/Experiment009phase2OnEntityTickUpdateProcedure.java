@@ -23,6 +23,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.client.Minecraft;
 
+import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+
 import java.util.stream.Collectors;
 import java.util.UUID;
 import java.util.List;
@@ -47,6 +49,12 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 		double maxSpeed = 0;
 		double speed = 0;
 		double IAATTACK = 0;
+		double attackDmg = 0;
+		double attackDmg2 = 0;
+		double weakattackdmg = 0;
+		double strongattackdmg = 0;
+		double attackDmg3 = 0;
+		double attackbuff = 0;
 		if ((new Object() {
 			public boolean getValue() {
 				CompoundTag dataIndex0 = new CompoundTag();
@@ -54,15 +62,21 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 				return dataIndex0.getBoolean("NoAI");
 			}
 		}.getValue()) == false) {
-			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 200) {
-				entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 2.5));
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.666) {
+				entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 2.5 + 1.5 * ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
 			} else {
-				entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 1));
+				entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 1 + 0.5 * ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
 			}
 			if (entity.getPersistentData().getDouble("IA") >= 100) {
 				if (entity.isAlive()) {
 					IAATTACK = Math.random();
-					if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 200) {
+					attackbuff = (world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100;
+					attackDmg = 1.5 + 1.5 * attackbuff;
+					attackDmg2 = 1.5 + 1.5 * attackbuff;
+					attackDmg3 = 2.5 + 2.5 * attackbuff;
+					weakattackdmg = 1 + 1 * attackbuff;
+					strongattackdmg = 2 + 2 * attackbuff;
+					if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.666) {
 						if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null)) {
 							deltaX = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX() - entity.getX();
 							deltaY = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY() - entity.getY();
@@ -120,7 +134,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 															return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
 														}
 													}
-												})), (float) 1.5);
+												})), (float) attackDmg);
 												entityiterator.setDeltaMovement(new Vec3(0, 1, 0));
 											}
 										}
@@ -175,7 +189,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 															return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
 														}
 													}
-												})), (float) 1.5);
+												})), (float) attackDmg2);
 												entityiterator.setDeltaMovement(new Vec3(0, (-1), 0));
 											}
 										}
@@ -228,7 +242,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 																		return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
 																	}
 																}
-															})), (float) 2.5);
+															})), (float) attackDmg3);
 															entityiterator.setDeltaMovement(new Vec3(0, 1.5, 0));
 															world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.5, 0);
 															if (entity.isAlive()) {
@@ -248,7 +262,8 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 								}
 							}
 						}
-					} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 300 && (entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 200) {
+					} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1)
+							&& (entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.666) {
 						if (IAATTACK >= 0.25) {
 							if (!((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null) == null)) {
 								deltaX = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX() - entity.getX();
@@ -304,7 +319,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 															return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
 														}
 													}
-												})), 1);
+												})), (float) weakattackdmg);
 												entityiterator.setDeltaMovement(new Vec3(0, 1, 0));
 											}
 										}
@@ -363,7 +378,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 																			return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
 																		}
 																	}
-																})), 2);
+																})), (float) strongattackdmg);
 																world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.5, 0);
 																if (entity.isAlive()) {
 																	if (world instanceof ServerLevel _level) {
@@ -386,7 +401,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 					}
 				}
 			}
-			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= 175) {
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.5833) {
 				{
 					Entity _ent = entity;
 					if (!_ent.level.isClientSide() && _ent.getServer() != null)
@@ -405,7 +420,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 						((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR)
 								.addTransientModifier((new AttributeModifier(UUID.fromString("4faaf81d-dbb4-4ec3-8783-d812b02b8cbb"), "Defense Buff", 0.1, AttributeModifier.Operation.MULTIPLY_TOTAL)));
 				}
-			} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 175) {
+			} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.5833) {
 				if (((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)
 						.hasModifier((new AttributeModifier(UUID.fromString("dd2e9e59-9ca0-46f0-86bf-89c26480a34c"), "Attack Buff", 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL)))) {
 					((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)
