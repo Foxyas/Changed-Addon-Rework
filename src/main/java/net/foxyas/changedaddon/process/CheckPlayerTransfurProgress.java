@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.process;
 
+import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -13,16 +14,24 @@ public class CheckPlayerTransfurProgress {
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event){
 		Player player = event.player;
-		ProcessTransfur.getPlayerTransfurProgress(player);
-		player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-			capability.LatexForm_ProgressTransfur = ProcessTransfur.getPlayerTransfurProgress(player).variant().toString();
-			capability.syncPlayerVariables(player);
-		});
+		ProcessTransfur.TransfurProgress Progress = ProcessTransfur.getPlayerTransfurProgress(player);
+		if (Progress != null) {
+			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+				capability.LatexForm_ProgressTransfur = ProcessTransfur.getPlayerTransfurProgress(player).variant().toString();
+				capability.syncPlayerVariables(player);
+			});
+		} else {
+			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+				capability.LatexForm_ProgressTransfur = "null";
+				capability.syncPlayerVariables(player);
+			});
+		}
 		{
 			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 			capability.Progress_Transfur_Number = ProcessTransfur.getPlayerTransfurProgress(player).progress();
 			capability.syncPlayerVariables(player);
 		});
- 	};
-  }
+ 			};
+
+	}
 }

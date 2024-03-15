@@ -16,6 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
@@ -94,9 +95,18 @@ public class Experiment009latexdmgProcedure {
 			if (entity instanceof Player) {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
 					if (!(entity instanceof LivingEntity _livEnt ? _livEnt.isBlocking() : false)) {
-						if (entity instanceof LivingEntity _entity) {
-							net.ltxprogrammer.changed.process.ProcessTransfur.progressTransfur(_entity, 1, net.ltxprogrammer.changed.entity.variant.LatexVariant.LIGHT_LATEX_WOLF);
-						}
+						float Math = 0.8f;
+						float PlayerTransfurProgress = new Object() {
+							public float getValue() {
+								CompoundTag dataIndex0 = new CompoundTag();
+								entity.saveWithoutId(dataIndex0);
+								return dataIndex0.getFloat("TransfurProgress");
+							}
+						}.getValue();
+						CompoundTag dataIndex1 = new CompoundTag();
+						entity.saveWithoutId(dataIndex1);
+						dataIndex1.putFloat("TransfurProgress", PlayerTransfurProgress + Math);
+						entity.load(dataIndex1);
 						if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 							_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get(), 200, 2, false, true));
 					}
