@@ -50,6 +50,11 @@ public class LeapProcedure {
 								if (entity instanceof Player _player)
 									_player.causeFoodExhaustion((float) 0.25);
 							}
+							{
+								Entity _ent = entity;
+								if (!_ent.level.isClientSide() && _ent.getServer() != null)
+									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+							}
 						}
 						if (entity.isShiftKeyDown()) {
 							deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
@@ -75,6 +80,11 @@ public class LeapProcedure {
 							}.checkGamemode(entity))) {
 								if (entity instanceof Player _player)
 									_player.causeFoodExhaustion((float) (motionY * 0.25));
+							}
+							{
+								Entity _ent = entity;
+								if (!_ent.level.isClientSide() && _ent.getServer() != null)
+									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
 							}
 						}
 					}

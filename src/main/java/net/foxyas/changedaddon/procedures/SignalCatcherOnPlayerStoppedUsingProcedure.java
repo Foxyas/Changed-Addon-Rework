@@ -9,6 +9,6 @@ public class SignalCatcherOnPlayerStoppedUsingProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof Player _player && !_player.level.isClientSide())
-			_player.displayClientMessage(new TextComponent(("Not enough time " + time + "/20")), true);
+			_player.displayClientMessage(new TextComponent(("Not enough time " + time + "/15")), true);
 	}
 }
