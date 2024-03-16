@@ -60,6 +60,9 @@ public class TransfurTotemRightclickedProcedure {
 						_player.displayClientMessage(new TextComponent("Any form linked please link one \u00A7e<Shift+Click>"), true);
 				}
 			} else {
+				if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_puro_kind/female")) {
+					itemstack.getOrCreateTag().putString("form", "changed_addon:form_latex_puro_kind/female");
+				}
 				if ((itemstack.getOrCreateTag().getString("form")).isEmpty()) {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
 						_player.displayClientMessage(new TextComponent("Any form linked please link one \u00A7e<Shift+Click>"), true);

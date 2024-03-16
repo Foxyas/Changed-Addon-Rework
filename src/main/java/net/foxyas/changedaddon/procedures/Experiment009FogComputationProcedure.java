@@ -99,9 +99,16 @@ public class Experiment009FogComputationProcedure {
 						}
 					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getZ() - entity.getZ();
 					distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-						_renderFogEvent.setNearPlaneDistance(1);
-						_renderFogEvent.setFarPlaneDistance((float) Math.max(10, distance));
+					if (distance <= 10) {
+						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+							_renderFogEvent.setNearPlaneDistance(1);
+							_renderFogEvent.setFarPlaneDistance(10);
+						}
+					} else {
+						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+							_renderFogEvent.setNearPlaneDistance(1);
+							_renderFogEvent.setFarPlaneDistance((float) distance);
+						}
 					}
 					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
 						_fogColors.setRed(0 / 255.0F);
@@ -135,9 +142,16 @@ public class Experiment009FogComputationProcedure {
 						}
 					}.compareDistOf(x, y, z)).findFirst().orElse(null)).getZ() - entity.getZ();
 					distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-						_renderFogEvent.setNearPlaneDistance(1);
-						_renderFogEvent.setFarPlaneDistance((float) Math.max(10, distance));
+					if (distance <= 10) {
+						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+							_renderFogEvent.setNearPlaneDistance(1);
+							_renderFogEvent.setFarPlaneDistance(10);
+						}
+					} else {
+						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+							_renderFogEvent.setNearPlaneDistance(1);
+							_renderFogEvent.setFarPlaneDistance((float) distance);
+						}
 					}
 					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
 						_fogColors.setRed(0 / 255.0F);

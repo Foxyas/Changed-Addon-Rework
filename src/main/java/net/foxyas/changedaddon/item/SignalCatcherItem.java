@@ -48,6 +48,6 @@ public class SignalCatcherItem extends Item {
 
 	@Override
 	public void releaseUsing(ItemStack itemstack, Level world, LivingEntity entity, int time) {
-		SignalCatcherOnPlayerStoppedUsingProcedure.execute(entity, time);
+		SignalCatcherOnPlayerStoppedUsingProcedure.execute(entity, itemstack);
 	}
 }

@@ -1,0 +1,10 @@
+{
+  "_fv": 47,
+  "_type": "loottable",
+  "definition": {
+    "type": "Entity",
+    "pools": [],
+    "name": "entities/dazed",
+    "namespace": "mod"
+  }
+}

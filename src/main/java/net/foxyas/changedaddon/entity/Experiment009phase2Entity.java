@@ -205,7 +205,7 @@ public class Experiment009phase2Entity extends Monster {
 	@Override
 	public void die(DamageSource source) {
 		super.die(source);
-		Experiment009phase2EntityDiesProcedure.execute(this);
+		Experiment009phase2EntityDiesProcedure.execute(this, source.getEntity());
 	}
 
 	@Override

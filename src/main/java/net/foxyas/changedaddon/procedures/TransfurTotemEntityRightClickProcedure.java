@@ -45,6 +45,7 @@ public class TransfurTotemEntityRightClickProcedure {
 			return;
 		ItemStack a = ItemStack.EMPTY;
 		ItemStack b = ItemStack.EMPTY;
+		String string = "";
 		a = (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
 		b = (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY);
 		if (!(sourceentity instanceof Player _player ? _player.getCooldowns().isOnCooldown(ChangedAddonModItems.TRANSFUR_TOTEM.get()) : false)) {
@@ -144,14 +145,45 @@ public class TransfurTotemEntityRightClickProcedure {
 						}
 					} else {
 						if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))
-								|| entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex")))) {
+								|| entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex"))) || entity instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
+							string = (ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace(":", ":form_");
+							if ((string).equals("changed_addon:form_dazed")) {
+								string = "changed_addon:form_dazed_latex";
+							} else if ((string).equals("changed_addon:form_puro_kind")) {
+								string = "changed_addon:form_latex_puro_kind/male";
+							} else if ((string).equals("changed_addon:form_puro_kind/female")) {
+								string = "changed_addon:form_latex_puro_kind/female";
+							} else if (string.startsWith("changed_addon:form_snow_leopard")) {
+								if ((string).equals("changed_addon:form_snow_leopard/male_organic")) {
+									string = "changed_addon:form_biosynth_snow_leopard/female";
+								} else if ((string).equals("changed_addon:form_snow_leopard/female_organic")) {
+									string = "changed_addon:form_biosynth_snow_leopard/male";
+								}
+							} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
+								string = "changed_addon:form_latex_snow_fox/male";
+							}
 							if (a.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get() && (a.getOrCreateTag().getString("form")).isEmpty()) {
-								if (((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_male")) {
+								if (string.contains("_male")) {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(a.getItem(), 20);
 									if (world.isClientSide())
 										Minecraft.getInstance().gameRenderer.displayItemActivation(a);
-									a.getOrCreateTag().putString("form", ("" + ((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).replace("_male", "/male")));
+									if ((string).equals("changed_addon:form_dazed")) {
+										string = "changed_addon:form_dazed_latex";
+									} else if ((string).equals("changed_addon:form_puro_kind")) {
+										string = "changed_addon:form_latex_puro_kind/male";
+									} else if ((string).equals("changed_addon:form_puro_kind/female")) {
+										string = "changed_addon:form_latex_puro_kind/female";
+									} else if (string.startsWith("changed_addon:form_snow_leopard")) {
+										if ((string).equals("changed_addon:form_snow_leopard/male_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/female";
+										} else if ((string).equals("changed_addon:form_snow_leopard/female_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/male";
+										}
+									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
+										string = "changed_addon:form_latex_snow_fox/male";
+									}
+									a.getOrCreateTag().putString("form", ("" + string.replace("_male", "/male")));
 									if (world instanceof Level _level) {
 										if (!_level.isClientSide()) {
 											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -159,12 +191,27 @@ public class TransfurTotemEntityRightClickProcedure {
 											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
 										}
 									}
-								} else if (((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_female")) {
+								} else if (string.contains("_female")) {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(a.getItem(), 20);
 									if (world.isClientSide())
 										Minecraft.getInstance().gameRenderer.displayItemActivation(a);
-									a.getOrCreateTag().putString("form", ("" + ((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).replace("_female", "/female")));
+									if ((string).equals("changed_addon:form_dazed")) {
+										string = "changed_addon:form_dazed_latex";
+									} else if ((string).equals("changed_addon:form_puro_kind")) {
+										string = "changed_addon:form_latex_puro_kind/male";
+									} else if ((string).equals("changed_addon:form_puro_kind/female")) {
+										string = "changed_addon:form_latex_puro_kind/female";
+									} else if (string.startsWith("changed_addon:form_snow_leopard")) {
+										if ((string).equals("changed_addon:form_snow_leopard/male_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/female";
+										} else if ((string).equals("changed_addon:form_snow_leopard/female_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/male";
+										}
+									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
+										string = "changed_addon:form_latex_snow_fox/male";
+									}
+									a.getOrCreateTag().putString("form", ("" + string.replace("_female", "/female")));
 									if (world instanceof Level _level) {
 										if (!_level.isClientSide()) {
 											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -172,13 +219,27 @@ public class TransfurTotemEntityRightClickProcedure {
 											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
 										}
 									}
-								} else if (!((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_male")
-										&& !((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_female")) {
+								} else if (!string.contains("_male") && !string.contains("_female")) {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(a.getItem(), 20);
 									if (world.isClientSide())
 										Minecraft.getInstance().gameRenderer.displayItemActivation(a);
-									a.getOrCreateTag().putString("form", ((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")));
+									if ((string).equals("changed_addon:form_dazed")) {
+										string = "changed_addon:form_dazed_latex";
+									} else if ((string).equals("changed_addon:form_puro_kind")) {
+										string = "changed_addon:form_latex_puro_kind/male";
+									} else if ((string).equals("changed_addon:form_puro_kind/female")) {
+										string = "changed_addon:form_latex_puro_kind/female";
+									} else if (string.startsWith("changed_addon:form_snow_leopard")) {
+										if ((string).equals("changed_addon:form_snow_leopard/male_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/female";
+										} else if ((string).equals("changed_addon:form_snow_leopard/female_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/male";
+										}
+									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
+										string = "changed_addon:form_latex_snow_fox/male";
+									}
+									a.getOrCreateTag().putString("form", string);
 									if (world instanceof Level _level) {
 										if (!_level.isClientSide()) {
 											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -188,12 +249,27 @@ public class TransfurTotemEntityRightClickProcedure {
 									}
 								}
 							} else if (b.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get() && (b.getOrCreateTag().getString("form")).isEmpty()) {
-								if (((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_male")) {
+								if (string.contains("_male")) {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(b.getItem(), 20);
 									if (world.isClientSide())
 										Minecraft.getInstance().gameRenderer.displayItemActivation(b);
-									b.getOrCreateTag().putString("form", ("" + ((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).replace("_male", "/male")));
+									if ((string).equals("changed_addon:form_dazed")) {
+										string = "changed_addon:form_dazed_latex";
+									} else if ((string).equals("changed_addon:form_puro_kind")) {
+										string = "changed_addon:form_latex_puro_kind/male";
+									} else if ((string).equals("changed_addon:form_puro_kind/female")) {
+										string = "changed_addon:form_latex_puro_kind/female";
+									} else if (string.startsWith("changed_addon:form_snow_leopard")) {
+										if ((string).equals("changed_addon:form_snow_leopard/male_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/female";
+										} else if ((string).equals("changed_addon:form_snow_leopard/female_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/male";
+										}
+									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
+										string = "changed_addon:form_latex_snow_fox/male";
+									}
+									b.getOrCreateTag().putString("form", ("" + string.replace("_male", "/male")));
 									if (world instanceof Level _level) {
 										if (!_level.isClientSide()) {
 											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -201,12 +277,27 @@ public class TransfurTotemEntityRightClickProcedure {
 											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
 										}
 									}
-								} else if (((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_female")) {
+								} else if (string.contains("_female")) {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(b.getItem(), 20);
 									if (world.isClientSide())
 										Minecraft.getInstance().gameRenderer.displayItemActivation(b);
-									b.getOrCreateTag().putString("form", ("" + ((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).replace("_female", "/female")));
+									if ((string).equals("changed_addon:form_dazed")) {
+										string = "changed_addon:form_dazed_latex";
+									} else if ((string).equals("changed_addon:form_puro_kind")) {
+										string = "changed_addon:form_latex_puro_kind/male";
+									} else if ((string).equals("changed_addon:form_puro_kind/female")) {
+										string = "changed_addon:form_latex_puro_kind/female";
+									} else if (string.startsWith("changed_addon:form_snow_leopard")) {
+										if ((string).equals("changed_addon:form_snow_leopard/male_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/female";
+										} else if ((string).equals("changed_addon:form_snow_leopard/female_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/male";
+										}
+									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
+										string = "changed_addon:form_latex_snow_fox/male";
+									}
+									b.getOrCreateTag().putString("form", ("" + string.replace("_female", "/female")));
 									if (world instanceof Level _level) {
 										if (!_level.isClientSide()) {
 											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -214,13 +305,27 @@ public class TransfurTotemEntityRightClickProcedure {
 											_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
 										}
 									}
-								} else if (!((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_male")
-										&& !((ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")).contains("_female")) {
+								} else if (!string.contains("_male") && !string.contains("_female")) {
 									if (sourceentity instanceof Player _player)
 										_player.getCooldowns().addCooldown(b.getItem(), 20);
 									if (world.isClientSide())
 										Minecraft.getInstance().gameRenderer.displayItemActivation(b);
-									b.getOrCreateTag().putString("form", ("" + (ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace("changed:", "changed:form_")));
+									if ((string).equals("changed_addon:form_dazed")) {
+										string = "changed_addon:form_dazed_latex";
+									} else if ((string).equals("changed_addon:form_puro_kind")) {
+										string = "changed_addon:form_latex_puro_kind/male";
+									} else if ((string).equals("changed_addon:form_puro_kind/female")) {
+										string = "changed_addon:form_latex_puro_kind/female";
+									} else if (string.startsWith("changed_addon:form_snow_leopard")) {
+										if ((string).equals("changed_addon:form_snow_leopard/male_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/female";
+										} else if ((string).equals("changed_addon:form_snow_leopard/female_organic")) {
+											string = "changed_addon:form_biosynth_snow_leopard/male";
+										}
+									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
+										string = "changed_addon:form_latex_snow_fox/male";
+									}
+									b.getOrCreateTag().putString("form", ("" + string));
 									if (world instanceof Level _level) {
 										if (!_level.isClientSide()) {
 											_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);

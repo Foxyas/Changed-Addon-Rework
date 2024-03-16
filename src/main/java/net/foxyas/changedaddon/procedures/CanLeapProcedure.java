@@ -17,4 +17,14 @@ public class CanLeapProcedure {
 		}
 		return false;
 	}
+
+	public static boolean flyentity(Entity entity) {
+		Player player = (Player) entity;
+		LatexVariantInstance LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
+		LatexVariant Variant = LatexVariant.getEntityVariant(LatexInstace.getLatexEntity());
+		if (Variant.canGlide){
+			return true;
+		}
+		return false;
+	}
 }

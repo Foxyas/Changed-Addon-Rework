@@ -17,13 +17,15 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 
 public class Experiment009EntityDiesProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity sourceentity) {
-		if (sourceentity == null)
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, Entity sourceentity) {
+		if (entity == null || sourceentity == null)
 			return;
 		Entity targetentity = null;
 		double timer = 0;
 		if (sourceentity instanceof Player _player && !_player.level.isClientSide())
-			_player.displayClientMessage(new TextComponent("THIS IS NOT OVER YET"), true);
+			_player.displayClientMessage(new TextComponent("\u00A7bTHIS IS NOT OVER YET"), true);
+		if (world instanceof ServerLevel _level)
+			_level.sendParticles(ParticleTypes.FLASH, x, (y + 1), z, 20, 1, 0.5, 1, 1);
 		new Object() {
 			private int ticks = 0;
 			private float waitTicks;
@@ -45,11 +47,12 @@ public class Experiment009EntityDiesProcedure {
 			}
 
 			private void run() {
-				if (world instanceof ServerLevel _level)
-					_level.sendParticles(ParticleTypes.FLASH, x, (y + 1), z, 20, 1, 0.5, 1, 1);
 				if (world instanceof ServerLevel _level) {
 					Entity entityToSpawn = new Experiment009phase2Entity(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2.get(), _level);
-					entityToSpawn.moveTo(x, y, z, world.getRandom().nextFloat() * 360F, 0);
+					entityToSpawn.moveTo(x, y, z, entity.getYRot(), entity.getXRot());
+					entityToSpawn.setYBodyRot(entity.getYRot());
+					entityToSpawn.setYHeadRot(entity.getYRot());
+					entityToSpawn.setDeltaMovement((entity.getDeltaMovement().x()), (entity.getDeltaMovement().y()), (entity.getDeltaMovement().z()));
 					if (entityToSpawn instanceof Mob _mobToSpawn)
 						_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 					world.addFreshEntity(entityToSpawn);

@@ -1,0 +1,10 @@
+{
+  "_fv": 47,
+  "_type": "loottable",
+  "definition": {
+    "type": "Entity",
+    "pools": [],
+    "name": "entities/latex_snow_fox_female",
+    "namespace": "mod"
+  }
+}

@@ -4185,7 +4185,14 @@
       "locked_code": false,
       "registry_name": "experiment_009_entity_dies",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009EntityDiesProcedure.java"
+        ],
         "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
           {
             "name": "sourceentity",
             "type": "entity"
@@ -4224,6 +4231,10 @@
         "dependencies": [
           {
             "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
             "type": "entity"
           }
         ]
@@ -9607,9 +9618,6 @@
       "locked_code": false,
       "registry_name": "signal_block_feature",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SignalBlockFeatureProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9656,8 +9664,8 @@
             "type": "entity"
           },
           {
-            "name": "time",
-            "type": "number"
+            "name": "itemstack",
+            "type": "itemstack"
           }
         ]
       },
@@ -9797,6 +9805,71 @@
         "type": "number"
       },
       "path": "~/GameRules"
+    },
+    {
+      "name": "Biosynthsnowleopardlootmale",
+      "type": "loottable",
+      "sortid": 474,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "biosynthsnowleopardlootmale",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/snow_leopard_male_organic.json"
+        ]
+      }
+    },
+    {
+      "name": "Biosynthsnowleopardfemale",
+      "type": "loottable",
+      "sortid": 475,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "biosynthsnowleopardfemale",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/biosynth_snow_leopard_female.json"
+        ]
+      }
+    },
+    {
+      "name": "SnowFoxLootBox",
+      "type": "loottable",
+      "sortid": 476,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "snow_fox_loot_box",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/latex_snow_fox.json"
+        ]
+      }
+    },
+    {
+      "name": "SnowFoxFemaleLootBox",
+      "type": "loottable",
+      "sortid": 477,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "snow_fox_female_loot_box",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/latex_snow_fox_female.json"
+        ]
+      }
+    },
+    {
+      "name": "DazedLatex",
+      "type": "loottable",
+      "sortid": 478,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "dazed_latex",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/dazed.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -10151,6 +10224,7 @@
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
       "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
       "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
+      "gamerule.changedAddonOrganicBuff": "ChangedAddon Organic Buff",
       "entity.changed_addon.snow_leopard_female_organic": "Female BioSynth Snow Leopard",
       "gui.changed_addon.book_recipe_page_11.label_p": "L",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
@@ -10278,6 +10352,7 @@
       "gui.changed_addon.bookrecipepage_6.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "gui.changed_addon.bookrecipepage_6.label_16": "16",
       "gui.changed_addon.book_recipe_page_11.button_back": "Back",
+      "entity.changed_addon.latex_puro_kind_male": "Puro Kind Male",
       "effect.changed_addon.untransfur": "Untransfur",
       "gui.changed_addon.grab_radial_menugrab.button_back": "back",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder": "Display Recipe Of Ammonia Powder",
@@ -10361,6 +10436,7 @@
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon Plus",
       "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
+      "gamerule.changedAddonOrganicBuff.description": "Enable or Desable the Organic Buff of Changed Addon",
       "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic form",
       "gui.changed_addon.bookrecipepage_10.label_s_seeds": "S \u003d ANY SEEDS",
       "gui.changed_addon.unifusergui.tooltip_place_a_syringe_with_dna": "Place a Syringe with DNA",
@@ -10428,6 +10504,7 @@
       "advancements.assimilatethem.descr": "You activated the assimilation",
       "advancements.timesthesyringewasuseadvancement_3.descr": "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!",
       "item.changed_addon.snow_leopard_female_organic_spawn_egg": "Female BioSynth Snow Leopard Spawn Egg",
+      "entity.changed_addon.latex_puro_kind_female": "Puro Kind Female",
       "advancements.foxyas_advancement.title": "§4YOU MONSTER",
       "advancements.dn_astudyisafantasticthingadvancement.title": "DNA study is a fantastic thing",
       "item.changed_addon.hazard_suit_chestplate": "Hazard  Chestplate",
