@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "potioneffect",
   "definition": {
-    "effectName": "Untransfur",
+    "effectName": "§7Untransfur",
     "icon": "untransfur.png",
     "color": {
       "value": -1,
@@ -10,7 +10,7 @@
     },
     "isInstant": false,
     "isBad": false,
-    "isBenefitical": false,
+    "isBenefitical": true,
     "renderStatusInInventory": true,
     "renderStatusInHUD": true,
     "onActiveTick": {

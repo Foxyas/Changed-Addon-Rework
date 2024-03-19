@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:village",
+  "config": {
+    "start_pool": "changed_addon:dazed_latex_meteor",
+    "size": 1
+  },
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:meadow"
+  ],
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "data": {
+    "rotation": [
+      0,
+      1,
+      2,
+      3
+    ]
+  }
+}

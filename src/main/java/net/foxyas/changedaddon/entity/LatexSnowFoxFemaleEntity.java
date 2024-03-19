@@ -48,7 +48,7 @@ public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEnt
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName()))
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), 20, 1, 1));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), 20, 1, 4));
 	}
 
 	public LatexSnowFoxFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {

@@ -1,0 +1,31 @@
+{
+  "_fv": 47,
+  "_type": "restructure",
+  "definition": {
+    "restrictBiomes": [
+      {
+        "value": "plains"
+      },
+      {
+        "value": "meadow"
+      }
+    ],
+    "structureStep": "Fluid springs",
+    "terrainAdaptation": "Beard box",
+    "startHeightmap": "MOTION BLOCKING",
+    "structureRotation": true,
+    "expansionHack": false,
+    "jigsawSize": 1,
+    "absoluteHeight": 0,
+    "distanceFromCenter": 32,
+    "minSpacingSeparation": 9,
+    "maxSpacingSeparation": 11,
+    "selectedStructure": "dazed_latex_meteor",
+    "structuresWeight": 1,
+    "structureSetPlacement": "Random spread",
+    "templatesWeight": 1,
+    "typeElement": "Single pool element",
+    "typeProjection": "Terrain matching",
+    "adaptNoise": true
+  }
+}

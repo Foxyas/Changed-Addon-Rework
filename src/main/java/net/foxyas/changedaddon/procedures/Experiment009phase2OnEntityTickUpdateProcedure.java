@@ -83,7 +83,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 							deltaZ = (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ() - entity.getZ();
 							distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 							entity.getPersistentData().putDouble("IA", 0);
-							if (distance >= 4) {
+							if (distance >= 3) {
 								if (IAATTACK > 0.5) {
 									{
 										Entity _ent = entity;

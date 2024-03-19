@@ -9,7 +9,7 @@ import net.foxyas.changedaddon.procedures.UntransfurOnEffectActiveTickProcedure;
 
 public class UntransfurMobEffect extends MobEffect {
 	public UntransfurMobEffect() {
-		super(MobEffectCategory.NEUTRAL, -1);
+		super(MobEffectCategory.BENEFICIAL, -1);
 	}
 
 	@Override

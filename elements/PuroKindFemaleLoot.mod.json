@@ -4,7 +4,7 @@
   "definition": {
     "type": "Entity",
     "pools": [],
-    "name": "entities/biosynth_snow_leopard_female",
+    "name": "entities/puro_kind_female",
     "namespace": "mod"
   }
 }
