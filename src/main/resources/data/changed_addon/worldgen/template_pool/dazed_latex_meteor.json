@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "changed_addon:dazed_latex_meteor",
-        "projection": "terrain_matching",
+        "projection": "rigid",
         "processors": "minecraft:empty"
       }
     }

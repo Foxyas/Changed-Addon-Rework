@@ -9934,7 +9934,8 @@
           "src/main/resources/data/changed_addon/worldgen/configured_structure_feature/dazed_latex_meteor.json",
           "src/main/resources/data/changed_addon/worldgen/template_pool/dazed_latex_meteor.json"
         ]
-      }
+      },
+      "path": "~/Structures"
     }
   ],
   "variable_elements": [
