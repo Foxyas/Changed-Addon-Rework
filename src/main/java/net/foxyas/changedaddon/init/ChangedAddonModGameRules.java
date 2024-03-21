@@ -16,4 +16,5 @@ public class ChangedAddonModGameRules {
 	public static final GameRules.Key<GameRules.BooleanValue> DOLATEXINFECTION = GameRules.register("dolatexinfection", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final GameRules.Key<GameRules.BooleanValue> PAINITE_GENERATION = GameRules.register("painiteGeneration", GameRules.Category.UPDATES, GameRules.BooleanValue.create(true));
 	public static final GameRules.Key<GameRules.IntegerValue> CHANGED_ADDON_HARD_MODE_BOSSES = GameRules.register("changedAddonHardModeBosses", GameRules.Category.MOBS, GameRules.IntegerValue.create(0));
+	public static final GameRules.Key<GameRules.BooleanValue> DO_DAZED_LATEX_BURN = GameRules.register("doDazedLatexBurn", GameRules.Category.MOBS, GameRules.BooleanValue.create(false));
 }

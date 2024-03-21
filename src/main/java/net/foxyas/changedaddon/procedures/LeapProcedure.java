@@ -7,10 +7,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.Minecraft;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.advancements.Advancement;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+
+import java.util.Iterator;
 
 public class LeapProcedure {
 	public static void execute(Entity entity) {
@@ -88,6 +94,20 @@ public class LeapProcedure {
 										_player.causeFoodExhaustion((float) (motionY * 0.25));
 									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+								}
+								if (!(entity instanceof ServerPlayer _plr28 && _plr28.level instanceof ServerLevel
+										&& _plr28.getAdvancements().getOrStartProgress(_plr28.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"))).isDone())) {
+									if (motionY >= 0.75) {
+										if (entity instanceof ServerPlayer _player) {
+											Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"));
+											AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+											if (!_ap.isDone()) {
+												Iterator _iterator = _ap.getRemainingCriteria().iterator();
+												while (_iterator.hasNext())
+													_player.getAdvancements().award(_adv, (String) _iterator.next());
+											}
+										}
+									}
 								}
 								{
 									Entity _ent = entity;

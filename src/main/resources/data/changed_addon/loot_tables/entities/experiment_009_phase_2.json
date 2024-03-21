@@ -35,15 +35,9 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 1,
-                "max": 20
+                "min": 5,
+                "max": 32
               }
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 1
             }
           ]
         },
@@ -58,12 +52,6 @@
                 "min": 5,
                 "max": 15
               }
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 1
             }
           ]
         },
@@ -83,7 +71,7 @@
           "conditions": [
             {
               "condition": "minecraft:random_chance",
-              "chance": 0.4
+              "chance": 0.5
             }
           ]
         },
@@ -143,7 +131,7 @@
           "conditions": [
             {
               "condition": "minecraft:random_chance",
-              "chance": 0.4
+              "chance": 0.5
             }
           ]
         },
@@ -175,7 +163,7 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 1,
+                "min": 5,
                 "max": 25
               }
             }
@@ -183,7 +171,7 @@
           "conditions": [
             {
               "condition": "minecraft:random_chance",
-              "chance": 0.3
+              "chance": 0.35
             }
           ]
         },
@@ -207,7 +195,7 @@
             },
             {
               "condition": "minecraft:random_chance_with_looting",
-              "chance": 0.3,
+              "chance": 0.4,
               "looting_multiplier": 1.1
             }
           ]

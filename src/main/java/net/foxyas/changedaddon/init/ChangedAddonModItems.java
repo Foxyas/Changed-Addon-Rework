@@ -58,6 +58,7 @@ import net.foxyas.changedaddon.item.Devitem1Item;
 import net.foxyas.changedaddon.item.DevItem4Item;
 import net.foxyas.changedaddon.item.DevItem2Item;
 import net.foxyas.changedaddon.item.DescontrolSyringeItem;
+import net.foxyas.changedaddon.item.DEVITEM6Item;
 import net.foxyas.changedaddon.item.ChangedbookItem;
 import net.foxyas.changedaddon.item.CatlyzerblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.CatalyzeddnaItem;
@@ -133,6 +134,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_RECORD = REGISTRY.register("experiment_009_phase_2_record", () -> new Experiment009Phase2RecordItem());
 	public static final RegistryObject<Item> SIGNAL_BLOCK = block(ChangedAddonModBlocks.SIGNAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
+	public static final RegistryObject<Item> DEVITEM_6 = REGISTRY.register("devitem_6", () -> new DEVITEM6Item());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

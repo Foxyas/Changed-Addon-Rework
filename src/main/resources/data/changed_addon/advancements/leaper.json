@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:devitem_6"
+    },
+    "title": {
+      "translate": "advancements.leaper.title"
+    },
+    "description": {
+      "translate": "advancements.leaper.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "leaper": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 50
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

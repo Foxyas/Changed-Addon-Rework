@@ -4,8 +4,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.common.ForgeMod;
 
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
@@ -16,8 +16,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
-import net.foxyas.changedaddon.entity.Experiment009Entity;
+import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.entity.DazedEntity;
 
 import javax.annotation.Nullable;
@@ -36,17 +35,31 @@ public class SmallEntityTickUpdateProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
 		if (entity == null)
 			return;
-		if (entity instanceof DazedEntity) {
-			if (world.canSeeSkyFromBelowWater(new BlockPos(entity.getX(), entity.getY(), entity.getZ())) && world instanceof Level _lvl5 && _lvl5.isDay() && !entity.isInWaterRainOrBubble()) {
-				if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
-					if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.FIRE_RESISTANCE) : false)) {
-						entity.setSecondsOnFire(3);
+		if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.DO_DAZED_LATEX_BURN) == true) {
+			if (entity instanceof DazedEntity) {
+				if (((world.getFluidState(new BlockPos(entity.getX(), entity.getY(), entity.getZ())).createLegacyBlock()).getBlock() instanceof LiquidBlock
+						|| (world.getFluidState(new BlockPos(entity.getX(), entity.getY(), entity.getZ())).createLegacyBlock()).getFluidState().isSource())
+						&& (world.getFluidState(new BlockPos(entity.getX(), entity.getY(), entity.getZ())).createLegacyBlock()).getBlock() == Blocks.LAVA) {
+					if (world.canSeeSkyFromBelowWater(new BlockPos(entity.getX(), entity.getY(), entity.getZ())) && world instanceof Level _lvl21 && _lvl21.isDay() && !entity.isInWaterRainOrBubble()) {
+						if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+							if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.FIRE_RESISTANCE) : false)) {
+								entity.setSecondsOnFire(3);
+							}
+						}
 					}
 				}
 			}
-		}
-		if (entity instanceof Experiment009Entity || entity instanceof Experiment009phase2Entity) {
-			((LivingEntity) entity).getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(2);
+			if (((world.getFluidState(new BlockPos(entity.getX(), entity.getY(), entity.getZ())).createLegacyBlock()).getBlock() instanceof LiquidBlock
+					|| (world.getFluidState(new BlockPos(entity.getX(), entity.getY(), entity.getZ())).createLegacyBlock()).getFluidState().isSource())
+					&& (world.getFluidState(new BlockPos(entity.getX(), entity.getY(), entity.getZ())).createLegacyBlock()).getBlock() == Blocks.LAVA) {
+				if (world.canSeeSkyFromBelowWater(new BlockPos(entity.getX(), entity.getY(), entity.getZ())) && world instanceof Level _lvl46 && _lvl46.isDay() && !entity.isInWaterRainOrBubble()) {
+					if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.FEET) : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+						if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.FIRE_RESISTANCE) : false)) {
+							entity.setSecondsOnFire(3);
+						}
+					}
+				}
+			}
 		}
 	}
 }

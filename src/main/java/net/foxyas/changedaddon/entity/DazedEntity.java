@@ -59,6 +59,7 @@ public class DazedEntity extends LatexEntity {
 		maxUpStep = 0.6f;
 		xpReward = 0;
 		setNoAi(false);
+		setPersistenceRequired();
 	}
 	@Override
 	public Color3 getHairColor(int i) {

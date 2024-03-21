@@ -38,6 +38,7 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf {
 		maxUpStep = 0.6f;
 		xpReward = AbstractDarkLatexWolf.XP_REWARD_MEDIUM;
 		setNoAi(false);
+		setPersistenceRequired();
 	}
 
 	@Override
