@@ -31,12 +31,12 @@ public class Experiment009dieProcedure {
 			{
 				Entity _ent = entity;
 				if (!_ent.level.isClientSide() && _ent.getServer() != null)
-					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme_phase2");
+					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @s * changed_addon:experiment009_theme_phase2");
 			}
 			{
 				Entity _ent = entity;
 				if (!_ent.level.isClientSide() && _ent.getServer() != null)
-					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme");
+					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @s * changed_addon:experiment009_theme");
 			}
 		}
 	}
