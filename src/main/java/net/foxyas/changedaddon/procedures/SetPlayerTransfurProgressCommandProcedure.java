@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.minecraft.world.entity.Entity;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.CommandSourceStack;
 
@@ -27,10 +26,7 @@ public class SetPlayerTransfurProgressCommandProcedure {
 			}
 		}.getEntity();
 		if (entity == entity) {
-			CompoundTag dataIndex1 = new CompoundTag();
-			EntityTarget.saveWithoutId(dataIndex1);
-			dataIndex1.putFloat("TransfurProgress", (float) Number);
-			EntityTarget.load(dataIndex1);
+			AddTransfurProgressProcedure.set(EntityTarget, Number);
 		}
 	}
 }

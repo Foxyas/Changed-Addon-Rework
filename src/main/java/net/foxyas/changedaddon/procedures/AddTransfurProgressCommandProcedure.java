@@ -20,10 +20,7 @@ public class AddTransfurProgressCommandProcedure {
 			}
 		}.getValue() + DoubleArgumentType.getDouble(arguments, "Number");
 		if (entity == entity) {
-			CompoundTag dataIndex1 = new CompoundTag();
-			entity.saveWithoutId(dataIndex1);
-			dataIndex1.putFloat("TransfurProgress", (float) Number);
-			entity.load(dataIndex1);
+			AddTransfurProgressProcedure.set(entity, Number);
 		}
 	}
 }

@@ -71,24 +71,7 @@ public class LatexInfectionTickProcedure {
 						}
 					}.getValue() > 0) {
 						if (entity.isAlive()) {
-							CompoundTag dataIndex1 = new CompoundTag();
-							entity.saveWithoutId(dataIndex1);
-							dataIndex1.putFloat("TransfurProgress", PlayerTransfurProgress + Math);
-							entity.load(dataIndex1);
-						}
-					}
-					if (new Object() {
-						public double getValue() {
-							CompoundTag dataIndex5 = new CompoundTag();
-							entity.saveWithoutId(dataIndex5);
-							return dataIndex5.getDouble("TransfurProgress");
-						}
-					}.getValue() < 0) {
-						{
-							CompoundTag ProgressReset = new CompoundTag();
-							entity.saveWithoutId(ProgressReset);
-							ProgressReset.putFloat("TransfurProgress", 0);
-							entity.load(ProgressReset);
+							AddTransfurProgressProcedure.set(entity, PlayerTransfurProgress + Math);
 						}
 					}
 				}

@@ -86,12 +86,9 @@ public class DolatexinfectiontickProcedure {
 				CanWork = false;
 			}
 			if (CanWork == true && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown <= 0) {
-				CompoundTag dataIndex2 = new CompoundTag();
-				entity.saveWithoutId(dataIndex2);
-				dataIndex2.putFloat("TransfurProgress", Player_TransfurProgress + mathnumber);
-				entity.load(dataIndex2);
+				AddTransfurProgressProcedure.set(entity, Player_TransfurProgress + mathnumber);
 				{
-					double _setval = 4;
+					double _setval = 3;
 					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 						capability.LatexInfectionCooldown = _setval;
 						capability.syncPlayerVariables(entity);

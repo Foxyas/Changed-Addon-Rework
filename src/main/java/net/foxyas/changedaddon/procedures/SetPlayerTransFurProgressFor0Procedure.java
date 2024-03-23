@@ -19,14 +19,4 @@ public class SetPlayerTransFurProgressFor0Procedure {
         }
 
     }
-    public static void latexdmg(Entity entity){
-        if (entity == null){
-            return;
-        }
-        if (entity instanceof Player _entity) {
-
-            ProcessTransfur.setPlayerTransfurProgress((Player) entity, new ProcessTransfur.TransfurProgress(ProcessTransfur.getPlayerTransfurProgress(_entity).progress()+1, LatexVariant.LIGHT_LATEX_WOLF));
-        }
-
-    }
 }

@@ -33,10 +33,7 @@ public class AddPlayerTransfurProgressProcedure {
 			}
 		}.getEntity();
 		if (entity == entity) {
-			CompoundTag dataIndex1 = new CompoundTag();
-			EntityTarget.saveWithoutId(dataIndex1);
-			dataIndex1.putFloat("TransfurProgress", (float) Number);
-			EntityTarget.load(dataIndex1);
+			AddTransfurProgressProcedure.set(EntityTarget, Number);
 		}
 	}
 }
