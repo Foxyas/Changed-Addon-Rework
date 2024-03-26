@@ -77,6 +77,8 @@ public class MusicPlayerProcedure {
 
 		if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get() == true) {
 			boolean canwork = false;
+			Minecraft minecraft = Minecraft.getInstance();
+			MusicManager musicManager = minecraft.getMusicManager();
 
 			boolean Spectator = new Object() {
 				public boolean checkGamemode(Player _player) {
@@ -93,11 +95,12 @@ public class MusicPlayerProcedure {
 				canwork = true;
 			}
 			if (Phase2isclose || KetisClose && canwork) {
-				Minecraft minecraft = Minecraft.getInstance();
-				MusicManager musicManager = minecraft.getMusicManager();
 				net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
 				Music Experiment009_phase2_theme_MusicInstance = new Music(Experiment009Phase2Music, 0, 0, true);
 				boolean isExperiment009Phase2ThemePlaying = musicManager.isPlayingMusic(Experiment009_phase2_theme_MusicInstance);
+				if (KetisClose && !isExperiment009Phase2ThemePlaying) {
+					musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
+				}
 				if (!isExperiment009Phase2ThemePlaying) {
 					musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
 				} else if (Experiment009Phase2 != null && !Experiment009Phase2.isAlive() ) {
@@ -112,8 +115,6 @@ public class MusicPlayerProcedure {
 					}
 
 			} else if (Phase1isclose && canwork) {
-				Minecraft minecraft = Minecraft.getInstance();
-				MusicManager musicManager = minecraft.getMusicManager();
 				net.minecraft.sounds.SoundEvent Experiment009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme"));
 				Music Experiment009_Theme_MusicInstance = new Music(Experiment009Music, 0, 0, true);
 				boolean isExperiment009ThemePlaying = musicManager.isPlayingMusic(Experiment009_Theme_MusicInstance);
