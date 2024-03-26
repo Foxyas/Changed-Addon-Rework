@@ -107,7 +107,7 @@ public class MusicPlayerProcedure {
 					if (isExperiment009Phase2ThemePlaying){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 					}
-				} else if (!Phase2isclose && isExperiment009Phase2ThemePlaying){
+				} else if (!Phase2isclose && !KetisClose && isExperiment009Phase2ThemePlaying){
 					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 				} else if (Ket != null && !Ket.isAlive() ) {
 					if (isExperiment009Phase2ThemePlaying){
