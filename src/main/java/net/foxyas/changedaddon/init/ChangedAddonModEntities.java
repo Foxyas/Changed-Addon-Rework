@@ -23,6 +23,7 @@ import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
+import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 import net.foxyas.changedaddon.entity.Experiment009Entity;
@@ -81,6 +82,8 @@ public class ChangedAddonModEntities {
 					.setCustomClientFactory(SnowLeopardFemaleOrganicEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<KetExperiment009Entity>> KET_EXPERIMENT_009 = register("ket_experiment_009", EntityType.Builder.<KetExperiment009Entity>of(KetExperiment009Entity::new, MobCategory.MONSTER)
+			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(KetExperiment009Entity::new).fireImmune().sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -101,6 +104,7 @@ public class ChangedAddonModEntities {
 			BunyEntity.init();
 			SnowLeopardMaleOrganicEntity.init();
 			SnowLeopardFemaleOrganicEntity.init();
+			KetExperiment009Entity.init();
 		});
 	}
 
@@ -118,5 +122,6 @@ public class ChangedAddonModEntities {
 		event.put(BUNY.get(), BunyEntity.createAttributes().build());
 		event.put(SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicEntity.createAttributes().build());
 		event.put(SNOW_LEOPARD_FEMALE_ORGANIC.get(), SnowLeopardFemaleOrganicEntity.createAttributes().build());
+		event.put(KET_EXPERIMENT_009.get(), KetExperiment009Entity.createAttributes().build());
 	}
 }

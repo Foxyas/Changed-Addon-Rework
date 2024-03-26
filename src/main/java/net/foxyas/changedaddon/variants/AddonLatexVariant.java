@@ -19,6 +19,7 @@ import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraftforge.fml.common.Mod;
 import net.foxyas.changedaddon.ChangedAddonRegisters;
 import java.util.List;
@@ -57,7 +58,17 @@ public class AddonLatexVariant {
     public static final LatexVariant<BunyEntity> BUNY = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.BUNY)
             .groundSpeed(1.15F).swimSpeed(0.75F).jumpStrength(1.75F).transfurMode(TransfurMode.ABSORPTION).scares(List.of()).additionalHealth(10).build(new ResourceLocation("changed_addon", "form_buny")));
 
-	//Anotation Dazed Maybe is of .faction(LatexType.WHITE_LATEX) 
+
+   //Boss Transfurs
+    public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);
+    public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_BOSS_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
+            .groundSpeed(1.15F).swimSpeed(1.1F).jumpStrength(1.75F).transfurMode(TransfurMode.NONE).scares(List.of(Monster.class)).additionalHealth(40).build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
+
+    //Usable BossTransfurs
+    public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
+            .groundSpeed(1.15F).swimSpeed(1.1F).jumpStrength(1.75F).transfurMode(TransfurMode.NONE).scares(List.of(Monster.class)).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
+
+    //Anotation Dazed Maybe is of .faction(LatexType.WHITE_LATEX)
 
     private static <T extends LatexEntity> LatexVariant<T> register(LatexVariant<T> variant) {
         return LatexVariant.register(variant);

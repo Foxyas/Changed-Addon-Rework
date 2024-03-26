@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -50,6 +51,11 @@ public class MusicPlayerProcedure {
 		double x = entity.getX();
 		double y = entity.getY();
 		double z = entity.getZ();
+	    Entity Ket = (Entity) world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).stream().sorted(new Object() {
+			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+	  			return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+			}
+		}.compareDistOf(x, y, z)).findFirst().orElse(null);
 
 		Entity Experiment009 = (Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).stream().sorted(new Object() {
 			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
@@ -66,6 +72,7 @@ public class MusicPlayerProcedure {
 		boolean Phase1isclose = !world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).isEmpty();
 
 		boolean Phase2isclose = !world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).isEmpty();
+		boolean KetisClose = !world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).isEmpty();
 
 
 		if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get() == true) {
@@ -93,7 +100,7 @@ public class MusicPlayerProcedure {
 				boolean isExperiment009Phase2ThemePlaying = musicManager.isPlayingMusic(Experiment009_phase2_theme_MusicInstance);
 				if (!isExperiment009Phase2ThemePlaying) {
 					musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
-				} else if (!Experiment009Phase2.isAlive()) {
+				} else if (Experiment009Phase2 != null && !Experiment009Phase2.isAlive() ) {
 					if (isExperiment009Phase2ThemePlaying){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 					}
@@ -108,12 +115,27 @@ public class MusicPlayerProcedure {
 				boolean isExperiment009ThemePlaying = musicManager.isPlayingMusic(Experiment009_Theme_MusicInstance);
 				if (!isExperiment009ThemePlaying) {
 					musicManager.startPlaying(Experiment009_Theme_MusicInstance);
-				} else if (isExperiment009ThemePlaying){
+				} else if (isExperiment009ThemePlaying && Experiment009 != null){
 					if (!Experiment009.isAlive()){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
 					}
 				} else if (Phase1isclose && isExperiment009ThemePlaying){
-					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
+						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
+				}
+			} else if (KetisClose && canwork) {
+				Minecraft minecraft = Minecraft.getInstance();
+				MusicManager musicManager = minecraft.getMusicManager();
+				net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
+				Music Experiment009_phase2_theme_MusicInstance = new Music(Experiment009Phase2Music, 0, 0, true);
+				boolean isExperiment009Phase2ThemePlaying = musicManager.isPlayingMusic(Experiment009_phase2_theme_MusicInstance);
+				if (!isExperiment009Phase2ThemePlaying) {
+					musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
+				} else if (Ket != null && !Experiment009Phase2.isAlive()) {
+					if (isExperiment009Phase2ThemePlaying){
+						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
+					}
+				} else if (!Phase2isclose && isExperiment009Phase2ThemePlaying){
+					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 				}
 			}
 		}

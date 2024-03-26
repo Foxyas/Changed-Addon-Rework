@@ -18,5 +18,6 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(BunyModel.LAYER_LOCATION, BunyModel::createBodyLayer);
 		event.registerLayerDefinition(OrganicSnowLeopardMaleModel.LAYER_LOCATION, OrganicSnowLeopardMaleModel::createBodyLayer);
 		event.registerLayerDefinition(OrganicSnowLeopardFemaleModel.LAYER_LOCATION, OrganicSnowLeopardFemaleModel::createBodyLayer);
+		event.registerLayerDefinition(KetModel.LAYER_LOCATION, KetModel::createBodyLayer);
 	}
 }
