@@ -92,7 +92,7 @@ public class MusicPlayerProcedure {
 			if (!Spectator) {
 				canwork = true;
 			}
-			if (Phase2isclose && canwork) {
+			if (Phase2isclose || KetisClose && canwork) {
 				Minecraft minecraft = Minecraft.getInstance();
 				MusicManager musicManager = minecraft.getMusicManager();
 				net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
@@ -106,7 +106,11 @@ public class MusicPlayerProcedure {
 					}
 				} else if (!Phase2isclose && isExperiment009Phase2ThemePlaying){
 					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
-				}
+				} else if (Ket != null && !Ket.isAlive() ) {
+					if (isExperiment009Phase2ThemePlaying){
+						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
+					}
+
 			} else if (Phase1isclose && canwork) {
 				Minecraft minecraft = Minecraft.getInstance();
 				MusicManager musicManager = minecraft.getMusicManager();
@@ -121,22 +125,8 @@ public class MusicPlayerProcedure {
 					}
 				} else if (Phase1isclose && isExperiment009ThemePlaying){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
-				}
-			} else if (KetisClose && canwork) {
-				Minecraft minecraft = Minecraft.getInstance();
-				MusicManager musicManager = minecraft.getMusicManager();
-				net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
-				Music Experiment009_phase2_theme_MusicInstance = new Music(Experiment009Phase2Music, 0, 0, true);
-				boolean isExperiment009Phase2ThemePlaying = musicManager.isPlayingMusic(Experiment009_phase2_theme_MusicInstance);
-				if (!isExperiment009Phase2ThemePlaying) {
-					musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
-				} else if (Ket != null && !Experiment009Phase2.isAlive()) {
-					if (isExperiment009Phase2ThemePlaying){
-						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 					}
-				} else if (!Phase2isclose && isExperiment009Phase2ThemePlaying){
-					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
-				}
+				} 
 			}
 		}
 	}

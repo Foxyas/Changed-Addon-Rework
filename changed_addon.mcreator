@@ -8513,7 +8513,7 @@
       "name": "MusicPlayer",
       "type": "procedure",
       "sortid": 408,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "music_player",
       "metadata": {

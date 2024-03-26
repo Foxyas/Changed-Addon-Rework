@@ -2,6 +2,22 @@
 // command backup
 "/particle dust_color_transition 1 0 0 2 0.54 0 0 ~ ~1 ~ 0.2 0.5 0.2 -0 101 force"
 
+else if (KetisClose && canwork) {
+				Minecraft minecraft = Minecraft.getInstance();
+				MusicManager musicManager = minecraft.getMusicManager();
+				net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
+				Music Experiment009_phase2_theme_MusicInstance = new Music(Experiment009Phase2Music, 0, 0, true);
+				boolean isExperiment009Phase2ThemePlaying = musicManager.isPlayingMusic(Experiment009_phase2_theme_MusicInstance);
+				if (!isExperiment009Phase2ThemePlaying) {
+					musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
+				} else if (Ket != null && !Ket.isAlive()) {
+					if (isExperiment009Phase2ThemePlaying){
+						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
+					}
+				} else if (!KetisClose && isExperiment009Phase2ThemePlaying){
+					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
+				}
+			}
 
 
 
