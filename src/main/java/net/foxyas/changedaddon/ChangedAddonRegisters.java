@@ -37,7 +37,10 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final RegistryObject<Item> ORGANIC_SNOW_LEOPARD_FEMALE_SPAWN_EGG = REGISTRY.register("snow_leopard_female_organic_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC, Color3.getColor("#eeeeee").toInt(), Color3.getColor("#9C9C9C").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-	}
+		public static final RegistryObject<Item> KET_SPAWN_EGG = REGISTRY.register("ket_experiment009_spawn_egg",
+			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.KET_EXPERIMENT_009, Color3.getColor("#E9E9E9").toInt(), Color3.getColor("#66FFFF").toInt(), new Item.Properties().tab(null)));
+
+}
 
 	@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	class ChangedAddonFacilityPieces extends FacilityPieces {

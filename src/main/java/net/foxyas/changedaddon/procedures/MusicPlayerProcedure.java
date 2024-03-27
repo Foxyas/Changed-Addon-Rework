@@ -51,28 +51,27 @@ public class MusicPlayerProcedure {
 		double x = entity.getX();
 		double y = entity.getY();
 		double z = entity.getZ();
-	    Entity Ket = (Entity) world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).stream().sorted(new Object() {
+	    Entity Ket = (Entity) world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
 			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 	  			return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 			}
 		}.compareDistOf(x, y, z)).findFirst().orElse(null);
 
-		Entity Experiment009 = (Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).stream().sorted(new Object() {
+		Entity Experiment009 = (Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
 			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 				return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 			}
 		}.compareDistOf(x, y, z)).findFirst().orElse(null);
 
-		Entity Experiment009Phase2 = (Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).stream().sorted(new Object() {
+		Entity Experiment009Phase2 = (Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
 			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 				return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 			}
 		}.compareDistOf(x, y, z)).findFirst().orElse(null);
 
-		boolean Phase1isclose = !world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).isEmpty();
-
-		boolean Phase2isclose = !world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).isEmpty();
-		boolean KetisClose = !world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 32, 32, 32), e -> true).isEmpty();
+		boolean Phase1isclose = !world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
+		boolean Phase2isclose = !world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
+		boolean KetisClose = !world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
 
 
 		if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get() == true) {
@@ -94,10 +93,15 @@ public class MusicPlayerProcedure {
 			if (!Spectator) {
 				canwork = true;
 			}
-			if (Phase2isclose || KetisClose && canwork) {
 				net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
 				Music Experiment009_phase2_theme_MusicInstance = new Music(Experiment009Phase2Music, 0, 0, true);
 				boolean isExperiment009Phase2ThemePlaying = musicManager.isPlayingMusic(Experiment009_phase2_theme_MusicInstance);
+				net.minecraft.sounds.SoundEvent Experiment009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme"));
+				Music Experiment009_Theme_MusicInstance = new Music(Experiment009Music, 0, 0, true);
+				boolean isExperiment009ThemePlaying = musicManager.isPlayingMusic(Experiment009_Theme_MusicInstance);
+
+
+			if (Phase2isclose || KetisClose && canwork) {
 				if (KetisClose && !isExperiment009Phase2ThemePlaying) {
 					musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
 				}
@@ -107,30 +111,26 @@ public class MusicPlayerProcedure {
 					if (isExperiment009Phase2ThemePlaying){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
 					}
-				} else if (!Phase2isclose && !KetisClose && isExperiment009Phase2ThemePlaying){
-					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
-				} else if (Ket != null && !Ket.isAlive() ) {
+				}  if (Ket != null && !Ket.isAlive() ) {
 					if (isExperiment009Phase2ThemePlaying){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
-					}
-
-			} else if (Phase1isclose && canwork) {
-				net.minecraft.sounds.SoundEvent Experiment009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme"));
-				Music Experiment009_Theme_MusicInstance = new Music(Experiment009Music, 0, 0, true);
-				boolean isExperiment009ThemePlaying = musicManager.isPlayingMusic(Experiment009_Theme_MusicInstance);
+							}
+						}
+					} else if (!Phase2isclose && !KetisClose && isExperiment009Phase2ThemePlaying){
+					minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme_phase2"), SoundSource.MUSIC);
+				} else if (Phase1isclose && canwork) {
 				if (!isExperiment009ThemePlaying) {
 					musicManager.startPlaying(Experiment009_Theme_MusicInstance);
 				} else if (isExperiment009ThemePlaying && Experiment009 != null){
 					if (!Experiment009.isAlive()){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
 					}
-				} else if (Phase1isclose && isExperiment009ThemePlaying){
+				}} else if (!Phase1isclose && isExperiment009ThemePlaying){
 						minecraft.getSoundManager().stop(new ResourceLocation("changed_addon","experiment009_theme"), SoundSource.MUSIC);
 					}
 				} 
 			}
-		}
-	}
+	
 
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
 		if (entity == null)

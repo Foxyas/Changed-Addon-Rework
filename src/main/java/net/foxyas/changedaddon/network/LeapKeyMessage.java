@@ -52,7 +52,7 @@ public class LeapKeyMessage {
 			return;
 		if (type == 0) {
 
-			LeapProcedure.execute(entity);
+			LeapProcedure.execute(world, x, y, z, entity);
 		}
 	}
 

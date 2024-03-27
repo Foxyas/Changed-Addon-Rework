@@ -1,14 +1,28 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraftforge.registries.ForgeRegistries;
+
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.client.Minecraft;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
@@ -16,10 +30,13 @@ import net.minecraft.advancements.Advancement;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 
+import java.util.stream.Collectors;
+import java.util.List;
 import java.util.Iterator;
+import java.util.Comparator;
 
 public class LeapProcedure {
-	public static void execute(Entity entity) {
+	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
 		double motionZ = 0;
@@ -113,6 +130,99 @@ public class LeapProcedure {
 									Entity _ent = entity;
 									if (!_ent.level.isClientSide() && _ent.getServer() != null)
 										_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+								}
+							}
+						}
+					}
+				}
+			} else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_ket_experiment009_boss")) {
+				if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.FADIGE.get()) : false)) {
+					if (!(new Object() {
+						public boolean checkGamemode(Entity _ent) {
+							if (_ent instanceof ServerPlayer _serverPlayer) {
+								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
+							} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
+							}
+							return false;
+						}
+					}.checkGamemode(entity))) {
+						int horizontalRadiusHemiTop = (int) 4 - 1;
+						int verticalRadiusHemiTop = (int) 1;
+						int yIterationsHemiTop = verticalRadiusHemiTop;
+						for (int i = 0; i < yIterationsHemiTop; i++) {
+							if (i == verticalRadiusHemiTop) {
+								continue;
+							}
+							for (int xi = -horizontalRadiusHemiTop; xi <= horizontalRadiusHemiTop; xi++) {
+								for (int zi = -horizontalRadiusHemiTop; zi <= horizontalRadiusHemiTop; zi++) {
+									double distanceSq = (xi * xi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop) + (i * i) / (double) (verticalRadiusHemiTop * verticalRadiusHemiTop)
+											+ (zi * zi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop);
+									if (distanceSq <= 1.0) {
+										{
+											final Vec3 _center = new Vec3(x + xi, y + i, z + zi);
+											List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(1, 2, 1), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+													.collect(Collectors.toList());
+											for (Entity entityiterator : _entfound) {
+												if (!(entityiterator == entity)) {
+													if (!(new Object() {
+														public boolean checkGamemode(Entity _ent) {
+															if (_ent instanceof ServerPlayer _serverPlayer) {
+																return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+															} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+																return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+																		&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+															}
+															return false;
+														}
+													}.checkGamemode(entity))) {
+														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 100, 0));
+													}
+													entityiterator.setDeltaMovement(new Vec3(0, 0.7, 0));
+													world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.7, 0);
+													if (!(entityiterator instanceof ItemEntity)) {
+														entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
+															@Override
+															public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+																Component _attackerName = null;
+																Component _entityName = _livingEntity.getDisplayName();
+																Component _itemName = null;
+																Entity _attacker = this.getEntity();
+																ItemStack _itemStack = ItemStack.EMPTY;
+																if (_attacker != null) {
+																	_attackerName = _attacker.getDisplayName();
+																}
+																if (_attacker instanceof LivingEntity _livingAttacker) {
+																	_itemStack = _livingAttacker.getMainHandItem();
+																}
+																if (!_itemStack.isEmpty() && _itemStack.hasCustomHoverName()) {
+																	_itemName = _itemStack.getDisplayName();
+																}
+																if (_attacker != null && _itemName != null) {
+																	return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+																} else if (_attacker != null) {
+																	return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+																} else {
+																	return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+																}
+															}
+														})), 3);
+														if (world instanceof Level _level) {
+															if (!_level.isClientSide()) {
+																_level.playSound(null, new BlockPos(entityiterator.getX(), entityiterator.getY(), entityiterator.getZ()),
+																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.thunder")), SoundSource.NEUTRAL, 1, 1);
+															} else {
+																_level.playLocalSound((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()),
+																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.thunder")), SoundSource.NEUTRAL, 1, 1, false);
+															}
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}

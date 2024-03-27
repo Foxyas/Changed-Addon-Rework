@@ -2,8 +2,12 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
+import net.foxyas.changedaddon.fluid.LitixCamoniaFluidFluid;
+import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.material.WaterFluid;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,7 +66,7 @@ import java.util.List;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class KetExperiment009Entity extends LatexEntity {
+public class KetExperiment009Entity extends LatexEntity implements AquaticEntity {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 
 	public KetExperiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
@@ -80,11 +84,13 @@ public class KetExperiment009Entity extends LatexEntity {
 
 	protected void setAttributes(AttributeMap attributes) {
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((425));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0);
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(this.getLatexLandSpeed());
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(this.getLatexSwimSpeed());
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(5);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(40);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(10);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
 	}
 	@Override
 	public Color3 getHairColor(int i) {
@@ -92,9 +98,14 @@ public class KetExperiment009Entity extends LatexEntity {
 	}
 
 	@Override
-	public int getTicksRequiredToFreeze() { return 700; }
-
-
+	public int getTicksRequiredToFreeze() { return 1000; }
+	@Override
+	protected boolean targetSelectorTest(LivingEntity livingEntity) {
+		if (livingEntity instanceof Player || livingEntity instanceof ServerPlayer){
+			return true;
+			}
+		return false;
+	}
 	@Override
 	public LatexType getLatexType() {
 		return LatexType.NEUTRAL;
@@ -259,8 +270,14 @@ public class KetExperiment009Entity extends LatexEntity {
 								("execute as " + entity.getStringUUID() + " at @s run tp @s ~ ~ ~ facing entity " + entity.getTarget().getStringUUID()));
 				}
 				entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-				entity.setPose(Pose.SWIMMING);
+				if (entity.isEyeInFluid(FluidTags.WATER)){
+					entity.setPose(Pose.SWIMMING);
+			 } else if (entity.getPose() == Pose.SWIMMING && !entity.isEyeInFluid(FluidTags.WATER)){
+					entity.setPose(Pose.STANDING);
+				}
 			}
+		} else if (entity.getPose() == Pose.SWIMMING && !entity.isInWater()){
+			entity.setPose(Pose.STANDING);
 		}
 	}
 
@@ -268,5 +285,6 @@ public class KetExperiment009Entity extends LatexEntity {
 	public void baseTick() {
 		super.baseTick();
 		SwimVoid(this);
+		Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
 	}
 }
