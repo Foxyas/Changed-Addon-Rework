@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
@@ -148,6 +149,39 @@ public class LeapProcedure {
 							return false;
 						}
 					}.checkGamemode(entity))) {
+						deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
+						deltaY = -Math.sin((entity.getXRot() / 180) * (float) Math.PI);
+						deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
+						speed = 2;
+						motionX = deltaX * speed;
+						motionY = deltaY * 1;
+						motionZ = deltaZ * speed;
+						if (entity.isOnGround() && !entity.isInWater()) {
+							if (!entity.isShiftKeyDown()) {
+								entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
+								{
+									Entity _ent = entity;
+									if (!_ent.level.isClientSide() && _ent.getServer() != null)
+										_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+								}
+								if (!(new Object() {
+									public boolean checkGamemode(Entity _ent) {
+										if (_ent instanceof ServerPlayer _serverPlayer) {
+											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+										} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+											return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+										}
+										return false;
+									}
+								}.checkGamemode(entity))) {
+									if (entity instanceof Player _player)
+										_player.causeFoodExhaustion((float) 0.1);
+									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0));
+								}
+							}
+						}
 						int horizontalRadiusHemiTop = (int) 4 - 1;
 						int verticalRadiusHemiTop = (int) 1;
 						int yIterationsHemiTop = verticalRadiusHemiTop;
@@ -177,12 +211,16 @@ public class LeapProcedure {
 															return false;
 														}
 													}.checkGamemode(entity))) {
+														if (entity instanceof Player _player)
+															_player.causeFoodExhaustion((float) 0.1);
 														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 100, 0));
 													}
 													entityiterator.setDeltaMovement(new Vec3(0, 0.7, 0));
 													world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.7, 0);
 													if (!(entityiterator instanceof ItemEntity)) {
+														if (entity instanceof LivingEntity _entity)
+															_entity.swing(InteractionHand.MAIN_HAND, true);
 														entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
 															@Override
 															public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
@@ -212,10 +250,10 @@ public class LeapProcedure {
 														if (world instanceof Level _level) {
 															if (!_level.isClientSide()) {
 																_level.playSound(null, new BlockPos(entityiterator.getX(), entityiterator.getY(), entityiterator.getZ()),
-																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.thunder")), SoundSource.NEUTRAL, 1, 1);
+																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0);
 															} else {
 																_level.playLocalSound((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()),
-																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.thunder")), SoundSource.NEUTRAL, 1, 1, false);
+																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0, false);
 															}
 														}
 													}
