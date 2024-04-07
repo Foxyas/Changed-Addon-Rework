@@ -55,13 +55,13 @@ public class AddonLatexVariant {
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
             .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.75F).transfurMode(TransfurMode.NONE).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
 
-   //Boss Transfurs
+    //Boss Transfurs
     public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_BOSS_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
             .groundSpeed(1.25F).swimSpeed(1.15F).reducedFall().jumpStrength(1.75F).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(60).build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
 
 
-    //Anotation Dazed Maybe is of .faction(LatexType.WHITE_LATEX)
+    //Annotation Dazed Maybe is of .faction(LatexType.WHITE_LATEX)
 
     private static <T extends LatexEntity> LatexVariant<T> register(LatexVariant<T> variant) {
         return LatexVariant.register(variant);
