@@ -216,44 +216,66 @@ public class LeapProcedure {
 														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 100, 0));
 													}
-													entityiterator.setDeltaMovement(new Vec3(0, 0.7, 0));
-													world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.7, 0);
-													if (!(entityiterator instanceof ItemEntity)) {
-														if (entity instanceof LivingEntity _entity)
-															_entity.swing(InteractionHand.MAIN_HAND, true);
-														entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
-															@Override
-															public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
-																Component _attackerName = null;
-																Component _entityName = _livingEntity.getDisplayName();
-																Component _itemName = null;
-																Entity _attacker = this.getEntity();
-																ItemStack _itemStack = ItemStack.EMPTY;
-																if (_attacker != null) {
-																	_attackerName = _attacker.getDisplayName();
-																}
-																if (_attacker instanceof LivingEntity _livingAttacker) {
-																	_itemStack = _livingAttacker.getMainHandItem();
-																}
-																if (!_itemStack.isEmpty() && _itemStack.hasCustomHoverName()) {
-																	_itemName = _itemStack.getDisplayName();
-																}
-																if (_attacker != null && _itemName != null) {
-																	return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
-																} else if (_attacker != null) {
-																	return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
-																} else {
-																	return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
-																}
+													if (!(new Object() {
+														public boolean checkGamemode(Entity _ent) {
+															if (_ent instanceof ServerPlayer _serverPlayer) {
+																return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+															} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+																return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+																		&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 															}
-														})), 3);
-														if (world instanceof Level _level) {
-															if (!_level.isClientSide()) {
-																_level.playSound(null, new BlockPos(entityiterator.getX(), entityiterator.getY(), entityiterator.getZ()),
-																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0);
-															} else {
-																_level.playLocalSound((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()),
-																		ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0, false);
+															return false;
+														}
+													}.checkGamemode(entityiterator)) && !(new Object() {
+														public boolean checkGamemode(Entity _ent) {
+															if (_ent instanceof ServerPlayer _serverPlayer) {
+																return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
+															} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+																return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+																		&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
+															}
+															return false;
+														}
+													}.checkGamemode(entityiterator))) {
+														entityiterator.setDeltaMovement(new Vec3(0, 0.7, 0));
+														world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.7, 0);
+														if (!(entityiterator instanceof ItemEntity)) {
+															if (entity instanceof LivingEntity _entity)
+																_entity.swing(InteractionHand.MAIN_HAND, true);
+															entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
+																@Override
+																public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+																	Component _attackerName = null;
+																	Component _entityName = _livingEntity.getDisplayName();
+																	Component _itemName = null;
+																	Entity _attacker = this.getEntity();
+																	ItemStack _itemStack = ItemStack.EMPTY;
+																	if (_attacker != null) {
+																		_attackerName = _attacker.getDisplayName();
+																	}
+																	if (_attacker instanceof LivingEntity _livingAttacker) {
+																		_itemStack = _livingAttacker.getMainHandItem();
+																	}
+																	if (!_itemStack.isEmpty() && _itemStack.hasCustomHoverName()) {
+																		_itemName = _itemStack.getDisplayName();
+																	}
+																	if (_attacker != null && _itemName != null) {
+																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+																	} else if (_attacker != null) {
+																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+																	} else {
+																		return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+																	}
+																}
+															})), 3);
+															if (world instanceof Level _level) {
+																if (!_level.isClientSide()) {
+																	_level.playSound(null, new BlockPos(entityiterator.getX(), entityiterator.getY(), entityiterator.getZ()),
+																			ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0);
+																} else {
+																	_level.playLocalSound((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()),
+																			ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0, false);
+																}
 															}
 														}
 													}

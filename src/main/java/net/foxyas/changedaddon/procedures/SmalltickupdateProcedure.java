@@ -21,6 +21,7 @@ import net.minecraft.advancements.Advancement;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 
 import javax.annotation.Nullable;
@@ -149,6 +150,14 @@ public class SmalltickupdateProcedure {
 		TransfurStats_Attack = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba758"), "transfur_stats", 9, AttributeModifier.Operation.ADDITION);
 		TransfurStats_Defense = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba759"), "transfur_stats", 24, AttributeModifier.Operation.ADDITION);
 		TransfurStats_Armor = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba760"), "transfur_stats", 12, AttributeModifier.Operation.ADDITION);
+		if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.NEED_PERMITION_FOR_009_TRANSFUR)) {
+			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
+					&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_ket_experiment009_boss")) {
+				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009TransfurAllowed == false) {
+					Exp009TransfurProcedure.execute(entity);
+				}
+			}
+		}
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
 				&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_ket_experiment009_boss")) {
 			if (!(((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE).hasModifier(TransfurStats_Attack)))

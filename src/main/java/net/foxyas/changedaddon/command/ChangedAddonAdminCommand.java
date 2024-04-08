@@ -18,18 +18,45 @@ import net.foxyas.changedaddon.procedures.SetmaxTransfurToleranceProcedure;
 import net.foxyas.changedaddon.procedures.SetTransfurProgressCommandProcedure;
 import net.foxyas.changedaddon.procedures.SetPlayerTransfurProgressCommandProcedure;
 import net.foxyas.changedaddon.procedures.SetDefaultValueProcedure;
+import net.foxyas.changedaddon.procedures.SetBossPermProcedure;
 import net.foxyas.changedaddon.procedures.GetmaxTransfurToleranceProcedure;
+import net.foxyas.changedaddon.procedures.GetBossPermProcedure;
 import net.foxyas.changedaddon.procedures.AddTransfurProgressCommandProcedure;
 import net.foxyas.changedaddon.procedures.AddPlayerTransfurProgressProcedure;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 
 @Mod.EventBusSubscriber
 public class ChangedAddonAdminCommand {
 	@SubscribeEvent
 	public static void registerCommand(RegisterCommandsEvent event) {
 		event.getDispatcher().register(Commands.literal("changed-addon-admin").requires(s -> s.hasPermission(2))
-				.then(Commands.literal("SetTransfurProgress").then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
+				.then(Commands.literal("allow_boss_transfur").then(Commands.literal("Ket_Exp_009").then(Commands.literal("get").then(Commands.argument("player", EntityArgument.player()).executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					GetBossPermProcedure.execute(entity);
+					return 0;
+				}))).then(Commands.literal("set").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("set", BoolArgumentType.bool()).executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					SetBossPermProcedure.execute(arguments, entity);
+					return 0;
+				})))))).then(Commands.literal("SetTransfurProgress").then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
