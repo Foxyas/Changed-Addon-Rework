@@ -96,6 +96,7 @@ public class ChangedAddonModVariables {
 			clone.aredarklatex = original.aredarklatex;
 			clone.UntransfurProgress = original.UntransfurProgress;
 			clone.Exp009TransfurAllowed = original.Exp009TransfurAllowed;
+			clone.Exp009Buff = original.Exp009Buff;
 			if (!event.isWasDeath()) {
 				clone.times_the_syringe_was_used = original.times_the_syringe_was_used;
 				clone.grab_escape = original.grab_escape;
@@ -305,6 +306,7 @@ public class ChangedAddonModVariables {
 		public double LatexInfectionCooldown = 0.0;
 		public double UntransfurProgress = 0.0;
 		public boolean Exp009TransfurAllowed = false;
+		public boolean Exp009Buff = false;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -347,6 +349,7 @@ public class ChangedAddonModVariables {
 			nbt.putDouble("LatexInfectionCooldown", LatexInfectionCooldown);
 			nbt.putDouble("UntransfurProgress", UntransfurProgress);
 			nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
+			nbt.putBoolean("Exp009Buff", Exp009Buff);
 			return nbt;
 		}
 
@@ -386,6 +389,7 @@ public class ChangedAddonModVariables {
 			LatexInfectionCooldown = nbt.getDouble("LatexInfectionCooldown");
 			UntransfurProgress = nbt.getDouble("UntransfurProgress");
 			Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
+			Exp009Buff = nbt.getBoolean("Exp009Buff");
 		}
 	}
 
@@ -444,6 +448,7 @@ public class ChangedAddonModVariables {
 					variables.LatexInfectionCooldown = message.data.LatexInfectionCooldown;
 					variables.UntransfurProgress = message.data.UntransfurProgress;
 					variables.Exp009TransfurAllowed = message.data.Exp009TransfurAllowed;
+					variables.Exp009Buff = message.data.Exp009Buff;
 				}
 			});
 			context.setPacketHandled(true);

@@ -220,12 +220,12 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
     }
 
-    public PoseStack getPlacementCorrectors(CorrectorType type) {
+   /* public PoseStack getPlacementCorrectors(CorrectorType type) {
         PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
-    }
+    }  */
     @Override
     public void setupHand() {
         animator.setupHand();

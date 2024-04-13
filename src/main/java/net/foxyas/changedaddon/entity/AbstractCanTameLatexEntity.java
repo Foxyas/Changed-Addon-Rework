@@ -1,25 +1,20 @@
 package net.foxyas.changedaddon.entity;
 
-import net.ltxprogrammer.changed.entity.LatexEntity;
-import net.ltxprogrammer.changed.entity.TamableLatexEntity;
-import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.Level;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
+import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
-import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,7 +22,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -173,27 +170,23 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
             if (this.isTame()) {
-                /*if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                    this.heal((float) itemstack.getFoodProperties(this).getNutrition());
-                    if (!player.getAbilities().instabuild) {
-                        itemstack.shrink(1);
-                    }
-
+                if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
+                    itemstack.shrink(1);
+                    this.heal(2.0F);
                     this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
                     return InteractionResult.SUCCESS;
-                }*/
-
-                /*else*/ {
+                } else {
                     InteractionResult interactionresult = super.mobInteract(player, hand);
                     if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
-                        this.setFollowOwner(!this.isFollowingOwner());
+                        boolean shouldFollow = !this.isFollowingOwner();
+                        this.setFollowOwner(shouldFollow);
+
+                        player.displayClientMessage(new TranslatableComponent(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
                         this.jumping = false;
                         this.navigation.stop();
                         this.setTarget((LivingEntity) null);
                         return InteractionResult.SUCCESS;
                     }
-
-                    return interactionresult;
                 }
             }
         }

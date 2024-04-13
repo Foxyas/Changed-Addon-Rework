@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexFemaleWolfModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexFemaleWolfModel;
 import net.ltxprogrammer.changed.util.Color3;
@@ -22,6 +23,7 @@ public class LatexSnowFoxFemaleRenderer extends LatexHumanoidRenderer<LatexSnowF
 		super(context, new ModelFemaleSnowFox(context.bakeLayer(ModelFemaleSnowFox.LAYER_LOCATION)),ArmorLatexFemaleWolfModel::new,ArmorLatexFemaleWolfModel.INNER_ARMOR,ArmorLatexFemaleWolfModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
+		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 	}
 
 	@Override
