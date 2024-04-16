@@ -40,7 +40,7 @@
     "hasGravity": false,
     "isWaterloggable": false,
     "creativeTab": {
-      "value": "CUSTOM:ChangedAddon"
+      "value": "No creative tab entry"
     },
     "destroyTool": "pickaxe",
     "customDrop": {

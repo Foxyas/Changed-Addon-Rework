@@ -135,7 +135,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SIGNAL_BLOCK = block(ChangedAddonModBlocks.SIGNAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
 	public static final RegistryObject<Item> DEVITEM_6 = REGISTRY.register("devitem_6", () -> new DEVITEM6Item());
-	public static final RegistryObject<Item> CATALY_FUSER = block(ChangedAddonModBlocks.CATALY_FUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> CATALY_FUSER = block(ChangedAddonModBlocks.CATALY_FUSER, null);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
