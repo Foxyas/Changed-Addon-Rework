@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/catalyfuser_bottom",
+    "up": "changed_addon:blocks/catalyfuser_top",
+    "north": "changed_addon:blocks/catalyfuser_front",
+    "east": "changed_addon:blocks/catalyfuser_left",
+    "south": "changed_addon:blocks/catalyfuser_back",
+    "west": "changed_addon:blocks/catalyfuser_right",
+    "particle": "changed_addon:blocks/catalyfuser_bottom"
+  }
+}

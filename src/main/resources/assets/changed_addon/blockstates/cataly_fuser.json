@@ -1,0 +1,57 @@
+{
+  "variants": {
+    "face=floor,facing=north": {
+      "model": "changed_addon:block/cataly_fuser"
+    },
+    "face=floor,facing=east": {
+      "model": "changed_addon:block/cataly_fuser",
+      "y": 90
+    },
+    "face=floor,facing=south": {
+      "model": "changed_addon:block/cataly_fuser",
+      "y": 180
+    },
+    "face=floor,facing=west": {
+      "model": "changed_addon:block/cataly_fuser",
+      "y": 270
+    },
+    "face=wall,facing=north": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 90
+    },
+    "face=wall,facing=east": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=south": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=west": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 90,
+      "y": 270
+    },
+    "face=ceiling,facing=north": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=east": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=south": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 180
+    },
+    "face=ceiling,facing=west": {
+      "model": "changed_addon:block/cataly_fuser",
+      "x": 180,
+      "y": 90
+    }
+  }
+}
