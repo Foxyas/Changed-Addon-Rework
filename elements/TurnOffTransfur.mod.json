@@ -1,0 +1,12 @@
+{
+  "_fv": 47,
+  "_type": "keybind",
+  "definition": {
+    "triggerKey": "NONE",
+    "keyBindingName": "Turn Off Transfur",
+    "keyBindingCategoryKey": "changed_addon",
+    "onKeyPressed": {
+      "name": "TurnOffTransfurOnKeyPressed"
+    }
+  }
+}

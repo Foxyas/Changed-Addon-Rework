@@ -1,0 +1,21 @@
+{
+  "_fv": 47,
+  "_type": "potion",
+  "definition": {
+    "potionName": "Potion of Transfur Sickness ",
+    "splashName": "Splash Potion of Transfur Sickness ",
+    "lingeringName": "Lingering Potion of Transfur Sickness ",
+    "arrowName": "Arrow of Transfur Sickness",
+    "effects": [
+      {
+        "effect": {
+          "value": "CUSTOM:TransfurSickness"
+        },
+        "duration": 2632,
+        "amplifier": 0,
+        "ambient": true,
+        "showParticles": false
+      }
+    ]
+  }
+}

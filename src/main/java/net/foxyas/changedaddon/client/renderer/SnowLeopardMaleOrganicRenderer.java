@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.client.model.OrganicSnowLeopardMaleModel;
 import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
 import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleCatModel;
@@ -24,6 +25,7 @@ public class SnowLeopardMaleOrganicRenderer extends LatexHumanoidRenderer<SnowLe
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
+		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	}
 
 	@Override

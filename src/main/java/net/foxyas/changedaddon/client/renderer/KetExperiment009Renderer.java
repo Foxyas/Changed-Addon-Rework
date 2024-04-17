@@ -4,6 +4,7 @@ package net.foxyas.changedaddon.client.renderer;
 import net.foxyas.changedaddon.client.model.KetModel;
 import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.EmissiveBodyLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
@@ -25,6 +26,7 @@ public class KetExperiment009Renderer extends LatexHumanoidRenderer<KetExperimen
 				ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon","textures/entities/ketmodel_glowtexture.png")));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	//  this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#66FFFF"))));
 	}
 

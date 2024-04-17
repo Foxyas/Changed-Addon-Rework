@@ -16,6 +16,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 
+import net.foxyas.changedaddon.network.TurnOffTransfurMessage;
 import net.foxyas.changedaddon.network.OpengrabescapeguiMessage;
 import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
 import net.foxyas.changedaddon.network.LeapKeyMessage;
@@ -81,6 +82,19 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
+	public static final KeyMapping TURN_OFF_TRANSFUR = new KeyMapping("key.changed_addon.turn_off_transfur", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
+		private boolean isDownOld = false;
+
+		@Override
+		public void setDown(boolean isDown) {
+			super.setDown(isDown);
+			if (isDownOld != isDown && isDown) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TurnOffTransfurMessage(0, 0));
+				TurnOffTransfurMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+			}
+			isDownOld = isDown;
+		}
+	};
 	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
@@ -89,6 +103,7 @@ public class ChangedAddonModKeyMappings {
 		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
 		ClientRegistry.registerKeyBinding(DUCT_PRONE);
 		ClientRegistry.registerKeyBinding(LEAP_KEY);
+		ClientRegistry.registerKeyBinding(TURN_OFF_TRANSFUR);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -100,6 +115,7 @@ public class ChangedAddonModKeyMappings {
 				OPEN_EXTRA_DETAILS.consumeClick();
 				DUCT_PRONE.consumeClick();
 				LEAP_KEY.consumeClick();
+				TURN_OFF_TRANSFUR.consumeClick();
 			}
 		}
 	}

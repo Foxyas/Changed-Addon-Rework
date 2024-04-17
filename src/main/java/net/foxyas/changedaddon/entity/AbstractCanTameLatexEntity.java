@@ -173,6 +173,14 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
                 if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
                     itemstack.shrink(1);
                     this.heal(2.0F);
+                    ParticleOptions particleoptions = ParticleTypes.HEART;
+        	        for(int i = 0; i < 4; ++i) {
+            		double d0 = this.random.nextGaussian() * 0.02D;
+            		double d1 = this.random.nextGaussian() * 0.02D;
+            		double d2 = this.random.nextGaussian() * 0.02D;
+            		this.level.addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+     				} //Spawn Heal Particles
+
                     this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
                     return InteractionResult.SUCCESS;
                 } else {

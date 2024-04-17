@@ -6,6 +6,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 import static net.ltxprogrammer.changed.entity.TransfurMode.*;
+import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 
 public class ReturnTransfurModeProcedure {
 	public static double execute(Entity entity) {
@@ -44,6 +46,44 @@ class setPlayerLatexAge {
 				PlayerVariant.ageAsVariant = number;
 			}
 		}
+	}
+}
+
+class setPlayerTransfurMode {
+	public static void execute(Player player,int mode) {
+		if (player == null) {
+			return;
+		}
+		LatexVariantInstance PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		if (PlayerVariant == null){
+			return;
+		} else {
+			if (mode == 1) {
+				PlayerVariant.transfurMode = TransfurMode.REPLICATION;
+			} else if (mode == 2) {
+				PlayerVariant.transfurMode = TransfurMode.ABSORPTION;
+			} else if (mode >= 3) {
+				PlayerVariant.transfurMode = TransfurMode.NONE;
+			}
+		}
+	}
+}
+
+
+class GetDefault {
+	public static boolean execute(Player player) {
+		if (player == null) {
+			return false;
+		}
+		LatexVariantInstance PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		if (PlayerVariant == null){
+			return false;
+		} else {
+			LatexVariant getVariant = PlayerVariant.getParent();
+			if(getVariant.transfurMode() != TransfurMode.NONE){
+				return true;	
+			}
+		} return false;
 	}
 }
 

@@ -1,0 +1,23 @@
+{
+  "_fv": 47,
+  "_type": "potioneffect",
+  "definition": {
+    "effectName": "§o§cTransfur Sickness",
+    "icon": "transfur_sickness.png",
+    "color": {
+      "value": -1,
+      "falpha": 0.0
+    },
+    "isInstant": false,
+    "isBad": true,
+    "isBenefitical": false,
+    "renderStatusInInventory": true,
+    "renderStatusInHUD": true,
+    "onActiveTick": {
+      "name": "TransfurSicknessOnEffectActiveTick"
+    },
+    "onExpired": {
+      "name": "TransfurSicknessEffectExpires"
+    }
+  }
+}

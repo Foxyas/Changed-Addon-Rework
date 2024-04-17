@@ -65,15 +65,6 @@ public class TransfurTotemItemInInventoryTickProcedure {
 						}
 					}
 				}
-				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-					{
-						boolean _setval = true;
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.Exp009Buff = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-				}
 			} else if (itemstack.getItem() == (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem()) {
 				if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_latex_benign_wolf")) {
 					{
@@ -102,35 +93,6 @@ public class TransfurTotemItemInInventoryTickProcedure {
 							while (_iterator.hasNext())
 								_player.getAdvancements().award(_adv, (String) _iterator.next());
 						}
-					}
-				}
-				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-					{
-						boolean _setval = true;
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.Exp009Buff = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-				}
-			} else if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff == true) {
-				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
-					{
-						boolean _setval = false;
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.Exp009Buff = _setval;
-							capability.syncPlayerVariables(entity);
-						});
-					}
-				}
-				if (!(itemstack.getItem() == (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem())
-						&& !(itemstack.getItem() == (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem())) {
-					{
-						boolean _setval = false;
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.Exp009Buff = _setval;
-							capability.syncPlayerVariables(entity);
-						});
 					}
 				}
 			}
