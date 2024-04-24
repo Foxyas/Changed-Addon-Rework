@@ -3,7 +3,7 @@
   "_type": "potioneffect",
   "definition": {
     "effectName": "§o§cTransfur Sickness",
-    "icon": "transfur_sickness.png",
+    "icon": "transfursickness.png",
     "color": {
       "value": -1,
       "falpha": 0.0

@@ -50,6 +50,8 @@ public class AddonLatexVariant {
             .groundSpeed(1.075F).swimSpeed(1.025F).transfurMode(TransfurMode.ABSORPTION).scares(List.of()).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_dazed_latex")));
     public static final LatexVariant<BunyEntity> BUNY = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.BUNY)
             .groundSpeed(1.15F).swimSpeed(0.75F).jumpStrength(1.5F).transfurMode(TransfurMode.ABSORPTION).scares(List.of()).additionalHealth(10).build(new ResourceLocation("changed_addon", "form_buny")));
+    public static final LatexVariant<MirrorWhiteTigerEntity> MIRROR_WHITE_TIGER = LatexVariant.register(LatexVariant.Builder.of(LatexVariant.LATEX_WHITE_TIGER,ChangedAddonModEntities.MIRROR_WHITE_TIGER)
+            .groundSpeed(1.15F).swimSpeed(0.95F).stepSize(0.7F).breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().build(new ResourceLocation("changed_addon", "form_mirror_white_tiger_female")));
 
     //Usable BossTransfurs
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)

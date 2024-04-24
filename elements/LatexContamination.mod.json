@@ -3,7 +3,7 @@
   "_type": "potioneffect",
   "definition": {
     "effectName": "Latex Contamination",
-    "icon": "latex-infection.png",
+    "icon": "transfur_infection.png",
     "color": {
       "value": -1,
       "falpha": 0.0

@@ -10163,7 +10163,8 @@
           "src/main/java/net/foxyas/changedaddon/block/CatalyFuserBlock.java",
           "src/main/resources/assets/changed_addon/models/block/cataly_fuser.json"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "TransfurSicknessOnEffectActiveTick",
@@ -10182,7 +10183,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TransfurSicknessEffectExpires",
@@ -10201,7 +10203,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TransfurSickness",
@@ -10214,7 +10217,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/potion/TransfurSicknessMobEffect.java"
         ]
-      }
+      },
+      "path": "~/effects"
     },
     {
       "name": "TransfurSicknessPotion",
@@ -10225,7 +10229,8 @@
       "registry_name": "transfur_sickness_potion",
       "metadata": {
         "files": []
-      }
+      },
+      "path": "~/effects/Potion Effects"
     },
     {
       "name": "TransfurSicknessRecipe",
@@ -10238,7 +10243,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/recipes/brewing/TransfurSicknessRecipeBrewingRecipe.java"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "TurnOffTransfurOnKeyPressed",
@@ -10257,7 +10263,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "TurnOffTransfur",
@@ -10269,6 +10276,34 @@
       "metadata": {
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/TurnOffTransfurMessage.java"
+        ]
+      },
+      "path": "~/Keybinds"
+    },
+    {
+      "name": "MirrorWhiteTiger",
+      "type": "livingentity",
+      "sortid": 503,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "mirror_white_tiger",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/entity/MirrorWhiteTigerEntity.java",
+          "src/main/java/net/foxyas/changedaddon/client/renderer/MirrorWhiteTigerRenderer.java"
+        ]
+      }
+    },
+    {
+      "name": "MirrorWhiteTigerLoot",
+      "type": "loottable",
+      "sortid": 504,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "mirror_white_tiger_loot",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/mirror_white_tiger.json"
         ]
       }
     }
@@ -10663,6 +10698,7 @@
       "changed_addon.latex_totem.notvalid": "Totem reacted §cnegatively§r to your §bDNA§r",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
+      "entity.changed_addon.mirror_white_tiger": "Mirror White Tiger",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
       "advancements.compressed_ammonia_advancement.title": "Compressed!!",
       "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
@@ -10854,6 +10890,7 @@
       "advancements.untransfuritemadvancement.descr": "You made one untransfur item",
       "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
       "gui.changed_addon.unifusergui.label_3": "+3",
+      "item.changed_addon.mirror_white_tiger_spawn_egg": "Mirror White Tiger Spawn Egg",
       "advancements.leaper.title": "Leaper",
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon Plus",
