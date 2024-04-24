@@ -22,9 +22,9 @@ public class MirrorWhiteTigerRenderer extends LatexHumanoidRenderer<MirrorWhiteT
 	public MirrorWhiteTigerRenderer(EntityRendererProvider.Context context) {
 		super(context, new ModelMirrorWhiteTiger(context.bakeLayer(ModelMirrorWhiteTiger.LAYER_LOCATION)),
 				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+		//this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
+		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::irisColorLeft,CustomEyesLayer::irisColorRight));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	}
 
