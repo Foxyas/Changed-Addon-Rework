@@ -10305,7 +10305,8 @@
         "files": [
           "src/main/resources/data/changed_addon/loot_tables/entities/mirror_white_tiger.json"
         ]
-      }
+      },
+      "path": "~/Entity/Entity Loot"
     }
   ],
   "variable_elements": [
