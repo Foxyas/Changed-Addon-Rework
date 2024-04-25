@@ -10292,7 +10292,8 @@
           "src/main/java/net/foxyas/changedaddon/entity/MirrorWhiteTigerEntity.java",
           "src/main/java/net/foxyas/changedaddon/client/renderer/MirrorWhiteTigerRenderer.java"
         ]
-      }
+      },
+      "path": "~/CustomCode/entitys"
     },
     {
       "name": "MirrorWhiteTigerLoot",
