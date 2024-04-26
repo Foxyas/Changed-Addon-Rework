@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.client.renderer;
 
-import net.foxyas.changedaddon.client.model.OrganicSnowLeopardFemaleModel;
+import net.foxyas.changedaddon.client.model.BioSynthSnowLeopardFemaleModel;
 import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
 import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
@@ -18,9 +18,9 @@ import net.minecraft.client.model.HumanoidModel;
 
 import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
 
-public class SnowLeopardFemaleOrganicRenderer extends LatexHumanoidRenderer<SnowLeopardFemaleOrganicEntity, OrganicSnowLeopardFemaleModel, ArmorLatexFemaleCatModel<SnowLeopardFemaleOrganicEntity>> {
+public class SnowLeopardFemaleOrganicRenderer extends LatexHumanoidRenderer<SnowLeopardFemaleOrganicEntity, BioSynthSnowLeopardFemaleModel, ArmorLatexFemaleCatModel<SnowLeopardFemaleOrganicEntity>> {
 	public SnowLeopardFemaleOrganicRenderer(EntityRendererProvider.Context context) {
-		super(context, new OrganicSnowLeopardFemaleModel(context.bakeLayer(OrganicSnowLeopardFemaleModel.LAYER_LOCATION)),
+		super(context, new BioSynthSnowLeopardFemaleModel(context.bakeLayer(BioSynthSnowLeopardFemaleModel.LAYER_LOCATION)),
 				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));

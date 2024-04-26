@@ -18,9 +18,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class OrganicSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopardMaleOrganicEntity> implements LatexHumanoidModelInterface<SnowLeopardMaleOrganicEntity,OrganicSnowLeopardMaleModel> {
+public class BioSynthSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopardMaleOrganicEntity> implements LatexHumanoidModelInterface<SnowLeopardMaleOrganicEntity,BioSynthSnowLeopardMaleModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "organic_snow_leopard_male"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "biosynth_snow_leopard_male"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart Head;
@@ -28,9 +28,9 @@ public class OrganicSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopardM
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
     private final ModelPart Tail;
-    private final LatexAnimator<SnowLeopardMaleOrganicEntity, OrganicSnowLeopardMaleModel> animator;
+    private final LatexAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> animator;
 
-    public OrganicSnowLeopardMaleModel(ModelPart root) {
+    public BioSynthSnowLeopardMaleModel(ModelPart root) {
         super(root);
         this.RightLeg = root.getChild("RightLeg");
         this.LeftLeg = root.getChild("LeftLeg");
@@ -226,7 +226,7 @@ public class OrganicSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopardM
     }
 
     @Override
-    public LatexAnimator<SnowLeopardMaleOrganicEntity, OrganicSnowLeopardMaleModel> getAnimator() {
+    public LatexAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> getAnimator() {
         return animator;
     }
 }

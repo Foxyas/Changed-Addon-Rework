@@ -73,11 +73,6 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<BunyEntity>of(BunyEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(BunyEntity::new)
 
 					.sized(0.7f, 1.93f));
-	public static final RegistryObject<EntityType<SnowLeopardMaleOrganicEntity>> SNOW_LEOPARD_MALE_ORGANIC = register("snow_leopard_male_organic",
-			EntityType.Builder.<SnowLeopardMaleOrganicEntity>of(SnowLeopardMaleOrganicEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
-					.setCustomClientFactory(SnowLeopardMaleOrganicEntity::new)
-
-					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<SnowLeopardFemaleOrganicEntity>> SNOW_LEOPARD_FEMALE_ORGANIC = register("snow_leopard_female_organic",
 			EntityType.Builder.<SnowLeopardFemaleOrganicEntity>of(SnowLeopardFemaleOrganicEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
 					.setCustomClientFactory(SnowLeopardFemaleOrganicEntity::new)
@@ -87,6 +82,11 @@ public class ChangedAddonModEntities {
 			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(KetExperiment009Entity::new).fireImmune().sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<MirrorWhiteTigerEntity>> MIRROR_WHITE_TIGER = register("mirror_white_tiger",
 			EntityType.Builder.<MirrorWhiteTigerEntity>of(MirrorWhiteTigerEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(MirrorWhiteTigerEntity::new)
+
+					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<SnowLeopardMaleOrganicEntity>> SNOW_LEOPARD_MALE_ORGANIC = register("snow_leopard_male_organic",
+			EntityType.Builder.<SnowLeopardMaleOrganicEntity>of(SnowLeopardMaleOrganicEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(SnowLeopardMaleOrganicEntity::new)
 
 					.sized(0.7f, 1.93f));
 
@@ -107,10 +107,10 @@ public class ChangedAddonModEntities {
 			PuroKindEntity.init();
 			PuroKindFemaleEntity.init();
 			BunyEntity.init();
-			SnowLeopardMaleOrganicEntity.init();
 			SnowLeopardFemaleOrganicEntity.init();
 			KetExperiment009Entity.init();
 			MirrorWhiteTigerEntity.init();
+			SnowLeopardMaleOrganicEntity.init();
 		});
 	}
 
@@ -126,9 +126,9 @@ public class ChangedAddonModEntities {
 		event.put(PURO_KIND.get(), PuroKindEntity.createAttributes().build());
 		event.put(PURO_KIND_FEMALE.get(), PuroKindFemaleEntity.createAttributes().build());
 		event.put(BUNY.get(), BunyEntity.createAttributes().build());
-		event.put(SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicEntity.createAttributes().build());
 		event.put(SNOW_LEOPARD_FEMALE_ORGANIC.get(), SnowLeopardFemaleOrganicEntity.createAttributes().build());
 		event.put(KET_EXPERIMENT_009.get(), KetExperiment009Entity.createAttributes().build());
 		event.put(MIRROR_WHITE_TIGER.get(), MirrorWhiteTigerEntity.createAttributes().build());
+		event.put(SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicEntity.createAttributes().build());
 	}
 }

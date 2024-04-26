@@ -238,6 +238,8 @@ public class TransfurTotemEntityRightClickProcedure {
 										}
 									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
 										string = "changed_addon:form_latex_snow_fox/male";
+									} else if ((string).equals("changed_addon:form_ket_experiment_009")) {
+										string = "changed_addon:form_ket_experiment009";
 									}
 									a.getOrCreateTag().putString("form", string);
 									if (world instanceof Level _level) {
@@ -324,6 +326,8 @@ public class TransfurTotemEntityRightClickProcedure {
 										}
 									} else if ((string).equals("changed_addon:form_latex_snow_fox")) {
 										string = "changed_addon:form_latex_snow_fox/male";
+									} else if ((string).equals("changed_addon:form_ket_experiment_009")) {
+										string = "changed_addon:form_ket_experiment009";
 									}
 									b.getOrCreateTag().putString("form", ("" + string));
 									if (world instanceof Level _level) {

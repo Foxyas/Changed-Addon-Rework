@@ -9550,21 +9550,6 @@
       "path": "~/CustomCode/entitys"
     },
     {
-      "name": "SnowLeopardMaleOrganic",
-      "type": "livingentity",
-      "sortid": 459,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "snow_leopard_male_organic",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/client/renderer/SnowLeopardMaleOrganicRenderer.java",
-          "src/main/java/net/foxyas/changedaddon/entity/SnowLeopardMaleOrganicEntity.java"
-        ]
-      },
-      "path": "~/CustomCode/entitys"
-    },
-    {
       "name": "SnowLeopardFemaleOrganic",
       "type": "livingentity",
       "sortid": 460,
@@ -10308,6 +10293,21 @@
         ]
       },
       "path": "~/Entity/Entity Loot"
+    },
+    {
+      "name": "SnowLeopardMaleOrganic",
+      "type": "livingentity",
+      "sortid": 505,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "snow_leopard_male_organic",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/SnowLeopardMaleOrganicRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/SnowLeopardMaleOrganicEntity.java"
+        ]
+      },
+      "path": "~/CustomCode/entitys"
     }
   ],
   "variable_elements": [
@@ -11235,7 +11235,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon Plus",
-    "version": "2.5.6",
+    "version": "2.5.7",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",
