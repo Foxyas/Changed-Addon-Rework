@@ -1,58 +1,20 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
-import net.foxyas.changedaddon.fluid.LitixCamoniaFluidFluid;
-import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
-import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.level.material.WaterFluid;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.event.TickEvent;
-
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.GameType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.sounds.Music;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.sounds.MusicManager;
-import net.minecraft.client.Minecraft;
-
-import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
-import net.foxyas.changedaddon.entity.Experiment009Entity;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
-import net.foxyas.changedaddon.ChangedAddonMod;
-
-import javax.annotation.Nullable;
-
-import java.util.Comparator;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.procedures.Experiment009phase2OnEntityTickUpdateProcedure;
-import net.ltxprogrammer.changed.entity.HairStyle;
-import net.ltxprogrammer.changed.entity.LatexEntity;
-import net.ltxprogrammer.changed.entity.LatexType;
-import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.entity.beast.*;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.level.Level;
@@ -63,17 +25,18 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class KetExperiment009Entity extends LatexEntity implements AquaticEntity {
-	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
+public class Experiment10Entity extends LatexEntity implements GenderedEntity {
+	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.PINK, ServerBossEvent.BossBarOverlay.NOTCHED_12);
 
-	public KetExperiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.KET_EXPERIMENT_009.get(), world);
+	public Experiment10Entity(PlayMessages.SpawnEntity packet, Level world) {
+		this(ChangedAddonModEntities.EXPERIMENT_10.get(), world);
 	}
 
-	public KetExperiment009Entity(EntityType<KetExperiment009Entity> type, Level world) {
+	public Experiment10Entity(EntityType<Experiment10Entity> type, Level world) {
 		super(type, world);
 		this.setAttributes(getAttributes());
 		maxUpStep = 0.6f;
@@ -83,7 +46,7 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((425));
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((300));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(this.getLatexLandSpeed());
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(this.getLatexSwimSpeed());
@@ -95,7 +58,7 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 	}
 	@Override
 	public Color3 getHairColor(int i) {
-		return Color3.getColor("#F1F1F1");
+		return Color3.getColor("#1f1f1f");
 	}
 
 	@Override
@@ -104,7 +67,7 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 	protected boolean targetSelectorTest(LivingEntity livingEntity) {
 		if (livingEntity instanceof Player || livingEntity instanceof ServerPlayer){
 			return true;
-			}
+		}
 		return false;
 	}
 	@Override
@@ -124,12 +87,12 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 
 	@Override
 	public @Nullable List<HairStyle> getValidHairStyles() {
-		return HairStyle.Collection.MALE.getStyles();
+		return HairStyle.Collection.FEMALE.getStyles();
 	}
 
 	@Override
 	public Color3 getDripColor() {
-		return Color3.getColor("#E2E2E2");
+		return Color3.getColor("#181818");
 	}
 
 
@@ -141,7 +104,12 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-
+		this.goalSelector.addGoal(10, new FloatGoal(this){
+			@Override
+			public boolean canUse() {
+				return super.canUse() && false;
+			}
+		});
 	}
 
 	@Override
@@ -228,20 +196,24 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 425);
-		builder = builder.add(Attributes.ARMOR, 40);
+		builder = builder.add(Attributes.MAX_HEALTH, 300);
+		builder = builder.add(Attributes.ARMOR, 20);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 32);
+		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
 		return builder;
 	}
 
+	@Override
+	public Gender getGender() {
+		return Gender.FEMALE;
+	}
 	public boolean isPhase2(){
-		return this.getHealth() <= 0.75 * this.getMaxHealth() ? true : false;
+		return this.getHealth() <= 0.50 * this.getMaxHealth() ? true : false;
 	}
 
-	public void SwimVoid(KetExperiment009Entity entity){
+	public void SwimVoid(Experiment10Entity entity){
 		double motionZ = 0;
 		double deltaZ = 0;
 		double distance = 0;
@@ -273,7 +245,7 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 				entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
 				if (entity.isEyeInFluid(FluidTags.WATER)){
 					entity.setPose(Pose.SWIMMING);
-			 } else if (entity.getPose() == Pose.SWIMMING && !entity.isEyeInFluid(FluidTags.WATER)){
+				} else if (entity.getPose() == Pose.SWIMMING && !entity.isEyeInFluid(FluidTags.WATER)){
 					entity.setPose(Pose.STANDING);
 				}
 			}
@@ -281,11 +253,20 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 			entity.setPose(Pose.STANDING);
 		}
 	}
-
+	public void SetDefense(Experiment10Entity entity){
+		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "ArmorChange", 20, AttributeModifier.Operation.ADDITION);
+		if (entity.isPhase2()){
+			if (!((entity.getAttribute(Attributes.ARMOR).hasModifier(AttibuteChange)))) {
+				entity.getAttribute(Attributes.ARMOR).addTransientModifier(AttibuteChange);
+			}
+		} else {
+			entity.getAttribute(Attributes.ARMOR).removeModifier(AttibuteChange);
+		}
+	}
 	@Override
 	public void baseTick() {
 		super.baseTick();
 		SwimVoid(this);
-		Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
 	}
+
 }

@@ -17,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 
 import net.foxyas.changedaddon.network.TurnOffTransfurMessage;
+import net.foxyas.changedaddon.network.PatKeyMessage;
 import net.foxyas.changedaddon.network.OpengrabescapeguiMessage;
 import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
 import net.foxyas.changedaddon.network.LeapKeyMessage;
@@ -95,6 +96,19 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
+	public static final KeyMapping PAT_KEY = new KeyMapping("key.changed_addon.pat_key", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
+		private boolean isDownOld = false;
+
+		@Override
+		public void setDown(boolean isDown) {
+			super.setDown(isDown);
+			if (isDownOld != isDown && isDown) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyMessage(0, 0));
+				PatKeyMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+			}
+			isDownOld = isDown;
+		}
+	};
 	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
@@ -104,6 +118,7 @@ public class ChangedAddonModKeyMappings {
 		ClientRegistry.registerKeyBinding(DUCT_PRONE);
 		ClientRegistry.registerKeyBinding(LEAP_KEY);
 		ClientRegistry.registerKeyBinding(TURN_OFF_TRANSFUR);
+		ClientRegistry.registerKeyBinding(PAT_KEY);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -116,6 +131,7 @@ public class ChangedAddonModKeyMappings {
 				DUCT_PRONE.consumeClick();
 				LEAP_KEY.consumeClick();
 				TURN_OFF_TRANSFUR.consumeClick();
+				PAT_KEY.consumeClick();
 			}
 		}
 	}

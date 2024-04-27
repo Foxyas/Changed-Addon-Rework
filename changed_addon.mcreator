@@ -9923,6 +9923,7 @@
     {
       "name": "DazedLatexMeteor",
       "type": "restructure",
+      "sortid": 507,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dazed_latex_meteor",
@@ -10308,6 +10309,56 @@
         ]
       },
       "path": "~/CustomCode/entitys"
+    },
+    {
+      "name": "Experiment10",
+      "type": "livingentity",
+      "sortid": 506,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "experiment_10",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/Experiment10Renderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/Experiment10Entity.java"
+        ]
+      }
+    },
+    {
+      "name": "PatKeyOnKeyPressed",
+      "type": "procedure",
+      "sortid": 508,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "pat_key_on_key_pressed",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PatKeyOnKeyPressedProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PatKey",
+      "type": "keybind",
+      "sortid": 509,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "pat_key",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/network/PatKeyMessage.java"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -10644,8 +10695,8 @@
       "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
-      "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
       "gui.changed_addon.bookpagenumber_4.label_in_the_rank_right_mouse_button": "in IV rank (right mouse button)",
+      "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
       "config.changed_addon.changed_addon_configs": "ChangedAddon-Server",
       "gui.changed_addon.tranfur_sounds_gui.label_transfursounds": "TransfurSounds",
       "gui.changed_addon.bookpagenumber_3.label_this_item_can_make_you_back_for": "this item can make you back for human stage",
@@ -10769,6 +10820,7 @@
       "gui.changed_addon.tranfur_sounds_gui.button_r": "Reset",
       "changedaddon.assimilation.when_customtransfur": "Only assimilation is allowed with a special transfur",
       "advancements.unifuser_advancement.title": "A Unifuser?",
+      "item.changed_addon.experiment10_spawn_egg": "Experiment 10 Spawn Egg",
       "gamerule.useNewFriendlyGrab.description": "When Active This gamerule will make the player use the \"New Friendly Grab\" Instead of old WARN this is a W-I-P FEATURE SO USE AT YOUR OWN RISK (warning Right Click Friendly Grab will not work if true ok)",
       "changedaddon.event.grab.when.small": "I\u0027m too small to grab",
       "gui.changed_addon.bookrecipepage_6.label_unifuser": "Unifuser",
@@ -10817,6 +10869,7 @@
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder": "Display Recipe Of Ammonia Powder",
       "death.attack.concience_lose.player": "%1$s lose your concience by %2$s",
       "gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for": "manently losing your humanity, you can craft",
+      "entity.changed_addon.experiment_10": "Experiment 10",
       "config.changed_addon.changed_addon_client_configs": "ChangedAddon-Client",
       "changedaddon.event.grab.when.you.die": "The person who was grabbing you §4Died§r before They could do anything!!",
       "item.changed_addon.transfur_totem": "Latex Totem",
@@ -10870,6 +10923,7 @@
       "gui.changed_addon.bookrecipepage_6.button_close": "Close",
       "gui.changed_addon.book_pagenumber_7.label_ansfur_modes": "-ansfur modes (need Friendly-",
       "block.changed_addon.latex_insulator": "Latex Insulator",
+      "key.changed_addon.pat_key": "Pat ",
       "gui.changed_addon.book_pagenumber_1.label_first_you_have_to_have_a_latex_b": "First, you need to get a latex base it drops from the latex beings or can be cra",
       "item.changed_addon.painite_axe": "Painite Axe",
       "advancements.ammoniapoweradvancement.descr": "Craft a ammonia particle",

@@ -19,6 +19,7 @@ import net.foxyas.changedaddon.client.renderer.LatexSnowFoxRenderer;
 import net.foxyas.changedaddon.client.renderer.LatexSnowFoxFemaleRenderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
+import net.foxyas.changedaddon.client.renderer.Experiment10Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009phase2Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.DazedRenderer;
@@ -42,5 +43,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.KET_EXPERIMENT_009.get(), KetExperiment009Renderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.MIRROR_WHITE_TIGER.get(), MirrorWhiteTigerRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_10.get(), Experiment10Renderer::new);
 	}
 }

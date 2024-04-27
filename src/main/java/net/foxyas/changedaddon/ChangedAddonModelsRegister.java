@@ -22,5 +22,6 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(OrganicSnowLeopardFemaleModel.LAYER_LOCATION, OrganicSnowLeopardFemaleModel::createBodyLayer);
 		event.registerLayerDefinition(KetModel.LAYER_LOCATION, KetModel::createBodyLayer);
 		event.registerLayerDefinition(ModelMirrorWhiteTiger.LAYER_LOCATION, ModelMirrorWhiteTiger::createBodyLayer);
+		event.registerLayerDefinition(Experiment10Model.LAYER_LOCATION, Experiment10Model::createBodyLayer);
 	}
 }
