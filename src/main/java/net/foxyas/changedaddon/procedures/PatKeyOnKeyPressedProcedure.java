@@ -107,7 +107,7 @@ public class PatKeyOnKeyPressedProcedure {
 									randomX = new Random().nextGaussian() * 0.02;
 									randomY = new Random().nextGaussian() * 0.02;
 									randomZ = new Random().nextGaussian() * 0.02;
-									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.2, 0.3, 0.2);
+									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.5, 0.3, 0.5);
 								}
 								if (entity instanceof Player _player && !_player.level.isClientSide())
 									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
@@ -196,7 +196,7 @@ public class PatKeyOnKeyPressedProcedure {
 									randomX = new Random().nextGaussian() * 0.02;
 									randomY = new Random().nextGaussian() * 0.02;
 									randomZ = new Random().nextGaussian() * 0.02;
-									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.2, 0.3, 0.2);
+									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.5, 0.3, 0.5);
 								}
 								if (entity instanceof Player _player && !_player.level.isClientSide())
 									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
@@ -230,7 +230,7 @@ public class PatKeyOnKeyPressedProcedure {
 									randomX = new Random().nextGaussian() * 0.02;
 									randomY = new Random().nextGaussian() * 0.02;
 									randomZ = new Random().nextGaussian() * 0.02;
-									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.2, 0.3, 0.2);
+									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.5, 0.3, 0.5);
 								}
 								if (entity instanceof Player _player && !_player.level.isClientSide())
 									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
