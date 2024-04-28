@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  2",
+    " 4 ",
+    "6  "
+  ],
+  "key": {
+    "2": {
+      "item": "minecraft:diamond"
+    },
+    "4": {
+      "item": "changed_addon:painite"
+    },
+    "6": {
+      "item": "changed:tsc_baton"
+    }
+  },
+  "result": {
+    "item": "changed_addon:electric_katana",
+    "count": 1
+  }
+}

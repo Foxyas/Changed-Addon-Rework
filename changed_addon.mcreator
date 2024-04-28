@@ -10359,6 +10359,95 @@
           "src/main/java/net/foxyas/changedaddon/network/PatKeyMessage.java"
         ]
       }
+    },
+    {
+      "name": "WitherSkill",
+      "type": "procedure",
+      "sortid": 511,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "wither_skill",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/WitherSkillProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "immediatesourceentity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ElectricKatana",
+      "type": "tool",
+      "sortid": 512,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "electric_katana",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/item/electric_katana.json",
+          "src/main/java/net/foxyas/changedaddon/item/ElectricKatanaItem.java"
+        ]
+      }
+    },
+    {
+      "name": "ElectricKatanaEntitySwingsItem",
+      "type": "procedure",
+      "sortid": 513,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "electric_katana_entity_swings_item",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ElectricKatanaEntitySwingsItemProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ElectricKatanaLivingEntityIsHitWithTool",
+      "type": "procedure",
+      "sortid": 514,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "electric_katana_living_entity_is_hit_with_tool",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "sourceentity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ElectricKatanaRecipe",
+      "type": "recipe",
+      "sortid": 515,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "electric_katana_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/electric_katana_recipe.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -10717,6 +10806,7 @@
       "gui.changed_addon.bookrecipepage_8.label_s": "S",
       "item.changed_addon.empty_spray": "Empty Spray",
       "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
+      "item.changed_addon.electric_katana": "Electric Katana",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.book_pagenumber_6.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
@@ -10860,7 +10950,6 @@
       "gui.changed_addon.tranfur_sounds_gui.button_5": "howl",
       "entity.changed_addon.buny": "Bnuy",
       "gui.changed_addon.bookrecipepage_6.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
-      "item.changed_addon.ket_experiment009_spawn_egg": "Ket Experiment 009 Spawn Egg",
       "gui.changed_addon.bookrecipepage_6.label_16": "16",
       "gui.changed_addon.book_recipe_page_11.button_back": "Back",
       "entity.changed_addon.latex_puro_kind_male": "Puro Kind Male",
@@ -10924,6 +11013,7 @@
       "gui.changed_addon.book_pagenumber_7.label_ansfur_modes": "-ansfur modes (need Friendly-",
       "block.changed_addon.latex_insulator": "Latex Insulator",
       "key.changed_addon.pat_key": "Pat ",
+      "item.changed_addon.ket_experiment_009_spawn_egg": "Ket Experiment 009 Spawn Egg",
       "gui.changed_addon.book_pagenumber_1.label_first_you_have_to_have_a_latex_b": "First, you need to get a latex base it drops from the latex beings or can be cra",
       "item.changed_addon.painite_axe": "Painite Axe",
       "advancements.ammoniapoweradvancement.descr": "Craft a ammonia particle",

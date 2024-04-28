@@ -51,6 +51,7 @@ import net.foxyas.changedaddon.item.Experiment009dnaItem;
 import net.foxyas.changedaddon.item.Experiment009SpawneggItem;
 import net.foxyas.changedaddon.item.Experiment009Phase2RecordItem;
 import net.foxyas.changedaddon.item.EmptySprayItem;
+import net.foxyas.changedaddon.item.ElectricKatanaItem;
 import net.foxyas.changedaddon.item.DevitemItem;
 import net.foxyas.changedaddon.item.Devitem5Item;
 import net.foxyas.changedaddon.item.Devitem3Item;
@@ -136,6 +137,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
 	public static final RegistryObject<Item> DEVITEM_6 = REGISTRY.register("devitem_6", () -> new DEVITEM6Item());
 	public static final RegistryObject<Item> CATALY_FUSER = block(ChangedAddonModBlocks.CATALY_FUSER, null);
+	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

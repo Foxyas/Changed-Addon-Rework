@@ -1,0 +1,40 @@
+{
+  "_fv": 47,
+  "_type": "tool",
+  "definition": {
+    "toolType": "Sword",
+    "renderType": 1,
+    "texture": "blue_katana_energy",
+    "customModelName": "laser_katana:default",
+    "name": "Electric Katana",
+    "specialInfo": [],
+    "creativeTab": {
+      "value": "COMBAT"
+    },
+    "harvestLevel": 1,
+    "efficiency": 4.0,
+    "attackSpeed": 1.8,
+    "enchantability": 10,
+    "damageVsEntity": 10.0,
+    "usageCount": 1324,
+    "blocksAffected": [],
+    "hasGlow": false,
+    "repairItems": [
+      {
+        "value": "CUSTOM:ElectricKatana"
+      },
+      {
+        "value": "TAG:changed_addon:tsc_katana_repair"
+      }
+    ],
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "onEntityHitWith": {
+      "name": "ElectricKatanaLivingEntityIsHitWithTool"
+    },
+    "onEntitySwing": {
+      "name": "ElectricKatanaEntitySwingsItem"
+    }
+  }
+}

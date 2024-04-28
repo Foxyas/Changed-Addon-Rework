@@ -63,6 +63,7 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 
 	@Override
 	public int getTicksRequiredToFreeze() { return 1000; }
+	
 	@Override
 	protected boolean targetSelectorTest(LivingEntity livingEntity) {
 		if (livingEntity instanceof Player || livingEntity instanceof ServerPlayer){
@@ -70,6 +71,15 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 		}
 		return false;
 	}
+	
+    @Override
+    public void checkDespawn() {
+        if(true){
+        	return;
+        }
+        super.checkDespawn();
+    }
+
 	@Override
 	public LatexType getLatexType() {
 		return LatexType.NEUTRAL;

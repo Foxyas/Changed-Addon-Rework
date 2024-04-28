@@ -1,0 +1,8 @@
+{
+  "parent": "changed_addon:custom/laser_katana",
+  "textures": {
+    "1": "changed_addon:blocks/base_energy_katana",
+    "2": "changed_addon:blocks/blue_katana_energy",
+    "particle": "changed_addon:items/blue_katana_energy"
+  }
+}

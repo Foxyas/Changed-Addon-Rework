@@ -81,9 +81,44 @@ public class PatKeyOnKeyPressedProcedure {
 			}
 		}.checkGamemode(entity))) {
 			if (!(entityTarget == null)) {
+				if (entityTarget instanceof Experiment10Entity || entityTarget instanceof KetExperiment009Entity) {
+					if (new Object() {
+						public boolean checkGamemode(Entity _ent) {
+							if (_ent instanceof ServerPlayer _serverPlayer) {
+								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+							} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+							}
+							return false;
+						}
+					}.checkGamemode(entity)) {
+						if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+							Canwork = true;
+							if (entity instanceof LivingEntity _entity)
+								_entity.swing(InteractionHand.MAIN_HAND, true);
+						} else if (!((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())
+								&& (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+							Canwork = true;
+							if (entity instanceof LivingEntity _entity)
+								_entity.swing(InteractionHand.OFF_HAND, true);
+						} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()
+								&& (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+							Canwork = true;
+							if (entity instanceof LivingEntity _entity)
+								_entity.swing(InteractionHand.MAIN_HAND, true);
+						} else {
+							Canwork = false;
+						}
+						if (Canwork) {
+							if (entity instanceof Player _player && !_player.level.isClientSide())
+								_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
+						}
+					}
+				}
 				if (entityTarget instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
 					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-						if (!(entityTarget instanceof Experiment10Entity) || !(entityTarget instanceof KetExperiment009Entity)) {
+						if (!(entityTarget instanceof Experiment10Entity) && !(entityTarget instanceof KetExperiment009Entity)) {
 							if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
 								Canwork = true;
 								if (entity instanceof LivingEntity _entity)
@@ -108,18 +143,8 @@ public class PatKeyOnKeyPressedProcedure {
 									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
 							}
 						}
-					} else if (entityTarget instanceof Experiment10Entity || entityTarget instanceof KetExperiment009Entity) {
-						if (new Object() {
-							public boolean checkGamemode(Entity _ent) {
-								if (_ent instanceof ServerPlayer _serverPlayer) {
-									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-								}
-								return false;
-							}
-						}.checkGamemode(entity)) {
+					} else if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
+						if (!(entityTarget instanceof Experiment10Entity) && !(entityTarget instanceof KetExperiment009Entity)) {
 							if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
 								Canwork = true;
 								if (entity instanceof LivingEntity _entity)
@@ -137,8 +162,12 @@ public class PatKeyOnKeyPressedProcedure {
 							} else {
 								Canwork = false;
 							}
-							if (entity instanceof Player _player && !_player.level.isClientSide())
-								_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
+							if (Canwork) {
+								if (world instanceof ServerLevel _level)
+									_level.sendParticles(ParticleTypes.HEART, (entityTarget.getX()), (entityTarget.getY() + 1), (entityTarget.getZ()), 7, 0.3, 0.3, 0.3, 1);
+								if (entity instanceof Player _player && !_player.level.isClientSide())
+									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
+							}
 						}
 					}
 				}
