@@ -39,8 +39,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 		public static final RegistryObject<Item> MIRROR_WHITE_TIGER = REGISTRY.register("mirror_white_tiger_spawn_egg",
 			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC, Color3.getColor("#FFFFFF").toInt(), Color3.getColor("#ACACAC").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
-
-		public static final RegistryObject<Item> EXP10_SPAWN_EGG = REGISTRY.register("experiment10_spawn_egg",
+		public static final RegistryObject<Item> EXP10_SPAWN_EGG = REGISTRY.register("experiment_10_spawn_egg",
 			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_10, Color3.getColor("#181818").toInt(), Color3.getColor("#ed1c24").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 		public static final RegistryObject<Item> KET_SPAWN_EGG = REGISTRY.register("ket_experiment009_spawn_egg",

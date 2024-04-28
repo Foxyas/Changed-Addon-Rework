@@ -267,6 +267,7 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 	public void baseTick() {
 		super.baseTick();
 		SwimVoid(this);
+		SetDefense(this);
 	}
 
 }
