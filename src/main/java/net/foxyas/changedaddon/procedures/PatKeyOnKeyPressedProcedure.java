@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
@@ -24,8 +25,6 @@ import net.minecraft.client.Minecraft;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
-
-import java.util.Random;
 
 public class PatKeyOnKeyPressedProcedure {
 	public static void execute(LevelAccessor world, Entity entity) {
@@ -103,12 +102,8 @@ public class PatKeyOnKeyPressedProcedure {
 								Canwork = false;
 							}
 							if (Canwork) {
-								for (int index0 = 0; index0 < 7; index0++) {
-									randomX = new Random().nextGaussian() * 0.02;
-									randomY = new Random().nextGaussian() * 0.02;
-									randomZ = new Random().nextGaussian() * 0.02;
-									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.5, 0.3, 0.5);
-								}
+								if (world instanceof ServerLevel _level)
+									_level.sendParticles(ParticleTypes.HEART, (entityTarget.getX()), (entityTarget.getY() + 1), (entityTarget.getZ()), 7, 0.3, 0.3, 0.3, 1);
 								if (entity instanceof Player _player && !_player.level.isClientSide())
 									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
 							}
@@ -192,12 +187,8 @@ public class PatKeyOnKeyPressedProcedure {
 								Canwork = false;
 							}
 							if (Canwork) {
-								for (int index1 = 0; index1 < 7; index1++) {
-									randomX = new Random().nextGaussian() * 0.02;
-									randomY = new Random().nextGaussian() * 0.02;
-									randomZ = new Random().nextGaussian() * 0.02;
-									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.5, 0.3, 0.5);
-								}
+								if (world instanceof ServerLevel _level)
+									_level.sendParticles(ParticleTypes.HEART, (entityTarget.getX()), (entityTarget.getY() + 1), (entityTarget.getZ()), 7, 0.3, 0.3, 0.3, 1);
 								if (entity instanceof Player _player && !_player.level.isClientSide())
 									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
 								if (entityTarget instanceof Player _player && !_player.level.isClientSide())
@@ -226,12 +217,8 @@ public class PatKeyOnKeyPressedProcedure {
 								Canwork = false;
 							}
 							if (Canwork) {
-								for (int index2 = 0; index2 < 7; index2++) {
-									randomX = new Random().nextGaussian() * 0.02;
-									randomY = new Random().nextGaussian() * 0.02;
-									randomZ = new Random().nextGaussian() * 0.02;
-									world.addParticle(ParticleTypes.HEART, (entityTarget.getX() + new Random().nextGaussian() * 0), (entityTarget.getY() + 1), (entityTarget.getZ() + new Random().nextGaussian() * 0), 0.5, 0.3, 0.5);
-								}
+								if (world instanceof ServerLevel _level)
+									_level.sendParticles(ParticleTypes.HEART, (entityTarget.getX()), (entityTarget.getY() + 1), (entityTarget.getZ()), 7, 0.3, 0.3, 0.3, 1);
 								if (entity instanceof Player _player && !_player.level.isClientSide())
 									_player.displayClientMessage(new TextComponent(("You Pat " + entityTarget.getDisplayName().getString())), true);
 								if (entityTarget instanceof Player _player && !_player.level.isClientSide())
