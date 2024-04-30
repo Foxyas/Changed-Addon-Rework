@@ -3,11 +3,11 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "experiment_009_dna",
+    "texture": "reddna",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "Experiment 009 DNA",
+    "name": "Experiment 10 DNA",
     "rarity": "RARE",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
@@ -27,7 +27,7 @@
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
     "specialInfo": [
-      "§3A Strange Orb..."
+      "§4A Strange Orb..."
     ],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",

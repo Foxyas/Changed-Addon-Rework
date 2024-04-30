@@ -46,6 +46,7 @@ import net.foxyas.changedaddon.item.LaethinSyringeItem;
 import net.foxyas.changedaddon.item.LaethinItem;
 import net.foxyas.changedaddon.item.InpureammoniaItem;
 import net.foxyas.changedaddon.item.HazardSuitItem;
+import net.foxyas.changedaddon.item.Experiment10DnaItem;
 import net.foxyas.changedaddon.item.Experiment009recordItem;
 import net.foxyas.changedaddon.item.Experiment009dnaItem;
 import net.foxyas.changedaddon.item.Experiment009SpawneggItem;
@@ -63,6 +64,7 @@ import net.foxyas.changedaddon.item.DEVITEM6Item;
 import net.foxyas.changedaddon.item.ChangedbookItem;
 import net.foxyas.changedaddon.item.CatlyzerblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.CatalyzeddnaItem;
+import net.foxyas.changedaddon.item.BossExperiment10SpawnEggItem;
 import net.foxyas.changedaddon.item.AmmoniaparticleItem;
 import net.foxyas.changedaddon.item.AmmoniaParticlesJeiIllustrativeItem;
 import net.foxyas.changedaddon.item.AmmoniaItem;
@@ -138,6 +140,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> DEVITEM_6 = REGISTRY.register("devitem_6", () -> new DEVITEM6Item());
 	public static final RegistryObject<Item> CATALY_FUSER = block(ChangedAddonModBlocks.CATALY_FUSER, null);
 	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
+	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
+	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

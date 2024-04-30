@@ -13,14 +13,14 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 import java.util.List;
 
-public class Experiment009dnaItem extends Item {
-	public Experiment009dnaItem() {
+public class Experiment10DnaItem extends Item {
+	public Experiment10DnaItem() {
 		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).fireResistant().rarity(Rarity.RARE));
 	}
 
 	@Override
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TextComponent("\u00A73A Strange Orb..."));
+		list.add(new TextComponent("\u00A74A Strange Orb..."));
 	}
 }
