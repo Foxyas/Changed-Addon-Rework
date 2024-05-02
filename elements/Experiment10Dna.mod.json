@@ -3,11 +3,11 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "reddna",
+    "texture": "experiment_10_dna",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "Experiment 10 DNA",
+    "name": "§4Experiment 10 DNA",
     "rarity": "RARE",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"

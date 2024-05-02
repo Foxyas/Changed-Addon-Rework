@@ -1,0 +1,34 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+     {
+      "item": "changed_addon:experiment_10_dna"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    },
+    {
+      "item": "minecraft:nether_star"
+    },
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "changed_addon:painite"
+    },
+    {
+      "item": "minecraft:red_dye"
+    },
+    {
+      "item": "minecraft:black_dye"
+    }
+  ],
+  "gendered": false,
+  "form": "changed_addon:form_experiment10"
+}

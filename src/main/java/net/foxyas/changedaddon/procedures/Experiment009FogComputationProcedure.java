@@ -112,11 +112,6 @@ public class Experiment009FogComputationProcedure {
 							_renderFogEvent.setFarPlaneDistance((float) distance);
 						}
 					}
-					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-						_fogColors.setRed(255 / 255.0F);
-						_fogColors.setGreen(0 / 255.0F);
-						_fogColors.setBlue(0 / 255.0F);
-					}
 				}
 			}
 			if (!(((Entity) world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
@@ -154,11 +149,6 @@ public class Experiment009FogComputationProcedure {
 							_renderFogEvent.setNearPlaneDistance(1);
 							_renderFogEvent.setFarPlaneDistance((float) distance);
 						}
-					}
-					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-						_fogColors.setRed(0 / 255.0F);
-						_fogColors.setGreen(0 / 255.0F);
-						_fogColors.setBlue(0 / 255.0F);
 					}
 				}
 			}
@@ -198,11 +188,6 @@ public class Experiment009FogComputationProcedure {
 							_renderFogEvent.setFarPlaneDistance((float) distance);
 						}
 					}
-					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-						_fogColors.setRed(0 / 255.0F);
-						_fogColors.setGreen(0 / 255.0F);
-						_fogColors.setBlue(0 / 255.0F);
-					}
 				}
 			}
 			if (!(((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
@@ -240,11 +225,6 @@ public class Experiment009FogComputationProcedure {
 							_renderFogEvent.setNearPlaneDistance(1);
 							_renderFogEvent.setFarPlaneDistance((float) distance);
 						}
-					}
-					if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-						_fogColors.setRed(0 / 255.0F);
-						_fogColors.setGreen(0 / 255.0F);
-						_fogColors.setBlue(0 / 255.0F);
 					}
 				}
 			}

@@ -10322,7 +10322,8 @@
           "src/main/java/net/foxyas/changedaddon/client/renderer/Experiment10Renderer.java",
           "src/main/java/net/foxyas/changedaddon/entity/Experiment10Entity.java"
         ]
-      }
+      },
+      "path": "~/CustomCode/entitys"
     },
     {
       "name": "PatKeyOnKeyPressed",
@@ -10345,7 +10346,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "PatKey",
@@ -10358,7 +10360,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/network/PatKeyMessage.java"
         ]
-      }
+      },
+      "path": "~/Keybinds"
     },
     {
       "name": "WitherSkill",
@@ -10381,7 +10384,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "ElectricKatana",
@@ -10395,7 +10399,8 @@
           "src/main/resources/assets/changed_addon/models/item/electric_katana.json",
           "src/main/java/net/foxyas/changedaddon/item/ElectricKatanaItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "ElectricKatanaEntitySwingsItem",
@@ -10414,7 +10419,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "ElectricKatanaLivingEntityIsHitWithTool",
@@ -10434,7 +10440,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "ElectricKatanaRecipe",
@@ -10447,7 +10454,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/electric_katana_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "Experiment10SpawnEggRightclickedOnBlock",
@@ -10490,7 +10498,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Experiment10Dna",
@@ -10504,7 +10513,8 @@
           "src/main/resources/assets/changed_addon/models/item/experiment_10_dna.json",
           "src/main/java/net/foxyas/changedaddon/item/Experiment10DnaItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Exp10SpawnEggRecipe",
@@ -10517,7 +10527,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/exp_10_spawn_egg_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "BossExperiment10SpawnEgg",
@@ -10531,7 +10542,8 @@
           "src/main/resources/assets/changed_addon/models/item/boss_experiment_10_spawn_egg.json",
           "src/main/java/net/foxyas/changedaddon/item/BossExperiment10SpawnEggItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Experiment10loot",
@@ -10543,6 +10555,60 @@
       "metadata": {
         "files": [
           "src/main/resources/data/changed_addon/loot_tables/entities/experiment_10.json"
+        ]
+      },
+      "path": "~/Entity/Entity Loot"
+    },
+    {
+      "name": "PatAblesEntitys",
+      "type": "tag",
+      "sortid": 522,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "pat_ables_entitys",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/entity_types/patable_entitys.json"
+        ]
+      },
+      "path": "~/Tags"
+    },
+    {
+      "name": "Experiment10FogColorProcess",
+      "type": "procedure",
+      "sortid": 523,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "experiment_10_fog_color_process",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Experiment10FogColorProcessProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "viewport",
+            "type": "viewport"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
         ]
       }
     }
@@ -11140,7 +11206,7 @@
       "itemGroup.tabchanged_addon": "Changed Addon Plus",
       "gui.changed_addon.foxyas_gui_2.button_deal": "deal",
       "gamerule.changedAddonOrganicBuff.description": "Enable or Desable the Organic Buff of Changed Addon",
-      "item.changed_addon.experiment_10_dna": "Experiment 10 DNA",
+      "item.changed_addon.experiment_10_dna": "§4Experiment 10 DNA",
       "advancements.organic_transfur_advancement.descr": "Transfur yourself into a organic form",
       "gui.changed_addon.bookrecipepage_10.label_s_seeds": "S \u003d ANY SEEDS",
       "gui.changed_addon.unifusergui.tooltip_place_a_syringe_with_dna": "Place a Syringe with DNA",

@@ -1,0 +1,33 @@
+{
+  "_fv": 47,
+  "_type": "tag",
+  "definition": {
+    "type": "Entities",
+    "items": [],
+    "blocks": [],
+    "functions": [],
+    "entities": [
+      {
+        "value": "EntityCat"
+      },
+      {
+        "value": "EntityWolf"
+      },
+      {
+        "value": "EntityParrot"
+      },
+      {
+        "value": "EntityFox"
+      },
+      {
+        "value": "EntityOcelot"
+      },
+      {
+        "value": "EntityRabbit"
+      }
+    ],
+    "biomes": [],
+    "name": "patable_entitys",
+    "namespace": "mod"
+  }
+}
