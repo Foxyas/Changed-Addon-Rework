@@ -56,5 +56,14 @@
         "stream": false
       }
     ]
+  },
+  "experiment10_theme": {
+    "subtitle": "subtitles.experiment10_theme",
+    "sounds": [
+      {
+        "name": "changed_addon:exp10_theme",
+        "stream": false
+      }
+    ]
   }
 }

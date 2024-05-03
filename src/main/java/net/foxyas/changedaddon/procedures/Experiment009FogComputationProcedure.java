@@ -12,13 +12,16 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.Minecraft;
 
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
@@ -76,6 +79,26 @@ public class Experiment009FogComputationProcedure {
 				return false;
 			}
 		}.checkGamemode(entity))) {
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.EXPERIMENT_009DNA.get()
+					|| (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.EXPERIMENT_009DNA.get()) {
+				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+					_renderFogEvent.setFogShape(FogShape.SPHERE);
+				}
+				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+					_renderFogEvent.setNearPlaneDistance(1);
+					_renderFogEvent.setFarPlaneDistance(10);
+				}
+			}
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.EXPERIMENT_10_DNA.get()
+					|| (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.EXPERIMENT_10_DNA.get()) {
+				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+					_renderFogEvent.setFogShape(FogShape.SPHERE);
+				}
+				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
+					_renderFogEvent.setNearPlaneDistance(1);
+					_renderFogEvent.setFarPlaneDistance(10);
+				}
+			}
 			if (!(((Entity) world.getEntitiesOfClass(Experiment10Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
 				Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 					return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));

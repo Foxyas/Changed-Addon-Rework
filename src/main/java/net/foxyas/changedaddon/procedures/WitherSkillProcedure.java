@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 
+import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 
 import javax.annotation.Nullable;
@@ -33,12 +34,19 @@ public class WitherSkillProcedure {
 			return;
 		Entity a2 = null;
 		a2 = immediatesourceentity;
+		a2 = immediatesourceentity;
 		if (immediatesourceentity instanceof Experiment10Entity a && a.isPhase2()) {
 			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 				_entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 2, false, true));
-		} else {
+		} else if (immediatesourceentity instanceof Experiment10Entity a && !a.isPhase2()) {
 			if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 				_entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 0, false, true));
+		}
+		if ((immediatesourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
+			if (((immediatesourceentity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_experiment10")) {
+				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+					_entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 0, false, true));
+			}
 		}
 	}
 }

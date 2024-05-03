@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:purple_dye"
+    },
+    "title": {
+      "translate": "advancements.hazy_purple.title"
+    },
+    "description": {
+      "translate": "advancements.hazy_purple.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hazy_purple": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 2000
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}
