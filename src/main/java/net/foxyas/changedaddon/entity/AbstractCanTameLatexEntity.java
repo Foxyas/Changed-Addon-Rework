@@ -13,6 +13,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.world.InteractionHand;
@@ -173,14 +174,9 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
                 if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
                     itemstack.shrink(1);
                     this.heal(2.0F);
-                    ParticleOptions particleoptions = ParticleTypes.HEART;
-        	        for(int i = 0; i < 4; ++i) {
-            		double d0 = this.random.nextGaussian() * 0.02D;
-            		double d1 = this.random.nextGaussian() * 0.02D;
-            		double d2 = this.random.nextGaussian() * 0.02D;
-            		this.level.addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
-     				} //Spawn Heal Particles
-
+                    if (this.level instanceof ServerLevel _level){
+                        _level.sendParticles(ParticleTypes.HEART, (this.getX()), (this.getY() + 1), (this.getZ()), 7, 0.3, 0.3, 0.3, 1); //Spawn Heal Particles
+                    }
                     this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
                     return InteractionResult.SUCCESS;
                 } else {

@@ -22,6 +22,9 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AddonLatexVariant {
@@ -57,7 +60,7 @@ public class AddonLatexVariant {
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
             .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).transfurMode(TransfurMode.NONE).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
     public static final LatexVariant<Experiment10Entity> EXPERIMENT_10_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
-            .groundSpeed(1.17F).swimSpeed(1.15F).reducedFall().jumpStrength(1.5F).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_experiment10")));
+            .groundSpeed(1.17F).swimSpeed(1.15F).reducedFall().jumpStrength(1.5F).transfurMode(TransfurMode.NONE).scares(List.of(EnderMan.class,WitherSkeleton.class,Creeper.class, AbstractGolem.class,Piglin.class,PiglinBrute.class)).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_experiment_10")));
 
     //Boss Transfurs
     public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);

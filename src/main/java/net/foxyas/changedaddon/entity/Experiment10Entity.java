@@ -3,13 +3,17 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -18,6 +22,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -30,7 +35,8 @@ import java.util.UUID;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment10Entity extends LatexEntity implements GenderedEntity {
-	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.PINK, ServerBossEvent.BossBarOverlay.NOTCHED_12);
+	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.PINK, ServerBossEvent.BossBarOverlay.NOTCHED_6);
+	private float TpCooldown;
 
 	public Experiment10Entity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.EXPERIMENT_10.get(), world);
@@ -46,11 +52,11 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((300));
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(this.getLatexLandSpeed());
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(this.getLatexSwimSpeed());
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(10);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
@@ -208,7 +214,7 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 300);
 		builder = builder.add(Attributes.ARMOR, 20);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 32);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
@@ -223,6 +229,17 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 		return this.getHealth() <= 0.50 * this.getMaxHealth() ? true : false;
 	}
 
+	public void readAdditionalSaveData(CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains("Tp_Cooldown"))
+			TpCooldown = tag.getFloat("Tp_Cooldown");
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putFloat("Tp_Cooldown",TpCooldown);
+	}
 	public void SwimVoid(Experiment10Entity entity){
 		double motionZ = 0;
 		double deltaZ = 0;
@@ -265,19 +282,85 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 	}
 	public void SetDefense(Experiment10Entity entity){
 		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "ArmorChange", 20, AttributeModifier.Operation.ADDITION);
+		AttributeModifier AttibuteDefenseChange = new AttributeModifier(UUID.fromString("10-10-0-0-0"), "ArmorChange", 0.7, AttributeModifier.Operation.MULTIPLY_BASE);
 		if (entity.isPhase2()){
 			if (!((entity.getAttribute(Attributes.ARMOR).hasModifier(AttibuteChange)))) {
 				entity.getAttribute(Attributes.ARMOR).addTransientModifier(AttibuteChange);
 			}
+
+		if (!((entity.getAttribute(Attributes.ARMOR_TOUGHNESS).hasModifier(AttibuteDefenseChange)))) {
+			entity.getAttribute(Attributes.ARMOR_TOUGHNESS).addTransientModifier(AttibuteDefenseChange);
+		}
+
 		} else {
 			entity.getAttribute(Attributes.ARMOR).removeModifier(AttibuteChange);
+			entity.getAttribute(Attributes.ARMOR_TOUGHNESS).removeModifier(AttibuteDefenseChange);
 		}
 	}
+
+	public void SetAttack(Experiment10Entity entity){
+		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Attack", 0.6667, AttributeModifier.Operation.MULTIPLY_BASE);
+		if (entity.isPhase2()){
+			if (!((entity.getAttribute(Attributes.ATTACK_DAMAGE).hasModifier(AttibuteChange)))) {
+				entity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(AttibuteChange);
+			}
+		} else {
+			entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(AttibuteChange);
+		}
+	}
+	
+	public void TpEntity(Experiment10Entity entity){
+		double deltaZ;
+		double distance;
+		double deltaX;
+		double deltaY;
+
+		if (entity.getTarget() == null) {
+			return; //stop if target = @null
+		}
+
+
+
+		Entity Target = entity.getTarget();
+		LivingEntity Targets = entity.getLastHurtByMob();
+		deltaX = Target.getX() - entity.getX();
+		deltaY = Target.getY() - entity.getY();
+		deltaZ = Target.getZ() - entity.getZ();
+		distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+
+		if (TpCooldown == 0) {
+			if(distance > 3) {
+				if (entity.getLastHurtByMob() == Target) {
+					entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
+					this.level.playLocalSound(entity.getX(),entity.getY(),entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE,10,1,true);
+					TpCooldown = 40;
+				} else {
+					entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
+					if(Targets != null)
+					{
+					entity.setTarget(Targets);
+					}
+					this.level.playLocalSound(entity.getX(),entity.getY(),entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE,10,1,true);
+					TpCooldown = 40;
+				}
+
+				/*if((TpCooldown != 0)){
+					TpCooldown -= 0.5f;
+				}*/
+			}
+		} else {
+			TpCooldown -= 0.5f;
+		}
+	}
+
+
 	@Override
 	public void baseTick() {
 		super.baseTick();
 		SwimVoid(this);
 		SetDefense(this);
+		SetAttack(this);
+		TpEntity(this);
 	}
 
 }
