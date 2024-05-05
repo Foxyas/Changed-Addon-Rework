@@ -11,6 +11,7 @@ import net.minecraftforge.api.distmarker.Dist;
 
 import net.foxyas.changedaddon.client.model.Modelsyringe_model;
 import net.foxyas.changedaddon.client.model.Modeljack_model;
+import net.foxyas.changedaddon.client.model.Modelempty_model;
 import net.foxyas.changedaddon.client.model.Modelcustom_model;
 import net.foxyas.changedaddon.client.model.ModelSyringe_projectile;
 import net.foxyas.changedaddon.client.model.ModelProtoTypeMob;
@@ -33,6 +34,7 @@ public class ChangedAddonModModels {
 		event.registerLayerDefinition(ModelDudes_e_custom.LAYER_LOCATION, ModelDudes_e_custom::createBodyLayer);
 		event.registerLayerDefinition(Modeljack_model.LAYER_LOCATION, Modeljack_model::createBodyLayer);
 		event.registerLayerDefinition(ModelDudes_e_Model.LAYER_LOCATION, ModelDudes_e_Model::createBodyLayer);
+		event.registerLayerDefinition(Modelempty_model.LAYER_LOCATION, Modelempty_model::createBodyLayer);
 		event.registerLayerDefinition(ModelFoxyasModel.LAYER_LOCATION, ModelFoxyasModel::createBodyLayer);
 		event.registerLayerDefinition(ModelHyper_Flower.LAYER_LOCATION, ModelHyper_Flower::createBodyLayer);
 		event.registerLayerDefinition(ModelSyringe_projectile.LAYER_LOCATION, ModelSyringe_projectile::createBodyLayer);
