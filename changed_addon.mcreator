@@ -10627,7 +10627,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/hazy_purple.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "GiveHazyPurpleAdvabcement",
