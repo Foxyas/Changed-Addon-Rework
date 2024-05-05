@@ -37,7 +37,7 @@ public class ElectricKatanaItem extends SwordItem {
 			}
 
 			public int getEnchantmentValue() {
-				return 10;
+				return 30;
 			}
 
 			public Ingredient getRepairIngredient() {

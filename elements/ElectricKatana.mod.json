@@ -6,7 +6,7 @@
     "renderType": 1,
     "texture": "blue_katana_energy",
     "customModelName": "laser_katana:default",
-    "name": "Electric Katana",
+    "name": "§bElectric Katana",
     "specialInfo": [],
     "creativeTab": {
       "value": "COMBAT"
@@ -14,7 +14,7 @@
     "harvestLevel": 1,
     "efficiency": 4.0,
     "attackSpeed": 1.8,
-    "enchantability": 10,
+    "enchantability": 30,
     "damageVsEntity": 10.0,
     "usageCount": 1324,
     "blocksAffected": [],

@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerPlayerGameMode;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -335,11 +337,15 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 					this.level.playLocalSound(entity.getX(),entity.getY(),entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE,10,1,true);
 					TpCooldown = 40;
 				} else {
-					entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
-					if(Targets != null)
+					if(Targets != null && !(Targets instanceof ServerPlayer))
 					{
 					entity.setTarget(Targets);
-					}
+					} else if (Targets != null && Targets instanceof ServerPlayer serverPlayer) {
+						if (serverPlayer.gameMode.getGameModeForPlayer() != GameType.CREATIVE && serverPlayer.gameMode.getGameModeForPlayer() != GameType.SPECTATOR){
+							entity.setTarget(Targets);
+						}
+					}// Check if the entity in not null and is instance of server player if is will check if the gametype and if is not Creative and Spectator return true
+					entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
 					this.level.playLocalSound(entity.getX(),entity.getY(),entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE,10,1,true);
 					TpCooldown = 40;
 				}
