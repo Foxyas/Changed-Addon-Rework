@@ -224,11 +224,11 @@ public class PatKeyOnKeyPressedProcedure {
 								if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_exp2")
 										&& !((entityTarget.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_exp2")) {
 									if (entityTarget instanceof LivingEntity _entity && !_entity.level.isClientSide())
-										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 120, 0, false, false));
+										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 								} else if (((entityTarget.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_exp2")
 										&& !((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_exp2")) {
 									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 120, 0, false, false));
+										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 								}
 								if (world instanceof ServerLevel _level)
 									_level.sendParticles(ParticleTypes.HEART, (entityTarget.getX()), (entityTarget.getY() + 1), (entityTarget.getZ()), 7, 0.3, 0.3, 0.3, 1);
