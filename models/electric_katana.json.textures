@@ -1,0 +1,18 @@
+{
+  "mappings": {
+    "red": {
+      "map": {
+        "3": "base_energy_katana",
+        "4": "red_katana_energy"
+      },
+      "name": "red"
+    },
+    "default": {
+      "map": {
+        "3": "base_energy_katana",
+        "4": "blue_katana_energy"
+      },
+      "name": "default"
+    }
+  }
+}

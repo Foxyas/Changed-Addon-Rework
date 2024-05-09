@@ -29,6 +29,8 @@ import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 import net.foxyas.changedaddon.entity.Experiment009Entity;
+import net.foxyas.changedaddon.entity.Exp2MaleEntity;
+import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 import net.foxyas.changedaddon.entity.DazedEntity;
 import net.foxyas.changedaddon.entity.BunyEntity;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -94,6 +96,14 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<Experiment10Entity>of(Experiment10Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Experiment10Entity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<Exp2MaleEntity>> EXP_2_MALE = register("exp_2_male",
+			EntityType.Builder.<Exp2MaleEntity>of(Exp2MaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp2MaleEntity::new)
+
+					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<Exp2FemaleEntity>> EXP_2_FEMALE = register("exp_2_female",
+			EntityType.Builder.<Exp2FemaleEntity>of(Exp2FemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp2FemaleEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -117,6 +127,8 @@ public class ChangedAddonModEntities {
 			MirrorWhiteTigerEntity.init();
 			SnowLeopardMaleOrganicEntity.init();
 			Experiment10Entity.init();
+			Exp2MaleEntity.init();
+			Exp2FemaleEntity.init();
 		});
 	}
 
@@ -137,5 +149,7 @@ public class ChangedAddonModEntities {
 		event.put(MIRROR_WHITE_TIGER.get(), MirrorWhiteTigerEntity.createAttributes().build());
 		event.put(SNOW_LEOPARD_MALE_ORGANIC.get(), SnowLeopardMaleOrganicEntity.createAttributes().build());
 		event.put(EXPERIMENT_10.get(), Experiment10Entity.createAttributes().build());
+		event.put(EXP_2_MALE.get(), Exp2MaleEntity.createAttributes().build());
+		event.put(EXP_2_FEMALE.get(), Exp2FemaleEntity.createAttributes().build());
 	}
 }

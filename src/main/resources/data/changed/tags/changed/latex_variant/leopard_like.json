@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "changed_addon:form_biosynth_snow_leopard/male",
-    "changed_addon:form_biosynth_snow_leopard/female"
+    "changed_addon:form_biosynth_snow_leopard/female",
+    "changed_addon:form_exp2/male",
+    "changed_addon:form_exp2/female"
   ]
 }

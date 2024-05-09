@@ -5,7 +5,7 @@
     "toolType": "Sword",
     "renderType": 1,
     "texture": "blue_katana_energy",
-    "customModelName": "laser_katana:default",
+    "customModelName": "electric_katana:default",
     "name": "§bElectric Katana",
     "specialInfo": [],
     "creativeTab": {

@@ -1,18 +1,10 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.HairStyle;
-import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -34,57 +26,19 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
-
-public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
-	public SnowLeopardMaleOrganicEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.SNOW_LEOPARD_MALE_ORGANIC.get(), world);
+public class Exp2FemaleEntity extends AbstractCanTameLatexEntity {
+	public Exp2FemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(ChangedAddonModEntities.EXP_2_FEMALE.get(), world);
 	}
 
-	public SnowLeopardMaleOrganicEntity(EntityType<SnowLeopardMaleOrganicEntity> type, Level world) {
+	public Exp2FemaleEntity(EntityType<Exp2FemaleEntity> type, Level world) {
 		super(type, world);
 		maxUpStep = 0.6f;
 		xpReward = 0;
 		setNoAi(false);
 		setPersistenceRequired();
 	}
-	public InteractionResult SnowLeopard(Player player, InteractionHand hand) {
-		ItemStack itemstack = player.getItemInHand(hand);
-		if (this.level.isClientSide) {
-			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
-			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-		} else {
-			if (!this.isTame() && this.isTameItem(itemstack)) {
-				if (!player.getAbilities().instabuild) {
-					itemstack.shrink(1);
-				}
-				boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 
-					if (!istransfur && this.random.nextInt(3) == 0) { // One in 3 chance
-						this.tame(player);
-						this.navigation.stop();
-						this.setTarget(null);
-						this.level.broadcastEntityEvent(this, (byte)7);
-					} else if(istransfur && this.random.nextInt(6) == 0) {
-						this.tame(player);
-						this.navigation.stop();
-						this.setTarget(null);
-						this.level.broadcastEntityEvent(this, (byte)7);
-					} else {
-						this.level.broadcastEntityEvent(this, (byte)6);
-					}
-
-				return InteractionResult.SUCCESS;
-			}
-
-			return super.mobInteract(player, hand);
-		}
-	}
-
-	@Override
-	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		return SnowLeopard(player,hand);
-	}
 
 	@Override
 	public TransfurMode getTransfurMode() {
@@ -94,22 +48,22 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
 
 	@Override
 	public Gender getGender() {
-		return Gender.MALE;
-	}
-
-	@Override
-	public @Nullable List<HairStyle> getValidHairStyles() {
-		return HairStyle.Collection.MALE.getStyles();
+		return Gender.FEMALE;
 	}
 
 	@Override
 	public HairStyle getDefaultHairStyle() {
-		HairStyle Hair = BALD.get();
-		if(level.random.nextInt(10) > 5){ Hair = HairStyle.SHORT_MESSY.get();
+		HairStyle Hair = HairStyle.LONG_KEPT.get();
+		if(level.random.nextInt(10) > 5){ Hair = HairStyle.LONG_MESSY.get();
 		} else {
-			Hair = BALD.get();
+			Hair = HairStyle.LONG_KEPT.get();
 		}
 		return Hair;
+	}
+
+	@Override
+	public @Nullable List<HairStyle> getValidHairStyles() {
+		return HairStyle.Collection.FEMALE.getStyles();
 	}
 
 	@Override
@@ -165,6 +119,4 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
 		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
 		return builder;
 	}
-
-
 }
