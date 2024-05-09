@@ -33,12 +33,17 @@ public class Exp2FemaleRenderer extends LatexHumanoidRenderer<Exp2FemaleEntity, 
 		return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
 		}
 
-		if (entity.getUnderlyingPlayer() != null && entity.getHealth() / entity.getMaxHealth() <= 0.60 ){
+		if (entity.getUnderlyingPlayer() != null && entity.getHealth() / entity.getMaxHealth() <= 0.60 && entity.getHealth() / entity.getMaxHealth() > 0.30){
 			return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard_hurt.png");
 		}
-		if (entity.getUnderlyingPlayer() != null && !(entity.getHealth() / entity.getMaxHealth() <= 0.60 )){
+		if (entity.getUnderlyingPlayer() != null && entity.getHealth() / entity.getMaxHealth() <= 0.30){
+			return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard_badly_hurt.png");
+		}
+		if (entity.getUnderlyingPlayer() != null && !(entity.getHealth() / entity.getMaxHealth() <= 0.60)){
 			return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
 		}
+		
+
 
 		return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
 	}
