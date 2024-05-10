@@ -372,9 +372,11 @@
   "gui.changed_addon.foxyasgui.button_deals": "交易",
   "gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you": "我想被你兽化",
   "gui.changed_addon.foxyasgui.button_trade": "交易",
-  "gui.changed_addon.foxyasgui.label_hello_im_foxyas_i_dont_want_to": "嗨，我是Foxyas，我不想同化你，我很友好",
-  "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "我只需要2个橙子和一个玻璃瓶",
-  "gui.changed_addon.foxyasgui.label_pls_dont_kill_me": "请不要杀我，我可以和你交换橙汁，我只需要2个",
+
+  "gui.changed_addon.foxyasgui.label_hello_im_foxyas_i_dont_want_to": "嗨，我是Foxyas，我不想兽化你，我很友好",//1
+  "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "我只需要2个橙子和一个玻璃瓶",//3
+  "gui.changed_addon.foxyasgui.label_pls_dont_kill_me": "请不要杀我，我可以和你交换橙汁",//2
+
   "gui.changed_addon.friendly_transfur_gui.button_no": "否",
   "gui.changed_addon.friendly_transfur_gui.button_no1": "是",
   "gui.changed_addon.friendly_transfur_gui.label_accept": "接受？",
