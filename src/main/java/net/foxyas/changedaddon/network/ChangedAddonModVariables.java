@@ -108,6 +108,7 @@ public class ChangedAddonModVariables {
 				clone.FriendlyGrabKeybind = original.FriendlyGrabKeybind;
 				clone.FriendlyGrabbing = original.FriendlyGrabbing;
 				clone.LatexInfectionCooldown = original.LatexInfectionCooldown;
+				clone.consciousness_fight_give_up = original.consciousness_fight_give_up;
 			}
 		}
 
@@ -307,6 +308,7 @@ public class ChangedAddonModVariables {
 		public double UntransfurProgress = 0.0;
 		public boolean Exp009TransfurAllowed = false;
 		public boolean Exp009Buff = false;
+		public boolean consciousness_fight_give_up = false;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -350,6 +352,7 @@ public class ChangedAddonModVariables {
 			nbt.putDouble("UntransfurProgress", UntransfurProgress);
 			nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
 			nbt.putBoolean("Exp009Buff", Exp009Buff);
+			nbt.putBoolean("consciousness_fight_give_up", consciousness_fight_give_up);
 			return nbt;
 		}
 
@@ -390,6 +393,7 @@ public class ChangedAddonModVariables {
 			UntransfurProgress = nbt.getDouble("UntransfurProgress");
 			Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
 			Exp009Buff = nbt.getBoolean("Exp009Buff");
+			consciousness_fight_give_up = nbt.getBoolean("consciousness_fight_give_up");
 		}
 	}
 
@@ -449,6 +453,7 @@ public class ChangedAddonModVariables {
 					variables.UntransfurProgress = message.data.UntransfurProgress;
 					variables.Exp009TransfurAllowed = message.data.Exp009TransfurAllowed;
 					variables.Exp009Buff = message.data.Exp009Buff;
+					variables.consciousness_fight_give_up = message.data.consciousness_fight_give_up;
 				}
 			});
 			context.setPacketHandled(true);

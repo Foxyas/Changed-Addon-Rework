@@ -1395,6 +1395,20 @@ public class UnifuserUpdateTickProcedure {
 							{
 								BlockEntity _ent = world.getBlockEntity(new BlockPos(x, y, z));
 								if (_ent != null) {
+									final int _slotid = 1;
+									final int _amount = 1;
+									_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										if (capability instanceof IItemHandlerModifiable) {
+											ItemStack _stk = capability.getStackInSlot(_slotid).copy();
+											_stk.shrink(_amount);
+											((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _stk);
+										}
+									});
+								}
+							}
+							{
+								BlockEntity _ent = world.getBlockEntity(new BlockPos(x, y, z));
+								if (_ent != null) {
 									final int _slotid = 3;
 									final ItemStack _setstack = b;
 									_setstack.setCount((int) (1 + new Object() {

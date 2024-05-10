@@ -70,6 +70,9 @@
         }
       }
     ],
+    "onClosed": {
+      "name": "FightTokeepconsciousnessminigameThisGUIIsClosed"
+    },
     "gridSettings": {
       "sx": 18,
       "sy": 18,

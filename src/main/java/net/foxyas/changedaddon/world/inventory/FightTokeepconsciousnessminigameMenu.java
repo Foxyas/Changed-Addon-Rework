@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
+import net.foxyas.changedaddon.procedures.FightTokeepconsciousnessminigameThisGUIIsClosedProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonModMenus;
 
 import java.util.function.Supplier;
@@ -60,6 +61,13 @@ public class FightTokeepconsciousnessminigameMenu extends AbstractContainerMenu 
 				return this.boundEntity.isAlive();
 		}
 		return true;
+	}
+
+	@Override
+	public void removed(Player playerIn) {
+		super.removed(playerIn);
+
+		FightTokeepconsciousnessminigameThisGUIIsClosedProcedure.execute(world, entity);
 	}
 
 	public Map<Integer, Slot> get() {

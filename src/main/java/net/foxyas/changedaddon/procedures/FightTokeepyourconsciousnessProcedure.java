@@ -159,7 +159,21 @@ public class FightTokeepyourconsciousnessProcedure {
 										capability.syncPlayerVariables(entity);
 									});
 								}
+								{
+									boolean _setval = false;
+									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+										capability.consciousness_fight_give_up = _setval;
+										capability.syncPlayerVariables(entity);
+									});
+								}
 							} else {
+								{
+									boolean _setval = false;
+									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+										capability.concience_Fight = _setval;
+										capability.syncPlayerVariables(entity);
+									});
+								}
 								{
 									double _setval = 0;
 									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
@@ -170,7 +184,7 @@ public class FightTokeepyourconsciousnessProcedure {
 								{
 									boolean _setval = false;
 									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-										capability.concience_Fight = _setval;
+										capability.consciousness_fight_give_up = _setval;
 										capability.syncPlayerVariables(entity);
 									});
 								}
