@@ -22,7 +22,7 @@ public class BunyRenderer extends LatexHumanoidRenderer<BunyEntity, BunyModel, A
 	public BunyRenderer(EntityRendererProvider.Context context) {
 		super(context, new BunyModel(context.bakeLayer(BunyModel.LAYER_LOCATION)),
 			ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+		//this.addLayer(new LatexParticlesLayer<>(this, getModel())); Is Organic .-.
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::irisColorLeft,CustomEyesLayer::irisColorRight));
 	}
 

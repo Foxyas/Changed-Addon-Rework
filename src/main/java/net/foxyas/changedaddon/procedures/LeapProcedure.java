@@ -4,6 +4,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.GameType;
@@ -158,6 +159,7 @@ public class LeapProcedure {
 						motionZ = deltaZ * speed;
 						if (entity.isOnGround() && !entity.isInWater()) {
 							if (!entity.isShiftKeyDown()) {
+								world.levelEvent(2001, new BlockPos(entity.getX(), entity.getY() - 1, entity.getZ()), Block.getId((world.getBlockState(new BlockPos(entity.getX(), entity.getY() - 1, entity.getZ())))));
 								entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
 								{
 									Entity _ent = entity;

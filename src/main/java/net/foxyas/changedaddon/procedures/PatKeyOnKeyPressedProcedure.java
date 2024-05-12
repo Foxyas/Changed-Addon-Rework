@@ -30,6 +30,8 @@ import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.Exp2MaleEntity;
+import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 
 public class PatKeyOnKeyPressedProcedure {
 	public static void execute(LevelAccessor world, Entity entity) {
@@ -142,6 +144,10 @@ public class PatKeyOnKeyPressedProcedure {
 								Canwork = false;
 							}
 							if (Canwork) {
+								if (entityTarget instanceof Exp2MaleEntity || entityTarget instanceof Exp2FemaleEntity) {
+									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+								}
 								if (world instanceof ServerLevel _level)
 									_level.sendParticles(ParticleTypes.HEART, (entityTarget.getX()), (entityTarget.getY() + 1), (entityTarget.getZ()), 7, 0.3, 0.3, 0.3, 1);
 								if (entity instanceof Player _player && !_player.level.isClientSide())
