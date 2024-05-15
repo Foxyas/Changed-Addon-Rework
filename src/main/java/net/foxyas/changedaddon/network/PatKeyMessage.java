@@ -52,7 +52,7 @@ public class PatKeyMessage {
 			return;
 		if (type == 0) {
 
-			PatKeyOnKeyPressedProcedure.execute(world, entity);
+			PatKeyOnKeyPressedProcedure.execute(world, x, y, z, entity);
 		}
 	}
 

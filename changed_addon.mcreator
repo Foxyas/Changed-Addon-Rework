@@ -10345,6 +10345,18 @@
             "type": "entity"
           },
           {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
             "name": "world",
             "type": "world"
           }
@@ -10731,6 +10743,21 @@
         ]
       },
       "path": "~/Procedures"
+    },
+    {
+      "name": "PatFeatureHandle",
+      "type": "procedure",
+      "sortid": 532,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "pat_feature_handle",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PatFeatureHandleProcedure.java"
+        ],
+        "dependencies": []
+      },
+      "path": "~/CustomCode"
     }
   ],
   "variable_elements": [
@@ -11091,6 +11118,7 @@
       "gamerule.giveBookOnStart": "Start With Book ",
       "gui.changed_addon.bookrecipepage_8.label_f": "F",
       "advancements.grabthem.descr": "You active your grab ",
+      "key.changed_addon.pat_message": "You pat {0}",
       "gui.changed_addon.bookrecipepage_8.label_m": "M",
       "gui.changed_addon.book_pagenumber_1.button_next": "next",
       "item.changed_addon.ammonia_particles_jei_illustrative": "16 Ammonia Particles ",
@@ -11269,6 +11297,7 @@
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",
       "changedaddon.friendlygrab.you_hug.organic": "You are organic so you §chug§r them",
       "gui.changed_addon.book_pagenumber_2.label_ammonia": "Ammonia powder",
+      "key.changed_addon.pat_received": "{0} pat You",
       "gui.changed_addon.book_pagenumber_7.label_humans_overlay": "Humans overlay",
       "changedaddon.grab.off": "Grab deactivated",
       "item.changed_addon.devitem": "Dev item",
