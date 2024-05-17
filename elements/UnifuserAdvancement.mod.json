@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "A Unifuser?",
-    "achievementDescription": "You craft or get a Unifisuer",
+    "achievementDescription": "You craft or get a Unifuser",
     "achievementIcon": {
       "value": "CUSTOM:Unifuser"
     },
