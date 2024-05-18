@@ -68,6 +68,10 @@ public class AddonLatexVariant {
     public static final LatexVariant<MirrorWhiteTigerEntity> MIRROR_WHITE_TIGER = LatexVariant.register(LatexVariant.Builder.of(LatexVariant.LATEX_WHITE_TIGER,ChangedAddonModEntities.MIRROR_WHITE_TIGER)
             .groundSpeed(1.15F).swimSpeed(0.95F).stepSize(0.7F).breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().build(new ResourceLocation("changed_addon", "form_mirror_white_tiger_female")));
 
+    public static final LatexVariant<WolfyEntity> WOLFY = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.WOLFY)
+            .groundSpeed(1.20F).swimSpeed(0.5F).stepSize(0.7F).breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of()).additionalHealth(-6).nightVision().build(new ResourceLocation("changed_addon", "form_wolfy")));
+
+
     //Experiments
     public static final GenderedVariant<Exp2MaleEntity,Exp2FemaleEntity> EXP2_GENDERED_VARIANT = LatexVariant.register(GenderedVariant.Builder.of(LatexVariant.LATEX_SNOW_LEOPARD,ChangedAddonModEntities.EXP_2_MALE,ChangedAddonModEntities.EXP_2_FEMALE)
             .groundSpeed(1.175F).swimSpeed(1.05F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp2")));

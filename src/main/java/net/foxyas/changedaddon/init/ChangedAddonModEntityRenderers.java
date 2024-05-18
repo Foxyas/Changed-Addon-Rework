@@ -9,6 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
 
+import net.foxyas.changedaddon.client.renderer.WolfyRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardMaleOrganicRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardFemaleOrganicRenderer;
 import net.foxyas.changedaddon.client.renderer.PuroKindRenderer;
@@ -48,5 +49,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_10.get(), Experiment10Renderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXP_2_MALE.get(), Exp2MaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXP_2_FEMALE.get(), Exp2FemaleRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.WOLFY.get(), WolfyRenderer::new);
 	}
 }

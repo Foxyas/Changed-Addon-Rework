@@ -59,6 +59,8 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final RegistryObject<Item> KET_SPAWN_EGG = REGISTRY.register("ket_experiment_009_spawn_egg",
 			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.KET_EXPERIMENT_009, Color3.getColor("#E9E9E9").toInt(), Color3.getColor("#66FFFF").toInt(), new Item.Properties().tab(null)));
 
+		public static final RegistryObject<Item> WOLFY_SPAWN_EGG = REGISTRY.register("wolfy_spawn_egg",
+			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.WOLFY, Color3.getColor("#393939").toInt(), Color3.getColor("#303030").toInt(), new Item.Properties().tab(null)));
 
 }
 

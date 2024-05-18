@@ -10758,6 +10758,34 @@
         "dependencies": []
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "Wolfy",
+      "type": "livingentity",
+      "sortid": 533,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "wolfy",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/WolfyRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/WolfyEntity.java"
+        ]
+      }
+    },
+    {
+      "name": "VariantUtil",
+      "type": "procedure",
+      "sortid": 534,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "variant_util",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/VariantUtilProcedure.java"
+        ],
+        "dependencies": []
+      }
     }
   ],
   "variable_elements": [
@@ -11289,6 +11317,7 @@
       "death.attack.concience_lose.player": "%1$s lose your concience by %2$s",
       "gui.changed_addon.book_pagenumber_2.label_this_item_can_make_you_back_for": "manently losing your humanity, you can craft",
       "entity.changed_addon.experiment_10": "Experiment 10",
+      "entity.changed_addon.wolfy": "Wolfy",
       "config.changed_addon.changed_addon_client_configs": "ChangedAddon-Client",
       "changedaddon.event.grab.when.you.die": "The person who was grabbing you §4Died§r before They could do anything!!",
       "item.changed_addon.transfur_totem": "Latex Totem",
