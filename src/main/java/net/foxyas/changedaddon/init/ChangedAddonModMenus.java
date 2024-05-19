@@ -16,6 +16,7 @@ import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
 import net.foxyas.changedaddon.world.inventory.TransfurTotemGuiMenu;
 import net.foxyas.changedaddon.world.inventory.TranfurSoundsGuiMenu;
 import net.foxyas.changedaddon.world.inventory.PagesecretMenu;
+import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
 import net.foxyas.changedaddon.world.inventory.GrabclickguiMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenugrabMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenuMenu;
@@ -71,6 +72,7 @@ public class ChangedAddonModMenus {
 	public static final MenuType<Bookrecipepage10Menu> BOOKRECIPEPAGE_10 = register("bookrecipepage_10", (id, inv, extraData) -> new Bookrecipepage10Menu(id, inv, extraData));
 	public static final MenuType<TransfurTotemGuiMenu> TRANSFUR_TOTEM_GUI = register("transfur_totem_gui", (id, inv, extraData) -> new TransfurTotemGuiMenu(id, inv, extraData));
 	public static final MenuType<BookRecipePage11Menu> BOOK_RECIPE_PAGE_11 = register("book_recipe_page_11", (id, inv, extraData) -> new BookRecipePage11Menu(id, inv, extraData));
+	public static final MenuType<InformantGuiMenu> INFORMANT_GUI = register("informant_gui", (id, inv, extraData) -> new InformantGuiMenu(id, inv, extraData));
 
 	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
 		MenuType<T> menuType = new MenuType<T>(containerFactory);

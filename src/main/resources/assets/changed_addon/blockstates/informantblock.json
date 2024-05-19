@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "changed_addon:block/informantblock"
+    },
+    "facing=east": {
+      "model": "changed_addon:block/informantblock",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "changed_addon:block/informantblock",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "changed_addon:block/informantblock",
+      "y": 270
+    }
+  }
+}

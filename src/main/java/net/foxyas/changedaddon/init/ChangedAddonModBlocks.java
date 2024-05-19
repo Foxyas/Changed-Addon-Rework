@@ -20,10 +20,10 @@ import net.foxyas.changedaddon.block.PainiteOreBlock;
 import net.foxyas.changedaddon.block.PainiteBlockBlock;
 import net.foxyas.changedaddon.block.LitixCamoniaFluidBlock;
 import net.foxyas.changedaddon.block.LatexInsulatorBlock;
+import net.foxyas.changedaddon.block.InformantblockBlock;
 import net.foxyas.changedaddon.block.GeneratorBlock;
 import net.foxyas.changedaddon.block.DarklatexpuddleBlock;
 import net.foxyas.changedaddon.block.CatlyzerBlock;
-import net.foxyas.changedaddon.block.CatalyFuserBlock;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 public class ChangedAddonModBlocks {
@@ -37,7 +37,7 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> DARKLATEXPUDDLE = REGISTRY.register("darklatexpuddle", () -> new DarklatexpuddleBlock());
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> SIGNAL_BLOCK = REGISTRY.register("signal_block", () -> new SignalBlockBlock());
-	public static final RegistryObject<Block> CATALY_FUSER = REGISTRY.register("cataly_fuser", () -> new CatalyFuserBlock());
+	public static final RegistryObject<Block> INFORMANTBLOCK = REGISTRY.register("informantblock", () -> new InformantblockBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

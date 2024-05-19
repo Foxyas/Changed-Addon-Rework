@@ -12,10 +12,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.Block;
 
 import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
+import net.foxyas.changedaddon.block.entity.InformantblockBlockEntity;
 import net.foxyas.changedaddon.block.entity.GeneratorBlockEntity;
 import net.foxyas.changedaddon.block.entity.DarklatexpuddleBlockEntity;
 import net.foxyas.changedaddon.block.entity.CatlyzerBlockEntity;
-import net.foxyas.changedaddon.block.entity.CatalyFuserBlockEntity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 public class ChangedAddonModBlockEntities {
@@ -24,7 +24,7 @@ public class ChangedAddonModBlockEntities {
 	public static final RegistryObject<BlockEntityType<?>> UNIFUSER = register("unifuser", ChangedAddonModBlocks.UNIFUSER, UnifuserBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> DARKLATEXPUDDLE = register("darklatexpuddle", ChangedAddonModBlocks.DARKLATEXPUDDLE, DarklatexpuddleBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> GENERATOR = register("generator", ChangedAddonModBlocks.GENERATOR, GeneratorBlockEntity::new);
-	public static final RegistryObject<BlockEntityType<?>> CATALY_FUSER = register("cataly_fuser", ChangedAddonModBlocks.CATALY_FUSER, CatalyFuserBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> INFORMANTBLOCK = register("informantblock", ChangedAddonModBlocks.INFORMANTBLOCK, InformantblockBlockEntity::new);
 
 	private static RegistryObject<BlockEntityType<?>> register(String registryname, RegistryObject<Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
 		return REGISTRY.register(registryname, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));

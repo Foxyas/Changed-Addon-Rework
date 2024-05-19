@@ -138,10 +138,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SIGNAL_BLOCK = block(ChangedAddonModBlocks.SIGNAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
 	public static final RegistryObject<Item> DEVITEM_6 = REGISTRY.register("devitem_6", () -> new DEVITEM6Item());
-	public static final RegistryObject<Item> CATALY_FUSER = block(ChangedAddonModBlocks.CATALY_FUSER, null);
 	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
 	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
 	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
+	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, null);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

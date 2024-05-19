@@ -140,6 +140,18 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 	public SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
 	}
+	
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (source == DamageSource.LIGHTNING_BOLT)
+			return false;
+		if (source.isExplosion())
+			return false;
+		if (source.isFire())
+			return false;
+		return super.hurt(source, amount);
+	}
+
 
 	public static void init() {
 	}

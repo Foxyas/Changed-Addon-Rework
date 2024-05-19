@@ -15,6 +15,7 @@ import net.foxyas.changedaddon.client.gui.UnifuserguiScreen;
 import net.foxyas.changedaddon.client.gui.TransfurTotemGuiScreen;
 import net.foxyas.changedaddon.client.gui.TranfurSoundsGuiScreen;
 import net.foxyas.changedaddon.client.gui.PagesecretScreen;
+import net.foxyas.changedaddon.client.gui.InformantGuiScreen;
 import net.foxyas.changedaddon.client.gui.GrabclickguiScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenugrabScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenuScreen;
@@ -69,6 +70,7 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.BOOKRECIPEPAGE_10, Bookrecipepage10Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.TRANSFUR_TOTEM_GUI, TransfurTotemGuiScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOK_RECIPE_PAGE_11, BookRecipePage11Screen::new);
+			MenuScreens.register(ChangedAddonModMenus.INFORMANT_GUI, InformantGuiScreen::new);
 		});
 	}
 }

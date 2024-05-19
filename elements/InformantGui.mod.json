@@ -1,0 +1,159 @@
+{
+  "_fv": 47,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 176,
+    "height": 191,
+    "inventoryOffsetX": 1,
+    "inventoryOffsetY": 14,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "textfield",
+        "data": {
+          "placeholder": "Form ID",
+          "name": "form",
+          "width": 120,
+          "height": 20,
+          "x": 155,
+          "y": 30
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_show_land_speed",
+          "text": {
+            "fixedValue": "",
+            "name": "ShowLandSpeed"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 131,
+          "y": 68
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_show_swim_speed",
+          "text": {
+            "fixedValue": "",
+            "name": "ShowSwimSpeed"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 131,
+          "y": 80
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_show_additional_health",
+          "text": {
+            "fixedValue": "",
+            "name": "ShowAdditionalHealth"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 131,
+          "y": 55
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_show_leg_count",
+          "text": {
+            "fixedValue": "",
+            "name": "ShowLegCount"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 131,
+          "y": 93
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_type_the_form",
+          "text": {
+            "fixedValue": "Type The Form"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 129,
+          "y": 28
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_empty",
+          "text": {
+            "fixedValue": "?"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 139,
+          "y": 36
+        }
+      },
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": ""
+          },
+          "disablePlacement": {
+            "fixedValue": false
+          },
+          "id": 0,
+          "disablePickup": {
+            "fixedValue": false
+          },
+          "dropItemsWhenNotBound": true,
+          "x": 276,
+          "y": 31
+        }
+      },
+      {
+        "type": "tooltip",
+        "data": {
+          "name": "tooltip_put_a_syringe_with_a_form",
+          "text": {
+            "fixedValue": "Put A syringe With a Form"
+          },
+          "displayCondition": {
+            "name": "IfisEmpty"
+          },
+          "width": 24,
+          "height": 24,
+          "x": 273,
+          "y": 27
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

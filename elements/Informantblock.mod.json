@@ -33,7 +33,7 @@
         "subtract": false
       }
     ],
-    "name": "CatalyFuser Collective",
+    "name": "Informant Block",
     "specialInfo": [],
     "hardness": 1.0,
     "resistance": 10.0,
@@ -101,8 +101,8 @@
     "breakHarvestLevel": 2,
     "isBonemealable": false,
     "hasInventory": true,
-    "guiBoundTo": "<NONE>",
-    "openGUIOnRightClick": false,
+    "guiBoundTo": "InformantGui",
+    "openGUIOnRightClick": true,
     "inventorySize": 9,
     "inventoryStackSize": 64,
     "inventoryDropWhenDestroyed": true,
