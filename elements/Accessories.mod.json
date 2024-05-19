@@ -1,0 +1,70 @@
+{
+  "_fv": 47,
+  "_type": "armor",
+  "definition": {
+    "enableHelmet": false,
+    "textureHelmet": "",
+    "enableBody": true,
+    "textureBody": "leggings_trim",
+    "enableLeggings": false,
+    "textureLeggings": "",
+    "enableBoots": false,
+    "textureBoots": "",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "armorTextureFile": "nothing_",
+    "helmetName": "Accessories Helmet",
+    "bodyName": "Accessories Chestplate",
+    "leggingsName": "Accessories Leggings",
+    "bootsName": "Accessories Boots",
+    "helmetSpecialInfo": [],
+    "bodySpecialInfo": [],
+    "leggingsSpecialInfo": [],
+    "bootsSpecialInfo": [],
+    "helmetModelName": "Default",
+    "helmetModelPart": "Helmet",
+    "helmetModelTexture": "painite.png",
+    "bodyModelName": "ModelAccessories",
+    "bodyModelPart": "Colar",
+    "armsModelPartL": "LeftArmBracelet",
+    "armsModelPartR": "RightArmBracelet",
+    "bodyModelTexture": "painite.png",
+    "leggingsModelName": "Default",
+    "leggingsModelPartL": "Leggings L",
+    "leggingsModelPartR": "Leggings R",
+    "leggingsModelTexture": "From armor",
+    "bootsModelName": "Default",
+    "bootsModelPartL": "Boots L",
+    "bootsModelPartR": "Boots R",
+    "bootsModelTexture": "From armor",
+    "helmetItemRenderType": 0,
+    "helmetItemCustomModelName": "Normal",
+    "bodyItemRenderType": 0,
+    "bodyItemCustomModelName": "Normal",
+    "leggingsItemRenderType": 0,
+    "leggingsItemCustomModelName": "Normal",
+    "bootsItemRenderType": 0,
+    "bootsItemCustomModelName": "Normal",
+    "helmetImmuneToFire": true,
+    "bodyImmuneToFire": true,
+    "leggingsImmuneToFire": false,
+    "bootsImmuneToFire": false,
+    "maxDamage": 45,
+    "damageValueHelmet": 0,
+    "damageValueBody": 2,
+    "damageValueLeggings": 0,
+    "damageValueBoots": 0,
+    "enchantability": 35,
+    "toughness": 0.0,
+    "knockbackResistance": 0.0,
+    "equipSound": {
+      "value": "CUSTOM:armor_equip"
+    },
+    "repairItems": [
+      {
+        "value": "CUSTOM:Painite"
+      }
+    ]
+  }
+}

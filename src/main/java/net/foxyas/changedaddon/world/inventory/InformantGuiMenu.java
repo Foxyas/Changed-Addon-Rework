@@ -77,14 +77,14 @@ public class InformantGuiMenu extends AbstractContainerMenu implements Supplier<
 					});
 			}
 		}
-		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 151, 7) {
+		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 151, 8) {
 			private final int slot = 0;
 		}));
 		for (int si = 0; si < 3; ++si)
 			for (int sj = 0; sj < 9; ++sj)
-				this.addSlot(new Slot(inv, sj + (si + 1) * 9, 1 + 8 + sj * 18, 26 + 84 + si * 18));
+				this.addSlot(new Slot(inv, sj + (si + 1) * 9, 1 + 8 + sj * 18, 31 + 84 + si * 18));
 		for (int si = 0; si < 9; ++si)
-			this.addSlot(new Slot(inv, si, 1 + 8 + si * 18, 26 + 142));
+			this.addSlot(new Slot(inv, si, 1 + 8 + si * 18, 31 + 142));
 	}
 
 	@Override

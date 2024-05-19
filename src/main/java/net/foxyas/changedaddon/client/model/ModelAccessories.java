@@ -18,16 +18,22 @@ import com.mojang.blaze3d.vertex.PoseStack;
 // Made with Blockbench 4.10.1
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
-public class ModelColarModel<T extends Entity> extends EntityModel<T> {
+public class ModelAccessories<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "model_colar_model"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "model_accessories"), "main");
 	public final ModelPart Colar;
 	public final ModelPart Necklace;
+	public final ModelPart Bracelets;
+	public final ModelPart RightArmBracelet;
+	public final ModelPart LeftArmBracelet;
 
-	public ModelColarModel(ModelPart root) {
+	public ModelAccessories(ModelPart root) {
 		this.Colar = root.getChild("Colar");
 		this.Necklace = Colar.getChild("Necklace");
+		this.Bracelets = root.getChild("Bracelets");
+		this.RightArmBracelet = Bracelets.getChild("RightArmBracelet");
+		this.LeftArmBracelet = Bracelets.getChild("LeftArmBracelet");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -52,12 +58,20 @@ public class ModelColarModel<T extends Entity> extends EntityModel<T> {
 						.addBox(-0.475F, 0.525F, -0.675F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(8, 27).addBox(-0.25F, 0.8F, -0.7F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(8, 27)
 						.addBox(-0.25F, 0.3F, -0.7F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)),
 				PartPose.offset(0.0F, 1.25F, -2.6F));
+		PartDefinition Bracelets = partdefinition.addOrReplaceChild("Bracelets", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition RightArmBracelet = Bracelets.addOrReplaceChild("RightArmBracelet", CubeListBuilder.create().texOffs(16, 10).addBox(-3.0312F, 6.0F, -2.0F, 4.0F, 2.0F, 4.0F, new CubeDeformation(0.08F)).texOffs(12, 27)
+				.addBox(-3.4562F, 6.0F, -1.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.08F)).texOffs(18, 29).addBox(-3.6062F, 6.5F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.08F)), PartPose.offset(-4.9688F, 2.0F, 0.0F));
+		PartDefinition LeftArmBracelet = Bracelets.addOrReplaceChild("LeftArmBracelet", CubeListBuilder.create().texOffs(18, 27).addBox(2.4063F, 6.5F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.08F)).texOffs(12, 23)
+				.addBox(2.4563F, 6.0F, -1.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.08F)).texOffs(18, 29).mirror().addBox(2.6062F, 6.5F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.08F)).mirror(false), PartPose.offset(4.9688F, 2.0F, 0.0F));
+		PartDefinition LeftArmBracelet_r1 = LeftArmBracelet.addOrReplaceChild("LeftArmBracelet_r1", CubeListBuilder.create().texOffs(0, 10).addBox(-2.0F, -1.0F, -2.0F, 4.0F, 2.0F, 4.0F, new CubeDeformation(0.08F)),
+				PartPose.offsetAndRotation(1.0313F, 7.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
 		return LayerDefinition.create(meshdefinition, 32, 32);
 	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		Colar.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+		Bracelets.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {

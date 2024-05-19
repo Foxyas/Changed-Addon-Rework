@@ -15,6 +15,8 @@ import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
 import net.foxyas.changedaddon.procedures.ShowSwimSpeedProcedure;
 import net.foxyas.changedaddon.procedures.ShowLegCountProcedure;
 import net.foxyas.changedaddon.procedures.ShowLandSpeedProcedure;
+import net.foxyas.changedaddon.procedures.ShowJumpStrengthProcedure;
+import net.foxyas.changedaddon.procedures.ShowCanGlideAndFlyProcedure;
 import net.foxyas.changedaddon.procedures.ShowAdditionalHealthProcedure;
 import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
 
@@ -38,7 +40,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 		this.z = container.z;
 		this.entity = container.entity;
 		this.imageWidth = 176;
-		this.imageHeight = 191;
+		this.imageHeight = 195;
 	}
 
 	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/informant_gui.png");
@@ -49,10 +51,10 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 		super.render(ms, mouseX, mouseY, partialTicks);
 		form.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
-		if (mouseX > leftPos + 3 && mouseX < leftPos + 27 && mouseY > topPos + 3 && mouseY < topPos + 27)
+		if (mouseX > leftPos + 4 && mouseX < leftPos + 28 && mouseY > topPos + 4 && mouseY < topPos + 28)
 			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_type_the_form"), mouseX, mouseY);
 		if (IfisEmptyProcedure.execute(entity))
-			if (mouseX > leftPos + 147 && mouseX < leftPos + 171 && mouseY > topPos + 2 && mouseY < topPos + 26)
+			if (mouseX > leftPos + 147 && mouseX < leftPos + 171 && mouseY > topPos + 4 && mouseY < topPos + 28)
 				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
 	}
 
@@ -87,17 +89,23 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		this.font.draw(poseStack,
 
-				ShowLandSpeedProcedure.execute(world, entity, guistate), 5, 43, -12829636);
+				ShowLandSpeedProcedure.execute(world, entity, guistate), 5, 44, -12829636);
 		this.font.draw(poseStack,
 
-				ShowSwimSpeedProcedure.execute(world, entity, guistate), 5, 55, -12829636);
+				ShowSwimSpeedProcedure.execute(world, entity, guistate), 5, 57, -12829636);
 		this.font.draw(poseStack,
 
-				ShowAdditionalHealthProcedure.execute(world, entity, guistate), 5, 30, -12829636);
+				ShowAdditionalHealthProcedure.execute(world, entity, guistate), 5, 31, -12829636);
 		this.font.draw(poseStack,
 
-				ShowLegCountProcedure.execute(world, entity, guistate), 5, 68, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.informant_gui.label_empty"), 13, 11, -12829636);
+				ShowLegCountProcedure.execute(world, entity, guistate), 5, 94, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.informant_gui.label_empty"), 13, 10, -12829636);
+		this.font.draw(poseStack,
+
+				ShowJumpStrengthProcedure.execute(world, entity, guistate), 5, 69, -12829636);
+		this.font.draw(poseStack,
+
+				ShowCanGlideAndFlyProcedure.execute(world, entity, guistate), 5, 82, -12829636);
 	}
 
 	@Override
@@ -110,7 +118,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		form = new EditBox(this.font, this.leftPos + 29, this.topPos + 5, 120, 20, new TranslatableComponent("gui.changed_addon.informant_gui.form")) {
+		form = new EditBox(this.font, this.leftPos + 27, this.topPos + 5, 120, 20, new TranslatableComponent("gui.changed_addon.informant_gui.form")) {
 			{
 				setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
 			}

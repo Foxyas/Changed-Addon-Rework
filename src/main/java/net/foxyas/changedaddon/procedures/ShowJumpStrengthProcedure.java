@@ -13,30 +13,27 @@ import java.util.function.Supplier;
 import java.util.Map;
 import java.util.HashMap;
 
-public class ShowAdditionalHealthProcedure {
+public class ShowJumpStrengthProcedure {
 	public static String execute(LevelAccessor world, Entity entity, HashMap guistate) {
 		if (entity == null || guistate == null)
 			return "";
-		double Hp = 0;
+		double JumpLevel = 0;
 		String type_form = "";
 		String Item_form = "";
-		boolean canFlyOrGlide = false;
 		if (world.isClientSide()) {
 			type_form = ((guistate.containsKey("text:form") ? ((EditBox) guistate.get("text:form")).getValue() : "").replace(" ", "")).toLowerCase();
 			type_form = type_form.replace(",", "");
 			type_form = type_form.replace("\\", "");
 			if ((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
-				Hp = (double) VariantUtilProcedure.GetExtraHp(type_form);;
-				return new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
-						+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString();
+				JumpLevel = (double) VariantUtilProcedure.GetJumpStrength(type_form);;
+				return new TranslatableComponent("text.changed_addon.jumpStrength").getString() + "" + (JumpLevel >= 1 ? "\u00A7a+" + Math.round(JumpLevel * 100) + "%" : "\u00A7c-" + Math.round(JumpLevel * 100) + "%");
 			}
 		}
 		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			Item_form = (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("form");
-			Hp = (double) VariantUtilProcedure.GetExtraHp(Item_form);;
-			return new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
-					+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString();
+			JumpLevel = (double) VariantUtilProcedure.GetJumpStrength(Item_form);;
+			return new TranslatableComponent("text.changed_addon.jumpStrength").getString() + "" + (JumpLevel >= 1 ? "\u00A7a+" + Math.round(JumpLevel * 100) + "%" : "\u00A7c-" + Math.round(JumpLevel * 100) + "%");
 		}
-		return "" + (new TranslatableComponent("text.changed_addon.additionalHealth").getString()).replace("%s", "???");
+		return (new TranslatableComponent("text.changed_addon.jumpStrength").getString()).replace("%s", "???");
 	}
 }

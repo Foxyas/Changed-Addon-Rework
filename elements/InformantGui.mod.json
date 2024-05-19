@@ -4,9 +4,9 @@
   "definition": {
     "type": 1,
     "width": 176,
-    "height": 191,
+    "height": 195,
     "inventoryOffsetX": 1,
-    "inventoryOffsetY": 14,
+    "inventoryOffsetY": 17,
     "renderBgLayer": true,
     "doesPauseGame": false,
     "components": [
@@ -17,8 +17,8 @@
           "name": "form",
           "width": 120,
           "height": 20,
-          "x": 155,
-          "y": 30
+          "x": 153,
+          "y": 28
         }
       },
       {
@@ -34,7 +34,7 @@
             "falpha": 0.0
           },
           "x": 131,
-          "y": 68
+          "y": 67
         }
       },
       {
@@ -66,7 +66,7 @@
             "falpha": 0.0
           },
           "x": 131,
-          "y": 55
+          "y": 54
         }
       },
       {
@@ -82,7 +82,7 @@
             "falpha": 0.0
           },
           "x": 131,
-          "y": 93
+          "y": 117
         }
       },
       {
@@ -94,8 +94,8 @@
           },
           "width": 24,
           "height": 24,
-          "x": 129,
-          "y": 28
+          "x": 130,
+          "y": 27
         }
       },
       {
@@ -110,7 +110,7 @@
             "falpha": 0.0
           },
           "x": 139,
-          "y": 36
+          "y": 33
         }
       },
       {
@@ -128,7 +128,7 @@
           },
           "dropItemsWhenNotBound": true,
           "x": 276,
-          "y": 31
+          "y": 30
         }
       },
       {
@@ -145,6 +145,38 @@
           "height": 24,
           "x": 273,
           "y": 27
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_show_jump_strength",
+          "text": {
+            "fixedValue": "",
+            "name": "ShowJumpStrength"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 131,
+          "y": 92
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_show_can_glide_and_fly",
+          "text": {
+            "fixedValue": "",
+            "name": "ShowCanGlideAndFly"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 131,
+          "y": 105
         }
       }
     ],

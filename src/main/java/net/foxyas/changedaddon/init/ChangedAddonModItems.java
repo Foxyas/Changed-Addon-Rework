@@ -69,6 +69,7 @@ import net.foxyas.changedaddon.item.AmmoniaparticleItem;
 import net.foxyas.changedaddon.item.AmmoniaParticlesJeiIllustrativeItem;
 import net.foxyas.changedaddon.item.AmmoniaItem;
 import net.foxyas.changedaddon.item.AmmoniaCompressedItem;
+import net.foxyas.changedaddon.item.AccessoriesItem;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -142,6 +143,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
 	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
 	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, null);
+	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

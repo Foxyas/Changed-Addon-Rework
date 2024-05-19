@@ -11,99 +11,121 @@ import net.minecraft.world.level.Level;
 public class VariantUtilProcedure {
 
 	public static float GetLandSpeed(String stringvariant) {
-		ResourceLocation form = new ResourceLocation(stringvariant);
-		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-			LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-			if (variant == null) {
-				return 0f;
-			} else {
-				return variant.groundSpeed;
-			}
-		} else {
-			return 0f;
-		}
-
-	}
-
-	public static float GetSwimSpeed(String stringvariant) {
-		ResourceLocation form = new ResourceLocation(stringvariant);
-		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-			LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-			if (variant == null) {
-				return 0f;
-			} else {
-				return variant.swimSpeed;
-			}
-		} else {
-			return 0f;
-		}
-	}
-		public static int GetExtraHp(String stringvariant) {
+		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
 			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
 				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-				if (variant == null) {
-					return 0;
-				} else {
-					return variant.additionalHealth;
-				}
+				return variant == null ? 0f : variant.groundSpeed;
+			} else {
+				return 0f;
+			}
+		} catch (Exception e) {
+			//System.err.println("Erro when processing GetLandSpeed: " + e.getMessage());
+			return 0f;
+		}
+	}
+
+	public static float GetSwimSpeed(String stringvariant) {
+		try {
+			ResourceLocation form = new ResourceLocation(stringvariant);
+			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+				return variant == null ? 0f : variant.swimSpeed;
+			} else {
+				return 0f;
+			}
+		} catch (Exception e) {
+			//System.err.println("Erro when processing GetSwimSpeed: " + e.getMessage());
+			return 0f;
+		}
+	}
+
+	public static int GetExtraHp(String stringvariant) {
+		try {
+			ResourceLocation form = new ResourceLocation(stringvariant);
+			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+				return variant == null ? 0 : variant.additionalHealth;
 			} else {
 				return 0;
 			}
+		} catch (Exception e) {
+			//System.err.println("Erro when processing GetExtraHp: " + e.getMessage());
+			return 0;
 		}
+	}
 
 	public static int GetLegs(String stringvariant) {
-		ResourceLocation form = new ResourceLocation(stringvariant);
-		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-			LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-			if (variant == null) {
-				return 0;
+		try {
+			ResourceLocation form = new ResourceLocation(stringvariant);
+			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+				return variant == null ? 0 : variant.legCount;
 			} else {
-				return variant.legCount;
+				return 0;
 			}
-		} else {
+		} catch (Exception e) {
+			//System.err.println("Erro when processing GetLegs: " + e.getMessage());
 			return 0;
 		}
 	}
 
 	public static boolean CanGlideandFly(String stringvariant) {
-		ResourceLocation form = new ResourceLocation(stringvariant);
-		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-			LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-			if (variant == null) {
-				return false;
+		try {
+			ResourceLocation form = new ResourceLocation(stringvariant);
+			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+				return variant != null && variant.canGlide;
 			} else {
-				return variant.canGlide;
+				return false;
 			}
-		} else {
+		} catch (Exception e) {
+			//System.err.println("Erro when processing CanGlideandFly: " + e.getMessage());
 			return false;
 		}
 	}
 
 	public static boolean CanClimb(String stringvariant) {
-		ResourceLocation form = new ResourceLocation(stringvariant);
-		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-			LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-			if (variant == null) {
-				return false;
+		try {
+			ResourceLocation form = new ResourceLocation(stringvariant);
+			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+				return variant != null && variant.canClimb;
 			} else {
-				return variant.canClimb;
+				return false;
 			}
-		} else {
+		} catch (Exception e) {
+			//System.err.println("Erro when processing CanClimb: " + e.getMessage());
 			return false;
 		}
 	}
 
-	public static EntityType GetEntity(String stringvariant, Level world) {
-		ResourceLocation form = new ResourceLocation(stringvariant);
-		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-			LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-			if (variant == null) {
-				return variant.LIGHT_LATEX_WOLF.male().getEntityType();
+	public static float GetJumpStrength(String stringvariant) {
+		try {
+			ResourceLocation form = new ResourceLocation(stringvariant);
+			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+				return variant == null ? 0f : variant.jumpStrength;
 			} else {
-				return variant.getEntityType();
+				return 0f;
 			}
-		} else {
+		} catch (Exception e) {
+			//System.err.println("Erro when processing GetJumpStrength: " + e.getMessage());
+			return 0f;
+		}
+	}
+
+	public static EntityType<?> GetEntity(String stringvariant, Level world) {
+		try {
+			ResourceLocation form = new ResourceLocation(stringvariant);
+			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+				LatexVariant variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+				return variant == null ? LatexVariant.LIGHT_LATEX_WOLF.male().getEntityType() : variant.getEntityType();
+			} else {
+				return LatexVariant.LIGHT_LATEX_WOLF.male().getEntityType();
+			}
+		} catch (Exception e) {
+			//System.err.println("Erro when processing GetEntity: " + e.getMessage());
 			return LatexVariant.LIGHT_LATEX_WOLF.male().getEntityType();
 		}
 	}

@@ -502,7 +502,7 @@
   "key.changed_addon.opengrabescapegui": "开放式额外转运站",
   "key.changed_addon.pat_key": "拍打胶兽",
   "key.changed_addon.turn_off_transfur": "关闭兽化技能",
-  "key.changedaddon.pat_message": "你拍打了 {0}",
+  "key.changed_addon.pat_message": "你拍打了 {0}",
 
   "subtitles.armor_equip": "装备盔甲",
   "subtitles.enter_in_friendly_grab": "玩家正在友好抓取",
