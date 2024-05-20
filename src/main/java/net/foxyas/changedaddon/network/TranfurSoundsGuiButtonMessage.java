@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.procedures.PlaySoundhowlProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundhissProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundgrowlProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundbarkProcedure;
+import net.foxyas.changedaddon.procedures.PlaySoundRoarProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundPurreowProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundPurrProcedure;
 import net.foxyas.changedaddon.procedures.PlaySoundMeowProcedure;
@@ -100,6 +101,10 @@ public class TranfurSoundsGuiButtonMessage {
 		if (buttonID == 7) {
 
 			SetCoolDownOffProcedure.execute(entity);
+		}
+		if (buttonID == 8) {
+
+			PlaySoundRoarProcedure.execute(world, entity);
 		}
 	}
 

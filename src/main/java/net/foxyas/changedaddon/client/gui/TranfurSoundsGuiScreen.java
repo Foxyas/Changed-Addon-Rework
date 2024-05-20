@@ -18,6 +18,7 @@ import net.foxyas.changedaddon.procedures.IfDogLatexProcedure;
 import net.foxyas.changedaddon.procedures.IfCatlatexProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasGuiEntityDisplayProcedure;
 import net.foxyas.changedaddon.procedures.CooldownResetProcedure;
+import net.foxyas.changedaddon.procedures.CanRoarProcedure;
 import net.foxyas.changedaddon.network.TranfurSoundsGuiButtonMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -39,6 +40,7 @@ public class TranfurSoundsGuiScreen extends AbstractContainerScreen<TranfurSound
 	Button button_6;
 	Button button_7;
 	Button button_cooldown;
+	Button button_61;
 
 	public TranfurSoundsGuiScreen(TranfurSoundsGuiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -213,5 +215,19 @@ public class TranfurSoundsGuiScreen extends AbstractContainerScreen<TranfurSound
 		};
 		guistate.put("button:button_cooldown", button_cooldown);
 		this.addRenderableWidget(button_cooldown);
+		button_61 = new Button(this.leftPos + 4, this.topPos + 94, 30, 20, new TranslatableComponent("gui.changed_addon.tranfur_sounds_gui.button_61"), e -> {
+			if (CanRoarProcedure.execute(entity)) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TranfurSoundsGuiButtonMessage(8, x, y, z));
+				TranfurSoundsGuiButtonMessage.handleButtonAction(entity, 8, x, y, z);
+			}
+		}) {
+			@Override
+			public void render(PoseStack ms, int gx, int gy, float ticks) {
+				if (CanRoarProcedure.execute(entity))
+					super.render(ms, gx, gy, ticks);
+			}
+		};
+		guistate.put("button:button_61", button_61);
+		this.addRenderableWidget(button_61);
 	}
 }

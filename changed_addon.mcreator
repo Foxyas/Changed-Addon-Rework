@@ -4997,10 +4997,13 @@
       "registry_name": "foxyas_gui_entity_display",
       "metadata": {
         "return_type": "entity",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/FoxyasGuiEntityDisplayProcedure.java"
+        ],
         "dependencies": [
           {
-            "name": "world",
-            "type": "world"
+            "name": "entity",
+            "type": "entity"
           }
         ]
       },
@@ -10750,7 +10753,8 @@
           "src/main/java/net/foxyas/changedaddon/client/renderer/WolfyRenderer.java",
           "src/main/java/net/foxyas/changedaddon/entity/WolfyEntity.java"
         ]
-      }
+      },
+      "path": "~/CustomCode/entitys"
     },
     {
       "name": "VariantUtil",
@@ -10764,7 +10768,8 @@
           "src/main/java/net/foxyas/changedaddon/procedures/VariantUtilProcedure.java"
         ],
         "dependencies": []
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "WolfyStats",
@@ -10787,7 +10792,8 @@
             "type": "entity"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "Informantblock",
@@ -10804,7 +10810,8 @@
           "src/main/resources/assets/changed_addon/models/item/informantblock.json",
           "src/main/java/net/foxyas/changedaddon/block/InformantblockBlock.java"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "ShowLandSpeed",
@@ -10832,7 +10839,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/GUI Procedures"
     },
     {
       "name": "ShowSwimSpeed",
@@ -10860,7 +10868,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/GUI Procedures"
     },
     {
       "name": "ShowAdditionalHealth",
@@ -10888,7 +10897,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/GUI Procedures"
     },
     {
       "name": "ShowLegCount",
@@ -10916,7 +10926,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/GUI Procedures"
     },
     {
       "name": "InformantGui",
@@ -10930,7 +10941,8 @@
           "src/main/java/net/foxyas/changedaddon/client/gui/InformantGuiScreen.java",
           "src/main/java/net/foxyas/changedaddon/world/inventory/InformantGuiMenu.java"
         ]
-      }
+      },
+      "path": "~/Guis"
     },
     {
       "name": "ShowJumpStrength",
@@ -10958,7 +10970,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/GUI Procedures"
     },
     {
       "name": "ShowCanGlideAndFly",
@@ -10986,7 +10999,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/GUI Procedures"
     },
     {
       "name": "Accessories",
@@ -11001,6 +11015,51 @@
           "src/main/resources/assets/changed_addon/models/item/accessories_chestplate.json"
         ]
       }
+    },
+    {
+      "name": "PlaySoundRoar",
+      "type": "procedure",
+      "sortid": 545,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "play_sound_roar",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlaySoundRoarProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
+    },
+    {
+      "name": "CanRoar",
+      "type": "procedure",
+      "sortid": 546,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "can_roar",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/CanRoarProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/TransfurSounds"
     }
   ],
   "variable_elements": [
@@ -11290,35 +11349,35 @@
     "en_us": {
       "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
       "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
-      "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "gui.changed_addon.book_pagenumber_7.label_ab": "-ab)",
+      "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
-      "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
+      "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_both_the_inventory_and_the_craft": "both the inventory and the craft table",
-      "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
+      "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
       "item.changed_addon.signal_catcher": "Signal Catcher",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
-      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
-      "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
+      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
+      "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
       "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
+      "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
       "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
-      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
+      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
       "item.minecraft.lingering_potion.effect.transfur_sickness_potion": "Lingering Potion of Transfur Sickness ",
       "gui.changed_addon.bookpagenumber_4.label_n": "N",
-      "effect.changed_addon.infriendlygrabeffect": "Friendly Grab Host",
       "entity.changed_addon.latex_snow_fox_male": "Male Latex Snow Fox",
+      "effect.changed_addon.infriendlygrabeffect": "Friendly Grab Host",
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
       "gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon": " (Press the Totem Icon)",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe1": "Display Litix-Camonia Recipe",
@@ -11340,9 +11399,9 @@
       "subtitles.spray.sound": "Using Spray",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gui.changed_addon.book_pagenumber_1.label_changed_addon_overlays": "Changed Addon Overlays?",
-      "attribute.changed_addon.latexresistance": "Latex Resistance",
-      "gui.changed_addon.pagesecret.button_close": "close",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
+      "gui.changed_addon.pagesecret.button_close": "close",
+      "attribute.changed_addon.latexresistance": "Latex Resistance",
       "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
@@ -11369,8 +11428,8 @@
       "gui.changed_addon.book_pagenumber_1.button_next": "next",
       "item.changed_addon.ammonia_particles_jei_illustrative": "16 Ammonia Particles ",
       "gui.changed_addon.bookpagenumber_5.label_unifuser": "Unifuser",
-      "gui.changed_addon.bookrecipepage_9.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
       "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
+      "gui.changed_addon.bookrecipepage_9.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
       "gui.changed_addon.book_recipe_page_11.label_g": "G",
       "gui.changed_addon.foxyasgui.Deals": "",
       "gui.changed_addon.book_pagenumber_7.label_friendly_modes": "-iendly modes (If Human this-",
@@ -11387,11 +11446,11 @@
       "gui.changed_addon.bookpagenumber_3.label_to_purify_the_latex_syringes_jus": "to purify the latex syringes just craft a purifier and follow this example",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
-      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.book_pagenumber_1.label_the_craft": "The Craft",
+      "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.label_untransfur_items": "recipe of litixcammonia ",
-      "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
       "gui.changed_addon.book_pagenumber_1.label_and_a_glass_bottle_in_any_type_o": "and a glass bottle in any type of craft ",
+      "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
       "gamerule.changedAddonOrganicBuff": "ChangedAddon Organic Buff",
       "entity.changed_addon.snow_leopard_female_organic": "Female BioSynth Snow Leopard",
       "gui.changed_addon.book_recipe_page_11.label_p": "L",
@@ -11578,6 +11637,7 @@
       "advancements.unifuser_advancement.descr": "You craft or get a Unifuser",
       "gui.changed_addon.grab_radial_menu_friendly.button_back": "back",
       "gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it1": "are you sure?",
+      "gui.changed_addon.tranfur_sounds_gui.button_61": "Roar",
       "changedaddon.grab.tired": "You are too tired to grab",
       "gui.changed_addon.book_pagenumber_1.label_the_syringe_craft_is_just_an_iro": "the syringe craft is just an iron nugget ",
       "item.changed_addon.exp_2_female_spawn_egg": "Exp2 Male Spawn Egg",

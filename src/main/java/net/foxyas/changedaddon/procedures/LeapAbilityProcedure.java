@@ -1,4 +1,4 @@
-/*
+ /*
 package net.foxyas.changedaddon.procedures;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -19,8 +19,7 @@ import javax.annotation.Nullable;
 
 public class LeapAbilityProcedure extends SimpleAbility {
 
-	private boolean Work;
-
+	
 	@Override
 	public TranslatableComponent getDisplayName(IAbstractLatex entity) {
 		return new TranslatableComponent("changed_addon.ability.leap");
@@ -28,14 +27,16 @@ public class LeapAbilityProcedure extends SimpleAbility {
 
 	@Override
 	public ResourceLocation getTexture(IAbstractLatex entity) {
-		return new ResourceLocation("changed_addon:textures/screens/friendlymodeicon.png");
+		return new ResourceLocation("changed_addon:textures/screens/friendlymodeicon.png"); //Place holder
 	}
 
 	@Override
 	public boolean canUse(IAbstractLatex entity) {
-		Player player = (Player) entity.getEntity();
+		if(entity instanceof Player player)	{
 		LatexVariantInstance LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
-		LatexVariant Variant = LatexVariant.getEntityVariant(entity.getLatexEntity());
+		}
+
+		LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
 		if (Variant.is(ChangedTags.LatexVariants.CAT_LIKE )|| Variant.is(ChangedTags.LatexVariants.LEOPARD_LIKE)){
 			return true;
 		}
@@ -43,7 +44,7 @@ public class LeapAbilityProcedure extends SimpleAbility {
 	}
 
 	public UseType getUseType(IAbstractLatex entity) {
-		return UseType.CHARGE_RELEASE;
+		return UseType.CHARGE_TIME;
 	}
 	@Override
 	public int getChargeTime(IAbstractLatex entity) {
@@ -58,11 +59,11 @@ public class LeapAbilityProcedure extends SimpleAbility {
 	@Override
 	public void startUsing(IAbstractLatex entity) {
 		super.startUsing(entity);
-		if(Work){
 		LeapAbility(entity.getEntity());
-		}
+		
 	}
 
+	/* Dont need ?
 	@Override
 	public void tick(IAbstractLatex entity) {
 		super.tick(entity);
@@ -71,12 +72,11 @@ public class LeapAbilityProcedure extends SimpleAbility {
 	@Override
 	public void tickCharge(IAbstractLatex entity, float ticks) {
 		super.tickCharge(entity, ticks);
-		if (ticks == 25) {
-			Work = true;
-		}
-	}
 
-	public static void LeapAbility(Entity entity) {
+	}
+ **/
+/*
+	 public static void LeapAbility(Entity entity) {
 		if (entity == null)
 			return;
 		double motionZ = 0;
@@ -102,7 +102,7 @@ public class LeapAbilityProcedure extends SimpleAbility {
 			deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
 			deltaY = entity.level.clip(new ClipContext(entity.getEyePosition(1f), entity.getEyePosition(1f).add(entity.getViewVector(1f).scale(1)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, entity)).getBlockPos().getY() - entity.getY();
 			deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-			speed = 0.25;
+			speed = 0.15;
 			Yspeed = 0.5;
 			motionX = deltaX * speed;
 			motionY = deltaY * Yspeed;
@@ -112,4 +112,4 @@ public class LeapAbilityProcedure extends SimpleAbility {
 	}
 
 }
-*/
+ */

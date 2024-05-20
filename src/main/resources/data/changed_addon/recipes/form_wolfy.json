@@ -1,0 +1,34 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:dark_latex_goo"
+    },
+    {
+      "item": "changed:dark_latex_goo"
+    },
+    {
+      "item": "changed:dark_latex_goo"
+    },
+    {
+      "item": "minecraft:white_wool"
+    },
+    {
+      "item": "minecraft:glass"
+    },
+    {
+      "item": "minecraft:black_stained_glass"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "changed:dark_latex_goo"
+    },
+    {
+      "item": "changed:syringe"
+    }
+  ],
+  "gendered": true,
+  "form": "changed_addon:form_wolfy"
+}

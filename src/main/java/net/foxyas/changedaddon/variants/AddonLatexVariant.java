@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.variants;
 
 //import net.foxyas.changedaddon.ChangedAddonAbilitys;
-
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.LatexEntity;

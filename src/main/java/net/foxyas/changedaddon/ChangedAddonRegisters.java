@@ -4,7 +4,6 @@ package net.foxyas.changedaddon;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-// import net.foxyas.changedaddon.procedures.LeapAbilityProcedure;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
@@ -72,8 +71,3 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		}
 	}
 
-	/*@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-	public class ChangedAddonAbilitys {
-		public static final DeferredRegister<AbstractAbility<?>> REGISTRY = ABILITY.createDeferred(ChangedAddonMod.MODID);
-		public static RegistryObject<LeapAbilityProcedure> LEAP = REGISTRY.register("leap", LeapAbilityProcedure::new);
-	}*/

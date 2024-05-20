@@ -189,6 +189,23 @@
           "x": 173,
           "y": 50
         }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_61",
+          "text": "Roar",
+          "onClick": {
+            "name": "PlaySoundRoar"
+          },
+          "displayCondition": {
+            "name": "CanRoar"
+          },
+          "width": 30,
+          "height": 20,
+          "x": 130,
+          "y": 139
+        }
       }
     ],
     "gridSettings": {
