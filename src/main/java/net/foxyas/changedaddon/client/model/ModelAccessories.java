@@ -39,7 +39,7 @@ public class ModelAccessories<T extends Entity> extends EntityModel<T> {
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-		PartDefinition Colar = partdefinition.addOrReplaceChild("Colar", CubeListBuilder.create().texOffs(1, 2).addBox(-4.5F, -0.7F, -3.0F, 9.0F, 2.0F, 6.0F, new CubeDeformation(-0.05F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition Colar = partdefinition.addOrReplaceChild("Colar", CubeListBuilder.create().texOffs(1, 2).addBox(-4.5F, -0.2F, -3.0F, 9.0F, 2.0F, 6.0F, new CubeDeformation(-0.2F)), PartPose.offset(0.0F, -0.5F, 0.0F));
 		PartDefinition Necklace = Colar.addOrReplaceChild("Necklace",
 				CubeListBuilder.create().texOffs(0, 23).addBox(-3.25F, -1.95F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(0, 23).addBox(-3.25F, -1.45F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(0, 23)
 						.addBox(2.25F, -1.95F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(0, 23).addBox(2.25F, -1.45F, -0.75F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(0, 25)
@@ -57,7 +57,7 @@ public class ModelAccessories<T extends Entity> extends EntityModel<T> {
 						.addBox(-0.75F, 0.3F, -0.7F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(8, 27).addBox(-0.75F, 0.8F, -0.7F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(8, 29)
 						.addBox(-0.475F, 0.525F, -0.675F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(8, 27).addBox(-0.25F, 0.8F, -0.7F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)).texOffs(8, 27)
 						.addBox(-0.25F, 0.3F, -0.7F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.25F)),
-				PartPose.offset(0.0F, 1.25F, -2.6F));
+				PartPose.offset(0.0F, 1.75F, -2.6F));
 		PartDefinition Bracelets = partdefinition.addOrReplaceChild("Bracelets", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 		PartDefinition RightArmBracelet = Bracelets.addOrReplaceChild("RightArmBracelet", CubeListBuilder.create().texOffs(16, 10).addBox(-3.0312F, 6.0F, -2.0F, 4.0F, 2.0F, 4.0F, new CubeDeformation(0.08F)).texOffs(12, 27)
 				.addBox(-3.4562F, 6.0F, -1.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.08F)).texOffs(18, 29).addBox(-3.6062F, 6.5F, -0.5F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.08F)), PartPose.offset(-4.9688F, 2.0F, 0.0F));
