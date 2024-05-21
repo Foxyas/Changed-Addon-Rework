@@ -1,8 +1,11 @@
 package net.foxyas.changedaddon.variants;
 
 //import net.foxyas.changedaddon.ChangedAddonAbilitys;
+import com.google.common.collect.ImmutableList;
+import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -12,7 +15,10 @@ import net.ltxprogrammer.changed.entity.variant.GenderedVariant;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedEntities;
+import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Skeleton;
@@ -21,10 +27,15 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
+
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
+import org.spongepowered.asm.mixin.Overwrite;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class AddonLatexVariant {
@@ -93,6 +104,6 @@ public class AddonLatexVariant {
     private static <T extends LatexEntity> LatexVariant<T> register(LatexVariant<T> variant) {
         return LatexVariant.register(variant);
     }
-
-
 }
+
+
