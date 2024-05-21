@@ -95,7 +95,7 @@ public class PatFeatureHandleProcedure {
 	private static void handleLatexEntity(Entity player, Entity target, LevelAccessor world) {
 		boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 
-		if (!isPlayerTransfur) return;
+		//if (!isPlayerTransfur) return;
 
 		if (!(target instanceof Experiment10Entity) && !(target instanceof KetExperiment009Entity) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
 			if (player instanceof Player) {
@@ -114,10 +114,17 @@ public class PatFeatureHandleProcedure {
 		boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 		boolean isTargetTransfur = target.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 
-		if (isPlayerTransfur && !isTargetTransfur && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
+		if ((isPlayerTransfur || !isPlayerTransfur) && (!isTargetTransfur || isTargetTransfur) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
+			if (!isPlayerTransfur && !isTargetTransfur){return;}//Dont Be Able to Pet if atlest one is Transfur :P
+			
 			if (player instanceof Player) {
 				((Player) player).swing(getSwingHand(player), true);
+				
 			}
+			if (isTargetTransfur && world instanceof ServerLevel serverLevel) {
+				serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
+			}
+
 			if (player instanceof Player p && !p.level.isClientSide()) {
 				p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
 				target.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_received", player.getDisplayName().getString()), true);
