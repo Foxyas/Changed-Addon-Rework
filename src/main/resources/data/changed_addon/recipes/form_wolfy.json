@@ -29,6 +29,6 @@
       "item": "changed:syringe"
     }
   ],
-  "gendered": true,
+  "gendered": false,
   "form": "changed_addon:form_wolfy"
 }
