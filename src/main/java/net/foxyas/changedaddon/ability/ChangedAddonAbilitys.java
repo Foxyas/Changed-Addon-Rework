@@ -19,6 +19,7 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 
 	public static final DeferredRegister<AbstractAbility<?>> REGISTRY = ABILITY.createDeferred(ChangedAddonMod.MODID);
 	public static final RegistryObject<LeapAbilityProcedure> LEAP = REGISTRY.register("leap", LeapAbilityProcedure::new);
+	public static final RegistryObject<ThunderBoltAbility> THUNDERBOLT = REGISTRY.register("thunderbolt",ThunderBoltAbility::new);
 
 	@SubscribeEvent
 	public static void registerAbiltiys(FMLConstructModEvent event) {

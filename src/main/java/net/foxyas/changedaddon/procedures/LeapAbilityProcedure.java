@@ -33,7 +33,7 @@ public class LeapAbilityProcedure extends SimpleAbility {
 
 	@Override
 	public ResourceLocation getTexture(IAbstractLatex entity) {
-		return new ResourceLocation("changed_addon:textures/screens/friendlymodeicon.png"); //Place holder
+		return new ResourceLocation("changed_addon:textures/screens/LeapAbility.png"); //Place holder
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class LeapAbilityProcedure extends SimpleAbility {
 
 	@Override
 	public int getChargeTime(IAbstractLatex entity) {
-		return 25;
+		return 20;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.variants;
 //import net.foxyas.changedaddon.ChangedAddonAbilitys;
 import com.google.common.collect.ImmutableList;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
+import net.foxyas.changedaddon.ability.ThunderBoltAbility;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -87,7 +88,7 @@ public class AddonLatexVariant {
             .groundSpeed(1.175F).swimSpeed(1.05F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp2")));
 
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
-            .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).transfurMode(TransfurMode.NONE).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
+            .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
 
     public static final LatexVariant<Experiment10Entity> EXPERIMENT_10_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
             .groundSpeed(1.17F).swimSpeed(1.15F).reducedFall().jumpStrength(1.5F).transfurMode(TransfurMode.NONE).scares(List.of(EnderMan.class,WitherSkeleton.class,Creeper.class, AbstractGolem.class,Piglin.class,PiglinBrute.class)).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_experiment_10")));
@@ -95,7 +96,7 @@ public class AddonLatexVariant {
     //Boss Transfurs
     public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_BOSS_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
-            .groundSpeed(1.25F).swimSpeed(1.20F).reducedFall().jumpStrength(1.75F).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(60).build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
+            .groundSpeed(1.25F).swimSpeed(1.20F).reducedFall().jumpStrength(1.75F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(60).build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
 
 
 

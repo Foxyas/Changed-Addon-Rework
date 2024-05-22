@@ -11041,6 +11041,74 @@
         ]
       },
       "path": "~/TransfurSounds"
+    },
+    {
+      "name": "Exp9Stats",
+      "type": "procedure",
+      "sortid": 547,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "exp_9_stats",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Exp9StatsProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "damagesource",
+            "type": "damagesource"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "amount",
+            "type": "number"
+          }
+        ]
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "BioSynthStats",
+      "type": "procedure",
+      "sortid": 548,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "bio_synth_stats",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/BioSynthStatsProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "damagesource",
+            "type": "damagesource"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "amount",
+            "type": "number"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wolfyloot",
+      "type": "loottable",
+      "sortid": 549,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "wolfyloot",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/wolfy.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -11794,6 +11862,7 @@
       "gui.changed_addon.bookpagenumber_3.label_sseed": "s\u003dseed",
       "changedaddon.friendlymode.off": "Friendly Mode Deactivated",
       "gui.changed_addon.bookrecipepage_6.button_back": "Back",
+      "changed_addon.ability.leap": "Leap",
       "item.minecraft.tipped_arrow.effect.transfur_sickness_potion": "Arrow of Transfur Sickness",
       "item.changed_addon.painite_armor_chestplate": "Painite Chestplate",
       "changedaddon.friendlygrab.dont_want": "They don\u0027t want to be friendly grabbed",
