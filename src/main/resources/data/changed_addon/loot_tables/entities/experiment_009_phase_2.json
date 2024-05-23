@@ -9,27 +9,16 @@
           "name": "changed_addon:experiment_009dna",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "function": "minecraft:looting_enchant",
               "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 3
-              },
-              "add": true,
-              "conditions": [
-                {
-                  "condition": "minecraft:random_chance_with_looting",
-                  "chance": 0.5,
-                  "looting_multiplier": 1.1
-                }
-              ]
+                "min": 0,
+                "max": 1
+              }
             }
           ],
           "conditions": [
             {
-              "condition": "minecraft:random_chance_with_looting",
-              "chance": 1,
-              "looting_multiplier": 1
+              "condition": "minecraft:killed_by_player"
             }
           ]
         }
@@ -52,12 +41,6 @@
                 "min": 1,
                 "max": 16
               }
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.8
             }
           ]
         },
@@ -101,12 +84,6 @@
                 "max": 5
               }
             }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.5
-            }
           ]
         },
         {
@@ -120,12 +97,6 @@
                 "min": 16,
                 "max": 32
               }
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.9
             }
           ]
         },
@@ -141,12 +112,6 @@
                 "max": 20
               }
             }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.8
-            }
           ]
         },
         {
@@ -160,12 +125,6 @@
                 "min": 1,
                 "max": 5
               }
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.5
             }
           ]
         },
@@ -181,12 +140,6 @@
                 "max": 20
               }
             }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.5
-            }
           ]
         },
         {
@@ -199,13 +152,16 @@
               "count": {
                 "min": 5,
                 "max": 25
-              }
-            }
-          ],
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.35
+              },
+              "conditions": [
+                {
+                  "condition": "minecraft:killed_by_player"
+                },
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.75
+                }
+              ]
             }
           ]
         },
@@ -219,18 +175,40 @@
               "count": {
                 "min": 10,
                 "max": 32
+              },
+              "conditions": [
+                {
+                  "condition": "minecraft:killed_by_player"
+                },
+                {
+                  "condition": "minecraft:random_chance",
+                  "chance": 0.5
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "changed:latex_syringe",
+          "functions": [
+            {
+              "function": "changed:set_variant",
+              "variant": "changed_addon:form_ket_experiment009"
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "min": 0,
+                "max": 1
               }
             }
           ],
           "conditions": [
             {
-              "condition": "minecraft:random_chance",
-              "chance": 0.2
-            },
-            {
               "condition": "minecraft:random_chance_with_looting",
-              "chance": 0.4,
-              "looting_multiplier": 1.1
+              "chance": 0.02,
+              "looting_multiplier": 0.05
             }
           ]
         }
