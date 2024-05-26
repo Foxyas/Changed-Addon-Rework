@@ -42,24 +42,24 @@ public class FemaleExp2Model extends LatexHumanoidModel<Exp2FemaleEntity> implem
         this.LeftArm = root.getChild("LeftArm");
 
         var tailPrimary = Tail.getChild("TailPrimary");
-        var tailSecondary = tailPrimary.getChild("TailSecondary");
-        var tailTertiary = tailSecondary.getChild("TailTertiary");
+		var tailSecondary = tailPrimary.getChild("TailSecondary");
+		var tailTertiary = tailSecondary.getChild("TailTertiary");
 		var tailQuaternary = tailTertiary.getChild("TailQuaternary");
-		//var tailQuinternary = tailQuaternary.getChild("TailQuinternary");
+		var tailQuinternary = tailQuaternary.getChild("TailQuinternary");
 
 
-        var leftLowerLeg = LeftLeg.getChild("LeftLowerLeg");
-        var leftFoot = leftLowerLeg.getChild("LeftFoot");
-        var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
-        var rightFoot = rightLowerLeg.getChild("RightFoot");
+		var leftLowerLeg = LeftLeg.getChild("LeftLowerLeg");
+		var leftFoot = leftLowerLeg.getChild("LeftFoot");
+		var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
+		var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
-                .addPreset(AnimatorPresets.catLike(
-                        Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
-                        Torso, LeftArm, RightArm,
-                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary,tailQuaternary),
-                        LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
-    }
+		animator = LatexAnimator.of(this).hipOffset(-1.5f)
+				.addPreset(AnimatorPresets.catLike(
+						Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
+						Torso, LeftArm, RightArm,
+						Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary , tailQuinternary),
+						LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
+	}
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
@@ -154,9 +154,13 @@ public class FemaleExp2Model extends LatexHumanoidModel<Exp2FemaleEntity> implem
 
 		PartDefinition Base_r3 = TailTertiary.addOrReplaceChild("Base_r3", CubeListBuilder.create().texOffs(27, 32).addBox(-2.5F, 4.55F, -3.3F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.25F, -4.5F, 1.5272F, 0.0F, 0.0F));
 
-		PartDefinition TailQuaternary = TailTertiary.addOrReplaceChild("TailQuaternary", CubeListBuilder.create(), PartPose.offset(0.0F, 1.0F, 7.5F));
+		PartDefinition TailQuaternary = TailTertiary.addOrReplaceChild("TailQuaternary", CubeListBuilder.create(), PartPose.offset(0.0F, 1.0F, 8.0F));
 
-		PartDefinition Base_r4 = TailQuaternary.addOrReplaceChild("Base_r4", CubeListBuilder.create().texOffs(60, 63).addBox(-2.0F, 5.5F, -3.8F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offsetAndRotation(0.0F, -1.0F, -5.5F, 1.7017F, 0.0F, 0.0F));
+		PartDefinition Base_r4 = TailQuaternary.addOrReplaceChild("Base_r4", CubeListBuilder.create().texOffs(73, 53).addBox(-2.5F, 4.55F, -3.3F, 5.0F, 8.0F, 5.0F, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(0.0F, -0.75F, -4.75F, 1.5708F, 0.0F, 0.0F));
+
+		PartDefinition TailQuinternary = TailQuaternary.addOrReplaceChild("TailQuinternary", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 7.5F));
+
+		PartDefinition Base_r5 = TailQuinternary.addOrReplaceChild("Base_r5", CubeListBuilder.create().texOffs(60, 63).addBox(-2.0F, 5.5F, -3.8F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offsetAndRotation(0.0F, -1.0F, -5.5F, 1.7017F, 0.0F, 0.0F));
 
 		PartDefinition Plantoids = Torso.addOrReplaceChild("Plantoids", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, -2.0F));
 

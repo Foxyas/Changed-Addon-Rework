@@ -45,7 +45,7 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
 		var tailSecondary = tailPrimary.getChild("TailSecondary");
 		var tailTertiary = tailSecondary.getChild("TailTertiary");
 		var tailQuaternary = tailTertiary.getChild("TailQuaternary");
-		//var tailQuinternary = tailQuaternary.getChild("TailQuinternary");
+		var tailQuinternary = tailQuaternary.getChild("TailQuinternary");
 
 
 		var leftLowerLeg = LeftLeg.getChild("LeftLowerLeg");
@@ -57,7 +57,7 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
 				.addPreset(AnimatorPresets.catLike(
 						Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
 						Torso, LeftArm, RightArm,
-						Tail, List.of(tailPrimary, tailSecondary, tailTertiary,tailQuaternary),
+						Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary , tailQuinternary),
 						LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
 	}
 
@@ -151,9 +151,13 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
 
 		PartDefinition Base_r3 = TailTertiary.addOrReplaceChild("Base_r3", CubeListBuilder.create().texOffs(0, 32).addBox(-2.5F, 4.55F, -3.3F, 5.0F, 8.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -0.25F, -4.5F, 1.5272F, 0.0F, 0.0F));
 
-		PartDefinition TailQuaternary = TailTertiary.addOrReplaceChild("TailQuaternary", CubeListBuilder.create(), PartPose.offset(0.0F, 1.0F, 7.5F));
+		PartDefinition TailQuaternary = TailTertiary.addOrReplaceChild("TailQuaternary", CubeListBuilder.create(), PartPose.offset(0.0F, 1.0F, 8.0F));
 
-		PartDefinition Base_r4 = TailQuaternary.addOrReplaceChild("Base_r4", CubeListBuilder.create().texOffs(30, 60).addBox(-2.0F, 5.5F, -3.8F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offsetAndRotation(0.0F, -1.0F, -5.5F, 1.7017F, 0.0F, 0.0F));
+		PartDefinition Base_r4 = TailQuaternary.addOrReplaceChild("Base_r4", CubeListBuilder.create().texOffs(59, 62).addBox(-2.5F, 4.55F, -3.3F, 5.0F, 8.0F, 5.0F, new CubeDeformation(-0.01F)), PartPose.offsetAndRotation(0.0F, -0.75F, -4.75F, 1.5708F, 0.0F, 0.0F));
+
+		PartDefinition TailQuinternary = TailQuaternary.addOrReplaceChild("TailQuinternary", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 7.5F));
+
+		PartDefinition Base_r5 = TailQuinternary.addOrReplaceChild("Base_r5", CubeListBuilder.create().texOffs(30, 60).addBox(-2.0F, 5.5F, -3.8F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offsetAndRotation(0.0F, -1.0F, -5.5F, 1.7017F, 0.0F, 0.0F));
 
 		PartDefinition NeckFur = Torso.addOrReplaceChild("NeckFur", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -181,7 +185,7 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
 
 		return LayerDefinition.create(meshdefinition, 96, 96);
 	}
-
+	
     @Override
     public void prepareMobModel (Exp2MaleEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);

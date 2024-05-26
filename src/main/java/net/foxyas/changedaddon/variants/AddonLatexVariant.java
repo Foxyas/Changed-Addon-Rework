@@ -88,10 +88,10 @@ public class AddonLatexVariant {
             .groundSpeed(1.175F).swimSpeed(1.05F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp2")));
 
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
-            .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
+            .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).additionalHealth(20).nightVision().build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
 
     public static final LatexVariant<Experiment10Entity> EXPERIMENT_10_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
-            .groundSpeed(1.17F).swimSpeed(1.15F).reducedFall().jumpStrength(1.5F).transfurMode(TransfurMode.NONE).scares(List.of(EnderMan.class,WitherSkeleton.class,Creeper.class, AbstractGolem.class,Piglin.class,PiglinBrute.class)).additionalHealth(20).build(new ResourceLocation("changed_addon", "form_experiment_10")));
+            .groundSpeed(1.17F).swimSpeed(1.15F).reducedFall().jumpStrength(1.5F).transfurMode(TransfurMode.NONE).scares(List.of(EnderMan.class,WitherSkeleton.class,Creeper.class, AbstractGolem.class,Piglin.class,PiglinBrute.class)).additionalHealth(20).nightVision().build(new ResourceLocation("changed_addon", "form_experiment_10")));
 
     //Boss Transfurs
     public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);
