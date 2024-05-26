@@ -96,7 +96,7 @@ public class AddonLatexVariant {
     //Boss Transfurs
     public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_BOSS_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
-            .groundSpeed(1.25F).swimSpeed(1.20F).reducedFall().jumpStrength(1.75F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(60).build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
+            .groundSpeed(1.25F).swimSpeed(1.20F).reducedFall().jumpStrength(1.75F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(60).nightVision().build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
 
 
 

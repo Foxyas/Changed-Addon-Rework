@@ -26,7 +26,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 	@Override
 	public TranslatableComponent getDisplayName(IAbstractLatex entity) {
-		return new TranslatableComponent("changed_addon.ability.leap");
+		return new TranslatableComponent("changed_addon.ability.thunder");
 	}
 
 	@Override

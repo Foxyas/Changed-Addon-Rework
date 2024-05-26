@@ -142,7 +142,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
 	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
 	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
-	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, null);
+	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
 
 	@SubscribeEvent
