@@ -44,6 +44,8 @@ public class FemaleExp2Model extends LatexHumanoidModel<Exp2FemaleEntity> implem
         var tailPrimary = Tail.getChild("TailPrimary");
         var tailSecondary = tailPrimary.getChild("TailSecondary");
         var tailTertiary = tailSecondary.getChild("TailTertiary");
+		var tailQuaternary = tailTertiary.getChild("TailQuaternary");
+		//var tailQuinternary = tailQuaternary.getChild("TailQuinternary");
 
 
         var leftLowerLeg = LeftLeg.getChild("LeftLowerLeg");
@@ -55,11 +57,11 @@ public class FemaleExp2Model extends LatexHumanoidModel<Exp2FemaleEntity> implem
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
-                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
+                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary,tailQuaternary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
     }
 
-    public static LayerDefinition createBodyLayer() {
+	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
