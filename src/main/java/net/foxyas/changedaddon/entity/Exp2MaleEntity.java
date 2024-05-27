@@ -1,9 +1,14 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.HairStyle;
 import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -38,6 +43,44 @@ public class Exp2MaleEntity extends AbstractCanTameLatexEntity {
 		xpReward = 0;
 		setNoAi(false);
 		setPersistenceRequired();
+	}
+
+	public InteractionResult Exp2(Player player, InteractionHand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
+		if (this.level.isClientSide) {
+			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+		} else {
+			if (!this.isTame() && this.isTameItem(itemstack)) {
+				if (!player.getAbilities().instabuild) {
+					itemstack.shrink(1);
+				}
+				boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+
+				if (!istransfur && this.random.nextInt(2) == 0) { // One in 2 chance
+					this.tame(player);
+					this.navigation.stop();
+					this.setTarget(null);
+					this.level.broadcastEntityEvent(this, (byte)7);
+				} else if(istransfur && this.random.nextInt(12) == 0) { //One in 12
+					this.tame(player);
+					this.navigation.stop();
+					this.setTarget(null);
+					this.level.broadcastEntityEvent(this, (byte)7);
+				} else {
+					this.level.broadcastEntityEvent(this, (byte)6);
+				}
+
+				return InteractionResult.SUCCESS;
+			}
+
+			return super.mobInteract(player, hand);
+		}
+	}
+
+	@Override
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+		return Exp2(player,hand);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
@@ -42,7 +43,6 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
 
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameLatexEntity.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameLatexEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-
 
     protected void registerGoals() {
         super.registerGoals();
@@ -286,5 +286,72 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
 
     public boolean isTameItem(ItemStack stack) {
         return stack.is(Items.COD) || stack.is(ChangedItems.ORANGE.get()) || stack.is(Items.COOKED_COD) || stack.is(Items.SALMON) || stack.is(Items.COOKED_SALMON);
+    }
+
+    //Styles For Tame
+    public InteractionResult Exp2Sytle(Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (this.level.isClientSide) {
+            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        } else {
+            if (!this.isTame() && this.isTameItem(itemstack)) {
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+                boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+
+                if (!istransfur && this.random.nextInt(2) == 0) { // One in 2 chance
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte)7);
+                } else if(istransfur && this.random.nextInt(12) == 0) { //One in 12
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte)7);
+                } else {
+                    this.level.broadcastEntityEvent(this, (byte)6);
+                }
+
+                return InteractionResult.SUCCESS;
+            }
+
+            return super.mobInteract(player, hand);
+        }
+    }
+
+    public InteractionResult BioSynthSnepStyle(Player player, InteractionHand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (this.level.isClientSide) {
+            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        } else {
+            if (!this.isTame() && this.isTameItem(itemstack)) {
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+                boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+
+                if (!istransfur && this.random.nextInt(3) == 0) { // One in 3 chance
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte)7);
+                } else if(istransfur && this.random.nextInt(6) == 0) {
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte)7);
+                } else {
+                    this.level.broadcastEntityEvent(this, (byte)6);
+                }
+
+                return InteractionResult.SUCCESS;
+            }
+
+            return super.mobInteract(player, hand);
+        }
     }
 }

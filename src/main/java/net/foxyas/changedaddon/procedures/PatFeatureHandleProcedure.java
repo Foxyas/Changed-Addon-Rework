@@ -1,9 +1,14 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
+import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
+import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.variants.AddonLatexVariant;
 import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,6 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -94,12 +100,16 @@ public class PatFeatureHandleProcedure {
 
 	private static void handleLatexEntity(Entity player, Entity target, LevelAccessor world) {
 		boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
-
+		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant((Player) player) != null && ((ProcessTransfur.getPlayerLatexVariant((Player) player)).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.male()) || ProcessTransfur.getPlayerLatexVariant((Player) player).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.female())));
 		//if (!isPlayerTransfur) return;
 
 		if (!(target instanceof Experiment10Entity) && !(target instanceof KetExperiment009Entity) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
 			if (player instanceof Player) {
 				((Player) player).swing(getSwingHand(player), true);
+				if(target instanceof Exp2MaleEntity || target instanceof Exp2FemaleEntity && isPlayerTransfur){
+					if(!isPlayerTransfurInExp2)
+					((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+				}
 			}
 			if (world instanceof ServerLevel serverLevel) {
 				serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
@@ -113,14 +123,28 @@ public class PatFeatureHandleProcedure {
 	private static void handlePlayerEntity(Entity player, Player target, LevelAccessor world) {
 		boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 		boolean isTargetTransfur = target.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant((Player) player) != null && ((ProcessTransfur.getPlayerLatexVariant((Player) player)).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.male()) || ProcessTransfur.getPlayerLatexVariant((Player) player).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.female())));
+		boolean isTargetTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant(target) != null && (ProcessTransfur.getPlayerLatexVariant(target).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.male()) || ProcessTransfur.getPlayerLatexVariant(target).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.female())));
 
+		
 		if ((isPlayerTransfur || !isPlayerTransfur) && (!isTargetTransfur || isTargetTransfur) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
-			if (!isPlayerTransfur && !isTargetTransfur){return;}//Dont Be Able to Pet if atlest one is Transfur :P
-			
-			if (player instanceof Player) {
+			if (!isPlayerTransfur && !isTargetTransfur){return;}//Don't Be Able to Pet if at lest one is Transfur :P
+
+			if (player instanceof Player player1) {
 				((Player) player).swing(getSwingHand(player), true);
-				
+				if(isPlayerTransfur && isTargetTransfur) { //Add The Effect if is Transfur is Exp2
+				 if (isPlayerTransfurInExp2 && !isTargetTransfurInExp2){
+					 target.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+					} else if (!isPlayerTransfurInExp2 && isTargetTransfurInExp2) {
+					 ((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+				 	} else if (isPlayerTransfurInExp2 && isTargetTransfurInExp2){
+					 //Exp2 Can't give Exp2 Transfur Sickness
+				 	}
+				}
 			}
+
+
+
 			if (isTargetTransfur && world instanceof ServerLevel serverLevel) {
 				serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
 			}
@@ -131,6 +155,7 @@ public class PatFeatureHandleProcedure {
 			}
 		}
 	}
+
 
 	private static void handlePatableEntity(Entity player, Entity target, LevelAccessor world) {
 		if (isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {

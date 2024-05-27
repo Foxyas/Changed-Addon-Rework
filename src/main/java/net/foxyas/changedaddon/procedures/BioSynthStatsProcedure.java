@@ -40,13 +40,5 @@ public class BioSynthStatsProcedure {
 				((LivingHurtEvent) event).setAmount((Math.round(Phase3Math)));
 			}
 		}
-		if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_exp2")) {
-			if ((damagesource).isFire()) {
-				math = amount / 2;
-				Phase2Math = math * 0.35;
-				Phase3Math = math + Phase2Math;
-				((LivingHurtEvent) event).setAmount((Math.round(Phase3Math)));
-			}
-		}
 	}
 }
