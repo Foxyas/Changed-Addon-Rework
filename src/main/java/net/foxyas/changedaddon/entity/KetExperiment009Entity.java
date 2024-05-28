@@ -1,61 +1,30 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
-import net.foxyas.changedaddon.fluid.LitixCamoniaFluidFluid;
-import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
-import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.level.material.WaterFluid;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.event.TickEvent;
-
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.GameType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.sounds.Music;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.sounds.MusicManager;
-import net.minecraft.client.Minecraft;
-
-import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
-import net.foxyas.changedaddon.entity.Experiment009Entity;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
-import net.foxyas.changedaddon.ChangedAddonMod;
-
-import javax.annotation.Nullable;
-
-import java.util.Comparator;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.procedures.Experiment009phase2OnEntityTickUpdateProcedure;
-import net.ltxprogrammer.changed.entity.HairStyle;
-import net.ltxprogrammer.changed.entity.LatexEntity;
-import net.ltxprogrammer.changed.entity.LatexType;
-import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.entity.beast.*;
+import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
+import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -196,6 +165,17 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 		if (source.isProjectile())
 			return false;
 		return super.hurt(source, amount);
+	}
+
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+		setEyeStyle(EyeStyle.TALL);
+		CompoundTag dataIndex0 = new CompoundTag();
+		this.saveWithoutId(dataIndex0);
+		dataIndex0.getCompound("LocalVariantInfo").putFloat("scale", 1);
+		this.load(dataIndex0);
+		return retval;
 	}
 
 	@Override

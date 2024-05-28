@@ -107,7 +107,7 @@ public class PatFeatureHandleProcedure {
 			if (player instanceof Player) {
 				((Player) player).swing(getSwingHand(player), true);
 				if(target instanceof Exp2MaleEntity || target instanceof Exp2FemaleEntity && isPlayerTransfur){
-					if(!isPlayerTransfurInExp2)
+					if(!isPlayerTransfurInExp2 && isPlayerTransfur)
 					((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 				}
 			}

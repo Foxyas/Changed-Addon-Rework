@@ -11213,7 +11213,22 @@
             "type": "number"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "PainiteAccessoriesRecipe",
+      "type": "recipe",
+      "sortid": 555,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "painite_accessories_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/painite_accessories_recipe.json"
+        ]
+      },
+      "path": "~/Recipes"
     }
   ],
   "variable_elements": [
