@@ -25,6 +25,7 @@ import net.foxyas.changedaddon.client.renderer.Experiment009phase2Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.Exp2MaleRenderer;
 import net.foxyas.changedaddon.client.renderer.Exp2FemaleRenderer;
+import net.foxyas.changedaddon.client.renderer.ErikRenderer;
 import net.foxyas.changedaddon.client.renderer.DazedRenderer;
 import net.foxyas.changedaddon.client.renderer.BunyRenderer;
 
@@ -50,5 +51,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.EXP_2_MALE.get(), Exp2MaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXP_2_FEMALE.get(), Exp2FemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.WOLFY.get(), WolfyRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.ERIK.get(), ErikRenderer::new);
 	}
 }
