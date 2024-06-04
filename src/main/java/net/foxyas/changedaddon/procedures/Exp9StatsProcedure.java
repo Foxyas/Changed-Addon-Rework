@@ -38,6 +38,8 @@ public class Exp9StatsProcedure {
 				}
 			} else if ((damagesource).isFire()) {
 				((LivingHurtEvent) event).setAmount((Math.round((amount / 2))));
+			} else if ((damagesource).isFire() && entity.isOnFire()) {
+				((LivingHurtEvent) event).setAmount((Math.round((amount / 2))));
 			}
 		}
 	}

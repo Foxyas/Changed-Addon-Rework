@@ -11244,6 +11244,52 @@
         ]
       },
       "path": "~/Entity"
+    },
+    {
+      "name": "ForceField",
+      "type": "procedure",
+      "sortid": 557,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "force_field",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ObtainAElectricKatana",
+      "type": "achievement",
+      "sortid": 558,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "obtain_a_electric_katana",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/obtain_a_electric_katana.json"
+        ]
+      }
+    },
+    {
+      "name": "SwimRegret",
+      "type": "achievement",
+      "sortid": 559,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "swim_regret",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/swim_regret.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -11626,6 +11672,7 @@
       "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
       "item.changed_addon.electric_katana": "§bElectric Katana",
       "entity.changed_addon.erik": "Erik",
+      "advancements.obtain_a_electric_katana.title": "An Shocking Upgrade",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.book_pagenumber_6.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
@@ -11655,6 +11702,7 @@
       "gui.changed_addon.bookrecipepage_8.label_3": "3",
       "gui.changed_addon.bookrecipepage_10.button_back": "Back",
       "gamerule.doDazedLatexBurn.description": "When On Make The Dazed Latexs Burn in Sun Light like in Dazed Game",
+      "advancements.swim_regret.descr": "Swim in water with a form that has low swim speed for a minute",
       "gui.changed_addon.bookrecipepage_10.label_f1": "F",
       "gui.changed_addon.bookrecipepage_10.label_f2": "F",
       "gui.changed_addon.book_pagenumber_2.label_the_recipe_for_the_main_item_sho": " LitixCamonia. LitixCamonia can be injected to",
@@ -11741,6 +11789,7 @@
       "item.changed_addon.syringewithlitixcammonia": "Syringe with Litix-Camonia",
       "item.changed_addon.wolfy_spawn_egg": "Wolfy Spawn Egg",
       "item.changed_addon.laethin_syringe": "Laethin Syringe",
+      "advancements.swim_regret.title": "Regret",
       "gui.changed_addon.informant_gui.label_empty": "?",
       "entity.changed_addon.biosynth_snow_leopard_male": "Male BioSynth Snow Leopard",
       "gui.changed_addon.bookpagenumber_3.label_below": " below",
@@ -11790,6 +11839,7 @@
       "config.changed_addon.changed_addon_client_configs": "ChangedAddon-Client",
       "changedaddon.event.grab.when.you.die": "The person who was grabbing you §4Died§r before They could do anything!!",
       "item.changed_addon.transfur_totem": "Latex Totem",
+      "advancements.obtain_a_electric_katana.descr": "Get the electric katana!",
       "item.changed_addon.orangejuice": "Orange Juice",
       "gui.changed_addon.book_pagenumber_6.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",

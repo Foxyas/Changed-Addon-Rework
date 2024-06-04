@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.variants;
 //import net.foxyas.changedaddon.ChangedAddonAbilitys;
 import com.google.common.collect.ImmutableList;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
+import net.foxyas.changedaddon.ability.PsychicPulseAbility;
 import net.foxyas.changedaddon.ability.ThunderBoltAbility;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
@@ -84,6 +85,9 @@ public class AddonLatexVariant {
 
 
     //Experiments
+    public static final GenderedVariant<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> EXP1_GENDERED_VARIANT = LatexVariant.register(GenderedVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX, ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
+            .groundSpeed(1.1F).swimSpeed(1F).additionalHealth(6).nightVision().addAbility(ChangedAddonAbilitys.PSYCHIC_PULSE).addAbility(ChangedAddonAbilitys.PSYCHIC_HOLD).addAbility(ChangedAbilities.SWITCH_GENDER).split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp1")));
+
     public static final GenderedVariant<Exp2MaleEntity,Exp2FemaleEntity> EXP2_GENDERED_VARIANT = LatexVariant.register(GenderedVariant.Builder.of(LatexVariant.LATEX_SNOW_LEOPARD,ChangedAddonModEntities.EXP_2_MALE,ChangedAddonModEntities.EXP_2_FEMALE)
             .groundSpeed(1.175F).swimSpeed(1.05F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp2")));
 

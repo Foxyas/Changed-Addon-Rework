@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:ammonia_compressed"
+    },
+    "title": {
+      "translate": "advancements.swim_regret.title"
+    },
+    "description": {
+      "translate": "advancements.swim_regret.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "swim_regret": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}
