@@ -1,0 +1,25 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Smithing",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "smithingInputStack": {
+      "value": "CUSTOM:ElectricKatana"
+    },
+    "smithingInputAdditionStack": {
+      "value": "CUSTOM:PainiteBlock"
+    },
+    "smithingReturnStack": {
+      "value": "CUSTOM:ElectricKatanaRed"
+    },
+    "name": "red_electric_katana_recipe",
+    "namespace": "mod"
+  }
+}

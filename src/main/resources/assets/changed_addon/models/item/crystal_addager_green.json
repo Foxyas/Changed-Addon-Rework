@@ -1,0 +1,7 @@
+{
+  "parent": "changed_addon:custom/crystal_dagger",
+  "textures": {
+    "0": "changed_addon:blocks/greenaddager",
+    "particle": "changed_addon:items/greenaddager"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:crystal_addager_red"
+    },
+    "title": {
+      "translate": "advancements.obtain_red_crystal_dagger.title"
+    },
+    "description": {
+      "translate": "advancements.obtain_red_crystal_dagger.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "obtain_red_crystal_dagger": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:crystal_addager_red"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250,
+    "recipes": [
+      "changed_addon:crystal_addager_red_recipe",
+      "changed_addon:crystal_addager_dark_recipe",
+      "changed_addon:crystal_addager_green_recipe"
+    ]
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

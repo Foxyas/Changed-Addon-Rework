@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "changed_addon:electric_katana"
+  },
+  "addition": {
+    "item": "changed_addon:painite_block"
+  },
+  "result": {
+    "item": "changed_addon:electric_katana_red"
+  }
+}

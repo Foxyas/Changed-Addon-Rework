@@ -6,6 +6,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.Random;
+
 public class AddTransfurProgressProcedure {
 	public static void add(Entity entity,float amount) {
 		if (entity == null) {
@@ -127,6 +129,51 @@ public class AddTransfurProgressProcedure {
 						/*Variant Check*/LatexVariant.LIGHT_LATEX_WOLF.male());
 				ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
 			}
+		}
+	}
+
+	public static void addRed(Entity entity,float amount) {
+		if (entity == null) {
+			return;
+		}
+
+		if (entity instanceof Player player){
+			if(player.getLevel().random.nextInt(10) > 5) {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF);
+			} else {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF_HORNED);
+			}
+		}
+	}
+
+	public static void addBlack(Entity entity,float amount) {
+		if (entity == null) {
+			return;
+		}
+
+		if (entity instanceof Player player){
+			if(player.getLevel().random.nextInt(5) <= 1) {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+			} else if ((player.getLevel().random.nextInt(5) == 2)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_DRAGON);
+			} else if ((player.getLevel().random.nextInt(5) == 3)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_PUP);
+			} else if ((player.getLevel().random.nextInt(5) == 4)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_YUFENG);
+			} else if ((player.getLevel().random.nextInt(5) >= 5)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+			}
+		}
+	}
+
+	public static void addGreen(Entity entity,float amount) {
+		if (entity == null) {
+			return;
+		}
+
+		if (entity instanceof Player player){
+			ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_BEIFENG);
+
 		}
 	}
 }

@@ -2,10 +2,10 @@
   "_fv": 47,
   "_type": "achievement",
   "definition": {
-    "achievementName": "Regret",
+    "achievementName": "Regret!",
     "achievementDescription": "Swim in water with a form that has low swim speed for a minute",
     "achievementIcon": {
-      "value": "CUSTOM:AmmoniaCompressed"
+      "value": "Items.FISH#1"
     },
     "background": "Default",
     "disableDisplay": false,
@@ -15,8 +15,8 @@
     "rewardLoot": [],
     "rewardRecipes": [],
     "rewardFunction": "No function",
-    "rewardXP": 0,
-    "achievementType": "goal",
+    "rewardXP": 250,
+    "achievementType": "challenge",
     "parent": {
       "value": "CUSTOM:ChangedaddonAdvancement"
     },

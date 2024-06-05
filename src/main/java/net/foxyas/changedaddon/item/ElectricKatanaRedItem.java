@@ -17,11 +17,11 @@ import net.foxyas.changedaddon.procedures.ElectricKatanaLivingEntityIsHitWithToo
 import net.foxyas.changedaddon.procedures.ElectricKatanaEntitySwingsItemProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 
-public class ElectricKatanaItem extends SwordItem {
-	public ElectricKatanaItem() {
+public class ElectricKatanaRedItem extends SwordItem {
+	public ElectricKatanaRedItem() {
 		super(new Tier() {
 			public int getUses() {
-				return 1324;
+				return 1536;
 			}
 
 			public float getSpeed() {
@@ -29,7 +29,7 @@ public class ElectricKatanaItem extends SwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 4f;
+				return 8f;
 			}
 
 			public int getLevel() {
@@ -41,9 +41,9 @@ public class ElectricKatanaItem extends SwordItem {
 			}
 
 			public Ingredient getRepairIngredient() {
-				return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))));
+				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))), Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA_RED.get())));
 			}
-		}, 3, -2.25f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
+		}, 3, -2.2f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
 	}
 
 	@Override

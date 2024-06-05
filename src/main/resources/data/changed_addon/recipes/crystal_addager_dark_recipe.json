@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  2",
+    " 4 ",
+    "6  "
+  ],
+  "key": {
+    "2": {
+      "tag": "changed:dark_crystal"
+    },
+    "4": {
+      "tag": "changed:dark_crystal"
+    },
+    "6": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "changed_addon:crystal_addager_black",
+    "count": 1
+  }
+}

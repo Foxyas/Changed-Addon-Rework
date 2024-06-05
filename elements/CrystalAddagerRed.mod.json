@@ -1,0 +1,30 @@
+{
+  "_fv": 47,
+  "_type": "tool",
+  "definition": {
+    "toolType": "Sword",
+    "renderType": 1,
+    "texture": "redaddager",
+    "customModelName": "crystal_dagger:red",
+    "name": "Red Crystal Addager",
+    "specialInfo": [],
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "harvestLevel": 1,
+    "efficiency": 4.0,
+    "attackSpeed": 1.6,
+    "enchantability": 20,
+    "damageVsEntity": 5.0,
+    "usageCount": 524,
+    "blocksAffected": [],
+    "hasGlow": false,
+    "repairItems": [],
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "onEntityHitWith": {
+      "name": "CrystalAddagerRedLivingEntityIsHitWithTool"
+    }
+  }
+}

@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " 42",
-    "244",
-    "62 "
+    "344",
+    "63 "
   ],
   "key": {
     "2": {
@@ -14,6 +14,9 @@
     },
     "6": {
       "item": "changed:tsc_baton"
+    },
+    "3": {
+      "item": "minecraft:redstone"
     }
   },
   "result": {

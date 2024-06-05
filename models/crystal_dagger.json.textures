@@ -1,0 +1,28 @@
+{
+  "mappings": {
+    "red": {
+      "map": {
+        "0": "redaddager"
+      },
+      "name": "red"
+    },
+    "gold": {
+      "map": {
+        "0": "goldenaddager"
+      },
+      "name": "gold"
+    },
+    "default": {
+      "map": {
+        "0": "greenaddager"
+      },
+      "name": "default"
+    },
+    "black": {
+      "map": {
+        "0": "blackaddager"
+      },
+      "name": "black"
+    }
+  }
+}

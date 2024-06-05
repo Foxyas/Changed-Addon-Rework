@@ -4,27 +4,27 @@
   "definition": {
     "toolType": "Sword",
     "renderType": 1,
-    "texture": "blue_katana_energy",
-    "customModelName": "electric_katana:default",
-    "name": "§bElectric Katana",
+    "texture": "red_katana",
+    "customModelName": "electric_katana:red_blade",
+    "name": "§4Electric Katana§r",
     "specialInfo": [],
     "creativeTab": {
       "value": "COMBAT"
     },
     "harvestLevel": 1,
     "efficiency": 4.0,
-    "attackSpeed": 1.75,
+    "attackSpeed": 1.8,
     "enchantability": 30,
-    "damageVsEntity": 6.0,
-    "usageCount": 1324,
+    "damageVsEntity": 10.0,
+    "usageCount": 1536,
     "blocksAffected": [],
     "hasGlow": false,
     "repairItems": [
       {
-        "value": "CUSTOM:ElectricKatana"
+        "value": "TAG:changed_addon:tsc_katana_repair"
       },
       {
-        "value": "TAG:changed_addon:tsc_katana_repair"
+        "value": "CUSTOM:ElectricKatanaRed"
       }
     ],
     "immuneToFire": false,

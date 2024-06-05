@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  2",
+    " 4 ",
+    "6  "
+  ],
+  "key": {
+    "2": {
+      "item": "changed:latex_wolf_crystal_fragment"
+    },
+    "4": {
+      "item": "changed:latex_wolf_crystal_fragment"
+    },
+    "6": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "changed_addon:crystal_addager_red",
+    "count": 1
+  }
+}

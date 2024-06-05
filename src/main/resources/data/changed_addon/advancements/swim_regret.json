@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:ammonia_compressed"
+      "item": "minecraft:salmon"
     },
     "title": {
       "translate": "advancements.swim_regret.title"
@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancements.swim_regret.descr"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": false,
     "hidden": true
@@ -18,6 +18,9 @@
     "swim_regret": {
       "trigger": "minecraft:impossible"
     }
+  },
+  "rewards": {
+    "experience": 250
   },
   "parent": "changed_addon:changedaddon_advancement"
 }

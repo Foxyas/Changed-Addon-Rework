@@ -52,6 +52,7 @@ import net.foxyas.changedaddon.item.Experiment009dnaItem;
 import net.foxyas.changedaddon.item.Experiment009SpawneggItem;
 import net.foxyas.changedaddon.item.Experiment009Phase2RecordItem;
 import net.foxyas.changedaddon.item.EmptySprayItem;
+import net.foxyas.changedaddon.item.ElectricKatanaRedItem;
 import net.foxyas.changedaddon.item.ElectricKatanaItem;
 import net.foxyas.changedaddon.item.DevitemItem;
 import net.foxyas.changedaddon.item.Devitem5Item;
@@ -61,6 +62,9 @@ import net.foxyas.changedaddon.item.DevItem4Item;
 import net.foxyas.changedaddon.item.DevItem2Item;
 import net.foxyas.changedaddon.item.DescontrolSyringeItem;
 import net.foxyas.changedaddon.item.DEVITEM6Item;
+import net.foxyas.changedaddon.item.CrystalAddagerRedItem;
+import net.foxyas.changedaddon.item.CrystalAddagerGreenItem;
+import net.foxyas.changedaddon.item.CrystalAddagerBlackItem;
 import net.foxyas.changedaddon.item.ChangedbookItem;
 import net.foxyas.changedaddon.item.CatlyzerblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.CatalyzeddnaItem;
@@ -144,6 +148,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
 	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
+	public static final RegistryObject<Item> CRYSTAL_ADDAGER_RED = REGISTRY.register("crystal_addager_red", () -> new CrystalAddagerRedItem());
+	public static final RegistryObject<Item> CRYSTAL_ADDAGER_GREEN = REGISTRY.register("crystal_addager_green", () -> new CrystalAddagerGreenItem());
+	public static final RegistryObject<Item> CRYSTAL_ADDAGER_BLACK = REGISTRY.register("crystal_addager_black", () -> new CrystalAddagerBlackItem());
+	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
