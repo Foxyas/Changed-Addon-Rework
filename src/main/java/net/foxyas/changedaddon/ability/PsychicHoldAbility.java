@@ -27,7 +27,7 @@ public class PsychicHoldAbility extends SimpleAbility {
 
 	@Override
 	public ResourceLocation getTexture(IAbstractLatex entity) {
-		return new ResourceLocation("changed_addon:textures/screens/thunderbolt.png"); //Place holder
+		return new ResourceLocation("changed_addon:textures/screens/psychic_hold.png"); //Place holder
 	}
 
 	@Override
@@ -44,16 +44,16 @@ public class PsychicHoldAbility extends SimpleAbility {
 	@Override
 	public void startUsing(IAbstractLatex entity) {
 		super.startUsing(entity);
-		execute(entity.getLevel(),entity);
+		//execute(entity.getLevel(),entity);
 	}
 
 	@Override
 	public void tick(IAbstractLatex entity) {
 		super.tick(entity);
-		execute(entity.getLevel(),entity);
+		execute(entity.getLevel(),entity.getEntity());
 	}
 
-	public static void execute(LevelAccessor world, IAbstractLatex iAbstractLatex) {
+	public static void execute(LevelAccessor world, Entity iAbstractLatex) {
 		if (iAbstractLatex == null)
 			return;
 		if (iAbstractLatex instanceof Player entity) {

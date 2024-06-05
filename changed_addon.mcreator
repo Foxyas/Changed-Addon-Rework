@@ -11253,10 +11253,17 @@
       "locked_code": false,
       "registry_name": "force_field",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ForceFieldProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
             "type": "entity"
+          },
+          {
+            "name": "pulse",
+            "type": "logic"
           },
           {
             "name": "world",
@@ -11963,6 +11970,7 @@
       "gui.changed_addon.bookrecipepage_7.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "item.changed_addon.prototype_spawn_egg": "Prototype Spawn Egg",
       "block.changed_addon.painite_ore": "Deepslate Painite Ore",
+      "changed_addon.ability.psychic_pulse": "Psychic Pulse",
       "fluid.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
       "entity.changed_addon.dazed_latex": "Dazed Latex",
       "item.changed_addon.unifuserblock_illustrative_item": "IN Unifuser Block Illustrative Item",
@@ -12064,6 +12072,7 @@
       "gui.changed_addon.book_pagenumber_6.label_e_only_for_player": "-e (only for players)",
       "gui.changed_addon.book_pagenumber_6.label_friendly_modes": "-iendly modes (If Human this-",
       "advancements.gooey_friend.title": "Gooey Friend",
+      "changed_addon.ability.psychic_hold": "Psychic Hold",
       "gui.changed_addon.bookrecipepage_10.label_3": "3",
       "gui.changed_addon.book_recipe_page_11.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
       "item.changed_addon.foxyas_spawn_egg": "Foxyas Spawn Egg",
