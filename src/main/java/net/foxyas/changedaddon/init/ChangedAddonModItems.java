@@ -65,6 +65,7 @@ import net.foxyas.changedaddon.item.DEVITEM6Item;
 import net.foxyas.changedaddon.item.CrystalAddagerRedItem;
 import net.foxyas.changedaddon.item.CrystalAddagerGreenItem;
 import net.foxyas.changedaddon.item.CrystalAddagerBlackItem;
+import net.foxyas.changedaddon.item.CrowBarItem;
 import net.foxyas.changedaddon.item.ChangedbookItem;
 import net.foxyas.changedaddon.item.CatlyzerblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.CatalyzeddnaItem;
@@ -152,6 +153,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> CRYSTAL_ADDAGER_GREEN = REGISTRY.register("crystal_addager_green", () -> new CrystalAddagerGreenItem());
 	public static final RegistryObject<Item> CRYSTAL_ADDAGER_BLACK = REGISTRY.register("crystal_addager_black", () -> new CrystalAddagerBlackItem());
 	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
+	public static final RegistryObject<Item> CROW_BAR = REGISTRY.register("crow_bar", () -> new CrowBarItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
