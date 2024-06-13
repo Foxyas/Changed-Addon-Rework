@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "changed_addon:form_experiment_10"
+    "changed_addon:form_experiment_10",
+    "changed:form_latex_ming_cat"
   ]
 }

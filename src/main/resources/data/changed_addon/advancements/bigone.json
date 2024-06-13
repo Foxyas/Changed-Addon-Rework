@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:cod_bucket"
+    },
+    "title": {
+      "translate": "advancements.bigone.title"
+    },
+    "description": {
+      "translate": "advancements.bigone.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "bigone": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 400
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}
