@@ -1,6 +1,5 @@
 {
   "credit": "Made with Blockbench",
-  "parent": "darklatexpuddle",
   "texture_size": [
     64,
     64
@@ -376,6 +375,7 @@
         8
       ],
       "color": 0,
+      "nbt": "{}",
       "children": [
         0,
         1,

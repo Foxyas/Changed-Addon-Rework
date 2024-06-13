@@ -32,10 +32,6 @@ public class Exp9StatsProcedure {
 		if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_ket_experiment009")) {
 			if ((damagesource).isBypassInvul()) {
 				((LivingHurtEvent) event).setAmount((Math.round((amount / 2))));
-			} else if ((damagesource).getMsgId().equals(DamageSource.LIGHTNING_BOLT.getMsgId())) {
-				if (event != null && event.isCancelable()) {
-					event.setCanceled(true);
-				}
 			} else if ((damagesource).isFire()) {
 				((LivingHurtEvent) event).setAmount((Math.round((amount / 2))));
 			} else if ((damagesource).isFire() && entity.isOnFire()) {

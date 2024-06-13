@@ -1,6 +1,5 @@
 {
   "credit": "Made with Blockbench",
-  "parent": "Laser_Katana",
   "texture_size": [
     64,
     64
@@ -48476,7 +48475,7 @@
               ]
             },
             {
-              "name": "Edge?",
+              "name": "Edge",
               "origin": [
                 0,
                 0,

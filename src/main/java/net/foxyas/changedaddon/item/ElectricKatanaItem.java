@@ -43,7 +43,7 @@ public class ElectricKatanaItem extends SwordItem {
 			public Ingredient getRepairIngredient() {
 				return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))));
 			}
-		}, 3, -2.25f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
+		}, 3, -2.3f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
 	}
 
 	@Override

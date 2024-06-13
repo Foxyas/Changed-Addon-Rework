@@ -39,11 +39,6 @@ public class Exp10StatsProcedure {
 				Phase3Math = math + Phase2Math;
 				((LivingHurtEvent) event).setAmount((Math.round(Phase3Math)));
 			}
-			if ((damagesource).getMsgId().equals(DamageSource.WITHER.getMsgId())) {
-				if (event != null && event.isCancelable()) {
-					event.setCanceled(true);
-				}
-			}
 		}
 	}
 }

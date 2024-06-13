@@ -1,11 +1,10 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "Laser_Katana",
 	"texture_size": [64, 64],
 	"textures": {
 		"3": "base_energy_katana",
-		"4": "blue_katana_energy",
-		"particle": "blue_katana_energy"
+		"4": "red_katana_energy",
+		"particle": "red_katana_energy"
 	},
 	"elements": [
 		{
@@ -8249,7 +8248,7 @@
 							]
 						},
 						{
-							"name": "Edge?",
+							"name": "Edge",
 							"origin": [0, 0, 0],
 							"color": 0,
 							"nbt": "{}",
