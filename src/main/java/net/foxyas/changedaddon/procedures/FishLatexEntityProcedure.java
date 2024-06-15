@@ -95,12 +95,12 @@ public class FishLatexEntityProcedure {
 						// Finalize o spawn da entidade
 						if (entityToSpawn instanceof Mob _mobToSpawn) {
 							_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
-							AddAdvancement(player);
-							event.damageRodBy(1);
 						}
 
 						// Adicione a entidade ao mundo
 						world.addFreshEntity(entityToSpawn);
+						AddAdvancement(player);
+						event.damageRodBy(1);
 
 						// Cancele o evento de pesca
 						event.setCanceled(true);

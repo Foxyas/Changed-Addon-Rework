@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:cod_bucket"
+      "item": "minecraft:salmon_bucket"
     },
     "title": {
       "translate": "advancements.bigone.title"

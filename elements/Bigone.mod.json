@@ -5,7 +5,7 @@
     "achievementName": "I Catch a Big One!",
     "achievementDescription": "You caught a big one! now enjoy your new fish friend",
     "achievementIcon": {
-      "value": "Items.COD_BUCKET"
+      "value": "Items.SALMON_BUCKET"
     },
     "background": "Default",
     "disableDisplay": false,

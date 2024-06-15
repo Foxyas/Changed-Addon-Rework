@@ -71,3 +71,5 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		}
 	}
 
+
+
