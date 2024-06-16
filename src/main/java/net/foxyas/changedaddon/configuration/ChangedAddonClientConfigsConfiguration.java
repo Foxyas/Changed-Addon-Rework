@@ -12,7 +12,7 @@ public class ChangedAddonClientConfigsConfiguration {
 		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
 		BUILDER.pop();
 		BUILDER.push("SlimModels");
-		SLIMMODEL = BUILDER.define("Slim Models", false);
+		SLIMMODEL = BUILDER.comment("Turn On the SlimModel Of The Partial Snow Leoapard Transfur (NEED RESTART FOR APPLY)").define("Slim Models", false);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

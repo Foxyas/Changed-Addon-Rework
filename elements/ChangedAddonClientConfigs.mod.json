@@ -40,10 +40,10 @@
             "logicField": 1,
             "numberField": 0.0,
             "textDefault": "",
-            "comment": "Turn On the SlimModel or not",
+            "comment": "Turn On the SlimModel Of The Partial Snow Leoapard Transfur (NEED RESTART FOR APPLY)",
             "vardisplay": "Slim Models",
             "varname": "slimmodel",
-            "enablecomment": false,
+            "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"
           }

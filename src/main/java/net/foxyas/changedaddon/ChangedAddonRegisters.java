@@ -4,10 +4,13 @@ package net.foxyas.changedaddon;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.variants.AddonLatexVariant;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoomPiece;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -61,7 +64,19 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final RegistryObject<Item> KET_SPAWN_EGG = REGISTRY.register("ket_experiment_009_spawn_egg",
 			() -> new ForgeSpawnEggItem(ChangedAddonModEntities.KET_EXPERIMENT_009, Color3.getColor("#E9E9E9").toInt(), Color3.getColor("#66FFFF").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
+		public static final RegistryObject<Item> PARTIAL_SNOW_LEOPARD = REGISTRY.register("latex_snow_leopard_partial_spawn_egg",
+			() -> new ForgeSpawnEggItem(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 		
+		/*public static final RegistryObject<Item> PARTIAL_SNOW_LEOPARD = REGISTRY.register("partial_snow_leopard_spawn_egg",
+			() -> new ForgeSpawnEggItem(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+		*/
+		
+
+
+		public static String SpawnEggIdFromTransfurVariant(LatexVariant latexVariant){
+			String Util = latexVariant.getFormId().toString().replace("changed_addon:form_","");
+			return Util + "_spawn_egg";
+		}
 }
 
 	@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)

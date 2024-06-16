@@ -1,55 +1,42 @@
-
 package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.foxyas.changedaddon.client.model.BioSynthSnowLeopardMaleModel;
 import net.foxyas.changedaddon.client.model.SnowLeopardPartialModel;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModConfigs;
 import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleCatModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.Random;
-
 public class SnowLeopardPartialRenderer extends LatexHumanoidRenderer<SnowLeopardPartialEntity, SnowLeopardPartialModel, ArmorLatexMaleCatModel<SnowLeopardPartialEntity>> {
 
-	
-	/*public SnowLeopardPartialRenderer(EntityRendererProvider.Context context) {
-		super(context, SnowLeopardPartialModel.human(context.bakeLayer(SnowLeopardPartialModel.LAYER_LOCATION_HUMAN)),
-				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
-		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
-		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-	}*/
-
-	public static ResourceLocation Texture() {
-		if (ChangedAddonClientConfigsConfiguration.SLIMMODEL.get()) {
-		return new ResourceLocation("changed_addon", "textures/entities/snow_leopard_partial_slim.png");
-		}
-		return new ResourceLocation("changed_addon", "textures/entities/snow_leopard_partial.png");
-	}
-
-	public static boolean isslim(){
-	 return ChangedAddonClientConfigsConfiguration.SLIMMODEL.get();
-	}
-
 	public SnowLeopardPartialRenderer(EntityRendererProvider.Context context) {
-		super(context, SnowLeopardPartialModel.human(context.bakeLayer(isslim() ? SnowLeopardPartialModel.LAYER_LOCATION_HUMAN_SLIM : SnowLeopardPartialModel.LAYER_LOCATION_HUMAN)),
+		super(context, SnowLeopardPartialModel.human(context.bakeLayer(getLayerLocation())),
 				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
-		var partialModel = new LatexPartialLayer<>(this, SnowLeopardPartialModel.latex(
-				context.bakeLayer(SnowLeopardPartialModel.LAYER_LOCATION_LATEX)),Texture());
+
+		var partialModel = new LatexPartialLayer<>(this, SnowLeopardPartialModel.latex(context.bakeLayer(getLatexLayerLocation())), getTexture());
 		this.addLayer(partialModel);
 		this.addLayer(new LatexParticlesLayer<>(this).addModel(partialModel.getModel(), entity -> partialModel.getTexture()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new DarkLatexMaskLayer<>(this, context.getModelSet()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
+	}
+
+	private static ModelLayerLocation getLayerLocation() {
+		return ChangedAddonClientConfigsConfiguration.SLIMMODEL.get() ? SnowLeopardPartialModel.LAYER_LOCATION_HUMAN_SLIM : SnowLeopardPartialModel.LAYER_LOCATION_HUMAN;
+	}
+
+	private static ModelLayerLocation getLatexLayerLocation() {
+		return ChangedAddonClientConfigsConfiguration.SLIMMODEL.get() ? SnowLeopardPartialModel.LAYER_LOCATION_LATEX_SLIM : SnowLeopardPartialModel.LAYER_LOCATION_LATEX;
+	}
+
+	private static ResourceLocation getTexture() {
+		return new ResourceLocation("changed_addon", ChangedAddonClientConfigsConfiguration.SLIMMODEL.get() ? "textures/entities/snow_leopard_partial_slim.png" : "textures/entities/snow_leopard_partial.png");
 	}
 
 	@Override
@@ -58,19 +45,18 @@ public class SnowLeopardPartialRenderer extends LatexHumanoidRenderer<SnowLeopar
 	}
 
 	@Override
-	public void render(SnowLeopardPartialEntity latex, float yRot, float p_115457_, PoseStack p_115458_, MultiBufferSource bufferSource, int p_115460_) {
-		if (latex.getUnderlyingPlayer() instanceof AbstractClientPlayer clientPlayer){
+	public void render(SnowLeopardPartialEntity latex, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+		if (latex.getUnderlyingPlayer() instanceof AbstractClientPlayer clientPlayer) {
 			this.model.setModelProperties(clientPlayer);
-		}
-		else {
+		} else {
 			this.model.defaultModelProperties();
 		}
-		super.render(latex, yRot, p_115457_, p_115458_, bufferSource, p_115460_);
+		super.render(latex, yRot, partialTicks, poseStack, bufferSource, packedLight);
 	}
 
 	@Override
 	protected void scale(SnowLeopardPartialEntity entity, PoseStack pose, float partialTick) {
-		float f = 0.9375F;
-		pose.scale(0.9375F, 0.9375F, 0.9375F);
+		float scale = 0.9375F;
+		pose.scale(scale, scale, scale);
 	}
 }
