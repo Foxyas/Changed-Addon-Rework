@@ -3,16 +3,17 @@ package net.foxyas.changedaddon;
 import com.google.common.collect.ImmutableMap;
 import net.foxyas.changedaddon.client.model.*;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
-import net.ltxprogrammer.changed.client.renderer.LatexHumanRenderer;
-import net.ltxprogrammer.changed.entity.beast.LatexHuman;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
@@ -41,10 +42,27 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(SnowLeopardPartialModel.LAYER_LOCATION_LATEX_SLIM, () -> SnowLeopardPartialModel.createLatexLayer(true));
 	}
 
+	@SubscribeEvent
+	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerEntityRenderer(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), SnowLeopardPartialRenderer::new);
+	}
+
+	/*
 	private static Map<String, EntityRenderer<? extends SnowLeopardPartialEntity>> partialRenderers = ImmutableMap.of();
+	
+	@Nullable
+	public static <T extends Entity> EntityRenderer<? super T> getRenderer(T entity) {
+		if (entity instanceof SnowLeopardPartialEntity partial) {
+			String s = partial.getModelName();
+			EntityRenderer<? extends SnowLeopardPartialEntity> entityrenderer = partialRenderers.get(s);
+			return (EntityRenderer) (entityrenderer != null ? entityrenderer : partialRenderers.get("default"));
+		}
+			return null; // Default to registered renderer
+	}
+
 		public static void registerComplexRenderers(EntityRendererProvider.Context context) {
 		partialRenderers = new ImmutableMap.Builder<String, EntityRenderer<? extends SnowLeopardPartialEntity>>()
 				.put("default", new SnowLeopardPartialRenderer(context, false))
 				.put("slim", new SnowLeopardPartialRenderer(context, true)).build();
-	}
+	}*/
 }

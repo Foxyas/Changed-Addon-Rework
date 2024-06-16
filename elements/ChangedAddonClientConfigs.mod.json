@@ -25,6 +25,29 @@
             "entityType": "CUSTOM:Dazed"
           }
         ]
+      },
+      {
+        "category": "SlimModels",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Turn On the SlimModel or not",
+            "vardisplay": "Slim Models",
+            "varname": "slimmodel",
+            "enablecomment": false,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
     "file": "ChangedAddon-Client",
