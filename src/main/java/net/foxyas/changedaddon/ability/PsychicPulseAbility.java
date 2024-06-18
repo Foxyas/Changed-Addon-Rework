@@ -36,20 +36,20 @@ public class PsychicPulseAbility extends SimpleAbility {
 
 
 	public UseType getUseType(IAbstractLatex entity) {
-		return UseType.HOLD;
+		return UseType.INSTANT;
 	}
 
 
 	@Override
 	public void startUsing(IAbstractLatex entity) {
 		super.startUsing(entity);
-		//execute(entity.getLevel(),entity);
+		execute(entity.getLevel(),entity.getEntity());
 	}
 
 	@Override
 	public void tick(IAbstractLatex entity) {
 		super.tick(entity);
-		execute(entity.getLevel(),entity.getEntity());
+		//execute(entity.getLevel(),entity.getEntity());
 	}
 
 
@@ -63,7 +63,9 @@ public class PsychicPulseAbility extends SimpleAbility {
 						.collect(Collectors.toList());
 				for (Entity entityiterator : _entfound) {
 					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("minecraft:impact_projectiles")))) {
-						entityiterator.setDeltaMovement(new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z()))));
+						Vec3 NegativeMotion = new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z())));
+						Vec3 Motion = NegativeMotion.multiply(1.25,1.25,1.25);
+						entityiterator.setDeltaMovement(Motion);
 					}
 				}
 			}
