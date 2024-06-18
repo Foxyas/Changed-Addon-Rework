@@ -34,6 +34,11 @@ public class PsychicPulseAbility extends SimpleAbility {
 		return true;
 	}
 
+	@Override
+	public int getCoolDown(IAbstractLatex entity) {
+		return 10;
+	}
+
 
 	public UseType getUseType(IAbstractLatex entity) {
 		return UseType.INSTANT;
