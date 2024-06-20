@@ -36,7 +36,7 @@ public class PsychicPulseAbility extends SimpleAbility {
 
 	@Override
 	public int getCoolDown(IAbstractLatex entity) {
-		return 10;
+		return 5;
 	}
 
 
@@ -64,13 +64,14 @@ public class PsychicPulseAbility extends SimpleAbility {
 		if (iAbstractLatex instanceof Player entity) {
 			{
 				final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
-				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(5 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(10 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 						.collect(Collectors.toList());
 				for (Entity entityiterator : _entfound) {
 					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("minecraft:impact_projectiles")))) {
-						Vec3 NegativeMotion = new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z())));
-						Vec3 Motion = NegativeMotion.multiply(1.25,1.25,1.25);
-						entityiterator.setDeltaMovement(Motion);
+						//if(!world.isClientSide()){}
+							Vec3 NegativeMotion = new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z())));
+							Vec3 Motion = NegativeMotion.multiply(1.5,1.5,1.5);
+							entityiterator.setDeltaMovement(Motion);
 					}
 				}
 			}
