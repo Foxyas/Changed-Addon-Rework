@@ -90,21 +90,21 @@ public class AddonLatexVariant {
 
     //Experiments
     public static final GenderedVariant<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> EXP1_GENDERED_VARIANT = LatexVariant.register(GenderedVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX, ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
-            .groundSpeed(1.1F).swimSpeed(1F).additionalHealth(6).nightVision().addAbility(ChangedAddonAbilitys.PSYCHIC_PULSE).addAbility(ChangedAddonAbilitys.PSYCHIC_HOLD).addAbility(ChangedAbilities.SWITCH_GENDER).split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp1")));
+            .groundSpeed(1.1F).swimSpeed(1F).additionalHealth(6).nightVision().extraJumps(2).addAbility(ChangedAddonAbilitys.PSYCHIC_PULSE).addAbility(ChangedAddonAbilitys.PSYCHIC_HOLD).addAbility(ChangedAbilities.SWITCH_GENDER).split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp1")));
 
     public static final GenderedVariant<Exp2MaleEntity,Exp2FemaleEntity> EXP2_GENDERED_VARIANT = LatexVariant.register(GenderedVariant.Builder.of(LatexVariant.LATEX_SNOW_LEOPARD,ChangedAddonModEntities.EXP_2_MALE,ChangedAddonModEntities.EXP_2_FEMALE)
             .groundSpeed(1.175F).swimSpeed(1.05F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp2")));
 
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
-            .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).additionalHealth(20).nightVision().build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
+            .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).addAbility(ChangedAddonAbilitys.SHOCKWAVE).transfurMode(TransfurMode.NONE).additionalHealth(20).nightVision().build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
 
     public static final LatexVariant<Experiment10Entity> EXPERIMENT_10_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
-            .groundSpeed(1.17F).swimSpeed(1.15F).reducedFall().jumpStrength(1.5F).transfurMode(TransfurMode.NONE).scares(List.of(EnderMan.class,WitherSkeleton.class,Creeper.class, AbstractGolem.class,Piglin.class,PiglinBrute.class)).additionalHealth(20).nightVision().build(new ResourceLocation("changed_addon", "form_experiment_10")));
+            .groundSpeed(1.17F).swimSpeed(1.085F).reducedFall().jumpStrength(1.5F).addAbility(ChangedAbilities.HYPNOSIS).transfurMode(TransfurMode.NONE).scares(List.of(EnderMan.class,WitherSkeleton.class,Creeper.class, AbstractGolem.class,Piglin.class,PiglinBrute.class)).additionalHealth(20).nightVision().build(new ResourceLocation("changed_addon", "form_experiment_10")));
 
     //Boss Transfurs
     public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009_BOSS_LATEX_VARIANT = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
-            .groundSpeed(1.25F).swimSpeed(1.20F).reducedFall().jumpStrength(1.75F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(60).nightVision().build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
+            .groundSpeed(1.25F).swimSpeed(1.20F).reducedFall().jumpStrength(1.75F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).addAbility(ChangedAddonAbilitys.SHOCKWAVE).transfurMode(TransfurMode.NONE).scares(List.of(Zombie.class,WitherSkeleton.class,AbstractVillager.class,Skeleton.class, AbstractGolem.class)).additionalHealth(60).nightVision().build(new ResourceLocation("changed_addon", "form_ket_experiment009_boss")));
 
 
 

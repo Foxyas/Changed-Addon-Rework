@@ -31,7 +31,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 	@Override
 	public ResourceLocation getTexture(IAbstractLatex entity) {
-		return new ResourceLocation("changed_addon:textures/screens/thunderbolt.png"); //Place holder
+		return new ResourceLocation("changed_addon:textures/screens/thunderbolt.png");
 	}
 
 	@Override

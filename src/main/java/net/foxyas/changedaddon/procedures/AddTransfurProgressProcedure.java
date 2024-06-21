@@ -166,6 +166,21 @@ public class AddTransfurProgressProcedure {
 		}
 	}
 
+	public static void addDarkLatex(Entity entity,float amount) {
+		if (entity == null) {
+			return;
+		}
+
+		if (entity instanceof Player player){
+			if(player.getLevel().random.nextInt(2) <= 1) {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+			} else if ((player.getLevel().random.nextInt(5) == 2)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+			}
+		}
+	}
+
+
 	public static void addGreen(Entity entity,float amount) {
 		if (entity == null) {
 			return;

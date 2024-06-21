@@ -22,6 +22,7 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 	public static final RegistryObject<ThunderBoltAbility> THUNDERBOLT = REGISTRY.register("thunderbolt",ThunderBoltAbility::new);
 	public static final RegistryObject<PsychicPulseAbility> PSYCHIC_PULSE = REGISTRY.register("psychic_pulse",PsychicPulseAbility::new);
 	public static final RegistryObject<PsychicHoldAbility> PSYCHIC_HOLD = REGISTRY.register("psychic_hold",PsychicHoldAbility::new);
+	public static final RegistryObject<ShockWaveAbility> SHOCKWAVE = REGISTRY.register("shock_wave",ShockWaveAbility::new);
 
 	@SubscribeEvent
 	public static void registerAbiltiys(FMLConstructModEvent event) {
