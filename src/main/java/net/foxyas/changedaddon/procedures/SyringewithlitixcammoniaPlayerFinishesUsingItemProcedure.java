@@ -131,7 +131,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 					}
 				}
 			} else {
-				UntransfurFail = new DamageSource("UnTransfurFail");
+				UntransfurFail = new DamageSource("untransfurfail");
 				UntransfurFail.bypassArmor();
 				entity.hurt(UntransfurFail, 15);
 				if (entity instanceof Player _player && !_player.level.isClientSide())

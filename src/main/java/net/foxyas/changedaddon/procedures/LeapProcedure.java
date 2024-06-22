@@ -323,6 +323,36 @@ public class LeapProcedure {
 								if (!_ent.level.isClientSide() && _ent.getServer() != null)
 									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
 							}
+						} else if (entity instanceof LivingEntity _livEnt ? _livEnt.isFallFlying() : false) {
+							deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
+							deltaY = -Math.sin((entity.getXRot() / 180) * (float) Math.PI);
+							deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
+							speed = 2;
+							motionX = deltaX * speed;
+							motionY = deltaY * speed;
+							motionZ = deltaZ * speed;
+							entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
+							if (!(new Object() {
+								public boolean checkGamemode(Entity _ent) {
+									if (_ent instanceof ServerPlayer _serverPlayer) {
+										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+									} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+										return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+									}
+									return false;
+								}
+							}.checkGamemode(entity))) {
+								if (entity instanceof Player _player)
+									_player.causeFoodExhaustion((float) 0.8);
+								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+							}
+							{
+								Entity _ent = entity;
+								if (!_ent.level.isClientSide() && _ent.getServer() != null)
+									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+							}
 						}
 					}
 				}

@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.ability.IAbstractLatex;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedDamageSources;
 import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -52,9 +53,9 @@ public class ShockWaveAbility extends SimpleAbility {
     public int getCoolDown(IAbstractLatex entity) {
         LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
         if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
-            return 15;
+            return 20;
         }
-        return 20;
+        return 35;
     }
 
     @Override
@@ -94,10 +95,11 @@ public class ShockWaveAbility extends SimpleAbility {
             for (Entity entityiterator : _entfound) {
                 if (entity != entityiterator && entityiterator instanceof LivingEntity _entity){
                     if (!_entity.level.isClientSide()){
-                        MobEffectInstance Effect = new MobEffectInstance(ChangedEffects.SHOCK, 60, 0, false, true);
+                        MobEffectInstance Effect = new MobEffectInstance(ChangedEffects.SHOCK, 40, 0, false, false,true);
                         Effect.setCurativeItems(List.of());
                         _entity.addEffect(Effect);
                         ChangedSounds.broadcastSound(_entity,ChangedSounds.PARALYZE1,5,1);
+                        player.causeFoodExhaustion(1);
                     }
                 }
             }
