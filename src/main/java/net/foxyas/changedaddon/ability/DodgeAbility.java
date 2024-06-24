@@ -3,23 +3,17 @@ package net.foxyas.changedaddon.ability;
 import net.ltxprogrammer.changed.ability.IAbstractLatex;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.entity.player.Player;
 
 public class DodgeAbility extends SimpleAbility {
 
-    private static int DodgeAmount = 3;
+    private static int DodgeAmount = 5;
     private static int MaxDodgeAmount = 5;
     private static boolean DodgeActivate = false;
+    public static int DodgeRegenCooldown = 5;
 
     public static boolean isDodgeActivate(){
         return DodgeActivate;
@@ -69,6 +63,9 @@ public class DodgeAbility extends SimpleAbility {
         if(tag.contains("MaxDodgeAmount")){
             MaxDodgeAmount = tag.getInt("MaxDodgeAmount");
         }
+        if(tag.contains("DodgeRegenCooldown")){
+            DodgeRegenCooldown = tag.getInt("DodgeRegenCooldown");
+        }
         if(tag.contains("DodgeActivate")){
             DodgeActivate = tag.getBoolean("DodgeActivate");
         }
@@ -79,6 +76,7 @@ public class DodgeAbility extends SimpleAbility {
         super.saveData(tag, entity);
         tag.putInt("DodgeAmount",DodgeAmount);
         tag.putInt("MaxDodgeAmount",MaxDodgeAmount);
+        tag.putInt("DodgeRegenCooldown",DodgeRegenCooldown);
         tag.putBoolean("DodgeActivate",DodgeActivate);
     }
 
@@ -100,31 +98,45 @@ public class DodgeAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractLatex entity) {
-        return this.DodgeAmount > 0;
+        return DodgeAmount > 0;
     }
 
     @Override
     public boolean canKeepUsing(IAbstractLatex entity) {
-        return this.DodgeAmount > 0;
+        return DodgeAmount > 0;
     }
 
     @Override
     public void startUsing(IAbstractLatex entity) {
         super.startUsing(entity);
         SetDodgeActivate(true);
+        if(entity.getEntity() instanceof Player player){
+            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
+        }
     }
 
     @Override
     public void tick(IAbstractLatex entity) {
         super.tick(entity);
         SetDodgeActivate(true);
+        if(entity.getEntity() instanceof Player player){
+            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
+        }
     }
 
     @Override
     public void stopUsing(IAbstractLatex entity) {
         super.stopUsing(entity);
         if(DodgeAmount < MaxDodgeAmount){
-            DodgeAmount++;
+            if(DodgeRegenCooldown < 5) {
+                DodgeAmount++;
+                DodgeRegenCooldown = 5;
+                if(entity.getEntity() instanceof Player player){
+                    player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
+                }
+            } else {
+                DodgeRegenCooldown--;
+            }
         }
         if(isDodgeActivate()){
             SetDodgeActivate(false);
