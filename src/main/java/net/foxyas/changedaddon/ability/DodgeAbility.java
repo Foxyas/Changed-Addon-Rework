@@ -109,7 +109,7 @@ public class DodgeAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractLatex entity) {
         super.startUsing(entity);
-        SetDodgeActivate(true);
+        SetDodgeActivate(canUse(entity));
         if(entity.getEntity() instanceof Player player){
             player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
         }
@@ -118,7 +118,7 @@ public class DodgeAbility extends SimpleAbility {
     @Override
     public void tick(IAbstractLatex entity) {
         super.tick(entity);
-        SetDodgeActivate(true);
+        SetDodgeActivate(canUse(entity));
         if(entity.getEntity() instanceof Player player){
             player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
         }
@@ -128,7 +128,7 @@ public class DodgeAbility extends SimpleAbility {
     public void stopUsing(IAbstractLatex entity) {
         super.stopUsing(entity);
         if(DodgeAmount < MaxDodgeAmount){
-            if(DodgeRegenCooldown < 5) {
+            if(DodgeRegenCooldown < 0) {
                 DodgeAmount++;
                 DodgeRegenCooldown = 5;
                 if(entity.getEntity() instanceof Player player){

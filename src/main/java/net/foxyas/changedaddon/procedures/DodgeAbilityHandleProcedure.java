@@ -27,6 +27,7 @@ public class DodgeAbilityHandleProcedure {
             if (attacker == null) {
                 return;
             }
+            
             // Get the position of the attacker
             Vec3 attackerPos = attacker.position();
 
@@ -44,7 +45,10 @@ public class DodgeAbilityHandleProcedure {
             int MaxDodgeAmount = DodgeAbility.getMaxDodgeAmount();
             double distance = attacker.distanceTo(target);
             boolean IsDodgeActivate = DodgeAbility.isDodgeActivate();
-            if(IsDodgeActivate){
+            boolean nonAnyIframe = player.invulnerableTime <= 0 && player.hurtTime <= 0;
+            boolean nonIframe = player.invulnerableTime <= 0;
+            boolean nonHurtFrame = player.hurtTime <= 0;
+            if(nonIframe || nonHurtFrame || nonAnyIframe && IsDodgeActivate){
                 if(DodgeAmount > 0){
                     if(distance <= 4){
                         // Teleport the target to the new position
@@ -52,16 +56,24 @@ public class DodgeAbilityHandleProcedure {
                             player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left",DodgeAmount),true);
                             DodgeAbility.subDodgeAmount();
                             target.teleportTo(Dodgetype1.x(), target.getY(), Dodgetype1.z());
+                            player.invulnerableTime = 20;
+                            player.hurtDuration = 10;
+                            player.hurtTime = player.hurtDuration;
                             event.setCanceled(true);
                         }
                     } else {
-                        if (world instanceof ServerLevel serverLevel) {
-                            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left",DodgeAmount),true);
-                            DodgeAbility.subDodgeAmount();
-                            event.setCanceled(true);
-                        }
-                        DodgeAttack(player,attacker);
+                    	if (world instanceof ServerLevel serverLevel) {
+                        	player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left",DodgeAmount),true);
+                        	DodgeAbility.subDodgeAmount();
+                        	player.invulnerableTime = 20;
+                        	player.hurtDuration = 10;
+                        	player.hurtTime = player.hurtDuration;
+                        	event.setCanceled(true);
+                    	}
+                    	DodgeAttack(player,attacker);
                     }
+                } else {
+					 DodgeAbility.SetDodgeActivate(false);
                 }
             }
 	    }
