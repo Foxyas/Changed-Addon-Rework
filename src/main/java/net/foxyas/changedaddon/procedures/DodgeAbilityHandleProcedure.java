@@ -110,7 +110,7 @@ public class DodgeAbilityHandleProcedure {
     public static void DodgeAttack(Entity Dodger,Entity attacker){
         Vec3 attackerPos = attacker.position();
         Vec3 DodgerPos = Dodger.position();
-        Vec3 DodgeMotion = attackerPos.subtract(DodgerPos.scale(-0.0005));
+        Vec3 DodgeMotion = attackerPos.subtract(DodgerPos).scale(-0.25);
         Dodger.setDeltaMovement(DodgeMotion.x,Dodger.getDeltaMovement().y,DodgeMotion.z);
     }
 }
