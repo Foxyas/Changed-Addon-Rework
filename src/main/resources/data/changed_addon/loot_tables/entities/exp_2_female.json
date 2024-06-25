@@ -195,7 +195,7 @@
           "functions": [
             {
               "function": "changed:set_variant",
-              "variant": "changed_addon:form_exp2/male"
+              "variant": "changed_addon:form_exp2/female"
             },
             {
               "function": "minecraft:looting_enchant",
