@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -71,6 +73,7 @@ public class DodgeAbilityHandleProcedure {
 								player.invulnerableTime = 60;
 								player.hurtDuration = 30;
 								player.hurtTime = player.hurtDuration;
+								serverLevel.playSound(player,player.getX(),player.getY(),player.getZ(), ChangedSounds.BOW2, SoundSource.PLAYERS,2.5f,1);
 								event.setCanceled(true);
 							}
 						} else {
@@ -80,6 +83,7 @@ public class DodgeAbilityHandleProcedure {
 								player.invulnerableTime = 60;
 								player.hurtDuration = 30;
 								player.hurtTime = player.hurtDuration;
+								serverLevel.playSound(player,player.getX(),player.getY(),player.getZ(), ChangedSounds.BOW2, SoundSource.PLAYERS,2.5f,1);
 								event.setCanceled(true);
 							}
 							DodgeAttack(player, attacker);
