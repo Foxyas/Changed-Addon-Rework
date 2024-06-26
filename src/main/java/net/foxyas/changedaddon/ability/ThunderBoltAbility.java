@@ -41,7 +41,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 		}
 
 		LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_LATEX_VARIANT || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
+		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
 			return true;
 		}
 		return false;
@@ -75,7 +75,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
 			return 10;
 		}
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_LATEX_VARIANT){
+		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009){
 			return 5;
 		}
 		return 3.5F;

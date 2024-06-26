@@ -100,7 +100,7 @@ public class PatFeatureHandleProcedure {
 
 	private static void handleLatexEntity(Entity player, Entity target, LevelAccessor world) {
 		boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
-		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant((Player) player) != null && ((ProcessTransfur.getPlayerLatexVariant((Player) player)).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.male()) || ProcessTransfur.getPlayerLatexVariant((Player) player).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.female())));
+		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant((Player) player) != null && ((ProcessTransfur.getPlayerLatexVariant((Player) player)).is(AddonLatexVariant.EXP2.male()) || ProcessTransfur.getPlayerLatexVariant((Player) player).is(AddonLatexVariant.EXP2.female())));
 		//if (!isPlayerTransfur) return;
 
 		if (!(target instanceof Experiment10Entity) && !(target instanceof KetExperiment009Entity) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
@@ -123,8 +123,8 @@ public class PatFeatureHandleProcedure {
 	private static void handlePlayerEntity(Entity player, Player target, LevelAccessor world) {
 		boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 		boolean isTargetTransfur = target.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
-		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant((Player) player) != null && ((ProcessTransfur.getPlayerLatexVariant((Player) player)).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.male()) || ProcessTransfur.getPlayerLatexVariant((Player) player).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.female())));
-		boolean isTargetTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant(target) != null && (ProcessTransfur.getPlayerLatexVariant(target).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.male()) || ProcessTransfur.getPlayerLatexVariant(target).is(AddonLatexVariant.EXP2_GENDERED_VARIANT.female())));
+		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant((Player) player) != null && ((ProcessTransfur.getPlayerLatexVariant((Player) player)).is(AddonLatexVariant.EXP2.male()) || ProcessTransfur.getPlayerLatexVariant((Player) player).is(AddonLatexVariant.EXP2.female())));
+		boolean isTargetTransfurInExp2 = (ProcessTransfur.getPlayerLatexVariant(target) != null && (ProcessTransfur.getPlayerLatexVariant(target).is(AddonLatexVariant.EXP2.male()) || ProcessTransfur.getPlayerLatexVariant(target).is(AddonLatexVariant.EXP2.female())));
 
 		
 		if ((isPlayerTransfur || !isPlayerTransfur) && (!isTargetTransfur || isTargetTransfur) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {

@@ -70,23 +70,23 @@ public class DodgeAbilityHandleProcedure {
 								player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", DodgeAmount), true);
 								DodgeAbility.subDodgeAmount();
 								target.teleportTo(Dodgetype1.x(), target.getY(), Dodgetype1.z());
-								player.invulnerableTime = 60;
-								player.hurtDuration = 30;
+								player.invulnerableTime = 50;
+								player.hurtDuration = 20;
 								player.hurtTime = player.hurtDuration;
-								serverLevel.playSound(player,player.getX(),player.getY(),player.getZ(), ChangedSounds.BOW2, SoundSource.PLAYERS,2.5f,1);
 								event.setCanceled(true);
 							}
+							ChangedSounds.broadcastSound(player, ChangedSounds.BOW2,2.5f,1);
 						} else {
 							if (world instanceof ServerLevel serverLevel) {
 								player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", DodgeAmount), true);
 								DodgeAbility.subDodgeAmount();
-								player.invulnerableTime = 60;
-								player.hurtDuration = 30;
+								player.invulnerableTime = 50;
+								player.hurtDuration = 20;
 								player.hurtTime = player.hurtDuration;
-								serverLevel.playSound(player,player.getX(),player.getY(),player.getZ(), ChangedSounds.BOW2, SoundSource.PLAYERS,2.5f,1);
 								event.setCanceled(true);
 							}
 							DodgeAttack(player, attacker);
+							ChangedSounds.broadcastSound(player, ChangedSounds.BOW2,2.5f,1);
 						}
 					} else {
 						DodgeAbility.SetDodgeActivate(false);

@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
@@ -13,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -70,13 +72,9 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 
 	@Override
 	public int getTicksRequiredToFreeze() { return 1000; }
-	
-	@Override
+
 	protected boolean targetSelectorTest(LivingEntity livingEntity) {
-		if (livingEntity instanceof Player || livingEntity instanceof ServerPlayer){
-			return true;
-		}
-		return false;
+		return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:humanoids")));
 	}
 	
     @Override

@@ -9,6 +9,6 @@ import net.minecraft.world.entity.player.Player;
 public class Exp009TransfurProcedure {
 	public static void execute(Entity entity) {
 		Player entity1 = (Player) entity;
-		ProcessTransfur.setPlayerLatexVariant(entity1, AddonLatexVariant.KET_EXPERIMENT_009_LATEX_VARIANT);
+		ProcessTransfur.setPlayerLatexVariant(entity1, AddonLatexVariant.KET_EXPERIMENT_009);
 	}
 }

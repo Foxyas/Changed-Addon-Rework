@@ -77,12 +77,10 @@ public class LatexSnowFoxEntity extends LatexEntity implements GenderedEntity,Po
 
 	@Override
 	public TransfurMode getTransfurMode() {
-		TransfurMode transfurMode = TransfurMode.REPLICATION;
-		if(level.random.nextInt(10) > 5){ transfurMode = TransfurMode.ABSORPTION;
-		} else {
-			transfurMode = TransfurMode.REPLICATION;
+		if(level.random.nextInt(10) > 5){ 
+			return TransfurMode.ABSORPTION;
 		}
-		return transfurMode;
+		return TransfurMode.REPLICATION;
 	}
 
 	@Override

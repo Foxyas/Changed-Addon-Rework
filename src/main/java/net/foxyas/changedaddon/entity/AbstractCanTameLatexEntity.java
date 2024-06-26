@@ -96,7 +96,7 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
         if (livingEntity == this.getOwner())
             return false;
-        return false;
+        return true;
     }
 
     @Nullable
