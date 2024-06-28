@@ -76,16 +76,16 @@ public class AddonLatexVariant {
             .groundSpeed(1.075F).swimSpeed(1.025F).transfurMode(TransfurMode.ABSORPTION).scares(List.of()).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_dazed_latex")));
 
     public static final LatexVariant<BunyEntity> BUNY = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.BUNY)
-            .groundSpeed(1.15F).swimSpeed(0.75F).jumpStrength(1.5F).transfurMode(TransfurMode.ABSORPTION).scares(List.of()).additionalHealth(10).build(new ResourceLocation("changed_addon", "form_buny")));
+            .groundSpeed(1.15F).swimSpeed(0.75F).jumpStrength(1.5F).reducedFall().transfurMode(TransfurMode.ABSORPTION).scares(List.of()).additionalHealth(10).build(new ResourceLocation("changed_addon", "form_buny")));
 
     public static final LatexVariant<MirrorWhiteTigerEntity> MIRROR_WHITE_TIGER = LatexVariant.register(LatexVariant.Builder.of(LatexVariant.LATEX_WHITE_TIGER,ChangedAddonModEntities.MIRROR_WHITE_TIGER)
-            .groundSpeed(1.15F).swimSpeed(0.95F).stepSize(0.7F).breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().build(new ResourceLocation("changed_addon", "form_mirror_white_tiger_female")));
+            .groundSpeed(1.15F).swimSpeed(0.95F).stepSize(0.7F).reducedFall().breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().build(new ResourceLocation("changed_addon", "form_mirror_white_tiger_female")));
 
     public static final LatexVariant<WolfyEntity> WOLFY = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.WOLFY)
             .groundSpeed(1.20F).swimSpeed(0.5F).stepSize(0.7F).breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of()).additionalHealth(-6).nightVision().build(new ResourceLocation("changed_addon", "form_wolfy")));
 
     public static final LatexVariant<SnowLeopardPartialEntity> SNOW_LEOPARD_PARTIAL = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL)
-            .groundSpeed(1.05F).swimSpeed(1F).stepSize(0.7F).breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of()).additionalHealth(4).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_leopard_partial")));
+            .groundSpeed(1.10F).swimSpeed(1.0F).stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of()).additionalHealth(4).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_leopard_partial")));
 
 
     //Experiments
