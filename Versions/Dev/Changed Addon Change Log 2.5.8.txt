@@ -1,0 +1,74 @@
++ Added the "Accessories" Armor Type (Low Defense But cool visual)
++ Add Exp2 {Snow leopard model With a Big Tail,Can Make Transfurs Get Transfur Sickness just by touch}
++ Fix Katana Model Issue (I guess)
++ Fix Mirror White tiger Spawn Egg Don't spawning Mirror White Tiger
++ Lower the Change To The Untransfur Fail with the LitixCamonia Syringe
++ Now the Laethin syringe have 100% of Untransfur Taxe
++ Add a Warn when You close the The Fight To Keep Concience
+
+   *New Bool Var to Detect if the player Give up and if do the warn will not be played
+
++ Fix the Laething Syringe Don't Use the Goo Item for the Craft
++ Add The Translation made by gengyoubo 
++ Fix The Organics Variants Drip Latex (Sorry)
++ Add A Block Break Effect in the Ket-009-Boss Transfur Dash
++ If You Pat Exp2 (Entity and Transfur) and if you are Transfured You will get Transfur Sickness [Can't transfur while with the effect]
++ use a new code for pat feature handle
++ add the Exp10 for the Cat like list
++ add the roar sound like a easter egg (tiger shark and Exp9 can use just say roar in chat)
++ Add Wolfy Transfur (-8 Hp,+25% of land speed,-50% of swim Speed)
++ Add Wolfy Entity (Puro Kind Loot)
++ Now the Exp9 Spawn Egg are in the Changed Addon Tab
++ Buffed The Exp9 And Exp10 Loot (Now the Orb is affected by loot effect and can drop a syringe with the Variant)
++ Now Exp10 can Hypnose
+- Nerf a Bit Exp10 SwimSpeed (1.15 -> 1.085)
++ Add Exp1 Transfur (Can Reflex and Hold Projectiles/Falling Blocks and have 2 extra jumps) 
++ Now Some Transfur have custom stats and the transfurs are (Exp9,Exp10,Exp2,BioSynth Type and Wolfy form)
+	**Fully means that don't take any hit of that type of dmg
+	**Partial means that don't take any dmg of that type of dmg (still take kb and hit)	
+
+    *BioSynth take 125% Amount of fire dmg instead of 200%
+    *Exp2 Form Take 135% Amount of fire dmg instead of 200%
+    *Exp9 Form are Immune to LightBolt dmg (fully)
+    *Exp9 Form Take 100% Amount of fire dmg instead of 200%
+    *Exp9 Form Take 50% Amount of Projectiles dmg
+    *Exp10 Form Are immune to Wither Dmg (fully)
+    *Exp10 Form take 150% Amount of fire dmg instead of 200%
+    *Wolfy Form Are immune to fire,explosions,light bolt and thorns dmg (fully)
+
++ Add Informant Block (Tell Some Transfur stats)
++ Now Exp9 and Exp10 Transfurs have NightVision 
++ Now Some Latex Entitys Spawn with 1.0 of scale (Exp9,Exp10)
++ Add 6 new advancements
+
+	*Regret! (Swim for 600 ticks in a slow SwimSpeed transfur)
+	*An Shocking Upgrade! (Craft or Get a Electric Katana)
+	*Dark Crystal Dagger! (Craft or Get a Dark Crystal Dagger)
+	*Green Crystal Dagger! (Craft or Get a Green Crystal Dagger)
+	*Red Crystal Dagger! (Craft or Get a Red Crystal Dagger)
+	*Obtain Red Electric Katana! (Craft or Get a Red Electric Katana) [Memories is broken]
+
++ Add the Crystal Addager with 3 Variants!
+
+  *The Crystal Addager Add Transfur Progress of the Variant of the Addager! That can be 
+      *Red Crystal Wolf (Normal and Horned)
+      *Every Dark Latex
+      *Beyfeng (The Green Crystal one)
+
+- Nerf Electric Katana Dmg And speed
++ New Electric Katana Variant (A few more Dmg,Swing Speed and Durability)
++ Add New CrowBar with Force Open Feature
++ add partial Snep
++ add Foxsi 
+	*(A Kinda of Soda Drink 4/2 food points and 1 of saturation)
+
++ add Snepsi 
+	*(You can Make this Sode using the Foxsi Soda! 5/2 food points and 1 of saturation and maybe can make you don't be you when you drink :3)
+
++ fix some grammar issues
++ make the signal catcher recipe be less expensive
++ Broken Mask (can be Repair using dark latex)
++ Dark Latex Mask Can Transfur Gamerule
++ Now you can't place the LatexSyringe with the Exp9 and Exp10 variants
++ Now You Craft 4 ammonia particles per inpure ammonia instead of just 1 
+    * Notice the speed don't change
