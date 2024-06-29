@@ -448,7 +448,7 @@ public class CatlyzerUpdateTickProcedure {
 								if (_ent != null) {
 									final int _slotid = 1;
 									final ItemStack _setstack = new ItemStack(ChangedAddonModItems.AMMONIAPARTICLE.get());
-									_setstack.setCount((int) (1 + new Object() {
+									_setstack.setCount((int) (4 + new Object() {
 										public int getAmount(LevelAccessor world, BlockPos pos, int slotid) {
 											AtomicInteger _retval = new AtomicInteger(0);
 											BlockEntity _ent = world.getBlockEntity(pos);
