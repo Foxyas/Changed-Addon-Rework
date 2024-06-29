@@ -21,6 +21,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
@@ -55,6 +56,17 @@ public class ErikEntity extends Monster {
 			protected double getAttackReachSqr(LivingEntity entity) {
 				return this.mob.getBbWidth() * this.mob.getBbWidth() + entity.getBbWidth();
 			}
+
+			@Override
+			public boolean canContinueToUse() {
+				double x = ErikEntity.this.getX();
+				double y = ErikEntity.this.getY();
+				double z = ErikEntity.this.getZ();
+				Entity entity = ErikEntity.this;
+				Level world = ErikEntity.this.level;
+				return super.canContinueToUse() && true;
+			}
+
 		});
 		this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
 		this.targetSelector.addGoal(3, new HurtByTargetGoal(this));

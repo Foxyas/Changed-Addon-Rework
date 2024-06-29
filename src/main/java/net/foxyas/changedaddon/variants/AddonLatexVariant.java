@@ -90,7 +90,7 @@ public class AddonLatexVariant {
 
     //Experiments
     public static final GenderedVariant<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> EXP1 = LatexVariant.register(GenderedVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX, ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
-            .groundSpeed(1.1F).swimSpeed(1F).additionalHealth(6).nightVision().extraJumps(2).addAbility(ChangedAddonAbilitys.PSYCHIC_PULSE).addAbility(ChangedAddonAbilitys.PSYCHIC_HOLD).addAbility(ChangedAbilities.SWITCH_GENDER).split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp1")));
+            .groundSpeed(1.1F).swimSpeed(1F).additionalHealth(6).nightVision().extraJumps(2).addAbility(ChangedAddonAbilitys.PSYCHIC_PULSE).addAbility(ChangedAddonAbilitys.PSYCHIC_HOLD).addAbility(ChangedAbilities.SWITCH_GENDER).transfurMode(TransfurMode.NONE).buildGendered(new ResourceLocation("changed_addon", "form_exp1")));
 
     public static final GenderedVariant<Exp2MaleEntity,Exp2FemaleEntity> EXP2 = LatexVariant.register(GenderedVariant.Builder.of(LatexVariant.LATEX_SNOW_LEOPARD,ChangedAddonModEntities.EXP_2_MALE,ChangedAddonModEntities.EXP_2_FEMALE)
             .groundSpeed(1.175F).swimSpeed(1.05F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp2")));

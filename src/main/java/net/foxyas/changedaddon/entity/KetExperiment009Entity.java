@@ -3,8 +3,11 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
+import net.foxyas.changedaddon.variants.AddonLatexVariant;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
+import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
