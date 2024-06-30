@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed_addon:snepsi"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:snepsi_can",
+    "count": 1
+  }
+}

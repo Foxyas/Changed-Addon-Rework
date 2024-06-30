@@ -1,0 +1,27 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "minecraft:snowball"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
+  "form": "changed_addon:form_latex_snow_leopard_partial"
+}

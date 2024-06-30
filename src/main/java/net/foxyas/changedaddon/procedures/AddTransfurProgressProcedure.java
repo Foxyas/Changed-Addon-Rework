@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.variants.AddonLatexVariant;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.Entity;
@@ -152,15 +153,15 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof Player player){
-			if(player.getLevel().random.nextInt(5) <= 1) {
+			if(player.getLevel().random.nextInt(6) <= 1) {
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
-			} else if ((player.getLevel().random.nextInt(5) == 2)){
+			} else if ((player.getLevel().random.nextInt(6) == 2)){
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_DRAGON);
-			} else if ((player.getLevel().random.nextInt(5) == 3)){
+			} else if ((player.getLevel().random.nextInt(6) == 3)){
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_PUP);
-			} else if ((player.getLevel().random.nextInt(5) == 4)){
+			} else if ((player.getLevel().random.nextInt(6) == 4)){
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_YUFENG);
-			} else if ((player.getLevel().random.nextInt(5) >= 5)){
+			} else if ((player.getLevel().random.nextInt(6) == 5)){
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
 			}
 		}
@@ -172,9 +173,9 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof Player player){
-			if(player.getLevel().random.nextInt(2) <= 1) {
+			if(player.getLevel().random.nextInt(3) == 1) {
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
-			} else if ((player.getLevel().random.nextInt(5) == 2)){
+			} else if ((player.getLevel().random.nextInt(3) == 2)){
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
 			}
 		}
@@ -190,5 +191,16 @@ public class AddTransfurProgressProcedure {
 			ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_BEIFENG);
 
 		}
+	}
+
+	public static void SnepsiTransfur(Entity player,boolean keepConcience,int type){
+		if (type == 1 ){
+        	ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.SNOW_LEOPARD_PARTIAL,keepConcience);
+		} else if (type == 2) {
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.male(),keepConcience);
+		} else if (type == 3) {
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.female(),keepConcience);
+		}
+
 	}
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "changed_addon:custom/snepsi",
+  "textures": {
+    "0": "changed_addon:blocks/foxsi",
+    "particle": "changed_addon:items/foxtaparticle"
+  }
+}

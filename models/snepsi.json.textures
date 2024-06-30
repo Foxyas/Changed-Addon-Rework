@@ -1,0 +1,22 @@
+{
+  "mappings": {
+    "default": {
+      "map": {
+        "0": "emptycan"
+      },
+      "name": "default"
+    },
+    "snepsi": {
+      "map": {
+        "0": "snepi"
+      },
+      "name": "snepsi"
+    },
+    "foxta": {
+      "map": {
+        "0": "foxsi"
+      },
+      "name": "foxta"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "_fv": 47,
+  "_type": "item",
+  "definition": {
+    "renderType": 1,
+    "texture": "foxtaparticle",
+    "customModelName": "snepsi:foxta",
+    "customProperties": {},
+    "states": [],
+    "name": "Foxta",
+    "rarity": "RARE",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "stackSize": 64,
+    "enchantability": 0,
+    "useDuration": 32,
+    "toolType": 1.0,
+    "damageCount": 0,
+    "recipeRemainder": {
+      "value": ""
+    },
+    "destroyAnyBlock": false,
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "enableMeleeDamage": false,
+    "damageVsEntity": 0.0,
+    "specialInfo": [
+      "Now made with 200% more oranages! Only $2.99! Tastes like Heaven!"
+    ],
+    "hasGlow": false,
+    "guiBoundTo": "<NONE>",
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "isFood": true,
+    "nutritionalValue": 4,
+    "saturation": 1.0,
+    "eatResultItem": {
+      "value": ""
+    },
+    "isMeat": false,
+    "isAlwaysEdible": true,
+    "animation": "drink"
+  }
+}

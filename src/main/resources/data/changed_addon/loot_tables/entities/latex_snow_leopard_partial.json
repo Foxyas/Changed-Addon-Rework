@@ -195,7 +195,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "changed:dark_latex_mask",
+          "name": "changed_addon:snepsi",
           "functions": [
             {
               "function": "changed:set_variant",

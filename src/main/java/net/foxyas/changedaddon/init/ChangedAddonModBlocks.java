@@ -15,6 +15,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraft.world.level.block.Block;
 
 import net.foxyas.changedaddon.block.UnifuserBlock;
+import net.foxyas.changedaddon.block.SnepsiCanBlock;
 import net.foxyas.changedaddon.block.SignalBlockBlock;
 import net.foxyas.changedaddon.block.PainiteOreBlock;
 import net.foxyas.changedaddon.block.PainiteBlockBlock;
@@ -22,6 +23,7 @@ import net.foxyas.changedaddon.block.LitixCamoniaFluidBlock;
 import net.foxyas.changedaddon.block.LatexInsulatorBlock;
 import net.foxyas.changedaddon.block.InformantblockBlock;
 import net.foxyas.changedaddon.block.GeneratorBlock;
+import net.foxyas.changedaddon.block.FoxtaCanBlock;
 import net.foxyas.changedaddon.block.DarklatexpuddleBlock;
 import net.foxyas.changedaddon.block.CatlyzerBlock;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -38,6 +40,8 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> SIGNAL_BLOCK = REGISTRY.register("signal_block", () -> new SignalBlockBlock());
 	public static final RegistryObject<Block> INFORMANTBLOCK = REGISTRY.register("informantblock", () -> new InformantblockBlock());
+	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
+	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -45,6 +49,8 @@ public class ChangedAddonModBlocks {
 		public static void clientSetup(FMLClientSetupEvent event) {
 			LatexInsulatorBlock.registerRenderLayer();
 			DarklatexpuddleBlock.registerRenderLayer();
+			FoxtaCanBlock.registerRenderLayer();
+			SnepsiCanBlock.registerRenderLayer();
 		}
 	}
 }

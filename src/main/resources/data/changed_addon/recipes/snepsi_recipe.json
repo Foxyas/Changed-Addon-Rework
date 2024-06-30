@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " 1 ",
+    "345",
+    " 7 "
+  ],
+  "key": {
+    "1": {
+      "item": "changed:latex_base"
+    },
+    "3": {
+      "item": "minecraft:snowball"
+    },
+    "4": {
+      "item": "changed_addon:foxta"
+    },
+    "5": {
+      "item": "minecraft:cod"
+    },
+    "7": {
+      "item": "minecraft:light_gray_dye"
+    }
+  },
+  "result": {
+    "item": "changed_addon:snepsi",
+    "count": 1
+  }
+}

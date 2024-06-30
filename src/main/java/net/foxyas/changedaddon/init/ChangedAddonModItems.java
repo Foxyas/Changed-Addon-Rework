@@ -28,6 +28,7 @@ import net.foxyas.changedaddon.item.TransfurTotemItem;
 import net.foxyas.changedaddon.item.SyringewithlitixcammoniaItem;
 import net.foxyas.changedaddon.item.SyringeItem;
 import net.foxyas.changedaddon.item.SpawneggoffoxyasItem;
+import net.foxyas.changedaddon.item.SnepsiItem;
 import net.foxyas.changedaddon.item.SignalCatcherItem;
 import net.foxyas.changedaddon.item.PotwithcamoniaItem;
 import net.foxyas.changedaddon.item.PainiteSwordItem;
@@ -46,6 +47,7 @@ import net.foxyas.changedaddon.item.LaethinSyringeItem;
 import net.foxyas.changedaddon.item.LaethinItem;
 import net.foxyas.changedaddon.item.InpureammoniaItem;
 import net.foxyas.changedaddon.item.HazardSuitItem;
+import net.foxyas.changedaddon.item.FoxtaItem;
 import net.foxyas.changedaddon.item.Experiment10DnaItem;
 import net.foxyas.changedaddon.item.Experiment009recordItem;
 import net.foxyas.changedaddon.item.Experiment009dnaItem;
@@ -154,6 +156,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> CRYSTAL_ADDAGER_BLACK = REGISTRY.register("crystal_addager_black", () -> new CrystalAddagerBlackItem());
 	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
 	public static final RegistryObject<Item> CROW_BAR = REGISTRY.register("crow_bar", () -> new CrowBarItem());
+	public static final RegistryObject<Item> SNEPSI = REGISTRY.register("snepsi", () -> new SnepsiItem());
+	public static final RegistryObject<Item> FOXTA = REGISTRY.register("foxta", () -> new FoxtaItem());
+	public static final RegistryObject<Item> FOXTA_CAN = block(ChangedAddonModBlocks.FOXTA_CAN, null);
+	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, null);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

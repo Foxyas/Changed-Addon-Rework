@@ -1,0 +1,39 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:snepsi"
+    },
+    "title": {
+      "translate": "advancements.obtain_snepsi.title"
+    },
+    "description": {
+      "translate": "advancements.obtain_snepsi.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "obtain_snepsi": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:snepsi"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

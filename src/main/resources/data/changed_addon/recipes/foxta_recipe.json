@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " 1 ",
+    "345",
+    " 7 "
+  ],
+  "key": {
+    "1": {
+      "item": "minecraft:sweet_berries"
+    },
+    "3": {
+      "item": "minecraft:sugar"
+    },
+    "4": {
+      "item": "changed_addon:orangejuice"
+    },
+    "5": {
+      "item": "minecraft:sugar"
+    },
+    "7": {
+      "item": "changed:latex_base"
+    }
+  },
+  "result": {
+    "item": "changed_addon:foxta",
+    "count": 1
+  }
+}
