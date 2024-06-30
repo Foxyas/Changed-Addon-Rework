@@ -151,6 +151,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
 	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
+	public static final RegistryObject<Item> ERIK_SPAWN_EGG = REGISTRY.register("erik_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.ERIK, -1, -1, new Item.Properties().tab(null)));
 	public static final RegistryObject<Item> CRYSTAL_ADDAGER_RED = REGISTRY.register("crystal_addager_red", () -> new CrystalAddagerRedItem());
 	public static final RegistryObject<Item> CRYSTAL_ADDAGER_GREEN = REGISTRY.register("crystal_addager_green", () -> new CrystalAddagerGreenItem());
 	public static final RegistryObject<Item> CRYSTAL_ADDAGER_BLACK = REGISTRY.register("crystal_addager_black", () -> new CrystalAddagerBlackItem());
@@ -158,8 +159,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> CROW_BAR = REGISTRY.register("crow_bar", () -> new CrowBarItem());
 	public static final RegistryObject<Item> SNEPSI = REGISTRY.register("snepsi", () -> new SnepsiItem());
 	public static final RegistryObject<Item> FOXTA = REGISTRY.register("foxta", () -> new FoxtaItem());
-	public static final RegistryObject<Item> FOXTA_CAN = block(ChangedAddonModBlocks.FOXTA_CAN, null);
-	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, null);
+	public static final RegistryObject<Item> FOXTA_CAN = block(ChangedAddonModBlocks.FOXTA_CAN, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

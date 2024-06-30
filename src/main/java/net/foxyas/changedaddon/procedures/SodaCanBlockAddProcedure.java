@@ -48,7 +48,8 @@ public class SodaCanBlockAddProcedure {
 				event.setCanceled(true);
 			}
 		}
-	}*/
+	}
+*/
 
 
 	@SubscribeEvent
@@ -56,7 +57,8 @@ public class SodaCanBlockAddProcedure {
 		//Only if the player is Crouching
 		/*if(!event.getPlayer().isCrouching()){
 			event.setCanceled(true); 
-		}*/
+		}
+*/
 
 		//Basic Variables
 		Direction direction = event.getFace();
@@ -81,14 +83,15 @@ public class SodaCanBlockAddProcedure {
 		double x = event.getPos().getX();
 		double y = event.getPos().getY();
 		double z = event.getPos().getZ();
+		boolean IsEvent;
 
 		//Item Handle to get which one is to be placed
 		if (event.getItemStack().is(ChangedAddonModItems.SNEPSI_CAN.get())) {
-			block = SnepsiState;
+			IsEvent = true;
 		} else if (event.getItemStack().is(ChangedAddonModItems.FOXTA_CAN.get())) {
-			block = FoxtaState;
+			IsEvent = true;
 		} else {
-			event.setCanceled(true); 
+			IsEvent = false;
 		}
 
 		//BlockPos Handle
@@ -107,8 +110,11 @@ public class SodaCanBlockAddProcedure {
 		
 		boolean isWater = world.getBlockState(EAST).is(Blocks.WATER);
 		
-		
+		if(!IsEvent){
+			return;
+		}
 		//Main logic Handle
+		if (IsEvent){
 		if (direction == Direction.UP) {
 			if (!world.getBlockState(DownOfUp).isCollisionShapeFullBlock(world,DownOfUp)){
 				event.setCanceled(true); 
@@ -116,14 +122,15 @@ public class SodaCanBlockAddProcedure {
 			/*if (!world.getBlockState(Up).isAir() && !world.getBlockState(Up).is(Blocks.WATER)){
 				event.setCanceled(true); 
 			}
-			/*block.setValue(WATERLOGGED, world.getBlockState(Up).is(Blocks.WATER));
+			block.setValue(WATERLOGGED, world.getBlockState(Up).is(Blocks.WATER));
 			world.setBlock(Up, block,3);
 			SetValues(Up,world,WATERLOGGED,isWater,FACING, event.getPlayer().getDirection().getOpposite());
 			world.playSound(event.getPlayer(),Up,block.getSoundType().getPlaceSound(),SoundSource.BLOCKS,1,1);
 			event.getPlayer().swing(event.getHand());
 			if(event.getPlayer() instanceof ServerPlayer serverPlayer && serverPlayer.gameMode.getGameModeForPlayer().isSurvival()){
 				event.getItemStack().shrink(1);
-			}*/
+			}
+			*/
 		} else if (direction == Direction.DOWN) {
 			if (!world.getBlockState(DownOfDown).isCollisionShapeFullBlock(world,DownOfDown)){
 				event.setCanceled(true); 
@@ -131,14 +138,15 @@ public class SodaCanBlockAddProcedure {
 			/*if (!world.getBlockState(Down).isAir() && !world.getBlockState(Down).is(Blocks.WATER)){
 				event.setCanceled(true); 
 			}
-			/*block.setValue(WATERLOGGED, world.getBlockState(Down).is(Blocks.WATER));
+			block.setValue(WATERLOGGED, world.getBlockState(Down).is(Blocks.WATER));
 			world.setBlock(Down, block,3);
 			SetValues(Down,world,WATERLOGGED,isWater,FACING, event.getPlayer().getDirection().getOpposite());
 			world.playSound(event.getPlayer(),Down,block.getSoundType().getPlaceSound(),SoundSource.BLOCKS,1,1);
 			event.getPlayer().swing(event.getHand());
 			if(event.getPlayer() instanceof ServerPlayer serverPlayer && serverPlayer.gameMode.getGameModeForPlayer().isSurvival()){
 				event.getItemStack().shrink(1);
-			}*/
+			}
+			*/
 		}
 		if (direction == Direction.NORTH) {
 			if (!world.getBlockState(DownOfNORTH).isCollisionShapeFullBlock(world,DownOfNORTH)){
@@ -147,14 +155,15 @@ public class SodaCanBlockAddProcedure {
 			/*if (!world.getBlockState(NORTH).isAir() && !world.getBlockState(NORTH).is(Blocks.WATER)){
 				event.setCanceled(true); 
 			}
-			/*block.setValue(WATERLOGGED, world.getBlockState(NORTH).is(Blocks.WATER));
+			block.setValue(WATERLOGGED, world.getBlockState(NORTH).is(Blocks.WATER));
 			world.setBlock(NORTH, block,3);
 			SetValues(NORTH,world,WATERLOGGED,isWater,FACING, event.getPlayer().getDirection().getOpposite());
 			world.playSound(event.getPlayer(),NORTH,block.getSoundType().getPlaceSound(),SoundSource.BLOCKS,1,1);
 			event.getPlayer().swing(event.getHand());
 			if(event.getPlayer() instanceof ServerPlayer serverPlayer && serverPlayer.gameMode.getGameModeForPlayer().isSurvival()){
 				event.getItemStack().shrink(1);
-			}*/
+			}
+			*/
 		} else if (direction == Direction.SOUTH) {
 			if (!world.getBlockState(DownOfSOUTH).isCollisionShapeFullBlock(world,DownOfSOUTH)){
 				event.setCanceled(true); 
@@ -162,14 +171,15 @@ public class SodaCanBlockAddProcedure {
 			/*if (!world.getBlockState(SOUTH).isAir() && !world.getBlockState(SOUTH).is(Blocks.WATER)){
 				event.setCanceled(true); 
 			}
-			/*block.setValue(WATERLOGGED, world.getBlockState(SOUTH).is(Blocks.WATER));
+			block.setValue(WATERLOGGED, world.getBlockState(SOUTH).is(Blocks.WATER));
 			world.setBlock(SOUTH, block,3);
 			SetValues(SOUTH,world,WATERLOGGED,isWater,FACING, event.getPlayer().getDirection().getOpposite());
 			world.playSound(event.getPlayer(),SOUTH,block.getSoundType().getPlaceSound(),SoundSource.BLOCKS,1,1);
 			event.getPlayer().swing(event.getHand());
 			if(event.getPlayer() instanceof ServerPlayer serverPlayer && serverPlayer.gameMode.getGameModeForPlayer().isSurvival()){
 				event.getItemStack().shrink(1);
-			}*/
+			}
+			*/
 		}
 		if (direction == Direction.WEST) {
 			if (!world.getBlockState(DownOfWEST).isCollisionShapeFullBlock(world,DownOfWEST)){
@@ -178,14 +188,15 @@ public class SodaCanBlockAddProcedure {
 			/*if (!world.getBlockState(WEST).isAir() && !world.getBlockState(WEST).is(Blocks.WATER)){
 				event.setCanceled(true); 
 			}
-			/*block.setValue(WATERLOGGED, world.getBlockState(WEST).is(Blocks.WATER));
+			block.setValue(WATERLOGGED, world.getBlockState(WEST).is(Blocks.WATER));
 			world.setBlock(WEST, block,3);
 			SetValues(WEST,world,WATERLOGGED,isWater,FACING, event.getPlayer().getDirection().getOpposite());
 			world.playSound(event.getPlayer(),WEST,block.getSoundType().getPlaceSound(),SoundSource.BLOCKS,1,1);
 			event.getPlayer().swing(event.getHand());
 			if(event.getPlayer() instanceof ServerPlayer serverPlayer && serverPlayer.gameMode.getGameModeForPlayer().isSurvival()){
 				event.getItemStack().shrink(1);
-			}*/
+			}
+			*/
 		} else if (direction == Direction.EAST) {
 			if (!world.getBlockState(DownOfEAST).isCollisionShapeFullBlock(world,DownOfEAST)){
 				event.setCanceled(true); 
@@ -193,19 +204,22 @@ public class SodaCanBlockAddProcedure {
 			/*if (!world.getBlockState(EAST).isAir() && !world.getBlockState(EAST).is(Blocks.WATER)){
 				event.setCanceled(true); 
 			}
-			/*block.setValue(WATERLOGGED, world.getBlockState(EAST).is(Blocks.WATER));
+			block.setValue(WATERLOGGED, world.getBlockState(EAST).is(Blocks.WATER));
 			world.setBlock(EAST, block,3);
 			SetValues(EAST,world,WATERLOGGED,isWater,FACING, event.getPlayer().getDirection().getOpposite());
 			world.playSound(event.getPlayer(),EAST,block.getSoundType().getPlaceSound(),SoundSource.BLOCKS,1,1);
 			event.getPlayer().swing(event.getHand());
 			if(event.getPlayer() instanceof ServerPlayer serverPlayer && serverPlayer.gameMode.getGameModeForPlayer().isSurvival()){
 				event.getItemStack().shrink(1);
-			}*/
+			}
+*/
+			}
 		}
 	}
 
 	/*public static void SetValues(BlockPos Block, Level World,BooleanProperty property,boolean value,DirectionProperty property2,Direction value2){
 		World.getBlockState(Block).setValue(property,value);
 		World.getBlockState(Block).setValue(property2,value2);
-	}*/
-}
+	}
+*/
+}

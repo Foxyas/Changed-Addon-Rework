@@ -11232,6 +11232,7 @@
       "metadata": {
         "files": [
           "src/main/java/net/foxyas/changedaddon/client/renderer/ErikRenderer.java",
+          "src/main/resources/assets/changed_addon/models/item/erik_spawn_egg.json",
           "src/main/java/net/foxyas/changedaddon/entity/ErikEntity.java"
         ]
       },
@@ -12911,6 +12912,7 @@
       "gui.changed_addon.bookpagenumber_3.label_recipe_of": "click in items for see yours recipes and if you want see all crafts",
       "advancements.untransfuradvancement.descr": "You untransfur with the Pot with Litix-Camonia",
       "gui.changed_addon.bookrecipepage_10.label_f": "F",
+      "item.changed_addon.erik_spawn_egg": "Erik Spawn Egg",
       "advancements.kill_experiment_009.descr": "You kill Experiment009 Good Job",
       "subtitles.experiment10_theme": "Experiment 10 Music Theme",
       "item.changed_addon.ammonia": "Ammonia Powder",
