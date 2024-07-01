@@ -31,10 +31,10 @@ public class WolfyRenderer extends LatexHumanoidRenderer<WolfyEntity, WolfyModel
 	@Override
 	public ResourceLocation getTextureLocation(WolfyEntity entity) {
 
-		if (entity.getHealth() / entity.getMaxHealth() <= 0.50 && entity.getHealth() / entity.getMaxHealth() > 0.02){
+		if (entity.getHealth() / entity.getMaxHealth() <= 0.50 && entity.getHealth() / entity.getMaxHealth() > 0.30){
 			return new ResourceLocation("changed_addon:textures/entities/noitems50hp.png");
 		}
-		if (entity.getHealth() / entity.getMaxHealth() <= 0.02){
+		if (entity.getHealth() / entity.getMaxHealth() <= 0.30){
 			return new ResourceLocation("changed_addon:textures/entities/noitems1hp.png");
 		}
 		return new ResourceLocation("changed_addon:textures/entities/noitems.png");

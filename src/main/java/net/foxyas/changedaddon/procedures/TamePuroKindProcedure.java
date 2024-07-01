@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.entity.WolfyEntity;
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.fml.common.Mod;
@@ -35,9 +37,8 @@ public class TamePuroKindProcedure {
 	private static void execute(@Nullable Event event, Entity entity, Entity sourceentity) {
 		if (entity == null || sourceentity == null)
 			return;
-		if (entity instanceof AbstractDarkLatexWolf) {
-		AbstractDarkLatexWolf Wolf = (AbstractDarkLatexWolf) entity;
-		String uuid = "";
+		if (entity instanceof AbstractDarkLatexWolf Wolf) {
+			String uuid = "";
 		if (entity instanceof PuroKindEntity || entity instanceof PuroKindFemaleEntity) {
 			if (!Wolf.isTame()) {
 				if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:orange"))) {
@@ -46,6 +47,16 @@ public class TamePuroKindProcedure {
 				} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:orange"))) {
 					if (sourceentity instanceof Player _owner)
 						Wolf.tame(_owner);
+					}
+				}
+			} else if (entity instanceof WolfyEntity){
+				if (!Wolf.isTame()){
+					if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.FOXTA.get()) {
+						if (sourceentity instanceof Player _owner)
+							Wolf.tame(_owner);
+					} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.FOXTA.get()) {
+						if (sourceentity instanceof Player _owner)
+							Wolf.tame(_owner);
 					}
 				}
 			}
