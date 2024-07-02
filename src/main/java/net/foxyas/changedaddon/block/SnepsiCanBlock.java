@@ -7,6 +7,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.Material;
@@ -30,6 +31,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.Direction;
@@ -37,6 +39,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 
 import java.util.List;
@@ -47,7 +50,7 @@ public class SnepsiCanBlock extends Block implements SimpleWaterloggedBlock {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
 	public SnepsiCanBlock() {
-		super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_GRAY).sound(SoundType.METAL).strength(1f, 10f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
+		super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_GRAY).sound(SoundType.METAL).strength(0.1f, 10f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
@@ -120,11 +123,16 @@ public class SnepsiCanBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+		return new ItemStack(ChangedAddonModItems.SNEPSI.get());
+	}
+
+	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
 		if (!dropsOriginal.isEmpty())
 			return dropsOriginal;
-		return Collections.singletonList(new ItemStack(this, 1));
+		return Collections.singletonList(new ItemStack(ChangedAddonModItems.SNEPSI.get()));
 	}
 
 	@OnlyIn(Dist.CLIENT)

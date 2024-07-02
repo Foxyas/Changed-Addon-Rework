@@ -1,0 +1,16 @@
+{
+  "mappings": {
+    "default": {
+      "map": {
+        "0": "snepsilow"
+      },
+      "name": "default"
+    },
+    "foxta": {
+      "map": {
+        "0": "foxsilow"
+      },
+      "name": "foxta"
+    }
+  }
+}

@@ -4,7 +4,7 @@
   "definition": {
     "renderType": 1,
     "texture": "snepsiparticle",
-    "customModelName": "snepsi:snepsi",
+    "customModelName": "snepsilow:default",
     "customProperties": {},
     "states": [],
     "name": "Snepsi",

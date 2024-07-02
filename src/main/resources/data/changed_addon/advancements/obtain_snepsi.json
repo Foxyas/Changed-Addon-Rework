@@ -35,5 +35,5 @@
   "rewards": {
     "experience": 250
   },
-  "parent": "changed_addon:changedaddon_advancement"
+  "parent": "changed_addon:obtain_foxta"
 }

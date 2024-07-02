@@ -12,7 +12,7 @@
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false
+    "hidden": true
   },
   "criteria": {
     "hazy_purple": {
@@ -20,7 +20,7 @@
     }
   },
   "rewards": {
-    "experience": 2000
+    "experience": 10000
   },
-  "parent": "changed_addon:changedaddon_advancement"
+  "parent": "changed_addon:kill_experiment_009"
 }

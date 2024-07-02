@@ -26,5 +26,5 @@
       }
     }
   },
-  "parent": "changed_addon:changedaddon_advancement"
+  "parent": "changed_addon:unifuser_advancement"
 }

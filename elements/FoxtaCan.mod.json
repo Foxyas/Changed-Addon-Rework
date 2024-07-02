@@ -37,16 +37,16 @@
     "specialInfo": [
       "Now made with 200% more oranages! Only $2.99! Tastes like Heaven!"
     ],
-    "hardness": 1.0,
+    "hardness": 0.09999999999999999,
     "resistance": 10.0,
     "hasGravity": false,
     "isWaterloggable": true,
     "creativeTab": {
-      "value": "CUSTOM:ChangedAddon"
+      "value": "No creative tab entry"
     },
     "destroyTool": "Not specified",
     "customDrop": {
-      "value": ""
+      "value": "CUSTOM:Foxta"
     },
     "dropAmount": 1,
     "useLootTableForDrops": false,
@@ -67,7 +67,7 @@
     },
     "colorOnMap": "SILVER",
     "creativePickItem": {
-      "value": ""
+      "value": "CUSTOM:Foxta"
     },
     "offsetType": "NONE",
     "aiPathNodeType": "DEFAULT",
