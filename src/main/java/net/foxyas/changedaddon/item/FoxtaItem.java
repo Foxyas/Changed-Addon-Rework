@@ -1,21 +1,21 @@
 
 package net.foxyas.changedaddon.item;
 
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.Component;
-
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.ltxprogrammer.changed.item.SpecializedItemRendering;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.function.Consumer;
 
-public class FoxtaItem extends Item {
+public class FoxtaItem extends Item implements SpecializedItemRendering {
 	public FoxtaItem() {
 		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(4).saturationMod(1f).alwaysEat()
 
@@ -31,5 +31,25 @@ public class FoxtaItem extends Item {
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
 		list.add(new TextComponent("Now made with 200% more oranages! Only $2.99! Tastes like Heaven!"));
+	}
+
+	private static final ModelResourceLocation GUIMODEL =
+			new ModelResourceLocation(new ResourceLocation("changed_addon","foxta_gui"), "inventory");
+	private static final ModelResourceLocation HANDMODEL =
+			new ModelResourceLocation(new ResourceLocation("changed_addon","foxta_hand"), "inventory");
+	private static final ModelResourceLocation GROUNDMODEL =
+			new ModelResourceLocation(new ResourceLocation("changed_addon","foxta"), "inventory");
+
+
+	@Override
+	public ModelResourceLocation getModelLocation(ItemStack itemStack, ItemTransforms.TransformType transformType) {
+		return transformType == ItemTransforms.TransformType.GUI || transformType == ItemTransforms.TransformType.FIXED ? GUIMODEL : transformType == ItemTransforms.TransformType.GROUND ? GROUNDMODEL : HANDMODEL;
+	}
+
+	@Override
+	public void loadSpecialModels(Consumer<ResourceLocation> consumer) {
+			consumer.accept(GUIMODEL);
+			consumer.accept(HANDMODEL);
+			consumer.accept(GROUNDMODEL);
 	}
 }

@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -88,7 +89,7 @@ public class SodaCanBlockAddProcedure {
 			return;
 		}
 
-		boolean isWater = world.getBlockState(targetPos).getFluidState().is(FluidTags.WATER);
+		boolean isWater = world.getBlockState(targetPos).getFluidState().is(FluidTags.WATER) && world.getBlockState(targetPos).getFluidState().isSource();
 		blockState = blockState.setValue(WATERLOGGED, isWater);
 
 		if (world.setBlock(targetPos, blockState, 3)) {
