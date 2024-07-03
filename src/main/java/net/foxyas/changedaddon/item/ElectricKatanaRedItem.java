@@ -29,7 +29,7 @@ public class ElectricKatanaRedItem extends SwordItem {
 			}
 
 			public float getAttackDamageBonus() {
-				return 8f;
+				return 6f;
 			}
 
 			public int getLevel() {
