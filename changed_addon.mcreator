@@ -7533,7 +7533,12 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/procedures/GetfullpainitearmorprocedureProcedure.java"
         ],
-        "dependencies": []
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
       },
       "path": "~/Procedures"
     },
@@ -7548,7 +7553,12 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/procedures/GetPainiteArmorWithProtectionProcedure.java"
         ],
-        "dependencies": []
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
       },
       "path": "~/Procedures"
     },
@@ -10880,7 +10890,7 @@
       "name": "TransfurTotemItemIsDroppedByPlayer",
       "type": "procedure",
       "sortid": 552,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "transfur_totem_item_is_dropped_by_player",
       "metadata": {
