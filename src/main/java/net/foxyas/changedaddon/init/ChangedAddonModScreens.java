@@ -16,7 +16,6 @@ import net.foxyas.changedaddon.client.gui.TransfurTotemGuiScreen;
 import net.foxyas.changedaddon.client.gui.TranfurSoundsGuiScreen;
 import net.foxyas.changedaddon.client.gui.PagesecretScreen;
 import net.foxyas.changedaddon.client.gui.InformantGuiScreen;
-import net.foxyas.changedaddon.client.gui.GrabclickguiScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenugrabScreen;
 import net.foxyas.changedaddon.client.gui.GrabRadialMenuScreen;
 import net.foxyas.changedaddon.client.gui.GeneratorguiScreen;
@@ -44,7 +43,6 @@ public class ChangedAddonModScreens {
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			MenuScreens.register(ChangedAddonModMenus.GRABCLICKGUI, GrabclickguiScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOK_PAGENUMBER_1, BookPagenumber1Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOK_PAGENUMBER_2, BookPagenumber2Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOKPAGENUMBER_3, Bookpagenumber3Screen::new);

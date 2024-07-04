@@ -17,7 +17,6 @@ import net.foxyas.changedaddon.world.inventory.TransfurTotemGuiMenu;
 import net.foxyas.changedaddon.world.inventory.TranfurSoundsGuiMenu;
 import net.foxyas.changedaddon.world.inventory.PagesecretMenu;
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
-import net.foxyas.changedaddon.world.inventory.GrabclickguiMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenugrabMenu;
 import net.foxyas.changedaddon.world.inventory.GrabRadialMenuMenu;
 import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
@@ -46,7 +45,6 @@ import java.util.ArrayList;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonModMenus {
 	private static final List<MenuType<?>> REGISTRY = new ArrayList<>();
-	public static final MenuType<GrabclickguiMenu> GRABCLICKGUI = register("grabclickgui", (id, inv, extraData) -> new GrabclickguiMenu(id, inv, extraData));
 	public static final MenuType<BookPagenumber1Menu> BOOK_PAGENUMBER_1 = register("book_pagenumber_1", (id, inv, extraData) -> new BookPagenumber1Menu(id, inv, extraData));
 	public static final MenuType<BookPagenumber2Menu> BOOK_PAGENUMBER_2 = register("book_pagenumber_2", (id, inv, extraData) -> new BookPagenumber2Menu(id, inv, extraData));
 	public static final MenuType<Bookpagenumber3Menu> BOOKPAGENUMBER_3 = register("bookpagenumber_3", (id, inv, extraData) -> new Bookpagenumber3Menu(id, inv, extraData));
