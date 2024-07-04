@@ -10880,7 +10880,7 @@
       "name": "TransfurTotemItemIsDroppedByPlayer",
       "type": "procedure",
       "sortid": 552,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "transfur_totem_item_is_dropped_by_player",
       "metadata": {
