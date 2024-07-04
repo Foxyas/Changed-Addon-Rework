@@ -82,11 +82,11 @@ public class AddTransfurProgressProcedure {
 		if (entity == null){
 			return;
 		}
-		float negative = (float) -Amount;
+		float negative = -Amount;
 		if (entity instanceof Player _entity) {
 			if (ProcessTransfur.getPlayerTransfurProgress(_entity) != null){
 			float Progress = ProcessTransfur.getPlayerTransfurProgress(_entity).progress();
-			LatexVariant Variant = ProcessTransfur.getPlayerTransfurProgress(_entity).variant();
+			LatexVariant<?> Variant = ProcessTransfur.getPlayerTransfurProgress(_entity).variant();
 
 			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(Progress + negative,//amount
 					/*Variant Check*/ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT : ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
@@ -104,7 +104,7 @@ public class AddTransfurProgressProcedure {
 		if (entity instanceof Player _entity) {
 			if (ProcessTransfur.getPlayerTransfurProgress(_entity) != null){
 				float Progress = ProcessTransfur.getPlayerTransfurProgress(_entity).progress();
-				LatexVariant Variant = ProcessTransfur.getPlayerTransfurProgress(_entity).variant();
+				LatexVariant<?> Variant = ProcessTransfur.getPlayerTransfurProgress(_entity).variant();
 
 			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(Progress + FAmount,//amount
 					/*Variant Check*/ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT : ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
@@ -145,6 +145,15 @@ public class AddTransfurProgressProcedure {
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF_HORNED);
 			}
 		}
+
+		if (entity instanceof LivingEntity player){
+			if(player.getLevel().random.nextInt(10) > 5) {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF);
+			} else {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF_HORNED);
+			}
+		}
+
 	}
 
 	public static void addBlack(Entity entity,float amount) {
@@ -165,6 +174,21 @@ public class AddTransfurProgressProcedure {
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
 			}
 		}
+
+		if (entity instanceof LivingEntity player){
+			if(player.getLevel().random.nextInt(6) <= 1) {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+			} else if ((player.getLevel().random.nextInt(6) == 2)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_DRAGON);
+			} else if ((player.getLevel().random.nextInt(6) == 3)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_PUP);
+			} else if ((player.getLevel().random.nextInt(6) == 4)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_YUFENG);
+			} else if ((player.getLevel().random.nextInt(6) == 5)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+			}
+		}
+
 	}
 
 	public static void addDarkLatex(Entity entity,float amount) {
@@ -179,6 +203,15 @@ public class AddTransfurProgressProcedure {
 				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
 			}
 		}
+
+		if (entity instanceof LivingEntity player){
+			if(player.getLevel().random.nextInt(3) == 1) {
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+			} else if ((player.getLevel().random.nextInt(3) == 2)){
+				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+			}
+		}
+
 	}
 
 
@@ -187,19 +220,19 @@ public class AddTransfurProgressProcedure {
 			return;
 		}
 
-		if (entity instanceof Player player){
+		if (entity instanceof LivingEntity player){
 			ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_BEIFENG);
 
 		}
 	}
 
-	public static void SnepsiTransfur(Entity player,boolean keepConcience,int type){
+	public static void SnepsiTransfur(Entity player,boolean keepConscience,int type){
 		if (type == 1 ){
-        	ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.SNOW_LEOPARD_PARTIAL,keepConcience);
+        	ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.SNOW_LEOPARD_PARTIAL,keepConscience);
 		} else if (type == 2) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.male(),keepConcience);
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.male(),keepConscience);
 		} else if (type == 3) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.female(),keepConcience);
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.female(),keepConscience);
 		}
 
 	}
