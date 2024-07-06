@@ -66,8 +66,8 @@
   "block.changed_addon.darklatexpuddle": "黑胶池",
   "block.changed_addon.generator": "发电机",
   "block.changed_addon.latex_insulator": "胶液绝缘体",
-  "block.changed_addon.litix_camonia_fluid": "Litix Camonia液体",
-  "block.changed_addon.painite_ore": "深板Painite矿石",
+  "block.changed_addon.litix_camonia_fluid": "Camonia胶液",
+  "block.changed_addon.painite_ore": "彩铅矿",
   "block.changed_addon.signal_block": "信号块",
   "block.changed_addon.unifuser": "反兽化药剂合成台",
 
@@ -120,6 +120,7 @@
   "death.attack.concience_lose.player": "%1$s 被 %2$s 失去了你的良心",
   "death.attack.latex_solvent": "%1$s 被溶解了",
   "death.attack.latex_solvent.player": "%1$s 被 %2$s 溶解了",
+
   "effect.changed_addon.fadige": "疲劳",
   "effect.changed_addon.grabeffect": "抓取效果",
   "effect.changed_addon.infriendlygrab": "在友好抓取中",
@@ -517,5 +518,40 @@
   "subtitles.warn": "警告声音",
 
   "translation.FriendlyGrab.HumanText": "§b您正在进行友好抓取，按 (key) 离开",
-  "translation.FriendlyGrab.TransfurText": "§f您正在进行友好抓取，悄悄按下 (key) 松开他们"
+  "translation.FriendlyGrab.TransfurText": "§f您正在进行友好抓取，悄悄按下 (key) 松开他们",
+
+  "text.changed_addon.landspeed": "陆地速度  \u003d %s",
+
+  "gui.changed_addon.book_pagenumber_1.label_infuse_itself_guides_you_with_it": "注入自己的食谱，为您提供指导",
+
+  "gamerule.changedAddonDuctMecanic.description": "允许您使用更改后的插件管道 Mecanic（默认关闭）",
+
+  "advancements.bigone.descr": "你钓到了一条大鱼！现在好好享受你的新鱼友吧",
+
+  "block.changed_addon.painite_block": "彩铅块",
+
+  "gui.changed_addon.book_pagenumber_7.label_these_are_the_modes_of_friendly": "-\u003e 这些是 Fr-",
+
+  "advancements.obtain_painite.descr": "Obtain Painite",
+
+  "item.changed_addon.exp_2_male_spawn_egg": "Exp2 Male Spawn Egg",
+
+  "gui.changed_addon.book_pagenumber_7.label_normaltransfur_grab_mode_o": "-\u003e 这些是有机 Friendl-",
+  "gui.changed_addon.bookrecipepage_8.label_catalyzer": "催化剂",
+  "gui.changed_addon.book_pagenumber_1.label_empty": "?",
+
+  "subtitles.grab_release": "玩家从抓取中解放",
+
+  "effect.changed_addon.transfur_sickness": "§o§c传染病",
+
+  "advancements.friendly_transfur.descr": "你被 Foxyas 兽化了",
+
+  "gui.changed_addon.grabclickgui.button_breakfree": "不受约束",
+  "gui.changed_addon.bookpagenumber_3.label_the_recipe_for_the_main_item_sho": "应找到主菜的菜谱",
+  "gui.changed_addon.book_pagenumber_2.label_i_was_about_to_forget_but_we_cre": "-ier 将注射器放入槽中进行净化。如果您不确定每",
+  "gui.changed_addon.unifusergui.label_next_page": "下一页",
+
+  "key.categories.changed_addon": "Changed Addon 热键",
+
+  "gui.changed_addon.book_pagenumber_1.label_for_that_just_use_a_syringe_on_y": "为此，只需用注射器在你身上抽血，但首先需要工艺品"
 }

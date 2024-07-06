@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:foxta"
+    },
+    "title": {
+      "translate": "advancements.drink_foxta.title"
+    },
+    "description": {
+      "translate": "advancements.drink_foxta.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "drink_foxta": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:foxta"
+          ]
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 1000
+  },
+  "parent": "changed_addon:obtain_foxta"
+}
