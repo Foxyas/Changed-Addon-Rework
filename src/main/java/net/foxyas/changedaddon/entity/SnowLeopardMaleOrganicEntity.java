@@ -48,8 +48,11 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
 		setNoAi(false);
 		setPersistenceRequired();
 	}
-	public InteractionResult SnowLeopard(Player player, InteractionHand hand) {
+	public InteractionResult SnowLeopard(Player player, InteractionHand hand,Player Host) {
 		ItemStack itemstack = player.getItemInHand(hand);
+		if(Host != null){
+			return super.mobInteract(player, hand);
+		}
 		if (this.level.isClientSide) {
 			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
@@ -83,7 +86,7 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
 
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		return SnowLeopard(player,hand);
+		return SnowLeopard(player,hand,this.getUnderlyingPlayer());
 	}
 
 	@Override

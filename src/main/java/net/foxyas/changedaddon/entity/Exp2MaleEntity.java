@@ -43,8 +43,12 @@ public class Exp2MaleEntity extends AbstractCanTameLatexEntity {
 		setPersistenceRequired();
 	}
 
-	public InteractionResult Exp2(Player player, InteractionHand hand) {
+	public InteractionResult Exp2(Player player, InteractionHand hand,Player Host) {
 		ItemStack itemstack = player.getItemInHand(hand);
+		if(Host != null){
+			return super.mobInteract(player, hand);
+		}
+
 		if (this.level.isClientSide) {
 			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
@@ -78,7 +82,7 @@ public class Exp2MaleEntity extends AbstractCanTameLatexEntity {
 
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		return Exp2(player,hand);
+		return Exp2(player,hand,this.getUnderlyingPlayer());
 	}
 
 	@Override
