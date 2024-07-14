@@ -12,7 +12,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.Difficulty;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
@@ -40,13 +39,8 @@ public class DolatexinfectiontickProcedure {
 		boolean CanWork = false;
 		double PlayerTransfurProgress = 0;
 		if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION) == true) {
-			float Player_TransfurProgress = new Object() {
-				public float getValue() {
-					CompoundTag dataIndex0 = new CompoundTag();
-					entity.saveWithoutId(dataIndex0);
-					return dataIndex0.getFloat("TransfurProgress");
-				}
-			}.getValue();
+			PlayerTransfurProgress = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number;
+			float Player_TransfurProgress = (float) PlayerTransfurProgress;
 			float mathnumber = 0f;
 			switch (world.getDifficulty()) {
 				case EASY :
