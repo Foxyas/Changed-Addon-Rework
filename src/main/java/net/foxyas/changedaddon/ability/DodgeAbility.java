@@ -22,7 +22,7 @@ public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
 
     @Override
     public ResourceLocation getTexture(IAbstractLatex entity) {
-        return new ResourceLocation("changed_addon:textures/screens/thunderbolt.png");
+        return new ResourceLocation("changed_addon:textures/screens/dodge_ability.png");
     }
 
     @Override

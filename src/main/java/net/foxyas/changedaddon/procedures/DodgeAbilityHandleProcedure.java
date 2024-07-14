@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -55,10 +56,10 @@ public class DodgeAbilityHandleProcedure {
 				return;
 			}
 			int DodgeAmount = DodgeAbility.getDodgeAmount();
-			int MaxDodgeAmount = DodgeAbility.getMaxDodgeAmount();
+			//int MaxDodgeAmount = DodgeAbility.getMaxDodgeAmount();
 			double distance = attacker.distanceTo(target);
 			boolean IsDodgeActivate = DodgeAbility.isDodgeActivate();
-			boolean nonAnyIframe = player.invulnerableTime <= 0 && player.hurtTime <= 0;
+			//boolean nonAnyIframe = player.invulnerableTime <= 0 && player.hurtTime <= 0;
 			boolean nonIframe = player.invulnerableTime <= 0;
 			boolean nonHurtFrame = player.hurtTime <= 0;
 			if (nonIframe || nonHurtFrame) {
@@ -66,10 +67,13 @@ public class DodgeAbilityHandleProcedure {
 					if (DodgeAmount > 0) {
 						if (distance <= 4) {
 							// Teleport the target to the new position
+							BlockPos Location = new BlockPos(Dodgetype1.x(), target.getY(), Dodgetype1.z());
 							if (world instanceof ServerLevel serverLevel) {
 								player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", DodgeAmount), true);
 								DodgeAbility.subDodgeAmount();
-								target.teleportTo(Dodgetype1.x(), target.getY(), Dodgetype1.z());
+								if(world.isEmptyBlock(Location) || world.isEmptyBlock(Location.above())) {
+									target.teleportTo(Location.getX(), Location.getY(), Location.getZ());
+								}
 								player.invulnerableTime = 50;
 								player.hurtDuration = 20;
 								player.hurtTime = player.hurtDuration;

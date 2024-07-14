@@ -3,7 +3,7 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "experiencebook_of_changed",
+    "texture": "changed_addon_book",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
