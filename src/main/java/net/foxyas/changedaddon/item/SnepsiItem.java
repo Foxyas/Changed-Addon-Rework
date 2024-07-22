@@ -1,9 +1,11 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.UseAnim;
@@ -37,7 +39,7 @@ public class SnepsiItem extends Item implements SpecializedItemRendering {
 	@Override
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TextComponent("Cat-ion? Isnt it spelled caution? Says do NOT drink. Contains goo?"));
+		list.add(new TranslatableComponent("item.changed_addon.snepsi.desc"));
 	}
 
 	@Override

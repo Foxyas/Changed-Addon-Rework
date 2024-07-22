@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:snepsi"
+    },
+    "title": {
+      "translate": "advancements.snepsi_adctive.title"
+    },
+    "description": {
+      "translate": "advancements.snepsi_adctive.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "snepsi_adctive": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 3500
+  },
+  "parent": "changed_addon:drink_snepsi"
+}

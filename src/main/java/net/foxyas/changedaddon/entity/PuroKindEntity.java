@@ -4,20 +4,20 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.HairStyle;
+import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -112,6 +112,19 @@ public class PuroKindEntity extends AbstractDarkLatexWolf {
 	@Override
 	public double getMyRidingOffset() {
 		return -0.35D;
+	}
+
+	public double getTorsoYOffset(LatexEntity self) {
+		float ageAdjusted = (float)self.tickCount * 0.33333334F * 0.25F * 0.15F;
+		float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
+		float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
+		float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
+		return (double)(Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
+	}
+
+	@Override
+	public double getPassengersRidingOffset() {
+		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + 1.2;
 	}
 
 	@Override

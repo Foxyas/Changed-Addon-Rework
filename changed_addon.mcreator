@@ -11816,6 +11816,33 @@
         ]
       },
       "path": "~/advancements"
+    },
+    {
+      "name": "SnepsiAdctive",
+      "type": "achievement",
+      "sortid": 615,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "snepsi_adctive",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/snepsi_adctive.json"
+        ]
+      }
+    },
+    {
+      "name": "PlayerUtil",
+      "type": "procedure",
+      "sortid": 616,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "player_util",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PlayerUtilProcedure.java"
+        ],
+        "dependencies": []
+      }
     }
   ],
   "variable_elements": [
@@ -12040,6 +12067,12 @@
       "type": "logic",
       "scope": "player_lifetime",
       "value": "false"
+    },
+    {
+      "name": "Snepsi_Drink",
+      "type": "number",
+      "scope": "player_persistent",
+      "value": "0"
     }
   ],
   "sound_elements": [
@@ -12105,13 +12138,13 @@
     "en_us": {
       "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
       "advancements.obtain_foxta.title": "Foxta!",
-      "item.changed_addon.crystal_addager_black": "Dark Crystal Addager",
       "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
+      "item.changed_addon.crystal_addager_black": "Dark Crystal Addager",
       "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
       "gui.changed_addon.book_pagenumber_7.label_ab": "-ab)",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
-      "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
+      "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "Litix-Camonia",
@@ -12120,19 +12153,19 @@
       "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
-      "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
       "item.changed_addon.signal_catcher": "Signal Catcher",
+      "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
-      "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
-      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
-      "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
+      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
+      "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
+      "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
       "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
       "item.changed_addon.partial_snow_leopard_spawn_egg": "Snow Leopard Partial Spawn Egg",
-      "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
       "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
+      "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
       "item.minecraft.lingering_potion.effect.transfur_sickness_potion": "Lingering Potion of Transfur Sickness ",
@@ -12141,8 +12174,8 @@
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
       "gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon": " (Press the Totem Icon)",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe1": "Display Litix-Camonia Recipe",
-      "entity.changed_addon.exp2_female": "Exp2 Female",
       "gui.changed_addon.book_pagenumber_6.label_mode_on": "-mode on) This Will change t-",
+      "entity.changed_addon.exp2_female": "Exp2 Female",
       "entity.changed_addon.latex_snow_leopard_partial": "Partial Snow Leopard",
       "block.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
       "gui.changed_addon.book_pagenumber_7.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
@@ -12173,16 +12206,16 @@
       "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
       "gui.changed_addon.bookpagenumber_3.label_catlyzer": "Catalyzer",
       "gui.changed_addon.book_pagenumber_1.label_empty1": "?",
-      "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
+      "effect.changed_addon.latex_contamination": "Latex Contamination",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "advancements.obtain_red_crystal_dagger.title": "§4Red§r Crystal Dagger!",
       "item.changed_addon.snepsi": "Snepsi",
       "gui.changed_addon.book_pagenumber_1.label_and_with_the_syringe_with_blood": "with the syringe with blood and latex base",
       "gui.changed_addon.bookpagenumber_4.label_in_the_rank_right_mouse_button": "in IV rank (right mouse button)",
-      "changed_addon.ability.dodge.dodge_amount_left": "Your Amount of Dodges left is %1$s",
       "config.changed_addon.changed_addon_configs": "ChangedAddon-Server",
+      "changed_addon.ability.dodge.dodge_amount_left": "Your Amount of Dodges left is %1$s",
       "gui.changed_addon.tranfur_sounds_gui.label_transfursounds": "TransfurSounds",
       "gui.changed_addon.bookpagenumber_3.label_this_item_can_make_you_back_for": "this item can make you back for human stage",
       "gui.changed_addon.foxyas_gui_2.button_aa": "yes",
@@ -12200,6 +12233,7 @@
       "gui.changed_addon.book_pagenumber_7.label_friendly_modes": "-iendly modes (If Human this-",
       "item.changed_addon.experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
       "gui.changed_addon.bookrecipepage_8.label_s": "S",
+      "advancements.snepsi_adctive.descr": "We take a big sippy,You drink 100 Snepsis!",
       "gui.changed_addon.informant_gui.form": "Form ID",
       "item.changed_addon.empty_spray": "Empty Spray",
       "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
@@ -12385,6 +12419,7 @@
       "advancements.obtain_a_electric_katana.descr": "Get the electric katana!",
       "item.changed_addon.orangejuice": "Orange Juice",
       "gui.changed_addon.book_pagenumber_6.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
+      "advancements.snepsi_adctive.title": "Snepsi Adctive!",
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",
       "changedaddon.friendlygrab.you_hug.organic": "You are organic so you §chug§r them",
       "gui.changed_addon.book_pagenumber_2.label_ammonia": "Ammonia powder",
@@ -12423,7 +12458,7 @@
       "gui.changed_addon.book_pagenumber_1.label_the_syringe_craft_is_just_an_iro": "the syringe craft is just an iron nugget ",
       "item.changed_addon.exp_2_female_spawn_egg": "Exp2 Female Spawn Egg",
       "block.changed_addon.generator": "Generator",
-      "advancements.drink_snepsi.title": "Wait this isnt pepsi!",
+      "advancements.drink_snepsi.title": "Wait this isn\u0027t pepsi!",
       "gui.changed_addon.book_pagenumber_1.button_changed_addon_overlays": "Changed Addon HUD",
       "advancements.changedaddon_advancement.title": "Changed Addon ",
       "gamerule.dolatexinfection": "Do Latex Infection",
@@ -12452,6 +12487,7 @@
       "item.changed_addon.litix_camonia_fluid_bucket": "LitixCamonia Bucket",
       "gamerule.allowPlayerGrab.description": "Allow Players Use the Grab Feature",
       "subtitles.enter_in_friendly_grab": "Player Being Friendly Grab",
+      "enchantment.changed_addon.solvent.desc": "Deal more damage to Latex Entities",
       "gui.changed_addon.book_pagenumber_6.label_normaltransfur_grab_mode_o": "-\u003e Normal/Transfur Grab mod-",
       "item.changed_addon.painite_armor_helmet": "Painite Helmet",
       "gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you": "i want be transfured by you",
@@ -12560,6 +12596,7 @@
       "gamerule.dolatexinfection.description": "this makes the latex infection in the player rise after being attacked",
       "advancements.obtain_dark_crystal_dagger.descr": "You get a §8Dark§r Crystal Dagger!",
       "gui.changed_addon.unifusergui.tooltip_put_the_second_ingredient": "Put the second ingredient",
+      "changedaddon.warn.cant_carry": "You can\u0027t carry %1$s they is too heavy",
       "gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it": "it i can do it",
       "subtitles.armor_equip": "Armor Equip",
       "gui.changed_addon.bookrecipepage_10.label_m_meet": "M \u003d ANY MEET",
@@ -12657,11 +12694,13 @@
       "gui.changed_addon.bookpagenumber_3.label_catlyzer1": "Catalyzer",
       "gui.changed_addon.bookpagenumber_4.label_catalyzer": "Catalyzer",
       "item.changed_addon.snow_leopard_male_organic_spawn_egg": "Male BioSynth Snow Leopard Spawn Egg",
+      "item.changed_addon.foxta.desc": "Now made with 200% more oranages! Only $2.99! Tastes like Heaven!",
       "gui.changed_addon.bookrecipepage_8.label_empty": "\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003e",
       "advancements.obtain_red_electric_katana.descr": "Obtain §4Red§r Electric Katana!",
       "gamerule.changedAddonHardModeBosses": "Changed Addon HardMode Bosses",
       "advancements.potwithlitixcamonia_advancement.title": "yummy?",
       "gui.changed_addon.bookrecipepage_10.label_m": "M",
+      "item.changed_addon.snepsi.desc": "Cat-ion? Isnt it spelled caution? Says do NOT drink. Contains goo?",
       "changedaddon.friendlygrab.Human.you_hug.organic": "They are organic so you just §chug§r them",
       "gui.changed_addon.bookrecipepage_10.label_s": "S",
       "item.changed_addon.changedbook": "Guide Book",
@@ -12684,6 +12723,7 @@
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
       "gui.changed_addon.bookpagenumber_3.label_the_recipe_for_the_main_item_sho": "the recipe for the main item should be found",
       "gui.changed_addon.book_pagenumber_2.label_i_was_about_to_forget_but_we_cre": "-ier by placing the syringe in the slot to purify. If you are unsure about per",
+      "changed_addon.ability.carry": "Carry",
       "gui.changed_addon.unifusergui.label_next_page": "Next Page",
       "key.categories.changed_addon": "Changed Addon KeyBinds",
       "gui.changed_addon.book_pagenumber_1.label_for_that_just_use_a_syringe_on_y": "for that just use a syringe on you to draw your blood but first you need craft"

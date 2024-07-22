@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.ltxprogrammer.changed.entity.variant.GenderedVariant;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.minecraft.core.Registry;

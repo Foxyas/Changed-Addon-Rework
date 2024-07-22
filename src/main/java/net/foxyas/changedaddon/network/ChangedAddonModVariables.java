@@ -97,6 +97,7 @@ public class ChangedAddonModVariables {
 			clone.UntransfurProgress = original.UntransfurProgress;
 			clone.Exp009TransfurAllowed = original.Exp009TransfurAllowed;
 			clone.Exp009Buff = original.Exp009Buff;
+			clone.Snepsi_Drink = original.Snepsi_Drink;
 			if (!event.isWasDeath()) {
 				clone.times_the_syringe_was_used = original.times_the_syringe_was_used;
 				clone.grab_escape = original.grab_escape;
@@ -309,6 +310,7 @@ public class ChangedAddonModVariables {
 		public boolean Exp009TransfurAllowed = false;
 		public boolean Exp009Buff = false;
 		public boolean consciousness_fight_give_up = false;
+		public double Snepsi_Drink = 0;
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -353,6 +355,7 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
 			nbt.putBoolean("Exp009Buff", Exp009Buff);
 			nbt.putBoolean("consciousness_fight_give_up", consciousness_fight_give_up);
+			nbt.putDouble("Snepsi_Drink", Snepsi_Drink);
 			return nbt;
 		}
 
@@ -394,6 +397,7 @@ public class ChangedAddonModVariables {
 			Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
 			Exp009Buff = nbt.getBoolean("Exp009Buff");
 			consciousness_fight_give_up = nbt.getBoolean("consciousness_fight_give_up");
+			Snepsi_Drink = nbt.getDouble("Snepsi_Drink");
 		}
 	}
 
@@ -454,6 +458,7 @@ public class ChangedAddonModVariables {
 					variables.Exp009TransfurAllowed = message.data.Exp009TransfurAllowed;
 					variables.Exp009Buff = message.data.Exp009Buff;
 					variables.consciousness_fight_give_up = message.data.consciousness_fight_give_up;
+					variables.Snepsi_Drink = message.data.Snepsi_Drink;
 				}
 			});
 			context.setPacketHandled(true);

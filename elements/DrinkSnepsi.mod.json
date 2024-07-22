@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "achievement",
   "definition": {
-    "achievementName": "Wait this isnt pepsi!",
+    "achievementName": "Wait this isn't pepsi!",
     "achievementDescription": "Drink snepsi for the first time",
     "achievementIcon": {
       "value": "CUSTOM:Snepsi"
