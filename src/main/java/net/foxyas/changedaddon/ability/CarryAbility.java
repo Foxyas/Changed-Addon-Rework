@@ -9,8 +9,10 @@ import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -51,16 +53,21 @@ public class CarryAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractLatex entity) {
         super.startUsing(entity);
-        Run(entity.getEntity());
+        boolean isCreative = false;
+        if(entity.getEntity() instanceof ServerPlayer player && player.gameMode.isCreative()){
+           isCreative = true;
+        }
+        Run(entity.getEntity(),isCreative);
     }
 
     @Override
     public void onRemove(IAbstractLatex entity) {
         super.onRemove(entity);
+
         SafeRemove(entity.getEntity());
     }
 
-    public static void Run(Entity mainEntity){
+    public static void Run(Entity mainEntity,boolean isCreative){
         if(mainEntity instanceof Player player){
             if (player.getFirstPassenger() != null){
                 player.getFirstPassenger().stopRiding();
@@ -88,7 +95,10 @@ public class CarryAbility extends SimpleAbility {
                         player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry",carryTarget.getDisplayName()),true);
                         return;
                     }
-                    if(carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)){
+                    if(!isCreative && carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)){
+                        carryTarget.startRiding(player,true);
+                        SoundPlay(player);
+                    } else if (isCreative) {
                         carryTarget.startRiding(player,true);
                         SoundPlay(player);
                     }
