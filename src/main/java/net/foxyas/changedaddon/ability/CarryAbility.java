@@ -19,6 +19,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.Objects;
+import net.minecraft.tags.TagKey;
+import net.minecraft.core.Registry;
 
 public class CarryAbility extends SimpleAbility {
     public CarryAbility() {
@@ -53,11 +55,7 @@ public class CarryAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractLatex entity) {
         super.startUsing(entity);
-        boolean isCreative = false;
-        if(entity.getEntity() instanceof ServerPlayer player && player.gameMode.isCreative()){
-           isCreative = true;
-        }
-        Run(entity.getEntity(),isCreative);
+        Run(entity.getEntity());
     }
 
     @Override
@@ -67,7 +65,7 @@ public class CarryAbility extends SimpleAbility {
         SafeRemove(entity.getEntity());
     }
 
-    public static void Run(Entity mainEntity,boolean isCreative){
+    public static void Run(Entity mainEntity){
         if(mainEntity instanceof Player player){
             if (player.getFirstPassenger() != null){
                 player.getFirstPassenger().stopRiding();
@@ -95,10 +93,10 @@ public class CarryAbility extends SimpleAbility {
                         player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry",carryTarget.getDisplayName()),true);
                         return;
                     }
-                    if(!isCreative && carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)){
+                    if(carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)){
                         carryTarget.startRiding(player,true);
                         SoundPlay(player);
-                    } else if (isCreative) {
+                    } else if (carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))) {
                         carryTarget.startRiding(player,true);
                         SoundPlay(player);
                     }

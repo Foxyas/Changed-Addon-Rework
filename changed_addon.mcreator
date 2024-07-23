@@ -2458,6 +2458,9 @@
       "registry_name": "show_25porcentbar",
       "metadata": {
         "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Show25porcentbarProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "x",
@@ -3403,6 +3406,9 @@
       "locked_code": false,
       "registry_name": "giveup",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/GiveupProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -3770,6 +3776,9 @@
       "locked_code": false,
       "registry_name": "latex_insulator_entity_collides_in_the_block",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexInsulatorEntityCollidesInTheBlockProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -5886,6 +5895,9 @@
       "locked_code": false,
       "registry_name": "open_tranfur_extra",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/OpenTranfurExtraProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9469,6 +9481,9 @@
       "locked_code": false,
       "registry_name": "leap",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LeapProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9742,6 +9757,9 @@
       "locked_code": false,
       "registry_name": "exp_009_ia",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/Exp009IAProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9955,6 +9973,9 @@
       "locked_code": false,
       "registry_name": "turn_off_transfur_on_key_pressed",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TurnOffTransfurOnKeyPressedProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -10045,6 +10066,9 @@
       "locked_code": false,
       "registry_name": "pat_key_on_key_pressed",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/PatKeyOnKeyPressedProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -11000,6 +11024,9 @@
       "locked_code": false,
       "registry_name": "force_field",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ForceFieldProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -11843,6 +11870,20 @@
         "dependencies": []
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "CanCarry",
+      "type": "tag",
+      "sortid": 617,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "can_carry",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/entity_types/can_carry.json"
+        ]
+      },
+      "path": "~/Tags"
     }
   ],
   "variable_elements": [
@@ -12162,7 +12203,7 @@
       "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
       "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
-      "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
+      "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 SpawnEgg",
       "item.changed_addon.partial_snow_leopard_spawn_egg": "Snow Leopard Partial Spawn Egg",
       "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "gui.changed_addon.book_pagenumber_2.label_click_here": "CLICK HERE",
