@@ -69,7 +69,7 @@ public class CarryAbility extends SimpleAbility {
             if(player.isSpectator()){
                 return;
             }
-            Entity carryTarget = PlayerUtilProcedure.getEntityPlayerLookingAt(player,3);
+            Entity carryTarget = PlayerUtilProcedure.getEntityPlayerLookingAt(player,4);
             if(carryTarget != null){
                 if(carryTarget instanceof Player carryPlayer){
                     if(carryPlayer.isCreative()){
