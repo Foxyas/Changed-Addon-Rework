@@ -70,7 +70,7 @@ public class AddonLatexVariant {
             .groundSpeed(1.17F).swimSpeed(1.0F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_biosynth_snow_leopard")));
 
     public static final GenderedVariant<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> ADDON_LATEX_SNOW_FOX = LatexVariant.register(GenderedVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX, ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
-            .groundSpeed(1.1F).swimSpeed(0.95F).additionalHealth(6).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_latex_snow_fox")));
+            .groundSpeed(1.1F).swimSpeed(0.95F).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_latex_snow_fox")));
 
     public static final LatexVariant<DazedEntity> DAZED_LATEX = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.DAZED)
             .groundSpeed(1.075F).swimSpeed(1.025F).transfurMode(TransfurMode.ABSORPTION).scares(List.of()).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_dazed_latex")));

@@ -124,7 +124,7 @@ public class PuroKindEntity extends AbstractDarkLatexWolf {
 
 	@Override
 	public double getPassengersRidingOffset() {
-		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + 1.2;
+		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
 	}
 
 	@Override

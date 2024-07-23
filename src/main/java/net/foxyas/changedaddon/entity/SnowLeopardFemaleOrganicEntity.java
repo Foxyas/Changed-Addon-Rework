@@ -103,12 +103,11 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameLatexEntity {
 
 	@Override
 	public HairStyle getDefaultHairStyle() {
-		HairStyle Hair = HairStyle.LONG_KEPT.get();
-		if(level.random.nextInt(10) > 5){ Hair = HairStyle.LONG_MESSY.get();
-		} else {
-			Hair = HairStyle.LONG_KEPT.get();
+		if(level.random.nextInt(10) > 5){
+			return HairStyle.LONG_MESSY.get();
 		}
-		return Hair;
+		return HairStyle.LONG_KEPT.get();
+
 	}
 
 	@Override
@@ -157,7 +156,7 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameLatexEntity {
 
 	@Override
 	public double getPassengersRidingOffset() {
-		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + 1.2;
+		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
 	}
 
 	@Override
