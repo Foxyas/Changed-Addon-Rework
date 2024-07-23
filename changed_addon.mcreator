@@ -9835,6 +9835,10 @@
         ],
         "dependencies": [
           {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
             "name": "entity",
             "type": "entity"
           }
