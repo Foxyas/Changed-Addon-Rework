@@ -81,9 +81,7 @@ public class CarryAbility extends SimpleAbility {
                         player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry",carryPlayer.getDisplayName()),true);
                         return;
                     }
-                    if(!player.level.isClientSide){
-                        carryPlayer.startRiding(player,true);
-                    }
+                    carryPlayer.startRiding(player,true);
                     SoundPlay(player);
                 } else {
                     if(carryTarget instanceof LightLatexCentaur){
@@ -91,9 +89,7 @@ public class CarryAbility extends SimpleAbility {
                         return;
                     }
                     if(carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)){
-                        if(!player.level.isClientSide){
-                            carryTarget.startRiding(player,true);
-                        }
+                        carryTarget.startRiding(player,true);
                         SoundPlay(player);
                     }
                 }
