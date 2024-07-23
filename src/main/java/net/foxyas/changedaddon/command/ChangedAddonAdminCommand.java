@@ -42,7 +42,7 @@ public class ChangedAddonAdminCommand {
 						entity = FakePlayerFactory.getMinecraft(world);
 					Direction direction = entity.getDirection();
 
-					GetBossPermProcedure.execute(entity);
+					GetBossPermProcedure.execute(arguments, entity);
 					return 0;
 				}))).then(Commands.literal("set").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("set", BoolArgumentType.bool()).executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
