@@ -77,7 +77,7 @@ public class CarryAbility extends SimpleAbility {
                             return;
                         }
                     }
-                    if(ProcessTransfur.getPlayerLatexVariant(carryPlayer).is(LatexVariant.LIGHT_LATEX_CENTAUR)){
+                    if(ProcessTransfur.getPlayerLatexVariant(carryPlayer) != null && ProcessTransfur.getPlayerLatexVariant(carryPlayer).is(LatexVariant.LIGHT_LATEX_CENTAUR)){
                         player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry",carryPlayer.getDisplayName()),true);
                         return;
                     }

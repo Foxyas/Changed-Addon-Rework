@@ -10,7 +10,7 @@ public class TransfurSicknessEffectExpiresProcedure {
 		if (entity == null)
 			return;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-			if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur) {
+			if (GetDefault.execute((Player) entity)) {
 				setPlayerTransfurMode.execute((Player) entity, 1);
 			}
 		}
