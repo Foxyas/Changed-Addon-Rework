@@ -69,6 +69,7 @@ public class CarryAbility extends SimpleAbility {
             // If the player is already carrying someone, make them dismount
             if (player.getFirstPassenger() != null) {
                 player.getFirstPassenger().stopRiding();
+                syncMount(player);
                 return;
             }
 
