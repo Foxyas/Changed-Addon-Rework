@@ -100,11 +100,10 @@ public class CarryAbility extends SimpleAbility {
                 }
 
                 // Start carrying the player
-                if(carryPlayer.startRiding(player, true)){
+                if (carryPlayer.startRiding(player, true)) {
                     // Synchronize mount with clients
                     syncMount(player);
                 }
-
 
             } else {
                 // If the looked at entity is a light latex centaur, prevent them from being carried
@@ -116,7 +115,7 @@ public class CarryAbility extends SimpleAbility {
                 // If the looked at entity is in the humanoid tag or can be carried
                 if (carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)
                         || carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))) {
-                    if(carryTarget.startRiding(player, true)){
+                    if (carryTarget.startRiding(player, true)) {
                         // Synchronize mount with clients
                         syncMount(player);
                     }
