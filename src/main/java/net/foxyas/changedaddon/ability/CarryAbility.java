@@ -9,18 +9,17 @@ import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 import java.util.Objects;
-import net.minecraft.tags.TagKey;
-import net.minecraft.core.Registry;
 
 public class CarryAbility extends SimpleAbility {
     public CarryAbility() {
@@ -65,50 +64,82 @@ public class CarryAbility extends SimpleAbility {
         SafeRemove(entity.getEntity());
     }
 
-    public static void Run(Entity mainEntity){
-        if(mainEntity instanceof Player player){
-            if (player.getFirstPassenger() != null){
+    public static void Run(Entity mainEntity) {
+        if (mainEntity instanceof Player player) {
+            // If the player is already carrying someone, make them dismount
+            if (player.getFirstPassenger() != null) {
                 player.getFirstPassenger().stopRiding();
                 return;
             }
-            if(player.isSpectator()){
+
+            // If the player is a spectator, do nothing
+            if (player.isSpectator()) {
                 return;
             }
-            Entity carryTarget = PlayerUtilProcedure.getEntityPlayerLookingAt(player,4);
-            if(carryTarget != null){
-                if(carryTarget instanceof Player carryPlayer){
-                    if(carryPlayer.isCreative()){
-                        if(!player.isCreative()){
-                            return;
-                        }
-                    }
-                    if(ProcessTransfur.getPlayerLatexVariant(carryPlayer) != null && ProcessTransfur.getPlayerLatexVariant(carryPlayer).is(LatexVariant.LIGHT_LATEX_CENTAUR)){
-                        player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry",carryPlayer.getDisplayName()),true);
-                        return;
-                    }
-                    carryPlayer.startRiding(player,true);
-                    SoundPlay(player);
-                } else {
-                    if(carryTarget instanceof LightLatexCentaur){
-                        player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry",carryTarget.getDisplayName()),true);
-                        return;
-                    }
-                    if(carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)){
-                        carryTarget.startRiding(player,true);
-                        SoundPlay(player);
-                    } else if (carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))) {
-                        carryTarget.startRiding(player,true);
-                        SoundPlay(player);
+
+            // Get the entity the player is looking at
+            Entity carryTarget = PlayerUtilProcedure.getEntityPlayerLookingAt(player, 4);
+
+            // If no entity is being looked at, exit
+            if (carryTarget == null) {
+                return;
+            }
+
+            // If the looked at entity is a player
+            if (carryTarget instanceof Player carryPlayer) {
+                // Creative players cannot be carried by non-creative players
+                if (carryPlayer.isCreative() && !player.isCreative()) {
+                    return;
+                }
+
+                // Check if the player has the light latex centaur variant and prevent them from being carried
+                if (ProcessTransfur.getPlayerLatexVariant(carryPlayer) != null
+                        && ProcessTransfur.getPlayerLatexVariant(carryPlayer).is(LatexVariant.LIGHT_LATEX_CENTAUR)) {
+                    player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry", carryPlayer.getDisplayName()), true);
+                    return;
+                }
+
+                // Start carrying the player
+                if(carryPlayer.startRiding(player, true)){
+                    // Synchronize mount with clients
+                    syncMount(player);
+                }
+
+
+            } else {
+                // If the looked at entity is a light latex centaur, prevent them from being carried
+                if (carryTarget instanceof LightLatexCentaur) {
+                    player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry", carryTarget.getDisplayName()), true);
+                    return;
+                }
+
+                // If the looked at entity is in the humanoid tag or can be carried
+                if (carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)
+                        || carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))) {
+                    if(carryTarget.startRiding(player, true)){
+                        // Synchronize mount with clients
+                        syncMount(player);
                     }
                 }
             }
         }
     }
 
-    public static void SoundPlay(Player player){
-        player.level.playSound(player,player, ChangedSounds.BOW2, SoundSource.PLAYERS,2.5f,1);
+    public static void SoundPlay(Player player) {
+        // Play the sound on the server side to ensure it is properly synchronized
+        player.level.playSound(null, player.blockPosition(), ChangedSounds.BOW2, SoundSource.PLAYERS, 2.5f, 1.0f);
     }
-    
+
+    private static void syncMount(Player player) {
+        // Send the mount synchronization packet to all tracking players
+        if (!player.level.isClientSide) {
+            ((ServerLevel) player.level).getChunkSource().broadcast(player, new ClientboundSetPassengersPacket(player));
+            SoundPlay(player); // Play the sound on the server for correct synchronization
+        }
+    }
+
+
+
     public static void SafeRemove(Entity MainEntity){
         if(MainEntity.getFirstPassenger() != null) {
             MainEntity.getFirstPassenger().stopRiding();
