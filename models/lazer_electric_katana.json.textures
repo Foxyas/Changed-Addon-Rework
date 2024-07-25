@@ -1,0 +1,10 @@
+{
+  "mappings": {
+    "default": {
+      "map": {
+        "0": "blue_katana_energy"
+      },
+      "name": "default"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "changed_addon:custom/handle_electric_katana",
+  "textures": {
+    "0": "changed_addon:blocks/base_energy_katana",
+    "particle": "changed_addon:items/blue_katana_energy"
+  }
+}
