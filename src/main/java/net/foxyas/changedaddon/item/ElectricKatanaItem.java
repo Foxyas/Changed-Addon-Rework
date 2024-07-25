@@ -52,25 +52,28 @@ public class ElectricKatanaItem extends SwordItem implements SpecializedItemRend
 		}, 3, -2.3f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
 	}
 
+	private static final ModelResourceLocation GUI_MODEL =
+			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_item"), "inventory");
 	private static final ModelResourceLocation HANDLE_MODEL =
 			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_handle"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_MODEL =
 			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_laser"), "inventory");
 	@Nullable
 	@Override
-	public ModelResourceLocation getEmissiveModelLocation(ItemStack itemStack, ItemTransforms.TransformType type) {
-		return EMISSIVE_MODEL;
+	public ModelResourceLocation getEmissiveModelLocation(ItemStack itemStack, ItemTransforms.TransformType transformType) {
+		return transformType == ItemTransforms.TransformType.GUI || transformType == ItemTransforms.TransformType.FIXED || transformType == ItemTransforms.TransformType.GROUND ? null :  EMISSIVE_MODEL;
 	}
 
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack itemStack, ItemTransforms.TransformType transformType) {
-		return HANDLE_MODEL;
+		return transformType == ItemTransforms.TransformType.GUI || transformType == ItemTransforms.TransformType.FIXED || transformType == ItemTransforms.TransformType.GROUND ? GUI_MODEL : HANDLE_MODEL;
 	}
 
 	@Override
 	public void loadSpecialModels(Consumer<ResourceLocation> consumer) {
 		consumer.accept(HANDLE_MODEL);
 		consumer.accept(EMISSIVE_MODEL);
+		consumer.accept(GUI_MODEL);
 	}
 
 	@Override
