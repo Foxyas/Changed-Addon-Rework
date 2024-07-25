@@ -28,15 +28,15 @@ public class SignalBlockFeatureProcedure {
 				|| (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.SIGNAL_CATCHER.get()) {
 			if (!(entity instanceof Player _player ? _player.getCooldowns().isOnCooldown(ChangedAddonModItems.SIGNAL_CATCHER.get()) : false)) {
 				if (entity.isShiftKeyDown()) {
-					sx = -64;
+					sx = -128;
 					found = false;
 					if (entity instanceof Player _player && !_player.level.isClientSide())
 						_player.displayClientMessage(new TextComponent("\u00A7o\u00A7n\u00A7bSuper Scam"), true);
-					for (int index0 = 0; index0 < 128; index0++) {
-						sy = -64;
-						for (int index1 = 0; index1 < 128; index1++) {
-							sz = -64;
-							for (int index2 = 0; index2 < 128; index2++) {
+					for (int index0 = 0; index0 < 256; index0++) {
+						sy = -128;
+						for (int index1 = 0; index1 < 256; index1++) {
+							sz = -128;
+							for (int index2 = 0; index2 < 256; index2++) {
 								if ((world.getBlockState(new BlockPos(x + sx, y + sy, z + sz))).getBlock() == ChangedAddonModBlocks.SIGNAL_BLOCK.get()) {
 									found = true;
 									if (found == true) {

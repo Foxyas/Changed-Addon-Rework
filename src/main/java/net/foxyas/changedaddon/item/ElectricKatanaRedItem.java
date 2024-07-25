@@ -58,10 +58,12 @@ public class ElectricKatanaRedItem extends SwordItem implements SpecializedItemR
 			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_handle"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_MODEL =
 			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_laser"), "inventory");
+	private static final ModelResourceLocation EMISSIVE_GUI_MODEL =
+			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_glow"), "inventory");
 	@Nullable
 	@Override
 	public ModelResourceLocation getEmissiveModelLocation(ItemStack itemStack, ItemTransforms.TransformType transformType) {
-		return transformType == ItemTransforms.TransformType.GUI || transformType == ItemTransforms.TransformType.FIXED || transformType == ItemTransforms.TransformType.GROUND ? null :  EMISSIVE_MODEL;
+		return transformType == ItemTransforms.TransformType.GUI || transformType == ItemTransforms.TransformType.FIXED || transformType == ItemTransforms.TransformType.GROUND ? EMISSIVE_GUI_MODEL :  EMISSIVE_MODEL;
 	}
 
 	@Override
@@ -74,6 +76,7 @@ public class ElectricKatanaRedItem extends SwordItem implements SpecializedItemR
 		consumer.accept(HANDLE_MODEL);
 		consumer.accept(EMISSIVE_MODEL);
 		consumer.accept(GUI_MODEL);
+		consumer.accept(EMISSIVE_GUI_MODEL);
 	}
 
 	@Override
