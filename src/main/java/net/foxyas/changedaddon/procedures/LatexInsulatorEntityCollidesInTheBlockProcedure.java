@@ -18,6 +18,7 @@ public class LatexInsulatorEntityCollidesInTheBlockProcedure {
 	public static void execute(Entity entity) {
 		if (entity == null)
 			return;
+		entity.fallDistance = 0;
 		if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
 				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
