@@ -21,9 +21,9 @@ public class SizeManipulatorProcedure {
 
 	public static float getSize(float size) {
 		if (size < 1.0f - SIZE_TOLERANCE) {
-			ChangedAddonMod.LOGGER.atWarn().log("Size is too low value: " + size + ",Value gonna be Auto Set to 0.95"); // Too Low Warn
+			ChangedAddonMod.LOGGER.atWarn().log("Size value is too low: " + size + ",The Size Value gonna be Auto Set to 0.95"); // Too Low Warn
 		} else if (size > 1.0f + SIZE_TOLERANCE) {
-			ChangedAddonMod.LOGGER.atWarn().log("Size is too high value: " + size + ",Value gonna be Auto Set to 1.05"); // Too High Warn
+			ChangedAddonMod.LOGGER.atWarn().log("Size value is too high: " + size + ",The Size Value gonna be Auto Set to 1.05"); // Too High Warn
 		}
 		return Mth.clamp(size, 1.0f - SIZE_TOLERANCE, 1.0f + SIZE_TOLERANCE);
 	}
