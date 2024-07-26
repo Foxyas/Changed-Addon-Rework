@@ -11884,6 +11884,29 @@
         ]
       },
       "path": "~/Tags"
+    },
+    {
+      "name": "SizeManipulator",
+      "type": "procedure",
+      "sortid": 618,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "size_manipulator",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SizeManipulatorProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [

@@ -13,10 +13,12 @@ import net.minecraft.commands.Commands;
 
 import net.foxyas.changedaddon.procedures.TooglewarnsProcedure;
 import net.foxyas.changedaddon.procedures.ToggleresettransfuradvancementsProcedure;
+import net.foxyas.changedaddon.procedures.SizeManipulatorProcedure;
 import net.foxyas.changedaddon.procedures.RecipeResetProcedure;
 import net.foxyas.changedaddon.procedures.InforesettransfuradvancementProcedure;
 import net.foxyas.changedaddon.procedures.InfoaddonwarnsProcedure;
 
+import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 
 @Mod.EventBusSubscriber
@@ -84,6 +86,18 @@ public class ChangedaddoncommandrootCommand {
 					Direction direction = entity.getDirection();
 
 					InfoaddonwarnsProcedure.execute(entity);
+					return 0;
+				}))).then(Commands.literal("Size_Manipulator").then(Commands.argument("size", DoubleArgumentType.doubleArg()).executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					SizeManipulatorProcedure.execute(arguments, entity);
 					return 0;
 				}))));
 	}
