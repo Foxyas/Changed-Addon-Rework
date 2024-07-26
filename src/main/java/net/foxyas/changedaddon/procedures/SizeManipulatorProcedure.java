@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.Changed;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +35,7 @@ public class SizeManipulatorProcedure {
 			float newSize = getSize(amount);
 			Changed.config.client.basicPlayerInfo.setSize(newSize); // Change Size
 			ChangedAddonMod.LOGGER.info("Size changed to: " + newSize + " for player: " + player.getName().getString()); // Command Classic Log
-			player.displayClientMessage(Component.literal("Size changed to: " + newSize), false); // Chat log for the player
+			player.displayClientMessage(new TextComponent("Size changed to: " + newSize), false); // Chat log for the player
 		} else {
 			ChangedAddonMod.LOGGER.atError().log("Entity is not a player, cannot change size."); // Command Classic Error
 		}
