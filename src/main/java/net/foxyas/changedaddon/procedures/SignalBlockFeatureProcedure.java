@@ -20,8 +20,8 @@ import java.util.Objects;
 
 public class SignalBlockFeatureProcedure {
 
-	private static final int LARGE_SEARCH_RADIUS = 128;
-	private static final int SMALL_SEARCH_RADIUS = 32;
+	private static final int LARGE_SEARCH_RADIUS = 356;
+	private static final int SMALL_SEARCH_RADIUS = 64;
 	private static final int MAX_FOUND_BLOCKS = 10;
 
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
