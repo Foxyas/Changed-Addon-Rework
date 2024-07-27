@@ -11908,6 +11908,34 @@
         ]
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "ShowExtraTransfurInfo",
+      "type": "procedure",
+      "sortid": 620,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "show_extra_transfur_info",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/ShowExtraTransfurInfoProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "tooltip",
+            "type": "tooltip"
+          }
+        ]
+      },
+      "path": "~/Procedures"
     }
   ],
   "variable_elements": [
@@ -12351,6 +12379,7 @@
       "gui.changed_addon.book_pagenumber_7.label_assimilation_grab_mode": "-\u003e Organic/cant Grab",
       "item.changed_addon.experiment_009_phase_2_spawn_egg": "Experiment 009 Phase 2 Spawn Egg",
       "gui.changed_addon.foxyasgui.label_pls_dont_kill_me": "pls dont kill me i can trade orange juice with you i just need 2",
+      "entity.changed_addon.ket_experiment009": "Ket Experiment 009",
       "gui.changed_addon.book_pagenumber_2.label_laeting_syringe": "Laeting Syringe",
       "changedaddon.fight_concience.success": "You §2Maintained!!! §rYour Conscience Good Job",
       "block.changed_addon.signal_block": "Signal Block",
