@@ -38,29 +38,24 @@ public class ShockWaveAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractLatex entity) {
-        if (entity instanceof Player player) {
-            LatexVariantInstance LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
-        }
-
-        LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
-        if (Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
-            return true;
-        }
-        return false;
+        Player player = (Player) entity.getEntity();
+        LatexVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
+        LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
+        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT;
     }
 
     @Override
     public int getCoolDown(IAbstractLatex entity) {
-        LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
+        LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
         if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
             return 20;
         }
-        return 35;
+        return 30;
     }
 
     @Override
     public int getChargeTime(IAbstractLatex entity) {
-        LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
+        LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
         if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
             return 6;
         }
@@ -88,19 +83,17 @@ public class ShockWaveAbility extends SimpleAbility {
         if (entity == null)
             return;
         Player player = (Player) entity;
-        {
-            final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
-            List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(16, 16, 16), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-                    .collect(Collectors.toList());
-            for (Entity entityiterator : _entfound) {
-                if (entity != entityiterator && entityiterator instanceof LivingEntity _entity){
-                    if (!_entity.level.isClientSide()){
-                        MobEffectInstance Effect = new MobEffectInstance(ChangedEffects.SHOCK, 40, 0, false, false,true);
-                        Effect.setCurativeItems(List.of());
-                        _entity.addEffect(Effect);
-                        ChangedSounds.broadcastSound(_entity,ChangedSounds.PARALYZE1,5,1);
-                        player.causeFoodExhaustion(1);
-                    }
+        final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
+        List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(16, 16, 16), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+                .collect(Collectors.toList());
+        for (Entity entityiterator : _entfound) {
+            if (player != entityiterator && entityiterator instanceof LivingEntity _entity){
+                if (!_entity.level.isClientSide()){
+                    MobEffectInstance Effect = new MobEffectInstance(ChangedEffects.SHOCK, 30, 0, false, false,true);
+                    Effect.setCurativeItems(List.of());
+                    _entity.addEffect(Effect);
+                    ChangedSounds.broadcastSound(_entity,ChangedSounds.PARALYZE1,5,1);
+                    player.causeFoodExhaustion(15);
                 }
             }
         }

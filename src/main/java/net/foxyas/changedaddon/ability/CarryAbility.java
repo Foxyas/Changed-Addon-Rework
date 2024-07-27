@@ -42,6 +42,11 @@ public class CarryAbility extends SimpleAbility {
     }
 
     @Override
+    public int getCoolDown(IAbstractLatex entity) {
+        return 5;
+    }
+
+    @Override
     public boolean canUse(IAbstractLatex entity) {
         return Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.female()) ||
                 Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.male()) ||
@@ -60,7 +65,6 @@ public class CarryAbility extends SimpleAbility {
     @Override
     public void onRemove(IAbstractLatex entity) {
         super.onRemove(entity);
-
         SafeRemove(entity.getEntity());
     }
 

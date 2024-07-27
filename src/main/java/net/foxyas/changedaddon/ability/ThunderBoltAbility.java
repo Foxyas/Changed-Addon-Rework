@@ -36,15 +36,9 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 	@Override
 	public boolean canUse(IAbstractLatex entity) {
-		if (entity instanceof Player player) {
-			LatexVariantInstance LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
-		}
-
-		LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
-			return true;
-		}
-		return false;
+		Player player = (Player) entity.getEntity();
+		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
+		return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT;
 	}
 
 	public UseType getUseType(IAbstractLatex entity) {
@@ -53,7 +47,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 	@Override
 	public int getChargeTime(IAbstractLatex entity) {
-		LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
+		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
 		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
 			return 15;
 		}
@@ -62,7 +56,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 	@Override
 	public int getCoolDown(IAbstractLatex entity) {
-		LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
+		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
 		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
 			return 15;
 		}
@@ -70,8 +64,8 @@ public class ThunderBoltAbility extends SimpleAbility {
 	}
 
 
-	public float holdingamount(IAbstractLatex entity) {
-		LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
+	public float ReachAmount(IAbstractLatex entity) {
+		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
 		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
 			return 10;
 		}
@@ -93,8 +87,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 	@Override
 	public void startUsing(IAbstractLatex entity) {
 		super.startUsing(entity);
-		LatexVariant Variant = entity.getLatexEntity().getSelfVariant();
-		SummonLightBolt(entity.getEntity(),entity.getLevel(),holdingamount(entity));
+		SummonLightBolt(entity.getEntity(),entity.getLevel(),ReachAmount(entity));
 	}
 
 
@@ -109,6 +102,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 	
 	public static void SummonLightBolt(Entity entity, LevelAccessor world,float amount) {
+		Player player = (Player) entity;
 		double x = 0;
 		double y = 0;
 		double z = 0;
@@ -121,10 +115,8 @@ public class ThunderBoltAbility extends SimpleAbility {
 			entityToSpawn.moveTo(Vec3.atBottomCenterOf(new BlockPos(x, y, z)));
 			entityToSpawn.setVisualOnly(false);
 			_level.addFreshEntity(entityToSpawn);
-		}
-		if (entity instanceof Player _player) {
-			_player.causeFoodExhaustion((float) 0.1);
-			_player.swing(getSwingHand(_player), true);
+			player.causeFoodExhaustion((float) 0.5);
+			player.swing(getSwingHand(player), true);
 		}
 	}
 }
