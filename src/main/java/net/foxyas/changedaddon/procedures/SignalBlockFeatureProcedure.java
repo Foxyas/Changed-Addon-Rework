@@ -100,9 +100,9 @@ public class SignalBlockFeatureProcedure {
 		StringBuilder message = new StringBuilder("Signal Blocks found at:\n");
 		for (int i = 0; i < positions.size(); i++) {
 			BlockPos pos = positions.get(i);
-			message.append("Block ").append(i + 1).append(": [").append(pos.getX()).append(", ").append(pos.getY()).append(", ").append(pos.getZ()).append("]\n");
+			message.append("Block ").append(i + 1).append(": [").append(pos.getX()).append(", ").append(pos.getY()).append(", ").append(pos.getZ()).append("]");
 			if (i < positions.size() - 1) {
-				message.append("; ");
+				message.append(";\n");
 			}
 		}
 		player.displayClientMessage(new TextComponent(message.toString()), false);
