@@ -22,6 +22,7 @@ public class SignalBlockFeatureProcedure {
 
     private static final int LARGE_SEARCH_RADIUS = 128;
     private static final int SMALL_SEARCH_RADIUS = 32;
+    private static final int MAX_FOUND_BLOCKS = 10;
 
     public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
         if (entity == null) return;
@@ -59,8 +60,13 @@ public class SignalBlockFeatureProcedure {
                     BlockPos currentPos = new BlockPos(sx, sy, sz);
                     if (world.getBlockState(currentPos).getBlock() == ChangedAddonModBlocks.SIGNAL_BLOCK.get()) {
                         foundPositions.add(currentPos);
+                        // Only update player state for the first found block
                         if (foundPositions.size() == 1) {
                             updatePlayerState(player, itemstack, sx, sy, sz, cooldown);
+                        }
+                        // Break loop if the number of found blocks exceeds MAX_FOUND_BLOCKS
+                        if (foundPositions.size() > MAX_FOUND_BLOCKS) {
+                            break outerLoop;
                         }
                     }
                 }
@@ -85,8 +91,15 @@ public class SignalBlockFeatureProcedure {
 
     private static void displayFoundLocations(Player player, List<BlockPos> positions) {
         StringBuilder message = new StringBuilder("Signal Blocks found at:");
-        for (BlockPos pos : positions) {
-            message.append(" ").append(pos.getX()).append(" ").append(pos.getY()).append(" ").append(pos.getZ()).append(";");
+        for (int i = 0; i < positions.size(); i++) {
+            BlockPos pos = positions.get(i);
+            message.append(" Block ").append(i + 1).append(": [")
+                   .append(pos.getX()).append(", ")
+                   .append(pos.getY()).append(", ")
+                   .append(pos.getZ()).append("]");
+            if (i < positions.size() - 1) {
+                message.append("; ");
+            }
         }
         player.displayClientMessage(new TextComponent(message.toString()), false);
     }
