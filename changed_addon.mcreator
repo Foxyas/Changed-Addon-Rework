@@ -9342,7 +9342,7 @@
       "type": "procedure",
       "sortid": 463,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "signal_block_feature",
       "metadata": {
         "files": [

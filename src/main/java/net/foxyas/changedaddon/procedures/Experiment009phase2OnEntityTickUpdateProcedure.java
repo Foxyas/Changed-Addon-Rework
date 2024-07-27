@@ -63,9 +63,9 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 			}
 		}.getValue()) == false) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.666) {
-				entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 2.5 + 0.1 * ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
-			} else {
 				entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 1 + 0.1 * ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
+			} else {
+				entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 0.5 + 0.1 * ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
 			}
 			if (entity.getPersistentData().getDouble("IA") >= 100) {
 				if (entity.isAlive()) {
