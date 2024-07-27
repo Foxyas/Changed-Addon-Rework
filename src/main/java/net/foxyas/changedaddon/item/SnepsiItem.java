@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 
 public class SnepsiItem extends Item implements SpecializedItemRendering {
 	public SnepsiItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(6).saturationMod(1f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(11).saturationMod(1f).alwaysEat()
 
 				.build()));
 	}

@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 
 public class FoxtaItem extends Item implements SpecializedItemRendering {
 	public FoxtaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(4).saturationMod(1f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(9).saturationMod(1f).alwaysEat()
 
 				.build()));
 	}

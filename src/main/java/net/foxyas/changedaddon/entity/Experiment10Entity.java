@@ -57,13 +57,13 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 	protected void setAttributes(AttributeMap attributes) {
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(this.getLatexLandSpeed());
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(this.getLatexSwimSpeed());
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(0.117);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.085);
 		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
-		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.5);
+		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.8);
 	}
 	@Override
 	public Color3 getHairColor(int i) {
