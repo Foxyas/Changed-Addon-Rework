@@ -119,8 +119,8 @@
         "data": {
           "image": "litixcamonia_slot.png",
           "use1Xscale": false,
-          "x": 164,
-          "y": 84
+          "x": 169,
+          "y": 85
         }
       },
       {
@@ -128,8 +128,17 @@
         "data": {
           "image": "laething_white_slot.png",
           "use1Xscale": false,
-          "x": 164,
+          "x": 169,
           "y": 104
+        }
+      },
+      {
+        "type": "image",
+        "data": {
+          "image": "empty_slot.png",
+          "use1Xscale": false,
+          "x": 188,
+          "y": 94
         }
       }
     ],

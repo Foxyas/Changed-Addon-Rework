@@ -71,10 +71,13 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		this.blit(ms, this.leftPos + 50, this.topPos + 65, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamonia_slot.png"));
-		this.blit(ms, this.leftPos + 85, this.topPos + 36, 0, 0, 16, 16, 16, 16);
+		this.blit(ms, this.leftPos + 90, this.topPos + 37, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_white_slot.png"));
-		this.blit(ms, this.leftPos + 85, this.topPos + 56, 0, 0, 16, 16, 16, 16);
+		this.blit(ms, this.leftPos + 90, this.topPos + 56, 0, 0, 16, 16, 16, 16);
+
+		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/empty_slot.png"));
+		this.blit(ms, this.leftPos + 109, this.topPos + 46, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.disableBlend();
 	}

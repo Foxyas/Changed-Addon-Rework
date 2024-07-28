@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/newlitixcamonia_almost_fully"
+    "layer0": "changed_addon:items/litix_camonia_syringe_almost_full"
   }
 }

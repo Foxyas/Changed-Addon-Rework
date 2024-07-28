@@ -3,13 +3,13 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "new_liticammonia_syringe",
+    "texture": "litix_camonia_syringe",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [
       {
         "renderType": 0,
-        "texture": "newlitixcamonia_almost_fully",
+        "texture": "litix_camonia_syringe_almost_full",
         "customModelName": "Normal",
         "stateMap": [
           {
