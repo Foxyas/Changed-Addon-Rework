@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/white_latex_block",
+    "up": "changed_addon:blocks/white_latex_block",
+    "north": "changed_addon:blocks/white_latex_block",
+    "east": "changed_addon:blocks/white_latex_block",
+    "south": "changed_addon:blocks/white_latex_block",
+    "west": "changed_addon:blocks/white_latex_block",
+    "particle": "changed_addon:blocks/white_latex_block"
+  }
+}

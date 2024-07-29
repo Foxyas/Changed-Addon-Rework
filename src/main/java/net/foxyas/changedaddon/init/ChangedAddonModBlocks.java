@@ -24,6 +24,8 @@ import net.foxyas.changedaddon.block.LatexInsulatorBlock;
 import net.foxyas.changedaddon.block.InformantblockBlock;
 import net.foxyas.changedaddon.block.GeneratorBlock;
 import net.foxyas.changedaddon.block.FoxtaCanBlock;
+import net.foxyas.changedaddon.block.DormantWhiteLatexBlock;
+import net.foxyas.changedaddon.block.DormantDarkLatexBlock;
 import net.foxyas.changedaddon.block.DarklatexpuddleBlock;
 import net.foxyas.changedaddon.block.CatlyzerBlock;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -42,6 +44,8 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> INFORMANTBLOCK = REGISTRY.register("informantblock", () -> new InformantblockBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
+	public static final RegistryObject<Block> DORMANT_DARK_LATEX = REGISTRY.register("dormant_dark_latex", () -> new DormantDarkLatexBlock());
+	public static final RegistryObject<Block> DORMANT_WHITE_LATEX = REGISTRY.register("dormant_white_latex", () -> new DormantWhiteLatexBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

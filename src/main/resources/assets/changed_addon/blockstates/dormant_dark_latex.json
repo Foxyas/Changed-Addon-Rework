@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "changed_addon:block/dormant_dark_latex"
+    }
+  }
+}

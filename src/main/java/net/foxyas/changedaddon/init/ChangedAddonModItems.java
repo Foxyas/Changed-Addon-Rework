@@ -161,6 +161,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> FOXTA = REGISTRY.register("foxta", () -> new FoxtaItem());
 	public static final RegistryObject<Item> FOXTA_CAN = block(ChangedAddonModBlocks.FOXTA_CAN, null);
 	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, null);
+	public static final RegistryObject<Item> DORMANT_DARK_LATEX = block(ChangedAddonModBlocks.DORMANT_DARK_LATEX, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> DORMANT_WHITE_LATEX = block(ChangedAddonModBlocks.DORMANT_WHITE_LATEX, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/dormant_dark_latex_block_bottom",
+    "up": "changed_addon:blocks/dormant_dark_latex_block_top",
+    "north": "changed_addon:blocks/dormant_dark_latex_block_side",
+    "east": "changed_addon:blocks/dormant_dark_latex_block_side",
+    "south": "changed_addon:blocks/dormant_dark_latex_block_side",
+    "west": "changed_addon:blocks/dormant_dark_latex_block_side",
+    "particle": "changed_addon:blocks/dormant_dark_latex_block_bottom"
+  }
+}
