@@ -6337,7 +6337,7 @@
       "type": "block",
       "sortid": 29,
       "compiles": true,
-      "locked_code": true,
+      "locked_code": false,
       "registry_name": "darklatexpuddle",
       "metadata": {
         "return_type": "logic",
