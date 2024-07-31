@@ -26,6 +26,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
 
+import net.foxyas.changedaddon.init.ChangedAddonModVillagerProfessions;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModPotions;
 import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
@@ -63,7 +64,7 @@ public class ChangedAddonMod {
 		ChangedAddonModPotions.REGISTRY.register(bus);
 
 		ChangedAddonModParticleTypes.REGISTRY.register(bus);
-
+		ChangedAddonModVillagerProfessions.PROFESSIONS.register(bus);
 		ChangedAddonModFluids.REGISTRY.register(bus);
 	}
 

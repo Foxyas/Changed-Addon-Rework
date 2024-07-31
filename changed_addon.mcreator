@@ -11968,6 +11968,16 @@
           "src/main/resources/assets/changed_addon/models/block/dormant_white_latex.json"
         ]
       }
+    },
+    {
+      "name": "Scientist",
+      "type": "villagerprofession",
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "scientist",
+      "metadata": {
+        "files": []
+      }
     }
   ],
   "variable_elements": [
@@ -12270,6 +12280,7 @@
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
+      "entity.minecraft.villager.changed_addon.scientist": "Scientist",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "Litix-Camonia",
       "changed_addon.ability.thunder": "Thunder Bolt",
@@ -12421,7 +12432,7 @@
       "changedaddon.untransfur.no_effect": "No effect",
       "entity.changed_addon.dazed": "Dazed",
       "item.changed_addon.ammonia_compressed": "Ammonia Compressed",
-      "item.changed_addon.accessories_chestplate": "Accessories Chestplate",
+      "item.changed_addon.accessories_chestplate": "Chest Accessories ",
       "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
       "item.changed_addon.catlyzerblock_illustrative_item": "IN Catalyzer Block Illustrative Item",
       "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
