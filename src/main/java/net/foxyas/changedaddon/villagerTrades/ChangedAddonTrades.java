@@ -61,7 +61,7 @@ public class ChangedAddonTrades {
 
             // Level 5 Trades
             event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD, 2 ), new ItemStack(ChangedAddonModItems.PAINITE_ORE.get()), 25, 10, 0.02f));
-            event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD, 2 ), new ItemStack(ChangedAddonModItems.SIGNAL_BLOCK.get()), 20, 10, 0.02f));
+            event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD, 15 ), new ItemStack(ChangedAddonModItems.SIGNAL_BLOCK.get()), 50, 10, 0.02f));
             event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD), new ItemStack(ChangedAddonModItems.DORMANT_DARK_LATEX.get()), 10, 20, 0.02f));
             event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD), new ItemStack(ChangedAddonModItems.DORMANT_WHITE_LATEX.get()), 10, 20, 0.02f));
         }
