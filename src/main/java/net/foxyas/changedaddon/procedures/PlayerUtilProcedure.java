@@ -1,8 +1,10 @@
 package net.foxyas.changedaddon.procedures;
 
+import com.mojang.math.Vector3f;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -107,6 +109,24 @@ public class PlayerUtilProcedure {
 				e.printStackTrace(); // Log the exception for debugging purposes
 				return null;
 			}
+		}
+	}
+
+	public class ParticlesUtil {
+
+		public static void sendColorTransitionParticles(ServerLevel level, double x, double y, double z,
+														float redStart, float greenStart, float blueStart,
+														float redEnd, float greenEnd, float blueEnd,
+														float size,float XV,float YV,float ZV, int count) {
+
+			// Criar a opção de partícula para transição de cor usando Vector3f
+			Vector3f startColor = new Vector3f(redStart, greenStart, blueStart);
+			Vector3f endColor = new Vector3f(redEnd, greenEnd, blueEnd);
+			DustColorTransitionOptions particleOptions = new DustColorTransitionOptions(startColor, endColor, size);
+
+			// Enviar as partículas
+			level.sendParticles(particleOptions,
+					x, y, z, count, size, size, size, 0.02f);
 		}
 	}
 }

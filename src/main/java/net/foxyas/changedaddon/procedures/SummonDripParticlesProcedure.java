@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
@@ -19,10 +20,9 @@ public class SummonDripParticlesProcedure {
 						LatexEntity fakeEntity = variant.getLatexEntity();
 						Color3 color3 = fakeEntity.getDripColor();
 						if (variant.getParent().getEntityType().is(ChangedTags.EntityTypes.ORGANIC_LATEX)) {
-							entity.getServer().getCommands().performCommand(entity.createCommandSourceStack().withSuppressedOutput().withPermission(4), "particle changed:gas " + color3.toInt() + " ~ ~1 ~ 0.2 0.5 0.2 0.1 50 force");
+							player.getLevel().addParticle(ChangedParticles.gas(color3), entity.getX(), entity.getY() + 1, entity.getZ(), 0.2, 0.5, 0.2);
 						} else {
-							entity.getServer().getCommands().performCommand(entity.createCommandSourceStack().withSuppressedOutput().withPermission(4), "particle changed:dripping_latex " + color3.toInt() + " ~ ~1 ~ 0.2 0.5 0.2 0.1 50 force");
-
+							player.getLevel().addParticle(ChangedParticles.drippingLatex(color3), entity.getX(), entity.getY() + 1, entity.getZ(), 0.2, 0.5, 0.2);
 						}
 					}
 

@@ -401,12 +401,8 @@ public class Exp009IAProcedure {
 					}
 				}
 			}
-			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.5833) {
-				{
-					Entity _ent = entity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "particle dust_color_transition 0 0.57 0.82 1 0 0.69 0.78 ~ ~1 ~ 0.2 0.5 0.2 -0 10");
-				}
+			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.5833) {//Summon Particles
+				PlayerUtilProcedure.ParticlesUtil.sendColorTransitionParticles((ServerLevel) entity.getLevel(), entity.getX(), entity.getY(), entity.getZ(), 0.0f, 0.57f, 0.82f, 1.0f, 0.0f, 0.69f, 1, 0.2f, 0.5f, 0.2f, 10);
 				if (!((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)
 						.hasModifier((new AttributeModifier(UUID.fromString("dd2e9e59-9ca0-46f0-86bf-89c26480a34c"), "Attack Buff", 0.25, AttributeModifier.Operation.MULTIPLY_TOTAL)))) {
 					if (!(((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)

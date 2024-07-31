@@ -45,23 +45,23 @@ public class ChangedAddonTrades {
             event.getTrades().get(3).add(new BasicItemListing(new ItemStack(ChangedAddonModItems.LATEX_INSULATOR.get()), new ItemStack(Items.EMERALD, 2), 15, 10, 0.02f));
             event.getTrades().get(3).add(new BasicItemListing(new ItemStack(ChangedBlocks.DARK_LATEX_BLOCK.get().asItem()), new ItemStack(Items.EMERALD, 4 ), 12, 15, 0.02f));
             event.getTrades().get(3).add(new BasicItemListing(new ItemStack(ChangedBlocks.WHITE_LATEX_BLOCK.get().asItem()), new ItemStack(Items.EMERALD, 4 ), 13, 15, 0.02f));
-            event.getTrades().get(3).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ), new ItemStack(ChangedAddonModItems.LITIX_CAMONIA.get(), 5), 20, 15, 0.02f));
+            event.getTrades().get(3).add(new BasicItemListing(new ItemStack(Items.EMERALD, 2 ), new ItemStack(ChangedAddonModItems.LITIX_CAMONIA.get(), 5), 20, 15, 0.02f));
             event.getTrades().get(3).add(new BasicItemListing(new ItemStack(Items.EMERALD, 1 ), new ItemStack(ChangedAddonModItems.SIGNAL_CATCHER.get()), 10, 15, 0.02f));
 
             // Level 4 Trades
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 2 ), new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5,darkLatexLaethin), 10, 10, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 2 ), new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5,WhiteLatexLaethin), 10, 10, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ), new ItemStack(ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(), 1), 10, 25, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 4 ), new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1, darkLatexLaethin), 10, 25, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 4 ), new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1, WhiteLatexLaethin), 10, 25, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ), new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5,darkLatexLaethin), 10, 10, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ), new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5,WhiteLatexLaethin), 10, 10, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 ), new ItemStack(ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(), 1), 10, 25, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 6 ), new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1, darkLatexLaethin), 10, 25, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 6 ), new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1, WhiteLatexLaethin), 10, 25, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.REDSTONE, 2 ), new ItemStack(ChangedAddonModItems.UNIFUSER.get()), 10, 20, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.COPPER_INGOT, 2 ), new ItemStack(ChangedBlocks.INFUSER.get().asItem()), 10, 20, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.REDSTONE, 2 ), new ItemStack(ChangedAddonModItems.CATLYZER.get()), 10, 20, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.COPPER_INGOT, 2 ), new ItemStack(ChangedBlocks.PURIFIER.get().asItem()), 10, 20, 0.02f));
 
             // Level 5 Trades
-            event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD, 2 ), new ItemStack(ChangedAddonModItems.PAINITE_ORE.get()), 25, 10, 0.02f));
-            event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD, 15 ), new ItemStack(ChangedAddonModItems.SIGNAL_BLOCK.get()), 50, 10, 0.02f));
+            event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD, 10 ), new ItemStack(ChangedAddonModItems.PAINITE_ORE.get()), 25, 10, 0.02f));
+            event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD, 32 ), new ItemStack(ChangedAddonModItems.SIGNAL_BLOCK.get()), 50, 10, 0.02f));
             event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD), new ItemStack(ChangedAddonModItems.DORMANT_DARK_LATEX.get()), 10, 20, 0.02f));
             event.getTrades().get(5).add(new BasicItemListing(new ItemStack(Items.EMERALD), new ItemStack(ChangedAddonModItems.DORMANT_WHITE_LATEX.get()), 10, 20, 0.02f));
         }
