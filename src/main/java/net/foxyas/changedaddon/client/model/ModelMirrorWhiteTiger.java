@@ -105,8 +105,8 @@ public class ModelMirrorWhiteTiger extends LatexHumanoidModel<MirrorWhiteTigerEn
 
 		PartDefinition leftear_r1 = LeftEar.addOrReplaceChild("leftear_r1", CubeListBuilder.create().texOffs(16, 32).addBox(-7.75F, -34.25F, -1.0F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.5F, 30.0F, 0.0F, 0.0F, 0.0F, 0.3054F));
 
-		PartDefinition Hair = Head.addOrReplaceChild("Hair", CubeListBuilder.create().texOffs(0, 0).addBox(-4.5F, -33.5F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.2F))
-		.texOffs(24, 8).addBox(-4.5F, -33.5F, -4.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.3F)), PartPose.offset(0.5F, 25.5F, 0.0F));
+		PartDefinition Hair = Head.addOrReplaceChild("Hair", CubeListBuilder.create().texOffs(25, 77).addBox(-4.5F, -33.5F, -4.0F, 8.0F, 11.0F, 8.0F, new CubeDeformation(0.2F))
+		.texOffs(0, 67).addBox(-4.5F, -33.5F, -4.0F, 8.0F, 10.0F, 8.0F, new CubeDeformation(0.35F)), PartPose.offset(0.5F, 25.5F, 0.0F));
 
 		PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create(), PartPose.offset(0.0F, -0.5F, 0.0F));
 
