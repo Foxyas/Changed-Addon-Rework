@@ -40,6 +40,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private float TpCooldown;
+	private boolean Phase2;
 
 	public Experiment10Entity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.EXPERIMENT_10.get(), world);
@@ -57,7 +58,7 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 	protected void setAttributes(AttributeMap attributes) {
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(0.117);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.085);
 		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
@@ -236,21 +237,40 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 	public Gender getGender() {
 		return Gender.FEMALE;
 	}
+
+	public void setPhase2(boolean set){
+		this.Phase2 = set;
+	}
+
 	public boolean isPhase2(){
-		return this.getHealth() <= 0.50 * this.getMaxHealth() ? true : false;
+		return this.Phase2;
 	}
 
 	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		if (tag.contains("Tp_Cooldown"))
 			TpCooldown = tag.getFloat("Tp_Cooldown");
+		if (tag.contains("Phase2")){
+			Phase2 = tag.getBoolean("Phase2");
+		}
 	}
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putFloat("Tp_Cooldown",TpCooldown);
+		tag.putBoolean("Phase2",Phase2);
 	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		SwimVoid(this);
+		SetDefense(this);
+		SetAttack(this);
+		TpEntity(this);
+	}
+
 	public void SwimVoid(Experiment10Entity entity){
 		double motionZ = 0;
 		double deltaZ = 0;
@@ -367,15 +387,4 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
 			TpCooldown -= 0.5f;
 		}
 	}
-
-
-	@Override
-	public void baseTick() {
-		super.baseTick();
-		SwimVoid(this);
-		SetDefense(this);
-		SetAttack(this);
-		TpEntity(this);
-	}
-
 }

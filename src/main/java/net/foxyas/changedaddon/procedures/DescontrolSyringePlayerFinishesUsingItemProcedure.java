@@ -40,11 +40,7 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
 						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "advancement revoke @s from minecraft:changed/transfur");
 				}
 			}
-			{
-				Entity _ent = entity;
-				if (!_ent.level.isClientSide() && _ent.getServer() != null)
-					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
-			}
+			PlayerUtilProcedure.UnTransfurPlayer(entity);
 			if (new Object() {
 				public boolean checkGamemode(Entity _ent) {
 					if (_ent instanceof ServerPlayer _serverPlayer) {
@@ -71,8 +67,8 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
 				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 					_entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
 			}
-			if (!(entity instanceof ServerPlayer _plr6 && _plr6.level instanceof ServerLevel
-					&& _plr6.getAdvancements().getOrStartProgress(_plr6.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
+			if (!(entity instanceof ServerPlayer _plr5 && _plr5.level instanceof ServerLevel
+					&& _plr5.getAdvancements().getOrStartProgress(_plr5.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
 				if (entity instanceof ServerPlayer _player) {
 					Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"));
 					AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);

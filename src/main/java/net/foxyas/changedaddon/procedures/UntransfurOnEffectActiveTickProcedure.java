@@ -44,11 +44,7 @@ public class UntransfurOnEffectActiveTickProcedure {
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress >= 100) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
 				SummonDripParticlesProcedure.execute(entity);
-				{
-					Entity _ent = entity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
-				}
+				PlayerUtilProcedure.UnTransfurPlayer(entity);
 				{
 					double _setval = 0;
 					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
@@ -89,8 +85,8 @@ public class UntransfurOnEffectActiveTickProcedure {
 						}
 					}.start(world, 10);
 				}
-				if (!(entity instanceof ServerPlayer _plr8 && _plr8.level instanceof ServerLevel
-						&& _plr8.getAdvancements().getOrStartProgress(_plr8.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement"))).isDone())) {
+				if (!(entity instanceof ServerPlayer _plr7 && _plr7.level instanceof ServerLevel
+						&& _plr7.getAdvancements().getOrStartProgress(_plr7.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement"))).isDone())) {
 					if (entity instanceof ServerPlayer _player) {
 						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement"));
 						AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);

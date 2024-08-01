@@ -1,12 +1,17 @@
 package net.foxyas.changedaddon.procedures;
 
 import com.mojang.math.Vector3f;
+import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
@@ -18,6 +23,34 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 public class PlayerUtilProcedure {
+
+	public static void TransfurPlayer(Entity entity, LatexVariant<?> latexVariant){
+		LivingEntity livingEntity = (LivingEntity) entity;
+		ProcessTransfur.transfur(livingEntity,entity.getLevel(),latexVariant,true);
+	}
+
+	public static void TransfurPlayer(Entity entity, String id){
+		ResourceLocation form = null;
+		try {
+			form = new ResourceLocation(id);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		LivingEntity livingEntity = (LivingEntity) entity;
+		if (form != null && LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+		LatexVariant<?> latexVariant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+		ProcessTransfur.transfur(livingEntity,entity.getLevel(),latexVariant,true);
+		}
+	}
+
+	public static void UnTransfurPlayer(Entity entity){
+		Player player = (Player) entity;
+		ProcessTransfur.ifPlayerLatex(player, (variant) -> {
+			variant.unhookAll(player);
+			ProcessTransfur.setPlayerLatexVariant(player, null);
+			ProcessTransfur.setPlayerTransfurProgress(player, new ProcessTransfur.TransfurProgress(0.0F, LatexVariant.FALLBACK_VARIANT));
+		});
+	}
 
 	public static Entity getEntityPlayerLookingAt(Player player, double range) {
 		Level world = player.level;
@@ -112,12 +145,12 @@ public class PlayerUtilProcedure {
 		}
 	}
 
-	public class ParticlesUtil {
+	public static class ParticlesUtil {
 
-		public static void sendColorTransitionParticles(ServerLevel level, double x, double y, double z,
+		public static void sendColorTransitionParticles(Level level, double x, double y, double z,
 														float redStart, float greenStart, float blueStart,
 														float redEnd, float greenEnd, float blueEnd,
-														float size,float XV,float YV,float ZV, int count) {
+														float size,float XV,float YV,float ZV, int count,float speed) {
 
 			// Criar a opção de partícula para transição de cor usando Vector3f
 			Vector3f startColor = new Vector3f(redStart, greenStart, blueStart);
@@ -125,8 +158,10 @@ public class PlayerUtilProcedure {
 			DustColorTransitionOptions particleOptions = new DustColorTransitionOptions(startColor, endColor, size);
 
 			// Enviar as partículas
-			level.sendParticles(particleOptions,
-					x, y, z, count, size, size, size, 0.02f);
+			if(level instanceof ServerLevel serverLevel){
+			serverLevel.sendParticles(particleOptions,
+					x, y+1, z, count, XV, YV, ZV, speed);
+			}
 		}
 	}
 }

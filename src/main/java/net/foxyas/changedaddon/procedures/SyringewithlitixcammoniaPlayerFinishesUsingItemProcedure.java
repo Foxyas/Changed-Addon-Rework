@@ -48,11 +48,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 					}
 				} else {
 					SummonDripParticlesProcedure.execute(entity);
-					{
-						Entity _ent = entity;
-						if (!_ent.level.isClientSide() && _ent.getServer() != null)
-							_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
-					}
+					PlayerUtilProcedure.UnTransfurPlayer(entity);
 					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == true) {
 						new Object() {
 							private int ticks = 0;
@@ -110,8 +106,8 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 						if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 							_entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
 					}
-					if (!(entity instanceof ServerPlayer _plr10 && _plr10.level instanceof ServerLevel
-							&& _plr10.getAdvancements().getOrStartProgress(_plr10.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
+					if (!(entity instanceof ServerPlayer _plr9 && _plr9.level instanceof ServerLevel
+							&& _plr9.getAdvancements().getOrStartProgress(_plr9.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {
 						if (entity instanceof ServerPlayer _player) {
 							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"));
 							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);

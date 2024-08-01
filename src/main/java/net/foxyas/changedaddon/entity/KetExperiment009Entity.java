@@ -42,6 +42,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class KetExperiment009Entity extends LatexEntity implements AquaticEntity {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
+	private boolean Phase2;
 
 	public KetExperiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.KET_EXPERIMENT_009.get(), world);
@@ -59,7 +60,7 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 	protected void setAttributes(AttributeMap attributes) {
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((425));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(0.115);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15);
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1));
 		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(15);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
@@ -219,8 +220,31 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 		return builder;
 	}
 
+	public void setPhase2(boolean set){
+		this.Phase2 = set;
+	}
+
 	public boolean isPhase2(){
-		return this.getHealth() <= 0.75 * this.getMaxHealth() ? true : false;
+		return this.Phase2;
+	}
+
+	public void readAdditionalSaveData(CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains("Phase2"))
+			Phase2 = tag.getBoolean("Phase2");
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean("Phase2",Phase2);
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		SwimVoid(this);
+		Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
 	}
 
 	public void SwimVoid(KetExperiment009Entity entity){
@@ -262,12 +286,5 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 		} else if (entity.getPose() == Pose.SWIMMING && !entity.isInWater()){
 			entity.setPose(Pose.STANDING);
 		}
-	}
-
-	@Override
-	public void baseTick() {
-		super.baseTick();
-		SwimVoid(this);
-		Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
 	}
 }
