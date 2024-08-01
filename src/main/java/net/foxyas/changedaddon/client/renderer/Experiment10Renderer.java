@@ -25,7 +25,7 @@ public class Experiment10Renderer extends LatexHumanoidRenderer<Experiment10Enti
 
 	@Override
 	public ResourceLocation getTextureLocation(Experiment10Entity entity) {
-		if (entity.getUnderlyingPlayer() == null && entity.isPhase2()) {
+		if (entity.getUnderlyingPlayer() == null && entity.getHealth() <= entity.getMaxHealth() * 0.6) {
 			return new ResourceLocation("changed_addon:textures/entities/exp-10-phase2.png");
 		} else {
 			return new ResourceLocation("changed_addon:textures/entities/exp-10.png");
