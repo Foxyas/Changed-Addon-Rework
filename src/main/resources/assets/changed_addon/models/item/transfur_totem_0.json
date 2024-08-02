@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/latex-totem_golden_glow"
+    "layer0": "changed_addon:items/latex_totem_glow"
   }
 }

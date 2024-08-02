@@ -49,11 +49,20 @@ public class ChangedAddonTrades {
             event.getTrades().get(3).add(new BasicItemListing(new ItemStack(Items.EMERALD, 1 ), new ItemStack(ChangedAddonModItems.SIGNAL_CATCHER.get()), 12, 15, 0.02f));
 
             // Level 4 Trades
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ), new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5,darkLatexLaethin), 12, 10, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ), new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5,WhiteLatexLaethin), 12, 10, 0.02f));
+            ItemStack Laethin = new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5);
+            ItemStack LaethinSyringe = new  ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1);
+            LaethinSyringe.setTag(WhiteLatexLaethin);
+            Laethin.setTag(WhiteLatexLaethin);
+            ItemStack DarkLaethin = new ItemStack(ChangedAddonModItems.LAETHIN.get(), 5);
+            ItemStack DarkLaethinSyringe = new  ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1);
+            LaethinSyringe.setTag(darkLatexLaethin);
+            Laethin.setTag(darkLatexLaethin);
+
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ),Laethin, 12, 10, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 5 ),DarkLaethin, 12, 10, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 ), new ItemStack(ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(), 1), 12, 25, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 6 ), new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1, darkLatexLaethin), 12, 25, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 6 ), new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get(), 1, WhiteLatexLaethin), 12, 25, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 6 ),LaethinSyringe, 12, 25, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 6 ),DarkLaethinSyringe, 12, 25, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 8 ), new ItemStack(Items.REDSTONE, 16 ), new ItemStack(ChangedAddonModItems.UNIFUSER.get()), 8, 20, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 4 ), new ItemStack(Items.IRON_INGOT, 2 ), new ItemStack(ChangedBlocks.INFUSER.get().asItem()), 8, 20, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 8 ), new ItemStack(Items.REDSTONE, 8 ), new ItemStack(ChangedAddonModItems.CATLYZER.get()), 8, 20, 0.02f));

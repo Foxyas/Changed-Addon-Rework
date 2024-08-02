@@ -13,7 +13,7 @@
     "states": [
       {
         "renderType": 0,
-        "texture": "latex-totem_golden_glow",
+        "texture": "latex_totem_glow",
         "customModelName": "Normal",
         "stateMap": [
           {

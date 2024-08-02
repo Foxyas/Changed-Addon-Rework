@@ -48,18 +48,18 @@ public class ShockWaveAbility extends SimpleAbility {
     public int getCoolDown(IAbstractLatex entity) {
         LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
         if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
-            return 20;
+            return 40;
         }
-        return 30;
+        return 60;
     }
 
     @Override
     public int getChargeTime(IAbstractLatex entity) {
         LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
         if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
-            return 6;
+            return 8;
         }
-        return 10;
+        return 12;
     }
 
     public UseType getUseType(IAbstractLatex entity) {
@@ -84,7 +84,11 @@ public class ShockWaveAbility extends SimpleAbility {
             return;
         Player player = (Player) entity;
         final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
-        List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(16, 16, 16), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+        float Zone = 16;
+        if (player.isInWaterOrRain()){
+            Zone = 24;
+        }
+        List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(Zone, Zone, Zone), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
                 .collect(Collectors.toList());
         for (Entity entityiterator : _entfound) {
             if (player != entityiterator && entityiterator instanceof LivingEntity _entity){
