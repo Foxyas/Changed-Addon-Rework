@@ -3,7 +3,7 @@
   "_type": "enchantment",
   "definition": {
     "name": "Latex Solvent",
-    "type": "WEAPON",
+    "type": "BREAKABLE",
     "rarity": "RARE",
     "minLevel": 1,
     "maxLevel": 5,

@@ -26,15 +26,12 @@ public class TransfurTotemRightclickedProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
+		String form = "";
 		if (!entity.isShiftKeyDown()) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
 				if (!(itemstack.getOrCreateTag().getString("form")).isEmpty()) {
 					SummonDripParticlesProcedure.execute(entity);
-					{
-						Entity _ent = entity;
-						if (!_ent.level.isClientSide() && _ent.getServer() != null)
-							_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "untransfur @s");
-					}
+					PlayerUtilProcedure.UnTransfurPlayer(entity);
 					if (entity instanceof Player _player)
 						_player.getCooldowns().addCooldown(itemstack.getItem(), 100);
 					if (world.isClientSide())
@@ -67,11 +64,8 @@ public class TransfurTotemRightclickedProcedure {
 					if (entity instanceof Player _player && !_player.level.isClientSide())
 						_player.displayClientMessage(new TextComponent("Any form linked please link one \u00A7e<Shift+Click>"), true);
 				} else {
-					{
-						Entity _ent = entity;
-						if (!_ent.level.isClientSide() && _ent.getServer() != null)
-							_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), ("transfur @s " + itemstack.getOrCreateTag().getString("form")));
-					}
+					form = itemstack.getOrCreateTag().getString("form");
+					PlayerUtilProcedure.TransfurPlayer(entity, form);
 					if (world.isClientSide())
 						Minecraft.getInstance().gameRenderer.displayItemActivation(itemstack);
 					if (entity instanceof Player _player)

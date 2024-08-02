@@ -12019,7 +12019,8 @@
           "src/main/java/net/foxyas/changedaddon/procedures/Phase2EntitysHandleProcedure.java"
         ],
         "dependencies": []
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "Exp10WhenAttack",
@@ -12046,7 +12047,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     }
   ],
   "variable_elements": [

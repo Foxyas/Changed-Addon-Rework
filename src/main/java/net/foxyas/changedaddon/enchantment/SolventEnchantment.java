@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SolventEnchantment extends Enchantment {
 	public SolventEnchantment(EquipmentSlot... slots) {
-		super(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, slots);
+		super(Enchantment.Rarity.RARE, EnchantmentCategory.BREAKABLE, slots);
 	}
 
 	@Override
