@@ -33,7 +33,7 @@ public class ChangedAddonTrades {
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 ), new ItemStack(ChangedItems.LATEX_BASE.get()), 12, 5, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedItems.LATEX_BASE.get(), 2 ), new ItemStack(Items.EMERALD), 12, 5, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.IRON_INGOT, 1 ), new ItemStack(ChangedItems.SYRINGE.get(), 6), 12, 5, 0.02f));
-            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedItems.SYRINGE.get(), 2 ), new ItemStack(Items.EMERALD, 1), 8, 5, 0.02f));
+            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedItems.SYRINGE.get(), 4 ), new ItemStack(Items.EMERALD, 1), 8, 5, 0.02f));
 
             // Level 2 Trades
             event.getTrades().get(2).add(new BasicItemListing(new ItemStack(ChangedItems.DARK_LATEX_MASK.get()), new ItemStack(Items.EMERALD, 3), 12, 10, 0.02f));
