@@ -28,9 +28,12 @@ public class ChangedAddonTrades {
             // Level 1 Trades
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 1 ), new ItemStack(ChangedAddonModItems.IMPUREAMMONIA.get(), 1), new ItemStack(ChangedAddonModItems.AMMONIAPARTICLE.get(), 4), 16, 10, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedAddonModItems.AMMONIAPARTICLE.get(), 16), new ItemStack(Items.EMERALD, 3), 16, 10, 0.05f));
+            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3), new ItemStack(ChangedAddonModItems.AMMONIAPARTICLE.get(), 16), 16, 10, 0.05f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 ), new ItemStack(ChangedAddonModItems.UNLATEXBASE.get()), 12, 5, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 ), new ItemStack(ChangedItems.LATEX_BASE.get()), 12, 5, 0.02f));
-            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.IRON_INGOT, 1 ), new ItemStack(ChangedItems.SYRINGE.get(), 4), 12, 5, 0.02f));
+            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedItems.LATEX_BASE.get(), 2 ), new ItemStack(Items.EMERALD), 12, 5, 0.02f));
+            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.IRON_INGOT, 1 ), new ItemStack(ChangedItems.SYRINGE.get(), 6), 12, 5, 0.02f));
+            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedItems.SYRINGE.get(), 2 ), new ItemStack(Items.EMERALD, 1), 8, 5, 0.02f));
 
             // Level 2 Trades
             event.getTrades().get(2).add(new BasicItemListing(new ItemStack(ChangedItems.DARK_LATEX_MASK.get()), new ItemStack(Items.EMERALD, 3), 12, 10, 0.02f));
