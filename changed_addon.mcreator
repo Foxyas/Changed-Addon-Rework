@@ -2919,27 +2919,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "ShowOrganicOverLay",
-      "type": "procedure",
-      "sortid": 200,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_organic_over_lay",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowOrganicOverLayProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "LitixCamoniaFluidMobplayerCollidesBlock",
       "type": "procedure",
       "sortid": 201,
@@ -3045,30 +3024,6 @@
         ]
       },
       "path": "~/commands"
-    },
-    {
-      "name": "ToggleOrganicOverlay",
-      "type": "procedure",
-      "sortid": 207,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "toggle_organic_overlay",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ToggleOrganicOverlayProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "arguments",
-            "type": "cmdcontext"
-          },
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
     },
     {
       "name": "LatexInsulatorEntityCollidesInTheBlock",
@@ -10872,12 +10827,6 @@
     },
     {
       "name": "organic_transfur",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "false"
-    },
-    {
-      "name": "organic_overlay",
       "type": "logic",
       "scope": "player_persistent",
       "value": "false"

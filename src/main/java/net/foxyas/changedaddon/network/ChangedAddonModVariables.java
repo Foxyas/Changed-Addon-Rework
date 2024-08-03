@@ -73,7 +73,6 @@ public class ChangedAddonModVariables {
 			clone.Progress_Transfur_Number = original.Progress_Transfur_Number;
 			clone.LatexEntitySummon = original.LatexEntitySummon;
 			clone.organic_transfur = original.organic_transfur;
-			clone.organic_overlay = original.organic_overlay;
 			clone.human_Form = original.human_Form;
 			clone.reset_transfur_advancements = original.reset_transfur_advancements;
 			clone.enter_in_duct = original.enter_in_duct;
@@ -137,7 +136,6 @@ public class ChangedAddonModVariables {
 		public boolean concience_Fight = false;
 		public String LatexEntitySummon = "any";
 		public boolean organic_transfur = false;
-		public boolean organic_overlay = false;
 		public boolean human_Form = true;
 		public boolean reset_transfur_advancements = false;
 		public boolean enter_in_duct = false;
@@ -170,7 +168,6 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("concience_Fight", concience_Fight);
 			nbt.putString("LatexEntitySummon", LatexEntitySummon);
 			nbt.putBoolean("organic_transfur", organic_transfur);
-			nbt.putBoolean("organic_overlay", organic_overlay);
 			nbt.putBoolean("human_Form", human_Form);
 			nbt.putBoolean("reset_transfur_advancements", reset_transfur_advancements);
 			nbt.putBoolean("enter_in_duct", enter_in_duct);
@@ -200,7 +197,6 @@ public class ChangedAddonModVariables {
 			concience_Fight = nbt.getBoolean("concience_Fight");
 			LatexEntitySummon = nbt.getString("LatexEntitySummon");
 			organic_transfur = nbt.getBoolean("organic_transfur");
-			organic_overlay = nbt.getBoolean("organic_overlay");
 			human_Form = nbt.getBoolean("human_Form");
 			reset_transfur_advancements = nbt.getBoolean("reset_transfur_advancements");
 			enter_in_duct = nbt.getBoolean("enter_in_duct");
@@ -249,7 +245,6 @@ public class ChangedAddonModVariables {
 					variables.concience_Fight = message.data.concience_Fight;
 					variables.LatexEntitySummon = message.data.LatexEntitySummon;
 					variables.organic_transfur = message.data.organic_transfur;
-					variables.organic_overlay = message.data.organic_overlay;
 					variables.human_Form = message.data.human_Form;
 					variables.reset_transfur_advancements = message.data.reset_transfur_advancements;
 					variables.enter_in_duct = message.data.enter_in_duct;
