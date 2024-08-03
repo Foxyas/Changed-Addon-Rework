@@ -14,29 +14,29 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.world.inventory.GrabRadialMenugrabMenu;
+import net.foxyas.changedaddon.world.inventory.FightTokeepconsciousnessminigameMenu;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 
 import io.netty.buffer.Unpooled;
 
-public class OpenGrabRadialMenuGrabsProcedure {
+public class OpenStruggleMenuOnKeyPressedProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
-				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
+		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
+				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).concience_Fight) {
 			{
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos = new BlockPos(x, y, z);
 					NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 						@Override
 						public Component getDisplayName() {
-							return new TextComponent("GrabRadialMenugrab");
+							return new TextComponent("FightTokeepconsciousnessminigame");
 						}
 
 						@Override
 						public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-							return new GrabRadialMenugrabMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+							return new FightTokeepconsciousnessminigameMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
 						}
 					}, _bpos);
 				}

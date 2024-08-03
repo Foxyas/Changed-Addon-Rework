@@ -15,57 +15,6 @@
       "path": "~/effects"
     },
     {
-      "name": "GrabeffectOnEffectActiveTick",
-      "type": "procedure",
-      "sortid": 38,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grabeffect_on_effect_active_tick",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/GrabeffectOnEffectActiveTickProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "GrabeffectEffectStartedapplied",
-      "type": "procedure",
-      "sortid": 40,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grabeffect_effect_startedapplied",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/GrabeffectEffectStartedappliedProcedure.java"
-        ],
-        "dependencies": []
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "ChangedaddonAdvancement",
       "type": "achievement",
       "sortid": 41,
@@ -78,62 +27,6 @@
         ]
       },
       "path": "~/advancements"
-    },
-    {
-      "name": "GrabProcedure",
-      "type": "procedure",
-      "sortid": 42,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grab_procedure",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/GrabProcedureProcedure.java"
-        ],
-        "dependencies": []
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Showstrugglebutton",
-      "type": "procedure",
-      "sortid": 43,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "showstrugglebutton",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowstrugglebuttonProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "StruggleButtonClickevent",
-      "type": "procedure",
-      "sortid": 47,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "struggle_button_clickevent",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/StruggleButtonClickeventProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
     },
     {
       "name": "Orangejuice",
@@ -688,61 +581,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "SetassimilatonOnKeyPressed",
-      "type": "procedure",
-      "sortid": 67,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "setassimilaton_on_key_pressed",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SetassimilatonOnKeyPressedProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ActiveFriendlyModeOnKeyPressed",
-      "type": "procedure",
-      "sortid": 68,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "active_friendly_mode_on_key_pressed",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ActiveFriendlyModeOnKeyPressedProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "TickupdateFriendlygrab",
-      "type": "procedure",
-      "sortid": 71,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "tickupdate_friendlygrab",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/TickupdateFriendlygrabProcedure.java"
-        ],
-        "dependencies": []
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "Devitem",
       "type": "item",
       "sortid": 75,
@@ -1002,227 +840,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "FriendlymodeoverlayDisplayOverlayIngame",
-      "type": "procedure",
-      "sortid": 93,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "friendlymodeoverlay_display_overlay_ingame",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/FriendlymodeoverlayDisplayOverlayIngameProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Showassimilationicon",
-      "type": "procedure",
-      "sortid": 94,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "showassimilationicon",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowassimilationiconProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Showassimilationoffbutton",
-      "type": "procedure",
-      "sortid": 95,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "showassimilationoffbutton",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowassimilationoffbuttonProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Shocantgrabicon",
-      "type": "procedure",
-      "sortid": 96,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "shocantgrabicon",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShocantgrabiconProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Showcangrabicon",
-      "type": "procedure",
-      "sortid": 97,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "showcangrabicon",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowcangrabiconProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Showfriendlymodeofficon",
-      "type": "procedure",
-      "sortid": 98,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "showfriendlymodeofficon",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowfriendlymodeofficonProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowfriendlymodeIcon",
-      "type": "procedure",
-      "sortid": 99,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "showfriendlymode_icon",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowfriendlymodeIconProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "OpengrabescapeguiOnKeyPressed",
-      "type": "procedure",
-      "sortid": 100,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "opengrabescapegui_on_key_pressed",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/OpengrabescapeguiOnKeyPressedProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Opengrabescapegui",
-      "type": "keybind",
-      "sortid": 101,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "opengrabescapegui",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/OpengrabescapeguiMessage.java"
-        ]
-      },
-      "path": "~/Keybinds"
-    },
-    {
-      "name": "Toggleaddonguiprocedure",
-      "type": "procedure",
-      "sortid": 102,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "toggleaddonguiprocedure",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ToggleaddonguiprocedureProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "arguments",
-            "type": "cmdcontext"
-          },
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "Openpage4",
       "type": "procedure",
       "sortid": 103,
@@ -1338,27 +955,6 @@
       "path": "~/advancements"
     },
     {
-      "name": "Showbreakfreebutton",
-      "type": "procedure",
-      "sortid": 107,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "showbreakfreebutton",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowbreakfreebuttonProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "Pagesecret",
       "type": "gui",
       "sortid": 108,
@@ -1405,47 +1001,6 @@
           {
             "name": "world",
             "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "GrabclickguiValue",
-      "type": "procedure",
-      "sortid": 110,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grabclickgui_value",
-      "metadata": {
-        "return_type": "string",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/GrabclickguiValueProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "SetcangrabonOnKeyPressed",
-      "type": "procedure",
-      "sortid": 111,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "setcangrabon_on_key_pressed",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/SetcangrabonOnKeyPressedProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
           }
         ]
       },
@@ -3016,89 +2571,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "WantFriendlyGrabOverlayDisplayOverlayIngame",
-      "type": "procedure",
-      "sortid": 170,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "want_friendly_grab_overlay_display_overlay_ingame",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/WantFriendlyGrabOverlayDisplayOverlayIngameProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowWantFriendlygrabtrue",
-      "type": "procedure",
-      "sortid": 171,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_want_friendlygrabtrue",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowWantFriendlygrabtrueProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowWantFriendlygrabfalse",
-      "type": "procedure",
-      "sortid": 172,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_want_friendlygrabfalse",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowWantFriendlygrabfalseProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "WantfriendlygrabOnKeyPressed",
-      "type": "procedure",
-      "sortid": 173,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "wantfriendlygrab_on_key_pressed",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/WantfriendlygrabOnKeyPressedProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "DevItem2",
       "type": "item",
       "sortid": 174,
@@ -3199,54 +2671,6 @@
           {
             "name": "itemstack",
             "type": "itemstack"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Togglehumanaddongui",
-      "type": "procedure",
-      "sortid": 180,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "togglehumanaddongui",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/TogglehumanaddonguiProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "arguments",
-            "type": "cmdcontext"
-          },
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Togglealladdongui",
-      "type": "procedure",
-      "sortid": 181,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "togglealladdongui",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/TogglealladdonguiProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "arguments",
-            "type": "cmdcontext"
-          },
-          {
-            "name": "entity",
-            "type": "entity"
           }
         ]
       },
@@ -3447,26 +2871,6 @@
       "path": "~/advancements"
     },
     {
-      "name": "GrabEscapeNeedClicks",
-      "type": "procedure",
-      "sortid": 192,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grab_escape_need_clicks",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/GrabEscapeNeedClicksProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "SyringewithlitixcammoniaLivingEntityIsHitWithItem",
       "type": "procedure",
       "sortid": 193,
@@ -3495,66 +2899,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "Infoaddongui",
-      "type": "procedure",
-      "sortid": 194,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "infoaddongui",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/InfoaddonguiProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Infoonlyhumanaddongui",
-      "type": "procedure",
-      "sortid": 195,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "infoonlyhumanaddongui",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/InfoonlyhumanaddonguiProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Infoonlytransfuraddongui",
-      "type": "procedure",
-      "sortid": 196,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "infoonlytransfuraddongui",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/InfoonlytransfuraddonguiProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "Infoaddonwarns",
       "type": "procedure",
       "sortid": 197,
@@ -3564,48 +2908,6 @@
       "metadata": {
         "files": [
           "src/main/java/net/foxyas/changedaddon/procedures/InfoaddonwarnsProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowOrganicFriendlyModeon",
-      "type": "procedure",
-      "sortid": 198,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_organic_friendly_modeon",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowOrganicFriendlyModeonProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowOrganicFriendlyModeOff",
-      "type": "procedure",
-      "sortid": 199,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_organic_friendly_mode_off",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowOrganicFriendlyModeOffProcedure.java"
         ],
         "dependencies": [
           {
@@ -4151,287 +3453,6 @@
           "src/main/java/net/foxyas/changedaddon/procedures/PainiteOreBlockDestroyedByExplosionProcedure.java"
         ],
         "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "GrabRadialMenu",
-      "type": "gui",
-      "sortid": 224,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grab_radial_menu",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/client/gui/GrabRadialMenuScreen.java",
-          "src/main/java/net/foxyas/changedaddon/network/GrabRadialMenuButtonMessage.java",
-          "src/main/java/net/foxyas/changedaddon/world/inventory/GrabRadialMenuMenu.java"
-        ]
-      },
-      "path": "~/Guis"
-    },
-    {
-      "name": "ShowOrganicGrabRadial",
-      "type": "procedure",
-      "sortid": 225,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_organic_grab_radial",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowOrganicGrabRadialProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifplayerarentorganic",
-      "type": "procedure",
-      "sortid": 226,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifplayerarentorganic",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/IfplayerarentorganicProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifplayerarentorganic2",
-      "type": "procedure",
-      "sortid": 227,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifplayerarentorganic_2",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Ifplayerarentorganic2Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowNoOrganicGrabRadial",
-      "type": "procedure",
-      "sortid": 228,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_no_organic_grab_radial",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowNoOrganicGrabRadialProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "OpenGrabRadialOnKeyPressed",
-      "type": "procedure",
-      "sortid": 229,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "open_grab_radial_on_key_pressed",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/OpenGrabRadialOnKeyPressedProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifplayerareorganic",
-      "type": "procedure",
-      "sortid": 230,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifplayerareorganic",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/IfplayerareorganicProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifplayerareorganic2",
-      "type": "procedure",
-      "sortid": 231,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifplayerareorganic_2",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Ifplayerareorganic2Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifplayerarentorganic3",
-      "type": "procedure",
-      "sortid": 232,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifplayerarentorganic_3",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Ifplayerarentorganic3Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifplayerarentorganic4",
-      "type": "procedure",
-      "sortid": 233,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifplayerarentorganic_4",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Ifplayerarentorganic4Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "GrabRadialMenugrab",
-      "type": "gui",
-      "sortid": 234,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grab_radial_menugrab",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/world/inventory/GrabRadialMenugrabMenu.java",
-          "src/main/java/net/foxyas/changedaddon/client/gui/GrabRadialMenugrabScreen.java",
-          "src/main/java/net/foxyas/changedaddon/network/GrabRadialMenugrabButtonMessage.java"
-        ]
-      },
-      "path": "~/Guis"
-    },
-    {
-      "name": "OpenGrabRafialMenuFriendly",
-      "type": "procedure",
-      "sortid": 235,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "open_grab_rafial_menu_friendly",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/OpenGrabRafialMenuFriendlyProcedure.java"
-        ],
-        "dependencies": []
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "OpenGrabRadialMenuGrabs",
-      "type": "procedure",
-      "sortid": 236,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "open_grab_radial_menu_grabs",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/OpenGrabRadialMenuGrabsProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
           {
             "name": "x",
             "type": "number"
@@ -5093,95 +4114,6 @@
       "path": "~/GameRules"
     },
     {
-      "name": "FriendlyTransfurGuitext",
-      "type": "procedure",
-      "sortid": 265,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "friendly_transfur_guitext",
-      "metadata": {
-        "return_type": "string",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/FriendlyTransfurGuitextProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "FriendlyTransfurGuino",
-      "type": "procedure",
-      "sortid": 266,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "friendly_transfur_guino",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/FriendlyTransfurGuinoProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "FriendlyTransfurGuiyes",
-      "type": "procedure",
-      "sortid": 267,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "friendly_transfur_guiyes",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/FriendlyTransfurGuiyesProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "FriendlyTransfurGui",
-      "type": "gui",
-      "sortid": 268,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "friendly_transfur_gui",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/FriendlyTransfurGuiButtonMessage.java",
-          "src/main/java/net/foxyas/changedaddon/world/inventory/FriendlyTransfurGuiMenu.java",
-          "src/main/java/net/foxyas/changedaddon/client/gui/FriendlyTransfurGuiScreen.java"
-        ]
-      },
-      "path": "~/Guis"
-    },
-    {
       "name": "LitixCamoniaSprayBroke",
       "type": "procedure",
       "sortid": 269,
@@ -5200,48 +4132,6 @@
           {
             "name": "itemstack",
             "type": "itemstack"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowGrabInFriendlyModeoff",
-      "type": "procedure",
-      "sortid": 270,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_grab_in_friendly_modeoff",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowGrabInFriendlyModeoffProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "ShowGrabInFriendlyModeOn",
-      "type": "procedure",
-      "sortid": 271,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_grab_in_friendly_mode_on",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowGrabInFriendlyModeOnProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
           }
         ]
       },
@@ -6464,116 +5354,6 @@
       "path": "~/Tags"
     },
     {
-      "name": "BookPagenumber6",
-      "type": "gui",
-      "sortid": 330,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "book_pagenumber_6",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/BookPagenumber6ButtonMessage.java",
-          "src/main/java/net/foxyas/changedaddon/client/gui/BookPagenumber6Screen.java",
-          "src/main/java/net/foxyas/changedaddon/world/inventory/BookPagenumber6Menu.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Guis"
-    },
-    {
-      "name": "Openpage6",
-      "type": "procedure",
-      "sortid": 331,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "openpage_6",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Openpage6Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "BookPagenumber7",
-      "type": "gui",
-      "sortid": 332,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "book_pagenumber_7",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/network/BookPagenumber7ButtonMessage.java",
-          "src/main/java/net/foxyas/changedaddon/world/inventory/BookPagenumber7Menu.java",
-          "src/main/java/net/foxyas/changedaddon/client/gui/BookPagenumber7Screen.java"
-        ]
-      },
-      "path": "~/Guis"
-    },
-    {
-      "name": "Openpage7",
-      "type": "procedure",
-      "sortid": 333,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "openpage_7",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Openpage7Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "GiveBookOnStart",
       "type": "gamerule",
       "sortid": 334,
@@ -6789,20 +5569,6 @@
         "dependencies": []
       },
       "path": "~/CustomCode"
-    },
-    {
-      "name": "GrabModeOverlays",
-      "type": "overlay",
-      "sortid": 347,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "grab_mode_overlays",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/client/gui/GrabModeOverlaysOverlay.java"
-        ]
-      },
-      "path": "~/OverLays"
     },
     {
       "name": "Experiment009latexdmg",
@@ -7228,58 +5994,6 @@
         ]
       },
       "path": "~/Procedures"
-    },
-    {
-      "name": "GrabclickguiThisGUIIsOpened",
-      "type": "procedure",
-      "sortid": 364,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "grabclickgui_this_gui_is_opened",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/GrabclickguiThisGUIIsOpenedProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifleavetheworld",
-      "type": "procedure",
-      "sortid": 365,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifleavetheworld",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/IfleavetheworldProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "SetFriendlyGrabKeyBindProcedure",
-      "type": "procedure",
-      "sortid": 366,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "set_friendly_grab_key_bind_procedure",
-      "metadata": {
-        "dependencies": []
-      },
-      "path": "~/CustomCode"
     },
     {
       "name": "SetTransfurProgressCommand",
@@ -12049,6 +10763,56 @@
         ]
       },
       "path": "~/Procedures"
+    },
+    {
+      "name": "OpenStruggleMenuOnKeyPressed",
+      "type": "procedure",
+      "sortid": 627,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "open_struggle_menu_on_key_pressed",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/OpenStruggleMenuOnKeyPressedProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "OpenStruggleMenu",
+      "type": "keybind",
+      "sortid": 628,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "open_struggle_menu",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/network/OpenStruggleMenuMessage.java"
+        ]
+      },
+      "path": "~/Keybinds"
     }
   ],
   "variable_elements": [
@@ -12065,64 +10829,16 @@
       "value": "any"
     },
     {
-      "name": "can_grab",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "false"
-    },
-    {
-      "name": "assmilation",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "false"
-    },
-    {
-      "name": "Friendly_mode",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "false"
-    },
-    {
       "name": "times_the_syringe_was_used",
       "type": "number",
       "scope": "player_lifetime",
       "value": "0"
     },
     {
-      "name": "visibleaddongui",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "true"
-    },
-    {
-      "name": "grab_escape",
-      "type": "logic",
-      "scope": "player_lifetime",
-      "value": "false"
-    },
-    {
-      "name": "escape_progress",
-      "type": "number",
-      "scope": "player_lifetime",
-      "value": "0"
-    },
-    {
-      "name": "wantfriendlygrab",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "true"
-    },
-    {
       "name": "showwarns",
       "type": "logic",
       "scope": "player_persistent",
       "value": "true"
-    },
-    {
-      "name": "visiblehumanaddongui",
-      "type": "logic",
-      "scope": "player_persistent",
-      "value": "false"
     },
     {
       "name": "LatexForm_ProgressTransfur",
@@ -12153,12 +10869,6 @@
       "type": "string",
       "scope": "player_persistent",
       "value": "any"
-    },
-    {
-      "name": "GrabEscapeClick",
-      "type": "number",
-      "scope": "player_persistent",
-      "value": "0.0"
     },
     {
       "name": "organic_transfur",
@@ -12219,30 +10929,6 @@
       "type": "logic",
       "scope": "player_persistent",
       "value": "false"
-    },
-    {
-      "name": "MaxTransfurTolerance",
-      "type": "number",
-      "scope": "map",
-      "value": "0"
-    },
-    {
-      "name": "isFriendlyGrabbing",
-      "type": "logic",
-      "scope": "player_lifetime",
-      "value": "false"
-    },
-    {
-      "name": "FriendlyGrabKeybind",
-      "type": "string",
-      "scope": "player_lifetime",
-      "value": ""
-    },
-    {
-      "name": "FriendlyGrabbing",
-      "type": "string",
-      "scope": "player_lifetime",
-      "value": ""
     },
     {
       "name": "LatexInfectionCooldown",
@@ -12344,12 +11030,11 @@
     "en_us": {
       "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
       "advancements.obtain_foxta.title": "Foxta!",
-      "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
       "item.changed_addon.crystal_addager_black": "Dark Crystal Addager",
-      "gui.changed_addon.book_pagenumber_6.label_these_are_the_modes_of_friendly": "-\u003e These are the modes of Fr-",
+      "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
-      "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
+      "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
       "entity.minecraft.villager.changed_addon.scientist": "Scientist",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
@@ -12358,13 +11043,12 @@
       "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
-      "item.changed_addon.signal_catcher": "Signal Catcher",
       "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
+      "item.changed_addon.signal_catcher": "Signal Catcher",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
       "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
       "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
-      "changedaddon.when_is.organic.grab": "You cannot grab as a organic latex creature",
       "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
       "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
@@ -12378,7 +11062,6 @@
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
       "gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon": " (Press the Totem Icon)",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe1": "Display Litix-Camonia Recipe",
-      "gui.changed_addon.book_pagenumber_6.label_mode_on": "-mode on) This Will change t-",
       "entity.changed_addon.exp2_female": "Exp2 Female",
       "entity.changed_addon.latex_snow_leopard_partial": "Partial Snow Leopard",
       "block.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
@@ -12390,18 +11073,16 @@
       "item.changed_addon.painite": "Painite",
       "advancements.transfur_totem_advancement_1.descr": "You use a latex totem to transfur or untransfur",
       "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
-      "item.changed_addon.latex_snow_fox_spawn_egg": "Male Latex Snow Fox Spawn Egg",
       "subtitles.spray.sound": "Using Spray",
+      "item.changed_addon.latex_snow_fox_spawn_egg": "Male Latex Snow Fox Spawn Egg",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
       "gui.changed_addon.pagesecret.button_close": "close",
       "attribute.changed_addon.latexresistance": "Latex Resistance",
-      "gui.changed_addon.grabclickgui.label_number": "number",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
       "item.changed_addon.painite_armor_leggings": "Painite Leggings",
       "changed_addon.ability.shock_wave": "Shock Wave",
-      "gui.changed_addon.friendly_transfur_gui.button_no": "no",
       "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
       "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
@@ -12409,8 +11090,8 @@
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "advancements.obtain_red_crystal_dagger.title": "§4Red§r Crystal Dagger!",
       "item.changed_addon.snepsi": "Snepsi",
-      "config.changed_addon.changed_addon_configs": "ChangedAddon-Server",
       "changed_addon.ability.dodge.dodge_amount_left": "Your Amount of Dodges left is %1$s",
+      "config.changed_addon.changed_addon_configs": "ChangedAddon-Server",
       "gui.changed_addon.tranfur_sounds_gui.label_transfursounds": "TransfurSounds",
       "gui.changed_addon.foxyas_gui_2.button_aa": "yes",
       "gamerule.giveBookOnStart": "Start With Book ",
@@ -12418,8 +11099,8 @@
       "key.changed_addon.pat_message": "You pat {0}",
       "gui.changed_addon.bookrecipepage_8.label_m": "M",
       "item.changed_addon.ammonia_particles_jei_illustrative": "16 Ammonia Particles ",
-      "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
       "gui.changed_addon.bookrecipepage_9.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
+      "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
       "gui.changed_addon.book_recipe_page_11.label_g": "G",
       "item.changed_addon.experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
       "advancements.snepsi_adctive.descr": "We take a big sippy,You drink 100 Snepsis!",
@@ -12430,25 +11111,21 @@
       "block.changed_addon.foxta_can": "§bFoxta Can§r",
       "item.changed_addon.electric_katana": "§bElectric Katana",
       "entity.changed_addon.erik": "Erik",
-      "advancements.obtain_a_electric_katana.title": "An Shocking Upgrade!",
       "changed_addon.ability.dodge.dodge_amount": "Your Amount of Dodges is %1$s",
+      "advancements.obtain_a_electric_katana.title": "An Shocking Upgrade!",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
-      "gui.changed_addon.book_pagenumber_6.label_these_are_the_friendly_transf": "-\u003e These are the Friendly Tr-",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
       "item.changed_addon.diffusion_syrine": "Latex-Diffusion Syringe",
       "death.attack.untransfurfail.player": "%1$s dies for a fail untransfurmation attempt while fighting %2$s",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
-      "key.changed_addon.opengrabescapegui": "Concience Fight Gui",
       "gamerule.changedAddonOrganicBuff": "ChangedAddon Organic Buff",
       "entity.changed_addon.snow_leopard_female_organic": "Female BioSynth Snow Leopard",
       "gui.changed_addon.book_recipe_page_11.label_p": "L",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
       "entity.changed_addon.latex_snow_fox_female": "Female Latex Snow Fox",
       "advancements.hazy_purple.title": "Hazy Purple",
-      "gui.changed_addon.book_pagenumber_6.label_ab": "-ab)",
-      "changedaddon.event.grab.when.entity.die": "The person that you were grabbing §4Died§r before you could do anything!!",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe": "Display Litix-Camonia Recipe",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
@@ -12457,8 +11134,8 @@
       "gui.changed_addon.bookrecipepage_6.label_pany_potion": "P\u003dANY POTION",
       "gui.changed_addon.bookrecipepage_8.label_3": "3",
       "gui.changed_addon.bookrecipepage_10.button_back": "Back",
-      "gamerule.doDazedLatexBurn.description": "When On Make The Dazed Latexs Burn in Sun Light like in Dazed Game",
       "advancements.swim_regret.descr": "Swim in water with a form that has low swim speed for a minute",
+      "gamerule.doDazedLatexBurn.description": "When On Make The Dazed Latexs Burn in Sun Light like in Dazed Game",
       "item.changed_addon.foxta": "Foxta",
       "changed_addon.latex_totem.notvalid": "Totem reacted §cnegatively§r to your §bDNA§r",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
@@ -12466,13 +11143,10 @@
       "gui.changed_addon.bookpagenumber_5.button_back": "Back",
       "changedaddon.friendlymode.on": "Friendly Mode Activated",
       "advancements.compressed_ammonia_advancement.title": "Compressed!!",
-      "gui.changed_addon.friendly_transfur_gui.label_accept": "accept?",
-      "gui.changed_addon.friendly_transfur_gui.button_no1": "yes",
       "advancements.untransfuradvancement.title": "I don\u0027t think it\u0027s that permanent!!",
       "gamerule.painiteGeneration.description": "Activate the generation of painite ore",
       "item.minecraft.splash_potion.effect.transfur_sickness_potion": "Splash Potion of Transfur Sickness ",
       "key.changed_addon.leap_key": "Leap Key",
-      "changedaddon.friendlygrab.hug": "entity §chug§r you",
       "item.changed_addon.experiment_009_spawnegg": "Experiment 009 Spawn Egg",
       "advancements.over_dose.title": "OverDose",
       "gui.changed_addon.book_pagenumber_2.label_pot_with_litixcamonia": "Pot With Litix-Camonia",
@@ -12482,15 +11156,11 @@
       "changed_addon.ability.dodge": "Dodge Ability",
       "entity.changed_addon.puro_kind_male": "Puro Kind Male",
       "item.changed_addon.experiment_009_phase_2_record.desc": "This Is the Music Theme of Jack Phase 2",
-      "changedaddon.feature.grab.isoff": "Grab Is §4Disabled§r in this World!",
-      "gui.changed_addon.book_pagenumber_7.button_close": "Back",
       "gui.changed_addon.bookrecipepage_9.button_close": "Close",
       "block.changed_addon.unifuser": "Unifuser",
       "death.attack.latex_solvent": "%1$s was dissolved",
-      "gui.changed_addon.book_pagenumber_7.label_organiccant_grab": "Organic/Cant Grab",
       "item.changed_addon.experiment_009_record": "Experiment 009 Theme Music Disc",
       "gui.changed_addon.bookrecipepage_7.label_catalyzer": "Catalyzer",
-      "gui.changed_addon.book_pagenumber_7.label_assimilation_grab_mode": "-\u003e Organic/cant Grab",
       "item.changed_addon.experiment_009_phase_2_spawn_egg": "Experiment 009 Phase 2 Spawn Egg",
       "gui.changed_addon.foxyasgui.label_pls_dont_kill_me": "pls dont kill me i can trade orange juice with you i just need 2",
       "entity.changed_addon.ket_experiment009": "Ket Experiment 009",
@@ -12499,7 +11169,6 @@
       "block.changed_addon.signal_block": "Signal Block",
       "effect.changed_addon.fadige": "Fatigue",
       "translation.FriendlyGrab.HumanText": "§bYou are in Friendly Grab Press (key) for leave",
-      "changedaddon.friendlygrab.alreadyin": "You are already Friendly Grabbing",
       "changedaddon.untransfur.no_effect": "No effect",
       "entity.changed_addon.dazed": "Dazed",
       "item.changed_addon.ammonia_compressed": "Ammonia Compressed",
@@ -12517,8 +11186,8 @@
       "death.attack.concience_lose": "%1$s lost they concience",
       "gui.changed_addon.unifusergui.tooltip_place_the_powders": "Place the Powders",
       "item.minecraft.tipped_arrow.effect.litixcamoniaeffect": "Arrow of LitixCamonia",
+      "key.changed_addon.open_struggle_menu": "Concience Fight Gui",
       "subtitles.experiment009_theme_phase2": "Experiment 009 Phase 2 Music Theme",
-      "gui.changed_addon.book_pagenumber_7.label_a_command": "A changed_addon Command",
       "block.changed_addon.catlyzer": "Catalyzer",
       "block.changed_addon.dormant_white_latex": "Dormant White Latex",
       "changedaddon.assimilation.when_customtransfur": "Only assimilation is allowed with a special transfur",
@@ -12526,7 +11195,6 @@
       "advancements.drink_snepsi.descr": "Drink snepsi for the first time",
       "gamerule.doDarkLatexMaskTransfur.description": "When on the player can be transfured while holding the Dark Latex Mask",
       "gamerule.useNewFriendlyGrab.description": "When Active This gamerule will make the player use the \"New Friendly Grab\" Instead of old WARN this is a W-I-P FEATURE SO USE AT YOUR OWN RISK (warning Right Click Friendly Grab will not work if true ok)",
-      "changedaddon.event.grab.when.small": "I\u0027m too small to grab",
       "entity.changed_addon.exp_2_male": "Exp2 Male",
       "subtitles.exp10_theme": "Experiment 10 Music Theme",
       "gui.changed_addon.bookrecipepage_6.label_unifuser": "Unifuser",
@@ -12569,7 +11237,6 @@
       "entity.changed_addon.latex_puro_kind_male": "Puro Kind Male",
       "item.changed_addon.electric_katana_red": "§4Electric Katana§r",
       "effect.changed_addon.untransfur": "§7Untransfur",
-      "gui.changed_addon.grab_radial_menugrab.button_back": "back",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder": "Display Recipe Of Ammonia Powder",
       "advancements.hazy_purple.descr": "Hold Exp10 and Exp9 Dna To Give you a Purple Fog",
       "death.attack.concience_lose.player": "%1$s lost they concience by %2$s",
@@ -12577,18 +11244,13 @@
       "entity.changed_addon.experiment_10": "Experiment 10",
       "entity.changed_addon.wolfy": "Wolfy",
       "config.changed_addon.changed_addon_client_configs": "ChangedAddon-Client",
-      "changedaddon.event.grab.when.you.die": "The person who was grabbing you §4Died§r before They could do anything!!",
       "item.changed_addon.transfur_totem": "Latex Totem",
       "advancements.obtain_a_electric_katana.descr": "Get the electric katana!",
       "item.changed_addon.orangejuice": "Orange Juice",
-      "gui.changed_addon.book_pagenumber_6.label_n_this_are_want_or_not": "-are want or not Friendly Gr-",
       "advancements.snepsi_adctive.title": "Snepsi Adctive!",
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",
-      "changedaddon.friendlygrab.you_hug.organic": "You are organic so you §chug§r them",
       "key.changed_addon.pat_received": "{0} pat You",
       "gui.changed_addon.book_pagenumber_2.label_ammonia": "Ammonia powder",
-      "changedaddon.grab.off": "Grab deactivated",
-      "gui.changed_addon.book_pagenumber_7.label_humans_overlay": "Humans overlay",
       "item.changed_addon.devitem": "Dev item",
       "gamerule.fighttokeepconsciousness": "Fight to keep consciousness",
       "advancements.organic_transfur_advancement.title": "Organic And Fluffy!!",
@@ -12599,7 +11261,6 @@
       "item.changed_addon.hazard_suit_boots": "Hazard Boots",
       "advancements.latex_insulator_advancement.descr": "Let\u0027s isolate this gooey infection",
       "entity.changed_addon.prototype": "Prototype",
-      "changedaddon.grab.when.cant": "You can\u0027t grab them",
       "text.changed_addon.legs": "Amount of Legs \u003d %s",
       "changedaddon.untransfur.Immune": "I\u0027m not affected",
       "advancements.obtain_red_crystal_dagger.descr": "You get a §4Red§r Crystal Dagger!",
@@ -12610,10 +11271,8 @@
       "item.changed_addon.painite_pickaxe": "Painite Pickaxe",
       "item.changed_addon.latex_dazed_spawn_egg": "Latex Dazed Spawn Egg",
       "advancements.unifuser_advancement.descr": "You craft or get a Unifuser",
-      "gui.changed_addon.grab_radial_menu_friendly.button_back": "back",
       "gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it1": "are you sure?",
       "gui.changed_addon.tranfur_sounds_gui.button_61": "Roar",
-      "changedaddon.grab.tired": "You are too tired to grab",
       "item.changed_addon.exp_2_female_spawn_egg": "Exp2 Female Spawn Egg",
       "block.changed_addon.generator": "Generator",
       "advancements.drink_snepsi.title": "Wait this isn\u0027t pepsi!",
@@ -12640,9 +11299,7 @@
       "item.changed_addon.crystal_addager_red": "Red Crystal Addager",
       "item.changed_addon.litix_camonia_fluid_bucket": "LitixCamonia Bucket",
       "gamerule.allowPlayerGrab.description": "Allow Players Use the Grab Feature",
-      "subtitles.enter_in_friendly_grab": "Player Being Friendly Grab",
       "enchantment.changed_addon.solvent.desc": "Deal more Damage to Latex Entities",
-      "gui.changed_addon.book_pagenumber_6.label_normaltransfur_grab_mode_o": "-\u003e Normal/Transfur Grab mod-",
       "item.changed_addon.painite_armor_helmet": "Painite Helmet",
       "advancements.obtain_dark_crystal_dagger.title": "§8Dark§r Crystal Dagger!",
       "gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you": "i want be transfured by you",
@@ -12650,7 +11307,6 @@
       "gui.changed_addon.book_pagenumber_1.button_close": "Close",
       "changedaddon.when_is.organic": "You cannot assimilate as a organic latex creature",
       "gui.changed_addon.book_pagenumber_2.label_syringe_with_litixcamonia": "Syringe With Litix-Camonia",
-      "gui.changed_addon.book_pagenumber_6.label_assimilation_grab_mode": "-\u003e Assimilation grab mode",
       "attribute.changed_addon.latexinfection": "Latex Infection",
       "advancements.untransfuritemadvancement.descr": "You made one untransfur item",
       "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
@@ -12668,16 +11324,13 @@
       "advancements.untransfuradvancement_2.title": "I don\u0027t think it\u0027s that permanent!!",
       "changed_addon.compact_disc.title.experiment_009": "§n§4Demoleculated §r§n§b Experiment",
       "advancements.obtain_foxta.descr": "You Obtain a Foxta! ",
-      "subtitles.in_grab_sound": "Player being grabbed",
       "item.changed_addon.painite_sword": "Painite Sword",
       "gui.changed_addon.foxyasgui.button_trade": "Trade",
       "advancements.litixcamonia_adcancement.descr": "Craft A Litix-Camonia",
       "entity.changed_addon.exp_2_female": "Exp2 Female",
-      "gui.changed_addon.book_pagenumber_7.label_default_off": "(Default off)",
       "gui.changed_addon.bookpagenumber_5.label_catalyzer": "Catalyzer",
       "advancements.timesthesyringewasuseadvancement_2.descr": "You used a litixcamonia syringe more than 64 times!!! §4CAN GO GET ONE CANCER IF YOU NOT STOP CHANGE YOUR DNA!!!!!",
       "changed_addon.latex_syringe.not_valid": "You Can\u0027t place this Syringe",
-      "subtitles.grab_start_sound": "Player just got grabbed",
       "gamerule.needPermitionFor009Transfur": "Need Permition For Transfur in 009",
       "advancements.foxyas_advancement.descr": "§4THOSE BASTARDS,THEY KILL FOXYAS",
       "gamerule.useNewFriendlyGrab": "Changed Addon New Friendly Grab",
@@ -12689,7 +11342,6 @@
       "entity.changed_addon.puro_kind": "Puro Kind",
       "item.changed_addon.experiment_009dna": "Experiment 009 DNA",
       "entity.changed_addon.latex_snow_fox": "Latex Snow Fox",
-      "gui.changed_addon.book_pagenumber_7.label_all_overlays_can_be_turned_on_by": "All overlays can be turned on by ",
       "item.changed_addon.unlatexbase": "Anti-Latex Base",
       "gui.changed_addon.bookpagenumber_4.button_close": "Close",
       "item.changed_addon.experiment_009_spawn_egg": "Experiment 009 Spawn Egg",
@@ -12706,16 +11358,13 @@
       "advancements.obtain_green_crystal_dagger.title": "§aGreen§r Crystal Dagger!",
       "gui.changed_addon.book_pagenumber_2.label_litixcamonia": "Litix-Camonia",
       "effect.changed_addon.latex_solvent": "Latex Solvent",
-      "gui.changed_addon.book_pagenumber_6.button_close": "Back",
       "advancements.transfur_totem_advancement_1.title": "In Total Control",
       "changedaddon.diets.good_food": "It seems like i feel more fuller when i eat this food",
-      "gui.changed_addon.book_pagenumber_7.label_e_only_for_player": "-y modes",
       "advancements.catlyzer_advancement.descr": "You craft or get a Catalyzer",
       "gui.changed_addon.bookpagenumber_3.label_or": "OR",
       "gamerule.changedAddonHardModeBosses.description": "Add a difficulty multiplier to Mod Changed Addon bosses",
       "gui.changed_addon.pagesecret.label_after_an_experiment_with_catalyz": "after an experiment with catalyzed dna a bit of blood and an \"unlatexbase\" ",
       "gui.changed_addon.book_pagenumber_2.button_close": "Close",
-      "changedaddon.event.grab.when.grab.immune": "They are very resistant to being grabbed, so you can\u0027t grab them",
       "gui.changed_addon.unifusergui.tooltip_display_recipes": "Display Recipes",
       "gui.changed_addon.foxyas_gui_2.button_no": "no",
       "entity.changed_addon.snow_leopard_male_organic": "Male BioSynth Snow Leopard",
@@ -12723,8 +11372,6 @@
       "block.changed_addon.darklatexpuddle": "Dark Latex Puddle",
       "gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form": "Put A syringe With a Form",
       "changedaddon.assimilation.when_on": "Activating assimilation deactivates Friendly Mode",
-      "gamerule.doGrabNeedLook.description": "When players need to look at the target to grab",
-      "gui.changed_addon.book_pagenumber_6.label_ansfur_modes": "-ansfur modes (need Friendly-",
       "item.changed_addon.latex_snow_fox_female_spawn_egg": "Female Latex Snow Fox Spawn Egg",
       "advancements.timesthesyringewasuseadvancement_3.descr": "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!",
       "gamerule.needPermitionFor009Transfur.description": "When On the player Need Permition For Transfur in Boss 009 ",
@@ -12742,7 +11389,6 @@
       "subtitles.armor_equip": "Armor Equip",
       "item.changed_addon.experiment_009_phase_2_record": "Experiment 009 Phase 2 Theme Music Disc",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.button_give_up": "     give up      ",
-      "gamerule.changedAddonNewFriendlyGrab.description": "this is a new friendly grab that is less buggy but is VERY different from normal",
       "death.attack.assimilation": "%1$s was assimilated",
       "item.changed_addon.devitem_3": "Dev item",
       "item.changed_addon.devitem_6": "DEVITEM 6",
@@ -12764,7 +11410,6 @@
       "key.changed_addon.duct_prone": "Duct Prone",
       "gui.changed_addon.book_pagenumber_1.button_changed_addon_recipes": "Changed Addon Recipes",
       "block.changed_addon.informantblock": "Informant Block",
-      "changedaddon.grab.on": "Grab activated",
       "item.changed_addon.puro_kind_spawn_egg": "Puro Kind Male Spawn Egg",
       "advancements.potwithlitixcamonia_advancement.descr": "You drank a liquid made from the dilution of litixcamonia The taste is not bad besides it tastes like cherry!",
       "gui.changed_addon.bookrecipepage_7.button_back": "Back",
@@ -12781,21 +11426,16 @@
       "changed_addon.ability.leap": "Leap",
       "item.minecraft.tipped_arrow.effect.transfur_sickness_potion": "Arrow of Transfur Sickness",
       "item.changed_addon.painite_armor_chestplate": "Painite Chestplate",
-      "changedaddon.friendlygrab.dont_want": "They don\u0027t want to be friendly grabbed",
       "gui.changed_addon.bookrecipepage_8.label_m_meet": "M \u003d ANY MEET",
       "subtitles.untransfursound": "Untransfurmization",
       "entity.changed_addon.exp2_male": "Exp2 Male",
       "changedaddon.warn.close_fight_to_keep_consciousness": "§1You Closed the Fight for Conscience Menu Press (KEY) to Open Again§r",
       "gamerule.allowPlayerGrab": "Allow Player Grab",
-      "gui.changed_addon.book_pagenumber_6.label_e_only_for_player": "-e (only for players)",
-      "gui.changed_addon.book_pagenumber_6.label_friendly_modes": "-iendly modes (If Human this-",
       "advancements.gooey_friend.title": "Gooey Friend",
       "changed_addon.ability.psychic_hold": "Psychic Hold",
       "gui.changed_addon.book_recipe_page_11.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
       "item.changed_addon.foxyas_spawn_egg": "Foxyas Spawn Egg",
       "gui.changed_addon.bookrecipepage_9.label_unifuser": "Unifuser",
-      "gui.changed_addon.book_pagenumber_6.button_next": "Next",
-      "gui.changed_addon.book_pagenumber_6.label_he_grabs_mode": "-he grab modes",
       "advancements.drink_foxta.descr": "Drink foxta for the first time  ",
       "gui.changed_addon.book_recipe_page_11.label_g_any_gooey_item": "G \u003d Any Gooey Item",
       "advancements.dn_astudyisafantasticthingadvancement.descr": "You made one Inpure Ammonia",
@@ -12804,17 +11444,14 @@
       "gui.changed_addon.book_pagenumber_2.label_impure_ammonia": "Impure Ammonia",
       "gui.changed_addon.pagesecret.label_he_emerged": "he emerged",
       "entity.changed_addon.foxyas": "Foxyas",
-      "gui.changed_addon.grabclickgui.label_escape_progress": "Escape Progress",
       "advancements.untransfuradvancement.descr": "You untransfur with the Pot with Litix-Camonia",
       "item.changed_addon.erik_spawn_egg": "Erik Spawn Egg",
       "advancements.kill_experiment_009.descr": "You kill Experiment009 Good Job",
       "subtitles.experiment10_theme": "Experiment 10 Music Theme",
       "item.changed_addon.ammonia": "Ammonia Powder",
-      "key.categories.grab_gui": "Grab KeyBinds",
       "gamerule.painiteGeneration": "Painite Generation",
       "gui.changed_addon.book_pagenumber_2.label_catalyzed_dna": "Catalyzed DNA",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.label_fast_you_only_have_4_seconds": "You only got 4 seconds, HURRY!",
-      "changedaddon.friendlygrab.you_hug": "You §chug§r them",
       "advancements.catlyzer_advancement.title": "A Catalyzer?",
       "item.changed_addon.snow_leopard_male_organic_spawn_egg": "Male BioSynth Snow Leopard Spawn Egg",
       "gui.changed_addon.bookpagenumber_4.label_catalyzer": "Catalyzer",
@@ -12823,7 +11460,6 @@
       "gamerule.changedAddonHardModeBosses": "Changed Addon HardMode Bosses",
       "advancements.potwithlitixcamonia_advancement.title": "yummy?",
       "item.changed_addon.snepsi.desc": "Cat-ion? Isnt it spelled caution? Says do NOT drink. Contains goo?",
-      "changedaddon.friendlygrab.Human.you_hug.organic": "They are organic so you just §chug§r them",
       "item.changed_addon.changedbook": "Guide Book",
       "text.changed_addon.landspeed": "Land Speed \u003d %s",
       "block.changed_addon.snepsi_can": "§bSnepsi Can§r",
@@ -12832,9 +11468,7 @@
       "block.changed_addon.painite_block": "Block of Painite",
       "advancements.obtain_painite.descr": "Obtain Painite",
       "item.changed_addon.exp_2_male_spawn_egg": "Exp2 Male Spawn Egg",
-      "gui.changed_addon.book_pagenumber_7.label_normaltransfur_grab_mode_o": "-\u003e Those are Organic Friendl-",
       "gui.changed_addon.book_pagenumber_1.label_empty": "?",
-      "subtitles.grab_release": "Player release from grab",
       "advancements.obtain_snepsi.title": "Snepsi?",
       "effect.changed_addon.transfur_sickness": "§o§cTransfur Sickness",
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",

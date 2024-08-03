@@ -6,7 +6,7 @@
     "keyBindingName": "Concience Fight Gui",
     "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {
-      "name": "OpengrabescapeguiOnKeyPressed"
+      "name": "OpenStruggleMenuOnKeyPressed"
     }
   }
 }

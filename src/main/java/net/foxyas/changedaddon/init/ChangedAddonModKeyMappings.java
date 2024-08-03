@@ -18,7 +18,7 @@ import net.minecraft.client.KeyMapping;
 
 import net.foxyas.changedaddon.network.TurnOffTransfurMessage;
 import net.foxyas.changedaddon.network.PatKeyMessage;
-import net.foxyas.changedaddon.network.OpengrabescapeguiMessage;
+import net.foxyas.changedaddon.network.OpenStruggleMenuMessage;
 import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
 import net.foxyas.changedaddon.network.LeapKeyMessage;
 import net.foxyas.changedaddon.network.DuctProneMessage;
@@ -26,19 +26,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class ChangedAddonModKeyMappings {
-	public static final KeyMapping OPENGRABESCAPEGUI = new KeyMapping("key.changed_addon.opengrabescapegui", GLFW.GLFW_KEY_B, "key.categories.changed_addon") {
-		private boolean isDownOld = false;
-
-		@Override
-		public void setDown(boolean isDown) {
-			super.setDown(isDown);
-			if (isDownOld != isDown && isDown) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpengrabescapeguiMessage(0, 0));
-				OpengrabescapeguiMessage.pressAction(Minecraft.getInstance().player, 0, 0);
-			}
-			isDownOld = isDown;
-		}
-	};
 	public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_J, "key.categories.changed_addon") {
 		private boolean isDownOld = false;
 
@@ -109,16 +96,29 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
+	public static final KeyMapping OPEN_STRUGGLE_MENU = new KeyMapping("key.changed_addon.open_struggle_menu", GLFW.GLFW_KEY_B, "key.categories.changed_addon") {
+		private boolean isDownOld = false;
+
+		@Override
+		public void setDown(boolean isDown) {
+			super.setDown(isDown);
+			if (isDownOld != isDown && isDown) {
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenStruggleMenuMessage(0, 0));
+				OpenStruggleMenuMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+			}
+			isDownOld = isDown;
+		}
+	};
 	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
 	public static void registerKeyBindings(FMLClientSetupEvent event) {
-		ClientRegistry.registerKeyBinding(OPENGRABESCAPEGUI);
 		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
 		ClientRegistry.registerKeyBinding(DUCT_PRONE);
 		ClientRegistry.registerKeyBinding(LEAP_KEY);
 		ClientRegistry.registerKeyBinding(TURN_OFF_TRANSFUR);
 		ClientRegistry.registerKeyBinding(PAT_KEY);
+		ClientRegistry.registerKeyBinding(OPEN_STRUGGLE_MENU);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})
@@ -126,12 +126,12 @@ public class ChangedAddonModKeyMappings {
 		@SubscribeEvent
 		public static void onClientTick(TickEvent.ClientTickEvent event) {
 			if (Minecraft.getInstance().screen == null) {
-				OPENGRABESCAPEGUI.consumeClick();
 				OPEN_EXTRA_DETAILS.consumeClick();
 				DUCT_PRONE.consumeClick();
 				LEAP_KEY.consumeClick();
 				TURN_OFF_TRANSFUR.consumeClick();
 				PAT_KEY.consumeClick();
+				OPEN_STRUGGLE_MENU.consumeClick();
 			}
 		}
 	}

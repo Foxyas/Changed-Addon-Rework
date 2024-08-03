@@ -1,7 +1,0 @@
-{
-  "_fv": 47,
-  "_type": "procedure",
-  "definition": {
-    "procedurexml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><xml xmlns=\"https://developers.google.com/blockly/xml\"><block deletable=\"false\" type=\"event_trigger\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"variables_set_number\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" has_entity=\"true\" is_player_var=\"true\"/><field name=\"VAR\">global:escape_progress</field><value name=\"VAL\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value><value name=\"entity\"><block type=\"entity_from_deps\"/></value></block></next></block></xml>"
-  }
-}

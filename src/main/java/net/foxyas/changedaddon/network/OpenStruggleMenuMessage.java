@@ -10,31 +10,31 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
-import net.foxyas.changedaddon.procedures.OpengrabescapeguiOnKeyPressedProcedure;
+import net.foxyas.changedaddon.procedures.OpenStruggleMenuOnKeyPressedProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class OpengrabescapeguiMessage {
+public class OpenStruggleMenuMessage {
 	int type, pressedms;
 
-	public OpengrabescapeguiMessage(int type, int pressedms) {
+	public OpenStruggleMenuMessage(int type, int pressedms) {
 		this.type = type;
 		this.pressedms = pressedms;
 	}
 
-	public OpengrabescapeguiMessage(FriendlyByteBuf buffer) {
+	public OpenStruggleMenuMessage(FriendlyByteBuf buffer) {
 		this.type = buffer.readInt();
 		this.pressedms = buffer.readInt();
 	}
 
-	public static void buffer(OpengrabescapeguiMessage message, FriendlyByteBuf buffer) {
+	public static void buffer(OpenStruggleMenuMessage message, FriendlyByteBuf buffer) {
 		buffer.writeInt(message.type);
 		buffer.writeInt(message.pressedms);
 	}
 
-	public static void handler(OpengrabescapeguiMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
+	public static void handler(OpenStruggleMenuMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
 		NetworkEvent.Context context = contextSupplier.get();
 		context.enqueueWork(() -> {
 			pressAction(context.getSender(), message.type, message.pressedms);
@@ -52,12 +52,12 @@ public class OpengrabescapeguiMessage {
 			return;
 		if (type == 0) {
 
-			OpengrabescapeguiOnKeyPressedProcedure.execute(world, x, y, z, entity);
+			OpenStruggleMenuOnKeyPressedProcedure.execute(world, x, y, z, entity);
 		}
 	}
 
 	@SubscribeEvent
 	public static void registerMessage(FMLCommonSetupEvent event) {
-		ChangedAddonMod.addNetworkMessage(OpengrabescapeguiMessage.class, OpengrabescapeguiMessage::buffer, OpengrabescapeguiMessage::new, OpengrabescapeguiMessage::handler);
+		ChangedAddonMod.addNetworkMessage(OpenStruggleMenuMessage.class, OpenStruggleMenuMessage::buffer, OpenStruggleMenuMessage::new, OpenStruggleMenuMessage::handler);
 	}
 }

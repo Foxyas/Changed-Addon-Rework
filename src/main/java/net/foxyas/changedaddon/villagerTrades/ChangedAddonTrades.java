@@ -41,7 +41,7 @@ public class ChangedAddonTrades {
             event.getTrades().get(2).add(new BasicItemListing(new ItemStack(ChangedItems.DARK_LATEX_GOO.get(), 16), new ItemStack(Items.EMERALD), 12, 10, 0.02f));
             event.getTrades().get(2).add(new BasicItemListing(new ItemStack(Items.EMERALD, 1 ), new ItemStack(ChangedItems.WHITE_LATEX_GOO.get()), 12, 15, 0.02f));
             event.getTrades().get(2).add(new BasicItemListing(new ItemStack(Items.EMERALD, 1 ), new ItemStack(ChangedItems.DARK_LATEX_GOO.get()), 12, 15, 0.02f));
-            event.getTrades().get(2).add(new BasicItemListing(new ItemStack(Items.EMERALD, 2 ), new ItemStack(ChangedAddonModItems.AMMONIA_COMPRESSED.get(), 4), 15, 10, 0.02f));
+            event.getTrades().get(2).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 ), new ItemStack(ChangedAddonModItems.AMMONIA_COMPRESSED.get(), 4), 15, 10, 0.02f));
             event.getTrades().get(2).add(new BasicItemListing(new ItemStack(Items.EMERALD, 4 ), new ItemStack(ChangedAddonModItems.AMMONIA.get(), 4), 12, 15, 0.02f));
 
             // Level 3 Trades
