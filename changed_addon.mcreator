@@ -5356,9 +5356,6 @@
       "locked_code": false,
       "registry_name": "dolatexinfectiontick",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/DolatexinfectiontickProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",

@@ -44,12 +44,14 @@ public class TickPlayerAreinDuctProcedure {
 				type_form = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm;
 				CanGlide = VariantUtilProcedure.CanGlideandFly(type_form);;
 				if (!((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))).getBlock() == ForgeRegistries.BLOCKS.getValue(new ResourceLocation("changed:duct")))) {
-					{
-						boolean _setval = false;
-						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-							capability.enter_in_duct = _setval;
-							capability.syncPlayerVariables(entity);
-						});
+					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).enter_in_duct) {
+						{
+							boolean _setval = false;
+							entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+								capability.enter_in_duct = _setval;
+								capability.syncPlayerVariables(entity);
+							});
+						}
 					}
 				}
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).enter_in_duct == true) {

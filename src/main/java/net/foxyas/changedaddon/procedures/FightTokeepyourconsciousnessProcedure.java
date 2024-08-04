@@ -74,12 +74,14 @@ public class FightTokeepyourconsciousnessProcedure {
 								}, _bpos);
 							}
 						}
-						{
-							boolean _setval = true;
-							entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-								capability.concience_Fight = _setval;
-								capability.syncPlayerVariables(entity);
-							});
+						if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).concience_Fight) {
+							{
+								boolean _setval = true;
+								entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+									capability.concience_Fight = _setval;
+									capability.syncPlayerVariables(entity);
+								});
+							}
 						}
 						SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
 					}

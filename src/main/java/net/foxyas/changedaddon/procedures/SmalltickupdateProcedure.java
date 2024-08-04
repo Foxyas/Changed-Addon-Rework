@@ -88,33 +88,51 @@ public class SmalltickupdateProcedure {
 			}
 		}
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
-			{
-				boolean _setval = false;
-				entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.human_Form = _setval;
-					capability.syncPlayerVariables(entity);
-				});
+			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).human_Form) {
+				{
+					boolean _setval = false;
+					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+						capability.human_Form = _setval;
+						capability.syncPlayerVariables(entity);
+					});
+				}
 			}
 		} else {
-			{
-				boolean _setval = true;
-				entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.human_Form = _setval;
-					capability.syncPlayerVariables(entity);
-				});
+			if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).human_Form) {
+				{
+					boolean _setval = true;
+					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+						capability.human_Form = _setval;
+						capability.syncPlayerVariables(entity);
+					});
+				}
 			}
 		}
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
 			if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
 					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("puro_kind")) {
-				{
-					boolean _setval = true;
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.aredarklatex = _setval;
-						capability.syncPlayerVariables(entity);
-					});
+				if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).aredarklatex) {
+					{
+						boolean _setval = true;
+						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+							capability.aredarklatex = _setval;
+							capability.syncPlayerVariables(entity);
+						});
+					}
 				}
 			} else {
+				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).aredarklatex) {
+					{
+						boolean _setval = false;
+						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+							capability.aredarklatex = _setval;
+							capability.syncPlayerVariables(entity);
+						});
+					}
+				}
+			}
+		} else {
+			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).aredarklatex) {
 				{
 					boolean _setval = false;
 					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
@@ -122,14 +140,6 @@ public class SmalltickupdateProcedure {
 						capability.syncPlayerVariables(entity);
 					});
 				}
-			}
-		} else {
-			{
-				boolean _setval = false;
-				entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.aredarklatex = _setval;
-					capability.syncPlayerVariables(entity);
-				});
 			}
 		}
 		TransfurStats_Attack = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba758"), "transfur_stats", 9, AttributeModifier.Operation.ADDITION);
@@ -174,22 +184,26 @@ public class SmalltickupdateProcedure {
 		}
 		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get()) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-				{
-					boolean _setval = true;
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.Exp009Buff = _setval;
-						capability.syncPlayerVariables(entity);
-					});
+				if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff) {
+					{
+						boolean _setval = true;
+						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+							capability.Exp009Buff = _setval;
+							capability.syncPlayerVariables(entity);
+						});
+					}
 				}
 			}
 		} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get()) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-				{
-					boolean _setval = true;
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.Exp009Buff = _setval;
-						capability.syncPlayerVariables(entity);
-					});
+				if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff) {
+					{
+						boolean _setval = true;
+						entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+							capability.Exp009Buff = _setval;
+							capability.syncPlayerVariables(entity);
+						});
+					}
 				}
 			}
 		} else if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff == true) {

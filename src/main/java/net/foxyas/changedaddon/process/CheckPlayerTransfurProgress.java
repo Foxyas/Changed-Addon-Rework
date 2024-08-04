@@ -16,22 +16,12 @@ public class CheckPlayerTransfurProgress {
 		Player player = event.player;
 		ProcessTransfur.TransfurProgress Progress = ProcessTransfur.getPlayerTransfurProgress(player);
 		if (Progress != null) {
-			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.LatexForm_ProgressTransfur = ProcessTransfur.getPlayerTransfurProgress(player).variant().toString();
-				capability.syncPlayerVariables(player);
-			});
+			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> capability.LatexForm_ProgressTransfur = ProcessTransfur.getPlayerTransfurProgress(player).variant().toString());
+			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> capability.Progress_Transfur_Number = ProcessTransfur.getPlayerTransfurProgress(player).progress());
 		} else {
-			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-				capability.LatexForm_ProgressTransfur = "null";
-				capability.syncPlayerVariables(player);
-			});
+			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> capability.LatexForm_ProgressTransfur = "null");
+			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> capability.Progress_Transfur_Number = 0);
 		}
-		{
-			player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-			capability.Progress_Transfur_Number = ProcessTransfur.getPlayerTransfurProgress(player).progress();
-			capability.syncPlayerVariables(player);
-		});
- 			};
 
 	}
 }

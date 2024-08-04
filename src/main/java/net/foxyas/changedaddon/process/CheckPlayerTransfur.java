@@ -15,60 +15,15 @@ public class CheckPlayerTransfur {
         Player player = event.player;
         if(player.isAlive()) {
         ProcessTransfur.ifPlayerLatex(player, (variant) -> {
-            player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                capability.transfur = true;
-                capability.syncPlayerVariables(player);
-            });
+            player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> capability.transfur = true);
             // Este bloco será executado se o jogador for látex e fornecerá a variante
         }, () -> {
-            player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                capability.transfur = false;
-                capability.syncPlayerVariables(player);
-            });
+            player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> capability.transfur = false);
             // Este bloco será executado se o jogador não for látex
         });
     }
     else {
-    	player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                capability.transfur = false;
-                capability.syncPlayerVariables(player);
-            });
+    	player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> capability.transfur = false);
     }
    }
 }
-/*
-@Mod.EventBusSubscriber
-class CheckPlayerLatexForm {
-
-    @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            Player player = event.player;
-            ProcessTransfur.ifPlayerLatex(player, variant -> {
-                player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                    capability.LatexForm = variant.getFormId().toString();
-                    capability.syncPlayerVariables(player);
-                });
-
-            }, () -> {
-            	player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                    capability.LatexForm = "";
-                    capability.syncPlayerVariables(player);
-                });
-            	
-            });
-
-  		          if (ProcessTransfur.isPlayerOrganic(player)) {
-  			  player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-    	      capability.organic_transfur = true;
-              capability.syncPlayerVariables(player);
-			    });
-	} else {
-    		  player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-              capability.organic_transfur = false;
-              capability.syncPlayerVariables(player);
-    			});
-			}
-        }
-    }
-} */
