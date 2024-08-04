@@ -11,8 +11,8 @@ import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
-public class Devitem1Item extends Item {
-	public Devitem1Item() {
+public class FriendlyGoeyIconItem extends Item {
+	public FriendlyGoeyIconItem() {
 		super(new Item.Properties().tab(null).stacksTo(64).rarity(Rarity.COMMON));
 	}
 

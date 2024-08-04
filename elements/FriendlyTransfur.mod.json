@@ -5,7 +5,7 @@
     "achievementName": "Friendly Transfur",
     "achievementDescription": "You get Transfured by Foxyas",
     "achievementIcon": {
-      "value": "CUSTOM:Devitem"
+      "value": "CUSTOM:FriendlyGoeyIcon"
     },
     "background": "Default",
     "disableDisplay": false,

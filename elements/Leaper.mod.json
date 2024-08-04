@@ -5,7 +5,7 @@
     "achievementName": "Leaper",
     "achievementDescription": "Do A Hight Jump Leap",
     "achievementIcon": {
-      "value": "CUSTOM:DEVITEM6"
+      "value": "CUSTOM:SnepIcon"
     },
     "background": "Default",
     "disableDisplay": false,

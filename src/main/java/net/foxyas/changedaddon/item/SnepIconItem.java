@@ -11,9 +11,9 @@ import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
-public class DevitemItem extends Item {
-	public DevitemItem() {
-		super(new Item.Properties().tab(null).stacksTo(64).rarity(Rarity.COMMON));
+public class SnepIconItem extends Item {
+	public SnepIconItem() {
+		super(new Item.Properties().tab(null).stacksTo(64).rarity(Rarity.EPIC));
 	}
 
 	@Override

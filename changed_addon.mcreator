@@ -581,21 +581,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "Devitem",
-      "type": "item",
-      "sortid": 75,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "devitem",
-      "metadata": {
-        "files": [
-          "src/main/resources/assets/changed_addon/models/item/devitem.json",
-          "src/main/java/net/foxyas/changedaddon/item/DevitemItem.java"
-        ]
-      },
-      "path": "~/Not Function Items"
-    },
-    {
       "name": "Untransfuradvancement",
       "type": "achievement",
       "sortid": 76,
@@ -2571,36 +2556,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "DevItem2",
-      "type": "item",
-      "sortid": 174,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "dev_item_2",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/item/DevItem2Item.java",
-          "src/main/resources/assets/changed_addon/models/item/dev_item_2.json"
-        ]
-      },
-      "path": "~/Not Function Items"
-    },
-    {
-      "name": "Devitem3",
-      "type": "item",
-      "sortid": 175,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "devitem_3",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/item/Devitem3Item.java",
-          "src/main/resources/assets/changed_addon/models/item/devitem_3.json"
-        ]
-      },
-      "path": "~/Not Function Items"
-    },
-    {
       "name": "UnifuserAdvancement",
       "type": "achievement",
       "sortid": 176,
@@ -2951,21 +2906,6 @@
         ]
       },
       "path": "~/advancements"
-    },
-    {
-      "name": "DevItem4",
-      "type": "item",
-      "sortid": 203,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "dev_item_4",
-      "metadata": {
-        "files": [
-          "src/main/resources/assets/changed_addon/models/item/dev_item_4.json",
-          "src/main/java/net/foxyas/changedaddon/item/DevItem4Item.java"
-        ]
-      },
-      "path": "~/Not Function Items"
     },
     {
       "name": "Toggleresettransfuradvancements",
@@ -5996,36 +5936,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "Devitem1",
-      "type": "item",
-      "sortid": 370,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "devitem_1",
-      "metadata": {
-        "files": [
-          "src/main/resources/assets/changed_addon/models/item/devitem_1.json",
-          "src/main/java/net/foxyas/changedaddon/item/Devitem1Item.java"
-        ]
-      },
-      "path": "~/Not Function Items"
-    },
-    {
-      "name": "Devitem5",
-      "type": "item",
-      "sortid": 371,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "devitem_5",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/item/Devitem5Item.java",
-          "src/main/resources/assets/changed_addon/models/item/devitem_5.json"
-        ]
-      },
-      "path": "~/Not Function Items"
-    },
-    {
       "name": "Ifisturnon",
       "type": "procedure",
       "sortid": 372,
@@ -8362,21 +8272,6 @@
         "type": "logic"
       },
       "path": "~/GameRules"
-    },
-    {
-      "name": "DEVITEM6",
-      "type": "item",
-      "sortid": 484,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "devitem_6",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/item/DEVITEM6Item.java",
-          "src/main/resources/assets/changed_addon/models/item/devitem_6.json"
-        ]
-      },
-      "path": "~/Not Function Items"
     },
     {
       "name": "Leaper",
@@ -10765,6 +10660,36 @@
         ]
       },
       "path": "~/Keybinds"
+    },
+    {
+      "name": "SnepIcon",
+      "type": "item",
+      "sortid": 629,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "snep_icon",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/SnepIconItem.java",
+          "src/main/resources/assets/changed_addon/models/item/snep_icon.json"
+        ]
+      },
+      "path": "~/advancements"
+    },
+    {
+      "name": "FriendlyGoeyIcon",
+      "type": "item",
+      "sortid": 630,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "friendly_goey_icon",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/FriendlyGoeyIconItem.java",
+          "src/main/resources/assets/changed_addon/models/item/friendly_goey_icon.json"
+        ]
+      },
+      "path": "~/advancements"
     }
   ],
   "variable_elements": [
@@ -11197,7 +11122,6 @@
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",
       "key.changed_addon.pat_received": "{0} pat You",
       "gui.changed_addon.book_pagenumber_2.label_ammonia": "Ammonia powder",
-      "item.changed_addon.devitem": "Dev item",
       "gamerule.fighttokeepconsciousness": "Fight to keep consciousness",
       "advancements.organic_transfur_advancement.title": "Organic And Fluffy!!",
       "gamerule.fight_to_keep_consciousness": "Fight to keep consciousness",
@@ -11225,8 +11149,6 @@
       "advancements.changedaddon_advancement.title": "Changed Addon ",
       "gamerule.dolatexinfection": "Do Latex Infection",
       "gamerule.fighttokeepconsciousness.description": "Allow the Fight to keep consciousness minigame (overwrite keep consciousness like a perm on)",
-      "item.changed_addon.dev_item_4": "Dev item",
-      "item.changed_addon.dev_item_2": "Dev item",
       "gui.changed_addon.bookpagenumber_3.button_close": "Close",
       "gui.changed_addon.bookpagenumber_4.label_n_any_latex_or_blood_syringe": "N \u003d ANY LATEX OR BLOOD SYRINGE",
       "gui.changed_addon.bookrecipepage_8.label_m2": "M",
@@ -11294,6 +11216,7 @@
       "gui.changed_addon.bookpagenumber_5.button_close": "Close",
       "item.changed_addon.laethin": "Laethin",
       "changedaddon.friendlymode.when_on": "Activating Friendly mode deactivates assimilation",
+      "item.changed_addon.snep_icon": "DEVITEM 6",
       "advancements.obtain_red_electric_katana.title": "§4Memories is broken§r",
       "item.changed_addon.prototype_spawn_egg": "Prototype Spawn Egg",
       "block.changed_addon.painite_ore": "Deepslate Painite Ore",
@@ -11321,6 +11244,7 @@
       "item.changed_addon.latex_snow_fox_female_spawn_egg": "Female Latex Snow Fox Spawn Egg",
       "advancements.timesthesyringewasuseadvancement_3.descr": "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!",
       "gamerule.needPermitionFor009Transfur.description": "When On the player Need Permition For Transfur in Boss 009 ",
+      "item.changed_addon.friendly_goey_icon": "Dev item",
       "item.changed_addon.snow_leopard_female_organic_spawn_egg": "Female BioSynth Snow Leopard Spawn Egg",
       "entity.changed_addon.latex_puro_kind_female": "Puro Kind Female",
       "advancements.foxyas_advancement.title": "§4YOU MONSTER",
@@ -11336,9 +11260,6 @@
       "item.changed_addon.experiment_009_phase_2_record": "Experiment 009 Phase 2 Theme Music Disc",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.button_give_up": "     give up      ",
       "death.attack.assimilation": "%1$s was assimilated",
-      "item.changed_addon.devitem_3": "Dev item",
-      "item.changed_addon.devitem_6": "DEVITEM 6",
-      "item.changed_addon.devitem_5": "Devitem 5",
       "item.changed_addon.hazard_suit_leggings": "Hazard Leggings",
       "item.changed_addon.crystal_addager_green": "Green Crystal Addager",
       "item.changed_addon.crow_bar": "Crow Bar",
@@ -11346,7 +11267,6 @@
       "entity.changed_addon.ket_experiment_009": "Ket Experiment 009",
       "item.changed_addon.buny_spawn_egg": "Bnuy Spawn Egg",
       "item.changed_addon.puro_kind_female_spawn_egg": "Puro Kind Female Spawn Egg",
-      "item.changed_addon.devitem_1": "Devitem 1",
       "gui.changed_addon.bookrecipepage_8.label_f3": "F",
       "gui.changed_addon.bookrecipepage_8.label_f2": "F",
       "gui.changed_addon.bookrecipepage_8.label_f1": "F",

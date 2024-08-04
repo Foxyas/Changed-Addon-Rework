@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:devitem"
+      "item": "changed_addon:friendly_goey_icon"
     },
     "title": {
       "translate": "advancements.friendly_transfur.title"

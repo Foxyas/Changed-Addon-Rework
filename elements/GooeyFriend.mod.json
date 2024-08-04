@@ -5,7 +5,7 @@
     "achievementName": "Gooey Friend",
     "achievementDescription": "You are next to a Friendly Latex",
     "achievementIcon": {
-      "value": "CUSTOM:Devitem"
+      "value": "CUSTOM:FriendlyGoeyIcon"
     },
     "background": "Default",
     "disableDisplay": false,
