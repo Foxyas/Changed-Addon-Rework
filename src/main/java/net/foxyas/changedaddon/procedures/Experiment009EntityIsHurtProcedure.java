@@ -32,11 +32,7 @@ public class Experiment009EntityIsHurtProcedure {
 		if (entity instanceof Experiment009Entity) {
 			ParticleAmount = 20;
 			if (amount > 4) {
-				{
-					Entity _ent = entity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "particle changed:dripping_latex -1 ~ ~0.5 ~ 0.2 0.4 0.2 0 20 force");
-				}
+				PlayerUtilProcedure.ParticlesUtil.sendDripParticles(entity.getLevel(), entity, 1, "#ffffff", 0.2f, 0.5f, 0.2f, 20, 0);
 			}
 		}
 	}

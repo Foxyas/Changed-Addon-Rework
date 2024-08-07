@@ -6,7 +6,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
@@ -21,47 +20,42 @@ public class LatexContaminationEffectStartedappliedProcedure {
 		double LatexSolvent_level = 0;
 		double LatexContamination_level = 0;
 		AttributeModifier LatexContamination = null;
-		if (entity instanceof LivingEntity && ((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()) != null) {
-			LatexContamination_level = (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()).getAmplifier() : 0) == 0
-					? 0.1
-					: (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()).getAmplifier() : 0) * 0.1 + 0.1;
-			LatexContamination = new AttributeModifier(UUID.fromString("0-0-0-0-1"), "Latex Contamination Effect Attribute Change", LatexContamination_level, AttributeModifier.Operation.ADDITION);
-			if (!(((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()).hasModifier(LatexContamination)))
-				((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()).addTransientModifier(LatexContamination);
-			if (!(new Object() {
-				public boolean checkGamemode(Entity _ent) {
-					if (_ent instanceof ServerPlayer _serverPlayer) {
-						return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-					} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-						return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-								&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+		if (entity instanceof Player) {
+			if (entity instanceof LivingEntity && ((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()) != null) {
+				LatexContamination_level = (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get())
+						? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()).getAmplifier()
+						: 0) == 0
+								? 0.1
+								: (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()).getAmplifier() : 0) * 0.1
+										+ 0.1;
+				LatexContamination = new AttributeModifier(UUID.fromString("0-0-0-0-1"), "Latex Contamination Effect Attribute Change", LatexContamination_level, AttributeModifier.Operation.ADDITION);
+				if (!(((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()).hasModifier(LatexContamination)))
+					((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()).addTransientModifier(LatexContamination);
+				if (!(new Object() {
+					public boolean checkGamemode(Entity _ent) {
+						if (_ent instanceof ServerPlayer _serverPlayer) {
+							return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+						} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+							return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+									&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+						}
+						return false;
 					}
-					return false;
+				}.checkGamemode(entity)) && !(new Object() {
+					public boolean checkGamemode(Entity _ent) {
+						if (_ent instanceof ServerPlayer _serverPlayer) {
+							return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
+						} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+							return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
+									&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
+						}
+						return false;
+					}
+				}.checkGamemode(entity))) {
+					float LatexC = (float) LatexContamination_level;
+					float Math = 0.5f * LatexC;
+					AddTransfurProgressProcedure.set(entity, Math);
 				}
-			}.checkGamemode(entity)) && !(new Object() {
-				public boolean checkGamemode(Entity _ent) {
-					if (_ent instanceof ServerPlayer _serverPlayer) {
-						return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-					} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-						return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-								&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-					}
-					return false;
-				}
-			}.checkGamemode(entity))) {
-				float LatexC = (float) LatexContamination_level;
-				float Math = 0.5f * LatexC;
-				float PlayerTransfurProgress = new Object() {
-					public float getValue() {
-						CompoundTag dataIndex0 = new CompoundTag();
-						entity.saveWithoutId(dataIndex0);
-						return dataIndex0.getFloat("TransfurProgress");
-					}
-				}.getValue();
-				CompoundTag dataIndex1 = new CompoundTag();
-				entity.saveWithoutId(dataIndex1);
-				dataIndex1.putFloat("TransfurProgress", PlayerTransfurProgress + Math);
-				entity.load(dataIndex1);
 			}
 		}
 	}

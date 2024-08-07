@@ -21,7 +21,7 @@ public class LatexTotemKeepConcienceProcedure {
 			if (!event.keepConscious) {
 				event.shouldKeepConscious = true;
 				if (!event.player.level.isClientSide())
-				event.player.displayClientMessage(new TextComponent("§o§n§l§3§n I Won't Let You Lose Your Consciousness"), true);
+				event.player.displayClientMessage(new TextComponent("§o§n§l§3§nI Won't Let You Lose Your Consciousness"), true);
 				
 			}
 		}

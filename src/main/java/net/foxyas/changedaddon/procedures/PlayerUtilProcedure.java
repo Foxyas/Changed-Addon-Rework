@@ -1,9 +1,13 @@
 package net.foxyas.changedaddon.procedures;
 
 import com.mojang.math.Vector3f;
+import net.foxyas.changedaddon.ChangedAddonMod;
+import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -139,7 +143,7 @@ public class PlayerUtilProcedure {
 
 				return entities.filter(entity -> entity.getStringUUID().equals(uuid)).findFirst().orElse(null);
 			} catch (Exception e) {
-				e.printStackTrace(); // Log the exception for debugging purposes
+				ChangedAddonMod.LOGGER.error(e.getMessage()); // Log the exception for debugging purposes
 				return null;
 			}
 		}
@@ -163,5 +167,32 @@ public class PlayerUtilProcedure {
 					x, y+1, z, count, XV, YV, ZV, speed);
 			}
 		}
+
+		public static void sendDripParticles(Level level,Entity entity,float middle,
+														float red, float green, float blue, float XV,float YV,float ZV, int count,float speed) {
+
+			// Criar a opção de partícula para transição de cor usando Vector3f
+			ColoredParticleOption particleOptions = ChangedParticles.drippingLatex(new Color3(red,green,blue));
+
+			// Enviar as partículas
+			if(level instanceof ServerLevel serverLevel){
+				serverLevel.sendParticles(particleOptions,
+						entity.getX(), entity.getY() + middle, entity.getZ(), count, XV, YV, ZV, speed);
+			}
+		}
+
+
+		public static void sendDripParticles(Level level,Entity entity,float middle,String color, float XV,float YV,float ZV, int count,float speed) {
+
+			// Criar a opção de partícula para transição de cor usando Vector3f
+			ColoredParticleOption particleOptions = ChangedParticles.drippingLatex(Color3.getColor(color));
+
+			// Enviar as partículas
+			if(level instanceof ServerLevel serverLevel){
+				serverLevel.sendParticles(particleOptions,
+						entity.getX(), entity.getY() + middle, entity.getZ(), count, XV, YV, ZV, speed);
+			}
+		}
+
 	}
 }

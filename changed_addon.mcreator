@@ -10540,6 +10540,7 @@
     {
       "name": "Scientist",
       "type": "villagerprofession",
+      "sortid": 631,
       "compiles": true,
       "locked_code": false,
       "registry_name": "scientist",
