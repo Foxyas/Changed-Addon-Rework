@@ -28,6 +28,6 @@ public class SnowLeopardMaleOrganicRenderer extends LatexHumanoidRenderer<SnowLe
 
 	@Override
 	public ResourceLocation getTextureLocation(SnowLeopardMaleOrganicEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/snowleopardmaleorganic.png");
+		return new ResourceLocation("changed_addon:textures/entities/biosynthsnowleopardmale.png");
 	}
 }

@@ -77,7 +77,7 @@ public class LeapProcedure {
 									}
 								}.checkGamemode(entity))) {
 									if (entity instanceof Player _player)
-										_player.causeFoodExhaustion((float) 0.25);
+										_player.causeFoodExhaustion((float) 0.3);
 									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 								}
@@ -110,7 +110,7 @@ public class LeapProcedure {
 									}
 								}.checkGamemode(entity))) {
 									if (entity instanceof Player _player)
-										_player.causeFoodExhaustion((float) (motionY * 0.25));
+										_player.causeFoodExhaustion((float) (motionY * 1.25));
 									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 								}
@@ -314,9 +314,9 @@ public class LeapProcedure {
 								}
 							}.checkGamemode(entity))) {
 								if (entity instanceof Player _player)
-									_player.causeFoodExhaustion((float) 0.3);
+									_player.causeFoodExhaustion((float) 0.8);
 								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 20, 0, false, false));
+									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 30, 0, false, false));
 							}
 							{
 								Entity _ent = entity;
@@ -344,9 +344,9 @@ public class LeapProcedure {
 								}
 							}.checkGamemode(entity))) {
 								if (entity instanceof Player _player)
-									_player.causeFoodExhaustion((float) 0.8);
+									_player.causeFoodExhaustion(3);
 								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0, false, false));
 							}
 							{
 								Entity _ent = entity;

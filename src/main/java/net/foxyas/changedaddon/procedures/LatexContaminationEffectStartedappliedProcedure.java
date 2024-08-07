@@ -54,7 +54,7 @@ public class LatexContaminationEffectStartedappliedProcedure {
 				}.checkGamemode(entity))) {
 					float LatexC = (float) LatexContamination_level;
 					float Math = 0.5f * LatexC;
-					AddTransfurProgressProcedure.set(entity, Math);
+					AddTransfurProgressProcedure.setAdd(entity, Math);
 				}
 			}
 		}

@@ -37,6 +37,21 @@ public class AddTransfurProgressProcedure {
 
 	}
 
+	public static void setAdd(Entity entity, float Amount){
+		if (entity == null){
+			return;
+		}
+
+		if (entity instanceof Player _entity) {
+			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress((ProcessTransfur.getPlayerTransfurProgress(_entity) == null ? 0
+					: ProcessTransfur.getPlayerTransfurProgress(_entity).progress()) + Amount,//Amount Math
+					ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT //Variant Check
+					: ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
+			ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
+		}
+
+	}
+
 	public static void set(Entity entity, double Amount){
 		if (entity == null){
 			return;
