@@ -97,7 +97,7 @@ public class ShockWaveAbility extends SimpleAbility {
                     Effect.setCurativeItems(List.of());
                     _entity.addEffect(Effect);
                     ChangedSounds.broadcastSound(_entity,ChangedSounds.PARALYZE1,5,1);
-                    player.causeFoodExhaustion(15);
+                    player.causeFoodExhaustion(4f);
                 }
             }
         }
