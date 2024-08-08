@@ -27,7 +27,7 @@
         ]
       },
       {
-        "category": "SlimModels",
+        "category": "Slim Models",
         "entries": [
           {
             "item": {
@@ -43,6 +43,47 @@
             "comment": "Turn On the SlimModel Of The Partial Snow Leoapard Transfur (NEED RESTART FOR APPLY)",
             "vardisplay": "Slim Models",
             "varname": "slimmodel",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
+      },
+      {
+        "category": "Custom Hair Color",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Set The Custom Hair Color For the Female Sneps [BioSynth and Exp2]",
+            "vardisplay": "Females Sneps Custom Hair Color",
+            "varname": "female_sneps_hair",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Set The Custom Hair Color For the Male Sneps [BioSynth and Exp2]",
+            "vardisplay": "Males Sneps Custom Hair Color",
+            "varname": "male_sneps_hair",
             "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"

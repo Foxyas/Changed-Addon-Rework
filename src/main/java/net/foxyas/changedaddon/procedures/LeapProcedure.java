@@ -344,7 +344,7 @@ public class LeapProcedure {
 								}
 							}.checkGamemode(entity))) {
 								if (entity instanceof Player _player)
-									_player.causeFoodExhaustion(3);
+									_player.causeFoodExhaustion(4);
 								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0, false, false));
 							}
