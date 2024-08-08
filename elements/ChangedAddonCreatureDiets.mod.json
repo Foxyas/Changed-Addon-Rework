@@ -6,7 +6,7 @@
     "displayName": "Creatures Diets?",
     "description": "Allow Transfur Get More Food points and saturation when eat a Good food for them",
     "category": "PLAYER",
-    "defaultValueLogic": false,
+    "defaultValueLogic": true,
     "defaultValueNumber": 0
   }
 }
