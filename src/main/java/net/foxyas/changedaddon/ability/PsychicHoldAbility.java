@@ -32,6 +32,13 @@ public class PsychicHoldAbility extends SimpleAbility {
 
 	@Override
 	public boolean canUse(IAbstractLatex entity) {
+		return !Spectator(entity.getEntity());
+	}
+
+	public static boolean Spectator(Entity entity){
+		if (entity instanceof Player player1){
+			return player1.isSpectator();
+		}
 		return true;
 	}
 

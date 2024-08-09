@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.ability.IAbstractLatex;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.beast.LightLatexCentaur;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -48,12 +49,18 @@ public class CarryAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractLatex entity) {
-        return Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.female()) ||
+        return (Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.female()) ||
                 Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.male()) ||
                 Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.female()) ||
                 Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.male()) ||
                 Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.female()) ||
-                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.male());
+                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.male()) ||
+                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(
+                        TagKey.create(
+                                ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon:able_to_carry")
+                        )
+                )
+        ) && !Spectator(entity.getEntity());
     }
 
     @Override
@@ -66,6 +73,13 @@ public class CarryAbility extends SimpleAbility {
     public void onRemove(IAbstractLatex entity) {
         super.onRemove(entity);
         SafeRemove(entity.getEntity());
+    }
+
+    public static boolean Spectator(Entity entity){
+        if (entity instanceof Player player1){
+            return player1.isSpectator();
+        }
+        return true;
     }
 
     public static void Run(Entity mainEntity) {

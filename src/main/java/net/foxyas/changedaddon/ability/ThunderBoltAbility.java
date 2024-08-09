@@ -38,7 +38,14 @@ public class ThunderBoltAbility extends SimpleAbility {
 	public boolean canUse(IAbstractLatex entity) {
 		Player player = (Player) entity.getEntity();
 		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-		return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT;
+		return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT && !Spectator(entity.getEntity());
+	}
+
+	public static boolean Spectator(Entity entity){
+		if (entity instanceof Player player1){
+			return player1.isSpectator();
+		}
+		return true;
 	}
 
 	public UseType getUseType(IAbstractLatex entity) {
@@ -74,9 +81,6 @@ public class ThunderBoltAbility extends SimpleAbility {
 		}
 		return 3.5F;
 	}
-
-
-		
 
 	@Override
 	public void tickCharge(IAbstractLatex entity, float ticks) {

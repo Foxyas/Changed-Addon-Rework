@@ -5,6 +5,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractLatex;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 public class DodgeAbilityInstance extends AbstractAbilityInstance {
@@ -12,8 +13,8 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractLatex entity){
         super(ability,entity);
     }
-    private static int DodgeAmount = 5;
-    private static int MaxDodgeAmount = 5;
+    private static int DodgeAmount = 4;
+    private static int MaxDodgeAmount = 4;
     private static boolean DodgeActivate = false;
     public static int DodgeRegenCooldown = 5;
 
@@ -58,7 +59,14 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public boolean canUse() {
-        return DodgeAmount > 0;
+        return DodgeAmount > 0 && !Spectator(entity.getEntity());
+    }
+
+    public static boolean Spectator(Entity entity){
+        if (entity instanceof Player player1){
+            return player1.isSpectator();
+        }
+        return true;
     }
 
     @Override

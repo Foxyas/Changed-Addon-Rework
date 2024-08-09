@@ -41,7 +41,15 @@ public class ShockWaveAbility extends SimpleAbility {
         Player player = (Player) entity.getEntity();
         LatexVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
         LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT;
+        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT
+                && !Spectator(entity.getEntity());
+    }
+
+    public static boolean Spectator(Entity entity){
+        if (entity instanceof Player player1){
+            return player1.isSpectator();
+        }
+        return true;
     }
 
     @Override
@@ -92,6 +100,11 @@ public class ShockWaveAbility extends SimpleAbility {
                 .collect(Collectors.toList());
         for (Entity entityiterator : _entfound) {
             if (player != entityiterator && entityiterator instanceof LivingEntity _entity){
+                if (_entity instanceof Player player1){
+                    if (player1.isSpectator() || player1.isCreative()){
+                        return;
+                    }
+                }
                 if (!_entity.level.isClientSide()){
                     MobEffectInstance Effect = new MobEffectInstance(ChangedEffects.SHOCK, 30, 0, false, false,true);
                     Effect.setCurativeItems(List.of());
