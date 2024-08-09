@@ -2,7 +2,6 @@
 package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
-import net.foxyas.changedaddon.client.renderer.layers.CarryAbilityLayer;
 import net.foxyas.changedaddon.client.renderer.layers.CustomHairColorLayer;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
@@ -20,7 +19,6 @@ public class Exp2MaleRenderer extends LatexHumanoidRenderer<Exp2MaleEntity, Male
 				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-		this.addLayer(new CarryAbilityLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/maleexp2_snow_leopard.png")));
 		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/male_snep_hair"),false));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
