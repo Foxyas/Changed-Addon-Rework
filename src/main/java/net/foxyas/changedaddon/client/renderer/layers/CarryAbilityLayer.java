@@ -55,14 +55,7 @@ public class CarryAbilityLayer<M extends LatexHumanoidModel<T> & LatexHumanoidMo
 
     private void renderHand(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector) {
         stack.pushPose();
-        if(arm == HumanoidArm.RIGHT){
-            stack.scale(1.0002F, 1.0002F, 1.0002F);
-        } else if (arm == HumanoidArm.LEFT) {
-            stack.scale(1.0002F, 1.0002F, 1.0002F);
-            stack.translate(0.0f, 0.0f, 4.0f);
-        }
-
-
+        stack.scale(1.0002F, 1.0002F, 1.0002F);
         FormRenderHandler.renderModelPartWithTexture(this.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), packedLight, 1F);
         stack.popPose();
     }
