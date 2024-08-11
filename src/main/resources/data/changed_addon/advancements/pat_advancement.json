@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:friendly_goey_icon"
+    },
+    "title": {
+      "translate": "advancements.pat_advancement.title"
+    },
+    "description": {
+      "translate": "advancements.pat_advancement.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "pat_advancement": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 10000
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

@@ -9,6 +9,8 @@ import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.variants.AddonLatexVariant;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,6 +32,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.Iterator;
 
 public class PatFeatureHandleProcedure {
 	//Thanks gengyoubo for the code
@@ -138,7 +142,7 @@ public class PatFeatureHandleProcedure {
 					} else if (!isPlayerTransfurInExp2 && isTargetTransfurInExp2) {
 					 ((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 				 	} else if (isPlayerTransfurInExp2 && isTargetTransfurInExp2){
-					 //Exp2 Can't give Exp2 Transfur Sickness
+					 return;//Exp2 Can't give Exp2 Transfur Sickness
 				 	}
 				}
 			}
@@ -147,6 +151,10 @@ public class PatFeatureHandleProcedure {
 
 			if (isTargetTransfur && world instanceof ServerLevel serverLevel) {
 				serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
+				if(serverLevel.random.nextFloat(100) <= 2.5f){
+					target.heal(6f);
+					GivePatAdvancement(player);
+				}
 			}
 
 			if (player instanceof Player p && !p.level.isClientSide()) {
@@ -186,5 +194,19 @@ public class PatFeatureHandleProcedure {
 
 	private static InteractionHand getSwingHand(Entity entity) {
 		return isHandEmpty(entity, InteractionHand.MAIN_HAND) ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+	}
+
+	public static void GivePatAdvancement(Entity entity){
+		if (entity instanceof ServerPlayer _player) {
+			Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:pat_advancement"));
+            assert _adv != null;
+            AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+			if (!_ap.isDone()) {
+                for (String string : _ap.getRemainingCriteria()) {
+                    _player.getAdvancements().award(_adv, string);
+                }
+			}
+		}
+
 	}
 }
