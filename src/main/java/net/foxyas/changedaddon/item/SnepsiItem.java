@@ -63,7 +63,8 @@ public class SnepsiItem extends Item implements SpecializedItemRendering {
 
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack itemStack, ItemTransforms.TransformType transformType) {
-		return transformType == ItemTransforms.TransformType.GUI || transformType == ItemTransforms.TransformType.FIXED ? GUIMODEL : transformType == ItemTransforms.TransformType.GROUND ? GROUNDMODEL : HANDMODEL;
+		return transformType == ItemTransforms.TransformType.GUI || transformType == ItemTransforms.TransformType.FIXED ? GUIMODEL
+				: transformType == ItemTransforms.TransformType.GROUND ? GROUNDMODEL : HANDMODEL;
 	}
 
 	@Override
