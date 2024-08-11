@@ -34,7 +34,7 @@ public class CarryAbility extends SimpleAbility {
 
     @Override
     public ResourceLocation getTexture(IAbstractLatex entity) {
-        return new ResourceLocation("changed_addon:textures/screens/carry.png");
+        return new ResourceLocation("changed_addon:textures/screens/carry_ability.png");
     }
 
     @Override
