@@ -20,8 +20,8 @@ import java.util.Objects;
 
 public class SignalBlockFeatureProcedure {
 
-	private static final int LARGE_SEARCH_RADIUS = 128;
-	private static final int SMALL_SEARCH_RADIUS = 32;
+	private static final int LARGE_SEARCH_RADIUS = 121;
+	private static final int SMALL_SEARCH_RADIUS = 33;
 	private static final int MAX_FOUND_BLOCKS = 10;
 
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
@@ -52,6 +52,10 @@ public class SignalBlockFeatureProcedure {
 		int endZ = (int) z + radius;
 
 		List<BlockPos> foundPositions = new ArrayList<>();
+
+		if (cooldown > 100){
+			player.getCooldowns().addCooldown(itemstack.getItem(), cooldown / 2);
+		}
 
 		if (!world.isClientSide()) {
 			for (int sx = startX; sx <= endX; sx++) {

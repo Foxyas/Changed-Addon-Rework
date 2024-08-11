@@ -52,7 +52,7 @@ public class SignalCatherToolTipProcedure {
 				tooltip.add(new TextComponent("Hold \u00A76<Shift>\u00A7r for Info"));
 			} else {
 				tooltip.add(new TextComponent("Hold \u00A7b<Right Click>\u00A7r For scan a 32 blocks area"));
-				tooltip.add(new TextComponent("Hold \u00A7c<Shift + Right Click>\u00A7r For Super scan and scan a 128 blocks area"));
+				tooltip.add(new TextComponent("Hold \u00A7c<Shift + Right Click>\u00A7r For Super scan and scan a 120 blocks area"));
 			}
 			tooltip.add(new TextComponent(("\u00A7oCords \u00A7l" + itemstack.getOrCreateTag().getDouble("x") + " " + itemstack.getOrCreateTag().getDouble("y") + " " + itemstack.getOrCreateTag().getDouble("z"))));
 			if (itemstack.getOrCreateTag().getBoolean("set") == true) {
