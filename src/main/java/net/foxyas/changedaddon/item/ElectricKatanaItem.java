@@ -53,7 +53,7 @@ public class ElectricKatanaItem extends SwordItem implements SpecializedItemRend
 	}
 
 	private static final ModelResourceLocation GUI_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_item"), "inventory");
+			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_item_full"), "inventory");
 	private static final ModelResourceLocation HANDLE_MODEL =
 			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_MODEL =
