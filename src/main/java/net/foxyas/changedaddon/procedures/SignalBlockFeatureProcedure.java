@@ -32,7 +32,7 @@ public class SignalBlockFeatureProcedure {
 			Player player = (Player) entity;
 			if (!player.getCooldowns().isOnCooldown(ChangedAddonModItems.SIGNAL_CATCHER.get())) {
 				int radius = player.isShiftKeyDown() ? LARGE_SEARCH_RADIUS : SMALL_SEARCH_RADIUS;
-				int cooldown = player.isShiftKeyDown() ? 100 : 60;
+				int cooldown = player.isShiftKeyDown() ? 600 : 100;
 				searchSignalBlock(world, x, y, z, player, itemstack, radius, cooldown);
 			}
 		}
