@@ -106,12 +106,10 @@ dependencies {
     implementation fg.deobf("curse.maven:carry-on-274259:5141758") //Carry On mod
     implementation fg.deobf("curse.maven:in-game-account-switcher-232676:4589915") //ReAuth
     
-    
-    
-   // compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281:api") //Jei Api
-  //  runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281") //Jei Mod
-    
-    //implementation files('libs/output.jar')
+
+    //compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281:api") //Jei Api
+    //runtimeOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281") //Jei Mod
+    //implementation files("libs/Changed-m1.18.2-v0.14")
 }
 
 tasks.withType(JavaCompile).configureEach {
