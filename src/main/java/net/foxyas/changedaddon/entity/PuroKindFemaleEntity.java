@@ -5,6 +5,9 @@ import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -35,8 +38,20 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf {
 		super(type, world);
 		maxUpStep = 0.6f;
 		xpReward = AbstractDarkLatexWolf.XP_REWARD_MEDIUM;
+		this.setAttributes(this.getAttributes());
 		setNoAi(false);
 		setPersistenceRequired();
+	}
+
+	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0F);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.08f);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
 
 	@Override

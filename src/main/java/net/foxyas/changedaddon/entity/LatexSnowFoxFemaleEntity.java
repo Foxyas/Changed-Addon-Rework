@@ -3,6 +3,9 @@ package net.foxyas.changedaddon.entity;
 
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -59,8 +62,21 @@ public class LatexSnowFoxFemaleEntity extends LatexEntity implements GenderedEnt
 		super(type, world);
 		maxUpStep = 0.6f;
 		xpReward = 5;
+		this.setAttributes(this.getAttributes());
 		setNoAi(false);
 	}
+
+	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.1f);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.95f);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+	}
+
 	@Override
 	public Color3 getHairColor(int i) {
 		return Color3.getColor("#E5E5E5");

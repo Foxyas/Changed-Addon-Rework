@@ -46,9 +46,9 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 
 	protected void setAttributes(AttributeMap attributes) {
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((14));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(16.0);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(this.getLatexLandSpeed());
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(this.getLatexSwimSpeed());
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0f);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.20f);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.5f);
 		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(2);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);

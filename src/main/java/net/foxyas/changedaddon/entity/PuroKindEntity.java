@@ -16,9 +16,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,7 +38,19 @@ public class PuroKindEntity extends AbstractDarkLatexWolf {
 		super(type, world);
 		maxUpStep = 0.6f;
 		xpReward = AbstractDarkLatexWolf.XP_REWARD_MEDIUM;
+		this.setAttributes(this.getAttributes());
 		setNoAi(false);
+	}
+
+	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0F);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.08f);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
 
 	@Override

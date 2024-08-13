@@ -57,15 +57,16 @@ public class MirrorWhiteTigerEntity extends LatexEntity implements PowderSnowWal
 		//this.setAttributes(getAttributes());
 		maxUpStep = 0.6f;
 		xpReward = LatexEntity.XP_REWARD_MEDIUM;
+		this.setAttributes(this.getAttributes());
 		setNoAi(false);
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(16);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(this.getLatexLandSpeed());
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(this.getLatexSwimSpeed());
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3);
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15f);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.95f);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(4.0);
 		//attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
 		//attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);

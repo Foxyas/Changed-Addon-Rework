@@ -1,6 +1,9 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,6 +41,17 @@ public class SnowLeopardPartialEntity extends LatexEntity implements PowderSnowW
 		setPersistenceRequired();
 	}
 
+	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0F);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.10f);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+	}
+
 	public static void init() {
 	}
 
@@ -47,7 +61,7 @@ public class SnowLeopardPartialEntity extends LatexEntity implements PowderSnowW
 		builder = builder.add(Attributes.MAX_HEALTH, 24);
 		builder = builder.add(Attributes.ARMOR, 4);
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 25);
+		builder = builder.add(Attributes.FOLLOW_RANGE, 40);
 		return builder;
 	}
 

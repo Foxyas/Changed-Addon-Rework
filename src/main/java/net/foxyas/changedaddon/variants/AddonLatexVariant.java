@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.variants;
 
-//import net.foxyas.changedaddon.ChangedAddonAbilitys;
 import com.google.common.collect.ImmutableList;
 import net.foxyas.changedaddon.ChangedAddonEntitys;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
