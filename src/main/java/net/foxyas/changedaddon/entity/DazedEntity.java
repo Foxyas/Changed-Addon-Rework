@@ -14,12 +14,15 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -47,8 +50,20 @@ public class DazedEntity extends LatexEntity {
 		super(type, world);
 		maxUpStep = 0.6f;
 		xpReward = 0;
+		this.setAttributes(this.getAttributes());
 		setNoAi(false);
 		setPersistenceRequired();
+	}
+
+	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
+		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.075F);
+		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.025F);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
 	@Override
 	public Color3 getHairColor(int i) {
