@@ -42,7 +42,7 @@ public class BunyEntity extends LatexEntity {
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((30));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15f);
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.75f);
