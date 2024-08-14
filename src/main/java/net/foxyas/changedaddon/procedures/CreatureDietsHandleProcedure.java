@@ -13,8 +13,10 @@ import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -31,94 +33,156 @@ import java.util.Objects;
 
 @Mod.EventBusSubscriber
 public class CreatureDietsHandleProcedure {
+
+	private static final List<Item> CAT_DIET = List.of(
+			Items.COD, Items.COOKED_COD, Items.SALMON, Items.COOKED_SALMON,
+			Items.PUFFERFISH, Items.TROPICAL_FISH
+	);
+	private static final List<Item> DRAGON_DIET = List.of(
+			Items.COD, Items.COOKED_COD, Items.SALMON, Items.COOKED_SALMON,
+			Items.PUFFERFISH, Items.TROPICAL_FISH, Items.RABBIT, Items.COOKED_RABBIT,
+			Items.BEEF, Items.COOKED_BEEF, Items.CHICKEN, Items.COOKED_CHICKEN,
+			Items.PORKCHOP, Items.COOKED_PORKCHOP, Items.MUTTON, Items.COOKED_MUTTON
+	);
+	private static final List<Item> WOLF_DIET = List.of(
+			Items.RABBIT, Items.COOKED_RABBIT, Items.BEEF, Items.COOKED_BEEF,
+			Items.CHICKEN, Items.COOKED_CHICKEN, Items.PORKCHOP, Items.COOKED_PORKCHOP,
+			Items.MUTTON, Items.COOKED_MUTTON
+	);
+	private static final List<Item> FOX_DIET = List.of(
+			Items.SWEET_BERRIES, Items.GLOW_BERRIES, Items.RABBIT, Items.COOKED_RABBIT,
+			Items.BEEF, Items.COOKED_BEEF, Items.CHICKEN, Items.COOKED_CHICKEN,
+			Items.PORKCHOP, Items.COOKED_PORKCHOP, Items.MUTTON, Items.COOKED_MUTTON
+	);
+	private static final List<Item> AQUATIC_DIET = List.of(
+			Items.DRIED_KELP, Items.COD, Items.COOKED_COD, Items.SALMON,
+			Items.COOKED_SALMON, Items.PUFFERFISH, Items.TROPICAL_FISH
+	);
+	private static final List<Item> SPECIAL_DIET = List.of(
+			ChangedItems.ORANGE.get(), ChangedAddonModItems.FOXTA.get()
+	);
+
 	@SubscribeEvent
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
+		if (event == null) return;
+
 		LivingEntity livingEntity = event.getEntityLiving();
 		ItemStack item = event.getItem();
+		if (!(livingEntity instanceof Player player)) return;
 
-		if (event == null) {
-			return;
-		}
+		LatexVariantInstance<?> latexInstance = ProcessTransfur.getPlayerLatexVariant(player);
+		if (latexInstance == null) return;
 
+		Level world = player.getLevel();
+		if (!world.getGameRules().getBoolean(ChangedAddonModGameRules.CHANGED_ADDON_CREATURE_DIETS)) return;
 
+		LatexEntity latexEntity = latexInstance.getLatexEntity();
+		LatexVariant<?> variant = latexEntity.getSelfVariant();
 
-		if (livingEntity != null) {
-			if(livingEntity instanceof Player player){
-				LatexVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
-				if(LatexInstace == null){
-					return;
-				}
-				Level World = player.getLevel();
-				if (!World.getGameRules().getBoolean(ChangedAddonModGameRules.CHANGED_ADDON_CREATURE_DIETS)){
-					return;
-				}
-				LatexVariant<?> Variant = LatexInstace.getLatexEntity().getSelfVariant();
-				LatexEntity latexEntity = LatexInstace.getLatexEntity();
-				List<Item> CatDiet = List.of(Items.COD,Items.COOKED_COD,Items.SALMON,Items.COOKED_SALMON,Items.PUFFERFISH,Items.TROPICAL_FISH);
-				List<Item> DragonDiet = List.of(Items.COD,Items.COOKED_COD,Items.SALMON,Items.COOKED_SALMON,Items.PUFFERFISH,Items.TROPICAL_FISH,Items.RABBIT,Items.COOKED_RABBIT,Items.BEEF,Items.COOKED_BEEF,Items.CHICKEN,Items.COOKED_CHICKEN,Items.PORKCHOP,Items.COOKED_PORKCHOP,Items.MUTTON,Items.COOKED_MUTTON);
-				List<Item> WolfDiet = List.of(Items.RABBIT,Items.COOKED_RABBIT,Items.BEEF,Items.COOKED_BEEF,Items.CHICKEN,Items.COOKED_CHICKEN,Items.PORKCHOP,Items.COOKED_PORKCHOP,Items.MUTTON,Items.COOKED_MUTTON);
-				List<Item> FoxDiet = List.of(Items.SWEET_BERRIES,Items.GLOW_BERRIES,Items.RABBIT,Items.COOKED_RABBIT,Items.BEEF,Items.COOKED_BEEF,Items.CHICKEN,Items.COOKED_CHICKEN,Items.PORKCHOP,Items.COOKED_PORKCHOP,Items.MUTTON,Items.COOKED_MUTTON);
-				List<Item> AquaticDiet = List.of(Items.DRIED_KELP,Items.COD,Items.COOKED_COD,Items.SALMON,Items.COOKED_SALMON,Items.PUFFERFISH,Items.TROPICAL_FISH);
-				List<Item> SpecialDiet = List.of(ChangedItems.ORANGE.get(),ChangedAddonModItems.FOXTA.get());
+		if (!item.isEdible()) return;
 
-				if(item.isEdible()) {
-					int foodleveladd = Objects.requireNonNull(item.getItem().getFoodProperties()).getNutrition() + 4;
-					float saturationadd = item.getItem().getFoodProperties().getSaturationModifier() + 3;
-					int foodlevelplayer = player.getFoodData().getFoodLevel();
-					float saturationplayer = player.getFoodData().getSaturationLevel();
-					boolean isWarnsOn = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).showwarns;
+		boolean isWarnsOn = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+				.orElse(new ChangedAddonModVariables.PlayerVariables()).showwarns;
 
-					if (Objects.requireNonNull(latexEntity.getType().getRegistryName()).toString().contains("cat") || Variant.is(ChangedTags.LatexVariants.CAT_LIKE) || Variant.is(ChangedTags.LatexVariants.LEOPARD_LIKE)){
-						if(CatDiet.contains(item.getItem())){
-							player.getFoodData().setFoodLevel(foodlevelplayer + 4);
-							player.getFoodData().setSaturation(saturationplayer + 3);
-							if(isWarnsOn){
-								player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"),true);
-							}
-						}
-					} else if (latexEntity.getType().getRegistryName().toString().contains("dog") || latexEntity.getType().getRegistryName().toString().contains("wolf") || latexEntity instanceof AbstractLatexWolf || Variant.is(ChangedTags.LatexVariants.WOLF_LIKE)) {
-							if(WolfDiet.contains(item.getItem())){
-							player.getFoodData().setFoodLevel(foodlevelplayer + 4);
-							player.getFoodData().setSaturation(saturationplayer + 3);
-								if(isWarnsOn){
-									player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"),true);
-								}
-							}
-					} else if (Variant == AddonLatexVariant.WOLFY || Variant.is(AddonLatexVariant.ADDON_PURO_KIND.male()) || Variant.is(AddonLatexVariant.ADDON_PURO_KIND.female())){
-							if(SpecialDiet.contains(item.getItem())){
-								player.getFoodData().setFoodLevel(foodlevelplayer + 4);
-								player.getFoodData().setSaturation(saturationplayer + 3);
-								if(isWarnsOn){
-									player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"),true);
-								}
-							}
-					} else if (latexEntity.getType().getRegistryName().toString().contains("fox") || Variant.is(AddonLatexVariant.EXP1.male()) || Variant.is(AddonLatexVariant.EXP1.female())) {
-							if(FoxDiet.contains(item.getItem())){
-								player.getFoodData().setFoodLevel(foodlevelplayer + 4);
-								player.getFoodData().setSaturation(saturationplayer + 3);
-								if(isWarnsOn){
-									player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"),true);
-								}
-							}
-						} else if (latexEntity instanceof AquaticEntity || Variant.is(ChangedTags.LatexVariants.SHARK_LIKE) || Variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(), new ResourceLocation("changed:aquatic_like")))){
-							if(AquaticDiet.contains(item.getItem())){
-								player.getFoodData().setFoodLevel(foodlevelplayer + 4);
-								player.getFoodData().setSaturation(saturationplayer + 3);
-								if(isWarnsOn){
-									player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"),true);
-								}
-							}
-						} else if (Objects.requireNonNull(latexEntity.getType().getRegistryName()).toString().contains("dragon") || Variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(), new ResourceLocation("changed:dragon_like")))){
-							if(DragonDiet.contains(item.getItem())){
-							player.getFoodData().setFoodLevel(foodlevelplayer + 4);
-							player.getFoodData().setSaturation(saturationplayer + 3);
-								if(isWarnsOn){
-								player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"),true);
-								}
-							}
-						}
-					}
-				}
+		DietType dietType = determineDietType(latexEntity, variant);
+		if (dietType == null) return;
+
+		if (dietType.isDietItem(item)) {
+			applyFoodEffects(player, item);
+			if (isWarnsOn) {
+				player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
 			}
 		}
 	}
+
+	private static void applyFoodEffects(Player player, ItemStack item) {
+		int additionalFood = 4;
+		float additionalSaturation = 3;
+
+		player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() + additionalFood);
+		player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
+	}
+
+	private static DietType determineDietType(LatexEntity latexEntity, LatexVariant<?> variant) {
+		if (isCatDiet(latexEntity, variant)) return DietType.CAT;
+		if (isWolfDiet(latexEntity, variant)) return DietType.WOLF;
+		if (isSpecialDiet(variant)) return DietType.SPECIAL;
+		if (isFoxDiet(latexEntity, variant)) return DietType.FOX;
+		if (isAquaticDiet(latexEntity, variant)) return DietType.AQUATIC;
+		if (isDragonDiet(latexEntity, variant)) return DietType.DRAGON;
+
+		return null;
+	}
+
+	private static boolean isCatDiet(LatexEntity entity, LatexVariant<?> variant) {
+		return entity.getType().getRegistryName().toString().contains("cat") ||
+				variant.is(ChangedTags.LatexVariants.CAT_LIKE) ||
+				variant.is(ChangedTags.LatexVariants.LEOPARD_LIKE) ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed_addon:cat_diet")));
+	}
+
+	private static boolean isWolfDiet(LatexEntity entity, LatexVariant<?> variant) {
+		return entity.getType().getRegistryName().toString().contains("dog") ||
+				entity.getType().getRegistryName().toString().contains("wolf") ||
+				entity instanceof AbstractLatexWolf ||
+				variant.is(ChangedTags.LatexVariants.WOLF_LIKE) ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed_addon:wolf_diet")));
+	}
+
+	private static boolean isSpecialDiet(LatexVariant<?> variant) {
+		return variant == AddonLatexVariant.WOLFY ||
+				variant.is(AddonLatexVariant.ADDON_PURO_KIND.male()) ||
+				variant.is(AddonLatexVariant.ADDON_PURO_KIND.female()) ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed_addon:special_diet")));
+	}
+
+	private static boolean isFoxDiet(LatexEntity entity, LatexVariant<?> variant) {
+		return entity.getType().getRegistryName().toString().contains("fox") ||
+				variant.is(AddonLatexVariant.EXP1.male()) ||
+				variant.is(AddonLatexVariant.EXP1.female()) ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed_addon:fox_diet")));
+	}
+
+	private static boolean isAquaticDiet(LatexEntity entity, LatexVariant<?> variant) {
+		return entity instanceof AquaticEntity ||
+				variant.is(ChangedTags.LatexVariants.SHARK_LIKE) ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed:aquatic_like"))) ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed_addon:aquatic_diet")));
+	}
+
+	private static boolean isDragonDiet(LatexEntity entity, LatexVariant<?> variant) {
+		return entity.getType().getRegistryName().toString().contains("dragon") ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed:dragon_like"))) ||
+				variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+						new ResourceLocation("changed_addon:dragon_diet")));
+	}
+
+	private enum DietType {
+		CAT(CAT_DIET, "changed_addon:cat_diet_list"),
+		DRAGON(DRAGON_DIET, "changed_addon:dragon_diet_list"),
+		WOLF(WOLF_DIET, "changed_addon:wolf_diet_list"),
+		FOX(FOX_DIET, "changed_addon:fox_diet_list"),
+		AQUATIC(AQUATIC_DIET, "changed_addon:aquatic_diet_list"),
+		SPECIAL(SPECIAL_DIET, "changed_addon:special_diet_list");
+
+		private final List<Item> dietItems;
+		private final String dietTag;
+
+		DietType(List<Item> dietItems, String dietTag) {
+			this.dietItems = dietItems;
+			this.dietTag = dietTag;
+		}
+
+		public boolean isDietItem(ItemStack item) {
+			return dietItems.contains(item.getItem()) ||
+					item.is(ItemTags.create( new ResourceLocation(dietTag)));
+		}
+	}
+}
