@@ -3,7 +3,11 @@
   "_type": "tag",
   "definition": {
     "type": "Items",
-    "items": [],
+    "items": [
+      {
+        "value": "Blocks.KELP"
+      }
+    ],
     "blocks": [],
     "functions": [],
     "entities": [],
