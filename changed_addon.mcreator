@@ -9338,9 +9338,6 @@
       "registry_name": "can_roar",
       "metadata": {
         "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/CanRoarProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
