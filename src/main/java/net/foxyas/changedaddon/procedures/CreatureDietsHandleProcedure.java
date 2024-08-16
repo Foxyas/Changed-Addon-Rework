@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.init.ChangedAddonModConfigs;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
@@ -17,6 +19,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -28,6 +32,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber
 public class CreatureDietsHandleProcedure {
@@ -58,9 +63,19 @@ public class CreatureDietsHandleProcedure {
         if (dietType == null) return;
 
         if (dietType.isDietItem(item)) {
-            applyFoodEffects(player, item);
+            applyFoodEffects(player, item,true);
             if (isWarnsOn) {
                 player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
+            }
+        } else if (ChangedAddonConfigsConfiguration.DEBUFFS.get()
+                && (!dietType.isDietItem(item)
+                && !dietType.isNotFoodItem(item))) {
+            applyFoodEffects(player, item,false);
+            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 5 * 20, 3, false, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 5 * 20, 0, false, true, true,
+                    new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
+            if (isWarnsOn) {
+                player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
             }
         }
     }
@@ -71,6 +86,23 @@ public class CreatureDietsHandleProcedure {
 
         player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() + additionalFood);
         player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
+    }
+
+    private static void applyFoodEffects(Player player, ItemStack item,boolean isGoodFood) {
+        int additionalFood;
+        float additionalSaturation;
+        if (isGoodFood){
+            additionalFood = Objects.requireNonNull(item.getFoodProperties(player)).getNutrition()/2;
+            additionalSaturation = Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier()/2;
+        } else {
+            additionalFood = -Objects.requireNonNull(item.getFoodProperties(player)).getNutrition()/4;
+            additionalSaturation = -Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier()/4;
+        }
+        if (!(player.getFoodData().getFoodLevel() >= 20)) {
+            player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() + additionalFood);
+        } else if (!(player.getFoodData().getSaturationLevel() >= 20)) {
+            player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
+        }
     }
 
     private static DietType determineDietType(LatexEntity latexEntity, LatexVariant<?> variant) {
@@ -174,6 +206,23 @@ public class CreatureDietsHandleProcedure {
         public boolean isDietItem(ItemStack item) {
             return dietItems.contains(item.getItem()) ||
                     item.is(ItemTags.create(new ResourceLocation(dietTag)));
+        }
+
+        public boolean isNotFoodItem(ItemStack item){
+            List<Item> NonFoodItemslist = List.of(ChangedAddonModItems.FOXTA.get(),
+                    ChangedAddonModItems.SNEPSI.get(),
+                    ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(),
+                    ChangedAddonModItems.LAETHIN_SYRINGE.get(),
+                    ChangedAddonModItems.DIFFUSION_SYRINE.get());
+
+            if (item.is(Items.ENCHANTED_GOLDEN_APPLE)){
+                return true;
+            } else if (item.is(Items.POTION)) {
+                return true;
+            } else if (NonFoodItemslist.contains(item.getItem())
+                    || item.is(ItemTags.create(new ResourceLocation("changed_addon:is_not_food")))) {
+                return true;
+            } else return item.is(Items.GOLDEN_APPLE);
         }
     }
 }

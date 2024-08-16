@@ -3,9 +3,12 @@ package net.foxyas.changedaddon.procedures;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
+import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -14,6 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,6 +27,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.*;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -34,14 +39,14 @@ public class PlayerUtilProcedure {
 	}
 
 	public static void TransfurPlayer(Entity entity, String id){
-		ResourceLocation form = null;
+		ResourceLocation form;
 		try {
 			form = new ResourceLocation(id);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		LivingEntity livingEntity = (LivingEntity) entity;
-		if (form != null && LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
+		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
 		LatexVariant<?> latexVariant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
 		ProcessTransfur.transfur(livingEntity,entity.getLevel(),latexVariant,true);
 		}
@@ -54,6 +59,21 @@ public class PlayerUtilProcedure {
 			ProcessTransfur.setPlayerLatexVariant(player, null);
 			ProcessTransfur.setPlayerTransfurProgress(player, new ProcessTransfur.TransfurProgress(0.0F, LatexVariant.FALLBACK_VARIANT));
 		});
+	}
+
+	public static boolean IsCatTransfur(Player player){
+		LatexVariant<?> variant = ProcessTransfur.getPlayerLatexVariant(player).getParent();
+        return variant.is(ChangedTags.LatexVariants.CAT_LIKE) ||
+				variant.is(ChangedTags.LatexVariants.LEOPARD_LIKE);
+    }
+
+	public static boolean IsWolfTransfur(Player player){
+		LatexVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerLatexVariant(player)).getParent();
+		LatexEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerLatexVariant(player)).getLatexEntity();
+		return Objects.requireNonNull(entity.getType().getRegistryName()).toString().contains("dog") ||
+                entity.getType().getRegistryName().toString().contains("wolf") ||
+				entity instanceof AbstractLatexWolf ||
+				variant.is(ChangedTags.LatexVariants.WOLF_LIKE);
 	}
 
 	public static Entity getEntityPlayerLookingAt(Player player, double range) {

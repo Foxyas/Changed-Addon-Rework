@@ -25,6 +25,29 @@
             "entityType": "CUSTOM:Dazed"
           }
         ]
+      },
+      {
+        "category": "Creatures Diets",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Add Debuffs when eat a non good food for your kind",
+            "vardisplay": "When Eat Food Debuffs",
+            "varname": "debuffs",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
     "file": "ChangedAddon-Server",

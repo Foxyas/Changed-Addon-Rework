@@ -13,14 +13,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 
 import javax.annotation.Nullable;
@@ -31,28 +27,17 @@ public class WhenEntityIshurtProcedure {
 	public static void onEntityAttacked(LivingHurtEvent event) {
 		Entity entity = event.getEntity();
 		if (event != null && entity != null) {
-			execute(event, entity.getLevel(), entity.getX(), entity.getY(), entity.getZ(), event.getSource(), entity, event.getSource().getDirectEntity());
+			execute(event, entity.getLevel(), entity, event.getSource().getDirectEntity());
 		}
 	}
 
-	public static void execute(LevelAccessor world, double x, double y, double z, DamageSource damagesource, Entity entity, Entity immediatesourceentity) {
-		execute(null, world, x, y, z, damagesource, entity, immediatesourceentity);
+	public static void execute(LevelAccessor world, Entity entity, Entity immediatesourceentity) {
+		execute(null, world, entity, immediatesourceentity);
 	}
 
-	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, DamageSource damagesource, Entity entity, Entity immediatesourceentity) {
+	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity, Entity immediatesourceentity) {
 		if (entity == null || immediatesourceentity == null)
 			return;
-		if (damagesource.getMsgId().equals("latex_solvent")) {
-			if (world instanceof Level _level) {
-				if (!_level.isClientSide()) {
-					_level.playSound(null, new BlockPos(entity.getX(), entity.getY() + 1, entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.extinguish_fire")), SoundSource.NEUTRAL, (float) 0.8, 0);
-				} else {
-					_level.playLocalSound((entity.getX()), (entity.getY() + 1), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.extinguish_fire")), SoundSource.NEUTRAL, (float) 0.8, 0, false);
-				}
-			}
-			if (world instanceof ServerLevel _level)
-				_level.sendParticles((SimpleParticleType) (ChangedAddonModParticleTypes.SOLVENT_PARTICLE.get()), x, (y + 1), z, 10, 0.2, 0.35, 0.2, 0.1);
-		}
 		if (immediatesourceentity instanceof Experiment10Entity) {
 			if (entity instanceof LivingEntity _livEnt ? _livEnt.isBlocking() : false) {
 				if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof ShieldItem) {

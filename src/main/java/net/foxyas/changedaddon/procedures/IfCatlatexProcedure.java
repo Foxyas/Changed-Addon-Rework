@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
@@ -21,6 +22,8 @@ public class IfCatlatexProcedure {
 					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_experiment_10")
 					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_experiment009")
 					|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_exp2")) {
+				return true;
+			} else if (PlayerUtilProcedure.IsCatTransfur((Player) entity)) {
 				return true;
 			}
 		}

@@ -5616,9 +5616,6 @@
       "locked_code": false,
       "registry_name": "latex_solvent_on_active_tick",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/LatexSolventOnActiveTickProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "entity",
@@ -6030,14 +6027,7 @@
       "locked_code": false,
       "registry_name": "when_entity_ishurt",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/WhenEntityIshurtProcedure.java"
-        ],
         "dependencies": [
-          {
-            "name": "damagesource",
-            "type": "damagesource"
-          },
           {
             "name": "entity",
             "type": "entity"
@@ -6045,18 +6035,6 @@
           {
             "name": "immediatesourceentity",
             "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
           },
           {
             "name": "world",
@@ -10714,7 +10692,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/aquatic_diet_list.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Foxdietlist",
@@ -10727,7 +10706,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/fox_diet_list.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Wolfdietlist",
@@ -10740,7 +10720,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/wolf_diet_list.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Specialdietlist",
@@ -10753,7 +10734,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/special_diet_list.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Dragondietlist",
@@ -10766,7 +10748,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/dragon_diet_list.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     },
     {
       "name": "Catdietlist",
@@ -10779,7 +10762,37 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/cat_diet_list.json"
         ]
-      }
+      },
+      "path": "~/Tags"
+    },
+    {
+      "name": "NotFood",
+      "type": "tag",
+      "sortid": 639,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "not_food",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/items/is_not_food.json"
+        ]
+      },
+      "path": "~/Tags"
+    },
+    {
+      "name": "SolventHitTick",
+      "type": "procedure",
+      "sortid": 640,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "solvent_hit_tick",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SolventHitTickProcedure.java"
+        ],
+        "dependencies": []
+      },
+      "path": "~/CustomCode"
     }
   ],
   "variable_elements": [
@@ -11113,6 +11126,7 @@
       "advancements.over_dose.title": "OverDose",
       "gui.changed_addon.book_pagenumber_2.label_pot_with_litixcamonia": "Pot With Litix-Camonia",
       "item.changed_addon.painite_hoe": "Painite Hoe",
+      "changedaddon.diets.bad_food": "It seems like i feel less fuller when i eat this food",
       "subtitles.warn": "Warn Sound",
       "gui.changed_addon.bookrecipepage_6.label_p": "P",
       "changed_addon.ability.dodge": "Dodge Ability",
