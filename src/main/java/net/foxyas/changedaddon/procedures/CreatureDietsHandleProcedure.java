@@ -69,10 +69,11 @@ public class CreatureDietsHandleProcedure {
             }
         } else if (ChangedAddonConfigsConfiguration.DEBUFFS.get()
                 && (!dietType.isDietItem(item)
-                && !dietType.isNotFoodItem(item))) {
+                && !dietType.isNotFoodItem(item))
+                && latexInstance.ageAsVariant < 15000) {
             applyFoodEffects(player, item,false);
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 5 * 20, 3, false, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 5 * 20, 0, false, true, true,
+            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 50, 3, false, true, true));
+            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, true, true,
                     new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
             if (isWarnsOn) {
                 player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
