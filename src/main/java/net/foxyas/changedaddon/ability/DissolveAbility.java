@@ -164,7 +164,7 @@ public class DissolveAbility extends SimpleAbility {
                 serverLevel.sendParticles(ChangedParticles.drippingLatex(Instance.getParent().getColors().getFirst()), player.getX(), player.getY() + 1, player.getZ(), 5, 0.2, 0.3, 0.2, 0);
                 serverLevel.sendParticles(ChangedParticles.drippingLatex(Instance.getParent().getColors().getSecond()), player.getX(), player.getY() + 1, player.getZ(), 5, 0.2, 0.3, 0.2, 0);
             }
-        } else {
+        } else if (Distance(player.position(),new Vec3(LocationX,LocationY,LocationZ)) > 1000) {
             player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dissolve.warn.too_far"),true);
         }
     }
