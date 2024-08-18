@@ -170,7 +170,8 @@ public class CreatureDietsHandleProcedure {
     private enum DietType {
         CAT(List.of(
                 Items.COD, Items.COOKED_COD, Items.SALMON, Items.COOKED_SALMON,
-                Items.PUFFERFISH, Items.TROPICAL_FISH
+                Items.PUFFERFISH, Items.TROPICAL_FISH, Items.RABBIT, Items.COOKED_RABBIT, Items.BEEF, Items.COOKED_BEEF,
+                Items.CHICKEN, Items.COOKED_CHICKEN, Items.PORKCHOP, Items.COOKED_PORKCHOP
         ), "changed_addon:cat_diet_list"),
         DRAGON(List.of(
                 Items.COD, Items.COOKED_COD, Items.SALMON, Items.COOKED_SALMON,
