@@ -8,11 +8,11 @@
       "item": "changed:white_latex_goo"
     },
     {
-      "item": "minecraft:snow_ball"
+      "item": "minecraft:snowball"
     },
     {
       "item": "minecraft:string"
-    }
+    },
     {
       "item": "minecraft:amethyst_shard"
     },
@@ -25,7 +25,6 @@
     {
       "item": "minecraft:magenta_dye"
     }
-    
   ],
   "gendered": false,
   "form": "changed_addon:form_exp6"
