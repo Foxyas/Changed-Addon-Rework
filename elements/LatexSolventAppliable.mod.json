@@ -45,6 +45,21 @@
       },
       {
         "value": "Items.TRIDENT"
+      },
+      {
+        "value": "CUSTOM:ElectricKatana"
+      },
+      {
+        "value": "CUSTOM:CrystalAddagerRed"
+      },
+      {
+        "value": "CUSTOM:CrystalAddagerGreen"
+      },
+      {
+        "value": "CUSTOM:CrystalAddagerBlack"
+      },
+      {
+        "value": "CUSTOM:ElectricKatanaRed"
       }
     ],
     "blocks": [],

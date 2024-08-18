@@ -1,8 +1,11 @@
 {
   "replace": false,
   "values": [
+    "changed_addon:crystal_addager_black",
+    "changed_addon:electric_katana_red",
     "minecraft:stone_axe",
     "changed_addon:crow_bar",
+    "changed_addon:crystal_addager_red",
     "minecraft:netherite_axe",
     "minecraft:trident",
     "minecraft:netherite_sword",
@@ -12,8 +15,10 @@
     "changed_addon:painite_axe",
     "changed_addon:painite_sword",
     "minecraft:stone_sword",
+    "changed_addon:electric_katana",
     "minecraft:diamond_axe",
     "minecraft:iron_axe",
+    "changed_addon:crystal_addager_green",
     "minecraft:iron_sword"
   ]
 }
