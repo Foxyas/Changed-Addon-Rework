@@ -54,7 +54,7 @@ public class DissolveAbility extends SimpleAbility {
 
     @Override
     public int getChargeTime(IAbstractLatex entity) {
-        return isSet() ? 0 : 30;
+        return isSet() ? 0 : 20;
     }
 
     @Override
