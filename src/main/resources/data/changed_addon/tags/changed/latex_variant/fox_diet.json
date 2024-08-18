@@ -1,4 +1,9 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+  	"changed_addon:form_exp1/male",
+  	"changed_addon:form_exp1/female",
+  	"changed_addon:form_latex_snow_fox/male",
+  	"changed_addon:form_latex_snow_fox/female"
+  ]
 }
