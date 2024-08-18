@@ -102,6 +102,8 @@
   "changed_addon.ability.psychic_pulse": "意念脉冲",
   "changed_addon.ability.shock_wave": "冲击波",
   "changed_addon.ability.thunder": "雷霆闪电",
+  "changed_addon.ability.dissolve": "溶解能力",
+  "changed_addon.ability.dissolve.warn.too_far:"你离要传送的地方太远了",
   "changed_addon.compact_disc.content.experiment_009": "实验体 009 必须被抹除！！它的力量非常强大，不要让它落入坏人之手，显然它不想也不能进行感染，§n§4它想杀掉所有档它路的人§r",
   "changed_addon.compact_disc.title.experiment_009": "§n§4分解 §r§n§b 实验",
   "changed_addon.latex_syringe.not_valid": "你不能放置这个注射器",
