@@ -111,6 +111,7 @@
   "changedaddon.assimilation.when_customtransfur": "只有在特定兽化状态下才允许同化",
   "changedaddon.assimilation.when_on": "同化激活 友好抓取关闭",
   "changedaddon.diets.good_food": "当我吃它的时候感觉更饱了",
+  "changedaddon.diets.bad_food": "吃了这个食物之后我感觉更饿了",
   "changedaddon.event.grab.when.entity.die": "你抓取的人在你做任何事情前已经§4死了§r！！",
   "changedaddon.event.grab.when.grab.immune": "他非常抵制被抓取，所以你不能抓取他",
   "changedaddon.event.grab.when.small": "我太小了，无法抓取",

@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:stone_axe",
+    "changed_addon:crow_bar",
+    "minecraft:netherite_axe",
+    "minecraft:trident",
+    "minecraft:netherite_sword",
+    "minecraft:wooden_sword",
+    "minecraft:golden_sword",
+    "minecraft:diamond_sword",
+    "changed_addon:painite_axe",
+    "changed_addon:painite_sword",
+    "minecraft:stone_sword",
+    "minecraft:diamond_axe",
+    "minecraft:iron_axe",
+    "minecraft:iron_sword"
+  ]
+}

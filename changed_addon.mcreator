@@ -10790,6 +10790,62 @@
         "dependencies": []
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "Exp6",
+      "type": "livingentity",
+      "sortid": 641,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "exp_6",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/entity/Exp6Entity.java",
+          "src/main/java/net/foxyas/changedaddon/client/renderer/Exp6Renderer.java"
+        ]
+      }
+    },
+    {
+      "name": "LatexSolventAppliable",
+      "type": "tag",
+      "sortid": 642,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "latex_solvent_appliable",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/tags/items/latex_solvent_appliable.json"
+        ]
+      },
+      "path": "~/Tags"
+    },
+    {
+      "name": "SnepsiLootInject",
+      "type": "loottable",
+      "sortid": 643,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "snepsi_loot_inject",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/inject/snepsi_loot_table.json"
+        ]
+      },
+      "path": "~/Structures/Structure Loot"
+    },
+    {
+      "name": "Exp6Loot",
+      "type": "loottable",
+      "sortid": 644,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "exp_6_loot",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/exp_6.json"
+        ]
+      },
+      "path": "~/Entity/Entity Loot"
     }
   ],
   "variable_elements": [
@@ -11020,6 +11076,7 @@
       "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
       "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
+      "changed_addon.ability.dissolve": "Dissolve Ability",
       "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
       "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
@@ -11039,6 +11096,7 @@
       "entity.changed_addon.experiment_009": "Experiment 009",
       "text.changed_addon.additionalHealth.Hearts": " Hearts",
       "gui.changed_addon.bookrecipepage_8.label_s_seeds": "S \u003d ANY SEEDS",
+      "entity.changed_addon.exp_6": "Exp 6",
       "gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants": "F \u003d ANY FLOWERS OR PLANTS",
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
@@ -11228,6 +11286,7 @@
       "advancements.organic_transfur_advancement.title": "Organic And Fluffy!!",
       "gamerule.fight_to_keep_consciousness": "Fight to keep consciousness",
       "gui.changed_addon.bookpagenumber_4.button_back": "Back",
+      "changed_addon.ability.dissolve.warn.too_far": "You are too far from the place to teleport there",
       "gui.changed_addon.tranfur_sounds_gui.button_1": "Purr",
       "gui.changed_addon.book_recipe_page_11.button_close": "Close",
       "item.changed_addon.hazard_suit_boots": "Hazard Boots",
@@ -11439,6 +11498,7 @@
       "item.changed_addon.exp_2_male_spawn_egg": "Exp2 Male Spawn Egg",
       "gui.changed_addon.book_pagenumber_1.label_empty": "?",
       "advancements.obtain_snepsi.title": "Snepsi?",
+      "item.changed_addon.exp_6_spawn_egg": "Exp6 Spawn Egg",
       "effect.changed_addon.transfur_sickness": "§o§cTransfur Sickness",
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
       "changed_addon.ability.carry": "Carry",

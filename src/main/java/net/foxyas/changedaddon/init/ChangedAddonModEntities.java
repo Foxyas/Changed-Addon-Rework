@@ -30,6 +30,7 @@ import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 import net.foxyas.changedaddon.entity.Experiment009Entity;
+import net.foxyas.changedaddon.entity.Exp6Entity;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 import net.foxyas.changedaddon.entity.ErikEntity;
@@ -112,6 +113,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<ErikEntity>of(ErikEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ErikEntity::new)
 
 					.sized(0.6f, 1.8f));
+	public static final RegistryObject<EntityType<Exp6Entity>> EXP_6 = register("exp_6",
+			EntityType.Builder.<Exp6Entity>of(Exp6Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp6Entity::new)
+
+					.sized(0.6f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -139,6 +144,7 @@ public class ChangedAddonModEntities {
 			Exp2FemaleEntity.init();
 			WolfyEntity.init();
 			ErikEntity.init();
+			Exp6Entity.init();
 		});
 	}
 
@@ -163,5 +169,6 @@ public class ChangedAddonModEntities {
 		event.put(EXP_2_FEMALE.get(), Exp2FemaleEntity.createAttributes().build());
 		event.put(WOLFY.get(), WolfyEntity.createAttributes().build());
 		event.put(ERIK.get(), ErikEntity.createAttributes().build());
+		event.put(EXP_6.get(), Exp6Entity.createAttributes().build());
 	}
 }

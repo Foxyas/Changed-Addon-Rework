@@ -248,6 +248,8 @@ public class AddTransfurProgressProcedure {
 			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.male(),keepConscience);
 		} else if (type == 3) {
 			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.female(),keepConscience);
+		} else if (type == 4) {
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP6,keepConscience);
 		}
 
 	}

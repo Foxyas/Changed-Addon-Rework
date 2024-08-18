@@ -3,7 +3,7 @@
   "_type": "enchantment",
   "definition": {
     "name": "Latex Solvent",
-    "type": "BREAKABLE",
+    "type": "WEAPON",
     "rarity": "RARE",
     "minLevel": 1,
     "maxLevel": 5,
@@ -14,7 +14,11 @@
       }
     ],
     "excludeEnchantments": true,
-    "compatibleItems": [],
+    "compatibleItems": [
+      {
+        "value": "TAG:changed_addon:latex_solvent_appliable"
+      }
+    ],
     "excludeItems": false,
     "isTreasureEnchantment": false,
     "isCurse": false,

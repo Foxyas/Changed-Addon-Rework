@@ -85,7 +85,7 @@ public class SodaCanBlockAddProcedure {
 			return;
 		}
 
-		if (!world.getBlockState(targetPos.below()).isCollisionShapeFullBlock(world, targetPos.below())) {
+		if (!world.getBlockState(targetPos.below()).isFaceSturdy(world, targetPos.below(),Direction.UP)) {
 			return;
 		}
 

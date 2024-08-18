@@ -1,0 +1,32 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:snow_ball"
+    },
+    {
+      "item": "minecraft:string"
+    }
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "changed_addon:snepsi"
+    },
+    {
+      "item": "minecraft:magenta_dye"
+    }
+    
+  ],
+  "gendered": false,
+  "form": "changed_addon:form_exp6"
+}

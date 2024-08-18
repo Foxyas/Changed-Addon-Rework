@@ -32,6 +32,8 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
 				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 2);
 			} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_exp2/female")) {
 				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 3);
+			} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_exp6")) {
+				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 4);
 			} else {
 				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 1);
 			}

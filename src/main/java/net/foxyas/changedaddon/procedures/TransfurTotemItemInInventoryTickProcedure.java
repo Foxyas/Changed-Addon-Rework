@@ -34,6 +34,9 @@ public class TransfurTotemItemInInventoryTickProcedure {
 		if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_snow_leopard/female_organic")) {
 			itemstack.getOrCreateTag().putString("form", "changed_addon:form_biosynth_snow_leopard/female");
 		}
+		if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_exp_6")) {
+			itemstack.getOrCreateTag().putString("form", "changed_addon:form_exp6");
+		}
 		if (!(entity instanceof Player _player ? _player.getCooldowns().isOnCooldown(itemstack.getItem()) : false)) {
 			if (itemstack.getItem() == (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem()) {
 				if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_latex_benign_wolf")) {
