@@ -51,7 +51,7 @@ public class Exp6Entity extends AbstractCanTameLatexEntity {
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((26));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.18F);
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.065f);
