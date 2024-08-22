@@ -58,7 +58,7 @@ import net.foxyas.changedaddon.item.Experiment009Phase2RecordItem;
 import net.foxyas.changedaddon.item.EmptySprayItem;
 import net.foxyas.changedaddon.item.ElectricKatanaRedItem;
 import net.foxyas.changedaddon.item.ElectricKatanaItem;
-import net.foxyas.changedaddon.item.DescontrolSyringeItem;
+import net.foxyas.changedaddon.item.DiffusionSyringeItem;
 import net.foxyas.changedaddon.item.CrystalAddagerRedItem;
 import net.foxyas.changedaddon.item.CrystalAddagerGreenItem;
 import net.foxyas.changedaddon.item.CrystalAddagerBlackItem;
@@ -88,7 +88,6 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> LAETHIN = REGISTRY.register("laethin", () -> new LaethinItem());
 	public static final RegistryObject<Item> SYRINGE = REGISTRY.register("syringe", () -> new SyringeItem());
 	public static final RegistryObject<Item> CATALYZEDDNA = REGISTRY.register("catalyzeddna", () -> new CatalyzeddnaItem());
-	public static final RegistryObject<Item> DIFFUSION_SYRINE = REGISTRY.register("diffusion_syrine", () -> new DescontrolSyringeItem());
 	public static final RegistryObject<Item> SYRINGEWITHLITIXCAMMONIA = REGISTRY.register("syringewithlitixcammonia", () -> new SyringewithlitixcammoniaItem());
 	public static final RegistryObject<Item> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", () -> new LaethinSyringeItem());
 	public static final RegistryObject<Item> POTWITHCAMONIA = REGISTRY.register("potwithcamonia", () -> new PotwithcamoniaItem());
@@ -153,6 +152,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> DORMANT_WHITE_LATEX = block(ChangedAddonModBlocks.DORMANT_WHITE_LATEX, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
+	public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", () -> new DiffusionSyringeItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

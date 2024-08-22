@@ -804,7 +804,7 @@
       "name": "Smalltickupdate",
       "type": "procedure",
       "sortid": 92,
-      "compiles": true,
+      "compiles": false,
       "locked_code": false,
       "registry_name": "smalltickupdate",
       "metadata": {
@@ -3611,21 +3611,6 @@
         ]
       },
       "path": "~/Procedures"
-    },
-    {
-      "name": "DescontrolSyringe",
-      "type": "item",
-      "sortid": 12,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "diffusion_syrine",
-      "metadata": {
-        "files": [
-          "src/main/resources/assets/changed_addon/models/item/diffusion_syrine.json",
-          "src/main/java/net/foxyas/changedaddon/item/DescontrolSyringeItem.java"
-        ]
-      },
-      "path": "~/Items"
     },
     {
       "name": "FoxyasguiDisableItemstackPlacement",
@@ -10030,7 +10015,7 @@
       "name": "CreatureDietsHandle",
       "type": "procedure",
       "sortid": 586,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "creature_diets_handle",
       "metadata": {
@@ -10847,6 +10832,20 @@
         ]
       },
       "path": "~/Entity/Entity Loot"
+    },
+    {
+      "name": "DiffusionSyringe",
+      "type": "item",
+      "sortid": 645,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "diffusion_syringe",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/DiffusionSyringeItem.java",
+          "src/main/resources/assets/changed_addon/models/item/diffusion_syringe.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -11113,6 +11112,7 @@
       "enchantment.changed_addon.solvent": "Latex Solvent",
       "item.changed_addon.painite_armor_leggings": "Painite Leggings",
       "changed_addon.ability.shock_wave": "Shock Wave",
+      "effect.changed_addon.transfur_sickness.description": "Prevents players from transfuring entities.",
       "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
       "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
@@ -11137,9 +11137,9 @@
       "gui.changed_addon.bookrecipepage_8.label_s": "S",
       "advancements.snepsi_adctive.descr": "We take a big sippy,You drink 100 Snepsis!",
       "gui.changed_addon.informant_gui.form": "Form ID",
-      "block.changed_addon.foxta_can": "§bFoxta Can§r",
-      "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
       "item.changed_addon.empty_spray": "Empty Spray",
+      "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
+      "block.changed_addon.foxta_can": "§bFoxta Can§r",
       "item.changed_addon.electric_katana": "§bElectric Katana",
       "entity.changed_addon.erik": "Erik",
       "changed_addon.jei_descriptions.laethin_syringe": "When using Untransfur you Instantly and don\u0027t have a chance to fail",
@@ -11147,7 +11147,6 @@
       "changed_addon.ability.dodge.dodge_amount": "Your Amount of Dodges is %1$s",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
-      "item.changed_addon.diffusion_syrine": "Latex-Diffusion Syringe",
       "death.attack.untransfurfail.player": "%1$s dies for a fail untransfurmation attempt while fighting %2$s",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
       "advancements.friendly_transfur.title": "Friendly Transfur",
@@ -11386,6 +11385,7 @@
       "changedaddon.friendlymode.when_on": "Activating Friendly mode deactivates assimilation",
       "item.changed_addon.snep_icon": "DEVITEM 6",
       "advancements.obtain_red_electric_katana.title": "§4Memories is broken§r",
+      "item.changed_addon.diffusion_syringe": "Latex-Diffusion Syringe",
       "item.changed_addon.prototype_spawn_egg": "Prototype Spawn Egg",
       "block.changed_addon.painite_ore": "Deepslate Painite Ore",
       "changed_addon.ability.psychic_pulse": "Psychic Pulse",
@@ -11397,6 +11397,7 @@
       "effect.changed_addon.latex_solvent": "Latex Solvent",
       "advancements.transfur_totem_advancement_1.title": "In Total Control",
       "changedaddon.diets.good_food": "It seems like i feel more fuller when i eat this food",
+      "effect.changed_addon.latex_contamination.description": "If you get infected, the infection will rise until complete infected. The effect’s strength increases the infection rate.",
       "advancements.catlyzer_advancement.descr": "You craft or get a Catalyzer",
       "gui.changed_addon.bookpagenumber_3.label_or": "OR",
       "gamerule.changedAddonHardModeBosses.description": "Add a difficulty multiplier to Mod Changed Addon bosses",
@@ -11449,7 +11450,7 @@
       "gui.changed_addon.bookrecipepage_7.button_back": "Back",
       "gui.changed_addon.bookrecipepage_9.label_p": "L",
       "text.changed_addon.swimspeed": "Swim Speed \u003d %s",
-      "effect.changed_addon.untransfur.description": "Add an untransfur progress shown by an overlay. Progress speeds up if the player sleeps. Once complete, the Untransfur effect is applied.",
+      "effect.changed_addon.untransfur.description": "Add an untransfur progress shown by an overlay. Progress speeds if sleeps. Once complete, the Untransfur is applied.",
       "advancements.kill_experiment_009.title": "Its Over",
       "gui.changed_addon.fight_tokeepconsciousnessminigame.button_fight": "           Fight            ",
       "changed_addon.jei_descriptions.potwithcammonia": "Grants enough Untransfur Effect to fully reverse your transformation when consumed.",
@@ -11507,7 +11508,9 @@
       "item.changed_addon.exp_2_male_spawn_egg": "Exp2 Male Spawn Egg",
       "gui.changed_addon.book_pagenumber_1.label_empty": "?",
       "advancements.obtain_snepsi.title": "Snepsi?",
+      "effect.changed_addon.fadige.description": "Adds a cooldown to certain abilities, causing temporary fatigue.",
       "item.changed_addon.exp_6_spawn_egg": "Exp6 Spawn Egg",
+      "changed_addon.jei_descriptions.diffusion_syringe": "",
       "effect.changed_addon.transfur_sickness": "§o§cTransfur Sickness",
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
       "changed_addon.ability.carry": "Carry",
