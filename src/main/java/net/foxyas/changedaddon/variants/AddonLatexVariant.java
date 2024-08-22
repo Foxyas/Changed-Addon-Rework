@@ -95,7 +95,7 @@ public class AddonLatexVariant {
             .groundSpeed(1.175F).swimSpeed(1.05F).breatheMode(LatexVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).additionalHealth(4).nightVision().split(LatexVariant.Builder::replicating, LatexVariant.Builder::absorbing).buildGendered(new ResourceLocation("changed_addon", "form_exp2")));
 
     public static final LatexVariant<Exp6Entity> EXP6 = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.EXP_6)
-            .groundSpeed(1.16F).swimSpeed(1.065F).reducedFall().jumpStrength(1.05F).addAbility(ChangedAddonAbilitys.CARRY).addAbility(ChangedAddonAbilitys.DISSOLVE).scares(List.of(Creeper.class)).transfurMode(TransfurMode.ABSORPTION).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_exp6")));
+            .groundSpeed(1.16F).swimSpeed(1.065F).reducedFall().jumpStrength(1.05F).addAbility(ChangedAddonAbilitys.CARRY).addAbility(ChangedAddonAbilitys.DISSOLVE).scares(List.of(Creeper.class)).transfurMode(TransfurMode.NONE).additionalHealth(6).nightVision().build(new ResourceLocation("changed_addon", "form_exp6")));
 
     public static final LatexVariant<KetExperiment009Entity> KET_EXPERIMENT_009 = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
             .groundSpeed(1.15F).swimSpeed(1.1F).reducedFall().jumpStrength(1.4F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).addAbility(ChangedAddonAbilitys.SHOCKWAVE).transfurMode(TransfurMode.NONE).additionalHealth(20).nightVision().build(new ResourceLocation("changed_addon", "form_ket_experiment009")));
