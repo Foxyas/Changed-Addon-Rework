@@ -76,7 +76,7 @@ public class SmalltickupdateProcedure {
 		}
 		if ((entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get())) : false)
 				|| (entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonModItems.POTWITHCAMONIA.get())) : false)
-				|| (entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINE.get())) : false)) {
+				|| (entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINGE.get())) : false)) {
 			if (entity instanceof ServerPlayer _player) {
 				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuritemadvancement"));
 				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);

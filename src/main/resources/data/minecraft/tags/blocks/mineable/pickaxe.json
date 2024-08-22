@@ -5,8 +5,8 @@
     "changed_addon:painite_block",
     "changed_addon:catlyzer",
     "changed_addon:unifuser",
-    "changed_addon:generator",
     "changed_addon:signal_block",
-    "changed_addon:informantblock"
+    "changed_addon:informantblock",
+    "changed_addon:generator"
   ]
 }

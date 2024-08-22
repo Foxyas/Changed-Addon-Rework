@@ -3,7 +3,7 @@
     {
       "name": "Fadige",
       "type": "potioneffect",
-      "sortid": 37,
+      "sortid": 52,
       "compiles": true,
       "locked_code": false,
       "registry_name": "fadige",
@@ -17,7 +17,7 @@
     {
       "name": "ChangedaddonAdvancement",
       "type": "achievement",
-      "sortid": 41,
+      "sortid": 53,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changedaddon_advancement",
@@ -61,7 +61,7 @@
     {
       "name": "BookPagenumber1",
       "type": "gui",
-      "sortid": 48,
+      "sortid": 54,
       "compiles": true,
       "locked_code": false,
       "registry_name": "book_pagenumber_1",
@@ -77,7 +77,7 @@
     {
       "name": "BookPagenumber2",
       "type": "gui",
-      "sortid": 49,
+      "sortid": 55,
       "compiles": true,
       "locked_code": false,
       "registry_name": "book_pagenumber_2",
@@ -93,7 +93,7 @@
     {
       "name": "Openpage2",
       "type": "procedure",
-      "sortid": 50,
+      "sortid": 56,
       "compiles": true,
       "locked_code": false,
       "registry_name": "openpage_2",
@@ -129,7 +129,7 @@
     {
       "name": "Openpage1",
       "type": "procedure",
-      "sortid": 51,
+      "sortid": 57,
       "compiles": true,
       "locked_code": false,
       "registry_name": "openpage_1",
@@ -165,7 +165,7 @@
     {
       "name": "Bookpagenumber3",
       "type": "gui",
-      "sortid": 52,
+      "sortid": 58,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookpagenumber_3",
@@ -181,7 +181,7 @@
     {
       "name": "Openpage3",
       "type": "procedure",
-      "sortid": 53,
+      "sortid": 59,
       "compiles": true,
       "locked_code": false,
       "registry_name": "openpage_3",
@@ -217,7 +217,7 @@
     {
       "name": "Closemenu",
       "type": "procedure",
-      "sortid": 54,
+      "sortid": 60,
       "compiles": true,
       "locked_code": false,
       "registry_name": "closemenu",
@@ -237,7 +237,7 @@
     {
       "name": "OrangeJuiceIsYummy",
       "type": "achievement",
-      "sortid": 55,
+      "sortid": 61,
       "compiles": true,
       "locked_code": false,
       "registry_name": "orange_juice_is_yummy",
@@ -251,7 +251,7 @@
     {
       "name": "Opennewworldwithmymod",
       "type": "procedure",
-      "sortid": 56,
+      "sortid": 62,
       "compiles": true,
       "locked_code": false,
       "registry_name": "opennewworldwithmymod",
@@ -275,7 +275,7 @@
     {
       "name": "ChangedAddon",
       "type": "tab",
-      "sortid": 57,
+      "sortid": 63,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changed_addon",
@@ -377,7 +377,7 @@
     {
       "name": "Orangejuicerecipe",
       "type": "recipe",
-      "sortid": 58,
+      "sortid": 64,
       "compiles": true,
       "locked_code": true,
       "registry_name": "orangejuicerecipe",
@@ -406,7 +406,7 @@
     {
       "name": "Meant",
       "type": "tag",
-      "sortid": 59,
+      "sortid": 65,
       "compiles": true,
       "locked_code": false,
       "registry_name": "meant",
@@ -420,7 +420,7 @@
     {
       "name": "Impureammoniarecipe",
       "type": "recipe",
-      "sortid": 60,
+      "sortid": 66,
       "compiles": true,
       "locked_code": false,
       "registry_name": "impureammoniarecipe",
@@ -434,7 +434,7 @@
     {
       "name": "Unlatexbaserecipe",
       "type": "recipe",
-      "sortid": 61,
+      "sortid": 67,
       "compiles": true,
       "locked_code": true,
       "registry_name": "unlatexbaserecipe",
@@ -463,7 +463,7 @@
     {
       "name": "Medicalsyringerecipe",
       "type": "recipe",
-      "sortid": 62,
+      "sortid": 68,
       "compiles": true,
       "locked_code": false,
       "registry_name": "medicalsyringerecipe",
@@ -477,7 +477,7 @@
     {
       "name": "PotwithcamoniaPlayerFinishesUsingItem",
       "type": "procedure",
-      "sortid": 63,
+      "sortid": 69,
       "compiles": true,
       "locked_code": false,
       "registry_name": "potwithcamonia_player_finishes_using_item",
@@ -497,7 +497,7 @@
     {
       "name": "Untransfur",
       "type": "potioneffect",
-      "sortid": 64,
+      "sortid": 70,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfur",
@@ -511,7 +511,7 @@
     {
       "name": "UntransfurOnEffectActiveTick",
       "type": "procedure",
-      "sortid": 65,
+      "sortid": 71,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfur_on_effect_active_tick",
@@ -547,7 +547,7 @@
     {
       "name": "SyringewithlitixcammoniaPlayerFinishesUsingItem",
       "type": "procedure",
-      "sortid": 66,
+      "sortid": 72,
       "compiles": true,
       "locked_code": false,
       "registry_name": "syringewithlitixcammonia_player_finishes_using_item",
@@ -583,7 +583,7 @@
     {
       "name": "Untransfuradvancement",
       "type": "achievement",
-      "sortid": 76,
+      "sortid": 73,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfuradvancement",
@@ -597,7 +597,7 @@
     {
       "name": "Untransfuradvancement2",
       "type": "achievement",
-      "sortid": 77,
+      "sortid": 74,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfuradvancement_2",
@@ -611,7 +611,7 @@
     {
       "name": "TimesthesyringewasusedAdvancement",
       "type": "achievement",
-      "sortid": 78,
+      "sortid": 75,
       "compiles": true,
       "locked_code": false,
       "registry_name": "timesthesyringewasused_advancement",
@@ -625,7 +625,7 @@
     {
       "name": "Timesthesyringewasuseadvancement2",
       "type": "achievement",
-      "sortid": 79,
+      "sortid": 76,
       "compiles": true,
       "locked_code": false,
       "registry_name": "timesthesyringewasuseadvancement_2",
@@ -639,7 +639,7 @@
     {
       "name": "Timesthesyringewasuseadvancement3",
       "type": "achievement",
-      "sortid": 80,
+      "sortid": 77,
       "compiles": true,
       "locked_code": false,
       "registry_name": "timesthesyringewasuseadvancement_3",
@@ -653,7 +653,7 @@
     {
       "name": "LitixcamoniaAdcancement",
       "type": "achievement",
-      "sortid": 81,
+      "sortid": 78,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litixcamonia_adcancement",
@@ -667,7 +667,7 @@
     {
       "name": "Ammoniapoweradvancement",
       "type": "achievement",
-      "sortid": 82,
+      "sortid": 79,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ammoniapoweradvancement",
@@ -681,7 +681,7 @@
     {
       "name": "Ammoniacraft",
       "type": "achievement",
-      "sortid": 83,
+      "sortid": 80,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ammoniacraft",
@@ -695,7 +695,7 @@
     {
       "name": "DNAstudyisafantasticthingadvancement",
       "type": "achievement",
-      "sortid": 86,
+      "sortid": 81,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dn_astudyisafantasticthingadvancement",
@@ -709,7 +709,7 @@
     {
       "name": "Untransfuritemadvancement",
       "type": "achievement",
-      "sortid": 87,
+      "sortid": 82,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfuritemadvancement",
@@ -723,7 +723,7 @@
     {
       "name": "AmmoniaparticleItemIsCraftedsmelted",
       "type": "procedure",
-      "sortid": 88,
+      "sortid": 83,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ammoniaparticle_item_is_craftedsmelted",
@@ -743,7 +743,7 @@
     {
       "name": "AmmoniaItemIsCraftedsmelted",
       "type": "procedure",
-      "sortid": 89,
+      "sortid": 84,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ammonia_item_is_craftedsmelted",
@@ -763,7 +763,7 @@
     {
       "name": "InpureammoniaItemIsCraftedsmelted",
       "type": "procedure",
-      "sortid": 90,
+      "sortid": 85,
       "compiles": true,
       "locked_code": false,
       "registry_name": "inpureammonia_item_is_craftedsmelted",
@@ -783,7 +783,7 @@
     {
       "name": "LitixCamoniaItemIsCraftedsmelted",
       "type": "procedure",
-      "sortid": 91,
+      "sortid": 86,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litix_camonia_item_is_craftedsmelted",
@@ -803,8 +803,8 @@
     {
       "name": "Smalltickupdate",
       "type": "procedure",
-      "sortid": 92,
-      "compiles": false,
+      "sortid": 87,
+      "compiles": true,
       "locked_code": false,
       "registry_name": "smalltickupdate",
       "metadata": {
@@ -827,7 +827,7 @@
     {
       "name": "Openpage4",
       "type": "procedure",
-      "sortid": 103,
+      "sortid": 88,
       "compiles": true,
       "locked_code": false,
       "registry_name": "openpage_4",
@@ -863,7 +863,7 @@
     {
       "name": "Bookpagenumber4",
       "type": "gui",
-      "sortid": 104,
+      "sortid": 89,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookpagenumber_4",
@@ -896,7 +896,7 @@
     {
       "name": "LatexInsulatorUpdateTick",
       "type": "procedure",
-      "sortid": 105,
+      "sortid": 90,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_insulator_update_tick",
@@ -928,7 +928,7 @@
     {
       "name": "LatexInsulatorAdvancement",
       "type": "achievement",
-      "sortid": 106,
+      "sortid": 91,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_insulator_advancement",
@@ -942,7 +942,7 @@
     {
       "name": "Pagesecret",
       "type": "gui",
-      "sortid": 108,
+      "sortid": 92,
       "compiles": true,
       "locked_code": false,
       "registry_name": "pagesecret",
@@ -958,7 +958,7 @@
     {
       "name": "Openpagesecret",
       "type": "procedure",
-      "sortid": 109,
+      "sortid": 93,
       "compiles": true,
       "locked_code": false,
       "registry_name": "openpagesecret",
@@ -994,7 +994,7 @@
     {
       "name": "Latexinsulatorrecipe",
       "type": "recipe",
-      "sortid": 112,
+      "sortid": 94,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latexinsulatorrecipe",
@@ -1058,7 +1058,7 @@
     {
       "name": "PainiteOreBlockRecipe",
       "type": "recipe",
-      "sortid": 113,
+      "sortid": 95,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_ore_block_recipe",
@@ -1072,7 +1072,7 @@
     {
       "name": "PainiteBlockOreRecipe",
       "type": "recipe",
-      "sortid": 114,
+      "sortid": 96,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_block_ore_recipe",
@@ -1086,7 +1086,7 @@
     {
       "name": "PainiteOreSmelting",
       "type": "recipe",
-      "sortid": 115,
+      "sortid": 97,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_ore_smelting",
@@ -1100,7 +1100,7 @@
     {
       "name": "PainitePickaxe",
       "type": "tool",
-      "sortid": 116,
+      "sortid": 98,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_pickaxe",
@@ -1115,7 +1115,7 @@
     {
       "name": "PainiteAxe",
       "type": "tool",
-      "sortid": 117,
+      "sortid": 99,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_axe",
@@ -1130,7 +1130,7 @@
     {
       "name": "PainiteSword",
       "type": "tool",
-      "sortid": 118,
+      "sortid": 100,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_sword",
@@ -1145,7 +1145,7 @@
     {
       "name": "PainiteShovel",
       "type": "tool",
-      "sortid": 119,
+      "sortid": 101,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_shovel",
@@ -1160,7 +1160,7 @@
     {
       "name": "PainiteArmor",
       "type": "armor",
-      "sortid": 120,
+      "sortid": 102,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_armor",
@@ -1178,7 +1178,7 @@
     {
       "name": "PainiteOrePrope",
       "type": "loottable",
-      "sortid": 121,
+      "sortid": 103,
       "compiles": true,
       "locked_code": true,
       "registry_name": "painite_ore_prope",
@@ -1192,7 +1192,7 @@
     {
       "name": "Blastpainite",
       "type": "recipe",
-      "sortid": 122,
+      "sortid": 104,
       "compiles": true,
       "locked_code": false,
       "registry_name": "blastpainite",
@@ -1206,7 +1206,7 @@
     {
       "name": "Ifplayeraretransfur",
       "type": "procedure",
-      "sortid": 123,
+      "sortid": 105,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifplayeraretransfur",
@@ -1227,7 +1227,7 @@
     {
       "name": "FoxyasRightClickedOnEntity",
       "type": "procedure",
-      "sortid": 124,
+      "sortid": 106,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_right_clicked_on_entity",
@@ -1283,7 +1283,7 @@
     {
       "name": "Trade",
       "type": "procedure",
-      "sortid": 125,
+      "sortid": 107,
       "compiles": true,
       "locked_code": false,
       "registry_name": "trade",
@@ -1303,7 +1303,7 @@
     {
       "name": "Foxyasgui",
       "type": "gui",
-      "sortid": 126,
+      "sortid": 108,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyasgui",
@@ -1319,7 +1319,7 @@
     {
       "name": "SpawneggoffoxyasRightclicked",
       "type": "procedure",
-      "sortid": 127,
+      "sortid": 109,
       "compiles": true,
       "locked_code": false,
       "registry_name": "spawneggoffoxyas_rightclicked",
@@ -1378,7 +1378,7 @@
     {
       "name": "Spawneggoffoxyasrecipe",
       "type": "recipe",
-      "sortid": 128,
+      "sortid": 110,
       "compiles": true,
       "locked_code": true,
       "registry_name": "spawneggoffoxyasrecipe",
@@ -1392,7 +1392,7 @@
     {
       "name": "FoxyasAdvancement",
       "type": "achievement",
-      "sortid": 129,
+      "sortid": 111,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_advancement",
@@ -1406,7 +1406,7 @@
     {
       "name": "FoxyasEntityDies",
       "type": "procedure",
-      "sortid": 130,
+      "sortid": 112,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_entity_dies",
@@ -1442,7 +1442,7 @@
     {
       "name": "Prototypespawneggrecipe",
       "type": "recipe",
-      "sortid": 131,
+      "sortid": 113,
       "compiles": true,
       "locked_code": false,
       "registry_name": "prototypespawneggrecipe",
@@ -1456,7 +1456,7 @@
     {
       "name": "GeneratorEmittedRedstonePower",
       "type": "procedure",
-      "sortid": 132,
+      "sortid": 114,
       "compiles": true,
       "locked_code": false,
       "registry_name": "generator_emitted_redstone_power",
@@ -1489,7 +1489,7 @@
     {
       "name": "GeneratorOnBlockRightClicked",
       "type": "procedure",
-      "sortid": 133,
+      "sortid": 115,
       "compiles": true,
       "locked_code": false,
       "registry_name": "generator_on_block_right_clicked",
@@ -1525,7 +1525,7 @@
     {
       "name": "Generator",
       "type": "block",
-      "sortid": 134,
+      "sortid": 116,
       "compiles": true,
       "locked_code": false,
       "registry_name": "generator",
@@ -1543,7 +1543,7 @@
     {
       "name": "GeneratorUpdateTick",
       "type": "procedure",
-      "sortid": 135,
+      "sortid": 117,
       "compiles": true,
       "locked_code": false,
       "registry_name": "generator_update_tick",
@@ -1575,7 +1575,7 @@
     {
       "name": "GeneratorguiValue",
       "type": "procedure",
-      "sortid": 136,
+      "sortid": 118,
       "compiles": true,
       "locked_code": false,
       "registry_name": "generatorgui_value",
@@ -1608,7 +1608,7 @@
     {
       "name": "GeneratorguiValue2",
       "type": "procedure",
-      "sortid": 137,
+      "sortid": 119,
       "compiles": true,
       "locked_code": false,
       "registry_name": "generatorgui_value_2",
@@ -1641,7 +1641,7 @@
     {
       "name": "Generatorgui",
       "type": "gui",
-      "sortid": 138,
+      "sortid": 120,
       "compiles": true,
       "locked_code": false,
       "registry_name": "generatorgui",
@@ -1657,7 +1657,7 @@
     {
       "name": "Bookrecipe",
       "type": "recipe",
-      "sortid": 139,
+      "sortid": 121,
       "compiles": true,
       "locked_code": true,
       "registry_name": "bookrecipe",
@@ -1671,7 +1671,7 @@
     {
       "name": "LitixCamoniaSprayRightclickedOnBlock",
       "type": "procedure",
-      "sortid": 140,
+      "sortid": 122,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litix_camonia_spray_rightclicked_on_block",
@@ -1730,7 +1730,7 @@
     {
       "name": "EmptySprayRightclickedOnBlock",
       "type": "procedure",
-      "sortid": 141,
+      "sortid": 123,
       "compiles": true,
       "locked_code": false,
       "registry_name": "empty_spray_rightclicked_on_block",
@@ -1781,7 +1781,7 @@
     {
       "name": "LitixCamoniaFluidUpdateTick",
       "type": "procedure",
-      "sortid": 142,
+      "sortid": 124,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litix_camonia_fluid_update_tick",
@@ -1832,7 +1832,7 @@
     {
       "name": "LitixCamoniaFluidcraft",
       "type": "recipe",
-      "sortid": 143,
+      "sortid": 125,
       "compiles": true,
       "locked_code": true,
       "registry_name": "litix_camonia_fluidcraft",
@@ -1846,7 +1846,7 @@
     {
       "name": "EmptySprayRecipe",
       "type": "recipe",
-      "sortid": 144,
+      "sortid": 126,
       "compiles": true,
       "locked_code": false,
       "registry_name": "empty_spray_recipe",
@@ -1878,7 +1878,7 @@
     {
       "name": "CatlyzerUpdateTick",
       "type": "procedure",
-      "sortid": 145,
+      "sortid": 127,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catlyzer_update_tick",
@@ -1910,7 +1910,7 @@
     {
       "name": "CatlyzerguiValue",
       "type": "procedure",
-      "sortid": 146,
+      "sortid": 128,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catlyzergui_value",
@@ -1943,7 +1943,7 @@
     {
       "name": "Catlyzergui",
       "type": "gui",
-      "sortid": 147,
+      "sortid": 129,
       "compiles": true,
       "locked_code": true,
       "registry_name": "catlyzergui",
@@ -1959,7 +1959,7 @@
     {
       "name": "Show10porcentbar",
       "type": "procedure",
-      "sortid": 148,
+      "sortid": 130,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_10porcentbar",
@@ -1992,7 +1992,7 @@
     {
       "name": "Show25porcentbar",
       "type": "procedure",
-      "sortid": 149,
+      "sortid": 131,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_25porcentbar",
@@ -2025,7 +2025,7 @@
     {
       "name": "Show50porcentbar",
       "type": "procedure",
-      "sortid": 150,
+      "sortid": 132,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_50porcentbar",
@@ -2058,7 +2058,7 @@
     {
       "name": "Show75porcentbar",
       "type": "procedure",
-      "sortid": 151,
+      "sortid": 133,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_75porcentbar",
@@ -2091,7 +2091,7 @@
     {
       "name": "Show90porcentbar",
       "type": "procedure",
-      "sortid": 152,
+      "sortid": 134,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_90porcentbar",
@@ -2124,7 +2124,7 @@
     {
       "name": "Showfullbar",
       "type": "procedure",
-      "sortid": 153,
+      "sortid": 135,
       "compiles": true,
       "locked_code": false,
       "registry_name": "showfullbar",
@@ -2157,7 +2157,7 @@
     {
       "name": "Show0porcentbar",
       "type": "procedure",
-      "sortid": 154,
+      "sortid": 136,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_0porcentbar",
@@ -2190,7 +2190,7 @@
     {
       "name": "CatlyzerOnBlockRightClicked",
       "type": "procedure",
-      "sortid": 155,
+      "sortid": 137,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catlyzer_on_block_right_clicked",
@@ -2244,7 +2244,7 @@
     {
       "name": "Unifusergui",
       "type": "gui",
-      "sortid": 156,
+      "sortid": 138,
       "compiles": true,
       "locked_code": true,
       "registry_name": "unifusergui",
@@ -2260,7 +2260,7 @@
     {
       "name": "UnifuserOnBlockRightClicked",
       "type": "procedure",
-      "sortid": 157,
+      "sortid": 139,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifuser_on_block_right_clicked",
@@ -2296,7 +2296,7 @@
     {
       "name": "UnifuserUpdateTick",
       "type": "procedure",
-      "sortid": 158,
+      "sortid": 140,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifuser_update_tick",
@@ -2328,7 +2328,7 @@
     {
       "name": "UnifuserguiDisableItemstackPlacement",
       "type": "procedure",
-      "sortid": 159,
+      "sortid": 141,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifusergui_disable_itemstack_placement",
@@ -2349,7 +2349,7 @@
     {
       "name": "UnifuserguiDisableItemstackPlacementslot0",
       "type": "procedure",
-      "sortid": 160,
+      "sortid": 142,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifusergui_disable_itemstack_placementslot_0",
@@ -2370,7 +2370,7 @@
     {
       "name": "Blockstartinfo",
       "type": "procedure",
-      "sortid": 161,
+      "sortid": 143,
       "compiles": true,
       "locked_code": false,
       "registry_name": "blockstartinfo",
@@ -2403,7 +2403,7 @@
     {
       "name": "Syringechange",
       "type": "recipe",
-      "sortid": 162,
+      "sortid": 144,
       "compiles": true,
       "locked_code": true,
       "registry_name": "syringechange",
@@ -2417,7 +2417,7 @@
     {
       "name": "Syringestag",
       "type": "tag",
-      "sortid": 163,
+      "sortid": 145,
       "compiles": true,
       "locked_code": true,
       "registry_name": "syringestag",
@@ -2431,7 +2431,7 @@
     {
       "name": "Catlyzerrecipe",
       "type": "recipe",
-      "sortid": 164,
+      "sortid": 146,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catlyzerrecipe",
@@ -2445,7 +2445,7 @@
     {
       "name": "UnifuserRecipe",
       "type": "recipe",
-      "sortid": 165,
+      "sortid": 147,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifuser_recipe",
@@ -2459,7 +2459,7 @@
     {
       "name": "Syringechange2",
       "type": "recipe",
-      "sortid": 166,
+      "sortid": 148,
       "compiles": true,
       "locked_code": true,
       "registry_name": "syringechange_2",
@@ -2473,7 +2473,7 @@
     {
       "name": "Bookpagenumber5",
       "type": "gui",
-      "sortid": 167,
+      "sortid": 149,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookpagenumber_5",
@@ -2489,7 +2489,7 @@
     {
       "name": "Openbookpage5",
       "type": "procedure",
-      "sortid": 168,
+      "sortid": 150,
       "compiles": true,
       "locked_code": false,
       "registry_name": "openbookpage_5",
@@ -2525,7 +2525,7 @@
     {
       "name": "IfBlockisfull",
       "type": "procedure",
-      "sortid": 169,
+      "sortid": 151,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_blockisfull",
@@ -2558,7 +2558,7 @@
     {
       "name": "UnifuserAdvancement",
       "type": "achievement",
-      "sortid": 176,
+      "sortid": 152,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifuser_advancement",
@@ -2572,7 +2572,7 @@
     {
       "name": "CatlyzerAdvancement",
       "type": "achievement",
-      "sortid": 177,
+      "sortid": 153,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catlyzer_advancement",
@@ -2586,7 +2586,7 @@
     {
       "name": "Tooglewarns",
       "type": "procedure",
-      "sortid": 178,
+      "sortid": 154,
       "compiles": true,
       "locked_code": false,
       "registry_name": "tooglewarns",
@@ -2610,7 +2610,7 @@
     {
       "name": "GiveBlockCraftAdvancement",
       "type": "procedure",
-      "sortid": 179,
+      "sortid": 155,
       "compiles": true,
       "locked_code": false,
       "registry_name": "give_block_craft_advancement",
@@ -2634,7 +2634,7 @@
     {
       "name": "HyperFlower",
       "type": "procedure",
-      "sortid": 182,
+      "sortid": 156,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hyper_flower",
@@ -2662,7 +2662,7 @@
     {
       "name": "SetPlayerTransFurProgressFor0",
       "type": "procedure",
-      "sortid": 183,
+      "sortid": 157,
       "compiles": true,
       "locked_code": true,
       "registry_name": "set_player_trans_fur_progress_for_0",
@@ -2674,7 +2674,7 @@
     {
       "name": "Fighttokeepconsciousness",
       "type": "gamerule",
-      "sortid": 184,
+      "sortid": 158,
       "compiles": true,
       "locked_code": false,
       "registry_name": "fighttokeepconsciousness",
@@ -2687,7 +2687,7 @@
     {
       "name": "FightTokeepyourconsciousness",
       "type": "procedure",
-      "sortid": 185,
+      "sortid": 159,
       "compiles": true,
       "locked_code": false,
       "registry_name": "fight_tokeepyourconsciousness",
@@ -2723,7 +2723,7 @@
     {
       "name": "FightTokeepconsciousnessminigameValue",
       "type": "procedure",
-      "sortid": 186,
+      "sortid": 160,
       "compiles": true,
       "locked_code": false,
       "registry_name": "fight_tokeepconsciousnessminigame_value",
@@ -2744,7 +2744,7 @@
     {
       "name": "FightTokeepconsciousnessminigame",
       "type": "gui",
-      "sortid": 187,
+      "sortid": 161,
       "compiles": true,
       "locked_code": false,
       "registry_name": "fight_tokeepconsciousnessminigame",
@@ -2760,7 +2760,7 @@
     {
       "name": "Fightforyourconscience",
       "type": "procedure",
-      "sortid": 188,
+      "sortid": 162,
       "compiles": true,
       "locked_code": false,
       "registry_name": "fightforyourconscience",
@@ -2780,7 +2780,7 @@
     {
       "name": "Giveup",
       "type": "procedure",
-      "sortid": 189,
+      "sortid": 163,
       "compiles": true,
       "locked_code": false,
       "registry_name": "giveup",
@@ -2800,7 +2800,7 @@
     {
       "name": "PotwithlitixcamoniaAdvancement",
       "type": "achievement",
-      "sortid": 190,
+      "sortid": 164,
       "compiles": true,
       "locked_code": false,
       "registry_name": "potwithlitixcamonia_advancement",
@@ -2814,7 +2814,7 @@
     {
       "name": "OverDose",
       "type": "achievement",
-      "sortid": 191,
+      "sortid": 165,
       "compiles": true,
       "locked_code": false,
       "registry_name": "over_dose",
@@ -2828,7 +2828,7 @@
     {
       "name": "SyringewithlitixcammoniaLivingEntityIsHitWithItem",
       "type": "procedure",
-      "sortid": 193,
+      "sortid": 166,
       "compiles": true,
       "locked_code": false,
       "registry_name": "syringewithlitixcammonia_living_entity_is_hit_with_item",
@@ -2856,7 +2856,7 @@
     {
       "name": "Infoaddonwarns",
       "type": "procedure",
-      "sortid": 197,
+      "sortid": 167,
       "compiles": true,
       "locked_code": false,
       "registry_name": "infoaddonwarns",
@@ -2876,7 +2876,7 @@
     {
       "name": "LitixCamoniaFluidMobplayerCollidesBlock",
       "type": "procedure",
-      "sortid": 201,
+      "sortid": 168,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litix_camonia_fluid_mobplayer_collides_block",
@@ -2896,7 +2896,7 @@
     {
       "name": "OrganicTransfurAdvancement",
       "type": "achievement",
-      "sortid": 202,
+      "sortid": 169,
       "compiles": true,
       "locked_code": true,
       "registry_name": "organic_transfur_advancement",
@@ -2910,7 +2910,7 @@
     {
       "name": "Toggleresettransfuradvancements",
       "type": "procedure",
-      "sortid": 204,
+      "sortid": 170,
       "compiles": true,
       "locked_code": false,
       "registry_name": "toggleresettransfuradvancements",
@@ -2934,7 +2934,7 @@
     {
       "name": "Inforesettransfuradvancement",
       "type": "procedure",
-      "sortid": 205,
+      "sortid": 171,
       "compiles": true,
       "locked_code": false,
       "registry_name": "inforesettransfuradvancement",
@@ -2954,7 +2954,7 @@
     {
       "name": "Changedaddoncommandroot",
       "type": "command",
-      "sortid": 206,
+      "sortid": 172,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changedaddoncommandroot",
@@ -2968,7 +2968,7 @@
     {
       "name": "LatexInsulatorEntityCollidesInTheBlock",
       "type": "procedure",
-      "sortid": 208,
+      "sortid": 173,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_insulator_entity_collides_in_the_block",
@@ -2988,7 +2988,7 @@
     {
       "name": "LitixCamoniaeffect",
       "type": "potion",
-      "sortid": 209,
+      "sortid": 174,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litixcamoniaeffect",
@@ -3000,7 +3000,7 @@
     {
       "name": "LitixCamoniaarrow",
       "type": "recipe",
-      "sortid": 210,
+      "sortid": 175,
       "compiles": true,
       "locked_code": true,
       "registry_name": "litix_camoniaarrow",
@@ -3014,7 +3014,7 @@
     {
       "name": "Experiment009",
       "type": "livingentity",
-      "sortid": 211,
+      "sortid": 176,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009",
@@ -3030,7 +3030,7 @@
     {
       "name": "Experiment009OnInitialEntitySpawn",
       "type": "procedure",
-      "sortid": 212,
+      "sortid": 177,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_on_initial_entity_spawn",
@@ -3066,7 +3066,7 @@
     {
       "name": "Experiment009phase2OnInitialEntitySpawn",
       "type": "procedure",
-      "sortid": 213,
+      "sortid": 178,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009phase_2_on_initial_entity_spawn",
@@ -3102,7 +3102,7 @@
     {
       "name": "Experiment009phase2",
       "type": "livingentity",
-      "sortid": 214,
+      "sortid": 179,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_phase_2",
@@ -3118,7 +3118,7 @@
     {
       "name": "Experiment009EntityDies",
       "type": "procedure",
-      "sortid": 215,
+      "sortid": 180,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_entity_dies",
@@ -3158,7 +3158,7 @@
     {
       "name": "Experiment009phase2EntityDies",
       "type": "procedure",
-      "sortid": 216,
+      "sortid": 181,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009phase_2_entity_dies",
@@ -3182,7 +3182,7 @@
     {
       "name": "Experiment009phase2OnEntityTickUpdate",
       "type": "procedure",
-      "sortid": 217,
+      "sortid": 182,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009phase_2_on_entity_tick_update",
@@ -3218,7 +3218,7 @@
     {
       "name": "Ifplayerishighofentity",
       "type": "procedure",
-      "sortid": 218,
+      "sortid": 183,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifplayerishighofentity",
@@ -3239,7 +3239,7 @@
     {
       "name": "Ifplayerislowofentity",
       "type": "procedure",
-      "sortid": 219,
+      "sortid": 184,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifplayerislowofentity",
@@ -3260,7 +3260,7 @@
     {
       "name": "Experiment009LootDrop",
       "type": "loottable",
-      "sortid": 220,
+      "sortid": 185,
       "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_009_loot_drop",
@@ -3274,7 +3274,7 @@
     {
       "name": "Experiment009recipe",
       "type": "recipe",
-      "sortid": 221,
+      "sortid": 186,
       "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_009recipe",
@@ -3303,7 +3303,7 @@
     {
       "name": "PainiteOreBlockDestroyedByPlayer",
       "type": "procedure",
-      "sortid": 222,
+      "sortid": 187,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_ore_block_destroyed_by_player",
@@ -3339,7 +3339,7 @@
     {
       "name": "PainiteOreBlockDestroyedByExplosion",
       "type": "procedure",
-      "sortid": 223,
+      "sortid": 188,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_ore_block_destroyed_by_explosion",
@@ -3386,7 +3386,7 @@
     {
       "name": "Experiment009Structureloot",
       "type": "loottable",
-      "sortid": 237,
+      "sortid": 189,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_structureloot",
@@ -3400,7 +3400,7 @@
     {
       "name": "UnifuserBlockAdded",
       "type": "procedure",
-      "sortid": 238,
+      "sortid": 190,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifuser_block_added",
@@ -3432,7 +3432,7 @@
     {
       "name": "DestroyStructureExperiment009Loot",
       "type": "loottable",
-      "sortid": 239,
+      "sortid": 191,
       "compiles": true,
       "locked_code": false,
       "registry_name": "destroy_structure_experiment_009_loot",
@@ -3446,7 +3446,7 @@
     {
       "name": "Ifplayerareinwater",
       "type": "procedure",
-      "sortid": 240,
+      "sortid": 192,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifplayerareinwater",
@@ -3467,7 +3467,7 @@
     {
       "name": "Experiment009OnEntityTickUpdate",
       "type": "procedure",
-      "sortid": 241,
+      "sortid": 193,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_on_entity_tick_update",
@@ -3491,7 +3491,7 @@
     {
       "name": "SmallEntityTickUpdate",
       "type": "procedure",
-      "sortid": 242,
+      "sortid": 194,
       "compiles": true,
       "locked_code": false,
       "registry_name": "small_entity_tick_update",
@@ -3515,7 +3515,7 @@
     {
       "name": "TickPlayerAreinDuct",
       "type": "procedure",
-      "sortid": 243,
+      "sortid": 195,
       "compiles": true,
       "locked_code": false,
       "registry_name": "tick_player_arein_duct",
@@ -3539,7 +3539,7 @@
     {
       "name": "PlayerRightClickInDuct",
       "type": "procedure",
-      "sortid": 244,
+      "sortid": 196,
       "compiles": true,
       "locked_code": false,
       "registry_name": "player_right_click_in_duct",
@@ -3579,7 +3579,7 @@
     {
       "name": "DescontrolSyringePlayerFinishesUsingItem",
       "type": "procedure",
-      "sortid": 245,
+      "sortid": 197,
       "compiles": true,
       "locked_code": false,
       "registry_name": "descontrol_syringe_player_finishes_using_item",
@@ -3615,7 +3615,7 @@
     {
       "name": "FoxyasguiDisableItemstackPlacement",
       "type": "procedure",
-      "sortid": 246,
+      "sortid": 198,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyasgui_disable_itemstack_placement",
@@ -3636,7 +3636,7 @@
     {
       "name": "FoxyasGuiEntityDisplay",
       "type": "procedure",
-      "sortid": 247,
+      "sortid": 199,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_gui_entity_display",
@@ -3657,7 +3657,7 @@
     {
       "name": "FoxyasguiWhileThisGUIIsOpenTick",
       "type": "procedure",
-      "sortid": 248,
+      "sortid": 200,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyasgui_while_this_gui_is_open_tick",
@@ -3697,7 +3697,7 @@
     {
       "name": "FoxyasGui2",
       "type": "gui",
-      "sortid": 249,
+      "sortid": 201,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_gui_2",
@@ -3713,7 +3713,7 @@
     {
       "name": "FoxyasDeal",
       "type": "procedure",
-      "sortid": 250,
+      "sortid": 202,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_deal",
@@ -3733,7 +3733,7 @@
     {
       "name": "IfplayerhaveDealTrue",
       "type": "procedure",
-      "sortid": 251,
+      "sortid": 203,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifplayerhave_deal_true",
@@ -3754,7 +3754,7 @@
     {
       "name": "FoxyasDealNo",
       "type": "procedure",
-      "sortid": 252,
+      "sortid": 204,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_deal_no",
@@ -3774,7 +3774,7 @@
     {
       "name": "IfplayerHaveDealFalse",
       "type": "procedure",
-      "sortid": 253,
+      "sortid": 205,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifplayer_have_deal_false",
@@ -3795,7 +3795,7 @@
     {
       "name": "FoxyasDealYes",
       "type": "procedure",
-      "sortid": 254,
+      "sortid": 206,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_deal_yes",
@@ -3815,7 +3815,7 @@
     {
       "name": "FoxyasGui2ThisGUIIsOpened",
       "type": "procedure",
-      "sortid": 255,
+      "sortid": 207,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_gui_2_this_gui_is_opened",
@@ -3835,7 +3835,7 @@
     {
       "name": "FriendlyTransfur",
       "type": "achievement",
-      "sortid": 256,
+      "sortid": 208,
       "compiles": true,
       "locked_code": false,
       "registry_name": "friendly_transfur",
@@ -3849,7 +3849,7 @@
     {
       "name": "DescontrolSyringerecipe",
       "type": "recipe",
-      "sortid": 257,
+      "sortid": 209,
       "compiles": true,
       "locked_code": false,
       "registry_name": "descontrol_syringerecipe",
@@ -3863,7 +3863,7 @@
     {
       "name": "FoxyasguiThisGUIIsOpened",
       "type": "procedure",
-      "sortid": 258,
+      "sortid": 210,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyasgui_this_gui_is_opened",
@@ -3883,7 +3883,7 @@
     {
       "name": "FoxyasguiThisGUIIsClosed",
       "type": "procedure",
-      "sortid": 259,
+      "sortid": 211,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyasgui_this_gui_is_closed",
@@ -3903,7 +3903,7 @@
     {
       "name": "FoxyasOnEntityTickUpdate",
       "type": "procedure",
-      "sortid": 260,
+      "sortid": 212,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas_on_entity_tick_update",
@@ -3927,7 +3927,7 @@
     {
       "name": "LatexEntitysTag",
       "type": "tag",
-      "sortid": 261,
+      "sortid": 213,
       "compiles": true,
       "locked_code": true,
       "registry_name": "latex_entitys_tag",
@@ -3941,7 +3941,7 @@
     {
       "name": "Solvent",
       "type": "enchantment",
-      "sortid": 262,
+      "sortid": 214,
       "compiles": true,
       "locked_code": false,
       "registry_name": "solvent",
@@ -3955,7 +3955,7 @@
     {
       "name": "TickentitySolventEnchantmenthit",
       "type": "procedure",
-      "sortid": 263,
+      "sortid": 215,
       "compiles": true,
       "locked_code": false,
       "registry_name": "tickentity_solvent_enchantmenthit",
@@ -3983,7 +3983,7 @@
     {
       "name": "ChangedAddonDuctMecanic",
       "type": "gamerule",
-      "sortid": 264,
+      "sortid": 216,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changed_addon_duct_mecanic",
@@ -3996,7 +3996,7 @@
     {
       "name": "LitixCamoniaSprayBroke",
       "type": "procedure",
-      "sortid": 269,
+      "sortid": 217,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litix_camonia_spray_broke",
@@ -4020,7 +4020,7 @@
     {
       "name": "TransfursExtraSoundDetails",
       "type": "procedure",
-      "sortid": 272,
+      "sortid": 218,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfurs_extra_sound_details",
@@ -4048,7 +4048,7 @@
     {
       "name": "LatexSolvent",
       "type": "potioneffect",
-      "sortid": 273,
+      "sortid": 219,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_solvent",
@@ -4062,7 +4062,7 @@
     {
       "name": "LatexSolventOnEffectActiveTick",
       "type": "procedure",
-      "sortid": 274,
+      "sortid": 220,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_solvent_on_effect_active_tick",
@@ -4082,7 +4082,7 @@
     {
       "name": "LatexSolventEffectExpires",
       "type": "procedure",
-      "sortid": 275,
+      "sortid": 221,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_solvent_effect_expires",
@@ -4102,11 +4102,14 @@
     {
       "name": "EntityLatexSolventOnEffectActiveTick",
       "type": "procedure",
-      "sortid": 276,
+      "sortid": 222,
       "compiles": true,
       "locked_code": false,
       "registry_name": "entity_latex_solvent_on_effect_active_tick",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/EntityLatexSolventOnEffectActiveTickProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -4119,7 +4122,7 @@
     {
       "name": "ShowUnifuserRecipes",
       "type": "procedure",
-      "sortid": 277,
+      "sortid": 223,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_unifuser_recipes",
@@ -4139,7 +4142,7 @@
     {
       "name": "IfShowUnifuserRecipes",
       "type": "procedure",
-      "sortid": 278,
+      "sortid": 224,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_show_unifuser_recipes",
@@ -4160,7 +4163,7 @@
     {
       "name": "IfShowUnifuserRecipes2",
       "type": "procedure",
-      "sortid": 279,
+      "sortid": 225,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_show_unifuser_recipes_2",
@@ -4181,7 +4184,7 @@
     {
       "name": "IfShowUnifuserRecipesPage1",
       "type": "procedure",
-      "sortid": 280,
+      "sortid": 226,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_show_unifuser_recipes_page_1",
@@ -4202,7 +4205,7 @@
     {
       "name": "SetRecipePage",
       "type": "procedure",
-      "sortid": 281,
+      "sortid": 227,
       "compiles": true,
       "locked_code": false,
       "registry_name": "set_recipe_page",
@@ -4238,7 +4241,7 @@
     {
       "name": "UnifuserguiThisGUIIsOpened",
       "type": "procedure",
-      "sortid": 282,
+      "sortid": 228,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifusergui_this_gui_is_opened",
@@ -4270,7 +4273,7 @@
     {
       "name": "IfShowCatlyzerRecipePage1",
       "type": "procedure",
-      "sortid": 283,
+      "sortid": 229,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_show_catlyzer_recipe_page_1",
@@ -4291,7 +4294,7 @@
     {
       "name": "RecipeReset",
       "type": "procedure",
-      "sortid": 284,
+      "sortid": 230,
       "compiles": true,
       "locked_code": false,
       "registry_name": "recipe_reset",
@@ -4311,7 +4314,7 @@
     {
       "name": "RecipeProgress",
       "type": "procedure",
-      "sortid": 285,
+      "sortid": 231,
       "compiles": true,
       "locked_code": false,
       "registry_name": "recipe_progress",
@@ -4344,7 +4347,7 @@
     {
       "name": "LatexResistancetick",
       "type": "procedure",
-      "sortid": 286,
+      "sortid": 232,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_resistancetick",
@@ -4364,7 +4367,7 @@
     {
       "name": "LatexResistance",
       "type": "attribute",
-      "sortid": 287,
+      "sortid": 233,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latexresistance",
@@ -4376,7 +4379,7 @@
     {
       "name": "LatexSolventEffectStartedapplied",
       "type": "procedure",
-      "sortid": 288,
+      "sortid": 234,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_solvent_effect_startedapplied",
@@ -4396,7 +4399,7 @@
     {
       "name": "OpenExtraDetails",
       "type": "keybind",
-      "sortid": 289,
+      "sortid": 235,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_extra_details",
@@ -4410,7 +4413,7 @@
     {
       "name": "PlaySoundhiss",
       "type": "procedure",
-      "sortid": 290,
+      "sortid": 236,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_soundhiss",
@@ -4434,7 +4437,7 @@
     {
       "name": "PlaySoundMeow",
       "type": "procedure",
-      "sortid": 291,
+      "sortid": 237,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_sound_meow",
@@ -4458,7 +4461,7 @@
     {
       "name": "PlaySoundPurreow",
       "type": "procedure",
-      "sortid": 292,
+      "sortid": 238,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_sound_purreow",
@@ -4482,7 +4485,7 @@
     {
       "name": "PlaySoundPurr",
       "type": "procedure",
-      "sortid": 293,
+      "sortid": 239,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_sound_purr",
@@ -4506,7 +4509,7 @@
     {
       "name": "PlaySoundgrowl",
       "type": "procedure",
-      "sortid": 294,
+      "sortid": 240,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_soundgrowl",
@@ -4530,7 +4533,7 @@
     {
       "name": "PlaySoundbark",
       "type": "procedure",
-      "sortid": 295,
+      "sortid": 241,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_soundbark",
@@ -4554,7 +4557,7 @@
     {
       "name": "PlaySoundhowl",
       "type": "procedure",
-      "sortid": 296,
+      "sortid": 242,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_soundhowl",
@@ -4578,7 +4581,7 @@
     {
       "name": "ReturnTypeTransfurSound",
       "type": "procedure",
-      "sortid": 297,
+      "sortid": 243,
       "compiles": true,
       "locked_code": false,
       "registry_name": "return_type_transfur_sound",
@@ -4599,7 +4602,7 @@
     {
       "name": "IfDogLatex",
       "type": "procedure",
-      "sortid": 298,
+      "sortid": 244,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_dog_latex",
@@ -4620,7 +4623,7 @@
     {
       "name": "IfCatlatex",
       "type": "procedure",
-      "sortid": 299,
+      "sortid": 245,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_catlatex",
@@ -4641,7 +4644,7 @@
     {
       "name": "TranfurSoundsGui",
       "type": "gui",
-      "sortid": 300,
+      "sortid": 246,
       "compiles": true,
       "locked_code": false,
       "registry_name": "tranfur_sounds_gui",
@@ -4657,7 +4660,7 @@
     {
       "name": "OpenTranfurExtra",
       "type": "procedure",
-      "sortid": 301,
+      "sortid": 247,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_tranfur_extra",
@@ -4693,7 +4696,7 @@
     {
       "name": "OpenFoxyasGui2",
       "type": "procedure",
-      "sortid": 302,
+      "sortid": 248,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_foxyas_gui_2",
@@ -4729,7 +4732,7 @@
     {
       "name": "CooldownReset",
       "type": "procedure",
-      "sortid": 303,
+      "sortid": 249,
       "compiles": true,
       "locked_code": false,
       "registry_name": "cooldown_reset",
@@ -4750,7 +4753,7 @@
     {
       "name": "CatlyzerblockIllustrativeItem",
       "type": "item",
-      "sortid": 304,
+      "sortid": 250,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catlyzerblock_illustrative_item",
@@ -4765,7 +4768,7 @@
     {
       "name": "UnifuserblockIllustrativeItem",
       "type": "item",
-      "sortid": 305,
+      "sortid": 251,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifuserblock_illustrative_item",
@@ -4780,7 +4783,7 @@
     {
       "name": "PotWithLitixCamoniaRecipe",
       "type": "recipe",
-      "sortid": 306,
+      "sortid": 252,
       "compiles": true,
       "locked_code": true,
       "registry_name": "pot_with_litix_camonia_recipe",
@@ -4794,7 +4797,7 @@
     {
       "name": "LitixCamoniajeirecipe",
       "type": "recipe",
-      "sortid": 307,
+      "sortid": 253,
       "compiles": true,
       "locked_code": true,
       "registry_name": "litix_camoniajeirecipe",
@@ -4808,7 +4811,7 @@
     {
       "name": "MultiLitixCamoniaJeiRecipe",
       "type": "recipe",
-      "sortid": 308,
+      "sortid": 254,
       "compiles": true,
       "locked_code": true,
       "registry_name": "multi_litix_camonia_jei_recipe",
@@ -4822,7 +4825,7 @@
     {
       "name": "SyringewithlitixcamoniajeiRecipe",
       "type": "recipe",
-      "sortid": 309,
+      "sortid": 255,
       "compiles": true,
       "locked_code": true,
       "registry_name": "syringewithlitixcamoniajei_recipe",
@@ -4836,7 +4839,7 @@
     {
       "name": "AmmoniaParticlejeiRecipe",
       "type": "recipe",
-      "sortid": 310,
+      "sortid": 256,
       "compiles": true,
       "locked_code": true,
       "registry_name": "ammonia_particlejei_recipe",
@@ -4850,7 +4853,7 @@
     {
       "name": "AmmoniaPowderJeiRecipe",
       "type": "recipe",
-      "sortid": 311,
+      "sortid": 257,
       "compiles": true,
       "locked_code": true,
       "registry_name": "ammonia_powder_jei_recipe",
@@ -4864,7 +4867,7 @@
     {
       "name": "BloodTypesSyringe",
       "type": "tag",
-      "sortid": 312,
+      "sortid": 258,
       "compiles": true,
       "locked_code": true,
       "registry_name": "blood_types_syringe",
@@ -4878,7 +4881,7 @@
     {
       "name": "CatalyzeddnaJeiRecipe",
       "type": "recipe",
-      "sortid": 313,
+      "sortid": 259,
       "compiles": true,
       "locked_code": true,
       "registry_name": "catalyzeddna_jei_recipe",
@@ -4892,7 +4895,7 @@
     {
       "name": "AmmoniaParticlesJeiIllustrative",
       "type": "item",
-      "sortid": 314,
+      "sortid": 260,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ammonia_particles_jei_illustrative",
@@ -4925,7 +4928,7 @@
     {
       "name": "TickHazardArmorFeature",
       "type": "procedure",
-      "sortid": 315,
+      "sortid": 261,
       "compiles": true,
       "locked_code": false,
       "registry_name": "tick_hazard_armor_feature",
@@ -4940,7 +4943,7 @@
     {
       "name": "HazardbootsRecipe",
       "type": "recipe",
-      "sortid": 316,
+      "sortid": 262,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazardboots_recipe",
@@ -4954,7 +4957,7 @@
     {
       "name": "HazardLegginsRecipe",
       "type": "recipe",
-      "sortid": 317,
+      "sortid": 263,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazard_leggins_recipe",
@@ -4968,7 +4971,7 @@
     {
       "name": "HazardChestplateRecipe",
       "type": "recipe",
-      "sortid": 318,
+      "sortid": 264,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazard_chestplate_recipe",
@@ -4982,7 +4985,7 @@
     {
       "name": "Hazardhelmetrecipe",
       "type": "recipe",
-      "sortid": 319,
+      "sortid": 265,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazardhelmetrecipe",
@@ -4996,7 +4999,7 @@
     {
       "name": "SetCoolDownOff",
       "type": "procedure",
-      "sortid": 320,
+      "sortid": 266,
       "compiles": true,
       "locked_code": false,
       "registry_name": "set_cool_down_off",
@@ -5016,7 +5019,7 @@
     {
       "name": "Ifplayerarenttransfur",
       "type": "procedure",
-      "sortid": 321,
+      "sortid": 267,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifplayerarenttransfur",
@@ -5037,7 +5040,7 @@
     {
       "name": "PainiteHoe",
       "type": "tool",
-      "sortid": 322,
+      "sortid": 268,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_hoe",
@@ -5052,7 +5055,7 @@
     {
       "name": "PainiteBeaconFeature",
       "type": "tag",
-      "sortid": 323,
+      "sortid": 269,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_beacon_feature",
@@ -5066,7 +5069,7 @@
     {
       "name": "DarklatexpuddleFeature",
       "type": "procedure",
-      "sortid": 324,
+      "sortid": 270,
       "compiles": true,
       "locked_code": false,
       "registry_name": "darklatexpuddle_feature",
@@ -5127,7 +5130,7 @@
     {
       "name": "BlockthatareLatexImmune",
       "type": "tag",
-      "sortid": 325,
+      "sortid": 271,
       "compiles": true,
       "locked_code": false,
       "registry_name": "blockthatare_latex_immune",
@@ -5141,7 +5144,7 @@
     {
       "name": "DarklatexpuddleBlockAdded",
       "type": "procedure",
-      "sortid": 326,
+      "sortid": 272,
       "compiles": true,
       "locked_code": false,
       "registry_name": "darklatexpuddle_block_added",
@@ -5173,7 +5176,7 @@
     {
       "name": "DarklatexpuddleUpdateTick",
       "type": "procedure",
-      "sortid": 327,
+      "sortid": 273,
       "compiles": true,
       "locked_code": false,
       "registry_name": "darklatexpuddle_update_tick",
@@ -5205,7 +5208,7 @@
     {
       "name": "DarkLatexPuddlerecipe",
       "type": "recipe",
-      "sortid": 328,
+      "sortid": 274,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dark_latex_puddlerecipe",
@@ -5219,7 +5222,7 @@
     {
       "name": "PainiteblockTag",
       "type": "tag",
-      "sortid": 329,
+      "sortid": 275,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painiteblock_tag",
@@ -5233,7 +5236,7 @@
     {
       "name": "GiveBookOnStart",
       "type": "gamerule",
-      "sortid": 334,
+      "sortid": 276,
       "compiles": true,
       "locked_code": false,
       "registry_name": "give_book_on_start",
@@ -5246,7 +5249,7 @@
     {
       "name": "ObtainPainite",
       "type": "achievement",
-      "sortid": 335,
+      "sortid": 277,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_painite",
@@ -5260,7 +5263,7 @@
     {
       "name": "Dolatexinfection",
       "type": "gamerule",
-      "sortid": 336,
+      "sortid": 278,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dolatexinfection",
@@ -5273,11 +5276,14 @@
     {
       "name": "Dolatexinfectiontick",
       "type": "procedure",
-      "sortid": 337,
+      "sortid": 279,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dolatexinfectiontick",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/DolatexinfectiontickProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -5294,7 +5300,7 @@
     {
       "name": "UntransfurItems",
       "type": "tag",
-      "sortid": 338,
+      "sortid": 280,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfur_items",
@@ -5308,7 +5314,7 @@
     {
       "name": "HazarArmorItemTip",
       "type": "procedure",
-      "sortid": 339,
+      "sortid": 281,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazar_armor_item_tip",
@@ -5328,7 +5334,7 @@
     {
       "name": "PainiteItemInInventoryTick",
       "type": "procedure",
-      "sortid": 340,
+      "sortid": 282,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_item_in_inventory_tick",
@@ -5348,7 +5354,7 @@
     {
       "name": "LatexInfection",
       "type": "attribute",
-      "sortid": 341,
+      "sortid": 283,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latexinfection",
@@ -5360,7 +5366,7 @@
     {
       "name": "LatexInfectionTick",
       "type": "procedure",
-      "sortid": 342,
+      "sortid": 284,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_infection_tick",
@@ -5380,7 +5386,7 @@
     {
       "name": "LatexContamination",
       "type": "potioneffect",
-      "sortid": 343,
+      "sortid": 285,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_contamination",
@@ -5394,7 +5400,7 @@
     {
       "name": "LatexContaminationEffectStartedapplied",
       "type": "procedure",
-      "sortid": 344,
+      "sortid": 286,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_contamination_effect_startedapplied",
@@ -5414,7 +5420,7 @@
     {
       "name": "LatexContaminationEffectExpires",
       "type": "procedure",
-      "sortid": 345,
+      "sortid": 287,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_contamination_effect_expires",
@@ -5434,7 +5440,7 @@
     {
       "name": "ReturnMaxTransfurTolerance",
       "type": "procedure",
-      "sortid": 346,
+      "sortid": 288,
       "compiles": true,
       "locked_code": true,
       "registry_name": "return_max_transfur_tolerance",
@@ -5447,7 +5453,7 @@
     {
       "name": "Experiment009latexdmg",
       "type": "procedure",
-      "sortid": 348,
+      "sortid": 289,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009latexdmg",
@@ -5487,7 +5493,7 @@
     {
       "name": "Iflatexentity",
       "type": "procedure",
-      "sortid": 349,
+      "sortid": 290,
       "compiles": true,
       "locked_code": false,
       "registry_name": "iflatexentity",
@@ -5524,7 +5530,7 @@
     {
       "name": "PainiteOreAdditionalGenerationCondition",
       "type": "procedure",
-      "sortid": 350,
+      "sortid": 291,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_ore_additional_generation_condition",
@@ -5557,7 +5563,7 @@
     {
       "name": "Experiment009IsHurt",
       "type": "procedure",
-      "sortid": 351,
+      "sortid": 292,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_is_hurt",
@@ -5581,7 +5587,7 @@
     {
       "name": "SolventParticle",
       "type": "particle",
-      "sortid": 352,
+      "sortid": 293,
       "compiles": true,
       "locked_code": false,
       "registry_name": "solvent_particle",
@@ -5596,11 +5602,14 @@
     {
       "name": "LatexSolventOnActiveTick",
       "type": "procedure",
-      "sortid": 353,
+      "sortid": 294,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_solvent_on_active_tick",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/LatexSolventOnActiveTickProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -5629,7 +5638,7 @@
     {
       "name": "ShowSolventDmg",
       "type": "procedure",
-      "sortid": 354,
+      "sortid": 295,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_solvent_dmg",
@@ -5653,7 +5662,7 @@
     {
       "name": "SetmaxTransfurTolerance",
       "type": "procedure",
-      "sortid": 355,
+      "sortid": 296,
       "compiles": true,
       "locked_code": true,
       "registry_name": "setmax_transfur_tolerance",
@@ -5674,7 +5683,7 @@
     {
       "name": "GetmaxTransfurTolerance",
       "type": "procedure",
-      "sortid": 356,
+      "sortid": 297,
       "compiles": true,
       "locked_code": false,
       "registry_name": "getmax_transfur_tolerance",
@@ -5694,7 +5703,7 @@
     {
       "name": "DuctProneOnKeyPressed",
       "type": "procedure",
-      "sortid": 357,
+      "sortid": 298,
       "compiles": true,
       "locked_code": false,
       "registry_name": "duct_prone_on_key_pressed",
@@ -5714,7 +5723,7 @@
     {
       "name": "DuctProneOnKeyReleased",
       "type": "procedure",
-      "sortid": 358,
+      "sortid": 299,
       "compiles": true,
       "locked_code": false,
       "registry_name": "duct_prone_on_key_released",
@@ -5734,7 +5743,7 @@
     {
       "name": "DuctProne",
       "type": "keybind",
-      "sortid": 359,
+      "sortid": 300,
       "compiles": true,
       "locked_code": false,
       "registry_name": "duct_prone",
@@ -5748,7 +5757,7 @@
     {
       "name": "CommandSetmaxTransfurTolerance",
       "type": "procedure",
-      "sortid": 360,
+      "sortid": 301,
       "compiles": true,
       "locked_code": false,
       "registry_name": "command_setmax_transfur_tolerance",
@@ -5772,7 +5781,7 @@
     {
       "name": "SetDefaultValue",
       "type": "procedure",
-      "sortid": 361,
+      "sortid": 302,
       "compiles": true,
       "locked_code": true,
       "registry_name": "set_default_value",
@@ -5804,7 +5813,7 @@
     {
       "name": "Experiment009SpawneggRightclickedOnBlock",
       "type": "procedure",
-      "sortid": 362,
+      "sortid": 303,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_spawnegg_rightclicked_on_block",
@@ -5848,7 +5857,7 @@
     {
       "name": "Ifnotexperiment009",
       "type": "procedure",
-      "sortid": 363,
+      "sortid": 304,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifnotexperiment_009",
@@ -5869,7 +5878,7 @@
     {
       "name": "SetTransfurProgressCommand",
       "type": "procedure",
-      "sortid": 367,
+      "sortid": 305,
       "compiles": true,
       "locked_code": false,
       "registry_name": "set_transfur_progress_command",
@@ -5893,7 +5902,7 @@
     {
       "name": "AddTransfurProgressCommand",
       "type": "procedure",
-      "sortid": 368,
+      "sortid": 306,
       "compiles": true,
       "locked_code": false,
       "registry_name": "add_transfur_progress_command",
@@ -5917,7 +5926,7 @@
     {
       "name": "Ifisturnon",
       "type": "procedure",
-      "sortid": 372,
+      "sortid": 307,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifisturnon",
@@ -5950,7 +5959,7 @@
     {
       "name": "Ifisturnoff",
       "type": "procedure",
-      "sortid": 373,
+      "sortid": 308,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifisturnoff",
@@ -5983,7 +5992,7 @@
     {
       "name": "SleepWithUntransfurEffect",
       "type": "procedure",
-      "sortid": 374,
+      "sortid": 309,
       "compiles": true,
       "locked_code": false,
       "registry_name": "sleep_with_untransfur_effect",
@@ -6007,11 +6016,14 @@
     {
       "name": "WhenEntityIshurt",
       "type": "procedure",
-      "sortid": 375,
+      "sortid": 310,
       "compiles": true,
       "locked_code": false,
       "registry_name": "when_entity_ishurt",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/WhenEntityIshurtProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -6032,7 +6044,7 @@
     {
       "name": "InpureAmmoniarecipeendgame",
       "type": "recipe",
-      "sortid": 376,
+      "sortid": 311,
       "compiles": true,
       "locked_code": false,
       "registry_name": "inpure_ammoniarecipeendgame",
@@ -6046,7 +6058,7 @@
     {
       "name": "Impureammoniarecipeplant",
       "type": "recipe",
-      "sortid": 377,
+      "sortid": 312,
       "compiles": true,
       "locked_code": false,
       "registry_name": "impureammoniarecipeplant",
@@ -6060,7 +6072,7 @@
     {
       "name": "Plant",
       "type": "tag",
-      "sortid": 378,
+      "sortid": 313,
       "compiles": true,
       "locked_code": false,
       "registry_name": "plant",
@@ -6074,7 +6086,7 @@
     {
       "name": "Getfullpainitearmorprocedure",
       "type": "procedure",
-      "sortid": 379,
+      "sortid": 314,
       "compiles": true,
       "locked_code": false,
       "registry_name": "getfullpainitearmorprocedure",
@@ -6094,7 +6106,7 @@
     {
       "name": "GetPainiteArmorWithProtection",
       "type": "procedure",
-      "sortid": 380,
+      "sortid": 315,
       "compiles": true,
       "locked_code": false,
       "registry_name": "get_painite_armor_with_protection",
@@ -6114,7 +6126,7 @@
     {
       "name": "Experiment009record",
       "type": "musicdisc",
-      "sortid": 381,
+      "sortid": 316,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_record",
@@ -6129,7 +6141,7 @@
     {
       "name": "Experiment009Phase2Record",
       "type": "musicdisc",
-      "sortid": 382,
+      "sortid": 317,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_phase_2_record",
@@ -6144,7 +6156,7 @@
     {
       "name": "KillExperiment009",
       "type": "achievement",
-      "sortid": 383,
+      "sortid": 318,
       "compiles": true,
       "locked_code": false,
       "registry_name": "kill_experiment_009",
@@ -6158,7 +6170,7 @@
     {
       "name": "KillExperiment009Procedure",
       "type": "procedure",
-      "sortid": 384,
+      "sortid": 319,
       "compiles": true,
       "locked_code": false,
       "registry_name": "kill_experiment_009_procedure",
@@ -6182,7 +6194,7 @@
     {
       "name": "Bookrecipepage6",
       "type": "gui",
-      "sortid": 385,
+      "sortid": 320,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookrecipepage_6",
@@ -6198,7 +6210,7 @@
     {
       "name": "Bookrecipepage7",
       "type": "gui",
-      "sortid": 386,
+      "sortid": 321,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookrecipepage_7",
@@ -6214,7 +6226,7 @@
     {
       "name": "OpenBookRecipe",
       "type": "procedure",
-      "sortid": 387,
+      "sortid": 322,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_book_recipe",
@@ -6250,7 +6262,7 @@
     {
       "name": "OpenBookRecipe2",
       "type": "procedure",
-      "sortid": 388,
+      "sortid": 323,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_book_recipe_2",
@@ -6286,7 +6298,7 @@
     {
       "name": "OpenBookRecipe3",
       "type": "procedure",
-      "sortid": 389,
+      "sortid": 324,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_book_recipe_3",
@@ -6322,7 +6334,7 @@
     {
       "name": "Bookrecipepage8",
       "type": "gui",
-      "sortid": 390,
+      "sortid": 325,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookrecipepage_8",
@@ -6338,7 +6350,7 @@
     {
       "name": "OpenBookRecipe4",
       "type": "procedure",
-      "sortid": 391,
+      "sortid": 326,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_book_recipe_4",
@@ -6374,7 +6386,7 @@
     {
       "name": "OpenBookRecipe5",
       "type": "procedure",
-      "sortid": 392,
+      "sortid": 327,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_book_recipe_5",
@@ -6410,7 +6422,7 @@
     {
       "name": "Bookrecipepage9",
       "type": "gui",
-      "sortid": 393,
+      "sortid": 328,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookrecipepage_9",
@@ -6444,7 +6456,7 @@
     {
       "name": "Bookrecipepage10",
       "type": "gui",
-      "sortid": 394,
+      "sortid": 329,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bookrecipepage_10",
@@ -6460,7 +6472,7 @@
     {
       "name": "TransfurTotemMakeItemGlow",
       "type": "procedure",
-      "sortid": 395,
+      "sortid": 330,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_make_item_glow",
@@ -6481,7 +6493,7 @@
     {
       "name": "TransfurTotemRightclicked",
       "type": "procedure",
-      "sortid": 396,
+      "sortid": 331,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_rightclicked",
@@ -6521,7 +6533,7 @@
     {
       "name": "TransfurTotemGui",
       "type": "gui",
-      "sortid": 397,
+      "sortid": 332,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_gui",
@@ -6552,7 +6564,7 @@
     {
       "name": "TransfurTotemItemInInventoryTick",
       "type": "procedure",
-      "sortid": 398,
+      "sortid": 333,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_item_in_inventory_tick",
@@ -6592,7 +6604,7 @@
     {
       "name": "TransfurTotemEntityRightClick",
       "type": "procedure",
-      "sortid": 399,
+      "sortid": 334,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_entity_right_click",
@@ -6632,7 +6644,7 @@
     {
       "name": "ShowTransfurTotemItemtip",
       "type": "procedure",
-      "sortid": 400,
+      "sortid": 335,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_transfur_totem_itemtip",
@@ -6656,7 +6668,7 @@
     {
       "name": "TransfurTotemAdvancement1",
       "type": "achievement",
-      "sortid": 401,
+      "sortid": 336,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_advancement_1",
@@ -6670,7 +6682,7 @@
     {
       "name": "TransfurTotemAdvancement2",
       "type": "achievement",
-      "sortid": 402,
+      "sortid": 337,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_advancement_2",
@@ -6684,7 +6696,7 @@
     {
       "name": "TransfurTotemItemInInventory",
       "type": "procedure",
-      "sortid": 403,
+      "sortid": 338,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem_item_in_inventory",
@@ -6720,7 +6732,7 @@
     {
       "name": "UntransfurPotionRecipe",
       "type": "recipe",
-      "sortid": 404,
+      "sortid": 339,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfur_potion_recipe",
@@ -6734,7 +6746,7 @@
     {
       "name": "IfInWater",
       "type": "procedure",
-      "sortid": 405,
+      "sortid": 340,
       "compiles": true,
       "locked_code": false,
       "registry_name": "if_in_water",
@@ -6755,7 +6767,7 @@
     {
       "name": "IfnotInWater",
       "type": "procedure",
-      "sortid": 406,
+      "sortid": 341,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifnot_in_water",
@@ -6776,7 +6788,7 @@
     {
       "name": "ChangedAddonAdmin",
       "type": "command",
-      "sortid": 407,
+      "sortid": 342,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changed_addon_admin",
@@ -6790,7 +6802,7 @@
     {
       "name": "MusicPlayer",
       "type": "procedure",
-      "sortid": 408,
+      "sortid": 343,
       "compiles": true,
       "locked_code": true,
       "registry_name": "music_player",
@@ -6814,7 +6826,7 @@
     {
       "name": "Experiment009EntityIsHurt",
       "type": "procedure",
-      "sortid": 409,
+      "sortid": 344,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_entity_is_hurt",
@@ -6838,7 +6850,7 @@
     {
       "name": "Experiment009die",
       "type": "procedure",
-      "sortid": 410,
+      "sortid": 345,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009die",
@@ -6858,7 +6870,7 @@
     {
       "name": "AddPlayerTransfurProgress",
       "type": "procedure",
-      "sortid": 411,
+      "sortid": 346,
       "compiles": true,
       "locked_code": false,
       "registry_name": "add_player_transfur_progress",
@@ -6882,7 +6894,7 @@
     {
       "name": "SetPlayerTransfurProgressCommand",
       "type": "procedure",
-      "sortid": 412,
+      "sortid": 347,
       "compiles": true,
       "locked_code": false,
       "registry_name": "set_player_transfur_progress_command",
@@ -6906,7 +6918,7 @@
     {
       "name": "LatexVariantAgeincrease",
       "type": "procedure",
-      "sortid": 413,
+      "sortid": 348,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_variant_ageincrease",
@@ -6946,7 +6958,7 @@
     {
       "name": "IfisEmpty",
       "type": "procedure",
-      "sortid": 414,
+      "sortid": 349,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifis_empty",
@@ -6967,7 +6979,7 @@
     {
       "name": "Ifisempty2",
       "type": "procedure",
-      "sortid": 415,
+      "sortid": 350,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifisempty_2",
@@ -6988,7 +7000,7 @@
     {
       "name": "IfisEmpty3",
       "type": "procedure",
-      "sortid": 416,
+      "sortid": 351,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ifis_empty_3",
@@ -7009,7 +7021,7 @@
     {
       "name": "SprayDurability",
       "type": "procedure",
-      "sortid": 417,
+      "sortid": 352,
       "compiles": true,
       "locked_code": false,
       "registry_name": "spray_durability",
@@ -7033,7 +7045,7 @@
     {
       "name": "PainiteGeneration",
       "type": "gamerule",
-      "sortid": 418,
+      "sortid": 353,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_generation",
@@ -7046,7 +7058,7 @@
     {
       "name": "Beehivefloor",
       "type": "recipe",
-      "sortid": 419,
+      "sortid": 354,
       "compiles": true,
       "locked_code": true,
       "registry_name": "beehivefloor",
@@ -7060,7 +7072,7 @@
     {
       "name": "Beehivewall",
       "type": "recipe",
-      "sortid": 420,
+      "sortid": 355,
       "compiles": true,
       "locked_code": true,
       "registry_name": "beehivewall",
@@ -7074,7 +7086,7 @@
     {
       "name": "BeehiveRoof",
       "type": "recipe",
-      "sortid": 421,
+      "sortid": 356,
       "compiles": true,
       "locked_code": true,
       "registry_name": "beehive_roof",
@@ -7088,7 +7100,7 @@
     {
       "name": "BeehiveCorner",
       "type": "recipe",
-      "sortid": 422,
+      "sortid": 357,
       "compiles": true,
       "locked_code": true,
       "registry_name": "beehive_corner",
@@ -7102,7 +7114,7 @@
     {
       "name": "Beehivebed",
       "type": "recipe",
-      "sortid": 423,
+      "sortid": 358,
       "compiles": true,
       "locked_code": true,
       "registry_name": "beehivebed",
@@ -7116,7 +7128,7 @@
     {
       "name": "CustomCodeBackUp",
       "type": "code",
-      "sortid": 424,
+      "sortid": 359,
       "compiles": true,
       "locked_code": true,
       "registry_name": "custom_code_back_up",
@@ -7130,7 +7142,7 @@
     {
       "name": "LatexCreature",
       "type": "tag",
-      "sortid": 425,
+      "sortid": 360,
       "compiles": true,
       "locked_code": true,
       "registry_name": "latex_creature",
@@ -7144,7 +7156,7 @@
     {
       "name": "ReturnTransfurMode",
       "type": "procedure",
-      "sortid": 426,
+      "sortid": 361,
       "compiles": true,
       "locked_code": true,
       "registry_name": "return_transfur_mode",
@@ -7165,7 +7177,7 @@
     {
       "name": "Gooeyblocks",
       "type": "tag",
-      "sortid": 427,
+      "sortid": 362,
       "compiles": true,
       "locked_code": true,
       "registry_name": "gooeyblocks",
@@ -7179,7 +7191,7 @@
     {
       "name": "Gooey",
       "type": "tag",
-      "sortid": 428,
+      "sortid": 363,
       "compiles": true,
       "locked_code": true,
       "registry_name": "gooey",
@@ -7193,7 +7205,7 @@
     {
       "name": "Latexinsulatoralt",
       "type": "recipe",
-      "sortid": 429,
+      "sortid": 364,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latexinsulatoralt",
@@ -7207,7 +7219,7 @@
     {
       "name": "ChangedAddonModelsRegister",
       "type": "code",
-      "sortid": 430,
+      "sortid": 365,
       "compiles": true,
       "locked_code": true,
       "registry_name": "changed_addon_models_register",
@@ -7221,7 +7233,7 @@
     {
       "name": "AdvancementTriggers",
       "type": "procedure",
-      "sortid": 431,
+      "sortid": 366,
       "compiles": true,
       "locked_code": true,
       "registry_name": "advancement_triggers",
@@ -7236,7 +7248,7 @@
     {
       "name": "ReturnPlayerName",
       "type": "procedure",
-      "sortid": 432,
+      "sortid": 367,
       "compiles": true,
       "locked_code": false,
       "registry_name": "return_player_name",
@@ -7291,7 +7303,7 @@
     {
       "name": "ChangedAddonRegisters",
       "type": "code",
-      "sortid": 433,
+      "sortid": 368,
       "compiles": true,
       "locked_code": true,
       "registry_name": "changed_addon_registers",
@@ -7305,7 +7317,7 @@
     {
       "name": "PainiteBeaconPayment",
       "type": "tag",
-      "sortid": 434,
+      "sortid": 369,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_beacon_payment",
@@ -7319,7 +7331,7 @@
     {
       "name": "Dazed",
       "type": "livingentity",
-      "sortid": 435,
+      "sortid": 370,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dazed",
@@ -7334,7 +7346,7 @@
     {
       "name": "LatexTotemKeepConcience",
       "type": "procedure",
-      "sortid": 436,
+      "sortid": 371,
       "compiles": true,
       "locked_code": true,
       "registry_name": "latex_totem_keep_concience",
@@ -7355,7 +7367,7 @@
     {
       "name": "LaethinPropertyValueProvider",
       "type": "procedure",
-      "sortid": 437,
+      "sortid": 372,
       "compiles": true,
       "locked_code": false,
       "registry_name": "laethin_property_value_provider",
@@ -7408,7 +7420,7 @@
     {
       "name": "LaethinSyringePlayerFinishesUsingItem",
       "type": "procedure",
-      "sortid": 438,
+      "sortid": 373,
       "compiles": true,
       "locked_code": false,
       "registry_name": "laethin_syringe_player_finishes_using_item",
@@ -7444,7 +7456,7 @@
     {
       "name": "LaethinCraft",
       "type": "recipe",
-      "sortid": 439,
+      "sortid": 374,
       "compiles": true,
       "locked_code": true,
       "registry_name": "laethin_craft",
@@ -7458,7 +7470,7 @@
     {
       "name": "LaethinCraftwhite",
       "type": "recipe",
-      "sortid": 440,
+      "sortid": 375,
       "compiles": true,
       "locked_code": true,
       "registry_name": "laethin_craftwhite",
@@ -7472,7 +7484,7 @@
     {
       "name": "SummonDripParticles",
       "type": "procedure",
-      "sortid": 441,
+      "sortid": 376,
       "compiles": true,
       "locked_code": true,
       "registry_name": "summon_drip_particles",
@@ -7487,7 +7499,7 @@
     {
       "name": "UntransfurProgress",
       "type": "procedure",
-      "sortid": 442,
+      "sortid": 377,
       "compiles": true,
       "locked_code": false,
       "registry_name": "untransfur_progress",
@@ -7507,7 +7519,7 @@
     {
       "name": "JeiLaethingSyringe",
       "type": "recipe",
-      "sortid": 443,
+      "sortid": 378,
       "compiles": true,
       "locked_code": true,
       "registry_name": "jei_laething_syringe",
@@ -7521,7 +7533,7 @@
     {
       "name": "BookRecipePage11",
       "type": "gui",
-      "sortid": 444,
+      "sortid": 379,
       "compiles": true,
       "locked_code": false,
       "registry_name": "book_recipe_page_11",
@@ -7555,7 +7567,7 @@
     {
       "name": "OpenBookRecipe11",
       "type": "procedure",
-      "sortid": 445,
+      "sortid": 380,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_book_recipe_11",
@@ -7591,7 +7603,7 @@
     {
       "name": "Experiment009FogComputation",
       "type": "procedure",
-      "sortid": 446,
+      "sortid": 381,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_fog_computation",
@@ -7631,7 +7643,7 @@
     {
       "name": "ChangedAddonConfigs",
       "type": "config",
-      "sortid": 447,
+      "sortid": 382,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changed_addon_configs",
@@ -7645,7 +7657,7 @@
     {
       "name": "ChangedAddonClientConfigs",
       "type": "config",
-      "sortid": 448,
+      "sortid": 383,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changed_addon_client_configs",
@@ -7659,7 +7671,7 @@
     {
       "name": "Air",
       "type": "tag",
-      "sortid": 449,
+      "sortid": 384,
       "compiles": true,
       "locked_code": false,
       "registry_name": "air",
@@ -7673,7 +7685,7 @@
     {
       "name": "GooeyFriend",
       "type": "achievement",
-      "sortid": 450,
+      "sortid": 385,
       "compiles": true,
       "locked_code": false,
       "registry_name": "gooey_friend",
@@ -7687,7 +7699,7 @@
     {
       "name": "UntransfurOverlay",
       "type": "overlay",
-      "sortid": 451,
+      "sortid": 386,
       "compiles": true,
       "locked_code": true,
       "registry_name": "untransfur_overlay",
@@ -7701,7 +7713,7 @@
     {
       "name": "PuroKind",
       "type": "livingentity",
-      "sortid": 452,
+      "sortid": 387,
       "compiles": true,
       "locked_code": true,
       "registry_name": "puro_kind",
@@ -7716,7 +7728,7 @@
     {
       "name": "PuroKindFemale",
       "type": "livingentity",
-      "sortid": 453,
+      "sortid": 388,
       "compiles": true,
       "locked_code": true,
       "registry_name": "puro_kind_female",
@@ -7746,7 +7758,7 @@
     {
       "name": "AmmoniaCompressedRecipe",
       "type": "recipe",
-      "sortid": 454,
+      "sortid": 389,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ammonia_compressed_recipe",
@@ -7760,7 +7772,7 @@
     {
       "name": "CompressedAmmoniaAdvancement",
       "type": "achievement",
-      "sortid": 455,
+      "sortid": 390,
       "compiles": true,
       "locked_code": false,
       "registry_name": "compressed_ammonia_advancement",
@@ -7774,7 +7786,7 @@
     {
       "name": "AmmoniaCompressedItemIsCraftedsmelted",
       "type": "procedure",
-      "sortid": 456,
+      "sortid": 391,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ammonia_compressed_item_is_craftedsmelted",
@@ -7794,7 +7806,7 @@
     {
       "name": "TamePuroKind",
       "type": "procedure",
-      "sortid": 457,
+      "sortid": 392,
       "compiles": true,
       "locked_code": true,
       "registry_name": "tame_puro_kind",
@@ -7818,7 +7830,7 @@
     {
       "name": "Buny",
       "type": "livingentity",
-      "sortid": 458,
+      "sortid": 393,
       "compiles": true,
       "locked_code": true,
       "registry_name": "buny",
@@ -7833,7 +7845,7 @@
     {
       "name": "SnowLeopardFemaleOrganic",
       "type": "livingentity",
-      "sortid": 460,
+      "sortid": 394,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snow_leopard_female_organic",
@@ -7848,7 +7860,7 @@
     {
       "name": "SummonEntity",
       "type": "procedure",
-      "sortid": 461,
+      "sortid": 395,
       "compiles": true,
       "locked_code": true,
       "registry_name": "summon_entity",
@@ -7863,7 +7875,7 @@
     {
       "name": "SignalBlock",
       "type": "block",
-      "sortid": 462,
+      "sortid": 36,
       "compiles": true,
       "locked_code": false,
       "registry_name": "signal_block",
@@ -7880,7 +7892,7 @@
     {
       "name": "SignalBlockFeature",
       "type": "procedure",
-      "sortid": 463,
+      "sortid": 396,
       "compiles": true,
       "locked_code": true,
       "registry_name": "signal_block_feature",
@@ -7920,7 +7932,7 @@
     {
       "name": "SignalCatcherOnPlayerStoppedUsing",
       "type": "procedure",
-      "sortid": 464,
+      "sortid": 397,
       "compiles": true,
       "locked_code": false,
       "registry_name": "signal_catcher_on_player_stopped_using",
@@ -7944,7 +7956,7 @@
     {
       "name": "SignalCatcher",
       "type": "item",
-      "sortid": 465,
+      "sortid": 37,
       "compiles": true,
       "locked_code": false,
       "registry_name": "signal_catcher",
@@ -7959,7 +7971,7 @@
     {
       "name": "SignalCatcherRecipe",
       "type": "recipe",
-      "sortid": 466,
+      "sortid": 398,
       "compiles": true,
       "locked_code": false,
       "registry_name": "signal_catcher_recipe",
@@ -7973,7 +7985,7 @@
     {
       "name": "SignalCatherToolTip",
       "type": "procedure",
-      "sortid": 467,
+      "sortid": 399,
       "compiles": true,
       "locked_code": false,
       "registry_name": "signal_cather_tool_tip",
@@ -8001,7 +8013,7 @@
     {
       "name": "LeapAbility",
       "type": "procedure",
-      "sortid": 469,
+      "sortid": 400,
       "compiles": true,
       "locked_code": true,
       "registry_name": "leap_ability",
@@ -8016,7 +8028,7 @@
     {
       "name": "Leap",
       "type": "procedure",
-      "sortid": 471,
+      "sortid": 401,
       "compiles": true,
       "locked_code": false,
       "registry_name": "leap",
@@ -8052,7 +8064,7 @@
     {
       "name": "LeapKey",
       "type": "keybind",
-      "sortid": 470,
+      "sortid": 402,
       "compiles": true,
       "locked_code": false,
       "registry_name": "leap_key",
@@ -8066,7 +8078,7 @@
     {
       "name": "CanLeap",
       "type": "procedure",
-      "sortid": 472,
+      "sortid": 403,
       "compiles": true,
       "locked_code": true,
       "registry_name": "can_leap",
@@ -8082,7 +8094,7 @@
     {
       "name": "ChangedAddonHardModeBosses",
       "type": "gamerule",
-      "sortid": 473,
+      "sortid": 404,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changed_addon_hard_mode_bosses",
@@ -8095,7 +8107,7 @@
     {
       "name": "Biosynthsnowleopardlootmale",
       "type": "loottable",
-      "sortid": 474,
+      "sortid": 405,
       "compiles": true,
       "locked_code": true,
       "registry_name": "biosynthsnowleopardlootmale",
@@ -8109,7 +8121,7 @@
     {
       "name": "SnowFoxLootBox",
       "type": "loottable",
-      "sortid": 476,
+      "sortid": 406,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snow_fox_loot_box",
@@ -8123,7 +8135,7 @@
     {
       "name": "SnowFoxFemaleLootBox",
       "type": "loottable",
-      "sortid": 477,
+      "sortid": 407,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snow_fox_female_loot_box",
@@ -8137,7 +8149,7 @@
     {
       "name": "DazedLatex",
       "type": "loottable",
-      "sortid": 478,
+      "sortid": 408,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dazed_latex",
@@ -8151,7 +8163,7 @@
     {
       "name": "Biosynthsnowleopardlootfemale",
       "type": "loottable",
-      "sortid": 479,
+      "sortid": 409,
       "compiles": true,
       "locked_code": true,
       "registry_name": "biosynthsnowleopardlootfemale",
@@ -8165,7 +8177,7 @@
     {
       "name": "Purokindloot",
       "type": "loottable",
-      "sortid": 480,
+      "sortid": 410,
       "compiles": true,
       "locked_code": true,
       "registry_name": "purokindloot",
@@ -8179,7 +8191,7 @@
     {
       "name": "PuroKindFemaleLoot",
       "type": "loottable",
-      "sortid": 481,
+      "sortid": 411,
       "compiles": true,
       "locked_code": true,
       "registry_name": "puro_kind_female_loot",
@@ -8193,7 +8205,7 @@
     {
       "name": "BunyLootBox",
       "type": "loottable",
-      "sortid": 482,
+      "sortid": 412,
       "compiles": true,
       "locked_code": true,
       "registry_name": "buny_loot_box",
@@ -8207,7 +8219,7 @@
     {
       "name": "DazedLatexMeteor",
       "type": "restructure",
-      "sortid": 507,
+      "sortid": 413,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dazed_latex_meteor",
@@ -8223,7 +8235,7 @@
     {
       "name": "DoDazedLatexBurn",
       "type": "gamerule",
-      "sortid": 483,
+      "sortid": 414,
       "compiles": true,
       "locked_code": false,
       "registry_name": "do_dazed_latex_burn",
@@ -8236,7 +8248,7 @@
     {
       "name": "Leaper",
       "type": "achievement",
-      "sortid": 485,
+      "sortid": 415,
       "compiles": true,
       "locked_code": false,
       "registry_name": "leaper",
@@ -8250,7 +8262,7 @@
     {
       "name": "AddTransfurProgress",
       "type": "procedure",
-      "sortid": 486,
+      "sortid": 416,
       "compiles": true,
       "locked_code": true,
       "registry_name": "add_transfur_progress",
@@ -8262,7 +8274,7 @@
     {
       "name": "KetExperiment009",
       "type": "livingentity",
-      "sortid": 487,
+      "sortid": 417,
       "compiles": true,
       "locked_code": true,
       "registry_name": "ket_experiment_009",
@@ -8277,7 +8289,7 @@
     {
       "name": "Exp009IA",
       "type": "procedure",
-      "sortid": 489,
+      "sortid": 418,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_009_ia",
@@ -8313,7 +8325,7 @@
     {
       "name": "Exp009Transfur",
       "type": "procedure",
-      "sortid": 490,
+      "sortid": 419,
       "compiles": true,
       "locked_code": true,
       "registry_name": "exp_009_transfur",
@@ -8328,7 +8340,7 @@
     {
       "name": "NeedPermitionFor009Transfur",
       "type": "gamerule",
-      "sortid": 491,
+      "sortid": 420,
       "compiles": true,
       "locked_code": false,
       "registry_name": "need_permition_for_009_transfur",
@@ -8341,7 +8353,7 @@
     {
       "name": "SetBossPerm",
       "type": "procedure",
-      "sortid": 492,
+      "sortid": 421,
       "compiles": true,
       "locked_code": false,
       "registry_name": "set_boss_perm",
@@ -8365,7 +8377,7 @@
     {
       "name": "GetBossPerm",
       "type": "procedure",
-      "sortid": 493,
+      "sortid": 422,
       "compiles": true,
       "locked_code": false,
       "registry_name": "get_boss_perm",
@@ -8389,7 +8401,7 @@
     {
       "name": "SetMultBossPerm",
       "type": "procedure",
-      "sortid": 494,
+      "sortid": 423,
       "compiles": true,
       "locked_code": false,
       "registry_name": "set_mult_boss_perm",
@@ -8413,7 +8425,7 @@
     {
       "name": "TransfurSicknessOnEffectActiveTick",
       "type": "procedure",
-      "sortid": 496,
+      "sortid": 424,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_sickness_on_effect_active_tick",
@@ -8433,7 +8445,7 @@
     {
       "name": "TransfurSicknessEffectExpires",
       "type": "procedure",
-      "sortid": 497,
+      "sortid": 425,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_sickness_effect_expires",
@@ -8453,7 +8465,7 @@
     {
       "name": "TransfurSickness",
       "type": "potioneffect",
-      "sortid": 498,
+      "sortid": 426,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_sickness",
@@ -8467,7 +8479,7 @@
     {
       "name": "TransfurSicknessPotion",
       "type": "potion",
-      "sortid": 499,
+      "sortid": 427,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_sickness_potion",
@@ -8479,7 +8491,7 @@
     {
       "name": "TransfurSicknessRecipe",
       "type": "recipe",
-      "sortid": 500,
+      "sortid": 428,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_sickness_recipe",
@@ -8493,7 +8505,7 @@
     {
       "name": "TurnOffTransfurOnKeyPressed",
       "type": "procedure",
-      "sortid": 501,
+      "sortid": 429,
       "compiles": true,
       "locked_code": false,
       "registry_name": "turn_off_transfur_on_key_pressed",
@@ -8513,7 +8525,7 @@
     {
       "name": "TurnOffTransfur",
       "type": "keybind",
-      "sortid": 502,
+      "sortid": 430,
       "compiles": true,
       "locked_code": false,
       "registry_name": "turn_off_transfur",
@@ -8527,7 +8539,7 @@
     {
       "name": "MirrorWhiteTiger",
       "type": "livingentity",
-      "sortid": 503,
+      "sortid": 431,
       "compiles": true,
       "locked_code": true,
       "registry_name": "mirror_white_tiger",
@@ -8542,7 +8554,7 @@
     {
       "name": "MirrorWhiteTigerLoot",
       "type": "loottable",
-      "sortid": 504,
+      "sortid": 432,
       "compiles": true,
       "locked_code": true,
       "registry_name": "mirror_white_tiger_loot",
@@ -8556,7 +8568,7 @@
     {
       "name": "SnowLeopardMaleOrganic",
       "type": "livingentity",
-      "sortid": 505,
+      "sortid": 433,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snow_leopard_male_organic",
@@ -8571,7 +8583,7 @@
     {
       "name": "Experiment10",
       "type": "livingentity",
-      "sortid": 506,
+      "sortid": 434,
       "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10",
@@ -8586,7 +8598,7 @@
     {
       "name": "PatKeyOnKeyPressed",
       "type": "procedure",
-      "sortid": 508,
+      "sortid": 435,
       "compiles": true,
       "locked_code": false,
       "registry_name": "pat_key_on_key_pressed",
@@ -8622,7 +8634,7 @@
     {
       "name": "PatKey",
       "type": "keybind",
-      "sortid": 509,
+      "sortid": 436,
       "compiles": true,
       "locked_code": false,
       "registry_name": "pat_key",
@@ -8636,7 +8648,7 @@
     {
       "name": "WitherSkill",
       "type": "procedure",
-      "sortid": 511,
+      "sortid": 437,
       "compiles": true,
       "locked_code": false,
       "registry_name": "wither_skill",
@@ -8660,7 +8672,7 @@
     {
       "name": "ElectricKatana",
       "type": "tool",
-      "sortid": 512,
+      "sortid": 50,
       "compiles": true,
       "locked_code": true,
       "registry_name": "electric_katana",
@@ -8675,7 +8687,7 @@
     {
       "name": "ElectricKatanaEntitySwingsItem",
       "type": "procedure",
-      "sortid": 513,
+      "sortid": 438,
       "compiles": true,
       "locked_code": true,
       "registry_name": "electric_katana_entity_swings_item",
@@ -8695,7 +8707,7 @@
     {
       "name": "ElectricKatanaLivingEntityIsHitWithTool",
       "type": "procedure",
-      "sortid": 514,
+      "sortid": 439,
       "compiles": true,
       "locked_code": true,
       "registry_name": "electric_katana_living_entity_is_hit_with_tool",
@@ -8716,7 +8728,7 @@
     {
       "name": "ElectricKatanaRecipe",
       "type": "recipe",
-      "sortid": 515,
+      "sortid": 440,
       "compiles": true,
       "locked_code": true,
       "registry_name": "electric_katana_recipe",
@@ -8730,7 +8742,7 @@
     {
       "name": "Experiment10SpawnEggRightclickedOnBlock",
       "type": "procedure",
-      "sortid": 517,
+      "sortid": 441,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_10_spawn_egg_rightclicked_on_block",
@@ -8774,7 +8786,7 @@
     {
       "name": "Experiment10Dna",
       "type": "item",
-      "sortid": 518,
+      "sortid": 38,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_10_dna",
@@ -8789,7 +8801,7 @@
     {
       "name": "Exp10SpawnEggRecipe",
       "type": "recipe",
-      "sortid": 519,
+      "sortid": 442,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_10_spawn_egg_recipe",
@@ -8803,7 +8815,7 @@
     {
       "name": "BossExperiment10SpawnEgg",
       "type": "item",
-      "sortid": 520,
+      "sortid": 39,
       "compiles": true,
       "locked_code": false,
       "registry_name": "boss_experiment_10_spawn_egg",
@@ -8818,7 +8830,7 @@
     {
       "name": "Experiment10loot",
       "type": "loottable",
-      "sortid": 521,
+      "sortid": 443,
       "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10loot",
@@ -8832,7 +8844,7 @@
     {
       "name": "PatAblesEntitys",
       "type": "tag",
-      "sortid": 522,
+      "sortid": 444,
       "compiles": true,
       "locked_code": false,
       "registry_name": "pat_ables_entitys",
@@ -8846,7 +8858,7 @@
     {
       "name": "Experiment10FogColorProcess",
       "type": "procedure",
-      "sortid": 523,
+      "sortid": 445,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_10_fog_color_process",
@@ -8886,7 +8898,7 @@
     {
       "name": "HazyPurple",
       "type": "achievement",
-      "sortid": 524,
+      "sortid": 446,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazy_purple",
@@ -8900,7 +8912,7 @@
     {
       "name": "GiveHazyPurpleAdvabcement",
       "type": "procedure",
-      "sortid": 525,
+      "sortid": 447,
       "compiles": true,
       "locked_code": false,
       "registry_name": "give_hazy_purple_advabcement",
@@ -8920,7 +8932,7 @@
     {
       "name": "Exp2Male",
       "type": "livingentity",
-      "sortid": 526,
+      "sortid": 448,
       "compiles": true,
       "locked_code": true,
       "registry_name": "exp_2_male",
@@ -8935,7 +8947,7 @@
     {
       "name": "Exp2Female",
       "type": "livingentity",
-      "sortid": 527,
+      "sortid": 449,
       "compiles": true,
       "locked_code": true,
       "registry_name": "exp_2_female",
@@ -8950,7 +8962,7 @@
     {
       "name": "Exp2FemaleLoot",
       "type": "loottable",
-      "sortid": 529,
+      "sortid": 450,
       "compiles": true,
       "locked_code": true,
       "registry_name": "exp_2_female_loot",
@@ -8964,7 +8976,7 @@
     {
       "name": "Exp2MaleLoot",
       "type": "loottable",
-      "sortid": 530,
+      "sortid": 451,
       "compiles": true,
       "locked_code": true,
       "registry_name": "exp_2_male_loot",
@@ -8978,7 +8990,7 @@
     {
       "name": "FightTokeepconsciousnessminigameThisGUIIsClosed",
       "type": "procedure",
-      "sortid": 531,
+      "sortid": 452,
       "compiles": true,
       "locked_code": false,
       "registry_name": "fight_tokeepconsciousnessminigame_this_gui_is_closed",
@@ -9002,7 +9014,7 @@
     {
       "name": "PatFeatureHandle",
       "type": "procedure",
-      "sortid": 532,
+      "sortid": 453,
       "compiles": true,
       "locked_code": true,
       "registry_name": "pat_feature_handle",
@@ -9017,7 +9029,7 @@
     {
       "name": "Wolfy",
       "type": "livingentity",
-      "sortid": 533,
+      "sortid": 454,
       "compiles": true,
       "locked_code": true,
       "registry_name": "wolfy",
@@ -9032,7 +9044,7 @@
     {
       "name": "VariantUtil",
       "type": "procedure",
-      "sortid": 534,
+      "sortid": 455,
       "compiles": true,
       "locked_code": true,
       "registry_name": "variant_util",
@@ -9047,7 +9059,7 @@
     {
       "name": "WolfyStats",
       "type": "procedure",
-      "sortid": 535,
+      "sortid": 456,
       "compiles": true,
       "locked_code": false,
       "registry_name": "wolfy_stats",
@@ -9071,7 +9083,7 @@
     {
       "name": "Informantblock",
       "type": "block",
-      "sortid": 536,
+      "sortid": 40,
       "compiles": true,
       "locked_code": false,
       "registry_name": "informantblock",
@@ -9089,7 +9101,7 @@
     {
       "name": "ShowLandSpeed",
       "type": "procedure",
-      "sortid": 537,
+      "sortid": 457,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_land_speed",
@@ -9118,7 +9130,7 @@
     {
       "name": "ShowSwimSpeed",
       "type": "procedure",
-      "sortid": 538,
+      "sortid": 458,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_swim_speed",
@@ -9147,7 +9159,7 @@
     {
       "name": "ShowAdditionalHealth",
       "type": "procedure",
-      "sortid": 539,
+      "sortid": 459,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_additional_health",
@@ -9176,7 +9188,7 @@
     {
       "name": "ShowLegCount",
       "type": "procedure",
-      "sortid": 540,
+      "sortid": 460,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_leg_count",
@@ -9205,7 +9217,7 @@
     {
       "name": "InformantGui",
       "type": "gui",
-      "sortid": 541,
+      "sortid": 461,
       "compiles": true,
       "locked_code": false,
       "registry_name": "informant_gui",
@@ -9220,7 +9232,7 @@
     {
       "name": "ShowJumpStrength",
       "type": "procedure",
-      "sortid": 542,
+      "sortid": 462,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_jump_strength",
@@ -9249,7 +9261,7 @@
     {
       "name": "ShowCanGlideAndFly",
       "type": "procedure",
-      "sortid": 543,
+      "sortid": 463,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_can_glide_and_fly",
@@ -9278,7 +9290,7 @@
     {
       "name": "Accessories",
       "type": "armor",
-      "sortid": 544,
+      "sortid": 41,
       "compiles": true,
       "locked_code": false,
       "registry_name": "accessories",
@@ -9293,7 +9305,7 @@
     {
       "name": "PlaySoundRoar",
       "type": "procedure",
-      "sortid": 545,
+      "sortid": 464,
       "compiles": true,
       "locked_code": false,
       "registry_name": "play_sound_roar",
@@ -9317,12 +9329,15 @@
     {
       "name": "CanRoar",
       "type": "procedure",
-      "sortid": 546,
+      "sortid": 465,
       "compiles": true,
       "locked_code": false,
       "registry_name": "can_roar",
       "metadata": {
         "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/CanRoarProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
@@ -9335,7 +9350,7 @@
     {
       "name": "Exp9Stats",
       "type": "procedure",
-      "sortid": 547,
+      "sortid": 466,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_9_stats",
@@ -9363,7 +9378,7 @@
     {
       "name": "BioSynthStats",
       "type": "procedure",
-      "sortid": 548,
+      "sortid": 467,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bio_synth_stats",
@@ -9391,7 +9406,7 @@
     {
       "name": "Wolfyloot",
       "type": "loottable",
-      "sortid": 549,
+      "sortid": 468,
       "compiles": true,
       "locked_code": true,
       "registry_name": "wolfyloot",
@@ -9405,7 +9420,7 @@
     {
       "name": "Exp10Stats",
       "type": "procedure",
-      "sortid": 550,
+      "sortid": 469,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_10_stats",
@@ -9433,7 +9448,7 @@
     {
       "name": "TransfurTotemItemIsDroppedByPlayer",
       "type": "procedure",
-      "sortid": 552,
+      "sortid": 470,
       "compiles": true,
       "locked_code": true,
       "registry_name": "transfur_totem_item_is_dropped_by_player",
@@ -9465,7 +9480,7 @@
     {
       "name": "Informantblockrecipe",
       "type": "recipe",
-      "sortid": 553,
+      "sortid": 471,
       "compiles": true,
       "locked_code": false,
       "registry_name": "informantblockrecipe",
@@ -9479,7 +9494,7 @@
     {
       "name": "Exp2Stats",
       "type": "procedure",
-      "sortid": 554,
+      "sortid": 472,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_2_stats",
@@ -9511,7 +9526,7 @@
     {
       "name": "PainiteAccessoriesRecipe",
       "type": "recipe",
-      "sortid": 555,
+      "sortid": 473,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_accessories_recipe",
@@ -9525,7 +9540,7 @@
     {
       "name": "Erik",
       "type": "livingentity",
-      "sortid": 556,
+      "sortid": 474,
       "compiles": true,
       "locked_code": false,
       "registry_name": "erik",
@@ -9541,7 +9556,7 @@
     {
       "name": "ForceField",
       "type": "procedure",
-      "sortid": 557,
+      "sortid": 475,
       "compiles": true,
       "locked_code": false,
       "registry_name": "force_field",
@@ -9569,7 +9584,7 @@
     {
       "name": "ObtainAElectricKatana",
       "type": "achievement",
-      "sortid": 558,
+      "sortid": 476,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_a_electric_katana",
@@ -9583,7 +9598,7 @@
     {
       "name": "SwimRegret",
       "type": "achievement",
-      "sortid": 559,
+      "sortid": 477,
       "compiles": true,
       "locked_code": false,
       "registry_name": "swim_regret",
@@ -9597,7 +9612,7 @@
     {
       "name": "SwimRegretTrigger",
       "type": "procedure",
-      "sortid": 560,
+      "sortid": 478,
       "compiles": true,
       "locked_code": false,
       "registry_name": "swim_regret_trigger",
@@ -9617,7 +9632,7 @@
     {
       "name": "CrystalAddagerRedLivingEntityIsHitWithTool",
       "type": "procedure",
-      "sortid": 561,
+      "sortid": 479,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_red_living_entity_is_hit_with_tool",
@@ -9637,7 +9652,7 @@
     {
       "name": "CrystalAddagerRed",
       "type": "tool",
-      "sortid": 562,
+      "sortid": 42,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_red",
@@ -9652,7 +9667,7 @@
     {
       "name": "CrystalAddagerGreen",
       "type": "tool",
-      "sortid": 563,
+      "sortid": 43,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_green",
@@ -9667,7 +9682,7 @@
     {
       "name": "CrystalAddagerBlack",
       "type": "tool",
-      "sortid": 564,
+      "sortid": 44,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_black",
@@ -9682,7 +9697,7 @@
     {
       "name": "CrystalAddagerGreenLivingEntityIsHitWithTool",
       "type": "procedure",
-      "sortid": 565,
+      "sortid": 480,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_green_living_entity_is_hit_with_tool",
@@ -9702,7 +9717,7 @@
     {
       "name": "CrystalAddagerBlackLivingEntityIsHitWithTool",
       "type": "procedure",
-      "sortid": 566,
+      "sortid": 481,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_black_living_entity_is_hit_with_tool",
@@ -9722,7 +9737,7 @@
     {
       "name": "CrystalAddagerredrecipe",
       "type": "recipe",
-      "sortid": 567,
+      "sortid": 482,
       "compiles": true,
       "locked_code": true,
       "registry_name": "crystal_addagerredrecipe",
@@ -9736,7 +9751,7 @@
     {
       "name": "CrystalAddagerdarkrecipe",
       "type": "recipe",
-      "sortid": 569,
+      "sortid": 483,
       "compiles": true,
       "locked_code": true,
       "registry_name": "crystal_addagerdarkrecipe",
@@ -9750,7 +9765,7 @@
     {
       "name": "CrystalAddagergreenrecipe",
       "type": "recipe",
-      "sortid": 570,
+      "sortid": 484,
       "compiles": true,
       "locked_code": true,
       "registry_name": "crystal_addagergreenrecipe",
@@ -9764,7 +9779,7 @@
     {
       "name": "Darkcrystal",
       "type": "tag",
-      "sortid": 571,
+      "sortid": 485,
       "compiles": true,
       "locked_code": true,
       "registry_name": "darkcrystal",
@@ -9778,7 +9793,7 @@
     {
       "name": "ObtainRedCrystalDagger",
       "type": "achievement",
-      "sortid": 572,
+      "sortid": 486,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_red_crystal_dagger",
@@ -9792,7 +9807,7 @@
     {
       "name": "ObtainGreenCrystalDagger",
       "type": "achievement",
-      "sortid": 573,
+      "sortid": 487,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_green_crystal_dagger",
@@ -9806,7 +9821,7 @@
     {
       "name": "ObtainDarkCrystalDagger",
       "type": "achievement",
-      "sortid": 574,
+      "sortid": 488,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_dark_crystal_dagger",
@@ -9820,7 +9835,7 @@
     {
       "name": "ElectricKatanaRed",
       "type": "tool",
-      "sortid": 575,
+      "sortid": 51,
       "compiles": true,
       "locked_code": true,
       "registry_name": "electric_katana_red",
@@ -9835,7 +9850,7 @@
     {
       "name": "ObtainRedElectricKatana",
       "type": "achievement",
-      "sortid": 576,
+      "sortid": 489,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_red_electric_katana",
@@ -9849,7 +9864,7 @@
     {
       "name": "RedElectricKatanaRecipe",
       "type": "recipe",
-      "sortid": 577,
+      "sortid": 490,
       "compiles": true,
       "locked_code": false,
       "registry_name": "red_electric_katana_recipe",
@@ -9863,7 +9878,7 @@
     {
       "name": "LabDoors",
       "type": "tag",
-      "sortid": 578,
+      "sortid": 491,
       "compiles": true,
       "locked_code": true,
       "registry_name": "lab_doors",
@@ -9877,7 +9892,7 @@
     {
       "name": "LabBigDoors",
       "type": "tag",
-      "sortid": 579,
+      "sortid": 492,
       "compiles": true,
       "locked_code": true,
       "registry_name": "lab_big_doors",
@@ -9891,7 +9906,7 @@
     {
       "name": "CrowBarCode",
       "type": "procedure",
-      "sortid": 580,
+      "sortid": 493,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crow_bar_code",
@@ -9931,7 +9946,7 @@
     {
       "name": "CrowBar",
       "type": "tool",
-      "sortid": 581,
+      "sortid": 45,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crow_bar",
@@ -9946,7 +9961,7 @@
     {
       "name": "CrowBarRecipe",
       "type": "recipe",
-      "sortid": 582,
+      "sortid": 494,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crow_bar_recipe",
@@ -9960,7 +9975,7 @@
     {
       "name": "ChangedAddonHumanoidsExtender",
       "type": "tag",
-      "sortid": 583,
+      "sortid": 495,
       "compiles": true,
       "locked_code": true,
       "registry_name": "changed_addon_humanoids_extender",
@@ -9974,23 +9989,22 @@
     {
       "name": "IgnoreDMGStats",
       "type": "procedure",
-      "sortid": 584,
+      "sortid": 496,
       "compiles": true,
       "locked_code": false,
       "registry_name": "ignore_dmg_stats",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IgnoreDMGStatsProcedure.java"
+        ],
         "dependencies": [
+          {
+            "name": "damagesource",
+            "type": "damagesource"
+          },
           {
             "name": "entity",
             "type": "entity"
-          },
-          {
-            "name": "amount",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
           }
         ]
       },
@@ -9999,7 +10013,7 @@
     {
       "name": "FishLatexEntity",
       "type": "procedure",
-      "sortid": 585,
+      "sortid": 497,
       "compiles": true,
       "locked_code": true,
       "registry_name": "fish_latex_entity",
@@ -10014,8 +10028,8 @@
     {
       "name": "CreatureDietsHandle",
       "type": "procedure",
-      "sortid": 586,
-      "compiles": false,
+      "sortid": 498,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "creature_diets_handle",
       "metadata": {
@@ -10029,7 +10043,7 @@
     {
       "name": "Bigone",
       "type": "achievement",
-      "sortid": 587,
+      "sortid": 499,
       "compiles": true,
       "locked_code": false,
       "registry_name": "bigone",
@@ -10043,7 +10057,7 @@
     {
       "name": "DoDarkLatexMaskTransfur",
       "type": "gamerule",
-      "sortid": 588,
+      "sortid": 500,
       "compiles": true,
       "locked_code": false,
       "registry_name": "do_dark_latex_mask_transfur",
@@ -10056,7 +10070,7 @@
     {
       "name": "DarkLatexMaskTransfurHandle",
       "type": "procedure",
-      "sortid": 589,
+      "sortid": 501,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dark_latex_mask_transfur_handle",
@@ -10080,7 +10094,7 @@
     {
       "name": "DodgeAbilityHandle",
       "type": "procedure",
-      "sortid": 590,
+      "sortid": 502,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dodge_ability_handle",
@@ -10095,7 +10109,7 @@
     {
       "name": "PartialSnowLeopardloot",
       "type": "loottable",
-      "sortid": 591,
+      "sortid": 503,
       "compiles": true,
       "locked_code": true,
       "registry_name": "partial_snow_leopardloot",
@@ -10109,7 +10123,7 @@
     {
       "name": "ChangedAddonCreatureDiets",
       "type": "gamerule",
-      "sortid": 592,
+      "sortid": 504,
       "compiles": true,
       "locked_code": false,
       "registry_name": "changed_addon_creature_diets",
@@ -10122,7 +10136,7 @@
     {
       "name": "BossesExpUse",
       "type": "procedure",
-      "sortid": 593,
+      "sortid": 505,
       "compiles": true,
       "locked_code": true,
       "registry_name": "bosses_exp_use",
@@ -10137,7 +10151,7 @@
     {
       "name": "SnepsiPlayerFinishesUsingItem",
       "type": "procedure",
-      "sortid": 594,
+      "sortid": 506,
       "compiles": true,
       "locked_code": false,
       "registry_name": "snepsi_player_finishes_using_item",
@@ -10161,7 +10175,7 @@
     {
       "name": "Snepsi",
       "type": "item",
-      "sortid": 595,
+      "sortid": 46,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snepsi",
@@ -10176,7 +10190,7 @@
     {
       "name": "Foxta",
       "type": "item",
-      "sortid": 596,
+      "sortid": 47,
       "compiles": true,
       "locked_code": true,
       "registry_name": "foxta",
@@ -10191,7 +10205,7 @@
     {
       "name": "FoxtaCan",
       "type": "block",
-      "sortid": 599,
+      "sortid": 507,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxta_can",
@@ -10208,7 +10222,7 @@
     {
       "name": "SnepsiCan",
       "type": "block",
-      "sortid": 600,
+      "sortid": 508,
       "compiles": true,
       "locked_code": false,
       "registry_name": "snepsi_can",
@@ -10225,7 +10239,7 @@
     {
       "name": "SnepsiRightclickedOnBlock",
       "type": "procedure",
-      "sortid": 601,
+      "sortid": 509,
       "compiles": true,
       "locked_code": false,
       "registry_name": "snepsi_rightclicked_on_block",
@@ -10269,7 +10283,7 @@
     {
       "name": "SodaCanBlockAdd",
       "type": "procedure",
-      "sortid": 602,
+      "sortid": 510,
       "compiles": true,
       "locked_code": true,
       "registry_name": "soda_can_block_add",
@@ -10284,7 +10298,7 @@
     {
       "name": "ObtainFoxta",
       "type": "achievement",
-      "sortid": 603,
+      "sortid": 511,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_foxta",
@@ -10298,7 +10312,7 @@
     {
       "name": "ObtainSnepsi",
       "type": "achievement",
-      "sortid": 604,
+      "sortid": 512,
       "compiles": true,
       "locked_code": false,
       "registry_name": "obtain_snepsi",
@@ -10312,7 +10326,7 @@
     {
       "name": "SnepsiRecipe",
       "type": "recipe",
-      "sortid": 609,
+      "sortid": 513,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snepsi_recipe",
@@ -10326,7 +10340,7 @@
     {
       "name": "FoxtaRecipe",
       "type": "recipe",
-      "sortid": 610,
+      "sortid": 514,
       "compiles": true,
       "locked_code": true,
       "registry_name": "foxta_recipe",
@@ -10340,7 +10354,7 @@
     {
       "name": "DrinkFoxta",
       "type": "achievement",
-      "sortid": 613,
+      "sortid": 515,
       "compiles": true,
       "locked_code": false,
       "registry_name": "drink_foxta",
@@ -10354,7 +10368,7 @@
     {
       "name": "DrinkSnepsi",
       "type": "achievement",
-      "sortid": 614,
+      "sortid": 516,
       "compiles": true,
       "locked_code": false,
       "registry_name": "drink_snepsi",
@@ -10368,7 +10382,7 @@
     {
       "name": "SnepsiAdctive",
       "type": "achievement",
-      "sortid": 615,
+      "sortid": 517,
       "compiles": true,
       "locked_code": false,
       "registry_name": "snepsi_adctive",
@@ -10382,7 +10396,7 @@
     {
       "name": "PlayerUtil",
       "type": "procedure",
-      "sortid": 616,
+      "sortid": 518,
       "compiles": true,
       "locked_code": true,
       "registry_name": "player_util",
@@ -10397,7 +10411,7 @@
     {
       "name": "CanCarry",
       "type": "tag",
-      "sortid": 617,
+      "sortid": 519,
       "compiles": true,
       "locked_code": true,
       "registry_name": "can_carry",
@@ -10411,7 +10425,7 @@
     {
       "name": "SizeManipulator",
       "type": "procedure",
-      "sortid": 618,
+      "sortid": 520,
       "compiles": true,
       "locked_code": true,
       "registry_name": "size_manipulator",
@@ -10435,7 +10449,7 @@
     {
       "name": "ShowExtraTransfurInfo",
       "type": "procedure",
-      "sortid": 620,
+      "sortid": 521,
       "compiles": true,
       "locked_code": false,
       "registry_name": "show_extra_transfur_info",
@@ -10463,7 +10477,7 @@
     {
       "name": "DormantDarkLatex",
       "type": "block",
-      "sortid": 621,
+      "sortid": 48,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dormant_dark_latex",
@@ -10480,7 +10494,7 @@
     {
       "name": "DormantWhiteLatex",
       "type": "block",
-      "sortid": 623,
+      "sortid": 49,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dormant_white_latex",
@@ -10497,7 +10511,7 @@
     {
       "name": "Scientist",
       "type": "villagerprofession",
-      "sortid": 631,
+      "sortid": 522,
       "compiles": true,
       "locked_code": false,
       "registry_name": "scientist",
@@ -10509,7 +10523,7 @@
     {
       "name": "PlayerDieWithConcienceFight",
       "type": "procedure",
-      "sortid": 624,
+      "sortid": 523,
       "compiles": true,
       "locked_code": false,
       "registry_name": "player_die_with_concience_fight",
@@ -10529,7 +10543,7 @@
     {
       "name": "Phase2EntitysHandle",
       "type": "procedure",
-      "sortid": 625,
+      "sortid": 524,
       "compiles": true,
       "locked_code": true,
       "registry_name": "phase_2_entitys_handle",
@@ -10544,7 +10558,7 @@
     {
       "name": "Exp10WhenAttack",
       "type": "procedure",
-      "sortid": 626,
+      "sortid": 525,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_10_when_attack",
@@ -10572,7 +10586,7 @@
     {
       "name": "OpenStruggleMenuOnKeyPressed",
       "type": "procedure",
-      "sortid": 627,
+      "sortid": 526,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_struggle_menu_on_key_pressed",
@@ -10608,7 +10622,7 @@
     {
       "name": "OpenStruggleMenu",
       "type": "keybind",
-      "sortid": 628,
+      "sortid": 527,
       "compiles": true,
       "locked_code": false,
       "registry_name": "open_struggle_menu",
@@ -10622,7 +10636,7 @@
     {
       "name": "SnepIcon",
       "type": "item",
-      "sortid": 629,
+      "sortid": 528,
       "compiles": true,
       "locked_code": false,
       "registry_name": "snep_icon",
@@ -10637,7 +10651,7 @@
     {
       "name": "FriendlyGoeyIcon",
       "type": "item",
-      "sortid": 630,
+      "sortid": 529,
       "compiles": true,
       "locked_code": false,
       "registry_name": "friendly_goey_icon",
@@ -10652,7 +10666,7 @@
     {
       "name": "PatAdvancement",
       "type": "achievement",
-      "sortid": 632,
+      "sortid": 530,
       "compiles": true,
       "locked_code": false,
       "registry_name": "pat_advancement",
@@ -10666,7 +10680,7 @@
     {
       "name": "Aquaticdietlist",
       "type": "tag",
-      "sortid": 633,
+      "sortid": 531,
       "compiles": true,
       "locked_code": false,
       "registry_name": "aquaticdietlist",
@@ -10680,7 +10694,7 @@
     {
       "name": "Foxdietlist",
       "type": "tag",
-      "sortid": 634,
+      "sortid": 532,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxdietlist",
@@ -10694,7 +10708,7 @@
     {
       "name": "Wolfdietlist",
       "type": "tag",
-      "sortid": 635,
+      "sortid": 533,
       "compiles": true,
       "locked_code": false,
       "registry_name": "wolfdietlist",
@@ -10708,7 +10722,7 @@
     {
       "name": "Specialdietlist",
       "type": "tag",
-      "sortid": 636,
+      "sortid": 534,
       "compiles": true,
       "locked_code": false,
       "registry_name": "specialdietlist",
@@ -10722,7 +10736,7 @@
     {
       "name": "Dragondietlist",
       "type": "tag",
-      "sortid": 637,
+      "sortid": 535,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dragondietlist",
@@ -10736,7 +10750,7 @@
     {
       "name": "Catdietlist",
       "type": "tag",
-      "sortid": 638,
+      "sortid": 536,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catdietlist",
@@ -10750,7 +10764,7 @@
     {
       "name": "NotFood",
       "type": "tag",
-      "sortid": 639,
+      "sortid": 537,
       "compiles": true,
       "locked_code": true,
       "registry_name": "not_food",
@@ -10764,7 +10778,7 @@
     {
       "name": "SolventHitTick",
       "type": "procedure",
-      "sortid": 640,
+      "sortid": 538,
       "compiles": true,
       "locked_code": true,
       "registry_name": "solvent_hit_tick",
@@ -10779,7 +10793,7 @@
     {
       "name": "Exp6",
       "type": "livingentity",
-      "sortid": 641,
+      "sortid": 539,
       "compiles": true,
       "locked_code": true,
       "registry_name": "exp_6",
@@ -10794,7 +10808,7 @@
     {
       "name": "LatexSolventAppliable",
       "type": "tag",
-      "sortid": 642,
+      "sortid": 540,
       "compiles": true,
       "locked_code": false,
       "registry_name": "latex_solvent_appliable",
@@ -10808,7 +10822,7 @@
     {
       "name": "SnepsiLootInject",
       "type": "loottable",
-      "sortid": 643,
+      "sortid": 541,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snepsi_loot_inject",
@@ -10822,7 +10836,7 @@
     {
       "name": "Exp6Loot",
       "type": "loottable",
-      "sortid": 644,
+      "sortid": 542,
       "compiles": true,
       "locked_code": true,
       "registry_name": "exp_6_loot",
@@ -10836,7 +10850,7 @@
     {
       "name": "DiffusionSyringe",
       "type": "item",
-      "sortid": 645,
+      "sortid": 12,
       "compiles": true,
       "locked_code": false,
       "registry_name": "diffusion_syringe",
@@ -10845,7 +10859,8 @@
           "src/main/java/net/foxyas/changedaddon/item/DiffusionSyringeItem.java",
           "src/main/resources/assets/changed_addon/models/item/diffusion_syringe.json"
         ]
-      }
+      },
+      "path": "~/Items"
     }
   ],
   "variable_elements": [
@@ -11079,7 +11094,7 @@
       "changed_addon.ability.dissolve": "Dissolve Ability",
       "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
-      "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
+      "item.changed_addon.boss_experiment_10_spawn_egg": "Experiment 10 SpawnEgg",
       "item.changed_addon.partial_snow_leopard_spawn_egg": "Snow Leopard Partial Spawn Egg",
       "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "advancements.untransfuritemadvancement.title": "Untransfur!?",

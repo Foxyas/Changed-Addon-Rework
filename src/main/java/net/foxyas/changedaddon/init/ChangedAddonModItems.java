@@ -88,6 +88,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> LAETHIN = REGISTRY.register("laethin", () -> new LaethinItem());
 	public static final RegistryObject<Item> SYRINGE = REGISTRY.register("syringe", () -> new SyringeItem());
 	public static final RegistryObject<Item> CATALYZEDDNA = REGISTRY.register("catalyzeddna", () -> new CatalyzeddnaItem());
+	public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", () -> new DiffusionSyringeItem());
 	public static final RegistryObject<Item> SYRINGEWITHLITIXCAMMONIA = REGISTRY.register("syringewithlitixcammonia", () -> new SyringewithlitixcammoniaItem());
 	public static final RegistryObject<Item> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", () -> new LaethinSyringeItem());
 	public static final RegistryObject<Item> POTWITHCAMONIA = REGISTRY.register("potwithcamonia", () -> new PotwithcamoniaItem());
@@ -113,6 +114,22 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> EXPERIMENT_009DNA = REGISTRY.register("experiment_009dna", () -> new Experiment009dnaItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_SPAWNEGG = REGISTRY.register("experiment_009_spawnegg", () -> new Experiment009SpawneggItem());
 	public static final RegistryObject<Item> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", () -> new TransfurTotemItem());
+	public static final RegistryObject<Item> SIGNAL_BLOCK = block(ChangedAddonModBlocks.SIGNAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
+	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
+	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
+	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
+	public static final RegistryObject<Item> CRYSTAL_ADDAGER_RED = REGISTRY.register("crystal_addager_red", () -> new CrystalAddagerRedItem());
+	public static final RegistryObject<Item> CRYSTAL_ADDAGER_GREEN = REGISTRY.register("crystal_addager_green", () -> new CrystalAddagerGreenItem());
+	public static final RegistryObject<Item> CRYSTAL_ADDAGER_BLACK = REGISTRY.register("crystal_addager_black", () -> new CrystalAddagerBlackItem());
+	public static final RegistryObject<Item> CROW_BAR = REGISTRY.register("crow_bar", () -> new CrowBarItem());
+	public static final RegistryObject<Item> SNEPSI = REGISTRY.register("snepsi", () -> new SnepsiItem());
+	public static final RegistryObject<Item> FOXTA = REGISTRY.register("foxta", () -> new FoxtaItem());
+	public static final RegistryObject<Item> DORMANT_DARK_LATEX = block(ChangedAddonModBlocks.DORMANT_DARK_LATEX, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> DORMANT_WHITE_LATEX = block(ChangedAddonModBlocks.DORMANT_WHITE_LATEX, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
+	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
 	public static final RegistryObject<Item> PAINITE_PICKAXE = REGISTRY.register("painite_pickaxe", () -> new PainitePickaxeItem());
 	public static final RegistryObject<Item> PAINITE_AXE = REGISTRY.register("painite_axe", () -> new PainiteAxeItem());
 	public static final RegistryObject<Item> PAINITE_SWORD = REGISTRY.register("painite_sword", () -> new PainiteSwordItem());
@@ -131,28 +148,11 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> PAINITE_HOE = REGISTRY.register("painite_hoe", () -> new PainiteHoeItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_RECORD = REGISTRY.register("experiment_009_record", () -> new Experiment009recordItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_RECORD = REGISTRY.register("experiment_009_phase_2_record", () -> new Experiment009Phase2RecordItem());
-	public static final RegistryObject<Item> SIGNAL_BLOCK = block(ChangedAddonModBlocks.SIGNAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
-	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
-	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
-	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
-	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
 	public static final RegistryObject<Item> ERIK_SPAWN_EGG = REGISTRY.register("erik_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.ERIK, -1, -1, new Item.Properties().tab(null)));
-	public static final RegistryObject<Item> CRYSTAL_ADDAGER_RED = REGISTRY.register("crystal_addager_red", () -> new CrystalAddagerRedItem());
-	public static final RegistryObject<Item> CRYSTAL_ADDAGER_GREEN = REGISTRY.register("crystal_addager_green", () -> new CrystalAddagerGreenItem());
-	public static final RegistryObject<Item> CRYSTAL_ADDAGER_BLACK = REGISTRY.register("crystal_addager_black", () -> new CrystalAddagerBlackItem());
-	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
-	public static final RegistryObject<Item> CROW_BAR = REGISTRY.register("crow_bar", () -> new CrowBarItem());
-	public static final RegistryObject<Item> SNEPSI = REGISTRY.register("snepsi", () -> new SnepsiItem());
-	public static final RegistryObject<Item> FOXTA = REGISTRY.register("foxta", () -> new FoxtaItem());
 	public static final RegistryObject<Item> FOXTA_CAN = block(ChangedAddonModBlocks.FOXTA_CAN, null);
 	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, null);
-	public static final RegistryObject<Item> DORMANT_DARK_LATEX = block(ChangedAddonModBlocks.DORMANT_DARK_LATEX, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> DORMANT_WHITE_LATEX = block(ChangedAddonModBlocks.DORMANT_WHITE_LATEX, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
-	public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", () -> new DiffusionSyringeItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

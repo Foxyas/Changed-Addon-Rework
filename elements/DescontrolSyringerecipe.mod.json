@@ -40,7 +40,7 @@
       }
     ],
     "recipeReturnStack": {
-      "value": "CUSTOM:DescontrolSyringe"
+      "value": "CUSTOM:DiffusionSyringe"
     },
     "name": "descontrol_syringerecipe",
     "namespace": "mod"

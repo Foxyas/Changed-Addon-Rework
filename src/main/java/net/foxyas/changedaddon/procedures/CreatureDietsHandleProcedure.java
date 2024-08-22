@@ -215,7 +215,7 @@ public class CreatureDietsHandleProcedure {
                     ChangedAddonModItems.SNEPSI.get(),
                     ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(),
                     ChangedAddonModItems.LAETHIN_SYRINGE.get(),
-                    ChangedAddonModItems.DIFFUSION_SYRINE.get());
+                    ChangedAddonModItems.DIFFUSION_SYRINGE.get());
 
             if (item.is(Items.ENCHANTED_GOLDEN_APPLE)){
                 return true;
