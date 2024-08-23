@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension;
+package net.foxyas.changedaddon.extension.jeiSuport;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.world.item.crafting.RecipeSerializer;

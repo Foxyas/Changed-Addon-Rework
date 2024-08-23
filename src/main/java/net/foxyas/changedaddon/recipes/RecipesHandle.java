@@ -1,14 +1,13 @@
 package net.foxyas.changedaddon.recipes;
 
-import net.foxyas.changedaddon.extension.JeiCatalyzerRecipe;
-import net.foxyas.changedaddon.extension.JeiUnifuserRecipe;
+import net.foxyas.changedaddon.extension.jeiSuport.JeiCatalyzerRecipe;
+import net.foxyas.changedaddon.extension.jeiSuport.JeiUnifuserRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 
 import java.util.List;

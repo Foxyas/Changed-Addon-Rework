@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.extension;
+package net.foxyas.changedaddon.extension.jeiSuport;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
