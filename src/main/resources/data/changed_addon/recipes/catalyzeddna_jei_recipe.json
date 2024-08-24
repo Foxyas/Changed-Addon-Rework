@@ -9,5 +9,6 @@
     "item": "changed_addon:catalyzeddna",
     "count": 1
   },
-  "ProgressSpeed": 2.5
+  "ProgressSpeed": 2.5,
+  "NitrogenUsage": 5
 }

@@ -19,12 +19,14 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
     private final float ProgressSpeed;
+    private final float NitrogenUsage;
 
-    public JeiCatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,float ProgressSpeed) {
+    public JeiCatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,float ProgressSpeed,float NitrogenUsage) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
         this.ProgressSpeed = ProgressSpeed;
+        this.NitrogenUsage = NitrogenUsage;
     }
 
     @Override
@@ -72,6 +74,10 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
         return ProgressSpeed;
     }
 
+    public float getNitrogenUsage() {
+        return NitrogenUsage;
+    }
+
     @Override
     public ResourceLocation getId() {
         return id;
@@ -106,8 +112,9 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
             inputs.set(0, Ingredient.fromJson(ingredients.get(0)));
             float ProgressSpeed  = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
+            float NitrogenUsage  = GsonHelper.getAsFloat(pSerializedRecipe, "NitrogenUsage", 0.0f);
 
-            return new JeiCatalyzerRecipe(pRecipeId, output, inputs,ProgressSpeed);
+            return new JeiCatalyzerRecipe(pRecipeId, output, inputs,ProgressSpeed,NitrogenUsage);
         }
 
         @Override
@@ -118,7 +125,8 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
             }
             ItemStack output = buf.readItem();
             float ProgressSpeed = buf.readFloat();
-            return new JeiCatalyzerRecipe(id, output, inputs,ProgressSpeed);
+            float NitrogenUsage = buf.readFloat();
+            return new JeiCatalyzerRecipe(id, output, inputs,ProgressSpeed,NitrogenUsage);
         }
 
         @Override
@@ -129,6 +137,7 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
             }
             buf.writeItemStack(recipe.getResultItem(), false);
             buf.writeFloat(recipe.getProgressSpeed());
+            buf.writeFloat(recipe.getNitrogenUsage());
         }
 
         @Override

@@ -157,4 +157,26 @@ public class RecipesHandle {
         }
         return 1f; // Retorna um ItemStack vazio se nenhuma receita correspondente for encontrada
     }
+
+    public static float getCatalyzerRecipeNitrogenUsage(LevelAccessor level, ItemStack input) {
+        if (level instanceof ServerLevel serverLevel) {
+            RecipeManager recipeManager = serverLevel.getRecipeManager();
+
+            // Obtém todas as receitas do tipo JeiCatalyzerRecipe
+            List<JeiCatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(JeiCatalyzerRecipe.Type.INSTANCE);
+
+            // Cria um contêiner simples com o input fornecido
+            SimpleContainer container = new SimpleContainer(1);
+            container.setItem(0, input);
+
+            // Verifica cada receita para ver se ela corresponde ao input fornecido
+            for (JeiCatalyzerRecipe recipe : catalyzerRecipes) {
+                NonNullList<Ingredient> ingredients = recipe.getIngredients();
+                if (!ingredients.get(0).test(input))
+                    continue;
+                return recipe.getNitrogenUsage();
+            }
+        }
+        return 0f; // Retorna um ItemStack vazio se nenhuma receita correspondente for encontrada
+    }
 }

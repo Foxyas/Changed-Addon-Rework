@@ -60,7 +60,7 @@
             "block": {
               "value": ""
             },
-            "logicField": 1,
+            "logicField": 0,
             "numberField": 0.0,
             "textDefault": "",
             "comment": "Allow Catalyzer and Unifuser Use New Recipe System ",

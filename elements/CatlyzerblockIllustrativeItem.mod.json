@@ -7,7 +7,7 @@
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "IN Catalyzer Block Illustrative Item",
+    "name": "Catalyzer Recipes Informations",
     "rarity": "RARE",
     "creativeTab": {
       "value": "No creative tab entry"
@@ -26,10 +26,7 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInfo": [
-      "Catalyzer Block Illustrative Item for a Jei Support",
-      "This mean that craft is in a Catalyzer Craft Style"
-    ],
+    "specialInfo": [],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,

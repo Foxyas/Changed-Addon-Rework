@@ -47,6 +47,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 	ImageButton imagebutton_20221106_142902;
 	ImageButton imagebutton_impureammoniawithslot;
 	ImageButton imagebutton_catalyzed_dna_slot;
+	private int TickMoment;
 
 	public CatlyzerguiScreen(CatlyzerguiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
@@ -127,13 +128,25 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/empty_bar.png"));
 			this.blit(ms, this.leftPos + 83, this.topPos + 46, 0, 0, 32, 12, 32, 12);
 		}
-				if (true) {
+		if (true) {
 			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_full.png"));
 			this.blit(ms, this.leftPos + 83+2, this.topPos + 46+2, 0, 0, progressint, 8, progressint, 8);
 		}
+		int time = 200;
+		if (TickMoment <= time){
+			TickMoment++;
+		} else {
+			TickMoment = 0;
+		}
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));
-		this.blit(ms, this.leftPos + 23, this.topPos + 45, 0, 0, 16, 16, 16, 16);
+		if (TickMoment >= time / 2){
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/syringes.png"));
+			this.blit(ms, this.leftPos + 23, this.topPos + 44, 0, 0, 16, 16, 16, 16);
+		} else {
+			RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/dusts.png"));
+			this.blit(ms, this.leftPos + 23, this.topPos + 45, 0, 0, 16, 16, 16, 16);
+		}
+
 
 		RenderSystem.disableBlend();
 	}

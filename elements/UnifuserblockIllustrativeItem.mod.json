@@ -7,7 +7,7 @@
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "IN Unifuser Block Illustrative Item",
+    "name": "Unifuser Recipes Informations",
     "rarity": "RARE",
     "creativeTab": {
       "value": "No creative tab entry"
@@ -26,10 +26,7 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInfo": [
-      "Unifuser Block Illustrative Item for a Jei Support",
-      "This mean that craft is in a Unifuser Craft Style"
-    ],
+    "specialInfo": [],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,

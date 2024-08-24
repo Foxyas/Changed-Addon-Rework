@@ -16,7 +16,7 @@ public class ChangedAddonConfigsConfiguration {
 		DEBUFFS = BUILDER.comment("Add Debuffs when eat a non good food for your kind").define("When Eat Food Debuffs", false);
 		BUILDER.pop();
 		BUILDER.push("BlocksRecipes");
-		CUSTOMRECIPES = BUILDER.comment("Allow Catalyzer and Unifuser Use New Recipe System ").define("Custom Recipes", false);
+		CUSTOMRECIPES = BUILDER.comment("Allow Catalyzer and Unifuser Use New Recipe System ").define("Custom Recipes", true);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();
