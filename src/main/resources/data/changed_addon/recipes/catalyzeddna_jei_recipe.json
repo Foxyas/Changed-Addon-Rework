@@ -1,5 +1,5 @@
 {
-  "type": "changed_addon:jei_catalyzer",
+  "type": "changed_addon:catalyzer",
   "ingredients": [
     {
       "tag": "changed_addon:bloodtype_syringe"
@@ -8,5 +8,6 @@
   "output": {
     "item": "changed_addon:catalyzeddna",
     "count": 1
-  }
+  },
+  "ProgressSpeed": 2.5
 }

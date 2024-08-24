@@ -1,5 +1,5 @@
 {
-  "type": "changed_addon:jei_unifuser",
+  "type": "changed_addon:unifuser",
   "ingredients": [
     {
       "item": "changed_addon:litix_camonia"
@@ -14,5 +14,6 @@
   "output": {
     "item": "changed_addon:potwithcamonia",
     "count": 1
-  }
+  },
+  "ProgressSpeed": 0.3
 }

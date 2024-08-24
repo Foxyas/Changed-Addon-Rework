@@ -1,5 +1,5 @@
 {
-  "type": "changed_addon:jei_catalyzer",
+  "type": "changed_addon:catalyzer",
   "ingredients": [
     {
      "item": "changed_addon:impureammonia"
@@ -8,5 +8,6 @@
   "output": {
     "item": "changed_addon:ammoniaparticle",
     "count": 4
-  }
+  },
+  "ProgressSpeed": 2.5
 }

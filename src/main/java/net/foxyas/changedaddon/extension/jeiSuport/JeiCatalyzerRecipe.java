@@ -18,11 +18,13 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
+    private final float ProgressSpeed;
 
-    public JeiCatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+    public JeiCatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,float ProgressSpeed) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        this.ProgressSpeed = ProgressSpeed;
     }
 
     @Override
@@ -66,6 +68,10 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
         return output.copy();
     }
 
+    public float getProgressSpeed() {
+        return ProgressSpeed;
+    }
+
     @Override
     public ResourceLocation getId() {
         return id;
@@ -86,12 +92,12 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
         }
 
         public static final Type INSTANCE = new Type();
-        public static final String ID = "jei_catalyzer";
+        public static final String ID = "catalyzer";
     }
 
     public static class Serializer implements RecipeSerializer<JeiCatalyzerRecipe>, IForgeRegistryEntry<RecipeSerializer<?>> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "jei_catalyzer");
+        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "catalyzer");
 
         @Override
         public JeiCatalyzerRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
@@ -99,8 +105,9 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
             inputs.set(0, Ingredient.fromJson(ingredients.get(0)));
+            float ProgressSpeed  = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
 
-            return new JeiCatalyzerRecipe(pRecipeId, output, inputs);
+            return new JeiCatalyzerRecipe(pRecipeId, output, inputs,ProgressSpeed);
         }
 
         @Override
@@ -110,7 +117,8 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, Ingredient.fromNetwork(buf));
             }
             ItemStack output = buf.readItem();
-            return new JeiCatalyzerRecipe(id, output, inputs);
+            float ProgressSpeed = buf.readFloat();
+            return new JeiCatalyzerRecipe(id, output, inputs,ProgressSpeed);
         }
 
         @Override
@@ -120,6 +128,7 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
                 ing.toNetwork(buf);
             }
             buf.writeItemStack(recipe.getResultItem(), false);
+            buf.writeFloat(recipe.getProgressSpeed());
         }
 
         @Override

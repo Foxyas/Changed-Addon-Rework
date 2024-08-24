@@ -19,11 +19,13 @@ public class JeiUnifuserRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
+    private final float ProgressSpeed;
 
-    public JeiUnifuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems) {
+    public JeiUnifuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,float ProgressSpeed) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
+        this.ProgressSpeed = ProgressSpeed;
     }
 
     @Override
@@ -66,6 +68,10 @@ public class JeiUnifuserRecipe implements Recipe<SimpleContainer> {
         return output.copy();
     }
 
+    public float getProgressSpeed() {
+        return ProgressSpeed;
+    }
+
     @Override
     public ResourceLocation getId() {
         return id;
@@ -86,12 +92,12 @@ public class JeiUnifuserRecipe implements Recipe<SimpleContainer> {
         }
 
         public static final Type INSTANCE = new Type();
-        public static final String ID = "jei_unifuser";
+        public static final String ID = "unifuser";
     }
 
     public static class Serializer implements RecipeSerializer<JeiUnifuserRecipe>, IForgeRegistryEntry<RecipeSerializer<?>> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "jei_unifuser");
+        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "unifuser");
 
         @Override
         public JeiUnifuserRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
@@ -105,9 +111,10 @@ public class JeiUnifuserRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, ingredient);
             }
 
-            return new JeiUnifuserRecipe(pRecipeId, output, inputs);
-        }
+            float ProgressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
 
+            return new JeiUnifuserRecipe(pRecipeId, output, inputs, ProgressSpeed);
+        }
 
         @Override
         public @Nullable JeiUnifuserRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
@@ -116,7 +123,8 @@ public class JeiUnifuserRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, Ingredient.fromNetwork(buf));
             }
             ItemStack output = buf.readItem();
-            return new JeiUnifuserRecipe(id, output, inputs);
+            float ProgressSpeed = buf.readFloat();
+            return new JeiUnifuserRecipe(id, output, inputs, ProgressSpeed);
         }
 
         @Override
@@ -126,6 +134,7 @@ public class JeiUnifuserRecipe implements Recipe<SimpleContainer> {
                 ing.toNetwork(buf);
             }
             buf.writeItemStack(recipe.getResultItem(), false);
+            buf.writeFloat(recipe.getProgressSpeed());
         }
 
         @Override
