@@ -11,6 +11,6 @@ public class UnifuserguiDisableItemstackPlacementslot0Procedure {
 				|| itemstack.getItem() == Blocks.TINTED_GLASS.asItem() || itemstack.getItem() == ChangedAddonModItems.UNLATEXBASE.get()) {
 			return false;
 		}
-		return true;
+		return false;
 	}
 }
