@@ -35,8 +35,8 @@ public class WhiteLatexSprayRightClickProcedure {
 					_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:spray.sound")), SoundSource.PLAYERS, 1, 1, false);
 				}
 			}
-			int horizontalRadiusSphere = (int) 2 - 1;
-			int verticalRadiusSphere = (int) 1 - 1;
+			int horizontalRadiusSphere = (int) 3 - 1;
+			int verticalRadiusSphere = (int) 2 - 1;
 			int yIterationsSphere = verticalRadiusSphere;
 			for (int i = -yIterationsSphere; i <= yIterationsSphere; i++) {
 				for (int xi = -horizontalRadiusSphere; xi <= horizontalRadiusSphere; xi++) {
@@ -88,8 +88,8 @@ public class WhiteLatexSprayRightClickProcedure {
 						_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:spray.sound")), SoundSource.PLAYERS, 1, 1, false);
 					}
 				}
-				int horizontalRadiusSphere = (int) 2 - 1;
-				int verticalRadiusSphere = (int) 1 - 1;
+				int horizontalRadiusSphere = (int) 3 - 1;
+				int verticalRadiusSphere = (int) 2 - 1;
 				int yIterationsSphere = verticalRadiusSphere;
 				for (int i = -yIterationsSphere; i <= yIterationsSphere; i++) {
 					for (int xi = -horizontalRadiusSphere; xi <= horizontalRadiusSphere; xi++) {

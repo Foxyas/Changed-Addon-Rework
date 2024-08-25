@@ -3,7 +3,7 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "spraywithammonia",
+    "texture": "whitelatexspray",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
