@@ -22,6 +22,7 @@ public class Exp2MaleRenderer extends LatexHumanoidRenderer<Exp2MaleEntity, Male
 		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/male_snep_hair"),false));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
+
 	}
 
 	@Override

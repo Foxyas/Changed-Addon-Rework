@@ -2,14 +2,13 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
-import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmBobAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
 import net.ltxprogrammer.changed.entity.LatexEntity;
@@ -225,7 +224,8 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
-    }  */
+    }  
+*/
     @Override
     public void setupHand() {
         animator.setupHand();
@@ -235,6 +235,7 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
     @Override
     public void setupAnim(@NotNull PuroKindEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        CarryAbilityAnimation.playAnimation(entity,this);
     }
 
     public ModelPart getArm (HumanoidArm p_102852) {
