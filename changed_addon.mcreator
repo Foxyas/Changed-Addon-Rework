@@ -10874,7 +10874,8 @@
           "src/main/java/net/foxyas/changedaddon/item/DarkLatexSprayItem.java",
           "src/main/resources/assets/changed_addon/models/item/dark_latex_spray.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "DarkLatexSprayRightClick",
@@ -10917,7 +10918,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "WhiteLatexSprayRightClick",
@@ -10960,7 +10962,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/Procedures"
     },
     {
       "name": "WhiteLatexSpray",
@@ -10974,7 +10977,8 @@
           "src/main/java/net/foxyas/changedaddon/item/WhiteLatexSprayItem.java",
           "src/main/resources/assets/changed_addon/models/item/white_latex_spray.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "DarkLatexSprayRecipe",
@@ -10987,7 +10991,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/dark_latex_spray_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "WhiteLatexSprayRecipe",
@@ -11000,7 +11005,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/white_latex_spray_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     }
   ],
   "variable_elements": [
