@@ -10861,6 +10861,120 @@
         ]
       },
       "path": "~/Items"
+    },
+    {
+      "name": "DarkLatexSpray",
+      "type": "item",
+      "sortid": 543,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "dark_latex_spray",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/DarkLatexSprayItem.java",
+          "src/main/resources/assets/changed_addon/models/item/dark_latex_spray.json"
+        ]
+      }
+    },
+    {
+      "name": "DarkLatexSprayRightClick",
+      "type": "procedure",
+      "sortid": 544,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "dark_latex_spray_right_click",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/DarkLatexSprayRightClickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "blockstate",
+            "type": "blockstate"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WhiteLatexSprayRightClick",
+      "type": "procedure",
+      "sortid": 545,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "white_latex_spray_right_click",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/WhiteLatexSprayRightClickProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "blockstate",
+            "type": "blockstate"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WhiteLatexSpray",
+      "type": "item",
+      "sortid": 546,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "white_latex_spray",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/WhiteLatexSprayItem.java",
+          "src/main/resources/assets/changed_addon/models/item/white_latex_spray.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -11201,6 +11315,7 @@
       "changedaddon.diets.bad_food": "It seems like i feel less fuller when i eat this food",
       "item.changed_addon.painite_hoe": "Painite Hoe",
       "changed_addon.jei_descriptions.exp9_dna": "Found among the loot a specific room in a facility which has a room with boxes full of chemical material",
+      "item.changed_addon.dark_latex_spray": "Dark Latex Spray",
       "subtitles.warn": "Warn Sound",
       "gui.changed_addon.bookrecipepage_6.label_p": "P",
       "changed_addon.ability.dodge": "Dodge Ability",
@@ -11497,6 +11612,7 @@
       "advancements.ammoniacraft.title": "a different kind of ammonia!?",
       "gui.changed_addon.book_pagenumber_2.label_impure_ammonia": "Impure Ammonia",
       "gui.changed_addon.pagesecret.label_he_emerged": "he emerged",
+      "item.changed_addon.white_latex_spray": "White Latex Spray",
       "entity.changed_addon.foxyas": "Foxyas",
       "advancements.untransfuradvancement.descr": "You untransfur with the Pot with Litix-Camonia",
       "item.changed_addon.erik_spawn_egg": "Erik Spawn Egg",

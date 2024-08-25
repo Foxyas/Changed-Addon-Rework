@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 
 import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryProcedure;
 import net.foxyas.changedaddon.procedures.LaethinPropertyValueProviderProcedure;
+import net.foxyas.changedaddon.item.WhiteLatexSprayItem;
 import net.foxyas.changedaddon.item.UnlatexbaseItem;
 import net.foxyas.changedaddon.item.UnifuserblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.TransfurTotemItem;
@@ -59,6 +60,7 @@ import net.foxyas.changedaddon.item.EmptySprayItem;
 import net.foxyas.changedaddon.item.ElectricKatanaRedItem;
 import net.foxyas.changedaddon.item.ElectricKatanaItem;
 import net.foxyas.changedaddon.item.DiffusionSyringeItem;
+import net.foxyas.changedaddon.item.DarkLatexSprayItem;
 import net.foxyas.changedaddon.item.CrystalAddagerRedItem;
 import net.foxyas.changedaddon.item.CrystalAddagerGreenItem;
 import net.foxyas.changedaddon.item.CrystalAddagerBlackItem;
@@ -153,6 +155,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, null);
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
+	public static final RegistryObject<Item> DARK_LATEX_SPRAY = REGISTRY.register("dark_latex_spray", () -> new DarkLatexSprayItem());
+	public static final RegistryObject<Item> WHITE_LATEX_SPRAY = REGISTRY.register("white_latex_spray", () -> new WhiteLatexSprayItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

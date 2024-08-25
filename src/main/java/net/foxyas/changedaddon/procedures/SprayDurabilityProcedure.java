@@ -35,5 +35,11 @@ public class SprayDurabilityProcedure {
 		if (itemstack.getItem() == ChangedAddonModItems.LITIX_CAMONIA_SPRAY.get()) {
 			tooltip.add(new TextComponent(((itemstack).getDamageValue() + "/" + (itemstack).getMaxDamage() + " Uses")));
 		}
+		if (itemstack.getItem() == ChangedAddonModItems.DARK_LATEX_SPRAY.get()) {
+			tooltip.add(new TextComponent(((itemstack).getDamageValue() + "/" + (itemstack).getMaxDamage() + " Uses")));
+		}
+		if (itemstack.getItem() == ChangedAddonModItems.WHITE_LATEX_SPRAY.get()) {
+			tooltip.add(new TextComponent(((itemstack).getDamageValue() + "/" + (itemstack).getMaxDamage() + " Uses")));
+		}
 	}
 }

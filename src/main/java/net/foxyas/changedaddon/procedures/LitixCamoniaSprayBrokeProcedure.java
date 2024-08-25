@@ -34,6 +34,18 @@ public class LitixCamoniaSprayBrokeProcedure {
 				_setstack.setCount(1);
 				ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
 			}
+		} else if (itemstack.getItem() == ChangedAddonModItems.WHITE_LATEX_SPRAY.get()) {
+			if (entity instanceof Player _player) {
+				ItemStack _setstack = new ItemStack(ChangedAddonModItems.EMPTY_SPRAY.get());
+				_setstack.setCount(1);
+				ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
+			}
+		} else if (itemstack.getItem() == ChangedAddonModItems.DARK_LATEX_SPRAY.get()) {
+			if (entity instanceof Player _player) {
+				ItemStack _setstack = new ItemStack(ChangedAddonModItems.EMPTY_SPRAY.get());
+				_setstack.setCount(1);
+				ItemHandlerHelper.giveItemToPlayer(_player, _setstack);
+			}
 		}
 	}
 }
