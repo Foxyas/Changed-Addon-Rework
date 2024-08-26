@@ -11,6 +11,7 @@ import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -18,11 +19,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Objects;
 
 public class CarryAbility extends SimpleAbility {
+
     public CarryAbility() {
         super();
     }
@@ -49,18 +52,14 @@ public class CarryAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractLatex entity) {
-        return (Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.female()) ||
-                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.male()) ||
-                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.female()) ||
-                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.male()) ||
-                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.female()) ||
-                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.male()) ||
-                Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(
-                        TagKey.create(
-                                ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon:able_to_carry")
-                        )
-                )
-        ) && !Spectator(entity.getEntity());
+        return (Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.female())
+                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.male())
+                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.female())
+                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.male())
+                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.female())
+                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.male())
+                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon:able_to_carry"))))
+                && !Spectator(entity.getEntity());
     }
 
     @Override
@@ -75,14 +74,14 @@ public class CarryAbility extends SimpleAbility {
         SafeRemove(entity.getEntity());
     }
 
-    public static boolean Spectator(Entity entity){
-        if (entity instanceof Player player1){
+    public static boolean Spectator(Entity entity) {
+        if (entity instanceof Player player1) {
             return player1.isSpectator();
         }
         return true;
     }
 
-    public static void Run(Entity mainEntity) {
+    private static void Run(Entity mainEntity) {
         if (mainEntity instanceof Player player) {
             // If the player is already carrying someone, make them dismount
             if (player.getFirstPassenger() != null) {
@@ -112,8 +111,7 @@ public class CarryAbility extends SimpleAbility {
                 }
 
                 // Check if the player has the light latex centaur variant and prevent them from being carried
-                if (ProcessTransfur.getPlayerLatexVariant(carryPlayer) != null
-                        && ProcessTransfur.getPlayerLatexVariant(carryPlayer).is(LatexVariant.LIGHT_LATEX_CENTAUR)) {
+                if (ProcessTransfur.getPlayerLatexVariant(carryPlayer) != null && ProcessTransfur.getPlayerLatexVariant(carryPlayer).is(LatexVariant.LIGHT_LATEX_CENTAUR)) {
                     player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry", carryPlayer.getDisplayName()), true);
                     return;
                 }
@@ -132,8 +130,7 @@ public class CarryAbility extends SimpleAbility {
                 }
 
                 // If the looked at entity is in the humanoid tag or can be carried
-                if (carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS)
-                        || carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))) {
+                if (carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS) || carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))) {
                     if (carryTarget.startRiding(player, true)) {
                         // Synchronize mount with clients
                         syncMount(player);
@@ -157,9 +154,8 @@ public class CarryAbility extends SimpleAbility {
     }
 
 
-
-    public static void SafeRemove(Entity MainEntity){
-        if(MainEntity.getFirstPassenger() != null) {
+    public static void SafeRemove(Entity MainEntity) {
+        if (MainEntity.getFirstPassenger() != null) {
             MainEntity.getFirstPassenger().stopRiding();
         }
     }

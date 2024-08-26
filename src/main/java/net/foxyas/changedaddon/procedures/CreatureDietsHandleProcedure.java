@@ -70,7 +70,7 @@ public class CreatureDietsHandleProcedure {
         } else if (ChangedAddonConfigsConfiguration.DEBUFFS.get()
                 && (!dietType.isDietItem(item)
                 && !dietType.isNotFoodItem(item))
-                && latexInstance.ageAsVariant < 15000) {
+                && latexInstance.ageAsVariant < ChangedAddonConfigsConfiguration.AGE_NEED.get()) {
             applyFoodEffects(player, item,false);
             player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 50, 3, false, true, true));
             player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, true, true,

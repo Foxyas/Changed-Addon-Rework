@@ -46,6 +46,24 @@
             "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 1,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Set Amount of Transfur Age is need to not get debuffs when eat a food that is not of your diet",
+            "vardisplay": "Age Need",
+            "varname": "age_need",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
           }
         ]
       },

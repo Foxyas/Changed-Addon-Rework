@@ -22,21 +22,21 @@ public class CarryAbilityAnimation {
             // Levanta os braços se a habilidade de carregar está selecionada e a mão estiver vazia
             if (entity.getMainHandItem().isEmpty()) {
                 // Levanta o braço principal para cima se estiver vazio
-                model.getArm(entity.getMainArm()).xRot = ((float) -Math.PI / 2F) - 90; // Rotaciona para cima (180 graus)
+                model.getArm(entity.getMainArm()).xRot = (float) Math.PI; // Rotaciona para cima (180 graus)
             }
             if (entity.getOffhandItem().isEmpty()) {
                 // Levanta o braço offhand para cima se estiver vazio
-                model.getArm(entity.getMainArm().getOpposite()).xRot = ((float) -Math.PI / 2F) - 90; // Rotaciona para cima (180 graus)
+                model.getArm(entity.getMainArm().getOpposite()).xRot = (float) Math.PI; // Rotaciona para cima (180 graus)
             }
         } else if (entity.getFirstPassenger() != null) {
             // Levanta os braços se a habilidade de carregar está selecionada e a mão estiver vazia
             if (entity.getMainHandItem().isEmpty()) {
                 // Levanta o braço principal para cima se estiver vazio
-                model.getArm(entity.getMainArm()).xRot = ((float) -Math.PI / 2F) - 90; // Rotaciona para cima (180 graus)
+                model.getArm(entity.getMainArm()).xRot = (float) Math.PI; // Rotaciona para cima (180 graus)
             }
             if (entity.getOffhandItem().isEmpty()) {
                 // Levanta o braço offhand para cima se estiver vazio
-                model.getArm(entity.getMainArm().getOpposite()).xRot = ((float) -Math.PI / 2F) - 90; // Rotaciona para cima (180 graus)
+                model.getArm(entity.getMainArm().getOpposite()).xRot = (float) Math.PI; // Rotaciona para cima (180 graus)
             }
         }
 
