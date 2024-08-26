@@ -56,7 +56,7 @@
               "value": ""
             },
             "logicField": 0,
-            "numberField": 0.0,
+            "numberField": 15000.0,
             "textDefault": "",
             "comment": "Set Amount of Transfur Age is need to not get debuffs when eat a food that is not of your diet",
             "vardisplay": "Age Need",

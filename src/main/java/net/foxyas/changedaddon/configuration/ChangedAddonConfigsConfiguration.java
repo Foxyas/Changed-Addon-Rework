@@ -15,7 +15,7 @@ public class ChangedAddonConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Creatures Diets");
 		DEBUFFS = BUILDER.comment("Add Debuffs when eat a non good food for your kind").define("When Eat Food Debuffs", false);
-		AGE_NEED = BUILDER.comment("Set Amount of Transfur Age is need to not get debuffs when eat a food that is not of your diet").define("Age Need", (double) 0);
+		AGE_NEED = BUILDER.comment("Set Amount of Transfur Age is need to not get debuffs when eat a food that is not of your diet").define("Age Need", (double) 15000);
 		BUILDER.pop();
 		BUILDER.push("BlocksRecipes");
 		CUSTOMRECIPES = BUILDER.comment("Allow Catalyzer and Unifuser Use New Recipe System ").define("Custom Recipes", true);
