@@ -76,6 +76,7 @@ public class PlayerUtilProcedure {
 				variant.is(ChangedTags.LatexVariants.WOLF_LIKE);
 	}
 
+	@Nullable
 	public static Entity getEntityPlayerLookingAt(Player player, double range) {
 		Level world = player.level;
 		Vec3 startVec = player.getEyePosition(1.0F); // Player's eye position
@@ -108,6 +109,7 @@ public class PlayerUtilProcedure {
 		return closestEntity; // Return the closest entity the player is looking at
 	}
 
+	@Nullable
 	public static Entity getEntityPlayerLookingAtType2(Entity entity, Entity player, double entityReach) {
 		double distance = entityReach * entityReach;
 		Vec3 eyePos = player.getEyePosition(1.0f);
