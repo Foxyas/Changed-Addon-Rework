@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
-import net.foxyas.changedaddon.procedures.LeapAbilityProcedure;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
