@@ -84,8 +84,14 @@ public class CarryAbility extends SimpleAbility {
     private static void Run(Entity mainEntity) {
         if (mainEntity instanceof Player player) {
             // If the player is already carrying someone, make them dismount
-            if (player.getFirstPassenger() != null) {
+            if (player.getFirstPassenger() != null && player.isShiftKeyDown()) {
                 player.getFirstPassenger().stopRiding();
+                syncMount(player);
+                return;
+            } else if (player.getFirstPassenger() != null && !player.isShiftKeyDown()) {
+                Entity localEntity = player.getFirstPassenger();
+                localEntity.stopRiding();
+                localEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
                 syncMount(player);
                 return;
             }

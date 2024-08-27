@@ -18,7 +18,7 @@ import static net.ltxprogrammer.changed.init.ChangedRegistry.ABILITY;
 public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 
 	public static final DeferredRegister<AbstractAbility<?>> REGISTRY = ABILITY.createDeferred(ChangedAddonMod.MODID);
-	public static final RegistryObject<LeapAbilityProcedure> LEAP = REGISTRY.register("leap", LeapAbilityProcedure::new);
+	public static final RegistryObject<LeapAbility> LEAP = REGISTRY.register("leap", LeapAbility::new);
 	public static final RegistryObject<ThunderBoltAbility> THUNDERBOLT = REGISTRY.register("thunderbolt",ThunderBoltAbility::new);
 	public static final RegistryObject<PsychicPulseAbility> PSYCHIC_PULSE = REGISTRY.register("psychic_pulse",PsychicPulseAbility::new);
 	public static final RegistryObject<PsychicHoldAbility> PSYCHIC_HOLD = REGISTRY.register("psychic_hold",PsychicHoldAbility::new);
