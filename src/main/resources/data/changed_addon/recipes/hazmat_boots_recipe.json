@@ -6,13 +6,13 @@
   ],
   "key": {
     "0": {
-      "item": "minecraft:leather"
+      "item": "changed_addon:unlatexbase"
     },
     "1": {
       "item": "minecraft:leather_boots"
     },
     "2": {
-      "item": "minecraft:leather"
+      "item": "changed_addon:unlatexbase"
     },
     "3": {
       "item": "minecraft:leather"
@@ -25,7 +25,7 @@
     }
   },
   "result": {
-    "item": "changed_addon:hazard_suit_boots",
+    "item": "changed_addon:hazmat_suit_boots",
     "count": 1
   }
 }

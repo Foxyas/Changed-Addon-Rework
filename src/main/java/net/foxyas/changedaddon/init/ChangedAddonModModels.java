@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.client.model.ModelSyringe_projectile;
 import net.foxyas.changedaddon.client.model.ModelProtoTypeMob;
 import net.foxyas.changedaddon.client.model.ModelNewHyperFlower;
 import net.foxyas.changedaddon.client.model.ModelHyper_Flower;
+import net.foxyas.changedaddon.client.model.ModelHazmat_Suit;
 import net.foxyas.changedaddon.client.model.ModelHazardArmorCustomArms;
 import net.foxyas.changedaddon.client.model.ModelFoxyas_form;
 import net.foxyas.changedaddon.client.model.ModelFoxyasModel;
@@ -33,6 +34,7 @@ public class ChangedAddonModModels {
 		event.registerLayerDefinition(ModelFoxyas_form.LAYER_LOCATION, ModelFoxyas_form::createBodyLayer);
 		event.registerLayerDefinition(ModelAccessories.LAYER_LOCATION, ModelAccessories::createBodyLayer);
 		event.registerLayerDefinition(Modelcustom_model.LAYER_LOCATION, Modelcustom_model::createBodyLayer);
+		event.registerLayerDefinition(ModelHazmat_Suit.LAYER_LOCATION, ModelHazmat_Suit::createBodyLayer);
 		event.registerLayerDefinition(Modelsyringe_model.LAYER_LOCATION, Modelsyringe_model::createBodyLayer);
 		event.registerLayerDefinition(ModelDudes_e_custom.LAYER_LOCATION, ModelDudes_e_custom::createBodyLayer);
 		event.registerLayerDefinition(Modeljack_model.LAYER_LOCATION, Modeljack_model::createBodyLayer);

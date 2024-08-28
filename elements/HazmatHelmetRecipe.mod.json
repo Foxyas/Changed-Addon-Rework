@@ -33,16 +33,16 @@
         "value": "Items.IRON_INGOT"
       },
       {
-        "value": "Items.IRON_NUGGET"
+        "value": "CUSTOM:Unlatexbase"
       },
       {
         "value": "Items.IRON_INGOT"
       }
     ],
     "recipeReturnStack": {
-      "value": "CUSTOM:HazardSuit.helmet"
+      "value": "CUSTOM:HazmatSuit.helmet"
     },
-    "name": "hazardhelmetrecipe",
+    "name": "hazmat_helmet_recipe",
     "namespace": "mod"
   }
 }

@@ -7,22 +7,22 @@
   ],
   "key": {
     "0": {
-      "item": "minecraft:black_dye"
+      "item": "changed_addon:unlatexbase"
     },
     "1": {
-      "item": "minecraft:yellow_dye"
+      "item": "minecraft:leather"
     },
     "2": {
-      "item": "minecraft:black_dye"
+      "item": "changed_addon:unlatexbase"
     },
     "3": {
-      "item": "minecraft:black_dye"
+      "item": "minecraft:leather"
     },
     "4": {
-      "item": "minecraft:leather_chestplate"
+      "item": "minecraft:leather_leggings"
     },
     "5": {
-      "item": "minecraft:black_dye"
+      "item": "minecraft:leather"
     },
     "6": {
       "item": "minecraft:leather"
@@ -35,7 +35,7 @@
     }
   },
   "result": {
-    "item": "changed_addon:hazard_suit_chestplate",
+    "item": "changed_addon:hazmat_suit_leggings",
     "count": 1
   }
 }

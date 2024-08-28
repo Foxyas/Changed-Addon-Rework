@@ -12,13 +12,13 @@
     "recipeShapeless": false,
     "recipeSlots": [
       {
-        "value": "Items.LEATHER"
-      },
-      {
-        "value": "CUSTOM:Unlatexbase"
+        "value": ""
       },
       {
         "value": "Items.LEATHER"
+      },
+      {
+        "value": ""
       },
       {
         "value": "Items.LEATHER"
@@ -30,13 +30,13 @@
         "value": "Items.LEATHER"
       },
       {
-        "value": ""
+        "value": "Items.LEATHER"
       },
       {
         "value": "Items.DYE#11"
       },
       {
-        "value": ""
+        "value": "Items.LEATHER"
       }
     ],
     "recipeReturnStack": {

@@ -3,13 +3,25 @@
   "_type": "armor",
   "definition": {
     "enableHelmet": true,
-    "textureHelmet": "hazard-helmet",
+    "textureHelmet": "hazmat_item_helmet",
     "enableBody": true,
-    "textureBody": "hazard_chestplate",
+    "textureBody": "hazmat_item_chestplate",
     "enableLeggings": true,
-    "textureLeggings": "hazard_leggins",
+    "textureLeggings": "hazmat_item_legs",
     "enableBoots": true,
-    "textureBoots": "hazard_boots",
+    "textureBoots": "hazmat_item_boots",
+    "onHelmetTick": {
+      "name": "HazmatSuitTickUsed"
+    },
+    "onBodyTick": {
+      "name": "HazmatSuitTickUsed"
+    },
+    "onLeggingsTick": {
+      "name": "HazmatSuitTickUsed"
+    },
+    "onBootsTick": {
+      "name": "HazmatSuitTickUsed"
+    },
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
@@ -22,22 +34,22 @@
     "bodySpecialInfo": [],
     "leggingsSpecialInfo": [],
     "bootsSpecialInfo": [],
-    "helmetModelName": "Default",
-    "helmetModelPart": "Helmet",
-    "helmetModelTexture": "From armor",
-    "bodyModelName": "ModelHazardArmorCustomArms",
-    "bodyModelPart": "body",
-    "armsModelPartL": "left_arm",
-    "armsModelPartR": "right_arm",
-    "bodyModelTexture": "From armor",
-    "leggingsModelName": "Default",
-    "leggingsModelPartL": "Leggings L",
-    "leggingsModelPartR": "Leggings R",
-    "leggingsModelTexture": "hazardarmor_legs.png",
-    "bootsModelName": "Default",
-    "bootsModelPartL": "Boots L",
-    "bootsModelPartR": "Boots R",
-    "bootsModelTexture": "hazardarmor_boots.png",
+    "helmetModelName": "ModelHazmat_Suit",
+    "helmetModelPart": "Head",
+    "helmetModelTexture": "hazmat_suit.png",
+    "bodyModelName": "ModelHazmat_Suit",
+    "bodyModelPart": "Body",
+    "armsModelPartL": "LeftArm",
+    "armsModelPartR": "RightArm",
+    "bodyModelTexture": "hazmat_suit.png",
+    "leggingsModelName": "ModelHazmat_Suit",
+    "leggingsModelPartL": "RightLeg",
+    "leggingsModelPartR": "LeftLeg",
+    "leggingsModelTexture": "hazmat_suit.png",
+    "bootsModelName": "ModelHazmat_Suit",
+    "bootsModelPartL": "LeftLeg",
+    "bootsModelPartR": "RightLeg",
+    "bootsModelTexture": "hazmat_suit_boots.png",
     "helmetItemRenderType": 0,
     "helmetItemCustomModelName": "Normal",
     "bodyItemRenderType": 0,

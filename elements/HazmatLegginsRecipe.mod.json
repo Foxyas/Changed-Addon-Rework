@@ -12,37 +12,37 @@
     "recipeShapeless": false,
     "recipeSlots": [
       {
-        "value": "Blocks.GLASS"
+        "value": "CUSTOM:Unlatexbase"
+      },
+      {
+        "value": "Items.LEATHER"
+      },
+      {
+        "value": "CUSTOM:Unlatexbase"
+      },
+      {
+        "value": "Items.LEATHER"
+      },
+      {
+        "value": "Items.LEATHER_LEGGINGS"
+      },
+      {
+        "value": "Items.LEATHER"
+      },
+      {
+        "value": "Items.LEATHER"
       },
       {
         "value": "Items.DYE#11"
       },
       {
-        "value": "Blocks.GLASS"
-      },
-      {
-        "value": "Items.IRON_INGOT"
-      },
-      {
-        "value": "Items.LEATHER_HELMET"
-      },
-      {
-        "value": "Items.IRON_INGOT"
-      },
-      {
-        "value": "Items.IRON_INGOT"
-      },
-      {
-        "value": "Items.IRON_NUGGET"
-      },
-      {
-        "value": "Items.IRON_INGOT"
+        "value": "Items.LEATHER"
       }
     ],
     "recipeReturnStack": {
-      "value": "CUSTOM:HazardSuit.helmet"
+      "value": "CUSTOM:HazmatSuit.legs"
     },
-    "name": "hazardhelmetrecipe",
+    "name": "hazmat_leggins_recipe",
     "namespace": "mod"
   }
 }

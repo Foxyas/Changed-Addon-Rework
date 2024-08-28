@@ -85,14 +85,28 @@ public class CarryAbility extends SimpleAbility {
         if (mainEntity instanceof Player player) {
             // If the player is already carrying someone, make them dismount
             if (player.getFirstPassenger() != null && player.isShiftKeyDown()) {
-                player.getFirstPassenger().stopRiding();
-                syncMount(player);
+                Entity localEntity = player.getFirstPassenger();
+                if (localEntity instanceof Player playerEntity){
+                    playerEntity.stopRiding();
+                    syncMount(player);
+                    syncMount(playerEntity);
+                } else {
+                    player.getFirstPassenger().stopRiding();
+                    syncMount(player);
+                }
                 return;
             } else if (player.getFirstPassenger() != null && !player.isShiftKeyDown()) {
                 Entity localEntity = player.getFirstPassenger();
-                localEntity.stopRiding();
-                localEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
-                syncMount(player);
+                if (localEntity instanceof Player playerEntity){
+                    playerEntity.stopRiding();
+                    syncMount(player);
+                    syncMount(playerEntity);
+                    playerEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
+                } else {
+                    localEntity.stopRiding();
+                    syncMount(player);
+                    localEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
+                }
                 return;
             }
 
@@ -126,6 +140,7 @@ public class CarryAbility extends SimpleAbility {
                 if (carryPlayer.startRiding(player, true)) {
                     // Synchronize mount with clients
                     syncMount(player);
+                    syncMount(carryPlayer);
                 }
 
             } else {

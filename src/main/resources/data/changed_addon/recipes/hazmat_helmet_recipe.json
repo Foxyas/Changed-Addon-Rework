@@ -28,14 +28,14 @@
       "item": "minecraft:iron_ingot"
     },
     "7": {
-      "item": "minecraft:iron_nugget"
+      "item": "changed_addon:unlatexbase"
     },
     "8": {
       "item": "minecraft:iron_ingot"
     }
   },
   "result": {
-    "item": "changed_addon:hazard_suit_helmet",
+    "item": "changed_addon:hazmat_suit_helmet",
     "count": 1
   }
 }

@@ -1,18 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "012",
+    " 1 ",
     "345",
-    " 7 "
+    "678"
   ],
   "key": {
-    "0": {
-      "item": "minecraft:leather"
-    },
     "1": {
-      "item": "changed_addon:unlatexbase"
-    },
-    "2": {
       "item": "minecraft:leather"
     },
     "3": {
@@ -24,8 +18,14 @@
     "5": {
       "item": "minecraft:leather"
     },
+    "6": {
+      "item": "minecraft:leather"
+    },
     "7": {
       "item": "minecraft:yellow_dye"
+    },
+    "8": {
+      "item": "minecraft:leather"
     }
   },
   "result": {

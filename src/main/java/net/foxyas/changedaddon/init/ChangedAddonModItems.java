@@ -48,6 +48,7 @@ import net.foxyas.changedaddon.item.LitixCamoniaFluidItem;
 import net.foxyas.changedaddon.item.LaethinSyringeItem;
 import net.foxyas.changedaddon.item.LaethinItem;
 import net.foxyas.changedaddon.item.InpureammoniaItem;
+import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.foxyas.changedaddon.item.HazardSuitItem;
 import net.foxyas.changedaddon.item.FriendlyGoeyIconItem;
 import net.foxyas.changedaddon.item.FoxtaItem;
@@ -157,6 +158,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
 	public static final RegistryObject<Item> DARK_LATEX_SPRAY = REGISTRY.register("dark_latex_spray", () -> new DarkLatexSprayItem());
 	public static final RegistryObject<Item> WHITE_LATEX_SPRAY = REGISTRY.register("white_latex_spray", () -> new WhiteLatexSprayItem());
+	public static final RegistryObject<Item> HAZMAT_SUIT_HELMET = REGISTRY.register("hazmat_suit_helmet", () -> new HazmatSuitItem.Helmet());
+	public static final RegistryObject<Item> HAZMAT_SUIT_CHESTPLATE = REGISTRY.register("hazmat_suit_chestplate", () -> new HazmatSuitItem.Chestplate());
+	public static final RegistryObject<Item> HAZMAT_SUIT_LEGGINGS = REGISTRY.register("hazmat_suit_leggings", () -> new HazmatSuitItem.Leggings());
+	public static final RegistryObject<Item> HAZMAT_SUIT_BOOTS = REGISTRY.register("hazmat_suit_boots", () -> new HazmatSuitItem.Boots());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

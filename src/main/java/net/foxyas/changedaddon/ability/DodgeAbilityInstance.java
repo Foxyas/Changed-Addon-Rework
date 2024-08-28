@@ -13,10 +13,10 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractLatex entity){
         super(ability,entity);
     }
-    private static int DodgeAmount = 4;
-    private static int MaxDodgeAmount = 4;
-    private static boolean DodgeActivate = false;
-    public static int DodgeRegenCooldown = 5;
+    private int DodgeAmount = 4;
+    private int MaxDodgeAmount = 4;
+    private boolean DodgeActivate = false;
+    public int DodgeRegenCooldown = 5;
 
     public boolean isDodgeActivate(){
         return DodgeActivate;

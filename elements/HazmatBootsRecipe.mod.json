@@ -12,37 +12,37 @@
     "recipeShapeless": false,
     "recipeSlots": [
       {
-        "value": "Blocks.GLASS"
+        "value": ""
       },
       {
-        "value": "Items.DYE#11"
+        "value": ""
       },
       {
-        "value": "Blocks.GLASS"
+        "value": ""
       },
       {
-        "value": "Items.IRON_INGOT"
+        "value": "CUSTOM:Unlatexbase"
       },
       {
-        "value": "Items.LEATHER_HELMET"
+        "value": "Items.LEATHER_BOOTS"
       },
       {
-        "value": "Items.IRON_INGOT"
+        "value": "CUSTOM:Unlatexbase"
       },
       {
-        "value": "Items.IRON_INGOT"
+        "value": "Items.LEATHER"
       },
       {
-        "value": "Items.IRON_NUGGET"
+        "value": "Items.DYE#16"
       },
       {
-        "value": "Items.IRON_INGOT"
+        "value": "Items.LEATHER"
       }
     ],
     "recipeReturnStack": {
-      "value": "CUSTOM:HazardSuit.helmet"
+      "value": "CUSTOM:HazmatSuit.boots"
     },
-    "name": "hazardhelmetrecipe",
+    "name": "hazmat_boots_recipe",
     "namespace": "mod"
   }
 }
