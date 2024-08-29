@@ -40,7 +40,7 @@ import java.util.List;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class KetExperiment009Entity extends LatexEntity implements AquaticEntity {
+public class KetExperiment009Entity extends LatexEntity {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private boolean Phase2;
 
@@ -247,43 +247,38 @@ public class KetExperiment009Entity extends LatexEntity implements AquaticEntity
 		Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
 	}
 
-	public void SwimVoid(KetExperiment009Entity entity){
-		double motionZ = 0;
-		double deltaZ = 0;
-		double distance = 0;
-		double deltaX = 0;
-		double motionY = 0;
-		double deltaY = 0;
-		double motionX = 0;
-		double maxSpeed = 0;
-		double speed = 0;
+	public void SwimVoid(KetExperiment009Entity entity) {
+		double motionZ;
+		double deltaZ;
+		double distance;
+		double deltaX;
+		double motionY;
+		double deltaY;
+		double motionX;
+		double maxSpeed;
+		double speed;
 		if (entity.isInWater()) {
 			if (!(entity.getTarget() == (null))) {
 				deltaX = entity.getTarget().getX() - entity.getX();
 				deltaY = entity.getTarget().getY() - entity.getY();
 				deltaZ = entity.getTarget().getZ() - entity.getZ();
 				distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-			}
-			if (distance > 0) {
-				speed = 0.07;
-				motionX = deltaX / distance * speed;
-				motionY = deltaY / distance * speed;
-				motionZ = deltaZ / distance * speed;
-				maxSpeed = 0.2;
-				{
-					Entity _ent = entity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-								("execute as " + entity.getStringUUID() + " at @s run tp @s ~ ~ ~ facing entity " + entity.getTarget().getStringUUID()));
-				}
-				entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-				if (entity.isEyeInFluid(FluidTags.WATER)){
-					entity.setPose(Pose.SWIMMING);
-			 } else if (entity.getPose() == Pose.SWIMMING && !entity.isEyeInFluid(FluidTags.WATER)){
-					entity.setPose(Pose.STANDING);
+				if (distance > 0) {
+					speed = 0.07;
+					motionX = deltaX / distance * speed;
+					motionY = deltaY / distance * speed;
+					motionZ = deltaZ / distance * speed;
+					maxSpeed = 0.2;
+					entity.lookAt(entity.getTarget(),5,5);
+					entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
 				}
 			}
-		} else if (entity.getPose() == Pose.SWIMMING && !entity.isInWater()){
+			if (entity.isEyeInFluid(FluidTags.WATER)) {
+						entity.setPose(Pose.SWIMMING);
+					} else if (entity.getPose() == Pose.SWIMMING && !entity.isEyeInFluid(FluidTags.WATER)) {
+						entity.setPose(Pose.STANDING);
+					}
+		} else if (entity.getPose() == Pose.SWIMMING && !entity.isInWater()) {
 			entity.setPose(Pose.STANDING);
 		}
 	}

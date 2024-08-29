@@ -6,6 +6,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 
 import java.util.stream.Collectors;
 import java.util.List;
@@ -54,12 +55,8 @@ public class FoxyasOnEntityTickUpdateProcedure {
 				motionY = deltaY / distance * speed;
 				motionZ = deltaZ / distance * speed;
 				maxSpeed = 0.2;
-				{
-					Entity _ent = entity;
-					if (!_ent.level.isClientSide() && _ent.getServer() != null)
-						_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4),
-								("execute as " + entity.getStringUUID() + " at @s run tp @s ~ ~ ~ facing entity " + (entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getStringUUID()));
-				}
+				entity.lookAt(EntityAnchorArgument.Anchor.EYES, new Vec3(((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getX()), ((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getY()),
+						((entity instanceof Mob _mobEnt ? (Entity) _mobEnt.getTarget() : null).getZ())));
 				entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
 			}
 			if (motionX > maxSpeed) {
