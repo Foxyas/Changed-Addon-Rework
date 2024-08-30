@@ -9,6 +9,7 @@ import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -85,6 +86,8 @@ public class KetExperiment009Entity extends LatexEntity {
 		}
 		return super.getMeleeAttackRangeSqr(target);
 	}
+
+
 
 	@Override
 	public Color3 getHairColor(int i) {
@@ -258,46 +261,89 @@ public class KetExperiment009Entity extends LatexEntity {
 		tag.putBoolean("Phase2",Phase2);
 	}
 
-	@Override
-	public void baseTick() {
-		super.baseTick();
-		SwimVoid(this);
-		Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
-	}
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        updateSwimmingMovement();
+        Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+        CrawSystem(this.getTarget());
+    }
 
-	public void SwimVoid(KetExperiment009Entity entity) {
-		double motionZ;
-		double deltaZ;
-		double distance;
-		double deltaX;
-		double motionY;
-		double deltaY;
-		double motionX;
-		double maxSpeed;
-		double speed;
-		if (entity.isInWater()) {
-			if (!(entity.getTarget() == (null))) {
-				deltaX = entity.getTarget().getX() - entity.getX();
-				deltaY = entity.getTarget().getY() - entity.getY();
-				deltaZ = entity.getTarget().getZ() - entity.getZ();
-				distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-				if (distance > 0) {
-					speed = 0.07;
-					motionX = deltaX / distance * speed;
-					motionY = deltaY / distance * speed;
-					motionZ = deltaZ / distance * speed;
-					maxSpeed = 0.2;
-					entity.lookAt(entity.getTarget(),5,5);
-					entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-				}
-			}
-			if (entity.isEyeInFluid(FluidTags.WATER)) {
-						entity.setPose(Pose.SWIMMING);
-					} else if (entity.getPose() == Pose.SWIMMING && !entity.isEyeInFluid(FluidTags.WATER)) {
-						entity.setPose(Pose.STANDING);
-					}
-		} else if (entity.getPose() == Pose.SWIMMING && !entity.isInWater()) {
-			entity.setPose(Pose.STANDING);
-		}
-	}
+    public void CrawSystem(LivingEntity target) {
+        if (target != null) {
+            setCrawlingPoseIfNeeded(target);
+            crawlToTarget(target);
+        }
+    }
+
+    public void setCrawlingPoseIfNeeded(LivingEntity target) {
+        double targetEyeY = target.getEyeY();
+        double entityEyeY = this.getEyeY();
+
+        if (target.getPose() == Pose.SWIMMING && !(this.getPose() == Pose.SWIMMING)) {
+            if (target.getY() < entityEyeY) {
+                this.setPose(Pose.SWIMMING);
+            } else {
+                if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
+                    this.setPose(Pose.STANDING);
+                } else {
+                    this.setPose(Pose.SWIMMING);
+                }
+            }
+        } else {
+            if (!this.isSwimming()) {
+                this.setPose(Pose.STANDING);
+            }
+        }
+    }
+
+    public void crawlToTarget(LivingEntity target) {
+        double targetEyeY = target.getEyeY();
+        double entityEyeY = this.getEyeY();
+
+        if (target.getPose() == Pose.SWIMMING && this.getPose() == Pose.SWIMMING) {
+            double deltaX = target.getX() - this.getX();
+            double deltaY = target.getY() - this.getY();
+            double deltaZ = target.getZ() - this.getZ();
+            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+
+            if (distance > 1.0) {
+                double speed = 0.15;
+                double motionX = deltaX * speed;
+                double motionY = deltaY * speed;
+                double motionZ = deltaZ * speed;
+                this.setDeltaMovement(this.getDeltaMovement().add(motionX, motionY, motionZ));
+            }
+        }
+    }
+
+    public void updateSwimmingMovement() {
+        if (this.isInWater()) {
+            if (this.getTarget() != null) {
+                LivingEntity target = this.getTarget();
+                double deltaX = target.getX() - this.getX();
+                double deltaY = target.getY() - this.getY();
+                double deltaZ = target.getZ() - this.getZ();
+                double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+
+                if (distance > 0) {
+                    double speed = 0.07;
+                    double motionX = deltaX / distance * speed;
+                    double motionY = deltaY / distance * speed;
+                    double motionZ = deltaZ / distance * speed;
+                    this.setDeltaMovement(this.getDeltaMovement().add(motionX, motionY, motionZ));
+                }
+            }
+
+            if (this.isEyeInFluid(FluidTags.WATER)) {
+                this.setPose(Pose.SWIMMING);
+                this.setSwimming(true);
+            } else if (this.getPose() == Pose.SWIMMING && !this.isEyeInFluid(FluidTags.WATER)) {
+                this.setPose(Pose.STANDING);
+                this.setSwimming(false);
+            }
+        } else if (this.getPose() == Pose.SWIMMING && !this.isInWater() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
+            this.setPose(Pose.STANDING);
+        }
+    }
 }
