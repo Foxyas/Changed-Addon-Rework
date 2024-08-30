@@ -22,10 +22,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -39,6 +36,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
@@ -266,32 +264,42 @@ public class KetExperiment009Entity extends LatexEntity {
         super.baseTick();
         updateSwimmingMovement();
         Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+		SetSpeed(this);
         CrawSystem(this.getTarget());
     }
 
-    public void CrawSystem(LivingEntity target) {
-        if (target != null) {
-            setCrawlingPoseIfNeeded(target);
-            crawlToTarget(target);
-        }
-    }
+	public void SetSpeed(KetExperiment009Entity entity) {
+		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.325, AttributeModifier.Operation.MULTIPLY_BASE);
+		if (entity.getPose() == Pose.SWIMMING) {
+			if (!((entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(AttibuteChange)))) {
+				entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(AttibuteChange);
+			}
+		} else {
+			entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(AttibuteChange);
+		}
+	}
+
+	public void CrawSystem(LivingEntity target) {
+		if (target != null) {
+			setCrawlingPoseIfNeeded(target);
+			crawlToTarget(target);
+		} else {
+			if (!this.isSwimming() && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
+				this.setPose(Pose.SWIMMING);
+			}
+		}
+	}
 
     public void setCrawlingPoseIfNeeded(LivingEntity target) {
         double targetEyeY = target.getEyeY();
         double entityEyeY = this.getEyeY();
 
         if (target.getPose() == Pose.SWIMMING && !(this.getPose() == Pose.SWIMMING)) {
-            if (target.getY() < entityEyeY) {
+            if (target.getY() < entityEyeY && !(target.level.getBlockState(new BlockPos(target.getX(), target.getEyeY(), target.getZ()).above()).isAir())) {
                 this.setPose(Pose.SWIMMING);
-            } else {
-                if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
-                    this.setPose(Pose.STANDING);
-                } else {
-                    this.setPose(Pose.SWIMMING);
-                }
             }
         } else {
-            if (!this.isSwimming()) {
+            if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
                 this.setPose(Pose.STANDING);
             }
         }
@@ -308,7 +316,7 @@ public class KetExperiment009Entity extends LatexEntity {
             double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 
             if (distance > 1.0) {
-                double speed = 0.005;
+                double speed = 0.05;
                 double motionX = deltaX / distance * speed;
                 double motionY = deltaY / distance * speed;
                 double motionZ = deltaZ / distance * speed;

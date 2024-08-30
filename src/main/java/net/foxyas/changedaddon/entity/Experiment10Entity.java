@@ -287,33 +287,32 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
         updateSwimmingMovement();
         SetDefense(this);
         SetAttack(this);
+		SetSpeed(this);
         TpEntity(this);
         CrawSystem(this.getTarget());
     }
 
-    public void CrawSystem(LivingEntity target) {
-        if (target != null) {
-            setCrawlingPoseIfNeeded(target);
-            crawlToTarget(target);
-        }
-    }
+	public void CrawSystem(LivingEntity target) {
+		if (target != null) {
+			setCrawlingPoseIfNeeded(target);
+			crawlToTarget(target);
+		} else {
+			if (!this.isSwimming() && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
+				this.setPose(Pose.SWIMMING);
+			}
+		}
+	}
 
     public void setCrawlingPoseIfNeeded(LivingEntity target) {
         double targetEyeY = target.getEyeY();
         double entityEyeY = this.getEyeY();
 
         if (target.getPose() == Pose.SWIMMING && !(this.getPose() == Pose.SWIMMING)) {
-            if (target.getY() < entityEyeY) {
+            if (target.getY() < entityEyeY && !(target.level.getBlockState(new BlockPos(target.getX(), target.getEyeY(), target.getZ()).above()).isAir())) {
                 this.setPose(Pose.SWIMMING);
-            } else {
-                if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
-                    this.setPose(Pose.STANDING);
-                } else {
-                    this.setPose(Pose.SWIMMING);
-                }
-            }
+            } 
         } else {
-            if (!this.isSwimming()) {
+            if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
                 this.setPose(Pose.STANDING);
             }
         }
@@ -330,7 +329,7 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
             double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 
             if (distance > 1.0) {
-                double speed = 0.005;
+                double speed = 0.00015;
                 double motionX = deltaX / distance * speed;
                 double motionY = deltaY / distance * speed;
                 double motionZ = deltaZ / distance * speed;
@@ -397,6 +396,17 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
             entity.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(AttibuteChange);
         }
     }
+
+	public void SetSpeed(Experiment10Entity entity) {
+		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.325, AttributeModifier.Operation.MULTIPLY_BASE);
+		if (entity.getPose() == Pose.SWIMMING) {
+			if (!((entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(AttibuteChange)))) {
+				entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(AttibuteChange);
+			}
+		} else {
+			entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(AttibuteChange);
+		}
+	}
 
     public void TpEntity(Experiment10Entity entity) {
         double deltaZ;
