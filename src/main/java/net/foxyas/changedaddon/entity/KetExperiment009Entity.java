@@ -269,7 +269,7 @@ public class KetExperiment009Entity extends LatexEntity {
     }
 
 	public void SetSpeed(KetExperiment009Entity entity) {
-		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.325, AttributeModifier.Operation.MULTIPLY_BASE);
+		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.4, AttributeModifier.Operation.MULTIPLY_BASE);
 		if (entity.getPose() == Pose.SWIMMING) {
 			if (!((entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(AttibuteChange)))) {
 				entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(AttibuteChange);
