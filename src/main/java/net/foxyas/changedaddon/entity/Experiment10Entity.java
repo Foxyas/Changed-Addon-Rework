@@ -330,10 +330,10 @@ public class Experiment10Entity extends LatexEntity implements GenderedEntity {
             double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 
             if (distance > 1.0) {
-                double speed = 0.15;
-                double motionX = deltaX * speed;
-                double motionY = deltaY * speed;
-                double motionZ = deltaZ * speed;
+                double speed = 0.005;
+                double motionX = deltaX / distance * speed;
+                double motionY = deltaY / distance * speed;
+                double motionZ = deltaZ / distance * speed;
                 this.setDeltaMovement(this.getDeltaMovement().add(motionX, motionY, motionZ));
             }
         }
