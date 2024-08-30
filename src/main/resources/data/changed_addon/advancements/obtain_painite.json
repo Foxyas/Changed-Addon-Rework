@@ -9,7 +9,7 @@
     "description": {
       "translate": "advancements.obtain_painite.descr"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": true

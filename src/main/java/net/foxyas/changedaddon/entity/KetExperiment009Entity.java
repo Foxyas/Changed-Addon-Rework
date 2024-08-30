@@ -28,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
@@ -68,6 +69,23 @@ public class KetExperiment009Entity extends LatexEntity {
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
 		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.85);
 	}
+
+	@Override
+	public boolean startRiding(Entity EntityIn, boolean force) {
+		if (EntityIn instanceof Boat){
+			return false;
+		}
+		return super.startRiding(EntityIn, force);
+	}
+
+	@Override
+	public double getMeleeAttackRangeSqr(LivingEntity target) {
+		if (target.getEyeY() > this.getEyeY() + 1){
+			return 6 * 6;
+		}
+		return super.getMeleeAttackRangeSqr(target);
+	}
+
 	@Override
 	public Color3 getHairColor(int i) {
 		return Color3.getColor("#F1F1F1");

@@ -38,7 +38,7 @@
     "hardness": 20.0,
     "resistance": 25.0,
     "hasGravity": false,
-    "isWaterloggable": false,
+    "isWaterloggable": true,
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
@@ -134,7 +134,7 @@
     ],
     "generationShape": "UNIFORM",
     "frequencyPerChunks": 1,
-    "frequencyOnChunk": 4,
+    "frequencyOnChunk": 8,
     "minGenerateHeight": -60,
     "maxGenerateHeight": -45,
     "generateCondition": {
