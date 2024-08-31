@@ -28,6 +28,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import net.minecraft.world.entity.Pose;
 
 public class PuroKindEntity extends AbstractDarkLatexWolf {
 	public PuroKindEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -137,8 +138,17 @@ public class PuroKindEntity extends AbstractDarkLatexWolf {
 		return (double)(Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
 	}
 
+	public double getTorsoYOffsetForFallFly(LatexEntity self){
+		float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
+		return 0.375 + bpiSize;
+	}
+
 	@Override
 	public double getPassengersRidingOffset() {
+		if (this.getPose() == Pose.FALL_FLYING || this.getPose() == Pose.SWIMMING) {
+			return getTorsoYOffsetForFallFly(this);
+		}
+
 		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
 	}
 

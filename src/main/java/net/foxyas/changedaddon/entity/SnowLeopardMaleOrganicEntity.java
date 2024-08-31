@@ -8,7 +8,7 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
@@ -22,9 +22,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
@@ -166,8 +163,17 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
 		return (double)(Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
 	}
 
+	public double getTorsoYOffsetForFallFly(LatexEntity self){
+		float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
+		return 0.375 + bpiSize;
+	}
+
 	@Override
 	public double getPassengersRidingOffset() {
+		if (this.getPose() == Pose.FALL_FLYING || this.getPose() == Pose.SWIMMING) {
+			return getTorsoYOffsetForFallFly(this);
+		}
+
 		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
 	}
 

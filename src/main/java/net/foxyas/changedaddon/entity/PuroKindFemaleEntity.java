@@ -1,30 +1,31 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.ltxprogrammer.changed.entity.*;
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.ltxprogrammer.changed.entity.Gender;
+import net.ltxprogrammer.changed.entity.HairStyle;
+import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.network.NetworkHooks;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.protocol.Packet;
-
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -123,8 +124,17 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf {
 		return (double)(Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
 	}
 
+	public double getTorsoYOffsetForFallFly(LatexEntity self) {
+		float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
+		return 0.375 + bpiSize;
+	}
+
 	@Override
 	public double getPassengersRidingOffset() {
+		if (this.getPose() == Pose.FALL_FLYING || this.getPose() == Pose.SWIMMING) {
+			return getTorsoYOffsetForFallFly(this);
+		}
+
 		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
 	}
 
