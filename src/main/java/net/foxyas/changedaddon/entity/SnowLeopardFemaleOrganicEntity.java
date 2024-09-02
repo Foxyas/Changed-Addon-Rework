@@ -167,7 +167,7 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameLatexEntity {
 
 	@Override
 	public double getPassengersRidingOffset() {
-		if (this.getPose() == Pose.STANDING) {
+		if (this.getPose() == Pose.STANDING || this.getPose() == Pose.CROUCHING) {
 			return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
 		}
 		return getTorsoYOffsetForFallFly(this);
