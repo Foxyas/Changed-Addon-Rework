@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.process;
 
-import net.foxyas.changedaddon.item.HazardSuitItem;
 import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -9,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -24,9 +24,22 @@ public class ItemSlotEventHandle {
             if (slot.getType() == EquipmentSlot.Type.ARMOR) {
                 if (to.getItem() instanceof HazmatSuitItem) {
                     if (latexVariantInstance != null){
-                        event.setCanceled(true);
+                        player.setItemSlot(slot, from);
+                        player.getInventory().add(to);
                     }
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRightClick(PlayerInteractEvent.RightClickItem event) {
+        Player player = event.getPlayer();
+        ItemStack itemStack = event.getItemStack();
+        LatexVariantInstance<?> latexVariantInstance = ProcessTransfur.getPlayerLatexVariant(player);
+        if (itemStack.getItem() instanceof HazmatSuitItem) {
+            if (latexVariantInstance != null){
+                event.setCanceled(true);
             }
         }
     }
