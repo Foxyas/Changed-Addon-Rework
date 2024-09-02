@@ -166,11 +166,10 @@ public class Exp2FemaleEntity extends AbstractCanTameLatexEntity {
 
 	@Override
 	public double getPassengersRidingOffset() {
-		if (this.getPose() == Pose.FALL_FLYING || this.getPose() == Pose.SWIMMING) {
-			return getTorsoYOffsetForFallFly(this);
+		if (this.getPose() == Pose.STANDING) {
+			return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
 		}
-
-		return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
+		return getTorsoYOffsetForFallFly(this);
 	}
 
 	@Override
