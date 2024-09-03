@@ -74,23 +74,23 @@ public class DodgeAbilityHandleProcedure {
 								if(world.isEmptyBlock(Location) || world.isEmptyBlock(Location.above())) {
 									target.teleportTo(Location.getX(), Location.getY(), Location.getZ());
 								}
-								player.invulnerableTime = 50;
+								player.invulnerableTime = 30;
 								player.hurtDuration = 20;
 								player.hurtTime = player.hurtDuration;
 								event.setCanceled(true);
 							}
-							ChangedSounds.broadcastSound(player, ChangedSounds.BOW2,2.5f,1);
+							ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f,1);
 						} else {
 							if (world instanceof ServerLevel serverLevel) {
 								player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", DodgeAmount), true);
 								DodgeAbility.subDodgeAmount();
-								player.invulnerableTime = 50;
+								player.invulnerableTime = 30;
 								player.hurtDuration = 20;
 								player.hurtTime = player.hurtDuration;
 								event.setCanceled(true);
 							}
 							DodgeAttack(player, attacker);
-							ChangedSounds.broadcastSound(player, ChangedSounds.BOW2,2.5f,1);
+							ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f,1);
 						}
 					} else {
 						DodgeAbility.SetDodgeActivate(false);
