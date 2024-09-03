@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class ItemSlotEventHandle {
+    /*
     @SubscribeEvent
     public static void onArmorEquip(LivingEquipmentChangeEvent event) {
         if (event.getEntity() instanceof Player player) {
@@ -31,6 +32,7 @@ public class ItemSlotEventHandle {
             }
         }
     }
+    */
 
     @SubscribeEvent
     public static void onPlayerRightClick(PlayerInteractEvent.RightClickItem event) {
