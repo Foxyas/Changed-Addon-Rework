@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.ability.IAbstractLatex;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.minecraft.core.Registry;
@@ -34,6 +35,12 @@ public class PsychicPulseAbility extends SimpleAbility {
 		return !Spectator(entity.getEntity());
 	}
 
+	@Override
+	public boolean canKeepUsing(IAbstractLatex entity) {
+		Player player = (Player) entity.getEntity();
+		return player.getFoodData().getFoodLevel() > 10;
+	}
+
 	public static boolean Spectator(Entity entity){
 		if (entity instanceof Player player1){
 			return player1.isSpectator();
@@ -43,25 +50,25 @@ public class PsychicPulseAbility extends SimpleAbility {
 
 	@Override
 	public int getCoolDown(IAbstractLatex entity) {
-		return 5;
+		return 0;
 	}
 
 
 	public UseType getUseType(IAbstractLatex entity) {
-		return UseType.INSTANT;
+		return UseType.HOLD;
 	}
 
 
 	@Override
 	public void startUsing(IAbstractLatex entity) {
 		super.startUsing(entity);
-		execute(entity.getLevel(),entity.getEntity());
+		//execute(entity.getLevel(),entity.getEntity());
 	}
 
 	@Override
 	public void tick(IAbstractLatex entity) {
 		super.tick(entity);
-		//execute(entity.getLevel(),entity.getEntity());
+		execute(entity.getLevel(),entity.getEntity());
 	}
 
 
@@ -72,13 +79,18 @@ public class PsychicPulseAbility extends SimpleAbility {
 			{
 				final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
 				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(10 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-						.collect(Collectors.toList());
+						.toList();
 				for (Entity entityiterator : _entfound) {
-					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("minecraft:impact_projectiles")))) {
-						//if(!world.isClientSide()){}
-							Vec3 NegativeMotion = new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z())));
-							Vec3 Motion = NegativeMotion.multiply(1.5,1.5,1.5);
-							entityiterator.setDeltaMovement(Motion);
+					if (entityiterator != entity) {
+						if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("minecraft:impact_projectiles")))) {
+							if (PlayerUtilProcedure.isProjectileMovingTowardsPlayer(entity,entityiterator)){
+								//if(!world.isClientSide()){}
+								Vec3 NegativeMotion = new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z())));
+								Vec3 Motion = NegativeMotion.multiply(1.5,1.5,1.5);
+								entityiterator.setDeltaMovement(Motion);
+								entityiterator.hasImpulse = true;
+							}
+						}
 					}
 				}
 			}

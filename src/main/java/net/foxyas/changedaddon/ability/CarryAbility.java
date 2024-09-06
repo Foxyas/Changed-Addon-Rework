@@ -11,15 +11,14 @@ import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.Registry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundSetPassengersPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Objects;
@@ -101,11 +100,17 @@ public class CarryAbility extends SimpleAbility {
                     playerEntity.stopRiding();
                     syncMount(player);
                     syncMount(playerEntity);
-                    playerEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
+                    if (!player.level.isClientSide()){
+                        playerEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
+                    }
                 } else {
-                    localEntity.stopRiding();
-                    syncMount(player);
-                    localEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
+                localEntity.stopRiding();
+                syncMount(player);
+                localEntity.setDeltaMovement(player.getLookAngle().scale(1.05));
+                localEntity.hasImpulse = true;
+                    if (!player.level.isClientSide()) {
+                        ((ServerLevel) player.level).getChunkSource().broadcast(localEntity, new ClientboundSetEntityMotionPacket(localEntity));
+                    }
                 }
                 return;
             }

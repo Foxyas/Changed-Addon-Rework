@@ -25,6 +25,10 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.*;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -147,6 +151,17 @@ public class PlayerUtilProcedure {
 		}
 
 		return null;
+	}
+
+	public static boolean isProjectileMovingTowardsPlayer(Player player, Entity projectile) {
+		Vec3 projectilePosition = projectile.position();
+		Vec3 projectileMotion = projectile.getDeltaMovement();
+
+		Vec3 directionToPlayer = player.position().subtract(projectilePosition).normalize();
+
+		double dotProduct = projectileMotion.normalize().dot(directionToPlayer);
+
+		return dotProduct > 0;
 	}
 
 	public static class GlobalEntityUtil {

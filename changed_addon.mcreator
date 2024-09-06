@@ -11111,6 +11111,20 @@
         ]
       },
       "path": "~/Procedures"
+    },
+    {
+      "name": "EquipArmorInEntity",
+      "type": "procedure",
+      "sortid": 556,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "equip_armor_in_entity",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/EquipArmorInEntityProcedure.java"
+        ],
+        "dependencies": []
+      }
     }
   ],
   "variable_elements": [
