@@ -14,9 +14,11 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -31,6 +33,8 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.scores.Team;
+import net.minecraftforge.common.IExtensibleEnum;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -284,11 +288,41 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
             }
     }
 
-    public boolean isTameItem(ItemStack stack) {
-        return stack.is(Items.COD) || stack.is(ChangedItems.ORANGE.get()) || stack.is(Items.COOKED_COD) || stack.is(Items.SALMON) || stack.is(Items.COOKED_SALMON);
+    //Public enum TameType that just hold a string for the Items tag Logic
+    public enum TameType implements IExtensibleEnum {
+        CAT("changed_addon:cat_tame_items"),
+        DOG("changed_addon:dog_tame_items");
+
+        public final String Tag;
+        TameType(String tag){
+            this.Tag = tag;
+        }
+        public static TameType create(String name,String tag){
+            throw new NotImplementedException("Not extended");
+        }
     }
 
-    //Styles For Tame
+    //TameType Use Type
+    public boolean isTameItem(ItemStack stack,TameType tameType) {
+        return stack.is(Items.COD)
+                || stack.is(ChangedItems.ORANGE.get())
+                || stack.is(Items.COOKED_COD)
+                || stack.is(Items.SALMON)
+                || stack.is(Items.COOKED_SALMON)
+                || stack.is(ItemTags.create(new ResourceLocation(tameType.Tag)));
+    }
+
+    //Default Use Type
+    public boolean isTameItem(ItemStack stack) {
+        return stack.is(Items.COD)
+                || stack.is(ChangedItems.ORANGE.get())
+                || stack.is(Items.COOKED_COD)
+                || stack.is(Items.SALMON)
+                || stack.is(Items.COOKED_SALMON)
+                || stack.is(ItemTags.create(new ResourceLocation("changed_addon:tame_items")));
+    }
+
+    //Preset Styles For Tame
     public InteractionResult Exp2Sytle(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if (this.level.isClientSide) {
