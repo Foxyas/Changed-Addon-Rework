@@ -18,6 +18,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Objects;
+
 @Mod.EventBusSubscriber
 public class EquipArmorInEntityProcedure {
 	@SubscribeEvent
@@ -80,7 +82,7 @@ public class EquipArmorInEntityProcedure {
 	private static void equipArmor(LatexEntity entity, Player player, InteractionHand hand, ItemStack itemStack, EquipmentSlot armorSlot) {
 		// Remove one unit of the new armor and equip it in the entity's slot
 		entity.setItemSlot(armorSlot, itemStack.split(1)); // Equip one unit of the new armor
-		entity.level.playSound(null, entity.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
+		entity.level.playSound(null, entity.blockPosition(), Objects.requireNonNull(itemStack.getEquipSound()), SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
 		// Remove the item from the player's hand
 		if (!player.level.isClientSide()) {
 			// Check if the hand being used is the main or offhand
@@ -110,7 +112,7 @@ public class EquipArmorInEntityProcedure {
 		double yRelative = clickPos.y;
 
 		// Display the yRelative value for debugging
-		player.displayClientMessage(new TextComponent("Y Relative: " + yRelative), false);
+		//player.displayClientMessage(new TextComponent("Y Relative: " + yRelative), false);
 
 		// Determine which armor slot to unequip based on the yRelative
 		EquipmentSlot clickedSlot = determineArmorSlot(yRelative,entity);
@@ -119,6 +121,7 @@ public class EquipArmorInEntityProcedure {
 			if (!currentArmor.isEmpty()) {
 				// Remove the armor from the slot
 				entity.setItemSlot(clickedSlot, ItemStack.EMPTY);
+				entity.level.playSound(null, entity.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
 				// Add the removed armor to the player's inventory or to the hand if empty
 				if (player.getItemInHand(hand).isEmpty()) {
 					player.setItemInHand(hand, currentArmor);
