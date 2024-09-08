@@ -11124,7 +11124,8 @@
           "src/main/java/net/foxyas/changedaddon/procedures/EquipArmorInEntityProcedure.java"
         ],
         "dependencies": []
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "TameItems",
@@ -11137,7 +11138,8 @@
         "files": [
           "src/main/resources/data/changed_addon/tags/items/tame_items.json"
         ]
-      }
+      },
+      "path": "~/Tags"
     }
   ],
   "variable_elements": [
