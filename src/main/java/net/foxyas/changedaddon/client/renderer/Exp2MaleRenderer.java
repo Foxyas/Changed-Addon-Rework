@@ -17,7 +17,7 @@ public class Exp2MaleRenderer extends LatexHumanoidRenderer<Exp2MaleEntity, Male
 	public Exp2MaleRenderer(EntityRendererProvider.Context context) {
 		super(context, new MaleExp2Model(context.bakeLayer(MaleExp2Model.LAYER_LOCATION)),
 				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+		this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotArmFur));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/male_snep_hair"),false));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));

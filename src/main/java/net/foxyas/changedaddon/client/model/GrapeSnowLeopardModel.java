@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implements LatexHumanoidModelInterface<Exp6Entity,GrapeSnowLeopardModel> {
+public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implements LatexHumanoidModelInterface<Exp6Entity, GrapeSnowLeopardModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "grape_snow_leopard_model"), "main");
     private final ModelPart RightLeg;
@@ -27,6 +27,8 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
     private final ModelPart Torso;
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
+    private final ModelPart RightArmFur;
+    private final ModelPart LeftArmFur;
     private final ModelPart Tail;
     private final LatexAnimator<Exp6Entity, GrapeSnowLeopardModel> animator;
 
@@ -39,6 +41,8 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
         this.Tail = Torso.getChild("Tail");
         this.RightArm = root.getChild("RightArm");
         this.LeftArm = root.getChild("LeftArm");
+        this.RightArmFur = RightArm.getChild("RightFur");
+        this.LeftArmFur = LeftArm.getChild("LeftFur");
 
         var tailPrimary = Tail.getChild("TailPrimary");
         var tailSecondary = tailPrimary.getChild("TailSecondary");
@@ -56,8 +60,12 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
-                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary , tailQuinternary),
+                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary, tailQuinternary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
+    }
+
+    public boolean isPartNotArmFur(ModelPart part) {
+        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -173,16 +181,18 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
         PartDefinition cube_r5 = NeckFur.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(47, 93).addBox(-3.0F, 0.75F, -0.25F, 6.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F))
                 .texOffs(47, 93).addBox(-3.0F, -0.25F, -1.0F, 6.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0893F, 0.8977F, 2.5F, -0.5672F, 0.0F, 0.0F));
 
-        PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(43, 41).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(33, 75).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 9.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
+        PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(43, 41).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
+
+        PartDefinition RightFur = RightArm.addOrReplaceChild("RightFur", CubeListBuilder.create().texOffs(33, 75).addBox(-4.0F, -2.0F, -2.0F, 4.0F, 9.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offset(1.0F, 0.0F, 0.0F));
 
         PartDefinition RightPawBeans = RightArm.addOrReplaceChild("RightPawBeans", CubeListBuilder.create().texOffs(0, 87).mirror().addBox(-2.0F, 9.475F, -0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F)).mirror(false)
                 .texOffs(0, 83).mirror().addBox(-2.8F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
                 .texOffs(0, 81).mirror().addBox(-1.5F, 9.475F, -1.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
                 .texOffs(0, 85).mirror().addBox(-0.225F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false), PartPose.offset(0.0F, -0.5F, 0.0F));
 
-        PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(20, 45).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
-                .texOffs(50, 75).mirror().addBox(-1.0F, -2.0F, -2.0F, 4.0F, 9.0F, 4.0F, new CubeDeformation(0.15F)).mirror(false), PartPose.offset(5.0F, 2.0F, 0.0F));
+        PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(20, 45).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, 2.0F, 0.0F));
+
+        PartDefinition LeftFur = LeftArm.addOrReplaceChild("LeftFur", CubeListBuilder.create().texOffs(50, 75).mirror().addBox(0.0F, -1.5F, -2.0F, 4.0F, 9.0F, 4.0F, new CubeDeformation(0.15F)).mirror(false), PartPose.offset(-1.0F, -0.5F, 0.0F));
 
         PartDefinition LeftPawBeans = LeftArm.addOrReplaceChild("LeftPawBeans", CubeListBuilder.create().texOffs(8, 87).addBox(0.0F, 9.975F, -0.375F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.075F))
                 .texOffs(8, 83).addBox(1.8F, 9.975F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F))
@@ -191,8 +201,9 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
 
         return LayerDefinition.create(meshdefinition, 96, 96);
     }
+
     @Override
-    public void prepareMobModel (Exp6Entity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public void prepareMobModel(Exp6Entity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
     }
 
@@ -211,17 +222,16 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
     @Override
     public void setupAnim(@NotNull Exp6Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        CarryAbilityAnimation.playAnimation(entity,this);
+        CarryAbilityAnimation.playAnimation(entity, this);
     }
 
-    public ModelPart getArm (HumanoidArm p_102852) {
+    public ModelPart getArm(HumanoidArm p_102852) {
         return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 
     public ModelPart getHead() {
         return this.Head;
     }
-
 
 
     public ModelPart getTorso() {

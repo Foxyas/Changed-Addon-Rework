@@ -17,7 +17,7 @@ public class SnowLeopardFemaleOrganicRenderer extends LatexHumanoidRenderer<Snow
 	public SnowLeopardFemaleOrganicRenderer(EntityRendererProvider.Context context) {
 		super(context, new BioSynthSnowLeopardFemaleModel(context.bakeLayer(BioSynthSnowLeopardFemaleModel.LAYER_LOCATION)),
 				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+		this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotArmFur));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/female_snep_hair"),true));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
