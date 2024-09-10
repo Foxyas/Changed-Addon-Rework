@@ -59,7 +59,7 @@ public class SnepsiItem extends Item implements SpecializedItemRendering {
 	private static final ModelResourceLocation HANDMODEL =
 			new ModelResourceLocation(new ResourceLocation("changed_addon","snepsi_hand"), "inventory");
 	private static final ModelResourceLocation GROUNDMODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","snepsi"), "inventory");
+			new ModelResourceLocation(new ResourceLocation("changed_addon","snepsi_ground"), "inventory");
 
 
 	@Override
