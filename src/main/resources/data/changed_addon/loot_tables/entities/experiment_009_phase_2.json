@@ -1,6 +1,33 @@
 {
   "type": "minecraft:entity",
   "pools": [
+     {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "changed_addon:transfur_totem"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "changed_addon:experiment_009_record"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "changed_addon:experiment_009_phase_2_record"
+        }
+      ]
+    },
     {
       "rolls": 1,
       "entries": [

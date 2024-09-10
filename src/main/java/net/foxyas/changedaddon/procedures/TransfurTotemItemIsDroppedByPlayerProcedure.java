@@ -38,7 +38,9 @@ public class TransfurTotemItemIsDroppedByPlayerProcedure {
     }
 
     private static void updateItemEntity(ItemEntity itemEntity) {
-        itemEntity.setGlowingTag(true);
-        itemEntity.lifespan = 10000;
-    }
+		itemEntity.setGlowingTag(true);
+		if (itemEntity.lifespan == 6000) {
+			itemEntity.lifespan = 10000;
+		}
+	}
 }
