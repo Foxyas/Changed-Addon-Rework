@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/full_red_katana"
+    "layer0": "changed_addon:items/red_eletric_katana"
   }
 }
