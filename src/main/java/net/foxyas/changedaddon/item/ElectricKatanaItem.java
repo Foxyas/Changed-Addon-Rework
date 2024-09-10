@@ -91,7 +91,9 @@ public class ElectricKatanaItem extends SwordItem implements SpecializedItemRend
 	@Override
 	public boolean onEntitySwing(ItemStack itemstack, LivingEntity entity) {
 		boolean retval = super.onEntitySwing(itemstack, entity);
-		ElectricKatanaEntitySwingsItemProcedure.execute(entity);
+		if (entity.swingTime <= 0) {
+			ElectricKatanaEntitySwingsItemProcedure.execute(entity);
+		}
 		return retval;
 	}
 }
