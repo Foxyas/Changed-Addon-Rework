@@ -14,9 +14,10 @@ public class ReturnTransfurModeProcedure {
 		if (entity == null)
 			return 0;
 		Player PlayerTarget = (Player) entity;
-		LatexVariantInstance PlayerVariant = ProcessTransfur.getPlayerLatexVariant(PlayerTarget);
+		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(PlayerTarget);
 		boolean istransfur = ProcessTransfur.isPlayerLatex(PlayerTarget);
 		if (istransfur){
+			LatexVariant<?> Variant = PlayerVariant.getParent();
 			if (PlayerVariant.transfurMode.equals(REPLICATION)) {
 			return 1;
 			} else if (PlayerVariant.transfurMode.equals(ABSORPTION)) {
@@ -34,7 +35,7 @@ class setPlayerLatexAge {
 		if (player == null) {
 			return;
 		}
-		LatexVariantInstance PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
 		if (PlayerVariant == null){
 			return;
 		} else {
@@ -54,7 +55,43 @@ class setPlayerTransfurMode {
 		if (player == null) {
 			return;
 		}
-		LatexVariantInstance PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		if (PlayerVariant == null){
+			return;
+		} else {
+			if (mode == 1) {
+				PlayerVariant.transfurMode = TransfurMode.REPLICATION;
+			} else if (mode == 2) {
+				PlayerVariant.transfurMode = TransfurMode.ABSORPTION;
+			} else if (mode >= 3) {
+				PlayerVariant.transfurMode = TransfurMode.NONE;
+			}
+		}
+	}
+
+	public static void execute(Player player,double mode) {
+		if (player == null) {
+			return;
+		}
+		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		if (PlayerVariant == null){
+			return;
+		} else {
+			if (mode == 1) {
+				PlayerVariant.transfurMode = TransfurMode.REPLICATION;
+			} else if (mode == 2) {
+				PlayerVariant.transfurMode = TransfurMode.ABSORPTION;
+			} else if (mode >= 3) {
+				PlayerVariant.transfurMode = TransfurMode.NONE;
+			}
+		}
+	}
+
+	public static void execute(Player player,float mode) {
+		if (player == null) {
+			return;
+		}
+		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
 		if (PlayerVariant == null){
 			return;
 		} else {
@@ -75,15 +112,32 @@ class GetDefault {
 		if (player == null) {
 			return false;
 		}
-		LatexVariantInstance PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
 		if (PlayerVariant == null){
 			return false;
 		} else {
-			LatexVariant getVariant = PlayerVariant.getParent();
-			if(getVariant.transfurMode() != TransfurMode.NONE){
-				return true;	
+			LatexVariant<?> getVariant = PlayerVariant.getParent();
+            return getVariant.transfurMode() != TransfurMode.NONE;
+		}
+    }
+
+	public static double GetDefaultValue(Entity entity) {
+		if (entity == null)
+			return 0;
+		Player PlayerTarget = (Player) entity;
+		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(PlayerTarget);
+		boolean istransfur = ProcessTransfur.isPlayerLatex(PlayerTarget);
+		if (istransfur){
+			LatexVariant<?> Variant = PlayerVariant.getParent();
+			if (Variant.transfurMode.equals(REPLICATION)) {
+				return 1;
+			} else if (Variant.transfurMode.equals(ABSORPTION)) {
+				return 2;
+			} else if (Variant.transfurMode.equals(NONE)) {
+				return 3;
 			}
-		} return false;
+		}
+		return 0;
 	}
 }
 

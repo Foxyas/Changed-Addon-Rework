@@ -25,6 +25,7 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 	public static final RegistryObject<DodgeAbility> DODGE = REGISTRY.register("dodge",DodgeAbility::new);
 	public static final RegistryObject<CarryAbility> CARRY = REGISTRY.register("carry",CarryAbility::new);
 	public static final RegistryObject<DissolveAbility> DISSOLVE = REGISTRY.register("warp",DissolveAbility::new);
+	public static final RegistryObject<WitherWaveAbility> WITHER_WAVE = REGISTRY.register("wither_wave",WitherWaveAbility::new);
 
 	@SubscribeEvent
 	public static void registerAbiltiys(FMLConstructModEvent event) {

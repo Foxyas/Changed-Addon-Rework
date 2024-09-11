@@ -14,7 +14,7 @@ public class TurnOffTransfurOnKeyPressedProcedure {
 				if (ReturnTransfurModeProcedure.execute(entity) != 3) {
 					setPlayerTransfurMode.execute((Player) entity, 3);
 				} else {
-					setPlayerTransfurMode.execute((Player) entity, 1);
+					setPlayerTransfurMode.execute((Player) entity, (int) GetDefault.GetDefaultValue(entity));
 				}
 			}
 		}

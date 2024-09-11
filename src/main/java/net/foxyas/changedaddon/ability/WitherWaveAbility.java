@@ -1,21 +1,24 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.variants.AddonLatexVariant;
 import net.ltxprogrammer.changed.ability.IAbstractLatex;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.LatexVariant;
 import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedDamageSources;
 import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -24,16 +27,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ShockWaveAbility extends SimpleAbility {
+public class WitherWaveAbility  extends SimpleAbility {
 
     @Override
     public TranslatableComponent getDisplayName(IAbstractLatex entity) {
-        return new TranslatableComponent("changed_addon.ability.shock_wave");
+        return new TranslatableComponent("changed_addon.ability.wither_wave");
     }
 
     @Override
     public ResourceLocation getTexture(IAbstractLatex entity) {
-        return new ResourceLocation("changed_addon:textures/screens/shock_wave.png"); //Place holder
+        return new ResourceLocation("changed_addon:textures/screens/wither_wave.png"); //Place holder
     }
 
     @Override
@@ -41,8 +44,7 @@ public class ShockWaveAbility extends SimpleAbility {
         Player player = (Player) entity.getEntity();
         LatexVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
         LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT
-                && !Spectator(entity.getEntity());
+        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.EXPERIMENT_10_LATEX_VARIANT && !Spectator(entity.getEntity());
     }
 
     public static boolean Spectator(Entity entity){
@@ -55,18 +57,12 @@ public class ShockWaveAbility extends SimpleAbility {
     @Override
     public int getCoolDown(IAbstractLatex entity) {
         LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-        if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
-            return 60;
-        }
         return 100;
     }
 
     @Override
     public int getChargeTime(IAbstractLatex entity) {
         LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-        if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
-            return 16;
-        }
         return 30;
     }
 
@@ -106,10 +102,11 @@ public class ShockWaveAbility extends SimpleAbility {
                     }
                 }
                 if (!_entity.level.isClientSide()){
-                    MobEffectInstance Effect = new MobEffectInstance(ChangedEffects.SHOCK, 40, 0, false, false,true);
-                    Effect.setCurativeItems(List.of());
+                    MobEffectInstance Effect = new MobEffectInstance(MobEffects.WITHER, 60, 1, false, false,true);
+                    Effect.setCurativeItems(List.of(new ItemStack(Items.MILK_BUCKET,1)));
                     _entity.addEffect(Effect);
-                    ChangedSounds.broadcastSound(_entity,ChangedSounds.PARALYZE1,5,1);
+                    ChangedSounds.broadcastSound(_entity, SoundEvents.COMPOSTER_READY,5,0);
+                    ChangedSounds.broadcastSound(player, SoundEvents.WITHER_SHOOT,5,1);
                     player.causeFoodExhaustion(4f);
                 }
             }
