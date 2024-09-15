@@ -33,7 +33,7 @@ public class ShockWaveAbility extends SimpleAbility {
 
     @Override
     public ResourceLocation getTexture(IAbstractLatex entity) {
-        return new ResourceLocation("changed_addon:textures/screens/shock_wave.png"); //Place holder
+        return new ResourceLocation("changed_addon:textures/screens/thunder_wave.png"); //Place holder
     }
 
     @Override
