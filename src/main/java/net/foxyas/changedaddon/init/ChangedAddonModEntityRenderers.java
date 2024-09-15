@@ -12,6 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.foxyas.changedaddon.client.renderer.WolfyRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardMaleOrganicRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardFemaleOrganicRenderer;
+import net.foxyas.changedaddon.client.renderer.ReynRenderer;
 import net.foxyas.changedaddon.client.renderer.PuroKindRenderer;
 import net.foxyas.changedaddon.client.renderer.PuroKindFemaleRenderer;
 import net.foxyas.changedaddon.client.renderer.PrototypeRenderer;
@@ -54,5 +55,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.WOLFY.get(), WolfyRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.ERIK.get(), ErikRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXP_6.get(), Exp6Renderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.REYN.get(), ReynRenderer::new);
 	}
 }

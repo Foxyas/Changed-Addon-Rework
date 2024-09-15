@@ -87,6 +87,8 @@ public class AddonLatexVariant {
     public static final LatexVariant<SnowLeopardPartialEntity> SNOW_LEOPARD_PARTIAL = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL)
             .groundSpeed(1.10F).swimSpeed(1.0F).stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of()).additionalHealth(4).nightVision().build(new ResourceLocation("changed_addon", "form_latex_snow_leopard_partial")));
 
+    public static final LatexVariant<ReynEntity> REYN = LatexVariant.register(LatexVariant.Builder.of(ChangedAddonEntitys.REYN)
+            .groundSpeed(1.05F).swimSpeed(1.0F).stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(LatexVariant.BreatheMode.NORMAL).scares(List.of()).additionalHealth(4).build(new ResourceLocation("changed_addon", "form_reyn")));
 
     //Experiments
     public static final GenderedVariant<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> EXP1 = LatexVariant.register(GenderedVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX, ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)

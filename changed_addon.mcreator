@@ -11136,6 +11136,20 @@
         ]
       },
       "path": "~/Tags"
+    },
+    {
+      "name": "Reyn",
+      "type": "livingentity",
+      "sortid": 558,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "reyn",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/ReynRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/ReynEntity.java"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -11665,6 +11679,7 @@
       "changed_addon.latex_syringe.not_valid": "You Can\u0027t place this Syringe",
       "gamerule.needPermitionFor009Transfur": "Need Permition For Transfur in 009",
       "advancements.foxyas_advancement.descr": "§4THOSE BASTARDS,THEY KILL FOXYAS",
+      "entity.changed_addon.reyn": "Reyn",
       "gamerule.useNewFriendlyGrab": "Changed Addon New Friendly Grab",
       "gui.changed_addon.bookrecipepage_7.button_close": "Close",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_partic": "Display Recipe of Ammonia Particles",

@@ -19,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.foxyas.changedaddon.entity.WolfyEntity;
 import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
 import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
+import net.foxyas.changedaddon.entity.ReynEntity;
 import net.foxyas.changedaddon.entity.PuroKindFemaleEntity;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
@@ -117,6 +118,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<Exp6Entity>of(Exp6Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp6Entity::new)
 
 					.sized(0.6f, 1.93f));
+	public static final RegistryObject<EntityType<ReynEntity>> REYN = register("reyn",
+			EntityType.Builder.<ReynEntity>of(ReynEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ReynEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -145,6 +150,7 @@ public class ChangedAddonModEntities {
 			WolfyEntity.init();
 			ErikEntity.init();
 			Exp6Entity.init();
+			ReynEntity.init();
 		});
 	}
 
@@ -170,5 +176,6 @@ public class ChangedAddonModEntities {
 		event.put(WOLFY.get(), WolfyEntity.createAttributes().build());
 		event.put(ERIK.get(), ErikEntity.createAttributes().build());
 		event.put(EXP_6.get(), Exp6Entity.createAttributes().build());
+		event.put(REYN.get(), ReynEntity.createAttributes().build());
 	}
 }
