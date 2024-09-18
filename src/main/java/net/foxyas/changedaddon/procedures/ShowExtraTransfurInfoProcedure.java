@@ -82,6 +82,8 @@ public class ShowExtraTransfurInfoProcedure {
 					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_exp6")) {
 					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
+				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_reyn")) {
+					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_wolfy")) {
 					tooltip.add(new TextComponent("\u00A78Dev Helper OC Transfur\u00A7r"));
 				}
