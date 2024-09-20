@@ -5274,7 +5274,7 @@
       "type": "procedure",
       "sortid": 279,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "dolatexinfectiontick",
       "metadata": {
         "files": [
@@ -11121,6 +11121,41 @@
         ]
       },
       "path": "~/CustomCode/entitys"
+    },
+    {
+      "name": "HazmatElementDisplayOverlay",
+      "type": "procedure",
+      "sortid": 559,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "hazmat_element_display_overlay",
+      "metadata": {
+        "return_type": "logic",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/HazmatElementDisplayOverlayProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      },
+      "path": "~/CustomCode"
+    },
+    {
+      "name": "HazmatElement",
+      "type": "overlay",
+      "sortid": 560,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "hazmat_element",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/gui/HazmatElementOverlay.java"
+        ]
+      },
+      "path": "~/CustomCode"
     }
   ],
   "variable_elements": [

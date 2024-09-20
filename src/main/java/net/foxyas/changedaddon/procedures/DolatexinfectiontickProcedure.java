@@ -1,119 +1,106 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.event.TickEvent;
-
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.GameType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.Difficulty;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.client.Minecraft;
-
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonModAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nullable;
+import java.util.Objects;
+import net.minecraft.world.Difficulty;
 
 @Mod.EventBusSubscriber
 public class DolatexinfectiontickProcedure {
+	private static final int HARD_TICK_DELAY = 40;
+	private static final int NORMAL_TICK_DELAY = 60;
+	private static final int EASY_TICK_DELAY = 100;
+
+	private static float getValueToApply(Level world,Player player) {
+		//float MAX_TRANSFUR_PROGRESS = ((float) Objects.requireNonNull(player.getAttribute(ChangedAttributes.TRANSFUR_TOLERANCE.get())).getValue());
+		float MAX_TRANSFUR_PROGRESS = Changed.config.server.transfurTolerance.get().floatValue();
+        return switch (world.getDifficulty()) {
+			case HARD -> MAX_TRANSFUR_PROGRESS * (12.5f / 100);
+            case NORMAL -> MAX_TRANSFUR_PROGRESS * (6.25f / 100);
+			case EASY -> MAX_TRANSFUR_PROGRESS * (3.1f / 100);
+            default -> 0f;
+        };
+	}
+
+	private static int getTickDelayForDifficulty(Level world) {
+		return switch (world.getDifficulty()) {
+			case EASY -> EASY_TICK_DELAY;
+			case NORMAL -> NORMAL_TICK_DELAY;
+			case HARD -> HARD_TICK_DELAY;
+			default -> -1;
+		};
+	}
+
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
-			execute(event, event.player.level, event.player);
+			execute(event.player);
 		}
 	}
 
-	public static void execute(LevelAccessor world, Entity entity) {
-		execute(null, world, entity);
-	}
+	public static void execute(Player player) {
+		if (player == null) return;
 
-	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
-		if (entity == null)
+		ChangedAddonModVariables.PlayerVariables playerVariables = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY)
+				.orElse(new ChangedAddonModVariables.PlayerVariables());
+
+		int tickCounter = (int) playerVariables.LatexInfectionCooldown;
+
+        if (!player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION)) {
+            return;
+        }
+
+        ProcessTransfur.TransfurProgress transfurProgress = ProcessTransfur.getPlayerTransfurProgress(player);
+        float mathnumber = getValueToApply(player.getLevel(),player);
+        int tickDelay = getTickDelayForDifficulty(player.getLevel());
+
+		if (transfurProgress == null){
 			return;
-		boolean CanWork = false;
-		double PlayerTransfurProgress = 0;
-		if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION) == true) {
-			PlayerTransfurProgress = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number;
-			float Player_TransfurProgress = (float) PlayerTransfurProgress;
-			float mathnumber = 0f;
-			switch (world.getDifficulty()) {
-				case EASY :
-					mathnumber = Player_TransfurProgress * 0.008f;
-					break;
-				case NORMAL :
-					mathnumber = Player_TransfurProgress * 0.009f;
-					break;
-				case HARD :
-					mathnumber = Player_TransfurProgress * 0.01f;
-					break;
-			}
-			if (!(world.getDifficulty() == Difficulty.PEACEFUL) && !(new Object() {
-				public boolean checkGamemode(Entity _ent) {
-					if (_ent instanceof ServerPlayer _serverPlayer) {
-						return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-					} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-						return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-								&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-					}
-					return false;
-				}
-			}.checkGamemode(entity)) && !(new Object() {
-				public boolean checkGamemode(Entity _ent) {
-					if (_ent instanceof ServerPlayer _serverPlayer) {
-						return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-					} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-						return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-								&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-					}
-					return false;
-				}
-			}.checkGamemode(entity)) && !(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) : false) && Player_TransfurProgress > 0
-					&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
-				CanWork = true;
-			} else {
-				CanWork = false;
-			}
-			if (CanWork == true && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown <= 0) {
-				AddTransfurProgressProcedure.set(entity, Player_TransfurProgress + mathnumber);
-				{
-					double _setval = 3;
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexInfectionCooldown = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-			} else if (CanWork == true && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown > 0) {
-				{
-					double _setval = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown - 1;
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexInfectionCooldown = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-			} else if (CanWork == false && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown > 0) {
-				{
-					double _setval = 0;
-					entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-						capability.LatexInfectionCooldown = _setval;
-						capability.syncPlayerVariables(entity);
-					});
-				}
-			}
-		} else if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION) == false
-				&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexInfectionCooldown > 0) {
-			{
-				double _setval = 0;
-				entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-					capability.LatexInfectionCooldown = _setval;
-					capability.syncPlayerVariables(entity);
-				});
-			}
+		} else if (!(transfurProgress.progress() > 0)) {
+			return;
+		} else if (player.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get())) {
+			return;
 		}
+
+		if (isSurvivalOrAdventure(player)
+				&& (player.level.getDifficulty() != Difficulty.PEACEFUL)) {
+
+            if (tickCounter >= tickDelay) {
+                ProcessTransfur.setPlayerTransfurProgress(player,
+						new ProcessTransfur.TransfurProgress(transfurProgress.progress() + mathnumber, transfurProgress.variant()));
+				playerVariables.LatexInfectionCooldown = 0;
+            } else {
+				playerVariables.LatexInfectionCooldown++;
+            }
+
+		} else if (!isSurvivalOrAdventure(player) && tickCounter != 0) {
+            playerVariables.LatexInfectionCooldown = 0;
+        }
+    }
+
+	private static boolean isSurvivalOrAdventure(Player player) {
+		if (player instanceof ServerPlayer serverPlayer) {
+			GameType gameMode = serverPlayer.gameMode.getGameModeForPlayer();
+			return gameMode == GameType.SURVIVAL || gameMode == GameType.ADVENTURE;
+		} else if (player.level.isClientSide() && player instanceof AbstractClientPlayer clientPlayer) {
+			PlayerInfo playerInfo = Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(clientPlayer.getGameProfile().getId());
+			return playerInfo != null && playerInfo.getGameMode() != GameType.SPECTATOR && playerInfo.getGameMode() != GameType.CREATIVE;
+		}
+		return false;
 	}
 }
