@@ -82,7 +82,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 		public static final RegistryObject<Item> REYN_SPAWN_EGG = ITEMS_REGISTRY.register("reyn_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonEntitys.REYN, Color3.getColor("#4C4C4C").toInt(), Color3.getColor("#464646").toInt(), new Item.Properties().tab(null)));
-
+		
 
 		@SubscribeEvent
 		public static void registerItems(FMLConstructModEvent event) {
