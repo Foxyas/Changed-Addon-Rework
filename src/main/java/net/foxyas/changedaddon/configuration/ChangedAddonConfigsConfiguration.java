@@ -9,6 +9,7 @@ public class ChangedAddonConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> DEBUFFS;
 	public static final ForgeConfigSpec.ConfigValue<Double> AGE_NEED;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> CUSTOMRECIPES;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_INFECT;
 	static {
 		BUILDER.push("Latex Totem");
 		ACCEPT_ALL_VARIANTS = BUILDER.comment("allow latex totem to have all Latex Variants").define("No Latex Totem Limitations", true);
@@ -19,6 +20,9 @@ public class ChangedAddonConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("BlocksRecipes");
 		CUSTOMRECIPES = BUILDER.comment("Allow Catalyzer and Unifuser Use New Recipe System ").define("Custom Recipes", true);
+		BUILDER.pop();
+		BUILDER.push("Latex Infection");
+		ALWAYS_INFECT = BUILDER.comment("Always Add Latex Infection").define("Always Cause Infect", false);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

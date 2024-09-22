@@ -89,6 +89,29 @@
             "entityType": "CUSTOM:Buny"
           }
         ]
+      },
+      {
+        "category": "Latex Infection",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Always Add Latex Infection",
+            "vardisplay": "Always Cause Infect",
+            "varname": "always_infect",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
     "file": "ChangedAddon-Server",
