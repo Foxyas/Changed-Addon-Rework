@@ -92,17 +92,20 @@ public class DolatexinfectiontickProcedure {
         if (ChangedAddonConfigsConfiguration.ALWAYS_INFECT.get()) {
             if (transfurProgress == null) {
                 return;
-            } else if (!getInfected(player)) {// transfurProgress.progress() > 0
+            }
+            if (transfurProgress.progress() > 0) {
+                if (!getInfected(player)) {
+                    setInfected(player, true);
+                }
+            } 
+            if (!getInfected(player)) {// transfurProgress.progress() > 0
                 return;
-            } else if (player.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get())) {
+            } 
+            if (player.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get())) {
                 if (getInfected(player)) {
                     setInfected(player, false);
                 }
                 return;
-            } else if (transfurProgress.progress() > 0) {
-                if (!getInfected(player)) {
-                    setInfected(player, true);
-                }
             }
         } else {
             if (transfurProgress == null) {

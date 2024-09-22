@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -80,9 +81,8 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final RegistryObject<Item> PARTIAL_SNOW_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_leopard_partial_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-		public static final RegistryObject<Item> REYN_SPAWN_EGG = ITEMS_REGISTRY.register("reyn_spawn_egg",
-				() -> new ForgeSpawnEggItem(ChangedAddonEntitys.REYN, Color3.getColor("#4C4C4C").toInt(), Color3.getColor("#464646").toInt(), new Item.Properties().tab(null)));
-		
+		public static final RegistryObject<Item> REYN_TRANSFUR_SPAWN_EGG = ITEMS_REGISTRY.register("reyn_spawn_egg",
+				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.REYN, Color3.getColor("#4C4C4C").toInt(), Color3.getColor("#464646").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 		@SubscribeEvent
 		public static void registerItems(FMLConstructModEvent event) {
