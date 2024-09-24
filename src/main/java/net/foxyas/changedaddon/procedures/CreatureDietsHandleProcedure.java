@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModConfigs;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
@@ -43,13 +44,24 @@ public class CreatureDietsHandleProcedure {
 
         LivingEntity livingEntity = event.getEntityLiving();
         ItemStack item = event.getItem();
-        if (!(livingEntity instanceof Player player)) return;
+
+        if (!(livingEntity instanceof Player player)) {
+            return;
+        }
 
         LatexVariantInstance<?> latexInstance = ProcessTransfur.getPlayerLatexVariant(player);
         if (latexInstance == null) return;
 
+
         Level world = player.getLevel();
-        if (!world.getGameRules().getBoolean(ChangedAddonModGameRules.CHANGED_ADDON_CREATURE_DIETS)) return;
+
+        if (world.isClientSide) {
+            return;
+        }
+
+        boolean isForWork = world.getGameRules().getBoolean(ChangedAddonModGameRules.CHANGED_ADDON_CREATURE_DIETS);
+        boolean Debuffs;
+        Debuffs = ChangedAddonConfigsConfiguration.DEBUFFS.get();
 
         LatexEntity latexEntity = latexInstance.getLatexEntity();
         LatexVariant<?> variant = latexEntity.getSelfVariant();
@@ -62,21 +74,24 @@ public class CreatureDietsHandleProcedure {
         DietType dietType = determineDietType(latexEntity, variant);
         if (dietType == null) return;
 
-        if (dietType.isDietItem(item)) {
-            applyFoodEffects(player, item,true);
-            if (isWarnsOn) {
-                player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
-            }
-        } else if (ChangedAddonConfigsConfiguration.DEBUFFS.get()
-                && (!dietType.isDietItem(item)
-                && !dietType.isNotFoodItem(item))
-                && latexInstance.ageAsVariant < ChangedAddonConfigsConfiguration.AGE_NEED.get()) {
-            applyFoodEffects(player, item,false);
-            player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 50, 3, false, true, true));
-            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, true, true,
-                    new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
-            if (isWarnsOn) {
-                player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
+        boolean ShouldGiveDebuffs = (latexInstance.ageAsVariant < ChangedAddonConfigsConfiguration.AGE_NEED.get());
+
+        if (isForWork) {
+            if (dietType.isDietItem(item)) {
+                applyFoodEffects(player, item, true);
+                if (isWarnsOn) {
+                    player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
+                }
+            } else if (Debuffs) {
+                if (!dietType.isNotFoodItem(item) && ShouldGiveDebuffs) {
+                    applyFoodEffects(player, item, false);
+                    player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 50, 3, false, true, true));
+                    player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, true, true,
+                            new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
+                    if (isWarnsOn) {
+                        player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
+                    }
+                }
             }
         }
     }
@@ -89,15 +104,15 @@ public class CreatureDietsHandleProcedure {
         player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
     }
 
-    private static void applyFoodEffects(Player player, ItemStack item,boolean isGoodFood) {
+    private static void applyFoodEffects(Player player, ItemStack item, boolean isGoodFood) {
         int additionalFood;
         float additionalSaturation;
-        if (isGoodFood){
-            additionalFood = Objects.requireNonNull(item.getFoodProperties(player)).getNutrition()/2;
-            additionalSaturation = Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier()/2;
+        if (isGoodFood) {
+            additionalFood = Objects.requireNonNull(item.getFoodProperties(player)).getNutrition() / 2;
+            additionalSaturation = Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier() / 2;
         } else {
-            additionalFood = -Objects.requireNonNull(item.getFoodProperties(player)).getNutrition()/4;
-            additionalSaturation = -Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier()/4;
+            additionalFood = -Objects.requireNonNull(item.getFoodProperties(player)).getNutrition() / 4;
+            additionalSaturation = -Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier() / 4;
         }
         if (!(player.getFoodData().getFoodLevel() >= 20)) {
             player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() + additionalFood);
@@ -210,14 +225,14 @@ public class CreatureDietsHandleProcedure {
                     item.is(ItemTags.create(new ResourceLocation(dietTag)));
         }
 
-        public boolean isNotFoodItem(ItemStack item){
+        public boolean isNotFoodItem(ItemStack item) {
             List<Item> NonFoodItemslist = List.of(ChangedAddonModItems.FOXTA.get(),
                     ChangedAddonModItems.SNEPSI.get(),
                     ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(),
                     ChangedAddonModItems.LAETHIN_SYRINGE.get(),
                     ChangedAddonModItems.DIFFUSION_SYRINGE.get());
 
-            if (item.is(Items.ENCHANTED_GOLDEN_APPLE)){
+            if (item.is(Items.ENCHANTED_GOLDEN_APPLE)) {
                 return true;
             } else if (item.is(Items.POTION)) {
                 return true;
