@@ -38,6 +38,8 @@ import java.util.Objects;
 @Mod.EventBusSubscriber
 public class CreatureDietsHandleProcedure {
 
+    public static List<LatexVariant<?>> NoDietList = List.of(AddonLatexVariant.REYN);
+
     @SubscribeEvent
     public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
         if (event == null) return;
@@ -122,6 +124,9 @@ public class CreatureDietsHandleProcedure {
     }
 
     private static DietType determineDietType(LatexEntity latexEntity, LatexVariant<?> variant) {
+        if (NoDietList.contains(variant)) {
+            return null;
+        }
         if (isCatDiet(latexEntity, variant)) return DietType.CAT;
         if (isWolfDiet(latexEntity, variant)) return DietType.WOLF;
         if (isSpecialDiet(variant)) return DietType.SPECIAL;
