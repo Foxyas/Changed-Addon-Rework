@@ -89,6 +89,29 @@
             "entityType": "CUSTOM:Buny"
           }
         ]
+      },
+      {
+        "category": "Overlays",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Set the Pat Overlay On or Off",
+            "vardisplay": "Pat Overlay",
+            "varname": "pat_overlay",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
     "file": "ChangedAddon-Client",

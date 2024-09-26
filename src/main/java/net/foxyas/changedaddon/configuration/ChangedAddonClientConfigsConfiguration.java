@@ -9,6 +9,7 @@ public class ChangedAddonClientConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SLIMMODEL;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> FEMALE_SNEPS_HAIR;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> MALE_SNEPS_HAIR;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> PAT_OVERLAY;
 	static {
 		BUILDER.push("MusicPlayer");
 		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
@@ -19,6 +20,9 @@ public class ChangedAddonClientConfigsConfiguration {
 		BUILDER.push("Custom Hair Color");
 		FEMALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color For the Female Sneps [BioSynth and Exp2]").define("Females Sneps Custom Hair Color", false);
 		MALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color For the Male Sneps [BioSynth and Exp2]").define("Males Sneps Custom Hair Color", false);
+		BUILDER.pop();
+		BUILDER.push("Overlays");
+		PAT_OVERLAY = BUILDER.comment("Set the Pat Overlay On or Off").define("Pat Overlay", true);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

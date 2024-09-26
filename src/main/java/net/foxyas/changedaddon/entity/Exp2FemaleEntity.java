@@ -57,9 +57,9 @@ public class Exp2FemaleEntity extends AbstractCanTameLatexEntity {
 
 	public InteractionResult Exp2(Player player, InteractionHand hand,Player Host) {
 		ItemStack itemstack = player.getItemInHand(hand);
-		if(Host != null){
+		/*if(Host != null){
 			return super.mobInteract(player, hand);
-		}
+		}*/
 
 		if (this.level.isClientSide) {
 			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();

@@ -1,6 +1,8 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraftforge.common.ForgeMod;
@@ -20,14 +22,10 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.player.AbstractClientPlayer;
 
 import net.ltxprogrammer.changed.util.Color3;
-import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.entity.PowderSnowWalkable;
-import net.ltxprogrammer.changed.entity.LatexType;
-import net.ltxprogrammer.changed.entity.LatexEntity;
 
 import net.foxyas.changedaddon.ChangedAddonEntitys;
 
-public class SnowLeopardPartialEntity extends LatexEntity implements PowderSnowWalkable {
+public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable {
 	public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), world);
 	}
@@ -107,5 +105,10 @@ public class SnowLeopardPartialEntity extends LatexEntity implements PowderSnowW
 		if (getUnderlyingPlayer() instanceof AbstractClientPlayer clientPlayer)
 			return clientPlayer.getModelName();
 		return DefaultPlayerSkin.getSkinModelName(this.getUUID());
+	}
+
+	@Override
+	public Gender getGender() {
+		return Gender.MALE;
 	}
 }
