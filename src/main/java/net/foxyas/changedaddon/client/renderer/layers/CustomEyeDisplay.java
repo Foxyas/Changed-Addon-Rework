@@ -6,13 +6,16 @@ import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
 import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 
 public class CustomEyeDisplay <M extends LatexHumanoidModel<T>, T extends LatexEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
     private final M model;
@@ -61,7 +64,7 @@ public class CustomEyeDisplay <M extends LatexHumanoidModel<T>, T extends LatexE
             RenderType renderType2;
 
             // Seleciona renderização com base na luz ao redor da entidade
-            if(entity.getLevel().getMaxLocalRawBrightness(entity.getOnPos().above()) <= 7){
+            if(isDarkAroundEntity(entity.getUnderlyingPlayer())){
                 renderType = GlowEyeRender;
                 renderType2 = GlowDisplayRender;
             } else {
@@ -84,4 +87,29 @@ public class CustomEyeDisplay <M extends LatexHumanoidModel<T>, T extends LatexE
             }
         }
     }
+
+
+    private static boolean isDarkAroundEntity(Entity entity) {
+    	if (entity == null){return false;}
+    	
+        // Pega a posição atual da entidade
+        BlockPos entityPos = entity.blockPosition();
+
+        // Nível de luz no bloco (inclui luz de blocos e luz do céu)
+        Level level = entity.getLevel();
+
+        // Obtém a luz do bloco (luz artificial, como tochas)
+        int blockLight = level.getBrightness(LightLayer.BLOCK, entityPos);
+
+        // Obtém a luz do céu (luz natural, como sol e lua)
+        int skyLight = level.getBrightness(LightLayer.SKY, entityPos);
+
+        // Combina ambos para verificar o nível de luz total (artificial + natural)
+        int totalLightLevel = Math.max(blockLight, skyLight);
+
+
+        // Considera escuro se o nível de luz total for menor ou igual a 7 (ponto de spawn de mobs)
+        return totalLightLevel <= 9;
+    }
+
 }
