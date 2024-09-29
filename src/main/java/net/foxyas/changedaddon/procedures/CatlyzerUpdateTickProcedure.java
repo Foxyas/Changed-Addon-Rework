@@ -285,7 +285,7 @@ public class CatlyzerUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final ItemStack _setstack = output;
-										_setstack.setCount((int) (1 + new Object() {
+										_setstack.setCount((int) ((output).getCount() + new Object() {
 											public int getAmount(LevelAccessor world, BlockPos pos, int slotid) {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
