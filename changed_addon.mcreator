@@ -4099,7 +4099,7 @@
       "name": "EntityLatexSolventOnEffectActiveTick",
       "type": "procedure",
       "sortid": 222,
-      "compiles": true,
+      "compiles": false,
       "locked_code": false,
       "registry_name": "entity_latex_solvent_on_effect_active_tick",
       "metadata": {
@@ -5066,7 +5066,7 @@
       "name": "DarklatexpuddleFeature",
       "type": "procedure",
       "sortid": 270,
-      "compiles": true,
+      "compiles": false,
       "locked_code": false,
       "registry_name": "darklatexpuddle_feature",
       "metadata": {
@@ -5273,7 +5273,7 @@
       "name": "Dolatexinfectiontick",
       "type": "procedure",
       "sortid": 279,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "dolatexinfectiontick",
       "metadata": {
@@ -5490,7 +5490,7 @@
       "name": "Iflatexentity",
       "type": "procedure",
       "sortid": 290,
-      "compiles": true,
+      "compiles": false,
       "locked_code": false,
       "registry_name": "iflatexentity",
       "metadata": {
@@ -5659,7 +5659,7 @@
       "name": "SetmaxTransfurTolerance",
       "type": "procedure",
       "sortid": 296,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "setmax_transfur_tolerance",
       "metadata": {
@@ -5778,7 +5778,7 @@
       "name": "SetDefaultValue",
       "type": "procedure",
       "sortid": 302,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "set_default_value",
       "metadata": {
@@ -7451,7 +7451,7 @@
       "name": "SummonDripParticles",
       "type": "procedure",
       "sortid": 376,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "summon_drip_particles",
       "metadata": {
@@ -8277,7 +8277,7 @@
       "name": "Exp009Transfur",
       "type": "procedure",
       "sortid": 419,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "exp_009_transfur",
       "metadata": {
@@ -9082,7 +9082,7 @@
       "name": "ShowSwimSpeed",
       "type": "procedure",
       "sortid": 458,
-      "compiles": true,
+      "compiles": false,
       "locked_code": false,
       "registry_name": "show_swim_speed",
       "metadata": {
@@ -10046,7 +10046,7 @@
       "name": "DodgeAbilityHandle",
       "type": "procedure",
       "sortid": 502,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "dodge_ability_handle",
       "metadata": {
@@ -10377,7 +10377,7 @@
       "name": "SizeManipulator",
       "type": "procedure",
       "sortid": 520,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "size_manipulator",
       "metadata": {
