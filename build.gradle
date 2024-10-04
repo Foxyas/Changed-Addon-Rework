@@ -73,6 +73,12 @@ repositories {
         name = "Changed"
         url = "https://raw.githubusercontent.com/LtxProgrammer/Changed-Minecraft-Mod/master/mcmodsrepo/"
     }
+
+    maven {
+        name = "Changed_Local_file"
+        url uri("C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/libs")
+    }
+
   /* maven {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
@@ -87,7 +93,8 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.2.21' //Forge Version
-    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.13.1") //Changed
+    implementation fg.deobf('net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14') //Changed Local File
+  //implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.13.1") //Changed
     implementation fg.deobf("curse.maven:advanced-xray-256256:3712732")	//Xray Ores
     implementation fg.deobf("curse.maven:lightspeedmod-821790:4594803") //Speed Up The Start of The Game
     implementation fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon

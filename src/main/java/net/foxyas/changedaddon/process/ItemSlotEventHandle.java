@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.process;
 
 import net.foxyas.changedaddon.item.HazmatSuitItem;
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -32,13 +32,14 @@ public class ItemSlotEventHandle {
             }
         }
     }
-    */
+    
+*/
 
     @SubscribeEvent
     public static void onPlayerRightClick(PlayerInteractEvent.RightClickItem event) {
         Player player = event.getPlayer();
         ItemStack itemStack = event.getItemStack();
-        LatexVariantInstance<?> latexVariantInstance = ProcessTransfur.getPlayerLatexVariant(player);
+        TransfurVariantInstance<?> latexVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (itemStack.getItem() instanceof HazmatSuitItem) {
             if (latexVariantInstance != null){
                 event.setCanceled(true);

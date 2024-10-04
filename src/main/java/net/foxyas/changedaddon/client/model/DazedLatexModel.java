@@ -6,10 +6,10 @@ package net.foxyas.changedaddon.client.model;
 
 import net.foxyas.changedaddon.entity.DazedEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.client.renderer.model.LightLatexWolfMaleModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
@@ -31,9 +31,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator.*;
+import static net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator.*;
 
-public class DazedLatexModel extends LatexHumanoidModel<DazedEntity> implements LatexHumanoidModelInterface<DazedEntity,DazedLatexModel> {
+public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implements AdvancedHumanoidModelInterface<DazedEntity,DazedLatexModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "dazed_latex"), "main");
 
@@ -44,7 +44,7 @@ public class DazedLatexModel extends LatexHumanoidModel<DazedEntity> implements 
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-    private final LatexAnimator<DazedEntity, DazedLatexModel> animator;
+    private final HumanoidAnimator<DazedEntity, DazedLatexModel> animator;
 
     public DazedLatexModel(ModelPart root) {
         super(root);
@@ -65,7 +65,7 @@ public class DazedLatexModel extends LatexHumanoidModel<DazedEntity> implements 
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.wolfLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -162,11 +162,12 @@ public class DazedLatexModel extends LatexHumanoidModel<DazedEntity> implements 
    	 }
 
    /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
-    } */
+    }
+ */
 		@Override
     	public void setupHand() {
         animator.setupHand();
@@ -203,7 +204,7 @@ public class DazedLatexModel extends LatexHumanoidModel<DazedEntity> implements 
     }
     
         @Override
-        public LatexAnimator<DazedEntity, DazedLatexModel> getAnimator() {
+        public HumanoidAnimator<DazedEntity, DazedLatexModel> getAnimator() {
        	 return animator;
         }
 }

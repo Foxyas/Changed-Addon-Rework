@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.ModelMirrorWhiteTiger;
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
-import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
@@ -18,7 +18,7 @@ import net.minecraft.client.model.HumanoidModel;
 
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
 
-public class MirrorWhiteTigerRenderer extends LatexHumanoidRenderer<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger, ArmorLatexFemaleCatModel<MirrorWhiteTigerEntity>> {
+public class MirrorWhiteTigerRenderer extends AdvancedHumanoidRenderer<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger, ArmorLatexFemaleCatModel<MirrorWhiteTigerEntity>> {
 	public MirrorWhiteTigerRenderer(EntityRendererProvider.Context context) {
 		super(context, new ModelMirrorWhiteTiger(context.bakeLayer(ModelMirrorWhiteTiger.LAYER_LOCATION)),
 				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);

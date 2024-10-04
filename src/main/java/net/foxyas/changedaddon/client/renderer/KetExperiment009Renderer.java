@@ -6,13 +6,13 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.model.KetModel;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
-import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -23,7 +23,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class KetExperiment009Renderer extends LatexHumanoidRenderer<KetExperiment009Entity, KetModel, ArmorLatexMaleWolfModel<KetExperiment009Entity>> {
+public class KetExperiment009Renderer extends AdvancedHumanoidRenderer<KetExperiment009Entity, KetModel, ArmorLatexMaleWolfModel<KetExperiment009Entity>> {
 	public KetExperiment009Renderer(EntityRendererProvider.Context context) {
 	super(context, new KetModel(context.bakeLayer(KetModel.LAYER_LOCATION)),
 				ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
@@ -38,7 +38,7 @@ public class KetExperiment009Renderer extends LatexHumanoidRenderer<KetExperimen
 		return new ResourceLocation("changed_addon:textures/entities/kettexture.png");
 	}
 
-	private static class CustomEmissiveBodyLayer<M extends EntityModel<T>, T extends LatexEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
+	private static class CustomEmissiveBodyLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
 		private final RenderType renderType;
 		private final ResourceLocation emissiveTexture;
 		private final float healthThreshold;
@@ -79,7 +79,7 @@ public class KetExperiment009Renderer extends LatexHumanoidRenderer<KetExperimen
 				stack.pushPose();
 				stack.scale(1.0002F, 1.0002F, 1.0002F);
 				EntityModel<T> var8 = this.getParentModel();
-				if (var8 instanceof LatexHumanoidModel<?> armedModel) {
+				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
 					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
 				}
 				stack.popPose();
@@ -89,7 +89,7 @@ public class KetExperiment009Renderer extends LatexHumanoidRenderer<KetExperimen
 				stack.pushPose();
 				stack.scale(1.0002F, 1.0002F, 1.0002F);
 				EntityModel<T> var8 = this.getParentModel();
-				if (var8 instanceof LatexHumanoidModel<?> armedModel) {
+				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
 					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
 				}
 				stack.popPose();
@@ -97,7 +97,7 @@ public class KetExperiment009Renderer extends LatexHumanoidRenderer<KetExperimen
 				stack.pushPose();
 				stack.scale(1.0002F, 1.0002F, 1.0002F);
 				EntityModel<T> var8 = this.getParentModel();
-				if (var8 instanceof LatexHumanoidModel<?> armedModel) {
+				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
 					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
 				}
 				stack.popPose();

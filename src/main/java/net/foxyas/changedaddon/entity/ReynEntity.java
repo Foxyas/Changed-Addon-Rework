@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.ltxprogrammer.changed.entity.HairStyle;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.util.Color3;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class ReynEntity extends LatexEntity {
+public class ReynEntity extends ChangedEntity {
 	public ReynEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.REYN.get(), world);
 	}

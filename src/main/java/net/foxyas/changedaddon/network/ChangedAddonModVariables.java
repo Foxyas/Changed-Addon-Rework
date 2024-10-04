@@ -69,7 +69,6 @@ public class ChangedAddonModVariables {
 			clone.transfur = original.transfur;
 			clone.LatexForm = original.LatexForm;
 			clone.showwarns = original.showwarns;
-			clone.LatexForm_ProgressTransfur = original.LatexForm_ProgressTransfur;
 			clone.Progress_Transfur_Number = original.Progress_Transfur_Number;
 			clone.LatexEntitySummon = original.LatexEntitySummon;
 			clone.organic_transfur = original.organic_transfur;
@@ -130,7 +129,6 @@ public class ChangedAddonModVariables {
 		public String LatexForm = "any";
 		public double times_the_syringe_was_used = 0;
 		public boolean showwarns = true;
-		public String LatexForm_ProgressTransfur = "any";
 		public double Progress_Transfur_Number = 0;
 		public double consciousness_fight_progress = 0;
 		public boolean concience_Fight = false;
@@ -162,7 +160,6 @@ public class ChangedAddonModVariables {
 			nbt.putString("LatexForm", LatexForm);
 			nbt.putDouble("times_the_syringe_was_used", times_the_syringe_was_used);
 			nbt.putBoolean("showwarns", showwarns);
-			nbt.putString("LatexForm_ProgressTransfur", LatexForm_ProgressTransfur);
 			nbt.putDouble("Progress_Transfur_Number", Progress_Transfur_Number);
 			nbt.putDouble("consciousness_fight_progress", consciousness_fight_progress);
 			nbt.putBoolean("concience_Fight", concience_Fight);
@@ -191,7 +188,6 @@ public class ChangedAddonModVariables {
 			LatexForm = nbt.getString("LatexForm");
 			times_the_syringe_was_used = nbt.getDouble("times_the_syringe_was_used");
 			showwarns = nbt.getBoolean("showwarns");
-			LatexForm_ProgressTransfur = nbt.getString("LatexForm_ProgressTransfur");
 			Progress_Transfur_Number = nbt.getDouble("Progress_Transfur_Number");
 			consciousness_fight_progress = nbt.getDouble("consciousness_fight_progress");
 			concience_Fight = nbt.getBoolean("concience_Fight");
@@ -239,7 +235,6 @@ public class ChangedAddonModVariables {
 					variables.LatexForm = message.data.LatexForm;
 					variables.times_the_syringe_was_used = message.data.times_the_syringe_was_used;
 					variables.showwarns = message.data.showwarns;
-					variables.LatexForm_ProgressTransfur = message.data.LatexForm_ProgressTransfur;
 					variables.Progress_Transfur_Number = message.data.Progress_Transfur_Number;
 					variables.consciousness_fight_progress = message.data.consciousness_fight_progress;
 					variables.concience_Fight = message.data.concience_Fight;

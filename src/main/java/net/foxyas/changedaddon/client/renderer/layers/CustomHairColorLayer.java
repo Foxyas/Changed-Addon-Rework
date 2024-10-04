@@ -5,7 +5,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfigurat
 import net.foxyas.changedaddon.init.ChangedAddonModConfigs;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.util.Color3;
@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class CustomHairColorLayer<M extends LatexHumanoidModel<T>, T extends LatexEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
+public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends LatexEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
     private final M model;
     private final RenderType renderTypeDark;
     private final RenderType renderTypeLight;

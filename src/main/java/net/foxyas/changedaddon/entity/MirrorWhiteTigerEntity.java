@@ -39,7 +39,7 @@ import java.util.Set;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 @Mod.EventBusSubscriber
-public class MirrorWhiteTigerEntity extends LatexEntity implements PowderSnowWalkable,GenderedEntity {
+public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowWalkable,GenderedEntity {
 
 	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("taiga")/*, new ResourceLocation("icy") */);
 	@SubscribeEvent
@@ -56,7 +56,7 @@ public class MirrorWhiteTigerEntity extends LatexEntity implements PowderSnowWal
 		super(type, world);
 		//this.setAttributes(getAttributes());
 		maxUpStep = 0.6f;
-		xpReward = LatexEntity.XP_REWARD_MEDIUM;
+		xpReward = ChangedEntity.XP_REWARD_MEDIUM;
 		this.setAttributes(this.getAttributes());
 		setNoAi(false);
 	}

@@ -4,10 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class OrganicSnowLeopardFemaleModel extends LatexHumanoidModel<SnowLeopardFemaleOrganicEntity> implements LatexHumanoidModelInterface<SnowLeopardFemaleOrganicEntity,OrganicSnowLeopardFemaleModel> {
+public class OrganicSnowLeopardFemaleModel extends AdvancedHumanoidModel<SnowLeopardFemaleOrganicEntity> implements AdvancedHumanoidModelInterface<SnowLeopardFemaleOrganicEntity,OrganicSnowLeopardFemaleModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "organic_snow_leopard_female"), "main");
     private final ModelPart RightLeg;
@@ -28,7 +28,7 @@ public class OrganicSnowLeopardFemaleModel extends LatexHumanoidModel<SnowLeopar
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
     private final ModelPart Tail;
-    private final LatexAnimator<SnowLeopardFemaleOrganicEntity, OrganicSnowLeopardFemaleModel> animator;
+    private final HumanoidAnimator<SnowLeopardFemaleOrganicEntity, OrganicSnowLeopardFemaleModel> animator;
 
     public OrganicSnowLeopardFemaleModel(ModelPart root) {
         super(root);
@@ -50,7 +50,7 @@ public class OrganicSnowLeopardFemaleModel extends LatexHumanoidModel<SnowLeopar
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -192,7 +192,7 @@ public class OrganicSnowLeopardFemaleModel extends LatexHumanoidModel<SnowLeopar
     }
 
     /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
@@ -220,7 +220,10 @@ public class OrganicSnowLeopardFemaleModel extends LatexHumanoidModel<SnowLeopar
         return Torso;
     }
 
-
+	@Override
+	public ModelPart getLeg(HumanoidArm humanoidArm) {
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+	}
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -233,7 +236,7 @@ public class OrganicSnowLeopardFemaleModel extends LatexHumanoidModel<SnowLeopar
     }
 
     @Override
-    public LatexAnimator<SnowLeopardFemaleOrganicEntity, OrganicSnowLeopardFemaleModel> getAnimator() {
+    public HumanoidAnimator<SnowLeopardFemaleOrganicEntity, OrganicSnowLeopardFemaleModel> getAnimator() {
         return animator;
     }
 }

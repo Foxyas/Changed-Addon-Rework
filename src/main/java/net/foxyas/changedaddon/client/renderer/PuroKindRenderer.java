@@ -4,7 +4,7 @@ package net.foxyas.changedaddon.client.renderer;
 import net.foxyas.changedaddon.client.model.PuroKindModel;
 import net.foxyas.changedaddon.client.model.PuroKindModel;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
-import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 
-public class PuroKindRenderer extends LatexHumanoidRenderer<PuroKindEntity, PuroKindModel, ArmorLatexMaleWolfModel<PuroKindEntity>> {
+public class PuroKindRenderer extends AdvancedHumanoidRenderer<PuroKindEntity, PuroKindModel, ArmorLatexMaleWolfModel<PuroKindEntity>> {
 	public PuroKindRenderer(EntityRendererProvider.Context context) {
 		super(context, new PuroKindModel(context.bakeLayer(PuroKindModel.LAYER_LOCATION)),ArmorLatexMaleWolfModel::new,ArmorLatexMaleWolfModel.INNER_ARMOR,ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel(), model::isPartNotMask));

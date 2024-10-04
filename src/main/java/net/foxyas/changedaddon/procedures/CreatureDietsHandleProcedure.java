@@ -1,17 +1,15 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
-import net.foxyas.changedaddon.init.ChangedAddonModConfigs;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.variants.AddonLatexVariant;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -38,7 +36,7 @@ import java.util.Objects;
 @Mod.EventBusSubscriber
 public class CreatureDietsHandleProcedure {
 
-    public static List<LatexVariant<?>> NoDietList = List.of(AddonLatexVariant.REYN);
+    public static List<TransfurVariant<?>> NoDietList = List.of(AddonLatexVariant.REYN.get());
 
     @SubscribeEvent
     public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
@@ -51,7 +49,7 @@ public class CreatureDietsHandleProcedure {
             return;
         }
 
-        LatexVariantInstance<?> latexInstance = ProcessTransfur.getPlayerLatexVariant(player);
+        TransfurVariantInstance<?> latexInstance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (latexInstance == null) return;
 
 
@@ -65,15 +63,15 @@ public class CreatureDietsHandleProcedure {
         boolean Debuffs;
         Debuffs = ChangedAddonConfigsConfiguration.DEBUFFS.get();
 
-        LatexEntity latexEntity = latexInstance.getLatexEntity();
-        LatexVariant<?> variant = latexEntity.getSelfVariant();
+        ChangedEntity ChangedEntity = latexInstance.getChangedEntity();
+        TransfurVariant<?> variant = ChangedEntity.getSelfVariant();
 
         if (!item.isEdible()) return;
 
         boolean isWarnsOn = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
                 .orElse(new ChangedAddonModVariables.PlayerVariables()).showwarns;
 
-        DietType dietType = determineDietType(latexEntity, variant);
+        DietType dietType = determineDietType(ChangedEntity, variant);
         if (dietType == null) return;
 
         boolean ShouldGiveDebuffs = (latexInstance.ageAsVariant < ChangedAddonConfigsConfiguration.AGE_NEED.get());
@@ -123,67 +121,67 @@ public class CreatureDietsHandleProcedure {
         }
     }
 
-    private static DietType determineDietType(LatexEntity latexEntity, LatexVariant<?> variant) {
+    private static DietType determineDietType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
         if (NoDietList.contains(variant)) {
             return null;
         }
-        if (isCatDiet(latexEntity, variant)) return DietType.CAT;
-        if (isWolfDiet(latexEntity, variant)) return DietType.WOLF;
+        if (isCatDiet(ChangedEntity, variant)) return DietType.CAT;
+        if (isWolfDiet(ChangedEntity, variant)) return DietType.WOLF;
         if (isSpecialDiet(variant)) return DietType.SPECIAL;
-        if (isFoxDiet(latexEntity, variant)) return DietType.FOX;
-        if (isAquaticDiet(latexEntity, variant)) return DietType.AQUATIC;
-        if (isDragonDiet(latexEntity, variant)) return DietType.DRAGON;
+        if (isFoxDiet(ChangedEntity, variant)) return DietType.FOX;
+        if (isAquaticDiet(ChangedEntity, variant)) return DietType.AQUATIC;
+        if (isDragonDiet(ChangedEntity, variant)) return DietType.DRAGON;
 
         return null;
     }
 
-    private static boolean isCatDiet(LatexEntity entity, LatexVariant<?> variant) {
+    private static boolean isCatDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("cat") ||
-                variant.is(ChangedTags.LatexVariants.CAT_LIKE) ||
-                variant.is(ChangedTags.LatexVariants.LEOPARD_LIKE) ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+                variant.is(ChangedTags.TransfurVariants.CAT_LIKE) ||
+                variant.is(ChangedTags.TransfurVariants.LEOPARD_LIKE) ||
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:cat_diet")));
     }
 
-    private static boolean isWolfDiet(LatexEntity entity, LatexVariant<?> variant) {
+    private static boolean isWolfDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("dog") ||
                 entity.getType().getRegistryName().toString().contains("wolf") ||
                 entity instanceof AbstractLatexWolf ||
-                variant.is(ChangedTags.LatexVariants.WOLF_LIKE) ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+                variant.is(ChangedTags.TransfurVariants.WOLF_LIKE) ||
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:wolf_diet")));
     }
 
-    private static boolean isSpecialDiet(LatexVariant<?> variant) {
-        return variant == AddonLatexVariant.WOLFY ||
-                variant.is(AddonLatexVariant.ADDON_PURO_KIND.male()) ||
-                variant.is(AddonLatexVariant.ADDON_PURO_KIND.female()) ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+    private static boolean isSpecialDiet(TransfurVariant<?> variant) {
+        return variant == AddonLatexVariant.WOLFY.get() ||
+                variant.is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getMaleVariant()) ||
+                variant.is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getFemaleVariant()) ||
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:special_diet")));
     }
 
-    private static boolean isFoxDiet(LatexEntity entity, LatexVariant<?> variant) {
+    private static boolean isFoxDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("fox") ||
-                variant.is(AddonLatexVariant.EXP1.male()) ||
-                variant.is(AddonLatexVariant.EXP1.female()) ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+                variant.is(AddonLatexVariant.Gendered.EXP1.getMaleVariant()) ||
+                variant.is(AddonLatexVariant.Gendered.EXP1.getFemaleVariant()) ||
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:fox_diet")));
     }
 
-    private static boolean isAquaticDiet(LatexEntity entity, LatexVariant<?> variant) {
+    private static boolean isAquaticDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity instanceof AquaticEntity ||
-                variant.is(ChangedTags.LatexVariants.SHARK_LIKE) ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+                variant.is(ChangedTags.TransfurVariants.SHARK_LIKE) ||
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed:aquatic_like"))) ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:aquatic_diet")));
     }
 
-    private static boolean isDragonDiet(LatexEntity entity, LatexVariant<?> variant) {
+    private static boolean isDragonDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("dragon") ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed:dragon_like"))) ||
-                variant.is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(),
+                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:dragon_diet")));
     }
 

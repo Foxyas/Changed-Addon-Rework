@@ -6,11 +6,11 @@ package net.foxyas.changedaddon.client.model;
 
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
-import net.ltxprogrammer.changed.client.renderer.model.LightLatexWolfMaleModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.model.WhiteWolfMaleModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
 import net.minecraft.resources.ResourceLocation;
@@ -31,9 +31,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator.*;
+import static net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator.*;
 
-public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> implements LatexHumanoidModelInterface<LatexSnowFoxEntity,ModelSnowFox> {
+public class ModelSnowFox extends AdvancedHumanoidModel<LatexSnowFoxEntity> implements AdvancedHumanoidModelInterface<LatexSnowFoxEntity,ModelSnowFox> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "snowfox"), "main");
 
@@ -44,7 +44,7 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-    private final LatexAnimator<LatexSnowFoxEntity, ModelSnowFox> animator;
+    private final HumanoidAnimator<LatexSnowFoxEntity, ModelSnowFox> animator;
 
     public ModelSnowFox(ModelPart root) {
         super(root);
@@ -65,7 +65,7 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.wolfLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -157,11 +157,12 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
    	 }
 
    /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
-    } */
+    }
+ */
 		@Override
     	public void setupHand() {
         animator.setupHand();
@@ -171,21 +172,24 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
     @Override
     public void setupAnim(@NotNull LatexSnowFoxEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        }
+    }
 
-        public ModelPart getArm (HumanoidArm p_102852) {
-            return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
-        }
+    public ModelPart getArm(HumanoidArm p_102852) {
+        return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
+    }
 
-        public ModelPart getHead() {
+    public ModelPart getHead() {
         return this.Head;
-        }
+    }
 
-        public ModelPart getTorso() {
+    public ModelPart getTorso() {
         return Torso;
-        }
+    }
 
-
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -198,7 +202,7 @@ public class ModelSnowFox extends LatexHumanoidModel<LatexSnowFoxEntity> impleme
     }
     
         @Override
-        public LatexAnimator<LatexSnowFoxEntity, ModelSnowFox> getAnimator() {
+        public HumanoidAnimator<LatexSnowFoxEntity, ModelSnowFox> getAnimator() {
        	 return animator;
         }
 }

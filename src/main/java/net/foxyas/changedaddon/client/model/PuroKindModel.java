@@ -4,14 +4,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmBobAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -30,14 +30,14 @@ class ModelAnimation{
     public ModelAnimation (){
 
     }
-    public static <T extends LatexEntity, M extends EntityModel<T>> Consumer<LatexAnimator<T, M>> PuroLike(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
+    public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> PuroLike(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
         return (animator) -> {
             animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad)).addPreset(wolfUpperBody(head, torso, leftArm, rightArm)).addPreset(catTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar)).addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(leftArm, rightArm)).addAnimator(new ArmBobAnimator(leftArm, rightArm)).addAnimator(new ArmRideAnimator(leftArm, rightArm));
         };
     }
 }
 
-public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements LatexHumanoidModelInterface<PuroKindEntity,PuroKindModel> {
+public class PuroKindModel extends AdvancedHumanoidModel<PuroKindEntity> implements AdvancedHumanoidModelInterface<PuroKindEntity,PuroKindModel> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "puro_kind"), "main");
 
     private final ModelPart RightLeg;
@@ -49,7 +49,7 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
     private final ModelPart Tail;
 
     private final ModelPart Mask;
-    private final LatexAnimator<PuroKindEntity, PuroKindModel> animator;
+    private final HumanoidAnimator<PuroKindEntity, PuroKindModel> animator;
 
     public PuroKindModel(ModelPart root) {
         super(root);
@@ -71,7 +71,7 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(/*AnimatorPresets.wolfLike*/ModelAnimation.PuroLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -220,7 +220,7 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
     }
 
    /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
@@ -250,6 +250,10 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
         return this.Torso;
     }
 
+	@Override
+	public ModelPart getLeg(HumanoidArm humanoidArm) {
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+	}
 
 
     @Override
@@ -263,7 +267,7 @@ public class PuroKindModel extends LatexHumanoidModel<PuroKindEntity> implements
     }
 
     @Override
-    public LatexAnimator<PuroKindEntity, PuroKindModel> getAnimator() {
+    public HumanoidAnimator<PuroKindEntity, PuroKindModel> getAnimator() {
         return animator;
     }
 }

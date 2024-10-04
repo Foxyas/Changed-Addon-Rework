@@ -5,9 +5,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.ReynEntity;
 import net.foxyas.changedaddon.entity.ReynEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ReynModel extends LatexHumanoidModel<ReynEntity> implements LatexHumanoidModelInterface<ReynEntity,ReynModel> {
+public class ReynModel extends AdvancedHumanoidModel<ReynEntity> implements AdvancedHumanoidModelInterface<ReynEntity,ReynModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "reyn_model"), "main");
 
@@ -29,7 +29,7 @@ public class ReynModel extends LatexHumanoidModel<ReynEntity> implements LatexHu
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-    private final LatexAnimator<ReynEntity, ReynModel> animator;
+    private final HumanoidAnimator<ReynEntity, ReynModel> animator;
 
     public ReynModel(ModelPart root) {
         super(root);
@@ -50,7 +50,7 @@ public class ReynModel extends LatexHumanoidModel<ReynEntity> implements LatexHu
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.wolfLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -227,6 +227,11 @@ public class ReynModel extends LatexHumanoidModel<ReynEntity> implements LatexHu
         return Torso;
     }
 
+	@Override
+	public ModelPart getLeg(HumanoidArm humanoidArm) {
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+	}
+
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         Head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
@@ -238,7 +243,7 @@ public class ReynModel extends LatexHumanoidModel<ReynEntity> implements LatexHu
     }
 
     @Override
-    public LatexAnimator<ReynEntity, ReynModel> getAnimator() {
+    public HumanoidAnimator<ReynEntity, ReynModel> getAnimator() {
         return animator;
     }
 }

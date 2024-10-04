@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.util.Color3;
@@ -27,7 +27,7 @@ import net.minecraft.network.protocol.Packet;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 
-public class BunyEntity extends LatexEntity {
+public class BunyEntity extends ChangedEntity {
 	public BunyEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.BUNY.get(), world);
 	}

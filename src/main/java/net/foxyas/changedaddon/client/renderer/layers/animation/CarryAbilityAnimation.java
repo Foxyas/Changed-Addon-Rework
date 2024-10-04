@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.client.renderer.layers.animation;
 
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.Registry;
@@ -14,15 +14,15 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class CarryAbilityAnimation {
 
-    public static void playAnimation(LatexEntity entity, LatexHumanoidModel<?> latexHumanoidModel) {
+    public static void playAnimation(ChangedEntity entity, AdvancedHumanoidModel<?> AdvancedHumanoidModel) {
         boolean isWithCarryAbilitySelected = false;
-        if (ProcessTransfur.getPlayerLatexVariant(entity.getUnderlyingPlayer()) != null) {
-            isWithCarryAbilitySelected = ProcessTransfur.getPlayerLatexVariant(entity.getUnderlyingPlayer()).selectedAbility == ChangedAddonAbilitys.CARRY.get();
+        if (ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()) != null) {
+            isWithCarryAbilitySelected = ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()).selectedAbility == ChangedAddonAbilitys.CARRY.get();
         }
-        updateArmPositions(entity, latexHumanoidModel, isWithCarryAbilitySelected);
+        updateArmPositions(entity, AdvancedHumanoidModel, isWithCarryAbilitySelected);
     }
 
-    public static void updateArmPositions(LatexEntity entity, LatexHumanoidModel<?> model, boolean isWithCarryAbilitySelected) {
+    public static void updateArmPositions(ChangedEntity entity, AdvancedHumanoidModel<?> model, boolean isWithCarryAbilitySelected) {
         if (entity.getUnderlyingPlayer() != null && entity.getUnderlyingPlayer().getFirstPassenger() != null) {
             // Levanta os braços se a habilidade de carregar está selecionada e a mão estiver vazia
             if (entity.getMainHandItem().isEmpty()) {

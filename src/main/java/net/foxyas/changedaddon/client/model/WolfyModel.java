@@ -4,15 +4,16 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.WolfyEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmBobAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -31,15 +32,14 @@ import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.
 
 class WolfyModelAnimation{
 	public WolfyModelAnimation (){
-
 	}
-	public static <T extends LatexEntity, M extends EntityModel<T>> Consumer<LatexAnimator<T, M>> PuroLike(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
+	public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> PuroLike(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
 		return (animator) -> {
 			animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad)).addPreset(wolfUpperBody(head, torso, leftArm, rightArm)).addPreset(catTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar)).addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(leftArm, rightArm)).addAnimator(new ArmBobAnimator(leftArm, rightArm)).addAnimator(new ArmRideAnimator(leftArm, rightArm));
 		};
 	}
 }
-public class WolfyModel extends LatexHumanoidModel<WolfyEntity> implements LatexHumanoidModelInterface<WolfyEntity,WolfyModel> {
+public class WolfyModel extends AdvancedHumanoidModel<WolfyEntity> implements AdvancedHumanoidModelInterface<WolfyEntity,WolfyModel> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "wolfy_model"), "main");
 
@@ -53,7 +53,7 @@ public class WolfyModel extends LatexHumanoidModel<WolfyEntity> implements Latex
 
     private final ModelPart Mask;
 
-	private final LatexAnimator<WolfyEntity, WolfyModel> animator;
+	private final HumanoidAnimator<WolfyEntity, WolfyModel> animator;
 
 	public WolfyModel(ModelPart root) {
 		super(root);
@@ -76,7 +76,7 @@ public class WolfyModel extends LatexHumanoidModel<WolfyEntity> implements Latex
 		var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
 		var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-		animator = LatexAnimator.of(this).hipOffset(-1.5f)
+		animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
 				.addPreset(/*AnimatorPresets.wolfLike*/WolfyModelAnimation.PuroLike(
 						Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
 						Torso, LeftArm, RightArm,
@@ -372,7 +372,7 @@ public class WolfyModel extends LatexHumanoidModel<WolfyEntity> implements Latex
 	}
 
 	/* public PoseStack getPlacementCorrectors(CorrectorType type) {
-		PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+		PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
 		if (type.isArm())
 			corrector.translate(-0.02f, 0.12f, 0.12f);
 		return corrector;
@@ -400,7 +400,10 @@ public class WolfyModel extends LatexHumanoidModel<WolfyEntity> implements Latex
 		return Torso;
 	}
 
-
+	@Override
+	public ModelPart getLeg(HumanoidArm humanoidArm) {
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+	}
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -413,7 +416,7 @@ public class WolfyModel extends LatexHumanoidModel<WolfyEntity> implements Latex
 	}
 
 	@Override
-	public LatexAnimator<WolfyEntity, WolfyModel> getAnimator() {
+	public HumanoidAnimator<WolfyEntity, WolfyModel> getAnimator() {
 		return animator;
 	}
 }

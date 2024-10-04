@@ -4,9 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class Experiment10Model extends LatexHumanoidModel<Experiment10Entity> implements LatexHumanoidModelInterface<Experiment10Entity,Experiment10Model> {
+public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity> implements AdvancedHumanoidModelInterface<Experiment10Entity,Experiment10Model> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "exp_10"), "main");
 
@@ -28,7 +28,7 @@ public class Experiment10Model extends LatexHumanoidModel<Experiment10Entity> im
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-    private final LatexAnimator<Experiment10Entity, Experiment10Model> animator;
+    private final HumanoidAnimator<Experiment10Entity, Experiment10Model> animator;
 
     public Experiment10Model(ModelPart root) {
         super(root);
@@ -49,7 +49,7 @@ public class Experiment10Model extends LatexHumanoidModel<Experiment10Entity> im
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -191,7 +191,7 @@ public class Experiment10Model extends LatexHumanoidModel<Experiment10Entity> im
     }
 
     /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
@@ -232,7 +232,7 @@ public class Experiment10Model extends LatexHumanoidModel<Experiment10Entity> im
     }
 
     @Override
-    public LatexAnimator<Experiment10Entity, Experiment10Model> getAnimator() {
+    public HumanoidAnimator<Experiment10Entity, Experiment10Model> getAnimator() {
         return animator;
     }
 }

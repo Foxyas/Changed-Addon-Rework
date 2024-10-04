@@ -45,7 +45,7 @@ import java.util.Set;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 @Mod.EventBusSubscriber
-public class LatexSnowFoxEntity extends LatexEntity implements GenderedEntity,PowderSnowWalkable {
+public class LatexSnowFoxEntity extends ChangedEntity implements GenderedEntity,PowderSnowWalkable {
 	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("snowy_plains"), new ResourceLocation("snowy_taiga"), new ResourceLocation("snowy_beach"));
 
 	@SubscribeEvent

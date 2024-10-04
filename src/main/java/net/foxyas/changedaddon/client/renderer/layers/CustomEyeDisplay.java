@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.LatexEntity;
 import net.ltxprogrammer.changed.util.Color3;
@@ -17,7 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 
-public class CustomEyeDisplay <M extends LatexHumanoidModel<T>, T extends LatexEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
+public class CustomEyeDisplay <M extends AdvancedHumanoidModel<T>, T extends LatexEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
     private final M model;
 
     private final RenderType GlowEyeRender;

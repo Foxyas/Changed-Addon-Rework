@@ -4,9 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 
-public class ModelMirrorWhiteTiger extends LatexHumanoidModel<MirrorWhiteTigerEntity> implements LatexHumanoidModelInterface<MirrorWhiteTigerEntity,ModelMirrorWhiteTiger> {
+public class ModelMirrorWhiteTiger extends AdvancedHumanoidModel<MirrorWhiteTigerEntity> implements AdvancedHumanoidModelInterface<MirrorWhiteTigerEntity,ModelMirrorWhiteTiger> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "organic_snow_leopard_male"), "main");
     private final ModelPart RightLeg;
@@ -28,7 +28,7 @@ public class ModelMirrorWhiteTiger extends LatexHumanoidModel<MirrorWhiteTigerEn
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
     private final ModelPart Tail;
-    private final LatexAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> animator;
+    private final HumanoidAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> animator;
 
     public ModelMirrorWhiteTiger(ModelPart root) {
         super(root);
@@ -50,7 +50,7 @@ public class ModelMirrorWhiteTiger extends LatexHumanoidModel<MirrorWhiteTigerEn
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -152,7 +152,7 @@ public class ModelMirrorWhiteTiger extends LatexHumanoidModel<MirrorWhiteTigerEn
     }
 
    /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
@@ -181,7 +181,10 @@ public class ModelMirrorWhiteTiger extends LatexHumanoidModel<MirrorWhiteTigerEn
         return Torso;
     }
 
-
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -194,7 +197,7 @@ public class ModelMirrorWhiteTiger extends LatexHumanoidModel<MirrorWhiteTigerEn
     }
 
     @Override
-    public LatexAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> getAnimator() {
+    public HumanoidAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> getAnimator() {
         return animator;
     }
 }

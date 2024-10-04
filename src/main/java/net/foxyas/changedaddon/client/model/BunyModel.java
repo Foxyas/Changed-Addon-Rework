@@ -1,11 +1,10 @@
 package net.foxyas.changedaddon.client.model;
 import net.foxyas.changedaddon.entity.BunyEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
-import net.ltxprogrammer.changed.client.renderer.model.LightLatexWolfMaleModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
 import net.minecraft.resources.ResourceLocation;
@@ -26,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator.*;
-public class BunyModel extends LatexHumanoidModel<BunyEntity> implements LatexHumanoidModelInterface<BunyEntity,BunyModel> {
+import static net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator.*;
+public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements AdvancedHumanoidModelInterface<BunyEntity,BunyModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "bunymodel"), "main");
     private final ModelPart RightLeg;
@@ -37,7 +36,7 @@ public class BunyModel extends LatexHumanoidModel<BunyEntity> implements LatexHu
     private final ModelPart RightArm;
     private final ModelPart LeftArm;
     private final ModelPart Tail;
-    private final LatexAnimator<BunyEntity, BunyModel> animator;
+    private final HumanoidAnimator<BunyEntity, BunyModel> animator;
 
     public BunyModel(ModelPart root) {
         super(root);
@@ -56,7 +55,7 @@ public class BunyModel extends LatexHumanoidModel<BunyEntity> implements LatexHu
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.wolfLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -137,11 +136,12 @@ public class BunyModel extends LatexHumanoidModel<BunyEntity> implements LatexHu
     }
 
    /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
-    } */
+    }
+ */
     @Override
     public void setupHand() {
         animator.setupHand();
@@ -165,7 +165,10 @@ public class BunyModel extends LatexHumanoidModel<BunyEntity> implements LatexHu
         return Torso;
     }
 
-
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -178,7 +181,7 @@ public class BunyModel extends LatexHumanoidModel<BunyEntity> implements LatexHu
     }
 
     @Override
-    public LatexAnimator<BunyEntity, BunyModel> getAnimator() {
+    public HumanoidAnimator<BunyEntity, BunyModel> getAnimator() {
         return animator;
     }
 }

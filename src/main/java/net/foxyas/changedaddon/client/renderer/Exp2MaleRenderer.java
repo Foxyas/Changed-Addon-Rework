@@ -4,7 +4,7 @@ package net.foxyas.changedaddon.client.renderer;
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
 import net.foxyas.changedaddon.client.renderer.layers.CustomHairColorLayer;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
-import net.ltxprogrammer.changed.client.renderer.LatexHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
@@ -13,7 +13,7 @@ import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleCatMo
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-public class Exp2MaleRenderer extends LatexHumanoidRenderer<Exp2MaleEntity, MaleExp2Model, ArmorLatexMaleCatModel<Exp2MaleEntity>> {
+public class Exp2MaleRenderer extends AdvancedHumanoidRenderer<Exp2MaleEntity, MaleExp2Model, ArmorLatexMaleCatModel<Exp2MaleEntity>> {
 	public Exp2MaleRenderer(EntityRendererProvider.Context context) {
 		super(context, new MaleExp2Model(context.bakeLayer(MaleExp2Model.LAYER_LOCATION)),
 				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);

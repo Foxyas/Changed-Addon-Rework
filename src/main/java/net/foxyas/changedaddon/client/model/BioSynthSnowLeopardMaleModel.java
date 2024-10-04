@@ -5,10 +5,10 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
 import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class BioSynthSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopardMaleOrganicEntity> implements LatexHumanoidModelInterface<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> {
+public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<SnowLeopardMaleOrganicEntity> implements AdvancedHumanoidModelInterface<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "biosynth_snow_leopard_male"), "main");
     private final ModelPart RightLeg;
@@ -31,7 +31,7 @@ public class BioSynthSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopard
     private final ModelPart RightArmFur;
     private final ModelPart LeftArmFur;
     private final ModelPart Tail;
-    private final LatexAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> animator;
+    private final HumanoidAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> animator;
 
     public BioSynthSnowLeopardMaleModel(ModelPart root) {
         super(root);
@@ -55,7 +55,7 @@ public class BioSynthSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopard
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -195,7 +195,7 @@ public class BioSynthSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopard
     }
 
     /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-         PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+         PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
          if (type.isArm())
              corrector.translate(-0.02f, 0.12f, 0.12f);
          return corrector;
@@ -225,6 +225,11 @@ public class BioSynthSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopard
         return Torso;
     }
 
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
+
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -237,7 +242,7 @@ public class BioSynthSnowLeopardMaleModel extends LatexHumanoidModel<SnowLeopard
     }
 
     @Override
-    public LatexAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> getAnimator() {
+    public HumanoidAnimator<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel> getAnimator() {
         return animator;
     }
 }

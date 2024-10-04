@@ -2689,7 +2689,7 @@
       "type": "procedure",
       "sortid": 159,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "fight_tokeepyourconsciousness",
       "metadata": {
         "files": [
@@ -5273,7 +5273,7 @@
       "name": "Dolatexinfectiontick",
       "type": "procedure",
       "sortid": 279,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "dolatexinfectiontick",
       "metadata": {
@@ -8030,7 +8030,7 @@
       "name": "CanLeap",
       "type": "procedure",
       "sortid": 403,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "can_leap",
       "metadata": {
@@ -10046,7 +10046,7 @@
       "name": "DodgeAbilityHandle",
       "type": "procedure",
       "sortid": 502,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "dodge_ability_handle",
       "metadata": {
@@ -10088,7 +10088,7 @@
       "name": "BossesExpUse",
       "type": "procedure",
       "sortid": 505,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "bosses_exp_use",
       "metadata": {
@@ -11082,7 +11082,7 @@
       "name": "EquipArmorInEntity",
       "type": "procedure",
       "sortid": 556,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "equip_armor_in_entity",
       "metadata": {
@@ -11182,12 +11182,6 @@
       "type": "logic",
       "scope": "player_persistent",
       "value": "true"
-    },
-    {
-      "name": "LatexForm_ProgressTransfur",
-      "type": "string",
-      "scope": "player_persistent",
-      "value": "any"
     },
     {
       "name": "Progress_Transfur_Number",
@@ -11985,7 +11979,7 @@
   "workspaceSettings": {
     "modid": "changed_addon",
     "modName": "Changed Addon Plus",
-    "version": "2.5.10.6",
+    "version": "2.6.0",
     "description": "this is a remastered version of my mod addon hope you like it If you want to help me by donating some money this is my patreon https://www.patreon.com/Changedaddonplus ",
     "author": "Foxyas",
     "websiteURL": "https://www.curseforge.com/minecraft/mc-mods/changed-addon-plus/",

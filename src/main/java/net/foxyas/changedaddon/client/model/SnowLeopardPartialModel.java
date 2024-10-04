@@ -5,14 +5,14 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
 import net.ltxprogrammer.changed.client.CubeListBuilderExtender;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmBobAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -36,14 +36,14 @@ class PartialModelAnimation{
     public PartialModelAnimation (){
 
     }
-    public static <T extends LatexEntity, M extends EntityModel<T>> Consumer<LatexAnimator<T, M>> Partial(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
+    public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> Partial(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
         return (animator) -> {
             animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad)).addPreset(wolfUpperBody(head, torso, leftArm, rightArm)).addPreset(catTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar)).addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(leftArm, rightArm)).addAnimator(new ArmBobAnimator(leftArm, rightArm)).addAnimator(new ArmRideAnimator(leftArm, rightArm));
         };
     }
 }
 
-public class SnowLeopardPartialModel extends LatexHumanoidModel<SnowLeopardPartialEntity> implements LatexHumanoidModelInterface<SnowLeopardPartialEntity, SnowLeopardPartialModel> {
+public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPartialEntity> implements AdvancedHumanoidModelInterface<SnowLeopardPartialEntity, SnowLeopardPartialModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION_HUMAN = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "main");
     public static final ModelLayerLocation LAYER_LOCATION_HUMAN_SLIM = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "main_slim");
@@ -64,7 +64,7 @@ public class SnowLeopardPartialModel extends LatexHumanoidModel<SnowLeopardParti
     private final ModelPart Hat;
     private final ModelPart Jacket;
 
-    private final LatexAnimator<SnowLeopardPartialEntity, SnowLeopardPartialModel> animator;
+    private final HumanoidAnimator<SnowLeopardPartialEntity, SnowLeopardPartialModel> animator;
 
     private static final ModelPart NULL_PART = new ModelPart(List.of(), Map.of());
 
@@ -138,7 +138,7 @@ public class SnowLeopardPartialModel extends LatexHumanoidModel<SnowLeopardParti
             rightPad = NULL_PART;
         }
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.catLike(
                         Head, leftEar, rightEar,
                         Torso, LeftArm, RightArm,
@@ -316,16 +316,17 @@ public class SnowLeopardPartialModel extends LatexHumanoidModel<SnowLeopardParti
         return arm == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 
-    public ModelPart getLeg(HumanoidArm p_102852_) {
-        return p_102852_ == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
-    }
-
     public ModelPart getHead() {
         return this.Head;
     }
 
     public ModelPart getTorso() {
         return this.Torso;
+    }
+
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }
 
     @Override
@@ -339,7 +340,7 @@ public class SnowLeopardPartialModel extends LatexHumanoidModel<SnowLeopardParti
     }
 
     @Override
-    public LatexAnimator<SnowLeopardPartialEntity, SnowLeopardPartialModel> getAnimator() {
+    public HumanoidAnimator<SnowLeopardPartialEntity, SnowLeopardPartialModel> getAnimator() {
         return animator;
     }
 }

@@ -9,10 +9,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -23,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class KetModel extends LatexHumanoidModel<KetExperiment009Entity> implements LatexHumanoidModelInterface<KetExperiment009Entity,KetModel> {
+public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> implements AdvancedHumanoidModelInterface<KetExperiment009Entity,KetModel> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "ket_exp_009"), "main");
 
@@ -34,7 +35,7 @@ public class KetModel extends LatexHumanoidModel<KetExperiment009Entity> impleme
 	private final ModelPart Head;
 	private final ModelPart Torso;
 	private final ModelPart Tail;
-	private final LatexAnimator<KetExperiment009Entity, KetModel> animator;
+	private final HumanoidAnimator<KetExperiment009Entity, KetModel> animator;
 
 	public KetModel(ModelPart root) {
 		super(root);
@@ -55,7 +56,7 @@ public class KetModel extends LatexHumanoidModel<KetExperiment009Entity> impleme
 		var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
 		var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-		animator = LatexAnimator.of(this).hipOffset(-1.5f)
+		animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
 				.addPreset(AnimatorPresets.wolfLike(
 						Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
 						Torso, LeftArm, RightArm,
@@ -191,7 +192,7 @@ public class KetModel extends LatexHumanoidModel<KetExperiment009Entity> impleme
 	}
 
 	/* public PoseStack getPlacementCorrectors(CorrectorType type) {
-		PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+		PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
 		if (type.isArm())
 			corrector.translate(-0.02f, 0.12f, 0.12f);
 		return corrector;
@@ -209,6 +210,11 @@ public class KetModel extends LatexHumanoidModel<KetExperiment009Entity> impleme
 
 	public ModelPart getArm (HumanoidArm p_102852) {
 		return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
+	}
+
+	@Override
+	public ModelPart getLeg(HumanoidArm humanoidArm) {
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
 	}
 
 	public ModelPart getHead() {
@@ -232,7 +238,7 @@ public class KetModel extends LatexHumanoidModel<KetExperiment009Entity> impleme
 	}
 
 	@Override
-	public LatexAnimator<KetExperiment009Entity, KetModel> getAnimator() {
+	public HumanoidAnimator<KetExperiment009Entity, KetModel> getAnimator() {
 		return animator;
 	}
 }

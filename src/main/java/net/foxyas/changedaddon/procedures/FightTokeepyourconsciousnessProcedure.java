@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.fml.common.Mod;
@@ -36,152 +37,76 @@ import io.netty.buffer.Unpooled;
 
 @Mod.EventBusSubscriber
 public class FightTokeepyourconsciousnessProcedure {
+
+	@SubscribeEvent
+	public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
+		if (event.player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHTTOKEEPCONSCIOUSNESS)){
+			event.shouldKeepConscious = true;
+			if (event.player instanceof ServerPlayer _ent) {
+				BlockPos _bpos = event.player.getOnPos();
+				NetworkHooks.openGui(_ent, new MenuProvider() {
+					@Override
+					public Component getDisplayName() {
+						return new TextComponent("FightTokeepconsciousnessminigame");
+					}
+
+					@Override
+					public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+						return new FightTokeepconsciousnessminigameMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+					}
+				}, _bpos);
+
+				_ent.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+					capability.concience_Fight = true;
+					capability.syncPlayerVariables(_ent);
+				});
+			}
+		}
+	}
+
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
-			execute(event, event.player.level, event.player.getX(), event.player.getY(), event.player.getZ(), event.player);
+			if (!event.player.level.isClientSide()) { // Executar apenas no servidor
+				execute(event, event.player.level, event.player.getX(), event.player.getY(), event.player.getZ(), event.player);
+			}
 		}
-	}
-
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-		execute(null, world, x, y, z, entity);
 	}
 
 	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity) {
-		if (entity == null)
-			return;
-		String form = "";
-		if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHTTOKEEPCONSCIOUSNESS) == true) {
-			form = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm_ProgressTransfur;
-			if (!((form).equals("changed:form_latex_crystal_wolf") || (form).equals("changed:form_latex_crystal_wolf_horned") || (form).equals("changed:form_latex_beifeng") || (form).equals("changed:form_aerosol_latex_wolf")
-					|| (form).equals("changed:form_white_latex_wolf"))) {
-				if (ReturnMaxTransfurToleranceProcedure.execute() > 1) {
-					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute() * 0.8) {
-						PlayerUtilProcedure.TransfurPlayer(entity, form);
-						{
-							if (entity instanceof ServerPlayer _ent) {
-								BlockPos _bpos = new BlockPos(x, y, z);
-								NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
-									@Override
-									public Component getDisplayName() {
-										return new TextComponent("FightTokeepconsciousnessminigame");
-									}
+		if (entity.isAlive()) {
+			var playerVars = entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+					.orElse(new ChangedAddonModVariables.PlayerVariables());
 
-									@Override
-									public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-										return new FightTokeepconsciousnessminigameMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
-									}
-								}, _bpos);
-							}
-						}
-						if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).concience_Fight) {
-							{
-								boolean _setval = true;
-								entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-									capability.concience_Fight = _setval;
-									capability.syncPlayerVariables(entity);
-								});
-							}
-						}
-						SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
-					}
-				}
-			} else {
-				if ((form).equals("changed:form_white_latex_wolf")) {
-					if ((world.getBlockState(new BlockPos(entity.getX(), entity.getY() + 1, entity.getZ()))).getBlock() == ForgeRegistries.BLOCKS.getValue(new ResourceLocation("changed:white_latex_pillar"))
-							|| (world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))).getBlock() == ForgeRegistries.BLOCKS.getValue(new ResourceLocation("changed:white_latex_pillar"))) {
-						if (((world.getBlockState(new BlockPos(entity.getX(), entity.getY() + 1, entity.getZ()))).getBlock().getStateDefinition().getProperty("extended") instanceof BooleanProperty _getbp18
-								&& (world.getBlockState(new BlockPos(entity.getX(), entity.getY() + 1, entity.getZ()))).getValue(_getbp18)) == true
-								|| ((world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))).getBlock().getStateDefinition().getProperty("extended") instanceof BooleanProperty _getbp23
-										&& (world.getBlockState(new BlockPos(entity.getX(), entity.getY(), entity.getZ()))).getValue(_getbp23)) == true) {
-							if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute()
-									* 0.8) {
-								PlayerUtilProcedure.TransfurPlayer(entity, form);
-								SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
-							}
-						}
+			if (playerVars.transfur && playerVars.concience_Fight) {
+				if (entity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null
+						&& ProcessTransfur.getPlayerTransfurVariant(player).ageAsVariant >= 100) {
+
+					if (playerVars.consciousness_fight_progress >= 25) {
+						// Vitória no minigame
+						player.displayClientMessage(new TextComponent(new TranslatableComponent("changedaddon.fight_concience.success").getString()), true);
+						updatePlayerVariables(playerVars, false, 0, false, entity);
+
 					} else {
-						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute() * 0.8) {
-							PlayerUtilProcedure.TransfurPlayer(entity, form);
-							SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
+						// Falha no minigame
+						player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
+						SummonEntityProcedure.execute((Level) world, player);
+						PlayerUtilProcedure.UnTransfurPlayer(entity);
+						if (entity instanceof LivingEntity livingEntity) {
+							livingEntity.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
 						}
-					}
-				} else {
-					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number >= ReturnMaxTransfurToleranceProcedure.execute() * 0.8) {
-						PlayerUtilProcedure.TransfurPlayer(entity, form);
-						SetPlayerTransFurProgressFor0Procedure.execute((Player) entity);
-					}
-				}
-			}
-			if (entity.isAlive()) {
-				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).concience_Fight) {
-						if (new Object() {
-							public int getValue() {
-								CompoundTag dataIndex25 = new CompoundTag();
-								entity.saveWithoutId(dataIndex25);
-								return dataIndex25.getInt("LatexVariantAge");
-							}
-						}.getValue() >= 100) {
-							if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).consciousness_fight_progress >= 25) {
-								if (entity instanceof Player _player && !_player.level.isClientSide())
-									_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.fight_concience.success").getString())), true);
-								{
-									boolean _setval = false;
-									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-										capability.concience_Fight = _setval;
-										capability.syncPlayerVariables(entity);
-									});
-								}
-								{
-									double _setval = 0;
-									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-										capability.consciousness_fight_progress = _setval;
-										capability.syncPlayerVariables(entity);
-									});
-								}
-								{
-									boolean _setval = false;
-									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-										capability.consciousness_fight_give_up = _setval;
-										capability.syncPlayerVariables(entity);
-									});
-								}
-							} else {
-								{
-									boolean _setval = false;
-									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-										capability.concience_Fight = _setval;
-										capability.syncPlayerVariables(entity);
-									});
-								}
-								{
-									double _setval = 0;
-									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-										capability.consciousness_fight_progress = _setval;
-										capability.syncPlayerVariables(entity);
-									});
-								}
-								{
-									boolean _setval = false;
-									entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-										capability.consciousness_fight_give_up = _setval;
-										capability.syncPlayerVariables(entity);
-									});
-								}
-								if (entity.isAlive()) {
-									if (entity instanceof Player _player && !_player.level.isClientSide())
-										_player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
-									SummonEntityProcedure.execute((Level) world, (Player) entity);
-									PlayerUtilProcedure.UnTransfurPlayer(entity);
-									if (entity instanceof LivingEntity _entity)
-										_entity.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
-								}
-							}
-						}
+						updatePlayerVariables(playerVars, false, 0, false, entity);
 					}
 				}
 			}
 		}
 	}
+
+	private static void updatePlayerVariables(ChangedAddonModVariables.PlayerVariables vars, boolean fight, int progress, boolean giveUp, Entity entity) {
+		vars.concience_Fight = fight;
+		vars.consciousness_fight_progress = progress;
+		vars.consciousness_fight_give_up = giveUp;
+		vars.syncPlayerVariables(entity);
+	}
+
 }

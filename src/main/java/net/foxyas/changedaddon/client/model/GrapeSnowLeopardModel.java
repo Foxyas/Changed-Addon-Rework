@@ -5,9 +5,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
 import net.foxyas.changedaddon.entity.Exp6Entity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implements LatexHumanoidModelInterface<Exp6Entity, GrapeSnowLeopardModel> {
+public class GrapeSnowLeopardModel extends AdvancedHumanoidModel<Exp6Entity> implements AdvancedHumanoidModelInterface<Exp6Entity, GrapeSnowLeopardModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "grape_snow_leopard_model"), "main");
     private final ModelPart RightLeg;
@@ -30,7 +30,7 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
     private final ModelPart RightArmFur;
     private final ModelPart LeftArmFur;
     private final ModelPart Tail;
-    private final LatexAnimator<Exp6Entity, GrapeSnowLeopardModel> animator;
+    private final HumanoidAnimator<Exp6Entity, GrapeSnowLeopardModel> animator;
 
     public GrapeSnowLeopardModel(ModelPart root) {
         super(root);
@@ -56,7 +56,7 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -208,7 +208,7 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
     }
 
     /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
@@ -249,7 +249,7 @@ public class GrapeSnowLeopardModel extends LatexHumanoidModel<Exp6Entity> implem
     }
 
     @Override
-    public LatexAnimator<Exp6Entity, GrapeSnowLeopardModel> getAnimator() {
+    public HumanoidAnimator<Exp6Entity, GrapeSnowLeopardModel> getAnimator() {
         return animator;
     }
 }

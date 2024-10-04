@@ -6,9 +6,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
-import net.ltxprogrammer.changed.client.renderer.animate.LatexAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.LatexHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements LatexHumanoidModelInterface<Exp2MaleEntity, MaleExp2Model> {
+public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> implements AdvancedHumanoidModelInterface<Exp2MaleEntity, MaleExp2Model> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "male_exp2_snep"), "main");
     private final ModelPart RightLeg;
@@ -31,7 +31,7 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
     private final ModelPart RightArmFur;
     private final ModelPart LeftArmFur;
     private final ModelPart Tail;
-    private final LatexAnimator<Exp2MaleEntity, MaleExp2Model> animator;
+    private final HumanoidAnimator<Exp2MaleEntity, MaleExp2Model> animator;
 
     public MaleExp2Model(ModelPart root) {
         super(root);
@@ -57,7 +57,7 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
         var rightLowerLeg = RightLeg.getChild("RightLowerLeg");
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
-        animator = LatexAnimator.of(this).hipOffset(-1.5f)
+        animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.catLike(
                         Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
@@ -202,7 +202,7 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
     }
 
     /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = LatexHumanoidModelInterface.super.getPlacementCorrectors(type);
+        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
         if (type.isArm())
             corrector.translate(-0.02f, 0.12f, 0.12f);
         return corrector;
@@ -231,6 +231,10 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
         return Torso;
     }
 
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
@@ -243,7 +247,7 @@ public class MaleExp2Model extends LatexHumanoidModel<Exp2MaleEntity> implements
     }
 
     @Override
-    public LatexAnimator<Exp2MaleEntity, MaleExp2Model> getAnimator() {
+    public HumanoidAnimator<Exp2MaleEntity, MaleExp2Model> getAnimator() {
         return animator;
     }
 }

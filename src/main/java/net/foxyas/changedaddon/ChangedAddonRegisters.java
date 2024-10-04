@@ -7,7 +7,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.procedures.LaethinPropertyValueProviderProcedure;
 import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryProcedure;
 import net.ltxprogrammer.changed.Changed;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoomPiece;
@@ -93,7 +93,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
 		}
 
-		public static String SpawnEggIdFromTransfurVariant(LatexVariant latexVariant){
+		public static String SpawnEggIdFromTransfurVariant(TransfurVariant latexVariant){
 			String Util = latexVariant.getFormId().toString().replace("changed_addon:form_","");
 			return Util + "_spawn_egg";
 		}

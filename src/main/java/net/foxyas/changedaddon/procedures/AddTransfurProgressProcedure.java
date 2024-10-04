@@ -1,12 +1,17 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.variants.AddonLatexVariant;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class AddTransfurProgressProcedure {
@@ -14,13 +19,8 @@ public class AddTransfurProgressProcedure {
 		if (entity == null) {
 			return;
 		}
-
 		if (entity instanceof Player player){
-			if (ProcessTransfur.getPlayerTransfurProgress(player).variant() != null){
-			ProcessTransfur.progressTransfur(player,amount, ProcessTransfur.getPlayerTransfurProgress(player).variant());
-			}else {
-			ProcessTransfur.progressTransfur(player,amount, LatexVariant.FALLBACK_VARIANT);
-			}
+			ProcessTransfur.progressPlayerTransfur(player,amount, ChangedTransfurVariants.FALLBACK_VARIANT.get(), TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		}
 	}
 
@@ -28,11 +28,8 @@ public class AddTransfurProgressProcedure {
 		if (entity == null){
 			return;
 		}
-
 		if (entity instanceof Player _entity) {
-			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(Amount,//amount
-		/*Variant Check*/ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT : ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
-			ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
+			ProcessTransfur.setPlayerTransfurProgress((Player) entity, Amount);
 		}
 
 	}
@@ -43,10 +40,7 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof Player _entity) {
-			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress((ProcessTransfur.getPlayerTransfurProgress(_entity) == null ? 0
-					: ProcessTransfur.getPlayerTransfurProgress(_entity).progress()) + Amount,//Amount Math
-					ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT //Variant Check
-					: ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
+			float transfurProgress = ProcessTransfur.getPlayerTransfurProgress(_entity) + Amount;
 			ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
 		}
 
@@ -58,9 +52,7 @@ public class AddTransfurProgressProcedure {
 		}
 		float FAmount = (float) Amount;
 		if (entity instanceof Player _entity) {
-			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(FAmount,//amount
-					/*Variant Check*/ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT : ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
-			ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
+			ProcessTransfur.setPlayerTransfurProgress((Player) entity,(float) Amount);
 		}
 
 	}
@@ -71,11 +63,7 @@ public class AddTransfurProgressProcedure {
 		}
 		float negative = -amount;
 		if (entity instanceof Player player){
-			if (ProcessTransfur.getPlayerTransfurProgress(player).variant() != null){
-				ProcessTransfur.progressTransfur(player,negative, ProcessTransfur.getPlayerTransfurProgress(player).variant());
-			}else {
-				ProcessTransfur.progressTransfur(player,negative, LatexVariant.FALLBACK_VARIANT);
-			}
+				ProcessTransfur.progressTransfur(player,negative, null,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		}
 	}
 
@@ -85,11 +73,7 @@ public class AddTransfurProgressProcedure {
 		}
 		float negative = (float) -amount;
 		if (entity instanceof Player player){
-			if (ProcessTransfur.getPlayerTransfurProgress(player).variant() != null){
-				ProcessTransfur.progressTransfur(player,negative, ProcessTransfur.getPlayerTransfurProgress(player).variant());
-			}else {
-				ProcessTransfur.progressTransfur(player,negative, LatexVariant.FALLBACK_VARIANT);
-			}
+			ProcessTransfur.progressTransfur(player,negative, null,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		}
 	}
 
@@ -99,14 +83,9 @@ public class AddTransfurProgressProcedure {
 		}
 		float negative = -Amount;
 		if (entity instanceof Player _entity) {
-			if (ProcessTransfur.getPlayerTransfurProgress(_entity) != null){
-			float Progress = ProcessTransfur.getPlayerTransfurProgress(_entity).progress();
-			LatexVariant<?> Variant = ProcessTransfur.getPlayerTransfurProgress(_entity).variant();
-
-			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(Progress + negative,//amount
-					/*Variant Check*/ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT : ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
+			float Progress = ProcessTransfur.getPlayerTransfurProgress(_entity);
+			float transfurProgress = Progress + negative;
 			ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
-		}
 		}
 
 	}
@@ -115,16 +94,11 @@ public class AddTransfurProgressProcedure {
 		if (entity == null){
 			return;
 		}
-		float FAmount = (float) -Amount;
+		float negative = (float) -Amount;
 		if (entity instanceof Player _entity) {
-			if (ProcessTransfur.getPlayerTransfurProgress(_entity) != null){
-				float Progress = ProcessTransfur.getPlayerTransfurProgress(_entity).progress();
-				LatexVariant<?> Variant = ProcessTransfur.getPlayerTransfurProgress(_entity).variant();
-
-			ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(Progress + FAmount,//amount
-					/*Variant Check*/ProcessTransfur.getPlayerTransfurProgress(_entity).variant() == null ? LatexVariant.FALLBACK_VARIANT : ProcessTransfur.getPlayerTransfurProgress(_entity).variant());
+			float Progress = ProcessTransfur.getPlayerTransfurProgress(_entity);
+			float transfurProgress = Progress + negative;
 			ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
-			}
 		}
 
 	}
@@ -133,17 +107,12 @@ public class AddTransfurProgressProcedure {
 		if (entity == null) {
 			return;
 		}
-		if (entity instanceof Player player){
-			if (ProcessTransfur.getPlayerTransfurProgress(player).variant() != null){
-		float amount = (float) amountB + ProcessTransfur.getPlayerTransfurProgress(player).progress();
-		ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(amount,//amount
-		/*Variant Check*/ProcessTransfur.getPlayerTransfurProgress(player).variant() != LatexVariant.LIGHT_LATEX_WOLF.male() ? LatexVariant.LIGHT_LATEX_WOLF.male() : ProcessTransfur.getPlayerTransfurProgress(player).variant());
-		ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
+		if (entity instanceof Player player) {
+			float amount = (float) amountB + ProcessTransfur.getPlayerTransfurProgress(player);
+			if (ProcessTransfur.getPlayerTransfurProgress(player) <= Objects.requireNonNull(player.getAttributes().getInstance(ChangedAttributes.TRANSFUR_TOLERANCE.get())).getBaseValue() * 0.75) {
+				ProcessTransfur.setPlayerTransfurProgress((Player) entity, amount);
 			} else {
-				float amount = (float) amountB + ProcessTransfur.getPlayerTransfurProgress(player).progress();
-				ProcessTransfur.TransfurProgress transfurProgress = new ProcessTransfur.TransfurProgress(amount,//amount
-						/*Variant Check*/LatexVariant.LIGHT_LATEX_WOLF.male());
-				ProcessTransfur.setPlayerTransfurProgress((Player) entity, transfurProgress);
+				ProcessTransfur.progressTransfur(player,(float) amountB,ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 	}
@@ -155,17 +124,17 @@ public class AddTransfurProgressProcedure {
 
 		if (entity instanceof Player player){
 			if(player.getLevel().random.nextInt(10) > 5) {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF_HORNED);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF_HORNED.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
 		if (entity instanceof LivingEntity player){
 			if(player.getLevel().random.nextInt(10) > 5) {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_CRYSTAL_WOLF_HORNED);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF_HORNED.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
@@ -178,29 +147,29 @@ public class AddTransfurProgressProcedure {
 
 		if (entity instanceof Player player){
 			if(player.getLevel().random.nextInt(6) <= 1) {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 2)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_DRAGON);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_DRAGON.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 3)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_PUP);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 4)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_YUFENG);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_YUFENG.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 5)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
 		if (entity instanceof LivingEntity player){
 			if(player.getLevel().random.nextInt(6) <= 1) {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 2)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_DRAGON);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_DRAGON.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 3)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_PUP);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 4)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_YUFENG);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_YUFENG.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(6) == 5)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
@@ -213,17 +182,17 @@ public class AddTransfurProgressProcedure {
 
 		if (entity instanceof Player player){
 			if(player.getLevel().random.nextInt(3) == 1) {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(3) == 2)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
 		if (entity instanceof LivingEntity player){
 			if(player.getLevel().random.nextInt(3) == 1) {
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF.randomGender(new Random()));
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else if ((player.getLevel().random.nextInt(3) == 2)){
-				ProcessTransfur.progressTransfur(player, amount, LatexVariant.DARK_LATEX_WOLF_PARTIAL);
+				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
@@ -236,20 +205,20 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof LivingEntity player){
-			ProcessTransfur.progressTransfur(player, amount, LatexVariant.LATEX_BEIFENG);
+			ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.BEIFENG.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 
 		}
 	}
 
 	public static void SnepsiTransfur(Entity player,boolean keepConscience,int type){
 		if (type == 1 ){
-        	ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.SNOW_LEOPARD_PARTIAL,keepConscience);
+        	ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.SNOW_LEOPARD_PARTIAL.get(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		} else if (type == 2) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.male(),keepConscience);
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.Gendered.EXP2.getMaleVariant(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		} else if (type == 3) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP2.female(),keepConscience);
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.Gendered.EXP2.getFemaleVariant(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		} else if (type == 4) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP6,keepConscience);
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), AddonLatexVariant.EXP6.get(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		}
 
 	}
