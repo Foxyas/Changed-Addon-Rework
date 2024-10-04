@@ -5,24 +5,28 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 import java.util.UUID;
 
 public class VariantUtilProcedure {
 
-	public static float GetLandSpeed(String stringvariant, Player player) {
+	public static float GetLandSpeed(String stringvariant,Player player) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-				TransfurVariantInstance<?> Instance = ProcessTransfur.getPlayerTransfurVariant(player);
-				return variant == null ? 0f : Instance.getSprintEfficiency();
+				ChangedEntity Instance = variant.getEntityType().create(player.level);
+				return variant == null ? 0f : (float) Instance.getAttributes().getInstance(Attributes.MOVEMENT_SPEED).getBaseValue() * 0.1f;
 			} else {
 				return 0f;
 			}
@@ -32,13 +36,13 @@ public class VariantUtilProcedure {
 		}
 	}
 
-	public static float GetSwimSpeed(String stringvariant, Player player) {
+	public static float GetSwimSpeed(String stringvariant,Player player) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-				TransfurVariantInstance<?> Instance = ProcessTransfur.getPlayerTransfurVariant(player);
-				return variant == null ? 0f : Instance.getSwimEfficiency();
+				ChangedEntity Instance = variant.getEntityType().create(player.level);
+				return variant == null ? 0f : (float) Instance.getAttributes().getInstance(ForgeMod.SWIM_SPEED.get()).getBaseValue() * 1f;
 			} else {
 				return 0f;
 			}
@@ -48,13 +52,13 @@ public class VariantUtilProcedure {
 		}
 	}
 
-	public static float GetExtraHp(String stringvariant, Player player) {
+	public static float GetExtraHp(String stringvariant,Player player) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-				TransfurVariantInstance<?> Instance = ProcessTransfur.getPlayerTransfurVariant(player);
-				return variant == null ? 0 : (Instance.getChangedEntity().getMaxHealth() - Player.MAX_HEALTH);
+				ChangedEntity Instance = variant.getEntityType().create(player.level);
+				return variant == null ? 0 : (Instance.getMaxHealth() - Player.MAX_HEALTH);
 			} else {
 				return 0;
 			}

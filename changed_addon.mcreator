@@ -5273,7 +5273,7 @@
       "name": "Dolatexinfectiontick",
       "type": "procedure",
       "sortid": 279,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "dolatexinfectiontick",
       "metadata": {
@@ -10046,7 +10046,7 @@
       "name": "DodgeAbilityHandle",
       "type": "procedure",
       "sortid": 502,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "dodge_ability_handle",
       "metadata": {
@@ -10088,7 +10088,7 @@
       "name": "BossesExpUse",
       "type": "procedure",
       "sortid": 505,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "bosses_exp_use",
       "metadata": {
@@ -11082,7 +11082,7 @@
       "name": "EquipArmorInEntity",
       "type": "procedure",
       "sortid": 556,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "equip_armor_in_entity",
       "metadata": {

@@ -66,9 +66,9 @@ public class ShowExtraTransfurInfoProcedure {
 			}.checkGamemode(entity)) {
 				if (Screen.hasShiftDown()) {
 					Item_form = itemstack.getOrCreateTag().getString("form");
-					Hp = (double) VariantUtilProcedure.GetExtraHp(Item_form);;
-					Speed = (double) VariantUtilProcedure.GetSwimSpeed(Item_form);
-					landSpeed = (double) VariantUtilProcedure.GetLandSpeed(Item_form);
+					Hp = (double) VariantUtilProcedure.GetExtraHp(Item_form, (Player) entity);
+					Speed = (double) VariantUtilProcedure.GetSwimSpeed(Item_form, (Player) entity);
+					landSpeed = (double) VariantUtilProcedure.GetLandSpeed(Item_form, (Player) entity);
 					JumpLevel = (double) VariantUtilProcedure.GetJumpStrength(Item_form);;
 					canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(Item_form);;
 					tooltip.add(new TextComponent(((new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")

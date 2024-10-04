@@ -3,9 +3,10 @@ package net.foxyas.changedaddon.procedures;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -37,7 +38,7 @@ import java.util.stream.StreamSupport;
 
 public class PlayerUtilProcedure {
 
-	public static void TransfurPlayer(Entity entity, LatexVariant<?> latexVariant){
+	public static void TransfurPlayer(Entity entity, TransfurVariant<?> latexVariant){
 		LivingEntity livingEntity = (LivingEntity) entity;
 		ProcessTransfur.transfur(livingEntity,entity.getLevel(),latexVariant,true);
 	}
@@ -50,34 +51,34 @@ public class PlayerUtilProcedure {
 			throw new RuntimeException(e);
 		}
 		LivingEntity livingEntity = (LivingEntity) entity;
-		if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-		LatexVariant<?> latexVariant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+		if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+		TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 		ProcessTransfur.transfur(livingEntity,entity.getLevel(),latexVariant,true);
 		}
 	}
 
 	public static void UnTransfurPlayer(Entity entity){
 		Player player = (Player) entity;
-		ProcessTransfur.ifPlayerLatex(player, (variant) -> {
+		ProcessTransfur.ifPlayerTransfurred(player, (variant) -> {
 			variant.unhookAll(player);
-			ProcessTransfur.setPlayerLatexVariant(player, null);
-			ProcessTransfur.setPlayerTransfurProgress(player, new ProcessTransfur.TransfurProgress(0.0F, LatexVariant.FALLBACK_VARIANT));
+			ProcessTransfur.removePlayerTransfurVariant(player);
+			ProcessTransfur.setPlayerTransfurProgress(player, 0.0f);
 		});
 	}
 
 	public static boolean IsCatTransfur(Player player){
-		LatexVariant<?> variant = ProcessTransfur.getPlayerLatexVariant(player).getParent();
-        return variant.is(ChangedTags.LatexVariants.CAT_LIKE) ||
-				variant.is(ChangedTags.LatexVariants.LEOPARD_LIKE);
+		TransfurVariant<?> variant = ProcessTransfur.getPlayerTransfurVariant(player).getParent();
+        return variant.is(ChangedTags.TransfurVariants.CAT_LIKE) ||
+				variant.is(ChangedTags.TransfurVariants.LEOPARD_LIKE);
     }
 
 	public static boolean IsWolfTransfur(Player player){
-		LatexVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerLatexVariant(player)).getParent();
-		LatexEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerLatexVariant(player)).getLatexEntity();
+		TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
+		ChangedEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getChangedEntity();
 		return Objects.requireNonNull(entity.getType().getRegistryName()).toString().contains("dog") ||
                 entity.getType().getRegistryName().toString().contains("wolf") ||
 				entity instanceof AbstractLatexWolf ||
-				variant.is(ChangedTags.LatexVariants.WOLF_LIKE);
+				variant.is(ChangedTags.TransfurVariants.WOLF_LIKE);
 	}
 
 	@Nullable

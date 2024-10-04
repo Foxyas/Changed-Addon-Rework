@@ -36,7 +36,7 @@ public class UntransfurOnEffectActiveTickProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (entity instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
+		if (entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity) {
 			if (!entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex")))) {
 				entity.hurt(DamageSource.GENERIC, entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()).getAmplifier() : 0);
 			}
