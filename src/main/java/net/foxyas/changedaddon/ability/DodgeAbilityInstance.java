@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.ability;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
-    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractLatex entity){
+    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity){
         super(ability,entity);
     }
     private int DodgeAmount = 4;

@@ -1,10 +1,10 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.variants.AddonLatexVariant;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -30,21 +30,21 @@ import java.util.stream.Collectors;
 public class WitherWaveAbility  extends SimpleAbility {
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractLatex entity) {
+    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.wither_wave");
     }
 
     @Override
-    public ResourceLocation getTexture(IAbstractLatex entity) {
+    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/wither_wave.png"); //Place holder
     }
 
     @Override
-    public boolean canUse(IAbstractLatex entity) {
+    public boolean canUse(IAbstractChangedEntity entity) {
         Player player = (Player) entity.getEntity();
-        LatexVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
-        LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.EXPERIMENT_10_LATEX_VARIANT && !Spectator(entity.getEntity());
+        TransfurVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
+        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
+        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.EXPERIMENT_10.get() && !Spectator(entity.getEntity());
     }
 
     public static boolean Spectator(Entity entity){
@@ -55,30 +55,30 @@ public class WitherWaveAbility  extends SimpleAbility {
     }
 
     @Override
-    public int getCoolDown(IAbstractLatex entity) {
-        LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
+    public int getCoolDown(IAbstractChangedEntity entity) {
+        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
         return 100;
     }
 
     @Override
-    public int getChargeTime(IAbstractLatex entity) {
-        LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
+    public int getChargeTime(IAbstractChangedEntity entity) {
+        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
         return 30;
     }
 
-    public UseType getUseType(IAbstractLatex entity) {
+    public UseType getUseType(IAbstractChangedEntity entity) {
         return UseType.CHARGE_TIME;
     }
 
 
     @Override
-    public void startUsing(IAbstractLatex entity) {
+    public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
         execute(entity.getLevel(),entity.getEntity());
     }
 
     @Override
-    public void tick(IAbstractLatex entity) {
+    public void tick(IAbstractChangedEntity entity) {
         super.tick(entity);
         //execute(entity.getLevel(),entity.getEntity());
     }

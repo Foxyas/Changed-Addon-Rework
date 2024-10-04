@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,22 +21,22 @@ import java.util.stream.Collectors;
 public class PsychicPulseAbility extends SimpleAbility {
 
 	@Override
-	public TranslatableComponent getDisplayName(IAbstractLatex entity) {
+	public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
 		return new TranslatableComponent("changed_addon.ability.psychic_pulse");
 	}
 
 	@Override
-	public ResourceLocation getTexture(IAbstractLatex entity) {
+	public ResourceLocation getTexture(IAbstractChangedEntity entity) {
 		return new ResourceLocation("changed_addon:textures/screens/psychic_pulse.png"); //Place holder
 	}
 
 	@Override
-	public boolean canUse(IAbstractLatex entity) {
+	public boolean canUse(IAbstractChangedEntity entity) {
 		return !Spectator(entity.getEntity());
 	}
 
 	@Override
-	public boolean canKeepUsing(IAbstractLatex entity) {
+	public boolean canKeepUsing(IAbstractChangedEntity entity) {
 		Player player = (Player) entity.getEntity();
 		return player.getFoodData().getFoodLevel() > 10;
 	}
@@ -49,33 +49,33 @@ public class PsychicPulseAbility extends SimpleAbility {
 	}
 
 	@Override
-	public int getCoolDown(IAbstractLatex entity) {
+	public int getCoolDown(IAbstractChangedEntity entity) {
 		return 0;
 	}
 
 
-	public UseType getUseType(IAbstractLatex entity) {
+	public UseType getUseType(IAbstractChangedEntity entity) {
 		return UseType.HOLD;
 	}
 
 
 	@Override
-	public void startUsing(IAbstractLatex entity) {
+	public void startUsing(IAbstractChangedEntity entity) {
 		super.startUsing(entity);
 		//execute(entity.getLevel(),entity.getEntity());
 	}
 
 	@Override
-	public void tick(IAbstractLatex entity) {
+	public void tick(IAbstractChangedEntity entity) {
 		super.tick(entity);
 		execute(entity.getLevel(),entity.getEntity());
 	}
 
 
-	public static void execute(LevelAccessor world, Entity iAbstractLatex) {
-		if (iAbstractLatex == null)
+	public static void execute(LevelAccessor world, Entity IAbstractChangedEntity) {
+		if (IAbstractChangedEntity == null)
 			return;
-		if (iAbstractLatex instanceof Player entity) {
+		if (IAbstractChangedEntity instanceof Player entity) {
 			{
 				final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
 				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(10 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))

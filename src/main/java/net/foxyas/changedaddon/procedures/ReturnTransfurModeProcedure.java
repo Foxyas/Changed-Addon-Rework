@@ -1,23 +1,23 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 import static net.ltxprogrammer.changed.entity.TransfurMode.*;
 import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 
 public class ReturnTransfurModeProcedure {
 	public static double execute(Entity entity) {
 		if (entity == null)
 			return 0;
 		Player PlayerTarget = (Player) entity;
-		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(PlayerTarget);
+		TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(PlayerTarget);
 		boolean istransfur = ProcessTransfur.isPlayerLatex(PlayerTarget);
 		if (istransfur){
-			LatexVariant<?> Variant = PlayerVariant.getParent();
+			TransfurVariant<?> Variant = PlayerVariant.getParent();
 			if (PlayerVariant.transfurMode.equals(REPLICATION)) {
 			return 1;
 			} else if (PlayerVariant.transfurMode.equals(ABSORPTION)) {
@@ -35,7 +35,7 @@ class setPlayerLatexAge {
 		if (player == null) {
 			return;
 		}
-		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(player);
 		if (PlayerVariant == null){
 			return;
 		} else {
@@ -55,7 +55,7 @@ class setPlayerTransfurMode {
 		if (player == null) {
 			return;
 		}
-		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(player);
 		if (PlayerVariant == null){
 			return;
 		} else {
@@ -73,7 +73,7 @@ class setPlayerTransfurMode {
 		if (player == null) {
 			return;
 		}
-		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(player);
 		if (PlayerVariant == null){
 			return;
 		} else {
@@ -91,7 +91,7 @@ class setPlayerTransfurMode {
 		if (player == null) {
 			return;
 		}
-		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(player);
 		if (PlayerVariant == null){
 			return;
 		} else {
@@ -112,11 +112,11 @@ class GetDefault {
 		if (player == null) {
 			return false;
 		}
-		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(player);
+		TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(player);
 		if (PlayerVariant == null){
 			return false;
 		} else {
-			LatexVariant<?> getVariant = PlayerVariant.getParent();
+			TransfurVariant<?> getVariant = PlayerVariant.getParent();
             return getVariant.transfurMode() != TransfurMode.NONE;
 		}
     }
@@ -125,10 +125,10 @@ class GetDefault {
 		if (entity == null)
 			return 0;
 		Player PlayerTarget = (Player) entity;
-		LatexVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerLatexVariant(PlayerTarget);
+		TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(PlayerTarget);
 		boolean istransfur = ProcessTransfur.isPlayerLatex(PlayerTarget);
 		if (istransfur){
-			LatexVariant<?> Variant = PlayerVariant.getParent();
+			TransfurVariant<?> Variant = PlayerVariant.getParent();
 			if (Variant.transfurMode.equals(REPLICATION)) {
 				return 1;
 			} else if (Variant.transfurMode.equals(ABSORPTION)) {

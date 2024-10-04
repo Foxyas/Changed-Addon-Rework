@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,17 +21,17 @@ import java.util.stream.Collectors;
 public class PsychicHoldAbility extends SimpleAbility {
 
 	@Override
-	public TranslatableComponent getDisplayName(IAbstractLatex entity) {
+	public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
 		return new TranslatableComponent("changed_addon.ability.psychic_hold");
 	}
 
 	@Override
-	public ResourceLocation getTexture(IAbstractLatex entity) {
+	public ResourceLocation getTexture(IAbstractChangedEntity entity) {
 		return new ResourceLocation("changed_addon:textures/screens/psychic_hold.png"); //Place holder
 	}
 
 	@Override
-	public boolean canUse(IAbstractLatex entity) {
+	public boolean canUse(IAbstractChangedEntity entity) {
 		return !Spectator(entity.getEntity());
 	}
 
@@ -43,27 +43,27 @@ public class PsychicHoldAbility extends SimpleAbility {
 	}
 
 
-	public UseType getUseType(IAbstractLatex entity) {
+	public UseType getUseType(IAbstractChangedEntity entity) {
 		return UseType.HOLD;
 	}
 
 
 	@Override
-	public void startUsing(IAbstractLatex entity) {
+	public void startUsing(IAbstractChangedEntity entity) {
 		super.startUsing(entity);
 		//execute(entity.getLevel(),entity);
 	}
 
 	@Override
-	public void tick(IAbstractLatex entity) {
+	public void tick(IAbstractChangedEntity entity) {
 		super.tick(entity);
 		execute(entity.getLevel(),entity.getEntity());
 	}
 
-	public static void execute(LevelAccessor world, Entity iAbstractLatex) {
-		if (iAbstractLatex == null)
+	public static void execute(LevelAccessor world, Entity IAbstractChangedEntity) {
+		if (IAbstractChangedEntity == null)
 			return;
-		if (iAbstractLatex instanceof Player entity) {
+		if (IAbstractChangedEntity instanceof Player entity) {
 			{
 				final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
 				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(10 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))

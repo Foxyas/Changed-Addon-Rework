@@ -1,10 +1,10 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
@@ -28,41 +28,41 @@ public class LeapAbility extends SimpleAbility {
     }
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractLatex entity) {
+    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.leap");
     }
 
     @Override
-    public ResourceLocation getTexture(IAbstractLatex entity) {
+    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/leap_ability.png");
     }
 
     @Override
-    public boolean canUse(IAbstractLatex entity) {
+    public boolean canUse(IAbstractChangedEntity entity) {
         if (entity instanceof Player player) {
-            LatexVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerLatexVariant(player);
+            TransfurVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
         }
 
-        LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-        return Variant.is(ChangedTags.LatexVariants.CAT_LIKE) || Variant.is(ChangedTags.LatexVariants.LEOPARD_LIKE);
+        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
+        return Variant.is(ChangedTags.TransfurVariants.CAT_LIKE) || Variant.is(ChangedTags.TransfurVariants.LEOPARD_LIKE);
     }
 
-    public UseType getUseType(IAbstractLatex entity) {
+    public UseType getUseType(IAbstractChangedEntity entity) {
         return UseType.CHARGE_TIME;
     }
 
     @Override
-    public int getChargeTime(IAbstractLatex entity) {
+    public int getChargeTime(IAbstractChangedEntity entity) {
         return 10;
     }
 
     @Override
-    public int getCoolDown(IAbstractLatex entity) {
+    public int getCoolDown(IAbstractChangedEntity entity) {
         return 15;
     }
 
     @Override
-    public void startUsing(IAbstractLatex entity) {
+    public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
         leapAbility(entity.getEntity());
 

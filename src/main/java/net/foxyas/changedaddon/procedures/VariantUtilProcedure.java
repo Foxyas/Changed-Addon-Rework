@@ -1,10 +1,14 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.ltxprogrammer.changed.entity.LatexEntity;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.Objects;
@@ -12,12 +16,13 @@ import java.util.UUID;
 
 public class VariantUtilProcedure {
 
-	public static float GetLandSpeed(String stringvariant) {
+	public static float GetLandSpeed(String stringvariant, Player player) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-				return variant == null ? 0f : variant.groundSpeed;
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+				TransfurVariantInstance<?> Instance = ProcessTransfur.getPlayerTransfurVariant(player);
+				return variant == null ? 0f : Instance.getSprintEfficiency();
 			} else {
 				return 0f;
 			}
@@ -27,12 +32,13 @@ public class VariantUtilProcedure {
 		}
 	}
 
-	public static float GetSwimSpeed(String stringvariant) {
+	public static float GetSwimSpeed(String stringvariant, Player player) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-				return variant == null ? 0f : variant.swimSpeed;
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+				TransfurVariantInstance<?> Instance = ProcessTransfur.getPlayerTransfurVariant(player);
+				return variant == null ? 0f : Instance.getSwimEfficiency();
 			} else {
 				return 0f;
 			}
@@ -42,12 +48,13 @@ public class VariantUtilProcedure {
 		}
 	}
 
-	public static int GetExtraHp(String stringvariant) {
+	public static float GetExtraHp(String stringvariant, Player player) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-				return variant == null ? 0 : variant.additionalHealth;
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+				TransfurVariantInstance<?> Instance = ProcessTransfur.getPlayerTransfurVariant(player);
+				return variant == null ? 0 : (Instance.getChangedEntity().getMaxHealth() - Player.MAX_HEALTH);
 			} else {
 				return 0;
 			}
@@ -60,8 +67,8 @@ public class VariantUtilProcedure {
 	public static int GetLegs(String stringvariant) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant == null ? 0 : variant.legCount;
 			} else {
 				return 0;
@@ -75,8 +82,8 @@ public class VariantUtilProcedure {
 	public static boolean CanGlideandFly(String stringvariant) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant != null && variant.canGlide;
 			} else {
 				return false;
@@ -90,8 +97,8 @@ public class VariantUtilProcedure {
 	public static boolean CanClimb(String stringvariant) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant != null && variant.canClimb;
 			} else {
 				return false;
@@ -105,8 +112,8 @@ public class VariantUtilProcedure {
 	public static float GetJumpStrength(String stringvariant) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant == null ? 0f : variant.jumpStrength;
 			} else {
 				return 0f;
@@ -120,19 +127,19 @@ public class VariantUtilProcedure {
 	public static EntityType<?> GetEntity(String stringvariant, Level world) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
-			if (LatexVariant.PUBLIC_LATEX_FORMS.contains(form)) {
-				LatexVariant<?> variant = ChangedRegistry.LATEX_VARIANT.get().getValue(form);
-				return variant == null ? LatexVariant.LIGHT_LATEX_WOLF.male().getEntityType() : variant.getEntityType();
+			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+				return variant == null ? ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get().getEntityType() : variant.getEntityType();
 			} else {
-				return LatexVariant.LIGHT_LATEX_WOLF.male().getEntityType();
+				return ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get().getEntityType();
 			}
 		} catch (Exception e) {
 			//System.err.println("Erro when processing GetEntity: " + e.getMessage());
-			return LatexVariant.LIGHT_LATEX_WOLF.male().getEntityType();
+			return ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get().getEntityType();
 		}
 	}
 
-	public static void SummonVariantEntity(EntityType<LatexEntity> entityType, Level world){
+	public static void SummonVariantEntity(EntityType<ChangedEntity> entityType, Level world){
 		Objects.requireNonNull(entityType.create(world)).setUUID(UUID.randomUUID());
 	}
 }

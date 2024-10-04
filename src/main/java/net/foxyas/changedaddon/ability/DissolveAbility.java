@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.ltxprogrammer.changed.ability.*;
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -24,12 +24,12 @@ public class DissolveAbility extends AbstractAbility<DissolveAbilityInstance> {
 
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractLatex entity) {
+    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.dissolve");
     }
 
     @Override
-    public UseType getUseType(IAbstractLatex entity) {
+    public UseType getUseType(IAbstractChangedEntity entity) {
         if (Objects.requireNonNull(entity.getAbilityInstance(this)).isSet()) {
             return UseType.INSTANT;
         }
@@ -37,22 +37,22 @@ public class DissolveAbility extends AbstractAbility<DissolveAbilityInstance> {
     }
 
     @Override
-    public int getChargeTime(IAbstractLatex entity) {
+    public int getChargeTime(IAbstractChangedEntity entity) {
         return Objects.requireNonNull(entity.getAbilityInstance(this)).isSet() ? 0 : 20;
     }
 
     @Override
-    public int getCoolDown(IAbstractLatex entity) {
+    public int getCoolDown(IAbstractChangedEntity entity) {
         return Objects.requireNonNull(entity.getAbilityInstance(this)).isSet() ? 600 : 20;
     }
 
     @Override
-    public boolean canUse(IAbstractLatex entity) {
+    public boolean canUse(IAbstractChangedEntity entity) {
         return true;
     }
 
     @Override
-    public ResourceLocation getTexture(IAbstractLatex entity) {
+    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/dodge_ability.png");
     }
 

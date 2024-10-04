@@ -8030,7 +8030,7 @@
       "name": "CanLeap",
       "type": "procedure",
       "sortid": 403,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "can_leap",
       "metadata": {

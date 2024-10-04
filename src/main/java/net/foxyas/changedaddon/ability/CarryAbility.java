@@ -2,13 +2,14 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.variants.AddonLatexVariant;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.entity.beast.LightLatexCentaur;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
+import net.ltxprogrammer.changed.entity.beast.WhiteLatexCentaur;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.init.ChangedTags;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -30,45 +31,45 @@ public class CarryAbility extends SimpleAbility {
     }
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractLatex entity) {
+    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.carry");
     }
 
     @Override
-    public ResourceLocation getTexture(IAbstractLatex entity) {
+    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/carry_ability.png");
     }
 
     @Override
-    public UseType getUseType(IAbstractLatex entity) {
+    public UseType getUseType(IAbstractChangedEntity entity) {
         return UseType.INSTANT;
     }
 
     @Override
-    public int getCoolDown(IAbstractLatex entity) {
+    public int getCoolDown(IAbstractChangedEntity entity) {
         return 5;
     }
 
     @Override
-    public boolean canUse(IAbstractLatex entity) {
-        return (Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.female())
-                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.EXP2.male())
-                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.female())
-                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ORGANIC_SNOW_LEOPARD.male())
-                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.female())
-                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(AddonLatexVariant.ADDON_PURO_KIND.male())
-                || Objects.requireNonNull(entity.getLatexVariantInstance()).getParent().is(TagKey.create(ChangedRegistry.LATEX_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon:able_to_carry"))))
+    public boolean canUse(IAbstractChangedEntity entity) {
+        return (Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.EXP2.getFemaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.EXP2.getMaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ORGANIC_SNOW_LEOPARD.getFemaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ORGANIC_SNOW_LEOPARD.getMaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getFemaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getMaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon:able_to_carry"))))
                 && !Spectator(entity.getEntity());
     }
 
     @Override
-    public void startUsing(IAbstractLatex entity) {
+    public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
         Run(entity.getEntity());
     }
 
     @Override
-    public void onRemove(IAbstractLatex entity) {
+    public void onRemove(IAbstractChangedEntity entity) {
         super.onRemove(entity);
         SafeRemove(entity.getEntity());
     }
@@ -136,7 +137,7 @@ public class CarryAbility extends SimpleAbility {
                 }
 
                 // Check if the player has the light latex centaur variant and prevent them from being carried
-                if (ProcessTransfur.getPlayerLatexVariant(carryPlayer) != null && ProcessTransfur.getPlayerLatexVariant(carryPlayer).is(LatexVariant.LIGHT_LATEX_CENTAUR)) {
+                if (ProcessTransfur.getPlayerTransfurVariant(carryPlayer) != null && ProcessTransfur.getPlayerTransfurVariant(carryPlayer).is(ChangedTransfurVariants.WHITE_LATEX_CENTAUR.get())) {
                     player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry", carryPlayer.getDisplayName()), true);
                     return;
                 }
@@ -150,7 +151,7 @@ public class CarryAbility extends SimpleAbility {
 
             } else {
                 // If the looked at entity is a light latex centaur, prevent them from being carried
-                if (carryTarget instanceof LightLatexCentaur) {
+                if (carryTarget instanceof WhiteLatexCentaur) {
                     player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry", carryTarget.getDisplayName()), true);
                     return;
                 }

@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.ability;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -39,7 +39,7 @@ public class DissolveAbilityInstance extends AbstractAbilityInstance {
         return LocationZ;
     }
 
-    public DissolveAbilityInstance(AbstractAbility<?> ability, IAbstractLatex entity){
+    public DissolveAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity){
         super(ability,entity);
     }
 
@@ -114,7 +114,7 @@ public class DissolveAbilityInstance extends AbstractAbilityInstance {
     }
 
     private void Tp(Player player){
-        LatexVariantInstance<?> Instance = ProcessTransfur.getPlayerLatexVariant(player);
+        TransfurVariantInstance<?> Instance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (Instance == null){
             return;
         }

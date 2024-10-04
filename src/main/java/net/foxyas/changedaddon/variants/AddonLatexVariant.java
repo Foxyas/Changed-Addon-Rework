@@ -85,7 +85,7 @@ public class AddonLatexVariant {
     public static final RegistryObject<TransfurVariant<KetExperiment009Entity>> KET_EXPERIMENT_009 = register("form_ket_experiment009",TransfurVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
             .reducedFall().jumpStrength(1.4F).addAbility(ChangedAddonAbilitys.THUNDERBOLT).addAbility(ChangedAddonAbilitys.SHOCKWAVE).transfurMode(TransfurMode.NONE).nightVision());
 
-    public static final RegistryObject<TransfurVariant<Experiment10Entity>> EXPERIMENT_10_LATEX_VARIANT = register("form_experiment_10",TransfurVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
+    public static final RegistryObject<TransfurVariant<Experiment10Entity>> EXPERIMENT_10 = register("form_experiment_10",TransfurVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
             .reducedFall().jumpStrength(1.5F).abilities(List.of(
                     entityType -> ChangedAddonAbilitys.WITHER_WAVE.get(),
                     entityType -> ChangedAbilities.HYPNOSIS.get()

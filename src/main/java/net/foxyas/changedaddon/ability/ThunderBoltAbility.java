@@ -1,10 +1,10 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.variants.AddonLatexVariant;
-import net.ltxprogrammer.changed.ability.IAbstractLatex;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.entity.variant.LatexVariant;
-import net.ltxprogrammer.changed.entity.variant.LatexVariantInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -25,20 +25,20 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 
 	@Override
-	public TranslatableComponent getDisplayName(IAbstractLatex entity) {
+	public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
 		return new TranslatableComponent("changed_addon.ability.thunder");
 	}
 
 	@Override
-	public ResourceLocation getTexture(IAbstractLatex entity) {
+	public ResourceLocation getTexture(IAbstractChangedEntity entity) {
 		return new ResourceLocation("changed_addon:textures/screens/thunderbolt.png");
 	}
 
 	@Override
-	public boolean canUse(IAbstractLatex entity) {
+	public boolean canUse(IAbstractChangedEntity entity) {
 		Player player = (Player) entity.getEntity();
-		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-		return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009 || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT && !Spectator(entity.getEntity());
+		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
+		return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009.get() || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get() && !Spectator(entity.getEntity());
 	}
 
 	public static boolean Spectator(Entity entity){
@@ -48,48 +48,48 @@ public class ThunderBoltAbility extends SimpleAbility {
 		return true;
 	}
 
-	public UseType getUseType(IAbstractLatex entity) {
+	public UseType getUseType(IAbstractChangedEntity entity) {
 		return UseType.CHARGE_RELEASE;
 	}
 
 	@Override
-	public int getChargeTime(IAbstractLatex entity) {
-		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
+	public int getChargeTime(IAbstractChangedEntity entity) {
+		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
+		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
 			return 15;
 		}
 		return 20;
 	}
 
 	@Override
-	public int getCoolDown(IAbstractLatex entity) {
-		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
+	public int getCoolDown(IAbstractChangedEntity entity) {
+		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
+		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
 			return 15;
 		}
 		return 25;
 	}
 
 
-	public float ReachAmount(IAbstractLatex entity) {
-		LatexVariant<?> Variant = entity.getLatexEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT) {
+	public float ReachAmount(IAbstractChangedEntity entity) {
+		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
+		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
 			return 10;
 		}
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009){
+		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009.get()){
 			return 5;
 		}
 		return 3.5F;
 	}
 
 	@Override
-	public void tickCharge(IAbstractLatex entity, float ticks) {
+	public void tickCharge(IAbstractChangedEntity entity, float ticks) {
 		super.tickCharge(entity, ticks);
 	}
 
 	
 	@Override
-	public void startUsing(IAbstractLatex entity) {
+	public void startUsing(IAbstractChangedEntity entity) {
 		super.startUsing(entity);
 		SummonLightBolt(entity.getEntity(),entity.getLevel(),ReachAmount(entity));
 	}
