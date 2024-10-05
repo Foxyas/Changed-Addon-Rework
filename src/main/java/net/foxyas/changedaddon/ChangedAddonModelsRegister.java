@@ -1,20 +1,12 @@
 package net.foxyas.changedaddon;
 
-import com.google.common.collect.ImmutableMap;
 import net.foxyas.changedaddon.client.model.*;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
-import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.world.entity.Entity;
+import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import javax.annotation.Nullable;
-import java.util.Map;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class ChangedAddonModelsRegister {
@@ -44,9 +36,17 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(ReynModel.LAYER_LOCATION, ReynModel::createBodyLayer);
 	}
 
+	/*
+	*@SubscribeEvent
+	*public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+	*	return;
+	*}
+	*/
+
 	@SubscribeEvent
-	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerEntityRenderer(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), SnowLeopardPartialRenderer::new);
+	public static void registerComplexEntityRenderers(RegisterComplexRenderersEvent event) {
+		event.registerEntityRenderer(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), "default", SnowLeopardPartialRenderer.forModelSize(false));
+		event.registerEntityRenderer(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), "slim", SnowLeopardPartialRenderer.forModelSize(true));
 	}
 
 	/*

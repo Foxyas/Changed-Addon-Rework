@@ -25,7 +25,7 @@ import net.ltxprogrammer.changed.util.Color3;
 
 import net.foxyas.changedaddon.ChangedAddonEntitys;
 
-public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable {
+public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable,ComplexRenderer {
 	public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), world);
 	}

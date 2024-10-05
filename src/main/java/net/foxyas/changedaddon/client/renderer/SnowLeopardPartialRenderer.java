@@ -15,11 +15,11 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SnowLeopardPartialRenderer extends AdvancedHumanoidRenderer<SnowLeopardPartialEntity, SnowLeopardPartialModel, ArmorLatexMaleCatModel<SnowLeopardPartialEntity>> {
 
-	public SnowLeopardPartialRenderer(EntityRendererProvider.Context context) {
-		super(context, SnowLeopardPartialModel.human(context.bakeLayer(getLayerLocation())),
+	public SnowLeopardPartialRenderer(EntityRendererProvider.Context context,boolean slim) {
+		super(context, SnowLeopardPartialModel.human(context.bakeLayer(getLayerLocation(slim))),
 				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
 
-		var partialModel = new LatexPartialLayer<>(this, SnowLeopardPartialModel.latex(context.bakeLayer(getLatexLayerLocation())), getTexture());
+		var partialModel = new LatexPartialLayer<>(this, SnowLeopardPartialModel.latex(context.bakeLayer(getLatexLayerLocation(slim))), getTexture(slim));
 		this.addLayer(partialModel);
 		this.addLayer(new LatexParticlesLayer<>(this).addModel(partialModel.getModel(), entity -> partialModel.getTexture()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
@@ -27,21 +27,25 @@ public class SnowLeopardPartialRenderer extends AdvancedHumanoidRenderer<SnowLeo
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	}
 
-	private static ModelLayerLocation getLayerLocation() {
-		return ChangedAddonClientConfigsConfiguration.SLIMMODEL.get() ? SnowLeopardPartialModel.LAYER_LOCATION_HUMAN_SLIM : SnowLeopardPartialModel.LAYER_LOCATION_HUMAN;
+	private static ModelLayerLocation getLayerLocation(boolean slim) {
+		return slim ? SnowLeopardPartialModel.LAYER_LOCATION_HUMAN_SLIM : SnowLeopardPartialModel.LAYER_LOCATION_HUMAN;
 	}
 
-	private static ModelLayerLocation getLatexLayerLocation() {
-		return ChangedAddonClientConfigsConfiguration.SLIMMODEL.get() ? SnowLeopardPartialModel.LAYER_LOCATION_LATEX_SLIM : SnowLeopardPartialModel.LAYER_LOCATION_LATEX;
+	private static ModelLayerLocation getLatexLayerLocation(boolean slim) {
+		return slim ? SnowLeopardPartialModel.LAYER_LOCATION_LATEX_SLIM : SnowLeopardPartialModel.LAYER_LOCATION_LATEX;
 	}
 
-	private static ResourceLocation getTexture() {
-		return new ResourceLocation("changed_addon", ChangedAddonClientConfigsConfiguration.SLIMMODEL.get() ? "textures/entities/snow_leopard_partial_slim.png" : "textures/entities/snow_leopard_partial.png");
+	private static ResourceLocation getTexture(boolean slim) {
+		return new ResourceLocation("changed_addon", slim ? "textures/entities/snow_leopard_partial_slim.png" : "textures/entities/snow_leopard_partial.png");
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(SnowLeopardPartialEntity partial) {
 		return partial.getSkinTextureLocation();
+	}
+
+	public static EntityRendererProvider<SnowLeopardPartialEntity> forModelSize(boolean slim) {
+		return (context) -> new SnowLeopardPartialRenderer(context, slim);
 	}
 
 	@Override
