@@ -11,6 +11,9 @@ import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.client.renderer.model.WhiteWolfFemaleModel;
+import net.ltxprogrammer.changed.client.tfanimations.HelperModel;
+import net.ltxprogrammer.changed.client.tfanimations.Limb;
+import net.ltxprogrammer.changed.client.tfanimations.TransfurHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.util.Mth;
 import net.minecraft.resources.ResourceLocation;
@@ -72,7 +75,14 @@ public class ModelFemaleSnowFox extends AdvancedHumanoidModel<LatexSnowFoxFemale
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
     }
-    
+
+    @Override
+    public HelperModel getTransfurHelperModel(Limb limb) {
+        if (limb == Limb.TORSO)
+            return TransfurHelper.getFeminineTorsoAlt();
+        return super.getTransfurHelperModel(limb);
+    }
+
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
@@ -198,7 +208,6 @@ public class ModelFemaleSnowFox extends AdvancedHumanoidModel<LatexSnowFoxFemale
         return Torso;
     }
 
-    @Override
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }

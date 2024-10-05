@@ -12,6 +12,9 @@ import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.tfanimations.HelperModel;
+import net.ltxprogrammer.changed.client.tfanimations.Limb;
+import net.ltxprogrammer.changed.client.tfanimations.TransfurHelper;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -79,7 +82,15 @@ public class PuroKindFemaleModel extends AdvancedHumanoidModel<PuroKindFemaleEnt
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
     }
-    public boolean isPartNotMask(ModelPart part) {
+
+	@Override
+	public HelperModel getTransfurHelperModel(Limb limb) {
+		if (limb == Limb.TORSO)
+			return TransfurHelper.getFeminineTorsoAlt();
+		return super.getTransfurHelperModel(limb);
+	}
+
+	public boolean isPartNotMask(ModelPart part) {
         return Mask.getAllParts().noneMatch(part::equals);
     }
 
@@ -258,8 +269,7 @@ public class PuroKindFemaleModel extends AdvancedHumanoidModel<PuroKindFemaleEnt
     public ModelPart getTorso() {
         return this.Torso;
     }
-
-	@Override
+    
 	public ModelPart getLeg(HumanoidArm humanoidArm) {
 		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
 	}

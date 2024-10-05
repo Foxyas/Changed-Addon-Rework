@@ -232,7 +232,6 @@ public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> impleme
         return Torso;
     }
 
-    @Override
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }

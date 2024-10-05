@@ -166,7 +166,6 @@ public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements Adva
         return Torso;
     }
 
-    @Override
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }

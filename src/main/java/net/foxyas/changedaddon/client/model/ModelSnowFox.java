@@ -187,7 +187,6 @@ public class ModelSnowFox extends AdvancedHumanoidModel<LatexSnowFoxEntity> impl
         return Torso;
     }
 
-    @Override
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }

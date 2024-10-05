@@ -220,7 +220,6 @@ public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity>
         return Torso;
     }
 
-    @Override
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }

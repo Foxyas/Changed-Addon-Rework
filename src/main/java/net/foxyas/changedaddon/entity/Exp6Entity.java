@@ -55,6 +55,8 @@ public class Exp6Entity extends AbstractCanTameLatexEntity {
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
 
+
+
 	public InteractionResult Exp2(Player player, InteractionHand hand, Player Host) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		/*if(Host != null){

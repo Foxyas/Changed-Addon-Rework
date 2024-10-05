@@ -385,6 +385,7 @@ public class WolfyModel extends AdvancedHumanoidModel<WolfyEntity> implements Ad
 
 	@Override
 	public void setupAnim(@NotNull WolfyEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		super.setupAnim(entity,limbSwing,limbSwingAmount,ageInTicks,netHeadYaw,headPitch);
 		animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 	}
 
@@ -400,10 +401,11 @@ public class WolfyModel extends AdvancedHumanoidModel<WolfyEntity> implements Ad
 		return Torso;
 	}
 
-	@Override
 	public ModelPart getLeg(HumanoidArm humanoidArm) {
 		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
 	}
+
+
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {

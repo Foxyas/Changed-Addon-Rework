@@ -3,6 +3,8 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
+import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
+import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -51,6 +53,8 @@ public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard imp
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(6, new LatexFollowOwnerGoal<>(this, 0.35D, 10.0F, 2.0F, false));
+        this.targetSelector.addGoal(1, new LatexOwnerHurtByTargetGoal<>(this));
+        this.targetSelector.addGoal(2, new LatexOwnerHurtTargetGoal<>(this));
     }
 
     @Override

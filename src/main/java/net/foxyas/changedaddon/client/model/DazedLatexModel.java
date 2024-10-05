@@ -180,12 +180,9 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
         return Torso;
     }
 
-    @Override
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }
-
-
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         Head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

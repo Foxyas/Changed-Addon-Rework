@@ -325,7 +325,6 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
         return this.Torso;
     }
 
-    @Override
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
     }
