@@ -110,6 +110,10 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
 		return Gender.MALE;
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.GRAY;
+    }
+
 	@Override
 	public @Nullable List<HairStyle> getValidHairStyles() {
 		return HairStyle.Collection.MALE.getStyles();

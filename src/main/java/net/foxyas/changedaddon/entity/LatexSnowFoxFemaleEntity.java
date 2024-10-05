@@ -119,6 +119,10 @@ public class LatexSnowFoxFemaleEntity extends ChangedEntity implements GenderedE
 		}
 		return color;
 	}
+
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.getColor("#e0e0e0");
+    }
 	
 	@Override
     public int getTicksRequiredToFreeze() { return 700; }

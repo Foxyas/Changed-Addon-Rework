@@ -87,6 +87,10 @@ public class BunyEntity extends ChangedEntity {
 		return Color3.getColor("#fee9c8");
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.getColor("#fee9c8");
+    }
+
 	@Override
 	public MobType getMobType() {
 		return MobType.UNDEFINED;

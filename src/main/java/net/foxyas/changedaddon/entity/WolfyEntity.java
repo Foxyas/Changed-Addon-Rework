@@ -116,6 +116,10 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 		return color;
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.getColor("#303030");
+    }
+
 	@Override
 	public MobType getMobType() {
 		return MobType.UNDEFINED;

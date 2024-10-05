@@ -107,6 +107,10 @@ public class Exp2FemaleEntity extends AbstractCanTameLatexEntity {
 		return Gender.FEMALE;
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.GRAY;
+    }
+
 	@Override
 	public HairStyle getDefaultHairStyle() {
 		if(level.random.nextInt(10) > 5){

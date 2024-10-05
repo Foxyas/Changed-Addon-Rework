@@ -80,6 +80,10 @@ public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowW
 		return Color3.WHITE;
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.GRAY;
+    }
+
 	@Override
 	public int getTicksRequiredToFreeze() {
 		return 420;

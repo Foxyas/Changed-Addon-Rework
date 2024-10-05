@@ -95,6 +95,10 @@ public class ReynEntity extends ChangedEntity {
 		}
 		return color;
 	}
+	
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.getColor("#4c4c4c");
+    }
 
 	@Override
 	public Packet<?> getAddEntityPacket() {

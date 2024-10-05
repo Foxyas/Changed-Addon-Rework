@@ -124,6 +124,10 @@ public class LatexSnowFoxEntity extends ChangedEntity implements GenderedEntity,
 		return color;
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.getColor("#e0e0e0");
+    }
+
 	@Override
 	public Gender getGender() {
 		return Gender.MALE;

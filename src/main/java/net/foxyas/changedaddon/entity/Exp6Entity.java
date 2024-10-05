@@ -117,6 +117,10 @@ public class Exp6Entity extends AbstractCanTameLatexEntity {
 		return HairStyle.LONG_KEPT.get();
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.GRAY;
+    }
+
 	@Override
 	public @Nullable List<HairStyle> getValidHairStyles() {
 		return HairStyle.Collection.FEMALE.getStyles();

@@ -130,6 +130,10 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 		return Color3.getColor("#181818");
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.DARK;
+    }
+
 
 	@Override
 	public Packet<?> getAddEntityPacket() {

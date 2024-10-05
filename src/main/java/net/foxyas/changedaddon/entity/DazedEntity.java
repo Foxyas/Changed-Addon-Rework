@@ -114,6 +114,10 @@ public class DazedEntity extends ChangedEntity {
 		return color;
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.getColor("#CFCFCF");
+    }
+
 	@Override
 	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);

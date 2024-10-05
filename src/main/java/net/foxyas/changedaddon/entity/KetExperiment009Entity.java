@@ -123,6 +123,10 @@ public class KetExperiment009Entity extends ChangedEntity {
 		return Color3.getColor("#E2E2E2");
 	}
 
+	public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.WHITE;
+    }
+
 
 	@Override
 	public Packet<?> getAddEntityPacket() {
