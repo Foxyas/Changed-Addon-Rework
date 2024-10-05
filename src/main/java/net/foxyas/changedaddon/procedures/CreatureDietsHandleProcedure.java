@@ -36,8 +36,6 @@ import java.util.Objects;
 @Mod.EventBusSubscriber
 public class CreatureDietsHandleProcedure {
 
-    public static List<TransfurVariant<?>> NoDietList = List.of(AddonLatexVariant.REYN.get());
-
     @SubscribeEvent
     public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
         if (event == null) return;
@@ -122,6 +120,7 @@ public class CreatureDietsHandleProcedure {
     }
 
     private static DietType determineDietType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
+        List<TransfurVariant<?>> NoDietList = List.of(AddonLatexVariant.REYN.get());
         if (NoDietList.contains(variant)) {
             return null;
         }

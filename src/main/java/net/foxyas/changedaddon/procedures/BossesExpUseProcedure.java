@@ -12,10 +12,10 @@ import net.foxyas.changedaddon.variants.AddonLatexVariant;
 
 @Mod.EventBusSubscriber
 public class BossesExpUseProcedure {
-	public static TransfurVariant<?> SyringeVariant;
 
 	@SubscribeEvent
 	public static void VariantGet(LatexSyringe.UsedOnBlock event) {
+		TransfurVariant<?> SyringeVariant;
 		SyringeVariant = event.syringeVariant;
 		var PlayerVariant = event.syringeVariant;
 		if (PlayerVariant == AddonLatexVariant.KET_EXPERIMENT_009.get() || PlayerVariant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get() || PlayerVariant == AddonLatexVariant.EXPERIMENT_10.get()) {
