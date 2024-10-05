@@ -204,6 +204,7 @@ public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity>
 
     @Override
     public void setupAnim(@NotNull Experiment10Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        super.setupAnim(entity,limbSwing,limbSwingAmount,ageInTicks,netHeadYaw,headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 

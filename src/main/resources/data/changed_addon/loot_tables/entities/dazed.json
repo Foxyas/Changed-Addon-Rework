@@ -123,7 +123,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "changed:light_latex_puddle_male",
+          "name": "changed:white_latex_puddle_male",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -149,7 +149,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "changed:light_latex_puddle_female",
+          "name": "changed:white_latex_puddle_female",
           "functions": [
             {
               "function": "minecraft:set_count",

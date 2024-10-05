@@ -90,7 +90,7 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_trade = new Button(this.leftPos + 235, this.topPos + 123, 51, 20, new TranslatableComponent("gui.changed_addon.foxyasgui.button_trade"), e -> {
+		button_trade = new Button(this.leftPos + 222, this.topPos + 115, 51, 20, new TranslatableComponent("gui.changed_addon.foxyasgui.button_trade"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FoxyasguiButtonMessage(0, x, y, z));
 				FoxyasguiButtonMessage.handleButtonAction(entity, 0, x, y, z);

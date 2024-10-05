@@ -215,6 +215,7 @@ public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> impleme
 
     @Override
     public void setupAnim(@NotNull Exp2MaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        super.setupAnim(entity,limbSwing,limbSwingAmount,ageInTicks,netHeadYaw,headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         CarryAbilityAnimation.playAnimation(entity, this);
     }

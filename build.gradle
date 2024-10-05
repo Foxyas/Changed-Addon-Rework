@@ -97,8 +97,8 @@ dependencies {
   //implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.13.1") //Changed
     implementation fg.deobf("curse.maven:advanced-xray-256256:3712732")	//Xray Ores
     implementation fg.deobf("curse.maven:lightspeedmod-821790:4594803") //Speed Up The Start of The Game
-    implementation fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon
-    implementation fg.deobf("curse.maven:rubidium-574856:4494903") //Fps Bost 
+  //implementation fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon
+    implementation fg.deobf("curse.maven:embeddium-908741:5322305") //Fps Bost 
     implementation fg.deobf("curse.maven:oculus-581495:4578744") //Shaders :D
     implementation fg.deobf("curse.maven:custom-player-models-439870:4840534") //Custom Player Models
   //implementation fg.deobf("curse.maven:roughly-enough-items-310111:4774383") //Jei But better

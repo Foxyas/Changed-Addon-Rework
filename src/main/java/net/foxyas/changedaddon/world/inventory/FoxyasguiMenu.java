@@ -81,7 +81,7 @@ public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map
 					});
 			}
 		}
-		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 209, 107) {
+		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 223, 89) {
 			private final int slot = 0;
 
 			@Override
@@ -89,7 +89,7 @@ public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map
 				return !FoxyasguiDisableItemstackPlacementProcedure.execute(itemstack);
 			}
 		}));
-		this.customSlots.put(2, this.addSlot(new SlotItemHandler(internal, 2, 302, 125) {
+		this.customSlots.put(2, this.addSlot(new SlotItemHandler(internal, 2, 283, 117) {
 			private final int slot = 2;
 
 			@Override
@@ -97,7 +97,7 @@ public class FoxyasguiMenu extends AbstractContainerMenu implements Supplier<Map
 				return false;
 			}
 		}));
-		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 209, 146) {
+		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 260, 89) {
 			private final int slot = 1;
 
 			@Override

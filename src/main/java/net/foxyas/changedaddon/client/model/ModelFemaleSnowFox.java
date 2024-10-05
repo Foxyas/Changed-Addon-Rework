@@ -174,14 +174,15 @@ public class ModelFemaleSnowFox extends AdvancedHumanoidModel<LatexSnowFoxFemale
         return corrector;
     }
  */
-		@Override
-    	public void setupHand() {
-        animator.setupHand();
-    	}
+   @Override
+   public void setupHand() {
+       animator.setupHand();
+   }
 
 
     @Override
     public void setupAnim(@NotNull LatexSnowFoxFemaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 

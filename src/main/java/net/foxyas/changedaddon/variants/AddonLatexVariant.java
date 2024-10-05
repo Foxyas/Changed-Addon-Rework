@@ -31,7 +31,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AddonLatexVariant {
+public class AddonLatexVariant extends ChangedTransfurVariants {
     //public static UseItemMode ABO = UseItemMode.create("ABO",false,true,true,true,true);
 	//this is For Not Show The Hot Bar
 	//.itemUseMode(ABO)
@@ -42,13 +42,17 @@ public class AddonLatexVariant {
             .transfurMode(TransfurMode.REPLICATION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of()));
     public static final RegistryObject<TransfurVariant<PuroKindFemaleEntity>> ADDON_PURO_KIND_FEMALE = register("form_puro_kind/female",TransfurVariant.Builder.of(ChangedAddonModEntities.PURO_KIND_FEMALE)
             .transfurMode(TransfurMode.ABSORPTION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of()));
-    public static final RegistryObject<TransfurVariant<SnowLeopardMaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_MALE = register("form_biosynth_snow_leopard/male",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.LATEX_SNOW_LEOPARD_MALE.get(),ChangedAddonModEntities.SNOW_LEOPARD_MALE_ORGANIC)
+    public static final RegistryObject<TransfurVariant<SnowLeopardMaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_MALE = register("form_biosynth_snow_leopard/male",
+            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_MALE.get(),*/ChangedAddonModEntities.SNOW_LEOPARD_MALE_ORGANIC)
             .transfurMode(TransfurMode.REPLICATION).nightVision().breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)));
-    public static final RegistryObject<TransfurVariant<SnowLeopardFemaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_FEMALE = register("form_biosynth_snow_leopard/female",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.LATEX_SNOW_LEOPARD_FEMALE.get(),ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC)
+    public static final RegistryObject<TransfurVariant<SnowLeopardFemaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_FEMALE = register("form_biosynth_snow_leopard/female",
+            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_FEMALE.get(),*/ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC)
             .transfurMode(TransfurMode.ABSORPTION).nightVision().breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)));
-    public static final RegistryObject<TransfurVariant<LatexSnowFoxEntity>> ADDON_LATEX_SNOW_FOX_MALE = register("form_latex_snow_fox/male",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get(),ChangedAddonModEntities.LATEX_SNOW_FOX)
+    public static final RegistryObject<TransfurVariant<LatexSnowFoxEntity>> ADDON_LATEX_SNOW_FOX_MALE = register("form_latex_snow_fox/male",
+            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_MALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX)
             .nightVision());
-    public static final RegistryObject<TransfurVariant<LatexSnowFoxFemaleEntity>> ADDON_LATEX_SNOW_FOX_FEMALE = register("form_latex_snow_fox/female",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.WHITE_LATEX_WOLF_FEMALE.get(),ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
+    public static final RegistryObject<TransfurVariant<LatexSnowFoxFemaleEntity>> ADDON_LATEX_SNOW_FOX_FEMALE = register("form_latex_snow_fox/female",
+            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_FEMALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
             .nightVision());
 
     public static final RegistryObject<TransfurVariant<DazedEntity>> DAZED_LATEX = register("form_dazed_latex",TransfurVariant.Builder.of(ChangedAddonModEntities.DAZED)
@@ -57,7 +61,8 @@ public class AddonLatexVariant {
     public static final RegistryObject<TransfurVariant<BunyEntity>> BUNY = register("form_buny",TransfurVariant.Builder.of(ChangedAddonModEntities.BUNY)
             .jumpStrength(1.5F).reducedFall().transfurMode(TransfurMode.ABSORPTION).scares(List.of()));
 
-    public static final RegistryObject<TransfurVariant<MirrorWhiteTigerEntity>> MIRROR_WHITE_TIGER = register("form_mirror_white_tiger_female",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.LATEX_WHITE_TIGER.get(),ChangedAddonModEntities.MIRROR_WHITE_TIGER)
+    public static final RegistryObject<TransfurVariant<MirrorWhiteTigerEntity>> MIRROR_WHITE_TIGER = register("form_mirror_white_tiger_female",
+            () -> TransfurVariant.Builder.of(/*LATEX_WHITE_TIGER.get(),*/ChangedAddonModEntities.MIRROR_WHITE_TIGER)
             .stepSize(0.7F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<WolfyEntity>> WOLFY = register("form_wolfy",TransfurVariant.Builder.of(ChangedAddonModEntities.WOLFY)
@@ -70,14 +75,18 @@ public class AddonLatexVariant {
             .stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of()));
 
     //Experiments
-    public static final RegistryObject<TransfurVariant<LatexSnowFoxEntity>> EXP1_MALE = register("form_exp1/male",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get(),ChangedAddonModEntities.LATEX_SNOW_FOX)
+    public static final RegistryObject<TransfurVariant<LatexSnowFoxEntity>> EXP1_MALE = register("form_exp1/male",
+            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_MALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX)
             .nightVision().extraJumps(2).addAbility(ChangedAddonAbilitys.PSYCHIC_PULSE).addAbility(ChangedAddonAbilitys.PSYCHIC_HOLD).addAbility(ChangedAbilities.SWITCH_GENDER).transfurMode(TransfurMode.NONE));
-    public static final RegistryObject<TransfurVariant<LatexSnowFoxFemaleEntity>> EXP1_FEMALE = register("form_exp1/female",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.WHITE_LATEX_WOLF_FEMALE.get(),ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
+    public static final RegistryObject<TransfurVariant<LatexSnowFoxFemaleEntity>> EXP1_FEMALE = register("form_exp1/female",
+            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_FEMALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
             .nightVision().extraJumps(2).addAbility(ChangedAddonAbilitys.PSYCHIC_PULSE).addAbility(ChangedAddonAbilitys.PSYCHIC_HOLD).addAbility(ChangedAbilities.SWITCH_GENDER).transfurMode(TransfurMode.NONE));
 
-    public static final RegistryObject<TransfurVariant<Exp2MaleEntity>> EXP2_MALE = register("form_exp2/male",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.LATEX_SNOW_LEOPARD_MALE.get(),ChangedAddonModEntities.EXP_2_MALE)
+    public static final RegistryObject<TransfurVariant<Exp2MaleEntity>> EXP2_MALE = register("form_exp2/male",
+            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_MALE.get(),*/ChangedAddonModEntities.EXP_2_MALE)
             .transfurMode(TransfurMode.REPLICATION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).nightVision());
-    public static final RegistryObject<TransfurVariant<Exp2FemaleEntity>> EXP2_FEMALE = register("form_exp2/female",() -> TransfurVariant.Builder.of(ChangedTransfurVariants.LATEX_SNOW_LEOPARD_FEMALE.get(),ChangedAddonModEntities.EXP_2_FEMALE)
+    public static final RegistryObject<TransfurVariant<Exp2FemaleEntity>> EXP2_FEMALE = register("form_exp2/female",
+            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_FEMALE.get(),*/ChangedAddonModEntities.EXP_2_FEMALE)
             .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<Exp6Entity>> EXP6 = register("form_exp6",TransfurVariant.Builder.of(ChangedAddonModEntities.EXP_6)
@@ -124,9 +133,8 @@ public class AddonLatexVariant {
     }
 
     private static <T extends ChangedEntity> RegistryObject<TransfurVariant<T>> register(String name, TransfurVariant.Builder<T> builder) {
-        DeferredRegister var10000 = REGISTRY;
         Objects.requireNonNull(builder);
-        return var10000.register(name, builder::build);
+        return REGISTRY.register(name, builder::build);
     }
 
     private static <T extends ChangedEntity> RegistryObject<TransfurVariant<T>> register(String name, Supplier<TransfurVariant.Builder<T>> builder) {

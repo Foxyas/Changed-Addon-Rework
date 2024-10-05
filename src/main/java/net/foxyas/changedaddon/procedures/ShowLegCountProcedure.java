@@ -25,14 +25,14 @@ public class ShowLegCountProcedure {
 			type_form = type_form.replace(",", "");
 			type_form = type_form.replace("\\", "");
 			if ((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
-				legs = (double) VariantUtilProcedure.GetLegs(type_form);;
-				return new TranslatableComponent("text.changed_addon.legs").getString() + "" + legs * 1;
+				int LegsAmount = VariantUtilProcedure.GetLegs(type_form);
+				return new TranslatableComponent("text.changed_addon.legs").getString() + "" + LegsAmount * 1;
 			}
 		}
 		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			Item_form = (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("form");
-			legs = (double) VariantUtilProcedure.GetLegs(Item_form);;
-			return new TranslatableComponent("text.changed_addon.legs").getString() + "" + legs * 1;
+			int LegsAmount = VariantUtilProcedure.GetLegs(Item_form);
+			return new TranslatableComponent("text.changed_addon.legs").getString() + "" + LegsAmount * 1;
 		}
 		return (new TranslatableComponent("text.changed_addon.legs").getString()).replace("%s", "???");
 	}

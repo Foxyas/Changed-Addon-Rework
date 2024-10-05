@@ -166,6 +166,7 @@ public class ModelMirrorWhiteTiger extends AdvancedHumanoidModel<MirrorWhiteTige
 
     @Override
     public void setupAnim(@NotNull MirrorWhiteTigerEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        super.setupAnim(entity,limbSwing,limbSwingAmount,ageInTicks,netHeadYaw,headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 

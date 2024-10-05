@@ -171,6 +171,7 @@ public class ModelSnowFox extends AdvancedHumanoidModel<LatexSnowFoxEntity> impl
 
     @Override
     public void setupAnim(@NotNull LatexSnowFoxEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 
