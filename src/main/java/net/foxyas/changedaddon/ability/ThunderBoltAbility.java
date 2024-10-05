@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.variants.AddonLatexVariant;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -38,7 +38,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 	public boolean canUse(IAbstractChangedEntity entity) {
 		Player player = (Player) entity.getEntity();
 		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-		return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.KET_EXPERIMENT_009.get() || Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get() && !Spectator(entity.getEntity());
+		return player.getFoodData().getFoodLevel() >= 10 && Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get() || Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get() && !Spectator(entity.getEntity());
 	}
 
 	public static boolean Spectator(Entity entity){
@@ -55,7 +55,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 	@Override
 	public int getChargeTime(IAbstractChangedEntity entity) {
 		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
+		if (Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
 			return 15;
 		}
 		return 20;
@@ -64,7 +64,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 	@Override
 	public int getCoolDown(IAbstractChangedEntity entity) {
 		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
+		if (Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
 			return 15;
 		}
 		return 25;
@@ -73,10 +73,10 @@ public class ThunderBoltAbility extends SimpleAbility {
 
 	public float ReachAmount(IAbstractChangedEntity entity) {
 		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
+		if (Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
 			return 10;
 		}
-		if (Variant == AddonLatexVariant.KET_EXPERIMENT_009.get()){
+		if (Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get()){
 			return 5;
 		}
 		return 3.5F;

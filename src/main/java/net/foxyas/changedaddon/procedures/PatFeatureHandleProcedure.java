@@ -6,7 +6,7 @@ import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
-import net.foxyas.changedaddon.variants.AddonLatexVariant;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
@@ -105,8 +105,8 @@ public class PatFeatureHandleProcedure {
 	private static void handleLatexEntity(Entity player, Entity target, LevelAccessor world) {
 		boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant((Player) player) != null
-				&& ((ProcessTransfur.getPlayerTransfurVariant((Player) player)).is(AddonLatexVariant.Gendered.EXP2.getMaleVariant())
-				|| ProcessTransfur.getPlayerTransfurVariant((Player) player).is(AddonLatexVariant.Gendered.EXP2.getFemaleVariant())));
+				&& ((ProcessTransfur.getPlayerTransfurVariant((Player) player)).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+				|| ProcessTransfur.getPlayerTransfurVariant((Player) player).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
 		//if (!isPlayerTransfur) return;
 
 		if (!(target instanceof Experiment10Entity) && !(target instanceof KetExperiment009Entity) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
@@ -131,12 +131,12 @@ public class PatFeatureHandleProcedure {
 		boolean isTargetTransfur = target.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
 
 		boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant((Player) player) != null
-				&& ((ProcessTransfur.getPlayerTransfurVariant((Player) player)).is(AddonLatexVariant.Gendered.EXP2.getMaleVariant())
-				|| ProcessTransfur.getPlayerTransfurVariant((Player) player).is(AddonLatexVariant.Gendered.EXP2.getFemaleVariant())));
+				&& ((ProcessTransfur.getPlayerTransfurVariant((Player) player)).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+				|| ProcessTransfur.getPlayerTransfurVariant((Player) player).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
 
 		boolean isTargetTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(target) != null
-				&& (ProcessTransfur.getPlayerTransfurVariant(target).is(AddonLatexVariant.Gendered.EXP2.getMaleVariant())
-				|| ProcessTransfur.getPlayerTransfurVariant(target).is(AddonLatexVariant.Gendered.EXP2.getFemaleVariant())));
+				&& (ProcessTransfur.getPlayerTransfurVariant(target).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+				|| ProcessTransfur.getPlayerTransfurVariant(target).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
 
 		
 		if ((isPlayerTransfur || !isPlayerTransfur) && (!isTargetTransfur || isTargetTransfur) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {

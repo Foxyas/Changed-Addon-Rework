@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.variants.AddonLatexVariant;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -44,7 +44,7 @@ public class WitherWaveAbility  extends SimpleAbility {
         Player player = (Player) entity.getEntity();
         TransfurVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
         TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-        return player.getFoodData().getFoodLevel() >= 10 && Variant == AddonLatexVariant.EXPERIMENT_10.get() && !Spectator(entity.getEntity());
+        return player.getFoodData().getFoodLevel() >= 10 && Variant == ChangedAddonTransfurVariants.EXPERIMENT_10.get() && !Spectator(entity.getEntity());
     }
 
     public static boolean Spectator(Entity entity){

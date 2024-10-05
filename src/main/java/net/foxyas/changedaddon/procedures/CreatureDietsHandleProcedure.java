@@ -4,7 +4,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
-import net.foxyas.changedaddon.variants.AddonLatexVariant;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
@@ -120,7 +120,7 @@ public class CreatureDietsHandleProcedure {
     }
 
     private static DietType determineDietType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
-        List<TransfurVariant<?>> NoDietList = List.of(AddonLatexVariant.REYN.get());
+        List<TransfurVariant<?>> NoDietList = List.of(ChangedAddonTransfurVariants.REYN.get());
         if (NoDietList.contains(variant)) {
             return null;
         }
@@ -152,17 +152,17 @@ public class CreatureDietsHandleProcedure {
     }
 
     private static boolean isSpecialDiet(TransfurVariant<?> variant) {
-        return variant == AddonLatexVariant.WOLFY.get() ||
-                variant.is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getMaleVariant()) ||
-                variant.is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getFemaleVariant()) ||
+        return variant == ChangedAddonTransfurVariants.WOLFY.get() ||
+                variant.is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getMaleVariant()) ||
+                variant.is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getFemaleVariant()) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:special_diet")));
     }
 
     private static boolean isFoxDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("fox") ||
-                variant.is(AddonLatexVariant.Gendered.EXP1.getMaleVariant()) ||
-                variant.is(AddonLatexVariant.Gendered.EXP1.getFemaleVariant()) ||
+                variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getMaleVariant()) ||
+                variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getFemaleVariant()) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:fox_diet")));
     }

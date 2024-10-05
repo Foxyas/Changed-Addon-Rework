@@ -32,6 +32,8 @@ public class VariantUtilProcedure {
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				ChangedEntity InstanceEntity = variant.getEntityType().create(player.level);
+                assert InstanceEntity != null;
+                InstanceEntity.setUnderlyingPlayer(player);
 				TransfurVariantInstance<?> Instance = new TransfurVariantInstance<>(variant,player);
 				return variant == null ? 0f : (float) (InstanceEntity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) - BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
 			} else {
@@ -49,6 +51,8 @@ public class VariantUtilProcedure {
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				ChangedEntity InstanceEntity = variant.getEntityType().create(player.level);
+				assert InstanceEntity != null;
+				InstanceEntity.setUnderlyingPlayer(player);
 				TransfurVariantInstance<?> Instance = new TransfurVariantInstance<>(variant,player);
 				return variant == null ? 0f : (float) (InstanceEntity.getAttributeBaseValue(ForgeMod.SWIM_SPEED.get()) - BASE_ATTRIBUTES.get().getBaseValue(ForgeMod.SWIM_SPEED.get()));
 			} else {
@@ -66,6 +70,8 @@ public class VariantUtilProcedure {
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				ChangedEntity Instance = variant.getEntityType().create(player.level);
+				assert Instance != null;
+				Instance.setUnderlyingPlayer(player);
 				return variant == null ? 0 : (Instance.getMaxHealth() - Player.MAX_HEALTH);
 			} else {
 				return 0;

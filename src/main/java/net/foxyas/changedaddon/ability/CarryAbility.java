@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.foxyas.changedaddon.variants.AddonLatexVariant;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.beast.WhiteLatexCentaur;
@@ -52,12 +52,12 @@ public class CarryAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        return (Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.EXP2.getFemaleVariant())
-                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.EXP2.getMaleVariant())
-                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ORGANIC_SNOW_LEOPARD.getFemaleVariant())
-                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ORGANIC_SNOW_LEOPARD.getMaleVariant())
-                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getFemaleVariant())
-                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(AddonLatexVariant.Gendered.ADDON_PURO_KIND.getMaleVariant())
+        return (Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(ChangedAddonTransfurVariants.Gendered.ORGANIC_SNOW_LEOPARD.getFemaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(ChangedAddonTransfurVariants.Gendered.ORGANIC_SNOW_LEOPARD.getMaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getFemaleVariant())
+                || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getMaleVariant())
                 || Objects.requireNonNull(entity.getTransfurVariantInstance()).getParent().is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon:able_to_carry"))))
                 && !Spectator(entity.getEntity());
     }

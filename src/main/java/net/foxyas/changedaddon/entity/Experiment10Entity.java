@@ -1,9 +1,12 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -35,6 +38,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
@@ -283,6 +287,22 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 		super.addAdditionalSaveData(tag);
 		tag.putFloat("Tp_Cooldown",TpCooldown);
 		tag.putBoolean("Phase2",Phase2);
+	}
+
+	@Override
+	public void visualTick(Level level) {
+		super.visualTick(level);
+		if (this.getUnderlyingPlayer() != null){
+			ProcessTransfur.ifPlayerTransfurred(getUnderlyingPlayer(), variant -> {
+				if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10.get())) {
+					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 8);
+					Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE));
+					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));
+					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
+					Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
+				}
+			});
+		}
 	}
 
     @Override

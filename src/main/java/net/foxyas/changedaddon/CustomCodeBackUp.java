@@ -2,7 +2,8 @@
 // command backup
 "/particle dust_color_transition 1 0 0 2 0.54 0 0 ~ ~1 ~ 0.2 0.5 0.2 -0 101 force"
 
-else if (KetisClose && canwork) {
+
+else if (KetisClose && canwork) {
 				Minecraft minecraft = Minecraft.getInstance();
 				MusicManager musicManager = minecraft.getMusicManager();
 				net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
@@ -21,7 +22,7 @@
 
 
 
-//AddonLatexVariant
+//ChangedAddonTransfurVariants
 
 
 
@@ -44,7 +45,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class AddonLatexVariant {
+public class ChangedAddonTransfurVariants {
     //public static UseItemMode ABO = UseItemMode.create("ABO",false,true,true,true,true);
 	//this is For Not Show The Hot Bar
 	//.itemUseMode(ABO)
