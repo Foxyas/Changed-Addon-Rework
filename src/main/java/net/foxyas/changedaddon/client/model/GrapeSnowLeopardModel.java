@@ -239,6 +239,11 @@ public class GrapeSnowLeopardModel extends AdvancedHumanoidModel<Exp6Entity> imp
     }
 
     @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
+
+    @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         Head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         Torso.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

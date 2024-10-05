@@ -14,9 +14,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 
-import net.ltxprogrammer.changed.entity.beast.DarkLatexPup;
+import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 
 import net.foxyas.changedaddon.item.HazmatSuitItem;
 
@@ -24,9 +24,9 @@ import net.foxyas.changedaddon.item.HazmatSuitItem;
 public class EquipArmorInEntityProcedure {
 	@SubscribeEvent
 	public static void onRightClickEntity(PlayerInteractEvent.EntityInteractSpecific event) {
-		if (event.getPlayer().isShiftKeyDown() && event.getTarget() instanceof LatexEntity latexEntity) {
+		if (event.getPlayer().isShiftKeyDown() && event.getTarget() instanceof ChangedEntity ChangedEntity) {
 			ItemStack itemStack = event.getItemStack();
-			if (latexEntity instanceof DarkLatexPup) {
+			if (ChangedEntity instanceof DarkLatexWolfPup) {
 				return;
 			}
 			// Check if the item is an armor piece
@@ -36,21 +36,21 @@ public class EquipArmorInEntityProcedure {
 				}
 				// Proceed only on the server side
 				if (!event.getWorld().isClientSide()) {
-					equipOrSwapArmor(latexEntity, itemStack, armorItem, event.getPlayer(), event.getHand());
+					equipOrSwapArmor(ChangedEntity, itemStack, armorItem, event.getPlayer(), event.getHand());
 				}
 			} else {
 				if (!event.getWorld().isClientSide()) {
 					if (itemStack.isEmpty()) {
-						checkClickLocationAndUnequipArmor(latexEntity, event.getPlayer(), event.getHand(), event.getLocalPos());
+						checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), event.getLocalPos());
 					}
 				}
 			}
 		}
 	}
 
-	public static void equipOrSwapArmor(LatexEntity entity, ItemStack itemStack, ArmorItem armorItem, Player player, InteractionHand hand) {
+	public static void equipOrSwapArmor(ChangedEntity entity, ItemStack itemStack, ArmorItem armorItem, Player player, InteractionHand hand) {
 		// Check if the entity is tamable and has an owner
-		if (entity instanceof TamableLatexEntity latexEntity && latexEntity.getOwner() != null && latexEntity.getOwner() == player) {
+		if (entity instanceof TamableLatexEntity ChangedEntity && ChangedEntity.getOwner() != null && ChangedEntity.getOwner() == player) {
 			EquipmentSlot armorSlot = armorItem.getSlot(); // Determine the correct armor slot
 			ItemStack currentArmor = entity.getItemBySlot(armorSlot); // Get the current armor in the slot
 			// If the slot is already occupied and the item in the player's hand is a different armor piece
@@ -63,7 +63,7 @@ public class EquipArmorInEntityProcedure {
 		}
 	}
 
-	private static void swapArmor(LatexEntity entity, Player player, InteractionHand hand, EquipmentSlot armorSlot, ItemStack currentArmor, ItemStack newArmor, ArmorItem armorItemStack) {
+	private static void swapArmor(ChangedEntity entity, Player player, InteractionHand hand, EquipmentSlot armorSlot, ItemStack currentArmor, ItemStack newArmor, ArmorItem armorItemStack) {
 		// Remove the current armor from the slot
 		entity.setItemSlot(armorSlot, ItemStack.EMPTY); // Remove the old armor from the slot
 		// Equip the new armor
@@ -79,7 +79,7 @@ public class EquipArmorInEntityProcedure {
 		}
 	}
 
-	private static void equipArmor(LatexEntity entity, Player player, InteractionHand hand, ItemStack itemStack, EquipmentSlot armorSlot, ArmorItem armorItemStack) {
+	private static void equipArmor(ChangedEntity entity, Player player, InteractionHand hand, ItemStack itemStack, EquipmentSlot armorSlot, ArmorItem armorItemStack) {
 		// Remove one unit of the new armor and equip it in the entity's slot
 		entity.setItemSlot(armorSlot, itemStack.split(1)); // Equip one unit of the new armor
 		if (armorItemStack.getEquipSound() != null) {
@@ -98,7 +98,7 @@ public class EquipArmorInEntityProcedure {
 		}
 	}
 
-	private static void checkClickLocationAndUnequipArmor(LatexEntity entity, Player player, InteractionHand hand, Vec3 clickPos) {
+	private static void checkClickLocationAndUnequipArmor(ChangedEntity entity, Player player, InteractionHand hand, Vec3 clickPos) {
 		Vec3 eyePosition = player.getEyePosition(1.0F);
 		Vec3 playerLook = player.getViewVector(1.0F);
 		Vec3 entityPosition = new Vec3(entity.getX(), entity.getY(), entity.getZ());

@@ -33,7 +33,7 @@ public class IflatexentityProcedure {
 		} else if (target == null) {
 			return false;
 		}
-		if ((target instanceof net.ltxprogrammer.changed.entity.LatexEntity || target instanceof Monster) && !target.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex")))) {
+		if ((entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity || target instanceof Monster) && !target.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex")))) {
 			return true;
 		} else if (target instanceof Player && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
 				&& !(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur) {

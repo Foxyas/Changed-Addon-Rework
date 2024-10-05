@@ -219,7 +219,10 @@ public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity>
         return Torso;
     }
 
-
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {

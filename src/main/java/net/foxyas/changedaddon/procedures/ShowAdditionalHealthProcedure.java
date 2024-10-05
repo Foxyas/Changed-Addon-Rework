@@ -26,14 +26,14 @@ public class ShowAdditionalHealthProcedure {
 			type_form = type_form.replace(",", "");
 			type_form = type_form.replace("\\", "");
 			if ((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
-				Hp = (double) VariantUtilProcedure.GetExtraHp(type_form);;
+				Hp = (double) VariantUtilProcedure.GetExtraHp(type_form, (Player) entity);;
 				return new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
 						+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString();
 			}
 		}
 		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			Item_form = (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("form");
-			Hp = (double) VariantUtilProcedure.GetExtraHp(Item_form);;
+			Hp = (double) VariantUtilProcedure.GetExtraHp(type_form, (Player) entity);;
 			return new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
 					+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString();
 		}

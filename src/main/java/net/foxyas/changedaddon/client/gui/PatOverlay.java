@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.gui;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModKeyMappings;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
@@ -59,14 +59,14 @@ public class PatOverlay {
         boolean isPatableByTag = PatEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
                 new ResourceLocation("changed_addon:patable_entitys")));
         if (PatEntity instanceof Player Patplayer){
-            boolean isPatPlayerTransfur = ProcessTransfur.getPlayerLatexVariant(Patplayer) != null;
-            boolean isPlayerTransfur = ProcessTransfur.getPlayerLatexVariant(player) != null;
+            boolean isPatPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(Patplayer) != null;
+            boolean isPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(player) != null;
             if (isPatPlayerTransfur){
                 return true;
             } else if (isPlayerTransfur) {
                 return true;
             }
-        } else if (PatEntity instanceof LatexEntity){
+        } else if (PatEntity instanceof ChangedEntity){
             return true;
         }
         return isPatableByTag;

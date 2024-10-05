@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -11,9 +12,10 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-import static net.ltxprogrammer.changed.entity.BasicPlayerInfo.SIZE_TOLERANCE;
-
 public class SizeManipulatorProcedure {
+
+	public static float SIZE_TOLERANCE = BasicPlayerInfo.getSizeTolerance();
+
 	public static void execute(CommandContext<CommandSourceStack> arguments, Entity entity) {
 		if (entity == null) return;
 		double amount = DoubleArgumentType.getDouble(arguments, "size");
@@ -30,11 +32,11 @@ public class SizeManipulatorProcedure {
 		return OverrideSize ? Mth.clamp(size, 1.0f - SIZE_TOLERANCE, 1.0f + SIZE_TOLERANCE) : size;
 
 		/*
-		if(newSize < 1.0f - SIZE_TOLERANCE) {
-				player.displayClientMessage(new TextComponent ("Size value is too low: " + newSize + ", The Size Value is going to be auto set to 0.95"),true);
-			} else if (newSize > 1.0f + SIZE_TOLERANCE) {
-				player.displayClientMessage(new TextComponent ("Size value is too high: " + newSize + ", The Size Value is going to be auto set to 1.05"),true);
-			}
+		* if(newSize < 1.0f - SIZE_TOLERANCE) {
+		*		player.displayClientMessage(new TextComponent ("Size value is too low: " + newSize + ", The Size Value is going to be auto set to 0.95"),true);
+		*	} else if (newSize > 1.0f + SIZE_TOLERANCE) {
+		*		player.displayClientMessage(new TextComponent ("Size value is too high: " + newSize + ", The Size Value is going to be auto set to 1.05"),true);
+		*	}
 		*/
 	}
 

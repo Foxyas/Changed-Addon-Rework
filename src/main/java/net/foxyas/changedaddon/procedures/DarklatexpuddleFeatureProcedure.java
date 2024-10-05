@@ -72,7 +72,7 @@ public class DarklatexpuddleFeatureProcedure {
 					if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame || entity instanceof ThrownExperienceBottle || entity instanceof ExperienceOrb)) {
 						if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")) {
 							if (!(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).contains("dark_latex")) {
-								if (entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:changed_creature"))) || entityiterator instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
+								if (entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:changed_creature"))) || entityiterator instanceof net.ltxprogrammer.changed.entity.ChangedEntity) {
 									if ((ForgeRegistries.ENTITIES.getKey(entityiterator.getType()).toString()).contains("dark_latex")) {
 										if (entityiterator instanceof Mob _entity)
 											_entity.getNavigation().moveTo(x, y, z, 0.3);

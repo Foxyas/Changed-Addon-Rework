@@ -1,34 +1,24 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
-import net.foxyas.changedaddon.init.ChangedAddonModAttributes;
-import net.foxyas.changedaddon.init.ChangedAddonModConfigs;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
-import net.ltxprogrammer.changed.Changed;
-import net.ltxprogrammer.changed.entity.LatexEntity;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Objects;
-
-import net.minecraft.world.Difficulty;
 
 @Mod.EventBusSubscriber
 public class DolatexinfectiontickProcedure {
@@ -37,8 +27,8 @@ public class DolatexinfectiontickProcedure {
     private static final int EASY_TICK_DELAY = 100;
 
     private static float getValueToApply(Level world, Player player) {
-        //float MAX_TRANSFUR_PROGRESS = ((float) Objects.requireNonNull(player.getAttribute(ChangedAttributes.TRANSFUR_TOLERANCE.get())).getValue());
-        float MAX_TRANSFUR_PROGRESS = Changed.config.server.transfurTolerance.get().floatValue();
+        float MAX_TRANSFUR_PROGRESS = ((float) Objects.requireNonNull(player.getAttribute(ChangedAttributes.TRANSFUR_TOLERANCE.get())).getValue());
+        //float MAX_TRANSFUR_PROGRESS = Changed.config.server.transfurTolerance.get().floatValue();
         return switch (world.getDifficulty()) {
             case HARD -> MAX_TRANSFUR_PROGRESS * (12.5f / 100);
             case NORMAL -> MAX_TRANSFUR_PROGRESS * (6.25f / 100);
@@ -85,15 +75,12 @@ public class DolatexinfectiontickProcedure {
 
         int tickCounter = (int) playerVariables.LatexInfectionCooldown;
 
-        ProcessTransfur.TransfurProgress transfurProgress = ProcessTransfur.getPlayerTransfurProgress(player);
+        float transfurProgress = ProcessTransfur.getPlayerTransfurProgress(player);
         float mathnumber = getValueToApply(player.getLevel(), player);
         int tickDelay = getTickDelayForDifficulty(player.getLevel());
 
         if (ChangedAddonConfigsConfiguration.ALWAYS_INFECT.get()) {
-            if (transfurProgress == null) {
-                return;
-            }
-            if (transfurProgress.progress() > 0) {
+            if (transfurProgress > 0) {
                 if (!getInfected(player)) {
                     setInfected(player, true);
                 }
@@ -108,9 +95,7 @@ public class DolatexinfectiontickProcedure {
                 return;
             }
         } else {
-            if (transfurProgress == null) {
-                return;
-            } else if (!(transfurProgress.progress() > 0)) {
+            if (!(transfurProgress > 0)) {
                 return;
             } else if (player.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get())) {
                 return;
@@ -121,8 +106,7 @@ public class DolatexinfectiontickProcedure {
                 && (player.level.getDifficulty() != Difficulty.PEACEFUL)) {
 
             if (tickCounter >= tickDelay) {
-                ProcessTransfur.setPlayerTransfurProgress(player,
-                        new ProcessTransfur.TransfurProgress(transfurProgress.progress() + mathnumber, transfurProgress.variant()));
+                ProcessTransfur.setPlayerTransfurProgress(player, transfurProgress + mathnumber);
                 playerVariables.LatexInfectionCooldown = 0;
             } else {
                 playerVariables.LatexInfectionCooldown++;

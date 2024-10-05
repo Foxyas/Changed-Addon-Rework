@@ -4,36 +4,24 @@ package net.foxyas.changedaddon.client.model;
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.DazedEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
-import net.ltxprogrammer.changed.client.renderer.model.LightLatexWolfMaleModel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.util.Mth;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.model.EntityModel;
-
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator.*;
-
-public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implements AdvancedHumanoidModelInterface<DazedEntity,DazedLatexModel> {
+public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implements AdvancedHumanoidModelInterface<DazedEntity, DazedLatexModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "dazed_latex"), "main");
 
@@ -72,9 +60,9 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
     }
-    
+
     public static LayerDefinition createBodyLayer() {
-         MeshDefinition meshdefinition = new MeshDefinition();
+        MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         PartDefinition RightLeg = partdefinition.addOrReplaceChild("RightLeg", CubeListBuilder.create(), PartPose.offset(-2.5F, 10.5F, 0.0F));
@@ -157,40 +145,44 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
     }
 
     @Override
-    public void prepareMobModel (DazedEntity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public void prepareMobModel(DazedEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
-   	 }
-
-   /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
-        if (type.isArm())
-            corrector.translate(-0.02f, 0.12f, 0.12f);
-        return corrector;
     }
- */
-		@Override
-    	public void setupHand() {
+
+    /* public PoseStack getPlacementCorrectors(CorrectorType type) {
+         PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
+         if (type.isArm())
+             corrector.translate(-0.02f, 0.12f, 0.12f);
+         return corrector;
+     }
+  */
+    @Override
+    public void setupHand() {
         animator.setupHand();
-    	}
+    }
 
 
     @Override
     public void setupAnim(@NotNull DazedEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        }
+    }
 
-        public ModelPart getArm (HumanoidArm p_102852) {
-            return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
-        }
+    public ModelPart getArm(HumanoidArm p_102852) {
+        return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
+    }
 
-        public ModelPart getHead() {
+    public ModelPart getHead() {
         return this.Head;
-        }
+    }
 
-        public ModelPart getTorso() {
+    public ModelPart getTorso() {
         return Torso;
-        }
+    }
 
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
 
 
     @Override
@@ -202,9 +194,9 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
         RightLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         LeftLeg.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
-    
-        @Override
-        public HumanoidAnimator<DazedEntity, DazedLatexModel> getAnimator() {
-       	 return animator;
-        }
+
+    @Override
+    public HumanoidAnimator<DazedEntity, DazedLatexModel> getAnimator() {
+        return animator;
+    }
 }

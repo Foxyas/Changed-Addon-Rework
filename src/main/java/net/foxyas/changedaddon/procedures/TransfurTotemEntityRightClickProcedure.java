@@ -145,7 +145,7 @@ public class TransfurTotemEntityRightClickProcedure {
 						}
 					} else {
 						if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))
-								|| entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex"))) || entity instanceof net.ltxprogrammer.changed.entity.LatexEntity) {
+								|| entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:organic_latex"))) || entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity) {
 							string = (ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).replace(":", ":form_");
 							if ((string).equals("changed_addon:form_dazed")) {
 								string = "changed_addon:form_dazed_latex";

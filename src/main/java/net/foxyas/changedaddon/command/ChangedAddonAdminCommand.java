@@ -104,7 +104,7 @@ public class ChangedAddonAdminCommand {
 
 					SetPlayerTransfurProgressCommandProcedure.execute(arguments, entity);
 					return 0;
-				}))))).then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
+				}))))).then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
@@ -126,9 +126,9 @@ public class ChangedAddonAdminCommand {
 						entity = FakePlayerFactory.getMinecraft(world);
 					Direction direction = entity.getDirection();
 
-					SetDefaultValueProcedure.execute(entity);
+					SetDefaultValueProcedure.execute(arguments, entity);
 					return 0;
-				}))).then(Commands.literal("GetMaxTransfurTolerance").executes(arguments -> {
+				})))).then(Commands.literal("GetMaxTransfurTolerance").executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();

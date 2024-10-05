@@ -239,6 +239,10 @@ public class FemaleExp2Model extends AdvancedHumanoidModel<Exp2FemaleEntity> imp
         return Torso;
     }
 
+    @Override
+    public ModelPart getLeg(HumanoidArm humanoidArm) {
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+    }
 
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
