@@ -40,7 +40,7 @@
             "logicField": 1,
             "numberField": 0.0,
             "textDefault": "",
-            "comment": "Turn On the SlimModel Of The Partial Snow Leoapard Transfur (NEED RESTART FOR APPLY)",
+            "comment": "Turn On the SlimModel Of The Partial Snow Leopard Transfur (NEED RESTART FOR APPLY AND IS DEPRECATED)",
             "vardisplay": "Slim Models",
             "varname": "slimmodel",
             "enablecomment": true,

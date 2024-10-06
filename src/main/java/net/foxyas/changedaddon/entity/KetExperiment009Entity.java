@@ -270,13 +270,20 @@ public class KetExperiment009Entity extends ChangedEntity {
 		super.visualTick(level);
 		if (this.getUnderlyingPlayer() != null){
 			ProcessTransfur.ifPlayerTransfurred(getUnderlyingPlayer(), variant -> {
-				if (variant.is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get()) || variant.is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get())) {
-					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 10);
+				if (variant.is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get())) {
+					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 20);
+					Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE));
+					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));
+					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
+					Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
+				} else if (variant.is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get())) {
+					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 40);
 					Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE));
 					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));
 					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
 					Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
 				}
+
 			});
 		}
 	}

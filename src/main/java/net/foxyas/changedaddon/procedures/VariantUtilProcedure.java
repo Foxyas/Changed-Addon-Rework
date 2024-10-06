@@ -35,7 +35,7 @@ public class VariantUtilProcedure {
                 assert InstanceEntity != null;
                 InstanceEntity.setUnderlyingPlayer(player);
 				TransfurVariantInstance<?> Instance = new TransfurVariantInstance<>(variant,player);
-				return variant == null ? 0f : (float) (InstanceEntity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) - BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
+				return variant == null ? 0f : (float) ((InstanceEntity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * 0.1F) - BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
 			} else {
 				return 0f;
 			}

@@ -47,7 +47,8 @@ public class ShowExtraTransfurInfoProcedure {
 		double Speed = 0;
 		double landSpeed = 0;
 		double JumpLevel = 0;
-		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")) || itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_tipped_arrow"))) {
+		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")) || itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_tipped_arrow"))
+				|| itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_flask"))) {
 			if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_ket_experiment009_boss")) {
 				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
 			} else if ((itemstack.getOrCreateTag().getString("form")).startsWith("changed_addon:form_exp1")) {
@@ -73,8 +74,8 @@ public class ShowExtraTransfurInfoProcedure {
 					canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(Item_form);;
 					tooltip.add(new TextComponent(((new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
 							+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString()) + "§r\n"
-							+ (new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 0 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c-" + (float) (landSpeed * 100) + "%")) + "§r\n"
-							+ (new TranslatableComponent("text.changed_addon.swimspeed").getString() + "" + (Speed >= 0 ? "\u00A7a+" + (float) (Speed * 100) + "%" : "\u00A7c-" + (float) (Speed * 100) + "%")) + "§r\n"
+							+ (new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 0 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c" + (float) (landSpeed * 100) + "%")) + "§r\n"
+							+ (new TranslatableComponent("text.changed_addon.swimspeed").getString() + "" + (Speed >= 0 ? "\u00A7a+" + (float) (Speed * 100) + "%" : "\u00A7c" + (float) (Speed * 100) + "%")) + "§r\n"
 							+ (new TranslatableComponent("text.changed_addon.jumpStrength").getString() + "" + (JumpLevel >= 1 ? "\u00A7a+" + Math.round(JumpLevel * 100) + "%" : "\u00A7c-" + Math.round(JumpLevel * 100) + "%")) + "§r\n"
 							+ (new TranslatableComponent("text.changed_addon.canGlide/Fly").getString() + "" + (canFlyOrGlide == true ? "\u00A7a" + canFlyOrGlide + "\u00A7r" : "\u00A7c" + canFlyOrGlide + "\u00A7r")))));
 				}

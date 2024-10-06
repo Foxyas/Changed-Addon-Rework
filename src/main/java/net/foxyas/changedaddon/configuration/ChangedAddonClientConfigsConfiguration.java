@@ -15,7 +15,7 @@ public class ChangedAddonClientConfigsConfiguration {
 		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
 		BUILDER.pop();
 		BUILDER.push("Slim Models");
-		SLIMMODEL = BUILDER.comment("Turn On the SlimModel Of The Partial Snow Leoapard Transfur (NEED RESTART FOR APPLY)").define("Slim Models", false);
+		SLIMMODEL = BUILDER.comment("Turn On the SlimModel Of The Partial Snow Leopard Transfur (NEED RESTART FOR APPLY AND IS DEPRECATED)").define("Slim Models", false);
 		BUILDER.pop();
 		BUILDER.push("Custom Hair Color");
 		FEMALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color For the Female Sneps [BioSynth and Exp2]").define("Females Sneps Custom Hair Color", false);

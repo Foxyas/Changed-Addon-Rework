@@ -295,7 +295,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 		if (this.getUnderlyingPlayer() != null){
 			ProcessTransfur.ifPlayerTransfurred(getUnderlyingPlayer(), variant -> {
 				if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10.get())) {
-					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 8);
+					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 10);
 					Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE));
 					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));
 					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
