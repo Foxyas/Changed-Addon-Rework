@@ -4,6 +4,7 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
@@ -43,6 +44,7 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameLatexEntity {
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((0));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0F);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17f);

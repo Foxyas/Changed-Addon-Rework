@@ -6,8 +6,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
-import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
@@ -60,6 +59,7 @@ public class KetExperiment009Entity extends ChangedEntity {
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((3));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((425));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15);
@@ -276,7 +276,7 @@ public class KetExperiment009Entity extends ChangedEntity {
 					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));
 					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
 					Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
-				} else if (variant.is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get())) {
+				}  else if (variant.is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get())) {
 					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 40);
 					Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE));
 					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));

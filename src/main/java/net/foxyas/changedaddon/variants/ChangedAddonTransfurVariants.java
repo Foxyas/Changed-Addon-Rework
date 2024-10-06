@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.variants;
 
-import net.foxyas.changedaddon.ChangedAddonEntitys;
+import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.entity.*;

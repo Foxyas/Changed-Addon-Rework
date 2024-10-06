@@ -1,29 +1,27 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.client.player.AbstractClientPlayer;
-
-import net.ltxprogrammer.changed.util.Color3;
-
-import net.foxyas.changedaddon.ChangedAddonEntitys;
 
 public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable,ComplexRenderer {
 	public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -40,6 +38,7 @@ public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements Pow
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((2));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0F);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.10f);

@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
@@ -62,6 +63,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((3));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);

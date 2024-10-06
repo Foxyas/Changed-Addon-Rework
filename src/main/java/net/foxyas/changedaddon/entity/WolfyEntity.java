@@ -1,32 +1,30 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.HairStyle;
+import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
-import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.network.NetworkHooks;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.protocol.Packet;
-
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -46,6 +44,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
+		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((1));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((14));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0f);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.20f);
