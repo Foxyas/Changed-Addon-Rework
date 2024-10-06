@@ -63,7 +63,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((3));
+		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);
@@ -252,6 +252,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
+		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 300);
 		builder = builder.add(Attributes.ARMOR, 20);

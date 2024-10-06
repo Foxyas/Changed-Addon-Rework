@@ -25,6 +25,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Objects;
+
 public class BunyEntity extends ChangedEntity {
 	public BunyEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.BUNY.get(), world);
@@ -40,7 +42,7 @@ public class BunyEntity extends ChangedEntity {
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((3));
+		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((30));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15f);
@@ -120,6 +122,7 @@ public class BunyEntity extends ChangedEntity {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
+		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 24);
 		builder = builder.add(Attributes.ARMOR, 0);

@@ -29,6 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
@@ -56,7 +57,7 @@ public class LatexSnowFoxEntity extends ChangedEntity implements GenderedEntity,
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((3));
+		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.1f);
@@ -167,6 +168,7 @@ public class LatexSnowFoxEntity extends ChangedEntity implements GenderedEntity,
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
+		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 24);
 		builder = builder.add(Attributes.ARMOR, 0);

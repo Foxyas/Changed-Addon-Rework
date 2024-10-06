@@ -23,6 +23,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.PlayMessages;
 
+import java.util.Objects;
+
 public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable,ComplexRenderer {
 	public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), world);
@@ -38,7 +40,7 @@ public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements Pow
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
-		attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get()).setBaseValue((2));
+		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((2));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0F);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.10f);
@@ -54,11 +56,12 @@ public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements Pow
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 24);
-		builder = builder.add(Attributes.ARMOR, 4);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 40);
+		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+		builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder.add(Attributes.MAX_HEALTH, 24);
+		builder.add(Attributes.ARMOR, 4);
+		builder.add(Attributes.ATTACK_DAMAGE, 3);
+		builder.add(Attributes.FOLLOW_RANGE, 40);
 		return builder;
 	}
 
