@@ -45,9 +45,9 @@ public class PatOverlay {
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity)) {
                         if (!PatInfo(entity).getString().isEmpty()){
                             Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo(lookedEntity), 237, 260, -1);
-                            Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo2(lookedEntity), 237, 251, -1);
+                                    PatInfo(lookedEntity), 237 - PatInfo2(lookedEntity).getString().length(), 251, -1);
+                            /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                    PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
 
                         }
                     }
@@ -78,7 +78,7 @@ public class PatOverlay {
     private static TranslatableComponent PatInfo(Entity lookedEntity) {
         String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
         if (lookedEntity instanceof LivingEntity) {
-            TranslatableComponent patMessage = new TranslatableComponent("changed_addon.info.is_patable", key.isEmpty() ? "Not Key Set" : key);
+            TranslatableComponent patMessage = new TranslatableComponent("changed_addon.info.is_patable", key.isEmpty() ? "Not Key Set" : key, lookedEntity.getDisplayName().getString());
             patMessage.withStyle(style ->
                     style.withColor(Color3.getColor("#FFFFFF").toInt())
                             .withBold(true)
@@ -90,7 +90,6 @@ public class PatOverlay {
     }
 
     private static TextComponent PatInfo2(Entity lookedEntity) {
-        String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
         if (lookedEntity instanceof LivingEntity) {
             TextComponent patMessage = new TextComponent(lookedEntity.getDisplayName().getString());
             patMessage.withStyle(style ->
