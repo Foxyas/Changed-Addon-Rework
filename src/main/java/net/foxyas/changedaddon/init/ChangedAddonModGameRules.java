@@ -20,4 +20,5 @@ public class ChangedAddonModGameRules {
 	public static final GameRules.Key<GameRules.BooleanValue> NEED_PERMITION_FOR_009_TRANSFUR = GameRules.register("needPermitionFor009Transfur", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
 	public static final GameRules.Key<GameRules.IntegerValue> DO_DARK_LATEX_MASK_TRANSFUR = GameRules.register("doDarkLatexMaskTransfur", GameRules.Category.PLAYER, GameRules.IntegerValue.create(0));
 	public static final GameRules.Key<GameRules.BooleanValue> CHANGED_ADDON_CREATURE_DIETS = GameRules.register("changedAddonCreatureDiets", GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
+	public static final GameRules.Key<GameRules.BooleanValue> NEED_PERMITION_FOR_BOSS_TRANSFUR = GameRules.register("needPermitionForBossTransfur", GameRules.Category.MISC, GameRules.BooleanValue.create(true));
 }

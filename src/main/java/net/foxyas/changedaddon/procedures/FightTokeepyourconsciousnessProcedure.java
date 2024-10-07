@@ -40,7 +40,7 @@ public class FightTokeepyourconsciousnessProcedure {
 
 	@SubscribeEvent
 	public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
-		if (event.player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHTTOKEEPCONSCIOUSNESS)){
+		if (!event.player.getLevel().isClientSide() && !event.keepConscious && event.player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHTTOKEEPCONSCIOUSNESS)){
 			event.shouldKeepConscious = true;
 			if (event.player instanceof ServerPlayer _ent) {
 				BlockPos _bpos = event.player.getOnPos();

@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.Experiment10Entity;
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
+import net.foxyas.changedaddon.entity.*;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,8 +21,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.client.Minecraft;
 
-import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
-import net.foxyas.changedaddon.entity.Experiment009Entity;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -55,9 +52,19 @@ public class MusicPlayerProcedure {
                 return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
             }
         }.compareDistOf(x, y, z)).findFirst().orElse(null);
+        Entity Exp10_2 = world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
+            Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+                return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+            }
+        }.compareDistOf(x, y, z)).findFirst().orElse(null);
         //Entity Exp10
 
         Entity Ket = world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
+            Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
+                return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
+            }
+        }.compareDistOf(x, y, z)).findFirst().orElse(null);
+        Entity Ket_2 = world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
             Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
                 return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
             }
@@ -80,8 +87,12 @@ public class MusicPlayerProcedure {
 
         boolean Exp009Phase1IsClose = !world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
         boolean Exp009Phase2IsClose = !world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
-        boolean KetExp9IsClose = !world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
-        boolean Exp10Close = !world.getEntitiesOfClass(Experiment10Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
+
+        boolean KetExp9IsClose = !world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty()
+                || !world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
+
+        boolean Exp10Close = !world.getEntitiesOfClass(Experiment10Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty()
+                || !world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
 
 
         if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get()) {
@@ -133,7 +144,7 @@ public class MusicPlayerProcedure {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
                     }
                 }
-                if (Ket != null && !Ket.isAlive()) {
+                if (Ket != null && (!Ket.isAlive() || !Ket_2.isAlive())) {
                     if (isExperiment009Phase2ThemePlaying) {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
                     }
@@ -154,7 +165,7 @@ public class MusicPlayerProcedure {
                 if (!isExperiment10ThemePlaying) {
                     musicManager.startPlaying(Experiment10_Theme_MusicInstance);
                 } else if (isExperiment10ThemePlaying && Exp10 != null) {
-                    if (!Exp10.isAlive()) {
+                    if (!Exp10.isAlive() || !Exp10_2.isAlive()) {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
                     }
                 }

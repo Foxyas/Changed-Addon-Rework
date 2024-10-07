@@ -20,8 +20,10 @@ import net.foxyas.changedaddon.client.renderer.MirrorWhiteTigerRenderer;
 import net.foxyas.changedaddon.client.renderer.LatexSnowFoxRenderer;
 import net.foxyas.changedaddon.client.renderer.LatexSnowFoxFemaleRenderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009Renderer;
+import net.foxyas.changedaddon.client.renderer.KetExperiment009BossRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10Renderer;
+import net.foxyas.changedaddon.client.renderer.Experiment10BossRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009phase2Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.Exp6Renderer;
@@ -56,5 +58,7 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.ERIK.get(), ErikRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXP_6.get(), Exp6Renderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.REYN.get(), ReynRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), Experiment10BossRenderer::new);
 	}
 }

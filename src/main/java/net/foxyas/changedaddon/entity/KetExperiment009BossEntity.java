@@ -41,34 +41,34 @@ import java.util.UUID;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class KetExperiment009Entity extends ChangedEntity {
+public class KetExperiment009BossEntity extends ChangedEntity {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private boolean Phase2;
 
-	public KetExperiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.KET_EXPERIMENT_009.get(), world);
+	public KetExperiment009BossEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS.get(), world);
 	}
 
-	public KetExperiment009Entity(EntityType<KetExperiment009Entity> type, Level world) {
+	public KetExperiment009BossEntity(EntityType<KetExperiment009BossEntity> type, Level world) {
 		super(type, world);
 		this.setAttributes(getAttributes());
 		maxUpStep = 0.6f;
-		xpReward = 150;
+		xpReward = 3000;
 		setNoAi(false);
 		setPersistenceRequired();
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
 		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6));
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 20));
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((425));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15);
-		attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.125));
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE) + 5);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR) + 4);
-		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
-		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
-		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK));
+		attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1));
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(15);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
+		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.85);
 	}
 
 	@Override
@@ -86,6 +86,8 @@ public class KetExperiment009Entity extends ChangedEntity {
 		}
 		return super.getMeleeAttackRangeSqr(target);
 	}
+
+
 
 	@Override
 	public Color3 getHairColor(int i) {
@@ -233,11 +235,11 @@ public class KetExperiment009Entity extends ChangedEntity {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3);
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 1.15);
-		builder = builder.add(Attributes.MAX_HEALTH, 40);
-		builder = builder.add(Attributes.ARMOR, 4);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
+		builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+		builder = builder.add(Attributes.MAX_HEALTH, 425);
+		builder = builder.add(Attributes.ARMOR, 40);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
@@ -272,15 +274,13 @@ public class KetExperiment009Entity extends ChangedEntity {
     @Override
     public void baseTick() {
         super.baseTick();
-		if (this.getUnderlyingPlayer() == null){
-			updateSwimmingMovement();
-			Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
-			SetSpeed(this);
-			CrawSystem(this.getTarget());
-		}
+        updateSwimmingMovement();
+        Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
+		SetSpeed(this);
+        CrawSystem(this.getTarget());
     }
 
-	public void SetSpeed(KetExperiment009Entity entity) {
+	public void SetSpeed(KetExperiment009BossEntity entity) {
 		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.4, AttributeModifier.Operation.MULTIPLY_BASE);
 		if (entity.getPose() == Pose.SWIMMING) {
 			if (!((entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(AttibuteChange)))) {

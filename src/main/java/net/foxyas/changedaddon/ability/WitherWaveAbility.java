@@ -42,9 +42,11 @@ public class WitherWaveAbility  extends SimpleAbility {
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
         Player player = (Player) entity.getEntity();
-        TransfurVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
+        TransfurVariantInstance<?> Instace = ProcessTransfur.getPlayerTransfurVariant(player);
         TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-        return player.getFoodData().getFoodLevel() >= 10 && Variant == ChangedAddonTransfurVariants.EXPERIMENT_10.get() && !Spectator(entity.getEntity());
+        return player.getFoodData().getFoodLevel() >= 10
+                && (Variant == ChangedAddonTransfurVariants.EXPERIMENT_10.get() || Variant == ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())
+                && !Spectator(entity.getEntity());
     }
 
     public static boolean Spectator(Entity entity){

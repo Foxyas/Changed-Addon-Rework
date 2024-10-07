@@ -11163,6 +11163,92 @@
         ]
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "KetExperiment009Boss",
+      "type": "livingentity",
+      "sortid": 561,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "ket_experiment_009_boss",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/KetExperiment009BossRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/KetExperiment009BossEntity.java"
+        ]
+      }
+    },
+    {
+      "name": "Experiment10Boss",
+      "type": "livingentity",
+      "sortid": 562,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "experiment_10_boss",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/Experiment10BossRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/Experiment10BossEntity.java"
+        ]
+      }
+    },
+    {
+      "name": "NeedPermitionForBossTransfur",
+      "type": "gamerule",
+      "sortid": 563,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "need_permition_for_boss_transfur",
+      "metadata": {
+        "files": [],
+        "type": "logic"
+      }
+    },
+    {
+      "name": "GetExp10BossPerm",
+      "type": "procedure",
+      "sortid": 564,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "get_exp_10_boss_perm",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/GetExp10BossPermProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetExp10BossPerm",
+      "type": "procedure",
+      "sortid": 565,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "set_exp_10_boss_perm",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/SetExp10BossPermProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "arguments",
+            "type": "cmdcontext"
+          },
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -11303,6 +11389,12 @@
       "type": "number",
       "scope": "player_persistent",
       "value": "0"
+    },
+    {
+      "name": "Exp10TransfurAllowed",
+      "type": "logic",
+      "scope": "player_persistent",
+      "value": "false"
     }
   ],
   "sound_elements": [
@@ -11408,6 +11500,7 @@
       "text.changed_addon.additionalHealth.Hearts": " Hearts",
       "gui.changed_addon.bookrecipepage_8.label_s_seeds": "S \u003d ANY SEEDS",
       "entity.changed_addon.exp_6": "Exp6",
+      "entity.changed_addon.experiment_10_boss": "Experiment 1 0",
       "gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants": "F \u003d ANY FLOWERS OR PLANTS",
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
@@ -11515,6 +11608,7 @@
       "block.changed_addon.signal_block": "Signal Block",
       "effect.changed_addon.fadige": "Fatigue",
       "translation.FriendlyGrab.HumanText": "§bYou are in Friendly Grab Press (key) for leave",
+      "entity.changed_addon.ket_experiment_009_boss": "Kat Experiment 0 0 9",
       "changedaddon.untransfur.no_effect": "No effect",
       "entity.changed_addon.dazed": "Dazed",
       "item.changed_addon.ammonia_compressed": "Ammonia Compressed",
@@ -11591,6 +11685,7 @@
       "entity.changed_addon.experiment_10": "Experiment 10",
       "entity.changed_addon.wolfy": "Wolfy",
       "config.changed_addon.changed_addon_client_configs": "ChangedAddon-Client",
+      "gamerule.needPermitionForBossTransfur": "Need Permition For Transfur into a Boss Transfur",
       "item.changed_addon.transfur_totem": "Latex Totem",
       "advancements.obtain_a_electric_katana.descr": "Get the electric katana!",
       "item.changed_addon.orangejuice": "Orange Juice",
@@ -11710,6 +11805,7 @@
       "item.changed_addon.unifuserblock_illustrative_item": "Unifuser Recipes Informations",
       "advancements.obtain_green_crystal_dagger.title": "§aGreen§r Crystal Dagger!",
       "gui.changed_addon.book_pagenumber_2.label_litixcamonia": "Litix-Camonia",
+      "gamerule.needPermitionForBossTransfur.description": "When On the player Need Permition For Transfur into a Boss Transfur",
       "effect.changed_addon.latex_solvent": "Latex Solvent",
       "advancements.transfur_totem_advancement_1.title": "In Total Control",
       "changedaddon.diets.good_food": "It seems like i feel more fuller when i eat this food",

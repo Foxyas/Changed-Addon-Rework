@@ -12,4 +12,10 @@ public class Exp009TransfurProcedure {
 		Player entity1 = (Player) entity;
 		ProcessTransfur.setPlayerTransfurVariant(entity1, ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get(), TransfurCause.GRAB_REPLICATE);
 	}
+
+	public static void exp10(Entity entity) {
+		Player entity1 = (Player) entity;
+		ProcessTransfur.setPlayerTransfurVariant(entity1, ChangedAddonTransfurVariants.EXPERIMENT_10.get(), TransfurCause.GRAB_REPLICATE);
+	}
+
 }

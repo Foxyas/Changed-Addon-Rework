@@ -105,13 +105,24 @@ public class ChangedAddonTransfurVariants {
             .scares(List.of(EnderMan.class, WitherSkeleton.class,Creeper.class, AbstractGolem.class, Piglin.class, PiglinBrute.class))
             .nightVision());
 
+
     //Boss Transfurs
     public static UseItemMode Ket_Boss = UseItemMode.create("Ket_Boss",false,true,true,true,true);
-    public static final RegistryObject<TransfurVariant<KetExperiment009Entity>> KET_EXPERIMENT_009_BOSS_LATEX_VARIANT = register("form_ket_experiment009_boss",TransfurVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
+    public static final RegistryObject<TransfurVariant<KetExperiment009BossEntity>> KET_EXPERIMENT_009_BOSS_LATEX_VARIANT = register("form_ket_experiment009_boss",TransfurVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS)
             .reducedFall().jumpStrength(1.75F)
-            .addAbility(ChangedAddonAbilitys.THUNDERBOLT)
-            .addAbility(ChangedAddonAbilitys.SHOCKWAVE).transfurMode(TransfurMode.NONE)
+            .abilities(List.of(
+                    entityType -> ChangedAddonAbilitys.THUNDERBOLT.get(),
+                    entityType -> ChangedAddonAbilitys.SHOCKWAVE.get()
+            )).transfurMode(TransfurMode.ABSORPTION)
             .scares(List.of(Zombie.class,WitherSkeleton.class, AbstractVillager.class, Skeleton.class, AbstractGolem.class))
+            .nightVision());
+
+    public static final RegistryObject<TransfurVariant<Experiment10BossEntity>> EXPERIMENT_10_BOSS = register("form_experiment_10_boss",TransfurVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10_BOSS)
+            .reducedFall().jumpStrength(1.5F).abilities(List.of(
+                    entityType -> ChangedAddonAbilitys.WITHER_WAVE.get(),
+                    entityType -> ChangedAbilities.HYPNOSIS.get()
+            )).transfurMode(TransfurMode.ABSORPTION)
+            .scares(List.of(EnderMan.class, WitherSkeleton.class,Creeper.class, AbstractGolem.class, Piglin.class, PiglinBrute.class))
             .nightVision());
 
     public static class Gendered {

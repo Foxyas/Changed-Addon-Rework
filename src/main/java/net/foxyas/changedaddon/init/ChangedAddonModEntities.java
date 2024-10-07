@@ -27,8 +27,10 @@ import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
+import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 import net.foxyas.changedaddon.entity.Experiment009Entity;
 import net.foxyas.changedaddon.entity.Exp6Entity;
@@ -122,6 +124,12 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<ReynEntity>of(ReynEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ReynEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<KetExperiment009BossEntity>> KET_EXPERIMENT_009_BOSS = register("ket_experiment_009_boss", EntityType.Builder.<KetExperiment009BossEntity>of(KetExperiment009BossEntity::new, MobCategory.MONSTER)
+			.setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(KetExperiment009BossEntity::new).fireImmune().sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<Experiment10BossEntity>> EXPERIMENT_10_BOSS = register("experiment_10_boss",
+			EntityType.Builder.<Experiment10BossEntity>of(Experiment10BossEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Experiment10BossEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -151,6 +159,8 @@ public class ChangedAddonModEntities {
 			ErikEntity.init();
 			Exp6Entity.init();
 			ReynEntity.init();
+			KetExperiment009BossEntity.init();
+			Experiment10BossEntity.init();
 		});
 	}
 
@@ -177,5 +187,7 @@ public class ChangedAddonModEntities {
 		event.put(ERIK.get(), ErikEntity.createAttributes().build());
 		event.put(EXP_6.get(), Exp6Entity.createAttributes().build());
 		event.put(REYN.get(), ReynEntity.createAttributes().build());
+		event.put(KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossEntity.createAttributes().build());
+		event.put(EXPERIMENT_10_BOSS.get(), Experiment10BossEntity.createAttributes().build());
 	}
 }

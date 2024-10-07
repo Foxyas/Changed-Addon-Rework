@@ -17,9 +17,11 @@ import net.minecraft.commands.Commands;
 import net.foxyas.changedaddon.procedures.SetmaxTransfurToleranceProcedure;
 import net.foxyas.changedaddon.procedures.SetTransfurProgressCommandProcedure;
 import net.foxyas.changedaddon.procedures.SetPlayerTransfurProgressCommandProcedure;
+import net.foxyas.changedaddon.procedures.SetExp10BossPermProcedure;
 import net.foxyas.changedaddon.procedures.SetDefaultValueProcedure;
 import net.foxyas.changedaddon.procedures.SetBossPermProcedure;
 import net.foxyas.changedaddon.procedures.GetmaxTransfurToleranceProcedure;
+import net.foxyas.changedaddon.procedures.GetExp10BossPermProcedure;
 import net.foxyas.changedaddon.procedures.GetBossPermProcedure;
 import net.foxyas.changedaddon.procedures.AddTransfurProgressCommandProcedure;
 import net.foxyas.changedaddon.procedures.AddPlayerTransfurProgressProcedure;
@@ -55,6 +57,30 @@ public class ChangedAddonAdminCommand {
 					Direction direction = entity.getDirection();
 
 					SetBossPermProcedure.execute(arguments, entity);
+					return 0;
+				}))))).then(Commands.literal("Exp_10").then(Commands.literal("get").then(Commands.argument("player", EntityArgument.player()).executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					GetExp10BossPermProcedure.execute(arguments, entity);
+					return 0;
+				}))).then(Commands.literal("set").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("set", BoolArgumentType.bool()).executes(arguments -> {
+					ServerLevel world = arguments.getSource().getLevel();
+					double x = arguments.getSource().getPosition().x();
+					double y = arguments.getSource().getPosition().y();
+					double z = arguments.getSource().getPosition().z();
+					Entity entity = arguments.getSource().getEntity();
+					if (entity == null)
+						entity = FakePlayerFactory.getMinecraft(world);
+					Direction direction = entity.getDirection();
+
+					SetExp10BossPermProcedure.execute(arguments, entity);
 					return 0;
 				})))))).then(Commands.literal("SetTransfurProgress").then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
 					ServerLevel world = arguments.getSource().getLevel();

@@ -64,15 +64,15 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 
 	protected void setAttributes(AttributeMap attributes) {
 		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
+		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 16));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.085);
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
-		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
-		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
-		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.8);
+		attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1));
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE) + 6.5);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));
+		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
+		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
+		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK));
 	}
 
 	@Override
@@ -295,28 +295,19 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 	@Override
 	public void visualTick(Level level) {
 		super.visualTick(level);
-		if (this.getUnderlyingPlayer() != null){
-			ProcessTransfur.ifPlayerTransfurred(getUnderlyingPlayer(), variant -> {
-				if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10.get())) {
-					Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 10);
-					Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE));
-					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR));
-					Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
-					Objects.requireNonNull(this.getAttribute(Attributes.KNOCKBACK_RESISTANCE)).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
-				}
-			});
-		}
 	}
 
     @Override
     public void baseTick() {
         super.baseTick();
-        updateSwimmingMovement();
-        SetDefense(this);
-        SetAttack(this);
-		SetSpeed(this);
-        TpEntity(this);
-        CrawSystem(this.getTarget());
+		if (this.getUnderlyingPlayer() == null){
+			updateSwimmingMovement();
+			SetDefense(this);
+			SetAttack(this);
+			SetSpeed(this);
+			TpEntity(this);
+			CrawSystem(this.getTarget());
+		}
     }
 
 	public void CrawSystem(LivingEntity target) {
