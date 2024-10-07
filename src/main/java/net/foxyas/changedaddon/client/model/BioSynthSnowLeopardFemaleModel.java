@@ -243,7 +243,7 @@ public class BioSynthSnowLeopardFemaleModel extends AdvancedHumanoidModel<SnowLe
     }
 
     public ModelPart getLeg(HumanoidArm humanoidArm) {
-        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
 

@@ -230,7 +230,7 @@ public class ReynModel extends AdvancedHumanoidModel<ReynEntity> implements Adva
 
 	@Override
 	public ModelPart getLeg(HumanoidArm humanoidArm) {
-		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
 	}
 
     @Override

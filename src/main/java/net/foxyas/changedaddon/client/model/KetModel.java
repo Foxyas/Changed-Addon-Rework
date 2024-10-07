@@ -213,7 +213,7 @@ public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> impl
 	}
 
 	public ModelPart getLeg(HumanoidArm humanoidArm) {
-		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
 	}
 
 	public ModelPart getHead() {

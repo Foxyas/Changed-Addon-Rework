@@ -209,7 +209,7 @@ public class ModelFemaleSnowFox extends AdvancedHumanoidModel<LatexSnowFoxFemale
     }
 
     public ModelPart getLeg(HumanoidArm humanoidArm) {
-        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
     @Override

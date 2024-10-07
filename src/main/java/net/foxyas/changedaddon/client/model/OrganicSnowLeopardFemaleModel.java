@@ -223,7 +223,7 @@ public class OrganicSnowLeopardFemaleModel extends AdvancedHumanoidModel<SnowLeo
 
 	@Override
 	public ModelPart getLeg(HumanoidArm humanoidArm) {
-		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
 	}
 
     @Override

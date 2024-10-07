@@ -402,7 +402,7 @@ public class WolfyModel extends AdvancedHumanoidModel<WolfyEntity> implements Ad
 	}
 
 	public ModelPart getLeg(HumanoidArm humanoidArm) {
-		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+		return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
 	}
 
 

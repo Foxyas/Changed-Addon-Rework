@@ -251,7 +251,7 @@ public class FemaleExp2Model extends AdvancedHumanoidModel<Exp2FemaleEntity> imp
     }
 
     public ModelPart getLeg(HumanoidArm humanoidArm) {
-        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
     @Override

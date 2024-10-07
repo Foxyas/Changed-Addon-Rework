@@ -250,7 +250,7 @@ public class GrapeSnowLeopardModel extends AdvancedHumanoidModel<Exp6Entity> imp
     }
 
     public ModelPart getLeg(HumanoidArm humanoidArm) {
-        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.rightLeg;
+        return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
     @Override
