@@ -144,11 +144,16 @@ public class MusicPlayerProcedure {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
                     }
                 }
-                if (Ket != null && (!Ket.isAlive() || !Ket_2.isAlive())) {
+                if (Ket != null && !Ket.isAlive()) {
                     if (isExperiment009Phase2ThemePlaying) {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
                     }
-                } //If the 009 KET is not alive
+                } else if (Ket_2 != null && !Ket_2.isAlive()) {
+                	 if (isExperiment009Phase2ThemePlaying) {
+                        minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
+                    }
+                }
+                //If the 009 KET is not alive
             } else if (!Exp009Phase2IsClose && !KetExp9IsClose && isExperiment009Phase2ThemePlaying) {
                 minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
             } else if (Exp009Phase1IsClose && canwork) {
@@ -165,7 +170,11 @@ public class MusicPlayerProcedure {
                 if (!isExperiment10ThemePlaying) {
                     musicManager.startPlaying(Experiment10_Theme_MusicInstance);
                 } else if (isExperiment10ThemePlaying && Exp10 != null) {
-                    if (!Exp10.isAlive() || !Exp10_2.isAlive()) {
+                    if (!Exp10.isAlive()) {
+                        minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
+                    }
+                } else if (isExperiment10ThemePlaying && Exp10_2 != null) {
+                    if (!Exp10_2.isAlive()) {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
                     }
                 }
