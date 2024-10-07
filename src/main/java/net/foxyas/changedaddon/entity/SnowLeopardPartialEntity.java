@@ -46,7 +46,7 @@ public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements Pow
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.10f);
 		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
 		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+		attributes.getInstance(Attributes.ARMOR).setBaseValue(4);
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}

@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-  	"changed_addon:latex_snow_fox_female",
   	"changed_addon:dazed",
   	"changed_addon:puro_kind",
   	"changed_addon:puro_kind_female",
@@ -12,6 +11,9 @@
   	"changed_addon:wolfy",
   	"changed_addon:exp_6",
   	"changed_addon:latex_snow_fox",
-  	"changed_addon:latex_snow_fox_female"
+  	"changed_addon:latex_snow_fox_female",
+  	"changed_addon:snow_leopard_female_organic",
+  	"changed_addon:snow_leopard_male_organic",
+  	"changed_addon:latex_snow_leopard_partial"
   	]
 }
