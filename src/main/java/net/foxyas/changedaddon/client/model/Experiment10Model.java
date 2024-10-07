@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.client.model;
 
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
@@ -7,6 +8,9 @@ import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.tfanimations.HelperModel;
+import net.ltxprogrammer.changed.client.tfanimations.Limb;
+import net.ltxprogrammer.changed.client.tfanimations.TransfurHelper;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -56,6 +60,14 @@ public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity>
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
     }
+
+    @Override
+    public HelperModel getTransfurHelperModel(Limb limb) {
+        if (limb == Limb.TORSO)
+            return TransfurHelper.getFeminineTorsoAlt();
+        return super.getTransfurHelperModel(limb);
+    }
+
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
