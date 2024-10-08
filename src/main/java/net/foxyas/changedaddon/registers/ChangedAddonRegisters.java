@@ -59,10 +59,10 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final RegistryObject<Item> WOLFY_SPAWN_EGG = ITEMS_REGISTRY.register("wolfy_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.WOLFY, Color3.getColor("#393939").toInt(), Color3.getColor("#303030").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-		public static final RegistryObject<Item> EXP1_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp1_male_spawn_egg",
+		public static final RegistryObject<Item> EXP1_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp_1_male_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXP_1_MALE, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-		public static final RegistryObject<Item> EXP1_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp1_female_spawn_egg",
+		public static final RegistryObject<Item> EXP1_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp_1_female_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXP_1_FEMALE, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 		public static final RegistryObject<Item> EXP2_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp_2_male_spawn_egg",
