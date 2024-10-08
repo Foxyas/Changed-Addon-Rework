@@ -25,14 +25,14 @@ public class ShowLandSpeedProcedure {
 			type_form = type_form.replace(",", "");
 			type_form = type_form.replace("\\", "");
 			if ((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
-				landSpeed = (double) VariantUtilProcedure.GetLandSpeed(type_form, (Player) entity) * 100;
-				return new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 100 ? "\u00A7a+" + (float) (landSpeed / 100) + "%" : "\u00A7c" + (float) (landSpeed / 100) + "%");
+				landSpeed = (double) VariantUtilProcedure.GetLandSpeed(type_form, (Player) entity);
+				return new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 0 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c" + (float) (landSpeed * 100) + "%");
 			}
 		}
 		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			Item_form = (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("form");
-			landSpeed = (double) VariantUtilProcedure.GetLandSpeed(type_form, (Player) entity) * 100;
-			return new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 100 ? "\u00A7a+" + (float) (landSpeed / 100) + "%" : "\u00A7c" + (float) (landSpeed / 100) + "%");
+			landSpeed = (double) VariantUtilProcedure.GetLandSpeed(item_form, (Player) entity);
+			return new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 0 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c" + (float) (landSpeed * 100) + "%");
 		}
 		return (new TranslatableComponent("text.changed_addon.landspeed").getString()).replace("%s", "???");
 	}

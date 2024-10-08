@@ -70,8 +70,8 @@ public class ShowExtraTransfurInfoProcedure {
 					Hp = (double) VariantUtilProcedure.GetExtraHp(Item_form, (Player) entity);
 					Speed = (double) VariantUtilProcedure.GetSwimSpeed(Item_form, (Player) entity);
 					landSpeed = (double) VariantUtilProcedure.GetLandSpeed(Item_form, (Player) entity);
-					JumpLevel = (double) VariantUtilProcedure.GetJumpStrength(Item_form);;
-					canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(Item_form);;
+					JumpLevel = (double) VariantUtilProcedure.GetJumpStrength(Item_form);
+					canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(Item_form);
 					tooltip.add(new TextComponent(((new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
 							+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString()) + "§r\n"
 							+ (new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 0 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c" + (float) (landSpeed * 100) + "%")) + "§r\n"
