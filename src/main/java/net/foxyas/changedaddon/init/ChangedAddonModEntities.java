@@ -36,6 +36,8 @@ import net.foxyas.changedaddon.entity.Experiment009Entity;
 import net.foxyas.changedaddon.entity.Exp6Entity;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
+import net.foxyas.changedaddon.entity.Exp1MaleEntity;
+import net.foxyas.changedaddon.entity.Exp1FemaleEntity;
 import net.foxyas.changedaddon.entity.ErikEntity;
 import net.foxyas.changedaddon.entity.DazedEntity;
 import net.foxyas.changedaddon.entity.BunyEntity;
@@ -130,6 +132,14 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<Experiment10BossEntity>of(Experiment10BossEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Experiment10BossEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<Exp1MaleEntity>> EXP_1_MALE = register("exp_1_male",
+			EntityType.Builder.<Exp1MaleEntity>of(Exp1MaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp1MaleEntity::new)
+
+					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<Exp1FemaleEntity>> EXP_1_FEMALE = register("exp_1_female",
+			EntityType.Builder.<Exp1FemaleEntity>of(Exp1FemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp1FemaleEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -161,6 +171,8 @@ public class ChangedAddonModEntities {
 			ReynEntity.init();
 			KetExperiment009BossEntity.init();
 			Experiment10BossEntity.init();
+			Exp1MaleEntity.init();
+			Exp1FemaleEntity.init();
 		});
 	}
 
@@ -189,5 +201,7 @@ public class ChangedAddonModEntities {
 		event.put(REYN.get(), ReynEntity.createAttributes().build());
 		event.put(KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossEntity.createAttributes().build());
 		event.put(EXPERIMENT_10_BOSS.get(), Experiment10BossEntity.createAttributes().build());
+		event.put(EXP_1_MALE.get(), Exp1MaleEntity.createAttributes().build());
+		event.put(EXP_1_FEMALE.get(), Exp1FemaleEntity.createAttributes().build());
 	}
 }

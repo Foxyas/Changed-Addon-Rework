@@ -13,7 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
 
 public class Experiment10SpawnEggRightclickedOnBlockProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Direction direction, Entity entity, ItemStack itemstack) {
@@ -21,7 +21,7 @@ public class Experiment10SpawnEggRightclickedOnBlockProcedure {
 			return;
 		if (direction == Direction.UP) {
 			if (world instanceof ServerLevel _level) {
-				Entity entityToSpawn = new Experiment10Entity(ChangedAddonModEntities.EXPERIMENT_10.get(), _level);
+				Entity entityToSpawn = new Experiment10BossEntity(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), _level);
 				entityToSpawn.moveTo((x + 0.5), (y + 1), (z + 0.5), world.getRandom().nextFloat() * 360F, 0);
 				if (entityToSpawn instanceof Mob _mobToSpawn)
 					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
@@ -29,7 +29,7 @@ public class Experiment10SpawnEggRightclickedOnBlockProcedure {
 			}
 		} else if (direction == Direction.DOWN) {
 			if (world instanceof ServerLevel _level) {
-				Entity entityToSpawn = new Experiment10Entity(ChangedAddonModEntities.EXPERIMENT_10.get(), _level);
+				Entity entityToSpawn = new Experiment10BossEntity(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), _level);
 				entityToSpawn.moveTo((x + 0.5), (y - 1.5), (z + 0.5), world.getRandom().nextFloat() * 360F, 0);
 				if (entityToSpawn instanceof Mob _mobToSpawn)
 					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
@@ -37,7 +37,7 @@ public class Experiment10SpawnEggRightclickedOnBlockProcedure {
 			}
 		} else if (direction == Direction.NORTH) {
 			if (world instanceof ServerLevel _level) {
-				Entity entityToSpawn = new Experiment10Entity(ChangedAddonModEntities.EXPERIMENT_10.get(), _level);
+				Entity entityToSpawn = new Experiment10BossEntity(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), _level);
 				entityToSpawn.moveTo((x + 0.5), y, (z - 0.5), world.getRandom().nextFloat() * 360F, 0);
 				if (entityToSpawn instanceof Mob _mobToSpawn)
 					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
@@ -45,7 +45,7 @@ public class Experiment10SpawnEggRightclickedOnBlockProcedure {
 			}
 		} else if (direction == Direction.SOUTH) {
 			if (world instanceof ServerLevel _level) {
-				Entity entityToSpawn = new Experiment10Entity(ChangedAddonModEntities.EXPERIMENT_10.get(), _level);
+				Entity entityToSpawn = new Experiment10BossEntity(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), _level);
 				entityToSpawn.moveTo((x + 0.5), y, (z + 1.5), world.getRandom().nextFloat() * 360F, 0);
 				if (entityToSpawn instanceof Mob _mobToSpawn)
 					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
@@ -53,7 +53,7 @@ public class Experiment10SpawnEggRightclickedOnBlockProcedure {
 			}
 		} else if (direction == Direction.WEST) {
 			if (world instanceof ServerLevel _level) {
-				Entity entityToSpawn = new Experiment10Entity(ChangedAddonModEntities.EXPERIMENT_10.get(), _level);
+				Entity entityToSpawn = new Experiment10BossEntity(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), _level);
 				entityToSpawn.moveTo((x - 0.5), y, (z + 0.5), world.getRandom().nextFloat() * 360F, 0);
 				if (entityToSpawn instanceof Mob _mobToSpawn)
 					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
@@ -61,7 +61,7 @@ public class Experiment10SpawnEggRightclickedOnBlockProcedure {
 			}
 		} else if (direction == Direction.EAST) {
 			if (world instanceof ServerLevel _level) {
-				Entity entityToSpawn = new Experiment10Entity(ChangedAddonModEntities.EXPERIMENT_10.get(), _level);
+				Entity entityToSpawn = new Experiment10BossEntity(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), _level);
 				entityToSpawn.moveTo((x + 1.5), y, (z + 0.5), world.getRandom().nextFloat() * 360F, 0);
 				if (entityToSpawn instanceof Mob _mobToSpawn)
 					_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);

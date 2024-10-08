@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
 
 import javax.annotation.Nullable;
 
@@ -43,6 +44,17 @@ public class WitherSkillProcedure {
 					_entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 2, false, true));
 			}
 		} else if (immediatesourceentity instanceof Experiment10Entity a && !a.isPhase2()) {
+			if ((immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+					_entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 0, false, true));
+			}
+		}
+		if (immediatesourceentity instanceof Experiment10BossEntity a && a.isPhase2()) {
+			if ((immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
+				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+					_entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 2, false, true));
+			}
+		} else if (immediatesourceentity instanceof Experiment10BossEntity a && !a.isPhase2()) {
 			if ((immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
 				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 					_entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 0, false, true));

@@ -59,6 +59,12 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final RegistryObject<Item> WOLFY_SPAWN_EGG = ITEMS_REGISTRY.register("wolfy_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.WOLFY, Color3.getColor("#393939").toInt(), Color3.getColor("#303030").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
+		public static final RegistryObject<Item> EXP1_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp1_male_spawn_egg",
+				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXP_1_MALE, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
+		public static final RegistryObject<Item> EXP1_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp1_female_spawn_egg",
+				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXP_1_FEMALE, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
 		public static final RegistryObject<Item> EXP2_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp_2_male_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXP_2_MALE, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
@@ -71,8 +77,14 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final RegistryObject<Item> EXP10_SPAWN_EGG = ITEMS_REGISTRY.register("experiment_10_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_10, Color3.getColor("#181818").toInt(), Color3.getColor("#ed1c24").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
+		public static final RegistryObject<Item> EXP10_BOSS_SPAWN_EGG = ITEMS_REGISTRY.register("experiment_10_boss_spawn_egg",
+				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_10_BOSS, Color3.getColor("#181818").toInt(), Color3.getColor("#ed1c24").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
 		public static final RegistryObject<Item> KET_SPAWN_EGG = ITEMS_REGISTRY.register("ket_experiment_009_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.KET_EXPERIMENT_009, Color3.getColor("#E9E9E9").toInt(), Color3.getColor("#66FFFF").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
+		public static final RegistryObject<Item> KET_BOSS_SPAWN_EGG = ITEMS_REGISTRY.register("ket_experiment_009_boss_spawn_egg",
+				() -> new ForgeSpawnEggItem(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS, Color3.getColor("#E9E9E9").toInt(), Color3.getColor("#66FFFF").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 		public static final RegistryObject<Item> PARTIAL_SNOW_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_leopard_partial_spawn_egg",
 				() -> new ForgeSpawnEggItem(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));

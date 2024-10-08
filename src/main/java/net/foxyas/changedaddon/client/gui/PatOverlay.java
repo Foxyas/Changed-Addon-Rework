@@ -44,11 +44,12 @@ public class PatOverlay {
                     Entity lookedEntity = PlayerUtilProcedure.getEntityPlayerLookingAt(entity, 4);
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity)) {
                         if (!PatInfo(entity).getString().isEmpty()){
-                            Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                        	if (!lookedEntity.isInvisible()){
+                        		Minecraft.getInstance().font.draw(event.getMatrixStack(),
                                     PatInfo(lookedEntity), 237 - PatInfo2(lookedEntity).getString().length(), 251, -1);
                             /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
-
+                                    PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
+                        	}
                         }
                     }
                 }

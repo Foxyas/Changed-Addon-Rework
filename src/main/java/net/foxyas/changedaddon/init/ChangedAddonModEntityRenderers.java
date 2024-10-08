@@ -29,6 +29,8 @@ import net.foxyas.changedaddon.client.renderer.Experiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.Exp6Renderer;
 import net.foxyas.changedaddon.client.renderer.Exp2MaleRenderer;
 import net.foxyas.changedaddon.client.renderer.Exp2FemaleRenderer;
+import net.foxyas.changedaddon.client.renderer.Exp1MaleRenderer;
+import net.foxyas.changedaddon.client.renderer.Exp1FemaleRenderer;
 import net.foxyas.changedaddon.client.renderer.ErikRenderer;
 import net.foxyas.changedaddon.client.renderer.DazedRenderer;
 import net.foxyas.changedaddon.client.renderer.BunyRenderer;
@@ -60,5 +62,7 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.REYN.get(), ReynRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), Experiment10BossRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.EXP_1_MALE.get(), Exp1MaleRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.EXP_1_FEMALE.get(), Exp1FemaleRenderer::new);
 	}
 }
