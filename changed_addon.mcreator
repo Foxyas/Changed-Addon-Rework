@@ -9105,7 +9105,7 @@
       "name": "ShowAdditionalHealth",
       "type": "procedure",
       "sortid": 459,
-      "compiles": true,
+      "compiles": false,
       "locked_code": false,
       "registry_name": "show_additional_health",
       "metadata": {

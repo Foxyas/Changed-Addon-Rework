@@ -31,7 +31,7 @@ public class ShowLandSpeedProcedure {
 		}
 		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			Item_form = (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("form");
-			landSpeed = (double) VariantUtilProcedure.GetLandSpeed(item_form, (Player) entity);
+			landSpeed = (double) VariantUtilProcedure.GetLandSpeed(Item_form, (Player) entity);
 			return new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 0 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c" + (float) (landSpeed * 100) + "%");
 		}
 		return (new TranslatableComponent("text.changed_addon.landspeed").getString()).replace("%s", "???");

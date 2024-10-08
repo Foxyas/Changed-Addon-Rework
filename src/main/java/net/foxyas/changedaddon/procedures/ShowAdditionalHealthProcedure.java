@@ -33,7 +33,7 @@ public class ShowAdditionalHealthProcedure {
 		}
 		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			Item_form = (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("form");
-			Hp = (double) VariantUtilProcedure.GetExtraHp(item_form, (Player) entity);
+			Hp = (double) VariantUtilProcedure.GetExtraHp(Item_form, (Player) entity);
 			return new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
 					+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString();
 		}
