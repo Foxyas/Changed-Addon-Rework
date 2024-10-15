@@ -5,10 +5,7 @@ import net.foxyas.changedaddon.client.model.MaleExp2Model;
 import net.foxyas.changedaddon.client.renderer.layers.CustomHairColorLayer;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.*;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleCatModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +19,6 @@ public class Exp2MaleRenderer extends AdvancedHumanoidRenderer<Exp2MaleEntity, M
 		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/male_snep_hair"),false));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-
 	}
 
 	@Override

@@ -26,6 +26,7 @@ public class Exp2FemaleRenderer extends AdvancedHumanoidRenderer<Exp2FemaleEntit
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	}
+	
 	@Override
 	public ResourceLocation getTextureLocation(Exp2FemaleEntity entity) {
 		if(entity.getUnderlyingPlayer() == null){
