@@ -42,7 +42,7 @@ public class PatOverlay {
             if (entity != null) {
                 if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()){
                     Entity lookedEntity = PlayerUtilProcedure.getEntityPlayerLookingAt(entity, 4);
-                    if (lookedEntity != null && isPatableEntity(entity,lookedEntity)) {
+                    if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isKeySet()) {
                         if (!PatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible()){
                         		Minecraft.getInstance().font.draw(event.getMatrixStack(),
@@ -73,6 +73,11 @@ public class PatOverlay {
             return true;
         }
         return isPatableByTag;
+    }
+
+    public static boolean isKeySet(){
+        String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
+        return !key.isEmpty();
     }
 
 
