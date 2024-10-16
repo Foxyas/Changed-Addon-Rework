@@ -149,9 +149,9 @@ public class PatFeatureHandleProcedure {
 					 target.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 					} else if (!isPlayerTransfurInExp2 && isTargetTransfurInExp2) {
 					 ((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
-				 	} else if (isPlayerTransfurInExp2 && isTargetTransfurInExp2){
+				 	} /*else if (isPlayerTransfurInExp2 && isTargetTransfurInExp2){
 					 return;//Exp2 Can't give Exp2 Transfur Sickness
-				 	}
+				 	}*/
 				}
 			}
 

@@ -105,7 +105,7 @@ public class ChangedAddonTransfurVariants {
             .reducedFall().jumpStrength(1.4F).abilities(List.of(
                     entityType -> ChangedAddonAbilitys.THUNDERBOLT.get(),
                     entityType -> ChangedAddonAbilitys.SHOCKWAVE.get()
-            )).transfurMode(TransfurMode.NONE).nightVision());
+            )).transfurMode(TransfurMode.ABSORPTION).nightVision());
 
     public static final RegistryObject<TransfurVariant<Experiment10Entity>> EXPERIMENT_10 = register("form_experiment_10",TransfurVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
             .reducedFall().jumpStrength(1.5F).abilities(List.of(
