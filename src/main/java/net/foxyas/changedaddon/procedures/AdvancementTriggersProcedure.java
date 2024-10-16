@@ -12,21 +12,46 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Iterator;
-	@Mod.EventBusSubscriber
+
+@Mod.EventBusSubscriber
 public class AdvancementTriggersProcedure {
 	@SubscribeEvent
 	public static void OrganicTrigger(ProcessTransfur.EntityVariantAssigned.ChangedVariant event) {
-
-		if (event.newVariant.getEntityType() != null && event.newVariant.getEntityType().is(ChangedTags.EntityTypes.ORGANIC_LATEX)) {
+		// Check if the new variant is not null and does not belong to the LATEX type
+		if (event.newVariant != null && !event.newVariant.getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
+			// If the interacted entity is a player
 			if (event.livingEntity instanceof Player player) {
+				// Grant the advancement
 				OrganicAdvancementGive(player);
 			}
 		}
-	};
+	}
 
+	// Method to grant the advancement
 	public static void OrganicAdvancementGive(Player player) {
-		if (!player.level.isClientSide() && player.getServer() != null)
-			player.getServer().getCommands().performCommand(player.createCommandSourceStack().withSuppressedOutput().withPermission(4), "advancement grant @s only changed_addon:organic_transfur_advancement");
+		// Ensure we are on the server side
+		if (!player.level.isClientSide()) {
+			// Get the player's server
+			var server = player.getServer();
+			if (server != null) {
+				// Get the server's advancement manager
+				var advancementManager = server.getAdvancements();
 
+				// Locate the specific advancement using its ResourceLocation
+				var organicAdvancement = advancementManager.getAdvancement(new ResourceLocation("changed_addon", "organic_transfur_advancement"));
+
+				// Grant the advancement if it exists
+				if (organicAdvancement != null) {
+					if (player instanceof ServerPlayer serverPlayer) {
+						var advancementProgress = serverPlayer.getAdvancements().getOrStartProgress(organicAdvancement);
+						if (!advancementProgress.isDone()) {
+							for (String criterion : advancementProgress.getRemainingCriteria()) {
+								serverPlayer.getAdvancements().award(organicAdvancement, criterion);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
