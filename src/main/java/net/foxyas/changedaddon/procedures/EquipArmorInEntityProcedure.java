@@ -52,7 +52,7 @@ public class EquipArmorInEntityProcedure {
 				} else if (itemStack.isEmpty()) {
 					// Proceed only on the server side
 					if (!event.getWorld().isClientSide()){
-					checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), event.getLocalPos());
+						checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), event.getLocalPos());
 					}
 				}
 			}

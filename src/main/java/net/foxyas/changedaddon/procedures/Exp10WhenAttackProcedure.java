@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
 
 import javax.annotation.Nullable;
 
@@ -38,7 +39,7 @@ public class Exp10WhenAttackProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity, Entity immediatesourceentity) {
 		if (entity == null || immediatesourceentity == null)
 			return;
-		if (immediatesourceentity instanceof Experiment10Entity) {
+		if (immediatesourceentity instanceof Experiment10Entity || immediatesourceentity instanceof Experiment10BossEntity) {
 			if (entity instanceof LivingEntity _livEnt ? _livEnt.isBlocking() : false) {
 				if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof ShieldItem) {
 					if (entity instanceof Player _player)
@@ -46,10 +47,10 @@ public class Exp10WhenAttackProcedure {
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, new BlockPos(immediatesourceentity.getX(), immediatesourceentity.getY() + 1, immediatesourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.crit")),
-									SoundSource.HOSTILE, (float) 1.5, 1);
+									SoundSource.NEUTRAL, (float) 1.5, 1);
 						} else {
 							_level.playLocalSound((immediatesourceentity.getX()), (immediatesourceentity.getY() + 1), (immediatesourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.crit")),
-									SoundSource.HOSTILE, (float) 1.5, 1, false);
+									SoundSource.NEUTRAL, (float) 1.5, 1, false);
 						}
 					}
 					if (world instanceof Level _level) {

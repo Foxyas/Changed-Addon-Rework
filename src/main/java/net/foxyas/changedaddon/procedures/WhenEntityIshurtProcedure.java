@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
 
 import javax.annotation.Nullable;
 
@@ -38,7 +39,7 @@ public class WhenEntityIshurtProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Entity entity, Entity immediatesourceentity) {
 		if (entity == null || immediatesourceentity == null)
 			return;
-		if (immediatesourceentity instanceof Experiment10Entity) {
+		if (immediatesourceentity instanceof Experiment10Entity || immediatesourceentity instanceof Experiment10BossEntity) {
 			if (entity instanceof LivingEntity _livEnt ? _livEnt.isBlocking() : false) {
 				if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof ShieldItem) {
 					if (entity instanceof Player _player)
