@@ -46,7 +46,7 @@ public class PatOverlay {
                         if (!PatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible()){
                         		Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo(lookedEntity), 237 - PatInfo2(lookedEntity).getString().length(), 251, -1);
+                                    PatInfo(lookedEntity), 237 - PatInfo2(lookedEntity).getString().length() * 2, 251, -1);
                             /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
                                     PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
                         	}

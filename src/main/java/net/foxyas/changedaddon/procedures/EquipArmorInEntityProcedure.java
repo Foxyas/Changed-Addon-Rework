@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraft.world.InteractionResult;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -29,19 +31,28 @@ public class EquipArmorInEntityProcedure {
 			if (ChangedEntity instanceof DarkLatexWolfPup) {
 				return;
 			}
-			// Check if the item is an armor piece
-			if (itemStack.getItem() instanceof ArmorItem armorItem) {
-				if (armorItem instanceof HazmatSuitItem) {
+
+			if (ChangedEntity instanceof TamableLatexEntity tamableLatexEntity){
+				if (tamableLatexEntity.getOwner() != event.getPlayer()){
 					return;
 				}
-				// Proceed only on the server side
-				if (!event.getWorld().isClientSide()) {
-					equipOrSwapArmor(ChangedEntity, itemStack, armorItem, event.getPlayer(), event.getHand());
+				if (!event.getPlayer().isShiftKeyDown()){
+					return;
 				}
-			} else {
-				if (!event.getWorld().isClientSide()) {
-					if (itemStack.isEmpty()) {
-						checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), event.getLocalPos());
+
+				// Check if the item is an armor piece
+				if (itemStack.getItem() instanceof ArmorItem armorItem) {
+					if (armorItem instanceof HazmatSuitItem) {
+						return;
+					}
+					// Proceed only on the server side
+					if (!event.getWorld().isClientSide()){
+						equipOrSwapArmor(ChangedEntity, itemStack, armorItem, event.getPlayer(), event.getHand());
+					}
+				} else if (itemStack.isEmpty()) {
+					// Proceed only on the server side
+					if (!event.getWorld().isClientSide()){
+					checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), event.getLocalPos());
 					}
 				}
 			}

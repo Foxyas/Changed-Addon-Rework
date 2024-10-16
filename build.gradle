@@ -76,7 +76,7 @@ repositories {
 
     maven {
         name = "Changed_Local_file"
-        url uri("C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/libs")
+        url uri("${rootProject.projectDir}/libs")
     }
 
   /* maven {
