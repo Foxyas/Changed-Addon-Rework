@@ -2,9 +2,10 @@ package net.foxyas.changedaddon.procedures;
 
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedParticles;
@@ -12,13 +13,16 @@ import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -26,10 +30,8 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.*;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
@@ -185,6 +187,39 @@ public class PlayerUtilProcedure {
 				return null;
 			}
 		}
+
+		@OnlyIn(Dist.CLIENT)
+		public class ModelFetcher {
+
+			@OnlyIn(Dist.CLIENT)
+			public static EntityModel<?> getModelOfEntity(Entity entity) {
+				// Obtém o EntityRendererManager (gerenciador de renderizadores)
+				EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+
+				// Verifica se o renderizador é para uma entidade viva (LivingEntity)
+				if (renderer instanceof LivingEntityRenderer) {
+					LivingEntityRenderer<?, ?> livingRenderer = (LivingEntityRenderer<?, ?>) renderer;
+					// Retorna o modelo da entidade
+					return livingRenderer.getModel();
+				}
+
+				return null; // Retorna null se não for uma entidade viva com um modelo
+			}
+
+			@OnlyIn(Dist.CLIENT)
+			public static AdvancedHumanoidModel<?> getChangedEntityModel(ChangedEntity entity){
+				// Obtém o EntityRendererManager (gerenciador de renderizadores)
+				EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+
+				// Verifica se o renderizador é para uma entidade viva (LivingEntity)
+				if (renderer instanceof AdvancedHumanoidRenderer<?,?,?> ChangedEntityModel) {
+					// Retorna o modelo da entidade
+					return ChangedEntityModel.getModel();
+				}
+				return null; // Retorna null se não for uma entidade viva com um modelo
+			}
+		}
+
 	}
 
 	public static class ParticlesUtil {

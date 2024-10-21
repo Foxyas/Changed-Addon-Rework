@@ -29,7 +29,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         return DodgeAmount;
     }
     public int getMaxDodgeAmount(){
-        return DodgeAmount;
+        return MaxDodgeAmount;
     }
 
     public void setDodgeAmount(int set){
