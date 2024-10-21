@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -31,6 +32,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class Exp2FemaleEntity extends AbstractCanTameLatexEntity {
+
+    private static final String DODGE_TICKS_TAG = "DodgeTicks";
+    private static final String IS_DODGING_TAG = "IsDodging";
+
+    private int dodgeTicks = 0;
+    private boolean isDodging = false;
     public Exp2FemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonModEntities.EXP_2_FEMALE.get(), world);
     }
@@ -55,6 +62,49 @@ public class Exp2FemaleEntity extends AbstractCanTameLatexEntity {
         attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
         attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
         attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putInt(DODGE_TICKS_TAG, dodgeTicks);
+        tag.putBoolean(IS_DODGING_TAG, isDodging);
+    }
+
+    // Sobrescreve para carregar NBT
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains(DODGE_TICKS_TAG)){
+            this.dodgeTicks = tag.getInt(DODGE_TICKS_TAG);
+        }
+        if (tag.contains(IS_DODGING_TAG)){
+            this.isDodging = tag.getBoolean(IS_DODGING_TAG);
+        }
+    }
+
+    // Método para iniciar o dodge
+    public void startDodge(int dodgeTicks) {
+        if (!this.isDodging) {
+            this.isDodging = true;
+            this.dodgeTicks = dodgeTicks; // Duração do dodge (10 ticks = 0,5 segundos)
+        }
+    }
+
+    public int getDodgeTicks(){
+        return dodgeTicks;
+    }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        if (isDodging) {
+            if (dodgeTicks > 0) {
+                dodgeTicks--;
+            } else {
+                isDodging = false;
+            }
+        }
     }
 
     public InteractionResult Exp2(Player player, InteractionHand hand, Player Host) {

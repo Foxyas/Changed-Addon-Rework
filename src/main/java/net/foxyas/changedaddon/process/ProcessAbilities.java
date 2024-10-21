@@ -32,11 +32,10 @@ public class ProcessAbilities {
 		int DodgeAmount = DodgeAbility.getDodgeAmount();
 		int MaxDodgeAmount = DodgeAbility.getMaxDodgeAmount();
 		boolean IsDodgeActivate = DodgeAbility.isDodgeActivate();
-		player.displayClientMessage(new TextComponent("TEXT12"), false);
 		if (!IsDodgeActivate) {
 			if (DodgeAmount < MaxDodgeAmount) {
 				if (DodgeAbility.DodgeRegenCooldown < 0) {
-					DodgeAbility.DodgeAmount++;
+					DodgeAbility.addDodgeAmount();
 					DodgeAbility.DodgeRegenCooldown = 5;
 					player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", +DodgeAmount), true);
 				} else {

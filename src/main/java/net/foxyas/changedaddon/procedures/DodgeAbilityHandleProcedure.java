@@ -3,6 +3,8 @@ package net.foxyas.changedaddon.procedures;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
+import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
+import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -80,6 +82,11 @@ public class DodgeAbilityHandleProcedure {
                                 player.hurtTime = player.hurtDuration;
                                 event.setCanceled(true);
                             }
+                            if (TransfurVariantInstance.getChangedEntity() instanceof Exp2MaleEntity exp2Male){
+                                exp2Male.startDodge(10);
+                            } else if (TransfurVariantInstance.getChangedEntity() instanceof Exp2FemaleEntity exp2Female) {
+                                exp2Female.startDodge(10);
+                            }
                             ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f, 1);
                         } else {
                             if (world instanceof ServerLevel serverLevel) {
@@ -91,6 +98,11 @@ public class DodgeAbilityHandleProcedure {
                                 event.setCanceled(true);
                             }
                             DodgeAttack(player, attacker);
+                            if (TransfurVariantInstance.getChangedEntity() instanceof Exp2MaleEntity exp2Male){
+                                exp2Male.startDodge(10);
+                            } else if (TransfurVariantInstance.getChangedEntity() instanceof Exp2FemaleEntity exp2Female) {
+                                exp2Female.startDodge(10);
+                            }
                             ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f, 1);
                         }
                     } else {
