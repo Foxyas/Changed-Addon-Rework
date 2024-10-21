@@ -38,9 +38,7 @@ public class ProcessAbilities {
 				if (DodgeAbility.DodgeRegenCooldown < 0) {
 					DodgeAbility.DodgeAmount++;
 					DodgeAbility.DodgeRegenCooldown = 5;
-					if (entity.getEntity() instanceof Player player) {
-						player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", +DodgeAmount), true);
-					}
+					player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", +DodgeAmount), true);
 				} else {
 					DodgeAbility.DodgeRegenCooldown--;
 				}
