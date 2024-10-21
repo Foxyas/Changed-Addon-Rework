@@ -35,14 +35,14 @@ public class ProcessAbilities {
 		player.displayClientMessage(new TextComponent("TEXT12"), false);
 		if (!IsDodgeActivate) {
 			if (DodgeAmount < MaxDodgeAmount) {
-				if (DodgeRegenCooldown < 0) {
-					DodgeAmount++;
-					DodgeRegenCooldown = 5;
+				if (DodgeAbility.DodgeRegenCooldown < 0) {
+					DodgeAbility.DodgeAmount++;
+					DodgeAbility.DodgeRegenCooldown = 5;
 					if (entity.getEntity() instanceof Player player) {
 						player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", +DodgeAmount), true);
 					}
 				} else {
-					DodgeRegenCooldown--;
+					DodgeAbility.DodgeRegenCooldown--;
 				}
 			}
 		}
