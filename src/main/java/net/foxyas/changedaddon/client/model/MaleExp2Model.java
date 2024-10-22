@@ -219,21 +219,6 @@ public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> impleme
         super.setupAnim(entity,limbSwing,limbSwingAmount,ageInTicks,netHeadYaw,headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         CarryAbilityAnimation.playAnimation(entity, this);
-        DodgeAnimationHandle(entity,ageInTicks);
-    }
-
-    private void DodgeAnimationHandle(Exp2MaleEntity entity, float ageInTicks) {
-        float dodgeStartTime = entity.getDodgeTicks();
-        if (dodgeStartTime > 0) {
-            // Apply dodge transformations - this can be customized in each model
-            this.Torso.yRot = 0.5F; // Example of body rotation
-            this.LeftLeg.xRot = -1.5F; // Example of left leg movement
-            this.RightLeg.xRot = 1.5F;// Example of right leg movement
-            this.LeftArm.xRot = -1.5f;
-            this.RightArm.xRot = 1.5f;
-        } else {
-            entity.startDodge(0);// Resets when the animation ends
-        }
     }
 
     public ModelPart getArm(HumanoidArm p_102852) {

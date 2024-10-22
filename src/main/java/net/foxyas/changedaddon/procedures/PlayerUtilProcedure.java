@@ -188,38 +188,6 @@ public class PlayerUtilProcedure {
 			}
 		}
 
-		@OnlyIn(Dist.CLIENT)
-		public class ModelFetcher {
-
-			@OnlyIn(Dist.CLIENT)
-			public static EntityModel<?> getModelOfEntity(Entity entity) {
-				// Obtém o EntityRendererManager (gerenciador de renderizadores)
-				EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-
-				// Verifica se o renderizador é para uma entidade viva (LivingEntity)
-				if (renderer instanceof LivingEntityRenderer) {
-					LivingEntityRenderer<?, ?> livingRenderer = (LivingEntityRenderer<?, ?>) renderer;
-					// Retorna o modelo da entidade
-					return livingRenderer.getModel();
-				}
-
-				return null; // Retorna null se não for uma entidade viva com um modelo
-			}
-
-			@OnlyIn(Dist.CLIENT)
-			public static AdvancedHumanoidModel<?> getChangedEntityModel(ChangedEntity entity){
-				// Obtém o EntityRendererManager (gerenciador de renderizadores)
-				EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-
-				// Verifica se o renderizador é para uma entidade viva (LivingEntity)
-				if (renderer instanceof AdvancedHumanoidRenderer<?,?,?> ChangedEntityModel) {
-					// Retorna o modelo da entidade
-					return ChangedEntityModel.getModel();
-				}
-				return null; // Retorna null se não for uma entidade viva com um modelo
-			}
-		}
-
 	}
 
 	public static class ParticlesUtil {
@@ -267,5 +235,42 @@ public class PlayerUtilProcedure {
 			}
 		}
 
+	}
+
+	public class ModelFetcher {
+
+		public static EntityModel<?> getModelOfEntity(Entity entity) {
+			// Obtém o EntityRendererManager (gerenciador de renderizadores)
+			EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+
+			// Verifica se o renderizador é para uma entidade viva (LivingEntity)
+			if (renderer instanceof LivingEntityRenderer) {
+				LivingEntityRenderer<?, ?> livingRenderer = (LivingEntityRenderer<?, ?>) renderer;
+				// Retorna o modelo da entidade
+				return livingRenderer.getModel();
+			}
+
+			return null; // Retorna null se não for uma entidade viva com um modelo
+		}
+
+		public static AdvancedHumanoidModel<?> getChangedEntityModel(ChangedEntity entity){
+			// Obtém o EntityRendererManager (gerenciador de renderizadores)
+			EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+
+			// Verifica se o renderizador é para uma entidade viva (LivingEntity)
+			if (renderer instanceof AdvancedHumanoidRenderer<?,?,?> ChangedEntityModel) {
+				// Retorna o modelo da entidade
+				return ChangedEntityModel.getModel();
+			}
+			return null; // Retorna null se não for uma entidade viva com um modelo
+		}
+
+		public static AdvancedHumanoidRenderer<?,?,?> getChangedEntityRender(ChangedEntity entity){
+			EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+			if (renderer instanceof AdvancedHumanoidRenderer<?,?,?> ChangedEntityModel) {
+				return ChangedEntityModel;
+			}
+			return null;
+		}
 	}
 }

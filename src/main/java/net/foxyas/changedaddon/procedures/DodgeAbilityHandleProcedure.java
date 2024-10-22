@@ -3,14 +3,21 @@ package net.foxyas.changedaddon.procedures;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
+import net.foxyas.changedaddon.client.renderer.layers.animation.DodgeAbilityAnimation;
 import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -74,6 +81,7 @@ public class DodgeAbilityHandleProcedure {
                             if (world instanceof ServerLevel serverLevel) {
                                 player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", DodgeAmount), true);
                                 DodgeAbility.subDodgeAmount();
+                                SpawnDodgeParticles(serverLevel,player,0.5f,0.3f,0.3f,0.3f,10,0.25f);
                                 if (world.isEmptyBlock(Location) || world.isEmptyBlock(Location.above())) {
                                     target.teleportTo(Location.getX(), Location.getY(), Location.getZ());
                                 }
@@ -81,11 +89,6 @@ public class DodgeAbilityHandleProcedure {
                                 player.hurtDuration = 20;
                                 player.hurtTime = player.hurtDuration;
                                 event.setCanceled(true);
-                            }
-                            if (TransfurVariantInstance.getChangedEntity() instanceof Exp2MaleEntity exp2Male){
-                                exp2Male.startDodge(10);
-                            } else if (TransfurVariantInstance.getChangedEntity() instanceof Exp2FemaleEntity exp2Female) {
-                                exp2Female.startDodge(10);
                             }
                             ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f, 1);
                         } else {
@@ -96,13 +99,9 @@ public class DodgeAbilityHandleProcedure {
                                 player.hurtDuration = 20;
                                 player.hurtTime = player.hurtDuration;
                                 event.setCanceled(true);
+                                SpawnDodgeParticles(serverLevel,player,0.5f,0.3f,0.3f,0.3f,10,0.25f);
                             }
                             DodgeAttack(player, attacker);
-                            if (TransfurVariantInstance.getChangedEntity() instanceof Exp2MaleEntity exp2Male){
-                                exp2Male.startDodge(10);
-                            } else if (TransfurVariantInstance.getChangedEntity() instanceof Exp2FemaleEntity exp2Female) {
-                                exp2Female.startDodge(10);
-                            }
                             ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f, 1);
                         }
                     } else {
@@ -111,6 +110,11 @@ public class DodgeAbilityHandleProcedure {
                 }
             }
         }
+    }
+    public static void SpawnDodgeParticles(ServerLevel serverLevel,Entity entity,float middle, float XV,float YV,float ZV, int count,float speed) {
+        // Enviar as partículas
+            serverLevel.sendParticles(ParticleTypes.POOF,
+                    entity.getX(), entity.getY() + middle, entity.getZ(), count, XV, YV, ZV, speed);
     }
 
     public static void DodgeDash(LivingEntity target, boolean set) {

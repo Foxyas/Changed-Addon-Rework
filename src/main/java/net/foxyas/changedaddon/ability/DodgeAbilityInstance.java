@@ -16,7 +16,9 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     private int DodgeAmount = 4;
     private int MaxDodgeAmount = 4;
     private boolean DodgeActivate = false;
-    public int DodgeRegenCooldown = 5;
+
+    public final int DefaultDodgeRegenCooldown = 20;
+    public int DodgeRegenCooldown = 20;
 
     public boolean isDodgeActivate(){
         return DodgeActivate;
