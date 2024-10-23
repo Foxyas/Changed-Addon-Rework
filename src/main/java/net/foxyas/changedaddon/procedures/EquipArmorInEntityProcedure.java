@@ -1,31 +1,34 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.minecraft.world.InteractionResult;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-
-import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
-import net.ltxprogrammer.changed.entity.TamableLatexEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-
 import net.foxyas.changedaddon.item.HazmatSuitItem;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TamableLatexEntity;
+import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class EquipArmorInEntityProcedure {
 	@SubscribeEvent
-	public static void onRightClickEntity(PlayerInteractEvent.EntityInteractSpecific event) {
+	public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
 		if (event.getPlayer().isShiftKeyDown() && event.getTarget() instanceof ChangedEntity ChangedEntity) {
 			ItemStack itemStack = event.getItemStack();
 			if (ChangedEntity instanceof DarkLatexWolfPup) {
@@ -39,7 +42,7 @@ public class EquipArmorInEntityProcedure {
 				if (!event.getPlayer().isShiftKeyDown()){
 					return;
 				}
-
+				event.setCancellationResult(InteractionResult.FAIL);
 				// Check if the item is an armor piece
 				if (itemStack.getItem() instanceof ArmorItem armorItem) {
 					if (armorItem instanceof HazmatSuitItem) {
@@ -49,12 +52,13 @@ public class EquipArmorInEntityProcedure {
 					if (!event.getWorld().isClientSide()){
 						equipOrSwapArmor(ChangedEntity, itemStack, armorItem, event.getPlayer(), event.getHand());
 					}
-				} else if (itemStack.isEmpty()) {
+				} else if (itemStack.isEmpty() && event.getHand() == InteractionHand.MAIN_HAND) {
 					// Proceed only on the server side
 					if (!event.getWorld().isClientSide()){
-						checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), event.getLocalPos());
+						checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), getLocationFromHit(event.getPlayer()));
 					}
 				}
+				event.setCanceled(true);
 			}
 		}
 	}
@@ -123,9 +127,9 @@ public class EquipArmorInEntityProcedure {
 		//toEntity.normalize().y - playerLook.normalize().y;
 		double yRelative = clickPos.y;
 		// Display the yRelative value for debugging
-		//player.displayClientMessage(new TextComponent("Y Relative: " + yRelative), false);
+		// player.displayClientMessage(new TextComponent("Y Relative: " + yRelative), false);
 		// Determine which armor slot to unequip based on the yRelative
-		EquipmentSlot clickedSlot = determineArmorSlot(yRelative, entity);
+		EquipmentSlot clickedSlot = determineArmorSlot(yRelative, entity, player);
 		if (clickedSlot != null) {
 			ItemStack currentArmor = entity.getItemBySlot(clickedSlot);
 			if (!currentArmor.isEmpty()) {
@@ -145,17 +149,32 @@ public class EquipArmorInEntityProcedure {
 		}
 	}
 
-	private static EquipmentSlot determineArmorSlot(double yClick, Entity entity) {
-		double entityHeight = entity.getBbHeight();
-		if (entityHeight <= 0) {
-			return EquipmentSlot.FEET;
+	private static Vec3 getLocationFromHit(Player player){
+		// Perform Ray Tracing to detect the entity hit
+		HitResult hitResult = player.pick(5.0D, 1.0F, false); // Check for hits within 5 blocks
+		Vec3 hitPosition = hitResult.getLocation();
+		if (hitResult instanceof EntityHitResult entityHitResult) {
+			// Entity hit, detect location
+			hitPosition = entityHitResult.getLocation();
 		}
+		return hitPosition;
+	}
+
+	private static EquipmentSlot determineArmorSlot(double yClick, Entity entity,Player player) {
+		double entityHeight = entity.getY();
+		Vec3 EntityPos = new Vec3(0,entityHeight,0);
+		Vec3 ClickPos = new Vec3(0,yClick,0);
+		double distance = EntityPos.distanceTo(ClickPos);
 		double relativeHeight = yClick / entityHeight;
-		if (relativeHeight > 0.8) {
+		player.displayClientMessage(new TextComponent("Relative is " + relativeHeight),false);
+		player.displayClientMessage(new TextComponent("Distance is " + distance),false);
+		player.displayClientMessage(new TextComponent("Distance2 is " + (yClick - entity.getY())),false);
+
+		if (distance >= 2.1) {
 			return EquipmentSlot.HEAD;
-		} else if (relativeHeight > 0.4) {
+		} else if (distance > 1) {
 			return EquipmentSlot.CHEST;
-		} else if (relativeHeight > 0.2) {
+		} else if (distance > 0) {
 			return EquipmentSlot.LEGS;
 		} else {
 			return EquipmentSlot.FEET;

@@ -9,6 +9,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
@@ -72,6 +73,21 @@ public class TickentitySolventEnchantmenthitProcedure {
 					}
 				}
 				if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), (immediatesourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0) {
+					if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity"))) || entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity) {
+						if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:latexes")))) {
+							entity.hurt(SolventDmg, (float) (amount + math));
+						}
+					}
+					if (entity instanceof Experiment009Entity) {
+						entity.hurt(SolventDmg, (float) (amount + math));
+					}
+				}
+			} else if (immediatesourceentity instanceof ThrownTrident trident) {
+				if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), trident.getPickupItem()) != 0) {
+					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
+							&& (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
+						entity.hurt(SolventDmg, (float) (amount + math));
+					}
 					if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity"))) || entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity) {
 						if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:latexes")))) {
 							entity.hurt(SolventDmg, (float) (amount + math));

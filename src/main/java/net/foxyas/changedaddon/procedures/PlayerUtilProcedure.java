@@ -24,6 +24,7 @@ import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -237,15 +238,16 @@ public class PlayerUtilProcedure {
 
 	}
 
-	public class ModelFetcher {
+	@OnlyIn(Dist.CLIENT)
+	public static class ModelFetcher {
 
+		@OnlyIn(Dist.CLIENT)
 		public static EntityModel<?> getModelOfEntity(Entity entity) {
 			// Obtém o EntityRendererManager (gerenciador de renderizadores)
 			EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
 
 			// Verifica se o renderizador é para uma entidade viva (LivingEntity)
-			if (renderer instanceof LivingEntityRenderer) {
-				LivingEntityRenderer<?, ?> livingRenderer = (LivingEntityRenderer<?, ?>) renderer;
+			if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
 				// Retorna o modelo da entidade
 				return livingRenderer.getModel();
 			}
@@ -253,6 +255,7 @@ public class PlayerUtilProcedure {
 			return null; // Retorna null se não for uma entidade viva com um modelo
 		}
 
+		@OnlyIn(Dist.CLIENT)
 		public static AdvancedHumanoidModel<?> getChangedEntityModel(ChangedEntity entity){
 			// Obtém o EntityRendererManager (gerenciador de renderizadores)
 			EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
@@ -265,6 +268,24 @@ public class PlayerUtilProcedure {
 			return null; // Retorna null se não for uma entidade viva com um modelo
 		}
 
+		@OnlyIn(Dist.CLIENT)
+		public static AdvancedHumanoidModel<?> getChangedEntityArmorModel(ChangedEntity entity,boolean outerModel){
+			// Obtém o EntityRendererManager (gerenciador de renderizadores)
+			EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+
+			// Verifica se o renderizador é para uma entidade viva (LivingEntity)
+			if (renderer instanceof AdvancedHumanoidRenderer<?,?,?> ChangedEntityModel) {
+				if (outerModel){
+					// Retorna o modelo da entidade
+					return ChangedEntityModel.getArmorLayer().getArmorModel(EquipmentSlot.CHEST);
+				}
+				// Retorna o modelo da entidade
+				return ChangedEntityModel.getArmorLayer().getArmorModel(EquipmentSlot.LEGS);
+			}
+			return null; // Retorna null se não for uma entidade viva com um modelo
+		}
+
+		@OnlyIn(Dist.CLIENT)
 		public static AdvancedHumanoidRenderer<?,?,?> getChangedEntityRender(ChangedEntity entity){
 			EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
 			if (renderer instanceof AdvancedHumanoidRenderer<?,?,?> ChangedEntityModel) {
