@@ -122,6 +122,8 @@
     "changed_addon.jei_descriptions.potwithcammonia": "当被使用时给予足够的反兽化效果以完全逆转你的转变",
     "changed_addon.latex_syringe.not_valid": "你不能放置这个注射器",
     "changed_addon.latex_totem.notvalid": "图腾对你的§bDNA§r产生了§c负反应§r",
+    "changed_addon.latex_totem.tittle.text_1": "§o§n§l§3⚡ 神器的共鸣 ⚡",
+    "changed_addon.latex_totem.tittle.text_2": "§o§l§3保护你的心智，你的意识被从悬崖边拉了回来，阻止让你陷入遗忘的漩涡中。",
     "changedaddon.assimilation.off": "同化关闭",
     "changedaddon.assimilation.on": "同化激活",
     "changedaddon.assimilation.when_customtransfur": "只有在特定兽化状态下才允许同化",

@@ -184,17 +184,26 @@ public class ModelFemaleSnowFox extends AdvancedHumanoidModel<LatexSnowFoxFemale
         return corrector;
     }
  */
-   @Override
-   public void setupHand() {
+   	@Override
+   	public void setupHand() {
        animator.setupHand();
-   }
+    }
 
 
     @Override
     public void setupAnim(@NotNull LatexSnowFoxFemaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    	animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
+
+    /*public PoseStack getPlacementCorrectors(CorrectorType type) {
+		PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
+		if (type == CorrectorType.HAIR)
+			corrector.translate(0.0f, 0.5f / 15.0f, 0.0f);
+		else if (type == CorrectorType.LOWER_HAIR)
+			corrector.translate(0.0f, -0.5f / 16.0f, -0.025f);
+		return corrector;
+	}*/
 
     public ModelPart getArm(HumanoidArm p_102852) {
         return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;

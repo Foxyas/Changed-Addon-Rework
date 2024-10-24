@@ -231,8 +231,8 @@ public class GrapeSnowLeopardModel extends AdvancedHumanoidModel<Exp6Entity> imp
 
     @Override
     public void setupAnim(@NotNull Exp6Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        super.setupAnim(entity,limbSwing,limbSwingAmount,ageInTicks,netHeadYaw,headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         CarryAbilityAnimation.playAnimation(entity, this);
     }
 

@@ -51,8 +51,6 @@ public class ShowExtraTransfurInfoProcedure {
 				|| itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_flask"))) {
 			if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_ket_experiment009_boss")) {
 				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
-			} else if ((itemstack.getOrCreateTag().getString("form")).startsWith("changed_addon:form_exp1")) {
-				tooltip.add(new TextComponent("\u00A78Exp1 Version\u00A7r"));
 			}
 			if (new Object() {
 				public boolean checkGamemode(Entity _ent) {

@@ -163,16 +163,16 @@ public class ModelSnowFox extends AdvancedHumanoidModel<LatexSnowFoxEntity> impl
         return corrector;
     }
  */
-		@Override
-    	public void setupHand() {
-        animator.setupHand();
-    	}
+	@Override
+	public void setupHand() {
+		animator.setupHand();
+    }
 
 
     @Override
     public void setupAnim(@NotNull LatexSnowFoxEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    	animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 
     public ModelPart getArm(HumanoidArm p_102852) {

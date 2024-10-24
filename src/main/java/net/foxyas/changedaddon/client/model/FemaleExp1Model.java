@@ -7,6 +7,7 @@ import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
+import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.tfanimations.HelperModel;
 import net.ltxprogrammer.changed.client.tfanimations.Limb;
 import net.ltxprogrammer.changed.client.tfanimations.TransfurHelper;
@@ -176,9 +177,18 @@ public class FemaleExp1Model extends AdvancedHumanoidModel<Exp1FemaleEntity> imp
 
     @Override
     public void setupAnim(@NotNull Exp1FemaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
+
+    /*public PoseStack getPlacementCorrectors(CorrectorType type) {
+		PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
+		if (type == CorrectorType.HAIR)
+			corrector.translate(0.0f, 0.5f / 15.0f, 0.0f);
+		else if (type == CorrectorType.LOWER_HAIR)
+			corrector.translate(0.0f, -0.5f / 16.0f, -0.025f);
+		return corrector;
+	}*/
 
     public ModelPart getArm(HumanoidArm p_102852) {
         return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
