@@ -37,8 +37,8 @@ public class CustomEyeDisplay <M extends AdvancedHumanoidModel<T>, T extends Cha
         this.GlowDisplayRender = RenderType.eyes(displayPart);
 
         // RenderType normal
-        this.NormalEyeRender = RenderType.entityCutoutNoCull(eyePart);
-        this.NormalDisplayRender = RenderType.entityCutoutNoCull(displayPart);
+        this.NormalEyeRender = RenderType.entityCutout(eyePart);
+        this.NormalDisplayRender = RenderType.entityCutout(displayPart);
 
         this.isOnlyHead = false;
     }
@@ -65,14 +65,9 @@ public class CustomEyeDisplay <M extends AdvancedHumanoidModel<T>, T extends Cha
             RenderType renderType2;
 
             // Seleciona renderização com base na luz ao redor da entidade
-            if (entity instanceof ReynEntity reynEntity){
-                if(reynEntity.ShouldGlow()){
+            if (entity instanceof ReynEntity reynEntity){
                     renderType = GlowEyeRender;
                     renderType2 = GlowDisplayRender;
-                } else {
-                    renderType = NormalEyeRender;
-                    renderType2 = NormalDisplayRender;
-                }
             } else {
                 if(packedLight > 5){
                     renderType = GlowEyeRender;

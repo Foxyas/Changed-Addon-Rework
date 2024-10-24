@@ -33,11 +33,11 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class ReynEntity extends ChangedEntity {
 
-	private static final String FORCE_GLOW_TAG = "ForceGlowDisplay";
-	private static final String GLOW_TAG = "GlowDisplay";
+	//private static final String FORCE_GLOW_TAG = "ForceGlowDisplay";
+	//private static final String GLOW_TAG = "GlowDisplay";
 
-	public boolean ForceGlowDisplay = false;
-	public boolean GlowDisplay;
+	//public boolean ForceGlowDisplay = false;
+	//public boolean GlowDisplay;
 	public ReynEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.REYN.get(), world);
 	}
@@ -61,7 +61,7 @@ public class ReynEntity extends ChangedEntity {
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
-
+	/*
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
@@ -118,12 +118,8 @@ public class ReynEntity extends ChangedEntity {
 		int totalLightLevel = Math.max(blockLight, skyLight);
 
 		// Considera escuro se o nível de luz total for menor ou igual a 9 (ponto de spawn de mobs)
-		if (level.isNight() && blockLight <= 9){
-			return true;
-		}
-
-		return totalLightLevel <= 9;
-	}
+		return skyLight <= 9;
+	}*/
 
 	@Override
 	public Color3 getHairColor(int i) {
