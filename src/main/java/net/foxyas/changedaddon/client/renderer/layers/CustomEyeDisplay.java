@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.foxyas.changedaddon.entity.ReynEntity;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
@@ -51,8 +52,8 @@ public class CustomEyeDisplay <M extends AdvancedHumanoidModel<T>, T extends Cha
         this.GlowDisplayRender = RenderType.eyes(displayPart);
 
         // RenderType normal
-        this.NormalEyeRender = RenderType.entityCutoutNoCull(eyePart);
-        this.NormalDisplayRender = RenderType.entityCutoutNoCull(displayPart);
+        this.NormalEyeRender = RenderType.entityCutout(eyePart);
+        this.NormalDisplayRender = RenderType.entityCutout(displayPart);
 
         this.isOnlyHead = OnlyHead;
     }
@@ -64,13 +65,24 @@ public class CustomEyeDisplay <M extends AdvancedHumanoidModel<T>, T extends Cha
             RenderType renderType2;
 
             // Seleciona renderização com base na luz ao redor da entidade
-            if(isDarkAroundEntity(entity.getUnderlyingPlayer())){
-                renderType = GlowEyeRender;
-                renderType2 = GlowDisplayRender;
+            if (entity instanceof ReynEntity reynEntity){
+                if(reynEntity.ShouldGlow()){
+                    renderType = GlowEyeRender;
+                    renderType2 = GlowDisplayRender;
+                } else {
+                    renderType = NormalEyeRender;
+                    renderType2 = NormalDisplayRender;
+                }
             } else {
-                renderType = NormalEyeRender;
-                renderType2 = NormalDisplayRender;
+                if(packedLight > 5){
+                    renderType = GlowEyeRender;
+                    renderType2 = GlowDisplayRender;
+                } else {
+                    renderType = NormalEyeRender;
+                    renderType2 = NormalDisplayRender;
+                }
             }
+
 
             BasicPlayerInfo info = entity.getBasicPlayerInfo();
             Color3 displayColor = info.getHairColor();  // Cor do display
@@ -87,29 +99,4 @@ public class CustomEyeDisplay <M extends AdvancedHumanoidModel<T>, T extends Cha
             }
         }
     }
-
-
-    private static boolean isDarkAroundEntity(Entity entity) {
-    	if (entity == null){return false;}
-    	
-        // Pega a posição atual da entidade
-        BlockPos entityPos = entity.blockPosition();
-
-        // Nível de luz no bloco (inclui luz de blocos e luz do céu)
-        Level level = entity.getLevel();
-
-        // Obtém a luz do bloco (luz artificial, como tochas)
-        int blockLight = level.getBrightness(LightLayer.BLOCK, entityPos);
-
-        // Obtém a luz do céu (luz natural, como sol e lua)
-        int skyLight = level.getBrightness(LightLayer.SKY, entityPos);
-
-        // Combina ambos para verificar o nível de luz total (artificial + natural)
-        int totalLightLevel = Math.max(blockLight, skyLight);
-
-
-        // Considera escuro se o nível de luz total for menor ou igual a 7 (ponto de spawn de mobs)
-        return totalLightLevel <= 9;
-    }
-
 }

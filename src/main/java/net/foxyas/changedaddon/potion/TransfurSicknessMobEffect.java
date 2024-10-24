@@ -21,7 +21,7 @@ public class TransfurSicknessMobEffect extends MobEffect {
 
 	@Override
 	public void applyEffectTick(LivingEntity entity, int amplifier) {
-		TransfurSicknessOnEffectActiveTickProcedure.execute(entity);
+		TransfurSicknessOnEffectActiveTickProcedure.execute(entity, amplifier);
 	}
 
 	@Override

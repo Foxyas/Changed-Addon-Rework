@@ -5,6 +5,8 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -29,6 +32,12 @@ import java.util.Objects;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class ReynEntity extends ChangedEntity {
+
+	private static final String FORCE_GLOW_TAG = "ForceGlowDisplay";
+	private static final String GLOW_TAG = "GlowDisplay";
+
+	public boolean ForceGlowDisplay = false;
+	public boolean GlowDisplay;
 	public ReynEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.REYN.get(), world);
 	}
@@ -51,6 +60,69 @@ public class ReynEntity extends ChangedEntity {
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains(FORCE_GLOW_TAG)){
+			ForceGlowDisplay = tag.getBoolean(FORCE_GLOW_TAG);
+		}
+		if (tag.contains(GLOW_TAG)){
+			GlowDisplay = tag.getBoolean(GLOW_TAG);
+		}
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean(FORCE_GLOW_TAG,ForceGlowDisplay);
+		tag.putBoolean(GLOW_TAG,GlowDisplay);
+	}
+
+	@Override
+	public void baseTick() {
+		super.baseTick();
+		if (this.GlowDisplay != ShouldGlow()){
+			this.GlowDisplay = ShouldGlow();
+		}
+	}
+
+	public boolean ShouldGlow(){
+		// Maybe can be optimized but ok
+		if (!ForceGlowDisplay && isDarkAroundEntity()){
+			return true;
+		} else if (ForceGlowDisplay && !isDarkAroundEntity()) {
+			return true;
+		} else if (ForceGlowDisplay && isDarkAroundEntity()) {
+			return true;
+		}
+
+		return isDarkAroundEntity();
+	}
+
+	private boolean isDarkAroundEntity() {
+		// Pega a posição atual da entidade
+		BlockPos entityPos = this.blockPosition();
+
+		// Nível de luz no bloco (inclui luz de blocos e luz do céu)
+		Level level = this.getLevel();
+
+		// Obtém a luz do bloco (luz artificial, como tochas)
+		int blockLight = level.getBrightness(LightLayer.BLOCK, entityPos);
+
+		// Obtém a luz do céu (luz natural, como sol e lua)
+		int skyLight = level.getBrightness(LightLayer.SKY, entityPos);
+
+		// Combina ambos para verificar o nível de luz total (artificial + natural)
+		int totalLightLevel = Math.max(blockLight, skyLight);
+
+		// Considera escuro se o nível de luz total for menor ou igual a 9 (ponto de spawn de mobs)
+		if (level.isNight() && blockLight <= 9){
+			return true;
+		}
+
+		return totalLightLevel <= 9;
 	}
 
 	@Override

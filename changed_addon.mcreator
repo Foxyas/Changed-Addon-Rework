@@ -8375,10 +8375,17 @@
       "locked_code": false,
       "registry_name": "transfur_sickness_on_effect_active_tick",
       "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/TransfurSicknessOnEffectActiveTickProcedure.java"
+        ],
         "dependencies": [
           {
             "name": "entity",
             "type": "entity"
+          },
+          {
+            "name": "amplifier",
+            "type": "number"
           }
         ]
       },
