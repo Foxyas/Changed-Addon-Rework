@@ -27,7 +27,7 @@ public class TransfurSicknessMobEffect extends MobEffect {
 	@Override
 	public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
 		super.removeAttributeModifiers(entity, attributeMap, amplifier);
-		TransfurSicknessEffectExpiresProcedure.execute(entity);
+		TransfurSicknessEffectExpiresProcedure.execute(entity, amplifier);
 	}
 
 	@Override
