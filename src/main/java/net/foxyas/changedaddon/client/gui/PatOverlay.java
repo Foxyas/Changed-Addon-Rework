@@ -97,7 +97,13 @@ public class PatOverlay {
 
     private static TextComponent PatInfo2(Entity lookedEntity) {
         if (lookedEntity instanceof LivingEntity) {
-            TextComponent patMessage = new TextComponent(lookedEntity.getDisplayName().getString());
+            TextComponent patMessage;
+
+            if(lookedEntity.hasCustomName()){
+                patMessage = new TextComponent(lookedEntity.getCustomName().getString());
+            } else {
+                patMessage = new TextComponent(lookedEntity.getDisplayName().getString());
+            }
             patMessage.withStyle(style ->
                     style.withColor(Color3.getColor("#FFFFFF").toInt())
                             .withBold(true)
