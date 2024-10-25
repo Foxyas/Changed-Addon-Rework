@@ -166,9 +166,9 @@ public class EquipArmorInEntityProcedure {
 		Vec3 ClickPos = new Vec3(0,yClick,0);
 		double distance = EntityPos.distanceTo(ClickPos);
 		double relativeHeight = yClick / entityHeight;
-		player.displayClientMessage(new TextComponent("Relative is " + relativeHeight),false);
-		player.displayClientMessage(new TextComponent("Distance is " + distance),false);
-		player.displayClientMessage(new TextComponent("Distance2 is " + (yClick - entity.getY())),false);
+		//@DEBUG player.displayClientMessage(new TextComponent("Relative is " + relativeHeight),false);
+		//@DEBUG player.displayClientMessage(new TextComponent("Distance is " + distance),false);
+		//@DEBUG player.displayClientMessage(new TextComponent("Distance2 is " + (yClick - entity.getY())),false);
 
 		if (distance >= 2.1) {
 			return EquipmentSlot.HEAD;
