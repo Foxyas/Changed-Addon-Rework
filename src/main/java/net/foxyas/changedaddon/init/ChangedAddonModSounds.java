@@ -25,6 +25,7 @@ public class ChangedAddonModSounds {
 		REGISTRY.put(new ResourceLocation("changed_addon", "untransfursound"), new SoundEvent(new ResourceLocation("changed_addon", "untransfursound")));
 		REGISTRY.put(new ResourceLocation("changed_addon", "spray.sound"), new SoundEvent(new ResourceLocation("changed_addon", "spray.sound")));
 		REGISTRY.put(new ResourceLocation("changed_addon", "experiment10_theme"), new SoundEvent(new ResourceLocation("changed_addon", "experiment10_theme")));
+		REGISTRY.put(new ResourceLocation("changed_addon", "block.plushes.sfx"), new SoundEvent(new ResourceLocation("changed_addon", "block.plushes.sfx")));
 	}
 
 	@SubscribeEvent

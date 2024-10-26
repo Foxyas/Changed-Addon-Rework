@@ -158,6 +158,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> HAZMAT_SUIT_CHESTPLATE = REGISTRY.register("hazmat_suit_chestplate", () -> new HazmatSuitItem.Chestplate());
 	public static final RegistryObject<Item> HAZMAT_SUIT_LEGGINGS = REGISTRY.register("hazmat_suit_leggings", () -> new HazmatSuitItem.Leggings());
 	public static final RegistryObject<Item> HAZMAT_SUIT_BOOTS = REGISTRY.register("hazmat_suit_boots", () -> new HazmatSuitItem.Boots());
+	public static final RegistryObject<Item> SNEP_PLUSHE = block(ChangedAddonModBlocks.SNEP_PLUSHE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> SNOW_FOX_PLUSHE = block(ChangedAddonModBlocks.SNOW_FOX_PLUSHE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

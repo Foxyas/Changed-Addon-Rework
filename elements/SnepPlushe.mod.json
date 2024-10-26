@@ -1,0 +1,501 @@
+{
+  "_fv": 47,
+  "_type": "block",
+  "definition": {
+    "texture": "gray_wool_particle",
+    "textureTop": "",
+    "textureLeft": "",
+    "textureFront": "",
+    "textureRight": "",
+    "textureBack": "",
+    "renderType": 2,
+    "customModelName": "snepplushemodel:default",
+    "rotationMode": 1,
+    "enablePitch": false,
+    "emissiveRendering": false,
+    "displayFluidOverlay": false,
+    "itemTexture": "",
+    "particleTexture": "",
+    "tintType": "No tint",
+    "isItemTinted": false,
+    "hasTransparency": true,
+    "connectedSides": false,
+    "transparencyType": "CUTOUT_MIPPED",
+    "disableOffset": false,
+    "boundingBoxes": [
+      {
+        "mx": 5.0,
+        "my": 12.0,
+        "mz": 5.0,
+        "Mx": 11.0,
+        "My": 18.0,
+        "Mz": 11.0,
+        "subtract": false
+      },
+      {
+        "mx": 4.75,
+        "my": 11.55,
+        "mz": 4.75,
+        "Mx": 11.25,
+        "My": 18.05,
+        "Mz": 11.25,
+        "subtract": false
+      },
+      {
+        "mx": 4.7,
+        "my": 13.4,
+        "mz": 4.7,
+        "Mx": 11.3,
+        "My": 18.0,
+        "Mz": 11.3,
+        "subtract": false
+      },
+      {
+        "mx": 6.6,
+        "my": 12.1,
+        "mz": 4.6,
+        "Mx": 9.4,
+        "My": 12.9,
+        "Mz": 5.4,
+        "subtract": false
+      },
+      {
+        "mx": 6.1,
+        "my": 12.6,
+        "mz": 3.85,
+        "Mx": 9.9,
+        "My": 14.4,
+        "Mz": 5.65,
+        "subtract": false
+      },
+      {
+        "mx": 7.6,
+        "my": 16.225,
+        "mz": 14.7,
+        "Mx": 8.4,
+        "My": 17.025,
+        "Mz": 15.5,
+        "subtract": false
+      },
+      {
+        "mx": 10.58566,
+        "my": 16.91144,
+        "mz": 7.4,
+        "Mx": 11.78566,
+        "My": 20.11144,
+        "Mz": 9.6,
+        "subtract": false
+      },
+      {
+        "mx": 4.21434,
+        "my": 16.91144,
+        "mz": 7.4,
+        "Mx": 5.41434,
+        "My": 20.11144,
+        "Mz": 9.6,
+        "subtract": false
+      },
+      {
+        "mx": 10.45,
+        "my": 11.7,
+        "mz": 5.2,
+        "Mx": 11.05,
+        "My": 13.3,
+        "Mz": 10.8,
+        "subtract": false
+      },
+      {
+        "mx": 10.36066,
+        "my": 12.55235,
+        "mz": 5.2,
+        "Mx": 10.96066,
+        "My": 14.15235,
+        "Mz": 10.8,
+        "subtract": false
+      },
+      {
+        "mx": 4.95,
+        "my": 11.7,
+        "mz": 5.2,
+        "Mx": 5.55,
+        "My": 13.3,
+        "Mz": 10.8,
+        "subtract": false
+      },
+      {
+        "mx": 5.03934,
+        "my": 12.55235,
+        "mz": 5.2,
+        "Mx": 5.63934,
+        "My": 14.15235,
+        "Mz": 10.8,
+        "subtract": false
+      },
+      {
+        "mx": 4.9,
+        "my": 1.9,
+        "mz": 6.9,
+        "Mx": 11.1,
+        "My": 12.1,
+        "Mz": 9.1,
+        "subtract": false
+      },
+      {
+        "mx": 4.85,
+        "my": 1.85,
+        "mz": 6.85,
+        "Mx": 11.15,
+        "My": 12.15,
+        "Mz": 9.15,
+        "subtract": false
+      },
+      {
+        "mx": 6.2,
+        "my": -0.69821,
+        "mz": 6.83376,
+        "Mx": 9.8,
+        "My": 2.90179,
+        "Mz": 11.43376,
+        "subtract": false
+      },
+      {
+        "mx": 5.8,
+        "my": -3.31697,
+        "mz": 7.88995,
+        "Mx": 10.2,
+        "My": 1.08303,
+        "Mz": 13.28995,
+        "subtract": false
+      },
+      {
+        "mx": 5.5,
+        "my": 10.2863,
+        "mz": 11.58216,
+        "Mx": 10.5,
+        "My": 18.2863,
+        "Mz": 16.58216,
+        "subtract": false
+      },
+      {
+        "mx": 5.85,
+        "my": 12.8907,
+        "mz": 15.81926,
+        "Mx": 10.15,
+        "My": 16.1907,
+        "Mz": 20.11926,
+        "subtract": false
+      },
+      {
+        "mx": 5.05,
+        "my": 9.65235,
+        "mz": 6.3,
+        "Mx": 10.95,
+        "My": 11.55235,
+        "Mz": 7.2,
+        "subtract": false
+      },
+      {
+        "mx": 5.15,
+        "my": 9.25235,
+        "mz": 5.9,
+        "Mx": 10.85,
+        "My": 10.95235,
+        "Mz": 6.6,
+        "subtract": false
+      },
+      {
+        "mx": 5.05,
+        "my": 9.65235,
+        "mz": 8.8,
+        "Mx": 10.95,
+        "My": 11.55235,
+        "Mz": 9.7,
+        "subtract": false
+      },
+      {
+        "mx": 5.15,
+        "my": 9.25235,
+        "mz": 9.4,
+        "Mx": 10.85,
+        "My": 10.95235,
+        "Mz": 10.1,
+        "subtract": false
+      },
+      {
+        "mx": 11.0,
+        "my": 8.5,
+        "mz": 0.5,
+        "Mx": 14.0,
+        "My": 11.5,
+        "Mz": 9.5,
+        "subtract": false
+      },
+      {
+        "mx": 11.75,
+        "my": 8.625,
+        "mz": 0.45,
+        "Mx": 13.25,
+        "My": 10.125,
+        "Mz": 0.95,
+        "subtract": false
+      },
+      {
+        "mx": 13.15,
+        "my": 10.35,
+        "mz": 0.45,
+        "Mx": 13.95,
+        "My": 11.15,
+        "Mz": 1.25,
+        "subtract": false
+      },
+      {
+        "mx": 12.15,
+        "my": 10.55,
+        "mz": 0.45,
+        "Mx": 12.95,
+        "My": 11.35,
+        "Mz": 1.25,
+        "subtract": false
+      },
+      {
+        "mx": 11.15,
+        "my": 10.35,
+        "mz": 0.45,
+        "Mx": 11.95,
+        "My": 11.15,
+        "Mz": 1.25,
+        "subtract": false
+      },
+      {
+        "mx": 2.0,
+        "my": 8.5,
+        "mz": 0.5,
+        "Mx": 5.0,
+        "My": 11.5,
+        "Mz": 9.5,
+        "subtract": false
+      },
+      {
+        "mx": 2.75,
+        "my": 8.625,
+        "mz": 0.45,
+        "Mx": 4.25,
+        "My": 10.125,
+        "Mz": 0.95,
+        "subtract": false
+      },
+      {
+        "mx": 4.15,
+        "my": 10.35,
+        "mz": 0.45,
+        "Mx": 4.95,
+        "My": 11.15,
+        "Mz": 1.25,
+        "subtract": false
+      },
+      {
+        "mx": 3.15,
+        "my": 10.55,
+        "mz": 0.45,
+        "Mx": 3.95,
+        "My": 11.35,
+        "Mz": 1.25,
+        "subtract": false
+      },
+      {
+        "mx": 2.15,
+        "my": 10.35,
+        "mz": 0.45,
+        "Mx": 2.95,
+        "My": 11.15,
+        "Mz": 1.25,
+        "subtract": false
+      },
+      {
+        "mx": 8.75,
+        "my": 0.5,
+        "mz": 1.25,
+        "Mx": 11.75,
+        "My": 3.5,
+        "Mz": 8.0,
+        "subtract": false
+      },
+      {
+        "mx": 9.5,
+        "my": 0.67682,
+        "mz": 1.167,
+        "Mx": 11.0,
+        "My": 2.17682,
+        "Mz": 1.667,
+        "subtract": false
+      },
+      {
+        "mx": 10.9,
+        "my": 2.27682,
+        "mz": 1.15,
+        "Mx": 11.7,
+        "My": 3.07682,
+        "Mz": 1.95,
+        "subtract": false
+      },
+      {
+        "mx": 9.85,
+        "my": 2.52682,
+        "mz": 1.15,
+        "Mx": 10.65,
+        "My": 3.32682,
+        "Mz": 1.95,
+        "subtract": false
+      },
+      {
+        "mx": 8.825,
+        "my": 2.27682,
+        "mz": 1.15,
+        "Mx": 9.625,
+        "My": 3.07682,
+        "Mz": 1.95,
+        "subtract": false
+      },
+      {
+        "mx": 4.0,
+        "my": 0.5,
+        "mz": 1.25,
+        "Mx": 7.0,
+        "My": 3.5,
+        "Mz": 8.0,
+        "subtract": false
+      },
+      {
+        "mx": 4.75,
+        "my": 0.71235,
+        "mz": 1.167,
+        "Mx": 6.25,
+        "My": 2.21235,
+        "Mz": 1.667,
+        "subtract": false
+      },
+      {
+        "mx": 6.15,
+        "my": 2.31235,
+        "mz": 1.15,
+        "Mx": 6.95,
+        "My": 3.11235,
+        "Mz": 1.95,
+        "subtract": false
+      },
+      {
+        "mx": 5.1,
+        "my": 2.56235,
+        "mz": 1.15,
+        "Mx": 5.9,
+        "My": 3.36235,
+        "Mz": 1.95,
+        "subtract": false
+      },
+      {
+        "mx": 4.075,
+        "my": 2.31235,
+        "mz": 1.15,
+        "Mx": 4.875,
+        "My": 3.11235,
+        "Mz": 1.95,
+        "subtract": false
+      }
+    ],
+    "name": "Snep Plushe",
+    "specialInfo": [],
+    "hardness": 0.5,
+    "resistance": 5.0,
+    "hasGravity": false,
+    "isWaterloggable": true,
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "destroyTool": "Not specified",
+    "customDrop": {
+      "value": ""
+    },
+    "dropAmount": 1,
+    "useLootTableForDrops": false,
+    "requiresCorrectTool": false,
+    "enchantPowerBonus": 0.0,
+    "plantsGrowOn": false,
+    "canRedstoneConnect": false,
+    "lightOpacity": 0,
+    "material": {
+      "value": "CLOTH"
+    },
+    "tickRate": 0,
+    "tickRandomly": false,
+    "isReplaceable": false,
+    "canProvidePower": false,
+    "emittedRedstonePower": {
+      "fixedValue": 15.0
+    },
+    "colorOnMap": "DEFAULT",
+    "creativePickItem": {
+      "value": ""
+    },
+    "offsetType": "NONE",
+    "aiPathNodeType": "DEFAULT",
+    "flammability": 20,
+    "fireSpreadSpeed": 0,
+    "isLadder": false,
+    "slipperiness": 0.6,
+    "speedFactor": 1.0,
+    "jumpFactor": 1.0,
+    "reactionToPushing": "NORMAL",
+    "isNotColidable": false,
+    "isCustomSoundType": false,
+    "soundOnStep": {
+      "value": "CLOTH"
+    },
+    "breakSound": {
+      "value": ""
+    },
+    "fallSound": {
+      "value": ""
+    },
+    "hitSound": {
+      "value": ""
+    },
+    "placeSound": {
+      "value": ""
+    },
+    "stepSound": {
+      "value": ""
+    },
+    "luminance": 0,
+    "unbreakable": false,
+    "breakHarvestLevel": 1,
+    "isBonemealable": false,
+    "hasInventory": false,
+    "guiBoundTo": "<NONE>",
+    "openGUIOnRightClick": false,
+    "inventorySize": 9,
+    "inventoryStackSize": 64,
+    "inventoryDropWhenDestroyed": true,
+    "inventoryComparatorPower": true,
+    "inventoryOutSlotIDs": [],
+    "inventoryInSlotIDs": [],
+    "hasEnergyStorage": false,
+    "energyInitial": 0,
+    "energyCapacity": 400000,
+    "energyMaxReceive": 200,
+    "energyMaxExtract": 200,
+    "isFluidTank": false,
+    "fluidCapacity": 8000,
+    "fluidRestrictions": [],
+    "onRightClicked": {
+      "name": "InteractPlushes"
+    },
+    "spawnWorldTypes": [],
+    "restrictionBiomes": [],
+    "blocksToReplace": [],
+    "generationShape": "UNIFORM",
+    "frequencyPerChunks": 10,
+    "frequencyOnChunk": 16,
+    "minGenerateHeight": 0,
+    "maxGenerateHeight": 64
+  }
+}

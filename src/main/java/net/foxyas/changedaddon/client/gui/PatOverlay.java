@@ -45,8 +45,10 @@ public class PatOverlay {
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isKeySet()) {
                         if (!PatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible()){
+                        		int EntityNameLength = PatInfo2(lookedEntity).getString().length();
+                        		int MoveOverlayAmount = EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;
                         		Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo(lookedEntity), 237 - PatInfo2(lookedEntity).getString().length() * 2, 251, -1);
+                                    PatInfo(lookedEntity), 237 - EntityNameLength, 251, -1);
                             /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
                                     PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
                         	}

@@ -65,5 +65,14 @@
         "stream": false
       }
     ]
+  },
+  "block.plushes.sfx": {
+    "subtitle": "subtitles.block.plushes.sfx",
+    "sounds": [
+      {
+        "name": "changed_addon:plush_sfx",
+        "stream": false
+      }
+    ]
   }
 }

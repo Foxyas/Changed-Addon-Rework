@@ -11293,6 +11293,72 @@
         "dependencies": []
       },
       "path": "~/CustomCode"
+    },
+    {
+      "name": "SnepPlushe",
+      "type": "block",
+      "sortid": 569,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "snep_plushe",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/block/snep_plushe.json",
+          "src/main/resources/assets/changed_addon/blockstates/snep_plushe.json",
+          "src/main/java/net/foxyas/changedaddon/block/SnepPlusheBlock.java",
+          "src/main/resources/assets/changed_addon/models/item/snep_plushe.json"
+        ]
+      },
+      "path": "~/Blocks"
+    },
+    {
+      "name": "SnowFoxPlushe",
+      "type": "block",
+      "sortid": 570,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "snow_fox_plushe",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/block/snow_fox_plushe.json",
+          "src/main/java/net/foxyas/changedaddon/block/SnowFoxPlusheBlock.java",
+          "src/main/resources/assets/changed_addon/models/item/snow_fox_plushe.json",
+          "src/main/resources/assets/changed_addon/blockstates/snow_fox_plushe.json"
+        ]
+      },
+      "path": "~/Blocks"
+    },
+    {
+      "name": "InteractPlushes",
+      "type": "procedure",
+      "sortid": 571,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "interact_plushes",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/InteractPlushesProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/Procedures"
     }
   ],
   "variable_elements": [
@@ -11498,6 +11564,14 @@
       ],
       "category": "neutral",
       "subtitle": "Experiment 10 Music Theme"
+    },
+    {
+      "name": "block.plushes.sfx",
+      "files": [
+        "plush_sfx"
+      ],
+      "category": "block",
+      "subtitle": "Plush Squeezed"
     }
   ],
   "language_map": {
@@ -11615,6 +11689,7 @@
       "gui.changed_addon.bookpagenumber_3.button_back": "Back",
       "gui.changed_addon.bookrecipepage_6.label_pany_potion": "P\u003dANY POTION",
       "gui.changed_addon.bookrecipepage_8.label_3": "3",
+      "subtitles.block.plushes.sfx": "Plush Squeezed",
       "gui.changed_addon.bookrecipepage_10.button_back": "Back",
       "advancements.swim_regret.descr": "Swim in water with a form that has low swim speed for a minute",
       "gamerule.doDazedLatexBurn.description": "When On Make The Dazed Latexs Burn in Sun Light like in Dazed Game",
@@ -11909,6 +11984,7 @@
       "advancements.potwithlitixcamonia_advancement.descr": "You drank a liquid made from the dilution of litixcamonia The taste is not bad besides it tastes like cherry!",
       "gui.changed_addon.bookrecipepage_7.button_back": "Back",
       "gui.changed_addon.bookrecipepage_9.label_p": "L",
+      "block.changed_addon.snep_plushe": "Snep Plushe",
       "text.changed_addon.swimspeed": "Swim Speed \u003d %s",
       "effect.changed_addon.untransfur.description": "Add an untransfur progress shown by an overlay. Progress speeds if sleeps. Once complete, the Untransfur is applied.",
       "changed_addon.latex_totem.tittle.text_2": "§o§l§3Shielding your mind, Your consciousness is pulled back from the brink. refusing to let you fall into oblivion.",
@@ -11920,6 +11996,7 @@
       "item.changed_addon.painite_shovel": "Painite Shovel",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_multiplier": "Display Litix-Camonia Multiplier Recipe",
       "gui.changed_addon.unifusergui.button_empty": "next",
+      "block.changed_addon.snow_fox_plushe": "Snow Fox Plushe",
       "changedaddon.friendlymode.off": "Friendly Mode Deactivated",
       "gui.changed_addon.bookrecipepage_6.button_back": "Back",
       "changed_addon.ability.leap": "Leap",

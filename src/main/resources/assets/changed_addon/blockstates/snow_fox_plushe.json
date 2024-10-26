@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "changed_addon:block/snow_fox_plushe"
+    },
+    "facing=east": {
+      "model": "changed_addon:block/snow_fox_plushe",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "changed_addon:block/snow_fox_plushe",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "changed_addon:block/snow_fox_plushe",
+      "y": 270
+    }
+  }
+}
