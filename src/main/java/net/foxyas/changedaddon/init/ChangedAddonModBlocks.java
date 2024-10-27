@@ -14,10 +14,10 @@ import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.level.block.Block;
 
+import net.foxyas.changedaddon.block.WolfPlushBlock;
 import net.foxyas.changedaddon.block.UnifuserBlock;
-import net.foxyas.changedaddon.block.SnowFoxPlusheBlock;
 import net.foxyas.changedaddon.block.SnepsiCanBlock;
-import net.foxyas.changedaddon.block.SnepPlusheBlock;
+import net.foxyas.changedaddon.block.SnepPlushBlock;
 import net.foxyas.changedaddon.block.SignalBlockBlock;
 import net.foxyas.changedaddon.block.PainiteOreBlock;
 import net.foxyas.changedaddon.block.PainiteBlockBlock;
@@ -48,8 +48,8 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
-	public static final RegistryObject<Block> SNEP_PLUSHE = REGISTRY.register("snep_plushe", () -> new SnepPlusheBlock());
-	public static final RegistryObject<Block> SNOW_FOX_PLUSHE = REGISTRY.register("snow_fox_plushe", () -> new SnowFoxPlusheBlock());
+	public static final RegistryObject<Block> SNEP_PLUSH = REGISTRY.register("snep_plush", () -> new SnepPlushBlock());
+	public static final RegistryObject<Block> WOLF_PLUSH = REGISTRY.register("wolf_plush", () -> new WolfPlushBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -59,8 +59,8 @@ public class ChangedAddonModBlocks {
 			DarklatexpuddleBlock.registerRenderLayer();
 			FoxtaCanBlock.registerRenderLayer();
 			SnepsiCanBlock.registerRenderLayer();
-			SnepPlusheBlock.registerRenderLayer();
-			SnowFoxPlusheBlock.registerRenderLayer();
+			SnepPlushBlock.registerRenderLayer();
+			WolfPlushBlock.registerRenderLayer();
 		}
 	}
 }

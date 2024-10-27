@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "changed_addon:block/snep_plush"
+    },
+    "facing=east": {
+      "model": "changed_addon:block/snep_plush",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "changed_addon:block/snep_plush",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "changed_addon:block/snep_plush",
+      "y": 270
+    }
+  }
+}

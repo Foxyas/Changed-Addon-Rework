@@ -11,7 +11,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.Block;
 
+import net.foxyas.changedaddon.block.entity.WolfPlushBlockEntity;
 import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
+import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.foxyas.changedaddon.block.entity.InformantblockBlockEntity;
 import net.foxyas.changedaddon.block.entity.GeneratorBlockEntity;
 import net.foxyas.changedaddon.block.entity.DarklatexpuddleBlockEntity;
@@ -25,6 +27,8 @@ public class ChangedAddonModBlockEntities {
 	public static final RegistryObject<BlockEntityType<?>> DARKLATEXPUDDLE = register("darklatexpuddle", ChangedAddonModBlocks.DARKLATEXPUDDLE, DarklatexpuddleBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> INFORMANTBLOCK = register("informantblock", ChangedAddonModBlocks.INFORMANTBLOCK, InformantblockBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> GENERATOR = register("generator", ChangedAddonModBlocks.GENERATOR, GeneratorBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> SNEP_PLUSH = register("snep_plush", ChangedAddonModBlocks.SNEP_PLUSH, SnepPlushBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> WOLF_PLUSH = register("wolf_plush", ChangedAddonModBlocks.WOLF_PLUSH, WolfPlushBlockEntity::new);
 
 	private static RegistryObject<BlockEntityType<?>> register(String registryname, RegistryObject<Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
 		return REGISTRY.register(registryname, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));

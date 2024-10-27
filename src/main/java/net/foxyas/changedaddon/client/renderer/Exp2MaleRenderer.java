@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.client.renderer.layers.CustomHairColorLayer;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
@@ -16,9 +17,7 @@ public class Exp2MaleRenderer extends AdvancedHumanoidRenderer<Exp2MaleEntity, M
 				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotArmFur));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-		if (ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get()){
-			this.addLayer(new CustomCoatLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/male_snep_hair")));
-		}
+		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/male_snep_hair")));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	}
