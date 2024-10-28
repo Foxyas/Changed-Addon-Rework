@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.block.entity;
 
+import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -13,7 +14,7 @@ public class SnepPlushBlockEntity extends BlockEntity {
 	public int squeezedTicks;
 
 	public SnepPlushBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonModBlockEntities.SNEP_PLUSH.get(), position, state);
+		super(ChangedAddonRegisters.ChangedAddonBlockEntitys.SNEP_PLUSH.get(), position, state);
 	}
 
 	@Override
