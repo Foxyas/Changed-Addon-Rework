@@ -100,8 +100,7 @@ public class SnepPlushBlockEntityRenderer implements BlockEntityRenderer<SnepPlu
                 bufferSource.getBuffer(RenderType.eyes(new ResourceLocation("changed_addon:textures/blocks/snow_leopard_plush_glow_eye.png"))),
                 light,
                 overlay
-        );
-
+        	);
         poseStack.popPose();
     }
 
