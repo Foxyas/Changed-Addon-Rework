@@ -72,7 +72,7 @@ public class SnepPlushBlockEntityRenderer implements BlockEntityRenderer<SnepPlu
         poseStack.pushPose();
 
         // Translade para a posição do bloco
-        poseStack.translate(0.5, 0.375, 0.505);
+        poseStack.translate(0.5, 0.375, 0.495);
 
         // Obtenha a rotação do bloco a partir do BlockState e aplique ao poseStack
         if (state.hasProperty(HorizontalDirectionalBlock.FACING)) {
