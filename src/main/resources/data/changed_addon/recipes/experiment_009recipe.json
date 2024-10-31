@@ -1,7 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-	"NAN",
+    "NAN",
     "LTP",
     "UCD"
   ],
@@ -13,32 +13,24 @@
       "item": "changed:latex_syringe",
       "nbt": "{safe:1b}"
     },
-    
     "L": {
       "item": "changed_addon:unlatexbase"
     },
-    
-    "P":{
-    	"item": "changed_addon:experiment_009dna"
+    "P": {
+      "item": "changed_addon:experiment_009dna"
     },
-    
-    "A":{
-    	"item": "minecraft:diamond_block"
+    "A": {
+      "item": "minecraft:copper_block"
     },
-    
-    "N":{
-		"item": "changed_addon:painite_block"
-    },
-    
-    "C":{
-		"item": "minecraft:gold_block"
+    "N": {
+      "item": "changed_addon:biomass"
     },
-    
-    "D":{
-		"item": "minecraft:iron_block"
+    "C": {
+      "item": "minecraft:gold_block"
+    },
+    "D": {
+      "item": "minecraft:iron_block"
     }
-
-    
   },
   "result": {
     "item": "changed_addon:experiment_009_spawnegg",

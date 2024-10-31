@@ -33,10 +33,10 @@
         "value": "TAG:changed_addon:gooey"
       },
       {
-        "value": "CUSTOM:PainiteBlock"
+        "value": "CUSTOM:Biomass"
       },
       {
-        "value": "Items.NETHERITE_INGOT"
+        "value": "Blocks.WITHER_ROSE"
       }
     ],
     "recipeReturnStack": {
