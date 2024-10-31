@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:glow_ink_sac"
+    },
+    "1": {
+      "tag": "forge:dyes/lime"
+    },
+    "2": {
+      "tag": "forge:dyes/black"
+    },
+    "3": {
+      "item": "minecraft:light_gray_wool"
+    },
+    "4": {
+      "item": "minecraft:white_wool"
+    },
+    "5": {
+      "item": "minecraft:light_gray_wool"
+    },
+    "6": {
+      "tag": "forge:dyes/black"
+    },
+    "7": {
+      "item": "minecraft:light_gray_wool"
+    },
+    "8": {
+      "tag": "forge:dyes/light_gray"
+    }
+  },
+  "result": {
+    "item": "changed_addon:snep_plush",
+    "count": 1
+  }
+}

@@ -11358,6 +11358,32 @@
           "src/main/java/net/foxyas/changedaddon/block/WolfPlushBlock.java"
         ]
       }
+    },
+    {
+      "name": "SnepPlushCraft",
+      "type": "recipe",
+      "sortid": 574,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "snep_plush_craft",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/snep_plush_craft.json"
+        ]
+      }
+    },
+    {
+      "name": "WolfPlushCraft",
+      "type": "recipe",
+      "sortid": 575,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "wolf_plush_craft",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/wolf_plush_craft.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
