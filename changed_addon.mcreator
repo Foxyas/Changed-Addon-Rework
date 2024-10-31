@@ -11323,7 +11323,8 @@
             "type": "world"
           }
         ]
-      }
+      },
+      "path": "~/CustomCode"
     },
     {
       "name": "SnepPlush",
@@ -11340,7 +11341,8 @@
           "src/main/java/net/foxyas/changedaddon/block/SnepPlushBlock.java",
           "src/main/resources/assets/changed_addon/models/item/snep_plush.json"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "WolfPlush",
@@ -11357,7 +11359,8 @@
           "src/main/resources/assets/changed_addon/models/item/wolf_plush.json",
           "src/main/java/net/foxyas/changedaddon/block/WolfPlushBlock.java"
         ]
-      }
+      },
+      "path": "~/Blocks"
     },
     {
       "name": "SnepPlushCraft",
@@ -11370,7 +11373,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/snep_plush_craft.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "WolfPlushCraft",
@@ -11383,7 +11387,23 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/wolf_plush_craft.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "Biomass",
+      "type": "item",
+      "sortid": 576,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "biomass",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/BiomassItem.java",
+          "src/main/resources/assets/changed_addon/models/item/biomass.json"
+        ]
+      },
+      "path": "~/Items"
     }
   ],
   "variable_elements": [
@@ -11833,6 +11853,7 @@
       "config.changed_addon.changed_addon_client_configs": "ChangedAddon-Client",
       "gamerule.needPermitionForBossTransfur": "Need Permition For Transfur into a Boss Transfur",
       "item.changed_addon.transfur_totem": "Latex Totem",
+      "item.changed_addon.biomass": "Biomass",
       "advancements.obtain_a_electric_katana.descr": "Get the electric katana!",
       "item.changed_addon.orangejuice": "Orange Juice",
       "advancements.snepsi_adctive.title": "Snepsi Adctive!",
@@ -11922,7 +11943,7 @@
       "entity.changed_addon.exp_2_female": "Exp2 Female",
       "gui.changed_addon.bookpagenumber_5.label_catalyzer": "Catalyzer",
       "advancements.timesthesyringewasuseadvancement_2.descr": "You used a litixcamonia syringe more than 64 times!!! §4CAN GO GET ONE CANCER IF YOU NOT STOP CHANGE YOUR DNA!!!!!",
-      "changed_addon.latex_syringe.not_valid": "You Can\u0027t place this Syringe",
+      "changed_addon.latex_syringe.not_valid": "You can\u0027t place this syringe on the floor",
       "gamerule.needPermitionFor009Transfur": "Need Permition For Transfur in 009",
       "advancements.foxyas_advancement.descr": "§4THOSE BASTARDS,THEY KILL FOXYAS",
       "entity.changed_addon.reyn": "Reyn",
