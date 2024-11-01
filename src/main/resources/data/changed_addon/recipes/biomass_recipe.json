@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "tag": "changed_addon:gooey"
+    },
+    "1": {
+      "tag": "changed_addon:meat"
+    },
+    "2": {
+      "tag": "changed_addon:gooey"
+    },
+    "3": {
+      "tag": "changed_addon:meat"
+    },
+    "4": {
+      "item": "changed:latex_base"
+    },
+    "5": {
+      "tag": "changed_addon:meat"
+    },
+    "6": {
+      "tag": "changed_addon:gooey"
+    },
+    "7": {
+      "tag": "changed_addon:meat"
+    },
+    "8": {
+      "tag": "changed_addon:gooey"
+    }
+  },
+  "result": {
+    "item": "changed_addon:biomass",
+    "count": 4
+  }
+}

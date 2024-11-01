@@ -1,7 +1,7 @@
 {
   "type": "changed:infuser",
   "ingredients": [
-     {
+    {
       "item": "changed_addon:experiment_10_dna"
     },
     {
