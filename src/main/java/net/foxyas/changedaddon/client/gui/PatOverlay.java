@@ -3,7 +3,11 @@ package net.foxyas.changedaddon.client.gui;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModKeyMappings;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
@@ -44,14 +48,15 @@ public class PatOverlay {
                     Entity lookedEntity = PlayerUtilProcedure.getEntityPlayerLookingAt(entity, 4);
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isKeySet()) {
                         if (!PatInfo(entity).getString().isEmpty()){
-                        	if (!lookedEntity.isInvisible()){
-                        			int EntityNameLength = PatInfo2(lookedEntity).getString().length();
-                        		int MoveOverlayAmount = EntityNameLength * 2;
+                        	if (!lookedEntity.isInvisible() && isPossibletoPat(entity)){
+                                float EntityNameLength = PatInfo2(lookedEntity).getString().length();
+                        		float MoveOverlayAmount = EntityNameLength * 1.5f;
                         		//EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;
                         		Minecraft.getInstance().font.draw(event.getMatrixStack(),
                                     PatInfo(lookedEntity), 237 - MoveOverlayAmount, 251, -1);
                             /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
+                                    PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
+
                         	}
                         }
                     }
@@ -76,6 +81,21 @@ public class PatOverlay {
             return true;
         }
         return isPatableByTag;
+    }
+
+    private static boolean isPossibletoPat(Player player) {
+        var variant = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (variant != null) {
+            var ability = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (ability != null
+                    && ability.suited
+                    && ability.grabbedHasControl) {
+                return false;
+            }
+        }
+
+
+        return GrabEntityAbility.getGrabber(player) == null;
     }
 
     public static boolean isKeySet(){
