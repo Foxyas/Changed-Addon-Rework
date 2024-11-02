@@ -98,7 +98,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 
 		public static final DeferredRegister<BlockEntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ChangedAddonMod.MODID);
-		public static final RegistryObject<BlockEntityType<SnepPlushBlockEntity>> SNEP_PLUSH = REGISTRY.register("Snep_Plush", () -> BlockEntityType.Builder.of(SnepPlushBlockEntity::new, ChangedAddonModBlocks.SNEP_PLUSH.get()).build(null));
+		public static final RegistryObject<BlockEntityType<SnepPlushBlockEntity>> SNEP_PLUSH = REGISTRY.register("snep_plushe", () -> BlockEntityType.Builder.of(SnepPlushBlockEntity::new, ChangedAddonModBlocks.SNEP_PLUSH.get()).build(null));
 
 		@SubscribeEvent
 		public static void registerBlockEntitysRender(FMLConstructModEvent event) {
