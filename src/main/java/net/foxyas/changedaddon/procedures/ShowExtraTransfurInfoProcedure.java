@@ -51,6 +51,8 @@ public class ShowExtraTransfurInfoProcedure {
 				|| itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_flask"))) {
 			if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_ket_experiment009_boss")) {
 				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
+			} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_experiment_10_boss")) {
+				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
 			}
 			if (new Object() {
 				public boolean checkGamemode(Entity _ent) {
@@ -85,6 +87,8 @@ public class ShowExtraTransfurInfoProcedure {
 					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_wolfy")) {
 					tooltip.add(new TextComponent("\u00A78Dev Helper OC Transfur\u00A7r"));
+				} else if ((itemstack.getOrCreateTag().getString("form")).startsWith("changed_addon:form_experiment_10")) {
+					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				}
 			}
 		}
