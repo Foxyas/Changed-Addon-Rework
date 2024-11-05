@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.client.model.*;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
+import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
 import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -40,6 +41,7 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(GrapeSnowLeopardModel.LAYER_LOCATION, GrapeSnowLeopardModel::createBodyLayer);
 		event.registerLayerDefinition(ReynModel.LAYER_LOCATION, ReynModel::createBodyLayer);
 		event.registerLayerDefinition(SnepPlushBlockEntityRenderer.SnepPlushExtraModel.LAYER_LOCATION, SnepPlushBlockEntityRenderer.SnepPlushExtraModel::createBodyLayer);
+		event.registerLayerDefinition(ContainmentContainerRenderer.FluidModelPart.LAYER_LOCATION, ContainmentContainerRenderer.FluidModelPart::createBodyLayer);
 	}
 
 	/*

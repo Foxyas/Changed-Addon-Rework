@@ -17,6 +17,7 @@ import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.foxyas.changedaddon.block.entity.InformantblockBlockEntity;
 import net.foxyas.changedaddon.block.entity.GeneratorBlockEntity;
 import net.foxyas.changedaddon.block.entity.DarklatexpuddleBlockEntity;
+import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.CatlyzerBlockEntity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -29,6 +30,7 @@ public class ChangedAddonModBlockEntities {
 	public static final RegistryObject<BlockEntityType<?>> GENERATOR = register("generator", ChangedAddonModBlocks.GENERATOR, GeneratorBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> SNEP_PLUSH = register("snep_plush", ChangedAddonModBlocks.SNEP_PLUSH, SnepPlushBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> WOLF_PLUSH = register("wolf_plush", ChangedAddonModBlocks.WOLF_PLUSH, WolfPlushBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> CONTAINMENT_CONTAINER = register("containment_container", ChangedAddonModBlocks.CONTAINMENT_CONTAINER, ContainmentContainerBlockEntity::new);
 
 	private static RegistryObject<BlockEntityType<?>> register(String registryname, RegistryObject<Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
 		return REGISTRY.register(registryname, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));

@@ -29,6 +29,7 @@ import net.foxyas.changedaddon.block.FoxtaCanBlock;
 import net.foxyas.changedaddon.block.DormantWhiteLatexBlock;
 import net.foxyas.changedaddon.block.DormantDarkLatexBlock;
 import net.foxyas.changedaddon.block.DarklatexpuddleBlock;
+import net.foxyas.changedaddon.block.ContainmentContainerBlock;
 import net.foxyas.changedaddon.block.CatlyzerBlock;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
@@ -50,6 +51,7 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 	public static final RegistryObject<Block> SNEP_PLUSH = REGISTRY.register("snep_plush", () -> new SnepPlushBlock());
 	public static final RegistryObject<Block> WOLF_PLUSH = REGISTRY.register("wolf_plush", () -> new WolfPlushBlock());
+	public static final RegistryObject<Block> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container", () -> new ContainmentContainerBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -61,6 +63,7 @@ public class ChangedAddonModBlocks {
 			SnepsiCanBlock.registerRenderLayer();
 			SnepPlushBlock.registerRenderLayer();
 			WolfPlushBlock.registerRenderLayer();
+			ContainmentContainerBlock.registerRenderLayer();
 		}
 	}
 }

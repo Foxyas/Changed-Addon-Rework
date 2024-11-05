@@ -2,7 +2,9 @@ package net.foxyas.changedaddon.registers;
 
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
+import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
 import net.foxyas.changedaddon.init.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -99,6 +101,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 		public static final DeferredRegister<BlockEntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ChangedAddonMod.MODID);
 		public static final RegistryObject<BlockEntityType<SnepPlushBlockEntity>> SNEP_PLUSH = REGISTRY.register("snep_plushe", () -> BlockEntityType.Builder.of(SnepPlushBlockEntity::new, ChangedAddonModBlocks.SNEP_PLUSH.get()).build(null));
+		public static final RegistryObject<BlockEntityType<ContainmentContainerBlockEntity>> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container_block_entity", () -> BlockEntityType.Builder.of(ContainmentContainerBlockEntity::new, ChangedAddonModBlocks.CONTAINMENT_CONTAINER.get()).build(null));
 
 		@SubscribeEvent
 		public static void registerBlockEntitysRender(FMLConstructModEvent event) {
@@ -110,6 +113,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
         public static void registerBlockEntitysRender(EntityRenderersEvent.RegisterRenderers event) {
 			// Registro do renderizador de BlockEntity
             event.registerBlockEntityRenderer(SNEP_PLUSH.get(),SnepPlushBlockEntityRenderer::new);
+			event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
 		}
     }
 
