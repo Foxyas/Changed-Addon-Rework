@@ -65,7 +65,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 
 	@Override
 	public VoxelShape getVisualShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-		return Shapes.empty();
+		return Shapes.box(4, 0, 4, 12, 24, 12);
 	}
 
 	@Override
