@@ -43,6 +43,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class ContainmentContainerBlock extends Block implements SimpleWaterloggedBlock, EntityBlock, NonLatexCoverableBlock {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -134,7 +135,14 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 
 	@Override
 	public void onPlace(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull BlockState p_53236_, boolean p_53237_) {
+		super.onPlace(state, level, pos, p_53236_, p_53237_);
 		level.scheduleTick(pos, this, this.getDelayAfterPlace());
+	}
+
+	@Override
+	public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, Random p_60465_) {
+		super.tick(state, serverLevel, pos, p_60465_);
+		serverLevel.scheduleTick(pos, this, this.getDelayAfterPlace());
 	}
 
 	@Override
@@ -150,8 +158,8 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 				if (blockEntity.getTransfurVariant().is(ChangedTransfurVariants.GAS_WOLF.get())
 						|| blockEntity.getTransfurVariant().getRegistryName().toString().contains("gas")){
 					if (level instanceof ServerLevel serverLevel){
-						serverLevel.sendParticles(ChangedParticles.gas(blockEntity.getTransfurVariant().getColors().getFirst()),blockPos.getX(),blockPos.getY(),blockPos.getZ(),5,0.5,0.5,0.5,0.5);
-						serverLevel.sendParticles(ChangedParticles.gas(blockEntity.getTransfurVariant().getColors().getSecond()),blockPos.getX(),blockPos.getY(),blockPos.getZ(),5,0.5,0.5,0.5,0.5);
+						serverLevel.sendParticles(ChangedParticles.gas(blockEntity.getTransfurVariant().getColors().getFirst()),blockPos.getX() + 0.5f,blockPos.getY() + 0.5f,blockPos.getZ() + 0.5f,5,0.5,0.5,0.5,0);
+						serverLevel.sendParticles(ChangedParticles.gas(blockEntity.getTransfurVariant().getColors().getSecond()),blockPos.getX() + 0.5f,blockPos.getY() + 0.5f,blockPos.getZ() + 0.5f,5,0.5,0.5,0.5,0);
 					}
 				}
 			}
