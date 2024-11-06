@@ -5,6 +5,8 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
@@ -17,6 +19,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.phys.Vec3;
 
 public class ContainmentContainerRenderer implements BlockEntityRenderer<ContainmentContainerBlockEntity> {
@@ -34,11 +37,11 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
 
         public static LayerDefinition createBodyLayer() {
             MeshDefinition meshdefinition = new MeshDefinition();
-            PartDefinition partdefinition = meshdefinition.getRoot();
+			PartDefinition partdefinition = meshdefinition.getRoot();
 
-            PartDefinition LatexLiquidFill = partdefinition.addOrReplaceChild("LatexLiquidFill", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -12.0F, -2.0F, 4.0F, 16.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
+			PartDefinition LatexLiquidFill = partdefinition.addOrReplaceChild("LatexLiquidFill", CubeListBuilder.create().texOffs(0, 8).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
 
-            return LayerDefinition.create(meshdefinition, 32, 32);
+			return LayerDefinition.create(meshdefinition, 32, 32);
         }
 
         @Override
@@ -60,26 +63,45 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
         poseStack.pushPose();
 
         // Translade para a posição do bloco
-        poseStack.translate(0.5, 0, 0.5);
+        poseStack.translate(0.5, -0.5, 0.5);
 
         TransfurVariant<?> variantColorGet = blockEntity.getTransfurVariant();
+        TagKey<TransfurVariant<?>> glowVariantsTag = TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
+                new ResourceLocation("changed_addon:glow_variants"));
 
         if (variantColorGet != null){
             Color3 firstColor = variantColorGet.getColors().getFirst();
             Color3 secondColor = variantColorGet.getColors().getSecond();
+            RenderType renderType1 = RenderType.entityTranslucent(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_color1.png"));
+            RenderType renderType2 = RenderType.entityTranslucent(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_color2.png"));
+            RenderType glowRenderType2 = RenderType.eyes(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_color2.png"));
             this.fluidModel.renderToBuffer(
                     poseStack,
-                    bufferSource.getBuffer(RenderType.entityCutout(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_color1.png"))),
+                    bufferSource.getBuffer(renderType1),
                     light,
                     overlay,firstColor.red(),firstColor.green(),firstColor.blue(),1
             );
-            this.fluidModel.renderToBuffer(
-                    poseStack,
-                    bufferSource.getBuffer(RenderType.entityCutout(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_color2.png"))),
-                    light,
-                    overlay,secondColor.red(),secondColor.green(),secondColor.blue(),1
-            );
+            if (variantColorGet.is(glowVariantsTag)){
+                this.fluidModel.renderToBuffer(
+                        poseStack,
+                        bufferSource.getBuffer(glowRenderType2),
+                        light,
+                        overlay,secondColor.red(),secondColor.green(),secondColor.blue(),1
+                );
+            } else {
+                this.fluidModel.renderToBuffer(
+                        poseStack,
+                        bufferSource.getBuffer(renderType2),
+                        light,
+                        overlay,secondColor.red(),secondColor.green(),secondColor.blue(),1
+                );
+            }
         }
         poseStack.popPose();
+    }
+
+    @Override
+    public int getViewDistance() {
+        return 128;
     }
 }

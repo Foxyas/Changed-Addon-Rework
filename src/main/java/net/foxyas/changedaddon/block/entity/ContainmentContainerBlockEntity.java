@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -42,6 +43,21 @@ public class ContainmentContainerBlockEntity extends BlockEntity {
 		return transfurVariant;
 	}
 
+	public boolean isTransfurNotLatex(@Nullable TransfurVariant<?> variant){
+		if (variant == null){
+			return true;
+		}
+		return !variant.getEntityType().is(ChangedTags.EntityTypes.LATEX);
+	}
+
+	public boolean isTransfurGasLike(@Nullable TransfurVariant<?> variant){
+		if (variant == null){
+			return false;
+		}
+		return !variant.is(ChangedTransfurVariants.GAS_WOLF.get())
+				|| variant.getRegistryName().toString().contains("gas");
+	}
+
 	@Override
 	public void load(@NotNull CompoundTag compound) {
 		super.load(compound);
@@ -68,7 +84,8 @@ public class ContainmentContainerBlockEntity extends BlockEntity {
 
 		if (compound.contains("PoseZ")) {
 			this.poseZ = compound.getDouble("PoseZ");
-		}*/
+		}
+*/
 	}
 
 	@Override
