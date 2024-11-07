@@ -242,22 +242,24 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 				level.updateNeighborsAt(pos,this);
 				ItemStack normalSyringe = new ItemStack(ChangedItems.SYRINGE.get());
 				ItemStack glassFlask = new ItemStack(ChangedItems.getBlockItem(ChangedBlocks.ERLENMEYER_FLASK.get()));
-				selectedItem.shrink(1);
 				if (selectedItem.getItem() instanceof LatexSyringe){
+					selectedItem.shrink(1);
 					if (!player.addItem(normalSyringe)){
 						player.drop(normalSyringe,false);
 					}
 				} else if (selectedItem.getItem() instanceof LatexFlask) {
+					selectedItem.shrink(1);
 					if (!player.addItem(glassFlask)){
 						player.drop(glassFlask,false);
 					}
 				}
+				
 			}
 		} else if (selectedItem.getItem() instanceof Syringe
 				&& blockEntity.getTransfurVariant() != null) {
-			ItemStack latexSyringe = selectedItem.getItem() instanceof LatexSyringe ? new ItemStack(ChangedItems.LATEX_SYRINGE.get()) :
-					selectedItem.getItem() instanceof LatexFlask ? new ItemStack(ChangedItems.LATEX_FLASK.get()) :
-							new ItemStack(ChangedItems.LATEX_SYRINGE.get());
+			ItemStack latexSyringe = selectedItem.getItem() instanceof LatexSyringe ? new ItemStack(ChangedItems.LATEX_SYRINGE.get())
+					: selectedItem.getItem() instanceof LatexFlask ? new ItemStack(ChangedItems.LATEX_FLASK.get())
+						: new ItemStack(ChangedItems.LATEX_SYRINGE.get());
 			Syringe.setVariant(latexSyringe,blockEntity.getTransfurVariant().getFormId());
 			blockEntity.setTransfurVariant(null);
 			level.blockUpdated(pos,this);

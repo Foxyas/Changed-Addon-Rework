@@ -3,10 +3,8 @@ package net.foxyas.changedaddon.client.renderer.blockEntitys;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
-import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
@@ -15,12 +13,12 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.OutlineBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.phys.Vec3;
 
 public class ContainmentContainerRenderer implements BlockEntityRenderer<ContainmentContainerBlockEntity> {
 
@@ -63,7 +61,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
         poseStack.pushPose();
 
         // Translade para a posição do bloco
-        poseStack.translate(0.5, -0.5, 0.5);
+        poseStack.translate(0.5, -0.505, 0.5);
 
         TransfurVariant<?> variantColorGet = blockEntity.getTransfurVariant();
         TagKey<TransfurVariant<?>> glowVariantsTag = TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
@@ -81,12 +79,27 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
                     light,
                     overlay,firstColor.red(),firstColor.green(),firstColor.blue(),1
             );
-            if (variantColorGet.is(glowVariantsTag)){
+            if (variantColorGet.is(glowVariantsTag)) {
+                /*
+                * Minecraft minecraft = Minecraft.getInstance();
+                * OutlineBufferSource outlineBufferSource = minecraft.renderBuffers().outlineBufferSource();
+                * Color3 color = variantColorGet.getColors().getSecond();
+                * int red = (int) (color.red() * 255);
+                * int green = (int) (color.green() * 255);
+                * int blue = (int) (color.blue() * 255);
+                // Definir a cor do contorno diretamente
+                * outlineBufferSource.setColor(red, green, blue, 255);
+                */
+
                 this.fluidModel.renderToBuffer(
                         poseStack,
-                        bufferSource.getBuffer(glowRenderType2),
+                        bufferSource.getBuffer(glowRenderType2), // Apenas linhas do contorno
                         light,
-                        overlay,secondColor.red(),secondColor.green(),secondColor.blue(),1
+                        overlay,
+                        secondColor.red(),
+                        secondColor.green(),
+                        secondColor.blue(),
+                        1
                 );
             } else {
                 this.fluidModel.renderToBuffer(
