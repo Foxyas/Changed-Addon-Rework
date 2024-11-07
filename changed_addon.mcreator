@@ -11689,6 +11689,7 @@
       "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
       "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
+      "item.changed_addon.signal_catcher": "Signal Catcher",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
       "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
       "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
