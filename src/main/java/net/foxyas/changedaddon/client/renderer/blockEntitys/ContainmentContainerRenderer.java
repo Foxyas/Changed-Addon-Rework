@@ -91,6 +91,16 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
                 * outlineBufferSource.setColor(red, green, blue, 255);
                 */
 
+				this.fluidModel.renderToBuffer(
+                        poseStack,
+                        bufferSource.getBuffer(renderType2), // Apenas linhas do contorno
+                        light,
+                        overlay,
+                        secondColor.red(),
+                        secondColor.green(),
+                        secondColor.blue(),
+                        1
+                );
                 this.fluidModel.renderToBuffer(
                         poseStack,
                         bufferSource.getBuffer(glowRenderType2), // Apenas linhas do contorno
