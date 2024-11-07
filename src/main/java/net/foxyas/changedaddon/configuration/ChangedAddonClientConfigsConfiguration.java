@@ -10,6 +10,9 @@ public class ChangedAddonClientConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> FEMALE_SNEPS_HAIR;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> MALE_SNEPS_HAIR;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PAT_OVERLAY;
+	public static final ForgeConfigSpec.ConfigValue<Double> PAT_OVERLAY_X;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> DYNAMIC_PAT_OVERLAY;
+	public static final ForgeConfigSpec.ConfigValue<Double> PAT_OVERLAY_Y;
 	static {
 		BUILDER.push("MusicPlayer");
 		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
@@ -23,6 +26,9 @@ public class ChangedAddonClientConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Overlays");
 		PAT_OVERLAY = BUILDER.comment("Set the Pat Overlay On or Off").define("Pat Overlay", true);
+		PAT_OVERLAY_X = BUILDER.comment("Set the X pos of the pat overlay.  [ Default  237 ]").define("Pat Overlay X pos", (double) 237);
+		DYNAMIC_PAT_OVERLAY = BUILDER.comment("The overlay's position will change depending on the entity's name. [ Default true ]").define("Dynamic Pos Pat Overlay", true);
+		PAT_OVERLAY_Y = BUILDER.comment("Set the Y pos of the pat overlay.  [ Default  251 ]").define("Pat Overlay Y pos", (double) 251);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

@@ -236,7 +236,8 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 
 		if (variant != null && blockEntity.getTransfurVariant() == null){
 			if (selectedItem.getItem() instanceof LatexSyringe
-					|| selectedItem.getItem() instanceof LatexFlask){
+					|| selectedItem.getItem() instanceof LatexFlask
+					&& !variant.getEntityType().is(ChangedTags.EntityTypes.PARTIAL_LATEX)){
 				blockEntity.setTransfurVariant(variant);
 				level.blockUpdated(pos,this);
 				level.updateNeighborsAt(pos,this);

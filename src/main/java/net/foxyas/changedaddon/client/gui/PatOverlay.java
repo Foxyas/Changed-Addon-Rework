@@ -36,13 +36,21 @@ public class PatOverlay {
         }
 
         if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
+
             int w = event.getWindow().getGuiScaledWidth();
             int h = event.getWindow().getGuiScaledHeight();
 
-            int posX = w / 2;
-            int posY = h / 2;
+            double posX = ChangedAddonClientConfigsConfiguration.PAT_OVERLAY_X.get();
+            double posY = ChangedAddonClientConfigsConfiguration.PAT_OVERLAY_Y.get();
+
+            float floatPosX = (float) posX;
+            float floatPosY = (float) posY;
+
+            boolean DynamicChanges = ChangedAddonClientConfigsConfiguration.DYNAMIC_PAT_OVERLAY.get();
+
 
             Player entity = Minecraft.getInstance().player;
+
             if (entity != null) {
                 if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()){
                     Entity lookedEntity = PlayerUtilProcedure.getEntityPlayerLookingAt(entity, 4);
@@ -53,9 +61,9 @@ public class PatOverlay {
                         		float MoveOverlayAmount = EntityNameLength * 1.5f;
                         		//EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;
                         		Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo(lookedEntity), 237 - MoveOverlayAmount, 251, -1);
-                            /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
+                                    PatInfo(lookedEntity), DynamicChanges ? floatPosX - MoveOverlayAmount : floatPosX, floatPosY, -1);
+                                /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                *   PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
 
                         	}
                         }

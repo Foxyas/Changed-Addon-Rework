@@ -110,6 +110,60 @@
             "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 1,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 237.0,
+            "textDefault": "",
+            "comment": "Set the X pos of the pat overlay.  [ Default  237 ]",
+            "vardisplay": "Pat Overlay X pos",
+            "varname": "pat_overlay_x",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "The overlay's position will change depending on the entity's name. [ Default true ]",
+            "vardisplay": "Dynamic Pos Pat Overlay",
+            "varname": "dynamic_pat_overlay",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 1,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 251.0,
+            "textDefault": "",
+            "comment": "Set the Y pos of the pat overlay.  [ Default  251 ]",
+            "vardisplay": "Pat Overlay Y pos",
+            "varname": "pat_overlay_y",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
           }
         ]
       }
