@@ -93,7 +93,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
 
 				this.fluidModel.renderToBuffer(
                         poseStack,
-                        bufferSource.getBuffer(renderType2), // Apenas linhas do contorno
+                        bufferSource.getBuffer(RenderType.entityCutout(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_full.png"))), // Apenas linhas do contorno
                         light,
                         overlay,
                         secondColor.red(),
