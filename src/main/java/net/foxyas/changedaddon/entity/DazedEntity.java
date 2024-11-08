@@ -6,7 +6,11 @@ import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.Difficulty;
@@ -36,6 +40,41 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 @Mod.EventBusSubscriber
 public class DazedEntity extends ChangedEntity {
+
+	// Definindo a chave de sincronização no seu código
+	private static final EntityDataAccessor<Boolean> DATA_PUDDLE_ID = SynchedEntityData.defineId(DazedEntity.class, EntityDataSerializers.BOOLEAN);
+	public boolean Morphed = false;
+	public static UseItemMode PuddleForm = UseItemMode.create("PuddleForm",false,false,false,true,false);
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(DATA_PUDDLE_ID, false); // Define o valor inicial como 'false'
+	}
+
+	// Getter para checar se está no estado morphed
+	public boolean isMorphed() {
+		return this.entityData.get(DATA_PUDDLE_ID);
+	}
+
+	public boolean isMorphed(boolean nbt) {
+		return !nbt ? this.entityData.get(DATA_PUDDLE_ID) : isMorphed();
+	}
+
+	// Setter para alterar o estado morphed
+	public void setMorphed(boolean morphed) {
+		this.entityData.set(DATA_PUDDLE_ID, morphed);
+	}
+
+	public void setMorphed(boolean morphed, boolean nbt) {
+		if (!nbt){
+			this.entityData.set(DATA_PUDDLE_ID, morphed);
+		} else {
+			this.Morphed = morphed;
+		}
+	}
+
+
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		//event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 20, 4, 4));
@@ -65,6 +104,47 @@ public class DazedEntity extends ChangedEntity {
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains("Morphed")){
+			this.Morphed = tag.getBoolean("Morphed");
+		}
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.putBoolean("Morphed",Morphed);
+	}
+
+	@Override
+	public float getEyeHeightMul() {
+		if (this.isMorphed())
+			return 0.4F;
+		else
+			return super.getEyeHeightMul();
+	}
+	
+
+	@Override
+	public EntityDimensions getDimensions(Pose pose) {
+		EntityDimensions core = super.getDimensions(pose);
+		if (this.isMorphed())
+			return EntityDimensions.scalable(core.width - 0.05f, core.height - 1.25f);
+		else
+			return core;
+	}
+
+	@Override
+	public UseItemMode getItemUseMode() {
+		if (this.isMorphed()){
+			return this.PuddleForm;
+		}
+		return super.getItemUseMode();
+	}
+
 	@Override
 	public Color3 getHairColor(int i) {
 		return Color3.getColor("#E5E5E5");
@@ -72,7 +152,6 @@ public class DazedEntity extends ChangedEntity {
 
 	@Override
 	public int getTicksRequiredToFreeze() { return 700; }
-
 
 	@Override
 	public LatexType getLatexType() {

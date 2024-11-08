@@ -60,7 +60,7 @@ public class ChangedAddonTransfurVariants {
                     .nightVision());
 
     public static final RegistryObject<TransfurVariant<DazedEntity>> DAZED_LATEX = register("form_dazed_latex",TransfurVariant.Builder.of(ChangedAddonModEntities.DAZED)
-            .transfurMode(TransfurMode.ABSORPTION).scares(List.of()).nightVision());
+            .transfurMode(TransfurMode.ABSORPTION).addAbility(ChangedAddonAbilitys.DAZED_PUDDLE_ABILITY).scares(List.of()).nightVision());
 
     public static final RegistryObject<TransfurVariant<BunyEntity>> BUNY = register("form_buny",TransfurVariant.Builder.of(ChangedAddonModEntities.BUNY)
             .jumpStrength(1.5F).reducedFall().transfurMode(TransfurMode.ABSORPTION).scares(List.of()));
