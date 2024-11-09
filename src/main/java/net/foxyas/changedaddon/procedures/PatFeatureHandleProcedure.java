@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
+import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
@@ -45,7 +46,8 @@ public class PatFeatureHandleProcedure {
 
 		if (isInSpectatorMode(entity)) return;
 
-		if (targetEntity instanceof Experiment10Entity || targetEntity instanceof KetExperiment009Entity) {
+		if (targetEntity instanceof Experiment10Entity || targetEntity instanceof KetExperiment009Entity 
+		|| targetEntity instanceof Experiment10BossEntity || targetEntity instanceof KetExperiment009BossEntity) {
 			handleSpecialEntities(entity, targetEntity);
 		} else if (targetEntity instanceof ChangedEntity) {
 			handleLatexEntity(entity, targetEntity, world);

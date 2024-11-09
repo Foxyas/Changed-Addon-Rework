@@ -45,7 +45,7 @@ import java.util.UUID;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment10Entity extends ChangedEntity implements GenderedEntity {
-	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
+	//private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private float TpCooldown;
 	private boolean Phase2;
 
@@ -231,19 +231,19 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 	@Override
 	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
-		this.bossInfo.addPlayer(player);
+		//this.bossInfo.addPlayer(player);
 	}
 
 	@Override
 	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
-		this.bossInfo.removePlayer(player);
+		//this.bossInfo.removePlayer(player);
 	}
 
 	@Override
 	public void customServerAiStep() {
 		super.customServerAiStep();
-		this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+		//this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
 	}
 
 	public static void init() {

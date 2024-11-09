@@ -42,7 +42,7 @@ import java.util.UUID;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class KetExperiment009Entity extends ChangedEntity {
-	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
+	//private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private boolean Phase2;
 
 	public KetExperiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
@@ -212,19 +212,19 @@ public class KetExperiment009Entity extends ChangedEntity {
 	@Override
 	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
-		this.bossInfo.addPlayer(player);
+		//this.bossInfo.addPlayer(player);
 	}
 
 	@Override
 	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
-		this.bossInfo.removePlayer(player);
+		//this.bossInfo.removePlayer(player);
 	}
 
 	@Override
 	public void customServerAiStep() {
 		super.customServerAiStep();
-		this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+		//this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
 	}
 
 	public static void init() {
