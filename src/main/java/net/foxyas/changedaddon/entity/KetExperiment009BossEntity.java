@@ -1,7 +1,9 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
+import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
@@ -41,7 +43,7 @@ import java.util.UUID;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class KetExperiment009BossEntity extends ChangedEntity {
+public class KetExperiment009BossEntity extends ChangedEntity implements BossWithMusic {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private boolean Phase2;
 
@@ -69,6 +71,16 @@ public class KetExperiment009BossEntity extends ChangedEntity {
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
 		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.85);
+	}
+
+	@Override
+	public boolean ShouldPlayMusic() {
+		return true;
+	}
+
+	@Override
+	public SoundEvent Music() {
+		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
 	}
 
 	@Override

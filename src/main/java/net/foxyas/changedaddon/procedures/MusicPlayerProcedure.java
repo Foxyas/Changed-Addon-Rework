@@ -1,32 +1,33 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.*;
-import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.event.TickEvent;
-
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.GameType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.sounds.Music;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.sounds.MusicManager;
-import net.minecraft.client.Minecraft;
-
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
+import net.foxyas.changedaddon.entity.*;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.sounds.MusicManager;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.Music;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
-
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
 @Mod.EventBusSubscriber
@@ -46,6 +47,7 @@ public class MusicPlayerProcedure {
         double x = entity.getX();
         double y = entity.getY();
         double z = entity.getZ();
+
 
         Entity Exp10 = world.getEntitiesOfClass(Experiment10Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
             Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
@@ -149,7 +151,7 @@ public class MusicPlayerProcedure {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
                     }
                 } else if (Ket_2 != null && !Ket_2.isAlive()) {
-                	 if (isExperiment009Phase2ThemePlaying) {
+                    if (isExperiment009Phase2ThemePlaying) {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
                     }
                 }
@@ -173,7 +175,7 @@ public class MusicPlayerProcedure {
                     if (!Exp10.isAlive()) {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
                     }
-                } else if (isExperiment10ThemePlaying && Exp10_2 != null) {
+                } else if (isExperiment10ThemePlaying && Exp10_2 != null) {
                     if (!Exp10_2.isAlive()) {
                         minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
                     }
@@ -184,4 +186,68 @@ public class MusicPlayerProcedure {
 
         } // <- This end the client side part,All before that is in client side
     } //End of the Void
+
+    public static void PlayBossMusic2(@Nullable Event event, LevelAccessor world, Entity entity) {
+        boolean Spectator = checkGameMode((Player) entity);
+
+        if (entity == null || !world.isClientSide() || !ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get() || Spectator) return;
+
+        Minecraft minecraft = Minecraft.getInstance();
+        MusicManager musicManager = minecraft.getMusicManager();
+        SoundManager soundManager = minecraft.getSoundManager();
+
+        Vec3 playerPos = new Vec3(entity.getX(), entity.getY(), entity.getZ());
+        List<LivingEntity> bossesNearby = world.getEntitiesOfClass(LivingEntity.class,
+                AABB.ofSize(playerPos, 64, 64, 64), livingEntity -> livingEntity instanceof BossWithMusic && ((BossWithMusic) livingEntity).ShouldPlayMusic());
+
+        // Se não houver bosses próximos, interrompe qualquer música do boss
+        if (bossesNearby.isEmpty()) {
+            stopAllBossMusic(soundManager);
+            return;
+        }
+
+        // Iniciar ou interromper a música do boss conforme necessário
+        for (LivingEntity bossEntity : bossesNearby) {
+            if (bossEntity instanceof BossWithMusic bossWithMusic) {
+                SoundEvent bossMusic = bossWithMusic.Music();
+                if (bossMusic != null) {
+                    Music musicInstance = new Music(bossMusic, 0, 0, true);
+                    ResourceLocation musicResource = ForgeRegistries.SOUND_EVENTS.getKey(bossMusic);
+
+                    // Se o boss estiver vivo e a música ainda não estiver tocando, inicia a música
+                    if (bossEntity.isAlive() && !musicManager.isPlayingMusic(musicInstance)) {
+                        musicManager.startPlaying(musicInstance);
+                    }
+                    // Se o boss morreu ou saiu do alcance, interrompe a música específica
+                    else if (!bossEntity.isAlive() && musicManager.isPlayingMusic(musicInstance)) {
+                        soundManager.stop(musicResource, SoundSource.MUSIC);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void stopAllBossMusic(SoundManager soundManager) {
+        ResourceLocation[] bossMusicResources = {
+                new ResourceLocation("changed_addon", "experiment009_theme"),
+                new ResourceLocation("changed_addon", "experiment009_theme_phase2"),
+                new ResourceLocation("changed_addon", "experiment10_theme")
+        };
+
+        // Itera e para qualquer música dos bosses
+        for (ResourceLocation resource : bossMusicResources) {
+            soundManager.stop(resource, SoundSource.MUSIC);
+        }
+    }
+
+    public static boolean checkGameMode(Player _player) {
+        if (_player instanceof ServerPlayer _serverPlayer) {
+            return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
+        } else if (_player.level.isClientSide()) {
+            return Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(_player.getGameProfile().getId()) != null
+                    && Objects.requireNonNull(Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId())).getGameMode() == GameType.SPECTATOR;
+        }
+        return false;
+    }
+
 }
