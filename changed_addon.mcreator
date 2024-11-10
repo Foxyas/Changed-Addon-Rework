@@ -11470,6 +11470,19 @@
         ]
       },
       "path": "~/Recipes"
+    },
+    {
+      "name": "RoombaRecipe",
+      "type": "recipe",
+      "sortid": 581,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "roomba_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/roomba_recipe.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
