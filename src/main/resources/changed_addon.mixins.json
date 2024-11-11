@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.foxyas.changedaddon.mixins",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "changed_addon.refmap.json",
+  "mixins": [
+    "IronBarsBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

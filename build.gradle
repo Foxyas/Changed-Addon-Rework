@@ -54,6 +54,8 @@ minecraft {
 }
 
 mixin {
+    add sourceSets.main, "changed_addon.refmap.json"
+    config "changed_addon.mixins.json"
     env {
         remapRefMap = true
     }
@@ -77,7 +79,8 @@ repositories {
     /*maven {
         name = "Changed_Local_file"
         url uri("${rootProject.projectDir}/libs")
-    }*/
+    }
+*/
 
   /* maven {
         // location of the maven that hosts JEI files
