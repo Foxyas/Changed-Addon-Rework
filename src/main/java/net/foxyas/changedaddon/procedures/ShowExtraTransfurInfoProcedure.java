@@ -74,8 +74,8 @@ public class ShowExtraTransfurInfoProcedure {
 					canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(Item_form);
 					tooltip.add(new TextComponent(((new TranslatableComponent("text.changed_addon.additionalHealth").getString() + "" + (Hp > 0 ? "\u00A7a+" + Hp / 2 + "\u00A7r" : "\u00A7c" + Hp / 2 + "\u00A7r")
 							+ new TranslatableComponent("text.changed_addon.additionalHealth.Hearts").getString()) + "§r\n"
-							+ (new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 0 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c" + (float) (landSpeed * 100) + "%")) + "§r\n"
-							+ (new TranslatableComponent("text.changed_addon.swimspeed").getString() + "" + (Speed >= 0 ? "\u00A7a+" + (float) (Speed * 100) + "%" : "\u00A7c" + (float) (Speed * 100) + "%")) + "§r\n"
+							+ (new TranslatableComponent("text.changed_addon.landspeed").getString() + "" + (landSpeed >= 1 ? "\u00A7a+" + (float) (landSpeed * 100) + "%" : "\u00A7c" + (float) (landSpeed * 100) + "%")) + "§r\n"
+							+ (new TranslatableComponent("text.changed_addon.swimspeed").getString() + "" + (Speed >= 1 ? "\u00A7a+" + (float) (Speed * 100) + "%" : "\u00A7c" + (float) (Speed * 100) + "%")) + "§r\n"
 							+ (new TranslatableComponent("text.changed_addon.jumpStrength").getString() + "" + (JumpLevel >= 1 ? "\u00A7a+" + Math.round(JumpLevel * 100) + "%" : "\u00A7c-" + Math.round(JumpLevel * 100) + "%")) + "§r\n"
 							+ (new TranslatableComponent("text.changed_addon.canGlide/Fly").getString() + "" + (canFlyOrGlide == true ? "\u00A7a" + canFlyOrGlide + "\u00A7r" : "\u00A7c" + canFlyOrGlide + "\u00A7r")))));
 				}

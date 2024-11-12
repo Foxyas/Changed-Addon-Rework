@@ -27,6 +27,7 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 	public static final RegistryObject<DissolveAbility> DISSOLVE = REGISTRY.register("warp",DissolveAbility::new);
 	public static final RegistryObject<WitherWaveAbility> WITHER_WAVE = REGISTRY.register("wither_wave",WitherWaveAbility::new);
 	public static final RegistryObject<DazedPuddleAbility> DAZED_PUDDLE_ABILITY = REGISTRY.register("dazed_puddle",DazedPuddleAbility::new);
+	public static final RegistryObject<SoftenAbility> SOFTEN_ABILITY = REGISTRY.register("soften",SoftenAbility::new);
 
 	@SubscribeEvent
 	public static void registerAbiltiys(FMLConstructModEvent event) {
