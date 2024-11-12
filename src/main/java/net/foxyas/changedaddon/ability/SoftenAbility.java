@@ -1,20 +1,16 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 
-import java.util.Objects;
+import java.util.function.BiFunction;
 
-public class SoftenAbility extends SimpleAbility {
-
+public class SoftenAbility extends AbstractAbility<SoftenAbilityInstance> {
     public SoftenAbility() {
-        super();
+        super(SoftenAbilityInstance::new);
     }
 
     @Override
