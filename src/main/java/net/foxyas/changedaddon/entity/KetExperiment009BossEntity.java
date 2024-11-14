@@ -66,7 +66,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15);
 		attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1));
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(15);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(20);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);

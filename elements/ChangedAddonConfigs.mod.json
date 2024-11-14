@@ -112,9 +112,32 @@
             "entityType": "CUSTOM:Buny"
           }
         ]
+      },
+      {
+        "category": "Latexs Forms Behavior",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Allow latexes forms to pass over blocks with holes",
+            "vardisplay": "Can Pass Through Blocks",
+            "varname": "can_pass_through_blocks",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
-    "file": "ChangedAddon-Server",
+    "file": "changed_addon-server",
     "configType": 1
   }
 }

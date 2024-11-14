@@ -243,8 +243,8 @@ public class Experiment009Entity extends Monster {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.28);
 		builder = builder.add(Attributes.MAX_HEALTH, 125);
-		builder = builder.add(Attributes.ARMOR, 40);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
+		builder = builder.add(Attributes.ARMOR, 25);
+		builder = builder.add(Attributes.ATTACK_DAMAGE, 8);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 64);
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.5);
 		builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);

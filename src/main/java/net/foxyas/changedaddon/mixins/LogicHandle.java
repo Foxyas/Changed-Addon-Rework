@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
-import net.foxyas.changedaddon.ability.SoftenAbilityInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -10,22 +9,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.CrossCollisionBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(CrossCollisionBlock.class)
-public abstract class IronBarsBlockMixin{
+public class LogicHandle {
 
-    @Inject(method = "getCollisionShape", at = @At("HEAD"), cancellable = true)
-    private void getCollisionModShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
+    public static boolean canPassThroughBlock(BlockState state, CollisionContext context){
         if (context instanceof EntityCollisionContext entityContext) {
             Entity collidingEntity = entityContext.getEntity();
 
@@ -35,16 +25,14 @@ public abstract class IronBarsBlockMixin{
                     // Verifica uma condição específica do jogador (no caso, ProcessTransfur)
                     if (ProcessTransfur.isPlayerLatex(player)) {
                         TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-                        transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(),Instance -> {
-                            if (Instance.isActivate()){
-                                // Se for um jogador Latex, permite que ele atravesse a barra de ferro (forma vazia)
-                                cir.setReturnValue(Shapes.empty()); // Colisão desativada para jogadores Latex
-                            }
-                        });
+                        return transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), (instance) -> {
+                        }) && transfurVariantInstance.getAbilityInstance(ChangedAddonAbilitys.SOFTEN_ABILITY.get()).isActivate();
                         //SoftenAbilityInstance ability = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(ChangedAddonAbilitys.SOFTEN_ABILITY.get());
                     }
                 }
             }
         }
+        return false;
     }
+
 }

@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "changed_addon.refmap.json",
   "mixins": [
-    "IronBarsBlockMixin"
+    "BlockMixin",
+    "CrossCollisionBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

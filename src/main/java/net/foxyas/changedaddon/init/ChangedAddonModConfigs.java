@@ -15,8 +15,8 @@ public class ChangedAddonModConfigs {
 	@SubscribeEvent
 	public static void register(FMLConstructModEvent event) {
 		event.enqueueWork(() -> {
-			ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ChangedAddonConfigsConfiguration.SPEC, "ChangedAddon-Server.toml");
-			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ChangedAddonClientConfigsConfiguration.SPEC, "ChangedAddon-Client.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ChangedAddonConfigsConfiguration.SPEC, "changed_addon-server.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ChangedAddonClientConfigsConfiguration.SPEC, "changed_addon-client.toml");
 		});
 	}
 }
