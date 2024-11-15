@@ -53,13 +53,6 @@ minecraft {
     }
 }
 
-mixin {
-    add sourceSets.main, "changed_addon.refmap.json"
-    config "changed_addon.mixins.json"
-    env {
-        remapRefMap = true
-    }
-}
 
 repositories {
 	// Mod Location
@@ -94,28 +87,39 @@ repositories {
     }*/
 }
 
+mixin {
+    add sourceSets.main, "changed_addon.refmap.json"
+    config "changed_addon.mixins.json"
+    env {
+        remapRefMap = true
+    }
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.18.2-40.2.21' //Forge Version
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     implementation fg.deobf('net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14') //Changed Local File
   //implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14") //Changed
-    implementation fg.deobf("curse.maven:advanced-xray-256256:3712732")	//Xray Ores
-    implementation fg.deobf("curse.maven:lightspeedmod-821790:4594803") //Speed Up The Start of The Game
-    implementation fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon
-    implementation fg.deobf("curse.maven:embeddium-908741:5322305") //Fps Boost
-    implementation fg.deobf("curse.maven:oculus-581495:4578744") //Shaders :D
-    implementation fg.deobf("curse.maven:custom-player-models-439870:4840534") //Custom Player Models
+    runtimeOnly fg.deobf("curse.maven:advanced-xray-256256:3712732")	//Xray Ores
+    runtimeOnly fg.deobf("curse.maven:lightspeedmod-821790:4594803") //Speed Up The Start of The Game
+    runtimeOnly fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon
+    runtimeOnly fg.deobf("curse.maven:embeddium-908741:5322305") //Fps Boost
+    runtimeOnly fg.deobf("curse.maven:oculus-581495:4578744") //Shaders :D
+    runtimeOnly fg.deobf("curse.maven:custom-player-models-439870:4840534") //Custom Player Models
   //implementation fg.deobf("curse.maven:roughly-enough-items-310111:4774383") //Jei But better
   //implementation fg.deobf("curse.maven:cloth-config-348521:4633387") // REI mod dependence
   //implementation fg.deobf("curse.maven:architectury-api-419699:4521465") //REI mod dependence
-    implementation fg.deobf("curse.maven:spark-361579:4505375") // Spark
-    implementation fg.deobf("curse.maven:hardcore-revival-274036:3830873") //HardCore Survival
-    implementation fg.deobf("curse.maven:balm-531761:4442615") //Balm API need for HardCore Survival
-    implementation fg.deobf("curse.maven:appleskin-248787:4770822") //AppleSkin
-    implementation fg.deobf("curse.maven:catalogue-459701:3803098") //Catalogue (Better Mod menu)
-    implementation fg.deobf("curse.maven:configured-457570:4462832") //Configured (Config options in game)
-    implementation fg.deobf("curse.maven:carry-on-274259:5141758") //Carry On mod
-    implementation fg.deobf("curse.maven:in-game-account-switcher-232676:4589915") //ReAuth
-    implementation fg.deobf("curse.maven:forgetmechunk-forge-632973:4041502") //Fps Boost
+    runtimeOnly fg.deobf("curse.maven:spark-361579:4505375") // Spark
+    runtimeOnly fg.deobf("curse.maven:hardcore-revival-274036:3830873") //HardCore Survival
+    runtimeOnly fg.deobf("curse.maven:balm-531761:4442615") //Balm API need for HardCore Survival
+    runtimeOnly fg.deobf("curse.maven:appleskin-248787:4770822") //AppleSkin
+    runtimeOnly fg.deobf("curse.maven:catalogue-459701:3803098") //Catalogue (Better Mod menu)
+    runtimeOnly fg.deobf("curse.maven:configured-457570:4462832") //Configured (Config options in game)
+    runtimeOnly fg.deobf("curse.maven:carry-on-274259:5141758") //Carry On mod
+    runtimeOnly fg.deobf("curse.maven:in-game-account-switcher-232676:4589915") //ReAuth
+    runtimeOnly fg.deobf("curse.maven:forgetmechunk-forge-632973:4041502") //Fps Boost
     
 
     //compileOnly fg.deobf("mezz.jei:jei-1.18.2:9.7.2.281:api") //Jei Api
