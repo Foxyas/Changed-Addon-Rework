@@ -18,6 +18,7 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -25,7 +26,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockBehaviour.class)
 public abstract class BlockMixin {
-
+@Shadow protected final boolean hasCollision;
+    protected BlockMixin(boolean hasCollision) {
+        this.hasCollision = hasCollision;
+    }
     @Inject(method = "getCollisionShape", at = @At("HEAD"), cancellable = true)
     private void getCollisionModShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
         if (context instanceof EntityCollisionContext entityContext) {
@@ -37,7 +41,7 @@ public abstract class BlockMixin {
                     // Verifica uma condição específica do jogador (no caso, ProcessTransfur)
                     if (ProcessTransfur.isPlayerLatex(player)) {
                         TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-                        if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity != null){
+                        if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) == null || transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity != null){
                             return;
                         }
                         if (ChangedAddonConfigsConfiguration.CAN_PASS_THROUGH_BLOCKS.get()){
@@ -54,5 +58,6 @@ public abstract class BlockMixin {
                 }
             }
         }
+        cir.setReturnValue(this.hasCollision ? state.getShape(world, pos) : Shapes.empty());
     }
 }
