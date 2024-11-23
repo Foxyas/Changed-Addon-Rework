@@ -41,19 +41,23 @@ public abstract class BlockMixin {
                     // Verifica uma condição específica do jogador (no caso, ProcessTransfur)
                     if (ProcessTransfur.isPlayerLatex(player)) {
                         TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-                        if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) == null || transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity != null){
+                        // Se a habilidade GRAB_ENTITY for nula ou a entidade já foi agarrada, retorna a colisão padrão
+                        if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) == null || transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity != null) {
+                            cir.setReturnValue(this.hasCollision ? state.getShape(world, pos) : Shapes.empty());
                             return;
                         }
-                        if (ChangedAddonConfigsConfiguration.CAN_PASS_THROUGH_BLOCKS.get()){
-                            cir.setReturnValue(Shapes.empty());
+                        // Se a configuração permitir, o jogador pode atravessar o bloco
+                        if (ChangedAddonConfigsConfiguration.CAN_PASS_THROUGH_BLOCKS.get()) {
+                            cir.setReturnValue(Shapes.empty()); // Colisão desativada
+                            return;
                         }
-                        transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), Instance -> {
-                            if (Instance.isActivate()){
-                                // Se for um jogador Latex, permite que ele atravesse a barra de ferro (forma vazia)
-                                cir.setReturnValue(Shapes.empty()); // Colisão desativada para jogadores Latex
+                        // Verifica se o jogador tem a habilidade SOFTEN ativa
+                        transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), instance -> {
+                            if (instance.isActivate()) {
+                                // Se a habilidade SOFTEN estiver ativa, permite que o jogador atravesse o bloco
+                                cir.setReturnValue(Shapes.empty()); // Colisão desativada
                             }
                         });
-                        //SoftenAbilityInstance ability = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(ChangedAddonAbilitys.SOFTEN_ABILITY.get());
                     }
                 }
             }
