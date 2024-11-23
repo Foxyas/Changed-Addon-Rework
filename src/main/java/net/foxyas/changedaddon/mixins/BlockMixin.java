@@ -44,12 +44,10 @@ public abstract class BlockMixin {
                         // Se a habilidade GRAB_ENTITY for nula ou a entidade já foi agarrada, retorna a colisão padrão
                         if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) == null || transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity != null) {
                             cir.setReturnValue(this.hasCollision ? state.getShape(world, pos) : Shapes.empty());
-                            return;
                         }
                         // Se a configuração permitir, o jogador pode atravessar o bloco
                         if (ChangedAddonConfigsConfiguration.CAN_PASS_THROUGH_BLOCKS.get()) {
                             cir.setReturnValue(Shapes.empty()); // Colisão desativada
-                            return;
                         }
                         // Verifica se o jogador tem a habilidade SOFTEN ativa
                         transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), instance -> {
