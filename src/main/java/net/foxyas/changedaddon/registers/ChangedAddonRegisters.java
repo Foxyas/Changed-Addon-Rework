@@ -6,14 +6,17 @@ import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
-import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoomPiece;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -76,6 +79,12 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 	public static final RegistryObject<Item> PARTIAL_SNOW_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_leopard_partial_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 	public static final RegistryObject<Item> REYN_TRANSFUR_SPAWN_EGG = ITEMS_REGISTRY.register("reyn_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.REYN, Color3.getColor("#4C4C4C").toInt(), Color3.getColor("#464646").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
+	public static final RegistryObject<Item> DARK_LATEX_COAT = ITEMS_REGISTRY.register("dark_latex_coat",
+			() -> new DarkLatexCoatItem(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
+	public static final RegistryObject<Item> DARK_LATEX_HEAD_CAP = ITEMS_REGISTRY.register("dark_latex_coat_cap",
+			() -> new DarkLatexCoatItem.HeadPart(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 	@SubscribeEvent
 	public static void registerItems(FMLConstructModEvent event) {
