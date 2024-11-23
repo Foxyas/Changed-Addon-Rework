@@ -6707,7 +6707,7 @@
       "type": "recipe",
       "sortid": 339,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "untransfur_potion_recipe",
       "metadata": {
         "files": [
