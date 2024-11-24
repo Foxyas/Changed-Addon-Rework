@@ -9,8 +9,8 @@ import java.net.URL;
 public class ResourcePackDownloader {
     public static void main(String[] args) {
         try {
-            String resourcePackUrl = "https://github.com/<owner>/<repo>/releases/download/v1.0.0/your_resource_pack.zip";
-            File output = new File("resourcepacks/your_resource_pack.zip");
+            String resourcePackUrl = "https://github.com/gengyoubo/Changed-Addon-Rework/tree/main/resourcepack";
+            File output = new File("translationpack.zip");
             ResourcePackDownloader.downloadResourcePack(resourcePackUrl, output);
             System.out.println("Resource pack downloaded successfully!");
         } catch (Exception e) {
