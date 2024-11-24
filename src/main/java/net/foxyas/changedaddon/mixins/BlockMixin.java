@@ -18,7 +18,6 @@ import net.minecraft.world.phys.shapes.EntityCollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -26,10 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockBehaviour.class)
 public abstract class BlockMixin {
-@Shadow protected final boolean hasCollision;
-    protected BlockMixin(boolean hasCollision) {
-        this.hasCollision = hasCollision;
-    }
+
     @Inject(method = "getCollisionShape", at = @At("HEAD"), cancellable = true)
     private void getCollisionModShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
         if (context instanceof EntityCollisionContext entityContext) {
@@ -41,25 +37,26 @@ public abstract class BlockMixin {
                     // Verifica uma condição específica do jogador (no caso, ProcessTransfur)
                     if (ProcessTransfur.isPlayerLatex(player)) {
                         TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-                        // Se a habilidade GRAB_ENTITY for nula ou a entidade já foi agarrada, retorna a colisão padrão
-                        if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) == null || transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity != null) {
-                            cir.setReturnValue(this.hasCollision ? state.getShape(world, pos) : Shapes.empty());
-                        }
-                        // Se a configuração permitir, o jogador pode atravessar o bloco
-                        if (ChangedAddonConfigsConfiguration.CAN_PASS_THROUGH_BLOCKS.get()) {
-                            cir.setReturnValue(Shapes.empty()); // Colisão desativada
-                        }
-                        // Verifica se o jogador tem a habilidade SOFTEN ativa
-                        transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), instance -> {
-                            if (instance.isActivate()) {
-                                // Se a habilidade SOFTEN estiver ativa, permite que o jogador atravesse o bloco
-                                cir.setReturnValue(Shapes.empty()); // Colisão desativada
+                        if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) != null
+                                && transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity == null) {
+
+                            //Config
+                            if (ChangedAddonConfigsConfiguration.CAN_PASS_THROUGH_BLOCKS.get()) {
+                                cir.setReturnValue(Shapes.empty());
                             }
-                        });
+
+                            //Ability
+                            transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), Instance -> {
+                                if (Instance.isActivate()) {
+                                    // Se for um jogador Latex, permite que ele atravesse a barra de ferro (forma vazia)
+                                    cir.setReturnValue(Shapes.empty()); // Colisão desativada para jogadores Latex
+                                }
+                            });
+                            //SoftenAbilityInstance ability = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(ChangedAddonAbilitys.SOFTEN_ABILITY.get());
+                        }
                     }
                 }
             }
         }
-        cir.setReturnValue(this.hasCollision ? state.getShape(world, pos) : Shapes.empty());
     }
 }

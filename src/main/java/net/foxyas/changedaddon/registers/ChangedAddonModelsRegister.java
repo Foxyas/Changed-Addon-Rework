@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.client.model.*;
+import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
@@ -40,6 +41,10 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(SnowLeopardPartialModel.LAYER_LOCATION_LATEX_SLIM, () -> SnowLeopardPartialModel.createLatexLayer(true));
 		event.registerLayerDefinition(GrapeSnowLeopardModel.LAYER_LOCATION, GrapeSnowLeopardModel::createBodyLayer);
 		event.registerLayerDefinition(ReynModel.LAYER_LOCATION, ReynModel::createBodyLayer);
+
+		//Armors Models
+		event.registerLayerDefinition(DarkLatexCoatModel.LAYER_LOCATION, DarkLatexCoatModel::createBodyLayer);
+
 
 		// Block Entitys Custom Models
 		event.registerLayerDefinition(SnepPlushBlockEntityRenderer.SnepPlushExtraModel.LAYER_LOCATION, SnepPlushBlockEntityRenderer.SnepPlushExtraModel::createBodyLayer);
