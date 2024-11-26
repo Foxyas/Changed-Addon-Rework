@@ -211,7 +211,7 @@ public class Experiment009phase2Entity extends Monster {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
 		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-		Experiment009phase2OnInitialEntitySpawnProcedure.execute(world, this.getX(), this.getY(), this.getZ(), this);
+		Experiment009phase2OnInitialEntitySpawnProcedure.execute(world, this);
 		return retval;
 	}
 
