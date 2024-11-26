@@ -293,9 +293,9 @@
       {
         "type": "label",
         "data": {
-          "name": "label_laeting_syringe",
+          "name": "label_laethin_syringe",
           "text": {
-            "fixedValue": "Laeting Syringe"
+            "fixedValue": "Laethin Syringe"
           },
           "color": {
             "value": -12829636,

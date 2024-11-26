@@ -93,7 +93,7 @@ public class BookPagenumber2Screen extends AbstractContainerScreen<BookPagenumbe
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_syringe_with_litixcamonia"), 35, 114, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_litixcamonia"), 150, 16, -12829636);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_catalyzed_dna"), 150, 36, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_laeting_syringe"), 150, 55, -12829636);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_2.label_laethin_syringe"), 150, 55, -12829636);
 	}
 
 	@Override
