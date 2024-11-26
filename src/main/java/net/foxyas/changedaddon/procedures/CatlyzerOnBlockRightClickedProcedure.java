@@ -44,7 +44,7 @@ public class CatlyzerOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("you stop the catlyzer"), true);
+					_player.displayClientMessage(new TextComponent("you stop the catalyzer"), true);
 			} else {
 				if (!world.isClientSide()) {
 					BlockPos _bp = new BlockPos(x, y, z);
@@ -56,7 +56,7 @@ public class CatlyzerOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("you start the catlyzer"), true);
+					_player.displayClientMessage(new TextComponent("you start the catalyzer"), true);
 			}
 		} else {
 			{
