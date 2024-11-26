@@ -1,0 +1,11 @@
+{
+  "_fv": 47,
+  "_type": "tab",
+  "definition": {
+    "name": "Changed Addon Plus Combat Optional",
+    "icon": {
+      "value": "CUSTOM:ElectricKatana"
+    },
+    "showSearch": false
+  }
+}

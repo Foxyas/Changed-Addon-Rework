@@ -35,7 +35,7 @@ public class ElectricKatanaRedItem extends SwordItem implements SpecializedItemR
 			}
 
 			public float getAttackDamageBonus() {
-				return 6f;
+				return 4f;
 			}
 
 			public int getLevel() {

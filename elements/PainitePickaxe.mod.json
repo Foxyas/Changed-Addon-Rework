@@ -9,7 +9,7 @@
     "name": "Painite Pickaxe",
     "specialInfo": [],
     "creativeTab": {
-      "value": "No creative tab entry"
+      "value": "CUSTOM:ChangedAddonCombatOptional"
     },
     "harvestLevel": 5,
     "efficiency": 12.0,

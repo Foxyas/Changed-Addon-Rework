@@ -15,7 +15,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class SyringewithlitixcammoniaItem extends Item {
 	public SyringewithlitixcammoniaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(2).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(2f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(2).rarity(Rarity.UNCOMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(2f).alwaysEat()
 
 				.build()));
 	}

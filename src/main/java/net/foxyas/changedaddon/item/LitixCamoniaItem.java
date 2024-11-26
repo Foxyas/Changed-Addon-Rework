@@ -17,7 +17,7 @@ import java.util.List;
 
 public class LitixCamoniaItem extends Item {
 	public LitixCamoniaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 
+import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 
 public abstract class PainiteArmorItem extends ArmorItem {
@@ -21,7 +22,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 		super(new ArmorMaterial() {
 			@Override
 			public int getDurabilityForSlot(EquipmentSlot slot) {
-				return new int[]{13, 15, 16, 11}[slot.getIndex()] * 45;
+				return new int[]{13, 15, 16, 11}[slot.getIndex()] * 40;
 			}
 
 			@Override
@@ -31,7 +32,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 			@Override
 			public int getEnchantmentValue() {
-				return 50;
+				return 18;
 			}
 
 			@Override
@@ -63,45 +64,45 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 	public static class Helmet extends PainiteArmorItem {
 		public Helmet() {
-			super(EquipmentSlot.HEAD, new Item.Properties().tab(null).fireResistant());
+			super(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON_COMBAT_OPTIONAL).fireResistant());
 		}
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/newpainite_armor__layer_1.png";
+			return "changed_addon:textures/models/armor/netherite_with_painite_trim__layer_1.png";
 		}
 	}
 
 	public static class Chestplate extends PainiteArmorItem {
 		public Chestplate() {
-			super(EquipmentSlot.CHEST, new Item.Properties().tab(null).fireResistant());
+			super(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON_COMBAT_OPTIONAL).fireResistant());
 		}
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/newpainite_armor__layer_1.png";
+			return "changed_addon:textures/models/armor/netherite_with_painite_trim__layer_1.png";
 		}
 	}
 
 	public static class Leggings extends PainiteArmorItem {
 		public Leggings() {
-			super(EquipmentSlot.LEGS, new Item.Properties().tab(null).fireResistant());
+			super(EquipmentSlot.LEGS, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON_COMBAT_OPTIONAL).fireResistant());
 		}
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/newpainite_armor__layer_2.png";
+			return "changed_addon:textures/models/armor/netherite_with_painite_trim__layer_2.png";
 		}
 	}
 
 	public static class Boots extends PainiteArmorItem {
 		public Boots() {
-			super(EquipmentSlot.FEET, new Item.Properties().tab(null).fireResistant());
+			super(EquipmentSlot.FEET, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON_COMBAT_OPTIONAL).fireResistant());
 		}
 
 		@Override
 		public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-			return "changed_addon:textures/models/armor/newpainite_armor__layer_1.png";
+			return "changed_addon:textures/models/armor/netherite_with_painite_trim__layer_1.png";
 		}
 	}
 }

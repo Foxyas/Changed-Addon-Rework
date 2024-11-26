@@ -14,7 +14,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class DiffusionSyringeItem extends Item {
 	public DiffusionSyringeItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(16).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(2).saturationMod(10f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(16).rarity(Rarity.EPIC).food((new FoodProperties.Builder()).nutrition(2).saturationMod(10f).alwaysEat()
 
 				.build()));
 	}

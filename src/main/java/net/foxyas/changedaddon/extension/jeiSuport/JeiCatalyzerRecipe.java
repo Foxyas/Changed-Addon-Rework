@@ -114,7 +114,7 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
             float ProgressSpeed  = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
             float NitrogenUsage  = GsonHelper.getAsFloat(pSerializedRecipe, "NitrogenUsage", 0.0f);
 
-            return new JeiCatalyzerRecipe(pRecipeId, output, inputs,ProgressSpeed,NitrogenUsage);
+            return new JeiCatalyzerRecipe(pRecipeId, output, inputs, ProgressSpeed, NitrogenUsage);
         }
 
         @Override
@@ -126,7 +126,7 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
             ItemStack output = buf.readItem();
             float ProgressSpeed = buf.readFloat();
             float NitrogenUsage = buf.readFloat();
-            return new JeiCatalyzerRecipe(id, output, inputs,ProgressSpeed,NitrogenUsage);
+            return new JeiCatalyzerRecipe(id, output, inputs, ProgressSpeed, NitrogenUsage);
         }
 
         @Override

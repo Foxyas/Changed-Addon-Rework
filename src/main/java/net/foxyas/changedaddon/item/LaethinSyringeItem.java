@@ -14,7 +14,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class LaethinSyringeItem extends Item {
 	public LaethinSyringeItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(1).saturationMod(20f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(1).saturationMod(20f).alwaysEat()
 
 				.build()));
 	}

@@ -3,25 +3,25 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "syringe_of_descontrol",
+    "texture": "iridium_ore",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "Latex-Diffusion Syringe",
-    "rarity": "EPIC",
+    "name": "Iridium",
+    "rarity": "UNCOMMON",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
-    "stackSize": 16,
+    "stackSize": 64,
     "enchantability": 0,
-    "useDuration": 32,
+    "useDuration": 0,
     "toolType": 1.0,
     "damageCount": 0,
     "recipeRemainder": {
       "value": ""
     },
     "destroyAnyBlock": false,
-    "immuneToFire": false,
+    "immuneToFire": true,
     "stayInGridWhenCrafting": false,
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
@@ -31,17 +31,14 @@
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,
     "inventoryStackSize": 64,
-    "onFinishUsingItem": {
-      "name": "DescontrolSyringePlayerFinishesUsingItem"
-    },
-    "isFood": true,
-    "nutritionalValue": 2,
-    "saturation": 10.0,
+    "isFood": false,
+    "nutritionalValue": 4,
+    "saturation": 0.3,
     "eatResultItem": {
       "value": ""
     },
     "isMeat": false,
-    "isAlwaysEdible": true,
-    "animation": "drink"
+    "isAlwaysEdible": false,
+    "animation": "none"
   }
 }

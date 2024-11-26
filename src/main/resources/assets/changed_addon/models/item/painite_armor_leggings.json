@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/new_panite_leggins"
+    "layer0": "changed_addon:items/netherite_leggings_with_painite_trim"
   }
 }

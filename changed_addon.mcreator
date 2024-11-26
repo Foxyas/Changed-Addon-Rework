@@ -11469,6 +11469,32 @@
         ]
       },
       "path": "~/Recipes"
+    },
+    {
+      "name": "ChangedAddonCombatOptional",
+      "type": "tab",
+      "sortid": 582,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "changed_addon_combat_optional",
+      "metadata": {
+        "files": []
+      }
+    },
+    {
+      "name": "Iridium",
+      "type": "item",
+      "sortid": 583,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "iridium",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/IridiumItem.java",
+          "src/main/resources/assets/changed_addon/models/item/iridium.json"
+        ]
+      },
+      "path": "~/Items"
     }
   ],
   "variable_elements": [
@@ -11745,7 +11771,7 @@
       "gui.changed_addon.book_pagenumber_2.label_laethin_syringe": "Laethin Syringe",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
-      "item.changed_addon.painite_armor_leggings": "Painite Leggings",
+      "item.changed_addon.painite_armor_leggings": "Netherite Leggings with Painite trim",
       "changed_addon.ability.shock_wave": "Shock Wave",
       "effect.changed_addon.transfur_sickness.description": "Prevents players from transfuring entities.",
       "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
@@ -11791,6 +11817,7 @@
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gamerule.changedAddonOrganicBuff": "ChangedAddon Organic Buff",
       "entity.changed_addon.snow_leopard_female_organic": "Female BioSynth Snow Leopard",
+      "itemGroup.tabchanged_addon_combat_optional": "Changed Addon Plus Combat Optional",
       "gui.changed_addon.book_recipe_page_11.label_p": "L",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
       "entity.changed_addon.latex_snow_fox_female": "Female Latex Snow Fox",
@@ -11978,7 +12005,7 @@
       "item.changed_addon.litix_camonia_fluid_bucket": "LitixCamonia Bucket",
       "gamerule.allowPlayerGrab.description": "Allow Players Use the Grab Feature",
       "enchantment.changed_addon.solvent.desc": "Deal more Damage to Latex Entities",
-      "item.changed_addon.painite_armor_helmet": "Painite Helmet",
+      "item.changed_addon.painite_armor_helmet": "Netherite Helmet with Painite trim",
       "advancements.obtain_dark_crystal_dagger.title": "§8Dark§r Crystal Dagger!",
       "gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you": "i want be transfured by you",
       "changedaddon.untransfur.diffusion": "You unfuse with the latex creature that was attached to you maybe he wants to fuse back so better RUN",
@@ -11987,6 +12014,7 @@
       "gui.changed_addon.book_pagenumber_2.label_syringe_with_litixcamonia": "Syringe With Litix-Camonia",
       "attribute.changed_addon.latexinfection": "Latex Infection",
       "advancements.untransfuritemadvancement.descr": "You made one untransfur item",
+      "item.changed_addon.iridium": "Iridium",
       "gamerule.changedAddonDuctMecanic": "Changed Addon Duct Mecanic",
       "gui.changed_addon.unifusergui.label_3": "+3",
       "item.changed_addon.mirror_white_tiger_spawn_egg": "Mirror White Tiger Spawn Egg",
@@ -12035,7 +12063,7 @@
       "item.changed_addon.laethin": "Laethin",
       "changedaddon.friendlymode.when_on": "Activating Friendly mode deactivates assimilation",
       "item.changed_addon.snep_icon": "DEVITEM 6",
-      "advancements.obtain_red_electric_katana.title": "§4Memories is broken§r",
+      "advancements.obtain_red_electric_katana.title": "§4Red Sytle!§r",
       "item.changed_addon.diffusion_syringe": "Latex-Diffusion Syringe",
       "item.changed_addon.prototype_spawn_egg": "Prototype Spawn Egg",
       "block.changed_addon.painite_ore": "Deepslate Painite Ore",
@@ -12121,7 +12149,7 @@
       "gui.changed_addon.bookrecipepage_6.button_back": "Back",
       "changed_addon.ability.leap": "Leap",
       "item.minecraft.tipped_arrow.effect.transfur_sickness_potion": "Arrow of Transfur Sickness",
-      "item.changed_addon.painite_armor_chestplate": "Painite Chestplate",
+      "item.changed_addon.painite_armor_chestplate": "Netherite Chestplate with Painite trim",
       "gui.changed_addon.bookrecipepage_8.label_m_meet": "M \u003d ANY MEET",
       "subtitles.untransfursound": "Untransfurmization",
       "entity.changed_addon.exp2_male": "Exp2 Male",
@@ -12138,7 +12166,7 @@
       "advancements.drink_foxta.descr": "Drink foxta for the first time  ",
       "gui.changed_addon.book_recipe_page_11.label_g_any_gooey_item": "G \u003d Any Gooey Item",
       "advancements.dn_astudyisafantasticthingadvancement.descr": "You made one Inpure Ammonia",
-      "item.changed_addon.painite_armor_boots": "Painite Boots",
+      "item.changed_addon.painite_armor_boots": "Netherite Boots with Painite trim",
       "block.changed_addon.containment_container": "Containment Container",
       "advancements.ammoniacraft.title": "a different kind of ammonia!?",
       "gui.changed_addon.book_pagenumber_2.label_impure_ammonia": "Impure Ammonia",
@@ -12163,7 +12191,7 @@
       "gui.changed_addon.bookpagenumber_4.label_catalyzer": "Catalyzer",
       "item.changed_addon.foxta.desc": "Now made with 200% more oranges! Only $2.99! Tastes like Heaven!",
       "effect.changed_addon.latex_solvent.description": "Inflicts damage on latex entities, with damage increasing as the effect strengthens.",
-      "advancements.obtain_red_electric_katana.descr": "Obtain §4Red§r Electric Katana!",
+      "advancements.obtain_red_electric_katana.descr": "Memories is Broken, truths go unspoken, you even forgot your name!!, Obtain §4Red§r Electric Katana!",
       "gamerule.changedAddonHardModeBosses": "Changed Addon HardMode Bosses",
       "advancements.potwithlitixcamonia_advancement.title": "yummy?",
       "item.changed_addon.snepsi.desc": "Cat-ion? Isnt it spelled caution? Says do NOT drink. Contains goo?",

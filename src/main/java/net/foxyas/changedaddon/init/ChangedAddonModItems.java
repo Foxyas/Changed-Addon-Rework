@@ -47,6 +47,7 @@ import net.foxyas.changedaddon.item.LitixCamoniaItem;
 import net.foxyas.changedaddon.item.LitixCamoniaFluidItem;
 import net.foxyas.changedaddon.item.LaethinSyringeItem;
 import net.foxyas.changedaddon.item.LaethinItem;
+import net.foxyas.changedaddon.item.IridiumItem;
 import net.foxyas.changedaddon.item.InpureammoniaItem;
 import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.foxyas.changedaddon.item.HazardSuitItem;
@@ -163,6 +164,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> WOLF_PLUSH = block(ChangedAddonModBlocks.WOLF_PLUSH, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", () -> new BiomassItem());
 	public static final RegistryObject<Item> CONTAINMENT_CONTAINER = block(ChangedAddonModBlocks.CONTAINMENT_CONTAINER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> IRIDIUM = REGISTRY.register("iridium", () -> new IridiumItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

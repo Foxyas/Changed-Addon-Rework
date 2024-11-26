@@ -9,7 +9,7 @@
     "name": "Painite Hoe",
     "specialInfo": [],
     "creativeTab": {
-      "value": "No creative tab entry"
+      "value": "CUSTOM:ChangedAddonCombatOptional"
     },
     "harvestLevel": 5,
     "efficiency": 15.0,
