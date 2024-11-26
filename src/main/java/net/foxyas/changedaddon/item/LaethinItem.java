@@ -8,6 +8,6 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class LaethinItem extends Item {
 	public LaethinItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE));
 	}
 }

@@ -12,6 +12,28 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
+import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
+import net.foxyas.changedaddon.world.inventory.TransfurTotemGuiMenu;
+import net.foxyas.changedaddon.world.inventory.TranfurSoundsGuiMenu;
+import net.foxyas.changedaddon.world.inventory.PagesecretMenu;
+import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
+import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
+import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
+import net.foxyas.changedaddon.world.inventory.FoxyasGui2Menu;
+import net.foxyas.changedaddon.world.inventory.FightTokeepconsciousnessminigameMenu;
+import net.foxyas.changedaddon.world.inventory.CatlyzerguiMenu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage9Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage8Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage7Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage6Menu;
+import net.foxyas.changedaddon.world.inventory.Bookrecipepage10Menu;
+import net.foxyas.changedaddon.world.inventory.Bookpagenumber5Menu;
+import net.foxyas.changedaddon.world.inventory.Bookpagenumber4Menu;
+import net.foxyas.changedaddon.world.inventory.Bookpagenumber3Menu;
+import net.foxyas.changedaddon.world.inventory.BookRecipePage11Menu;
+import net.foxyas.changedaddon.world.inventory.BookPagenumber2Menu;
+import net.foxyas.changedaddon.world.inventory.BookPagenumber1Menu;
+
 import java.util.List;
 import java.util.ArrayList;
 

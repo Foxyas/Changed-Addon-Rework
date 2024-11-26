@@ -8,6 +8,6 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class CatalyzeddnaItem extends Item {
 	public CatalyzeddnaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(1).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(1).rarity(Rarity.RARE));
 	}
 }
