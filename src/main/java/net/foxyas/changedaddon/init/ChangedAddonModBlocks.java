@@ -46,12 +46,12 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> INFORMANTBLOCK = REGISTRY.register("informantblock", () -> new InformantblockBlock());
 	public static final RegistryObject<Block> DORMANT_DARK_LATEX = REGISTRY.register("dormant_dark_latex", () -> new DormantDarkLatexBlock());
 	public static final RegistryObject<Block> DORMANT_WHITE_LATEX = REGISTRY.register("dormant_white_latex", () -> new DormantWhiteLatexBlock());
-	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
-	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
-	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 	public static final RegistryObject<Block> SNEP_PLUSH = REGISTRY.register("snep_plush", () -> new SnepPlushBlock());
 	public static final RegistryObject<Block> WOLF_PLUSH = REGISTRY.register("wolf_plush", () -> new WolfPlushBlock());
 	public static final RegistryObject<Block> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container", () -> new ContainmentContainerBlock());
+	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
+	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
+	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -59,11 +59,11 @@ public class ChangedAddonModBlocks {
 		public static void clientSetup(FMLClientSetupEvent event) {
 			LatexInsulatorBlock.registerRenderLayer();
 			DarklatexpuddleBlock.registerRenderLayer();
-			FoxtaCanBlock.registerRenderLayer();
-			SnepsiCanBlock.registerRenderLayer();
 			SnepPlushBlock.registerRenderLayer();
 			WolfPlushBlock.registerRenderLayer();
 			ContainmentContainerBlock.registerRenderLayer();
+			FoxtaCanBlock.registerRenderLayer();
+			SnepsiCanBlock.registerRenderLayer();
 		}
 	}
 }
