@@ -33,7 +33,7 @@ public class SignalBlockFeatureProcedure {
 			Player player = (Player) entity;
 			if (!player.getCooldowns().isOnCooldown(ChangedAddonModItems.SIGNAL_CATCHER.get())) {
 				int radius = player.isShiftKeyDown() ? LARGE_SEARCH_RADIUS : SMALL_SEARCH_RADIUS;
-				int cooldown = player.isShiftKeyDown() ? 600 : 100;
+				int cooldown = player.isShiftKeyDown() ? 225 : 75;
 				//searchSignalBlock(world, x, y, z, player, itemstack, radius, cooldown);
 				searchSignalBlockUsingChunks(world, x, y, z, player, itemstack, radius, cooldown);
 			}
@@ -74,7 +74,9 @@ public class SignalBlockFeatureProcedure {
 		if (!foundPositions.isEmpty()) {
 			BlockPos firstFound = foundPositions.get(0);
 			updatePlayerState(player, itemstack, firstFound.getX(), firstFound.getY(), firstFound.getZ(), cooldown);
-			displayFoundLocations(player, foundPositions);
+			if (player.level.isClientSide()) {
+				displayFoundLocations(player, foundPositions);
+			}
 			playSounds(world, x, y, z, firstFound);
 		} else if (!player.level.isClientSide()) {
 			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
