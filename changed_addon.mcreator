@@ -7854,7 +7854,7 @@
       "name": "SignalBlockFeature",
       "type": "procedure",
       "sortid": 404,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "signal_block_feature",
       "metadata": {
