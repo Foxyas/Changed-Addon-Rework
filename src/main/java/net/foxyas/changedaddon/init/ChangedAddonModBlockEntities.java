@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.foxyas.changedaddon.block.entity.WolfPlushBlockEntity;
 import net.foxyas.changedaddon.block.entity.UnifuserBlockEntity;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
+import net.foxyas.changedaddon.block.entity.SignalBlockBlockEntity;
 import net.foxyas.changedaddon.block.entity.InformantblockBlockEntity;
 import net.foxyas.changedaddon.block.entity.GeneratorBlockEntity;
 import net.foxyas.changedaddon.block.entity.DarklatexpuddleBlockEntity;
@@ -26,6 +27,7 @@ public class ChangedAddonModBlockEntities {
 	public static final RegistryObject<BlockEntityType<?>> CATLYZER = register("catlyzer", ChangedAddonModBlocks.CATLYZER, CatlyzerBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> UNIFUSER = register("unifuser", ChangedAddonModBlocks.UNIFUSER, UnifuserBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> DARKLATEXPUDDLE = register("darklatexpuddle", ChangedAddonModBlocks.DARKLATEXPUDDLE, DarklatexpuddleBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> SIGNAL_BLOCK = register("signal_block", ChangedAddonModBlocks.SIGNAL_BLOCK, SignalBlockBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> INFORMANTBLOCK = register("informantblock", ChangedAddonModBlocks.INFORMANTBLOCK, InformantblockBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> SNEP_PLUSH = register("snep_plush", ChangedAddonModBlocks.SNEP_PLUSH, SnepPlushBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> WOLF_PLUSH = register("wolf_plush", ChangedAddonModBlocks.WOLF_PLUSH, WolfPlushBlockEntity::new);

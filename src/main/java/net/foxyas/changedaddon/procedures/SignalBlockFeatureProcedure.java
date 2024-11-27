@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraft.core.Vec3i;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
@@ -33,7 +34,8 @@ public class SignalBlockFeatureProcedure {
 			if (!player.getCooldowns().isOnCooldown(ChangedAddonModItems.SIGNAL_CATCHER.get())) {
 				int radius = player.isShiftKeyDown() ? LARGE_SEARCH_RADIUS : SMALL_SEARCH_RADIUS;
 				int cooldown = player.isShiftKeyDown() ? 600 : 100;
-				searchSignalBlock(world, x, y, z, player, itemstack, radius, cooldown);
+				//searchSignalBlock(world, x, y, z, player, itemstack, radius, cooldown);
+				searchSignalBlockUsingChunks(world, x, y, z, player, itemstack, radius, cooldown);
 			}
 		}
 	}
@@ -42,6 +44,43 @@ public class SignalBlockFeatureProcedure {
 		LivingEntity livingEntity = (LivingEntity) entity;
 		return livingEntity.getMainHandItem().getItem() == ChangedAddonModItems.SIGNAL_CATCHER.get() || livingEntity.getOffhandItem().getItem() == ChangedAddonModItems.SIGNAL_CATCHER.get();
 	}
+
+	private static void searchSignalBlockUsingChunks(LevelAccessor world, double x, double y, double z, Player player, ItemStack itemstack, int radius, int cooldown) {
+		int chunkRadius = (radius >> 4) + 1; // Raio em chunks (16 blocos por chunk)
+		int chunkX = (int) x >> 4;
+		int chunkZ = (int) z >> 4;
+
+		List<BlockPos> foundPositions = new ArrayList<>();
+
+		for (int cx = chunkX - chunkRadius; cx <= chunkX + chunkRadius; cx++) {
+			for (int cz = chunkZ - chunkRadius; cz <= chunkZ + chunkRadius; cz++) {
+				if (world instanceof Level level) {
+					var chunk = level.getChunk(cx, cz);
+					chunk.getBlockEntities().forEach((pos, entity) -> {
+						// Verifique se a posição está no raio
+						if (entity.getBlockState().getBlock() == ChangedAddonModBlocks.SIGNAL_BLOCK.get() &&
+								pos.distSqr(new Vec3i(x, y, z)) <= radius * radius) {
+							foundPositions.add(pos);
+							if (foundPositions.size() >= MAX_FOUND_BLOCKS) {
+								return; // Limite alcançado
+							}
+						}
+					});
+				}
+			}
+		}
+
+		// Resultado da busca
+		if (!foundPositions.isEmpty()) {
+			BlockPos firstFound = foundPositions.get(0);
+			updatePlayerState(player, itemstack, firstFound.getX(), firstFound.getY(), firstFound.getZ(), cooldown);
+			displayFoundLocations(player, foundPositions);
+			playSounds(world, x, y, z, firstFound);
+		} else if (!player.level.isClientSide()) {
+			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
+		}
+	}
+
 
 	private static void searchSignalBlock(LevelAccessor world, double x, double y, double z, Player player, ItemStack itemstack, int radius, int cooldown) {
 		int startX = (int) x - radius;

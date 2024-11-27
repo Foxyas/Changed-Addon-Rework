@@ -7844,6 +7844,7 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/block/SignalBlockBlock.java",
           "src/main/resources/assets/changed_addon/blockstates/signal_block.json",
+          "src/main/java/net/foxyas/changedaddon/block/entity/SignalBlockBlockEntity.java",
           "src/main/resources/assets/changed_addon/models/block/signal_block.json",
           "src/main/resources/assets/changed_addon/models/item/signal_block.json"
         ]
@@ -7854,7 +7855,7 @@
       "name": "SignalBlockFeature",
       "type": "procedure",
       "sortid": 404,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "signal_block_feature",
       "metadata": {
