@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 1.2,
+  "cookingtime": 200,
+  "ingredient": {
+    "item": "changed_addon:raw_iridium"
+  },
+  "result": "changed_addon:iridium"
+}

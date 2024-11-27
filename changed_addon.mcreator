@@ -11499,6 +11499,49 @@
         ]
       },
       "path": "~/Items"
+    },
+    {
+      "name": "RawIridium",
+      "type": "item",
+      "sortid": 578,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "raw_iridium",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/RawIridiumItem.java",
+          "src/main/resources/assets/changed_addon/models/item/raw_iridium.json"
+        ]
+      },
+      "path": "~/Items"
+    },
+    {
+      "name": "Smeltingrawiridium",
+      "type": "recipe",
+      "sortid": 579,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "smeltingrawiridium",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/smelting_raw_iridium.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "BlastingRawiridium",
+      "type": "recipe",
+      "sortid": 580,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "blasting_rawiridium",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/blasting_raw_iridium.json"
+        ]
+      },
+      "path": "~/Recipes"
     }
   ],
   "variable_elements": [
@@ -11791,6 +11834,7 @@
       "advancements.pat_advancement.descr": "Your pat was so good that it helped someone get better",
       "gui.changed_addon.foxyas_gui_2.button_aa": "yes",
       "gamerule.giveBookOnStart": "Start With Book ",
+      "item.changed_addon.raw_iridium": "Raw Iridium",
       "gui.changed_addon.bookrecipepage_8.label_f": "F",
       "key.changed_addon.pat_message": "You pat {0}",
       "item.changed_addon.exp_1_female_spawn_egg": "Exp1 Female Spawn Egg",

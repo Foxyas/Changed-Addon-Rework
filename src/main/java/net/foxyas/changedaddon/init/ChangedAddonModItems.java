@@ -32,6 +32,7 @@ import net.foxyas.changedaddon.item.SpawneggoffoxyasItem;
 import net.foxyas.changedaddon.item.SnepsiItem;
 import net.foxyas.changedaddon.item.SnepIconItem;
 import net.foxyas.changedaddon.item.SignalCatcherItem;
+import net.foxyas.changedaddon.item.RawIridiumItem;
 import net.foxyas.changedaddon.item.PotwithcamoniaItem;
 import net.foxyas.changedaddon.item.PainiteSwordItem;
 import net.foxyas.changedaddon.item.PainiteShovelItem;
@@ -165,6 +166,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, null);
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
+	public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", () -> new RawIridiumItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

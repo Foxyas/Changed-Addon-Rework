@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "experience": 1.2,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "changed_addon:raw_iridium"
+  },
+  "result": "changed_addon:iridium"
+}
