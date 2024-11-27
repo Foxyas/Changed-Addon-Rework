@@ -38,7 +38,7 @@
     "hardness": 20.0,
     "resistance": 25.0,
     "hasGravity": false,
-    "isWaterloggable": true,
+    "isWaterloggable": false,
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },

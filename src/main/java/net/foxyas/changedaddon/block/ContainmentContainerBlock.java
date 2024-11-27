@@ -62,7 +62,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 	public static final VoxelShape SHAPE_WHOLE = Block.box(4.0, 0.0, 4.0, 12.0, 16.0, 12.0);
 
 	public ContainmentContainerBlock() {
-		super(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.GLASS).strength(3f, 5f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
+		super(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.GLASS).strength(3f, 5f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false).requiresCorrectToolForDrops());
 		this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
