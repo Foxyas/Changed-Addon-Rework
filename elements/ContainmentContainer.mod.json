@@ -42,7 +42,7 @@
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },
-    "destroyTool": "Not specified",
+    "destroyTool": "pickaxe",
     "customDrop": {
       "value": ""
     },
