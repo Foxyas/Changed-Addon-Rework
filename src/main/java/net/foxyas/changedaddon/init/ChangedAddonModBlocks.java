@@ -23,6 +23,8 @@ import net.foxyas.changedaddon.block.PainiteOreBlock;
 import net.foxyas.changedaddon.block.PainiteBlockBlock;
 import net.foxyas.changedaddon.block.LitixCamoniaFluidBlock;
 import net.foxyas.changedaddon.block.LatexInsulatorBlock;
+import net.foxyas.changedaddon.block.IridiumoreBlock;
+import net.foxyas.changedaddon.block.IridiumBlockBlock;
 import net.foxyas.changedaddon.block.InformantblockBlock;
 import net.foxyas.changedaddon.block.GeneratorBlock;
 import net.foxyas.changedaddon.block.FoxtaCanBlock;
@@ -52,6 +54,8 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
+	public static final RegistryObject<Block> IRIDIUM_ORE = REGISTRY.register("iridium_ore", () -> new IridiumoreBlock());
+	public static final RegistryObject<Block> IRIDIUM_BLOCK = REGISTRY.register("iridium_block", () -> new IridiumBlockBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

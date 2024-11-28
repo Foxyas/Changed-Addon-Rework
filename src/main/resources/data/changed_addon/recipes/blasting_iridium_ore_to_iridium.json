@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "experience": 25,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "changed_addon:iridium_ore"
+  },
+  "result": "changed_addon:iridium"
+}

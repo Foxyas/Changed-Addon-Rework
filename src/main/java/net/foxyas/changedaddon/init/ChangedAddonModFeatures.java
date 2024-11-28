@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Holder;
 
 import net.foxyas.changedaddon.world.features.ores.PainiteOreFeature;
+import net.foxyas.changedaddon.world.features.ores.IridiumoreFeature;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -31,6 +32,8 @@ public class ChangedAddonModFeatures {
 	private static final List<FeatureRegistration> FEATURE_REGISTRATIONS = new ArrayList<>();
 	public static final RegistryObject<Feature<?>> PAINITE_ORE = register("painite_ore", PainiteOreFeature::feature,
 			new FeatureRegistration(GenerationStep.Decoration.UNDERGROUND_ORES, PainiteOreFeature.GENERATE_BIOMES, PainiteOreFeature::placedFeature));
+	public static final RegistryObject<Feature<?>> IRIDIUM_ORE = register("iridium_ore", IridiumoreFeature::feature,
+			new FeatureRegistration(GenerationStep.Decoration.UNDERGROUND_ORES, IridiumoreFeature.GENERATE_BIOMES, IridiumoreFeature::placedFeature));
 
 	private static RegistryObject<Feature<?>> register(String registryname, Supplier<Feature<?>> feature, FeatureRegistration featureRegistration) {
 		FEATURE_REGISTRATIONS.add(featureRegistration);

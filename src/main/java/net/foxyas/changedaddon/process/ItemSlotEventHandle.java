@@ -35,8 +35,8 @@ public class ItemSlotEventHandle {
     
 */
 
-    @SubscribeEvent
-    public static void onPlayerRightClick(PlayerInteractEvent.RightClickItem event) {
+   /*@SubscribeEvent
+   * public static void onPlayerRightClick(PlayerInteractEvent.RightClickItem event) {
         Player player = event.getPlayer();
         ItemStack itemStack = event.getItemStack();
         TransfurVariantInstance<?> latexVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
@@ -45,5 +45,5 @@ public class ItemSlotEventHandle {
                 event.setCanceled(true);
             }
         }
-    }
+    }*/
 }

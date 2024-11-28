@@ -1,0 +1,48 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "recipeSlots": [
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:IridiumBlock"
+    },
+    "name": "iridium_to_block",
+    "namespace": "mod"
+  }
+}

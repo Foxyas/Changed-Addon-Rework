@@ -1,0 +1,22 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Blasting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 25.0,
+    "cookingTime": 100,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "blastingInputStack": {
+      "value": "CUSTOM:Iridiumore"
+    },
+    "blastingReturnStack": {
+      "value": "CUSTOM:Iridium"
+    },
+    "name": "blasting_iridium_ore_to_iridium",
+    "namespace": "mod"
+  }
+}

@@ -11542,6 +11542,165 @@
         ]
       },
       "path": "~/Recipes"
+    },
+    {
+      "name": "Iridiumore",
+      "type": "block",
+      "sortid": 581,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "iridium_ore",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/world/features/ores/IridiumoreFeature.java",
+          "src/main/java/net/foxyas/changedaddon/block/IridiumoreBlock.java",
+          "src/main/resources/assets/changed_addon/models/item/iridium_ore.json",
+          "src/main/resources/assets/changed_addon/blockstates/iridium_ore.json",
+          "src/main/resources/assets/changed_addon/models/block/iridium_ore.json"
+        ]
+      },
+      "path": "~/Blocks"
+    },
+    {
+      "name": "IridiumoreBlockDestroyedByPlayer",
+      "type": "procedure",
+      "sortid": 582,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "iridiumore_block_destroyed_by_player",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IridiumoreBlockDestroyedByPlayerProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "IridiumoreBlockDestroyedByExplosion",
+      "type": "procedure",
+      "sortid": 583,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "iridiumore_block_destroyed_by_explosion",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/IridiumoreBlockDestroyedByExplosionProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      },
+      "path": "~/Procedures"
+    },
+    {
+      "name": "IridiumBlock",
+      "type": "block",
+      "sortid": 584,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "iridium_block",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/blockstates/iridium_block.json",
+          "src/main/java/net/foxyas/changedaddon/block/IridiumBlockBlock.java",
+          "src/main/resources/assets/changed_addon/models/item/iridium_block.json",
+          "src/main/resources/assets/changed_addon/models/block/iridium_block.json"
+        ]
+      },
+      "path": "~/Blocks"
+    },
+    {
+      "name": "IridiumOreDrop",
+      "type": "loottable",
+      "sortid": 585,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "iridium_ore_drop",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/blocks/iridium_ore.json"
+        ]
+      },
+      "path": "~/CustomCode"
+    },
+    {
+      "name": "Smeltiridiumore",
+      "type": "recipe",
+      "sortid": 586,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "smeltiridiumore",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/smelting_iridium_ore_to_iridium.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "BlastIridiumOre",
+      "type": "recipe",
+      "sortid": 587,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "blast_iridium_ore",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/blasting_iridium_ore_to_iridium.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "Iridiumblockrecipe",
+      "type": "recipe",
+      "sortid": 588,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "iridiumblockrecipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/iridium_to_block.json"
+        ]
+      },
+      "path": "~/Recipes"
     }
   ],
   "variable_elements": [
@@ -11759,24 +11918,24 @@
   ],
   "language_map": {
     "en_us": {
-      "advancements.obtain_foxta.title": "Foxta!",
       "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
-      "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
+      "advancements.obtain_foxta.title": "Foxta!",
       "item.changed_addon.crystal_addager_black": "Dark Crystal Dagger",
+      "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
-      "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
+      "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
       "entity.minecraft.villager.changed_addon.scientist": "Scientist",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "Litix-Camonia",
       "changed_addon.ability.thunder": "Thunder Bolt",
-      "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
-      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "block.changed_addon.wolf_plush": "Wolf Plush",
+      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
+      "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
-      "item.changed_addon.signal_catcher": "Signal Catcher",
       "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
+      "item.changed_addon.signal_catcher": "Signal Catcher",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
       "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
       "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
@@ -11802,15 +11961,15 @@
       "entity.changed_addon.experiment_009": "Experiment 009",
       "text.changed_addon.additionalHealth.Hearts": " Hearts",
       "gui.changed_addon.bookrecipepage_8.label_s_seeds": "S \u003d ANY SEEDS",
-      "entity.changed_addon.exp_6": "Exp6",
       "entity.changed_addon.experiment_10_boss": "Experiment 10",
+      "entity.changed_addon.exp_6": "Exp6",
       "gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants": "F \u003d ANY FLOWERS OR PLANTS",
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
       "advancements.transfur_totem_advancement_1.descr": "You use a latex totem to transfur or untransfur",
       "gui.changed_addon.unifusergui.button_aaaaaaaaaa": "Next",
-      "item.changed_addon.latex_snow_fox_spawn_egg": "Male Latex Snow Fox Spawn Egg",
       "subtitles.spray.sound": "Using Spray",
+      "item.changed_addon.latex_snow_fox_spawn_egg": "Male Latex Snow Fox Spawn Egg",
       "item.changed_addon.potwithcamonia": "Pot with Litix-Camonia",
       "gamerule.giveBookOnStart.description": "When starting the game when the achievement Changed Addon is given, the Experiment Book will be added to the player\u0027s inventory",
       "gui.changed_addon.pagesecret.button_close": "close",
@@ -11821,6 +11980,7 @@
       "item.changed_addon.painite_armor_leggings": "Netherite Leggings with Painite trim",
       "changed_addon.ability.shock_wave": "Shock Wave",
       "effect.changed_addon.transfur_sickness.description": "Prevents players from transfuring entities.",
+      "block.changed_addon.iridium_ore": "Deepslate Iridium Ore",
       "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
       "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
@@ -11828,8 +11988,8 @@
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "advancements.obtain_red_crystal_dagger.title": "§4Red§r Crystal Dagger!",
       "item.changed_addon.snepsi": "Snepsi",
-      "config.changed_addon.changed_addon_configs": "changed_addon-server",
       "changed_addon.ability.dodge.dodge_amount_left": "Your Amount of Dodges left is %1$s",
+      "config.changed_addon.changed_addon_configs": "changed_addon-server",
       "gui.changed_addon.tranfur_sounds_gui.label_transfursounds": "TransfurSounds",
       "advancements.pat_advancement.descr": "Your pat was so good that it helped someone get better",
       "gui.changed_addon.foxyas_gui_2.button_aa": "yes",
@@ -11849,14 +12009,14 @@
       "gui.changed_addon.bookrecipepage_8.label_s": "S",
       "advancements.snepsi_adctive.descr": "We take a big sippy,You drink 100 Snepsis!",
       "gui.changed_addon.informant_gui.form": "Form ID",
-      "block.changed_addon.foxta_can": "§bFoxta Can§r",
-      "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
       "item.changed_addon.empty_spray": "Empty Spray",
+      "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
+      "block.changed_addon.foxta_can": "§bFoxta Can§r",
       "item.changed_addon.electric_katana": "§bElectric Katana",
       "entity.changed_addon.erik": "Erik",
-      "changed_addon.jei_descriptions.laethin_syringe": "When using Untransfur you Instantly and don\u0027t have a chance to fail",
-      "advancements.obtain_a_electric_katana.title": "An Shocking Upgrade!",
       "changed_addon.ability.dodge.dodge_amount": "Your Amount of Dodges is %1$s",
+      "advancements.obtain_a_electric_katana.title": "An Shocking Upgrade!",
+      "changed_addon.jei_descriptions.laethin_syringe": "When using Untransfur you Instantly and don\u0027t have a chance to fail",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
       "death.attack.untransfurfail.player": "%1$s dies for a fail untransfurmation attempt while fighting %2$s",
@@ -11864,23 +12024,23 @@
       "advancements.friendly_transfur.title": "Friendly Transfur",
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gamerule.changedAddonOrganicBuff": "ChangedAddon Organic Buff",
-      "itemGroup.tabchanged_addon_combat_optional": "Changed Addon Plus Combat Optional",
       "entity.changed_addon.snow_leopard_female_organic": "Female BioSynth Snow Leopard",
+      "itemGroup.tabchanged_addon_combat_optional": "Changed Addon Plus Combat Optional",
       "gui.changed_addon.book_recipe_page_11.label_p": "L",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
       "entity.changed_addon.latex_snow_fox_female": "Female Latex Snow Fox",
       "advancements.hazy_purple.title": "Hazy Purple",
       "advancements.transfur_totem_advancement_2.title": "§bSalvation§r§5 of A §fGooey §r§4Curse",
       "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_recipe": "Display Litix-Camonia Recipe",
-      "gui.changed_addon.book_pagenumber_2.label_ammonia_particle": "Ammonia Particle",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
+      "gui.changed_addon.book_pagenumber_2.label_ammonia_particle": "Ammonia Particle",
       "gui.changed_addon.bookpagenumber_3.button_back": "Back",
       "gui.changed_addon.bookrecipepage_6.label_pany_potion": "P\u003dANY POTION",
       "gui.changed_addon.bookrecipepage_8.label_3": "3",
       "subtitles.block.plushes.sfx": "Plush Squeezed",
       "gui.changed_addon.bookrecipepage_10.button_back": "Back",
-      "gamerule.doDazedLatexBurn.description": "When On Make The Dazed Latexs Burn in Sun Light like in Dazed Game",
       "advancements.swim_regret.descr": "Swim in water with a form that has low swim speed for a minute",
+      "gamerule.doDazedLatexBurn.description": "When On Make The Dazed Latexs Burn in Sun Light like in Dazed Game",
       "item.changed_addon.foxta": "Foxta",
       "changed_addon.latex_totem.notvalid": "Totem reacted §cnegatively§r to your §bDNA§r",
       "death.attack.latex_solvent.player": "%1$s was dissolved by %2$s",
@@ -12140,6 +12300,7 @@
       "block.changed_addon.darklatexpuddle": "Dark Latex Puddle",
       "gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form": "Put A syringe With a Form",
       "changedaddon.assimilation.when_on": "Activating assimilation deactivates Friendly Mode",
+      "block.changed_addon.iridium_block": "Block of Painite",
       "changed_addon.ability.soften": "Soften",
       "item.changed_addon.latex_snow_fox_female_spawn_egg": "Female Latex Snow Fox Spawn Egg",
       "advancements.timesthesyringewasuseadvancement_3.descr": "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!",

@@ -8,7 +8,8 @@
     "BlockMixin",
     "ChangedEntityTargetSelectorMixin",
     "CrossCollisionBlockMixin",
-    "RandomVariantFunctionMixin"
+    "RandomVariantFunctionMixin",
+    "TransfurVariantInstanceMixin"
   ],
   "injectors": {
     "defaultRequire": 1
