@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -11,9 +12,9 @@ import net.minecraft.world.entity.player.Player;
 public class CanLeapProcedure {
 	public static boolean execute(Entity entity) {
 		Player player = (Player) entity;
-		TransfurVariantInstance LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
-		TransfurVariant Variant = TransfurVariant.getEntityVariant(LatexInstace.getChangedEntity());
-		if (Variant.is(ChangedTags.TransfurVariants.CAT_LIKE )|| Variant.is(ChangedTags.TransfurVariants.LEOPARD_LIKE)){
+		TransfurVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
+		TransfurVariant<?> Variant = TransfurVariant.getEntityVariant(LatexInstace.getChangedEntity());
+		if (Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE)|| Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)){
 			return true;
 		}
 		return false;

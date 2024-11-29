@@ -2,8 +2,13 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedaddoncommonConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -29,8 +34,14 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 	public static final RegistryObject<DazedPuddleAbility> DAZED_PUDDLE_ABILITY = REGISTRY.register("dazed_puddle",DazedPuddleAbility::new);
 	public static final RegistryObject<SoftenAbility> SOFTEN_ABILITY = REGISTRY.register("soften",SoftenAbility::new);
 
+	public static void addUniversalAbilities(TransfurVariant.UniversalAbilitiesEvent event){
+		if (ChangedaddoncommonConfiguration.SOFTEN_ABILITY.get()){
+		event.addAbility(event.isOfTag(ChangedTags.EntityTypes.LATEX).and(event.isNotOfTag(ChangedTags.EntityTypes.PARTIAL_LATEX)), SOFTEN_ABILITY);
+		}
+	}
+
 	@SubscribeEvent
-	public static void registerAbiltiys(FMLConstructModEvent event) {
+	public static void registerAbilities(FMLConstructModEvent event) {
 		ChangedAddonAbilitys.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 

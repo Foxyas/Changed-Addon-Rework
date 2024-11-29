@@ -136,8 +136,8 @@ public class CreatureDietsHandleProcedure {
 
     private static boolean isCatDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("cat") ||
-                variant.is(ChangedTags.TransfurVariants.CAT_LIKE) ||
-                variant.is(ChangedTags.TransfurVariants.LEOPARD_LIKE) ||
+                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) ||
+                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:cat_diet")));
     }
@@ -146,7 +146,7 @@ public class CreatureDietsHandleProcedure {
         return entity.getType().getRegistryName().toString().contains("dog") ||
                 entity.getType().getRegistryName().toString().contains("wolf") ||
                 entity instanceof AbstractLatexWolf ||
-                variant.is(ChangedTags.TransfurVariants.WOLF_LIKE) ||
+                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.WOLF_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:wolf_diet")));
     }
@@ -169,7 +169,7 @@ public class CreatureDietsHandleProcedure {
 
     private static boolean isAquaticDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity instanceof AquaticEntity ||
-                variant.is(ChangedTags.TransfurVariants.SHARK_LIKE) ||
+                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.SHARK_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed:aquatic_like"))) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),

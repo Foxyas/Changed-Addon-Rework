@@ -10,7 +10,6 @@ public class ChangedAddonConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Double> AGE_NEED;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> CUSTOMRECIPES;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_INFECT;
-	public static final ForgeConfigSpec.ConfigValue<Boolean> CAN_PASS_THROUGH_BLOCKS;
 	static {
 		BUILDER.push("Latex Totem");
 		ACCEPT_ALL_VARIANTS = BUILDER.comment("allow latex totem to have all Latex Variants").define("No Latex Totem Limitations", true);
@@ -24,9 +23,6 @@ public class ChangedAddonConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Latex Infection");
 		ALWAYS_INFECT = BUILDER.comment("Always Add Latex Infection").define("Always Cause Infect", false);
-		BUILDER.pop();
-		BUILDER.push("Latexs Forms Behavior");
-		CAN_PASS_THROUGH_BLOCKS = BUILDER.comment("Allow latexes forms to pass over blocks with holes").define("Can Pass Through Blocks", false);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

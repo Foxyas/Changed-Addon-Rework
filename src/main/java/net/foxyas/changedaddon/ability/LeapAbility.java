@@ -1,11 +1,11 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -19,7 +19,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 public class LeapAbility extends SimpleAbility {
@@ -44,7 +43,7 @@ public class LeapAbility extends SimpleAbility {
         }
 
         TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-        return Variant.is(ChangedTags.TransfurVariants.CAT_LIKE) || Variant.is(ChangedTags.TransfurVariants.LEOPARD_LIKE);
+        return Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
     }
 
     public UseType getUseType(IAbstractChangedEntity entity) {

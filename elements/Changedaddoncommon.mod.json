@@ -1,0 +1,33 @@
+{
+  "_fv": 47,
+  "_type": "config",
+  "definition": {
+    "pools": [
+      {
+        "category": "Latexs Forms Extra Abilities",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Add the Soften Ability for all the goeys latexes ",
+            "vardisplay": "Soften Ability",
+            "varname": "soften_ability",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
+      }
+    ],
+    "file": "changed_addon-common",
+    "configType": 0
+  }
+}

@@ -41,10 +41,10 @@ public abstract class CrossCollisionBlockMixin{
                         if (transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()) != null
                                 && transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).grabbedEntity == null) {
 
-                            //Config
+                            /*//Config
                             if (ChangedAddonConfigsConfiguration.CAN_PASS_THROUGH_BLOCKS.get()) {
                                 cir.setReturnValue(Shapes.empty());
-                            }
+                            }*/
 
                             //Ability
                             transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), Instance -> {

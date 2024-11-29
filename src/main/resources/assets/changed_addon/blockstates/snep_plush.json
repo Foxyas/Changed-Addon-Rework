@@ -1,18 +1,93 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,cans=none": {
       "model": "changed_addon:block/snep_plush"
     },
-    "facing=east": {
+    "facing=east,cans=none": {
       "model": "changed_addon:block/snep_plush",
       "y": 90
     },
-    "facing=south": {
+    "facing=south,cans=none": {
       "model": "changed_addon:block/snep_plush",
       "y": 180
     },
-    "facing=west": {
+    "facing=west,cans=none": {
       "model": "changed_addon:block/snep_plush",
+      "y": 270
+    },
+    "facing=north,cans=right": {
+      "model": "changed_addon:block/snep_plush_with_right_can"
+    },
+    "facing=east,cans=right": {
+      "model": "changed_addon:block/snep_plush_with_right_can",
+      "y": 90
+    },
+    "facing=south,cans=right": {
+      "model": "changed_addon:block/snep_plush_with_right_can",
+      "y": 180
+    },
+    "facing=west,cans=right": {
+      "model": "changed_addon:block/snep_plush_with_right_can",
+      "y": 270
+    },
+    "facing=north,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can"
+    },
+    "facing=east,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can",
+      "y": 90
+    },
+    "facing=south,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can",
+      "y": 180
+    },
+    "facing=west,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can",
+      "y": 270
+    },
+    "facing=north,cans=both": {
+      "model": "changed_addon:block/snep_plush_with_both_cans"
+    },
+    "facing=east,cans=both": {
+      "model": "changed_addon:block/snep_plush_with_both_cans",
+      "y": 90
+    },
+    "facing=south,cans=both": {
+      "model": "changed_addon:block/snep_plush_with_both_cans",
+      "y": 180
+    },
+    "facing=west,cans=both": {
+      "model": "changed_addon:block/snep_plush_with_both_cans",
+      "y": 270
+    },
+    "facing=north,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can"
+    },
+    "facing=east,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can",
+      "y": 90
+    },
+    "facing=south,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can",
+      "y": 180
+    },
+    "facing=west,cans=left": {
+      "model": "changed_addon:block/snep_plush_with_left_can",
+      "y": 270
+    },
+    "facing=north,cans=hug": {
+      "model": "changed_addon:block/snep_plush_hugging_a_can"
+    },
+    "facing=east,cans=hug": {
+      "model": "changed_addon:block/snep_plush_hugging_a_can",
+      "y": 90
+    },
+    "facing=south,cans=hug": {
+      "model": "changed_addon:block/snep_plush_hugging_a_can",
+      "y": 180
+    },
+    "facing=west,cans=hug": {
+      "model": "changed_addon:block/snep_plush_hugging_a_can",
       "y": 270
     }
   }

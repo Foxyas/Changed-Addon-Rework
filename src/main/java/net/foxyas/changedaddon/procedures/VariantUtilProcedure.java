@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.util.Cacheable;
+import net.ltxprogrammer.changed.util.UniversalDist;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -34,7 +35,7 @@ public class VariantUtilProcedure {
 				ChangedEntity InstanceEntity = variant.getEntityType().create(player.level);
                 assert InstanceEntity != null;
                 InstanceEntity.setUnderlyingPlayer(player);
-				TransfurVariantInstance<?> Instance = new TransfurVariantInstance<>(variant,player);
+				var Instance = UniversalDist.createVariantFor(variant,player);
 				return variant == null ? 0f : (float) ((InstanceEntity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * 0.1F) / BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
 			} else {
 				return 0f;
@@ -53,7 +54,7 @@ public class VariantUtilProcedure {
 				ChangedEntity InstanceEntity = variant.getEntityType().create(player.level);
 				assert InstanceEntity != null;
 				InstanceEntity.setUnderlyingPlayer(player);
-				TransfurVariantInstance<?> Instance = new TransfurVariantInstance<>(variant,player);
+				var Instance = UniversalDist.createVariantFor(variant,player);
 				return variant == null ? 0f : (float) (InstanceEntity.getAttributeBaseValue(ForgeMod.SWIM_SPEED.get()) / BASE_ATTRIBUTES.get().getBaseValue(ForgeMod.SWIM_SPEED.get()));
 			} else {
 				return 0f;

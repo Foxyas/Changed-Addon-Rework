@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -14,6 +15,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.piglin.Piglin;
@@ -35,6 +37,21 @@ public class ChangedAddonTransfurVariants {
     //public static UseItemMode ABO = UseItemMode.create("ABO",false,true,true,true,true);
     //this is For Not Show The Hot Bar
     //.itemUseMode(ABO)
+
+    public static class TransfurVariantTags {
+        public static final TagKey<TransfurVariant<?>> WOLF_LIKE = create("wolf_like");
+        public static final TagKey<TransfurVariant<?>> SHARK_LIKE = create("shark_like");
+        public static final TagKey<TransfurVariant<?>> CAT_LIKE = create("cat_like");
+        public static final TagKey<TransfurVariant<?>> LEOPARD_LIKE = create("leopard_like");
+
+        public TransfurVariantTags() {
+        }
+
+        private static TagKey<TransfurVariant<?>> create(String name) {
+            return TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
+                    new ResourceLocation("changed_addon",name));
+        }
+    }
 
     public static final DeferredRegister<TransfurVariant<?>> REGISTRY = ChangedRegistry.TRANSFUR_VARIANT.createDeferred(ChangedAddonMod.MODID);
 
