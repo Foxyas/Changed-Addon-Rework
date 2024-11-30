@@ -46,7 +46,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent(("you stop the " + new TranslatableComponent(("block.changed_addon." + ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).getString())), true);
+					_player.displayClientMessage(new TextComponent(("you stop the " + new TranslatableComponent(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
 			} else {
 				if (!world.isClientSide()) {
 					BlockPos _bp = new BlockPos(x, y, z);
@@ -58,7 +58,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent(("you start the " + new TranslatableComponent(("block.changed_addon." + ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).getString())), true);
+					_player.displayClientMessage(new TextComponent(("you start the " + new TranslatableComponent(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
 			}
 		} else {
 			{

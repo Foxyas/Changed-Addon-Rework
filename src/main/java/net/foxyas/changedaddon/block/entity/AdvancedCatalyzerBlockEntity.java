@@ -95,7 +95,7 @@ public class AdvancedCatalyzerBlockEntity extends RandomizableContainerBlockEnti
 
 	@Override
 	public Component getDisplayName() {
-		return new TextComponent("Catalyzer");
+		return new TextComponent("Advanced Catalyzer");
 	}
 
 	@Override

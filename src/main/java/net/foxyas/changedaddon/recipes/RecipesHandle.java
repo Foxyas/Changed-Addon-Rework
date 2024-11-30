@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.recipes;
 
 import net.foxyas.changedaddon.block.AdvancedUnifuserBlock;
+import net.foxyas.changedaddon.block.AdvancedCatalyzerBlock;
 import net.foxyas.changedaddon.extension.jeiSuport.JeiCatalyzerRecipe;
 import net.foxyas.changedaddon.extension.jeiSuport.JeiUnifuserRecipe;
 import net.minecraft.core.NonNullList;
@@ -141,7 +142,7 @@ public class RecipesHandle {
 
     public static float getCatalyzerRecipeProgressSpeed(LevelAccessor level, BlockState blockState, ItemStack input) {
         if (level instanceof ServerLevel serverLevel) {
-            float multiplier = blockState.getBlock() instanceof AdvancedUnifuserBlock ? 4f : 1f;
+            float multiplier = blockState.getBlock() instanceof AdvancedCatalyzerBlock ? 4f : 1f;
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiCatalyzerRecipe

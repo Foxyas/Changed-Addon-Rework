@@ -17,7 +17,7 @@ import java.util.Collections;
 
 public class ReinforcedWallCautionBlock extends Block implements NonLatexCoverableBlock {
 	public ReinforcedWallCautionBlock() {
-		super(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.NETHERITE_BLOCK).strength(3f, 10f));
+		super(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.NETHERITE_BLOCK).strength(6f, 30f));
 	}
 
 	@Override

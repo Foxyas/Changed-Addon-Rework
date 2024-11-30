@@ -8,6 +8,8 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,9 +25,9 @@ import java.util.Map;
 public class RightClickWithIridiumProcedure {
 
 	// Mapeamento de blocos para substituição
-	public static final Map<Block, Block> BASE_CONVERSION = new HashMap<>();
-
-	static {
+	public static final Map<Block, Block> CONVERSION() {
+		Map<Block, Block> BASE_CONVERSION = new HashMap<>();
+		
 		BASE_CONVERSION.put(ChangedBlocks.WALL_WHITE.get(),
 				ChangedAddonModBlocks.REINFORCED_WALL.get());
 		BASE_CONVERSION.put(ChangedBlocks.WALL_CAUTION.get(),
@@ -34,6 +36,8 @@ public class RightClickWithIridiumProcedure {
 				ChangedAddonModBlocks.REINFORCED_WALL_SILVER_TILED.get());
 		BASE_CONVERSION.put(ChangedBlocks.WALL_BLUE_STRIPED.get(),
 				ChangedAddonModBlocks.REINFORCED_WALL_SILVER_STRIPED.get());
+
+				return BASE_CONVERSION;
 	}
 
 	@SubscribeEvent
@@ -45,19 +49,22 @@ public class RightClickWithIridiumProcedure {
 			Block clickedBlock = world.getBlockState(pos).getBlock();
 
 			// Verifica se o bloco está no mapa de conversão
-			if (BASE_CONVERSION.containsKey(clickedBlock)) {
-				Block convertedBlock = BASE_CONVERSION.get(clickedBlock);
+			if (CONVERSION().containsKey(clickedBlock)) {
+				Block convertedBlock = CONVERSION().get(clickedBlock);
 
 				// Substitui o bloco no mundo
 				world.setBlock(pos, convertedBlock.defaultBlockState(), 3);
-				if (world instanceof ServerLevel serverLevel){
-					PlayerUtilProcedure.ParticlesUtil.sendParticles(serverLevel,ParticleTypes.END_ROD,pos,0.25f,0.25f,0.25f,10,1);
+				if (world instanceof ServerLevel serverLevel) {
+					PlayerUtilProcedure.ParticlesUtil.sendParticles(serverLevel, ParticleTypes.END_ROD, pos, 0.25f, 0.25f, 0.25f, 10, 1);
+					serverLevel.playSound(null,pos, SoundEvents.METAL_PLACE, SoundSource.BLOCKS,1,1);
 				}
 
 				// Consome o item na mão, exceto no modo criativo
 				if (!event.getPlayer().isCreative()) {
 					event.getItemStack().shrink(1);
 				}
+
+				event.getPlayer().swing(event.getHand(), true);
 
 				// Cancela o evento para evitar interações adicionais
 				event.setCanceled(true);

@@ -6,6 +6,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.foxyas.changedaddon.enchantment.SolventEnchantment;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
@@ -76,9 +77,12 @@ class JeiDescriptionHandler {
 
         // Enchant Information
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
-        EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), 5), enchantedBook);
-        registration.addIngredientInfo(enchantedBook, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.solvent.desc"));
-
+        for (int i = 0; i < 5; i++) {
+            if (i != 0){
+                EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBook);
+                registration.addIngredientInfo(enchantedBook, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.solvent.desc"));
+            }
+        }
     }
 }
 
