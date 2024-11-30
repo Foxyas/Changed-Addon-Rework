@@ -56,7 +56,7 @@ public class RightClickWithIridiumProcedure {
 				world.setBlock(pos, convertedBlock.defaultBlockState(), 3);
 				if (world instanceof ServerLevel serverLevel) {
 					PlayerUtilProcedure.ParticlesUtil.sendParticles(serverLevel, ParticleTypes.END_ROD, pos, 0.25f, 0.25f, 0.25f, 10, 1);
-					serverLevel.playSound(null,pos, SoundEvents.METAL_PLACE, SoundSource.BLOCKS,1,1);
+					serverLevel.playSound(null,pos, SoundEvents.NETHERITE_BLOCK_PLACE, SoundSource.BLOCKS,1,1);
 				}
 
 				// Consome o item na mão, exceto no modo criativo
