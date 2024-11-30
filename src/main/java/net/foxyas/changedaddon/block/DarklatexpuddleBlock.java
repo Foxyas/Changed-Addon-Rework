@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.block;
 
+import net.ltxprogrammer.changed.block.NonLatexCoverableBlock;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
@@ -44,7 +45,7 @@ import java.util.Random;
 import java.util.List;
 import java.util.Collections;
 
-public class DarklatexpuddleBlock extends Block implements EntityBlock {
+public class DarklatexpuddleBlock extends Block implements EntityBlock, NonLatexCoverableBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
 	public DarklatexpuddleBlock() {
