@@ -19,6 +19,11 @@ import net.foxyas.changedaddon.block.UnifuserBlock;
 import net.foxyas.changedaddon.block.SnepsiCanBlock;
 import net.foxyas.changedaddon.block.SnepPlushBlock;
 import net.foxyas.changedaddon.block.SignalBlockBlock;
+import net.foxyas.changedaddon.block.ReinforcedwallsilvertiledBlock;
+import net.foxyas.changedaddon.block.ReinforcedWallCautionBlock;
+import net.foxyas.changedaddon.block.ReinforcedWallBlock;
+import net.foxyas.changedaddon.block.ReinforcedSilverStripedWallBlock;
+import net.foxyas.changedaddon.block.ReinforcedCrossBlock;
 import net.foxyas.changedaddon.block.PainiteOreBlock;
 import net.foxyas.changedaddon.block.PainiteBlockBlock;
 import net.foxyas.changedaddon.block.LitixCamoniaFluidBlock;
@@ -60,6 +65,11 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> IRIDIUM_BLOCK = REGISTRY.register("iridium_block", () -> new IridiumBlockBlock());
 	public static final RegistryObject<Block> ADVANCED_UNIFUSER = REGISTRY.register("advanced_unifuser", () -> new AdvancedUnifuserBlock());
 	public static final RegistryObject<Block> ADVANCED_CATALYZER = REGISTRY.register("advanced_catalyzer", () -> new AdvancedCatalyzerBlock());
+	public static final RegistryObject<Block> REINFORCED_WALL = REGISTRY.register("reinforced_wall", () -> new ReinforcedWallBlock());
+	public static final RegistryObject<Block> REINFORCED_WALL_SILVER_STRIPED = REGISTRY.register("reinforced_wall_silver_striped", () -> new ReinforcedSilverStripedWallBlock());
+	public static final RegistryObject<Block> REINFORCED_WALL_SILVER_TILED = REGISTRY.register("reinforced_wall_silver_tiled", () -> new ReinforcedwallsilvertiledBlock());
+	public static final RegistryObject<Block> REINFORCED_WALL_CAUTION = REGISTRY.register("reinforced_wall_caution", () -> new ReinforcedWallCautionBlock());
+	public static final RegistryObject<Block> REINFORCED_CROSS_BLOCK = REGISTRY.register("reinforced_cross_block", () -> new ReinforcedCrossBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

@@ -22,6 +22,8 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -234,6 +236,14 @@ public class PlayerUtilProcedure {
 			if(level instanceof ServerLevel serverLevel){
 				serverLevel.sendParticles(particleOptions,
 						entity.getX(), entity.getY() + middle, entity.getZ(), count, XV, YV, ZV, speed);
+			}
+		}
+
+		public static void sendParticles(Level level, ParticleOptions particleOptions, BlockPos entity,float XV, float YV, float ZV, int count, float speed) {
+			// Enviar as partículas
+			if(level instanceof ServerLevel serverLevel){
+				serverLevel.sendParticles(particleOptions,
+						entity.getX(), entity.getY(), entity.getZ(), count, XV, YV, ZV, speed);
 			}
 		}
 

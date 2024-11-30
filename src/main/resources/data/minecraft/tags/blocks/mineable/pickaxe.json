@@ -12,6 +12,11 @@
     "changed_addon:iridium_ore",
     "changed_addon:iridium_block",
     "changed_addon:advanced_unifuser",
-    "changed_addon:advanced_catalyzer"
+    "changed_addon:advanced_catalyzer",
+    "changed_addon:reinforced_wall",
+    "changed_addon:reinforced_wall_silver_striped",
+    "changed_addon:reinforced_wall_silver_tiled",
+    "changed_addon:reinforced_wall_caution",
+    "changed_addon:reinforced_cross_block"
   ]
 }

@@ -20,7 +20,7 @@ import net.foxyas.changedaddon.procedures.PainiteOreBlockDestroyedByExplosionPro
 
 public class PainiteOreBlock extends Block {
 	public PainiteOreBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(20f, 25f).requiresCorrectToolForDrops());
+		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).sound(SoundType.STONE).strength(15f, 25f).requiresCorrectToolForDrops());
 	}
 
 	@Override

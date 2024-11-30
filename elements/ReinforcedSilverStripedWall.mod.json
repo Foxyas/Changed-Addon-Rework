@@ -2,15 +2,15 @@
   "_fv": 47,
   "_type": "block",
   "definition": {
-    "texture": "reinforced_unifuser_buttom",
-    "textureTop": "reinforced_unifuser_top_animated",
-    "textureLeft": "reinforced_unifuser_side_a",
-    "textureFront": "reinforced_unifuser_side_b",
-    "textureRight": "reinforced_unifuser_side_a",
-    "textureBack": "reinforced_unifuser_back",
+    "texture": "wall_white_with_silver",
+    "textureTop": "wall_white_with_silver",
+    "textureLeft": "wall_silver_striped",
+    "textureFront": "wall_silver_striped",
+    "textureRight": "wall_silver_striped",
+    "textureBack": "wall_silver_striped",
     "renderType": 10,
     "customModelName": "Normal",
-    "rotationMode": 1,
+    "rotationMode": 0,
     "enablePitch": false,
     "emissiveRendering": false,
     "displayFluidOverlay": false,
@@ -33,10 +33,10 @@
         "subtract": false
       }
     ],
-    "name": "Advanced Unifuser",
+    "name": "Reinforced Wall Silver Striped",
     "specialInfo": [],
-    "hardness": 5.0,
-    "resistance": 25.0,
+    "hardness": 3.0,
+    "resistance": 10.0,
     "hasGravity": false,
     "isWaterloggable": false,
     "creativeTab": {
@@ -52,11 +52,11 @@
     "enchantPowerBonus": 0.0,
     "plantsGrowOn": false,
     "canRedstoneConnect": false,
-    "lightOpacity": 0,
+    "lightOpacity": 15,
     "material": {
       "value": "IRON"
     },
-    "tickRate": 5,
+    "tickRate": 0,
     "tickRandomly": false,
     "isReplaceable": false,
     "canProvidePower": false,
@@ -96,25 +96,19 @@
     "stepSound": {
       "value": ""
     },
-    "luminance": 1,
+    "luminance": 0,
     "unbreakable": false,
-    "breakHarvestLevel": 2,
+    "breakHarvestLevel": 1,
     "isBonemealable": false,
-    "hasInventory": true,
-    "guiBoundTo": "Unifusergui",
+    "hasInventory": false,
+    "guiBoundTo": "<NONE>",
     "openGUIOnRightClick": false,
-    "inventorySize": 4,
+    "inventorySize": 9,
     "inventoryStackSize": 64,
     "inventoryDropWhenDestroyed": true,
     "inventoryComparatorPower": true,
-    "inventoryOutSlotIDs": [
-      3
-    ],
-    "inventoryInSlotIDs": [
-      0,
-      1,
-      2
-    ],
+    "inventoryOutSlotIDs": [],
+    "inventoryInSlotIDs": [],
     "hasEnergyStorage": false,
     "energyInitial": 0,
     "energyCapacity": 400000,
@@ -123,31 +117,9 @@
     "isFluidTank": false,
     "fluidCapacity": 8000,
     "fluidRestrictions": [],
-    "onRightClicked": {
-      "name": "UnifuserOnBlockRightClicked"
-    },
-    "onBlockAdded": {
-      "name": "UnifuserBlockAdded"
-    },
-    "onTickUpdate": {
-      "name": "UnifuserUpdateTick"
-    },
     "spawnWorldTypes": [],
     "restrictionBiomes": [],
-    "blocksToReplace": [
-      {
-        "value": "Blocks.STONE#0"
-      },
-      {
-        "value": "Blocks.STONE#1"
-      },
-      {
-        "value": "Blocks.STONE#3"
-      },
-      {
-        "value": "Blocks.STONE#5"
-      }
-    ],
+    "blocksToReplace": [],
     "generationShape": "UNIFORM",
     "frequencyPerChunks": 10,
     "frequencyOnChunk": 16,

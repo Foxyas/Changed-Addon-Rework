@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "01"
+  ],
+  "key": {
+    "0": {
+      "item": "changed_addon:iridium"
+    },
+    "1": {
+      "item": "changed:wall_caution"
+    }
+  },
+  "result": {
+    "item": "changed_addon:reinforced_wall_caution",
+    "count": 1
+  }
+}

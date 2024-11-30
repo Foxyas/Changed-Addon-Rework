@@ -171,6 +171,11 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> IRIDIUM_BLOCK = block(ChangedAddonModBlocks.IRIDIUM_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ADVANCED_UNIFUSER = block(ChangedAddonModBlocks.ADVANCED_UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ADVANCED_CATALYZER = block(ChangedAddonModBlocks.ADVANCED_CATALYZER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL = block(ChangedAddonModBlocks.REINFORCED_WALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_STRIPED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_STRIPED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_TILED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_TILED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL_CAUTION = block(ChangedAddonModBlocks.REINFORCED_WALL_CAUTION, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_CROSS_BLOCK = block(ChangedAddonModBlocks.REINFORCED_CROSS_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

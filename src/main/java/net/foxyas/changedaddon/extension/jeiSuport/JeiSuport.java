@@ -54,7 +54,9 @@ public class JeiSuport implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.CATLYZER.get().asItem()), JeiCatalyzer_Type);
+        registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.ADVANCED_CATALYZER.get().asItem()), JeiCatalyzer_Type);
         registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.UNIFUSER.get().asItem()), JeiUnifuser_Type);
+        registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.ADVANCED_UNIFUSER.get().asItem()), JeiUnifuser_Type);
     }
 }
 
@@ -68,6 +70,8 @@ class JeiDescriptionHandler {
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.laethin_syringe"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.POTWITHCAMONIA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.potwithcammonia"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.diffusion_syringe"));
+
+        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.iridium_use"));
 
 
         // Enchant Information

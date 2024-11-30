@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/wall_white_with_silver",
+    "up": "changed_addon:blocks/wall_white_with_silver",
+    "north": "changed_addon:blocks/wall_silver_caution",
+    "east": "changed_addon:blocks/wall_silver_caution",
+    "south": "changed_addon:blocks/wall_silver_caution",
+    "west": "changed_addon:blocks/wall_silver_caution",
+    "particle": "changed_addon:blocks/wall_white_with_silver"
+  }
+}
