@@ -20,6 +20,8 @@ import net.foxyas.changedaddon.block.entity.GeneratorBlockEntity;
 import net.foxyas.changedaddon.block.entity.DarklatexpuddleBlockEntity;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.CatlyzerBlockEntity;
+import net.foxyas.changedaddon.block.entity.AdvancedUnifuserBlockEntity;
+import net.foxyas.changedaddon.block.entity.AdvancedCatalyzerBlockEntity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 public class ChangedAddonModBlockEntities {
@@ -33,6 +35,8 @@ public class ChangedAddonModBlockEntities {
 	public static final RegistryObject<BlockEntityType<?>> WOLF_PLUSH = register("wolf_plush", ChangedAddonModBlocks.WOLF_PLUSH, WolfPlushBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> CONTAINMENT_CONTAINER = register("containment_container", ChangedAddonModBlocks.CONTAINMENT_CONTAINER, ContainmentContainerBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> GENERATOR = register("generator", ChangedAddonModBlocks.GENERATOR, GeneratorBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> ADVANCED_UNIFUSER = register("advanced_unifuser", ChangedAddonModBlocks.ADVANCED_UNIFUSER, AdvancedUnifuserBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> ADVANCED_CATALYZER = register("advanced_catalyzer", ChangedAddonModBlocks.ADVANCED_CATALYZER, AdvancedCatalyzerBlockEntity::new);
 
 	private static RegistryObject<BlockEntityType<?>> register(String registryname, RegistryObject<Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
 		return REGISTRY.register(registryname, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));

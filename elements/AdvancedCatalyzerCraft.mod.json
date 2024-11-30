@@ -1,0 +1,48 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": true,
+    "recipeSlots": [
+      {
+        "value": "Items.COPPER_INGOT"
+      },
+      {
+        "value": "Items.REDSTONE"
+      },
+      {
+        "value": "Items.COPPER_INGOT"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "CUSTOM:Catlyzer"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "Blocks.BLACKSTONE"
+      },
+      {
+        "value": "CUSTOM:Iridium"
+      },
+      {
+        "value": "Blocks.BLACKSTONE"
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:AdvancedCatalyzer"
+    },
+    "name": "advanced_catalyzer_recipe",
+    "namespace": "mod"
+  }
+}

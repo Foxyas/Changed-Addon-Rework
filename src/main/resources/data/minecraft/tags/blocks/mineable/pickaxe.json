@@ -10,6 +10,8 @@
     "changed_addon:containment_container",
     "changed_addon:generator",
     "changed_addon:iridium_ore",
-    "changed_addon:iridium_block"
+    "changed_addon:iridium_block",
+    "changed_addon:advanced_unifuser",
+    "changed_addon:advanced_catalyzer"
   ]
 }

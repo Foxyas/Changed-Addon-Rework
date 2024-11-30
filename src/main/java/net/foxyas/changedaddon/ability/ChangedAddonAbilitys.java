@@ -35,9 +35,7 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 	public static final RegistryObject<SoftenAbility> SOFTEN_ABILITY = REGISTRY.register("soften",SoftenAbility::new);
 
 	public static void addUniversalAbilities(TransfurVariant.UniversalAbilitiesEvent event){
-		if (ChangedaddoncommonConfiguration.SOFTEN_ABILITY.get()){
 		event.addAbility(event.isOfTag(ChangedTags.EntityTypes.LATEX).and(event.isNotOfTag(ChangedTags.EntityTypes.PARTIAL_LATEX)), SOFTEN_ABILITY);
-		}
 	}
 
 	@SubscribeEvent

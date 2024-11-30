@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/catalyzer_button",
+    "up": "changed_addon:blocks/newcatalyzer_animationtexture",
+    "north": "changed_addon:blocks/catalyzersideb",
+    "east": "changed_addon:blocks/catalyzersideb",
+    "south": "changed_addon:blocks/catalyzer_back",
+    "west": "changed_addon:blocks/catalyzersideb",
+    "particle": "changed_addon:blocks/catalyzer_button"
+  }
+}

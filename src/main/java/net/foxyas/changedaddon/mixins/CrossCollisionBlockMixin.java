@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.CrossCollisionBlock;
@@ -48,9 +49,14 @@ public abstract class CrossCollisionBlockMixin{
 
                             //Ability
                             transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), Instance -> {
-                                if (Instance.isActivate()) {
-                                    // Se for um jogador Latex, permite que ele atravesse a barra de ferro (forma vazia)
-                                    cir.setReturnValue(Shapes.empty()); // Colisão desativada para jogadores Latex
+                                if (player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()
+                                        && player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()
+                                        && player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()
+                                        && player.getItemBySlot(EquipmentSlot.FEET).isEmpty()){
+                                    if (Instance.isActivate()) {
+                                        // Se for um jogador Latex, permite que ele atravesse a barra de ferro (forma vazia)
+                                        cir.setReturnValue(Shapes.empty()); // Colisão desativada para jogadores Latex
+                                    }
                                 }
                             });
                             //SoftenAbilityInstance ability = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(ChangedAddonAbilitys.SOFTEN_ABILITY.get());

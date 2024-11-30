@@ -33,6 +33,8 @@ import net.foxyas.changedaddon.block.DormantDarkLatexBlock;
 import net.foxyas.changedaddon.block.DarklatexpuddleBlock;
 import net.foxyas.changedaddon.block.ContainmentContainerBlock;
 import net.foxyas.changedaddon.block.CatlyzerBlock;
+import net.foxyas.changedaddon.block.AdvancedUnifuserBlock;
+import net.foxyas.changedaddon.block.AdvancedCatalyzerBlock;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 public class ChangedAddonModBlocks {
@@ -56,6 +58,8 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 	public static final RegistryObject<Block> IRIDIUM_ORE = REGISTRY.register("iridium_ore", () -> new IridiumoreBlock());
 	public static final RegistryObject<Block> IRIDIUM_BLOCK = REGISTRY.register("iridium_block", () -> new IridiumBlockBlock());
+	public static final RegistryObject<Block> ADVANCED_UNIFUSER = REGISTRY.register("advanced_unifuser", () -> new AdvancedUnifuserBlock());
+	public static final RegistryObject<Block> ADVANCED_CATALYZER = REGISTRY.register("advanced_catalyzer", () -> new AdvancedCatalyzerBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

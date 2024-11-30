@@ -24,13 +24,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UnifuserUpdateTickProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z) {
+	public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate) {
 		ItemStack a = ItemStack.EMPTY;
 		ItemStack b = ItemStack.EMPTY;
 		ItemStack Slot0 = ItemStack.EMPTY;
 		ItemStack Slot1 = ItemStack.EMPTY;
 		ItemStack Slot2 = ItemStack.EMPTY;
 		ItemStack output = ItemStack.EMPTY;
+		BlockState block = Blocks.AIR.defaultBlockState();
 		if ((new Object() {
 			public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 				AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -155,6 +156,7 @@ public class UnifuserUpdateTickProcedure {
 			}
 		}.getValue(world, new BlockPos(x, y, z), "start_recipe")) == true) {
 			if (ChangedAddonConfigsConfiguration.CUSTOMRECIPES.get()) {
+				block = blockstate;
 				Slot0 = (new Object() {
 					public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -425,7 +427,7 @@ public class UnifuserUpdateTickProcedure {
 												return blockEntity.getTileData().getDouble(tag);
 											return -1;
 										}
-									}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + RecipesHandle.getUnifuserRecipeProgressSpeed(world, Slot0, Slot1, Slot2)));
+									}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + RecipesHandle.getUnifuserRecipeProgressSpeed(world, block, Slot0, Slot1, Slot2)));
 								if (world instanceof Level _level)
 									_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 							}

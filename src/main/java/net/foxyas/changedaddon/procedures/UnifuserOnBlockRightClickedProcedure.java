@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.NetworkHooks;
 
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,7 +24,7 @@ import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
 import io.netty.buffer.Unpooled;
 
 public class UnifuserOnBlockRightClickedProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
+	public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate, Entity entity) {
 		if (entity == null)
 			return;
 		if (entity.isShiftKeyDown()) {
@@ -44,7 +46,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("you stop the Unifuser"), true);
+					_player.displayClientMessage(new TextComponent(("you stop the " + new TranslatableComponent(("block.changed_addon." + ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).getString())), true);
 			} else {
 				if (!world.isClientSide()) {
 					BlockPos _bp = new BlockPos(x, y, z);
@@ -56,7 +58,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent("you start the Unifuser"), true);
+					_player.displayClientMessage(new TextComponent(("you start the " + new TranslatableComponent(("block.changed_addon." + ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).getString())), true);
 			}
 		} else {
 			{

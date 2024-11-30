@@ -21,9 +21,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CatlyzerUpdateTickProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z) {
+	public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate) {
 		ItemStack output = ItemStack.EMPTY;
 		ItemStack Slot0 = ItemStack.EMPTY;
+		BlockState block = Blocks.AIR.defaultBlockState();
 		if (new Object() {
 			public double getValue(LevelAccessor world, BlockPos pos, String tag) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -157,6 +158,7 @@ public class CatlyzerUpdateTickProcedure {
 			}
 		}.getValue(world, new BlockPos(x, y, z), "start_recipe")) == true) {
 			if (ChangedAddonConfigsConfiguration.CUSTOMRECIPES.get()) {
+				block = blockstate;
 				Slot0 = (new Object() {
 					public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -217,7 +219,7 @@ public class CatlyzerUpdateTickProcedure {
 												return blockEntity.getTileData().getDouble(tag);
 											return -1;
 										}
-									}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + RecipesHandle.getCatalyzerRecipeProgressSpeed(world, Slot0)));
+									}.getValue(world, new BlockPos(x, y, z), "recipe_progress") + RecipesHandle.getCatalyzerRecipeProgressSpeed(world, block, Slot0)));
 								if (world instanceof Level _level)
 									_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 							}

@@ -169,6 +169,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", () -> new RawIridiumItem());
 	public static final RegistryObject<Item> IRIDIUM_ORE = block(ChangedAddonModBlocks.IRIDIUM_ORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> IRIDIUM_BLOCK = block(ChangedAddonModBlocks.IRIDIUM_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ADVANCED_UNIFUSER = block(ChangedAddonModBlocks.ADVANCED_UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ADVANCED_CATALYZER = block(ChangedAddonModBlocks.ADVANCED_CATALYZER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

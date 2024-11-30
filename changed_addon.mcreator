@@ -1888,6 +1888,10 @@
         ],
         "dependencies": [
           {
+            "name": "blockstate",
+            "type": "blockstate"
+          },
+          {
             "name": "x",
             "type": "number"
           },
@@ -2200,6 +2204,10 @@
         ],
         "dependencies": [
           {
+            "name": "blockstate",
+            "type": "blockstate"
+          },
+          {
             "name": "entity",
             "type": "entity"
           },
@@ -2270,6 +2278,10 @@
         ],
         "dependencies": [
           {
+            "name": "blockstate",
+            "type": "blockstate"
+          },
+          {
             "name": "entity",
             "type": "entity"
           },
@@ -2305,6 +2317,10 @@
           "src/main/java/net/foxyas/changedaddon/procedures/UnifuserUpdateTickProcedure.java"
         ],
         "dependencies": [
+          {
+            "name": "blockstate",
+            "type": "blockstate"
+          },
           {
             "name": "x",
             "type": "number"
@@ -11715,6 +11731,70 @@
         ]
       },
       "path": "~/Configs"
+    },
+    {
+      "name": "AdvancedUnifuser",
+      "type": "block",
+      "sortid": 591,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "advanced_unifuser",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/block/AdvancedUnifuserBlock.java",
+          "src/main/resources/assets/changed_addon/blockstates/advanced_unifuser.json",
+          "src/main/resources/assets/changed_addon/models/block/advanced_unifuser.json",
+          "src/main/java/net/foxyas/changedaddon/block/entity/AdvancedUnifuserBlockEntity.java",
+          "src/main/resources/assets/changed_addon/models/item/advanced_unifuser.json"
+        ]
+      },
+      "path": "~/Blocks"
+    },
+    {
+      "name": "AdvancedUnifuserCraft",
+      "type": "recipe",
+      "sortid": 592,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "advanced_unifuser_craft",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/advanced_unifuser_recipe.json"
+        ]
+      },
+      "path": "~/Recipes"
+    },
+    {
+      "name": "AdvancedCatalyzer",
+      "type": "block",
+      "sortid": 593,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "advanced_catalyzer",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/item/advanced_catalyzer.json",
+          "src/main/resources/assets/changed_addon/models/block/advanced_catalyzer.json",
+          "src/main/resources/assets/changed_addon/blockstates/advanced_catalyzer.json",
+          "src/main/java/net/foxyas/changedaddon/block/entity/AdvancedCatalyzerBlockEntity.java",
+          "src/main/java/net/foxyas/changedaddon/block/AdvancedCatalyzerBlock.java"
+        ]
+      },
+      "path": "~/Blocks"
+    },
+    {
+      "name": "AdvancedCatalyzerCraft",
+      "type": "recipe",
+      "sortid": 594,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "advanced_catalyzer_craft",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/advanced_catalyzer_recipe.json"
+        ]
+      },
+      "path": "~/Recipes"
     }
   ],
   "variable_elements": [
@@ -12084,6 +12164,7 @@
       "death.attack.latex_solvent": "%1$s was dissolved",
       "gui.changed_addon.bookrecipepage_7.label_catalyzer": "Catalyzer",
       "item.changed_addon.experiment_009_phase_2_spawn_egg": "Experiment 009 Phase 2 Spawn Egg",
+      "block.changed_addon.advanced_catalyzer": "Catalyzer",
       "gui.changed_addon.foxyasgui.label_pls_dont_kill_me": "pls dont kill me i can trade orange juice with you i just need 2",
       "entity.changed_addon.ket_experiment009": "Ket Experiment 009",
       "changedaddon.fight_concience.success": "You §2Maintained!!! §rYour Conscience Good Job",
@@ -12380,6 +12461,7 @@
       "entity.changed_addon.exp_1_male": "Exp 1 Male",
       "changedaddon.warn.close_fight_to_keep_consciousness": "§1You Closed the Fight for Conscience Menu Press (KEY) to Open Again§r",
       "gamerule.allowPlayerGrab": "Allow Player Grab",
+      "block.changed_addon.advanced_unifuser": "Advanced Unifuser",
       "advancements.gooey_friend.title": "Gooey Friend",
       "changed_addon.ability.psychic_hold": "Psychic Hold",
       "gui.changed_addon.book_recipe_page_11.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",

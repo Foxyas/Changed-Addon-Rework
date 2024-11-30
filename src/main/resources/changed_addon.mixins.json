@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "changed_addon.refmap.json",
   "mixins": [
+    "AnimationsMixin",
     "BlockMixin",
     "ChangedEntityTargetSelectorMixin",
     "ChangedMixin",

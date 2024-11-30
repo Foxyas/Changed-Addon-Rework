@@ -1,6 +1,8 @@
 
 package net.foxyas.changedaddon.block;
 
+import org.checkerframework.checker.units.qual.s;
+
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.material.Material;
@@ -32,17 +34,17 @@ import net.minecraft.core.BlockPos;
 import net.foxyas.changedaddon.procedures.UnifuserBlockAddedProcedure;
 import net.foxyas.changedaddon.procedures.CatlyzerUpdateTickProcedure;
 import net.foxyas.changedaddon.procedures.CatlyzerOnBlockRightClickedProcedure;
-import net.foxyas.changedaddon.block.entity.CatlyzerBlockEntity;
+import net.foxyas.changedaddon.block.entity.AdvancedCatalyzerBlockEntity;
 
 import java.util.Random;
 import java.util.List;
 import java.util.Collections;
 
-public class CatlyzerBlock extends Block implements EntityBlock {
+public class AdvancedCatalyzerBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-	public CatlyzerBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.METAL).strength(5f, 10f));
+	public AdvancedCatalyzerBlock() {
+		super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.NETHERITE_BLOCK).strength(5f, 25f).lightLevel(s -> 1));
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 
@@ -116,7 +118,7 @@ public class CatlyzerBlock extends Block implements EntityBlock {
 
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new CatlyzerBlockEntity(pos, state);
+		return new AdvancedCatalyzerBlockEntity(pos, state);
 	}
 
 	@Override
@@ -130,7 +132,7 @@ public class CatlyzerBlock extends Block implements EntityBlock {
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof CatlyzerBlockEntity be) {
+			if (blockEntity instanceof AdvancedCatalyzerBlockEntity be) {
 				Containers.dropContents(world, pos, be);
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
@@ -146,7 +148,7 @@ public class CatlyzerBlock extends Block implements EntityBlock {
 	@Override
 	public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
 		BlockEntity tileentity = world.getBlockEntity(pos);
-		if (tileentity instanceof CatlyzerBlockEntity be)
+		if (tileentity instanceof AdvancedCatalyzerBlockEntity be)
 			return AbstractContainerMenu.getRedstoneSignalFromContainer(be);
 		else
 			return 0;

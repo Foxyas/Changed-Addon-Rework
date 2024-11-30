@@ -174,8 +174,24 @@ public class SnepPlushBlock extends Block implements SimpleWaterloggedBlock, Ent
 	@Override
 	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
 		super.onPlace(blockstate, world, pos, oldState, moving);
-		world.scheduleTick(pos, this, 10);
+
+		// Chance muito pequena (ex: 1 em 100)
+		Random random = new Random();
+		if (random.nextInt(100) == 0) {  // 1% de chance
+			// Gerar um valor aleatório para CANS, ignorando NONE
+			CansEnum[] possibleValues = {CansEnum.RIGHT, CansEnum.LEFT, CansEnum.HUG, CansEnum.BOTH};
+			CansEnum randomCans = possibleValues[random.nextInt(possibleValues.length)];
+
+			// Criar um novo estado de bloco com o valor alterado de CANS
+			BlockState newBlockState = blockstate.setValue(CANS, randomCans);
+
+			// Atualizar o estado do bloco no mundo
+			world.setBlock(pos, newBlockState, 3);  // Muda o estado do bloco
+		}
+
+		world.scheduleTick(pos, this, 10);  // Continua o tick
 	}
+
 
 	@Override
 	public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, Random p_60465_) {

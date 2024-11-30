@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "changed_addon:blocks/reinforced_unifuser_buttom",
+    "up": "changed_addon:blocks/reinforced_unifuser_top_animated",
+    "north": "changed_addon:blocks/reinforced_unifuser_side_b",
+    "east": "changed_addon:blocks/reinforced_unifuser_side_a",
+    "south": "changed_addon:blocks/reinforced_unifuser_back",
+    "west": "changed_addon:blocks/reinforced_unifuser_side_a",
+    "particle": "changed_addon:blocks/reinforced_unifuser_buttom"
+  }
+}

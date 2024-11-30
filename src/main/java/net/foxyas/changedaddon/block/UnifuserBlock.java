@@ -95,7 +95,7 @@ public class UnifuserBlock extends Block implements EntityBlock {
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
-		UnifuserUpdateTickProcedure.execute(world, x, y, z);
+		UnifuserUpdateTickProcedure.execute(world, x, y, z, blockstate);
 		world.scheduleTick(pos, this, 5);
 	}
 
@@ -109,7 +109,7 @@ public class UnifuserBlock extends Block implements EntityBlock {
 		double hitY = hit.getLocation().y;
 		double hitZ = hit.getLocation().z;
 		Direction direction = hit.getDirection();
-		UnifuserOnBlockRightClickedProcedure.execute(world, x, y, z, entity);
+		UnifuserOnBlockRightClickedProcedure.execute(world, x, y, z, blockstate, entity);
 		return InteractionResult.SUCCESS;
 	}
 
