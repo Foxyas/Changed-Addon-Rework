@@ -129,7 +129,7 @@ public class ChangedAddonModEntities {
 	public static final RegistryObject<EntityType<Exp6Entity>> EXP_6 = register("exp_6",
 			EntityType.Builder.<Exp6Entity>of(Exp6Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp6Entity::new)
 
-					.sized(0.6f, 1.93f));
+					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<ReynEntity>> REYN = register("reyn",
 			EntityType.Builder.<ReynEntity>of(ReynEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ReynEntity::new)
 
