@@ -51,7 +51,7 @@ public class PatOverlay {
 
             Player entity = Minecraft.getInstance().player;
 
-            if (entity != null) {
+            if (entity != null && !entity.isSpectator()) {
                 if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()){
                     Entity lookedEntity = PlayerUtilProcedure.getEntityPlayerLookingAt(entity, 4);
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isKeySet()) {
