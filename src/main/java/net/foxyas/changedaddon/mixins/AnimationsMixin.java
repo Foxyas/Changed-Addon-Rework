@@ -17,10 +17,11 @@ public class AnimationsMixin {
     @Inject(method = "setupAnim(Lnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFF)V",at = @At("HEAD"),cancellable = true)
     private void addCustomAnimation(
             @NotNull ChangedEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci){
-        if (entity.getUnderlyingPlayer() != null && ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()).hasAbility(ChangedAddonAbilitys.CARRY.get())){
+        if (entity.getUnderlyingPlayer() != null && ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()) != null
+                && ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()).hasAbility(ChangedAddonAbilitys.CARRY.get())){
             CarryAbilityAnimation.playAnimation(entity,(AdvancedHumanoidModel<?>) (Object) this);
         }
-        if (entity.getSelfVariant().abilities.stream().anyMatch(entityTypeFunction -> {
+        if (entity.getSelfVariant() != null && entity.getSelfVariant().abilities.stream().anyMatch(entityTypeFunction -> {
             // Supondo que a função aceite algum EntityType e você esteja verificando seu resultado:
             AbstractAbility<?> ability = entityTypeFunction.apply(entity.getType());
             return ability != null && ability.equals(ChangedAddonAbilitys.CARRY.get());
