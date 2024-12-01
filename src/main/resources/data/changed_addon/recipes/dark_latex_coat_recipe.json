@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    " $ "
+  ],
+  "key": {
+    "#": {
+      "item": "changed:dark_latex_goo"
+    },
+    "$": {
+      "item": "changed_addon:unlatexbase"
+    }
+  },
+  "result": {
+    "item": "changed_addon:dark_latex_coat",
+    "count": 1
+  }
+}
