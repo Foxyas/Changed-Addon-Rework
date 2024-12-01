@@ -177,7 +177,7 @@ public class SnepPlushBlock extends Block implements SimpleWaterloggedBlock, Ent
 
 		// Chance muito pequena (ex: 45 em 100)
 		Random random = new Random();
-		if (random.nextInt(100) <= 45) {  // 45% de chance
+		if (random.nextInt(100) <= 25) {  // 25% de chance
 			// Gerar um valor aleatório para CANS, ignorando NONE
 			CansEnum[] possibleValues = {CansEnum.RIGHT, CansEnum.LEFT, CansEnum.HUG, CansEnum.BOTH};
 			CansEnum randomCans = possibleValues[random.nextInt(possibleValues.length)];
