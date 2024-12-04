@@ -6,7 +6,6 @@ import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -31,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class Exp2FemaleEntity extends AbstractCanTameLatexEntity {
+public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity {
 
 
     public Exp2FemaleEntity(PlayMessages.SpawnEntity packet, Level world) {

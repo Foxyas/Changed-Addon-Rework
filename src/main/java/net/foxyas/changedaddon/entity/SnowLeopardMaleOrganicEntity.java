@@ -32,7 +32,7 @@ import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class SnowLeopardMaleOrganicEntity extends AbstractCanTameLatexEntity {
+public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEntity {
 	public SnowLeopardMaleOrganicEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.SNOW_LEOPARD_MALE_ORGANIC.get(), world);
 	}

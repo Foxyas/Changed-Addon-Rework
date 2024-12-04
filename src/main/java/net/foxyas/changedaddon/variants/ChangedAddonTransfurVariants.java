@@ -123,6 +123,11 @@ public class ChangedAddonTransfurVariants {
                     entityType -> ChangedAddonAbilitys.DISSOLVE.get()
             )).scares(List.of(Creeper.class)).transfurMode(TransfurMode.ABSORPTION).nightVision());
 
+    public static final RegistryObject<TransfurVariant<LatexSnepEntity>> LATEX_SNEP = register("form_latex_snep",
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNEP)
+                    .transfurMode(TransfurMode.NONE).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilitys.DODGE).scares(List.of(Creeper.class)).nightVision());
+
+
     public static final RegistryObject<TransfurVariant<KetExperiment009Entity>> KET_EXPERIMENT_009 = register("form_ket_experiment009",TransfurVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
             .reducedFall().jumpStrength(1.4F).abilities(List.of(
                     entityType -> ChangedAddonAbilitys.THUNDERBOLT.get(),
@@ -167,7 +172,7 @@ public class ChangedAddonTransfurVariants {
     }
 
 
-    //Annotation Dazed Maybe is of .faction(LatexType.WHITE_LATEX)
+    //Annotation; Dazed Maybe is of .faction(LatexType.WHITE_LATEX)
 
     @SubscribeEvent
     public static void registerTransfurVariants(FMLConstructModEvent event) {

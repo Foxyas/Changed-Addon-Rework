@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameLatexEntity {
+public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameSnepChangedEntity {
 	public SnowLeopardFemaleOrganicEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC.get(), world);
 	}

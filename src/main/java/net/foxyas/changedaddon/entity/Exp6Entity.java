@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class Exp6Entity extends AbstractCanTameLatexEntity {
+public class Exp6Entity extends AbstractCanTameSnepChangedEntity {
 	public Exp6Entity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.EXP_6.get(), world);
 	}

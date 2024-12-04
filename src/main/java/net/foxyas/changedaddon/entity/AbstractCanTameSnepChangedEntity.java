@@ -42,13 +42,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractCanTameLatexEntity extends AbstractSnowLeopard implements TamableLatexEntity {
-    public AbstractCanTameLatexEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
+public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopard implements TamableLatexEntity {
+    public AbstractCanTameSnepChangedEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
         super(type, level);
     }
 
-    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameLatexEntity.class, EntityDataSerializers.BYTE);
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameLatexEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.BYTE);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
     protected void registerGoals() {
         super.registerGoals();

@@ -66,6 +66,8 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final RegistryObject<Item> EXP2_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("exp_2_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXP_2_FEMALE, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
+	public static final RegistryObject<Item> LATEX_SNEP_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snep_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNEP, Color3.getColor("#9C9C9C").toInt(), Color3.getColor("#484848").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
 	public static final RegistryObject<Item> EXP6_SPAWN_EGG = ITEMS_REGISTRY.register("exp_6_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXP_6, Color3.getColor("#B2B1B9").toInt(), Color3.getColor("#CAA2E6").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 	public static final RegistryObject<Item> EXP10_SPAWN_EGG = ITEMS_REGISTRY.register("experiment_10_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_10, Color3.getColor("#181818").toInt(), Color3.getColor("#ed1c24").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));

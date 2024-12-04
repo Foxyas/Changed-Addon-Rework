@@ -26,6 +26,7 @@ import net.foxyas.changedaddon.entity.PrototypeEntity;
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
+import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
@@ -140,6 +141,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<Experiment10BossEntity>of(Experiment10BossEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Experiment10BossEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<LatexSnepEntity>> LATEX_SNEP = register("latex_snep",
+			EntityType.Builder.<LatexSnepEntity>of(LatexSnepEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnepEntity::new)
+
+					.sized(0.6f, 0.7f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -173,6 +178,7 @@ public class ChangedAddonModEntities {
 			ReynEntity.init();
 			KetExperiment009BossEntity.init();
 			Experiment10BossEntity.init();
+			LatexSnepEntity.init();
 		});
 	}
 
@@ -203,5 +209,6 @@ public class ChangedAddonModEntities {
 		event.put(REYN.get(), ReynEntity.createAttributes().build());
 		event.put(KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossEntity.createAttributes().build());
 		event.put(EXPERIMENT_10_BOSS.get(), Experiment10BossEntity.createAttributes().build());
+		event.put(LATEX_SNEP.get(), LatexSnepEntity.createAttributes().build());
 	}
 }
