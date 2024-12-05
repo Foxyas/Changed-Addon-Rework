@@ -9,6 +9,7 @@ import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorNoneModel;
+import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -27,7 +28,7 @@ public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity,
 	public LatexSnepRenderer(EntityRendererProvider.Context context) {
 		super(context, new LatexSnepModel(context.bakeLayer(LatexSnepModel.LAYER_LOCATION)),
 				ArmorNoneModel::new, ArmorNoneModel.INNER_ARMOR, ArmorNoneModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new CustomCatEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/latex_snep_eyes.png") , new ResourceLocation("changed_addon:textures/entities/latex_snep_sclera.png")));
+		this.addLayer(new CustomCatEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/latex_snep_right_eye.png"), new ResourceLocation("changed_addon:textures/entities/latex_snep_left_eye.png") , new ResourceLocation("changed_addon:textures/entities/latex_snep_sclera.png")));
 	}
 
 	@Override
@@ -35,54 +36,40 @@ public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity,
 		return new ResourceLocation("changed_addon:textures/entities/latex_snep.png");
 	}
 
-	private static class CustomCatEyesLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
-		private final RenderType EyesRenderType;
-		private final ResourceLocation eyesTexture;
+	private static class CustomCatEyesLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> {
+		private final RenderType rightEyesRenderType;
+		private final ResourceLocation rightEyeTexture;
+
+		private final RenderType leftEyesRenderType;
+		private final ResourceLocation leftEyeTexture;
 		private final RenderType ScleraRenderType;
 		private final ResourceLocation scleraTexture;
 
-		public CustomCatEyesLayer(RenderLayerParent<T, M> p_116964_, ResourceLocation eyesTexture, ResourceLocation scleraTexture) {
+		public CustomCatEyesLayer(RenderLayerParent<T, M> p_116964_, ResourceLocation rightEyeTexture, ResourceLocation leftEyeTexture, ResourceLocation scleraTexture) {
 			super(p_116964_);
-			this.EyesRenderType = RenderType.eyes(eyesTexture);
-			this.eyesTexture = eyesTexture;
+			this.rightEyesRenderType = RenderType.eyes(rightEyeTexture);
+			this.rightEyeTexture = rightEyeTexture;
+			this.leftEyesRenderType = RenderType.eyes(leftEyeTexture);
+			this.leftEyeTexture = leftEyeTexture;
 			this.ScleraRenderType = RenderType.eyes(scleraTexture);
 			this.scleraTexture = scleraTexture;
-		}
-		public ResourceLocation getTexture(int i) {
-			return i == 1 ? this.eyesTexture : this.scleraTexture;
 		}
 
 		@Override
 		public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-			VertexConsumer vertexConsumer = bufferSource.getBuffer(this.EyesRenderType);
-			this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-			VertexConsumer vertexConsumer2 = bufferSource.getBuffer(this.ScleraRenderType);
-			this.getParentModel().renderToBuffer(poseStack, vertexConsumer2, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			var Colors = entity.getBasicPlayerInfo();
+			VertexConsumer vertexConsumer = bufferSource.getBuffer(this.rightEyesRenderType);
+			this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, Colors.getRightIrisColor().red(), Colors.getRightIrisColor().green(), Colors.getRightIrisColor().blue(), 1);
+			VertexConsumer vertexConsumer2 = bufferSource.getBuffer(this.leftEyesRenderType);
+			this.getParentModel().renderToBuffer(poseStack, vertexConsumer2, 15728640, OverlayTexture.NO_OVERLAY, Colors.getRightIrisColor().red(), Colors.getRightIrisColor().green(), Colors.getRightIrisColor().blue(), 1);
+			VertexConsumer vertexConsumer3 = bufferSource.getBuffer(this.ScleraRenderType);
+			this.getParentModel().renderToBuffer(poseStack, vertexConsumer3, 15728640, OverlayTexture.NO_OVERLAY,Colors.getScleraColor().red(), Colors.getScleraColor().green(), Colors.getScleraColor().blue(), 1.0F);
 		}
 
 
 		@Override
 		public @NotNull RenderType renderType() {
-			return this.EyesRenderType;
-		}
-
-		public RenderType getEyesRenderType() {
-			return EyesRenderType;
-		}
-
-		public RenderType getScleraRenderType() {
-			return ScleraRenderType;
-		}
-
-		public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector) {
-			stack.pushPose();
-			stack.scale(1.0002F, 1.0002F, 1.0002F);
-			EntityModel<T> var8 = this.getParentModel();
-			if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-				FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.EyesRenderType), 15728880, 1.0F);
-				FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.ScleraRenderType), 15728880, 1.0F);
-			}
-			stack.popPose();
+			return this.rightEyesRenderType;
 		}
 	}
 }
