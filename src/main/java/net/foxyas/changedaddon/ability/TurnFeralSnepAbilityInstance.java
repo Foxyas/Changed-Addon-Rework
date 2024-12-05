@@ -50,7 +50,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     public void onSelected() {
         super.onSelected();
         if (this.OldVariant == null){
-        	setOldVariant(entity.getTransfurVariant());	
+        	setOldVariant(entity.getSelfVariant());	
         }
     }
 
