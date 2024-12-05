@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -13,10 +14,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomInteraction extends SimpleAbility {
+public class CustomInteraction extends AbstractAbility<CustomInteractionInstance> {
 
     public CustomInteraction(){
-        super();
+        super(CustomInteractionInstance::new);
     }
 
     @Override
@@ -27,20 +28,6 @@ public class CustomInteraction extends SimpleAbility {
     @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/normal_paw.png");
-    }
-
-    @Override
-    public boolean canUse(IAbstractChangedEntity entity) {
-        return true;
-    }
-
-    public UseType getUseType(IAbstractChangedEntity entity) {
-        return UseType.INSTANT;
-    }
-
-    @Override
-    public int getCoolDown(IAbstractChangedEntity entity) {
-        return 3;
     }
 
     @Nullable
