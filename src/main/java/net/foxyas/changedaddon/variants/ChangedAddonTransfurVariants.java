@@ -124,7 +124,7 @@ public class ChangedAddonTransfurVariants {
 
     public static final RegistryObject<TransfurVariant<LatexSnepEntity>> LATEX_SNEP = register("form_latex_snep",
             () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNEP)
-                    .transfurMode(TransfurMode.NONE).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CUSTOM_INTERACTION).itemUseMode(UseItemMode.MOUTH).reducedFall().jumpStrength(1.3F).scares(List.of(Creeper.class)).nightVision());
+                    .transfurMode(TransfurMode.NONE).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CUSTOM_INTERACTION).addAbility(ChangedAddonAbilitys.TURN_FERAL_SNEP).itemUseMode(UseItemMode.MOUTH).reducedFall().jumpStrength(1.3F).scares(List.of(Creeper.class)).nightVision());
 
 
     public static final RegistryObject<TransfurVariant<KetExperiment009Entity>> KET_EXPERIMENT_009 = register("form_ket_experiment009",TransfurVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)

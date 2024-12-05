@@ -49,7 +49,9 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void onSelected() {
         super.onSelected();
-        setOldVariant(entity.getTransfurVariant());
+        if (this.OldVariant == null){
+        	setOldVariant(entity.getTransfurVariant());	
+        }
     }
 
     @Override
