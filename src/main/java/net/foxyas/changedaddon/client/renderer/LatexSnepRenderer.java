@@ -16,7 +16,7 @@ import net.foxyas.changedaddon.entity.LatexSnepEntity;
 
 public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity, LatexSnepModel, ArmorNoneModel<LatexSnepEntity>> {
 	public LatexSnepRenderer(EntityRendererProvider.Context context) {
-		super(context, new LatexSnepModel(context.bakeLayer(ModelMirrorWhiteTiger.LAYER_LOCATION)),
+		super(context, new LatexSnepModel(context.bakeLayer(LatexSnepModel.LAYER_LOCATION)),
 				ArmorNoneModel::new, ArmorNoneModel.INNER_ARMOR, ArmorNoneModel.OUTER_ARMOR, 0.5f);
 	}
 

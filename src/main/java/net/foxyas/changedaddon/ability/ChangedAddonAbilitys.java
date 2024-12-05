@@ -33,6 +33,7 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 	public static final RegistryObject<WitherWaveAbility> WITHER_WAVE = REGISTRY.register("wither_wave",WitherWaveAbility::new);
 	public static final RegistryObject<DazedPuddleAbility> DAZED_PUDDLE_ABILITY = REGISTRY.register("dazed_puddle",DazedPuddleAbility::new);
 	public static final RegistryObject<SoftenAbility> SOFTEN_ABILITY = REGISTRY.register("soften",SoftenAbility::new);
+	public static final RegistryObject<CustomInteraction> CUSTOM_INTERACTION = REGISTRY.register("custom_interaction",CustomInteraction::new);
 
 	public static void addUniversalAbilities(TransfurVariant.UniversalAbilitiesEvent event){
 		event.addAbility(event.isOfTag(ChangedTags.EntityTypes.LATEX).and(event.isNotOfTag(ChangedTags.EntityTypes.PARTIAL_LATEX)), SOFTEN_ABILITY);
