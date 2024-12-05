@@ -81,7 +81,11 @@ public class CarryAbility extends SimpleAbility {
         return true;
     }
 
-    private static void Run(Entity mainEntity) {
+    public Entity CarryTarget(Player player){
+        return PlayerUtilProcedure.getEntityPlayerLookingAt(player, 4);
+    }
+
+    private void Run(Entity mainEntity) {
         if (mainEntity instanceof Player player) {
             // If the player is already carrying someone, make them dismount
             if (player.getFirstPassenger() != null && player.isShiftKeyDown()) {
@@ -122,7 +126,7 @@ public class CarryAbility extends SimpleAbility {
             }
 
             // Get the entity the player is looking at
-            Entity carryTarget = PlayerUtilProcedure.getEntityPlayerLookingAt(player, 4);
+            Entity carryTarget = this.CarryTarget(player);
 
             // If no entity is being looked at, exit
             if (carryTarget == null) {

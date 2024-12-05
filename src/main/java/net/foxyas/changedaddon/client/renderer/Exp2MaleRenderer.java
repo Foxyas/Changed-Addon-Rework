@@ -2,6 +2,7 @@
 package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
+import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.client.renderer.layers.CustomHairColorLayer;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
