@@ -234,8 +234,8 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
         if (entity.isCrouching()) {
             //this.Body.xRot = 3.246312F;
             float f = entity.getCrouchAmount(partialTicks);
-            this.Torso.setPos(0.0F, 15.0F + entity.getCrouchAmount(partialTicks) - 2, 0.0F);
-            this.Head.setPos(0.0F, 14.0F + f - 2, -7.2F);
+            this.Torso.setPos(0.0F, 15.0F + entity.getCrouchAmount(partialTicks) - (entity.WantToLoaf() ? 2F : 0), 0.0F);
+            this.Head.setPos(0.0F, 14.0F + f - (entity.WantToLoaf() ? 2F : 0), -7.2F);
         } else if (entity.isSleeping()) {
             this.LegBackRight.visible = false;
             this.LegBackLeft.visible = false;

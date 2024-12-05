@@ -1,28 +1,21 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomInteraction extends AbstractAbility<CustomInteractionInstance> {
-
-    public CustomInteraction(){
-        super(CustomInteractionInstance::new);
+public class TurnFeralSnepAbility extends AbstractAbility<TurnFeralSnepAbilityInstance> {
+    public TurnFeralSnepAbility() {
+        super(TurnFeralSnepAbilityInstance::new);
     }
 
     @Override
     public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
-        return new TranslatableComponent("changed_addon.ability.custom_interaction");
+        return new TranslatableComponent("changed_addon.ability.turn_feral");
     }
 
     @Override
@@ -34,8 +27,23 @@ public class CustomInteraction extends AbstractAbility<CustomInteractionInstance
     @Override
     public Component getSelectedDisplayText(IAbstractChangedEntity entity) {
         if (entity.getChangedEntity() instanceof LatexSnepEntity){
-            return new TranslatableComponent("changed_addon.ability.custom_interaction.have_interaction");
+            return new TranslatableComponent("changed_addon.ability.turn_feral.can");
         }
         return super.getSelectedDisplayText(entity);
+    }
+
+    @Override
+    public int getChargeTime(IAbstractChangedEntity entity) {
+        return 32;
+    }
+
+    @Override
+    public int getCoolDown(IAbstractChangedEntity entity) {
+        return 30;
+    }
+
+    @Override
+    public UseType getUseType(IAbstractChangedEntity entity) {
+        return UseType.CHARGE_RELEASE;
     }
 }

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -29,7 +30,9 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
 
     @Override
     public void startUsing() {
-
+        if (entity.getChangedEntity() instanceof LatexSnepEntity latexSnepEntity){
+            latexSnepEntity.WantLoaf = !latexSnepEntity.WantLoaf;
+        }
     }
 
     @Override

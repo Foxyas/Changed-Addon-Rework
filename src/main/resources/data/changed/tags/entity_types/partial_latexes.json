@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "changed_addon:latex_snow_leopard_partial"
+    "changed_addon:latex_snow_leopard_partial",
+    "changed_addon:latex_snep"
   ]
 }

@@ -5,7 +5,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -111,11 +110,11 @@ public class ChangedAddonTransfurVariants {
 
     public static final RegistryObject<TransfurVariant<Exp2MaleEntity>> EXP2_MALE = register("form_exp2/male",
             () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_MALE.get(),*/ChangedAddonModEntities.EXP_2_MALE)
-                    .transfurMode(TransfurMode.REPLICATION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).nightVision());
+                    .transfurMode(TransfurMode.REPLICATION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilitys.TURN_FERAL_SNEP).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<Exp2FemaleEntity>> EXP2_FEMALE = register("form_exp2/female",
             () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_FEMALE.get(),*/ChangedAddonModEntities.EXP_2_FEMALE)
-                    .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).nightVision());
+                    .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilitys.TURN_FERAL_SNEP).addAbility(ChangedAbilities.SWITCH_GENDER).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CARRY).scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<Exp6Entity>> EXP6 = register("form_exp6",TransfurVariant.Builder.of(ChangedAddonModEntities.EXP_6)
             .reducedFall().jumpStrength(1.05F).abilities(List.of(
@@ -125,7 +124,7 @@ public class ChangedAddonTransfurVariants {
 
     public static final RegistryObject<TransfurVariant<LatexSnepEntity>> LATEX_SNEP = register("form_latex_snep",
             () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNEP)
-                    .transfurMode(TransfurMode.NONE).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilitys.CUSTOM_INTERACTION).itemUseMode(UseItemMode.MOUTH).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilitys.DODGE).scares(List.of(Creeper.class)).nightVision());
+                    .transfurMode(TransfurMode.NONE).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilitys.DODGE).addAbility(ChangedAddonAbilitys.CUSTOM_INTERACTION).itemUseMode(UseItemMode.MOUTH).reducedFall().jumpStrength(1.3F).scares(List.of(Creeper.class)).nightVision());
 
 
     public static final RegistryObject<TransfurVariant<KetExperiment009Entity>> KET_EXPERIMENT_009 = register("form_ket_experiment009",TransfurVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
