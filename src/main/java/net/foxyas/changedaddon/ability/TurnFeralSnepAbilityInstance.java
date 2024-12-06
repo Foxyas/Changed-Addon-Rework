@@ -9,9 +9,11 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Random;
@@ -121,20 +123,20 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
                     TransfurContext.hazard(TransfurCause.GRAB_REPLICATE),
                     1
             );
-
             if (variantInstance != null) {
                 variantInstance.ifHasAbility(ChangedAddonAbilitys.TURN_FERAL_SNEP.get(), abilityInstance ->
                         abilityInstance.setOldVariant(entity.getTransfurVariant())
                 );
+                entity.getEntity().getLevel().playSound(null,entity.getEntity(), ChangedSounds.POISON, SoundSource.PLAYERS,1,1);
             }
         }
     }
 
     private TransfurVariant<?> determineNextVariant(TransfurVariant<?> currentVariant) {
-        if (currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP.get()) {
-            return this.OldVariant != null ? this.OldVariant : ChangedAddonTransfurVariants.Gendered.EXP2.getRandomVariant(new Random());
+        if (currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get()) {
+            return this.OldVariant != null ? this.OldVariant : ChangedAddonTransfurVariants.Gendered.ORGANIC_SNOW_LEOPARD.getRandomVariant(new Random());
         } else {
-            return ChangedAddonTransfurVariants.LATEX_SNEP.get();
+            return ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get();
         }
     }
 

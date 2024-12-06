@@ -166,6 +166,29 @@
             "entityType": "CUSTOM:Buny"
           }
         ]
+      },
+      {
+        "category": "Extra Animations",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "allow the show of the extra hand while fall fly",
+            "vardisplay": "Show Extra Hand [Fall fly]",
+            "varname": "show_extra_hand_fall_fly",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
     "file": "changed_addon-client",

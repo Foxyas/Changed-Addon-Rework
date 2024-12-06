@@ -60,6 +60,11 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
 
+	@Override
+	public TransfurVariant<?> getSelfVariant() {
+		return ChangedAddonTransfurVariants.LATEX_SNEP.get();
+	}
+
 	public boolean WantToLoaf() {
 		return WantLoaf;
 	}

@@ -71,7 +71,7 @@ public class LeapAbility extends SimpleAbility {
             return;
         }
 
-        double speed = 0.8;
+        double speed = 1;
         double motionX, motionY, motionZ;
 
         if (!player.isShiftKeyDown()) {
@@ -80,7 +80,7 @@ public class LeapAbility extends SimpleAbility {
             motionY = -Math.sin(Math.toRadians(player.getXRot())) * speed;
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * speed;
             player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));*/
-            player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed,speed/4,speed)));
+            player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed,speed,speed)));
             playSound(player);
             exhaustPlayer(player, 0.25F);
 
@@ -94,7 +94,7 @@ public class LeapAbility extends SimpleAbility {
                                     player))
                     .getBlockPos().getY();
             motionX = -Math.sin(Math.toRadians(player.getYRot())) * 0.15;
-            motionY = (targetY - player.getY()) * 0.5;
+            motionY = (targetY) * 0.5;
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
             float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 1.5F : 1;
 
