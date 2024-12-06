@@ -15,10 +15,12 @@ public class CanLeapProcedure {
 		TransfurVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
 		TransfurVariant<?> Variant = TransfurVariant.getEntityVariant(LatexInstace.getChangedEntity());
 		if (Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)){
+			if (Variant.is(ChangedAddonTransfurVariants.LATEX_SNEP.get())){
+				return false;
+				}
+				
 			return true;
-		} else if (Variant.is(ChangedAddonTransfurVariants.LATEX_SNEP.get())){
-			return false;
-			}
+		}
 		return false;
 	}
 

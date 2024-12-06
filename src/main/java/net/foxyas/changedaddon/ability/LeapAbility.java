@@ -71,7 +71,7 @@ public class LeapAbility extends SimpleAbility {
             return;
         }
 
-        double speed = 0.6;
+        double speed = 0.8;
         double motionX, motionY, motionZ;
 
         if (!player.isShiftKeyDown()) {
@@ -80,7 +80,7 @@ public class LeapAbility extends SimpleAbility {
             motionY = -Math.sin(Math.toRadians(player.getXRot())) * speed;
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * speed;
             player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));*/
-            player.setDeltaMovement(player.getDeltaMovement().add(player.getEyePosition(1).multiply(speed,speed,speed)));
+            player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed,speed/4,speed)));
             playSound(player);
             exhaustPlayer(player, 0.25F);
 
@@ -96,14 +96,14 @@ public class LeapAbility extends SimpleAbility {
             motionX = -Math.sin(Math.toRadians(player.getYRot())) * 0.15;
             motionY = (targetY - player.getY()) * 0.5;
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
-            float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 2.5F : 1;
+            float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 1.5F : 1;
 
             player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ));
             playSound(player);
             applyFatigue(player, motionY);
 
             // Grant Advancement
-            if (motionY >= 0.75) {
+            if (motionY * multiplier >= 0.75) {
                 grantAdvancement(player, "changed_addon:leaper");
             }
         }
@@ -136,6 +136,7 @@ public class LeapAbility extends SimpleAbility {
 
         Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(advancementId));
         if (advancement == null) return;
+        
 
         AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
         if (!progress.isDone()) {

@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 
 import java.util.Comparator;
 import java.util.List;
@@ -61,21 +63,53 @@ public class PsychicHoldAbility extends SimpleAbility {
 	}
 
 	public static void execute(LevelAccessor world, Entity IAbstractChangedEntity) {
-		if (IAbstractChangedEntity == null)
-			return;
-		if (IAbstractChangedEntity instanceof Player entity) {
-			{
-				final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
-				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(10 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-						.collect(Collectors.toList());
-				for (Entity entityiterator : _entfound) {
-					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("minecraft:impact_projectiles")))) {
-						entityiterator.setDeltaMovement(new Vec3((entityiterator.getDeltaMovement().x() + -(entityiterator.getDeltaMovement().x())), (entityiterator.getDeltaMovement().y() + -(entityiterator.getDeltaMovement().y())),
-								(entityiterator.getDeltaMovement().z() + -(entityiterator.getDeltaMovement().z()))));
-					}
-				}
-			}
-		}
-	}
+    if (IAbstractChangedEntity == null || !(IAbstractChangedEntity instanceof Player player)) {
+        return;
+    }
+
+    final Vec3 playerPos = new Vec3(player.getX(), player.getY(), player.getZ());
+    double maxRange = 10.0; // Raio máximo de efeito
+    double stopRange = 4.0; // Distância para parar os projéteis
+    double repelRange = 2.0; // Distância para repelir os projéteis
+
+    List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class, new AABB(playerPos, playerPos).inflate(maxRange / 2d), e -> true).stream()
+            .sorted(Comparator.comparingDouble(entity -> entity.distanceToSqr(playerPos)))
+            .collect(Collectors.toList());
+
+    for (Entity projectile : nearbyEntities) {
+        if (projectile instanceof FallingBlockEntity ||
+                projectile.getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
+            Vec3 projectilePos = projectile.position();
+            Vec3 toPlayer = playerPos.subtract(projectilePos).normalize(); // Direção do jogador
+            double distance = projectilePos.distanceTo(playerPos);
+
+            if (distance <= stopRange && distance > repelRange) {
+                // Parar completamente projéteis próximos, mas não muito próximos
+                projectile.setDeltaMovement(Vec3.ZERO);
+            } else if (distance <= repelRange) {
+                // Repelir projéteis extremamente próximos
+                Vec3 repelForce = toPlayer.scale(-1.0 * (repelRange - distance)); // Força inversamente proporcional
+                projectile.setDeltaMovement(projectile.getDeltaMovement().add(repelForce));
+            } else {
+                // Diminuir velocidade de projéteis distantes
+                double slowFactor = Math.max(0.1, 1.0 - (distance / maxRange)); // Fator de lentidão (mínimo 0.1)
+                Vec3 currentMotion = projectile.getDeltaMovement();
+                Vec3 reducedMotion = currentMotion.scale(slowFactor);
+
+                // Verificar se projétil está indo na direção do jogador (produto escalar)
+                double dotProduct = currentMotion.normalize().dot(toPlayer);
+                if (player.isShiftKeyDown()) {
+                    if (dotProduct > 0) {
+                        projectile.setDeltaMovement(reducedMotion);
+                    }
+                } else {
+                    projectile.setDeltaMovement(reducedMotion);
+                }
+            }
+        }
+    }
+}
+
+}
 
 }
