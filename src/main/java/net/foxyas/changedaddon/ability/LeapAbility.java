@@ -5,8 +5,7 @@ import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -15,11 +14,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
-
-import java.util.Objects;
 
 public class LeapAbility extends SimpleAbility {
     public LeapAbility() {
@@ -38,21 +34,19 @@ public class LeapAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        if (entity instanceof Player player) {
-            TransfurVariantInstance<?> LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
-        }
-
-        TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-        return Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
+        TransfurVariant<?> variant = entity.getChangedEntity().getSelfVariant();
+        return variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) ||
+                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
     }
 
+    @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        return UseType.CHARGE_TIME;
+        return UseType.CHARGE_RELEASE;
     }
 
     @Override
     public int getChargeTime(IAbstractChangedEntity entity) {
-        return 10;
+        return 2;
     }
 
     @Override
@@ -63,84 +57,90 @@ public class LeapAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
-        leapAbility(entity.getEntity());
-
+        if (entity.getEntity() != null) {
+            leapAbility(entity.getEntity(),entity);
+        }
     }
 
-    public static void leapAbility(Entity entity) {
-        if (entity == null)
+    private static void leapAbility(Entity entity,IAbstractChangedEntity iAbstractChangedEntity) {
+        if (!(entity instanceof Player player) || player.getFoodData().getFoodLevel() <= 6) {
             return;
+        }
 
-        double motionZ;
-        double deltaZ;
-        double deltaX;
-        double motionY;
-        double deltaY;
-        double motionX;
-        double maxSpeed = 0;
-        double speed;
-        double Yspeed;
-        if ((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) > 6) {
-            if (entity.isOnGround() && !entity.isInWater()) {
-                Player Staticplayer = (Player) entity;
-                if (!Staticplayer.isSpectator()) {
-                    if (!entity.isShiftKeyDown()) {
-                        deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
-                        deltaY = -Math.sin((entity.getXRot() / 180) * (float) Math.PI);
-                        deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-                        speed = 0.8;
-                        motionX = deltaX * speed;
-                        motionY = deltaY * speed;
-                        motionZ = deltaZ * speed;
-                        entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-                        Player player = (Player) entity;
-                        if (!player.isCreative()) {
-                            player.causeFoodExhaustion((float) 0.25);
-                        }
-                        {
-                            if (!entity.level.isClientSide() && entity.getServer() != null)
-                                entity.getServer().getCommands().performCommand(entity.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
-                        }
-                    }
-                    if (entity.isShiftKeyDown()) {
-                        deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
-                        deltaY = entity.level.clip(new ClipContext(entity.getEyePosition(1f), entity.getEyePosition(1f).add(entity.getViewVector(1f).scale(1)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, entity)).getBlockPos().getY()
-                                - entity.getY();
-                        deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-                        speed = 0.15;
-                        Yspeed = 0.5;
-                        motionX = deltaX * speed;
-                        motionY = deltaY * Yspeed;
-                        motionZ = deltaZ * speed;
-                        entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-                        Player _player = (Player) entity;
-                        if (!_player.isCreative()) {
-                            _player.causeFoodExhaustion((float) (motionY * 0.25));
-                            LivingEntity _entity = (LivingEntity) entity;
-                            if (!_entity.level.isClientSide())
-                                _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
-                        }
-                        if (!(entity instanceof ServerPlayer _plr27 && _plr27.level instanceof ServerLevel
-                                && _plr27.getAdvancements().getOrStartProgress(Objects.requireNonNull(_plr27.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper")))).isDone())) {
-                            if (motionY >= 0.75) {
-                                if (entity instanceof ServerPlayer player_) {
-                                    Advancement _adv = player_.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"));
-                                    assert _adv != null;
-                                    AdvancementProgress _ap = player_.getAdvancements().getOrStartProgress(_adv);
-                                    if (!_ap.isDone()) {
-                                        for (String string : _ap.getRemainingCriteria())
-                                            player_.getAdvancements().award(_adv, string);
-                                    }
-                                }
-                            }
-                        }
-                        {
-                            if (!entity.level.isClientSide() && entity.getServer() != null)
-                                entity.getServer().getCommands().performCommand(entity.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
-                        }
-                    }
-                }
+        if (!player.isOnGround() || player.isInWater() || player.isSpectator()) {
+            return;
+        }
 
+        double speed = 0.6;
+        double motionX, motionY, motionZ;
+
+        if (!player.isShiftKeyDown()) {
+            // Normal Leap
+            /*motionX = -Math.sin(Math.toRadians(player.getYRot())) * speed;
+            motionY = -Math.sin(Math.toRadians(player.getXRot())) * speed;
+            motionZ = Math.cos(Math.toRadians(player.getYRot())) * speed;
+            player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));*/
+            player.setDeltaMovement(player.getDeltaMovement().add(player.getEyePosition(1).multiply(speed,speed,speed)));
+            playSound(player);
+            exhaustPlayer(player, 0.25F);
+
+        } else {
+            // Precision Leap
+            double targetY = player.level.clip(
+                            new ClipContext(player.getEyePosition(1f),
+                                    player.getEyePosition(1f).add(player.getViewVector(1f).scale(1)),
+                                    ClipContext.Block.OUTLINE,
+                                    ClipContext.Fluid.NONE,
+                                    player))
+                    .getBlockPos().getY();
+            motionX = -Math.sin(Math.toRadians(player.getYRot())) * 0.15;
+            motionY = (targetY - player.getY()) * 0.5;
+            motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
+            float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 2.5F : 1;
+
+            player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ));
+            playSound(player);
+            applyFatigue(player, motionY);
+
+            // Grant Advancement
+            if (motionY >= 0.75) {
+                grantAdvancement(player, "changed_addon:leaper");
+            }
+        }
+    }
+
+    private static void playSound(Player player) {
+        if (!player.level.isClientSide()) {
+            player.level.playSound(null, player.blockPosition(), ChangedSounds.BOW2,
+                    player.getSoundSource(), 2.5F, 1.0F);
+        }
+    }
+
+    private static void exhaustPlayer(Player player, float exhaustion) {
+        if (!player.isCreative()) {
+            player.causeFoodExhaustion(exhaustion);
+        }
+    }
+
+    private static void applyFatigue(Player player, double motionY) {
+        if (!player.isCreative()) {
+            player.causeFoodExhaustion((float) (motionY * 0.25));
+        }
+    }
+
+    private static void grantAdvancement(Player player, String advancementId) {
+        if (!(player instanceof ServerPlayer serverPlayer) ||
+                !(serverPlayer.level instanceof ServerLevel)) {
+            return;
+        }
+
+        Advancement advancement = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation(advancementId));
+        if (advancement == null) return;
+
+        AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+        if (!progress.isDone()) {
+            for (String criterion : progress.getRemainingCriteria()) {
+                serverPlayer.getAdvancements().award(advancement, criterion);
             }
         }
     }

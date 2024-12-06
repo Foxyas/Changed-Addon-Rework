@@ -44,6 +44,6 @@ public class TurnFeralSnepAbility extends AbstractAbility<TurnFeralSnepAbilityIn
 
     @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        return UseType.CHARGE_RELEASE;
+        return UseType.CHARGE_TIME;
     }
 }

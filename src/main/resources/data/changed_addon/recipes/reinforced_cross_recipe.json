@@ -7,13 +7,13 @@
   ],
   "key": {
     "0": {
-      "item": "minecraft:netherite_ingot"
+      "item": "minecraft:netherite_scrap"
     },
     "1": {
       "item": "changed_addon:iridium"
     },
     "2": {
-      "item": "minecraft:netherite_ingot"
+      "item": "minecraft:netherite_scrap"
     },
     "3": {
       "item": "changed_addon:iridium"
@@ -25,13 +25,13 @@
       "item": "changed_addon:iridium"
     },
     "6": {
-      "item": "minecraft:netherite_ingot"
+      "item": "minecraft:netherite_scrap"
     },
     "7": {
       "item": "changed_addon:iridium"
     },
     "8": {
-      "item": "minecraft:netherite_ingot"
+      "item": "minecraft:netherite_scrap"
     }
   },
   "result": {

@@ -12,13 +12,13 @@
     "recipeShapeless": false,
     "recipeSlots": [
       {
-        "value": "Items.NETHERITE_INGOT"
+        "value": "Items.NETHERITE_SCRAP"
       },
       {
         "value": "CUSTOM:Iridium"
       },
       {
-        "value": "Items.NETHERITE_INGOT"
+        "value": "Items.NETHERITE_SCRAP"
       },
       {
         "value": "CUSTOM:Iridium"
@@ -30,13 +30,13 @@
         "value": "CUSTOM:Iridium"
       },
       {
-        "value": "Items.NETHERITE_INGOT"
+        "value": "Items.NETHERITE_SCRAP"
       },
       {
         "value": "CUSTOM:Iridium"
       },
       {
-        "value": "Items.NETHERITE_INGOT"
+        "value": "Items.NETHERITE_SCRAP"
       }
     ],
     "recipeReturnStack": {

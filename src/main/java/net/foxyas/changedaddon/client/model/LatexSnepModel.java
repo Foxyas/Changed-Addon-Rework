@@ -289,7 +289,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
             this.Tail.xRot = 20f * ((float)Math.PI / 180F);
         }
         if (entity.isSleeping()) {
-            this.Tail.xRot = DEBUG.HeadPosK * Mth.DEG_TO_RAD;
+            this.Tail.xRot = 0 * Mth.DEG_TO_RAD;
         }
 
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
@@ -325,48 +325,5 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
         LegBackRight.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         LegBackLeft.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         LegFrontLeft.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-    }
-
-    @Mod.EventBusSubscriber
-    public static class DEBUG {
-
-        public static float HeadPosX,HeadPosY,HeadPosZ,HeadPosT,HeadPosV,HeadPosB,HeadPosK,HeadPosL = 0;
-
-        @SubscribeEvent
-        public static void DEBUG(ServerChatEvent event){
-            if (event.getMessage().startsWith("setHeadPos")){
-                String a = event.getMessage().replace("setHeadPos","");
-                if (a.startsWith("T")){
-                    HeadPosT =  (float) convert(a.replace("T",""));
-                } else if (a.startsWith("V")){
-                    HeadPosV =  (float) convert(a.replace("V",""));
-                } else if (a.startsWith("B")){
-                    HeadPosB =  (float) convert(a.replace("B",""));
-                }
-                if (a.startsWith("k")){
-                    HeadPosK =  (float) convert(a.replace("k",""));
-                } else if (a.startsWith("l")){
-                    HeadPosL =  (float) convert(a.replace("l",""));
-                }
-                if (a.startsWith("x")){
-                    HeadPosX =  (float) convert(a.replace("x",""));
-                } else if (a.startsWith("y")){
-                    HeadPosY =  (float) convert(a.replace("y",""));
-                } else if (a.startsWith("z")){
-                    HeadPosZ =  (float) convert(a.replace("z",""));
-                }
-            }
-            if (event.getMessage().startsWith("Show info")){
-                event.getPlayer().displayClientMessage(new TextComponent("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL),false);
-            }
-        }
-
-        private static double convert(String s) {
-            try {
-                return Double.parseDouble(s.trim());
-            } catch (Exception e) {
-            }
-            return 0;
-        }
     }
 }
