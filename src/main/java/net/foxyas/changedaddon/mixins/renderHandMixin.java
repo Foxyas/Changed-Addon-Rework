@@ -85,7 +85,7 @@ public class renderHandMixin {
             return false;
         }
 
-        if (!ChangedAddonClientConfigsConfiguration.SHOW_EXTRA_HAND_FALL_FLY.get()){
+        if (!ChangedAddonClientConfigsConfiguration.SHOW_EXTRA_HAND.get()){
             return false;
         }
 

@@ -13,7 +13,7 @@ public class ChangedAddonClientConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Double> PAT_OVERLAY_X;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> DYNAMIC_PAT_OVERLAY;
 	public static final ForgeConfigSpec.ConfigValue<Double> PAT_OVERLAY_Y;
-	public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_EXTRA_HAND_FALL_FLY;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_EXTRA_HAND;
 	static {
 		BUILDER.push("MusicPlayer");
 		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
@@ -32,7 +32,7 @@ public class ChangedAddonClientConfigsConfiguration {
 		PAT_OVERLAY_Y = BUILDER.comment("Set the Y pos of the pat overlay.  [ Default  251 ]").define("Pat Overlay Y pos", (double) 251);
 		BUILDER.pop();
 		BUILDER.push("Extra Animations");
-		SHOW_EXTRA_HAND_FALL_FLY = BUILDER.comment("allow the show of the extra hand while fall fly").define("Show Extra Hand [Fall fly]", false);
+		SHOW_EXTRA_HAND = BUILDER.comment("allow the show of the extra hand in some contexts like fall fly").define("Show Extra Hand", false);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "C",
+    "triggerKey": "NONE",
     "keyBindingName": "Leap Key",
     "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {

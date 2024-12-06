@@ -57,7 +57,7 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	public static final KeyMapping LEAP_KEY = new KeyMapping("key.changed_addon.leap_key", GLFW.GLFW_KEY_C, "key.categories.changed_addon") {
+	public static final KeyMapping LEAP_KEY = new KeyMapping("key.changed_addon.leap_key", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
 		private boolean isDownOld = false;
 
 		@Override

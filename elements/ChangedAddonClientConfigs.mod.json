@@ -181,9 +181,9 @@
             "logicField": 1,
             "numberField": 0.0,
             "textDefault": "",
-            "comment": "allow the show of the extra hand while fall fly",
-            "vardisplay": "Show Extra Hand [Fall fly]",
-            "varname": "show_extra_hand_fall_fly",
+            "comment": "allow the show of the extra hand in some contexts like fall fly",
+            "vardisplay": "Show Extra Hand",
+            "varname": "show_extra_hand",
             "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"
