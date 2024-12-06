@@ -61,7 +61,7 @@ public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity,
 			VertexConsumer vertexConsumer = bufferSource.getBuffer(this.rightEyesRenderType);
 			this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, Colors.getRightIrisColor().red(), Colors.getRightIrisColor().green(), Colors.getRightIrisColor().blue(), 1);
 			VertexConsumer vertexConsumer2 = bufferSource.getBuffer(this.leftEyesRenderType);
-			this.getParentModel().renderToBuffer(poseStack, vertexConsumer2, 15728640, OverlayTexture.NO_OVERLAY, Colors.getRightIrisColor().red(), Colors.getRightIrisColor().green(), Colors.getRightIrisColor().blue(), 1);
+			this.getParentModel().renderToBuffer(poseStack, vertexConsumer2, 15728640, OverlayTexture.NO_OVERLAY, Colors.getLeftIrisColor().red(), Colors.getLeftIrisColor().green(), Colors.getLeftIrisColor().blue(), 1);
 			VertexConsumer vertexConsumer3 = bufferSource.getBuffer(this.ScleraRenderType);
 			this.getParentModel().renderToBuffer(poseStack, vertexConsumer3, 15728640, OverlayTexture.NO_OVERLAY,Colors.getScleraColor().red(), Colors.getScleraColor().green(), Colors.getScleraColor().blue(), 1.0F);
 		}

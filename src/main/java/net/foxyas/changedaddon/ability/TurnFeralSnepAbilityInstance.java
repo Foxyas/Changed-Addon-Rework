@@ -51,8 +51,15 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void onSelected() {
         super.onSelected();
-        if (this.OldVariant == null){
-        	setOldVariant(entity.getSelfVariant());	
+        if (entity.getEntity() instanceof Player player){
+            var Instance = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (this.OldVariant == null
+                    && Instance != null){
+                if (Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get()
+                        && Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP.get()){
+                    setOldVariant(entity.getSelfVariant());
+                }
+            }
         }
     }
 
@@ -133,7 +140,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     }
 
     private TransfurVariant<?> determineNextVariant(TransfurVariant<?> currentVariant) {
-        if (currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get()) {
+        if (currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() || currentVariant == ChangedAddonTransfurVariants.LATEX_SNEP.get()) {
             return this.OldVariant != null ? this.OldVariant : ChangedAddonTransfurVariants.Gendered.ORGANIC_SNOW_LEOPARD.getRandomVariant(new Random());
         } else {
             return ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get();

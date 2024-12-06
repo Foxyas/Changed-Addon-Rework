@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.network.chat.TextComponent;
 
 public class LeapAbility extends SimpleAbility {
     public LeapAbility() {
@@ -90,7 +91,7 @@ public class LeapAbility extends SimpleAbility {
             motionX = -Math.sin(Math.toRadians(player.getYRot())) * 0.15;
             motionY = targetY * 0.8F;
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
-            float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 2.5F : 1;
+            float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 2.8F : 1;
 
             player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ));
             playSound(player);
@@ -98,6 +99,7 @@ public class LeapAbility extends SimpleAbility {
 
             // Grant Advancement
             if (motionY * multiplier >= 0.75) {
+            	//player.displayClientMessage(new TextComponent("Message" + motionY * multiplier), true);
                 grantAdvancement(player, "changed_addon:leaper");
             }
         }

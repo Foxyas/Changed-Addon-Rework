@@ -160,7 +160,7 @@ public class SnepPlushBlock extends Block implements SimpleWaterloggedBlock, Ent
 		if (blockEntity instanceof SnepPlushBlockEntity PlusheBlockEntity){
 			if (!PlusheBlockEntity.isSqueezed()){
 				InteractPlushesProcedure.execute(world, x, y, z);
-				PlusheBlockEntity.squeezedTicks = 10;
+				PlusheBlockEntity.squeezedTicks = 4;
 			}
 		}
 		return InteractionResult.SUCCESS;

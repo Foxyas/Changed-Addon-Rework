@@ -121,7 +121,7 @@ public class WolfPlushBlock extends Block implements EntityBlock {
 		if (blockEntity instanceof WolfPlushBlockEntity PlusheBlockEntity){
 			if (!PlusheBlockEntity.isSqueezed()){
 				InteractPlushesProcedure.execute(world, x, y, z);
-				PlusheBlockEntity.squeezedTicks = 10;
+				PlusheBlockEntity.squeezedTicks = 4;
 			}
 		}
 		return InteractionResult.SUCCESS;
