@@ -68,9 +68,9 @@ public class PsychicHoldAbility extends SimpleAbility {
     }
 
     final Vec3 playerPos = new Vec3(player.getX(), player.getY(), player.getZ());
-    double maxRange = 10.0; // Raio máximo de efeito
-    double stopRange = 4.0; // Distância para parar os projéteis
-    double repelRange = 2.0; // Distância para repelir os projéteis
+    double maxRange = 14.0; // Raio máximo de efeito
+    double stopRange = 6.0; // Distância para parar os projéteis
+    double repelRange = 4.0; // Distância para repelir os projéteis
 
     List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class, new AABB(playerPos, playerPos).inflate(maxRange / 2d), e -> true).stream()
             .sorted(Comparator.comparingDouble(entity -> entity.distanceToSqr(playerPos)))
