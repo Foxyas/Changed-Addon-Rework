@@ -71,7 +71,7 @@ public class LeapAbility extends SimpleAbility {
             return;
         }
 
-        double speed = 1;
+        double speed = 0.6;
         double motionX, motionY, motionZ;
 
         if (!player.isShiftKeyDown()) {
@@ -82,21 +82,15 @@ public class LeapAbility extends SimpleAbility {
             player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));*/
             player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed,speed,speed)));
             playSound(player);
-            exhaustPlayer(player, 0.25F);
+            exhaustPlayer(player, 0.5F);
 
         } else {
             // Precision Leap
-            double targetY = player.level.clip(
-                            new ClipContext(player.getEyePosition(1f),
-                                    player.getEyePosition(1f).add(player.getViewVector(1f).scale(1)),
-                                    ClipContext.Block.OUTLINE,
-                                    ClipContext.Fluid.NONE,
-                                    player))
-                    .getBlockPos().getY();
+            double targetY = player.getViewVector(1).y;
             motionX = -Math.sin(Math.toRadians(player.getYRot())) * 0.15;
-            motionY = (targetY) * 0.5;
+            motionY = targetY * 0.8F;
             motionZ = Math.cos(Math.toRadians(player.getYRot())) * 0.15;
-            float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 1.5F : 1;
+            float multiplier = iAbstractChangedEntity.getSelfVariant() == ChangedAddonTransfurVariants.LATEX_SNEP.get() ? 2.5F : 1;
 
             player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY * multiplier, motionZ));
             playSound(player);
