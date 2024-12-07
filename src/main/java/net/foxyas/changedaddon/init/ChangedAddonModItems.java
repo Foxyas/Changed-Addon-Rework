@@ -57,6 +57,8 @@ import net.foxyas.changedaddon.item.FoxtaItem;
 import net.foxyas.changedaddon.item.Experiment10DnaItem;
 import net.foxyas.changedaddon.item.Experiment009dnaItem;
 import net.foxyas.changedaddon.item.Experiment009SpawneggItem;
+import net.foxyas.changedaddon.item.Exp9LatexBaseItem;
+import net.foxyas.changedaddon.item.Exp10LatexBaseItem;
 import net.foxyas.changedaddon.item.EmptySprayItem;
 import net.foxyas.changedaddon.item.ElectricKatanaRedItem;
 import net.foxyas.changedaddon.item.ElectricKatanaItem;
@@ -176,6 +178,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_TILED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_TILED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> REINFORCED_WALL_CAUTION = block(ChangedAddonModBlocks.REINFORCED_WALL_CAUTION, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> REINFORCED_CROSS_BLOCK = block(ChangedAddonModBlocks.REINFORCED_CROSS_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", () -> new Exp9LatexBaseItem());
+	public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", () -> new Exp10LatexBaseItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

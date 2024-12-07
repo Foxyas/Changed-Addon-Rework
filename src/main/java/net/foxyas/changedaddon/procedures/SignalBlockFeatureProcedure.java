@@ -1,23 +1,26 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.minecraft.core.Vec3i;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.core.BlockPos;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import net.minecraft.network.chat.Style;
 
 public class SignalBlockFeatureProcedure {
 
@@ -142,16 +145,31 @@ public class SignalBlockFeatureProcedure {
 	}
 
 	private static void displayFoundLocations(Player player, List<BlockPos> positions) {
-		StringBuilder message = new StringBuilder("Signal Blocks found at:\n");
-		for (int i = 0; i < positions.size(); i++) {
-			BlockPos pos = positions.get(i);
-			message.append("Block ").append(i + 1).append(": [").append(pos.getX()).append(", ").append(pos.getY()).append(", ").append(pos.getZ()).append("]");
-			if (i < positions.size() - 1) {
-				message.append(";\n");
-			}
-		}
-		player.displayClientMessage(new TextComponent(message.toString()), false);
+    boolean isCreative = player.isCreative();
+
+    player.displayClientMessage(new TextComponent("Signal Blocks found at:"), false); // Mensagem inicial
+
+    for (int i = 0; i < positions.size(); i++) {
+        	BlockPos pos = positions.get(i);
+
+        	// Cria o texto básico da posição
+        	String positionText = String.format("Block %d: [%d, %d, %d]", i + 1, pos.getX(), pos.getY(), pos.getZ());
+        	TextComponent message = new TextComponent(positionText);
+
+        	if (isCreative) {
+            	// Adiciona eventos ao texto apenas para jogadores criativos
+            	Style style = Style.EMPTY
+                    	.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/tp %d %d %d", pos.getX(), pos.getY(), pos.getZ())))
+                    	.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent("Click to copy the teleport command")));
+
+            	message.setStyle(style);
+        	}
+
+        	// Envia cada linha individualmente
+        	player.displayClientMessage(message, false);
+    	}
 	}
+
 
 	private static void playSounds(LevelAccessor world, double x, double y, double z, BlockPos foundPos) {
 		playSound(world, foundPos, "block.conduit.deactivate", SoundSource.BLOCKS, 1.5f);

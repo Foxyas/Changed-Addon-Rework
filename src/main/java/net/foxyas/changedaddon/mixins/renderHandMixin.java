@@ -92,7 +92,7 @@ public class renderHandMixin {
         // Check if the player is gliding with a variant that can glide and has sufficient speed
         if (variantInstance.getParent().canGlide && player.isFallFlying()) {
             double speed = player.getDeltaMovement().length(); // Velocidade do jogador
-            if (speed > 1.5) {
+            if (speed > 1.5 || player.getFallFlyingTicks() >= 5) {
                 return true;
             }
         }
