@@ -1,0 +1,19 @@
+{
+  "type": "changed_addon:unifuser",
+  "ingredients": [
+    {
+      "item": "changed_addon:experiment_10_dna"
+    },
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "tag": "air"
+    }    
+  ],
+  "output": {
+    "item": "changed_addon:laethin_syringe",
+    "count": 1
+  },
+  "ProgressSpeed": 0.5
+}
