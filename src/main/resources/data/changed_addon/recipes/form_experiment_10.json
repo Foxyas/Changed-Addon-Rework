@@ -2,7 +2,7 @@
   "type": "changed:infuser",
   "ingredients": [
     {
-      "item": "changed_addon:experiment_10_dna"
+      "item": "changed_addon:exp_10_latex_base"
     },
     {
       "item": "minecraft:netherite_ingot"
