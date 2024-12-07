@@ -2,7 +2,7 @@
   "type": "changed_addon:unifuser",
   "ingredients": [
     {
-      "item": "changed_addon:experiment_10_dna"
+      "item": "changed_addon:experiment_9_dna"
     },
     {
       "item": "changed:latex_base"
@@ -12,7 +12,7 @@
     }    
   ],
   "output": {
-    "item": "changed_addon:exp_10_latex_base",
+    "item": "changed_addon:exp_9_latex_base",
     "count": 1
   },
   "ProgressSpeed": 0.5
