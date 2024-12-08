@@ -1,6 +1,8 @@
 
 package net.foxyas.changedaddon.recipes.brewing;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ChangedAddonModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +23,9 @@ import net.foxyas.changedaddon.init.ChangedAddonModItems;
 public class UntransfurPotionRecipeBrewingRecipe implements IBrewingRecipe {
 	@SubscribeEvent
 	public static void init(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> BrewingRecipeRegistry.addRecipe(new UntransfurPotionRecipeBrewingRecipe()));
+		if(!ChangedAddonMod.config.common.PotionSynthesis.get()) {
+			event.enqueueWork(() -> BrewingRecipeRegistry.addRecipe(new UntransfurPotionRecipeBrewingRecipe()));
+		}
 	}
 
 	@Override

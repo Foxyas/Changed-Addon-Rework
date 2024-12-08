@@ -68,7 +68,15 @@ repositories {
         name = "Changed"
         url = "https://raw.githubusercontent.com/LtxProgrammer/Changed-Minecraft-Mod/master/mcmodsrepo/"
     }
-
+    maven {
+        name = "Forge"
+        url = "https://maven.minecraftforge.net"
+    }
+    maven {
+        name = "ModMaven"
+        url = "https://maven.parchmentmc.org/"
+    }
+    mavenCentral()
     /*maven {
         name = "Changed_Local_file"
         url uri("${rootProject.projectDir}/libs")
