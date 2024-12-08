@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.registers.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -33,8 +34,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.Iterator;
 
 public class PatFeatureHandleProcedure {
 	//Thanks gengyoubo for the code
@@ -111,18 +110,27 @@ public class PatFeatureHandleProcedure {
 				|| ProcessTransfur.getPlayerTransfurVariant((Player) player).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
 		//if (!isPlayerTransfur) return;
 
-		if (!(target instanceof Experiment10Entity) && !(target instanceof KetExperiment009Entity) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
-			if (player instanceof Player) {
+		if (!(target instanceof Experiment10Entity)
+				&& !(target instanceof KetExperiment009Entity)
+				&& isHandEmpty(player, InteractionHand.MAIN_HAND)
+				|| isHandEmpty(player, InteractionHand.OFF_HAND)) {
+			if (player instanceof Player p) {
 				((Player) player).swing(getSwingHand(player), true);
-				if(target instanceof Exp2MaleEntity || target instanceof Exp2FemaleEntity && isPlayerTransfur){
-					if(!isPlayerTransfurInExp2 && isPlayerTransfur)
-					((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+				if (target instanceof Exp2MaleEntity || target instanceof Exp2FemaleEntity && isPlayerTransfur) {
+					if (!isPlayerTransfurInExp2 && isPlayerTransfur)
+						((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 				}
 			}
-			if (world instanceof ServerLevel serverLevel) {
+			if (player instanceof Player p && world instanceof ServerLevel serverLevel) {
+				p.swing(getSwingHand(player), true);
 				serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
-			}
-			if (player instanceof Player p && !p.level.isClientSide()) {
+
+				// Dispara o trigger personalizado
+				if (p instanceof ServerPlayer sp) {
+					GiveStealthPatAdvancement(sp,target);
+				}
+
+				// Exibe mensagens
 				p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
 			}
 		}
@@ -153,7 +161,8 @@ public class PatFeatureHandleProcedure {
 					 ((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 				 	} /*else if (isPlayerTransfurInExp2 && isTargetTransfurInExp2){
 					 return;//Exp2 Can't give Exp2 Transfur Sickness
-				 	}*/
+				 	}
+*/
 				}
 			}
 
@@ -210,12 +219,33 @@ public class PatFeatureHandleProcedure {
 		if (entity instanceof ServerPlayer _player) {
 			Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:pat_advancement"));
             assert _adv != null;
+			if (_player.getAdvancements().getOrStartProgress(_adv).isDone()){
+				return;
+			}
             AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 			if (!_ap.isDone()) {
                 for (String string : _ap.getRemainingCriteria()) {
                     _player.getAdvancements().award(_adv, string);
                 }
 			}
+		}
+
+	}
+
+	public static void GiveStealthPatAdvancement(Entity entity,Entity target){
+		if (entity instanceof ServerPlayer _player) {
+			/*Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:stealthpats"));
+            assert _adv != null;
+            if (_player.getAdvancements().getOrStartProgress(_adv).isDone()){
+				return;
+			}
+			AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+			if (!_ap.isDone()) {
+				for (String string : _ap.getRemainingCriteria()) {
+					_player.getAdvancements().award(_adv, string);
+				}
+			}*/
+			ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.Trigger(_player,target);
 		}
 
 	}

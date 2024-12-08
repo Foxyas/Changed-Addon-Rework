@@ -3,7 +3,7 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "snow_leopard",
+    "texture": "stealth_pat_icon",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],

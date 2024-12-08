@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
+import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
@@ -21,13 +22,27 @@ public class ChangedEntityTargetSelectorMixin {
     private void CancelTarget(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir){
         ItemStack Head = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack Chest = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-        if (isDarkLatexCoat(Head) && isDarkLatexCoat(Chest)){
-            //ChangedAddonMod.LOGGER.info("Evento cancelado: capacete e peitoral detectados");
-            cir.setReturnValue(false);
-        } else if (isDarkLatexCoat(Head) ^ isDarkLatexCoat(Chest)) {
-            if (livingEntity.distanceTo((ChangedEntity) (Object) this) >= 4){
-                //ChangedAddonMod.LOGGER.info("Evento cancelado: item parcial detectado, distância > 4");
+        if (ChangedAddonConfigsConfiguration.DL_COAT_AFFECT_ALL.get()) {
+            if (isDarkLatexCoat(Head) && isDarkLatexCoat(Chest)){
+                //ChangedAddonMod.LOGGER.info("Evento cancelado: capacete e peitoral detectados");
                 cir.setReturnValue(false);
+            } else if (isDarkLatexCoat(Head) ^ isDarkLatexCoat(Chest)) {
+                if (livingEntity.distanceTo((ChangedEntity) (Object) this) >= 4){
+                    //ChangedAddonMod.LOGGER.info("Evento cancelado: item parcial detectado, distância > 4");
+                    cir.setReturnValue(false);
+                }
+            }
+        } else {
+            if ((ChangedEntity) (Object) this instanceof AbstractDarkLatexWolf){
+                if (isDarkLatexCoat(Head) && isDarkLatexCoat(Chest)){
+                    //ChangedAddonMod.LOGGER.info("Evento cancelado: capacete e peitoral detectados");
+                    cir.setReturnValue(false);
+                } else if (isDarkLatexCoat(Head) ^ isDarkLatexCoat(Chest)) {
+                    if (livingEntity.distanceTo((ChangedEntity) (Object) this) >= 4){
+                        //ChangedAddonMod.LOGGER.info("Evento cancelado: item parcial detectado, distância > 4");
+                        cir.setReturnValue(false);
+                    }
+                }
             }
         }
     }

@@ -16,7 +16,19 @@
   },
   "criteria": {
     "stealthpats": {
-      "trigger": "minecraft:impossible"
+      "trigger": "changed_addon:pat_entity_trigger",
+      "conditions": {
+        "head": {
+          "items": [
+            "changed_addon:dark_latex_coat_cap"
+          ]
+        },
+        "chest": {
+          "items": [
+            "changed_addon:dark_latex_coat"
+          ]
+        }
+      }
     }
   },
   "rewards": {

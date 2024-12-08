@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.ltxprogrammer.changed.entity.beast.*;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.advancements.Advancement;
@@ -13,6 +14,8 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -73,37 +76,49 @@ public class FishLatexEntityProcedure {
 			FishingHook hookEntity = event.getHookEntity();
 			Player player = event.getPlayer();
 			LevelAccessor world = player.getLevel();
+			ItemStack itemStack = event.getPlayer().getUseItem();
+			float ItemEnchantment = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.CHANGED_LURE.get(),itemStack);
 
-			// Verifique a chance de spawnar a entidade
-			if (player.level.random.nextInt(100) <= 10 + (int) player.getAttributeValue(Attributes.LUCK)) {
-				if (world instanceof ServerLevel _level) {
+			// Verifica se o item de pesca tem o encantamento "Changed Lure"
+			if (ItemEnchantment > 0) {
 
-					// Crie a entidade
-					Entity entityToSpawn = getRandomEntity(entityList(_level));
-					if (entityToSpawn != null) {
-						entityToSpawn.moveTo(hookEntity.getX(), hookEntity.getY(), hookEntity.getZ(), 0, 0);
-						entityToSpawn.setYBodyRot(0);
-						entityToSpawn.setYHeadRot(0);
+				// Cálculo da chance de spawnar uma criatura "Changed"
+				float luck = (float) player.getAttributeValue(Attributes.LUCK);
+				float attributeBonus = Math.min(luck, 35.0F); // Aplica o cap no valor de Luck
+				float enchantmentBonus = ItemEnchantment + attributeBonus;
+				float chance = 5.0F + enchantmentBonus;  // Aumenta a chance de spawn com base no Luck e no encantamento
 
-						// Defina a movimentação da entidade
-						entityToSpawn.setDeltaMovement(
-								(player.getX() - hookEntity.getX()) * 0.15,
-								(player.getY() - hookEntity.getY()) * 0.15,
-								(player.getZ() - hookEntity.getZ()) * 0.15
-						);
+				// Verifique se a chance de spawnar a entidade é suficiente
+				if (player.level.random.nextFloat() * 100 <= chance) {
+					if (world instanceof ServerLevel _level) {
 
-						// Finalize o spawn da entidade
-						if (entityToSpawn instanceof Mob _mobToSpawn) {
-							_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+						// Crie a entidade
+						Entity entityToSpawn = getRandomEntity(entityList(_level));
+						if (entityToSpawn != null) {
+							entityToSpawn.moveTo(hookEntity.getX(), hookEntity.getY(), hookEntity.getZ(), 0, 0);
+							entityToSpawn.setYBodyRot(0);
+							entityToSpawn.setYHeadRot(0);
+
+							// Define a movimentação da entidade para se aproximar do jogador
+							entityToSpawn.setDeltaMovement(
+									(player.getX() - hookEntity.getX()) * 0.15,
+									(player.getY() - hookEntity.getY()) * 0.15,
+									(player.getZ() - hookEntity.getZ()) * 0.15
+							);
+
+							// Finaliza o spawn da entidade
+							if (entityToSpawn instanceof Mob _mobToSpawn) {
+								_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+							}
+
+							// Adiciona a entidade ao mundo
+							world.addFreshEntity(entityToSpawn);
+							AddAdvancement(player);  // Suponho que isso adicione uma conquista ao jogador
+							event.damageRodBy(1);  // Diminui a durabilidade da vara de pesca
+
+							// Cancele o evento de pesca para evitar o item normal
+							event.setCanceled(true);
 						}
-
-						// Adicione a entidade ao mundo
-						world.addFreshEntity(entityToSpawn);
-						AddAdvancement(player);
-						event.damageRodBy(1);
-
-						// Cancele o evento de pesca
-						event.setCanceled(true);
 					}
 				}
 			}

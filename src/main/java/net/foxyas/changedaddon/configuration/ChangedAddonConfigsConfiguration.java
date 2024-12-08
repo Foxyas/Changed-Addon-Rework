@@ -10,6 +10,7 @@ public class ChangedAddonConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Double> AGE_NEED;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> CUSTOMRECIPES;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_INFECT;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> DL_COAT_AFFECT_ALL;
 	static {
 		BUILDER.push("Latex Totem");
 		ACCEPT_ALL_VARIANTS = BUILDER.comment("allow latex totem to have all Latex Variants").define("No Latex Totem Limitations", true);
@@ -23,6 +24,9 @@ public class ChangedAddonConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Latex Infection");
 		ALWAYS_INFECT = BUILDER.comment("Always Add Latex Infection").define("Always Cause Infect", false);
+		BUILDER.pop();
+		BUILDER.push("Beasts Behavior");
+		DL_COAT_AFFECT_ALL = BUILDER.comment("When active, the Dark Latex Coat will affect all beasts").define("DL Coat Confuse All Creatures", true);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

@@ -42,7 +42,7 @@ public class IridiumoreFeature extends OreFeature {
 
 	public static Feature<?> feature() {
 		FEATURE = new IridiumoreFeature();
-		CONFIGURED_FEATURE = FeatureUtils.register("changed_addon:iridium_ore", FEATURE, new OreConfiguration(IridiumoreFeatureRuleTest.INSTANCE, ChangedAddonModBlocks.IRIDIUM_ORE.get().defaultBlockState(), 8));
+		CONFIGURED_FEATURE = FeatureUtils.register("changed_addon:iridium_ore", FEATURE, new OreConfiguration(IridiumoreFeatureRuleTest.INSTANCE, ChangedAddonModBlocks.IRIDIUM_ORE.get().defaultBlockState(), 4));
 		PLACED_FEATURE = PlacementUtils.register("changed_addon:iridium_ore", CONFIGURED_FEATURE,
 				List.of(CountPlacement.of(2), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(-45)), BiomeFilter.biome()));
 		return FEATURE;

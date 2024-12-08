@@ -184,13 +184,11 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
         this.Torso.yRot = 0.0F;
         this.Torso.zRot = 0.0F;
         this.Tail.xRot = -0.05235988F;
-        if (entity.isSprinting()){
+        if (entity.isSprinting() && entity.isOnGround()){
             this.LegFrontRight.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
             this.LegFrontLeft.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
-            this.LegBackRight.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
- //+ (float) Math.PI
-            this.LegBackLeft.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
- //+ (float) Math.PI
+            this.LegBackRight.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount; //+ (float) Math.PI
+            this.LegBackLeft.xRot = Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount; //+ (float) Math.PI
             this.LegBackRight.yRot = 0f;
             this.LegBackRight.zRot = 0f;
             this.LegBackLeft.yRot = 0f;
