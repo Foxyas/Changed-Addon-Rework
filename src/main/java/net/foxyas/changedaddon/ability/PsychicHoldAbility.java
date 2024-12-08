@@ -63,50 +63,58 @@ public class PsychicHoldAbility extends SimpleAbility {
 	}
 
 	public static void execute(LevelAccessor world, Entity IAbstractChangedEntity) {
-    if (IAbstractChangedEntity == null || !(IAbstractChangedEntity instanceof Player player)) {
+    if (!(IAbstractChangedEntity instanceof Player player)) {
         return;
     }
 
     final Vec3 playerPos = new Vec3(player.getX(), player.getY(), player.getZ());
-    double maxRange = 15.0; // Raio máximo de efeito
-    double stopRange = 3.0; // Distância para parar os projéteis
-    double repelRange = 2.0; // Distância para repelir os projéteis
+    final double maxRange = 16.0; // Raio máximo de efeito
+    final double repelRange = 2.5; // Distância para repelir os projéteis
+    final double stopSpeedThreshold = 0.5; // Velocidade limite para parar projéteis
 
-    List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class, new AABB(playerPos, playerPos).inflate(maxRange / 2d), e -> true).stream()
-            .sorted(Comparator.comparingDouble(entity -> entity.distanceToSqr(playerPos)))
-            .collect(Collectors.toList());
+    // Selecionar apenas entidades relevantes
+    List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class, 
+        new AABB(playerPos, playerPos).inflate(maxRange / 2.0),
+        e -> e instanceof FallingBlockEntity || e.getType().is(EntityTypeTags.IMPACT_PROJECTILES)
+    );
 
     for (Entity projectile : nearbyEntities) {
-        if (projectile instanceof FallingBlockEntity ||
-                projectile.getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
-            Vec3 projectilePos = projectile.position();
-            Vec3 toPlayer = playerPos.subtract(projectilePos).normalize(); // Direção do jogador
-            double distance = projectilePos.distanceTo(playerPos);
+    	    Vec3 projectilePos = projectile.position();
+	        Vec3 toPlayer = playerPos.subtract(projectilePos).normalize(); // Direção do jogador
+        	double distance = projectilePos.distanceTo(playerPos);
 
-            if (distance <= stopRange && distance > repelRange) {
-                // Parar completamente projéteis próximos, mas não muito próximos
-                projectile.setDeltaMovement(Vec3.ZERO);
-            } else if (distance <= repelRange) {
-                // Repelir projéteis extremamente próximos
-                Vec3 repelForce = toPlayer.scale(-1.0 * (repelRange - distance)); // Força inversamente proporcional
-                projectile.setDeltaMovement(projectile.getDeltaMovement().add(repelForce));
-            } else {
-                // Diminuir velocidade de projéteis distantes
-                double slowFactor = Math.max(0.1, 1.0 - (distance / maxRange)); // Fator de lentidão (mínimo 0.1)
-                Vec3 currentMotion = projectile.getDeltaMovement();
-                Vec3 reducedMotion = currentMotion.scale(slowFactor);
+        	// Adicionar exaustão enquanto usa a habilidade
+    		if (!player.isSpectator()) {
+        		player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
+    		}
 
-                // Verificar se projétil está indo na direção do jogador (produto escalar)
-                double dotProduct = currentMotion.normalize().dot(toPlayer);
-                if (player.isShiftKeyDown()) {
-                    if (dotProduct > 0) {
-                        projectile.setDeltaMovement(reducedMotion);
-                    }
-                } else {
-                    projectile.setDeltaMovement(reducedMotion);
+        	// Verificar velocidade do projétil
+        	Vec3 currentMotion = projectile.getDeltaMovement();
+        	if (distance > repelRange && currentMotion.lengthSqr() <= stopSpeedThreshold * stopSpeedThreshold) {
+            	// Parar projéteis com baixa velocidade
+            	projectile.setDeltaMovement(Vec3.ZERO);
+            	continue;
+        	}
+
+        	if (distance <= repelRange) {
+            	// Repelir projéteis extremamente próximos
+            	Vec3 repelForce = toPlayer.scale(-1.0 * (repelRange - distance)); // Força inversamente proporcional
+            	projectile.setDeltaMovement(currentMotion.add(repelForce));
+        	} else {
+            	// Diminuir velocidade de projéteis distantes
+            	double slowFactor = Math.max(0.1, 1.0 - (distance / maxRange)); // Fator de lentidão (mínimo 0.1)
+            	Vec3 reducedMotion = currentMotion.scale(slowFactor);
+
+            	// Verificar se projétil está indo na direção do jogador (produto escalar)
+            	double dotProduct = currentMotion.normalize().dot(toPlayer);
+            	if (player.isShiftKeyDown()) {
+                	if (dotProduct > 0) {
+                    	projectile.setDeltaMovement(reducedMotion);
                 	}
+            	} else {
+                	projectile.setDeltaMovement(reducedMotion);
             	}
         	}
     	}
 	}
-}
+}

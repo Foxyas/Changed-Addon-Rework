@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:pat_icon"
+    },
+    "title": {
+      "translate": "advancements.stealthpats.title"
+    },
+    "description": {
+      "translate": "advancements.stealthpats.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "stealthpats": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "experience": 160
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

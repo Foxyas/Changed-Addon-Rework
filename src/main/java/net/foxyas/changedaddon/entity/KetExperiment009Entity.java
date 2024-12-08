@@ -94,10 +94,12 @@ public class KetExperiment009Entity extends ChangedEntity {
 
 	@Override
 	public int getTicksRequiredToFreeze() { return 1000; }
+	
 	@Override
 	protected boolean targetSelectorTest(LivingEntity livingEntity) {
         return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:humanoids")));
     }
+    
 	@Override
 	public LatexType getLatexType() {
 		return LatexType.NEUTRAL;

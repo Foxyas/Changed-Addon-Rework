@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.LatexSnepModel;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
@@ -22,6 +23,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.Pose;
+//import net.foxyas.changedaddon.process.DEBUG;
 import org.jetbrains.annotations.NotNull;
 
 public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity, LatexSnepModel, ArmorNoneModel<LatexSnepEntity>> {
@@ -31,10 +34,41 @@ public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity,
 		this.addLayer(new CustomCatEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/latex_snep_right_eye.png"), new ResourceLocation("changed_addon:textures/entities/latex_snep_left_eye.png") , new ResourceLocation("changed_addon:textures/entities/latex_snep_sclera.png")));
 	}
 
+
+	/*
+	@Override
+	public void render(LatexSnepEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+		super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
+		poseStack.pushPose();
+		if (entity.getPose() == Pose.SWIMMING || entity.getPose() == Pose.FALL_FLYING) {
+			poseStack.mulPose(Vector3f.XP.rotationDegrees(DEBUG.HeadPosX));
+			poseStack.mulPose(Vector3f.XN.rotationDegrees(DEBUG.HeadPosY));
+			poseStack.mulPose(Vector3f.YP.rotationDegrees(DEBUG.HeadPosZ));
+			poseStack.mulPose(Vector3f.YN.rotationDegrees(DEBUG.HeadPosT));
+			poseStack.mulPose(Vector3f.ZP.rotationDegrees(DEBUG.HeadPosV));
+			poseStack.mulPose(Vector3f.ZN.rotationDegrees(DEBUG.HeadPosB));
+		}
+		poseStack.popPose();
+	}
+	*/
+
 	@Override
 	public ResourceLocation getTextureLocation(LatexSnepEntity entity) {
 		return new ResourceLocation("changed_addon:textures/entities/latex_snep.png");
 	}
+
+
+	@Override
+	protected float getFlipDegrees(LatexSnepEntity entity) {
+		return super.getFlipDegrees(entity);
+	}
+
+	@Override
+	protected boolean isEntityUprightType(@NotNull LatexSnepEntity entity) {
+		return false;
+	}
+
+
 
 	private static class CustomCatEyesLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> {
 		private final RenderType rightEyesRenderType;

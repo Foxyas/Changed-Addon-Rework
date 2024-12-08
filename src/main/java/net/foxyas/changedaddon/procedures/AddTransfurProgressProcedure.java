@@ -212,14 +212,17 @@ public class AddTransfurProgressProcedure {
 
 	public static void SnepsiTransfur(Entity player,boolean keepConscience,int type){
 		if (type == 1 ){
-        	ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.SNOW_LEOPARD_PARTIAL.get(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
+        	ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.SNOW_LEOPARD_PARTIAL.get(), keepConscience, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		} else if (type == 2) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant(), keepConscience, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		} else if (type == 3) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant(), keepConscience, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		} else if (type == 4) {
-			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.EXP6.get(),keepConscience,TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.EXP6.get(), keepConscience, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
+		} else if (type == 5) {
+			ProcessTransfur.transfur((LivingEntity) player,player.getLevel(), ChangedAddonTransfurVariants.LATEX_SNEP.get(), keepConscience, TransfurContext.hazard(TransfurCause.FACE_HAZARD));
 		}
+
 
 	}
 }

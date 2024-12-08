@@ -34,6 +34,7 @@ import net.foxyas.changedaddon.item.SnepIconItem;
 import net.foxyas.changedaddon.item.SignalCatcherItem;
 import net.foxyas.changedaddon.item.RawIridiumItem;
 import net.foxyas.changedaddon.item.PotwithcamoniaItem;
+import net.foxyas.changedaddon.item.PatIconItem;
 import net.foxyas.changedaddon.item.PainiteSwordItem;
 import net.foxyas.changedaddon.item.PainiteShovelItem;
 import net.foxyas.changedaddon.item.PainitePickaxeItem;
@@ -180,6 +181,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> REINFORCED_CROSS_BLOCK = block(ChangedAddonModBlocks.REINFORCED_CROSS_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", () -> new Exp9LatexBaseItem());
 	public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", () -> new Exp10LatexBaseItem());
+	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

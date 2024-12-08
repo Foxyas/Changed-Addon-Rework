@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Objects;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.minecraft.world.entity.LivingEntity;
 
 public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 
@@ -68,6 +69,11 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 	public boolean WantToLoaf() {
 		return WantLoaf;
 	}
+
+	@Override
+	protected boolean targetSelectorTest(LivingEntity livingEntity) {
+        return false;
+    }
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {

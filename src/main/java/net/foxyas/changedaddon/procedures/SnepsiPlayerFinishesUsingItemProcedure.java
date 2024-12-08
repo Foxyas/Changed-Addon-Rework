@@ -34,6 +34,8 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
 				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 3);
 			} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_exp6")) {
 				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 4);
+			} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_latex_snep")) {
+				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 5);
 			} else {
 				AddTransfurProgressProcedure.SnepsiTransfur(entity, true, 1);
 			}

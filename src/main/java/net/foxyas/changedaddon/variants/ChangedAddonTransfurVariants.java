@@ -56,7 +56,7 @@ public class ChangedAddonTransfurVariants {
     public static final DeferredRegister<TransfurVariant<?>> REGISTRY = ChangedRegistry.TRANSFUR_VARIANT.createDeferred(ChangedAddonMod.MODID);
 
     public static List<TransfurVariant<?>> getRemovedVariantsList() {
-        return List.of(REYN.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP.get());
+        return List.of(REYN.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get());
     }
 
     public static final RegistryObject<TransfurVariant<PuroKindEntity>> ADDON_PURO_KIND_MALE = register("form_puro_kind/male",TransfurVariant.Builder.of(ChangedAddonModEntities.PURO_KIND)

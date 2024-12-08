@@ -11978,7 +11978,8 @@
           "src/main/java/net/foxyas/changedaddon/client/renderer/LatexSnepRenderer.java",
           "src/main/java/net/foxyas/changedaddon/entity/LatexSnepEntity.java"
         ]
-      }
+      },
+      "path": "~/CustomCode/entitys"
     },
     {
       "name": "Exp9LatexBase",
@@ -11992,7 +11993,8 @@
           "src/main/java/net/foxyas/changedaddon/item/Exp9LatexBaseItem.java",
           "src/main/resources/assets/changed_addon/models/item/exp_9_latex_base.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Exp10LatexBase",
@@ -12005,6 +12007,47 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/item/Exp10LatexBaseItem.java",
           "src/main/resources/assets/changed_addon/models/item/exp_10_latex_base.json"
+        ]
+      },
+      "path": "~/Items"
+    },
+    {
+      "name": "LatexSnepLoot",
+      "type": "loottable",
+      "sortid": 610,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "latex_snep_loot",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/entities/latex_snep.json"
+        ]
+      }
+    },
+    {
+      "name": "PatIcon",
+      "type": "item",
+      "sortid": 612,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "pat_icon",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/item/pat_icon.json",
+          "src/main/java/net/foxyas/changedaddon/item/PatIconItem.java"
+        ]
+      }
+    },
+    {
+      "name": "Stealthpats",
+      "type": "achievement",
+      "sortid": 611,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "stealthpats",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/stealthpats.json"
         ]
       }
     }
@@ -12375,6 +12418,7 @@
       "gui.changed_addon.bookrecipepage_9.button_close": "Close",
       "block.changed_addon.unifuser": "Unifuser",
       "death.attack.latex_solvent": "%1$s was dissolved",
+      "item.changed_addon.pat_icon": "DEVITEM 7",
       "gui.changed_addon.bookrecipepage_7.label_catalyzer": "Catalyzer",
       "item.changed_addon.experiment_009_phase_2_spawn_egg": "Experiment 009 Phase 2 Spawn Egg",
       "block.changed_addon.advanced_catalyzer": "Advanced Catalyzer",
@@ -12499,6 +12543,7 @@
       "item.changed_addon.painite_pickaxe": "Painite Pickaxe",
       "item.changed_addon.latex_dazed_spawn_egg": "Latex Dazed Spawn Egg",
       "advancements.unifuser_advancement.descr": "You craft or get a Unifuser",
+      "advancements.stealthpats.descr": "Pet a Goo Creature while wearing a cloak to conceal and confuse them.",
       "gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it1": "are you sure?",
       "gui.changed_addon.tranfur_sounds_gui.button_61": "Roar",
       "item.changed_addon.exp_2_female_spawn_egg": "Exp2 Female Spawn Egg",
@@ -12694,6 +12739,7 @@
       "gui.changed_addon.bookrecipepage_9.label_unifuser": "Unifuser",
       "changed_addon.form_dialogues.exp10.death.text1": "§4§l§oSo much potential, wasted in a single breath... pathetic.§r",
       "changed_addon.form_dialogues.exp10.death.text2": "§4§l§oAnd even with all this power, you found a way to die...§r",
+      "advancements.stealthpats.title": "Hidden §cAffection§r",
       "advancements.drink_foxta.descr": "Drink foxta for the first time  ",
       "gui.changed_addon.book_recipe_page_11.label_g_any_gooey_item": "G \u003d Any Gooey Item",
       "advancements.dn_astudyisafantasticthingadvancement.descr": "You made one Inpure Ammonia",

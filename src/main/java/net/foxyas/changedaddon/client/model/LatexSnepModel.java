@@ -3,23 +3,21 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
+//import net.foxyas.changedaddon.process.DEBUG;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
-import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.world.entity.Pose;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -29,7 +27,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "latex_snep"), "main");
     // Grupo principal: Animal e corpo
 
-    //private final ModelPart AnimalRoot;
+    private final ModelPart Animal;
     private final ModelPart Head;
     private final ModelPart Torso;
 
@@ -57,11 +55,10 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
 
     public LatexSnepModel(ModelPart root) {
         super(root);
-        //  this.Animal = root.getChild("Animal");
 
-        this.Head = root.getChild("Head");
-
-        this.Torso = root.getChild("Torso");
+        this.Animal = root.getChild("Animal");
+        this.Head = Animal.getChild("Head");
+        this.Torso = Animal.getChild("Torso");
 
         this.Tail = this.Torso.getChild("Tail");
         this.TailPrimary = this.Tail.getChild("TailPrimary");
@@ -74,22 +71,22 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
                 .addPreset(AnimatorPresets.wolfTail(Tail, List.of(TailPrimary, TailSecondary, TailTertiary, TailQuaternary, TailQuinternary)));
 
 
-        this.LegFrontRight = root.getChild("LegFrontRight").getChild("RightArm");
+        this.LegFrontRight = Animal.getChild("LegFrontRight").getChild("RightArm");
         /*ModelPart rightLowerLeg = this.LegFrontRight.getChild("RightLowerLeg");
         ModelPart rightFoot = rightLowerLeg.getChild("RightFoot");
         ModelPart rightPad = rightFoot.getChild("RightPad");*/
 
-        this.LegBackRight = root.getChild("LegBackRight");
+        this.LegBackRight = Animal.getChild("LegBackRight");
         ModelPart rightLowerLeg = this.LegBackRight.getChild("RightLowerLeg");
         ModelPart rightFoot = rightLowerLeg.getChild("RightFoot");
         ModelPart rightPad = rightFoot.getChild("RightPad");
 
-        this.LegFrontLeft = root.getChild("LegFrontLeft").getChild("LeftArm");
+        this.LegFrontLeft = Animal.getChild("LegFrontLeft").getChild("LeftArm");
         /*ModelPart leftLowerLeg = this.LegFrontLeft.getChild("LeftLowerLeg");
         ModelPart leftFoot = leftLowerLeg.getChild("LeftFoot");
         ModelPart leftPad = leftFoot.getChild("LeftPad");*/
 
-        this.LegBackLeft = root.getChild("LegBackLeft");
+        this.LegBackLeft = Animal.getChild("LegBackLeft");
         ModelPart leftLowerLeg = this.LegBackLeft.getChild("LeftLowerLeg");
         ModelPart leftFoot = leftLowerLeg.getChild("LeftFoot");
         ModelPart leftPad = leftFoot.getChild("LeftPad");
@@ -101,20 +98,20 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        //PartDefinition Animal = partdefinition.addOrReplaceChild("Animal", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.5F));
+        PartDefinition Animal = partdefinition.addOrReplaceChild("Animal", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.5F));
 
-        PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -2.0F, -3.0F, 5.0F, 4.0F, 5.0F, new CubeDeformation(0.05F))
+        PartDefinition Head = Animal.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-2.5F, -2.0F, -3.0F, 5.0F, 4.0F, 5.0F, new CubeDeformation(0.05F))
                 .texOffs(0, 24).addBox(-1.5F, -0.02F, -4.0F, 3.0F, 2.0F, 2.0F, new CubeDeformation(0.05F))
                 .texOffs(0, 10).addBox(-2.0F, -3.0F, 0.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.05F))
-                .texOffs(6, 10).addBox(1.0F, -3.0F, 0.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.05F)), PartPose.offset(0.0F, 14.0F, -7.75F));
+                .texOffs(6, 10).addBox(1.0F, -3.0F, 0.0F, 1.0F, 1.0F, 2.0F, new CubeDeformation(0.05F)), PartPose.offset(0.0F, -10.0F, -8.25F));
 
-        PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create(), PartPose.offset(0.0F, 15.0F, 0.0F));
+        PartDefinition Torso = Animal.addOrReplaceChild("Torso", CubeListBuilder.create(), PartPose.offset(0.0F, -9.0F, -0.5F));
 
         PartDefinition Torso_r1 = Torso.addOrReplaceChild("Torso_r1", CubeListBuilder.create().texOffs(50, 12).addBox(-3.0F, 3.0F, -2.0F, 6.0F, 11.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.5F, -4.75F, 1.5708F, 0.0F, 0.0F));
 
         PartDefinition Torso_r2 = Torso.addOrReplaceChild("Torso_r2", CubeListBuilder.create().texOffs(48, 1).addBox(-3.5F, -2.0F, -2.5F, 7.0F, 5.0F, 6.0F, new CubeDeformation(-0.2F)), PartPose.offsetAndRotation(0.0F, 0.5F, -4.5F, 1.5708F, 0.0F, 0.0F));
 
-        PartDefinition Tail = Torso.addOrReplaceChild("Tail", CubeListBuilder.create(), PartPose.offset(0.0F, -0.5F, 7.75F));
+        PartDefinition Tail = Torso.addOrReplaceChild("Tail", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -0.5F, 7.75F, 0.0436F, 0.0F, 0.0F));
 
         PartDefinition TailPrimary = Tail.addOrReplaceChild("TailPrimary", CubeListBuilder.create(), PartPose.offsetAndRotation(0.0F, -0.0173F, -1.0306F, 0.1309F, 0.0F, 0.0F));
 
@@ -136,19 +133,19 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
 
         PartDefinition Base_r5 = TailQuinternary.addOrReplaceChild("Base_r5", CubeListBuilder.create().texOffs(60, 63).addBox(-2.0F, 5.5F, -3.8F, 4.0F, 3.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offsetAndRotation(0.0F, -1.0F, -5.5F, 1.7017F, 0.0F, 0.0F));
 
-        PartDefinition LegFrontRight = partdefinition.addOrReplaceChild("LegFrontRight", CubeListBuilder.create(), PartPose.offset(-1.0F, 18.0F, -4.0F));
+        PartDefinition LegFrontRight = Animal.addOrReplaceChild("LegFrontRight", CubeListBuilder.create(), PartPose.offset(-1.0F, -6.0F, -4.5F));
 
         PartDefinition RightArm = LegFrontRight.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(16, 35).mirror().addBox(-1.5F, -2.0F, -1.75F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition RightThigh_r1 = RightArm.addOrReplaceChild("RightThigh_r1", CubeListBuilder.create().texOffs(0, 34).addBox(0.0F, 2.075F, -2.1F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.001F)), PartPose.offsetAndRotation(-1.5F, -4.5F, 1.0F, -0.2182F, 0.0F, 0.0F));
 
-        PartDefinition LegFrontLeft = partdefinition.addOrReplaceChild("LegFrontLeft", CubeListBuilder.create(), PartPose.offset(1.0F, 18.25F, -4.25F));
+        PartDefinition LegFrontLeft = Animal.addOrReplaceChild("LegFrontLeft", CubeListBuilder.create(), PartPose.offset(1.0F, -5.75F, -4.75F));
 
         PartDefinition LeftArm = LegFrontLeft.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(16, 35).addBox(-0.5F, -2.25F, -1.5F, 2.0F, 8.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition LeftThigh_r1 = LeftArm.addOrReplaceChild("LeftThigh_r1", CubeListBuilder.create().texOffs(0, 34).mirror().addBox(-2.0F, 2.075F, -2.1F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.001F)).mirror(false), PartPose.offsetAndRotation(1.5F, -4.75F, 1.25F, -0.2182F, 0.0F, 0.0F));
 
-        PartDefinition LegBackRight = partdefinition.addOrReplaceChild("LegBackRight", CubeListBuilder.create(), PartPose.offset(-2.0F, 18.0F, 7.0F));
+        PartDefinition LegBackRight = Animal.addOrReplaceChild("LegBackRight", CubeListBuilder.create(), PartPose.offset(-2.0F, -6.0F, 6.5F));
 
         PartDefinition RightThigh_r2 = LegBackRight.addOrReplaceChild("RightThigh_r2", CubeListBuilder.create().texOffs(0, 34).addBox(0.25F, 2.075F, -2.1F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.001F)), PartPose.offsetAndRotation(-1.5F, -4.5F, 1.0F, -0.2182F, 0.0F, 0.0F));
 
@@ -162,7 +159,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
 
         PartDefinition RightPad = RightFoot.addOrReplaceChild("RightPad", CubeListBuilder.create().texOffs(7, 34).addBox(-0.75F, -1.0F, -0.85F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 2.825F, -2.675F));
 
-        PartDefinition LegBackLeft = partdefinition.addOrReplaceChild("LegBackLeft", CubeListBuilder.create(), PartPose.offset(1.75F, 18.0F, 7.0F));
+        PartDefinition LegBackLeft = Animal.addOrReplaceChild("LegBackLeft", CubeListBuilder.create(), PartPose.offset(1.75F, -6.0F, 6.5F));
 
         PartDefinition LeftThigh_r2 = LegBackLeft.addOrReplaceChild("LeftThigh_r2", CubeListBuilder.create().texOffs(0, 34).mirror().addBox(-2.0F, 2.075F, -2.1F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.001F)).mirror(false), PartPose.offsetAndRotation(1.5F, -4.5F, 1.0F, -0.2182F, 0.0F, 0.0F));
 
@@ -250,12 +247,14 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
         } else if (!entity.isShiftKeyDown()) {
             this.Torso.setPos(0.0F, 15.0F, 0.0F);
         }
+
     }
 
     @Override
     public void setupHand() {
         animator.setupHand();
     }
+
 
     @Override
     public void setupAnim(@NotNull LatexSnepEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
@@ -289,6 +288,10 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
             this.Tail.xRot = 20f * ((float)Math.PI / 180F);
         }
         if (entity.isSleeping()) {
+            this.Tail.xRot = 0 * Mth.DEG_TO_RAD;
+        }
+
+        if (entity.getPose() == Pose.SWIMMING || entity.getPose() == Pose.FALL_FLYING) {
             this.Tail.xRot = 0 * Mth.DEG_TO_RAD;
         }
 

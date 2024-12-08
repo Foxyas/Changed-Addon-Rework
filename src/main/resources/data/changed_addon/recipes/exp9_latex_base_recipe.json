@@ -2,7 +2,7 @@
   "type": "changed_addon:unifuser",
   "ingredients": [
     {
-      "item": "changed_addon:experiment_9_dna"
+      "item": "changed_addon:experiment_009dna"
     },
     {
       "item": "changed:latex_base"
