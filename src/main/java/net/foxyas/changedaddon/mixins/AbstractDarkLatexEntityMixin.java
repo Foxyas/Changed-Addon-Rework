@@ -15,7 +15,7 @@ public class AbstractDarkLatexEntityMixin {
 	@Inject(method = "targetSelectorTest", at = @At("HEAD"), cancellable = true)
 	private void CancelTargetIfNotMoving(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
 		if (livingEntity instanceof Player player) {
-			if (player.getDeltaMovement().length() == 0 && !player.swinging) {
+			if (player.getDeltaMovement().length() == 0 && player.swingTime <= 0) {
 				cir.setReturnValue(false);
 			}
 		}

@@ -59,6 +59,9 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
                         && Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP.get()){
                     setOldVariant(entity.getSelfVariant());
                 }
+            } else if (Instance != null){
+            	if (Instance.getParent() ==	ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() && ability.getSelectedDisplayText(this.entity) != null){
+            	player.displayClientMessage(ability.getSelectedDisplayText(this.entity),true);
             }
         }
     }

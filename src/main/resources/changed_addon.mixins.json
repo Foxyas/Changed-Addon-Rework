@@ -13,7 +13,8 @@
     "ChangedMixin",
     "CrossCollisionBlockMixin",
     "RandomVariantFunctionMixin",
-    "TransfurVariantInstanceMixin"
+    "TransfurVariantInstanceMixin",
+    "WingAnimationMixin"
   ],
   "injectors": {
     "defaultRequire": 1

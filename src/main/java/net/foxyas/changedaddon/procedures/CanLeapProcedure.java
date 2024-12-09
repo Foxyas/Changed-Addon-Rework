@@ -25,12 +25,12 @@ public class CanLeapProcedure {
 	}
 
 	public static boolean flyentity(Entity entity) {
-		Player player = (Player) entity;
+		/*Player player = (Player) entity;
 		TransfurVariantInstance LatexInstace = ProcessTransfur.getPlayerTransfurVariant(player);
 		TransfurVariant Variant = TransfurVariant.getEntityVariant(LatexInstace.getChangedEntity());
 		if (Variant.canGlide){
 			return true;
-		}
+		}*/
 		return false;
 	}
 }

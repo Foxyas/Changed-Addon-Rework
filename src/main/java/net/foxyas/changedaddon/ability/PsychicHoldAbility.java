@@ -84,7 +84,7 @@ public class PsychicHoldAbility extends SimpleAbility {
         	double distance = projectilePos.distanceTo(playerPos);
 
         	// Adicionar exaustão enquanto usa a habilidade
-    		if (!player.isSpectator() && projectile.isOnGround()) {
+    		if (!player.isSpectator() && !projectile.isOnGround()) {
         		player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
     		}
 
@@ -98,11 +98,11 @@ public class PsychicHoldAbility extends SimpleAbility {
 
         	if (distance <= repelRange) {
             	// Repelir projéteis extremamente próximos
-            	Vec3 repelForce = toPlayer.scale(-1.0 * ((repelRange - distance) * 2)); // Força inversamente proporcional
+            	Vec3 repelForce = toPlayer.scale(-1.0 * ((repelRange - distance) * 1.5)); // Força inversamente proporcional
             	projectile.setDeltaMovement(currentMotion.add(repelForce));
         	} else {
             	// Diminuir velocidade de projéteis distantes
-            	double slowFactor = Math.max(0.1, 1.0 - (distance / maxRange)); // Fator de lentidão (mínimo 0.1)
+            	double slowFactor = Math.max(0.1, 1.0 - ((distance / maxRange) / 2)); // Fator de lentidão (mínimo 0.1)
             	Vec3 reducedMotion = currentMotion.scale(slowFactor);
 
             	// Verificar se projétil está indo na direção do jogador (produto escalar)
