@@ -16,7 +16,7 @@ import net.minecraft.network.chat.TextComponent;
 
 public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInstance> {
 
-    public static final int TICK_HOLD_NEED = 15;
+    public static final int TICK_HOLD_NEED = 30;
     public WingFlapAbility() {
         super(AbilityInstance::new);
     }
@@ -71,6 +71,9 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
     public static class AbilityInstance extends AbstractAbilityInstance {
 
 
+    	public boolean ReadytoDash = false;
+
+
         public AbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
             super(ability, entity);
         }
@@ -115,6 +118,13 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
 
         @Override
         public void tick() {
+         if (!(entity.getEntity() instanceof Player player) || player.getFoodData().getFoodLevel() <= 6) {
+                return;
+            }
+            if (getController().getHoldTicks() >= TICK_HOLD_NEED){
+				this.ReadytoDash = true;
+            }
+
 			player.displayClientMessage(new TextComponent("ticks = " + getController().getHoldTicks()),true);
         }
 
@@ -127,7 +137,8 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
             if (player.isInWater() || player.isSpectator()) {
                 return;
             }
-            if (player.isFallFlying() && !player.getAbilities().flying && getController().getHoldTicks() >= TICK_HOLD_NEED){
+            if (player.isFallFlying() && !player.getAbilities().flying && ReadytoDash){
+            	this.ReadytoDash = false;
                 double speed = 2;
                 player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed,speed,speed)));
                 playSound(player);

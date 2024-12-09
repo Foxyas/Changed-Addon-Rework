@@ -24,7 +24,7 @@ public class WingAnimationMixin {
             if (variantInstance.hasAbility(ChangedAddonAbilitys.WING_FLAP_ABILITY.get())
                     && variantInstance.getAbilityInstance(ChangedAddonAbilitys.WING_FLAP_ABILITY.get()).canUse()){
                 WingFlapAbility.AbilityInstance WingFlapAbilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilitys.WING_FLAP_ABILITY.get());
-                float maxRotation = (Math.min(20,20 * (WingFlapAbilityInstance.getController().getHoldTicks() / WingFlapAbility.TICK_HOLD_NEED)));
+                float maxRotation = (Math.min(20, 20 * (WingFlapAbilityInstance.getController().getHoldTicks() / WingFlapAbility.TICK_HOLD_NEED)));
                 ((DragonWingFallFlyAnimator<?, ?>) (Object) this).leftWingRoot.zRot = -maxRotation * Mth.DEG_TO_RAD;
                 ((DragonWingFallFlyAnimator<?, ?>) (Object) this).rightWingRoot.zRot = maxRotation * Mth.DEG_TO_RAD;
             }
