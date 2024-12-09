@@ -83,8 +83,12 @@ public class PsychicHoldAbility extends SimpleAbility {
 	        Vec3 toPlayer = playerPos.subtract(projectilePos).normalize(); // Direção do jogador
         	double distance = projectilePos.distanceTo(playerPos);
 
+			if (!projectile.isOnGround()){
+				continue;
+			}
+
         	// Adicionar exaustão enquanto usa a habilidade
-    		if (!player.isSpectator() && !projectile.isOnGround()) {
+    		if (!player.isSpectator()) {
         		player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
     		}
 
