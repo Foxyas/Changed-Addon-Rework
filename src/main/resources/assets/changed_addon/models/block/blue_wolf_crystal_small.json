@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "changed_addon:blocks/blue_wolf_crystal_small",
+    "particle": "changed_addon:blocks/blue_wolf_crystal_small"
+  }
+}

@@ -14,8 +14,8 @@ public class TransfurSicknessOnEffectActiveTickProcedure {
 			if (GetDefault.execute((Player) entity)) {
 				setPlayerTransfurMode.execute((Player) entity, 3);
 			}
-			levelPotion = amplifier;
-			TransfurSicknessHandleProcedure.addAttributeMod(entity, levelPotion);
+			/*levelPotion = amplifier;
+			TransfurSicknessHandleProcedure.addAttributeMod(entity, levelPotion);*/
 		}
 	}
 }

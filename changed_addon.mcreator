@@ -4050,7 +4050,7 @@
       "type": "potioneffect",
       "sortid": 240,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "latex_solvent",
       "metadata": {
         "files": [
@@ -5388,7 +5388,7 @@
       "type": "potioneffect",
       "sortid": 305,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "latex_contamination",
       "metadata": {
         "files": [
@@ -5402,7 +5402,7 @@
       "type": "procedure",
       "sortid": 306,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "latex_contamination_effect_startedapplied",
       "metadata": {
         "files": [
@@ -5422,7 +5422,7 @@
       "type": "procedure",
       "sortid": 307,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "latex_contamination_effect_expires",
       "metadata": {
         "files": [
@@ -8377,7 +8377,7 @@
       "type": "procedure",
       "sortid": 440,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "transfur_sickness_on_effect_active_tick",
       "metadata": {
         "files": [
@@ -8401,7 +8401,7 @@
       "type": "procedure",
       "sortid": 441,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "transfur_sickness_effect_expires",
       "metadata": {
         "files": [
@@ -8425,7 +8425,7 @@
       "type": "potioneffect",
       "sortid": 442,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "transfur_sickness",
       "metadata": {
         "files": [
@@ -10339,7 +10339,7 @@
       "type": "achievement",
       "sortid": 533,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "snepsi_adctive",
       "metadata": {
         "files": [
@@ -12070,11 +12070,153 @@
       "type": "achievement",
       "sortid": 612,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "foxta_adctive",
       "metadata": {
         "files": [
           "src/main/resources/data/changed_addon/advancements/foxta_adctive.json"
+        ]
+      },
+      "path": "~/advancements"
+    },
+    {
+      "name": "LatexExposure",
+      "type": "potioneffect",
+      "sortid": 613,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "latex_exposure",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/potion/LatexExposureMobEffect.java"
+        ]
+      }
+    },
+    {
+      "name": "WhiteWolfCrystalBlock",
+      "type": "block",
+      "sortid": 614,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "white_wolf_crystal_block",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/block/white_wolf_crystal_block.json",
+          "src/main/resources/assets/changed_addon/models/item/white_wolf_crystal_block.json",
+          "src/main/resources/assets/changed_addon/blockstates/white_wolf_crystal_block.json",
+          "src/main/java/net/foxyas/changedaddon/block/WhiteWolfCrystalBlockBlock.java"
+        ]
+      }
+    },
+    {
+      "name": "BlueWolfCrystalBlock",
+      "type": "block",
+      "sortid": 615,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "blue_wolf_crystal_block",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/block/blue_wolf_crystal_block.json",
+          "src/main/resources/assets/changed_addon/models/item/blue_wolf_crystal_block.json",
+          "src/main/java/net/foxyas/changedaddon/block/BlueWolfCrystalBlockBlock.java",
+          "src/main/resources/assets/changed_addon/blockstates/blue_wolf_crystal_block.json"
+        ]
+      }
+    },
+    {
+      "name": "OrangeWolfCrystalBlock",
+      "type": "block",
+      "sortid": 616,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "orange_wolf_crystal_block",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/item/orange_wolf_crystal_block.json",
+          "src/main/java/net/foxyas/changedaddon/block/OrangeWolfCrystalBlockBlock.java",
+          "src/main/resources/assets/changed_addon/models/block/orange_wolf_crystal_block.json",
+          "src/main/resources/assets/changed_addon/blockstates/orange_wolf_crystal_block.json"
+        ]
+      }
+    },
+    {
+      "name": "YellowWolfCrystalBlock",
+      "type": "block",
+      "sortid": 617,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "yellow_wolf_crystal_block",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/block/YellowWolfCrystalBlockBlock.java",
+          "src/main/resources/assets/changed_addon/models/item/yellow_wolf_crystal_block.json",
+          "src/main/resources/assets/changed_addon/models/block/yellow_wolf_crystal_block.json",
+          "src/main/resources/assets/changed_addon/blockstates/yellow_wolf_crystal_block.json"
+        ]
+      }
+    },
+    {
+      "name": "YellowWolfCrystalSmall",
+      "type": "block",
+      "sortid": 618,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "yellow_wolf_crystal_small",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/blockstates/yellow_wolf_crystal_small.json",
+          "src/main/java/net/foxyas/changedaddon/block/YellowWolfCrystalSmallBlock.java",
+          "src/main/resources/assets/changed_addon/models/block/yellow_wolf_crystal_small.json",
+          "src/main/resources/assets/changed_addon/models/item/yellow_wolf_crystal_small.json"
+        ]
+      }
+    },
+    {
+      "name": "OrangeWolfCrystalSmall",
+      "type": "block",
+      "sortid": 619,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "orange_wolf_crystal_small",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/block/orange_wolf_crystal_small.json",
+          "src/main/resources/assets/changed_addon/blockstates/orange_wolf_crystal_small.json",
+          "src/main/resources/assets/changed_addon/models/item/orange_wolf_crystal_small.json",
+          "src/main/java/net/foxyas/changedaddon/block/OrangeWolfCrystalSmallBlock.java"
+        ]
+      }
+    },
+    {
+      "name": "BlueWolfCrystalSmall",
+      "type": "block",
+      "sortid": 620,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "blue_wolf_crystal_small",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/item/blue_wolf_crystal_small.json",
+          "src/main/java/net/foxyas/changedaddon/block/BlueWolfCrystalSmallBlock.java",
+          "src/main/resources/assets/changed_addon/models/block/blue_wolf_crystal_small.json",
+          "src/main/resources/assets/changed_addon/blockstates/blue_wolf_crystal_small.json"
+        ]
+      }
+    },
+    {
+      "name": "WhiteWolfCrystalSmall",
+      "type": "block",
+      "sortid": 621,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "white_wolf_crystal_small",
+      "metadata": {
+        "files": [
+          "src/main/resources/assets/changed_addon/models/block/white_wolf_crystal_small.json",
+          "src/main/resources/assets/changed_addon/blockstates/white_wolf_crystal_small.json",
+          "src/main/java/net/foxyas/changedaddon/block/WhiteWolfCrystalSmallBlock.java",
+          "src/main/resources/assets/changed_addon/models/item/white_wolf_crystal_small.json"
         ]
       }
     }
@@ -12290,8 +12432,8 @@
     "en_us": {
       "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
       "advancements.obtain_foxta.title": "Foxta!",
-      "item.changed_addon.crystal_addager_black": "Dark Crystal Dagger",
       "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
+      "item.changed_addon.crystal_addager_black": "Dark Crystal Dagger",
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
@@ -12349,6 +12491,7 @@
       "enchantment.changed_addon.solvent": "Latex Solvent",
       "item.changed_addon.painite_armor_leggings": "Netherite Leggings with Painite trim",
       "changed_addon.ability.shock_wave": "Shock Wave",
+      "block.changed_addon.yellow_wolf_crystal_small": "White Wolf Crystal Block",
       "effect.changed_addon.transfur_sickness.description": "Prevents players from transfuring entities.",
       "block.changed_addon.iridium_ore": "Deepslate Iridium Ore",
       "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
@@ -12357,6 +12500,7 @@
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "advancements.obtain_red_crystal_dagger.title": "§4Red§r Crystal Dagger!",
+      "block.changed_addon.white_wolf_crystal_small": "White Wolf Crystal Block",
       "item.changed_addon.snepsi": "Snepsi",
       "changed_addon.ability.dodge.dodge_amount_left": "Your Amount of Dodges left is %1$s",
       "config.changed_addon.changed_addon_configs": "changed_addon-server",
@@ -12393,6 +12537,7 @@
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
       "death.attack.untransfurfail.player": "%1$s dies for a fail untransfurmation attempt while fighting %2$s",
       "item.minecraft.lingering_potion.effect.litixcamoniaeffect": "Lingering Potion of LitixCamonia",
+      "block.changed_addon.yellow_wolf_crystal_block": "White Wolf Crystal Block",
       "advancements.friendly_transfur.title": "Friendly Transfur",
       "item.changed_addon.ammoniaparticle": "Ammonia Particle",
       "gamerule.changedAddonOrganicBuff": "ChangedAddon Organic Buff",
@@ -12504,6 +12649,7 @@
       "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "oranges and one glass bottle for that",
       "advancements.latex_insulator_advancement.title": "Latex Insulator",
       "key.changed_addon.open_extra_details": "Open Transfur Extra",
+      "block.changed_addon.blue_wolf_crystal_block": "White Wolf Crystal Block",
       "advancements.leaper.descr": "Do A Hight Jump Leap",
       "item.minecraft.splash_potion.effect.litixcamoniaeffect": "Splash Potion of LitixCamonia",
       "gui.changed_addon.tranfur_sounds_gui.button_6": "hiss",
@@ -12543,6 +12689,7 @@
       "key.changed_addon.pat_received": "{0} pat You",
       "gui.changed_addon.book_pagenumber_2.label_ammonia": "Ammonia powder",
       "gamerule.fighttokeepconsciousness": "Fight to keep consciousness",
+      "block.changed_addon.orange_wolf_crystal_block": "White Wolf Crystal Block",
       "advancements.organic_transfur_advancement.title": "Organic And Fluffy!!",
       "gamerule.fight_to_keep_consciousness": "Fight to keep consciousness",
       "gui.changed_addon.bookpagenumber_4.button_back": "Back",
@@ -12553,6 +12700,7 @@
       "advancements.latex_insulator_advancement.descr": "Let\u0027s isolate this gooey infection",
       "entity.changed_addon.prototype": "Prototype",
       "advancements.pat_advancement.title": "That does something?!",
+      "effect.changed_addon.latex_exposure": "Latex Exposure",
       "item.changed_addon.exp_1_male_spawn_egg": "Exp1 Male Spawn Egg",
       "text.changed_addon.legs": "Amount of Legs \u003d %s",
       "item.changed_addon.hazmat_suit_boots": "Hazmat Boots",
@@ -12667,6 +12815,7 @@
       "gui.changed_addon.book_pagenumber_2.label_litixcamonia": "Litix-Camonia",
       "item.changed_addon.experiment_10_boss_spawn_egg": "Experiment 10 Boss Spawn Egg",
       "gamerule.needPermitionForBossTransfur.description": "When On the player Need Permition For Transfur into a Boss Transfur",
+      "block.changed_addon.blue_wolf_crystal_small": "White Wolf Crystal Block",
       "effect.changed_addon.latex_solvent": "Latex Solvent",
       "block.changed_addon.reinforced_cross_block": "Reinforced Cross",
       "advancements.transfur_totem_advancement_1.title": "In Total Control",
@@ -12692,6 +12841,7 @@
       "advancements.timesthesyringewasuseadvancement_3.descr": "YOU USE THE LITIX SYRINGE 120 TIMES §4 I WARNED YOU TO STOP SERIOUSLY YOU COULD GET CANCER!!!",
       "gamerule.needPermitionFor009Transfur.description": "When On the player Need Permition For Transfur in Boss 009 ",
       "item.changed_addon.friendly_goey_icon": "Dev item",
+      "block.changed_addon.white_wolf_crystal_block": "White Wolf Crystal Block",
       "item.changed_addon.snow_leopard_female_organic_spawn_egg": "Female BioSynth Snow Leopard Spawn Egg",
       "entity.changed_addon.latex_puro_kind_female": "Puro Kind Female",
       "advancements.foxyas_advancement.title": "§4YOU MONSTER",
@@ -12727,6 +12877,7 @@
       "key.changed_addon.duct_prone": "Duct Prone",
       "gui.changed_addon.book_pagenumber_1.button_changed_addon_recipes": "Changed Addon Recipes",
       "block.changed_addon.informantblock": "Informant Block",
+      "block.changed_addon.orange_wolf_crystal_small": "White Wolf Crystal Block",
       "item.changed_addon.puro_kind_spawn_egg": "Puro Kind Male Spawn Egg",
       "advancements.potwithlitixcamonia_advancement.descr": "You drank a liquid made from the dilution of litixcamonia The taste is not bad besides it tastes like cherry!",
       "gui.changed_addon.bookrecipepage_7.button_back": "Back",

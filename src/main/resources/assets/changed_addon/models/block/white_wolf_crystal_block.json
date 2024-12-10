@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "changed_addon:blocks/white_wolf_crystal_block",
+    "particle": "changed_addon:blocks/white_wolf_crystal_block"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "changed_addon:block/blue_wolf_crystal_block"
+    }
+  }
+}

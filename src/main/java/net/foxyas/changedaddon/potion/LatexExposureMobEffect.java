@@ -1,27 +1,23 @@
 
 package net.foxyas.changedaddon.potion;
 
-import net.foxyas.changedaddon.init.ChangedAddonModAttributes;
-import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.LivingEntity;
+import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffect;
-
-import net.foxyas.changedaddon.procedures.LatexSolventOnActiveTickProcedure;
-import net.foxyas.changedaddon.procedures.LatexSolventEffectStartedappliedProcedure;
-import net.foxyas.changedaddon.procedures.LatexSolventEffectExpiresProcedure;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
-public class LatexSolventMobEffect extends MobEffect {
-	public LatexSolventMobEffect() {
-		super(MobEffectCategory.NEUTRAL, Color3.getColor("#ffffff").toInt());
-		addAttributeModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(),"a0ca1f84-b8cc-43da-baea-0e6a6af71a7a",0.1, AttributeModifier.Operation.ADDITION);
+public class LatexExposureMobEffect extends MobEffect {
+	public LatexExposureMobEffect() {
+		super(MobEffectCategory.HARMFUL, -1118482);
+		addAttributeModifier(ChangedAttributes.TRANSFUR_TOLERANCE.get(),"3a4a0a56-72e9-438e-b0d3-8e4b02b2f7ae",-2, AttributeModifier.Operation.ADDITION);
 	}
+
 
 	@Override
 	public String getDescriptionId() {
-		return "effect.changed_addon.latex_solvent";
+		return "effect.changed_addon.latex_exposure";
 	}
 
 	@Override

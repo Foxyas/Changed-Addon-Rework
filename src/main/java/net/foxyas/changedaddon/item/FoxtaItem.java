@@ -70,10 +70,10 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
     @Override
     public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
         ItemStack retval = super.finishUsingItem(itemstack, world, entity);
-        if (entity instanceof ServerPlayer serverPlayer) {
+        /*if (entity instanceof ServerPlayer serverPlayer) {
             StatsCounter stats = serverPlayer.getStats();
             // Distância percorrida no ar
-            int Foxta_Drink_Amount = stats.getValue(Stats.ITEM_USED.get(ChangedAddonModItems.SNEPSI.get()));
+            int Foxta_Drink_Amount = stats.getValue(Stats.ITEM_USED.get(ChangedAddonModItems.FOXTA.get()));
             if (Foxta_Drink_Amount >= 100) {
                 Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:foxta_adctive"));
                 assert _adv != null;
@@ -83,7 +83,7 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
                 }
             }
             //serverPlayer.displayClientMessage(new TextComponent("Drink this = " + Snepsi_Drink_Amount),false);
-        }
+        }*/
 
         return retval;
     }

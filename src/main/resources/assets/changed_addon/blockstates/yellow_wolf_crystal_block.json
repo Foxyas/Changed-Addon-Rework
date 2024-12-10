@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "changed_addon:block/yellow_wolf_crystal_block"
+    }
+  }
+}

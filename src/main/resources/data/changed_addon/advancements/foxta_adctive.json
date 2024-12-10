@@ -12,11 +12,32 @@
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": true
+    "hidden": false
   },
   "criteria": {
     "foxta_adctive": {
-      "trigger": "minecraft:impossible"
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:foxta"
+          ]
+        },
+        "player": {
+          "player": {
+            "stats": [
+              {
+                "type": "minecraft:used",
+                "stat": "changed_addon:foxta",
+                "value": {
+                  "min": 100,
+                  "max": 999999
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "rewards": {

@@ -13,6 +13,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.foxyas.changedaddon.potion.UntransfurMobEffect;
 import net.foxyas.changedaddon.potion.TransfurSicknessMobEffect;
 import net.foxyas.changedaddon.potion.LatexSolventMobEffect;
+import net.foxyas.changedaddon.potion.LatexExposureMobEffect;
 import net.foxyas.changedaddon.potion.LatexContaminationMobEffect;
 import net.foxyas.changedaddon.potion.FadigeMobEffect;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -24,4 +25,5 @@ public class ChangedAddonModMobEffects {
 	public static final RegistryObject<MobEffect> LATEX_SOLVENT = REGISTRY.register("latex_solvent", () -> new LatexSolventMobEffect());
 	public static final RegistryObject<MobEffect> LATEX_CONTAMINATION = REGISTRY.register("latex_contamination", () -> new LatexContaminationMobEffect());
 	public static final RegistryObject<MobEffect> TRANSFUR_SICKNESS = REGISTRY.register("transfur_sickness", () -> new TransfurSicknessMobEffect());
+	public static final RegistryObject<MobEffect> LATEX_EXPOSURE = REGISTRY.register("latex_exposure", () -> new LatexExposureMobEffect());
 }

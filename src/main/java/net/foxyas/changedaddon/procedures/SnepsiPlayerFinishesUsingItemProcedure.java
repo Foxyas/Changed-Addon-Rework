@@ -22,7 +22,6 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
         if (entity instanceof ServerPlayer serverPlayer) {
             StatsCounter stats = serverPlayer.getStats();
             // Distância percorrida no ar
-            int Snepsi_Drink_Amount = stats.getValue(Stats.ITEM_USED.get(ChangedAddonModItems.SNEPSI.get()));
             if (ProcessTransfur.getPlayerTransfurVariant(serverPlayer) == null) {
                 if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_latex_snow_leopard_partial")) {
                     AddTransfurProgressProcedure.SnepsiTransfur(entity, 1);
@@ -38,6 +37,7 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
                     AddTransfurProgressProcedure.SnepsiTransfur(entity, 1);
                 }
             }
+            /*int Snepsi_Drink_Amount = stats.getValue(Stats.ITEM_USED.get(ChangedAddonModItems.SNEPSI.get()));
             if (Snepsi_Drink_Amount >= 100) {
                 Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:snepsi_adctive"));
                 assert _adv != null;
@@ -45,7 +45,7 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
                 if (!_ap.isDone()) {
                     for (String string : _ap.getRemainingCriteria()) serverPlayer.getAdvancements().award(_adv, string);
                 }
-            }
+            }*/
             //serverPlayer.displayClientMessage(new TextComponent("Drink this = " + Snepsi_Drink_Amount),false);
         }
 

@@ -182,6 +182,14 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
+	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
