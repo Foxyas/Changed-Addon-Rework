@@ -71,11 +71,10 @@ public class AbstractWolfCrystalExtender {
 
         public AbstractWolfCrystalBlock() {
             super(
-                    BlockBehaviour.Properties.of(ChangedMaterials.LATEX_CRYSTAL)
-                            .sound(SoundType.AMETHYST_CLUSTER)
-                            .noOcclusion()
-                            .dynamicShape()
-                            .strength(1.7F, 0.2F)
+                    BlockBehaviour.Properties.of(Material.ICE_SOLID, MaterialColor.COLOR_RED)
+                    .friction(0.98F)
+                    .sound(SoundType.AMETHYST)
+                    .strength(2.0F, 2.0F))
             );
         }
 
