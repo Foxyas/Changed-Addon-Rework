@@ -12160,7 +12160,7 @@
       "name": "YellowWolfCrystalSmall",
       "type": "block",
       "sortid": 618,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "yellow_wolf_crystal_small",
       "metadata": {
@@ -12176,7 +12176,7 @@
       "name": "OrangeWolfCrystalSmall",
       "type": "block",
       "sortid": 619,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "orange_wolf_crystal_small",
       "metadata": {
@@ -12192,7 +12192,7 @@
       "name": "BlueWolfCrystalSmall",
       "type": "block",
       "sortid": 620,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "blue_wolf_crystal_small",
       "metadata": {
@@ -12208,7 +12208,7 @@
       "name": "WhiteWolfCrystalSmall",
       "type": "block",
       "sortid": 621,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "white_wolf_crystal_small",
       "metadata": {
@@ -12217,6 +12217,58 @@
           "src/main/resources/assets/changed_addon/blockstates/white_wolf_crystal_small.json",
           "src/main/java/net/foxyas/changedaddon/block/WhiteWolfCrystalSmallBlock.java",
           "src/main/resources/assets/changed_addon/models/item/white_wolf_crystal_small.json"
+        ]
+      }
+    },
+    {
+      "name": "WolfCrystalBlueRecipe",
+      "type": "recipe",
+      "sortid": 622,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "wolf_crystal_blue_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/wolf_crystal_blue_recipe.json"
+        ]
+      }
+    },
+    {
+      "name": "WolfCrystalYellowRecipe",
+      "type": "recipe",
+      "sortid": 623,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "wolf_crystal_yellow_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/wolf_crystal_yellow_recipe.json"
+        ]
+      }
+    },
+    {
+      "name": "WolfCrystalOrangeRecipe",
+      "type": "recipe",
+      "sortid": 624,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "wolf_crystal_orange_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/wolf_crystal_orange_recipe.json"
+        ]
+      }
+    },
+    {
+      "name": "WolfCrystalWhiteRecipe",
+      "type": "recipe",
+      "sortid": 625,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "wolf_crystal_white_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/wolf_crystal_white_recipe.json"
         ]
       }
     }

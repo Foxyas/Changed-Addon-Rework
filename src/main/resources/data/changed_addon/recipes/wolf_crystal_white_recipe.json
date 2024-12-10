@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "0",
+    "1"
+  ],
+  "key": {
+    "0": {
+      "item": "changed:wolf_crystal_block"
+    },
+    "1": {
+      "item": "minecraft:white_dye"
+    }
+  },
+  "result": {
+    "item": "changed_addon:white_wolf_crystal_block",
+    "count": 1
+  }
+}

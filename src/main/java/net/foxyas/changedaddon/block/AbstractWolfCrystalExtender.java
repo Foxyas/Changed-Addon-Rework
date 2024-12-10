@@ -1,8 +1,12 @@
 package net.foxyas.changedaddon.block;
 
-import net.ltxprogrammer.changed.block.*;
+import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
+import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
+import net.ltxprogrammer.changed.block.WolfCrystal;
+import net.ltxprogrammer.changed.block.WolfCrystalBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.LatexType;
+import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedMaterials;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
@@ -12,19 +16,56 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
-import static net.ltxprogrammer.changed.block.AbstractLatexBlock.getLatexed;
-import net.minecraft.world.item.Item;
+import java.util.function.Supplier;
 
 
 public class AbstractWolfCrystalExtender {
+
+    /*@Mod.EventBusSubscriber
+    public static class TransformBlockSystem {
+        @SubscribeEvent
+        public static void ColorTheCrystal(PlayerInteractEvent.RightClickBlock event){
+            Level level = event.getWorld();
+            if (level.getBlockState(event.getPos()).getBlock() instanceof WolfCrystalBlock){
+                BlockState newBlockStage;
+                ItemStack itemStack = event.getItemStack();
+                if (itemStack.is(Items.LIGHT_BLUE_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                } else if (itemStack.is(Items.WHITE_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                } else if (itemStack.is(Items.ORANGE_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                } else if (itemStack.is(Items.YELLOW_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                }
+            } else if (level.getBlockState(event.getPos()).getBlock() instanceof AbstractWolfCrystalBlock) {
+                BlockState newBlockStage;
+                ItemStack itemStack = event.getItemStack();
+                if (itemStack.is(Items.RED_DYE)) {
+                    newBlockStage = ChangedBlocks.WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                }
+            }
+        }
+    }*/
 
     public static abstract class AbstractWolfCrystalBlock extends AbstractLatexIceBlock {
 
@@ -76,7 +117,7 @@ public class AbstractWolfCrystalExtender {
     }
     public static abstract class AbstractWolfCrystalSmall extends TransfurCrystalBlock {
 
-        public AbstractWolfCrystalSmall(Item fragment) {
+        public AbstractWolfCrystalSmall(Supplier<? extends Item> fragment) {
             super(ChangedTransfurVariants.CRYSTAL_WOLF, fragment,
 
                     BlockBehaviour.Properties.of(ChangedMaterials.LATEX_CRYSTAL)
@@ -85,7 +126,8 @@ public class AbstractWolfCrystalExtender {
                             .dynamicShape()
                             .strength(1.7F, 0.2F)
             );
-        }
+        }
+
 
         public AbstractWolfCrystalSmall() {
             super(ChangedTransfurVariants.CRYSTAL_WOLF, ChangedItems.WOLF_CRYSTAL_FRAGMENT,
