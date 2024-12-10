@@ -12022,7 +12022,8 @@
         "files": [
           "src/main/resources/data/changed_addon/loot_tables/entities/latex_snep.json"
         ]
-      }
+      },
+      "path": "~/Entity/Entity Loot"
     },
     {
       "name": "PatIcon",
