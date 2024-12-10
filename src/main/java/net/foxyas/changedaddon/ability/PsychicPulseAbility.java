@@ -89,6 +89,10 @@ public class PsychicPulseAbility extends SimpleAbility {
 								Vec3 Motion = NegativeMotion.multiply(1.5,1.5,1.5);
 								entityiterator.setDeltaMovement(Motion);
 								entityiterator.hasImpulse = true;
+								// Adicionar exaustão enquanto usa a habilidade
+								if (!entity.isSpectator()) {
+									entity.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
+								}
 							}
 						}
 					}

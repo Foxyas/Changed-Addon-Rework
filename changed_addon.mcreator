@@ -12036,7 +12036,8 @@
           "src/main/resources/assets/changed_addon/models/item/pat_icon.json",
           "src/main/java/net/foxyas/changedaddon/item/PatIconItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "Stealthpats",
@@ -12049,7 +12050,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/stealthpats.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     },
     {
       "name": "ChangedLure",
