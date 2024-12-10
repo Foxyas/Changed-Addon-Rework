@@ -7251,7 +7251,7 @@
       "name": "LatexSnowFox",
       "type": "livingentity",
       "sortid": 35,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_snow_fox",
       "metadata": {
@@ -7691,7 +7691,7 @@
       "name": "PuroKind",
       "type": "livingentity",
       "sortid": 405,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "puro_kind",
       "metadata": {
@@ -7706,7 +7706,7 @@
       "name": "PuroKindFemale",
       "type": "livingentity",
       "sortid": 406,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "puro_kind_female",
       "metadata": {
@@ -7823,7 +7823,7 @@
       "name": "SnowLeopardFemaleOrganic",
       "type": "livingentity",
       "sortid": 412,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "snow_leopard_female_organic",
       "metadata": {
@@ -8226,7 +8226,7 @@
       "name": "AddTransfurProgress",
       "type": "procedure",
       "sortid": 433,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "add_transfur_progress",
       "metadata": {
@@ -8542,7 +8542,7 @@
       "name": "Experiment10",
       "type": "livingentity",
       "sortid": 450,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10",
       "metadata": {
@@ -9987,7 +9987,7 @@
       "name": "CreatureDietsHandle",
       "type": "procedure",
       "sortid": 514,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "creature_diets_handle",
       "metadata": {
@@ -10355,7 +10355,7 @@
       "name": "PlayerUtil",
       "type": "procedure",
       "sortid": 534,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "player_util",
       "metadata": {
@@ -11182,7 +11182,7 @@
       "name": "Experiment10Boss",
       "type": "livingentity",
       "sortid": 575,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10_boss",
       "metadata": {
@@ -11335,7 +11335,7 @@
       "name": "SnepPlush",
       "type": "block",
       "sortid": 59,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "snep_plush",
       "metadata": {
@@ -11970,7 +11970,7 @@
       "name": "LatexSnep",
       "type": "livingentity",
       "sortid": 607,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_snep",
       "metadata": {

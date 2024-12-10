@@ -75,7 +75,7 @@ public class PsychicHoldAbility extends SimpleAbility {
     // Selecionar apenas entidades relevantes
     List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class,
         new AABB(playerPos, playerPos).inflate(maxRange / 2.0),
-        (e -> e instanceof FallingBlockEntity || e.getType().is(EntityTypeTags.IMPACT_PROJECTILES)) && (!e.isOnGround()));
+        e -> e instanceof FallingBlockEntity || e.getType().is(EntityTypeTags.IMPACT_PROJECTILES) && !e.isOnGround());
 
     for (Entity projectile : nearbyEntities) {
     	    Vec3 projectilePos = projectile.position();
