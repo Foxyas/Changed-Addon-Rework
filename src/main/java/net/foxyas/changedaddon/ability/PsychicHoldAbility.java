@@ -111,13 +111,9 @@ public class PsychicHoldAbility extends SimpleAbility {
 
             	// Verificar se projétil está indo na direção do jogador (produto escalar)
             	double dotProduct = currentMotion.normalize().dot(toPlayer);
-            	if (!player.isShiftKeyDown()) {
-                	if (dotProduct > 0) {
+            	if (dotProduct > 0) {
                     	projectile.setDeltaMovement(reducedMotion);
-                	}
-            	} else {
-                	projectile.setDeltaMovement(reducedMotion);
-            	}
+                }
         	}
     	}
 	}
