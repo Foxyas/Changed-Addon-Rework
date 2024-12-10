@@ -12064,7 +12064,8 @@
         "files": [
           "src/main/java/net/foxyas/changedaddon/enchantment/ChangedLureEnchantment.java"
         ]
-      }
+      },
+      "path": "~/Enchants"
     }
   ],
   "variable_elements": [
