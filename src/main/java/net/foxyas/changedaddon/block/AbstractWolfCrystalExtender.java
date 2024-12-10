@@ -31,8 +31,8 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.Material;
 
 
 public class AbstractWolfCrystalExtender {
