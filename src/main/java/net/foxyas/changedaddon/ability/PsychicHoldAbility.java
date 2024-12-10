@@ -77,6 +77,11 @@ public class PsychicHoldAbility extends SimpleAbility {
         new AABB(playerPos, playerPos).inflate(maxRange / 2.0),
         e -> e instanceof FallingBlockEntity || e.getType().is(EntityTypeTags.IMPACT_PROJECTILES) && !e.isOnGround());
 
+        // Adicionar exaustão enquanto usa a habilidade
+		if (!player.isSpectator() && !nearbyEntities.isEmpty()) {
+			player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
+		}
+
     for (Entity projectile : nearbyEntities) {
     	    Vec3 projectilePos = projectile.position();
 	        Vec3 toPlayer = playerPos.subtract(projectilePos).normalize(); // Direção do jogador
@@ -84,11 +89,6 @@ public class PsychicHoldAbility extends SimpleAbility {
 
 			if (projectile.isOnGround()){
 				return;
-			}
-
-			// Adicionar exaustão enquanto usa a habilidade
-			if (!player.isSpectator()) {
-				player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
 			}
 
 
