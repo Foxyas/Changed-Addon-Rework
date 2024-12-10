@@ -63,14 +63,6 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<LatexSnowFoxFemaleEntity>of(LatexSnowFoxFemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnowFoxFemaleEntity::new)
 
 					.sized(0.7f, 1.93f));
-	public static final RegistryObject<EntityType<Exp1MaleEntity>> EXP_1_MALE = register("exp_1_male",
-			EntityType.Builder.<Exp1MaleEntity>of(Exp1MaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp1MaleEntity::new)
-
-					.sized(0.7f, 1.93f));
-	public static final RegistryObject<EntityType<Exp1FemaleEntity>> EXP_1_FEMALE = register("exp_1_female",
-			EntityType.Builder.<Exp1FemaleEntity>of(Exp1FemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp1FemaleEntity::new)
-
-					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<Experiment009Entity>> EXPERIMENT_009 = register("experiment_009",
 			EntityType.Builder.<Experiment009Entity>of(Experiment009Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).setCustomClientFactory(Experiment009Entity::new)
 
@@ -141,6 +133,14 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<Experiment10BossEntity>of(Experiment10BossEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Experiment10BossEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<Exp1MaleEntity>> EXP_1_MALE = register("exp_1_male",
+			EntityType.Builder.<Exp1MaleEntity>of(Exp1MaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp1MaleEntity::new)
+
+					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<Exp1FemaleEntity>> EXP_1_FEMALE = register("exp_1_female",
+			EntityType.Builder.<Exp1FemaleEntity>of(Exp1FemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp1FemaleEntity::new)
+
+					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<LatexSnepEntity>> LATEX_SNEP = register("latex_snep",
 			EntityType.Builder.<LatexSnepEntity>of(LatexSnepEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnepEntity::new)
 
@@ -157,8 +157,6 @@ public class ChangedAddonModEntities {
 			FoxyasEntity.init();
 			LatexSnowFoxEntity.init();
 			LatexSnowFoxFemaleEntity.init();
-			Exp1MaleEntity.init();
-			Exp1FemaleEntity.init();
 			Experiment009Entity.init();
 			Experiment009phase2Entity.init();
 			DazedEntity.init();
@@ -178,6 +176,8 @@ public class ChangedAddonModEntities {
 			ReynEntity.init();
 			KetExperiment009BossEntity.init();
 			Experiment10BossEntity.init();
+			Exp1MaleEntity.init();
+			Exp1FemaleEntity.init();
 			LatexSnepEntity.init();
 		});
 	}
@@ -188,8 +188,6 @@ public class ChangedAddonModEntities {
 		event.put(FOXYAS.get(), FoxyasEntity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX.get(), LatexSnowFoxEntity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleEntity.createAttributes().build());
-		event.put(EXP_1_MALE.get(), Exp1MaleEntity.createAttributes().build());
-		event.put(EXP_1_FEMALE.get(), Exp1FemaleEntity.createAttributes().build());
 		event.put(EXPERIMENT_009.get(), Experiment009Entity.createAttributes().build());
 		event.put(EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Entity.createAttributes().build());
 		event.put(DAZED.get(), DazedEntity.createAttributes().build());
@@ -209,6 +207,8 @@ public class ChangedAddonModEntities {
 		event.put(REYN.get(), ReynEntity.createAttributes().build());
 		event.put(KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossEntity.createAttributes().build());
 		event.put(EXPERIMENT_10_BOSS.get(), Experiment10BossEntity.createAttributes().build());
+		event.put(EXP_1_MALE.get(), Exp1MaleEntity.createAttributes().build());
+		event.put(EXP_1_FEMALE.get(), Exp1FemaleEntity.createAttributes().build());
 		event.put(LATEX_SNEP.get(), LatexSnepEntity.createAttributes().build());
 	}
 }

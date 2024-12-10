@@ -44,8 +44,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.FOXYAS.get(), FoxyasRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX.get(), LatexSnowFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleRenderer::new);
-		event.registerEntityRenderer(ChangedAddonModEntities.EXP_1_MALE.get(), Exp1MaleRenderer::new);
-		event.registerEntityRenderer(ChangedAddonModEntities.EXP_1_FEMALE.get(), Exp1FemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_009.get(), Experiment009Renderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_009_PHASE_2.get(), Experiment009phase2Renderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.DAZED.get(), DazedRenderer::new);
@@ -65,6 +63,8 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.REYN.get(), ReynRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), Experiment10BossRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.EXP_1_MALE.get(), Exp1MaleRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.EXP_1_FEMALE.get(), Exp1FemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNEP.get(), LatexSnepRenderer::new);
 	}
 }

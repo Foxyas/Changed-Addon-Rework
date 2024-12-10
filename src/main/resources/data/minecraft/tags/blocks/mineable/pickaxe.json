@@ -8,7 +8,6 @@
     "changed_addon:signal_block",
     "changed_addon:informantblock",
     "changed_addon:containment_container",
-    "changed_addon:generator",
     "changed_addon:iridium_ore",
     "changed_addon:iridium_block",
     "changed_addon:advanced_unifuser",
@@ -17,6 +16,7 @@
     "changed_addon:reinforced_wall_silver_striped",
     "changed_addon:reinforced_wall_silver_tiled",
     "changed_addon:reinforced_wall_caution",
-    "changed_addon:reinforced_cross_block"
+    "changed_addon:reinforced_cross_block",
+    "changed_addon:generator"
   ]
 }

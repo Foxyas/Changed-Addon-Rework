@@ -34,9 +34,9 @@ public class ChangedAddonModBlockEntities {
 	public static final RegistryObject<BlockEntityType<?>> SNEP_PLUSH = register("snep_plush", ChangedAddonModBlocks.SNEP_PLUSH, SnepPlushBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> WOLF_PLUSH = register("wolf_plush", ChangedAddonModBlocks.WOLF_PLUSH, WolfPlushBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> CONTAINMENT_CONTAINER = register("containment_container", ChangedAddonModBlocks.CONTAINMENT_CONTAINER, ContainmentContainerBlockEntity::new);
-	public static final RegistryObject<BlockEntityType<?>> GENERATOR = register("generator", ChangedAddonModBlocks.GENERATOR, GeneratorBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> ADVANCED_UNIFUSER = register("advanced_unifuser", ChangedAddonModBlocks.ADVANCED_UNIFUSER, AdvancedUnifuserBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> ADVANCED_CATALYZER = register("advanced_catalyzer", ChangedAddonModBlocks.ADVANCED_CATALYZER, AdvancedCatalyzerBlockEntity::new);
+	public static final RegistryObject<BlockEntityType<?>> GENERATOR = register("generator", ChangedAddonModBlocks.GENERATOR, GeneratorBlockEntity::new);
 
 	private static RegistryObject<BlockEntityType<?>> register(String registryname, RegistryObject<Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
 		return REGISTRY.register(registryname, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));

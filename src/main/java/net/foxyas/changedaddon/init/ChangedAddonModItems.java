@@ -120,11 +120,13 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> DARKLATEXPUDDLE = block(ChangedAddonModBlocks.DARKLATEXPUDDLE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> LUNARROSE_HELMET = REGISTRY.register("lunarrose_helmet", () -> new LunarroseItem.Helmet());
 	public static final RegistryObject<Item> EXPERIMENT_009DNA = REGISTRY.register("experiment_009dna", () -> new Experiment009dnaItem());
+	public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", () -> new Exp9LatexBaseItem());
 	public static final RegistryObject<Item> EXPERIMENT_009_SPAWNEGG = REGISTRY.register("experiment_009_spawnegg", () -> new Experiment009SpawneggItem());
 	public static final RegistryObject<Item> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", () -> new TransfurTotemItem());
 	public static final RegistryObject<Item> SIGNAL_BLOCK = block(ChangedAddonModBlocks.SIGNAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
 	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
+	public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", () -> new Exp10LatexBaseItem());
 	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
 	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
@@ -146,6 +148,16 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> WOLF_PLUSH = block(ChangedAddonModBlocks.WOLF_PLUSH, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", () -> new BiomassItem());
 	public static final RegistryObject<Item> CONTAINMENT_CONTAINER = block(ChangedAddonModBlocks.CONTAINMENT_CONTAINER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", () -> new RawIridiumItem());
+	public static final RegistryObject<Item> IRIDIUM_ORE = block(ChangedAddonModBlocks.IRIDIUM_ORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> IRIDIUM_BLOCK = block(ChangedAddonModBlocks.IRIDIUM_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ADVANCED_UNIFUSER = block(ChangedAddonModBlocks.ADVANCED_UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ADVANCED_CATALYZER = block(ChangedAddonModBlocks.ADVANCED_CATALYZER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL = block(ChangedAddonModBlocks.REINFORCED_WALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_STRIPED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_STRIPED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_TILED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_TILED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_WALL_CAUTION = block(ChangedAddonModBlocks.REINFORCED_WALL_CAUTION, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> REINFORCED_CROSS_BLOCK = block(ChangedAddonModBlocks.REINFORCED_CROSS_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
 	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
 	public static final RegistryObject<Item> PAINITE_SWORD = REGISTRY.register("painite_sword", () -> new PainiteSwordItem());
@@ -169,18 +181,6 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonModBlocks.SNEPSI_CAN, null);
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
-	public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", () -> new RawIridiumItem());
-	public static final RegistryObject<Item> IRIDIUM_ORE = block(ChangedAddonModBlocks.IRIDIUM_ORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> IRIDIUM_BLOCK = block(ChangedAddonModBlocks.IRIDIUM_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> ADVANCED_UNIFUSER = block(ChangedAddonModBlocks.ADVANCED_UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> ADVANCED_CATALYZER = block(ChangedAddonModBlocks.ADVANCED_CATALYZER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> REINFORCED_WALL = block(ChangedAddonModBlocks.REINFORCED_WALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_STRIPED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_STRIPED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_TILED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_TILED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> REINFORCED_WALL_CAUTION = block(ChangedAddonModBlocks.REINFORCED_WALL_CAUTION, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> REINFORCED_CROSS_BLOCK = block(ChangedAddonModBlocks.REINFORCED_CROSS_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", () -> new Exp9LatexBaseItem());
-	public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", () -> new Exp10LatexBaseItem());
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
 
 	@SubscribeEvent

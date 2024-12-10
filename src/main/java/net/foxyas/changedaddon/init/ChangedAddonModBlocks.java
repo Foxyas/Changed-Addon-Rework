@@ -58,9 +58,6 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> SNEP_PLUSH = REGISTRY.register("snep_plush", () -> new SnepPlushBlock());
 	public static final RegistryObject<Block> WOLF_PLUSH = REGISTRY.register("wolf_plush", () -> new WolfPlushBlock());
 	public static final RegistryObject<Block> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container", () -> new ContainmentContainerBlock());
-	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
-	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
-	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 	public static final RegistryObject<Block> IRIDIUM_ORE = REGISTRY.register("iridium_ore", () -> new IridiumoreBlock());
 	public static final RegistryObject<Block> IRIDIUM_BLOCK = REGISTRY.register("iridium_block", () -> new IridiumBlockBlock());
 	public static final RegistryObject<Block> ADVANCED_UNIFUSER = REGISTRY.register("advanced_unifuser", () -> new AdvancedUnifuserBlock());
@@ -70,6 +67,9 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> REINFORCED_WALL_SILVER_TILED = REGISTRY.register("reinforced_wall_silver_tiled", () -> new ReinforcedwallsilvertiledBlock());
 	public static final RegistryObject<Block> REINFORCED_WALL_CAUTION = REGISTRY.register("reinforced_wall_caution", () -> new ReinforcedWallCautionBlock());
 	public static final RegistryObject<Block> REINFORCED_CROSS_BLOCK = REGISTRY.register("reinforced_cross_block", () -> new ReinforcedCrossBlock());
+	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
+	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
+	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
