@@ -86,6 +86,12 @@ public class PsychicHoldAbility extends SimpleAbility {
 				return;
 			}
 
+			// Adicionar exaustão enquanto usa a habilidade
+			if (!player.isSpectator()) {
+				player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
+			}
+
+
         	// Verificar velocidade do projétil
         	Vec3 currentMotion = projectile.getDeltaMovement();
         	if (distance > repelRange && currentMotion.lengthSqr() <= stopSpeedThreshold * stopSpeedThreshold) {
@@ -114,10 +120,5 @@ public class PsychicHoldAbility extends SimpleAbility {
             	}
         	}
     	}
-
-    	// Adicionar exaustão enquanto usa a habilidade
-		if (!player.isSpectator() && !nearbyEntities.isEmpty()) {
-			player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
-		}
 	}
 }
