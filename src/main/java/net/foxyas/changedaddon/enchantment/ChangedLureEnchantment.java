@@ -9,4 +9,9 @@ public class ChangedLureEnchantment extends Enchantment {
 	public ChangedLureEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.FISHING_ROD, slots);
 	}
+
+	@Override
+	public int getMaxLevel() {
+		return 5;
+	}
 }

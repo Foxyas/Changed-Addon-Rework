@@ -18,7 +18,7 @@ import net.foxyas.changedaddon.ability.WingFlapAbility;
 import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
 
 @Mixin(value = DragonWingFallFlyAnimator.class, remap = false)
-public class WingAnimationMixin {
+public class WingFallFlyAnimationMixin {
 
 	@Inject(method = "setupAnim", at = @At("TAIL"))
 	private void WingAnimation(@NotNull ChangedEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
@@ -26,9 +26,12 @@ public class WingAnimationMixin {
 			TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer());
 			if (variantInstance.hasAbility(ChangedAddonAbilitys.WING_FLAP_ABILITY.get()) && variantInstance.getAbilityInstance(ChangedAddonAbilitys.WING_FLAP_ABILITY.get()).canUse()
 					&& variantInstance.getSelectedAbility() instanceof WingFlapAbility.AbilityInstance WingFlapAbilityInstance) {
+				if (entity.getUnderlyingPlayer().getAbilities().flying){
+					return;
+				}
 
 				// Aplicação no cálculo da rotação
-				float progress = WingFlapAbilityInstance.getController().getHoldTicks() / (float) WingFlapAbility.TICK_HOLD_NEED;
+				float progress = WingFlapAbilityInstance.getController().getHoldTicks() / (float) WingFlapAbility.MAX_TICK_HOLD;
 				float easedProgress = easeOutCubic(progress); // Aplica suavização
 				float maxRotation = capLevel(35 * easedProgress, 0, 35); // Aplica o level cap
 

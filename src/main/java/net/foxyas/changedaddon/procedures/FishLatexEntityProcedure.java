@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import net.minecraft.world.item.FishingRodItem;
 
 @Mod.EventBusSubscriber
 public class FishLatexEntityProcedure {
@@ -72,56 +73,67 @@ public class FishLatexEntityProcedure {
 
 	@SubscribeEvent
 	public static void onPlayerFishItem(ItemFishedEvent event) {
-		if (event != null && event.getPlayer() != null) {
-			FishingHook hookEntity = event.getHookEntity();
-			Player player = event.getPlayer();
-			LevelAccessor world = player.getLevel();
-			ItemStack itemStack = event.getPlayer().getUseItem();
-			float ItemEnchantment = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.CHANGED_LURE.get(),itemStack);
+    	if (event != null && event.getPlayer() != null) {
+        	Player player = event.getPlayer();
+        	LevelAccessor world = player.getLevel();
+        	FishingHook hookEntity = event.getHookEntity();
 
-			// Verifica se o item de pesca tem o encantamento "Changed Lure"
-			if (ItemEnchantment > 0) {
+        	// Obtem o item em uso do jogador
+        	ItemStack itemStack = player.getMainHandItem();
+        	if (!(itemStack.getItem() instanceof FishingRodItem)) {
+            	itemStack = player.getOffhandItem();
+	        }
 
-				// Cálculo da chance de spawnar uma criatura "Changed"
-				float luck = (float) player.getAttributeValue(Attributes.LUCK);
-				float attributeBonus = Math.min(luck, 35.0F); // Aplica o cap no valor de Luck
-				float enchantmentBonus = ItemEnchantment + attributeBonus;
-				float chance = 5.0F + enchantmentBonus;  // Aumenta a chance de spawn com base no Luck e no encantamento
+    	    // Verifica se o item é uma vara de pesca
+        	if (!(itemStack.getItem() instanceof FishingRodItem)) {
+            	return; // Nenhuma vara de pesca encontrada, encerra o método
+	        }
 
-				// Verifique se a chance de spawnar a entidade é suficiente
-				if (player.level.random.nextFloat() * 100 <= chance) {
-					if (world instanceof ServerLevel _level) {
+    	    // Obtém o nível do encantamento "Changed Lure" na vara
+        	float itemEnchantment = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.CHANGED_LURE.get(), itemStack);
 
-						// Crie a entidade
-						Entity entityToSpawn = getRandomEntity(entityList(_level));
-						if (entityToSpawn != null) {
-							entityToSpawn.moveTo(hookEntity.getX(), hookEntity.getY(), hookEntity.getZ(), 0, 0);
-							entityToSpawn.setYBodyRot(0);
-							entityToSpawn.setYHeadRot(0);
+        	// Verifica se o item possui o encantamento "Changed Lure"
+        	if (itemEnchantment > 0) {
+            	// Cálculo da chance de spawnar uma criatura "Changed"
+            	float luck = (float) player.getAttributeValue(Attributes.LUCK);
+            	float attributeBonus = Math.min(luck, 35.0F); // Aplica o cap no valor de Luck
+            	float enchantmentBonus = (2.5F * itemEnchantment) + attributeBonus;
+            	float chance = 7.5F + enchantmentBonus; // Aumenta a chance de spawn com base no Luck e no encantamento
 
-							// Define a movimentação da entidade para se aproximar do jogador
-							entityToSpawn.setDeltaMovement(
-									(player.getX() - hookEntity.getX()) * 0.15,
-									(player.getY() - hookEntity.getY()) * 0.15,
-									(player.getZ() - hookEntity.getZ()) * 0.15
-							);
+            	// Verifica se a chance de spawnar a entidade é suficiente
+            	if (player.level.random.nextFloat() * 100 <= chance) {
+                	if (world instanceof ServerLevel _level) {
+                    	// Cria a entidade
+                    	Entity entityToSpawn = getRandomEntity(entityList(_level));
+                    	if (entityToSpawn != null) {
+                        	entityToSpawn.moveTo(hookEntity.getX(), hookEntity.getY(), hookEntity.getZ(), 0, 0);
+                        	entityToSpawn.setYBodyRot(0);
+                        	entityToSpawn.setYHeadRot(0);
 
-							// Finaliza o spawn da entidade
-							if (entityToSpawn instanceof Mob _mobToSpawn) {
-								_mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
-							}
+                        	// Define a movimentação da entidade para se aproximar do jogador
+                        	entityToSpawn.setDeltaMovement(
+                        	        (player.getX() - hookEntity.getX()) * 0.15,
+                        	        (player.getY() - hookEntity.getY()) * 0.15,
+                        	        (player.getZ() - hookEntity.getZ()) * 0.15
+                        	);
 
-							// Adiciona a entidade ao mundo
-							world.addFreshEntity(entityToSpawn);
-							AddAdvancement(player);  // Suponho que isso adicione uma conquista ao jogador
-							event.damageRodBy(1);  // Diminui a durabilidade da vara de pesca
+                        	// Finaliza o spawn da entidade
+                        if (entityToSpawn instanceof Mob _mobToSpawn) {
+                            _mobToSpawn.finalizeSpawn(_level, world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+                        }
 
-							// Cancele o evento de pesca para evitar o item normal
-							event.setCanceled(true);
-						}
-					}
-				}
-			}
-		}
+                        // Adiciona a entidade ao mundo
+                        world.addFreshEntity(entityToSpawn);
+                        AddAdvancement(player); // Adiciona uma conquista ao jogador
+                        event.damageRodBy(1);  // Diminui a durabilidade da vara de pesca
+
+                        // Cancela o evento de pesca para evitar o item normal
+                        event.setCanceled(true);
+                    	}
+                	}
+            	}
+        	}
+    	}
 	}
+
 }

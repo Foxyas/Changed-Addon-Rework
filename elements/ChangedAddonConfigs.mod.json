@@ -133,6 +133,24 @@
             "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "When active, the Dark Latex Entites Will not See the player if they aren't moving",
+            "vardisplay": "Dark Latex No Moviment no Vision",
+            "varname": "dl_no_moviment_no_vision",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
           }
         ]
       }

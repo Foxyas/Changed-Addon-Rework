@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "V",
+    "triggerKey": "NONE",
     "keyBindingName": "Duct Prone",
     "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {

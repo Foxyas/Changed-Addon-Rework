@@ -3,20 +3,19 @@ package net.foxyas.changedaddon.ability;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 
-import java.util.function.BiFunction;
 import net.minecraft.network.chat.TextComponent;
 
 public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInstance> {
 
-    public static final int TICK_HOLD_NEED = 30;
+    public static final int MAX_TICK_HOLD = 30;
+    public static final int TICK_HOLD_NEED = 10;
     public WingFlapAbility() {
         super(AbilityInstance::new);
     }
@@ -35,8 +34,10 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
     public UseType getUseType(IAbstractChangedEntity entity) {
         if (entity.getEntity() instanceof Player player){
             if (player.getAbilities().flying){
-                return UseType.CHARGE_RELEASE;
+                return UseType.CHARGE_TIME;
             } else if (player.isFallFlying()) {
+                return UseType.HOLD;
+            } else if (player.isOnGround()) {
                 return UseType.HOLD;
             }
         }
@@ -51,6 +52,8 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
                 return 5;
             } else if (player.isFallFlying()) {
                 return 30;
+            } else if (player.isOnGround()) {
+                return 10;
             }
         }
         return 30;
@@ -62,6 +65,8 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
             if (player.getAbilities().flying){
                 return 15;
             } else if (player.isFallFlying()) {
+                return 25;
+            } else if (player.isOnGround()) {
                 return 20;
             }
         }
@@ -70,10 +75,9 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
 
     public static class AbilityInstance extends AbstractAbilityInstance {
 
-
     	public boolean ReadytoDash = false;
-
-
+        public float DashPower = 0;
+        public int LastTick = 0;
         public AbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
             super(ability, entity);
         }
@@ -111,7 +115,7 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
             if (player.getAbilities().flying && !player.isFallFlying()) {
                 double speed = 2;
                 player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed,speed,speed)));
-                playSound(player);
+                playFlapSound(player);
                 exhaustPlayer(player, 0.8F);
             }
         }
@@ -121,11 +125,17 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
          if (!(entity.getEntity() instanceof Player player) || player.getFoodData().getFoodLevel() <= 6) {
                 return;
             }
-            if (getController().getHoldTicks() >= TICK_HOLD_NEED){
-				this.ReadytoDash = true;
-            }
 
-			player.displayClientMessage(new TextComponent("ticks = " + getController().getHoldTicks()),true);
+            this.DashPower = capLevel((float) getController().getHoldTicks() / MAX_TICK_HOLD, 0, 1);
+            if (getController().getHoldTicks() >= TICK_HOLD_NEED){
+				this.ReadytoDash = true;                
+            }
+            
+			if (this.DashPower >= 1 && getController().getHoldTicks() == MAX_TICK_HOLD){
+				player.playSound(SoundEvents.ENDER_DRAGON_FLAP, 1, 2F);
+			}
+
+			player.displayClientMessage(new TextComponent("ticks = " + getController().getHoldTicks()),true);
         }
 
         @Override
@@ -139,10 +149,18 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
             }
             if (player.isFallFlying() && !player.getAbilities().flying && ReadytoDash){
             	this.ReadytoDash = false;
-                double speed = 2;
+                double speed = 2 * DashPower;
                 player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(speed,speed,speed)));
-                playSound(player);
-                exhaustPlayer(player, 4F);
+                playFlapSound(player);
+                exhaustPlayer(player, 4F * DashPower);
+                this.DashPower = 0;
+            } else if (player.isOnGround() && player.getXRot() <= -45 && ReadytoDash) {
+                this.ReadytoDash = false;
+                double speed = 2 * DashPower;
+                player.setDeltaMovement(player.getDeltaMovement().add(player.getViewVector(1).multiply(0,speed,0)));
+                playFlapSound(player, 0.5F);
+                exhaustPlayer(player, 4F * DashPower);
+                this.DashPower = 0;
             }
         }
 
@@ -153,10 +171,34 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
             }
         }
 
+        private static void playFlapSound(Player player) {
+            if (!player.level.isClientSide()) {
+                player.level.playSound(null, player.blockPosition(), SoundEvents.ENDER_DRAGON_FLAP,
+                        player.getSoundSource(), 2.5F, 1.0F);
+            }
+        }
+
+        private static void playFlapSound(Player player, float pitch) {
+            if (!player.level.isClientSide()) {
+                player.level.playSound(null, player.blockPosition(), SoundEvents.ENDER_DRAGON_FLAP,
+                        player.getSoundSource(), 2.5F, pitch);
+            }
+        }
+
+
         private static void exhaustPlayer(Player player, float exhaustion) {
             if (!player.isCreative()) {
                 player.causeFoodExhaustion(exhaustion);
             }
+        }
+
+        private static float capLevel(float value, float min, float max) {
+            if (value < min) {
+                return min;
+            } else if (value > max) {
+                return max;
+            }
+            return value;
         }
     }
 }

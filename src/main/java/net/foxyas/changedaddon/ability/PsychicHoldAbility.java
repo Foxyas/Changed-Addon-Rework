@@ -83,7 +83,7 @@ public class PsychicHoldAbility extends SimpleAbility {
 	        Vec3 toPlayer = playerPos.subtract(projectilePos).normalize(); // Direção do jogador
         	double distance = projectilePos.distanceTo(playerPos);
 
-			if (!projectile.isOnGround()){
+			if (projectile.isOnGround()){
 				continue;
 			}
 
@@ -106,7 +106,7 @@ public class PsychicHoldAbility extends SimpleAbility {
             	projectile.setDeltaMovement(currentMotion.add(repelForce));
         	} else {
             	// Diminuir velocidade de projéteis distantes
-            	double slowFactor = Math.max(0.1, 1.0 - ((distance / maxRange) / 2)); // Fator de lentidão (mínimo 0.1)
+            	double slowFactor = Math.max(0.1,/* 1.0 -*/ (distance / maxRange)); // Fator de lentidão (mínimo 0.1)
             	Vec3 reducedMotion = currentMotion.scale(slowFactor);
 
             	// Verificar se projétil está indo na direção do jogador (produto escalar)

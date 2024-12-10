@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "keybind",
   "definition": {
-    "triggerKey": "J",
+    "triggerKey": "NONE",
     "keyBindingName": "Open Transfur Extra",
     "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {
