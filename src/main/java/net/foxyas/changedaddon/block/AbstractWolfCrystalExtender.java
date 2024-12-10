@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import static net.ltxprogrammer.changed.block.AbstractLatexBlock.getLatexed;
+import net.minecraft.world.item.Item;
 
 
 public class AbstractWolfCrystalExtender {
@@ -75,6 +76,17 @@ public class AbstractWolfCrystalExtender {
     }
     public static abstract class AbstractWolfCrystalSmall extends TransfurCrystalBlock {
 
+        public AbstractWolfCrystalSmall(Item fragment) {
+            super(ChangedTransfurVariants.CRYSTAL_WOLF, fragment,
+
+                    BlockBehaviour.Properties.of(ChangedMaterials.LATEX_CRYSTAL)
+                            .sound(SoundType.AMETHYST_CLUSTER)
+                            .noOcclusion()
+                            .dynamicShape()
+                            .strength(1.7F, 0.2F)
+            );
+        }
+
         public AbstractWolfCrystalSmall() {
             super(ChangedTransfurVariants.CRYSTAL_WOLF, ChangedItems.WOLF_CRYSTAL_FRAGMENT,
 
@@ -84,6 +96,6 @@ public class AbstractWolfCrystalExtender {
                             .dynamicShape()
                             .strength(1.7F, 0.2F)
             );
-        }
+        }
     }
 }
