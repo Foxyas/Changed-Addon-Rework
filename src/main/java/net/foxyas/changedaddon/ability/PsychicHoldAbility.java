@@ -73,15 +73,20 @@ public class PsychicHoldAbility extends SimpleAbility {
     final double stopSpeedThreshold = 0.5; // Velocidade limite para parar projéteis
 
     // Selecionar apenas entidades relevantes
-    List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class,
-        new AABB(playerPos, playerPos).inflate(maxRange / 2.0),
-        e -> e instanceof FallingBlockEntity || e.getType().is(EntityTypeTags.IMPACT_PROJECTILES)
-    );
+    final Vec3 _center = new Vec3((player.getX()), (player.getY()), (player.getZ()));
+	List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(maxRange / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
+						.toList();
+
 
     for (Entity projectile : nearbyEntities) {
     	    Vec3 projectilePos = projectile.position();
 	        Vec3 toPlayer = playerPos.subtract(projectilePos).normalize(); // Direção do jogador
         	double distance = projectilePos.distanceTo(playerPos);
+        	if (projectile == player) {return;}
+
+			if (!(projectile instanceof FallingBlockEntity) || !(projectile.getType().is(EntityTypeTags.IMPACT_PROJECTILES))) {return;}
+			
+						
 
 			if (projectile.isOnGround()){
 				return;
