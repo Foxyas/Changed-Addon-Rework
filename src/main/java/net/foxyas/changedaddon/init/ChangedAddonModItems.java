@@ -100,7 +100,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", () -> new LaethinSyringeItem());
 	public static final RegistryObject<Item> POTWITHCAMONIA = REGISTRY.register("potwithcamonia", () -> new PotwithcamoniaItem());
 	public static final RegistryObject<Item> ORANGEJUICE = REGISTRY.register("orangejuice", () -> new OrangejuiceItem());
+	public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", () -> new RawIridiumItem());
 	public static final RegistryObject<Item> IRIDIUM = REGISTRY.register("iridium", () -> new IridiumItem());
+	public static final RegistryObject<Item> IRIDIUM_ORE = block(ChangedAddonModBlocks.IRIDIUM_ORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> IRIDIUM_BLOCK = block(ChangedAddonModBlocks.IRIDIUM_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> PAINITE = REGISTRY.register("painite", () -> new PainiteItem());
 	public static final RegistryObject<Item> PAINITE_ORE = block(ChangedAddonModBlocks.PAINITE_ORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> PAINITE_BLOCK = block(ChangedAddonModBlocks.PAINITE_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
@@ -148,9 +151,6 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> WOLF_PLUSH = block(ChangedAddonModBlocks.WOLF_PLUSH, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> BIOMASS = REGISTRY.register("biomass", () -> new BiomassItem());
 	public static final RegistryObject<Item> CONTAINMENT_CONTAINER = block(ChangedAddonModBlocks.CONTAINMENT_CONTAINER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", () -> new RawIridiumItem());
-	public static final RegistryObject<Item> IRIDIUM_ORE = block(ChangedAddonModBlocks.IRIDIUM_ORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> IRIDIUM_BLOCK = block(ChangedAddonModBlocks.IRIDIUM_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ADVANCED_UNIFUSER = block(ChangedAddonModBlocks.ADVANCED_UNIFUSER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ADVANCED_CATALYZER = block(ChangedAddonModBlocks.ADVANCED_CATALYZER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> REINFORCED_WALL = block(ChangedAddonModBlocks.REINFORCED_WALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);

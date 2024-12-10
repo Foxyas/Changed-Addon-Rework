@@ -1008,7 +1008,7 @@
     {
       "name": "Painite",
       "type": "item",
-      "sortid": 18,
+      "sortid": 21,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite",
@@ -1023,7 +1023,7 @@
     {
       "name": "PainiteOre",
       "type": "block",
-      "sortid": 19,
+      "sortid": 22,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_ore",
@@ -1041,7 +1041,7 @@
     {
       "name": "PainiteBlock",
       "type": "block",
-      "sortid": 20,
+      "sortid": 23,
       "compiles": true,
       "locked_code": false,
       "registry_name": "painite_block",
@@ -1267,7 +1267,7 @@
     {
       "name": "Foxyas",
       "type": "livingentity",
-      "sortid": 22,
+      "sortid": 25,
       "compiles": true,
       "locked_code": false,
       "registry_name": "foxyas",
@@ -1363,7 +1363,7 @@
     {
       "name": "Spawneggoffoxyas",
       "type": "item",
-      "sortid": 23,
+      "sortid": 26,
       "compiles": true,
       "locked_code": false,
       "registry_name": "spawneggoffoxyas",
@@ -1426,7 +1426,7 @@
     {
       "name": "Prototype",
       "type": "livingentity",
-      "sortid": 21,
+      "sortid": 24,
       "compiles": true,
       "locked_code": false,
       "registry_name": "prototype",
@@ -1715,7 +1715,7 @@
     {
       "name": "LitixCamoniaSpray",
       "type": "item",
-      "sortid": 24,
+      "sortid": 27,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litix_camonia_spray",
@@ -1766,7 +1766,7 @@
     {
       "name": "EmptySpray",
       "type": "item",
-      "sortid": 25,
+      "sortid": 28,
       "compiles": true,
       "locked_code": false,
       "registry_name": "empty_spray",
@@ -1813,7 +1813,7 @@
     {
       "name": "LitixCamoniaFluid",
       "type": "fluid",
-      "sortid": 26,
+      "sortid": 29,
       "compiles": true,
       "locked_code": false,
       "registry_name": "litix_camonia_fluid",
@@ -1860,7 +1860,7 @@
     {
       "name": "Catlyzer",
       "type": "block",
-      "sortid": 27,
+      "sortid": 30,
       "compiles": true,
       "locked_code": false,
       "registry_name": "catlyzer",
@@ -2234,7 +2234,7 @@
     {
       "name": "Unifuser",
       "type": "block",
-      "sortid": 28,
+      "sortid": 31,
       "compiles": true,
       "locked_code": false,
       "registry_name": "unifuser",
@@ -3371,7 +3371,7 @@
     {
       "name": "Experiment009dna",
       "type": "item",
-      "sortid": 34,
+      "sortid": 37,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009dna",
@@ -4910,7 +4910,7 @@
     {
       "name": "HazardSuit",
       "type": "armor",
-      "sortid": 29,
+      "sortid": 32,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazard_suit",
@@ -5105,7 +5105,7 @@
     {
       "name": "Darklatexpuddle",
       "type": "block",
-      "sortid": 30,
+      "sortid": 33,
       "compiles": true,
       "locked_code": true,
       "registry_name": "darklatexpuddle",
@@ -5805,7 +5805,7 @@
     {
       "name": "Experiment009Spawnegg",
       "type": "item",
-      "sortid": 36,
+      "sortid": 39,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_009_spawnegg",
@@ -6525,7 +6525,7 @@
     {
       "name": "TransfurTotem",
       "type": "item",
-      "sortid": 37,
+      "sortid": 40,
       "compiles": true,
       "locked_code": false,
       "registry_name": "transfur_totem",
@@ -6694,7 +6694,7 @@
     {
       "name": "Lunarrose",
       "type": "armor",
-      "sortid": 31,
+      "sortid": 34,
       "compiles": true,
       "locked_code": false,
       "registry_name": "lunarrose",
@@ -7250,7 +7250,7 @@
     {
       "name": "LatexSnowFox",
       "type": "livingentity",
-      "sortid": 32,
+      "sortid": 35,
       "compiles": false,
       "locked_code": true,
       "registry_name": "latex_snow_fox",
@@ -7265,7 +7265,7 @@
     {
       "name": "LatexSnowFoxFemale",
       "type": "livingentity",
-      "sortid": 33,
+      "sortid": 36,
       "compiles": true,
       "locked_code": true,
       "registry_name": "latex_snow_fox_female",
@@ -7852,7 +7852,7 @@
     {
       "name": "SignalBlock",
       "type": "block",
-      "sortid": 38,
+      "sortid": 41,
       "compiles": true,
       "locked_code": false,
       "registry_name": "signal_block",
@@ -7934,7 +7934,7 @@
     {
       "name": "SignalCatcher",
       "type": "item",
-      "sortid": 39,
+      "sortid": 42,
       "compiles": true,
       "locked_code": false,
       "registry_name": "signal_catcher",
@@ -8744,7 +8744,7 @@
     {
       "name": "Experiment10Dna",
       "type": "item",
-      "sortid": 40,
+      "sortid": 43,
       "compiles": true,
       "locked_code": false,
       "registry_name": "experiment_10_dna",
@@ -8773,7 +8773,7 @@
     {
       "name": "BossExperiment10SpawnEgg",
       "type": "item",
-      "sortid": 42,
+      "sortid": 45,
       "compiles": true,
       "locked_code": false,
       "registry_name": "boss_experiment_10_spawn_egg",
@@ -9041,7 +9041,7 @@
     {
       "name": "Informantblock",
       "type": "block",
-      "sortid": 43,
+      "sortid": 46,
       "compiles": true,
       "locked_code": false,
       "registry_name": "informantblock",
@@ -9248,7 +9248,7 @@
     {
       "name": "Accessories",
       "type": "armor",
-      "sortid": 44,
+      "sortid": 47,
       "compiles": true,
       "locked_code": false,
       "registry_name": "accessories",
@@ -9610,7 +9610,7 @@
     {
       "name": "CrystalAddagerRed",
       "type": "tool",
-      "sortid": 45,
+      "sortid": 48,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_red",
@@ -9625,7 +9625,7 @@
     {
       "name": "CrystalAddagerGreen",
       "type": "tool",
-      "sortid": 46,
+      "sortid": 49,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_green",
@@ -9640,7 +9640,7 @@
     {
       "name": "CrystalAddagerBlack",
       "type": "tool",
-      "sortid": 47,
+      "sortid": 50,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crystal_addager_black",
@@ -9904,7 +9904,7 @@
     {
       "name": "CrowBar",
       "type": "tool",
-      "sortid": 48,
+      "sortid": 51,
       "compiles": true,
       "locked_code": false,
       "registry_name": "crow_bar",
@@ -10133,7 +10133,7 @@
     {
       "name": "Snepsi",
       "type": "item",
-      "sortid": 49,
+      "sortid": 52,
       "compiles": true,
       "locked_code": true,
       "registry_name": "snepsi",
@@ -10148,7 +10148,7 @@
     {
       "name": "Foxta",
       "type": "item",
-      "sortid": 50,
+      "sortid": 53,
       "compiles": true,
       "locked_code": true,
       "registry_name": "foxta",
@@ -10435,7 +10435,7 @@
     {
       "name": "DormantDarkLatex",
       "type": "block",
-      "sortid": 51,
+      "sortid": 54,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dormant_dark_latex",
@@ -10452,7 +10452,7 @@
     {
       "name": "DormantWhiteLatex",
       "type": "block",
-      "sortid": 52,
+      "sortid": 55,
       "compiles": true,
       "locked_code": true,
       "registry_name": "dormant_white_latex",
@@ -10823,7 +10823,7 @@
     {
       "name": "DarkLatexSpray",
       "type": "item",
-      "sortid": 53,
+      "sortid": 56,
       "compiles": true,
       "locked_code": false,
       "registry_name": "dark_latex_spray",
@@ -10926,7 +10926,7 @@
     {
       "name": "WhiteLatexSpray",
       "type": "item",
-      "sortid": 54,
+      "sortid": 57,
       "compiles": true,
       "locked_code": false,
       "registry_name": "white_latex_spray",
@@ -10969,7 +10969,7 @@
     {
       "name": "HazmatSuit",
       "type": "armor",
-      "sortid": 55,
+      "sortid": 58,
       "compiles": true,
       "locked_code": false,
       "registry_name": "hazmat_suit",
@@ -11334,7 +11334,7 @@
     {
       "name": "SnepPlush",
       "type": "block",
-      "sortid": 56,
+      "sortid": 59,
       "compiles": false,
       "locked_code": true,
       "registry_name": "snep_plush",
@@ -11352,7 +11352,7 @@
     {
       "name": "WolfPlush",
       "type": "block",
-      "sortid": 57,
+      "sortid": 60,
       "compiles": true,
       "locked_code": true,
       "registry_name": "wolf_plush",
@@ -11398,7 +11398,7 @@
     {
       "name": "Biomass",
       "type": "item",
-      "sortid": 58,
+      "sortid": 61,
       "compiles": true,
       "locked_code": true,
       "registry_name": "biomass",
@@ -11447,7 +11447,7 @@
     {
       "name": "ContainmentContainer",
       "type": "block",
-      "sortid": 59,
+      "sortid": 62,
       "compiles": true,
       "locked_code": true,
       "registry_name": "containment_container",
@@ -11504,7 +11504,7 @@
     {
       "name": "Iridium",
       "type": "item",
-      "sortid": 17,
+      "sortid": 18,
       "compiles": true,
       "locked_code": false,
       "registry_name": "iridium",
@@ -11519,7 +11519,7 @@
     {
       "name": "RawIridium",
       "type": "item",
-      "sortid": 60,
+      "sortid": 17,
       "compiles": true,
       "locked_code": false,
       "registry_name": "raw_iridium",
@@ -11562,7 +11562,7 @@
     {
       "name": "Iridiumore",
       "type": "block",
-      "sortid": 61,
+      "sortid": 19,
       "compiles": true,
       "locked_code": false,
       "registry_name": "iridium_ore",
@@ -11648,7 +11648,7 @@
     {
       "name": "IridiumBlock",
       "type": "block",
-      "sortid": 62,
+      "sortid": 20,
       "compiles": true,
       "locked_code": false,
       "registry_name": "iridium_block",
@@ -11984,7 +11984,7 @@
     {
       "name": "Exp9LatexBase",
       "type": "item",
-      "sortid": 35,
+      "sortid": 38,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_9_latex_base",
@@ -11999,7 +11999,7 @@
     {
       "name": "Exp10LatexBase",
       "type": "item",
-      "sortid": 41,
+      "sortid": 44,
       "compiles": true,
       "locked_code": false,
       "registry_name": "exp_10_latex_base",

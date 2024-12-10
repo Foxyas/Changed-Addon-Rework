@@ -30,10 +30,10 @@ import java.util.ArrayList;
 public class ChangedAddonModFeatures {
 	public static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.FEATURES, ChangedAddonMod.MODID);
 	private static final List<FeatureRegistration> FEATURE_REGISTRATIONS = new ArrayList<>();
-	public static final RegistryObject<Feature<?>> PAINITE_ORE = register("painite_ore", PainiteOreFeature::feature,
-			new FeatureRegistration(GenerationStep.Decoration.UNDERGROUND_ORES, PainiteOreFeature.GENERATE_BIOMES, PainiteOreFeature::placedFeature));
 	public static final RegistryObject<Feature<?>> IRIDIUM_ORE = register("iridium_ore", IridiumoreFeature::feature,
 			new FeatureRegistration(GenerationStep.Decoration.UNDERGROUND_ORES, IridiumoreFeature.GENERATE_BIOMES, IridiumoreFeature::placedFeature));
+	public static final RegistryObject<Feature<?>> PAINITE_ORE = register("painite_ore", PainiteOreFeature::feature,
+			new FeatureRegistration(GenerationStep.Decoration.UNDERGROUND_ORES, PainiteOreFeature.GENERATE_BIOMES, PainiteOreFeature::placedFeature));
 
 	private static RegistryObject<Feature<?>> register(String registryname, Supplier<Feature<?>> feature, FeatureRegistration featureRegistration) {
 		FEATURE_REGISTRATIONS.add(featureRegistration);

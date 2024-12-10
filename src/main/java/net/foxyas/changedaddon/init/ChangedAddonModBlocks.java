@@ -45,6 +45,8 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 public class ChangedAddonModBlocks {
 	public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, ChangedAddonMod.MODID);
 	public static final RegistryObject<Block> LATEX_INSULATOR = REGISTRY.register("latex_insulator", () -> new LatexInsulatorBlock());
+	public static final RegistryObject<Block> IRIDIUM_ORE = REGISTRY.register("iridium_ore", () -> new IridiumoreBlock());
+	public static final RegistryObject<Block> IRIDIUM_BLOCK = REGISTRY.register("iridium_block", () -> new IridiumBlockBlock());
 	public static final RegistryObject<Block> PAINITE_ORE = REGISTRY.register("painite_ore", () -> new PainiteOreBlock());
 	public static final RegistryObject<Block> PAINITE_BLOCK = REGISTRY.register("painite_block", () -> new PainiteBlockBlock());
 	public static final RegistryObject<Block> LITIX_CAMONIA_FLUID = REGISTRY.register("litix_camonia_fluid", () -> new LitixCamoniaFluidBlock());
@@ -58,8 +60,6 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> SNEP_PLUSH = REGISTRY.register("snep_plush", () -> new SnepPlushBlock());
 	public static final RegistryObject<Block> WOLF_PLUSH = REGISTRY.register("wolf_plush", () -> new WolfPlushBlock());
 	public static final RegistryObject<Block> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container", () -> new ContainmentContainerBlock());
-	public static final RegistryObject<Block> IRIDIUM_ORE = REGISTRY.register("iridium_ore", () -> new IridiumoreBlock());
-	public static final RegistryObject<Block> IRIDIUM_BLOCK = REGISTRY.register("iridium_block", () -> new IridiumBlockBlock());
 	public static final RegistryObject<Block> ADVANCED_UNIFUSER = REGISTRY.register("advanced_unifuser", () -> new AdvancedUnifuserBlock());
 	public static final RegistryObject<Block> ADVANCED_CATALYZER = REGISTRY.register("advanced_catalyzer", () -> new AdvancedCatalyzerBlock());
 	public static final RegistryObject<Block> REINFORCED_WALL = REGISTRY.register("reinforced_wall", () -> new ReinforcedWallBlock());

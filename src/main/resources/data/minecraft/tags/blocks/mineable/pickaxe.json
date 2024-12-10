@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
+    "changed_addon:iridium_ore",
+    "changed_addon:iridium_block",
     "changed_addon:painite_ore",
     "changed_addon:painite_block",
     "changed_addon:catlyzer",
@@ -8,8 +10,6 @@
     "changed_addon:signal_block",
     "changed_addon:informantblock",
     "changed_addon:containment_container",
-    "changed_addon:iridium_ore",
-    "changed_addon:iridium_block",
     "changed_addon:advanced_unifuser",
     "changed_addon:advanced_catalyzer",
     "changed_addon:reinforced_wall",
