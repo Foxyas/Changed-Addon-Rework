@@ -6,7 +6,10 @@ import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.block.WolfCrystal;
 import net.ltxprogrammer.changed.block.WolfCrystalBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.init.*;
+import net.ltxprogrammer.changed.init.ChangedBlocks;
+import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.init.ChangedMaterials;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,87 +18,71 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.function.Supplier;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.material.Material;
 
 
 public class AbstractWolfCrystalExtender {
 
     @Mod.EventBusSubscriber
     public static class TransformBlockSystem {
+
         @SubscribeEvent
-        public static void ColorTheCrystal(PlayerInteractEvent.RightClickBlock event){
+        public static void colorTheCrystal(PlayerInteractEvent.RightClickBlock event) {
             Level level = event.getWorld();
-            if (level.getBlockState(event.getPos()).getBlock() instanceof WolfCrystalBlock){
-                BlockState newBlockStage;
-                ItemStack itemStack = event.getItemStack();
-                if (itemStack.is(Items.LIGHT_BLUE_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                } else if (itemStack.is(Items.WHITE_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                } else if (itemStack.is(Items.ORANGE_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                } else if (itemStack.is(Items.YELLOW_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                }
-            } else if (level.getBlockState(event.getPos()).getBlock() instanceof AbstractWolfCrystalBlock) {
-                BlockState newBlockStage;
-                ItemStack itemStack = event.getItemStack();
-                if (itemStack.is(Items.RED_DYE)) {
-                    newBlockStage = ChangedBlocks.WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                }
-                if (itemStack.is(Items.LIGHT_BLUE_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                } else if (itemStack.is(Items.WHITE_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                } else if (itemStack.is(Items.ORANGE_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
-                } else if (itemStack.is(Items.YELLOW_DYE)) {
-                    newBlockStage = ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
-                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
-                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
-                    event.getPlayer().swing(event.getHand());
+            BlockPos pos = event.getPos();
+            ItemStack itemStack = event.getItemStack();
+            BlockState currentState = level.getBlockState(pos);
+            Block block = currentState.getBlock();
+
+            // Verifica se é um bloco que pode ser transformado
+            if (block instanceof WolfCrystalBlock || block instanceof AbstractWolfCrystalBlock) {
+                // Mapeia os corantes para os blocos correspondentes
+                Map<Item, Block> dyeToBlockMap = Map.of(
+                        Items.LIGHT_BLUE_DYE, ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.WHITE_DYE, ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.ORANGE_DYE, ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.YELLOW_DYE, ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.RED_DYE, ChangedBlocks.WOLF_CRYSTAL_BLOCK.get() // Apenas AbstractWolfCrystalBlock pode ser alterado para vermelho
+                );
+
+                // Verifica se o corante corresponde a um bloco
+                Block newBlock = dyeToBlockMap.get(itemStack.getItem());
+                if (newBlock != null) {
+                    // Evita o desperdício verificando se o bloco já tem a mesma cor
+                    if (!newBlock.defaultBlockState().equals(currentState)) {
+                        level.setBlockAndUpdate(pos, newBlock.defaultBlockState());
+                        playDyeUseSound(level, pos);
+                        event.getPlayer().swing(event.getHand());
+                        itemStack.shrink(1); // Consome o corante
+                    }
                 }
             }
+        }
+
+        // Método auxiliar para tocar o som de aplicação do corante
+        private static void playDyeUseSound(Level level, BlockPos pos) {
+            level.playLocalSound(
+                    pos.getX(), pos.getY(), pos.getZ(),
+                    SoundEvents.DYE_USE, SoundSource.BLOCKS,
+                    1.0f, 1.0f, true
+            );
         }
     }
 

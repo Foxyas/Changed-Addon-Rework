@@ -12321,7 +12321,8 @@
           "src/main/resources/assets/changed_addon/models/item/blue_wolf_crystal_fragment.json",
           "src/main/java/net/foxyas/changedaddon/item/BlueWolfCrystalFragmentItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "YellowWolfCrystalFragment",
@@ -12335,7 +12336,8 @@
           "src/main/java/net/foxyas/changedaddon/item/YellowWolfCrystalFragmentItem.java",
           "src/main/resources/assets/changed_addon/models/item/yellow_wolf_crystal_fragment.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "WhiteWolfCrystalFragment",
@@ -12349,7 +12351,8 @@
           "src/main/java/net/foxyas/changedaddon/item/WhiteWolfCrystalFragmentItem.java",
           "src/main/resources/assets/changed_addon/models/item/white_wolf_crystal_fragment.json"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "OrangeWolfCrystalFragment",
@@ -12363,7 +12366,8 @@
           "src/main/resources/assets/changed_addon/models/item/orange_wolf_crystal_fragment.json",
           "src/main/java/net/foxyas/changedaddon/item/OrangeWolfCrystalFragmentItem.java"
         ]
-      }
+      },
+      "path": "~/Items"
     },
     {
       "name": "OrangeWolfCrystalBlockRecipe",
@@ -12376,7 +12380,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/orange_wolf_crystal_block_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "BlueWolfCrystalBlockRecipe",
@@ -12389,7 +12394,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/blue_wolf_crystal_block_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "YellowWolfCrystalBlockRecipe",
@@ -12402,7 +12408,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/yellow_wolf_crystal_block_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "WhiteWolfCrystalBlockRecipe",
@@ -12415,7 +12422,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/white_wolf_crystal_block_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "BlueWolfCrystalRecipe",
@@ -12428,7 +12436,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/blue_wolf_crystal_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "OrangeWolfCrystalRecipe",
@@ -12441,7 +12450,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/orange_wolf_crystal_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "YellowWolfCrystalRecipe",
@@ -12454,7 +12464,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/yellow_wolf_crystal_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "WhiteWolfCrystalRecipe",
@@ -12467,7 +12478,8 @@
         "files": [
           "src/main/resources/data/changed_addon/recipes/white_wolf_crystal_recipe.json"
         ]
-      }
+      },
+      "path": "~/Recipes"
     },
     {
       "name": "CrystalCollector",
@@ -12480,7 +12492,8 @@
         "files": [
           "src/main/resources/data/changed_addon/advancements/crystal_collector.json"
         ]
-      }
+      },
+      "path": "~/advancements"
     }
   ],
   "variable_elements": [
@@ -12712,7 +12725,6 @@
       "item.changed_addon.signal_catcher": "Signal Catcher",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
       "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
-      "translation.FriendlyGrab.TransfurText": "§fYou are Friendly Grabbing,Sneek and Press (key) for release them",
       "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
       "changed_addon.ability.dissolve": "Dissolve Ability",
       "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
@@ -12857,7 +12869,6 @@
       "changedaddon.fight_concience.success": "You §2Maintained!!! §rYour Conscience Good Job",
       "block.changed_addon.signal_block": "Signal Block",
       "effect.changed_addon.fadige": "Fatigue",
-      "translation.FriendlyGrab.HumanText": "§bYou are in Friendly Grab Press (key) for leave",
       "entity.changed_addon.ket_experiment_009_boss": "Kat Experiment 009",
       "changedaddon.untransfur.no_effect": "No effect",
       "entity.changed_addon.dazed": "Dazed",
@@ -12886,7 +12897,6 @@
       "advancements.unifuser_advancement.title": "A Unifuser?",
       "advancements.drink_snepsi.descr": "Drink snepsi for the first time",
       "gamerule.doDarkLatexMaskTransfur.description": "When on the player can be transfured while holding the Dark Latex Mask",
-      "gamerule.useNewFriendlyGrab.description": "When Active This gamerule will make the player use the \"New Friendly Grab\" Instead of old WARN this is a W-I-P FEATURE SO USE AT YOUR OWN RISK (warning Right Click Friendly Grab will not work if true ok)",
       "entity.changed_addon.exp_2_male": "Exp2 Male",
       "subtitles.exp10_theme": "Experiment 10 Music Theme",
       "gui.changed_addon.bookrecipepage_6.label_unifuser": "Unifuser",
@@ -13005,7 +13015,6 @@
       "advancements.obtain_snepsi.descr": "You Obtain a Snepsi!, Cation this soda have high dose of Snep",
       "item.changed_addon.crystal_addager_red": "Red Crystal Dagger",
       "item.changed_addon.litix_camonia_fluid_bucket": "LitixCamonia Bucket",
-      "gamerule.allowPlayerGrab.description": "Allow Players Use the Grab Feature",
       "enchantment.changed_addon.solvent.desc": "Deal more Damage to Latex Entities",
       "item.changed_addon.painite_armor_helmet": "Netherite Helmet with Painite trim",
       "advancements.obtain_dark_crystal_dagger.title": "§8Dark§r Crystal Dagger!",
@@ -13048,7 +13057,6 @@
       "gamerule.needPermitionFor009Transfur": "Need Permition For Transfur in 009",
       "advancements.foxyas_advancement.descr": "§4THOSE BASTARDS,THEY KILL FOXYAS",
       "entity.changed_addon.reyn": "Reyn",
-      "gamerule.useNewFriendlyGrab": "Changed Addon New Friendly Grab",
       "gui.changed_addon.bookrecipepage_7.button_close": "Close",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_partic": "Display Recipe of Ammonia Particles",
       "changedaddon.assimilation.on": "Assimilation activated",
@@ -13114,7 +13122,6 @@
       "advancements.dn_astudyisafantasticthingadvancement.title": "DNA study is a fantastic thing",
       "item.changed_addon.hazard_suit_chestplate": "Hazard  Chestplate",
       "advancements.crystal_collector.descr": "Hold Each Crystal Color in Your Inventory",
-      "gamerule.doGrabNeedLook": "Grab Need Look ",
       "item.changed_addon.reyn_spawn_egg": "Reyn Spawn Egg",
       "gamerule.dolatexinfection.description": "this makes the latex infection in the player rise after being attacked",
       "advancements.obtain_dark_crystal_dagger.descr": "You get a §8Dark§r Crystal Dagger!",
@@ -13138,7 +13145,6 @@
       "gui.changed_addon.bookrecipepage_8.label_f3": "F",
       "gui.changed_addon.bookrecipepage_8.label_f2": "F",
       "gui.changed_addon.bookrecipepage_8.label_f1": "F",
-      "gamerule.changedAddonNewFriendlyGrab": "Changed Addon New Friendly Grab",
       "gui.changed_addon.tranfur_sounds_gui.button_cooldown": "Cooldown Reset",
       "advancements.bigone.title": "I Catch a Big One!",
       "key.changed_addon.duct_prone": "Duct Prone",
@@ -13173,7 +13179,6 @@
       "entity.changed_addon.exp2_male": "Exp2 Male",
       "entity.changed_addon.exp_1_male": "Exp 1 Male",
       "changedaddon.warn.close_fight_to_keep_consciousness": "§1You Closed the Fight for Conscience Menu Press (KEY) to Open Again§r",
-      "gamerule.allowPlayerGrab": "Allow Player Grab",
       "block.changed_addon.advanced_unifuser": "Advanced Unifuser",
       "advancements.gooey_friend.title": "Gooey Friend",
       "changed_addon.ability.psychic_hold": "Psychic Hold",
