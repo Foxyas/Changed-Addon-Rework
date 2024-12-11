@@ -1,0 +1,48 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:black_dye"
+    },
+    "title": {
+      "translate": "advancements.crystal_dyer.title"
+    },
+    "description": {
+      "translate": "advancements.crystal_dyer.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "crystal_dyer": {
+      "trigger": "minecraft:item_used_on_block",
+      "conditions": {
+        "location": {
+          "block": {
+            "blocks": [
+              "changed:wolf_crystal_block",
+              "changed_addon:blue_wolf_crystal_block",
+              "changed_addon:white_wolf_crystal_block",
+              "changed_addon:orange_wolf_crystal_block",
+              "changed_addon:yellow_wolf_crystal_block"
+            ]
+          }
+        },
+        "item": {
+          "items": [
+            "minecraft:light_blue_dye",
+            "minecraft:white_dye",
+            "minecraft:orange_dye",
+            "minecraft:yellow_dye",
+            "minecraft:red_dye"
+          ]
+        }
+      }
+    }
+  },
+  "rewards": {
+    "experience": 80
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

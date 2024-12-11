@@ -6,16 +6,16 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.foxyas.changedaddon.enchantment.SolventEnchantment;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 import java.util.List;
@@ -74,6 +74,13 @@ class JeiDescriptionHandler {
 
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.iridium_use"));
 
+        addSharedDescriptions(registration, List.of(
+                ChangedAddonModItems.BLUE_WOLF_CRYSTAL_FRAGMENT.get(),
+                ChangedAddonModItems.ORANGE_WOLF_CRYSTAL_FRAGMENT.get(),
+                ChangedAddonModItems.YELLOW_WOLF_CRYSTAL_FRAGMENT.get(),
+                ChangedAddonModItems.WHITE_WOLF_CRYSTAL_FRAGMENT.get()
+        ), "item.changed_addon.colorful_wolf_crystal_fragment_desc");
+
 
         // Enchant Information
         ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
@@ -83,6 +90,19 @@ class JeiDescriptionHandler {
                 registration.addIngredientInfo(enchantedBook, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.solvent.desc"));
             }
         }
+        for (int i = 0; i < 5; i++) {
+            if (i != 0){
+                EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.CHANGED_LURE.get(), i), enchantedBook);
+                registration.addIngredientInfo(enchantedBook, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.changed_lure.desc"));
+            }
+        }
     }
+
+    private static void addSharedDescriptions(IRecipeRegistration registration, List<Item> items, String translationKey) {
+        items.forEach(item ->
+                registration.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM_STACK, new TranslatableComponent(translationKey))
+        );
+    }
+
 }
 

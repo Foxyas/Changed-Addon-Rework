@@ -119,7 +119,7 @@ public class PatOverlay {
             patMessage.withStyle(style ->
                     style.withColor(Color3.getColor("#FFFFFF").toInt())
                             .withBold(true)
-                            .withItalic(true));
+                            .withItalic(false));
             return patMessage;
         } else {
             return new TranslatableComponent("");
