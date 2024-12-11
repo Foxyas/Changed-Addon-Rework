@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "achievement",
   "definition": {
-    "achievementName": "Changed Addon ",
+    "achievementName": "Changed Addon",
     "achievementDescription": "You downloaded the Changed Addon by Foxyas",
     "achievementIcon": {
       "value": "CUSTOM:Changedbook"

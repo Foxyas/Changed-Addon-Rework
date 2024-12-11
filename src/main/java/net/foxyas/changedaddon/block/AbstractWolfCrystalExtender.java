@@ -11,8 +11,12 @@ import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedMaterials;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -70,7 +74,14 @@ public class AbstractWolfCrystalExtender {
                         level.setBlockAndUpdate(pos, newBlock.defaultBlockState());
                         playDyeUseSound(level, pos);
                         event.getPlayer().swing(event.getHand());
-                        itemStack.shrink(1); // Consome o corante
+
+                        // Consome o corante se o jogador não estiver no modo criativo
+                        if (!event.getPlayer().isCreative()) {
+                            itemStack.shrink(1);
+                        }
+
+                        // Código para conceder um avanço ao jogador
+                        grantAdvancement(event.getPlayer(), "changed_addon:crystal_dyer");
                     }
                 }
             }
@@ -83,6 +94,22 @@ public class AbstractWolfCrystalExtender {
                     SoundEvents.DYE_USE, SoundSource.BLOCKS,
                     1.0f, 1.0f, true
             );
+        }
+
+        // Método para conceder um avanço ao jogador
+        private static void grantAdvancement(Player player, String advancementId) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                Advancement advancement = serverPlayer.server.getAdvancements()
+                        .getAdvancement(new ResourceLocation(advancementId));
+                if (advancement != null) {
+                    AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
+                    if (!progress.isDone()) {
+                        for (String criterion : progress.getRemainingCriteria()) {
+                            serverPlayer.getAdvancements().award(advancement, criterion);
+                        }
+                    }
+                }
+            }
         }
     }
 
