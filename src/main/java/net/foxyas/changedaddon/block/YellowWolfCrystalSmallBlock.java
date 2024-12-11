@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.block;
 
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.ltxprogrammer.changed.block.DarkLatexBlock;
 import net.ltxprogrammer.changed.block.WolfCrystalBlock;
 import net.ltxprogrammer.changed.entity.LatexType;
@@ -32,7 +33,7 @@ import net.minecraft.world.level.LevelReader;
 
 public class YellowWolfCrystalSmallBlock extends AbstractWolfCrystalExtender.AbstractWolfCrystalSmall {
 	public YellowWolfCrystalSmallBlock() {
-		super();
+		super(ChangedAddonModItems.YELLOW_WOLF_CRYSTAL_FRAGMENT);
 	}
 
 	@Override

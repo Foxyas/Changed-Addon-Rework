@@ -14,7 +14,8 @@
     "RandomVariantFunctionMixin",
     "TransfurVariantInstanceMixin",
     "WingFallFlyAnimationMixin",
-    "WingFlyAnimationMixin"
+    "WingFlyAnimationMixin",
+    "WolfCrystalSmallMixin"
   ],
   "injectors": {
     "defaultRequire": 1

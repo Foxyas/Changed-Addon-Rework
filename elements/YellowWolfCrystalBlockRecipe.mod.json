@@ -1,0 +1,48 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "recipeSlots": [
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      },
+      {
+        "value": "CUSTOM:YellowWolfCrystalFragment"
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:YellowWolfCrystalBlock"
+    },
+    "name": "yellow_wolf_crystal_block_recipe",
+    "namespace": "mod"
+  }
+}

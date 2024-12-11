@@ -22,6 +22,8 @@ import net.minecraft.client.renderer.item.ItemProperties;
 
 import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryProcedure;
 import net.foxyas.changedaddon.procedures.LaethinPropertyValueProviderProcedure;
+import net.foxyas.changedaddon.item.YellowWolfCrystalFragmentItem;
+import net.foxyas.changedaddon.item.WhiteWolfCrystalFragmentItem;
 import net.foxyas.changedaddon.item.WhiteLatexSprayItem;
 import net.foxyas.changedaddon.item.UnlatexbaseItem;
 import net.foxyas.changedaddon.item.UnifuserblockIllustrativeItemItem;
@@ -43,6 +45,7 @@ import net.foxyas.changedaddon.item.PainiteHoeItem;
 import net.foxyas.changedaddon.item.PainiteAxeItem;
 import net.foxyas.changedaddon.item.PainiteArmorItem;
 import net.foxyas.changedaddon.item.OrangejuiceItem;
+import net.foxyas.changedaddon.item.OrangeWolfCrystalFragmentItem;
 import net.foxyas.changedaddon.item.LunarroseItem;
 import net.foxyas.changedaddon.item.LitixCamoniaSprayItem;
 import net.foxyas.changedaddon.item.LitixCamoniaItem;
@@ -73,6 +76,7 @@ import net.foxyas.changedaddon.item.ChangedbookItem;
 import net.foxyas.changedaddon.item.CatlyzerblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.CatalyzeddnaItem;
 import net.foxyas.changedaddon.item.BossExperiment10SpawnEggItem;
+import net.foxyas.changedaddon.item.BlueWolfCrystalFragmentItem;
 import net.foxyas.changedaddon.item.BiomassItem;
 import net.foxyas.changedaddon.item.AmmoniaparticleItem;
 import net.foxyas.changedaddon.item.AmmoniaParticlesJeiIllustrativeItem;
@@ -190,6 +194,10 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("blue_wolf_crystal_fragment", () -> new BlueWolfCrystalFragmentItem());
+	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("yellow_wolf_crystal_fragment", () -> new YellowWolfCrystalFragmentItem());
+	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("white_wolf_crystal_fragment", () -> new WhiteWolfCrystalFragmentItem());
+	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("orange_wolf_crystal_fragment", () -> new OrangeWolfCrystalFragmentItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
