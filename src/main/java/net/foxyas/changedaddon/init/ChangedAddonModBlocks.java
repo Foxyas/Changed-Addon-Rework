@@ -75,17 +75,17 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> REINFORCED_WALL_SILVER_TILED = REGISTRY.register("reinforced_wall_silver_tiled", () -> new ReinforcedwallsilvertiledBlock());
 	public static final RegistryObject<Block> REINFORCED_WALL_CAUTION = REGISTRY.register("reinforced_wall_caution", () -> new ReinforcedWallCautionBlock());
 	public static final RegistryObject<Block> REINFORCED_CROSS_BLOCK = REGISTRY.register("reinforced_cross_block", () -> new ReinforcedCrossBlock());
-	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
-	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
-	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
-	public static final RegistryObject<Block> WHITE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("white_wolf_crystal_block", () -> new WhiteWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> BLUE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("blue_wolf_crystal_block", () -> new BlueWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> ORANGE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("orange_wolf_crystal_block", () -> new OrangeWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> YELLOW_WOLF_CRYSTAL_BLOCK = REGISTRY.register("yellow_wolf_crystal_block", () -> new YellowWolfCrystalBlockBlock());
+	public static final RegistryObject<Block> WHITE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("white_wolf_crystal_block", () -> new WhiteWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> YELLOW_WOLF_CRYSTAL_SMALL = REGISTRY.register("yellow_wolf_crystal_small", () -> new YellowWolfCrystalSmallBlock());
 	public static final RegistryObject<Block> ORANGE_WOLF_CRYSTAL_SMALL = REGISTRY.register("orange_wolf_crystal_small", () -> new OrangeWolfCrystalSmallBlock());
 	public static final RegistryObject<Block> BLUE_WOLF_CRYSTAL_SMALL = REGISTRY.register("blue_wolf_crystal_small", () -> new BlueWolfCrystalSmallBlock());
 	public static final RegistryObject<Block> WHITE_WOLF_CRYSTAL_SMALL = REGISTRY.register("white_wolf_crystal_small", () -> new WhiteWolfCrystalSmallBlock());
+	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
+	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
+	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -96,12 +96,12 @@ public class ChangedAddonModBlocks {
 			SnepPlushBlock.registerRenderLayer();
 			WolfPlushBlock.registerRenderLayer();
 			ContainmentContainerBlock.registerRenderLayer();
-			FoxtaCanBlock.registerRenderLayer();
-			SnepsiCanBlock.registerRenderLayer();
 			YellowWolfCrystalSmallBlock.registerRenderLayer();
 			OrangeWolfCrystalSmallBlock.registerRenderLayer();
 			BlueWolfCrystalSmallBlock.registerRenderLayer();
 			WhiteWolfCrystalSmallBlock.registerRenderLayer();
+			FoxtaCanBlock.registerRenderLayer();
+			SnepsiCanBlock.registerRenderLayer();
 		}
 	}
 }

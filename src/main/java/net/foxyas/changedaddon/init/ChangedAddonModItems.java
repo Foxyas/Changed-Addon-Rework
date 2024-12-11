@@ -162,6 +162,18 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> REINFORCED_WALL_SILVER_TILED = block(ChangedAddonModBlocks.REINFORCED_WALL_SILVER_TILED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> REINFORCED_WALL_CAUTION = block(ChangedAddonModBlocks.REINFORCED_WALL_CAUTION, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> REINFORCED_CROSS_BLOCK = block(ChangedAddonModBlocks.REINFORCED_CROSS_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("blue_wolf_crystal_fragment", () -> new BlueWolfCrystalFragmentItem());
+	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("orange_wolf_crystal_fragment", () -> new OrangeWolfCrystalFragmentItem());
+	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("yellow_wolf_crystal_fragment", () -> new YellowWolfCrystalFragmentItem());
+	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("white_wolf_crystal_fragment", () -> new WhiteWolfCrystalFragmentItem());
 	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
 	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
 	public static final RegistryObject<Item> PAINITE_SWORD = REGISTRY.register("painite_sword", () -> new PainiteSwordItem());
@@ -186,18 +198,6 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
-	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_SMALL = block(ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> BLUE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("blue_wolf_crystal_fragment", () -> new BlueWolfCrystalFragmentItem());
-	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("yellow_wolf_crystal_fragment", () -> new YellowWolfCrystalFragmentItem());
-	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("white_wolf_crystal_fragment", () -> new WhiteWolfCrystalFragmentItem());
-	public static final RegistryObject<Item> ORANGE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("orange_wolf_crystal_fragment", () -> new OrangeWolfCrystalFragmentItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
