@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "changed_addon:orange_wolf_crystal_block"
+    }
+  ],
+  "result": {
+    "item": "changed_addon:orange_wolf_crystal_fragment",
+    "count": 9
+  }
+}

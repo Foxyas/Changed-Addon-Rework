@@ -48,18 +48,22 @@ public class AbstractWolfCrystalExtender {
                     newBlockStage = ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
                     level.setBlockAndUpdate(event.getPos(),newBlockStage);
                     level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
                 } else if (itemStack.is(Items.WHITE_DYE)) {
                     newBlockStage = ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
                     level.setBlockAndUpdate(event.getPos(),newBlockStage);
                     level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
                 } else if (itemStack.is(Items.ORANGE_DYE)) {
                     newBlockStage = ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
                     level.setBlockAndUpdate(event.getPos(),newBlockStage);
                     level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
                 } else if (itemStack.is(Items.YELLOW_DYE)) {
                     newBlockStage = ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
                     level.setBlockAndUpdate(event.getPos(),newBlockStage);
                     level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
                 }
             } else if (level.getBlockState(event.getPos()).getBlock() instanceof AbstractWolfCrystalBlock) {
                 BlockState newBlockStage;
@@ -68,6 +72,28 @@ public class AbstractWolfCrystalExtender {
                     newBlockStage = ChangedBlocks.WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
                     level.setBlockAndUpdate(event.getPos(),newBlockStage);
                     level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
+                }
+                if (itemStack.is(Items.LIGHT_BLUE_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
+                } else if (itemStack.is(Items.WHITE_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
+                } else if (itemStack.is(Items.ORANGE_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
+                } else if (itemStack.is(Items.YELLOW_DYE)) {
+                    newBlockStage = ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get().defaultBlockState();
+                    level.setBlockAndUpdate(event.getPos(),newBlockStage);
+                    level.playLocalSound(event.getPos().getX(),event.getPos().getY(),event.getPos().getZ(), SoundEvents.DYE_USE, SoundSource.BLOCKS,1,1,true);
+                    event.getPlayer().swing(event.getHand());
                 }
             }
         }

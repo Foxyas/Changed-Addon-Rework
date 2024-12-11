@@ -1,0 +1,46 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed:wolf_crystal_fragment"
+    },
+    "title": {
+      "translate": "advancements.crystal_collector.title"
+    },
+    "description": {
+      "translate": "advancements.crystal_collector.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "crystal_collector": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:dark_latex_crystal_fragment",
+              "changed:dark_dragon_crystal_fragment",
+              "changed:beifeng_crystal_fragment",
+              "changed:wolf_crystal_fragment",
+              "changed_addon:orange_wolf_crystal_fragment",
+              "changed_addon:white_wolf_crystal_fragment",
+              "changed_addon:yellow_wolf_crystal_fragment",
+              "changed_addon:blue_wolf_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "experience": 160
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}
