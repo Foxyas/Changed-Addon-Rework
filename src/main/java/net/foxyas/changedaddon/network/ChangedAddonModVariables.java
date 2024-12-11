@@ -84,7 +84,6 @@ public class ChangedAddonModVariables {
 			clone.Exp009Buff = original.Exp009Buff;
 			clone.Exp10TransfurAllowed = original.Exp10TransfurAllowed;
 			if (!event.isWasDeath()) {
-				clone.times_the_syringe_was_used = original.times_the_syringe_was_used;
 				clone.consciousness_fight_progress = original.consciousness_fight_progress;
 				clone.concience_Fight = original.concience_Fight;
 				clone.act_cooldown = original.act_cooldown;
@@ -127,7 +126,6 @@ public class ChangedAddonModVariables {
 	public static class PlayerVariables {
 		public boolean transfur = false;
 		public String LatexForm = "any";
-		public double times_the_syringe_was_used = 0;
 		public boolean showwarns = true;
 		public double Progress_Transfur_Number = 0;
 		public double consciousness_fight_progress = 0;
@@ -158,7 +156,6 @@ public class ChangedAddonModVariables {
 			CompoundTag nbt = new CompoundTag();
 			nbt.putBoolean("transfur", transfur);
 			nbt.putString("LatexForm", LatexForm);
-			nbt.putDouble("times_the_syringe_was_used", times_the_syringe_was_used);
 			nbt.putBoolean("showwarns", showwarns);
 			nbt.putDouble("Progress_Transfur_Number", Progress_Transfur_Number);
 			nbt.putDouble("consciousness_fight_progress", consciousness_fight_progress);
@@ -186,7 +183,6 @@ public class ChangedAddonModVariables {
 			CompoundTag nbt = (CompoundTag) Tag;
 			transfur = nbt.getBoolean("transfur");
 			LatexForm = nbt.getString("LatexForm");
-			times_the_syringe_was_used = nbt.getDouble("times_the_syringe_was_used");
 			showwarns = nbt.getBoolean("showwarns");
 			Progress_Transfur_Number = nbt.getDouble("Progress_Transfur_Number");
 			consciousness_fight_progress = nbt.getDouble("consciousness_fight_progress");
@@ -233,7 +229,6 @@ public class ChangedAddonModVariables {
 					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()));
 					variables.transfur = message.data.transfur;
 					variables.LatexForm = message.data.LatexForm;
-					variables.times_the_syringe_was_used = message.data.times_the_syringe_was_used;
 					variables.showwarns = message.data.showwarns;
 					variables.Progress_Transfur_Number = message.data.Progress_Transfur_Number;
 					variables.consciousness_fight_progress = message.data.consciousness_fight_progress;

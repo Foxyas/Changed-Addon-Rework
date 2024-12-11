@@ -1,0 +1,7 @@
+{
+  "_fv": 47,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">player_completes_advancement</field><next><block type=\"controls_if\"><value name=\"IF0\"><block type=\"advancement_isequalto\"><field name=\"achievement\">CUSTOM:OverDose</field></block></value><statement name=\"DO0\"><block type=\"deal_damage\"><value name=\"amount\"><block type=\"math_number\"><field name=\"NUM\">10</field></block></value><value name=\"entity\"><block type=\"entity_from_deps\"></block></value><value name=\"damagesource\"><block type=\"natural_custom_damagesource\"><value name=\"damagesource\"><block type=\"text\"><field name=\"TEXT\">OverDose</field></block></value></block></value></block></statement></block></next></block></xml>"
+  }
+}

@@ -12,7 +12,7 @@
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false
+    "hidden": true
   },
   "criteria": {
     "crystal_collector": {
@@ -98,5 +98,5 @@
   "rewards": {
     "experience": 160
   },
-  "parent": "changed_addon:changedaddon_advancement"
+  "parent": "changed_addon:crystal_adventurer"
 }

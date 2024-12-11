@@ -2,8 +2,8 @@
   "_fv": 47,
   "_type": "achievement",
   "definition": {
-    "achievementName": "§4YOU MONSTER",
-    "achievementDescription": "§4THOSE BASTARDS,THEY KILL FOXYAS",
+    "achievementName": "§4Fox Killer",
+    "achievementDescription": "§4You..§oMonster§r§4...Are you prond of that?",
     "achievementIcon": {
       "value": "CUSTOM:PainiteSword"
     },
@@ -16,7 +16,7 @@
     "rewardRecipes": [],
     "rewardFunction": "No function",
     "rewardXP": 0,
-    "achievementType": "task",
+    "achievementType": "goal",
     "parent": {
       "value": "CUSTOM:ChangedaddonAdvancement"
     },

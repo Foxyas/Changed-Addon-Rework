@@ -16,7 +16,28 @@
   },
   "criteria": {
     "timesthesyringewasused_advancement": {
-      "trigger": "minecraft:impossible"
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:syringewithlitixcammonia"
+          ]
+        },
+        "player": {
+          "player": {
+            "stats": [
+              {
+                "type": "minecraft:used",
+                "stat": "changed_addon:syringewithlitixcammonia",
+                "value": {
+                  "min": 32,
+                  "max": 999999
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "parent": "changed_addon:untransfuradvancement_2"

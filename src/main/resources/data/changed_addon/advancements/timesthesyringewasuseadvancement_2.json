@@ -16,7 +16,28 @@
   },
   "criteria": {
     "timesthesyringewasuseadvancement_2": {
-      "trigger": "minecraft:impossible"
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "changed_addon:syringewithlitixcammonia"
+          ]
+        },
+        "player": {
+          "player": {
+            "stats": [
+              {
+                "type": "minecraft:used",
+                "stat": "changed_addon:syringewithlitixcammonia",
+                "value": {
+                  "min": 64,
+                  "max": 999999
+                }
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "parent": "changed_addon:timesthesyringewasused_advancement"

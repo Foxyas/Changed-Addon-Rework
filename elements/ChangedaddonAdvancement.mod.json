@@ -7,7 +7,7 @@
     "achievementIcon": {
       "value": "CUSTOM:Changedbook"
     },
-    "background": "Default",
+    "background": "wall_white_with_silver.png",
     "disableDisplay": false,
     "showPopup": true,
     "announceToChat": false,

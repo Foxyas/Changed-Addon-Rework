@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/pot_with_litixcamonia_rework"
+    "layer0": "changed_addon:items/glass_bottle_with_litix_camonia"
   }
 }
