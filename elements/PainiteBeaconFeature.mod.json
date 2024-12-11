@@ -7,6 +7,9 @@
     "blocks": [
       {
         "value": "CUSTOM:PainiteBlock"
+      },
+      {
+        "value": "CUSTOM:IridiumBlock"
       }
     ],
     "functions": [],

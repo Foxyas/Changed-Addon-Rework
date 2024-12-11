@@ -6,6 +6,9 @@
     "items": [
       {
         "value": "CUSTOM:Painite"
+      },
+      {
+        "value": "CUSTOM:Iridium"
       }
     ],
     "blocks": [],
