@@ -145,7 +145,7 @@ public class ChangedAddonTransfurVariants {
                     .addAbility(ChangedAddonAbilitys.LEAP)
                     .addAbility(ChangedAddonAbilitys.DODGE)
                     .addAbility(ChangedAddonAbilitys.CUSTOM_INTERACTION)
-                    .itemUseMode(UseItemMode.MOUTH).reducedFall().jumpStrength(1.3F).scares(List.of(Creeper.class)).nightVision());
+                    .itemUseMode(UseItemMode.MOUTH).reducedFall().jumpStrength(1.5F).scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<LatexSnepEntity>> LATEX_SNEP_FERAL_FORM = register("form_latex_snep_feral",
             () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNEP)

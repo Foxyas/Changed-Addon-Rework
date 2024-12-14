@@ -8,6 +8,9 @@ import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.network.PlayMessages;
@@ -18,9 +21,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.damagesource.DamageSource;
 
 import net.minecraft.sounds.SoundEvent;
@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Objects;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.minecraft.world.entity.LivingEntity;
 
 public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 
@@ -143,6 +142,21 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		if (source == DamageSource.FREEZE)
 			return false;
 		return super.hurt(source, amount);
+	}
+
+	@Override
+	public boolean isItemAllowedInSlot(ItemStack stack, EquipmentSlot slot) {
+		if (slot.getType() == EquipmentSlot.Type.ARMOR) {
+			return false;
+		} /*else if (slot == EquipmentSlot.OFFHAND) {
+			return false;
+		}*/
+		return super.isItemAllowedInSlot(stack, slot);
+	}
+
+	@Override
+	public boolean canBeLeashed(Player p_21418_) {
+		return !this.isLeashed();
 	}
 
 	public static void init() {

@@ -21,16 +21,16 @@ public abstract class TransfurVariantInstanceMixin {
 
     @Inject(method = "canWear", at = @At("HEAD"), cancellable = true)
     private void negateArmor(Player player, ItemStack itemStack, EquipmentSlot slot, CallbackInfoReturnable<Boolean> cir){
-        if (itemStack.getItem() instanceof HazmatSuitItem || itemStack.getItem() instanceof DarkLatexCoatItem){
+        if ((itemStack.getItem() instanceof HazmatSuitItem || itemStack.getItem() instanceof DarkLatexCoatItem) && slot.getType() == EquipmentSlot.Type.ARMOR){
             cir.setReturnValue(false);
         }
     }
 
 
-    @Inject(method = "canWear", at = @At("HEAD"), cancellable = true)
+    /*@Inject(method = "canWear", at = @At("HEAD"), cancellable = true)
     private void negateArmorForms(Player player, ItemStack itemStack, EquipmentSlot slot, CallbackInfoReturnable<Boolean> cir){
         if (this.getParent() == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() || this.getParent() == ChangedAddonTransfurVariants.LATEX_SNEP.get()){
             cir.setReturnValue(false);
         }
-    }
+    }*/
 }

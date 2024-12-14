@@ -4,6 +4,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -11,23 +12,36 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.network.chat.TextComponent;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+
 
 public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInstance> {
 
     public static final int MAX_TICK_HOLD = 30;
     public static final int TICK_HOLD_NEED = 10;
     public WingFlapAbility() {
-        super(AbilityInstance::new);
+        super(WingFlapAbility.AbilityInstance::new);
+    }
+
+    @Override
+    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
+        if (entity.getEntity() instanceof Player player){
+            AbilityInstance Instance = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(this);
+            if (Instance.DashPower <= 0.1f){
+                return new ResourceLocation("changed_addon:textures/screens/wing_flap_ability_start.png");
+            } else if (Instance.DashPower >= 0.3f && Instance.DashPower < 0.95F){
+                return new ResourceLocation("changed_addon:textures/screens/wing_flap_ability_mid.png");
+            } else if (Instance.DashPower >= 0.95F) {
+                return new ResourceLocation("changed_addon:textures/screens/wing_flap_ability_final.png");
+            }
+        }
+
+        return new ResourceLocation("changed_addon:textures/screens/wing_flap_ability_start.png");
     }
 
     @Override
     public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.wing_flap");
-    }
-
-    @Override
-    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return new ResourceLocation("changed_addon:textures/screens/leap_ability.png");
     }
 
     @Override
@@ -63,7 +77,7 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
     public int getCoolDown(IAbstractChangedEntity entity) {
         if (entity.getEntity() instanceof Player player){
             if (player.getAbilities().flying){
-                return 15;
+                return 10;
             } else if (player.isFallFlying()) {
                 return 25;
             } else if (player.isOnGround()) {
@@ -76,8 +90,8 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
     public static class AbilityInstance extends AbstractAbilityInstance {
 
     	public boolean ReadytoDash = false;
-        public float DashPower = 0;
         public int LastTick = 0;
+        public float DashPower = 0;
         public AbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
             super(ability, entity);
         }
@@ -128,14 +142,18 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
 
             this.DashPower = capLevel((float) getController().getHoldTicks() / MAX_TICK_HOLD, 0, 1);
             if (getController().getHoldTicks() >= TICK_HOLD_NEED){
-				this.ReadytoDash = true;                
+				this.ReadytoDash = true;
             }
             
-			if (this.DashPower >= 1 && getController().getHoldTicks() == MAX_TICK_HOLD){
+
+			if (this.DashPower >= 1 && getController().getHoldTicks() == MAX_TICK_HOLD){
 				player.playSound(SoundEvents.ENDER_DRAGON_FLAP, 1, 2F);
 			}
 
-			player.displayClientMessage(new TextComponent("ticks = " + getController().getHoldTicks()),true);
+
+			if (player.level.isClientSide() && ChangedAddonClientConfigsConfiguration.WING_FLAP_INFO.get()){
+				player.displayClientMessage(new TextComponent("Ticks = " + getController().getHoldTicks()), true);
+			}
         }
 
         @Override
@@ -162,6 +180,8 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
                 exhaustPlayer(player, 4F * DashPower);
                 this.DashPower = 0;
             }
+
+            this.DashPower = 0;
         }
 
         private static void playSound(Player player) {

@@ -14,11 +14,7 @@ public class FoxyasDealYesProcedure {
 		if (entity == null)
 			return;
 		entity.getPersistentData().putBoolean("Deal", false);
-		{
-			Entity _ent = entity;
-			if (!_ent.level.isClientSide() && _ent.getServer() != null)
-				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "transfur @s changed:form_light_latex_wolf/male");
-		}
+		PlayerUtilProcedure.TransfurPlayer(entity, "changed:form_white_latex_wolf/male");
 		if (entity instanceof Player _player)
 			_player.closeContainer();
 		if (entity instanceof ServerPlayer _player) {

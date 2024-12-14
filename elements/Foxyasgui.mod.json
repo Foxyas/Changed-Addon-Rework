@@ -15,7 +15,7 @@
         "data": {
           "name": "label_hello_im_foxyas_i_dont_want_to",
           "text": {
-            "fixedValue": "hello I'm Foxyas I don't want to assimilate you i am friendly so"
+            "fixedValue": "hello I'm Foxyas I don't want to assimilate you,i am friendly so"
           },
           "color": {
             "value": -12829636,
@@ -30,7 +30,7 @@
         "data": {
           "name": "label_pls_dont_kill_me",
           "text": {
-            "fixedValue": "pls dont kill me i can trade orange juice with you i just need 2"
+            "fixedValue": "pls dont kill me,i can trade orange juice with you,i just need 2"
           },
           "color": {
             "value": -12829636,

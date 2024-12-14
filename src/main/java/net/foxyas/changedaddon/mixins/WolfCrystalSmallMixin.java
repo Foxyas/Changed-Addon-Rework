@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin(value = SmallWolfCrystal.class,remap = false)
+@Mixin(value = SmallWolfCrystal.class,remap = true)
 public class WolfCrystalSmallMixin {
 
     @Inject(method = "mayPlaceOn",at = @At("HEAD"),cancellable = true)

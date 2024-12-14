@@ -164,6 +164,24 @@
             "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Display How much Ticks You have Hold the Wing Flap Ability",
+            "vardisplay": "Wing Flap Ability Ticks Info",
+            "varname": "wing_flap_info",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
           }
         ]
       },
