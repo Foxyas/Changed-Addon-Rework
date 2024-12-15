@@ -13,6 +13,7 @@
  */
 package net.foxyas.changedaddon;
 
+import net.minecraftforge.fml.ModLoadingContext;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -50,8 +51,11 @@ public class ChangedAddonMod {
 	private static final String PROTOCOL_VERSION = "1";
 	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 	private static int messageID = 0;
+	public static ChangedAddonModConfig config;
+
 
 	public ChangedAddonMod() {
+		config = new ChangedAddonModConfig(ModLoadingContext.get());
 		ChangedAddonModTabs.load();
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		ChangedAddonModBlocks.REGISTRY.register(bus);
@@ -72,4 +76,5 @@ public class ChangedAddonMod {
 		PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
 		messageID++;
 	}
+
 }
