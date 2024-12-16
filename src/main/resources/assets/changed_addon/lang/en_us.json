@@ -312,7 +312,7 @@
   "advancements.obtain_snepsi.descr": "You Obtain a Snepsi!, Cation this soda have high dose of Snep",
   "item.changed_addon.crystal_addager_red": "Red Crystal Dagger",
   "item.changed_addon.litix_camonia_fluid_bucket": "LitixCamonia Bucket",
-  "enchantment.changed_addon.solvent.desc": "Deal more Damage to Latex Entities",
+  "enchantment.changed_addon.solvent.desc": "Deal %1$s Damage to Latex Entities",
   "item.changed_addon.painite_armor_helmet": "Netherite Helmet with Painite trim",
   "advancements.obtain_dark_crystal_dagger.title": "§8Dark§r Crystal Dagger!",
   "gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you": "i want be transfured by you",

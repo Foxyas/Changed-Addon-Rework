@@ -65,7 +65,7 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
             if (player.getAbilities().flying){
                 return 5;
             } else if (player.isFallFlying()) {
-                return 30;
+                return 45;
             } else if (player.isOnGround()) {
                 return 10;
             }

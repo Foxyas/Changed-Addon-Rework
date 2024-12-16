@@ -71,7 +71,6 @@ class JeiDescriptionHandler {
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.laethin_syringe"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.POTWITHCAMONIA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.potwithcammonia"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.diffusion_syringe"));
-
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.iridium_use"));
 
         addSharedDescriptions(registration, List.of(
@@ -81,20 +80,43 @@ class JeiDescriptionHandler {
                 ChangedAddonModItems.WHITE_WOLF_CRYSTAL_FRAGMENT.get()
         ), "item.changed_addon.colorful_wolf_crystal_fragment_desc");
 
-
         // Enchant Information
-        ItemStack enchantedBook = new ItemStack(Items.ENCHANTED_BOOK);
-        for (int i = 0; i < 5; i++) {
-            if (i != 0){
-                EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBook);
-                registration.addIngredientInfo(enchantedBook, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.solvent.desc"));
-            }
+        registerSolventDescriptions(registration);
+        registerChangedLureDescriptions(registration);
+    }
+
+    private static void registerSolventDescriptions(IRecipeRegistration registration) {
+        ItemStack enchantedBookWithSolvent = new ItemStack(Items.ENCHANTED_BOOK);
+        for (int i = 1; i < 6; i++) { // Começa em 1 para ignorar o nível 0
+            float math = SolventMath(i);
+            EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBookWithSolvent);
+            registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.solvent.desc", math));
         }
-        for (int i = 0; i < 5; i++) {
-            if (i != 0){
-                EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.CHANGED_LURE.get(), i), enchantedBook);
-                registration.addIngredientInfo(enchantedBook, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.changed_lure.desc"));
-            }
+    }
+
+    private static void registerChangedLureDescriptions(IRecipeRegistration registration) {
+        ItemStack enchantedBookWithChangedLure = new ItemStack(Items.ENCHANTED_BOOK);
+        for (int i = 1; i < 6; i++) { // Começa em 1 para ignorar o nível 0
+            EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.CHANGED_LURE.get(), i), enchantedBookWithChangedLure);
+            registration.addIngredientInfo(enchantedBookWithChangedLure, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.changed_lure.desc"));
+        }
+    }
+
+    private static float SolventMath(float EnchantLevel) {
+        if (EnchantLevel == 1) {
+            return 1.5f;
+        } else if (EnchantLevel == 0) {
+            return 1f;
+        } else if (EnchantLevel == 2) {
+            return 3f;
+        } else if (EnchantLevel == 3) {
+            return 4f;
+        } else if (EnchantLevel == 4) {
+            return 4.5f;
+        } else if (EnchantLevel == 5) {
+            return 5f;
+        } else {
+            return EnchantLevel - 0.5f;
         }
     }
 
@@ -103,6 +125,4 @@ class JeiDescriptionHandler {
                 registration.addIngredientInfo(new ItemStack(item), VanillaTypes.ITEM_STACK, new TranslatableComponent(translationKey))
         );
     }
-
 }
-
