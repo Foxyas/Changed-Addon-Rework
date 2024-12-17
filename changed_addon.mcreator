@@ -10335,20 +10335,6 @@
       "path": "~/advancements"
     },
     {
-      "name": "SnepsiAdctive",
-      "type": "achievement",
-      "sortid": 545,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "snepsi_adctive",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/advancements/snepsi_adctive.json"
-        ]
-      },
-      "path": "~/advancements"
-    },
-    {
       "name": "PlayerUtil",
       "type": "procedure",
       "sortid": 546,
@@ -12066,20 +12052,6 @@
       "path": "~/Enchants"
     },
     {
-      "name": "FoxtaAdctive",
-      "type": "achievement",
-      "sortid": 624,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "foxta_adctive",
-      "metadata": {
-        "files": [
-          "src/main/resources/data/changed_addon/advancements/foxta_adctive.json"
-        ]
-      },
-      "path": "~/advancements"
-    },
-    {
       "name": "LatexExposure",
       "type": "potioneffect",
       "sortid": 625,
@@ -12550,6 +12522,32 @@
         ]
       },
       "path": "~/advancements"
+    },
+    {
+      "name": "SnepsiAddictive",
+      "type": "achievement",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "snepsi_addictive",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/snepsi_addictive.json"
+        ]
+      },
+      "path": "~/advancements"
+    },
+    {
+      "name": "FoxtaAddictive",
+      "type": "achievement",
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "foxta_addictive",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/foxta_addictive.json"
+        ]
+      },
+      "path": "~/advancements"
     }
   ],
   "variable_elements": [
@@ -12755,6 +12753,7 @@
   ],
   "language_map": {
     "en_us": {
+      "advancements.foxta_addictive.descr": "We take a big sippy,You drink 100 Foxtas!!!",
       "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
       "advancements.obtain_foxta.title": "Foxta!",
       "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
@@ -12812,6 +12811,7 @@
       "gui.changed_addon.pagesecret.button_close": "close",
       "attribute.changed_addon.latexresistance": "Latex Resistance",
       "gui.changed_addon.book_pagenumber_2.label_laethin_syringe": "Laethin Syringe",
+      "advancements.snepsi_addictive.title": "Snepsi Addctive!",
       "gui.changed_addon.bookrecipepage_10.button_close": "Close",
       "enchantment.changed_addon.solvent": "Latex Solvent",
       "item.changed_addon.painite_armor_leggings": "Netherite Leggings with Painite trim",
@@ -12843,12 +12843,10 @@
       "changed_addon.gui.recipe_progress": "ProgressSpeed is %s per tick",
       "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
       "gui.changed_addon.bookrecipepage_9.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
-      "advancements.foxta_adctive.title": "Foxta Adctive!",
       "gui.changed_addon.book_recipe_page_11.label_g": "G",
       "item.changed_addon.experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
       "item.changed_addon.exp_9_latex_base": "Exp9 Latex Base",
       "gui.changed_addon.bookrecipepage_8.label_s": "S",
-      "advancements.snepsi_adctive.descr": "We take a big sippy,You drink 100 Snepsis!",
       "gui.changed_addon.informant_gui.form": "Form ID",
       "item.changed_addon.empty_spray": "Empty Spray",
       "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
@@ -13009,7 +13007,6 @@
       "item.changed_addon.biomass": "Biomass",
       "advancements.obtain_a_electric_katana.descr": "Get the electric katana!",
       "item.changed_addon.orangejuice": "Orange Juice",
-      "advancements.snepsi_adctive.title": "Snepsi Adctive!",
       "changed_addon.compact_disc.content.experiment_009": "Experiment 009 Had to be Demoleculated!! he\u0027s powerful very powerful never let him fall into the wrong hands he apparently can\u0027t infect but he shows he doesn\u0027t want to §n§4 He Wants to Kill Everyone who gets in his way§r",
       "item.changed_addon.latex_snep_spawn_egg": "Latex Animal Snow Leopard Spawn Egg",
       "key.changed_addon.pat_received": "{0} pat You",
@@ -13083,7 +13080,6 @@
       "gui.changed_addon.unifusergui.label_3": "+3",
       "item.changed_addon.orange_wolf_crystal_fragment": "§6Orange§r Wolf Crystal Fragment",
       "item.changed_addon.mirror_white_tiger_spawn_egg": "Mirror White Tiger Spawn Egg",
-      "advancements.foxta_adctive.descr": "We take a big sippy,You drink 100 Foxtas!!!",
       "advancements.leaper.title": "Leaper",
       "advancements.timesthesyringewasuseadvancement_3.title": "STOP",
       "itemGroup.tabchanged_addon": "Changed Addon Plus",
@@ -13115,6 +13111,7 @@
       "changedaddon.assimilation.on": "Assimilation activated",
       "gui.changed_addon.foxyasgui.label_hello_im_foxyas_i_dont_want_to": "hello I\u0027m Foxyas I don\u0027t want to assimilate you,i am friendly so",
       "item.changed_addon.latex_snow_leopard_partial_spawn_egg": "Snow Leopard Partial Spawn Egg",
+      "advancements.snepsi_addictive.descr": "We take a big sippy,You drink 100 Snepsis!",
       "changed_addon.ability.wing_flap": "Wing Flap",
       "entity.changed_addon.puro_kind": "Puro Kind",
       "changed_addon.form_dialogues.exp2.death.text1": "§8§lI Won\u0027t Let You §oDown§r §8§lAgain",
@@ -13240,6 +13237,7 @@
       "item.changed_addon.foxyas_spawn_egg": "Foxyas Spawn Egg",
       "gui.changed_addon.bookrecipepage_9.label_unifuser": "Unifuser",
       "changed_addon.form_dialogues.exp10.death.text1": "§4§l§oSo much potential, wasted in a single breath... pathetic.§r",
+      "advancements.foxta_addictive.title": "Foxta Addctive!",
       "changed_addon.form_dialogues.exp10.death.text2": "§4§l§oAnd even with all this power, you found a way to die...§r",
       "advancements.stealthpats.title": "Hidden §cAffection§r",
       "advancements.drink_foxta.descr": "Drink foxta for the first time  ",
