@@ -41,6 +41,7 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(SnowLeopardPartialModel.LAYER_LOCATION_LATEX_SLIM, () -> SnowLeopardPartialModel.createLatexLayer(true));
 		event.registerLayerDefinition(GrapeSnowLeopardModel.LAYER_LOCATION, GrapeSnowLeopardModel::createBodyLayer);
 		event.registerLayerDefinition(ReynModel.LAYER_LOCATION, ReynModel::createBodyLayer);
+		//event.registerLayerDefinition(SpecimeDEV.LAYER_LOCATION, SpecimeDEV::createBodyLayer);
 
 		//Entitys Model
 		event.registerLayerDefinition(LatexSnepModel.LAYER_LOCATION, LatexSnepModel::createBodyLayer);
