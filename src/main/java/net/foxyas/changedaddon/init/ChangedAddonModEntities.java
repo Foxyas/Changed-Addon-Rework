@@ -24,6 +24,7 @@ import net.foxyas.changedaddon.entity.PuroKindFemaleEntity;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
+import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
@@ -145,6 +146,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<LatexSnepEntity>of(LatexSnepEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnepEntity::new)
 
 					.sized(0.6f, 0.7f));
+	public static final RegistryObject<EntityType<LuminarcticLeopardEntity>> LUMINARCTIC_LEOPARD = register("luminarctic_leopard",
+			EntityType.Builder.<LuminarcticLeopardEntity>of(LuminarcticLeopardEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LuminarcticLeopardEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -179,6 +184,7 @@ public class ChangedAddonModEntities {
 			Exp1MaleEntity.init();
 			Exp1FemaleEntity.init();
 			LatexSnepEntity.init();
+			LuminarcticLeopardEntity.init();
 		});
 	}
 
@@ -210,5 +216,6 @@ public class ChangedAddonModEntities {
 		event.put(EXP_1_MALE.get(), Exp1MaleEntity.createAttributes().build());
 		event.put(EXP_1_FEMALE.get(), Exp1FemaleEntity.createAttributes().build());
 		event.put(LATEX_SNEP.get(), LatexSnepEntity.createAttributes().build());
+		event.put(LUMINARCTIC_LEOPARD.get(), LuminarcticLeopardEntity.createAttributes().build());
 	}
 }

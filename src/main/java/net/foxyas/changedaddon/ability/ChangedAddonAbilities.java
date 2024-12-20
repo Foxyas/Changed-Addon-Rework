@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -20,7 +19,7 @@ import java.util.List;
 import static net.ltxprogrammer.changed.init.ChangedRegistry.ABILITY;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
+public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
 
 	public static final DeferredRegister<AbstractAbility<?>> REGISTRY = ABILITY.createDeferred(ChangedAddonMod.MODID);
 	public static final RegistryObject<LeapAbility> LEAP = REGISTRY.register("leap", LeapAbility::new);
@@ -38,6 +37,8 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 	public static final RegistryObject<TurnFeralSnepAbility> TURN_FERAL_SNEP = REGISTRY.register("turn_feral", TurnFeralSnepAbility::new);
 	public static final RegistryObject<WingFlapAbility> WING_FLAP_ABILITY = REGISTRY.register("wing_flap", WingFlapAbility::new);
 
+	//TODO:Create Abilities For The New Form/Boss
+
 	public static List<EntityType<?>> getCanGlideEntites(){
 		//["form_dark_dragon", "form_dark_latex_yufeng", "form_latex_pink_yuin_dragon", "form_latex_red_dragon"]
 		return List.of(ChangedEntities.DARK_LATEX_YUFENG.get(),ChangedEntities.LATEX_PINK_YUIN_DRAGON.get(),ChangedEntities.DARK_DRAGON.get(),ChangedEntities.LATEX_RED_DRAGON.get());
@@ -49,7 +50,7 @@ public class ChangedAddonAbilitys /*extends ChangedAbilities*/ {
 
 	@SubscribeEvent
 	public static void registerAbilities(FMLConstructModEvent event) {
-		ChangedAddonAbilitys.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+		ChangedAddonAbilities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
 	}
 
 }

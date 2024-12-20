@@ -6,14 +6,12 @@ import net.minecraftforge.event.TickEvent;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.TextComponent;
 
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
-import net.foxyas.changedaddon.ability.DodgeAbility;
-import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
+import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
 
 @Mod.EventBusSubscriber
 public class ProcessAbilities {
@@ -25,7 +23,7 @@ public class ProcessAbilities {
 		if (TransfurVariantInstance == null) {
 			return;
 		}
-		DodgeAbilityInstance DodgeAbility = (DodgeAbilityInstance) TransfurVariantInstance.abilityInstances.get(ChangedAddonAbilitys.DODGE.get());
+		DodgeAbilityInstance DodgeAbility = (DodgeAbilityInstance) TransfurVariantInstance.abilityInstances.get(ChangedAddonAbilities.DODGE.get());
 		if (DodgeAbility == null) {
 			return;
 		}

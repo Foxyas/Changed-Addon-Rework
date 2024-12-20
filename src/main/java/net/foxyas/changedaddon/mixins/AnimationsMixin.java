@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
+import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
 import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -18,13 +18,13 @@ public class AnimationsMixin {
     private void addCustomAnimation(
             @NotNull ChangedEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci){
         if (entity.getUnderlyingPlayer() != null && ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()) != null
-                && ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()).hasAbility(ChangedAddonAbilitys.CARRY.get())){
+                && ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()).hasAbility(ChangedAddonAbilities.CARRY.get())){
             CarryAbilityAnimation.playAnimation(entity,(AdvancedHumanoidModel<?>) (Object) this);
         }
         if (entity.getSelfVariant() != null && entity.getSelfVariant().abilities.stream().anyMatch(entityTypeFunction -> {
             // Supondo que a função aceite algum EntityType e você esteja verificando seu resultado:
             AbstractAbility<?> ability = entityTypeFunction.apply(entity.getType());
-            return ability != null && ability.equals(ChangedAddonAbilitys.CARRY.get());
+            return ability != null && ability.equals(ChangedAddonAbilities.CARRY.get());
         })) {
             CarryAbilityAnimation.playAnimation(entity, (AdvancedHumanoidModel<?>) (Object) this);
         }

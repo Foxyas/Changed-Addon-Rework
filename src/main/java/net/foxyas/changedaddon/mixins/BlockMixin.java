@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -47,7 +46,7 @@ public abstract class BlockMixin {
                             }*/
 
                             //Ability
-                            transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), Instance -> {
+                            transfurVariantInstance.ifHasAbility(ChangedAddonAbilities.SOFTEN_ABILITY.get(), Instance -> {
                                 if (player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()
                                         && player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()
                                         && player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()

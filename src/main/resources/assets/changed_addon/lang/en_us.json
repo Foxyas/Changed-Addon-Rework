@@ -1,10 +1,11 @@
 {
-  "advancements.obtain_foxta.title": "Foxta!",
-  "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
   "advancements.foxta_addictive.descr": "We take a big sippy,You drink 100 Foxtas!!!",
+  "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
+  "advancements.obtain_foxta.title": "Foxta!",
   "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
   "item.changed_addon.crystal_addager_black": "Dark Crystal Dagger",
   "death.attack.OverDose": "%1$s get a §4OverDose§r",
+  "entity.changed_addon.luminarctic_leopard": "Luminarctic Leopard",
   "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
   "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
   "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",

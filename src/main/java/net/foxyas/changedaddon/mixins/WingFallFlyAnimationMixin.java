@@ -15,7 +15,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.wing.DragonWingFallFlyAnimator;
 
 import net.foxyas.changedaddon.ability.WingFlapAbility;
-import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
+import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
 
 @Mixin(value = DragonWingFallFlyAnimator.class, remap = false)
 public class WingFallFlyAnimationMixin {
@@ -24,7 +24,7 @@ public class WingFallFlyAnimationMixin {
 	private void WingAnimation(@NotNull ChangedEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
 		if (entity.getUnderlyingPlayer() != null && ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer()) != null) {
 			TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer());
-			if (variantInstance.hasAbility(ChangedAddonAbilitys.WING_FLAP_ABILITY.get()) && variantInstance.getAbilityInstance(ChangedAddonAbilitys.WING_FLAP_ABILITY.get()).canUse()
+			if (variantInstance.hasAbility(ChangedAddonAbilities.WING_FLAP_ABILITY.get()) && variantInstance.getAbilityInstance(ChangedAddonAbilities.WING_FLAP_ABILITY.get()).canUse()
 					&& variantInstance.getSelectedAbility() instanceof WingFlapAbility.AbilityInstance WingFlapAbilityInstance) {
 				if (entity.getUnderlyingPlayer().getAbilities().flying){
 					return;

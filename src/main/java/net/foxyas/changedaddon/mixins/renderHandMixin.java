@@ -3,12 +3,11 @@ package net.foxyas.changedaddon.mixins;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import net.foxyas.changedaddon.ability.CarryAbility;
-import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
+import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
 //import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
@@ -25,7 +24,6 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -98,9 +96,9 @@ public class renderHandMixin {
         }
 
         // Check if the player has the Carry ability and is carrying a valid entity
-        if (variantInstance.hasAbility(ChangedAddonAbilitys.CARRY.get())
-                && variantInstance.selectedAbility == ChangedAddonAbilitys.CARRY.get()) {
-            CarryAbility carryAbility = (CarryAbility) variantInstance.getAbilityInstance(ChangedAddonAbilitys.CARRY.get()).ability;
+        if (variantInstance.hasAbility(ChangedAddonAbilities.CARRY.get())
+                && variantInstance.selectedAbility == ChangedAddonAbilities.CARRY.get()) {
+            CarryAbility carryAbility = (CarryAbility) variantInstance.getAbilityInstance(ChangedAddonAbilities.CARRY.get()).ability;
             Entity carryTarget = carryAbility.CarryTarget(player);
 
             if (carryTarget instanceof LivingEntity) {

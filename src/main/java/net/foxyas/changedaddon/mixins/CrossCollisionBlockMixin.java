@@ -1,8 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.ability.ChangedAddonAbilitys;
-import net.foxyas.changedaddon.ability.SoftenAbilityInstance;
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -14,7 +12,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.CrossCollisionBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.EntityCollisionContext;
@@ -48,7 +45,7 @@ public abstract class CrossCollisionBlockMixin{
                             }*/
 
                             //Ability
-                            transfurVariantInstance.ifHasAbility(ChangedAddonAbilitys.SOFTEN_ABILITY.get(), Instance -> {
+                            transfurVariantInstance.ifHasAbility(ChangedAddonAbilities.SOFTEN_ABILITY.get(), Instance -> {
                                 if (player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()
                                         && player.getItemBySlot(EquipmentSlot.CHEST).isEmpty()
                                         && player.getItemBySlot(EquipmentSlot.LEGS).isEmpty()

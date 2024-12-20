@@ -59,7 +59,8 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
                         && Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP.get()){
                     setOldVariant(entity.getSelfVariant());
                 }
-            } else if (Instance != null){
+            }
+ else if (Instance != null){
             	if (Instance.getParent() ==	ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() && ability.getSelectedDisplayText(this.entity) != null){
             	player.displayClientMessage(ability.getSelectedDisplayText(this.entity),true);
             	}
@@ -135,7 +136,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
                     1
             );
             if (variantInstance != null) {
-                variantInstance.ifHasAbility(ChangedAddonAbilitys.TURN_FERAL_SNEP.get(), abilityInstance ->
+                variantInstance.ifHasAbility(ChangedAddonAbilities.TURN_FERAL_SNEP.get(), abilityInstance ->
                         abilityInstance.setOldVariant(entity.getTransfurVariant())
                 );
                 entity.getEntity().getLevel().playSound(null,entity.getEntity(), ChangedSounds.POISON, SoundSource.PLAYERS,1,1);
