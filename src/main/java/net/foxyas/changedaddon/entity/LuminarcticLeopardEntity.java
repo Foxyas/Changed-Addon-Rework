@@ -19,6 +19,7 @@ import net.ltxprogrammer.changed.util.CameraUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
@@ -68,6 +69,8 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 	public int PassivesTicksCooldown = 0;
 	public boolean isDashing = false;
 	private final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
+	public int DodgeAnimTicks = 0;
+	public final int DodgeAnimMaxTicks = 20;
 
 	public LuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), world);
@@ -109,6 +112,9 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		if (tag.contains("SuperAbilitiesTicksCooldown")) {
 			this.SuperAbilitiesTicksCooldown = tag.getInt("SuperAbilitiesTicksCooldown");
 		}
+		if (tag.contains("DodgeAnimTicks")) {
+			this.DodgeAnimTicks = tag.getInt("DodgeAnimTicks");
+		}
 		if (tag.contains("isDashing")) {
 			this.isDashing = tag.getBoolean("isDashing");
 		}
@@ -122,6 +128,7 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		tag.putInt("SuperAbilitiesTicksCooldown", SuperAbilitiesTicksCooldown);
 		tag.putInt("PassivesTicksCooldown", PassivesTicksCooldown);
 		tag.putBoolean("isDashing", isDashing);
+		tag.putInt("DodgeAnimTicks",DodgeAnimTicks);
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
@@ -294,8 +301,10 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 			if (amount > 2){
 				return super.hurt(source, amount);
 			} else if (source.getDirectEntity() == this){
+				this.DodgeAnimTicks = DodgeAnimMaxTicks;
 				return false;
 			} else {
+				this.DodgeAnimTicks = DodgeAnimMaxTicks;
 				return false;
 			}
 		}

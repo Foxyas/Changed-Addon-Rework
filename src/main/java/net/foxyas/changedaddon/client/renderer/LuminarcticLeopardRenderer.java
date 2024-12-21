@@ -2,6 +2,7 @@
 package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.LuminarcticLeopardModel;
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
 import net.foxyas.changedaddon.entity.DazedEntity;
@@ -25,6 +26,7 @@ import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -61,6 +63,26 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
 		);
 
 		this.addLayer(new thisConditionalLayers.thisGlowLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_ability_active.png")));
+	}
+
+	@Override
+	public void render(LuminarcticLeopardEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+		if (entity.DodgeAnimTicks > 0) {
+			poseStack.pushPose();
+
+			// Calcula a rotação com base no progresso da animação de esquiva
+			float dodgeProgress = (float) entity.DodgeAnimTicks / entity.DodgeAnimMaxTicks;
+			float rotationAngle = 90.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
+
+			// Aplica a rotação no eixo X
+			poseStack.mulPose(Vector3f.XP.rotationDegrees(rotationAngle));
+
+			// Renderiza o modelo normalmente (chama o super ou código adicional aqui)
+			super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
+			poseStack.popPose(); // Restaura a pose original
+		} else {
+			super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
+		}
 	}
 
 	@Override

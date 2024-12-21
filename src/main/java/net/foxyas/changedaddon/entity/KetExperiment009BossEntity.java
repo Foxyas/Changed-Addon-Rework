@@ -1,15 +1,12 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
+import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.Exp009IAProcedure;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -24,7 +21,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -35,6 +35,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -75,12 +76,12 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 
 	@Override
 	public boolean ShouldPlayMusic() {
-		return true;
+		return this.isAlive();
 	}
 
 	@Override
-	public SoundEvent Music() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
+	public @NotNull BossMusicTheme BossMusicTheme() {
+		return BossMusicTheme.EXP9_PHASE2;
 	}
 
 	@Override

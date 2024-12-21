@@ -1,15 +1,12 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
+import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -38,6 +35,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,13 +77,14 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
 	@Override
 	public boolean ShouldPlayMusic() {
-		return true;
+		return this.isAlive();
 	}
 
 	@Override
-	public SoundEvent Music() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
+	public @NotNull BossMusicTheme BossMusicTheme() {
+		return BossMusicTheme.EXP10;
 	}
+
 
 	@Override
 	public boolean startRiding(Entity EntityIn, boolean force) {
