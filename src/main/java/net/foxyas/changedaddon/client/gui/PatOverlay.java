@@ -4,9 +4,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfigurat
 import net.foxyas.changedaddon.init.ChangedAddonModKeyMappings;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
-import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
@@ -19,6 +17,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -58,7 +58,7 @@ public class PatOverlay {
                         if (!PatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible() && isPossibletoPat(entity)){
                                 float EntityNameLength = PatInfo2(lookedEntity).getString().length();
-                        		float MoveOverlayAmount = EntityNameLength * 1.5f;
+                        		float MoveOverlayAmount = EntityNameLength * 1.65f;
                         		//EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;
                         		Minecraft.getInstance().font.draw(event.getMatrixStack(),
                                     PatInfo(lookedEntity), DynamicChanges ? floatPosX - MoveOverlayAmount : floatPosX, floatPosY, -1);
@@ -73,23 +73,50 @@ public class PatOverlay {
         }
     }
 
-    private static boolean isPatableEntity(Player player,Entity PatEntity) {
-        // Verifica se a entidade está dentro das tags definidas como 'patable entities'
-        boolean isPatableByTag = PatEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
-                new ResourceLocation("changed_addon:patable_entitys")));
-        if (PatEntity instanceof Player Patplayer){
-            boolean isPatPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(Patplayer) != null;
-            boolean isPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(player) != null;
-            if (isPatPlayerTransfur){
-                return true;
-            } else if (isPlayerTransfur) {
-                return true;
-            }
-        } else if (PatEntity instanceof ChangedEntity){
-            return true;
-        }
-        return isPatableByTag;
-    }
+    private static boolean isPatableEntity(Player player, Entity patEntity) {
+    	// Verifica se a entidade está dentro das tags definidas como 'patable entities'
+    	boolean isPatableByTag = patEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
+        	    new ResourceLocation("changed_addon:patable_entitys")));
+
+    	// Verifica se a visão do jogador está limpa até a entidade
+    	if (!isLineOfSightClear(player, patEntity)) {
+        	return false;
+    	}	
+
+    	if (patEntity instanceof Player patPlayer) {
+        	boolean isPatPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(patPlayer) != null;
+        	boolean isPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(player) != null;
+        	if (isPatPlayerTransfur) {
+            	return true;
+        	} else if (isPlayerTransfur) {
+            	return true;
+        	}
+    	} else if (patEntity instanceof ChangedEntity) {
+        	return true;
+    	}
+    	return isPatableByTag;
+	}
+
+
+	private static boolean isLineOfSightClear(Player player, Entity entity) {
+    	var level = player.getLevel();
+    	var playerEyePos = player.getEyePosition(1.0F); // Posição dos olhos do jogador
+    	var entityEyePos = entity.getBoundingBox().getCenter(); // Centro da entidade
+
+    	// Realiza o traçado de linha
+    	var result = level.clip(new ClipContext(
+            	playerEyePos, 
+            	entityEyePos,
+                ClipContext.Block.VISUAL, // Apenas blocos visuais são considerados
+            	ClipContext.Fluid.NONE, // Ignorar fluidos
+            	player
+    	));
+
+    	// Retorna true se o resultado for MISS (nenhum bloco obstruindo)
+    	return result.getType() == HitResult.Type.MISS;
+	}
+
+
 
     private static boolean isPossibletoPat(Player player) {
         var variant = ProcessTransfur.getPlayerTransfurVariant(player);

@@ -67,15 +67,23 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
 
 	@Override
 	public void render(LuminarcticLeopardEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		if (entity.DodgeAnimTicks > 0) {
+		if (entity.DodgeAnimTicks != 0) {
 			poseStack.pushPose();
 
 			// Calcula a rotação com base no progresso da animação de esquiva
-			float dodgeProgress = (float) entity.DodgeAnimTicks / entity.DodgeAnimMaxTicks;
-			float rotationAngle = 90.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
+			float dodgeProgress;
+			if (entity.DodgeAnimTicks < 0){
+				dodgeProgress = (float) entity.DodgeAnimTicks / -entity.DodgeAnimMaxTicks;
+				float rotationAngle = 90.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
+				// Aplica a rotação no eixo X
+				poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationAngle));
+			} else {
+				dodgeProgress = (float) entity.DodgeAnimTicks / entity.DodgeAnimMaxTicks;
+				float rotationAngle = 90.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
 
-			// Aplica a rotação no eixo X
-			poseStack.mulPose(Vector3f.XP.rotationDegrees(rotationAngle));
+				// Aplica a rotação no eixo X
+				poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationAngle));
+			}
 
 			// Renderiza o modelo normalmente (chama o super ou código adicional aqui)
 			super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);

@@ -11,7 +11,6 @@ public class ChangedAddonConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> CUSTOMRECIPES;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> ALWAYS_INFECT;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> DL_COAT_AFFECT_ALL;
-	public static final ForgeConfigSpec.ConfigValue<Boolean> DL_NO_MOVIMENT_NO_VISION;
 	static {
 		BUILDER.push("Latex Totem");
 		ACCEPT_ALL_VARIANTS = BUILDER.comment("allow latex totem to have all Latex Variants").define("No Latex Totem Limitations", true);
@@ -28,7 +27,6 @@ public class ChangedAddonConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Beasts Behavior");
 		DL_COAT_AFFECT_ALL = BUILDER.comment("When active, the Dark Latex Coat will affect all beasts").define("DL Coat Confuse All Creatures", true);
-		DL_NO_MOVIMENT_NO_VISION = BUILDER.comment("When active, the Dark Latex Entites Will not See the player if they aren't moving").define("Dark Latex No Moviment no Vision", true);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

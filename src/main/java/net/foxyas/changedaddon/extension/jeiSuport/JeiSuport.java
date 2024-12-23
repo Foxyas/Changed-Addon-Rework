@@ -103,7 +103,7 @@ class JeiDescriptionHandler {
     }
 
     private static float SolventMath(float EnchantLevel) {
-        if (EnchantLevel == 1) {
+        /*if (EnchantLevel == 1) {
             return 1.5f;
         } else if (EnchantLevel == 0) {
             return 1f;
@@ -117,7 +117,8 @@ class JeiDescriptionHandler {
             return 5f;
         } else {
             return EnchantLevel - 0.5f;
-        }
+        }*/
+        return 1.0f + (EnchantLevel - 1) * 0.20f;
     }
 
     private static void addSharedDescriptions(IRecipeRegistration registration, List<Item> items, String translationKey) {

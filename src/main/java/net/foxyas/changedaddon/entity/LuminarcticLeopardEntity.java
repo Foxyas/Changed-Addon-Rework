@@ -16,10 +16,9 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.CameraUtil;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
@@ -30,6 +29,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -38,11 +38,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -52,6 +53,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Random;
+import net.minecraft.network.chat.TextComponent;
 
 public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 
@@ -71,6 +73,8 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 	private final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
 	public int DodgeAnimTicks = 0;
 	public final int DodgeAnimMaxTicks = 20;
+
+	//public int DEVATTACKTESTTICK = 0;
 
 	public LuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), world);
@@ -118,6 +122,9 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		if (tag.contains("isDashing")) {
 			this.isDashing = tag.getBoolean("isDashing");
 		}
+		//if (tag.contains("DEVATTACKTESTTICK")) {
+		//	this.DEVATTACKTESTTICK = tag.getInt("DEVATTACKTESTTICK");
+		//}
 	}
 
 	@Override
@@ -128,7 +135,8 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		tag.putInt("SuperAbilitiesTicksCooldown", SuperAbilitiesTicksCooldown);
 		tag.putInt("PassivesTicksCooldown", PassivesTicksCooldown);
 		tag.putBoolean("isDashing", isDashing);
-		tag.putInt("DodgeAnimTicks",DodgeAnimTicks);
+		tag.putInt("DodgeAnimTicks", DodgeAnimTicks);
+		//tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
 	}
 
 	protected void setAttributes(AttributeMap attributes) {
@@ -254,23 +262,54 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 			this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
 		}
 
+		/*if (this.DEVATTACKTESTTICK != 0){
+			this.AbilitiesTicksCooldown = 0;
+			this.ActivatedAbility = true;
+		}*/
+
+		if (this.DodgeAnimTicks > 0){
+			this.DodgeAnimTicks -= 2;
+		} else if (this.DodgeAnimTicks < 0){
+			this.DodgeAnimTicks += 2;
+		}
+
+		if (this.AbilitiesTicksCooldown <= 0){
+			this.bossAbilitiesHandle.tick();
+		} else {
+			this.AbilitiesTicksCooldown --;
+		}
+
+		this.ActivatedAbility = this.getTarget() != null;
+		if (this.SuperAbilitiesTicksCooldown > 0){
+			this.SuperAbilitiesTicksCooldown --; //Super Abilities CoolDown
+		}
+
 		if (this.isAlive()){
-			if (isDashing){
-				PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, ParticleTypes.GLOW, this.position(), 0.3f, 0.2f, 0.3f, 4,0);
-			}
-            this.ActivatedAbility = this.getTarget() != null;
-			if (this.SuperAbilitiesTicksCooldown > 0){
-				this.SuperAbilitiesTicksCooldown --; //Super Abilities CoolDown
-			}
+
 			if (this.PassivesTicksCooldown <= 10){
 				this.bossAbilitiesHandle.Passives(); //Passives
 			} else {
 				this.PassivesTicksCooldown -= 2;
 			}
-			if (this.AbilitiesTicksCooldown <= 0){
-				this.bossAbilitiesHandle.tick();
-			} else {
-				this.AbilitiesTicksCooldown --;
+
+			if (isDashing){
+				for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
+    				double angleTheta = Math.toRadians(theta);
+    				for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
+        				double anglePhi = Math.toRadians(phi);
+        				double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
+        				double y = this.getY() + Math.cos(anglePhi) * 4.0;
+        				double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
+        				Vec3 pos = new Vec3(x, y, z);
+        				PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                		this.getLevel(),
+                		ParticleTypes.GLOW,
+                		pos,
+                		0.3f, 0.2f, 0.3f,
+				        4, 0
+        				);
+    				}
+				}
 			}
 		}
 	}
@@ -278,12 +317,12 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
-		Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(125f);
+		Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(205f);
 		Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(15f);
 		Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
 		Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2.5f);
-		this.setHealth(125f);
-		this.setAbsorptionAmount(75f);
+		this.setHealth(205f);
+		//this.setAbsorptionAmount(75f);
 		this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
 		return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
 	}
@@ -291,20 +330,46 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 	@Override
 	public boolean hurt(@NotNull DamageSource source, float amount) {
 		this.AbilitiesTicksCooldown -= 5 + (0.05f * amount);
+
+		if (source instanceof EntityDamageSource entityDamageSource && entityDamageSource.isThorns()){
+			return false;
+		}
+
+		if (source.isProjectile()){
+			return false;
+		}
+
+		if (source.isFire() || source.isExplosion()){
+			return super.hurt(source, amount * 0.01f);
+		}
+
+		Entity attacker = source.getDirectEntity();
+		if (attacker == null){ attacker = source.getEntity(); }
+
+		if (attacker == null){
+			return super.hurt(source, amount);
+		}
+
 		if (source.getDirectEntity() == null){
 			super.hurt(source, amount);
 		}
-		if (source.getDirectEntity() instanceof LivingEntity livingEntity && EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 5) {
-			return super.hurt(source, amount * 0.8f);
+
+		if (attacker instanceof LivingEntity livingEntity && EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 5) {
+			return super.hurt(source, amount * 0.5f);
 		} else {
 			amount = amount / 6;
 			if (amount > 2){
+				this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2;
 				return super.hurt(source, amount);
-			} else if (source.getDirectEntity() == this){
-				this.DodgeAnimTicks = DodgeAnimMaxTicks;
+			} else if (attacker == this){
+				this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
+				Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
+				this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
 				return false;
 			} else {
-				this.DodgeAnimTicks = DodgeAnimMaxTicks;
+				this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
+                Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
+				this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
 				return false;
 			}
 		}
@@ -323,6 +388,36 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 			Random random = boss.getLevel().random;
 			int abilityIndex = random.nextInt(8); // 8 habilidades ativas restantes, índices de 0 a
 			LivingEntity bossTarget = this.boss.getTarget();
+
+			/*if (boss.DEVATTACKTESTTICK != 0){
+				int abilitytest = boss.DEVATTACKTESTTICK;
+				switch (abilitytest) {
+					case 1:
+						glacialSpikes();
+						break;
+					case 2:
+						frostNova();
+						break;
+					case 3:
+						crystallineShield();
+						break;
+					case 4:
+						radioactiveBurst();
+						break;
+					case 5:
+						irradiatedPulse();
+						break;
+					case 6:
+						radiantField();
+						break;
+					case 7:
+						meltdown();
+						break;
+					case 8:
+						arcticDash();
+						break;
+				}
+			}*/
 
 
 			if (bossTarget != null){
@@ -375,11 +470,12 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 					// Para cada entidade dentro da área do dash
 					for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3))) {
 						if (entity != boss) {
-							entity.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassArmor(), 10.0F);
+							entity.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassArmor(), 4.0F);
 							entity.knockback(1.5, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
 
 							// Cria partículas de glow no local da entidade atingida
-							PlayerUtilProcedure.ParticlesUtil.sendParticles(entity.level,ParticleTypes.GLOW,entity.position(),0.3f,0.2f,0.3f,25,1);
+							Vec3 pos = new Vec3(entity.position().x,entity.position().y + 0.5,entity.position().z);
+							PlayerUtilProcedure.ParticlesUtil.sendParticles(entity.level,ParticleTypes.GLOW,pos,0.3f,0.2f,0.3f,25,1);
 							entity.playSound(SoundEvents.BEACON_AMBIENT, 4.5f, 0);
 						}
 					}
@@ -395,19 +491,18 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		// Glacial Spikes Ability
 		public void glacialSpikes() {
 			if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
-				for (int repeat = 0; repeat < 10; repeat++) {
-					for (int i = 0; i < 24; i++) {
+				for (int i = 0; i < 16; i++) {
 						double angle = Math.toRadians(i * 45); // 8 direções
 						double x = boss.getX() + Mth.cos((float) angle) * 3.0;
 						double z = boss.getZ() + Mth.sin((float) angle) * 3.0;
-						boss.level.addParticle(ParticleTypes.SNOWFLAKE, x, boss.getY(), z, 0.0, 0.1, 0.0);
+						Vec3 pos = new Vec3(x,boss.getY(),z);
+						PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SNOWFLAKE, pos, 0.3f, 0.2f, 0.3f, 15,0);
 						for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3.0))) {
 							if (entity != boss) {
-								entity.hurt(DamageSource.mobAttack(boss).bypassMagic().bypassArmor(), 8.0F);
+								entity.hurt(DamageSource.mobAttack(boss).bypassMagic(), 8.0F);
 								entity.knockback(1.0, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
 							}
 						}
-					}
 				}
 				boss.playSound(SoundEvents.GENERIC_EXPLODE,4.5f,1);
 				boss.AbilitiesTicksCooldown = 100; // Set cooldown for the next activation
@@ -417,7 +512,7 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		// Frost Nova Ability
 		public void frostNova() {
 			if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
-				boss.level.addParticle(ParticleTypes.CLOUD, boss.getX(), boss.getY(), boss.getZ(), 0.0, 0.0, 0.0);
+				PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.CLOUD, boss.position(), 0.3f, 0.2f, 0.3f, 15,0);
 				for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(6.0))) {
 					if (entity != boss) {
 						entity.hurt(DamageSource.mobAttack(boss).bypassArmor(), 12.0f);
@@ -434,11 +529,12 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		// Crystalline Shield Ability
 		public void crystallineShield() {
 			if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
-				for (int i = 0; i < 12; i++) {
+				for (int i = 0; i < 16; i++) {
 					double angle = Math.toRadians(i * 45); // 8 direções
 					double x = boss.getX() + Mth.cos((float) angle) * 3.0;
 					double z = boss.getZ() + Mth.sin((float) angle) * 3.0;
-					boss.level.addParticle(ParticleTypes.END_ROD, x, boss.getY(), z, 0.0, 0.1, 0.0);
+					Vec3 pos = new Vec3(x,boss.getY(),z);
+					PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.END_ROD, pos, 0.3f, 0.2f, 0.3f, 15,0);
 				}
 				boss.playSound(SoundEvents.BEACON_AMBIENT, 4.5f,0);
 				boss.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 2)); // Resistência por 5 segundos
@@ -451,40 +547,100 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 			if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
 				for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(5.0))) {
 					if (entity != boss) {
-						entity.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassMagic().bypassArmor(), 9.0F);
+						entity.hurt(DamageSource.mobAttack(boss).bypassMagic().bypassArmor(), 9.0F);
 						if (!entity.getLevel().isClientSide()){
 							entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
 						}
 					}
 				}
 				boss.playSound(SoundEvents.GENERIC_EXPLODE, 4.5f,2);
-				boss.level.addParticle(ParticleTypes.SMOKE, boss.getX(), boss.getY(), boss.getZ(), 0.0, 0.1, 0.0);
+				PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SMOKE, this.boss.position(), 0.1f, 0.2f, 0.1f, 15,0);
 				boss.AbilitiesTicksCooldown = 80; // Set cooldown for the next activation
 			}
 		}
 
 		// Toxic Glare Ability
 		public void toxicGlare(LivingEntity entity) {
+			if (entity == null || boss == null){
+				return;
+			}
+
 			if (entity instanceof Player player) {
 				// Calcula se o jogador está olhando para o boss
 				Vec3 lookVec = player.getLookAngle().normalize(); // Vetor de direção do olhar do jogador
 				Vec3 directionToBoss = boss.position().subtract(player.position()).normalize(); // Vetor direção do jogador para o boss
 				double dotProduct = lookVec.dot(directionToBoss); // Produto escalar para verificar alinhamento
-				//player.displayClientMessage(new TextComponent("Dot value =" + dotProduct), true); // Debug
+				player.displayClientMessage(new TextComponent("Dot Value = " + dotProduct), true); //Debug
 				// Se o ângulo entre o olhar e o boss for menor que 30 graus
-				if (dotProduct > 0.9) { // ~30 graus de tolerância (cos(30º) ≈ 0.866)
-					if (!player.getLevel().isClientSide()){
-						if (ProcessTransfur.isPlayerNotLatex(player)){
-							player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2)); // Aplica "Radiação"
-						} else {
-							player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 2)); // Aplica "Radiação"
+				if (dotProduct > 0.95) { // ~30 graus de tolerância (cos(30º) ≈ 0.866)
+					// Verifica se a visão está limpa
+					Level world = player.getLevel();
+					Vec3 playerEyePos = player.getEyePosition(1.0F); // Posição dos olhos do jogador
+					Vec3 bossPos = boss.position().add(0, boss.getBbHeight() / 2.0, 0); // Centro aproximado do boss
+
+					// Verifica obstruções de blocos
+					BlockHitResult blockHitResult = world.clip(new ClipContext(
+							playerEyePos,
+							bossPos,
+							ClipContext.Block.COLLIDER,
+							ClipContext.Fluid.NONE,
+							player
+					));
+
+					// Verifica obstruções de entidades
+					EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(
+							world,
+							player,
+							playerEyePos,
+							bossPos,
+							player.getBoundingBox().expandTowards(lookVec.scale(64)), // Alcance de 64 blocos
+							e -> e == boss // Filtra apenas o boss como alvo válido
+					);
+
+					// Verifica se não há bloco ou entidade obstruindo
+					if ((blockHitResult.getType() == HitResult.Type.MISS || blockHitResult.getBlockPos().equals(boss.blockPosition()))
+							&& entityHitResult != null && entityHitResult.getEntity() == boss) {
+						if (!player.getLevel().isClientSide()) {
+							if (ProcessTransfur.isPlayerNotLatex(player)) {
+								player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2)); // Aplica "Radiação"
+							} else {
+								player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 2)); // Aplica "Radiação"
+							}
 						}
+						/*if (entity != null && boss != null){
+							CameraUtil.tugEntityLookDirection(player, boss, 0.095);
+							// player.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassArmor(), 1.0F); // Causa dano fraco
+						}*/
 					}
-					CameraUtil.tugEntityLookDirection(player, boss, 0.095);
-					//player.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassArmor(), 1.0F); // Causa dano fraco
 				}
 			}
 		}
+
+		public void tugPlayerLook(Player player, Vec3 target, double strength) {
+			// Obtém a posição dos olhos do jogador
+			Vec3 eyePosition = player.getEyePosition(1.0F);
+
+			// Calcula a direção entre o jogador e o alvo
+			Vec3 direction = target.subtract(eyePosition);
+
+			// Calcula as rotações necessárias
+			double distanceXZ = Math.sqrt(direction.x * direction.x + direction.z * direction.z);
+			float targetYaw = (float) (Math.toDegrees(Math.atan2(direction.z, direction.x)) - 90.0F);
+			float targetPitch = (float) -Math.toDegrees(Math.atan2(direction.y, distanceXZ));
+
+			// Aplica rotação suavemente com força (interpolação)
+			float newYaw = (float) (player.getYRot() + (targetYaw - player.getYRot()) * strength);
+			float newPitch = (float) (player.getXRot() + (targetPitch - player.getXRot()) * strength);
+
+			player.setYRot(newYaw);
+			player.setXRot(newPitch);
+
+			// Atualiza as rotações anteriores para suavizar
+			player.yRotO = newYaw;
+			player.xRotO = newPitch;
+		}
+
+
 
 		// Hypnotic Gaze Ability
 		public void hypnoticGaze(LivingEntity entity) {
@@ -532,14 +688,14 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		public void irradiatedPulse() {
 			if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
 				for (int i = 0; i < 5; i++) {
-					boss.level.addParticle(ParticleTypes.DRAGON_BREATH, boss.getX(), boss.getY(), boss.getZ(), 0.0, 0.2, 0.0);
+					PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.DRAGON_BREATH, this.boss.position(), 0.3f, 0.2f, 0.3f, 15,0);
 				}
 				for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(6.0))) {
 					if (entity != boss) {
 						if (!entity.getLevel().isClientSide()) {
 							entity.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 1)); // Aplica veneno por 6 segundos
 						}
-						entity.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassArmor(), 8.0F); // Dano direto
+						entity.hurt(DamageSource.mobAttack(boss), 6.0F); // Dano direto
 					}
 				}
 				boss.playSound(SoundEvents.BEACON_ACTIVATE, 4.5f, 0);
@@ -550,13 +706,42 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 		// Radiant Field Ability
 		public void radiantField() {
 			if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
-				for (int i = 0; i < 360; i += 15) {
+				// Partículas em círculo ao redor do boss
+				/*
+				 * for (int i = 0; i < 360; i += 15) {
 					double angle = Math.toRadians(i);
 					double x = boss.getX() + Mth.cos((float) angle) * 4.0;
 					double z = boss.getZ() + Mth.sin((float) angle) * 4.0;
-					boss.level.addParticle(ParticleTypes.GLOW, x, boss.getY(), z, 0.0, 0.1, 0.0);
+					Vec3 pos = new Vec3(x, boss.getY(), z);
+					PlayerUtilProcedure.ParticlesUtil.sendParticles(
+							boss.getLevel(),
+							ParticleTypes.GLOW,
+							pos,
+							0.1f, 0.2f, 0.1f,
+							15, 0
+					);
+				}*/
+
+				
+				for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
+    				double angleTheta = Math.toRadians(theta);
+    				for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
+        				double anglePhi = Math.toRadians(phi);
+        				double x = this.boss.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
+        				double y = this.boss.getY() + Math.cos(anglePhi) * 4.0;
+        				double z = this.boss.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
+        				Vec3 pos = new Vec3(x, y, z);
+        				PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                		this.boss.getLevel(),
+                		ParticleTypes.GLOW,
+                		pos,
+                		0.3f, 0.2f, 0.3f,
+				        15, 0
+        				);
+    				}
 				}
 
+				// Dano e efeitos em entidades próximas
 				for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(4.0))) {
 					if (entity != boss) {
 						entity.hurt(DamageSource.mobAttack(boss), 2.0F); // Dano leve
@@ -565,32 +750,55 @@ public class LuminarcticLeopardEntity extends AbstractSnowLeopard {
 						}
 					}
 				}
+
+				// Som e cooldown
 				boss.playSound(SoundEvents.BEACON_DEACTIVATE, 4.5f, 1);
 				boss.AbilitiesTicksCooldown = 100; // Set cooldown for the next activation
 			}
 		}
 
+
 		// Meltdown Ability - Agora com partículas de esfera ao redor da Entity
 		public void meltdown() {
 			if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
-				boss.level.addParticle(ParticleTypes.EXPLOSION, boss.getX(), boss.getY(), boss.getZ(), 0.0, 0.0, 0.0);
+				PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.EXPLOSION, this.boss.position(), 0.3f, 0.2f, 0.3f, 15,0);
 
 				// Para cada entidade dentro da área do meltdown
 				for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(5.0))) {
 					if (entity != boss) {
-						entity.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassArmor(), 14.0F); // Dano alto
+						entity.hurt(DamageSource.mobAttack(boss).bypassArmor(), 14.0F); // Dano alto
 						if (!entity.getLevel().isClientSide()) {
 							entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0)); // Aplica cegueira
 						}
 
-						// Gera partículas em formato esférico ao redor da entidade
-						for (int i = 0; i < 360; i += 15) {
+				for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
+    				double angleTheta = Math.toRadians(theta);
+    				for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
+        				double anglePhi = Math.toRadians(phi);
+        				double x = this.boss.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
+        				double y = this.boss.getY() + Math.cos(anglePhi) * 4.0;
+        				double z = this.boss.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
+        				Vec3 pos = new Vec3(x, y, z);
+        				PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                		this.boss.getLevel(),
+                		ParticleTypes.SMOKE,
+                		pos,
+                		0.3f, 0.2f, 0.3f,
+				        15, 0
+        				);
+    				}
+				}
+						/*
+						*for (int i = 0; i < 360; i += 15) {
+
 							double angle = Math.toRadians(i);
 							double x = entity.getX() + Math.cos(angle) * 2.0; // Distância esférica
 							double z = entity.getZ() + Math.sin(angle) * 2.0; // Distância esférica
 							double y = entity.getY() + Math.sin(angle) * 2.0; // Distância esférica em Y
-							boss.level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+							Vec3 pos = new Vec3(x,y,z);
+							PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SMOKE, pos, 0.3f, 0, 0.3f, 3,0);
 						}
+						*/
 					}
 				}
 
