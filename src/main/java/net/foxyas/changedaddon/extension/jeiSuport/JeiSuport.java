@@ -91,7 +91,8 @@ class JeiDescriptionHandler {
         for (int i = 1; i < 6; i++) { // Começa em 1 para ignorar o nível 0
             float math = SolventMath(i);
             EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBookWithSolvent);
-            registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TextComponent(new TranslatableComponent("enchantment.changed_addon.solvent.desc", math).toString().replace(" T ","% ")));
+            String text = new TranslatableComponent("enchantment.changed_addon.solvent.desc", math).getString().replace(" T ","% ");
+            registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TextComponent(text));
         }
     }
 
