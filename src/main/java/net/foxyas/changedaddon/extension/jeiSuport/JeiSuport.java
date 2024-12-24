@@ -10,6 +10,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -90,7 +91,7 @@ class JeiDescriptionHandler {
         for (int i = 1; i < 6; i++) { // Começa em 1 para ignorar o nível 0
             float math = SolventMath(i);
             EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBookWithSolvent);
-            registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.solvent.desc", math));
+            registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TextComponent(new TranslatableComponent("enchantment.changed_addon.solvent.desc", math).toString().replace(" T ","% ")));
         }
     }
 
@@ -118,7 +119,7 @@ class JeiDescriptionHandler {
         } else {
             return EnchantLevel - 0.5f;
         }*/
-        return 1.0f + (EnchantLevel - 1) * 0.20f;
+        return 1.0f + (EnchantLevel) * 0.20f;
     }
 
     private static void addSharedDescriptions(IRecipeRegistration registration, List<Item> items, String translationKey) {

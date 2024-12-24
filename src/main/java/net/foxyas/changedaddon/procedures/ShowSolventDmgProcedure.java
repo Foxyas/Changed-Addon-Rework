@@ -45,7 +45,7 @@ public class ShowSolventDmgProcedure {
 		} else {
 			othermath = 1;
 		}
-		math = 0 + (EnchantLevel - 1) * 0.2;
+		math = 0 + (EnchantLevel - 0) * 0.2;
 		if (!(itemstack.getItem() instanceof BowItem) && !(itemstack.getItem() instanceof CrossbowItem)) {
 			if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), itemstack) != 0) {
 				if (Screen.hasShiftDown()) {

@@ -91,7 +91,7 @@ public class TickentitySolventEnchantmenthitProcedure {
 	}
 
 	private static double calculateDamageMultiplier(float enchantLevel) {
-		return 1.0 + (enchantLevel - 1) * 0.20;	
+		return 1.0 + (enchantLevel) * 0.20;	
 	}
 
 	/*
