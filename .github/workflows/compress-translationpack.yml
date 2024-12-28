@@ -1,0 +1,31 @@
+name: Compress Translation Pack
+
+on:
+  push: # 在 push 时触发
+    branches:
+      - main # 目标分支，可以根据实际需要调整
+
+jobs:
+  compress-and-move:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: 检出仓库代码
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Step 2: 压缩 translationpack 文件夹内容为 ZIP 文件
+      - name: Compress translationpack folder
+        run: |
+          mkdir -p resourcepack # 确保 resourcepack 文件夹存在
+          zip -r translationpack.zip translationpack # 压缩 translationpack 文件夹
+          mv translationpack.zip resourcepack/ # 将 ZIP 文件移动到 resourcepack 文件夹
+
+      # Step 3: 提交更改到仓库
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add resourcepack/translationpack.zip
+          git commit -m "Add compressed translationpack to resourcepack"
+          git push
