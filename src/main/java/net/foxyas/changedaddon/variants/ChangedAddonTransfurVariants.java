@@ -56,7 +56,7 @@ public class ChangedAddonTransfurVariants {
     public static final DeferredRegister<TransfurVariant<?>> REGISTRY = ChangedRegistry.TRANSFUR_VARIANT.createDeferred(ChangedAddonMod.MODID);
 
     public static List<TransfurVariant<?>> getRemovedVariantsList() {
-        return List.of(REYN.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get());
+        return List.of(REYN.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
     }
 
     public static final RegistryObject<TransfurVariant<PuroKindEntity>> ADDON_PURO_KIND_MALE = register("form_puro_kind/male",TransfurVariant.Builder.of(ChangedAddonModEntities.PURO_KIND)
@@ -156,8 +156,17 @@ public class ChangedAddonTransfurVariants {
                     .addAbility(ChangedAddonAbilities.TURN_FERAL_SNEP)
                     .itemUseMode(UseItemMode.MOUTH).reducedFall().jumpStrength(1.3F).scares(List.of(Creeper.class)).nightVision());
 
-    public static final RegistryObject<TransfurVariant<LuminarcticLeopardEntity>> LUMINARCTIC_LEOPARD  = register("form_luminarctic_leopard",
+    public static final RegistryObject<TransfurVariant<LuminarcticLeopardEntity>> LUMINARCTIC_LEOPARD  = register("form_luminarctic_leopard/male",
             () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_FEMALE.get(),*/ChangedAddonModEntities.LUMINARCTIC_LEOPARD)
+                    .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.35F)
+                    .addAbility(ChangedAddonAbilities.LEAP)
+                    .addAbility(ChangedAddonAbilities.DODGE)
+                    .addAbility(ChangedAbilities.HYPNOSIS)
+                    .addAbility(ChangedAddonAbilities.CUSTOM_INTERACTION)
+                    .scares(List.of(Creeper.class)).nightVision().doubleJump());
+
+    public static final RegistryObject<TransfurVariant<FemaleLuminarcticLeopardEntity>> FEMALE_LUMINARCTIC_LEOPARD  = register("form_luminarctic_leopard/female",
+            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_FEMALE.get(),*/ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD)
                     .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.35F)
                     .addAbility(ChangedAddonAbilities.LEAP)
                     .addAbility(ChangedAddonAbilities.DODGE)
@@ -201,11 +210,12 @@ public class ChangedAddonTransfurVariants {
             .nightVision());
 
     public static class Gendered {
-        public static final GenderedPair<PuroKindEntity,PuroKindFemaleEntity> ADDON_PURO_KIND =  new GenderedPair<>(ADDON_PURO_KIND_MALE,ADDON_PURO_KIND_FEMALE);
-        public static final GenderedPair<SnowLeopardMaleOrganicEntity,SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD =  new GenderedPair<>(ORGANIC_SNOW_LEOPARD_MALE,ORGANIC_SNOW_LEOPARD_FEMALE);
-        public static final GenderedPair<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> ADDON_LATEX_SNOW_FOX =  new GenderedPair<>(ADDON_LATEX_SNOW_FOX_MALE,ADDON_LATEX_SNOW_FOX_FEMALE);
-        public static final GenderedPair<Exp1MaleEntity, Exp1FemaleEntity> EXP1 =  new GenderedPair<>(EXP1_MALE,EXP1_FEMALE);
-        public static final GenderedPair<Exp2MaleEntity,Exp2FemaleEntity> EXP2 =  new GenderedPair<>(EXP2_MALE,EXP2_FEMALE);
+        public static final GenderedPair<PuroKindEntity, PuroKindFemaleEntity> ADDON_PURO_KIND = new GenderedPair<>(ADDON_PURO_KIND_MALE, ADDON_PURO_KIND_FEMALE);
+        public static final GenderedPair<SnowLeopardMaleOrganicEntity, SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD = new GenderedPair<>(ORGANIC_SNOW_LEOPARD_MALE, ORGANIC_SNOW_LEOPARD_FEMALE);
+        public static final GenderedPair<LatexSnowFoxEntity, LatexSnowFoxFemaleEntity> ADDON_LATEX_SNOW_FOX = new GenderedPair<>(ADDON_LATEX_SNOW_FOX_MALE, ADDON_LATEX_SNOW_FOX_FEMALE);
+        public static final GenderedPair<Exp1MaleEntity, Exp1FemaleEntity> EXP1 = new GenderedPair<>(EXP1_MALE, EXP1_FEMALE);
+        public static final GenderedPair<Exp2MaleEntity, Exp2FemaleEntity> EXP2 = new GenderedPair<>(EXP2_MALE, EXP2_FEMALE);
+        public static final GenderedPair<LuminarcticLeopardEntity, FemaleLuminarcticLeopardEntity> LUMINARCTIC_LEOPARDS = new GenderedPair<>(LUMINARCTIC_LEOPARD, FEMALE_LUMINARCTIC_LEOPARD);
 
     }
 

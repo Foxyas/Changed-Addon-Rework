@@ -13,7 +13,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class WhiteLatexSprayItem extends Item {
 	public WhiteLatexSprayItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(10).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(64).rarity(Rarity.COMMON));
 	}
 
 	@Override

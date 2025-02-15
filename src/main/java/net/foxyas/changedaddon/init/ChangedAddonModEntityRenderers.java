@@ -24,6 +24,7 @@ import net.foxyas.changedaddon.client.renderer.LatexSnepRenderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009BossRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
+import net.foxyas.changedaddon.client.renderer.FemaleLuminarcticLeopardRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10BossRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment009phase2Renderer;
@@ -68,5 +69,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.EXP_1_FEMALE.get(), Exp1FemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNEP.get(), LatexSnepRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), LuminarcticLeopardRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), FemaleLuminarcticLeopardRenderer::new);
 	}
 }

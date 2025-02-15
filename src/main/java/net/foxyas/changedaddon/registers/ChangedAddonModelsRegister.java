@@ -42,6 +42,7 @@ public class ChangedAddonModelsRegister {
 		event.registerLayerDefinition(GrapeSnowLeopardModel.LAYER_LOCATION, GrapeSnowLeopardModel::createBodyLayer);
 		event.registerLayerDefinition(ReynModel.LAYER_LOCATION, ReynModel::createBodyLayer);
 		event.registerLayerDefinition(LuminarcticLeopardModel.LAYER_LOCATION, LuminarcticLeopardModel::createBodyLayer);
+		event.registerLayerDefinition(LuminarcticFemaleLeopardModel.LAYER_LOCATION,LuminarcticFemaleLeopardModel::createBodyLayer);
 
 		//Entitys Model
 		event.registerLayerDefinition(LatexSnepModel.LAYER_LOCATION, LatexSnepModel::createBodyLayer);

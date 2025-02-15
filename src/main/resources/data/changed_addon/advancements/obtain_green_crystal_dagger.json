@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:crystal_addager_green"
+      "item": "changed_addon:crystal_dagger_green"
     },
     "title": {
       "translate": "advancements.obtain_green_crystal_dagger.title"
@@ -21,7 +21,7 @@
         "items": [
           {
             "items": [
-              "changed_addon:crystal_addager_green"
+              "changed_addon:crystal_dagger_green"
             ],
             "count": {
               "min": 1,

@@ -31,6 +31,7 @@ import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
+import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.Experiment10BossEntity;
 import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
@@ -150,6 +151,11 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<LuminarcticLeopardEntity>of(LuminarcticLeopardEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LuminarcticLeopardEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<FemaleLuminarcticLeopardEntity>> FEMALE_LUMINARCTIC_LEOPARD = register("female_luminarctic_leopard",
+			EntityType.Builder.<FemaleLuminarcticLeopardEntity>of(FemaleLuminarcticLeopardEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(FemaleLuminarcticLeopardEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -185,6 +191,7 @@ public class ChangedAddonModEntities {
 			Exp1FemaleEntity.init();
 			LatexSnepEntity.init();
 			LuminarcticLeopardEntity.init();
+			FemaleLuminarcticLeopardEntity.init();
 		});
 	}
 
@@ -217,5 +224,6 @@ public class ChangedAddonModEntities {
 		event.put(EXP_1_FEMALE.get(), Exp1FemaleEntity.createAttributes().build());
 		event.put(LATEX_SNEP.get(), LatexSnepEntity.createAttributes().build());
 		event.put(LUMINARCTIC_LEOPARD.get(), LuminarcticLeopardEntity.createAttributes().build());
+		event.put(FEMALE_LUMINARCTIC_LEOPARD.get(), FemaleLuminarcticLeopardEntity.createAttributes().build());
 	}
 }

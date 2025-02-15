@@ -4,67 +4,58 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
-import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.CameraUtil;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.NetworkHooks;
+
+import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.Packet;
+
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.Random;
-import net.minecraft.network.chat.TextComponent;
 
-public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
-
-	private static final SoundEvent TestMusic = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
-
-
-	public LuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), world);
+public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
+	public FemaleLuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), world);
 	}
 
-	public LuminarcticLeopardEntity(EntityType<LuminarcticLeopardEntity> type, Level world) {
+	public FemaleLuminarcticLeopardEntity(EntityType<FemaleLuminarcticLeopardEntity> type, Level world) {
 		super(type, world);
 		maxUpStep = 0.6f;
 		xpReward = 100;
@@ -178,7 +169,6 @@ public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 
 	@Override
 	public Gender getGender() {
-		return Gender.MALE;
+		return Gender.FEMALE;
 	}
-
 }
