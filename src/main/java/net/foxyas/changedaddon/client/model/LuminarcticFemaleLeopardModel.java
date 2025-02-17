@@ -89,23 +89,21 @@ public class LuminarcticFemaleLeopardModel extends AdvancedHumanoidModel<FemaleL
 
 		PartDefinition feline_eyes = Head.addOrReplaceChild("feline_eyes", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition left_iris = feline_eyes.addOrReplaceChild("left_iris", CubeListBuilder.create().texOffs(44, 84).addBox(1.0F, -5.1F, -4.401F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
-				.texOffs(44, 84).addBox(1.0F, -3.9F, -4.401F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
-				.texOffs(45, 84).addBox(1.0F, -5.0F, -3.75F, 1.0F, 2.0F, 0.0F, new CubeDeformation(-0.3F))
-				.texOffs(44, 84).addBox(1.0F, -3.8F, -4.45F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
-				.texOffs(44, 84).addBox(1.0F, -3.7F, -4.501F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F))
-				.texOffs(44, 85).addBox(1.0F, -5.3F, -4.501F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F))
-				.texOffs(44, 84).addBox(1.0F, -5.2F, -4.45F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+		PartDefinition left_iris = feline_eyes.addOrReplaceChild("left_iris", CubeListBuilder.create().texOffs(44, 84).addBox(-2.0F, -5.1F, -4.401F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
+				.texOffs(44, 84).addBox(-2.0F, -3.9F, -4.401F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
+				.texOffs(44, 84).addBox(-2.0F, -5.0F, -4.35F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.3F))
+				.texOffs(44, 84).addBox(-2.0F, -3.8F, -4.45F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
+				.texOffs(44, 84).addBox(-2.0F, -5.2F, -4.45F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
+				.texOffs(44, 84).addBox(-2.0F, -5.3F, -4.501F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F))
+				.texOffs(44, 84).addBox(-2.0F, -3.7F, -4.501F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F)), PartPose.offset(3.0F, 0.0F, 0.0F));
 
-		PartDefinition right = feline_eyes.addOrReplaceChild("right", CubeListBuilder.create().texOffs(40, 84).addBox(-2.0F, -5.1F, -4.401F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
+		PartDefinition right_iris = feline_eyes.addOrReplaceChild("right_iris", CubeListBuilder.create().texOffs(40, 84).addBox(-2.0F, -5.1F, -4.401F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
 				.texOffs(40, 84).addBox(-2.0F, -3.9F, -4.401F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
 				.texOffs(40, 84).addBox(-2.0F, -5.0F, -4.35F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.3F))
 				.texOffs(40, 84).addBox(-2.0F, -3.8F, -4.45F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
 				.texOffs(40, 84).addBox(-2.0F, -5.2F, -4.45F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
 				.texOffs(40, 84).addBox(-2.0F, -5.3F, -4.501F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F))
 				.texOffs(40, 84).addBox(-2.0F, -3.7F, -4.501F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-
-		PartDefinition bone = right.addOrReplaceChild("bone", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		PartDefinition RightEar = Head.addOrReplaceChild("RightEar", CubeListBuilder.create(), PartPose.offset(-2.5F, -5.0F, 0.0F));
 

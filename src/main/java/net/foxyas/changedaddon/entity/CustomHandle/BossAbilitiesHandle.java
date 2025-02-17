@@ -114,7 +114,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 // Para cada entidade dentro da área do dash
                 for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3))) {
                     if (entity != boss) {
-                        entity.hurt(DamageSource.mobAttack(boss).bypassInvul().bypassArmor(), 4.0F);
+                        entity.hurt(DamageSource.mobAttack(boss).bypassArmor(), 4.0F);
                         entity.knockback(1.5, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
 
                         // Cria partículas de glow no local da entidade atingida
@@ -214,7 +214,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
             Vec3 directionToBoss = boss.position().subtract(player.position()).normalize(); // Vetor direção do jogador para o boss
             double dotProduct = lookVec.dot(directionToBoss); // Produto escalar para verificar alinhamento
 
-            player.displayClientMessage(new TextComponent("Dot Value = " + dotProduct), true); //Debug
+            //player.displayClientMessage(new TextComponent("Dot Value = " + dotProduct), true); //Debug
             // Se o ângulo entre o olhar e o boss for menor que 30 graus
             if (dotProduct > 0.95) { // ~30 graus de tolerância (cos(30º) ≈ 0.866)
                 // Verifica se a visão está limpa

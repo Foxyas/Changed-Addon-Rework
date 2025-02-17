@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -43,15 +42,15 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
 		this.addLayer(new thisConditionalLayers.thisCustomEyesLayer<>(this,
 				new CustomEyesLayer<>(this, context.getModelSet(),
 						CustomEyesLayer::scleraColor,
-						CustomEyesLayer::glowingIrisColorLeft,
-						CustomEyesLayer::glowingIrisColorRight,
+						CustomEyesLayer::irisColorLeft,
+						CustomEyesLayer::irisColorRight,
 						CustomEyesLayer::noRender,
 						CustomEyesLayer::noRender)
 				,
 				new CustomEyesLayer<>(this, context.getModelSet(),
 						CustomEyesLayer::scleraColor,
-						CustomEyesLayer.fixedColorGlowing(RED),
-						CustomEyesLayer.fixedColorGlowing(RED),
+						CustomEyesLayer::glowingIrisColorLeft,
+						CustomEyesLayer::glowingIrisColorRight,
 						CustomEyesLayer::noRender,
 						CustomEyesLayer::noRender)
 		));

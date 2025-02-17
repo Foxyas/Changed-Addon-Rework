@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -37,7 +38,7 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
     public void startUsing() {
         if (entity.getChangedEntity() instanceof LatexSnepEntity latexSnepEntity){
             latexSnepEntity.WantLoaf = !latexSnepEntity.WantLoaf;
-        } else if (entity.getChangedEntity() instanceof LuminarcticLeopardEntity lumi) {
+        } else if (entity.getChangedEntity() instanceof AbstractLuminarcticLeopard lumi) {
             lumi.SetActivatedAbility(!lumi.isActivatedAbility());
         }
     }

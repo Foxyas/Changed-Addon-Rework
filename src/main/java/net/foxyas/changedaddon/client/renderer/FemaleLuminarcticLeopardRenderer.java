@@ -27,6 +27,7 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
 	public FemaleLuminarcticLeopardRenderer(EntityRendererProvider.Context context) {
 		super(context, new LuminarcticFemaleLeopardModel(context.bakeLayer(LuminarcticFemaleLeopardModel.LAYER_LOCATION)),
 				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
+				
 		this.addLayer(new LatexParticlesLayer<>(this, getModel(), model::isPartNotArmFur));
 
 		Color3 RED = new Color3(255, 0, 0);

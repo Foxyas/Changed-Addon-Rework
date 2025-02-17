@@ -73,47 +73,49 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
 			this.ActivatedAbility = true;
 		}*/
 
-        if (this.DodgeAnimTicks > 0){
-            this.DodgeAnimTicks -= 2;
-        } else if (this.DodgeAnimTicks < 0){
-            this.DodgeAnimTicks += 2;
-        }
-
-        if (this.AbilitiesTicksCooldown <= 0){
-            this.bossAbilitiesHandle.tick();
-        } else {
-            this.AbilitiesTicksCooldown --;
-        }
-
-        this.ActivatedAbility = this.getTarget() != null;
-        if (this.SuperAbilitiesTicksCooldown > 0){
-            this.SuperAbilitiesTicksCooldown --; //Super Abilities CoolDown
-        }
-
-        if (this.isAlive()){
-
-            if (this.PassivesTicksCooldown <= 10){
-                this.bossAbilitiesHandle.Passives(); //Passives
-            } else {
-                this.PassivesTicksCooldown -= 2;
+        if (!this.isNoAi()){
+            if (this.DodgeAnimTicks > 0) {
+                this.DodgeAnimTicks -= 2;
+            } else if (this.DodgeAnimTicks < 0) {
+                this.DodgeAnimTicks += 2;
             }
 
-            if (isDashing){
-                for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
-                    double angleTheta = Math.toRadians(theta);
-                    for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
-                        double anglePhi = Math.toRadians(phi);
-                        double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
-                        double y = this.getY() + Math.cos(anglePhi) * 4.0;
-                        double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
-                        Vec3 pos = new Vec3(x, y, z);
-                        PlayerUtilProcedure.ParticlesUtil.sendParticles(
-                                this.getLevel(),
-                                ParticleTypes.GLOW,
-                                pos,
-                                0.3f, 0.2f, 0.3f,
-                                4, 0
-                        );
+            if (this.AbilitiesTicksCooldown <= 0) {
+                this.bossAbilitiesHandle.tick();
+            } else {
+                this.AbilitiesTicksCooldown--;
+            }
+
+            this.ActivatedAbility = this.getTarget() != null;
+            if (this.SuperAbilitiesTicksCooldown > 0) {
+                this.SuperAbilitiesTicksCooldown--; //Super Abilities CoolDown
+            }
+
+            if (this.isAlive()) {
+
+                if (this.PassivesTicksCooldown <= 10) {
+                    this.bossAbilitiesHandle.Passives(); //Passives
+                } else {
+                    this.PassivesTicksCooldown -= 2;
+                }
+
+                if (isDashing) {
+                    for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
+                        double angleTheta = Math.toRadians(theta);
+                        for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
+                            double anglePhi = Math.toRadians(phi);
+                            double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
+                            double y = this.getY() + Math.cos(anglePhi) * 4.0;
+                            double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
+                            Vec3 pos = new Vec3(x, y, z);
+                            PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                                    this.getLevel(),
+                                    ParticleTypes.GLOW,
+                                    pos,
+                                    0.3f, 0.2f, 0.3f,
+                                    4, 0
+                            );
+                        }
                     }
                 }
             }

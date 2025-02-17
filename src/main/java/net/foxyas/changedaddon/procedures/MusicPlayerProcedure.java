@@ -60,7 +60,7 @@ public class MusicPlayerProcedure {
                 }.compareDistOf(x, y, z)).findFirst().orElse(null);
                 //Entity Exp10
 
-        Entity Lumi = world.getEntitiesOfClass(LuminarcticLeopardEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
+        Entity Lumi = world.getEntitiesOfClass(AbstractLuminarcticLeopard.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
             Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
                 return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
             }
@@ -96,7 +96,7 @@ public class MusicPlayerProcedure {
         boolean Exp10Close = !world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty()
                 || !world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
 
-        boolean LumiClose = !world.getEntitiesOfClass(LuminarcticLeopardEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
+        boolean LumiClose = !world.getEntitiesOfClass(AbstractLuminarcticLeopard.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
 
 
 

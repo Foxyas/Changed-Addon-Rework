@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
@@ -34,7 +35,7 @@ public class CustomInteraction extends AbstractAbility<CustomInteractionInstance
     @Nullable
     @Override
     public Component getSelectedDisplayText(IAbstractChangedEntity entity) {
-        if (entity.getChangedEntity() instanceof LatexSnepEntity || entity.getChangedEntity() instanceof LuminarcticLeopardEntity){
+        if (entity.getChangedEntity() instanceof LatexSnepEntity || entity.getChangedEntity() instanceof AbstractLuminarcticLeopard){
             return new TranslatableComponent("changed_addon.ability.custom_interaction.have_interaction");
         }
         return super.getSelectedDisplayText(entity);
