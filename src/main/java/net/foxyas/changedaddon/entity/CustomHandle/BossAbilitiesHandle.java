@@ -1,18 +1,22 @@
 package net.foxyas.changedaddon.entity.CustomHandle;
 
+import net.foxyas.changedaddon.client.model.LuminarcticFemaleLeopardModel;
 import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.CameraUtil;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -22,10 +26,16 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 // Class for handling boss abilities
 public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
+
+    private static List<EntityType<?>> ImmuneEntities(){
+        return List.of(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get());
+    }
 
     public void tick() {
         // Seleciona aleatoriamente uma habilidade para ser executada
@@ -113,8 +123,8 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 boss.setDeltaMovement(targetDirection.scale(2.5)); // Dash rápido para a posição do alvo
                 // Para cada entidade dentro da área do dash
                 for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3))) {
-                    if (entity != boss) {
-                        entity.hurt(DamageSource.mobAttack(boss).bypassArmor(), 4.0F);
+                    if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
+                        entity.hurt(DamageSource.mobAttack(boss), 4.0F);
                         entity.knockback(1.5, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
 
                         // Cria partículas de glow no local da entidade atingida
@@ -141,8 +151,8 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 Vec3 pos = new Vec3(x, boss.getY(), z);
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SNOWFLAKE, pos, 0.3f, 0.2f, 0.3f, 15, 0);
                 for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3.0))) {
-                    if (entity != boss) {
-                        entity.hurt(DamageSource.mobAttack(boss).bypassMagic(), 8.0F);
+                    if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
+                        entity.hurt(DamageSource.mobAttack(boss), 8.0F);
                         entity.knockback(1.0, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
                     }
                 }
@@ -157,8 +167,8 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
             PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.CLOUD, boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(6.0))) {
-                if (entity != boss) {
-                    entity.hurt(DamageSource.mobAttack(boss).bypassArmor(), 12.0f);
+                if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
+                    entity.hurt(DamageSource.mobAttack(boss), 12.0f);
                     if (!entity.getLevel().isClientSide()) {
                         entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 2));
                     }
@@ -189,8 +199,8 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     public void radioactiveBurst() {
         if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(5.0))) {
-                if (entity != boss) {
-                    entity.hurt(DamageSource.mobAttack(boss).bypassMagic().bypassArmor(), 9.0F);
+                if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
+                    entity.hurt(DamageSource.mobAttack(boss), 9.0F);
                     if (!entity.getLevel().isClientSide()) {
                         entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
                     }
@@ -334,7 +344,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.DRAGON_BREATH, this.boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
             }
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(6.0))) {
-                if (entity != boss) {
+                if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
                     if (!entity.getLevel().isClientSide()) {
                         entity.addEffect(new MobEffectInstance(MobEffects.POISON, 120, 1)); // Aplica veneno por 6 segundos
                     }
@@ -386,7 +396,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
 
             // Dano e efeitos em entidades próximas
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(4.0))) {
-                if (entity != boss) {
+                if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
                     entity.hurt(DamageSource.mobAttack(boss), 2.0F); // Dano leve
                     if (!entity.getLevel().isClientSide()) {
                         entity.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 0)); // Bloqueia regeneração
@@ -408,8 +418,8 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
 
             // Para cada entidade dentro da área do meltdown
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(5.0))) {
-                if (entity != boss) {
-                    entity.hurt(DamageSource.mobAttack(boss).bypassArmor(), 14.0F); // Dano alto
+                if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
+                    entity.hurt(DamageSource.mobAttack(boss), 14.0F); // Dano alto
                     if (!entity.getLevel().isClientSide()) {
                         entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0)); // Aplica cegueira
                     }

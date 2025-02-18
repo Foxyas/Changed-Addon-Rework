@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.entity.Experiment009Entity;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -68,9 +69,8 @@ public class TickentitySolventEnchantmenthitProcedure {
 
 	private static boolean shouldAffectEntity(Entity entity) {
 		return entity instanceof Player player && ProcessTransfur.isPlayerLatex(player)
-				|| entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))
-				|| entity instanceof ChangedEntity
-				|| entity instanceof Experiment009Entity;
+				|| (entity.getType().is(ChangedTags.EntityTypes.LATEX)
+				&& entity instanceof ChangedEntity) || entity instanceof Experiment009Entity;
 	}
 
 	private static boolean isValidWeapon(Entity entity) {
@@ -91,7 +91,8 @@ public class TickentitySolventEnchantmenthitProcedure {
 	}
 
 	private static double calculateDamageMultiplier(float enchantLevel) {
-		return 1.0 + (enchantLevel) * 0.20;	
+		return 1.0 + (enchantLevel) * 0.20;
+	
 	}
 
 	/*

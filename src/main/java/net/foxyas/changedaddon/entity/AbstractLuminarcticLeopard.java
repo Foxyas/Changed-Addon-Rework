@@ -99,7 +99,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
                     this.PassivesTicksCooldown -= 2;
                 }
 
-                if (isDashing) {
+                if (this.isDashing) {
+                    if (this.getTarget() == null){this.isDashing = false;}
                     for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
                         double angleTheta = Math.toRadians(theta);
                         for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
