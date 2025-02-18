@@ -30,6 +30,9 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,23 +72,21 @@ public class CreatureDietsHandleProcedure {
         boolean isWarnsOn = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
                 .orElse(new ChangedAddonModVariables.PlayerVariables()).showwarns;
 
-        DietType dietType = determineDietType(ChangedEntity, variant);
-        if (dietType == null) return;
+        List<DietType> dietType = determineDietType(ChangedEntity, variant);
+        if (dietType.isEmpty()) return;
 
         boolean ShouldGiveDebuffs = (latexInstance.ageAsVariant < ChangedAddonConfigsConfiguration.AGE_NEED.get());
 
         if (isForWork) {
-            if (dietType.isDietItem(item)) {
+            if (dietType.stream().anyMatch((diet -> diet.isDietItem(item)))) {
                 applyFoodEffects(player, item, true);
                 if (isWarnsOn) {
                     player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
                 }
             } else if (Debuffs) {
-                if (!dietType.isNotFoodItem(item) && ShouldGiveDebuffs) {
+                if (dietType.stream().noneMatch((diet -> diet.isDietItem(item))) && !DietType.isNotFoodItem(item) && ShouldGiveDebuffs) {
                     applyFoodEffects(player, item, false);
-                    player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 50, 3, false, true, true));
-                    player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, true, true,
-                            new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
+                    applyMobEffects(player);
                     if (isWarnsOn) {
                         player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
                     }
@@ -100,6 +101,12 @@ public class CreatureDietsHandleProcedure {
 
         player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() + additionalFood);
         player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
+    }
+
+    private static void applyMobEffects(Player player){
+        player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 50, 3, false, true, true));
+        player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, true, true,
+                new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
     }
 
     private static void applyFoodEffects(Player player, ItemStack item, boolean isGoodFood) {
@@ -119,19 +126,20 @@ public class CreatureDietsHandleProcedure {
         }
     }
 
-    private static DietType determineDietType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
+    private static List<DietType> determineDietType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
         List<TransfurVariant<?>> NoDietList = List.of(ChangedAddonTransfurVariants.REYN.get());
+        List<DietType> dietTypeList = new ArrayList<>();
         if (NoDietList.contains(variant)) {
-            return null;
+            return List.of();
         }
-        if (isCatDiet(ChangedEntity, variant)) return DietType.CAT;
-        if (isWolfDiet(ChangedEntity, variant)) return DietType.WOLF;
-        if (isSpecialDiet(variant)) return DietType.SPECIAL;
-        if (isFoxDiet(ChangedEntity, variant)) return DietType.FOX;
-        if (isAquaticDiet(ChangedEntity, variant)) return DietType.AQUATIC;
-        if (isDragonDiet(ChangedEntity, variant)) return DietType.DRAGON;
+        if (isCatDiet(ChangedEntity, variant)) dietTypeList.add(DietType.CAT);
+        if (isWolfDiet(ChangedEntity, variant)) dietTypeList.add(DietType.WOLF);
+        if (isSpecialDiet(variant)) dietTypeList.add(DietType.SPECIAL);
+        if (isFoxDiet(ChangedEntity, variant)) dietTypeList.add(DietType.FOX);
+        if (isAquaticDiet(ChangedEntity, variant)) dietTypeList.add(DietType.AQUATIC);
+        if (isDragonDiet(ChangedEntity, variant)) dietTypeList.add(DietType.DRAGON);
 
-        return null;
+        return dietTypeList;
     }
 
     private static boolean isCatDiet(ChangedEntity entity, TransfurVariant<?> variant) {
@@ -227,7 +235,7 @@ public class CreatureDietsHandleProcedure {
                     item.is(ItemTags.create(new ResourceLocation(dietTag)));
         }
 
-        public boolean isNotFoodItem(ItemStack item) {
+        public static boolean isNotFoodItem(ItemStack item) {
             List<Item> NonFoodItemslist = List.of(ChangedAddonModItems.FOXTA.get(),
                     ChangedAddonModItems.SNEPSI.get(),
                     ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(),
