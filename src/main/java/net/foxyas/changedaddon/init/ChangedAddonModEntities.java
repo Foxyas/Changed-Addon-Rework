@@ -25,6 +25,7 @@ import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
+import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
@@ -156,6 +157,11 @@ public class ChangedAddonModEntities {
 					.setCustomClientFactory(FemaleLuminarcticLeopardEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<LatexSquidTigerSharkEntity>> LATEX_SQUID_TIGER_SHARK = register("latex_squid_tiger_shark",
+			EntityType.Builder.<LatexSquidTigerSharkEntity>of(LatexSquidTigerSharkEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(LatexSquidTigerSharkEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -192,6 +198,7 @@ public class ChangedAddonModEntities {
 			LatexSnepEntity.init();
 			LuminarcticLeopardEntity.init();
 			FemaleLuminarcticLeopardEntity.init();
+			LatexSquidTigerSharkEntity.init();
 		});
 	}
 
@@ -225,5 +232,6 @@ public class ChangedAddonModEntities {
 		event.put(LATEX_SNEP.get(), LatexSnepEntity.createAttributes().build());
 		event.put(LUMINARCTIC_LEOPARD.get(), LuminarcticLeopardEntity.createAttributes().build());
 		event.put(FEMALE_LUMINARCTIC_LEOPARD.get(), FemaleLuminarcticLeopardEntity.createAttributes().build());
+		event.put(LATEX_SQUID_TIGER_SHARK.get(), LatexSquidTigerSharkEntity.createAttributes().build());
 	}
 }
