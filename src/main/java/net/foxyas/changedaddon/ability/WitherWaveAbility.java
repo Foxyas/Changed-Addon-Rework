@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class WitherWaveAbility  extends SimpleAbility {
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
+    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.wither_wave");
     }
 

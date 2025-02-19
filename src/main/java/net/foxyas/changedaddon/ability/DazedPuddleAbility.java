@@ -34,7 +34,7 @@ public class DazedPuddleAbility extends SimpleAbility {
     public final AttributeModifier PuddleReachAttributeMod = new AttributeModifier(UUID.fromString("393f142c-fcec-4a4f-a233-6c86b64f6468"),"ReachPuddleMod", -0.5, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
+    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("ability.changed.puddle");
     }
 

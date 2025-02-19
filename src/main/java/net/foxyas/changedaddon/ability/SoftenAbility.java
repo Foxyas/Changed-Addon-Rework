@@ -3,9 +3,12 @@ package net.foxyas.changedaddon.ability;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.function.BiFunction;
 
 public class SoftenAbility extends AbstractAbility<SoftenAbilityInstance> {
@@ -14,8 +17,14 @@ public class SoftenAbility extends AbstractAbility<SoftenAbilityInstance> {
     }
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
+    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.soften");
+    }
+
+    @Override
+    public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
+        Collection<Component> Description = List.of(new TranslatableComponent("changed_addon.ability.soften.description"));
+        return Description;
     }
 
     @Override

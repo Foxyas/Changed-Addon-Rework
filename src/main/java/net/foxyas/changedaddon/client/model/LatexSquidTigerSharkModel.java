@@ -8,13 +8,15 @@ import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.DoubleArmBobAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.camera.SharkCameraSwimAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.upperbody.SharkHeadInitAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.upperbody.SharkHeadSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.renderer.model.DoubleArmedModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.beast.LatexSquidDogMale;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -31,11 +33,90 @@ import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.
 public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidTigerSharkEntity> implements AdvancedHumanoidModelInterface<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel>, DoubleArmedModel {
 
     public static class CustomHybridAnimation{
-        public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> squidTigerSharkLike(ModelPart head, ModelPart torso, ModelPart upperLeftArm, ModelPart upperRightArm, ModelPart lowerLeftArm, ModelPart lowerRightArm,List<ModelPart> upperLeftTentacle, List<ModelPart> upperRightTentacle, List<ModelPart> lowerLeftTentacle, List<ModelPart> lowerRightTentacle) {
+
+        public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> squidTigerSharkLike(
+                ModelPart head,
+                ModelPart torso,
+                ModelPart upperLeftArm,
+                ModelPart upperRightArm,
+                ModelPart lowerLeftArm,
+                ModelPart lowerRightArm,
+                ModelPart tail,
+                List<ModelPart> tailJoints,
+                List<ModelPart> upperLeftTentacle,
+                List<ModelPart> upperRightTentacle,
+                List<ModelPart> lowerLeftTentacle,
+                List<ModelPart> lowerRightTentacle,
+                ModelPart leftLeg,
+                ModelPart leftLegLower,
+                ModelPart leftFoot,
+                ModelPart leftPad,
+                ModelPart rightLeg,
+                ModelPart rightLegLower,
+                ModelPart rightFoot,
+                ModelPart rightPad) {
             return (animator) -> {
-                animator.addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm)).addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle)).addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm));
+                /*animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
+                        .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addPreset(wolfTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar))
+                        .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
+                        .addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(upperLeftArm, upperRightArm))
+                        .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator(new ArmRideAnimator(upperLeftArm, upperRightArm));*/
+                animator.addPreset(sharkBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
+                        .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
+                        .addPreset(sharkTail(tail, tailJoints))
+                        .addAnimator(new SharkHeadInitAnimator(head))
+                        .addAnimator(new SharkHeadSwimAnimator(head))
+                        .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator(new ArmRideAnimator(upperLeftArm, upperLeftArm))
+                        .addCameraAnimator(new SharkCameraSwimAnimator());
+            };
+
+        }
+
+        public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> squidTigerSharkArmorLike(
+                ModelPart head,
+                ModelPart torso,
+                ModelPart upperLeftArm,
+                ModelPart upperRightArm,
+                ModelPart lowerLeftArm,
+                ModelPart lowerRightArm,
+                /*ModelPart tail,
+                List<ModelPart> tailJoints,*/
+                List<ModelPart> upperLeftTentacle,
+                List<ModelPart> upperRightTentacle,
+                List<ModelPart> lowerLeftTentacle,
+                List<ModelPart> lowerRightTentacle,
+                ModelPart leftLeg,
+                ModelPart leftLegLower,
+                ModelPart leftFoot,
+                ModelPart leftPad,
+                ModelPart rightLeg,
+                ModelPart rightLegLower,
+                ModelPart rightFoot,
+                ModelPart rightPad) {
+            return (animator) -> {
+                /*animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
+                        .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addPreset(wolfTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar))
+                        .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
+                        .addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(upperLeftArm, upperRightArm))
+                        .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator(new ArmRideAnimator(upperLeftArm, upperRightArm));*/
+                animator.addPreset(sharkBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
+                        .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
+                        //.addPreset(sharkTail(tail, tailJoints))
+                        .addAnimator(new SharkHeadInitAnimator(head))
+                        .addAnimator(new SharkHeadSwimAnimator(head))
+                        .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator(new ArmRideAnimator(upperLeftArm, upperLeftArm))
+                        .addCameraAnimator(new SharkCameraSwimAnimator());
             };
         }
+
     }
 
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "squid_tiger_shark"), "main");
@@ -96,14 +177,12 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
         lowerLeftTentacle.add(last(lowerLeftTentacle).getChild("TentacleQuaternaryLL"));
         lowerLeftTentacle.add(last(lowerLeftTentacle).getChild("TentaclePadLL"));
 
-        animator = HumanoidAnimator.of(this).hipOffset(-1.5f).legLength(13.0f)
-                .addPreset(AnimatorPresets.sharkLike(
-                        Head, Torso, LeftArm, RightArm,
-                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary),
-                        LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")))
+        animator = HumanoidAnimator.of(this).hipOffset(-0.8f).legLength(13.0f)
                 .addPreset(CustomHybridAnimation.squidTigerSharkLike(
                         Head, Torso, LeftArm, RightArm, LeftArm2, RightArm2,
-                        upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle));
+                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary),
+                        upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle,
+                        LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
         animator.torsoWidth = 5.2f;
     }
 
@@ -334,16 +413,16 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
     @Override
     public ModelPart getArm(HumanoidArm humanoidArm) {
         return switch (humanoidArm) {
-            case LEFT -> LeftArm2;
-            case RIGHT -> RightArm2;
+            case LEFT -> LeftArm;
+            case RIGHT -> RightArm;
         };
     }
 
     @Override
     public ModelPart getOtherArm(HumanoidArm humanoidArm) {
         return switch (humanoidArm) {
-            case LEFT -> LeftArm;
-            case RIGHT -> RightArm;
+            case LEFT -> LeftArm2;
+            case RIGHT -> RightArm2;
         };
     }
 

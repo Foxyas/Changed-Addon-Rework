@@ -174,7 +174,7 @@ public class ChangedAddonTransfurVariants {
                     .addAbility(ChangedAddonAbilities.CUSTOM_INTERACTION)
                     .scares(List.of(Creeper.class)).nightVision().doubleJump());
 
-    public static final RegistryObject<TransfurVariant<LatexSquidTigerSharkEntity>> LATEX_TIGER_SHARK = register("form_latex_tiger_shark",
+    public static final RegistryObject<TransfurVariant<LatexSquidTigerSharkEntity>> LATEX_TIGER_SHARK = register("form_latex_squid_tiger_shark",
             TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SQUID_TIGER_SHARK).extraHands().addAbility(ChangedAbilities.CREATE_INKBALL).gills().addAbility(ChangedAbilities.SUMMON_SHARKS));
 
 

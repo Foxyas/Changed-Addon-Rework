@@ -120,6 +120,13 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void stopUsing() {
+        if(isDodgeActivate()){
+            SetDodgeActivate(false);
+        }
+    }
+
+    @Override
+    public void tickIdle() {
         if(DodgeAmount < MaxDodgeAmount){
             if(DodgeRegenCooldown < 0) {
                 DodgeAmount++;
@@ -130,9 +137,6 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             } else {
                 DodgeRegenCooldown--;
             }
-        }
-        if(isDodgeActivate()){
-            SetDodgeActivate(false);
         }
     }
 }

@@ -104,8 +104,8 @@ public class CreatureDietsHandleProcedure {
     }
 
     private static void applyMobEffects(Player player){
-        player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 50, 3, false, true, true));
-        player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, true, true,
+        player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 60, 3, false, true, true));
+        player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 160, 0, false, true, true,
                 new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
     }
 

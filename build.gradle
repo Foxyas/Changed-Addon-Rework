@@ -101,7 +101,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
   //implementation fg.deobf('net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14b') //Changed Local File
-    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14b") //Changed
+    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14c") //Changed
     runtimeOnly fg.deobf("curse.maven:advanced-xray-256256:3712732")	//Xray Ores
     runtimeOnly fg.deobf("curse.maven:lightspeedmod-821790:4594803") //Speed Up The Start of The Game
     runtimeOnly fg.deobf("curse.maven:forge-carpet-547361:3930877") //Player Summon

@@ -16,7 +16,7 @@ public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
    }
 
     @Override
-    public TranslatableComponent getDisplayName(IAbstractChangedEntity entity) {
+    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
         return new TranslatableComponent("changed_addon.ability.dodge");
     }
 
