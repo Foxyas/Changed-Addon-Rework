@@ -53,7 +53,7 @@ public class PatOverlay {
 
             if (entity != null && !entity.isSpectator()) {
                 if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()){
-                    Entity lookedEntity = PlayerUtilProcedure.getEntityPlayerLookingAt(entity, 4);
+                    Entity lookedEntity = PlayerUtilProcedure.getEntityLookingAt(entity, 3);
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isKeySet()) {
                         if (!PatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible() && isPossibletoPat(entity)){

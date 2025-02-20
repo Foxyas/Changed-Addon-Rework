@@ -40,7 +40,7 @@ public class PatFeatureHandleProcedure {
 	public static void execute(LevelAccessor world, Entity entity) {
 		if (entity == null) return;
 
-		Entity targetEntity = getEntityLookingAt(entity, 4);
+		Entity targetEntity = getEntityLookingAt(entity, 3);
 		if (targetEntity == null) return;
 
 		if (isInSpectatorMode(entity)) return;

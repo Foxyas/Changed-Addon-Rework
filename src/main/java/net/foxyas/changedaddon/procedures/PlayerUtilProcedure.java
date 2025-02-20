@@ -121,6 +121,33 @@ public class PlayerUtilProcedure {
 	}
 
 	@Nullable
+	public static Entity getEntityLookingAt(Entity entity, double reach) {
+		double distance = reach * reach;
+		Vec3 eyePos = entity.getEyePosition(1.0f);
+		HitResult hitResult = entity.pick(reach, 1.0f, false);
+
+		if (hitResult != null && hitResult.getType() != HitResult.Type.MISS) {
+			distance = hitResult.getLocation().distanceToSqr(eyePos);
+		}
+
+		Vec3 viewVec = entity.getViewVector(1.0F);
+		Vec3 toVec = eyePos.add(viewVec.x * reach, viewVec.y * reach, viewVec.z * reach);
+		AABB aabb = entity.getBoundingBox().expandTowards(viewVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
+
+		EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(entity, eyePos, toVec, aabb, e -> !e.isSpectator(), distance);
+
+		if (entityHitResult != null) {
+			Entity hitEntity = entityHitResult.getEntity();
+			if (eyePos.distanceToSqr(entityHitResult.getLocation()) <= reach * reach) {
+				return hitEntity;
+			}
+		}
+		return null;
+	}
+
+	
+
+	@Nullable
 	public static Entity getEntityPlayerLookingAtType2(Entity entity, Entity player, double entityReach) {
 		double distance = entityReach * entityReach;
 		Vec3 eyePos = player.getEyePosition(1.0f);
