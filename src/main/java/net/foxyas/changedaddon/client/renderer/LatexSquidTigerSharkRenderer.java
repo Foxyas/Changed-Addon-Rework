@@ -3,17 +3,17 @@ package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.model.LatexSquidTigerSharkModel;
-import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
+import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleSharkModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-public class LatexSquidTigerSharkRenderer extends AdvancedHumanoidRenderer<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel, ArmorLatexSquidTigerSharkModel<LatexSquidTigerSharkEntity>> {
+public class LatexSquidTigerSharkRenderer extends AdvancedHumanoidRenderer<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel, ArmorLatexMaleSharkModel<LatexSquidTigerSharkEntity>> {
 	public LatexSquidTigerSharkRenderer(EntityRendererProvider.Context context) {
 		super(context, new LatexSquidTigerSharkModel(context.bakeLayer(LatexSquidTigerSharkModel.LAYER_LOCATION)),
-				ArmorLatexSquidTigerSharkModel::new, ArmorLatexSquidTigerSharkModel.INNER_ARMOR, ArmorLatexSquidTigerSharkModel.OUTER_ARMOR, 0.65f);
+				ArmorLatexMaleSharkModel::new, ArmorLatexMaleSharkModel.INNER_ARMOR, ArmorLatexMaleSharkModel.OUTER_ARMOR, 0.65f);
 		this.addLayer(new DoubleItemInHandLayer<>(this));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));

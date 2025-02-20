@@ -127,7 +127,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void tickIdle() {
-        if(DodgeAmount < MaxDodgeAmount){
+        if(!isDodgeActivate() && DodgeAmount < MaxDodgeAmount){
             if(DodgeRegenCooldown < 0) {
                 DodgeAmount++;
                 DodgeRegenCooldown = 5;

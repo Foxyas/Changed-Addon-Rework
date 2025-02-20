@@ -1,24 +1,22 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.procedures.ElectricKatanaEntitySwingsItemProcedure;
+import net.foxyas.changedaddon.procedures.ElectricKatanaLivingEntityIsHitWithToolProcedure;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraftforge.common.crafting.CompoundIngredient;
-
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
-
-import net.foxyas.changedaddon.procedures.ElectricKatanaLivingEntityIsHitWithToolProcedure;
-import net.foxyas.changedaddon.procedures.ElectricKatanaEntitySwingsItemProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.crafting.CompoundIngredient;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -50,6 +48,18 @@ public class ElectricKatanaRedItem extends SwordItem implements SpecializedItemR
 				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))), Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA_RED.get())));
 			}
 		}, 3, -2.2f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
+	}
+
+	@Override
+	public boolean canEquip(ItemStack stack, EquipmentSlot armorType, Entity entity) {
+		if (entity instanceof Player player){
+			var Variant = ProcessTransfur.getPlayerTransfurVariant(player);
+			if (Variant != null && Variant.canWear(player, new ItemStack(Items.DIAMOND_HELMET), EquipmentSlot.HEAD)){
+				return true;
+			}
+		}
+
+		return super.canEquip(stack, armorType, entity);
 	}
 
 	private static final ModelResourceLocation GUI_MODEL =

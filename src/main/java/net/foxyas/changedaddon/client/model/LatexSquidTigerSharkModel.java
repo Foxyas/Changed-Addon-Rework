@@ -177,7 +177,7 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
         lowerLeftTentacle.add(last(lowerLeftTentacle).getChild("TentacleQuaternaryLL"));
         lowerLeftTentacle.add(last(lowerLeftTentacle).getChild("TentaclePadLL"));
 
-        animator = HumanoidAnimator.of(this).hipOffset(-0.8f).legLength(13.0f)
+        animator = HumanoidAnimator.of(this).hipOffset(-0.75f).legLength(13.0f)
                 .addPreset(CustomHybridAnimation.squidTigerSharkLike(
                         Head, Torso, LeftArm, RightArm, LeftArm2, RightArm2,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary),

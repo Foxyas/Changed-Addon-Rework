@@ -62,7 +62,7 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
         var lowerRightTentacle = List.of(Torso.getChild("RightLowerTentacle"));
         var lowerLeftTentacle = List.of(Torso.getChild("LeftLowerTentacle"));
 
-        animator = HumanoidAnimator.of(this).hipOffset(-0.8f).legLength(13.0f)
+        animator = HumanoidAnimator.of(this).hipOffset(-0.75f).legLength(13.0f)
                 .addPreset(LatexSquidTigerSharkModel.CustomHybridAnimation.squidTigerSharkArmorLike(
                         Head, Torso, LeftArm, RightArm, LeftArm2, RightArm2,
                         upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle,
@@ -78,7 +78,7 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
 
         PartDefinition RightLeg = partdefinition.addOrReplaceChild("RightLeg", CubeListBuilder.create(), PartPose.offset(-2.5F, 10.5F, 0.0F));
 
-        PartDefinition RightThigh_r1 = RightLeg.addOrReplaceChild("RightThigh_r1", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, layer.altDeformation.extend(0.5F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
+        PartDefinition RightThigh_r1 = RightLeg.addOrReplaceChild("RightThigh_r1", CubeListBuilder.create().texOffs(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, layer.altDeformation.extend(0.505F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
         PartDefinition RightLowerLeg = RightLeg.addOrReplaceChild("RightLowerLeg", CubeListBuilder.create(), PartPose.offset(0.0F, 6.375F, -3.45F));
 
@@ -108,7 +108,7 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
 
         PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, layer.deformation.extend(0.25F)), PartPose.offset(0.0F, -2.2F, 0.0F));
 
-        PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, 0.1F, -2.2F, 8.0F, 12.0F, 4.0F, layer.dualDeformation.extend( layer == ArmorModel.OUTER ? 0.1F : 0.05F)), PartPose.offset(0.0F, -2.2F, 0.0F));
+        PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(16, 16).addBox(-4.0F, 0.1F, -2.2F, 8.0F, 12.0F, 4.0F, layer.deformation.extend(layer == ArmorModel.OUTER ? 0.0F : 0.25F)), PartPose.offset(0.0F, -2.2F, 0.0F));
 
         PartDefinition RightUpperTentacle = Torso.addOrReplaceChild("RightUpperTentacle", CubeListBuilder.create(), PartPose.offset(-2.5F, 2.7F, 1.0F));
 
