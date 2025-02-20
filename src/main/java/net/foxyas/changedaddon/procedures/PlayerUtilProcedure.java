@@ -24,6 +24,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -145,7 +146,58 @@ public class PlayerUtilProcedure {
 		return null;
 	}
 
-	
+	@Nullable
+	public static EntityHitResult getEntityHitLookingAt(Entity entity, double reach) {
+		double distance = reach * reach;
+		Vec3 eyePos = entity.getEyePosition(1.0f);
+		HitResult hitResult = entity.pick(reach, 1.0f, false);
+
+		if (hitResult != null && hitResult.getType() != HitResult.Type.MISS) {
+			distance = hitResult.getLocation().distanceToSqr(eyePos);
+		}
+
+		Vec3 viewVec = entity.getViewVector(1.0F);
+		Vec3 toVec = eyePos.add(viewVec.x * reach, viewVec.y * reach, viewVec.z * reach);
+		AABB aabb = entity.getBoundingBox().expandTowards(viewVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
+
+		EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(entity, eyePos, toVec, aabb, e -> !e.isSpectator(), distance);
+
+		if (entityHitResult != null) {
+			if (eyePos.distanceToSqr(entityHitResult.getLocation()) <= reach * reach) {
+				return entityHitResult;
+			}
+		}
+		return null;
+	}
+
+	@Nullable
+	public static Vec3 getRelativeHitPosition(LivingEntity entity, double distance) {
+    	EntityHitResult hitResult = PlayerUtilProcedure.getEntityHitLookingAt(entity, distance);
+    	if (hitResult != null) {
+        	Vec3 hitLocation = hitResult.getLocation();
+        	Vec3 entityPosition = hitResult.getEntity().getPosition(1);
+        	return hitLocation.subtract(entityPosition);
+    	}
+    	return null;
+	}
+
+	public static boolean isLineOfSightClear(Player player, Entity entity) {
+    	var level = player.getLevel();
+    	var playerEyePos = player.getEyePosition(1.0F); // Posição dos olhos do jogador
+    	var entityEyePos = entity.getBoundingBox().getCenter(); // Centro da entidade
+
+    	// Realiza o traçado de linha
+    	var result = level.clip(new ClipContext(
+            	playerEyePos, 
+            	entityEyePos,
+                ClipContext.Block.VISUAL, // Apenas blocos visuais são considerados
+            	ClipContext.Fluid.NONE, // Ignorar fluidos
+            	player
+    	));
+
+    	// Retorna true se o resultado for MISS (nenhum bloco obstruindo)
+    	return result.getType() == HitResult.Type.MISS;
+	}
 
 	@Nullable
 	public static Entity getEntityPlayerLookingAtType2(Entity entity, Entity player, double entityReach) {
