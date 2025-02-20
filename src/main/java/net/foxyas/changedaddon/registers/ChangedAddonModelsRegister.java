@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.client.model.*;
-import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
+//import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
