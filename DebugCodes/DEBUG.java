@@ -23,7 +23,9 @@ import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
 public class DEBUG {
-    public static float HeadPosX,HeadPosY,HeadPosZ,HeadPosT,HeadPosV,HeadPosB,HeadPosK,HeadPosL,HeadPosJ = 0;
+    public static float HeadPosT,HeadPosV,HeadPosB,HeadPosK,HeadPosL,HeadPosJ = 0;
+    public static float HeadPosX,HeadPosY,HeadPosZ = 1;
+
     @SubscribeEvent
     public static void DEBUG(ServerChatEvent event){
         if (event.getMessage().startsWith("setHeadPos")){

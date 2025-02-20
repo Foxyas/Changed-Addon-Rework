@@ -7,8 +7,10 @@ import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkMode
 import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 
 public class LatexSquidTigerSharkRenderer extends AdvancedHumanoidRenderer<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel, ArmorLatexSquidTigerSharkModel<LatexSquidTigerSharkEntity>> {
 	public LatexSquidTigerSharkRenderer(EntityRendererProvider.Context context) {
