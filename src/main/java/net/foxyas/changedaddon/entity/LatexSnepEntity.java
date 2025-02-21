@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.entity.CustomHandle.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.Gender;
@@ -113,6 +114,7 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		this.goalSelector.addGoal(5,new SleepingWithOwnerGoal(this));
 	}
 
 	//todo: Create new Goal for Snep to Sleep with they owner

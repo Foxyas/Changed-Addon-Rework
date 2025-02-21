@@ -15,7 +15,7 @@
         "data": {
           "name": "label_hello_im_foxyas_i_dont_want_to",
           "text": {
-            "fixedValue": "hello I'm Foxyas I don't want to assimilate you,i am friendly so"
+            "fixedValue": "hello I'm Foxyas, I don't want to assimilate you,i am friendly.."
           },
           "color": {
             "value": -12829636,
@@ -99,7 +99,7 @@
           },
           "width": 51,
           "height": 20,
-          "x": 263,
+          "x": 265,
           "y": 147
         }
       },
@@ -122,7 +122,7 @@
         "type": "button",
         "data": {
           "name": "button_i_want_be_transfured_by_you",
-          "text": "i want be transfured by you",
+          "text": "i want to be transfured by you",
           "onClick": {
             "name": "OpenFoxyasGui2"
           },
@@ -131,8 +131,8 @@
           },
           "width": 165,
           "height": 20,
-          "x": 129,
-          "y": 95
+          "x": 54,
+          "y": 98
         }
       }
     ],
