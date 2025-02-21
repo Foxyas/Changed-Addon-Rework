@@ -8,6 +8,7 @@ import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.Util;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -370,14 +371,14 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                 if (!player.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-                boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+                boolean isTransfur = ProcessTransfur.isPlayerTransfurred(player);
 
-                if (!istransfur && this.random.nextInt(3) == 0) { // One in 3 chance
+                if (!isTransfur && this.random.nextInt(3) == 0) { // One in 3 chance
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
                     this.level.broadcastEntityEvent(this, (byte)7);
-                } else if(istransfur && this.random.nextInt(6) == 0) {
+                } else if(isTransfur && this.random.nextInt(6) == 0) {
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);

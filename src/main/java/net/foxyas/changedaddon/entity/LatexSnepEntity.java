@@ -1,36 +1,36 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.ForgeMod;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.network.NetworkHooks;
-
-import net.minecraft.world.level.Level;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
 
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.network.protocol.Packet;
-
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
-
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 
 public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 
@@ -115,6 +115,8 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		super.registerGoals();
 	}
 
+	//todo: Create new Goal for Snep to Sleep with they owner
+
 	@Override
 	public MobType getMobType() {
 		return MobType.UNDEFINED;
@@ -150,9 +152,31 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 			return false;
 		} /*else if (slot == EquipmentSlot.OFFHAND) {
 			return false;
-		}*/
+		}
+*/
 		return super.isItemAllowedInSlot(stack, slot);
 	}
+
+	@Override
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+		return BioSynthSnepStyle(player,hand);
+	}
+
+	@Override
+	public void startSleeping(BlockPos pos) {
+		super.startSleeping(pos);
+
+		// Obtém todas as entidades dentro de um cubo 3x3x3 ao redor do bloco onde a entidade vai dormir
+		List<Entity> entities = this.level.getEntities(this, new AABB(pos).inflate(1));
+
+		// Verifica se há alguma entidade exatamente no mesmo BlockPos onde a entidade vai dormir
+		boolean isEntityOnBed = entities.stream().anyMatch(e -> e.blockPosition().equals(pos));
+
+		if (isEntityOnBed) {
+			this.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
+		}
+	}
+
 
 	@Override
 	public boolean canBeLeashed(Player p_21418_) {
