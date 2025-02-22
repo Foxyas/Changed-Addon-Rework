@@ -15,6 +15,7 @@ public class ChangedAddonClientConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Double> PAT_OVERLAY_Y;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> WING_FLAP_INFO;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_EXTRA_HAND;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> PLANTOIDS_VARIABLE;
 	static {
 		BUILDER.push("MusicPlayer");
 		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
@@ -35,6 +36,9 @@ public class ChangedAddonClientConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Extra Animations");
 		SHOW_EXTRA_HAND = BUILDER.comment("allow the show of the extra hand in some contexts like fall fly").define("Show Extra Hand", false);
+		BUILDER.pop();
+		BUILDER.push("ModelsHandle");
+		PLANTOIDS_VARIABLE = BUILDER.comment("Turn off the Plantoids [Female Chest Features]").define("Turn Off the Plantoids", false);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

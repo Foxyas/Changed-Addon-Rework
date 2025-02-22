@@ -207,6 +207,29 @@
             "entityType": "CUSTOM:Buny"
           }
         ]
+      },
+      {
+        "category": "ModelsHandle",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 1,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Turn off the Plantoids [Female Chest Features]",
+            "vardisplay": "Turn Off the Plantoids",
+            "varname": "plantoids_variable",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
     "file": "changed_addon-client",

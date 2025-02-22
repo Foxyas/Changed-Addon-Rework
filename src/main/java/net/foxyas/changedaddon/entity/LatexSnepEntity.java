@@ -206,8 +206,6 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 
 	@Override
 	public void startSleeping(BlockPos pos) {
-		super.startSleeping(pos);
-
 		// Obtém todas as entidades dentro de um cubo 3x3x3 ao redor do bloco onde a entidade vai dormir
 		List<Entity> entities = this.level.getEntitiesOfClass(Entity.class, new AABB(pos).inflate(1));
 
@@ -217,16 +215,7 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		if (isEntityOnBed) {
 			this.playSound(SoundEvents.CAT_PURR, 1.0F, 1.0F); // Toca o som de ronronar
 		}
-
-		this.setPose(Pose.SLEEPING);
-	}
-
-	@Override
-	public void stopSleeping() {
-		super.stopSleeping();
-		if (this.getPose() == Pose.SLEEPING) {
-			this.setPose(Pose.STANDING);
-		}
+		super.startSleeping(pos);
 	}
 
 	@Override

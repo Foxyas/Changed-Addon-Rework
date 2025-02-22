@@ -10,6 +10,7 @@ import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -28,6 +29,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -64,6 +66,20 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         super.defineSynchedData();
         this.entityData.define(DATA_FLAGS_ID, (byte)0);
         this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
+    }
+
+    @Override
+    public void stopSleeping() {
+        super.stopSleeping();
+        //if (this.getPose() == Pose.SLEEPING) {
+        //    this.setPose(Pose.STANDING);
+        //}
+    }
+
+    @Override
+    public void startSleeping(BlockPos blockPos) {
+        super.startSleeping(blockPos);
+        //this.setPose(Pose.SLEEPING);
     }
 
     public boolean isBiped(){

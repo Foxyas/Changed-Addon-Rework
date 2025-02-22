@@ -39,9 +39,9 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final DeferredRegister<Item> ITEMS_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
 
-	public static final RegistryObject<Item> LATEX_SNOW_FOX_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+	public static final RegistryObject<Item> LATEX_SNOW_FOX_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-	public static final RegistryObject<Item> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_fox_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE, 0xFFFFFFF, 0xffb6b9b9, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+	public static final RegistryObject<Item> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_fox_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 	public static final RegistryObject<Item> DAZED_LATEX_SPAWN_EGG = ITEMS_REGISTRY.register("latex_dazed_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.DAZED, 0xFFFFFFF, 0xffCFCFCF, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 

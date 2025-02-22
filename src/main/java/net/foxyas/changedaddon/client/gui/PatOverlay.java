@@ -145,8 +145,8 @@ public class PatOverlay {
             TranslatableComponent patMessage = new TranslatableComponent("changed_addon.info.is_patable", key.isEmpty() ? "Not Key Set" : key, lookedEntity.getDisplayName().getString());
             patMessage.withStyle(style ->
                     style.withColor(Color3.getColor("#FFFFFF").toInt())
-                            .withBold(true)
-                            .withItalic(false));
+                            //.withBold(true)
+                            .withItalic(true));
             return patMessage;
         } else {
             return new TranslatableComponent("");
