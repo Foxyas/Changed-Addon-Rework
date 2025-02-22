@@ -38,6 +38,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.IExtensibleEnum;
 import org.apache.commons.lang3.NotImplementedException;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -63,6 +64,10 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         super.defineSynchedData();
         this.entityData.define(DATA_FLAGS_ID, (byte)0);
         this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
+    }
+
+    public boolean isBiped(){
+        return true;
     }
 
     @Override
@@ -172,7 +177,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
         if (this.level.isClientSide) {

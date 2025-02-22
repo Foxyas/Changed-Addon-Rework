@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.entity.AbstractCanTameSnepChangedEntity;
+import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
@@ -29,13 +31,15 @@ import net.minecraftforge.fml.common.Mod;
 public class EquipArmorInEntityProcedure {
 	@SubscribeEvent
 	public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
-		if (event.getPlayer().isShiftKeyDown() && event.getTarget() instanceof ChangedEntity ChangedEntity) {
+		if (event.getPlayer().isShiftKeyDown() && event.getTarget() instanceof ChangedEntity changedEntity) {
 			ItemStack itemStack = event.getItemStack();
-			if (ChangedEntity instanceof DarkLatexWolfPup) {
+			if (changedEntity instanceof DarkLatexWolfPup
+					|| changedEntity instanceof LatexSnepEntity
+					|| (changedEntity instanceof AbstractCanTameSnepChangedEntity snepChanged && !snepChanged.isBiped())) {
 				return;
 			}
 
-			if (ChangedEntity instanceof TamableLatexEntity tamableLatexEntity){
+			if (changedEntity instanceof TamableLatexEntity tamableLatexEntity){
 				if (tamableLatexEntity.getOwner() != event.getPlayer()){
 					return;
 				}
@@ -50,12 +54,12 @@ public class EquipArmorInEntityProcedure {
 					}
 					// Proceed only on the server side
 					if (!event.getWorld().isClientSide()){
-						equipOrSwapArmor(ChangedEntity, itemStack, armorItem, event.getPlayer(), event.getHand());
+						equipOrSwapArmor(changedEntity, itemStack, armorItem, event.getPlayer(), event.getHand());
 					}
 				} else if (itemStack.isEmpty() && event.getHand() == InteractionHand.MAIN_HAND) {
 					// Proceed only on the server side
 					if (!event.getWorld().isClientSide()){
-						checkClickLocationAndUnequipArmor(ChangedEntity, event.getPlayer(), event.getHand(), getLocationFromHit(event.getPlayer()));
+						checkClickLocationAndUnequipArmor(changedEntity, event.getPlayer(), event.getHand(), getLocationFromHit(event.getPlayer()));
 					}
 				}
 				event.setCanceled(true);

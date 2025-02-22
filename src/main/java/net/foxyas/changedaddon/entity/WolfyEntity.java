@@ -90,6 +90,10 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 		return Gender.MALE;
 	}
 
+	@Override
+	public boolean isMaskless() {
+		return true;
+	}
 
 	@Override
 	protected void registerGoals() {

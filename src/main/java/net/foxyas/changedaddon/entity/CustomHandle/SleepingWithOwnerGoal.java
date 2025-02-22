@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.CustomHandle;
 
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
@@ -58,12 +59,14 @@ public class SleepingWithOwnerGoal extends Goal {
         if (bedPos != null && pet instanceof PathfinderMob pathfinderPet) {
             // Move o pet para a cama com velocidade reduzida
             pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.7);
+            pet.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
         }
     }
 
     @Override
     public boolean canContinueToUse() {
-        return owner != null && owner.isSleeping() && bedPos != null && !pet.isSleeping();
+        // O pet só pode continuar dormindo se o dono ainda estiver dormindo
+        return owner != null && owner.isSleeping();
     }
 
     @Override
@@ -71,13 +74,17 @@ public class SleepingWithOwnerGoal extends Goal {
         if (bedPos != null) {
             double distanceToBed = pet.distanceToSqr(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5);
 
-            if (distanceToBed > 0.5 && pet instanceof PathfinderMob pathfinderPet) {
+            if (distanceToBed > 1 && pet instanceof PathfinderMob pathfinderPet) {
                 // Reduz velocidade conforme se aproxima
                 pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.3);
             } else {
                 // Se está no bloco correto, começa a dormir
                 sleepTimer++;
-                if (sleepTimer >= 20) { // Espera 1 segundo antes de dormir
+                //if (sleepTimer == 5) {
+                    //pet.playSound(SoundEvents.CAT_BEG_FOR_FOOD, 1.0F, 1.0F);
+                //}
+                if (sleepTimer == 10) { // Espera 0,5 segundo antes de dormir
+                    //pet.playSound(SoundEvents.CAT_EAT, 1.0F, 1.0F);
                     pet.startSleeping(bedPos);
                 }
             }

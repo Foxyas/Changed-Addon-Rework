@@ -9,6 +9,7 @@ import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -29,6 +30,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -81,6 +83,11 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		if (tag.contains("wantLoaf")){
 			this.WantLoaf = tag.getBoolean("wantLoaf");
 		}
+	}
+
+	@Override
+	public boolean isBiped() {
+		return false;
 	}
 
 	@Override
@@ -159,9 +166,42 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		return super.isItemAllowedInSlot(stack, slot);
 	}
 
+	public InteractionResult LatexSnepInteraction(Player player, InteractionHand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
+		if (this.level.isClientSide) {
+			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+		} else {
+			if (!this.isTame() && this.isTameItem(itemstack)) {
+				if (!player.getAbilities().instabuild) {
+					itemstack.shrink(1);
+				}
+				boolean isTransfur = ProcessTransfur.isPlayerTransfurred(player);
+
+				if (!isTransfur && this.random.nextInt(3) == 0) { // One in 3 chance
+					this.tame(player);
+					this.navigation.stop();
+					this.setTarget(null);
+					this.level.broadcastEntityEvent(this, (byte)7);
+				} else if(isTransfur && this.random.nextInt(6) == 0) {
+					this.tame(player);
+					this.navigation.stop();
+					this.setTarget(null);
+					this.level.broadcastEntityEvent(this, (byte)7);
+				} else {
+					this.level.broadcastEntityEvent(this, (byte)6);
+				}
+
+				return InteractionResult.SUCCESS;
+			}
+
+			return super.mobInteract(player, hand);
+		}
+	}
+
 	@Override
-	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		return BioSynthSnepStyle(player,hand);
+	protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+		return LatexSnepInteraction(player, hand);
 	}
 
 	@Override
@@ -169,16 +209,25 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		super.startSleeping(pos);
 
 		// Obtém todas as entidades dentro de um cubo 3x3x3 ao redor do bloco onde a entidade vai dormir
-		List<Entity> entities = this.level.getEntities(this, new AABB(pos).inflate(1));
+		List<Entity> entities = this.level.getEntitiesOfClass(Entity.class, new AABB(pos).inflate(1));
 
 		// Verifica se há alguma entidade exatamente no mesmo BlockPos onde a entidade vai dormir
-		boolean isEntityOnBed = entities.stream().anyMatch(e -> e.blockPosition().equals(pos));
+		boolean isEntityOnBed = entities.stream().anyMatch(e -> (e instanceof Player && this.getOwner() == e && e.blockPosition().equals(pos)));
 
 		if (isEntityOnBed) {
-			this.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
+			this.playSound(SoundEvents.CAT_PURR, 1.0F, 1.0F); // Toca o som de ronronar
 		}
+
+		this.setPose(Pose.SLEEPING);
 	}
 
+	@Override
+	public void stopSleeping() {
+		super.stopSleeping();
+		if (this.getPose() == Pose.SLEEPING) {
+			this.setPose(Pose.STANDING);
+		}
+	}
 
 	@Override
 	public boolean canBeLeashed(Player p_21418_) {

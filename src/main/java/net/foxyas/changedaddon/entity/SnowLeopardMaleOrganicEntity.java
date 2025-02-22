@@ -25,6 +25,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -94,7 +95,7 @@ public class SnowLeopardMaleOrganicEntity extends AbstractCanTameSnepChangedEnti
 	}
 
 	@Override
-	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+	protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
 		return SnowLeopard(player,hand,this.getUnderlyingPlayer());
 	}
 
