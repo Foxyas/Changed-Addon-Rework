@@ -13,9 +13,7 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SleepingWithOwnerGoal extends Goal {
     private static final double MAX_DISTANCE_SQ = 32.0; // 10 blocos ao quadrado
@@ -26,6 +24,32 @@ public class SleepingWithOwnerGoal extends Goal {
     private final boolean isDogOrCat;
 
     public static class BipedSleepGoal extends Goal {
+
+        public static class BedSearchType {
+            public static final BedSearchType NEAREST = new BedSearchType(0,10);
+            public static final BedSearchType FURTHER = new BedSearchType(10,10);
+            private final double MinScale, MaxScale;
+
+            public BedSearchType(double[] scale){
+                super();
+                this.MinScale = scale[0];
+                this.MaxScale = scale[1];
+            }
+
+            public BedSearchType(double MinScale,double MaxScale){
+                super();
+                this.MinScale = MinScale;
+                this.MaxScale = MaxScale;
+            }
+
+            public double getMaxScale() {
+                return MaxScale;
+            }
+
+            public double getMinScale() {
+                return MinScale;
+            }
+        }
         private static final int BED_SEARCH_RADIUS = 3; // Raio de busca ao redor do dono
         private static final double MAX_DISTANCE_SQ = 32.0; // Distância máxima permitida para a cama
 
@@ -34,15 +58,40 @@ public class SleepingWithOwnerGoal extends Goal {
         private BlockPos bedPos;
         private int sleepTimer = 0;
         private final boolean isDogOrCat;
+        private final BedSearchType bedSearchType;
 
         public BipedSleepGoal(LivingEntity pet) {
             this.pet = pet;
             this.isDogOrCat = false;
+            this.bedSearchType = BedSearchType.NEAREST;
         }
 
         public BipedSleepGoal(LivingEntity pet, boolean isDogOrCat) {
             this.pet = pet;
             this.isDogOrCat = isDogOrCat;
+            this.bedSearchType = BedSearchType.NEAREST;
+        }
+        public BipedSleepGoal(LivingEntity pet, boolean isDogOrCat,BedSearchType bedSearchType) {
+            this.pet = pet;
+            this.isDogOrCat = isDogOrCat;
+            this.bedSearchType = bedSearchType;
+        }
+
+        public BipedSleepGoal(LivingEntity pet, boolean isDogOrCat, Random PersonalityBased) {
+            this.pet = pet;
+            this.isDogOrCat = isDogOrCat;
+            this.bedSearchType = selectRandom(PersonalityBased);
+        }
+
+        private static BedSearchType selectRandom(Random random){
+            var value = random.nextInt(3);
+            if (value == 0){
+                return BedSearchType.NEAREST;
+            } else if (value == 1){
+                return BedSearchType.FURTHER;
+            } else {
+                return new BedSearchType(random.nextDouble(11),10);
+            }
         }
 
         @Override
@@ -64,7 +113,16 @@ public class SleepingWithOwnerGoal extends Goal {
             // Verifica se o dono está dormindo e obtém a posição da cama
             if (player.isSleeping()) {
                 this.owner = player;
-                this.bedPos = getNearestBedFromList(findBedsNearOwner(player));
+                if (this.bedSearchType == BedSearchType.NEAREST){
+                    this.bedPos = getNearestBedFromList(findBedsNearOwner(player));
+                } else if (this.bedSearchType == BedSearchType.FURTHER) {
+                    this.bedPos = getFurtherAwayBedFromList(findBedsNearOwner(player));
+                } else {
+                    this.bedPos = getBestBed(findBedsNearOwner(player),
+                            bedSearchType.getMinScale(),
+                            bedSearchType.getMaxScale())
+                            .orElse(null);
+                }
 
                 if (bedPos == null) {
                     return false; // Se a cama não existir, cancela
@@ -85,7 +143,9 @@ public class SleepingWithOwnerGoal extends Goal {
         public void start() {
             if (bedPos != null && pet instanceof PathfinderMob pathfinderPet) {
                 pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.7);
-                pet.playSound(isDogOrCat ? SoundEvents.WOLF_AMBIENT : SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som correspondente
+                if (!isDogOrCat) {
+                    pet.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
+                }
             }
         }
 
@@ -211,6 +271,21 @@ public class SleepingWithOwnerGoal extends Goal {
             return nearestBed;
         }
 
+        private Optional<BlockPos> getBestBed(List<BlockPos> bedList, double minScale, double maxScale) {
+            if (minScale >= maxScale){
+                minScale = maxScale;
+            }
+            double maxDistance = BED_SEARCH_RADIUS * BED_SEARCH_RADIUS * maxScale; // Distância máxima ao quadrado
+            double minDistance = BED_SEARCH_RADIUS * BED_SEARCH_RADIUS * minScale; // Distância mínima ao quadrado
+
+            return bedList.stream()
+                    .map(bedPos -> Map.entry(bedPos, pet.distanceToSqr(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5)))
+                    .filter(entry -> entry.getValue() >= minDistance && entry.getValue() <= maxDistance) // Filtro por distância desejada
+                    .min(Comparator.comparingDouble(Map.Entry::getValue)) // Seleciona a mais próxima dentro do intervalo
+                    .map(Map.Entry::getKey);
+        }
+
+
     }
 
 
@@ -265,7 +340,9 @@ public class SleepingWithOwnerGoal extends Goal {
         if (bedPos != null && pet instanceof PathfinderMob pathfinderPet) {
             // Move o pet para a cama com velocidade reduzida
             pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.7);
-            pet.playSound(!isDogOrCat ? SoundEvents.CAT_PURREOW : SoundEvents.WOLF_AMBIENT, 1.0F, 1.0F); // Toca o som de ronronar
+            if (!isDogOrCat) {
+                pet.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
+            }
         }
     }
 

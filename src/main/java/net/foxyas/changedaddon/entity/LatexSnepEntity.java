@@ -124,8 +124,6 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 		this.goalSelector.addGoal(5,new SleepingWithOwnerGoal(this));
 	}
 
-	//todo: Create new Goal for Snep to Sleep with they owner
-
 	@Override
 	public MobType getMobType() {
 		return MobType.UNDEFINED;

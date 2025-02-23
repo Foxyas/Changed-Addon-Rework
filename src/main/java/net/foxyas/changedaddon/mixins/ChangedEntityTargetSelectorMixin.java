@@ -1,9 +1,11 @@
 package net.foxyas.changedaddon.mixins;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.entity.CustomHandle.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
+import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
 import net.ltxprogrammer.changed.entity.beast.PhageLatexWolfFemale;
 import net.ltxprogrammer.changed.entity.beast.PhageLatexWolfMale;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -13,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = ChangedEntity.class,remap = false)
@@ -46,6 +49,19 @@ public class ChangedEntityTargetSelectorMixin {
             }
         }
     }
+
+    @Inject(method = "registerGoals", at = @At("HEAD"), cancellable = true)
+    private void addExtraGoal(CallbackInfo ci){
+        if ((ChangedEntity) (Object) this instanceof AbstractDarkLatexWolf){
+            var thisFixed = ((ChangedEntity) (Object) this);
+            if (thisFixed instanceof DarkLatexWolfPup){
+                thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal(thisFixed , true));
+            } else {
+                thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed,true, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
+            }
+        }
+    }
+
     private static boolean isDarkLatexCoat(ItemStack itemStack) {
         return itemStack != null 
                 && !itemStack.isEmpty() 

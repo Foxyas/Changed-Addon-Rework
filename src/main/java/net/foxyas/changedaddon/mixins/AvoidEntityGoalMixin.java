@@ -27,12 +27,16 @@ public class AvoidEntityGoalMixin {
     @Inject(method = "canUse", at = @At("TAIL"), cancellable = true)
     public void preventAvoidLatexSnep(CallbackInfoReturnable<Boolean> cir) {
         if (this.mob instanceof Ocelot || this.mob instanceof Cat){
-            if (toAvoid != null
-                    && toAvoid instanceof Player player
-                    && ProcessTransfur.getPlayerTransfurVariant(player) != null
-                    && ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedAddonTransfurVariants.LATEX_SNEP.get())) {
-                // Cancela a IA de evitar o jogador
-                cir.setReturnValue(false);
+            if (toAvoid != null && toAvoid instanceof Player player){
+                if (ProcessTransfur.getPlayerTransfurVariant(player) != null) {
+                    if (ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedAddonTransfurVariants.LATEX_SNEP.get())){
+                        // Cancela a IA de evitar o jogador
+                        cir.setReturnValue(false);
+                    } else if (ProcessTransfur.getPlayerTransfurVariant(player).getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE)
+                            || ProcessTransfur.getPlayerTransfurVariant(player).getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)) {
+                        cir.setReturnValue(false);
+                    }
+                }
             }
         }
     }

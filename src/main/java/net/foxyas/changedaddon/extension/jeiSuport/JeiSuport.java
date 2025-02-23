@@ -89,7 +89,7 @@ class JeiDescriptionHandler {
     private static void registerSolventDescriptions(IRecipeRegistration registration) {
         ItemStack enchantedBookWithSolvent = new ItemStack(Items.ENCHANTED_BOOK);
         for (int i = 1; i < 6; i++) { // Começa em 1 para ignorar o nível 0
-            float math = SolventMath(i);
+            float math = SolventMath(i) * 100;
             EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBookWithSolvent);
             String text = new TranslatableComponent("enchantment.changed_addon.solvent.desc", math).getString().replace(" T ","% ");
             registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TextComponent(text));

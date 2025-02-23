@@ -881,7 +881,7 @@
       "type": "block",
       "sortid": 3,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "latex_insulator",
       "metadata": {
         "files": [
@@ -3434,7 +3434,7 @@
       "type": "loottable",
       "sortid": 224,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "destroy_structure_experiment_009_loot",
       "metadata": {
         "files": [
@@ -5368,7 +5368,7 @@
       "type": "procedure",
       "sortid": 316,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "latex_infection_tick",
       "metadata": {
         "files": [

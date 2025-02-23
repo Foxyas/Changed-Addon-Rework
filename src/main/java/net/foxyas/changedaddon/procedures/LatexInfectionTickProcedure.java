@@ -1,5 +1,8 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.UniversalDist;
+import net.ltxprogrammer.changed.world.enchantments.LatexProtectionEnchantment;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -31,35 +34,17 @@ public class LatexInfectionTickProcedure {
 	}
 
 	private static void execute(@Nullable Event event, Entity entity) {
-		if (entity == null)
+		if (!(entity instanceof Player player)) {
 			return;
-		double TransfurProgress = 0;
-		double TransfurProgress_local_var = 0;
-		TransfurProgress = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Progress_Transfur_Number;
-		TransfurProgress_local_var = ((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()).getValue();
-		float Math = (float) (TransfurProgress * TransfurProgress_local_var / 100);
-		if (!(new Object() {
-			public boolean checkGamemode(Entity _ent) {
-				if (_ent instanceof ServerPlayer _serverPlayer) {
-					return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-				} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-					return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-				}
-				return false;
-			}
-		}.checkGamemode(entity)) && !(new Object() {
-			public boolean checkGamemode(Entity _ent) {
-				if (_ent instanceof ServerPlayer _serverPlayer) {
-					return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-				} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-					return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-				}
-				return false;
-			}
-		}.checkGamemode(entity))) {
-			if (((LivingEntity) entity).getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()).getValue() > 0) {
-				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
-					if (TransfurProgress > 0) {
+		}
+		double TransfurProgress = ProcessTransfur.getPlayerTransfurProgress(player);
+		double TransfurInfectionAttribute = player.getAttribute(ChangedAddonModAttributes.LATEXINFECTION.get()).getValue();
+		float Math = (float) (TransfurProgress * TransfurInfectionAttribute / 100);
+		var PlayerTolerance = ProcessTransfur.getEntityTransfurTolerance(player);
+		if (!(player.isCreative()) && !(player.isSpectator())) {
+			if (TransfurInfectionAttribute > 0) {
+				if (!ProcessTransfur.isPlayerTransfurred(player)) {
+					if (TransfurProgress > 0 && (TransfurProgress + Math) < (PlayerTolerance * 0.995f)) {
 						if (entity.isAlive()) {
 							AddTransfurProgressProcedure.set(entity, TransfurProgress + Math);
 						}
