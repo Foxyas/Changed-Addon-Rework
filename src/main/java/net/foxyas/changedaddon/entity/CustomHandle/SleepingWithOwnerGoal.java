@@ -50,7 +50,7 @@ public class SleepingWithOwnerGoal extends Goal {
                 return MinScale;
             }
         }
-        private static final int BED_SEARCH_RADIUS = 3; // Raio de busca ao redor do dono
+        private static final int BED_SEARCH_RADIUS = 5; // Raio de busca ao redor do dono
         private static final double MAX_DISTANCE_SQ = 32.0; // Distância máxima permitida para a cama
 
         private final LivingEntity pet;
@@ -156,7 +156,29 @@ public class SleepingWithOwnerGoal extends Goal {
 
         @Override
         public void tick() {
+            if (pet.isSleeping()) {
+                // Ajusta a posição da entidade na cama caso não esteja corretamente posicionada
+                if (bedPos != null && bedPos.distToCenterSqr(pet.position()) >= 1.25f) {
+                    pet.setPos(bedPos.getX() + 0.5f, bedPos.getY() + 0.9f, bedPos.getZ() + 0.5f);
+                }
+
+                // Para a movimentação da entidade
+                if (pet instanceof PathfinderMob pathfinderPet) {
+				pathfinderPet.getNavigation().stop();
+                }
+                return; // Se já está dormindo, não faz mais nada
+            }
+
             if (bedPos != null) {
+                BlockState bedState = pet.level.getBlockState(bedPos);
+
+                // Verifica se a cama ainda existe e não está ocupada antes de continuar indo até ela
+                if (!(bedState.getBlock() instanceof BedBlock) || bedState.getValue(BedBlock.OCCUPIED)) {
+                    bedPos = null;
+                    sleepTimer = 0;
+                    return;
+                }
+
                 double distanceToBed = pet.distanceToSqr(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5);
 
                 if (distanceToBed >= 1.5f && pet instanceof PathfinderMob pathfinderPet) {
@@ -164,28 +186,48 @@ public class SleepingWithOwnerGoal extends Goal {
                 } else {
                     sleepTimer++;
                     if (sleepTimer >= 10) {
-                        if (!pet.isSleeping()) {
+                        // Verifica novamente antes de dormir
+                        if (!bedState.getValue(BedBlock.OCCUPIED)) {
                             pet.startSleeping(bedPos);
-                        }
 
-                        // Atualiza o estado do bloco da cama para ficar ocupada
-                        BlockState bedState = pet.level.getBlockState(bedPos);
-                        if (bedState.getBlock() instanceof BedBlock) {
+                            // Atualiza o estado da cama para ocupada
                             pet.level.setBlockAndUpdate(bedPos, bedState.setValue(BedBlock.OCCUPIED, true));
-                        }
-                        // Para a movimentação da entidade
-                        if (pet instanceof PathfinderMob pathfinderPet) {
-                            pathfinderPet.getNavigation().stop();
-                        }
 
-                        //set pos
-                        if (bedPos.distToCenterSqr(pet.position()) >= 1.25f){
-                            pet.setPos(bedPos.getX() + 0.5f, bedPos.getY() + 0.9f, bedPos.getZ() + 0.5f);
+                            // Para a movimentação da entidade
+                            if (pet instanceof PathfinderMob pathfinderPet) {
+                                pathfinderPet.getNavigation().stop();
+                            }
+                        } else {
+                            // Cama ocupada, resetar busca
+                            bedPos = null;
+                            sleepTimer = 0;
                         }
                     }
                 }
             }
+
+            // Se a entidade não tiver uma cama ou a cama anterior foi invalidada, busca uma nova
+            if (bedPos == null) {
+                bedPos = findNewBed();
+            }
         }
+
+        /**
+         * Encontra uma nova cama disponível para a entidade dormir.
+         */
+        private BlockPos findNewBed() {
+            List<BlockPos> beds = findBedsNearOwner(this.owner);
+
+            if (beds.isEmpty()) {
+                return null; // Nenhuma cama encontrada
+            }
+
+            return this.bedSearchType == BedSearchType.NEAREST ? getNearestBedFromList(beds)
+                    : this.bedSearchType == BedSearchType.FURTHER ? getFurtherAwayBedFromList(beds)
+                    : getBestBed(beds, bedSearchType.getMinScale(), bedSearchType.getMaxScale()).orElse(null);
+        }
+
+
 
         @Override
         public void stop() {
@@ -217,7 +259,7 @@ public class SleepingWithOwnerGoal extends Goal {
             List<BlockPos> nearbyBeds = new ArrayList<>();
 
             for (int x = -BED_SEARCH_RADIUS; x <= BED_SEARCH_RADIUS; x++) {
-                for (int y = -1; y <= 1; y++) { // Permite variação de altura
+                for (int y = -BED_SEARCH_RADIUS; y <= BED_SEARCH_RADIUS; y++) { // Permite variação de altura
                     for (int z = -BED_SEARCH_RADIUS; z <= BED_SEARCH_RADIUS; z++) {
                         BlockPos checkPos = ownerPos.offset(x, y, z);
                         BlockState state = world.getBlockState(checkPos);
