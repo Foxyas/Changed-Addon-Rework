@@ -37,8 +37,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     public float AbilitiesTicksCooldown = 20;
     public int SuperAbilitiesTicksCooldown = 0;
     public int PassivesTicksCooldown = 0;
-    public boolean isDashing = false;
-    final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
+    public int DashingTicks = 0;
+    public final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
     public int DodgeAnimTicks = 0;
     public final int DodgeAnimMaxTicks = 20;
 
@@ -99,8 +99,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
                     this.PassivesTicksCooldown -= 2;
                 }
 
-                if (this.isDashing) {
-                    if (this.getTarget() == null){this.isDashing = false;}
+                if (this.isDashing()) {
+                	DashingTicks--;
+                    if (this.getTarget() == null){this.DashingTicks = 0;}
                     for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
                         double angleTheta = Math.toRadians(theta);
                         for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
@@ -153,8 +154,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         if (tag.contains("DodgeAnimTicks")) {
             this.DodgeAnimTicks = tag.getInt("DodgeAnimTicks");
         }
-        if (tag.contains("isDashing")) {
-            this.isDashing = tag.getBoolean("isDashing");
+        if (tag.contains("DashingTicks")) {
+            this.DashingTicks = tag.getInt("DashingTicks");
         }
         //if (tag.contains("DEVATTACKTESTTICK")) {
         //	this.DEVATTACKTESTTICK = tag.getInt("DEVATTACKTESTTICK");
@@ -168,8 +169,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         tag.putFloat("AbilitiesTicksCooldown", AbilitiesTicksCooldown);
         tag.putInt("SuperAbilitiesTicksCooldown", SuperAbilitiesTicksCooldown);
         tag.putInt("PassivesTicksCooldown", PassivesTicksCooldown);
-        tag.putBoolean("isDashing", isDashing);
         tag.putInt("DodgeAnimTicks", DodgeAnimTicks);
+        tag.putInt("DashingTicks", DodgeAnimTicks);
         //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
 
@@ -185,6 +186,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
     }
+
+    public boolean isDashing(){return this.DashingTicks > 0;}
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {

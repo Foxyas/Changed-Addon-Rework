@@ -50,6 +50,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 public class KetExperiment009BossEntity extends ChangedEntity implements BossWithMusic {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private boolean Phase2;
+	private double AI;
 
 	public KetExperiment009BossEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS.get(), world);
@@ -193,8 +194,14 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 			return false;
 		if (source == DamageSource.LIGHTNING_BOLT)
 			return false;
-		if (source.getMsgId().equals("trident"))
-			return false;
+		if (source.getMsgId().equals("trident")) {
+			if (this.getLevel().random.nextFloat() <= 0.25f){
+				if (source.getEntity() instanceof Player player){
+					player.displayClientMessage(new TextComponent("§l§o§3YOU'RE COWARD! Is distance all you can rely on? How PATHETIC!!!"), true);
+				}
+			}
+			return super.hurt(source, amount * 0.5f);	
+		}
 		if (source == DamageSource.ANVIL)
 			return false;
 		if (source == DamageSource.DRAGON_BREATH)
@@ -277,12 +284,15 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 		super.readAdditionalSaveData(tag);
 		if (tag.contains("Phase2"))
 			Phase2 = tag.getBoolean("Phase2");
+		if (tag.contains("AI"))
+			AI = tag.getDouble("AI");
 	}
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putBoolean("Phase2",Phase2);
+		tag.putDouble("AI",AI);
 	}
 
 	@Override
@@ -297,8 +307,16 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         Exp009IAProcedure.execute(this.level, this.getX(), this.getY(), this.getZ(), this);
 		SetSpeed(this);
         CrawSystem(this.getTarget());
-		BossAbilitiesHandle.BurstAttack(this);
+		thisBurstAttack();
     }
+
+	private void thisBurstAttack() {
+		if (this.AI >= 100) {
+			BossAbilitiesHandle.BurstAttack(this);
+			this.AI = 0;
+		}
+	}
+
 
 	public void SetSpeed(KetExperiment009BossEntity entity) {
 		AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "Speed", -0.4, AttributeModifier.Operation.MULTIPLY_BASE);

@@ -86,8 +86,6 @@ public class PatOverlay {
                                    float TextDynamic = 0;
                                    if (getSimplePatInfo().length() > 1){
                                         TextDynamic = ((float) getSimplePatInfo().length() / 2) * 4.25f;
-                                   } else {
-										TextDynamic = DEBUG.HeadPosB;
                                    }
 
                                    // Renderiza a imagem na tela

@@ -55,9 +55,9 @@ public class ChangedEntityTargetSelectorMixin {
     private void addExtraGoal(CallbackInfo ci){
         var thisFixed = ((ChangedEntity) (Object) this);
         if (thisFixed instanceof AbstractDarkLatexWolf){
-            thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed,true, thisFixed.getLevel().getRandom()));
+            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed, true, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
         } else if (thisFixed instanceof DarkLatexWolfPup){
-            thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal(thisFixed , true));
+            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal(thisFixed, true));
         }
     }
 

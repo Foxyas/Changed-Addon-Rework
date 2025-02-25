@@ -31,6 +31,7 @@ import net.minecraft.world.phys.*;
 
 import java.util.List;
 import java.util.Random;
+import net.minecraft.sounds.SoundSource;
 
 // Class for handling boss abilities
 public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
@@ -49,32 +50,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         BlockPos center = boss.blockPosition();
         Level world = boss.getLevel();
 
-        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, Explosion.BlockInteraction.BREAK);
-
-        for (BlockPos pos : BlockPos.betweenClosed(
-                center.offset(-radius, -radiusY, -radius),
-                center.offset(radius, radiusY, radius))) {
-
-            // Cálculo da distância esférica
-            double dx = (pos.getX() - center.getX()) / (double) radius;
-            double dy = (pos.getY() - center.getY()) / (double) radiusY;
-            double dz = (pos.getZ() - center.getZ()) / (double) radius;
-            double distanceSq = dx * dx + dy * dy + dz * dz;
-
-            if (distanceSq <= 1.0) { // Somente dentro da esfera
-                BlockState state = world.getBlockState(pos);
-                // Explosão visual sem destruir blocos
-                var ExplosionVariable = new Explosion(boss.getLevel(), boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, false, Explosion.BlockInteraction.BREAK);
-                // Verifica se é um bloco sólido (qualquer bloco que não seja ar)
-                if (!state.isAir() && state.getExplosionResistance(boss.getLevel(), pos, ExplosionVariable) <= 4) {
-                    BlockState newState = Blocks.FROSTED_ICE.defaultBlockState()
-                            .setValue(FrostedIceBlock.AGE, 2); // Corrigido!
-                    //world.destroyBlock(pos, true);
-                    world.setBlockAndUpdate(pos, newState);
-                }
-            }
-
-        }
+        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 6.0f, Explosion.BlockInteraction.DESTROY);
         for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(1.5))) {
             if (entity == boss){continue;}
             entity.knockback(1.5, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
@@ -126,11 +102,11 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         if (bossTarget != null) {
             if (bossTarget.distanceTo(boss) >= 4) {
                 arcticDash();
-                this.boss.isDashing = true;
+                this.boss.DashingTicks = 40;
                 abilityIndex = random.nextInt(5);
                 switch (abilityIndex) {
                     case 0:
-                        radioactiveBurst();
+                        arcticDash();
                         break;
                     case 1:
                         irradiatedPulse();
@@ -142,12 +118,12 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                         meltdown();
                         break;
                     case 4:
-                        arcticDash();
+                        RadioActiveIceExplosion();
                         break;
                 }
             } else if (bossTarget.distanceTo(boss) <= 4) {
                 // Habilidades ativas
-                abilityIndex = random.nextInt(8);
+                abilityIndex = random.nextInt(9);
                 switch (abilityIndex) {
                     case 0:
                         glacialSpikes();
@@ -172,6 +148,9 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                         break;
                     case 7:
                         arcticDash();
+                        break;
+                    case 8:
+                        RadioActiveIceExplosion();
                         break;
                 }
             }
@@ -203,39 +182,48 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     }
 
     public void createIceExplosion() {
-        int radius = 3; // Raio da explosão
-        int radiusY = 3;
-        BlockPos center = this.boss.blockPosition();
-        Level world = this.boss.getLevel();
-
-        world.explode(this.boss, this.boss.getX(), this.boss.getY(), this.boss.getZ(), 4.0f, Explosion.BlockInteraction.BREAK);
-
-        for (BlockPos pos : BlockPos.betweenClosed(
-                center.offset(-radius, -radiusY, -radius),
-                center.offset(radius, radiusY, radius))) {
-
-            // Cálculo da distância esférica
-            double dx = (pos.getX() - center.getX()) / (double) radius;
-            double dy = (pos.getY() - center.getY()) / (double) radiusY;
-            double dz = (pos.getZ() - center.getZ()) / (double) radius;
-            double distanceSq = dx * dx + dy * dy + dz * dz;
-
-            if (distanceSq <= 1.0) { // Somente dentro da esfera
-                BlockState state = world.getBlockState(pos);
-                // Explosão visual sem destruir blocos
-                var ExplosionVariable = new Explosion(this.boss.getLevel(),this.boss, this.boss.getX(), this.boss.getY(), this.boss.getZ(), 4.0f, false, Explosion.BlockInteraction.BREAK);
-                // Verifica se é um bloco sólido (qualquer bloco que não seja ar)
-                if (!state.isAir() && state.getExplosionResistance(this.boss.getLevel(), pos, ExplosionVariable) <= 4) {
-                    BlockState newState = Blocks.FROSTED_ICE.defaultBlockState()
-                            .setValue(FrostedIceBlock.AGE, 2); // Corrigido!
-                    //world.destroyBlock(pos, true);
-                    world.setBlockAndUpdate(pos, newState);
-                }
-            }
-
-        }
-
+    if (boss.getLevel().isClientSide) {
+        return; // Garante que o código só execute no servidor
     }
+
+    int radius = 11; // Raio da explosão
+    int radiusY = 11;
+    BlockPos center = boss.blockPosition();
+    Level world = boss.getLevel();
+
+    world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, Explosion.BlockInteraction.BREAK);
+
+    Explosion explosionReference = new Explosion(world, boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, false, Explosion.BlockInteraction.NONE);
+
+    for (BlockPos pos : BlockPos.betweenClosed(
+            center.offset(-radius, -radiusY, -radius),
+            center.offset(radius, radiusY, radius))) {
+
+        // Cálculo da distância esférica
+        double dx = (pos.getX() - center.getX()) / (double) radius;
+        double dy = (pos.getY() - center.getY()) / (double) radiusY;
+        double dz = (pos.getZ() - center.getZ()) / (double) radius;
+        double distanceSq = dx * dx + dy * dy + dz * dz;
+
+        if (distanceSq <= 1.0) { // Somente dentro da esfera
+            BlockState state = world.getBlockState(pos);
+
+            // Verifica a resistência à explosão
+            float blastResistance = state.getBlock().getExplosionResistance();
+
+            if (!state.isAir() && blastResistance <= 2.0f) {
+                BlockState newState = Blocks.FROSTED_ICE.defaultBlockState()
+                        .setValue(FrostedIceBlock.AGE, 2);
+                	world.setBlockAndUpdate(pos, newState);
+                	// Toca o som de gelo sendo colocado
+                	world.playSound(null, pos, SoundEvents.GLASS_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
+            	}
+        	}
+    	}
+    
+    	boss.playSound(SoundEvents.GENERIC_EXPLODE, 4.5f, 1);
+    	boss.AbilitiesTicksCooldown = 125;
+	}
 
 
     // Arctic Dash Ability
@@ -264,8 +252,9 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 boss.playSound(ChangedSounds.BOW2, 4.5f, 1);
                 boss.AbilitiesTicksCooldown = 60; // Set cooldown for the next activation
             }
-            this.boss.isDashing = false;
+            this.boss.DashingTicks = 0;
         }
+        this.boss.DashingTicks = 0;
     }
 
 

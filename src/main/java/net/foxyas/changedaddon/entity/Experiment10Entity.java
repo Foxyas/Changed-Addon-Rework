@@ -190,8 +190,14 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 			return false;
 		if (source == DamageSource.LIGHTNING_BOLT)
 			return false;
-		if (source.getMsgId().equals("trident"))
-			return false;
+		if (source.getMsgId().equals("trident")) {
+			if (this.getLevel().random.nextFloat() <= 0.25f){
+				if (source.getEntity() instanceof Player player){
+					player.displayClientMessage(new TextComponent("§l§o§3YOU'RE COWARD! Is distance all you can rely on? How PATHETIC!!!"), true);
+				}
+			}
+			return super.hurt(source, amount * 0.5f);	
+		}
 		if (source == DamageSource.ANVIL)
 			return false;
 		if (source == DamageSource.DRAGON_BREATH)
@@ -307,9 +313,16 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 			SetSpeed(this);
 			TpEntity(this);
 			CrawSystem(this.getTarget());
-			BossAbilitiesHandle.BurstAttack(this);
+			thisBurstAttack();
 		}
     }
+
+	private void thisBurstAttack() {
+		if (TpCooldown <= 0) {
+			BossAbilitiesHandle.BurstAttack(this);
+			this.TpCooldown = 50;
+		}
+	}
 
 	public void CrawSystem(LivingEntity target) {
 		if (target != null) {
@@ -444,7 +457,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         deltaZ = Target.getZ() - entity.getZ();
         distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 
-        if (TpCooldown == 0) {
+        if (TpCooldown <= 0) {
             if (distance > 3) {
                 if (entity.getLastHurtByMob() == Target) {
                     entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
