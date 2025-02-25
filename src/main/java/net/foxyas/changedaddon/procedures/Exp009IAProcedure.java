@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.LevelAccessor;
@@ -197,12 +198,14 @@ public class Exp009IAProcedure {
 									world.addParticle(ParticleTypes.FLASH, (entity.getX()), (entity.getY()), (entity.getZ()), 0, 1, 0);
 									entity.getPersistentData().putDouble("IA", 0);
 								}
-							}
-							if (distance <= 2) {
+							} else {
 								int horizontalRadiusHemiTop = (int) 3 - 1;
 								int verticalRadiusHemiTop = (int) 1;
 								int yIterationsHemiTop = verticalRadiusHemiTop;
-								for (int i = 0; i < yIterationsHemiTop; i++) {
+								if (IAATTACK <= 0.25f){
+									BossAbilitiesHandle.ExplosionBurst(entity);
+								} else{
+									for (int i = 0; i < yIterationsHemiTop; i++) {
 									if (i == verticalRadiusHemiTop) {
 										continue;
 									}
@@ -259,6 +262,7 @@ public class Exp009IAProcedure {
 											}
 										}
 									}
+								}
 								}
 							}
 						}

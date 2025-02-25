@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -52,16 +53,15 @@ public class ChangedEntityTargetSelectorMixin {
 
     @Inject(method = "registerGoals", at = @At("HEAD"), cancellable = true)
     private void addExtraGoal(CallbackInfo ci){
-        if ((ChangedEntity) (Object) this instanceof AbstractDarkLatexWolf){
-            var thisFixed = ((ChangedEntity) (Object) this);
-            if (thisFixed instanceof DarkLatexWolfPup){
-                thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal(thisFixed , true));
-            } else {
-                thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed,true, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
-            }
+        var thisFixed = ((ChangedEntity) (Object) this);
+        if (thisFixed instanceof AbstractDarkLatexWolf){
+            thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed,true, thisFixed.getLevel().getRandom()));
+        } else if (thisFixed instanceof DarkLatexWolfPup){
+            thisFixed.goalSelector.addGoal(5,new SleepingWithOwnerGoal(thisFixed , true));
         }
     }
 
+    @Unique
     private static boolean isDarkLatexCoat(ItemStack itemStack) {
         return itemStack != null 
                 && !itemStack.isEmpty() 

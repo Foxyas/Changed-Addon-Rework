@@ -14,6 +14,7 @@ public class ChangedAddonClientConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> DYNAMIC_PAT_OVERLAY;
 	public static final ForgeConfigSpec.ConfigValue<Double> PAT_OVERLAY_Y;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> WING_FLAP_INFO;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> PAW_STYLE_PAT_OVERLAY;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_EXTRA_HAND;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PLANTOIDS_VARIABLE;
 	static {
@@ -29,10 +30,11 @@ public class ChangedAddonClientConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Overlays");
 		PAT_OVERLAY = BUILDER.comment("Set the Pat Overlay On or Off").define("Pat Overlay", true);
-		PAT_OVERLAY_X = BUILDER.comment("Set the X pos of the pat overlay.  [ Default  237 ]").define("Pat Overlay X pos", (double) 237);
-		DYNAMIC_PAT_OVERLAY = BUILDER.comment("The overlay's position will change depending on the entity's name. [ Default true ]").define("Dynamic Pos Pat Overlay", true);
-		PAT_OVERLAY_Y = BUILDER.comment("Set the Y pos of the pat overlay.  [ Default  251 ]").define("Pat Overlay Y pos", (double) 251);
+		PAT_OVERLAY_X = BUILDER.comment("Set the X pos of the pat overlay.  \n[Default 12]").define("Pat Overlay X pos", (double) 12);
+		DYNAMIC_PAT_OVERLAY = BUILDER.comment("The overlay's position will change depending on the entity's name. \n[Default true]").define("Dynamic Pos Pat Overlay", true);
+		PAT_OVERLAY_Y = BUILDER.comment("Set the Y pos of the pat overlay.  \n[Default 72]").define("Pat Overlay Y pos", (double) 72);
 		WING_FLAP_INFO = BUILDER.comment("Display How much Ticks You have Hold the Wing Flap Ability").define("Wing Flap Ability Ticks Info", false);
+		PAW_STYLE_PAT_OVERLAY = BUILDER.comment("Make the pat overlay use a paw icon instead of text").define("Paw Style Pat Overlay", true);
 		BUILDER.pop();
 		BUILDER.push("Extra Animations");
 		SHOW_EXTRA_HAND = BUILDER.comment("allow the show of the extra hand in some contexts like fall fly").define("Show Extra Hand", false);

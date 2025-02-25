@@ -25,7 +25,6 @@ import org.jetbrains.annotations.NotNull;
 public class DEBUG {
     public static float HeadPosT,HeadPosV,HeadPosB,HeadPosK,HeadPosL,HeadPosJ = 0;
     public static float HeadPosX,HeadPosY,HeadPosZ = 1;
-    public static String COLORSTRING = "#ffffff";
 
     @SubscribeEvent
     public static void DEBUG(ServerChatEvent event){
@@ -52,9 +51,6 @@ public class DEBUG {
             } else if (a.startsWith("z")){
                 HeadPosZ =  (float) convert(a.replace("z",""));
             }
-        }
-        if (event.getMessage().startsWith("setColor:")){
-            COLORSTRING = event.getMessage().replace("setColor:","");
         }
         if (event.getMessage().startsWith("Show info")){
             event.getPlayer().displayClientMessage(new TextComponent("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL + "\n" + "J = " + HeadPosJ),false);

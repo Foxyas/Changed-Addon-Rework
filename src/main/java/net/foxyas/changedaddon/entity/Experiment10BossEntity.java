@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
@@ -11,6 +12,7 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
@@ -24,6 +26,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -38,6 +41,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -97,7 +101,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 	@Override
 	public double getMeleeAttackRangeSqr(LivingEntity target) {
 		if (target.getEyeY() > this.getEyeY() + 1){
-			return 6 * 4;
+			return super.getMeleeAttackRangeSqr(target) * 1.5D;
 		}
 		return super.getMeleeAttackRangeSqr(target);
 	}
@@ -160,12 +164,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(10, new FloatGoal(this){
-			@Override
-			public boolean canUse() {
-				return super.canUse() && false;
-			}
-		});
 	}
 
 	@Override
@@ -195,8 +193,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof AbstractArrow)
-			return false;
 		if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
 			return false;
 		if (source == DamageSource.FALL)
@@ -217,8 +213,14 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 			return false;
 		if (source.getMsgId().equals("witherSkull"))
 			return false;
-		if (source.isProjectile())
-			return false;
+		if (source.isProjectile()) {
+			if (this.getLevel().random.nextFloat() <= 0.25f){
+				if (source.getEntity() instanceof Player player){
+					player.displayClientMessage(new TextComponent("§l§o§4Coward! Is distance all you can rely on? How PATHETIC!!!"), true);
+				}
+			}
+			return super.hurt(source, amount * 0.5f);
+		}
 		return super.hurt(source, amount);
 	}
 
@@ -317,6 +319,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 		SetSpeed(this);
         TpEntity(this);
         CrawSystem(this.getTarget());
+		BossAbilitiesHandle.BurstAttack(this);
     }
 
 	public void CrawSystem(LivingEntity target) {

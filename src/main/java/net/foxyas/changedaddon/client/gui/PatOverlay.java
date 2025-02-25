@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.client.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModKeyMappings;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
@@ -9,6 +11,8 @@ import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -24,6 +28,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+//import net.foxyas.changedaddon.process.DEBUG;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class PatOverlay {
@@ -41,7 +46,7 @@ public class PatOverlay {
             int h = event.getWindow().getGuiScaledHeight();
 
             double posX = ChangedAddonClientConfigsConfiguration.PAT_OVERLAY_X.get();
-            double posY = ChangedAddonClientConfigsConfiguration.PAT_OVERLAY_Y.get();
+            double posY = h - ChangedAddonClientConfigsConfiguration.PAT_OVERLAY_Y.get();
 
             float floatPosX = (float) posX;
             float floatPosY = (float) posY;
@@ -55,16 +60,41 @@ public class PatOverlay {
                 if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()){
                     Entity lookedEntity = PlayerUtilProcedure.getEntityLookingAt(entity, 3);
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isKeySet()) {
-                        if (!PatInfo(entity).getString().isEmpty()){
+                        if (!getPatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible() && isPossibletoPat(entity)){
-                                float EntityNameLength = PatInfo2(lookedEntity).getString().length();
-                        		float MoveOverlayAmount = EntityNameLength * 1.65f;
-                        		//EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;
-                        		Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                    PatInfo(lookedEntity), DynamicChanges ? floatPosX - MoveOverlayAmount : floatPosX, floatPosY, -1);
-                                /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                *   PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
+                               if (!ChangedAddonClientConfigsConfiguration.PAW_STYLE_PAT_OVERLAY.get()) {
+                                    float EntityNameLength = PatInfo2(lookedEntity).getString().length();
+                                    float MoveOverlayAmount = EntityNameLength * 2f;
+                                    //EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;
+                                    Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                            getPatInfo(lookedEntity), DynamicChanges ? floatPosX - MoveOverlayAmount : floatPosX, floatPosY, -1);
+                                    /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                     *   PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
+                               } else {
+                                   ResourceLocation TEXTURE = new ResourceLocation("changed_addon:textures/screens/paw_normal.png");
+                                   Minecraft mc = Minecraft.getInstance();
+                                   PoseStack poseStack = event.getMatrixStack();
+                                   RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                                   RenderSystem.setShaderTexture(0, TEXTURE);
 
+                                   int x = ((int) posX); // Posição X na tela
+                                   int y = ((int) posY); // Posição Y na tela
+                                   int largura = (int) 19; // Largura da imagem
+                                   int altura = (int) 19; // Altura da imagem
+                                   float troubleShotXValue = floatPosX + 9;
+                                   float troubleShotYValue = floatPosY + 20;
+                                   float TextDynamic = 0;
+                                   if (getSimplePatInfo().length() > 1){
+                                        TextDynamic = ((float) getSimplePatInfo().length() / 2) * 4.25f;
+                                   } else {
+										TextDynamic = DEBUG.HeadPosB;
+                                   }
+
+                                   // Renderiza a imagem na tela
+                                   GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
+                                   Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                           getSimplePatInfo(), troubleShotXValue + -TextDynamic, troubleShotYValue, Color3.getColor("#ffabab").toInt());
+                                }
                         	}
                         }
                     }
@@ -72,6 +102,7 @@ public class PatOverlay {
             }
         }
     }
+
 
     private static boolean isPatableEntity(Player player, Entity patEntity) {
     	// Verifica se a entidade está dentro das tags definidas como 'patable entities'
@@ -139,7 +170,7 @@ public class PatOverlay {
     }
 
 
-    private static TranslatableComponent PatInfo(Entity lookedEntity) {
+    private static TranslatableComponent getPatInfo(Entity lookedEntity) {
         String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
         if (lookedEntity instanceof LivingEntity) {
             TranslatableComponent patMessage = new TranslatableComponent("changed_addon.info.is_patable", key.isEmpty() ? "Not Key Set" : key, lookedEntity.getDisplayName().getString());
@@ -151,6 +182,10 @@ public class PatOverlay {
         } else {
             return new TranslatableComponent("");
         }
+    }
+
+    private static String getSimplePatInfo() {
+        return ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
     }
 
     private static TextComponent PatInfo2(Entity lookedEntity) {

@@ -2,6 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
+import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
@@ -12,6 +13,7 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
@@ -86,7 +88,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 	@Override
 	public double getMeleeAttackRangeSqr(LivingEntity target) {
 		if (target.getEyeY() > this.getEyeY() + 1){
-			return 6 * 4;
+			return super.getMeleeAttackRangeSqr(target) * 1.5D;
 		}
 		return super.getMeleeAttackRangeSqr(target);
 	}
@@ -149,12 +151,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(10, new FloatGoal(this){
-			@Override
-			public boolean canUse() {
-				return super.canUse() && false;
-			}
-		});
 	}
 
 	@Override
@@ -184,8 +180,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof AbstractArrow)
-			return false;
 		if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
 			return false;
 		if (source == DamageSource.FALL)
@@ -206,8 +200,14 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 			return false;
 		if (source.getMsgId().equals("witherSkull"))
 			return false;
-		if (source.isProjectile())
-			return false;
+		if (source.isProjectile()) {
+			if (this.getLevel().random.nextFloat() <= 0.25f){
+				if (source.getEntity() instanceof Player player){
+					player.displayClientMessage(new TextComponent("§l§o§4Coward! Is distance all you can rely on? How PATHETIC!!!"), true);
+				}
+			}
+			return super.hurt(source, amount * 0.5f);
+		}
 		return super.hurt(source, amount);
 	}
 
@@ -307,6 +307,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 			SetSpeed(this);
 			TpEntity(this);
 			CrawSystem(this.getTarget());
+			BossAbilitiesHandle.BurstAttack(this);
 		}
     }
 
