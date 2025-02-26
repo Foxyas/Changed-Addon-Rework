@@ -47,10 +47,11 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         super(p_19870_, p_19871_);
     }
 
+    public int GlowStage = 0; //0 = normal and 1 = Pulse
+
     public boolean isActivatedAbility() {
         return ActivatedAbility;
     }
-
 
     public void SetActivatedAbility(boolean value){
         this.ActivatedAbility = value;
@@ -64,59 +65,68 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     @Override
     public void baseTick() {
         super.baseTick();
-        if (!this.level.isClientSide) {
-            this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
-        }
+        if (this.getUnderlyingPlayer() == null) {
+            if (!this.level.isClientSide) {
+                this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
+            }
 
 		/*if (this.DEVATTACKTESTTICK != 0){
 			this.AbilitiesTicksCooldown = 0;
 			this.ActivatedAbility = true;
 		}*/
 
-        if (!this.isNoAi()){
-            if (this.DodgeAnimTicks > 0) {
-                this.DodgeAnimTicks -= 2;
-            } else if (this.DodgeAnimTicks < 0) {
-                this.DodgeAnimTicks += 2;
-            }
-
-            if (this.AbilitiesTicksCooldown <= 0) {
-                this.bossAbilitiesHandle.tick();
-            } else {
-                this.AbilitiesTicksCooldown--;
-            }
-
-            this.ActivatedAbility = this.getTarget() != null;
-            if (this.SuperAbilitiesTicksCooldown > 0) {
-                this.SuperAbilitiesTicksCooldown--; //Super Abilities CoolDown
-            }
-
-            if (this.isAlive()) {
-
-                if (this.PassivesTicksCooldown <= 10) {
-                    this.bossAbilitiesHandle.Passives(); //Passives
-                } else {
-                    this.PassivesTicksCooldown -= 2;
+            if (!this.isNoAi()) {
+                if (this.DodgeAnimTicks > 0) {
+                    this.DodgeAnimTicks -= 2;
+                } else if (this.DodgeAnimTicks < 0) {
+                    this.DodgeAnimTicks += 2;
                 }
 
-                if (this.isDashing()) {
-                	DashingTicks--;
-                    if (this.getTarget() == null){this.DashingTicks = 0;}
-                    for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
-                        double angleTheta = Math.toRadians(theta);
-                        for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
-                            double anglePhi = Math.toRadians(phi);
-                            double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
-                            double y = this.getY() + Math.cos(anglePhi) * 4.0;
-                            double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
-                            Vec3 pos = new Vec3(x, y, z);
-                            PlayerUtilProcedure.ParticlesUtil.sendParticles(
-                                    this.getLevel(),
-                                    ParticleTypes.GLOW,
-                                    pos,
-                                    0.3f, 0.2f, 0.3f,
-                                    4, 0
-                            );
+                if (this.AbilitiesTicksCooldown <= 0) {
+                    this.bossAbilitiesHandle.tick();
+                    if (this.getUnderlyingPlayer() == null) {
+                        this.GlowStage = 0;
+                    }
+                } else {
+                    this.AbilitiesTicksCooldown--;
+                    if (this.getUnderlyingPlayer() == null) {
+                        this.GlowStage = 1;
+                    }
+                }
+
+                this.ActivatedAbility = this.getTarget() != null;
+                if (this.SuperAbilitiesTicksCooldown > 0) {
+                    this.SuperAbilitiesTicksCooldown--; //Super Abilities CoolDown
+                }
+
+                if (this.isAlive()) {
+                    if (this.PassivesTicksCooldown <= 10) {
+                        this.bossAbilitiesHandle.Passives(); //Passives
+                    } else {
+                        this.PassivesTicksCooldown -= 2;
+                    }
+
+                    if (this.isDashing()) {
+                        DashingTicks--;
+                        if (this.getTarget() == null) {
+                            this.DashingTicks = 0;
+                        }
+                        for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
+                            double angleTheta = Math.toRadians(theta);
+                            for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
+                                double anglePhi = Math.toRadians(phi);
+                                double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
+                                double y = this.getY() + Math.cos(anglePhi) * 4.0;
+                                double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
+                                Vec3 pos = new Vec3(x, y, z);
+                                PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                                        this.getLevel(),
+                                        ParticleTypes.GLOW,
+                                        pos,
+                                        0.3f, 0.2f, 0.3f,
+                                        4, 0
+                                );
+                            }
                         }
                     }
                 }
@@ -157,6 +167,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         if (tag.contains("DashingTicks")) {
             this.DashingTicks = tag.getInt("DashingTicks");
         }
+        if (tag.contains("GlowStage")){
+            this.GlowStage = tag.getInt("GlowStage");
+        }
         //if (tag.contains("DEVATTACKTESTTICK")) {
         //	this.DEVATTACKTESTTICK = tag.getInt("DEVATTACKTESTTICK");
         //}
@@ -171,6 +184,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         tag.putInt("PassivesTicksCooldown", PassivesTicksCooldown);
         tag.putInt("DodgeAnimTicks", DodgeAnimTicks);
         tag.putInt("DashingTicks", DodgeAnimTicks);
+        tag.putInt("GlowStage",GlowStage);
         //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
 

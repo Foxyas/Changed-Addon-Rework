@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.registers;
 
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.block.*;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
@@ -22,10 +23,12 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -83,8 +86,9 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final RegistryObject<Item> REYN_TRANSFUR_SPAWN_EGG = ITEMS_REGISTRY.register("reyn_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.REYN, Color3.getColor("#4C4C4C").toInt(), Color3.getColor("#464646").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-	public static final RegistryObject<Item> LUMINARCTIC_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("luminarctic_leopard_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LUMINARCTIC_LEOPARD, Color3.getColor("#414141").toInt(), Color3.getColor("#1D1D1D").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
-	public static final RegistryObject<Item> LUMINARCTIC_FEMALE_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("female_luminarctic_leopard_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD, Color3.getColor("#414141").toInt(), Color3.getColor("#1D1D1D").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+	public static final RegistryObject<Item> LUMINARCTIC_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("luminarctic_leopard_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LUMINARCTIC_LEOPARD, Color3.getColor("#414141").toInt(), Color3.getColor("#FFFFFF").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
+	public static final RegistryObject<Item> LUMINARCTIC_FEMALE_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("female_luminarctic_leopard_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD, Color3.getColor("#414141").toInt(), Color3.getColor("#FFFFFF").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 	public static final RegistryObject<Item> LATEX_SQUID_TIGER_SHARK_SPAWN_EGG = ITEMS_REGISTRY.register("latex_squid_tiger_shark_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SQUID_TIGER_SHARK, Color3.getColor("#969696").toInt(), Color3.BLACK.toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 	
@@ -97,6 +101,14 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 	@SubscribeEvent
 	public static void registerItems(FMLConstructModEvent event) {
 		ChangedAddonRegisters.ITEMS_REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+	}
+
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+	public static class ClientSideHandler {
+		@SubscribeEvent
+		public static void clientSetup(FMLClientSetupEvent event) {
+			LuminarCrystalBlockBlock.registerRenderLayer();
+		}
 	}
 
 	/*

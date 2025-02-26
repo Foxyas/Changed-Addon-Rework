@@ -47,6 +47,7 @@ import net.foxyas.changedaddon.item.PainiteArmorItem;
 import net.foxyas.changedaddon.item.OrangejuiceItem;
 import net.foxyas.changedaddon.item.OrangeWolfCrystalFragmentItem;
 import net.foxyas.changedaddon.item.LunarroseItem;
+import net.foxyas.changedaddon.item.LuminarCrystalShardItem;
 import net.foxyas.changedaddon.item.LitixCamoniaSprayItem;
 import net.foxyas.changedaddon.item.LitixCamoniaItem;
 import net.foxyas.changedaddon.item.LitixCamoniaFluidItem;
@@ -198,6 +199,9 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
+	public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD = REGISTRY.register("luminar_crystal_shard", () -> new LuminarCrystalShardItem());
+	public static final RegistryObject<Item> LUMINAR_CRYSTAL_BLOCK = block(ChangedAddonModBlocks.LUMINAR_CRYSTAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> LUMINAR_CRYSTAL_SMALL = block(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

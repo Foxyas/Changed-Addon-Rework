@@ -1,12 +1,11 @@
 package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.LuminarcticLeopardModel;
 import net.foxyas.changedaddon.client.model.MaleExp2Model;
-import net.foxyas.changedaddon.entity.DazedEntity;
-import net.foxyas.changedaddon.entity.Exp2MaleEntity;
-import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
+import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.ltxprogrammer.changed.ability.HypnosisAbility;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
@@ -25,6 +24,7 @@ import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
@@ -57,6 +57,7 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 		this.addLayer(new thisConditionalLayers.thisGlowLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_ability_active.png")));
+		this.addLayer(new thisConditionalLayers.thisGlowFelineEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_feline_eyes_male.png")));
 	}
 
 	@Override
@@ -108,13 +109,39 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
 						if (instance.getController().getHoldTicks() > 0){
 							super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
 						}
-					} else if (entity instanceof LuminarcticLeopardEntity LUMI && LUMI.isActivatedAbility()) {
-						super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+					} else if (entity instanceof AbstractLuminarcticLeopard LUMI && LUMI.isActivatedAbility()) {
+						if (LUMI.GlowStage >= 1){
+							VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
+							float pulseFactor = (float) (Math.sin(ageInTicks * 0.1f) + 1) / 2; // Varia entre 0 e 1 suavemente, simulando o efeito de pulsar
+
+							// Calculando a cor escurecida
+							float intensity = 1f; // O quão escuro pode ficar
+							float red = 1.0f - pulseFactor * intensity;
+							float green = 1.0f - pulseFactor * intensity;
+							float blue = 1.0f - pulseFactor * intensity;
+							// Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
+							this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
+						} else {
+							super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+						}
 					}
 				}
+				if (entity instanceof AbstractLuminarcticLeopard WILD_LUMI && WILD_LUMI.getTarget() != null){
+					// Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
+					if (WILD_LUMI.GlowStage >= 1){
+						VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
+						float pulseFactor = (float) (Math.sin(ageInTicks * 0.1f) + 1) / 2; // Varia entre 0 e 1 suavemente, simulando o efeito de pulsar
 
-				if (entity instanceof LuminarcticLeopardEntity WILD_LUMI && WILD_LUMI.getTarget() != null){
-					super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+						// Calculando a cor escurecida
+						float intensity = 1f; // O quão escuro pode ficar
+						float red = 1.0f - pulseFactor * intensity;
+						float green = 1.0f - pulseFactor * intensity;
+						float blue = 1.0f - pulseFactor * intensity;
+						// Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
+						this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
+					} else {
+						super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+					}
 				}
 			}
 
@@ -134,6 +161,22 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
 
 				if (entity instanceof LuminarcticLeopardEntity WILD_LUMI && WILD_LUMI.getTarget() != null){
 					super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
+				}
+			}
+		}
+
+		private static class thisGlowFelineEyesLayer<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends EmissiveBodyLayer<M, T> {
+			public thisGlowFelineEyesLayer(RenderLayerParent<T, M> p_116964_, ResourceLocation emissiveTexture) {
+				super(p_116964_, emissiveTexture);
+			}
+
+			@Override
+			public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+				if (entity.getUnderlyingPlayer() != null) {
+					return;
+				}
+				if (entity instanceof LuminarcticLeopardEntity WILD_LUMI && WILD_LUMI.getTarget() != null) {
+					super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
 				}
 			}
 		}

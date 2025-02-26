@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0,defrost=false": {
+      "model": "changed_addon:block/luminar_crystal_block"
+    },
+    "age=1,defrost=false": {
+      "model": "changed_addon:block/luminar_crystal_block_1"
+    },
+    "age=2,defrost=false": {
+      "model": "changed_addon:block/luminar_crystal_block_2"
+    },
+    "age=3,defrost=false": {
+      "model": "changed_addon:block/luminar_crystal_block_3"
+    },
+    "age=0,defrost=true": {
+      "model": "changed_addon:block/luminar_crystal_block"
+    },
+    "age=1,defrost=true": {
+      "model": "changed_addon:block/luminar_crystal_block_1"
+    },
+    "age=2,defrost=true": {
+      "model": "changed_addon:block/luminar_crystal_block_2"
+    },
+    "age=3,defrost=true": {
+      "model": "changed_addon:block/luminar_crystal_block_3"
+    }
+  }
+}

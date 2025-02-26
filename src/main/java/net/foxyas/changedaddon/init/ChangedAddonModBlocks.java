@@ -32,6 +32,8 @@ import net.foxyas.changedaddon.block.PainiteOreBlock;
 import net.foxyas.changedaddon.block.PainiteBlockBlock;
 import net.foxyas.changedaddon.block.OrangeWolfCrystalSmallBlock;
 import net.foxyas.changedaddon.block.OrangeWolfCrystalBlockBlock;
+import net.foxyas.changedaddon.block.LuminarCrystalSmallBlock;
+import net.foxyas.changedaddon.block.LuminarCrystalBlockBlock;
 import net.foxyas.changedaddon.block.LitixCamoniaFluidBlock;
 import net.foxyas.changedaddon.block.LatexInsulatorBlock;
 import net.foxyas.changedaddon.block.IridiumoreBlock;
@@ -86,6 +88,8 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
+	public static final RegistryObject<Block> LUMINAR_CRYSTAL_BLOCK = REGISTRY.register("luminar_crystal_block", () -> new LuminarCrystalBlockBlock());
+	public static final RegistryObject<Block> LUMINAR_CRYSTAL_SMALL = REGISTRY.register("luminar_crystal_small", () -> new LuminarCrystalSmallBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -102,6 +106,7 @@ public class ChangedAddonModBlocks {
 			WhiteWolfCrystalSmallBlock.registerRenderLayer();
 			FoxtaCanBlock.registerRenderLayer();
 			SnepsiCanBlock.registerRenderLayer();
+			LuminarCrystalSmallBlock.registerRenderLayer();
 		}
 	}
 }

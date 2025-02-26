@@ -39,7 +39,7 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
         if (entity.getChangedEntity() instanceof LatexSnepEntity latexSnepEntity){
             latexSnepEntity.WantLoaf = !latexSnepEntity.WantLoaf;
         } else if (entity.getChangedEntity() instanceof AbstractLuminarcticLeopard lumi) {
-            lumi.SetActivatedAbility(!lumi.isActivatedAbility());
+            lumi.GlowStage = lumi.GlowStage >= 1 ? 0 : 1;
         }
     }
 

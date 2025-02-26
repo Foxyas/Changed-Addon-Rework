@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.HitResult;
@@ -59,7 +60,7 @@ public class PatOverlay {
             if (entity != null && !entity.isSpectator()) {
                 if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()){
                     Entity lookedEntity = PlayerUtilProcedure.getEntityLookingAt(entity, 3);
-                    if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isKeySet()) {
+                    if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isEntityInPassiveStage(lookedEntity) && isKeySet()) {
                         if (!getPatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible() && isPossibletoPat(entity)){
                                if (!ChangedAddonClientConfigsConfiguration.PAW_STYLE_PAT_OVERLAY.get()) {
@@ -99,6 +100,14 @@ public class PatOverlay {
                 }
             }
         }
+    }
+
+    private static boolean isEntityInPassiveStage(Entity lookedEntity) {
+        if (lookedEntity instanceof ChangedEntity changedEntity){
+            return changedEntity.getTarget() == null;
+        } else if (lookedEntity instanceof Mob mob) {
+            return mob.getTarget() == null;
+        } else return lookedEntity instanceof Player;
     }
 
 
