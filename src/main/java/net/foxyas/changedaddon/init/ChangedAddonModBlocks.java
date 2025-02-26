@@ -81,6 +81,8 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> ORANGE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("orange_wolf_crystal_block", () -> new OrangeWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> YELLOW_WOLF_CRYSTAL_BLOCK = REGISTRY.register("yellow_wolf_crystal_block", () -> new YellowWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> WHITE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("white_wolf_crystal_block", () -> new WhiteWolfCrystalBlockBlock());
+	public static final RegistryObject<Block> LUMINAR_CRYSTAL_BLOCK = REGISTRY.register("luminar_crystal_block", () -> new LuminarCrystalBlockBlock());
+	public static final RegistryObject<Block> LUMINAR_CRYSTAL_SMALL = REGISTRY.register("luminar_crystal_small", () -> new LuminarCrystalSmallBlock());
 	public static final RegistryObject<Block> YELLOW_WOLF_CRYSTAL_SMALL = REGISTRY.register("yellow_wolf_crystal_small", () -> new YellowWolfCrystalSmallBlock());
 	public static final RegistryObject<Block> ORANGE_WOLF_CRYSTAL_SMALL = REGISTRY.register("orange_wolf_crystal_small", () -> new OrangeWolfCrystalSmallBlock());
 	public static final RegistryObject<Block> BLUE_WOLF_CRYSTAL_SMALL = REGISTRY.register("blue_wolf_crystal_small", () -> new BlueWolfCrystalSmallBlock());
@@ -88,8 +90,6 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
-	public static final RegistryObject<Block> LUMINAR_CRYSTAL_BLOCK = REGISTRY.register("luminar_crystal_block", () -> new LuminarCrystalBlockBlock());
-	public static final RegistryObject<Block> LUMINAR_CRYSTAL_SMALL = REGISTRY.register("luminar_crystal_small", () -> new LuminarCrystalSmallBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -100,13 +100,13 @@ public class ChangedAddonModBlocks {
 			SnepPlushBlock.registerRenderLayer();
 			WolfPlushBlock.registerRenderLayer();
 			ContainmentContainerBlock.registerRenderLayer();
+			LuminarCrystalSmallBlock.registerRenderLayer();
 			YellowWolfCrystalSmallBlock.registerRenderLayer();
 			OrangeWolfCrystalSmallBlock.registerRenderLayer();
 			BlueWolfCrystalSmallBlock.registerRenderLayer();
 			WhiteWolfCrystalSmallBlock.registerRenderLayer();
 			FoxtaCanBlock.registerRenderLayer();
 			SnepsiCanBlock.registerRenderLayer();
-			LuminarCrystalSmallBlock.registerRenderLayer();
 		}
 	}
 }
