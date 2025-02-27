@@ -66,7 +66,7 @@ public class AbstractLuminarCrystal {
                     .friction(0.98F)
                     .sound(SoundType.AMETHYST)
                     .strength(2.0F, 8.0F).hasPostProcess((blockState, blockGetter, blockPos) -> true)
-                    .emissiveRendering((blockState, blockGetter, blockPos) -> true).noOcclusion());
+                    .emissiveRendering((blockState, blockGetter, blockPos) -> true).noOcclusion().randomTicks());
             this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0).setValue(DEFROST, false));
         }
 
@@ -108,11 +108,7 @@ public class AbstractLuminarCrystal {
 
         @Override
         public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
-            super.onPlace(blockstate, world, pos, oldState, moving);
-            if (blockstate.getValue(DEFROST)){
-                world.scheduleTick(pos, this, 70);
-            }
-
+            super.onPlace(blockstate, world, pos, oldState, moving);
         }
 
         @Override
@@ -176,7 +172,10 @@ public class AbstractLuminarCrystal {
 
         @Override
         public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random p_60554_) {
-            super.randomTick(state, level, pos, p_60554_);
+            //super.randomTick(state, level, pos, p_60554_);
+            if (state.getValue(DEFROST)){
+                level.scheduleTick(pos, this, 70);
+            }
         }
 
          private void triggerCrystal(BlockState blockState, Level level, BlockPos position, Entity entity) {
