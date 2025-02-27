@@ -1,11 +1,14 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -23,8 +26,14 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +44,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
@@ -77,7 +87,7 @@ public class DazedEntity extends ChangedEntity {
 
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
-		//event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 20, 4, 4));
+		event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 20, 4, 4));
 	}
 
 	public DazedEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -250,9 +260,46 @@ public class DazedEntity extends ChangedEntity {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(ChangedAddonModEntities.DAZED.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				(entityType, world, reason, pos, random) -> (world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Mob.checkMobSpawnRules(entityType, world, reason, pos, random)));
+		SpawnPlacements.register(
+				ChangedAddonModEntities.DAZED.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				DazedEntity::canSpawnNear
+		);
 	}
+
+	private static boolean canSpawnNear(EntityType<DazedEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
+		if (world.getDifficulty() == Difficulty.PEACEFUL) {
+			return false;
+		}
+
+		if (!Monster.isDarkEnoughToSpawn(world, pos, random)) {
+			ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't dark enough");
+			return false;
+		}
+
+		if (!world.getBiome(pos).is(Tags.Biomes.IS_PLAINS)) {
+			ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't plains");
+			return false;
+		}
+
+		// Certifica-se de que o bloco abaixo não é ar e é sólido
+		BlockState blockBelow = world.getBlockState(pos.below());
+		if (!blockBelow.isSolidRender(world, pos.below()) || !blockBelow.isFaceSturdy(world, pos.below(), Direction.UP)) {
+			ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't a good block");
+			return false;
+		}
+
+		// Defina uma AABB (Área de Checagem) ao redor do spawn para verificar se há Oak Log por perto.
+		AABB checkArea = new AABB(pos).inflate(32); // Raio de 32 blocos ao redor
+
+		boolean nearSpawnBlock = world.getBlockStatesIfLoaded(checkArea)
+				.anyMatch(state -> state.is(Blocks.OBSIDIAN));
+		ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos);
+
+		return nearSpawnBlock;
+	}
+
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();

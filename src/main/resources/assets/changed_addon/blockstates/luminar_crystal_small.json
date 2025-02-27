@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "hearted=false": {
+      "model": "changed_addon:block/luminar_crystal_small_2"
+    },
+    "hearted=true": {
       "model": "changed_addon:block/luminar_crystal_small"
     }
   }

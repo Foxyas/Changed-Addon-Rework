@@ -86,23 +86,23 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
 		.texOffs(41, 93).addBox(-2.0F, -5.3F, -4.49F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F))
 		.texOffs(41, 93).addBox(-2.0F, -3.7F, -4.49F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition left_iris = feline_eyes.addOrReplaceChild("left_iris", CubeListBuilder.create().texOffs(41, 93).addBox(-2.0F, -5.1F, -4.399F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
-		.texOffs(41, 93).addBox(-2.0F, -3.9F, -4.399F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
-		.texOffs(41, 93).addBox(-2.0F, -5.0F, -4.35F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.3F))
-		.texOffs(41, 93).addBox(-2.0F, -3.8F, -4.448F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
-		.texOffs(41, 93).addBox(-2.0F, -5.2F, -4.448F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
-		.texOffs(41, 93).addBox(-2.0F, -5.3F, -4.49F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F))
-		.texOffs(41, 93).addBox(-2.0F, -3.7F, -4.49F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F)), PartPose.offset(3.0F, 0.0F, 0.0F));
+		PartDefinition left_iris = feline_eyes.addOrReplaceChild("left_iris", CubeListBuilder.create().texOffs(45, 93).addBox(-2.0F, -5.1F, -4.399F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
+		.texOffs(45, 93).addBox(-2.0F, -3.9F, -4.399F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.35F))
+		.texOffs(45, 93).addBox(-2.0F, -5.0F, -4.35F, 1.0F, 2.0F, 1.0F, new CubeDeformation(-0.3F))
+		.texOffs(45, 93).addBox(-2.0F, -3.8F, -4.448F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
+		.texOffs(45, 93).addBox(-2.0F, -5.2F, -4.448F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.4F))
+		.texOffs(45, 93).addBox(-2.0F, -5.3F, -4.49F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F))
+		.texOffs(45, 93).addBox(-2.0F, -3.7F, -4.49F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.45F)), PartPose.offset(3.0F, 0.0F, 0.0F));
 
 		PartDefinition LeftEar = Head.addOrReplaceChild("LeftEar", CubeListBuilder.create(), PartPose.offset(2.5F, -5.0F, 0.0F));
 
-		PartDefinition leftearextra_r1 = LeftEar.addOrReplaceChild("leftearextra_r1", CubeListBuilder.create().texOffs(47, 61).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(-0.0001F)), PartPose.offsetAndRotation(1.8711F, -5.7315F, 0.5F, 0.0F, 0.0F, 0.829F));
+		PartDefinition leftearextra_r1 = LeftEar.addOrReplaceChild("leftearextra_r1", CubeListBuilder.create().texOffs(47, 61).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(-0.0002F)), PartPose.offsetAndRotation(1.8711F, -5.7315F, 0.5F, 0.0F, 0.0F, 0.829F));
 
 		PartDefinition leftear_r1 = LeftEar.addOrReplaceChild("leftear_r1", CubeListBuilder.create().texOffs(46, 61).addBox(-7.75F, -34.75F, -1.0F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-2.25F, 29.25F, 0.0F, 0.0F, 0.0F, 0.3054F));
 
 		PartDefinition RightEar = Head.addOrReplaceChild("RightEar", CubeListBuilder.create(), PartPose.offset(-3.0F, -5.5F, 0.0F));
 
-		PartDefinition rightearextra_r1 = RightEar.addOrReplaceChild("rightearextra_r1", CubeListBuilder.create().texOffs(61, 48).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(-0.0001F)), PartPose.offsetAndRotation(-1.6211F, -5.2315F, 0.5F, 0.0F, 0.0F, -0.829F));
+		PartDefinition rightearextra_r1 = RightEar.addOrReplaceChild("rightearextra_r1", CubeListBuilder.create().texOffs(61, 48).addBox(-0.5F, -0.5F, -1.5F, 1.0F, 1.0F, 3.0F, new CubeDeformation(-0.0002F)), PartPose.offsetAndRotation(-1.6211F, -5.2315F, 0.5F, 0.0F, 0.0F, -0.829F));
 
 		PartDefinition rightear_r1 = RightEar.addOrReplaceChild("rightear_r1", CubeListBuilder.create().texOffs(61, 48).addBox(5.75F, -34.75F, -1.0F, 2.0F, 4.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(2.5F, 29.75F, 0.0F, 0.0F, 0.0F, -0.3054F));
 
@@ -113,7 +113,7 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
 
 		PartDefinition Right = ExtraFur.addOrReplaceChild("Right", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r1 = Right.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(82, 24).mirror().addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-3.9107F, -4.1023F, -0.75F, 0.948F, 0.1168F, -0.3325F));
+		PartDefinition cube_r1 = Right.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(82, 24).mirror().addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-3.9107F, -4.1024F, -0.75F, 0.948F, 0.1168F, -0.3325F));
 
 		PartDefinition cube_r2 = Right.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(82, 16).mirror().addBox(0.25F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-4.5F, -3.0F, 0.0F, 0.9472F, 0.0741F, -0.3414F));
 
@@ -121,13 +121,13 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
 
 		PartDefinition cube_r4 = Right.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(82, 0).mirror().addBox(0.3F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-4.75F, -2.25F, -0.75F, 0.4437F, 0.0502F, -0.5043F));
 
-		PartDefinition cube_r5 = Right.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(82, 47).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.9107F, -2.1023F, 0.0F, 0.0F, 0.0F, -0.4363F));
+		PartDefinition cube_r5 = Right.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(82, 47).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.9107F, -2.1024F, 0.0F, 0.0F, 0.0F, -0.4363F));
 
 		PartDefinition cube_r6 = Right.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(82, 39).mirror().addBox(0.25F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-4.5F, -1.0F, 0.0F, 0.0F, 0.0F, -0.4363F));
 
 		PartDefinition Left = ExtraFur.addOrReplaceChild("Left", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r7 = Left.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(72, 26).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.9107F, -4.1023F, -0.75F, 0.948F, -0.1168F, 0.3325F));
+		PartDefinition cube_r7 = Left.addOrReplaceChild("cube_r7", CubeListBuilder.create().texOffs(72, 26).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.9107F, -4.1024F, -0.75F, 0.948F, -0.1168F, 0.3325F));
 
 		PartDefinition cube_r8 = Left.addOrReplaceChild("cube_r8", CubeListBuilder.create().texOffs(72, 18).addBox(-1.25F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(4.5F, -3.0F, 0.0F, 0.9472F, -0.0741F, 0.3414F));
 
@@ -135,7 +135,7 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
 
 		PartDefinition cube_r10 = Left.addOrReplaceChild("cube_r10", CubeListBuilder.create().texOffs(72, 2).addBox(-1.3F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(4.75F, -2.25F, -0.75F, 0.4437F, -0.0502F, 0.5043F));
 
-		PartDefinition cube_r11 = Left.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(82, 63).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.9107F, -2.1023F, 0.0F, 0.0F, 0.0F, 0.4363F));
+		PartDefinition cube_r11 = Left.addOrReplaceChild("cube_r11", CubeListBuilder.create().texOffs(82, 63).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.9107F, -2.1024F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
 		PartDefinition cube_r12 = Left.addOrReplaceChild("cube_r12", CubeListBuilder.create().texOffs(82, 55).addBox(-1.25F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(4.5F, -1.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
@@ -179,9 +179,9 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
 		PartDefinition fur_r7 = Back.addOrReplaceChild("fur_r7", CubeListBuilder.create().texOffs(51, 84).mirror().addBox(-0.3096F, -1.4529F, -0.5F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-0.0652F, 2.0802F, 1.292F, 0.5516F, -0.1395F, -2.9193F));
 
 		PartDefinition fur_r8 = Back.addOrReplaceChild("fur_r8", CubeListBuilder.create().texOffs(48, 87).addBox(-1.9107F, 0.0F, -0.75F, 4.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(48, 87).addBox(-1.9107F, 1.0F, 0.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 1.3977F, 2.0F, -0.5672F, 0.0F, 0.0F));
+		.texOffs(48, 87).addBox(-1.9107F, 1.0F, 0.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 1.3976F, 2.0F, -0.5672F, 0.0F, 0.0F));
 
-		PartDefinition fur_r9 = Back.addOrReplaceChild("fur_r9", CubeListBuilder.create().texOffs(48, 87).addBox(-1.9107F, 1.0F, 0.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 0.8977F, 2.0F, -0.5672F, 0.0F, 0.0F));
+		PartDefinition fur_r9 = Back.addOrReplaceChild("fur_r9", CubeListBuilder.create().texOffs(48, 87).addBox(-1.9107F, 1.0F, 0.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 0.8976F, 2.0F, -0.5672F, 0.0F, 0.0F));
 
 		PartDefinition fur_r10 = Back.addOrReplaceChild("fur_r10", CubeListBuilder.create().texOffs(51, 84).addBox(-3.6904F, -1.4529F, -0.5F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(0.0652F, 2.0802F, 1.292F, 0.5516F, 0.1395F, 2.9193F));
 
@@ -204,9 +204,9 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
 		PartDefinition fur_r18 = Front.addOrReplaceChild("fur_r18", CubeListBuilder.create().texOffs(19, 84).mirror().addBox(-0.3096F, -1.4529F, -0.5F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-0.0652F, 1.5802F, -1.542F, -0.5516F, 0.1395F, -2.9193F));
 
 		PartDefinition fur_r19 = Front.addOrReplaceChild("fur_r19", CubeListBuilder.create().texOffs(20, 84).addBox(-1.9107F, 0.0F, -0.25F, 4.0F, 2.0F, 1.0F, new CubeDeformation(0.0F))
-		.texOffs(20, 84).addBox(-1.9107F, 1.0F, -1.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 0.8977F, -2.25F, 0.5672F, 0.0F, 0.0F));
+		.texOffs(20, 84).addBox(-1.9107F, 1.0F, -1.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 0.8976F, -2.25F, 0.5672F, 0.0F, 0.0F));
 
-		PartDefinition fur_r20 = Front.addOrReplaceChild("fur_r20", CubeListBuilder.create().texOffs(20, 84).addBox(-1.9107F, 1.0F, -1.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 0.3977F, -2.25F, 0.5672F, 0.0F, 0.0F));
+		PartDefinition fur_r20 = Front.addOrReplaceChild("fur_r20", CubeListBuilder.create().texOffs(20, 84).addBox(-1.9107F, 1.0F, -1.0F, 4.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-0.0893F, 0.3976F, -2.25F, 0.5672F, 0.0F, 0.0F));
 
 		PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(16, 41).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, 1.5F, 0.0F));
 

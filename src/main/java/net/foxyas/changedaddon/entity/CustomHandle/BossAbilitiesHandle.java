@@ -104,7 +104,6 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         if (bossTarget != null) {
             if (bossTarget.distanceTo(boss) >= 4) {
                 arcticDash();
-                this.boss.DashingTicks = 40;
                 abilityIndex = random.nextInt(5);
                 switch (abilityIndex) {
                     case 0:
@@ -193,7 +192,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     BlockPos center = boss.blockPosition();
     Level world = boss.getLevel();
 
-    world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, Explosion.BlockInteraction.BREAK);
+    world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 3.0f, Explosion.BlockInteraction.BREAK);
 
     Explosion explosionReference = new Explosion(world, boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, false, Explosion.BlockInteraction.NONE);
 
@@ -237,6 +236,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
             // Segundo Dash: Direção do boss para o alvo
             LivingEntity target = boss.getTarget();
             if (target != null) {
+                this.boss.DashingTicks = 40;
                 Vec3 targetDirection = target.position().subtract(boss.position()).normalize();
                 boss.setDeltaMovement(targetDirection.scale(2.5)); // Dash rápido para a posição do alvo
                 // Para cada entidade dentro da área do dash
@@ -495,9 +495,9 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
 				}*/
 
 
-            for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
+            for (int theta = 0; theta < 360; theta += 45) { // Ângulo horizontal
                 double angleTheta = Math.toRadians(theta);
-                for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
+                for (int phi = 0; phi <= 180; phi += 45) { // Ângulo vertical
                     double anglePhi = Math.toRadians(phi);
                     double x = this.boss.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
                     double y = this.boss.getY() + Math.cos(anglePhi) * 4.0;
@@ -543,9 +543,9 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                         entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0)); // Aplica cegueira
                     }
 
-                    for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
+                    for (int theta = 0; theta < 360; theta += 45) { // Ângulo horizontal
                         double angleTheta = Math.toRadians(theta);
-                        for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
+                        for (int phi = 0; phi <= 180; phi += 45) { // Ângulo vertical
                             double anglePhi = Math.toRadians(phi);
                             double x = this.boss.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
                             double y = this.boss.getY() + Math.cos(anglePhi) * 4.0;

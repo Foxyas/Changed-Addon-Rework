@@ -72,8 +72,6 @@ public class AbstractLuminarCrystal {
 
         @Override
         public boolean skipRendering(BlockState blockState, BlockState blockState1, Direction direction) {
-            if (true) return false;
-
             return blockState1.is(this) ? true : super.skipRendering(blockState, blockState1, direction);
         }
 
@@ -101,17 +99,20 @@ public class AbstractLuminarCrystal {
 
         @Override
         public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable) {
-		/*BlockState plant = plantable.getPlant(world, pos.relative(facing));
-		if (plant.getBlock() instanceof WhiteWolfCrystalSmallBlock)
+		BlockState plant = plantable.getPlant(world, pos.relative(facing));
+		if (plant.getBlock() instanceof AbstractLuminarCrystal.CrystalSmall)
 			return true;
-		else*/
+		else
             return super.canSustainPlant(state, world, pos, facing, plantable);
         }
 
         @Override
         public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
             super.onPlace(blockstate, world, pos, oldState, moving);
-            //world.scheduleTick(pos, this, 20);
+            if (blockstate.getValue(DEFROST)){
+                world.scheduleTick(pos, this, 70);
+            }
+
         }
 
         @Override
@@ -124,7 +125,7 @@ public class AbstractLuminarCrystal {
                 } else {
                     level.destroyBlock(pos, false, null);
                 }
-                level.scheduleTick(pos, this, 40); //delay de 20 ticks antes de agir
+                level.scheduleTick(pos, this, 70); //delay de 20 ticks antes de agir
             } else {
                 BlockPos above = pos.above();
                 if (level.getBlockState(above).is(Blocks.AIR)) {
@@ -174,8 +175,8 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void randomTick(BlockState p_60551_, ServerLevel p_60552_, BlockPos p_60553_, Random p_60554_) {
-            super.randomTick(p_60551_, p_60552_, p_60553_, p_60554_);
+        public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random p_60554_) {
+            super.randomTick(state, level, pos, p_60554_);
         }
 
          private void triggerCrystal(BlockState blockState, Level level, BlockPos position, Entity entity) {
@@ -190,6 +191,8 @@ public class AbstractLuminarCrystal {
     }
 
     public static abstract class CrystalSmall extends TransfurCrystalBlock {
+    
+	    public static final BooleanProperty HEARTED = BooleanProperty.create("hearted");
 
         public CrystalSmall() {
             super(ChangedAddonModItems.LUMINAR_CRYSTAL_SHARD,
@@ -201,18 +204,25 @@ public class AbstractLuminarCrystal {
                             .hasPostProcess((blockState, blockGetter, blockPos) -> true)
                             .emissiveRendering((blockState, blockGetter, blockPos) -> true)
                             .noOcclusion());
+			this.registerDefaultState(this.stateDefinition.any().setValue(HEARTED, false));
         }
 
         @Override
         public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
             return Shapes.empty();
         }
+        
+        @Override
+        protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+            builder.add(HEARTED);
+        }
+
 
         @Override
         public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
             super.entityInside(state, level, pos, entity);
             if (entity instanceof LivingEntity livingEntity && !livingEntity.hasEffect(MobEffects.WITHER)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 20,1,false,true,true));
+                livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true));
             }
         }
 

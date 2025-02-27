@@ -45,6 +45,6 @@ public class LuminarCrystalBlockBlock extends AbstractLuminarCrystal.Block {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get(), renderType -> renderType == RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.LUMINAR_CRYSTAL_BLOCK.get(), renderType -> renderType == RenderType.translucent());
 	}
 }
