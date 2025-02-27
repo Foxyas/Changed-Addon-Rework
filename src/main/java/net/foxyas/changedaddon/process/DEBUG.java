@@ -61,7 +61,7 @@ public class DEBUG {
             event.getPlayer().displayClientMessage(new TextComponent("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL + "\n" + "J = " + HeadPosJ),false);
         }
         if (event.getMessage().startsWith("Show Info")){
-            StructureHandle.isStructureNearby(event.getPlayer().getLevel(),event.getPlayer().getOnPos(),"changed_addon:dazed_latex_meteor", 3);
+             event.getPlayer().displayClientMessage(new TextComponent("X = " + StructureHandle.isStructureNearby(event.getPlayer().getLevel(),event.getPlayer().getOnPos(),"changed_addon:dazed_latex_meteor", 3)), false);
         }
     }
     private static double convert(String s) {

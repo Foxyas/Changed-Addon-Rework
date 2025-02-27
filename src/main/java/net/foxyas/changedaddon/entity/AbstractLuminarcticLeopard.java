@@ -235,9 +235,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         } else {
             amount = amount / 6;
             if (amount > 2){
-                this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2;
+		if (amount < 4){
+		this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2;
+		}
                 return super.hurt(source, amount);
-            } else if (attacker == this){
+            } else {
+				if (attacker == this) {
                 this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
                 Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
                 this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
@@ -247,10 +250,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
                 Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
                 this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
                 return false;
-            }
+            	}	
+            } 
         }
     }
-
-
-
+    
 }
