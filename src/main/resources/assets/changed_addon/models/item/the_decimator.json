@@ -1,0 +1,7 @@
+{
+  "parent": "changed_addon:custom/the_decimator",
+  "textures": {
+    "1": "changed_addon:blocks/the_decimator",
+    "particle": "changed_addon:items/the_decimator_particle"
+  }
+}

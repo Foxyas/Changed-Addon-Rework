@@ -143,6 +143,7 @@ public class CarryAbility extends SimpleAbility {
     private static void syncMount(Player player) {
         if (!player.level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             serverPlayer.connection.send(new ClientboundSetPassengersPacket(player));
+            serverPlayer.setDeltaMovement(serverPlayer.getLookAngle().scale(1.05));
             SoundPlay(serverPlayer);
         }
     }

@@ -28,6 +28,7 @@ import net.foxyas.changedaddon.item.WhiteLatexSprayItem;
 import net.foxyas.changedaddon.item.UnlatexbaseItem;
 import net.foxyas.changedaddon.item.UnifuserblockIllustrativeItemItem;
 import net.foxyas.changedaddon.item.TransfurTotemItem;
+import net.foxyas.changedaddon.item.TheDecimatorItem;
 import net.foxyas.changedaddon.item.SyringewithlitixcammoniaItem;
 import net.foxyas.changedaddon.item.SyringeItem;
 import net.foxyas.changedaddon.item.SpawneggoffoxyasItem;
@@ -203,6 +204,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
 	public static final RegistryObject<Item> GOO_CORE = block(ChangedAddonModBlocks.GOO_CORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> THE_DECIMATOR = REGISTRY.register("the_decimator", () -> new TheDecimatorItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
