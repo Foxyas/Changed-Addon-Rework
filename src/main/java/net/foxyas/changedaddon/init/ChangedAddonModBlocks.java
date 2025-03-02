@@ -39,6 +39,7 @@ import net.foxyas.changedaddon.block.LatexInsulatorBlock;
 import net.foxyas.changedaddon.block.IridiumoreBlock;
 import net.foxyas.changedaddon.block.IridiumBlockBlock;
 import net.foxyas.changedaddon.block.InformantblockBlock;
+import net.foxyas.changedaddon.block.GooCoreBlock;
 import net.foxyas.changedaddon.block.GeneratorBlock;
 import net.foxyas.changedaddon.block.FoxtaCanBlock;
 import net.foxyas.changedaddon.block.DormantWhiteLatexBlock;
@@ -90,6 +91,7 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
+	public static final RegistryObject<Block> GOO_CORE = REGISTRY.register("goo_core", () -> new GooCoreBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {
@@ -107,6 +109,7 @@ public class ChangedAddonModBlocks {
 			WhiteWolfCrystalSmallBlock.registerRenderLayer();
 			FoxtaCanBlock.registerRenderLayer();
 			SnepsiCanBlock.registerRenderLayer();
+			GooCoreBlock.registerRenderLayer();
 		}
 	}
 }

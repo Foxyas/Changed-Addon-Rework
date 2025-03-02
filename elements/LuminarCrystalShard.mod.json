@@ -6,7 +6,22 @@
     "texture": "luminar_crystal_shard",
     "customModelName": "Normal",
     "customProperties": {},
-    "states": [],
+    "states": [
+      {
+        "renderType": 0,
+        "texture": "animated_luminar_crystal",
+        "customModelName": "Normal",
+        "stateMap": [
+          {
+            "property": {
+              "name": "lefthanded",
+              "type": "logic"
+            },
+            "value": true
+          }
+        ]
+      }
+    ],
     "name": "Luminar Crystal Shard",
     "rarity": "RARE",
     "creativeTab": {

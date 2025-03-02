@@ -1,7 +1,7 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "changed_addon:blocks/luminar_crystal_small",
-    "particle": "changed_addon:blocks/luminar_crystal_small"
+    "cross": "changed_addon:blocks/new_small_luminar_crystal_hearted",
+    "particle": "changed_addon:blocks/new_small_luminar_crystal_hearted"
   }
 }

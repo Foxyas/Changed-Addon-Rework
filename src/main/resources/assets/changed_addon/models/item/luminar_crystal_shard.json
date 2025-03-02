@@ -2,5 +2,13 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "changed_addon:items/luminar_crystal_shard"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "lefthanded": 1
+      },
+      "model": "changed_addon:item/luminar_crystal_shard_0"
+    }
+  ]
 }

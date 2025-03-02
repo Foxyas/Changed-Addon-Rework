@@ -4,6 +4,7 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -47,6 +48,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
+import java.util.Set;
 
 @Mod.EventBusSubscriber
 public class DazedEntity extends ChangedEntity {
@@ -84,10 +86,14 @@ public class DazedEntity extends ChangedEntity {
 		}
 	}
 
+	
+	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("plains"));
 
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
-		event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 20, 4, 4));
+		if (SPAWN_BIOMES.contains(event.getName())){
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 40, 1, 4));
+		}
 	}
 
 	public DazedEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -294,8 +300,8 @@ public class DazedEntity extends ChangedEntity {
 		AABB checkArea = new AABB(pos).inflate(32); // Raio de 32 blocos ao redor
 
 		boolean nearSpawnBlock = world.getBlockStatesIfLoaded(checkArea)
-				.anyMatch(state -> state.is(Blocks.OBSIDIAN));
-		ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos);
+				.anyMatch(state -> state.is(ChangedAddonModBlocks.GOO_CORE.get()));
+		ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n" + nearSpawnBlock);
 
 		return nearSpawnBlock;
 	}
