@@ -3,25 +3,10 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "luminar_crystal_shard",
+    "texture": "crystals_shards",
     "customModelName": "Normal",
     "customProperties": {},
-    "states": [
-      {
-        "renderType": 0,
-        "texture": "animated_luminar_crystal",
-        "customModelName": "Normal",
-        "stateMap": [
-          {
-            "property": {
-              "name": "lefthanded",
-              "type": "logic"
-            },
-            "value": true
-          }
-        ]
-      }
-    ],
+    "states": [],
     "name": "Luminar Crystal Shard",
     "rarity": "RARE",
     "creativeTab": {

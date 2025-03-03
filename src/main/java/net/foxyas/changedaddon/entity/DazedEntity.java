@@ -92,7 +92,7 @@ public class DazedEntity extends ChangedEntity {
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName())){
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 40, 1, 4));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 125, 1, 4));
 		}
 	}
 

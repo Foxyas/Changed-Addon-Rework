@@ -12629,7 +12629,6 @@
       "registry_name": "luminar_crystal_shard",
       "metadata": {
         "files": [
-          "src/main/resources/assets/changed_addon/models/item/luminar_crystal_shard_0.json",
           "src/main/resources/assets/changed_addon/models/item/luminar_crystal_shard.json",
           "src/main/java/net/foxyas/changedaddon/item/LuminarCrystalShardItem.java"
         ]
