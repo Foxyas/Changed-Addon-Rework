@@ -1,7 +1,10 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.minecraft.network.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;
+
+import net.minecraftforge.common.ForgeMod;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
@@ -19,8 +22,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
@@ -39,7 +44,7 @@ public class TheDecimatorItem extends Item {
 	}
 
 	private float AttackSpeed() {
-		return -4f + 1.25f;
+		return -4f + 0.8f;
 	}
 
 	private static final UUID BASE_ATTACK_REACH_UUID = UUID.fromString("fa02d244-9771-415c-8789-fd03b5252c8c");
@@ -62,9 +67,35 @@ public class TheDecimatorItem extends Item {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-		if (sourceentity instanceof Player player && !player.getAbilities().instabuild) {
-			itemstack.hurtAndBreak(1, entity, i -> i.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+	public boolean hurtEnemy(ItemStack itemstack, LivingEntity target, LivingEntity attacker) {
+		Player player = (Player) attacker;
+		if (!player.getAbilities().instabuild) {
+			// Danifica o item na mão
+			itemstack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+		}
+		if (!player.swinging && player.swingTime <= 0 && attacker.isOnGround()) {
+			// ⚔ Área de efeito: Raio de 2 blocos ao redor do alvo
+			double radius = 2.0;
+			AABB attackArea = target.getBoundingBox().inflate(radius, 0, radius);
+			List<LivingEntity> nearbyEntities = player.level.getEntitiesOfClass(LivingEntity.class, attackArea);
+			// 🔥 Knockback em todos os alvos próximos (exceto o atacante)
+			for (LivingEntity entity : nearbyEntities) {
+				if (entity != target && entity != player) {
+					Vec3 knockbackVec = entity.position().subtract(target.position()).normalize();
+					// 🏹 Knockback horizontal (respeita resistência)
+					entity.knockback(0.8, knockbackVec.x, knockbackVec.z);
+					entity.hurt(DamageSource.mobAttack(player), 7f / nearbyEntities.size());
+				}
+			}
+			// 💥 Partículas para indicar o ataque em área
+			target.level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.5f, 0.75f);
+			double d0 = (double) (-Mth.sin(player.getYRot() * 0.017453292F)) * 1;
+			double d1 = (double) Mth.cos(player.getYRot() * 0.017453292F) * 1;
+			Level var7 = player.level;
+			if (var7 instanceof ServerLevel serverLevel) {
+				serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5), player.getZ() + d1, 0, d0, 0.0, d1, 0.0);
+			}
+			//((ServerLevel) player.level).sendParticles(ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0);
 		}
 		return true;
 	}
@@ -88,24 +119,15 @@ public class TheDecimatorItem extends Item {
 			List<LivingEntity> attackHitBox = world.getEntitiesOfClass(LivingEntity.class, attackArea);
 			for (LivingEntity livingEntity : attackHitBox) {
 				if (livingEntity != player) {
-					livingEntity.hurt(DamageSource.mobAttack(player), 6f);
+					livingEntity.hurt(DamageSource.mobAttack(player), 6.5f);
 				}
-				livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(new Vec3(0, 0.5f, 0)));
+				var vecMath = livingEntity.position().subtract(Vec3.atCenterOf(pos)).normalize();
+				var distance = vecMath.length();
+				vecMath.scale(1 / Math.max(0.8f, distance));
+				livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(vecMath));
 			}
-			// 🎯 Definir AABB manualmente conforme a face clicada
-			AABB particleArea;
-			switch (face) {
-				case UP, DOWN -> particleArea = new AABB(pos.getX() - 2, pos.getY(), pos.getZ() - 2, // MinPos
-						pos.getX() + 2, pos.getY(), pos.getZ() + 2 // MaxPos
-					); // 3x1x3 (horizontal)
-				case NORTH, SOUTH -> particleArea = new AABB(pos.getX() - 2, pos.getY() - 2, pos.getZ(), // MinPos
-						pos.getX() + 2, pos.getY() + 2, pos.getZ() // MaxPos
-					); // 3x3 na direção X-Y
-				case EAST, WEST -> particleArea = new AABB(pos.getX(), pos.getY() - 2, pos.getZ() - 2, // MinPos
-						pos.getX(), pos.getY() + 2, pos.getZ() + 2 // MaxPos
-					); // 3x3 na direção Z-Y
-				default -> particleArea = new AABB(pos); // Fallback (1 bloco)
-			}
+			// Definir AABB manualmente conforme a face clicada
+			AABB particleArea = getArea(face, pos);
 			int radius = 2;
 			int radiusY = 2;
 			// 🔥 Gerar partículas de "break" dentro da área
@@ -130,6 +152,24 @@ public class TheDecimatorItem extends Item {
 		return InteractionResult.PASS;
 	}
 
+	@NotNull
+	private AABB getArea(Direction face, BlockPos pos) {
+		AABB particleArea;
+		switch (face) {
+			case UP, DOWN -> particleArea = new AABB(pos.getX() - 2, pos.getY(), pos.getZ() - 2, // MinPos
+					pos.getX() + 2, pos.getY(), pos.getZ() + 2 // MaxPos
+				); // 3x1x3 (horizontal)
+			case NORTH, SOUTH -> particleArea = new AABB(pos.getX() - 2, pos.getY() - 2, pos.getZ(), // MinPos
+					pos.getX() + 2, pos.getY() + 2, pos.getZ() // MaxPos
+				); // 3x3 na direção X-Y
+			case EAST, WEST -> particleArea = new AABB(pos.getX(), pos.getY() - 2, pos.getZ() - 2, // MinPos
+					pos.getX(), pos.getY() + 2, pos.getZ() + 2 // MaxPos
+				); // 3x3 na direção Z-Y
+			default -> particleArea = new AABB(pos); // Fallback (1 bloco)
+		}
+		return particleArea;
+	}
+
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
 		if (equipmentSlot == EquipmentSlot.MAINHAND) {
@@ -137,7 +177,8 @@ public class TheDecimatorItem extends Item {
 			builder.putAll(super.getAttributeModifiers(equipmentSlot, stack));
 			builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", AttackDamage(), AttributeModifier.Operation.ADDITION));
 			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", AttackSpeed(), AttributeModifier.Operation.ADDITION));
-			builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_REACH_UUID, "Tool modifier", 0.5f, AttributeModifier.Operation.MULTIPLY_TOTAL));
+			builder.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(BASE_ATTACK_REACH_UUID, "Tool modifier", 0.5f, AttributeModifier.Operation.ADDITION));
+			builder.put(ForgeMod.ATTACK_RANGE.get(), new AttributeModifier(BASE_ATTACK_REACH_UUID, "Tool modifier", 0.5f, AttributeModifier.Operation.ADDITION));
 			return builder.build();
 		}
 		return super.getAttributeModifiers(equipmentSlot, stack);
