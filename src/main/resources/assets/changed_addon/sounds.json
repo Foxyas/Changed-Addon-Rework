@@ -74,5 +74,35 @@
         "stream": false
       }
     ]
+  },
+  "hammer_swing": {
+    "subtitle": "subtitles.hammer_swing",
+    "sounds": [
+      {
+        "name": "changed_addon:woosh1",
+        "stream": false
+      },
+      {
+        "name": "changed_addon:woosh2",
+        "stream": false
+      },
+      {
+        "name": "changed_addon:woosh3",
+        "stream": false
+      },
+      {
+        "name": "changed_addon:woosh4",
+        "stream": false
+      }
+    ]
+  },
+  "hammer_gun_shot": {
+    "subtitle": "subtitles.hammer_gun_shot",
+    "sounds": [
+      {
+        "name": "changed_addon:heavy1",
+        "stream": false
+      }
+    ]
   }
 }

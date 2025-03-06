@@ -37,30 +37,11 @@ public class ShowTransfurTotemItemtipProcedure {
 		if (itemstack.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get()) {
 			if ((itemstack.getOrCreateTag().getString("form")).isEmpty()) {
 				tooltip.add(new TextComponent("\u00A76No Form Linked"));
-				if (Screen.hasAltDown() && Screen.hasControlDown()) {
-					tooltip.add(new TextComponent("\u00A7bI fell twice, but i've seen what they made of me the first time."));
-					tooltip.add(new TextComponent("\u00A7bI'm not letting you just rid of me like they did."));
-					tooltip.add(new TextComponent("\u00A7bPerhaps I can live on with some use, after all..."));
-					if (Screen.hasShiftDown()) {
-						tooltip.add(new TextComponent("\u00A7bSorry, Ria. I'm still not enough to avenge the humanity sins..."));
-						tooltip.add(new TextComponent("\u00A7bSorry, Andy for can't protect you..."));
-						tooltip.add(new TextComponent("\u00A7b......"));
-						tooltip.add(new TextComponent("\u00A7bAt least i will try protect someone this time....."));
-					}
-				}
 			} else {
 				if (Screen.hasShiftDown() && !Screen.hasAltDown() && !Screen.hasControlDown()) {
 					tooltip.add(new TextComponent(("\u00A76Form=" + itemstack.getOrCreateTag().getString("form"))));
 				} else if (Screen.hasAltDown() && Screen.hasControlDown()) {
-					tooltip.add(new TextComponent("\u00A7bI fell twice, but i've seen what they made of me the first time."));
-					tooltip.add(new TextComponent("\u00A7bI'm not letting you just rid of me like they did."));
-					tooltip.add(new TextComponent("\u00A7bPerhaps I can live on with some use, after all..."));
-					if (Screen.hasShiftDown()) {
-						tooltip.add(new TextComponent("\u00A7bSorry, Ria. I'm still not enough to avenge the humanity sins..."));
-						tooltip.add(new TextComponent("\u00A7bSorry, Andy for can't protect you..."));
-						tooltip.add(new TextComponent("\u00A7b......"));
-						tooltip.add(new TextComponent("\u00A7bAt least i will try protect someone this time....."));
-					}
+					tooltip.add(new TextComponent((new TranslatableComponent("item.changed_addon.transfur_totem.desc_1").getString())));
 				} else {
 					tooltip.add(new TextComponent(("\u00A76(" + new TranslatableComponent(("entity." + ((itemstack.getOrCreateTag().getString("form")).replace("/", "_")).replace(":form_", "."))).getString() + ")")));
 				}

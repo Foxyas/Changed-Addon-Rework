@@ -1,7 +1,12 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraftforge.common.ForgeMod;
@@ -73,22 +78,47 @@ public class TheDecimatorItem extends Item {
 			// Danifica o item na mão
 			itemstack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(EquipmentSlot.MAINHAND));
 		}
-		if (!player.swinging && player.swingTime <= 0 && attacker.isOnGround()) {
-			// ⚔ Área de efeito: Raio de 2 blocos ao redor do alvo
-			double radius = 2.0;
+		return true;
+	}
+
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, book) > 0){
+			return false;
+		}
+
+		return super.isBookEnchantable(stack, book);
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		if (enchantment == Enchantments.SHARPNESS){
+			return false;
+		}
+
+		return super.canApplyAtEnchantingTable(stack, enchantment);
+	}
+
+	@Override
+	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity target) {
+		if (player.getAttackStrengthScale(0.0f) >= 0.9 && player.isOnGround()) {
+			// ⚔ Área de efeito: Raio de 1.5 blocos ao redor do alvo
+			double radius = 1.5;
 			AABB attackArea = target.getBoundingBox().inflate(radius, 0, radius);
 			List<LivingEntity> nearbyEntities = player.level.getEntitiesOfClass(LivingEntity.class, attackArea);
 			// 🔥 Knockback em todos os alvos próximos (exceto o atacante)
 			for (LivingEntity entity : nearbyEntities) {
 				if (entity != target && entity != player) {
-					Vec3 knockbackVec = entity.position().subtract(target.position()).normalize();
+					Vec3 knockbackVec = target.position().subtract(entity.position()).normalize();
 					// 🏹 Knockback horizontal (respeita resistência)
 					entity.knockback(0.8, knockbackVec.x, knockbackVec.z);
 					entity.hurt(DamageSource.mobAttack(player), 7f / nearbyEntities.size());
 				}
 			}
 			// 💥 Partículas para indicar o ataque em área
-			target.level.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.5f, 0.75f);
+			if (ChangedAddonSounds.HAMMER_SWING != null) {
+				target.level.playSound(null, target.getX(), target.getY(), target.getZ(), ChangedAddonSounds.HAMMER_SWING, SoundSource.PLAYERS, 0.5f, 1f);
+			}
 			double d0 = (double) (-Mth.sin(player.getYRot() * 0.017453292F)) * 1;
 			double d1 = (double) Mth.cos(player.getYRot() * 0.017453292F) * 1;
 			Level var7 = player.level;
@@ -97,7 +127,7 @@ public class TheDecimatorItem extends Item {
 			}
 			//((ServerLevel) player.level).sendParticles(ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0);
 		}
-		return true;
+		return super.onLeftClickEntity(stack, player, target);
 	}
 
 	@Override
@@ -121,10 +151,10 @@ public class TheDecimatorItem extends Item {
 				if (livingEntity != player) {
 					livingEntity.hurt(DamageSource.mobAttack(player), 6.5f);
 				}
-				var vecMath = livingEntity.position().subtract(Vec3.atCenterOf(pos)).normalize();
+				Vec3 vecMath = livingEntity.position().subtract(Vec3.atCenterOf(pos)).normalize();
 				var distance = vecMath.length();
-				vecMath.scale(1 / Math.max(0.8f, distance));
-				livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(vecMath));
+				Vec3 newVec = new Vec3(vecMath.x() / Math.max(0.75f, distance), vecMath.y() / Math.max(0.75f, distance), vecMath.z() / Math.max(0.75f, distance));
+				livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(newVec));
 			}
 			// Definir AABB manualmente conforme a face clicada
 			AABB particleArea = getArea(face, pos);
@@ -141,7 +171,9 @@ public class TheDecimatorItem extends Item {
 				}
 			}
 			// 🔊 Reproduzir som de explosão no local
-			world.playSound(null, pos, SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.0f, 1.0f);
+			if (ChangedAddonSounds.HAMMER_GUN_SHOT != null) {
+				world.playSound(null, pos, ChangedAddonSounds.HAMMER_GUN_SHOT, SoundSource.PLAYERS, 1.0f, 1.0f);
+			}
 			// 💥 Criar uma partícula de explosão centralizada
 			Vec3 center = Vec3.atCenterOf(pos);
 			world.addParticle(ParticleTypes.EXPLOSION, center.x, center.y, center.z, 0, 0, 0);

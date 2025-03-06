@@ -3,7 +3,7 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "crystals_shards",
+    "texture": "luminar_crystal_shards",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],

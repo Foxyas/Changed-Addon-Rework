@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
@@ -9,6 +10,7 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -28,12 +30,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Exp2MaleEntity extends AbstractCanTameSnepChangedEntity {
+public class Exp2MaleEntity extends AbstractCanTameSnepChangedEntity implements CustomPatReaction {
 
 
 	public Exp2MaleEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -205,5 +208,14 @@ public class Exp2MaleEntity extends AbstractCanTameSnepChangedEntity {
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
 		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
 		return builder;
+	}
+
+	@Override
+	public void WhenPattedReaction() {
+		List<SoundEvent> soundEvents = new ArrayList<>();
+		soundEvents.add(SoundEvents.CAT_AMBIENT);
+		soundEvents.add(SoundEvents.CAT_PURR);
+		soundEvents.add(SoundEvents.CAT_PURREOW);
+		this.playSound(soundEvents.get(this.random.nextInt(soundEvents.size())),1,1);
 	}
 }

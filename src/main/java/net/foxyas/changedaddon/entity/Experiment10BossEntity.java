@@ -4,15 +4,18 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
+import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
@@ -41,14 +44,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment10BossEntity extends ChangedEntity implements GenderedEntity, BossWithMusic {
+public class Experiment10BossEntity extends ChangedEntity implements GenderedEntity, BossWithMusic, CustomPatReaction {
 	private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 	private float TpCooldown;
 	private boolean Phase2;
@@ -496,4 +496,20 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
             TpCooldown -= 0.5f;
         }
     }
+
+	@Override
+	public void WhenPattedReaction(Player player) {
+		List<TranslatableComponent> translatableComponentList = new ArrayList<>();
+		translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_0"));
+		translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_1"));
+		translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_2"));
+		translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_3"));
+
+		player.displayClientMessage(translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size())).withStyle((a) -> {
+			a.withBold(true);
+			a.withItalic(true);
+			a.withColor(ChatFormatting.DARK_RED);
+			return a;
+		}),true);
+	}
 }

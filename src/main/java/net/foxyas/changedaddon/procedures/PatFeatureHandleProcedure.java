@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
@@ -91,13 +92,14 @@ public class PatFeatureHandleProcedure {
 	}
 
 	private static void handleSpecialEntities(Entity player, Entity target) {
-		if (!isInCreativeMode(player)) return;
+		//if (!isInCreativeMode(player)) return;
 
 		if (isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
 			if (player instanceof Player) {
 				((Player) player).swing(getSwingHand(player), true);
 			}
 			if (player instanceof Player p && !p.level.isClientSide()) {
+				if (target instanceof CustomPatReaction pat){pat.WhenPattedReaction();}
 				p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
 			}
 		}
@@ -114,17 +116,16 @@ public class PatFeatureHandleProcedure {
 				&& !(target instanceof KetExperiment009Entity)
 				&& isHandEmpty(player, InteractionHand.MAIN_HAND)
 				|| isHandEmpty(player, InteractionHand.OFF_HAND)) {
-			if (player instanceof Player p) {
-				((Player) player).swing(getSwingHand(player), true);
-				if (target instanceof Exp2MaleEntity || target instanceof Exp2FemaleEntity && isPlayerTransfur) {
-					if (!isPlayerTransfurInExp2 && isPlayerTransfur)
-						((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
-				}
-			}
-			if (player instanceof Player p && world instanceof ServerLevel serverLevel) {
+            Player p = (Player) player;
+            p.swing(getSwingHand(player), true);
+            if (target instanceof Exp2MaleEntity || target instanceof Exp2FemaleEntity && isPlayerTransfur) {
+                if (!isPlayerTransfurInExp2 && isPlayerTransfur)
+                    p.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+            }
+            if (world instanceof ServerLevel serverLevel) {
 				p.swing(getSwingHand(player), true);
 				serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
-
+				if (target instanceof CustomPatReaction e){e.WhenPattedReaction();}
 				// Dispara o trigger personalizado
 				if (p instanceof ServerPlayer sp) {
 					GiveStealthPatAdvancement(sp,target);

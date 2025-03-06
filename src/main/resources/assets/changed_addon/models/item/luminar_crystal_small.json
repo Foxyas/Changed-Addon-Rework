@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "changed_addon:blocks/luminar_crystal_small_2"
+    "layer0": "changed_addon:blocks/new_small_luminar_crystal"
   }
 }
