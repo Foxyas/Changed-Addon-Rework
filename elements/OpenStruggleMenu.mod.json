@@ -3,7 +3,7 @@
   "_type": "keybind",
   "definition": {
     "triggerKey": "B",
-    "keyBindingName": "Concience Fight Gui",
+    "keyBindingName": "Consciousness Fight Gui",
     "keyBindingCategoryKey": "changed_addon",
     "onKeyPressed": {
       "name": "OpenStruggleMenuOnKeyPressed"

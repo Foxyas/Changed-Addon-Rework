@@ -4,7 +4,7 @@
   "definition": {
     "type": "Logic",
     "displayName": "Do Latex Infection",
-    "description": "this makes the latex infection in the player rise after being attacked",
+    "description": "If you get infected, the infection will rise until completely infected. The effect’s strength increases the infection rate.",
     "category": "PLAYER",
     "defaultValueLogic": false,
     "defaultValueNumber": 0

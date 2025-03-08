@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "achievement",
   "definition": {
-    "achievementName": "An Shocking Upgrade!",
+    "achievementName": "A Shocking upgrade!",
     "achievementDescription": "Get the electric katana!",
     "achievementIcon": {
       "value": "CUSTOM:ElectricKatana"

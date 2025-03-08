@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Snepsi?",
-    "achievementDescription": "You Obtain a Snepsi!, Cation this soda have high dose of Snep",
+    "achievementDescription": "Obtain an Snepsi!, Cation this soda have high dose of Snep",
     "achievementIcon": {
       "value": "CUSTOM:Snepsi"
     },

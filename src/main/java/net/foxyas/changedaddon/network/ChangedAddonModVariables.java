@@ -74,7 +74,6 @@ public class ChangedAddonModVariables {
 			clone.organic_transfur = original.organic_transfur;
 			clone.human_Form = original.human_Form;
 			clone.reset_transfur_advancements = original.reset_transfur_advancements;
-			clone.enter_in_duct = original.enter_in_duct;
 			clone.ShowRecipes = original.ShowRecipes;
 			clone.UnifuserRecipePage = original.UnifuserRecipePage;
 			clone.CatlyzerRecipePage = original.CatlyzerRecipePage;
@@ -134,7 +133,6 @@ public class ChangedAddonModVariables {
 		public boolean organic_transfur = false;
 		public boolean human_Form = true;
 		public boolean reset_transfur_advancements = false;
-		public boolean enter_in_duct = false;
 		public boolean act_cooldown = false;
 		public boolean ShowRecipes = false;
 		public double UnifuserRecipePage = 1.0;
@@ -164,7 +162,6 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("organic_transfur", organic_transfur);
 			nbt.putBoolean("human_Form", human_Form);
 			nbt.putBoolean("reset_transfur_advancements", reset_transfur_advancements);
-			nbt.putBoolean("enter_in_duct", enter_in_duct);
 			nbt.putBoolean("act_cooldown", act_cooldown);
 			nbt.putBoolean("ShowRecipes", ShowRecipes);
 			nbt.putDouble("UnifuserRecipePage", UnifuserRecipePage);
@@ -191,7 +188,6 @@ public class ChangedAddonModVariables {
 			organic_transfur = nbt.getBoolean("organic_transfur");
 			human_Form = nbt.getBoolean("human_Form");
 			reset_transfur_advancements = nbt.getBoolean("reset_transfur_advancements");
-			enter_in_duct = nbt.getBoolean("enter_in_duct");
 			act_cooldown = nbt.getBoolean("act_cooldown");
 			ShowRecipes = nbt.getBoolean("ShowRecipes");
 			UnifuserRecipePage = nbt.getDouble("UnifuserRecipePage");
@@ -237,7 +233,6 @@ public class ChangedAddonModVariables {
 					variables.organic_transfur = message.data.organic_transfur;
 					variables.human_Form = message.data.human_Form;
 					variables.reset_transfur_advancements = message.data.reset_transfur_advancements;
-					variables.enter_in_duct = message.data.enter_in_duct;
 					variables.act_cooldown = message.data.act_cooldown;
 					variables.ShowRecipes = message.data.ShowRecipes;
 					variables.UnifuserRecipePage = message.data.UnifuserRecipePage;

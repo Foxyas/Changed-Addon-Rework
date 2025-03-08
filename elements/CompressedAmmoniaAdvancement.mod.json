@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Compressed!!",
-    "achievementDescription": "You craft a Ammonia Compressed",
+    "achievementDescription": "You craft an Ammonia Compressed",
     "achievementIcon": {
       "value": "CUSTOM:AmmoniaCompressed"
     },

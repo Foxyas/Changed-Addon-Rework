@@ -21,7 +21,6 @@ import net.foxyas.changedaddon.network.PatKeyMessage;
 import net.foxyas.changedaddon.network.OpenStruggleMenuMessage;
 import net.foxyas.changedaddon.network.OpenExtraDetailsMessage;
 import net.foxyas.changedaddon.network.LeapKeyMessage;
-import net.foxyas.changedaddon.network.DuctProneMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
@@ -35,24 +34,6 @@ public class ChangedAddonModKeyMappings {
 			if (isDownOld != isDown && isDown) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenExtraDetailsMessage(0, 0));
 				OpenExtraDetailsMessage.pressAction(Minecraft.getInstance().player, 0, 0);
-			}
-			isDownOld = isDown;
-		}
-	};
-	public static final KeyMapping DUCT_PRONE = new KeyMapping("key.changed_addon.duct_prone", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
-		private boolean isDownOld = false;
-
-		@Override
-		public void setDown(boolean isDown) {
-			super.setDown(isDown);
-			if (isDownOld != isDown && isDown) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new DuctProneMessage(0, 0));
-				DuctProneMessage.pressAction(Minecraft.getInstance().player, 0, 0);
-				DUCT_PRONE_LASTPRESS = System.currentTimeMillis();
-			} else if (isDownOld != isDown && !isDown) {
-				int dt = (int) (System.currentTimeMillis() - DUCT_PRONE_LASTPRESS);
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new DuctProneMessage(1, dt));
-				DuctProneMessage.pressAction(Minecraft.getInstance().player, 1, dt);
 			}
 			isDownOld = isDown;
 		}
@@ -109,12 +90,10 @@ public class ChangedAddonModKeyMappings {
 			isDownOld = isDown;
 		}
 	};
-	private static long DUCT_PRONE_LASTPRESS = 0;
 
 	@SubscribeEvent
 	public static void registerKeyBindings(FMLClientSetupEvent event) {
 		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
-		ClientRegistry.registerKeyBinding(DUCT_PRONE);
 		ClientRegistry.registerKeyBinding(LEAP_KEY);
 		ClientRegistry.registerKeyBinding(TURN_OFF_TRANSFUR);
 		ClientRegistry.registerKeyBinding(PAT_KEY);
@@ -127,7 +106,6 @@ public class ChangedAddonModKeyMappings {
 		public static void onClientTick(TickEvent.ClientTickEvent event) {
 			if (Minecraft.getInstance().screen == null) {
 				OPEN_EXTRA_DETAILS.consumeClick();
-				DUCT_PRONE.consumeClick();
 				LEAP_KEY.consumeClick();
 				TURN_OFF_TRANSFUR.consumeClick();
 				PAT_KEY.consumeClick();

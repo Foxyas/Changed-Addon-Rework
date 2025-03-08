@@ -2,7 +2,7 @@
   "_fv": 47,
   "_type": "block",
   "definition": {
-    "texture": "generator",
+    "texture": "goocore",
     "textureTop": "",
     "textureLeft": "",
     "textureFront": "",
@@ -79,24 +79,24 @@
     "jumpFactor": 1.0,
     "reactionToPushing": "NORMAL",
     "isNotColidable": false,
-    "isCustomSoundType": false,
+    "isCustomSoundType": true,
     "soundOnStep": {
       "value": "SCULK_SENSOR"
     },
     "breakSound": {
-      "value": ""
+      "value": "block.stone.break"
     },
     "fallSound": {
-      "value": ""
+      "value": "block.stone.fall"
     },
     "hitSound": {
-      "value": ""
+      "value": "block.sculk_sensor.hit"
     },
     "placeSound": {
-      "value": ""
+      "value": "block.sculk_sensor.place"
     },
     "stepSound": {
-      "value": ""
+      "value": "block.sculk_sensor.step"
     },
     "luminance": 0,
     "unbreakable": false,

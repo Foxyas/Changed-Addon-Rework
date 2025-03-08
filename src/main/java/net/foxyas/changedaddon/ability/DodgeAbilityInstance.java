@@ -13,6 +13,11 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity){
         super(ability,entity);
     }
+
+    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity, int Dodges){
+        super(ability,entity);
+        this.MaxDodgeAmount = Dodges;
+    }
     private int DodgeAmount = 4;
     private int MaxDodgeAmount = 4;
     private boolean DodgeActivate = false;
@@ -102,11 +107,14 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         tag.putBoolean("DodgeActivate",DodgeActivate);
     }
 
+    public float getDodgeStaminaRatio(){
+        return (float) DodgeAmount / getMaxDodgeAmount() * 100;
+    };
 
     @Override
     public void startUsing() {
         if(entity.getEntity() instanceof Player player){
-            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
+            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + getDodgeStaminaRatio()),true);
         }
     }
 
@@ -114,7 +122,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     public void tick() {
         SetDodgeActivate(canUse());
         if(entity.getEntity() instanceof Player player){
-            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
+            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + getDodgeStaminaRatio()),true);
         }
     }
 

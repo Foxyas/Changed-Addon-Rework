@@ -11,9 +11,13 @@ import net.minecraft.world.entity.player.Player;
 
 public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
 
-   public DodgeAbility(){
-       super(DodgeAbilityInstance::new);
-   }
+    public DodgeAbility() {
+        super(DodgeAbilityInstance::new);
+    }
+
+    public DodgeAbility(int Dodges) {
+        super((ab, ia) -> new DodgeAbilityInstance(ab, ia, Dodges));
+    }
 
     @Override
     public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {

@@ -52,6 +52,7 @@ import net.foxyas.changedaddon.item.LuminarCrystalShardItem;
 import net.foxyas.changedaddon.item.LitixCamoniaSprayItem;
 import net.foxyas.changedaddon.item.LitixCamoniaItem;
 import net.foxyas.changedaddon.item.LitixCamoniaFluidItem;
+import net.foxyas.changedaddon.item.LaethinminatorItem;
 import net.foxyas.changedaddon.item.LaethinSyringeItem;
 import net.foxyas.changedaddon.item.LaethinItem;
 import net.foxyas.changedaddon.item.IridiumItem;
@@ -205,6 +206,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
 	public static final RegistryObject<Item> GOO_CORE = block(ChangedAddonModBlocks.GOO_CORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> THE_DECIMATOR = REGISTRY.register("the_decimator", () -> new TheDecimatorItem());
+	public static final RegistryObject<Item> LAETHINMINATOR = REGISTRY.register("laethinminator", () -> new LaethinminatorItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

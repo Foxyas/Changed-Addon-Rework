@@ -36,6 +36,7 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
 	public static final RegistryObject<CustomInteraction> CUSTOM_INTERACTION = REGISTRY.register("custom_interaction",CustomInteraction::new);
 	public static final RegistryObject<TurnFeralSnepAbility> TURN_FERAL_SNEP = REGISTRY.register("turn_feral", TurnFeralSnepAbility::new);
 	public static final RegistryObject<WingFlapAbility> WING_FLAP_ABILITY = REGISTRY.register("wing_flap", WingFlapAbility::new);
+	public static final RegistryObject<ClawsAbility> CLAWS_ABILITY = REGISTRY.register("claws", ClawsAbility::new);
 
 	//TODO:Create Abilities For The New Form/Boss
 

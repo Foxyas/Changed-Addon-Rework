@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Leaper",
-    "achievementDescription": "Do A Hight Jump Leap",
+    "achievementDescription": "Do a high leap as a feline latex.",
     "achievementIcon": {
       "value": "CUSTOM:SnepIcon"
     },
