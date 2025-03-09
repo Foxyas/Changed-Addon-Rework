@@ -12604,6 +12604,46 @@
           "src/main/resources/data/changed_addon/loot_tables/chests/experiment_10_loot_op.json"
         ]
       }
+    },
+    {
+      "name": "GooCoreFragment",
+      "type": "item",
+      "sortid": 656,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "goo_core_fragment",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/item/GooCoreFragmentItem.java",
+          "src/main/resources/assets/changed_addon/models/item/goo_core_fragment.json"
+        ]
+      }
+    },
+    {
+      "name": "GooCorerecipe",
+      "type": "recipe",
+      "sortid": 657,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "goo_corerecipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/goo_core_recipe.json"
+        ]
+      }
+    },
+    {
+      "name": "GooCoreLootTable",
+      "type": "loottable",
+      "sortid": 658,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "goo_core_loot_table",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/loot_tables/blocks/goo_core.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -13331,6 +13371,7 @@
       "gui.changed_addon.bookrecipepage_9.label_unifuser": "Unifuser",
       "changed_addon.form_dialogues.exp10.death.text1": "§4§l§oSo much potential, wasted in a single breath... pathetic.§r",
       "advancements.foxta_addictive.title": "Foxta Addctive!",
+      "item.changed_addon.goo_core_fragment": "Goo Core Fragment",
       "changed_addon.form_dialogues.exp10.death.text2": "§4§l§oAnd even with all this power, you found a way to die...§r",
       "advancements.stealthpats.title": "Hidden §cAffection§r",
       "advancements.drink_foxta.descr": "Drink foxta for the first time  ",

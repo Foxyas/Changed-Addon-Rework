@@ -59,6 +59,7 @@ import net.foxyas.changedaddon.item.IridiumItem;
 import net.foxyas.changedaddon.item.InpureammoniaItem;
 import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.foxyas.changedaddon.item.HazardSuitItem;
+import net.foxyas.changedaddon.item.GooCoreFragmentItem;
 import net.foxyas.changedaddon.item.FriendlyGoeyIconItem;
 import net.foxyas.changedaddon.item.FoxtaItem;
 import net.foxyas.changedaddon.item.Experiment10DnaItem;
@@ -207,6 +208,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> GOO_CORE = block(ChangedAddonModBlocks.GOO_CORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> THE_DECIMATOR = REGISTRY.register("the_decimator", () -> new TheDecimatorItem());
 	public static final RegistryObject<Item> LAETHINMINATOR = REGISTRY.register("laethinminator", () -> new LaethinminatorItem());
+	public static final RegistryObject<Item> GOO_CORE_FRAGMENT = REGISTRY.register("goo_core_fragment", () -> new GooCoreFragmentItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
