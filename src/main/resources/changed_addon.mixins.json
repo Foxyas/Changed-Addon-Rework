@@ -12,6 +12,7 @@
     "ChangedMixin",
     "CrossCollisionBlockMixin",
     "InfinityEnchantmentMixin",
+    "PlayerMixin",
     "RandomVariantFunctionMixin",
     "TransfurVariantInstanceMixin",
     "WingFallFlyAnimationMixin",
