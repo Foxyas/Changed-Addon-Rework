@@ -144,6 +144,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> CRYSTAL_DAGGER_RED = REGISTRY.register("crystal_dagger_red", () -> new CrystalAddagerRedItem());
 	public static final RegistryObject<Item> CRYSTAL_DAGGER_GREEN = REGISTRY.register("crystal_dagger_green", () -> new CrystalAddagerGreenItem());
 	public static final RegistryObject<Item> CRYSTAL_DAGGER_BLACK = REGISTRY.register("crystal_dagger_black", () -> new CrystalAddagerBlackItem());
+	public static final RegistryObject<Item> LAETHINMINATOR = REGISTRY.register("laethinminator", () -> new LaethinminatorItem());
 	public static final RegistryObject<Item> CROW_BAR = REGISTRY.register("crow_bar", () -> new CrowBarItem());
 	public static final RegistryObject<Item> SNEPSI = REGISTRY.register("snepsi", () -> new SnepsiItem());
 	public static final RegistryObject<Item> FOXTA = REGISTRY.register("foxta", () -> new FoxtaItem());
@@ -181,6 +182,8 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> YELLOW_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("yellow_wolf_crystal_fragment", () -> new YellowWolfCrystalFragmentItem());
 	public static final RegistryObject<Item> WHITE_WOLF_CRYSTAL_FRAGMENT = REGISTRY.register("white_wolf_crystal_fragment", () -> new WhiteWolfCrystalFragmentItem());
 	public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD = REGISTRY.register("luminar_crystal_shard", () -> new LuminarCrystalShardItem());
+	public static final RegistryObject<Item> GOO_CORE = block(ChangedAddonModBlocks.GOO_CORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> GOO_CORE_FRAGMENT = REGISTRY.register("goo_core_fragment", () -> new GooCoreFragmentItem());
 	public static final RegistryObject<Item> ELECTRIC_KATANA = REGISTRY.register("electric_katana", () -> new ElectricKatanaItem());
 	public static final RegistryObject<Item> ELECTRIC_KATANA_RED = REGISTRY.register("electric_katana_red", () -> new ElectricKatanaRedItem());
 	public static final RegistryObject<Item> PAINITE_SWORD = REGISTRY.register("painite_sword", () -> new PainiteSwordItem());
@@ -192,6 +195,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> PAINITE_ARMOR_CHESTPLATE = REGISTRY.register("painite_armor_chestplate", () -> new PainiteArmorItem.Chestplate());
 	public static final RegistryObject<Item> PAINITE_ARMOR_LEGGINGS = REGISTRY.register("painite_armor_leggings", () -> new PainiteArmorItem.Leggings());
 	public static final RegistryObject<Item> PAINITE_ARMOR_BOOTS = REGISTRY.register("painite_armor_boots", () -> new PainiteArmorItem.Boots());
+	public static final RegistryObject<Item> THE_DECIMATOR = REGISTRY.register("the_decimator", () -> new TheDecimatorItem());
 	public static final RegistryObject<Item> GENERATOR = block(ChangedAddonModBlocks.GENERATOR, null);
 	public static final RegistryObject<Item> EXPERIMENT_009_SPAWN_EGG = REGISTRY.register("experiment_009_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.EXPERIMENT_009, -1, -2697514, new Item.Properties().tab(null)));
 	public static final RegistryObject<Item> EXPERIMENT_009_PHASE_2_SPAWN_EGG = REGISTRY.register("experiment_009_phase_2_spawn_egg",
@@ -205,10 +209,6 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
-	public static final RegistryObject<Item> GOO_CORE = block(ChangedAddonModBlocks.GOO_CORE, ChangedAddonModTabs.TAB_CHANGED_ADDON);
-	public static final RegistryObject<Item> THE_DECIMATOR = REGISTRY.register("the_decimator", () -> new TheDecimatorItem());
-	public static final RegistryObject<Item> LAETHINMINATOR = REGISTRY.register("laethinminator", () -> new LaethinminatorItem());
-	public static final RegistryObject<Item> GOO_CORE_FRAGMENT = REGISTRY.register("goo_core_fragment", () -> new GooCoreFragmentItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
