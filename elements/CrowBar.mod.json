@@ -6,7 +6,7 @@
     "renderType": 0,
     "texture": "crowbar_texture",
     "customModelName": "Normal",
-    "name": "Crow Bar",
+    "name": "Crowbar",
     "specialInfo": [],
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"

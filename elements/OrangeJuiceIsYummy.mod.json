@@ -3,7 +3,7 @@
   "_type": "achievement",
   "definition": {
     "achievementName": "Orange Juice Is Yummy",
-    "achievementDescription": "You Drink One Orange Juice yummy",
+    "achievementDescription": "You drank §lOrange juice§r, yummy",
     "achievementIcon": {
       "value": "CUSTOM:Orangejuice"
     },

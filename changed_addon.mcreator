@@ -7119,7 +7119,7 @@
       "name": "LatexSnowFox",
       "type": "livingentity",
       "sortid": 35,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_snow_fox",
       "metadata": {
@@ -7574,7 +7574,7 @@
       "name": "PuroKindFemale",
       "type": "livingentity",
       "sortid": 419,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "puro_kind_female",
       "metadata": {
@@ -8410,7 +8410,7 @@
       "name": "Experiment10",
       "type": "livingentity",
       "sortid": 463,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10",
       "metadata": {
@@ -11033,7 +11033,7 @@
       "name": "Experiment10Boss",
       "type": "livingentity",
       "sortid": 587,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10_boss",
       "metadata": {
@@ -11186,7 +11186,7 @@
       "name": "SnepPlush",
       "type": "block",
       "sortid": 60,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "snep_plush",
       "metadata": {
@@ -11299,7 +11299,7 @@
       "name": "ContainmentContainer",
       "type": "block",
       "sortid": 63,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "containment_container",
       "metadata": {
@@ -11821,7 +11821,7 @@
       "name": "LatexSnep",
       "type": "livingentity",
       "sortid": 619,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_snep",
       "metadata": {
@@ -11937,7 +11937,7 @@
       "name": "WhiteWolfCrystalBlock",
       "type": "block",
       "sortid": 74,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "white_wolf_crystal_block",
       "metadata": {
@@ -11954,7 +11954,7 @@
       "name": "BlueWolfCrystalBlock",
       "type": "block",
       "sortid": 71,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "blue_wolf_crystal_block",
       "metadata": {
@@ -12056,7 +12056,7 @@
       "name": "WhiteWolfCrystalSmall",
       "type": "block",
       "sortid": 80,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "white_wolf_crystal_small",
       "metadata": {
@@ -12466,7 +12466,7 @@
       "name": "LatexSquidTigerShark",
       "type": "livingentity",
       "sortid": 647,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_squid_tiger_shark",
       "metadata": {
@@ -12871,7 +12871,7 @@
       "item.changed_addon.female_luminarctic_leopard_spawn_egg": "Luminarctic Female Leopard Spawn Egg",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
-      "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want link your form?",
+      "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want to link your form?",
       "advancements.crystal_adventurer.title": "Gooey Crystal Adventurer",
       "entity.minecraft.villager.changed_addon.scientist": "Scientist",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
@@ -13040,7 +13040,7 @@
       "enchantment.changed_addon.changed_lure": "Changed Lure",
       "item.changed_addon.ammonia_compressed": "Ammonia Compressed",
       "item.changed_addon.accessories_chestplate": "Chest Accessories ",
-      "advancements.orange_juice_is_yummy.descr": "You Drink One Orange Juice yummy",
+      "advancements.orange_juice_is_yummy.descr": "You drank §lOrange juice§r, yummy",
       "item.changed_addon.catlyzerblock_illustrative_item": "Catalyzer Recipes Informations",
       "entity.changed_addon.latex_snep": "Latex Snep",
       "item.changed_addon.litix_camonia_spray": "LitixCamonia Spray",
@@ -13313,7 +13313,7 @@
       "entity.changed_addon.female_luminarctic_leopard": "Female Luminarctic Leopard",
       "changed_addon.form_dialogues.exp9.death.text2": "§b§l§oYou Fall Because Of This? How Pathetic...§r",
       "item.changed_addon.hazard_suit_leggings": "Hazard Leggings",
-      "item.changed_addon.crow_bar": "Crow Bar",
+      "item.changed_addon.crow_bar": "Crowbar",
       "changed_addon.ability.custom_interaction.have_interaction": "This Variant §aHave§r Custom Interactions",
       "item.changed_addon.the_decimator": "The Decimator",
       "changed_addon.form_dialogues.exp9.death.text1": "§b§l§oPathetic!,How dare you show weakness like this! you really are just a useless peace of scrap!!§r",
