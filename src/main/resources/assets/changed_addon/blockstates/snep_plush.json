@@ -30,21 +30,6 @@
       "model": "changed_addon:block/snep_plush_with_right_can",
       "y": 270
     },
-    "facing=north,cans=left": {
-      "model": "changed_addon:block/snep_plush_with_left_can"
-    },
-    "facing=east,cans=left": {
-      "model": "changed_addon:block/snep_plush_with_left_can",
-      "y": 90
-    },
-    "facing=south,cans=left": {
-      "model": "changed_addon:block/snep_plush_with_left_can",
-      "y": 180
-    },
-    "facing=west,cans=left": {
-      "model": "changed_addon:block/snep_plush_with_left_can",
-      "y": 270
-    },
     "facing=north,cans=both": {
       "model": "changed_addon:block/snep_plush_with_both_cans"
     },

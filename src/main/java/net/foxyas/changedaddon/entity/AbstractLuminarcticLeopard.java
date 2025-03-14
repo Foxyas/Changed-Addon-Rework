@@ -1,10 +1,15 @@
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -12,20 +17,46 @@ import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import net.minecraft.sounds.SoundEvents;
 
 public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
+
+    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
+    public static class WhenAttackAEntity {
+        @SubscribeEvent
+        public static void WhenAttack(LivingAttackEvent event) {
+            LivingEntity target = event.getEntityLiving();
+            Entity source = event.getSource().getEntity();
+            if (source instanceof AbstractLuminarcticLeopard lumi && lumi.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
+            } else if (source instanceof Player player) {
+                TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+                if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
+                        && instance != null
+                        && instance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAUSE_FREEZE_DMG)) {
+                    target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
+                    target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
+                }
+            }
+        }
+    }
 
     public final ServerBossEvent bossBar = new ServerBossEvent(
             this.getDisplayName(), // Nome exibido na boss bar
@@ -53,7 +84,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         return ActivatedAbility;
     }
 
-    public void SetActivatedAbility(boolean value){
+    public void SetActivatedAbility(boolean value) {
         this.ActivatedAbility = value;
     }
 
@@ -149,7 +180,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("ActivatedAbility")){
+        if (tag.contains("ActivatedAbility")) {
             this.ActivatedAbility = tag.getBoolean("ActivatedAbility");
         }
         if (tag.contains("AbilitiesTicksCooldown")) {
@@ -167,7 +198,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         if (tag.contains("DashingTicks")) {
             this.DashingTicks = tag.getInt("DashingTicks");
         }
-        if (tag.contains("GlowStage")){
+        if (tag.contains("GlowStage")) {
             this.GlowStage = tag.getInt("GlowStage");
         }
         //if (tag.contains("DEVATTACKTESTTICK")) {
@@ -184,7 +215,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         tag.putInt("PassivesTicksCooldown", PassivesTicksCooldown);
         tag.putInt("DodgeAnimTicks", DodgeAnimTicks);
         tag.putInt("DashingTicks", DodgeAnimTicks);
-        tag.putInt("GlowStage",GlowStage);
+        tag.putInt("GlowStage", GlowStage);
         //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
 
@@ -201,58 +232,66 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
     }
 
-    public boolean isDashing(){return this.DashingTicks > 0;}
+    public boolean isDashing() {
+        return this.DashingTicks > 0;
+    }
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
         this.AbilitiesTicksCooldown -= 5 + (0.05f * amount);
 
-        if (source instanceof EntityDamageSource entityDamageSource && entityDamageSource.isThorns()){
+        if (source instanceof EntityDamageSource entityDamageSource && entityDamageSource.isThorns()) {
             return false;
         }
 
-        if (source.isProjectile()){
+        if (source.isProjectile()) {
             return false;
         }
 
-        if (source.isFire() || source.isExplosion()){
+        if (source.isFire() || source.isExplosion()) {
             return super.hurt(source, amount * 0.01f);
         }
 
         Entity attacker = source.getDirectEntity();
-        if (attacker == null){ attacker = source.getEntity(); }
-
-        if (attacker == null){
-            return super.hurt(source, amount);
+        if (attacker == null) {
+            attacker = source.getEntity();
         }
 
-        if (source.getDirectEntity() == null){
+        if (attacker == null) {
+            if (source == ChangedAddonDamageSources.SOLVENT) {
+                return super.hurt(source, amount * 0.5f);
+            }
+            return super.hurt(source, amount * 0.25f);
+        }
+
+        if (source.getDirectEntity() == null) {
             super.hurt(source, amount);
         }
 
-        if (attacker instanceof LivingEntity livingEntity && EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 5) {
+        if (attacker instanceof LivingEntity livingEntity
+                && (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 1)) {
             return super.hurt(source, amount * 0.5f);
         } else {
             amount = amount / 6;
-            if (amount > 2){
-		if (amount < 4){
-		this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2;
-		}
+            if (amount > 2) {
+                if (amount < 4) {
+                    this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2;
+                }
                 return super.hurt(source, amount);
             } else {
-				if (attacker == this) {
-                this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
-                Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
-                this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
-                return false;
-            } else {
-                this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
-                Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
-                this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
-                return false;
-            	}	
-            } 
+                if (attacker == this) {
+                    this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
+                    Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
+                    this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
+                    return false;
+                } else {
+                    this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
+                    Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
+                    this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
+                    return false;
+                }
+            }
         }
     }
-    
+
 }

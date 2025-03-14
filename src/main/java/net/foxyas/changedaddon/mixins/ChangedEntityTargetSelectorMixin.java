@@ -50,17 +50,6 @@ public class ChangedEntityTargetSelectorMixin {
             }
         }
     }
-
-    @Inject(method = "registerGoals", at = @At("HEAD"), cancellable = true)
-    private void addExtraGoal(CallbackInfo ci){
-        var thisFixed = ((ChangedEntity) (Object) this);
-        if (thisFixed instanceof AbstractDarkLatexWolf){
-            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed, true, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
-        } else if (thisFixed instanceof DarkLatexWolfPup){
-            thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal(thisFixed, true));
-        }
-    }
-
     @Unique
     private static boolean isDarkLatexCoat(ItemStack itemStack) {
         return itemStack != null 

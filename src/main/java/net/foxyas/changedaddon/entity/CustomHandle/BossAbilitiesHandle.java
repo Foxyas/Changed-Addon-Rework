@@ -52,7 +52,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         BlockPos center = boss.blockPosition();
         Level world = boss.getLevel();
 
-        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 6.0f, Explosion.BlockInteraction.DESTROY);
+        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 2.5f, Explosion.BlockInteraction.DESTROY);
         for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(1.5))) {
             if (entity == boss){continue;}
             entity.knockback(1.5, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());

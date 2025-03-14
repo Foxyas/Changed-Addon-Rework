@@ -1,5 +1,10 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.init.ChangedTags;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -16,32 +21,14 @@ import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber
 public class LatexSolventOnEffectActiveTickProcedure {
+
 	@SubscribeEvent
-	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			execute(event, event.player);
-		}
-	}
-
-	public static void execute(Entity entity) {
-		execute(null, entity);
-	}
-
-	private static void execute(@Nullable Event event, Entity entity) {
-		if (entity == null)
-			return;
-		DamageSource Solvent = null;
-		if ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()).getDuration() : 0) > 0) {
-			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
-				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
-					if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
-						Solvent = new DamageSource("latex_solvent");
-						entity.hurt(Solvent,
-								(float) ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()).getAmplifier() : 0) == 0
-										? 0.25
-										: ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get()).getAmplifier() : 0) + 1) / 4));
-					}
-				}
+	public static void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
+		Entity entity = event.getEntity();
+		if (entity instanceof ChangedEntity changedEntity && changedEntity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+			MobEffectInstance SolventEffectInstace = changedEntity.getEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get());
+			if (SolventEffectInstace != null){
+				changedEntity.hurt(ChangedAddonDamageSources.SOLVENT, SolventEffectInstace.getAmplifier() * 2);
 			}
 		}
 	}

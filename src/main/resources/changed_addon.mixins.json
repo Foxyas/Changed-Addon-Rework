@@ -8,6 +8,7 @@
     "AnimationsMixin",
     "AvoidEntityGoalMixin",
     "BlockMixin",
+    "ChangedEntityGoalsMixin",
     "ChangedEntityTargetSelectorMixin",
     "ChangedMixin",
     "CrossCollisionBlockMixin",

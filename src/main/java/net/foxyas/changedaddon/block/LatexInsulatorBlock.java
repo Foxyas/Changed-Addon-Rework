@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Collections;
 
 public class LatexInsulatorBlock extends Block {
+
+	public static final VoxelShape SHAPE_WHOLE = Block.box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0);
 	public LatexInsulatorBlock() {
 		super(BlockBehaviour.Properties.of(Material.CLAY).sound(SoundType.SLIME_BLOCK).strength(0.05f, 10f).speedFactor(0.5f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
 	}
@@ -61,6 +63,10 @@ public class LatexInsulatorBlock extends Block {
 	@Override
 	public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return Shapes.block();
+	}
+
+	public VoxelShape getInteractionShape(BlockState p_60547_, BlockGetter p_60548_, BlockPos p_60549_) {
+		return SHAPE_WHOLE;
 	}
 
 	@Override

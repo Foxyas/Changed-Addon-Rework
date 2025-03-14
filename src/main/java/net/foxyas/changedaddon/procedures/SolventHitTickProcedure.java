@@ -1,11 +1,13 @@
-/*package net.foxyas.changedaddon.procedures;
+package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
+import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -21,16 +23,11 @@ public class SolventHitTickProcedure {
 	@SubscribeEvent
 	public static void onEntityAttacked(LivingHurtEvent event) {
 		Entity target = event.getEntity();
-		Entity source = event.getSource().getEntity();
+		DamageSource source = event.getSource();
 
 		// Verifica se o atacante possui o encantamento Solvent
-		if (source instanceof LivingEntity attacker) {
-			ItemStack mainHandItem = attacker.getMainHandItem();
-			int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), mainHandItem);
-
-			if (enchantLevel > 0) {
-				playSoundAndParticles(target);
-			}
+		if (source == ChangedAddonDamageSources.SOLVENT) {
+			playSoundAndParticles(target);
 		}
 	}
 
@@ -61,4 +58,3 @@ public class SolventHitTickProcedure {
 		}
 	}
 }
-*/

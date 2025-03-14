@@ -1,10 +1,56 @@
 {
   "variants": {
-    "hearted=false": {
+    "hearted=false,facing=down": {
+      "model": "changed_addon:block/luminar_crystal_small_2",
+      "x": 180
+    },
+    "hearted=false,facing=east": {
+      "model": "changed_addon:block/luminar_crystal_small_2",
+      "x": 90,
+      "y": 90
+    },
+    "hearted=false,facing=north": {
+      "model": "changed_addon:block/luminar_crystal_small_2",
+      "x": 90
+    },
+    "hearted=false,facing=south": {
+      "model": "changed_addon:block/luminar_crystal_small_2",
+      "x": 90,
+      "y": 180
+    },
+    "hearted=false,facing=up": {
       "model": "changed_addon:block/luminar_crystal_small_2"
     },
-    "hearted=true": {
+    "hearted=false,facing=west": {
+      "model": "changed_addon:block/luminar_crystal_small_2",
+      "x": 90,
+      "y": 270
+    },
+    "hearted=true,facing=down": {
+      "model": "changed_addon:block/luminar_crystal_small",
+      "x": 180
+    },
+    "hearted=true,facing=east": {
+      "model": "changed_addon:block/luminar_crystal_small",
+      "x": 90,
+      "y": 90
+    },
+    "hearted=true,facing=north": {
+      "model": "changed_addon:block/luminar_crystal_small",
+      "x": 90
+    },
+    "hearted=true,facing=south": {
+      "model": "changed_addon:block/luminar_crystal_small",
+      "x": 90,
+      "y": 180
+    },
+    "hearted=true,facing=up": {
       "model": "changed_addon:block/luminar_crystal_small"
+    },
+    "hearted=true,facing=west": {
+      "model": "changed_addon:block/luminar_crystal_small",
+      "x": 90,
+      "y": 270
     }
   }
 }

@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.process.util;
 
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
@@ -61,13 +62,13 @@ public class ChangedAddonLaethinminatorUtil {
     }
 
     public static void affectSurroundingEntities(ServerLevel world, Player player, BlockPos targetPos, double area) {
-        List<ChangedEntity> entityList = world.getEntitiesOfClass(ChangedEntity.class, new AABB(targetPos), (changedEntity) -> changedEntity.getType().is(ChangedTags.EntityTypes.LATEX));
+        List<ChangedEntity> entityList = world.getEntitiesOfClass(ChangedEntity.class, new AABB(targetPos).inflate(area), (changedEntity) -> changedEntity.getType().is(ChangedTags.EntityTypes.LATEX));
         for (ChangedEntity en: entityList) {
             boolean isAllied = player.isAlliedTo(en);
             if (player.canAttack(en)
                     && player.canHit(en,0)
                     && !isAllied){
-                en.hurt(DamageSource.mobAttack(player),6f);
+                en.hurt(ChangedAddonDamageSources.mobAttack(player).setProjectile(),6f);
             }
         }
     }

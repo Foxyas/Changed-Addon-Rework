@@ -170,8 +170,11 @@ public class PlayerUtilProcedure {
         return null;
     }
 
-    @Nullable
+    public static HitResult getEntityBlockHitLookingAt(Entity entity, double reach, float deltaTicks, boolean affectByFluids){
+        return entity.pick(reach, deltaTicks, affectByFluids);
+    }
 
+    @Nullable
     public static Vec3 getRelativeHitPosition(LivingEntity entity, double distance) {
         EntityHitResult hitResult = PlayerUtilProcedure.getEntityHitLookingAt(entity, distance);
         if (hitResult != null) {

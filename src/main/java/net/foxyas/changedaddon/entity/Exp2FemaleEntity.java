@@ -217,6 +217,6 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
         soundEvents.add(SoundEvents.CAT_AMBIENT);
         soundEvents.add(SoundEvents.CAT_PURR);
         soundEvents.add(SoundEvents.CAT_PURREOW);
-        this.playSound(soundEvents.get(this.random.nextInt(soundEvents.size())),1,1);
+        this.playSound(soundEvents.get(this.random.nextInt(soundEvents.size())),2.5f,1);
     }
 }

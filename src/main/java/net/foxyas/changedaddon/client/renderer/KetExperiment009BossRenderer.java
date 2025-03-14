@@ -28,7 +28,7 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 	public KetExperiment009BossRenderer(EntityRendererProvider.Context context) {
 	super(context, new KetBossModel(context.bakeLayer(KetBossModel.LAYER_LOCATION)),
 				ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.7f));
+		this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.749f));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	//  this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#66FFFF"))));
