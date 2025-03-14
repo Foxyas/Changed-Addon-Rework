@@ -185,10 +185,10 @@ public class AbstractLuminarCrystal {
                         BlockPos relative = pos.relative(direction);
                         if (level.getBlockState(relative).is(Blocks.AIR)) {
                         	BlockState smallCrystalStage = ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
-                            smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.FACING, direction);
-                            smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.WATERLOGGED , level.getBlockState(relative).getFluidState().isSourceOfType(Fluids.WATER));
+                            smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.FACING, direction);
+                            smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.WATERLOGGED , level.getBlockState(relative).getFluidState().isSourceOfType(Fluids.WATER));
                             
-                            level.setBlock(relative, stage, 3);
+                            level.setBlock(relative, smallCrystalStage, 3);
                             level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 0.8f);
                         }
                     }
