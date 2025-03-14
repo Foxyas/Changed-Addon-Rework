@@ -45,12 +45,15 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
             LivingEntity target = event.getEntityLiving();
             Entity source = event.getSource().getEntity();
             if (source instanceof AbstractLuminarcticLeopard lumi && lumi.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level,ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                 target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
+                target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
             } else if (source instanceof Player player) {
                 TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
                 if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
                         && instance != null
                         && instance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAUSE_FREEZE_DMG)) {
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level,ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                     target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
                     target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
                 }

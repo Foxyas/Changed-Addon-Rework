@@ -33,6 +33,7 @@ import net.minecraft.world.phys.*;
 
 import java.util.List;
 import java.util.Random;
+
 import net.minecraft.sounds.SoundSource;
 
 // Class for handling boss abilities
@@ -54,13 +55,15 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
 
         world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 2.5f, Explosion.BlockInteraction.DESTROY);
         for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(1.5))) {
-            if (entity == boss){continue;}
+            if (entity == boss) {
+                continue;
+            }
             entity.knockback(1.5, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
         }
 
     }
 
-    private static List<EntityType<?>> ImmuneEntities(){
+    private static List<EntityType<?>> ImmuneEntities() {
         return List.of(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get());
     }
 
@@ -159,8 +162,8 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     }
 
     // Radio Ice Explosion
-    public void RadioActiveIceExplosion(){
-        if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0){
+    public void RadioActiveIceExplosion() {
+        if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
             for (int theta = 0; theta < 360; theta += 15) { // Ângulo horizontal
                 double angleTheta = Math.toRadians(theta);
                 for (int phi = 0; phi <= 180; phi += 15) { // Ângulo vertical
@@ -183,48 +186,48 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     }
 
     public void createIceExplosion() {
-    if (boss.getLevel().isClientSide) {
-        return; // Garante que o código só execute no servidor
+        if (boss.getLevel().isClientSide) {
+            return; // Garante que o código só execute no servidor
+        }
+
+        int radius = 6; // Raio da explosão
+        int radiusY = 6;
+        BlockPos center = boss.blockPosition();
+        Level world = boss.getLevel();
+
+        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 3.0f, Explosion.BlockInteraction.BREAK);
+
+        Explosion explosionReference = new Explosion(world, boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, false, Explosion.BlockInteraction.NONE);
+
+        for (BlockPos pos : BlockPos.betweenClosed(
+                center.offset(-radius, -radiusY, -radius),
+                center.offset(radius, radiusY, radius))) {
+
+            // Cálculo da distância esférica
+            double dx = (pos.getX() - center.getX()) / (double) radius;
+            double dy = (pos.getY() - center.getY()) / (double) radiusY;
+            double dz = (pos.getZ() - center.getZ()) / (double) radius;
+            double distanceSq = dx * dx + dy * dy + dz * dz;
+
+            if (distanceSq <= 1.0) { // Somente dentro da esfera
+                BlockState state = world.getBlockState(pos);
+
+                // Verifica a resistência à explosão
+                float blastResistance = state.getBlock().getExplosionResistance();
+
+                if (!state.isAir() && blastResistance <= 2.0f) {
+                    BlockState newState = ChangedAddonModBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState()
+                            .setValue(LuminarCrystalBlockBlock.AGE, 0).setValue(LuminarCrystalBlockBlock.DEFROST, true);
+                    world.setBlockAndUpdate(pos, newState);
+                    // Toca o som de gelo sendo colocado
+                    world.playSound(null, pos, SoundEvents.GLASS_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+            }
+        }
+
+        boss.playSound(SoundEvents.GENERIC_EXPLODE, 4.5f, 1);
+        boss.AbilitiesTicksCooldown = 125;
     }
-
-    int radius = 6; // Raio da explosão
-    int radiusY = 6;
-    BlockPos center = boss.blockPosition();
-    Level world = boss.getLevel();
-
-    world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 3.0f, Explosion.BlockInteraction.BREAK);
-
-    Explosion explosionReference = new Explosion(world, boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, false, Explosion.BlockInteraction.NONE);
-
-    for (BlockPos pos : BlockPos.betweenClosed(
-            center.offset(-radius, -radiusY, -radius),
-            center.offset(radius, radiusY, radius))) {
-
-        // Cálculo da distância esférica
-        double dx = (pos.getX() - center.getX()) / (double) radius;
-        double dy = (pos.getY() - center.getY()) / (double) radiusY;
-        double dz = (pos.getZ() - center.getZ()) / (double) radius;
-        double distanceSq = dx * dx + dy * dy + dz * dz;
-
-        if (distanceSq <= 1.0) { // Somente dentro da esfera
-            BlockState state = world.getBlockState(pos);
-
-            // Verifica a resistência à explosão
-            float blastResistance = state.getBlock().getExplosionResistance();
-
-            if (!state.isAir() && blastResistance <= 2.0f) {
-                BlockState newState = ChangedAddonModBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState()
-                        .setValue(LuminarCrystalBlockBlock.AGE, 0).setValue(LuminarCrystalBlockBlock.DEFROST, true);
-                	world.setBlockAndUpdate(pos, newState);
-                	// Toca o som de gelo sendo colocado
-                	world.playSound(null, pos, SoundEvents.GLASS_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
-            	}
-        	}
-    	}
-    
-    	boss.playSound(SoundEvents.GENERIC_EXPLODE, 4.5f, 1);
-    	boss.AbilitiesTicksCooldown = 125;
-	}
 
 
     // Arctic Dash Ability

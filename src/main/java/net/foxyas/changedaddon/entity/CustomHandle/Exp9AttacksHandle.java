@@ -22,6 +22,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.Random;
+
 import net.minecraft.world.entity.player.Player;
 
 public class Exp9AttacksHandle {
@@ -37,21 +38,28 @@ public class Exp9AttacksHandle {
             this.boss = boss;
         }
 
-       @Override
-		public boolean canUse() {
-    	this.target = boss.getTarget();
-    
-    	if (target instanceof Player player && player.isCreative()) {
-        	return false; // Evita atacar jogadores no modo criativo
-    	}
-    	
-	    	return target != null && (boss.distanceTo(target) >= 5 && boss.distanceTo(target) <= 16) && (boss.isPhase2() ? true : random.nextFloat() >= 0.25f);
-		}
+        @Override
+        public boolean canUse() {
+            this.target = boss.getTarget();
 
-		@Override
-		public boolean canContinueToUse() {
-    		return phase < 5 && target != null && target.isAlive();
-		}
+            if (target instanceof Player player && (player.isCreative() || player.isSpectator())) {
+                return false; // Evita atacar jogadores no modo criativo ou spectator
+            }
+
+            return target != null && (boss.distanceTo(target) >= 4 && boss.distanceTo(target) <= 16) && (boss.isPhase2() ? true : random.nextFloat() >= 0.25f);
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            if (target instanceof Player player) {
+                if (player.isCreative() || player.isSpectator()) {
+                    return false;
+                }
+            }
+
+
+            return phase < 5 && target != null && target.isAlive();
+        }
 
 
         @Override
@@ -75,41 +83,41 @@ public class Exp9AttacksHandle {
         }
 
         @Override
-    	public void stop() {
-        	whenStopUsing();
-    	}
+        public void stop() {
+            whenStopUsing();
+        }
 
-    	private void whenStopUsing() {
-        	if (!boss.isOnGround()) { // Se o boss estiver no ar
-            	double x = boss.getX();
-            	double z = boss.getZ();
+        private void whenStopUsing() {
+            if (!boss.isOnGround()) { // Se o boss estiver no ar
+                double x = boss.getX();
+                double z = boss.getZ();
 
-            	// Obtém a altura do primeiro bloco sólido abaixo
-            	int groundY = boss.level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) x, (int) z);
+                // Obtém a altura do primeiro bloco sólido abaixo
+                int groundY = boss.level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) x, (int) z);
 
-            	// Define a nova posição para o teleporte (levemente acima do chão para evitar clipagem)
-            	Vec3 smashPos = new Vec3(x, groundY + 0.5, z);
+                // Define a nova posição para o teleporte (levemente acima do chão para evitar clipagem)
+                Vec3 smashPos = new Vec3(x, groundY + 0.5, z);
 
-            	// Teleporta o boss para o chão dinamicamente
-            	boss.teleportTo(smashPos.x, smashPos.y, smashPos.z);
-            	boss.SpawnThunderBolt(smashPos);
-        	}
-    	}
+                // Teleporta o boss para o chão dinamicamente
+                boss.teleportTo(smashPos.x, smashPos.y, smashPos.z);
+                boss.SpawnThunderBolt(smashPos);
+            }
+        }
 
         private void teleportTargetUp() {
-    		Vec3 newPos = target.position().add(0, 10, 0);
-    		target.teleportTo(newPos.x, newPos.y, newPos.z);
-	    	this.boss.swing(InteractionHand.MAIN_HAND);
-    		target.hurt(boss.ThunderDmg, 4);
-    		boss.setAttackCoolDown(0);
+            Vec3 newPos = target.position().add(0, 10, 0);
+            target.teleportTo(newPos.x, newPos.y, newPos.z);
+            this.boss.swing(InteractionHand.MAIN_HAND);
+            target.hurt(boss.ThunderDmg, 4);
+            boss.setAttackCoolDown(0);
 
-    		// Aplica Slow Falling no boss e no target por 4 segundos (80 ticks)
-    		MobEffectInstance slowFallingEffect = new MobEffectInstance(MobEffects.SLOW_FALLING, 40, 0, false, false);
-    		target.addEffect(slowFallingEffect);
-    		boss.addEffect(slowFallingEffect);
+            // Aplica Slow Falling no boss e no target por 4 segundos (80 ticks)
+            MobEffectInstance slowFallingEffect = new MobEffectInstance(MobEffects.SLOW_FALLING, 40, 0, false, false);
+            target.addEffect(slowFallingEffect);
+            boss.addEffect(slowFallingEffect);
 
-    		spawnThunder(newPos);
-    	}
+            spawnThunder(newPos);
+        }
 
 
         private void followAndKnockback() {
@@ -354,7 +362,7 @@ public class Exp9AttacksHandle {
             if (target == null) return false;
 
             double distance = this.boss.distanceTo(target);
-            return boss.getAttackCoolDown() >= 100 && distance > 5;
+            return boss.getAttackCoolDown() >= 100 && distance >= 5;
         }
 
 
@@ -402,8 +410,8 @@ public class Exp9AttacksHandle {
         public boolean canUse() {
             LivingEntity target = this.getTarget();
             if (target != null) {
-            	double distance = this.boss.distanceTo(target);
-				return distance <= 6;
+                double distance = this.boss.distanceTo(target);
+                return distance <= 6;
             }
             return true;
         }
@@ -433,7 +441,7 @@ public class Exp9AttacksHandle {
                         this.boss.SpawnThunderBolt(pos);
                     }
                 } else {
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 12; i++) {
                         double offsetX = (boss.getRandom().nextDouble() - 0.5) * 20;
                         double offsetZ = (boss.getRandom().nextDouble() - 0.5) * 20;
                         BlockPos pos = new BlockPos(this.boss.getX() + offsetX, this.boss.getY(), this.boss.getZ() + offsetZ);
@@ -454,7 +462,7 @@ public class Exp9AttacksHandle {
 
         @Override
         public boolean canUse() {
-            return boss.getTarget() != null && (boss.getHealth() / boss.getMaxHealth() < 0.3 || this.boss.distanceTo(boss.getTarget()) >= 6);
+            return boss.getTarget() != null && boss.getHealth() / boss.getMaxHealth() <= 0.5 && this.boss.distanceTo(boss.getTarget()) >= 6;
         }
 
         @Override
@@ -462,9 +470,9 @@ public class Exp9AttacksHandle {
             Teleport();
         }
 
-        public void Teleport(){
+        public void Teleport() {
             LivingEntity target = boss.getTarget();
-            if (target == null){
+            if (target == null) {
                 return;
             }
             Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
@@ -473,8 +481,8 @@ public class Exp9AttacksHandle {
             boss.setAttackCoolDown(0);
         }
 
-        public static void Teleport(KetExperiment009BossEntity boss, LivingEntity target){
-            if (target == null){
+        public static void Teleport(KetExperiment009BossEntity boss, LivingEntity target) {
+            if (target == null) {
                 return;
             }
             Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);

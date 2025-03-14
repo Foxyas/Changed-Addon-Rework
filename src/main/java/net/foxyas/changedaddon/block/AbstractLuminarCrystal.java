@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.block;
 import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
 import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -11,9 +12,14 @@ import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.ParticleUtils;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -31,16 +37,14 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.*;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.*;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -52,8 +56,22 @@ import java.util.List;
 import java.util.Random;
 
 
-
 public class AbstractLuminarCrystal {
+
+    public static void spawnParticleOnFace(ServerLevel level, BlockPos pos, Direction direction , int count, float particleSpeed) {
+        ParticleOptions p_144961_ = ParticleTypes.SNOWFLAKE;
+        Vec3 vec3 = Vec3.atCenterOf(pos);
+        int i = direction.getStepX();
+        int j = direction.getStepY();
+        int k = direction.getStepZ();
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)k * 0.55D);
+        double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, d3, d4, d5, count, particleSpeed);
+    }
 
     public static abstract class Block extends AbstractLatexIceBlock {
         public static final int MAX_AGE = 3;
@@ -72,12 +90,12 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public boolean skipRendering(BlockState blockState, BlockState blockState1, Direction direction) {
-            return blockState1.is(this) ? true : super.skipRendering(blockState, blockState1, direction);
+        public boolean skipRendering(@NotNull BlockState blockState, BlockState blockState1, @NotNull Direction direction) {
+            return blockState1.is(this) || super.skipRendering(blockState, blockState1, direction);
         }
 
         @Override
-        public VoxelShape getVisualShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
+        public @NotNull VoxelShape getVisualShape(@NotNull BlockState blockState, @NotNull BlockGetter blockGetter, @NotNull BlockPos blockPos, @NotNull CollisionContext collisionContext) {
             return Shapes.empty();
         }
 
@@ -87,10 +105,10 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void stepOn(Level level, BlockPos blockPos, BlockState blockState, Entity entity) {
+        public void stepOn(@NotNull Level level, @NotNull BlockPos blockPos, @NotNull BlockState blockState, @NotNull Entity entity) {
             super.stepOn(level, blockPos, blockState, entity);
             triggerCrystal(blockState, level, blockPos, entity);
-            
+
         }
 
         @Override
@@ -99,16 +117,16 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable) {
-		BlockState plant = plantable.getPlant(world, pos.relative(facing));
-		if (plant.getBlock() instanceof AbstractLuminarCrystal.CrystalSmall)
-			return true;
-		else
-            return super.canSustainPlant(state, world, pos, facing, plantable);
+        public boolean canSustainPlant(@NotNull BlockState state, @NotNull BlockGetter world, BlockPos pos, @NotNull Direction facing, net.minecraftforge.common.IPlantable plantable) {
+            BlockState plant = plantable.getPlant(world, pos.relative(facing));
+            if (plant.getBlock() instanceof AbstractLuminarCrystal.CrystalSmall)
+                return true;
+            else
+                return super.canSustainPlant(state, world, pos, facing, plantable);
         }
 
         @Override
-        public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
+        public void onPlace(@NotNull BlockState blockstate, @NotNull Level world, @NotNull BlockPos pos, @NotNull BlockState oldState, boolean moving) {
             super.onPlace(blockstate, world, pos, oldState, moving);
         }
 
@@ -128,7 +146,7 @@ public class AbstractLuminarCrystal {
                 if (level.getBlockState(above).is(Blocks.AIR)) {
                     level.setBlock(above, ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState(), 3);
                     level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 1.0f);
-                    
+
                 }
                 //level.scheduleTick(pos, this, 20); //delay de 20 ticks antes de agir
             }
@@ -140,7 +158,7 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void playerDestroy(Level p_49827_, Player p_49828_, BlockPos p_49829_, BlockState p_49830_, @Nullable BlockEntity p_49831_, ItemStack p_49832_) {
+        public void playerDestroy(@NotNull Level p_49827_, @NotNull Player p_49828_, @NotNull BlockPos p_49829_, @NotNull BlockState p_49830_, @Nullable BlockEntity p_49831_, @NotNull ItemStack p_49832_) {
             super.playerDestroy(p_49827_, p_49828_, p_49829_, p_49830_, p_49831_, p_49832_);
         }
 
@@ -150,8 +168,8 @@ public class AbstractLuminarCrystal {
 
             for (AbstractLuminarcticLeopard boss : lumiList) {
                 if (boss.canAttack(player) && boss.hasLineOfSight(player)) { // Verifica se pode atacar e ver o jogador
-                    if (player.getLevel() instanceof ServerLevel){
-                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,60, 0, false, false, false));
+                    if (player.getLevel() instanceof ServerLevel) {
+                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
                     }
                     boss.setTarget(player); // Define o jogador como alvo
                 }
@@ -160,7 +178,7 @@ public class AbstractLuminarCrystal {
             return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
         }
 
-         @Override
+        @Override
         public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootBuilder) {
             ResourceLocation resourcelocation = this.getLootTable();
             if (resourcelocation == BuiltInLootTables.EMPTY) {
@@ -175,29 +193,44 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
-            //super.randomTick(state, level, pos, p_60554_);
-            if (state.getValue(DEFROST)){
+        public void randomTick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
+            if (state.getValue(DEFROST)) {
+                if (random.nextFloat() >= 0.99f) {
+                    for (Direction direction : Direction.values()) {
+                            AbstractLuminarCrystal.spawnParticleOnFace(level, pos, direction, 6, 0f);
+                    }
+                }
                 level.scheduleTick(pos, this, 70);
             } else {
-                for (Direction direction: Direction.values()) {
-                    if (random.nextFloat() <= 0.25f){
+                for (Direction direction : Direction.values()) {
+                    if (direction == Direction.UP) {
+                        continue;
+                    }
+                    if (random.nextFloat() >= 0.80f) {
                         BlockPos relative = pos.relative(direction);
-                        if (level.getBlockState(relative).is(Blocks.AIR)) {
-                        	BlockState smallCrystalStage = ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
-                            smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.FACING, direction);
-                            smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.WATERLOGGED , level.getBlockState(relative).getFluidState().isSourceOfType(Fluids.WATER));
-                            
+                        BlockState relativeState = level.getBlockState(relative);
+                        if (relativeState.getBlock() instanceof AbstractLuminarCrystal.CrystalSmall){
+                            continue;
+                        }
+
+                        // Verifica se o bloco pode ser substituído
+                        if (relativeState.isAir() || relativeState.getFluidState().isSourceOfType(Fluids.WATER) && (relativeState.getMaterial().isReplaceable() && !(relativeState.getFluidState().getType() instanceof LavaFluid))) {
+                            BlockState smallCrystalStage = ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
+                            smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.FACING, direction);
+                            smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.WATERLOGGED, relativeState.getFluidState().isSourceOfType(Fluids.WATER));
                             level.setBlock(relative, smallCrystalStage, 3);
-                            level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 0.8f);
                         }
                     }
                 }
             }
         }
 
-         private void triggerCrystal(BlockState blockState, Level level, BlockPos position, Entity entity) {
+        @Override
+        public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Random random) {
+            super.animateTick(state, level, pos, random);
+        }
 
+        private void triggerCrystal(BlockState blockState, Level level, BlockPos position, Entity entity) {
             if (entity instanceof LivingEntity le && !(entity instanceof ChangedEntity) && !le.isDeadOrDying()) {
                 if (entity instanceof Player player && (ProcessTransfur.isPlayerTransfurred(player) || player.isCreative()))
                     return;
@@ -207,19 +240,19 @@ public class AbstractLuminarCrystal {
 
     }
 
-    public static abstract class CrystalSmall extends TransfurCrystalBlock {
-    
-	    public static final BooleanProperty HEARTED = BooleanProperty.create("hearted");
+    public static abstract class CrystalSmall extends TransfurCrystalBlock implements SimpleWaterloggedBlock {
+
+        public static final BooleanProperty HEARTED = BooleanProperty.create("hearted");
 
         public static final DirectionProperty FACING = BlockStateProperties.FACING;
         public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-        protected static final VoxelShape NORTH_AABB = Block.box(2, 2, 0, 14, 14, 15.0);
-        protected static final VoxelShape SOUTH_AABB = Block.box(2, 2, 0, 14, 14, 15.0);
-        protected static final VoxelShape EAST_AABB = Block.box(0, 2, 2, 15.0, 14, 14);
-        protected static final VoxelShape WEST_AABB = Block.box(0, 2, 2, 15.0, 14, 14);
-        protected static final VoxelShape UP_AABB = Block.box(2, 0, 2, 14, 15.0, 14);
-        protected static final VoxelShape DOWN_AABB = Block.box(2, 0, 2, 14, 15.0, 14);
+        protected static final VoxelShape NORTH_AABB = Block.box(2, 2, 0, 14, 14, 14.0);
+        protected static final VoxelShape SOUTH_AABB = Block.box(2, 2, 0, 14, 14, 14.0);
+        protected static final VoxelShape EAST_AABB = Block.box(0, 2, 2, 14.0, 14, 14);
+        protected static final VoxelShape WEST_AABB = Block.box(0, 2, 2, 14.0, 14, 14);
+        protected static final VoxelShape UP_AABB = Block.box(2, 0, 2, 14, 14.0, 14);
+        protected static final VoxelShape DOWN_AABB = Block.box(2, 0, 2, 14, 14.0, 14);
 
 
         public CrystalSmall() {
@@ -228,6 +261,7 @@ public class AbstractLuminarCrystal {
                             .sound(SoundType.AMETHYST_CLUSTER)
                             .noOcclusion()
                             .dynamicShape()
+                            .randomTicks()
                             .strength(1.7F, 2.5F)
                             .hasPostProcess((blockState, blockGetter, blockPos) -> true)
                             .emissiveRendering((blockState, blockGetter, blockPos) -> true)
@@ -249,10 +283,22 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
             return Shapes.empty();
         }
-        
+
+        @Override
+        public boolean canBeReplaced(@NotNull BlockState thisState, @NotNull Fluid fluid) {
+            if (fluid instanceof LavaFluid || (fluid instanceof WaterFluid)) {
+                if (thisState.getValue(HEARTED)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            return super.canBeReplaced(thisState, fluid);
+        }
+
         @Override
         protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
             builder.add(HEARTED);
@@ -261,26 +307,54 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-            super.entityInside(state, level, pos, entity);
-            if (entity instanceof LivingEntity livingEntity && !livingEntity.hasEffect(MobEffects.WITHER)){
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true));
-                livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + (int) (livingEntity.getTicksRequiredToFreeze() * 0.25f));
+        public @NotNull FluidState getFluidState(BlockState state) {
+            return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+        }
+
+        @Override
+        public void randomTick(@NotNull BlockState thisState, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull Random random) {
+            super.randomTick(thisState, serverLevel, pos, random);
+            if (random.nextFloat() >= 0.99f) {
+                for (Direction direction : Direction.values()) {
+                    AbstractLuminarCrystal.spawnParticleOnFace(serverLevel, pos, direction, 3, 0f);
+                }
             }
         }
 
         @Override
-        public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+        public @NotNull BlockState updateShape(BlockState state, @NotNull Direction facing, @NotNull BlockState facingState, @NotNull LevelAccessor world, @NotNull BlockPos currentPos, @NotNull BlockPos facingPos) {
+            if (state.getValue(WATERLOGGED)) {
+                world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+            }
+            return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
+        }
+
+        @Override
+        public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+            super.entityInside(state, level, pos, entity);
+            if (entity instanceof LivingEntity livingEntity) {
+                if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
+                    return;
+                }
+                if (!livingEntity.hasEffect(MobEffects.WITHER)) {
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true));
+                }
+                livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 20);
+            }
+        }
+
+        @Override
+        public boolean propagatesSkylightDown(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
             return true;
         }
 
         @Override
-        public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+        public int getLightBlock(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos) {
             return 4;
         }
 
         @Override
-        public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        public @NotNull VoxelShape getVisualShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext context) {
             return Shapes.empty();
         }
 
@@ -330,13 +404,18 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
+        public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Random random) {
+            super.animateTick(state, level, pos, random);
+        }
+
+        @Override
         public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
             List<AbstractLuminarcticLeopard> lumiList = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
 
             for (AbstractLuminarcticLeopard boss : lumiList) {
                 if (boss.canAttack(player) && boss.hasLineOfSight(player)) { // Verifica se pode atacar e ver o jogador
-                    if (player.getLevel() instanceof ServerLevel){
-                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,60, 0, false, false, false));
+                    if (player.getLevel() instanceof ServerLevel) {
+                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
                     }
                     boss.setTarget(player); // Define o jogador como alvo
                 }
@@ -344,5 +423,6 @@ public class AbstractLuminarCrystal {
 
             return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
         }
+
     }
 }

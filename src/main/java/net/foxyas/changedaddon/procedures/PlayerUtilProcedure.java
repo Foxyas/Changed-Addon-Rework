@@ -396,6 +396,14 @@ public class PlayerUtilProcedure {
             }
         }
 
+        public static void sendParticles(Level level, ParticleOptions particleOptions, double x, double y, double z, double XV, double YV, double ZV, int count, float speed) {
+            // Enviar as partículas
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(particleOptions,
+                        x, y, z, count, XV, YV, ZV, speed);
+            }
+        }
+
     }
 
     @OnlyIn(Dist.CLIENT)

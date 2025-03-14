@@ -142,6 +142,9 @@ public class SnepPlushBlock extends Block implements SimpleWaterloggedBlock, Ent
 
 	@Override
 	public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+		if (state.getValue(WATERLOGGED)) {
+			return 0;
+		}
 		return 20;
 	}
 
