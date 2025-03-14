@@ -280,19 +280,19 @@ public class DazedEntity extends ChangedEntity {
 		}
 
 		if (!Monster.isDarkEnoughToSpawn(world, pos, random)) {
-			ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't dark enough");
+			//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't dark enough");
 			return false;
 		}
 
 		if (!world.getBiome(pos).is(Tags.Biomes.IS_PLAINS)) {
-			ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't plains");
+			//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't plains");
 			return false;
 		}
 
 		// Certifica-se de que o bloco abaixo não é ar e é sólido
 		BlockState blockBelow = world.getBlockState(pos.below());
 		if (!blockBelow.isSolidRender(world, pos.below()) || !blockBelow.isFaceSturdy(world, pos.below(), Direction.UP)) {
-			ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't a good block");
+			//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't a good block");
 			return false;
 		}
 
@@ -301,7 +301,7 @@ public class DazedEntity extends ChangedEntity {
 
 		boolean nearSpawnBlock = world.getBlockStatesIfLoaded(checkArea)
 				.anyMatch(state -> state.is(ChangedAddonModBlocks.GOO_CORE.get()));
-		ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n" + nearSpawnBlock);
+		//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n" + nearSpawnBlock);
 
 		return nearSpawnBlock;
 	}

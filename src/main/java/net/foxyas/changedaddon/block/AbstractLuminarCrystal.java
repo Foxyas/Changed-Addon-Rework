@@ -51,8 +51,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static net.foxyas.changedaddon.block.AbstractLuminarCrystal.CrystalSmall.FACING;
-import static net.foxyas.changedaddon.block.AbstractLuminarCrystal.CrystalSmall.WATERLOGGED;
 
 
 public class AbstractLuminarCrystal {
@@ -186,11 +184,10 @@ public class AbstractLuminarCrystal {
                     if (random.nextFloat() <= 0.25f){
                         BlockPos relative = pos.relative(direction);
                         if (level.getBlockState(relative).is(Blocks.AIR)) {
-                        	BlockState stage = ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
-                            state.setValue(CrystalSmall.FACING, direction);
-                            if (level.getBlockState(relative).getFluidState().isSourceOfType(Fluids.WATER)) {
-                                stage.setValue(WATERLOGGED , true);
-                            }
+                        	BlockState smallCrystalStage = ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
+                            smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.FACING, direction);
+                            smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.WATERLOGGED , level.getBlockState(relative).getFluidState().isSourceOfType(Fluids.WATER));
+                            
                             level.setBlock(relative, stage, 3);
                             level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 0.8f);
                         }
