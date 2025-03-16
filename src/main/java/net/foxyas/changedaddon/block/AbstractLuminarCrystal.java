@@ -14,12 +14,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.util.ParticleUtils;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -59,7 +57,22 @@ import java.util.Random;
 public class AbstractLuminarCrystal {
 
     public static void spawnParticleOnFace(ServerLevel level, BlockPos pos, Direction direction , int count, float particleSpeed) {
-        ParticleOptions p_144961_ = ParticleTypes.SNOWFLAKE;
+        ParticleOptions p_144961_ = ParticleTypes.END_ROD;
+        Vec3 vec3 = Vec3.atCenterOf(pos);
+        int i = direction.getStepX();
+        int j = direction.getStepY();
+        int k = direction.getStepZ();
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)k * 0.55D);
+        double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, 0.05, 0.05, 0.05, count, particleSpeed);
+    }
+
+    public static void spawnEndRodParticleOnFace(ServerLevel level, BlockPos pos, Direction direction , int count, float particleSpeed) {
+        ParticleOptions p_144961_ = ParticleTypes.END_ROD;
         Vec3 vec3 = Vec3.atCenterOf(pos);
         int i = direction.getStepX();
         int j = direction.getStepY();
@@ -71,6 +84,21 @@ public class AbstractLuminarCrystal {
         double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, d3, d4, d5, count, particleSpeed);
+    }
+
+    public static void spawnSnowParticleOnFace(ServerLevel level, BlockPos pos, Direction direction , int count, float particleSpeed) {
+        ParticleOptions p_144961_ = ParticleTypes.SNOWFLAKE;
+        Vec3 vec3 = Vec3.atCenterOf(pos);
+        int i = direction.getStepX();
+        int j = direction.getStepY();
+        int k = direction.getStepZ();
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)k * 0.55D);
+        double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, 0.2, 0.2, 0.2, count, particleSpeed);
     }
 
     public static abstract class Block extends AbstractLatexIceBlock {
@@ -197,7 +225,7 @@ public class AbstractLuminarCrystal {
             if (state.getValue(DEFROST)) {
                 if (random.nextFloat() >= 0.99f) {
                     for (Direction direction : Direction.values()) {
-                            AbstractLuminarCrystal.spawnParticleOnFace(level, pos, direction, 6, 0f);
+                            AbstractLuminarCrystal.spawnParticleOnFace(level, pos, direction, 1, 0f);
                     }
                 }
                 level.scheduleTick(pos, this, 70);
@@ -247,12 +275,12 @@ public class AbstractLuminarCrystal {
         public static final DirectionProperty FACING = BlockStateProperties.FACING;
         public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-        protected static final VoxelShape NORTH_AABB = Block.box(2, 2, 0, 14, 14, 14.0);
-        protected static final VoxelShape SOUTH_AABB = Block.box(2, 2, 0, 14, 14, 14.0);
-        protected static final VoxelShape EAST_AABB = Block.box(0, 2, 2, 14.0, 14, 14);
-        protected static final VoxelShape WEST_AABB = Block.box(0, 2, 2, 14.0, 14, 14);
+        protected static final VoxelShape NORTH_AABB = Block.box(2, 2, 2, 14, 14, 16.0);
+        protected static final VoxelShape SOUTH_AABB = Block.box(2, 2, 0, 14, 14, 14.0); // Corrigido
+        protected static final VoxelShape EAST_AABB = Block.box(0, 2, 2, 14, 14, 14); // Corrigido
+        protected static final VoxelShape WEST_AABB = Block.box(2, 2, 2, 16.0, 14, 14);
         protected static final VoxelShape UP_AABB = Block.box(2, 0, 2, 14, 14.0, 14);
-        protected static final VoxelShape DOWN_AABB = Block.box(2, 0, 2, 14, 14.0, 14);
+        protected static final VoxelShape DOWN_AABB = Block.box(2, 2, 2, 14, 16.0, 14);
 
 
         public CrystalSmall() {
@@ -316,7 +344,7 @@ public class AbstractLuminarCrystal {
             super.randomTick(thisState, serverLevel, pos, random);
             if (random.nextFloat() >= 0.99f) {
                 for (Direction direction : Direction.values()) {
-                    AbstractLuminarCrystal.spawnParticleOnFace(serverLevel, pos, direction, 3, 0f);
+                    spawnParticleOnFace(serverLevel, pos, direction, 2, 0.01f);
                 }
             }
         }
@@ -339,7 +367,7 @@ public class AbstractLuminarCrystal {
                 if (!livingEntity.hasEffect(MobEffects.WITHER)) {
                     livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true));
                 }
-                livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 20);
+                livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 5);
             }
         }
 
