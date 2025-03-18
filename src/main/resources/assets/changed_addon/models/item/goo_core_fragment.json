@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/goo_core_fragment"
+    "layer0": "changed_addon:items/goo_core_fragment_spherical"
   }
 }

@@ -3,7 +3,7 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "goo_core_fragment",
+    "texture": "goo_core_fragment_spherical",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],

@@ -42,6 +42,7 @@
     "minecraft:wither_rose",
     "minecraft:dead_bush",
     "minecraft:oxeye_daisy",
-    "minecraft:brown_mushroom"
+    "minecraft:brown_mushroom",
+    "changed:orange_tree_sapling"
   ]
 }

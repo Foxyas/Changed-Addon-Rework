@@ -1,7 +1,9 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
+import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
@@ -11,11 +13,14 @@ import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,8 +30,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,9 +43,13 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Random;
+
 import net.minecraft.sounds.SoundEvents;
 
 public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
+
+
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
@@ -59,6 +72,32 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
                 }
             }
         }
+    }
+
+    public static boolean canSpawnNear(EntityType<?> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
+        if (world.getDifficulty() == Difficulty.PEACEFUL) {
+            return false;
+        }
+
+        // Verifica se a luz do bloco é menor ou igual a 6
+        if (world.getBrightness(LightLayer.BLOCK, pos) > 6) {
+            return false;
+        }
+
+        // Certifica-se de que o bloco abaixo não é ar e é sólido
+        BlockState blockBelow = world.getBlockState(pos.below());
+        if (!blockBelow.isSolidRender(world, pos.below()) || !blockBelow.isFaceSturdy(world, pos.below(), Direction.UP)) {
+            return false;
+        }
+
+        // Define uma área de checagem ao redor do spawn (raio de 3 blocos)
+        AABB checkArea = new AABB(pos).inflate(6); // Raio de 3 blocos ao redor
+
+        boolean nearLuminarCrystal = world.getBlockStatesIfLoaded(checkArea)
+                .anyMatch(state -> state.is(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
+                        state.getValue(AbstractLuminarCrystal.CrystalSmall.HEARTED));
+
+        return nearLuminarCrystal;
     }
 
     public final ServerBossEvent bossBar = new ServerBossEvent(
@@ -225,11 +264,11 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
-        Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(205f);
+        Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(300f);
         Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(15f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2.5f);
-        this.setHealth(205f);
+        this.setHealth(300f);
         //this.setAbsorptionAmount(75f);
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);

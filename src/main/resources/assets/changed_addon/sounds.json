@@ -21,24 +21,6 @@
       }
     ]
   },
-  "experiment009_theme": {
-    "subtitle": "subtitles.experiment009_theme",
-    "sounds": [
-      {
-        "name": "changed_addon:jack_phase_1",
-        "stream": false
-      }
-    ]
-  },
-  "experiment009_theme_phase2": {
-    "subtitle": "subtitles.experiment009_theme_phase2",
-    "sounds": [
-      {
-        "name": "changed_addon:jack_phase_2",
-        "stream": false
-      }
-    ]
-  },
   "untransfursound": {
     "subtitle": "subtitles.untransfursound",
     "sounds": [
@@ -102,6 +84,24 @@
       {
         "name": "changed_addon:heavy1",
         "stream": false
+      }
+    ]
+  },
+  "music.boss.luminarctic_leopard": {
+    "subtitle": "subtitles.music.boss.luminarctic_leopard",
+    "sounds": [
+      {
+        "name": "changed_addon:misstake",
+        "stream": true
+      }
+    ]
+  },
+  "music.boss.exp9": {
+    "subtitle": "subtitles.music.boss.exp9",
+    "sounds": [
+      {
+        "name": "changed_addon:meaningless_strafe",
+        "stream": true
       }
     ]
   }

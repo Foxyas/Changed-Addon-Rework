@@ -27,6 +27,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Blocks;
@@ -274,12 +275,23 @@ public class DazedEntity extends ChangedEntity {
 		);
 	}
 
+	public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_33009_, BlockPos p_33010_, Random p_33011_) {
+		if (p_33009_.getBrightness(LightLayer.SKY, p_33010_) > p_33011_.nextInt(32)) {
+			return false;
+		} else if (p_33009_.getBrightness(LightLayer.BLOCK, p_33010_) > 5) {
+			return false;
+		} else {
+			int i = p_33009_.getLevel().isThundering() ? p_33009_.getMaxLocalRawBrightness(p_33010_, 10) : p_33009_.getMaxLocalRawBrightness(p_33010_);
+			return i <= p_33011_.nextInt(8);
+		}
+	}
+
 	private static boolean canSpawnNear(EntityType<DazedEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
 		if (world.getDifficulty() == Difficulty.PEACEFUL) {
 			return false;
 		}
 
-		if (!Monster.isDarkEnoughToSpawn(world, pos, random)) {
+		if (!isDarkEnoughToSpawn(world, pos, random)) {
 			//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't dark enough");
 			return false;
 		}

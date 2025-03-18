@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.registers;
 
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.block.*;
+import net.foxyas.changedaddon.block.LuminarCrystalBlockBlock;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
@@ -15,6 +15,7 @@ import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
+import net.ltxprogrammer.changed.world.features.structures.facility.FacilityPieceCollection;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoomPiece;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -148,10 +149,10 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class ChangedAddonFacilityPieces extends FacilityPieces {
-    	static {
-			ChangedAddonMod.LOGGER.log(Level.DEBUG,"Changed Addon Plus facility pieces registration has been performed");
-        	FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp009_facility_piece"), new ResourceLocation("changed_addon:chests/destroy_structure_experiment_009_loot")));
-    	}
+		public static final FacilityPieceCollection Exp9FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp009room"), new ResourceLocation("changed_addon:chests/experiment_009_loot")));
+		public static final FacilityPieceCollection Exp10FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp10room"), new ResourceLocation("changed_addon:chests/experiment_10_loot_normal")));
+		public static final FacilityPieceCollection LuminarCrystalsFacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:luminar_crystal_room"), new ResourceLocation("changed:chests/high_tier_lab.json")));
+
 	}
 
     private static RegistryObject<Item> RegisterBlockItem(RegistryObject<Block> block, CreativeModeTab tab) {

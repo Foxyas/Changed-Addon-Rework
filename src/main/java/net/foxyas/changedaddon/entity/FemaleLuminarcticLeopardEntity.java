@@ -24,8 +24,13 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.network.NetworkHooks;
@@ -51,6 +56,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
+
+	@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
+	public static class SpawnHandle {
+		@SubscribeEvent
+		public static void SpawnHandles(BiomeLoadingEvent event) {
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), 300, 1, 4));
+		}
+	}
+
 	public FemaleLuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), world);
 	}
@@ -58,7 +72,7 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 	public FemaleLuminarcticLeopardEntity(EntityType<FemaleLuminarcticLeopardEntity> type, Level world) {
 		super(type, world);
 		maxUpStep = 0.6f;
-		xpReward = 100;
+		xpReward = 1000;
 		this.setAttributes(this.getAttributes());
 		setNoAi(false);
 		setPersistenceRequired();
@@ -154,6 +168,12 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 	}
 
 	public static void init() {
+		SpawnPlacements.register(
+				ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(),
+				SpawnPlacements.Type.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				AbstractLuminarcticLeopard::canSpawnNear
+		);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

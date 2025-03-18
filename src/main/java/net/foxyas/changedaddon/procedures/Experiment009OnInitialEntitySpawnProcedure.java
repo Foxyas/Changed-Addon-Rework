@@ -35,10 +35,5 @@ public class Experiment009OnInitialEntitySpawnProcedure {
 			((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE).addTransientModifier(HardModeBuff);
 		if (entity instanceof LivingEntity _entity)
 			_entity.setHealth(entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1);
-		{
-			Entity _ent = entity;
-			if (!_ent.level.isClientSide() && _ent.getServer() != null)
-				_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "stopsound @a * changed_addon:experiment009_theme");
-		}
 	}
 }

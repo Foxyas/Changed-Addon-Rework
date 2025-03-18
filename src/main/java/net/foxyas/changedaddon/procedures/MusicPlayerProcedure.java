@@ -38,32 +38,30 @@ public class MusicPlayerProcedure {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             //PlayBossMusic(event, event.player.level, event.player);
-            newPlayBossMusic(event, event.player.level, event.player);
+            newPlayBossMusic(event.player.level, event.player);
             //PlayBossMusic2(event, event.player.level, event.player);
         }
     }
 
-    public static void newPlayBossMusic(@Nullable Event event, LevelAccessor world, Entity entity) {
-        if (entity == null) {
+    public static void newPlayBossMusic(LevelAccessor world, Player player) {
+        if (player == null) {
             return;
         }
 
-        double x = entity.getX();
-        double y = entity.getY();
-        double z = entity.getZ();
+        double x = player.getX();
+        double y = player.getY();
+        double z = player.getZ();
 
         // Lista de entidades por tipo
         List<Experiment10BossEntity> exp10Entities = world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
         List<AbstractLuminarcticLeopard> LumiEntities = world.getEntitiesOfClass(AbstractLuminarcticLeopard.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
         List<KetExperiment009BossEntity> ketExp9Entities = world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
-        List<Experiment009Entity> exp009Phase1Entities = world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
         List<Experiment009phase2Entity> exp009Phase2Entities = world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
 
         // Verificações de proximidade
         boolean exp10Close = !exp10Entities.isEmpty();
         boolean LumiClose = !LumiEntities.isEmpty();
         boolean ketExp9Close = !ketExp9Entities.isEmpty();
-        boolean exp009Phase1Close = !exp009Phase1Entities.isEmpty();
         boolean exp009Phase2Close = !exp009Phase2Entities.isEmpty();
 
         if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get()) {
@@ -72,26 +70,26 @@ public class MusicPlayerProcedure {
             SoundManager soundManager = minecraft.getSoundManager();
 
             // Verificar se o jogador está no modo espectador
-            boolean spectator = isSpectator(entity);
+            boolean spectator = isSpectator(player);
 
             if (spectator) {
                 return;
             }
 
             // Eventos de som
-            net.minecraft.sounds.SoundEvent exp009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
-            net.minecraft.sounds.SoundEvent exp009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme"));
-            net.minecraft.sounds.SoundEvent exp10Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
+            SoundEvent exp009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.exp9"));
+            SoundEvent exp10Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
+            SoundEvent LumiMusic = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.luminarctic_leopard"));
 
             // Instâncias de música
-            Music exp009ThemeMusicInstance = new Music(Objects.requireNonNull(exp009Music), 0, 0, true);
             Music exp10ThemeMusicInstance = new Music(Objects.requireNonNull(exp10Music), 0, 0, true);
-            Music exp009Phase2ThemeMusicInstance = new Music(Objects.requireNonNull(exp009Phase2Music), 0, 0, true);
+            Music exp009Phase2ThemeMusicInstance = new Music(Objects.requireNonNull(exp009Music), 0, 0, true);
+            Music LumiThemeMusicInstance = new Music(Objects.requireNonNull(LumiMusic), 0, 0, true);
 
             // Verificar se músicas estão tocando
-            boolean isExp009ThemePlaying = musicManager.isPlayingMusic(exp009ThemeMusicInstance);
             boolean isExp10ThemePlaying = musicManager.isPlayingMusic(exp10ThemeMusicInstance);
             boolean isExp009Phase2ThemePlaying = musicManager.isPlayingMusic(exp009Phase2ThemeMusicInstance);
+            boolean isLumiThemePlaying = musicManager.isPlayingMusic(LumiThemeMusicInstance);
 
             if ((exp009Phase2Close || ketExp9Close)) {
                 if (!isExp009Phase2ThemePlaying) {
@@ -102,33 +100,32 @@ public class MusicPlayerProcedure {
                         || ketExp9Entities.stream().anyMatch(KetExperiment009BossEntity::isDeadOrDying)) {
                     soundManager.stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
                 }
-            } else if (!exp009Phase2Close && !ketExp9Close && isExp009Phase2ThemePlaying) {
+            } else if (isExp009Phase2ThemePlaying) {
                 soundManager.stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
             }
 
-            if (exp009Phase1Close) {
-                if (!isExp009ThemePlaying) {
-                    musicManager.startPlaying(exp009ThemeMusicInstance);
-                }
-
-                if (exp009Phase1Entities.stream().anyMatch(Experiment009Entity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "experiment009_theme"), SoundSource.MUSIC);
-                }
-            } else if (!exp009Phase1Close && isExp009ThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "experiment009_theme"), SoundSource.MUSIC);
-            }
-
-            if (exp10Close || LumiClose) {
+            if (exp10Close) {
                 if (!isExp10ThemePlaying) {
                     musicManager.startPlaying(exp10ThemeMusicInstance);
                 }
 
-                if (exp10Entities.stream().anyMatch(Experiment10BossEntity::isDeadOrDying)
-                        || LumiEntities.stream().anyMatch(AbstractLuminarcticLeopard::isDeadOrDying)) {
+                if (exp10Entities.stream().anyMatch(LivingEntity::isDeadOrDying)) {
                     soundManager.stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
                 }
-            } else if (!exp10Close && !LumiClose && isExp10ThemePlaying) {
+            } else if (isExp10ThemePlaying) {
                 soundManager.stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
+            }
+
+            if (LumiClose && LumiEntities.stream().anyMatch((e) -> e.getTarget() == player)) {
+                if (!isLumiThemePlaying) {
+                    musicManager.startPlaying(LumiThemeMusicInstance);
+                }
+
+                if (LumiEntities.stream().anyMatch(LivingEntity::isDeadOrDying)) {
+                    soundManager.stop(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
+                }
+            } else if (isLumiThemePlaying) {
+                soundManager.stop(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
             }
         }
     }
@@ -214,9 +211,9 @@ public class MusicPlayerProcedure {
             }
 
             //Sound Events
-            net.minecraft.sounds.SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
-            net.minecraft.sounds.SoundEvent Experiment009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme"));
-            net.minecraft.sounds.SoundEvent Experiment10Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
+            SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
+            SoundEvent Experiment009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme"));
+            SoundEvent Experiment10Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
 
             //Music Creator
             Music Experiment009_Theme_MusicInstance = new Music(Objects.requireNonNull(Experiment009Music), 0, 0, true);
@@ -396,27 +393,9 @@ public class MusicPlayerProcedure {
         * Hard Coded Entities Bellow
         */
 
-        else if (bossEntity instanceof Experiment009Entity){
-            SoundEvent bossMusic = BossMusicTheme.EXP9_PHASE1.getAsSoundEvent();
-            Music musicInstance = BossMusicTheme.EXP9_PHASE1.getAsMusic();
-            ResourceLocation musicResource = ForgeRegistries.SOUND_EVENTS.getKey(bossMusic);
-            if (bossMusic == null) return;
-
-            // Checa se alguma música de boss já está tocando
-            if (isAnyBossMusicPlaying(musicManager, BossMusicTheme.values())) {
-                return; // Não toca nenhuma nova música
-            }
-            // Se o boss estiver vivo e a música ainda não estiver tocando, inicia a música
-            if (bossEntity.isAlive() && !musicManager.isPlayingMusic(musicInstance)) {
-                musicManager.startPlaying(musicInstance);
-            }
-            // Se o boss morreu ou saiu do alcance, interrompe a música específica
-            else if (!bossEntity.isAlive() && musicManager.isPlayingMusic(musicInstance)) {
-                soundManager.stop(musicResource, SoundSource.MUSIC);
-            }
-        } else if (bossEntity instanceof Experiment009phase2Entity) {
-            SoundEvent bossMusic = BossMusicTheme.EXP9_PHASE2.getAsSoundEvent();
-            Music musicInstance = BossMusicTheme.EXP9_PHASE2.getAsMusic();
+        else if (bossEntity instanceof Experiment009phase2Entity) {
+            SoundEvent bossMusic = BossMusicTheme.EXP9.getAsSoundEvent();
+            Music musicInstance = BossMusicTheme.EXP9.getAsMusic();
             ResourceLocation musicResource = ForgeRegistries.SOUND_EVENTS.getKey(bossMusic);
             if (bossMusic == null) return;
 

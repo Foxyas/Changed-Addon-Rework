@@ -102,7 +102,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 
     @Override
     public @NotNull BossMusicTheme BossMusicTheme() {
-        return BossMusicTheme.EXP9_PHASE2;
+        return BossMusicTheme.EXP9;
     }
 
     @Override

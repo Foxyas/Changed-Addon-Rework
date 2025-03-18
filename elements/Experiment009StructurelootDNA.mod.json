@@ -1,0 +1,10 @@
+{
+  "_fv": 47,
+  "_type": "loottable",
+  "definition": {
+    "type": "Chest",
+    "pools": [],
+    "name": "chests/experiment_009_loot_dna",
+    "namespace": "mod"
+  }
+}
