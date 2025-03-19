@@ -74,7 +74,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         }
     }
 
-    public static boolean canSpawnNear(EntityType<?> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
+    public static <T extends AbstractLuminarcticLeopard> boolean canSpawnNear(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
         if (world.getDifficulty() == Difficulty.PEACEFUL) {
             return false;
         }
@@ -94,8 +94,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         AABB checkArea = new AABB(pos).inflate(6); // Raio de 3 blocos ao redor
 
         boolean nearLuminarCrystal = world.getBlockStatesIfLoaded(checkArea)
-                .anyMatch(state -> state.is(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
+                .anyMatch((state) -> state.is(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
                         state.getValue(AbstractLuminarCrystal.CrystalSmall.HEARTED));
+        ChangedAddonMod.LOGGER.info("DEBUG = " + nearLuminarCrystal);
 
         return nearLuminarCrystal;
     }

@@ -39,7 +39,7 @@ public class Exp1FemaleEntity extends ChangedEntity implements GenderedEntity,Po
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName()))
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), 20, 1, 4));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.EXP_1_FEMALE.get(), 20, 1, 4));
 	}
 
 	public Exp1FemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -159,7 +159,7 @@ public class Exp1FemaleEntity extends ChangedEntity implements GenderedEntity,Po
 	}
 
 	public static void init() {
-		SpawnPlacements.register(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+		SpawnPlacements.register(ChangedAddonModEntities.EXP_1_FEMALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				(entityType, world, reason, pos, random) -> (world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Mob.checkMobSpawnRules(entityType, world, reason, pos, random)));
 	}
 
