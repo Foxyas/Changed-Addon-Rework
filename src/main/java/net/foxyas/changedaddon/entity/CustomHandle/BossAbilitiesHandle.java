@@ -195,7 +195,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         BlockPos center = boss.blockPosition();
         Level world = boss.getLevel();
 
-        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 3.0f, Explosion.BlockInteraction.BREAK);
+        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 2.0f, Explosion.BlockInteraction.BREAK);
 
         Explosion explosionReference = new Explosion(world, boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, false, Explosion.BlockInteraction.NONE);
 

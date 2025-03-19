@@ -90,16 +90,26 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
             return false;
         }
 
-        // Define uma área de checagem ao redor do spawn (raio de 3 blocos)
-        AABB checkArea = new AABB(pos).inflate(6); // Raio de 3 blocos ao redor
+        // Define uma área de checagem ao redor do spawn (raio de 6 blocos)
+        AABB checkArea = new AABB(pos).inflate(6);
 
+        // Verifica se há um Luminar Crystal Small (hearted) por perto
         boolean nearLuminarCrystal = world.getBlockStatesIfLoaded(checkArea)
                 .anyMatch((state) -> state.is(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
                         state.getValue(AbstractLuminarCrystal.CrystalSmall.HEARTED));
-        //ChangedAddonMod.LOGGER.info("DEBUG = " + nearLuminarCrystal);
 
-        return nearLuminarCrystal;
+        if (!nearLuminarCrystal) {
+            return false;
+        }
+
+        // **Novo: Checagem para limitar a quantidade de entidades**
+        int maxEntitiesNear = 3; // Defina quantas entidades podem existir perto do cristal
+        int currentEntities = world.getEntities(entityType, checkArea, entity -> true).size();
+
+        return currentEntities < maxEntitiesNear; // Já tem muitas entidades perto, impedir novo spawn
+        // Condições atendidas, pode spawnar
     }
+
 
     public final ServerBossEvent bossBar = new ServerBossEvent(
             this.getDisplayName(), // Nome exibido na boss bar
