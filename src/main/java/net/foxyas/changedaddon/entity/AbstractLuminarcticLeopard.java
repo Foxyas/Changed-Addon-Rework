@@ -96,7 +96,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         boolean nearLuminarCrystal = world.getBlockStatesIfLoaded(checkArea)
                 .anyMatch((state) -> state.is(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
                         state.getValue(AbstractLuminarCrystal.CrystalSmall.HEARTED));
-        ChangedAddonMod.LOGGER.info("DEBUG = " + nearLuminarCrystal);
+        //ChangedAddonMod.LOGGER.info("DEBUG = " + nearLuminarCrystal);
 
         return nearLuminarCrystal;
     }
