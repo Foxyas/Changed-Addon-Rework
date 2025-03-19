@@ -1,0 +1,19 @@
+{
+  "_fv": 47,
+  "_type": "musicdisc",
+  "definition": {
+    "name": "Meaningless Strafe Music Disc",
+    "texture": "meaningless_strafe_disc",
+    "description": "Meaningless Strafe - Haise_h1",
+    "creativeTab": {
+      "value": "CUSTOM:ChangedAddon"
+    },
+    "specialInfo": [],
+    "hasGlow": false,
+    "music": {
+      "value": "CUSTOM:music.boss.exp9"
+    },
+    "lengthInTicks": 100,
+    "analogOutput": 15
+  }
+}

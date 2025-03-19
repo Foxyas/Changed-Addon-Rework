@@ -14,7 +14,6 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.foxyas.changedaddon.client.gui.UnifuserguiScreen;
 import net.foxyas.changedaddon.client.gui.TransfurTotemGuiScreen;
 import net.foxyas.changedaddon.client.gui.TranfurSoundsGuiScreen;
-import net.foxyas.changedaddon.client.gui.PagesecretScreen;
 import net.foxyas.changedaddon.client.gui.InformantGuiScreen;
 import net.foxyas.changedaddon.client.gui.GeneratorguiScreen;
 import net.foxyas.changedaddon.client.gui.FoxyasguiScreen;
@@ -42,7 +41,6 @@ public class ChangedAddonModScreens {
 			MenuScreens.register(ChangedAddonModMenus.BOOK_PAGENUMBER_2, BookPagenumber2Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOKPAGENUMBER_3, Bookpagenumber3Screen::new);
 			MenuScreens.register(ChangedAddonModMenus.BOOKPAGENUMBER_4, Bookpagenumber4Screen::new);
-			MenuScreens.register(ChangedAddonModMenus.PAGESECRET, PagesecretScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.FOXYASGUI, FoxyasguiScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.GENERATORGUI, GeneratorguiScreen::new);
 			MenuScreens.register(ChangedAddonModMenus.CATLYZERGUI, CatlyzerguiScreen::new);

@@ -93,7 +93,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "changed_addon:unlatexbase",
+          "name": "changed_addon:anti_latex_base",
           "weight": 1,
           "functions": [
             {

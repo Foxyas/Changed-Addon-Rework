@@ -47,6 +47,7 @@ import net.foxyas.changedaddon.item.PainiteAxeItem;
 import net.foxyas.changedaddon.item.PainiteArmorItem;
 import net.foxyas.changedaddon.item.OrangejuiceItem;
 import net.foxyas.changedaddon.item.OrangeWolfCrystalFragmentItem;
+import net.foxyas.changedaddon.item.MeaninglessstrafemusicdiscItem;
 import net.foxyas.changedaddon.item.LunarroseItem;
 import net.foxyas.changedaddon.item.LuminarCrystalShardItem;
 import net.foxyas.changedaddon.item.LitixCamoniaSprayItem;
@@ -93,7 +94,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 public class ChangedAddonModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
 	public static final RegistryObject<Item> CHANGEDBOOK = REGISTRY.register("changedbook", () -> new ChangedbookItem());
-	public static final RegistryObject<Item> UNLATEXBASE = REGISTRY.register("unlatexbase", () -> new UnlatexbaseItem());
+	public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", () -> new UnlatexbaseItem());
 	public static final RegistryObject<Item> LATEX_INSULATOR = block(ChangedAddonModBlocks.LATEX_INSULATOR, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> IMPUREAMMONIA = REGISTRY.register("impureammonia", () -> new InpureammoniaItem());
 	public static final RegistryObject<Item> AMMONIAPARTICLE = REGISTRY.register("ammoniaparticle", () -> new AmmoniaparticleItem());
@@ -132,13 +133,13 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> LUNARROSE_HELMET = REGISTRY.register("lunarrose_helmet", () -> new LunarroseItem.Helmet());
 	public static final RegistryObject<Item> EXPERIMENT_009DNA = REGISTRY.register("experiment_009dna", () -> new Experiment009dnaItem());
 	public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", () -> new Exp9LatexBaseItem());
-	public static final RegistryObject<Item> EXPERIMENT_009_SPAWNEGG = REGISTRY.register("experiment_009_spawnegg", () -> new Experiment009SpawneggItem());
+	public static final RegistryObject<Item> EXP_9_CONTAINMENT_VIAL = REGISTRY.register("exp_9_containment_vial", () -> new Experiment009SpawneggItem());
 	public static final RegistryObject<Item> TRANSFUR_TOTEM = REGISTRY.register("transfur_totem", () -> new TransfurTotemItem());
 	public static final RegistryObject<Item> SIGNAL_BLOCK = block(ChangedAddonModBlocks.SIGNAL_BLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> SIGNAL_CATCHER = REGISTRY.register("signal_catcher", () -> new SignalCatcherItem());
 	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
 	public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", () -> new Exp10LatexBaseItem());
-	public static final RegistryObject<Item> BOSS_EXPERIMENT_10_SPAWN_EGG = REGISTRY.register("boss_experiment_10_spawn_egg", () -> new BossExperiment10SpawnEggItem());
+	public static final RegistryObject<Item> EXP_10_CONTAINMENT_VIAL = REGISTRY.register("exp_10_containment_vial", () -> new BossExperiment10SpawnEggItem());
 	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
 	public static final RegistryObject<Item> CRYSTAL_DAGGER_RED = REGISTRY.register("crystal_dagger_red", () -> new CrystalAddagerRedItem());
@@ -209,6 +210,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", () -> new SnepIconItem());
 	public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", () -> new FriendlyGoeyIconItem());
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
+	public static final RegistryObject<Item> MEANINGLESS_STRAFE_MUSIC_DISC = REGISTRY.register("meaningless_strafe_music_disc", () -> new MeaninglessstrafemusicdiscItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

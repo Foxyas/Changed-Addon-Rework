@@ -3,11 +3,11 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "entity",
+    "texture": "exp_009_containment_vial",
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "Experiment 009 Spawn Egg",
+    "name": "Exp009 Containment Vial",
     "rarity": "RARE",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"

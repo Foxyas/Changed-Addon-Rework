@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:experiment_009_spawnegg"
+      "item": "changed_addon:exp_9_containment_vial"
     },
     "title": {
       "translate": "advancements.kill_experiment_009.title"

@@ -11,6 +11,9 @@ import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.registers.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.Emote;
+import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
+import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -129,10 +132,12 @@ public class PatFeatureHandleProcedure {
                 if (!isPlayerTransfurInExp2 && isPlayerTransfur)
                     p.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
             }
+
             if (world instanceof ServerLevel serverLevel) {
                 p.swing(getSwingHand(player), true);
                 serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
                 // Dispara o trigger personalizado
+                SpawnEmote(p, target);
                 if (p instanceof ServerPlayer sp) {
                     GiveStealthPatAdvancement(sp, target);
                 }
@@ -246,6 +251,25 @@ public class PatFeatureHandleProcedure {
             }
         }
 
+    }
+
+    public static void SpawnEmote(Player player, Entity target){
+        if (target instanceof ChangedEntity changedEntity){
+            if (changedEntity.getTarget() == player){
+                return;
+            }
+            if (changedEntity instanceof AbstractDarkLatexWolf){
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(player.getLevel(),
+                        ChangedParticles.emote(changedEntity, Emote.CONFUSED),
+                        target.getX(),
+                        target.getY() + (double)target.getDimensions(target.getPose()).height + 0.65,
+                        target.getZ(),
+                        0.0f,
+                        0.0f,
+                        0.0f, 1, 0f
+                );
+            }
+        }
     }
 
     public static void GiveStealthPatAdvancement(Entity entity, Entity target) {

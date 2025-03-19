@@ -14,7 +14,7 @@
       "nbt": "{safe:1b}"
     },
     "L": {
-      "item": "changed_addon:unlatexbase"
+      "item": "changed_addon:anti_latex_base"
     },
     "P": {
       "item": "changed_addon:exp_9_latex_base"
@@ -33,7 +33,7 @@
     }
   },
   "result": {
-    "item": "changed_addon:experiment_009_spawnegg",
+    "item": "changed_addon:exp_9_containment_vial",
     "count": 1
   }
 }

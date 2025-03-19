@@ -1,13 +1,16 @@
 package net.foxyas.changedaddon.advancements.critereon;
 
 import com.google.gson.JsonObject;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.Emote;
+import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
+import net.ltxprogrammer.changed.init.ChangedParticles;
+import net.ltxprogrammer.changed.process.ProcessEmote;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.TriggerInstance> {

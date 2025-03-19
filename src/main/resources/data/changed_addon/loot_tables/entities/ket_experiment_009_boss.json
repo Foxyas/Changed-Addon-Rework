@@ -1,12 +1,16 @@
 {
   "type": "minecraft:entity",
   "pools": [
-     {
+    {
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "changed_addon:transfur_totem"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "changed_addon:meaningless_strafe_music_disc"
         }
       ]
     },

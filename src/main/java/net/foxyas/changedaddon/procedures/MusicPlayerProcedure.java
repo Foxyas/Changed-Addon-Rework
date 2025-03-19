@@ -98,10 +98,10 @@ public class MusicPlayerProcedure {
 
                 if (exp009Phase2Entities.stream().anyMatch(Experiment009phase2Entity::isDeadOrDying)
                         || ketExp9Entities.stream().anyMatch(KetExperiment009BossEntity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
+                    soundManager.stop(new ResourceLocation("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
                 }
             } else if (isExp009Phase2ThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
+                soundManager.stop(new ResourceLocation("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
             }
 
             if (exp10Close) {

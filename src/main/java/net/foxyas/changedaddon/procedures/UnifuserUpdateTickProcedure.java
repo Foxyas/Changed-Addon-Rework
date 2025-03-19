@@ -776,7 +776,7 @@ public class UnifuserUpdateTickProcedure {
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
-				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.UNLATEXBASE.get()) {
+				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.ANTI_LATEX_BASE.get()) {
 					if ((new Object() {
 						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -793,7 +793,7 @@ public class UnifuserUpdateTickProcedure {
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
-					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.UNLATEXBASE.get()) {
+					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.ANTI_LATEX_BASE.get()) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);

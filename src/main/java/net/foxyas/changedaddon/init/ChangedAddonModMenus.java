@@ -15,7 +15,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
 import net.foxyas.changedaddon.world.inventory.TransfurTotemGuiMenu;
 import net.foxyas.changedaddon.world.inventory.TranfurSoundsGuiMenu;
-import net.foxyas.changedaddon.world.inventory.PagesecretMenu;
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
 import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
 import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
@@ -44,7 +43,6 @@ public class ChangedAddonModMenus {
 	public static final MenuType<BookPagenumber2Menu> BOOK_PAGENUMBER_2 = register("book_pagenumber_2", (id, inv, extraData) -> new BookPagenumber2Menu(id, inv, extraData));
 	public static final MenuType<Bookpagenumber3Menu> BOOKPAGENUMBER_3 = register("bookpagenumber_3", (id, inv, extraData) -> new Bookpagenumber3Menu(id, inv, extraData));
 	public static final MenuType<Bookpagenumber4Menu> BOOKPAGENUMBER_4 = register("bookpagenumber_4", (id, inv, extraData) -> new Bookpagenumber4Menu(id, inv, extraData));
-	public static final MenuType<PagesecretMenu> PAGESECRET = register("pagesecret", (id, inv, extraData) -> new PagesecretMenu(id, inv, extraData));
 	public static final MenuType<FoxyasguiMenu> FOXYASGUI = register("foxyasgui", (id, inv, extraData) -> new FoxyasguiMenu(id, inv, extraData));
 	public static final MenuType<GeneratorguiMenu> GENERATORGUI = register("generatorgui", (id, inv, extraData) -> new GeneratorguiMenu(id, inv, extraData));
 	public static final MenuType<CatlyzerguiMenu> CATLYZERGUI = register("catlyzergui", (id, inv, extraData) -> new CatlyzerguiMenu(id, inv, extraData));
