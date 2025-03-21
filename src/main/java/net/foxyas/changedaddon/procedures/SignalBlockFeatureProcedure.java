@@ -15,6 +15,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class SignalBlockFeatureProcedure {
 				int radius = player.isShiftKeyDown() ? LARGE_SEARCH_RADIUS : SMALL_SEARCH_RADIUS;
 				int cooldown = player.isShiftKeyDown() ? 225 : 75;
 				//searchSignalBlock(world, x, y, z, player, itemstack, radius, cooldown);
-				searchSignalBlockUsingChunks(world, x, y, z, player, itemstack, radius, cooldown);
+				searchSignalBlockUsingChunks(world, player.getOnPos(), player, itemstack, radius, cooldown);
 			}
 		}
 	}
@@ -54,6 +55,8 @@ public class SignalBlockFeatureProcedure {
 		int chunkZ = (int) z >> 4;
 
 		List<BlockPos> foundPositions = new ArrayList<>();
+
+		world.getBlockStatesIfLoaded(new AABB(x,y,z,x,y,z).inflate(radius));
 
 		for (int cx = chunkX - chunkRadius; cx <= chunkX + chunkRadius; cx++) {
 			for (int cz = chunkZ - chunkRadius; cz <= chunkZ + chunkRadius; cz++) {
@@ -81,6 +84,32 @@ public class SignalBlockFeatureProcedure {
 				displayFoundLocations(player, foundPositions);
 			}
 			playSounds(world, x, y, z, firstFound);
+		} else if (!player.level.isClientSide()) {
+			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
+		}
+	}
+
+	private static void searchSignalBlockUsingChunks(LevelAccessor world, BlockPos pos, Player player, ItemStack itemstack, int radius, int cooldown) {
+		List<BlockPos> foundPositions = new ArrayList<>();
+		BlockPos.betweenClosedStream(new AABB(pos,pos).inflate(radius)).forEach((blockPos) -> {
+			if (world.getBlockState(blockPos).getBlock() == ChangedAddonModBlocks.SIGNAL_BLOCK.get() &&
+					blockPos.distSqr(pos) <= radius * radius) {
+				if (foundPositions.size() >= MAX_FOUND_BLOCKS) {
+					return; // Limite alcançado
+				} else {
+					foundPositions.add(pos);
+				}
+			}
+		});
+
+		// Resultado da busca
+		if (!foundPositions.isEmpty()) {
+			BlockPos firstFound = foundPositions.get(0);
+			updatePlayerState(player, itemstack, firstFound.getX(), firstFound.getY(), firstFound.getZ(), cooldown);
+			if (player.level.isClientSide()) {
+				displayFoundLocations(player, foundPositions);
+			}
+			playSounds(world, player.getX(), player.getY(), player.getZ(), firstFound);
 		} else if (!player.level.isClientSide()) {
 			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
 		}

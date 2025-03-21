@@ -84,7 +84,7 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 			livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 		});
 		
-		ChangedAddonLaethinminatorUtil.shootDynamicLaser(player.getLevel(), player, 16, 4, 4);
+		ChangedAddonLaethinminatorUtil.shootDynamicLaser(player.getLevel(), player, 16, 5, 5);
 	}
 
 	@Nullable
@@ -101,8 +101,10 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 		@Override
 		public void setupUsingAnimation(ItemStack itemStack, EntityStateContext entity, UpperModelContext model, HumanoidArm arm, float progress) {
 			super.setupUsingAnimation(itemStack, entity, model, arm, progress);
-			model.rightArm.xRot = model.head.xRot - 1.570796f - (entity.livingEntity.isCrouching() ? 0.2617994F : 0.0F);
-			model.rightArm.yRot = model.head.yRot;
+			arm = entity.livingEntity.getUsedItemHand() == InteractionHand.MAIN_HAND ? arm : arm.getOpposite();
+
+			model.getArm(arm).xRot = model.head.xRot - 1.570796f - (entity.livingEntity.isCrouching() ? 0.2617994F : 0.0F);
+			model.getArm(arm).yRot = model.head.yRot;
 		}
 	}
 }

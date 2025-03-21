@@ -61,7 +61,7 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 	public static class SpawnHandle {
 		@SubscribeEvent
 		public static void SpawnHandles(BiomeLoadingEvent event) {
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), 300, 1, 4));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), 30, 1, 4));
 		}
 	}
 
