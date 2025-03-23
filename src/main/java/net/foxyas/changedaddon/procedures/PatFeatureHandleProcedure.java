@@ -6,9 +6,11 @@ import net.foxyas.changedaddon.entity.Exp2MaleEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.*;
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.registers.ChangedAddonCriteriaTriggers;
+import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Emote;
@@ -29,6 +31,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -169,7 +172,7 @@ public class PatFeatureHandleProcedure {
                 || ProcessTransfur.getPlayerTransfurVariant(target).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
 
 
-        if ((isPlayerTransfur || !isPlayerTransfur) && (!isTargetTransfur || isTargetTransfur) && isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
+        if (isHandEmpty(player, InteractionHand.MAIN_HAND) || isHandEmpty(player, InteractionHand.OFF_HAND)) {
             if (!isPlayerTransfur && !isTargetTransfur) {
                 return;
             }//Don't Be Able to Pet if at lest one is Transfur :P
@@ -250,7 +253,6 @@ public class PatFeatureHandleProcedure {
                 }
             }
         }
-
     }
 
     public static void SpawnEmote(Player player, Entity target){
@@ -258,11 +260,11 @@ public class PatFeatureHandleProcedure {
             if (changedEntity.getTarget() == player){
                 return;
             }
-            if (changedEntity instanceof AbstractDarkLatexWolf){
+            if (shouldBeConfused(player, target)) {
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(player.getLevel(),
                         ChangedParticles.emote(changedEntity, Emote.CONFUSED),
                         target.getX(),
-                        target.getY() + (double)target.getDimensions(target.getPose()).height + 0.65,
+                        target.getY() + (double) target.getDimensions(target.getPose()).height + 0.65,
                         target.getZ(),
                         0.0f,
                         0.0f,
@@ -270,6 +272,15 @@ public class PatFeatureHandleProcedure {
                 );
             }
         }
+    }
+
+    private static boolean shouldBeConfused(Player player, Entity entity) {
+        if (entity instanceof AbstractDarkLatexWolf) {
+            // Verificando se o jogador usa a armadura correta
+            return player.getItemBySlot(EquipmentSlot.HEAD).is(ChangedAddonRegisters.DARK_LATEX_HEAD_CAP.get())
+                    && player.getItemBySlot(EquipmentSlot.CHEST).is(ChangedAddonRegisters.DARK_LATEX_COAT.get());
+        }
+        return false;
     }
 
     public static void GiveStealthPatAdvancement(Entity entity, Entity target) {

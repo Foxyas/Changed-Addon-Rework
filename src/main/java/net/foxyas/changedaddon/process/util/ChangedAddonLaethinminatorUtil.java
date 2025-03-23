@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.List;
 
+import static net.foxyas.changedaddon.process.util.FoxyasUtils.getRelativePosition;
+
 public class ChangedAddonLaethinminatorUtil {
 
     public static void shootDynamicLaser(Level world, Player player, int maxRange, int horizontalRadius, int verticalRadius) {
@@ -73,7 +75,7 @@ public class ChangedAddonLaethinminatorUtil {
 
     public static void shootDynamicLaser(ServerLevel world, Player player, int maxRange, int horizontalRadius, int verticalRadius) {
         Vec3 eyePosition = player.getEyePosition(1.0F); // Posição dos olhos do jogador
-        Vec3 lookDirection = player.getLookAngle();    // Direção para onde o jogador está olhando
+        //Vec3 lookDirection = player.getLookAngle().normalize();    // Direção para onde o jogador está olhando
         //aplicar um efeito de particulas de "gas"
         Color StartColor = new Color(255, 255, 255, 255);
         Color EndColor = new Color(255, 179, 179, 255);
@@ -84,7 +86,7 @@ public class ChangedAddonLaethinminatorUtil {
 
         for (int i = 1; i <= maxRange; i++) {
             // Calcula a posição do bloco na trajetória do laser
-            Vec3 targetVec = eyePosition.add(lookDirection.scale(i));
+            Vec3 targetVec = eyePosition.add(getRelativePosition(player, 0, 0, i, true));
             BlockPos targetPos = new BlockPos(targetVec);
 
             Vec3 particlePos = eyePos.add(lookDir.scale(i * 0.5));
@@ -92,17 +94,18 @@ public class ChangedAddonLaethinminatorUtil {
 
             // Verifica se o bloco é ar; se for, ignora essa fileira
             if (world.getBlockState(targetPos).isAir()) {
+                // Afeta os blocos ao redor do ponto atual
+                affectSurroundingEntities(world, player, targetVec, 4 * ((double) i / maxRange));
                 continue;
+            } else {
+                affectSurroundingEntities(world, player, targetVec, 4 * ((double) i / maxRange));
             }
-
-            // Afeta os blocos ao redor do ponto atual
-            affectSurroundingEntities(world, player, targetPos, 4);
             affectSurroundingBlocks(world, targetPos, horizontalRadius, verticalRadius);
         }
     }
 
-    public static void affectSurroundingEntities(ServerLevel world, Player player, BlockPos targetPos, double area) {
-        List<ChangedEntity> entityList = world.getEntitiesOfClass(ChangedEntity.class, new AABB(targetPos).inflate(area), (changedEntity) -> changedEntity.getType().is(ChangedTags.EntityTypes.LATEX));
+    public static void affectSurroundingEntities(ServerLevel world, Player player, Vec3 targetPos, double area) {
+        List<ChangedEntity> entityList = world.getEntitiesOfClass(ChangedEntity.class, new AABB(targetPos, targetPos).inflate(area), (changedEntity) -> changedEntity.getType().is(ChangedTags.EntityTypes.LATEX));
         for (ChangedEntity en : entityList) {
             boolean isAllied = player.isAlliedTo(en);
             if (player.canAttack(en)

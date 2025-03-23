@@ -91,9 +91,12 @@ public class MusicPlayerProcedure {
             boolean isExp009Phase2ThemePlaying = musicManager.isPlayingMusic(exp009Phase2ThemeMusicInstance);
             boolean isLumiThemePlaying = musicManager.isPlayingMusic(LumiThemeMusicInstance);
 
+
             if ((exp009Phase2Close || ketExp9Close)) {
                 if (!isExp009Phase2ThemePlaying) {
-                    musicManager.startPlaying(exp009Phase2ThemeMusicInstance);
+                    if (!exp10Close && !LumiClose) {
+                        musicManager.startPlaying(exp009Phase2ThemeMusicInstance);
+                    }
                 }
 
                 if (exp009Phase2Entities.stream().anyMatch(Experiment009phase2Entity::isDeadOrDying)
@@ -106,7 +109,9 @@ public class MusicPlayerProcedure {
 
             if (exp10Close) {
                 if (!isExp10ThemePlaying) {
-                    musicManager.startPlaying(exp10ThemeMusicInstance);
+                    if (!exp009Phase2Close && !ketExp9Close) {
+                        musicManager.startPlaying(exp10ThemeMusicInstance);
+                    }
                 }
 
                 if (exp10Entities.stream().anyMatch(LivingEntity::isDeadOrDying)) {
@@ -118,7 +123,9 @@ public class MusicPlayerProcedure {
 
             if (LumiClose && LumiEntities.stream().anyMatch((e) -> e.getTarget() == player)) {
                 if (!isLumiThemePlaying) {
-                    musicManager.startPlaying(LumiThemeMusicInstance);
+                    if (!exp10Close && !ketExp9Close && !exp009Phase2Close)  {
+                        musicManager.startPlaying(LumiThemeMusicInstance);
+                    }
                 }
 
                 if (LumiEntities.stream().anyMatch(LivingEntity::isDeadOrDying)) {

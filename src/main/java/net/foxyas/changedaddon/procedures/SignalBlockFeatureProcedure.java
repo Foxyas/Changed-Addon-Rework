@@ -91,16 +91,32 @@ public class SignalBlockFeatureProcedure {
 
 	private static void searchSignalBlockUsingChunks(LevelAccessor world, BlockPos pos, Player player, ItemStack itemstack, int radius, int cooldown) {
 		List<BlockPos> foundPositions = new ArrayList<>();
-		BlockPos.betweenClosedStream(new AABB(pos,pos).inflate(radius)).forEach((blockPos) -> {
-			if (world.getBlockState(blockPos).getBlock() == ChangedAddonModBlocks.SIGNAL_BLOCK.get() &&
-					blockPos.distSqr(pos) <= radius * radius) {
-				if (foundPositions.size() >= MAX_FOUND_BLOCKS) {
-					return; // Limite alcançado
-				} else {
-					foundPositions.add(pos);
+		int chunkRadius = (radius >> 4) + 1; // Raio em chunks (16 blocos por chunk)
+		double x,y,z;
+		x = player.getX();
+		y = player.getY();
+		z = player.getZ();
+
+		int chunkX = (int) x >> 4;
+		int chunkZ = (int) z >> 4;
+
+		for (int cx = chunkX - chunkRadius; cx <= chunkX + chunkRadius; cx++) {
+			for (int cz = chunkZ - chunkRadius; cz <= chunkZ + chunkRadius; cz++) {
+				if (world instanceof Level level) {
+					var chunk = level.getChunk(cx, cz);
+					chunk.getBlockEntities().forEach((BlockPos, entity) -> {
+						// Verifique se a posição está no raio
+						if (entity.getBlockState().getBlock() == ChangedAddonModBlocks.SIGNAL_BLOCK.get() &&
+								BlockPos.distSqr(new Vec3i(x, y, z)) <= radius * radius) {
+							foundPositions.add(BlockPos);
+							if (foundPositions.size() >= MAX_FOUND_BLOCKS) {
+								return; // Limite alcançado
+							}
+						}
+					});
 				}
 			}
-		});
+		}
 
 		// Resultado da busca
 		if (!foundPositions.isEmpty()) {

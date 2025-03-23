@@ -404,6 +404,16 @@ public class PlayerUtilProcedure {
             }
         }
 
+        public static void sendParticlesinClient(Level level, ParticleOptions particleOptions, double x, double y, double z, double XV, double YV, double ZV, int count) {
+            // Enviar as partículas
+            if (level instanceof ClientLevel clientLevel) {
+                for (int i = 0; i < count; i++) {
+                    clientLevel.addParticle(particleOptions,
+                            x, y, z, XV, YV, ZV);
+                }
+            }
+        }
+
     }
 
     @OnlyIn(Dist.CLIENT)

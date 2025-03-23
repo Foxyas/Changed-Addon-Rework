@@ -46,7 +46,7 @@ public class Exp9AttacksHandle {
                 return false; // Evita atacar jogadores no modo criativo ou spectator
             }
 
-            return target != null && (boss.distanceTo(target) >= 4 && boss.distanceTo(target) <= 16) && (boss.isPhase2() ? true : random.nextFloat() >= 0.25f);
+            return target != null && (boss.distanceTo(target) >= 9 && boss.distanceTo(target) <= 18) && (boss.isPhase2() || !boss.isPhase2() && random.nextFloat() <= 0.25f);
         }
 
         @Override
@@ -101,6 +101,7 @@ public class Exp9AttacksHandle {
                 // Teleporta o boss para o chão dinamicamente
                 boss.teleportTo(smashPos.x, smashPos.y, smashPos.z);
                 boss.SpawnThunderBolt(smashPos);
+                boss.setAttackCoolDown(0);
             }
         }
 
@@ -462,7 +463,7 @@ public class Exp9AttacksHandle {
 
         @Override
         public boolean canUse() {
-            return boss.getTarget() != null && boss.getHealth() / boss.getMaxHealth() <= 0.5 && this.boss.distanceTo(boss.getTarget()) >= 6;
+            return boss.getTarget() != null && boss.getHealth() / boss.getMaxHealth() <= 0.5 && this.boss.distanceTo(boss.getTarget()) >= 8 && this.boss.getAttackCoolDown() >= 50;
         }
 
         @Override
@@ -504,7 +505,7 @@ public class Exp9AttacksHandle {
             LivingEntity target = boss.getTarget();
             if (target == null) return false;
 
-            boolean isClose = boss.distanceTo(target) < 3;
+            boolean isClose = boss.distanceTo(target) <= 3;
             boolean lastHitTimeHigher = boss.getLastHurtByMobTimestamp() > target.getLastHurtByMobTimestamp();
             boolean attackedByAnother = boss.getLastHurtByMob() != null && boss.getLastHurtByMob() != target;
 
