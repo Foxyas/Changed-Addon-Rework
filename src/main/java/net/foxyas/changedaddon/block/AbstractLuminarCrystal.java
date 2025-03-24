@@ -361,11 +361,16 @@ public class AbstractLuminarCrystal {
         public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
             super.entityInside(state, level, pos, entity);
             if (entity instanceof LivingEntity livingEntity) {
+                MobEffectInstance EffectInstance = new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true);
                 if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
                     return;
                 }
+                if (!livingEntity.canBeAffected(EffectInstance)){
+                    return;
+                }
+
                 if (!livingEntity.hasEffect(MobEffects.WITHER)) {
-                    livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true));
+                    livingEntity.addEffect(EffectInstance);
                 }
                 livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 5);
             }

@@ -28,6 +28,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
@@ -233,6 +235,15 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
             return super.hurt(source, amount * 0.5f);
         }
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
+        if (mobEffectInstance.getEffect() == MobEffects.WITHER){
+            return false;
+        }
+
+        return super.canBeAffected(mobEffectInstance);
     }
 
     @Override
