@@ -24,9 +24,10 @@ public class SolventHitTickProcedure {
 	public static void onEntityAttacked(LivingHurtEvent event) {
 		Entity target = event.getEntity();
 		DamageSource source = event.getSource();
+		String MsgId = source.getMsgId();
 
 		// Verifica se o atacante possui o encantamento Solvent
-		if (source == ChangedAddonDamageSources.SOLVENT) {
+		if (source == ChangedAddonDamageSources.SOLVENT || (source.getMsgId().equals("latex_solvent") || source.getMsgId().startsWith("latex_solvent"))) {
 			playSoundAndParticles(target);
 		}
 	}
