@@ -150,10 +150,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
 
     @Override
     public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
-        if (mobEffectInstance.getEffect() == MobEffects.WITHER){
-            return false;
-        }
-
         return super.canBeAffected(mobEffectInstance);
     }
 

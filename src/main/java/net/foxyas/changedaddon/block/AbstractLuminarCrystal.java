@@ -365,7 +365,7 @@ public class AbstractLuminarCrystal {
                 if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
                     return;
                 }
-                if (!livingEntity.canBeAffected(EffectInstance)){
+                if (!livingEntity.canBeAffected(EffectInstance) || livingEntity instanceof AbstractLuminarcticLeopard){
                     return;
                 }
 
