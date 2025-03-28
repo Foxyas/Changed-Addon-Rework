@@ -14,7 +14,8 @@ public class ThunderSparkOption implements ParticleOptions {
     public static final Deserializer<ThunderSparkOption> DESERIALIZER = new Deserializer<>() {
         @Override
         public @NotNull ThunderSparkOption fromNetwork(@NotNull ParticleType<ThunderSparkOption> type, FriendlyByteBuf buffer) {
-            return new ThunderSparkOption(type,buffer.readInt());
+            int energyCharge = buffer.readInt();
+            return new ThunderSparkOption(type, energyCharge);
         }
 
         @Override
@@ -23,10 +24,9 @@ public class ThunderSparkOption implements ParticleOptions {
             if (!reader.canRead()) {
                 throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.readerExpectedInt().create();
             }
-
             try {
-                int variant = reader.readInt();
-                return new ThunderSparkOption(type,variant);
+                int energyCharge = reader.readInt();
+                return new ThunderSparkOption(type, energyCharge);
             } catch (Exception e) {
                 throw CommandSyntaxException.BUILT_IN_EXCEPTIONS.readerInvalidInt().create(reader);
             }
@@ -35,22 +35,27 @@ public class ThunderSparkOption implements ParticleOptions {
 
     public static Codec<ThunderSparkOption> codec(ParticleType<ThunderSparkOption> type) {
         return RecordCodecBuilder.create(builder -> builder.group(
-                Codec.INT.fieldOf("variant").forGetter(option -> option.variant)
-        ).apply(builder, (id) -> new ThunderSparkOption(type, id)));
+                Codec.INT.fieldOf("energy").forGetter(option -> option.EnergyCharge)
+        ).apply(builder, (energy) -> new ThunderSparkOption(type, energy)));
     }
 
-    private final int variant;
-
+    private final int EnergyCharge;
     private ParticleType<ThunderSparkOption> Type;
 
-    public ThunderSparkOption(ParticleType<ThunderSparkOption> type, int variant) {
+    public ThunderSparkOption(ParticleType<ThunderSparkOption> type, int energyCharge, int replayCount) {
         super();
         this.Type = type;
-        this.variant = Mth.clamp(variant, 0, 2); // Garante que está entre 0 e 2
+        this.EnergyCharge = energyCharge;
     }
 
-    public int getVariant() {
-        return variant;
+    public ThunderSparkOption(ParticleType<ThunderSparkOption> type, int energyCharge) {
+        super();
+        this.Type = type;
+        this.EnergyCharge = energyCharge; //Mth.clamp(energyCharge, 1, 80); // Garante que está entre 0 e 2
+    }
+
+    public int getEnergyCharge() {
+        return EnergyCharge;
     }
 
     @Override
@@ -60,12 +65,12 @@ public class ThunderSparkOption implements ParticleOptions {
 
     @Override
     public void writeToNetwork(FriendlyByteBuf buffer) {
-        buffer.writeInt(variant);
+        buffer.writeInt(EnergyCharge);
     }
 
     @Override
     public @NotNull String writeToString() {
-        return "thunder_spark_" + variant;
+        return "thunder_spark_" + EnergyCharge;
     }
 
 
