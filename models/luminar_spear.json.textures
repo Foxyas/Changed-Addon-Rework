@@ -1,0 +1,10 @@
+{
+  "mappings": {
+    "default": {
+      "map": {
+        "0": "luminar_crystal_spear"
+      },
+      "name": "default"
+    }
+  }
+}

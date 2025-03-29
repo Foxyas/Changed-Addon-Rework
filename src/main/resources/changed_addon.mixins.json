@@ -12,6 +12,7 @@
     "ChangedEntityTargetSelectorMixin",
     "ChangedMixin",
     "CrossCollisionBlockMixin",
+    "EnchantmentMixin",
     "InfinityEnchantmentMixin",
     "PlayerMixin",
     "RandomVariantFunctionMixin",

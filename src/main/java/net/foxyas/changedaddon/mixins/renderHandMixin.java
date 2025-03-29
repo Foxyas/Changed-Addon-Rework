@@ -11,16 +11,21 @@ import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
+import net.ltxprogrammer.changed.client.tfanimations.TransfurAnimator;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.extension.ChangedCompatibility;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -32,12 +37,42 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static net.ltxprogrammer.changed.client.FormRenderHandler.renderModelPartWithTexture;
+import static net.ltxprogrammer.changed.client.FormRenderHandler.renderHand;
 
 @Mixin(value = FormRenderHandler.class, remap = false)
 public class renderHandMixin {
 
+    @Inject(method = "maybeRenderHand",at = @At("HEAD") , cancellable = true)
+    private static void renderBothHands(PlayerRenderer playerRenderer, PoseStack stack, MultiBufferSource buffer, int light, AbstractClientPlayer player, ModelPart arm, ModelPart armwear, CallbackInfoReturnable<Boolean> cir){
+        ProcessTransfur.ifPlayerTransfurred(player, (variant) -> {
+            if (player == Minecraft.getInstance().getCameraEntity()) {
+                if (shouldRenderBothHands(player, variant)){
+                    float partialTick = Minecraft.getInstance().getDeltaFrameTime();
+                    HumanoidArm handSide = ((PlayerModel)playerRenderer.getModel()).rightArm != arm ? HumanoidArm.LEFT.getOpposite() : HumanoidArm.RIGHT.getOpposite();
+                    ChangedCompatibility.freezeIsFirstPersonRendering();
+                    variant.sync(player);
+                    variant.getChangedEntity().setCustomNameVisible(true);
+                    if (variant.getTransfurProgression(partialTick) < 1.0F && !variant.isTemporaryFromSuit()) {
+                        TransfurAnimator.startCapture();
+                        renderHand(player, handSide, stack, buffer, light, partialTick);
+                        renderHand(variant.getChangedEntity(), handSide, stack, buffer, light, partialTick);
+                        TransfurAnimator.endCapture();
+                        ChangedCompatibility.forceIsFirstPersonRenderingToFrozen();
+                        TransfurAnimator.renderTransfurringArm(player, handSide, variant, stack, buffer, light, partialTick, (ResourceLocation)null);
+                    } else {
+                        renderHand(variant.getChangedEntity(), handSide, stack, buffer, light, partialTick);
+                    }
+
+                    ChangedCompatibility.thawIsFirstPersonRendering();
+                }
+            }
+        });
+    }
+
+    /*
     @Inject(method = "renderHand(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/HumanoidArm;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IFZ)V",
             at = @At("TAIL"), cancellable = true)
     private static void renderBothHand(LivingEntity living, HumanoidArm arm, PoseStack stack, MultiBufferSource buffer, int light, float partialTick, boolean layers, CallbackInfo ci) {
@@ -74,6 +109,7 @@ public class renderHandMixin {
         renderModelPartWithTexture(handPart, stackCorrector, stack, buffer.getBuffer(RenderType.entityCutout(texture)), light, 1.0F);
         stack.popPose();
     }
+    */
 
     /**
      * Determine if both hands should be rendered based on the player's state and abilities.

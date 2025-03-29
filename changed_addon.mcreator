@@ -12582,6 +12582,22 @@
           "src/main/resources/assets/changed_addon/models/item/meaningless_strafe_music_disc.json"
         ]
       }
+    },
+    {
+      "name": "LuminarCrystalSpear",
+      "type": "rangeditem",
+      "sortid": 655,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "luminar_crystal_spear",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/entity/LuminarCrystalSpearEntity.java",
+          "src/main/java/net/foxyas/changedaddon/client/renderer/LuminarCrystalSpearRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/item/LuminarCrystalSpearItem.java",
+          "src/main/resources/assets/changed_addon/models/item/luminar_crystal_spear.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -12928,6 +12944,7 @@
       "gui.changed_addon.book_pagenumber_2.label_ammonia_particle": "Ammonia Particle",
       "advancements.changedaddon_advancement.descr": "You downloaded the Changed Addon by Foxyas",
       "item.changed_addon.luminar_crystal_shard": "Luminar Crystal Shard",
+      "item.changed_addon.luminar_crystal_spear": "Luminar Crystal Spear",
       "gui.changed_addon.bookpagenumber_3.button_back": "Back",
       "gui.changed_addon.bookrecipepage_6.label_pany_potion": "P\u003dANY POTION",
       "gui.changed_addon.bookrecipepage_8.label_3": "3",

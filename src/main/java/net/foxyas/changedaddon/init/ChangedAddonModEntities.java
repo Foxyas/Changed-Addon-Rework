@@ -25,6 +25,7 @@ import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
+import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
@@ -162,6 +163,8 @@ public class ChangedAddonModEntities {
 					.setCustomClientFactory(LatexSquidTigerSharkEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<LuminarCrystalSpearEntity>> LUMINAR_CRYSTAL_SPEAR = register("projectile_luminar_crystal_spear", EntityType.Builder.<LuminarCrystalSpearEntity>of(LuminarCrystalSpearEntity::new, MobCategory.MISC)
+			.setCustomClientFactory(LuminarCrystalSpearEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
