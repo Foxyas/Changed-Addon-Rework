@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.client.gui.PatOverlay;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
@@ -52,6 +53,8 @@ public class PatFeatureHandleProcedure {
         if (targetEntity == null) return;
 
         if (isInSpectatorMode(entity)) return;
+
+        if (entity instanceof Player p && !(PatOverlay.isPossibleToPat(p))) return;
 
         if (targetEntity instanceof Experiment10Entity || targetEntity instanceof KetExperiment009Entity
                 || targetEntity instanceof Experiment10BossEntity || targetEntity instanceof KetExperiment009BossEntity) {

@@ -1,5 +1,9 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.client.gui.PatOverlay;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
+import net.ltxprogrammer.changed.init.*;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.tags.TagKey;
@@ -13,10 +17,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.core.Registry;
 
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
-import net.ltxprogrammer.changed.init.ChangedTags;
-import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.beast.WhiteLatexCentaur;
@@ -85,6 +85,21 @@ public class CarryAbility extends SimpleAbility {
 		return PlayerUtilProcedure.getEntityPlayerLookingAt(player, 4);
 	}
 
+	public boolean isPossibleToCarry(LivingEntity entity) {
+		if (entity instanceof Player player){
+			var variant = ProcessTransfur.getPlayerTransfurVariant(player);
+			if (variant != null) {
+				var ability = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+				if (ability != null
+						&& ability.suited
+						&& ability.grabbedHasControl) {
+					return false;
+				}
+			}
+		}
+		return GrabEntityAbility.getGrabber(entity) == null;
+	}
+
 	private void Run(Entity mainEntity) {
 		if (!(mainEntity instanceof Player player))
 			return;
@@ -114,6 +129,8 @@ public class CarryAbility extends SimpleAbility {
 		Entity carryTarget = this.CarryTarget(player);
 		if (carryTarget == null)
 			return;
+		if (carryTarget instanceof LivingEntity p && !(this.isPossibleToCarry(p))) return;
+
 		if (carryTarget instanceof WhiteLatexCentaur || (carryTarget instanceof Player p && ProcessTransfur.getPlayerTransfurVariant(p) != null && ProcessTransfur.getPlayerTransfurVariant(p).is(ChangedTransfurVariants.WHITE_LATEX_CENTAUR.get()))) {
 			player.displayClientMessage(new TranslatableComponent("changedaddon.warn.cant_carry", carryTarget.getDisplayName()), true);
 			return;

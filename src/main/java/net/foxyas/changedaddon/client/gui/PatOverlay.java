@@ -62,7 +62,7 @@ public class PatOverlay {
                     Entity lookedEntity = PlayerUtilProcedure.getEntityLookingAt(entity, 3);
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isEntityInPassiveStage(lookedEntity) && isKeySet()) {
                         if (!getPatInfo(entity).getString().isEmpty()){
-                        	if (!lookedEntity.isInvisible() && isPossibletoPat(entity)){
+                        	if (!lookedEntity.isInvisible() && isPossibleToPat(entity)){
                                if (!ChangedAddonClientConfigsConfiguration.PAW_STYLE_PAT_OVERLAY.get()) {
                                     float EntityNameLength = PatInfo2(lookedEntity).getString().length();
                                     float MoveOverlayAmount = EntityNameLength * 2f;
@@ -156,7 +156,7 @@ public class PatOverlay {
 
 
 
-    private static boolean isPossibletoPat(Player player) {
+    public static boolean isPossibleToPat(Player player) {
         var variant = ProcessTransfur.getPlayerTransfurVariant(player);
         if (variant != null) {
             var ability = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
