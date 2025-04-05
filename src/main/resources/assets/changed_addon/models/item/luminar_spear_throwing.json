@@ -1,0 +1,21 @@
+{
+  "parent": "changed_addon:item/luminar_crystal_spear",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [180, 90, 0],
+      "translation": [0, 0, 0.75]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [180, 90, 0],
+      "translation": [0, 0, 0.75]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, -96, 23],
+      "translation": [3.25, 0, 0]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, -96, 23],
+      "translation": [3.25, 0, 0]
+    }
+  }
+}

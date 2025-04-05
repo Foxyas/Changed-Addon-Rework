@@ -3,5 +3,13 @@
   "textures": {
     "0": "changed_addon:blocks/luminar_crystal_spear",
     "particle": "changed_addon:items/air"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "throwing": 1
+      },
+      "model": "changed_addon:item/luminar_spear_throwing"
+    }
+  ]
 }

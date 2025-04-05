@@ -8,6 +8,6 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class GooCoreFragmentItem extends Item {
 	public GooCoreFragmentItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).fireResistant().rarity(Rarity.COMMON));
 	}
 }

@@ -8,6 +8,6 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class LuminarCrystalShardItem extends Item {
 	public LuminarCrystalShardItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).fireResistant().rarity(Rarity.RARE));
 	}
 }

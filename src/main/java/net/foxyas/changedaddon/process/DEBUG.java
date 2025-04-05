@@ -49,7 +49,7 @@ public class DEBUG {
             } else if (a.startsWith("l")){
                 HeadPosL =  (float) convert(a.replace("l",""));
             } else if (a.startsWith("j")){
-                HeadPosL =  (float) convert(a.replace("j",""));
+                HeadPosJ =  (float) convert(a.replace("j",""));
             }
             if (a.startsWith("x")){
                 HeadPosX =  (float) convert(a.replace("x",""));

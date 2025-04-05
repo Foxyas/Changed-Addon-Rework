@@ -12,11 +12,14 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
+import net.foxyas.changedaddon.procedures.LaethinPropertyValueProviderProcedure;
+import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryProcedure;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityPieceCollection;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoomPiece;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
@@ -102,6 +105,12 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 	@SubscribeEvent
 	public static void registerItems(FMLConstructModEvent event) {
 		ChangedAddonRegisters.ITEMS_REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+	}
+
+	@SubscribeEvent
+	public static void clientLoad(FMLClientSetupEvent event) {
+		event.enqueueWork(() -> ItemProperties.register(LUMINAR_CRYSTAL_SPEAR.get(), new ResourceLocation("throwing"),
+				(stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F));
 	}
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

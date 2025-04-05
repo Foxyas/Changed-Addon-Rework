@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.CustomHandle;
 
+import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.process.util.DelayedTask;
@@ -11,30 +12,33 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
-
-import net.minecraft.world.entity.player.Player;
 
 public class Exp9AttacksHandle {
 
-    public static class TeleportComboGoal extends Goal {
+    public static class TeleportUpperCutComboGoal extends Goal {
         private final KetExperiment009BossEntity boss;
         private LivingEntity target;
         private int phase = 0;
         private int ticks = 0;
+        private int delay = 5;
         private final Random random = new Random();
 
-        public TeleportComboGoal(KetExperiment009BossEntity boss) {
+
+        public TeleportUpperCutComboGoal(KetExperiment009BossEntity boss) {
             this.boss = boss;
         }
 
@@ -46,7 +50,7 @@ public class Exp9AttacksHandle {
                 return false; // Evita atacar jogadores no modo criativo ou spectator
             }
 
-            return target != null && (boss.distanceTo(target) >= 9 && boss.distanceTo(target) <= 18) && (boss.isPhase2() || !boss.isPhase2() && random.nextFloat() <= 0.25f);
+            return target != null && target.isOnGround() && (boss.distanceTo(target) >= 7.5 && boss.distanceTo(target) <= 18) && (boss.isPhase2() || (!boss.isPhase2() && random.nextFloat() <= 0.25f));
         }
 
         @Override
@@ -64,16 +68,19 @@ public class Exp9AttacksHandle {
 
         @Override
         public void start() {
+            super.start();
             phase = 0;
             ticks = 0;
+            this.delay = this.boss.isPhase2() && this.boss.computeHealthRatio() <= 0.30f ? 3 : 5;
             teleportTargetUp();
         }
 
         @Override
         public void tick() {
+            super.tick();
             ticks++;
 
-            if (ticks % 5 == 0) { // Executa a cada segundo
+            if (ticks % delay == 0) {
                 switch (phase) {
                     case 1, 2, 3 -> followAndKnockback();
                     case 4 -> hammerSmash();
@@ -84,6 +91,7 @@ public class Exp9AttacksHandle {
 
         @Override
         public void stop() {
+            super.stop();
             whenStopUsing();
         }
 
@@ -106,11 +114,18 @@ public class Exp9AttacksHandle {
         }
 
         private void teleportTargetUp() {
-            Vec3 newPos = target.position().add(0, 10, 0);
-            target.teleportTo(newPos.x, newPos.y, newPos.z);
-            this.boss.swing(InteractionHand.MAIN_HAND);
-            target.hurt(boss.ThunderDmg, 4);
+            SummonTeleportParticles();
+            boss.teleportTo(target.position().x, target.position().y, target.position().z);
             boss.setAttackCoolDown(0);
+            this.boss.swing(InteractionHand.MAIN_HAND);
+            Vec3 newPos = target.position().add(0, 10, 0);
+            if (target.isBlocking()) {
+                this.phase = 5;
+                target.teleportTo(newPos.x, newPos.y * 0.5, newPos.z);
+                return;
+            }
+            target.teleportTo(newPos.x, newPos.y, newPos.z);
+            target.hurt(boss.ThunderDmg, 4);
 
             // Aplica Slow Falling no boss e no target por 4 segundos (80 ticks)
             MobEffectInstance slowFallingEffect = new MobEffectInstance(MobEffects.SLOW_FALLING, 40, 0, false, false);
@@ -120,8 +135,27 @@ public class Exp9AttacksHandle {
             spawnThunder(newPos);
         }
 
+        private void SummonTeleportParticles() {
+            Vec3 posDifference = target.position().subtract(this.boss.position());
+            int maxAmount = 20;
+
+            for (int i = 0; i <= maxAmount; i++) {
+                double ratio = (double) i / maxAmount;
+                Vec3 spawnPos = this.boss.getEyePosition().add(posDifference.scale(ratio));
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                        this.boss.getLevel(),
+                        ChangedAddonParticles.thunderSpark(1),
+                        spawnPos,
+                        0.25f, 0.25f, 0.25f,
+                        5, // quantidade por ponto
+                        1  // speed
+                );
+            }
+        }
+
 
         private void followAndKnockback() {
+            SummonTeleportParticles();
             Vec3 knockDir = target.getLookAngle().scale(-1).add(0, 0.5, 0);
             boss.teleportTo(target.getX(), target.getY(), target.getZ());
             target.setDeltaMovement(knockDir);
@@ -131,6 +165,9 @@ public class Exp9AttacksHandle {
         }
 
         private void hammerSmash() {
+            // Aplica O Rastro de particulas para simular velocidade
+            SummonTeleportParticles();
+
             // Aplica o impacto ao alvo
             target.setDeltaMovement(0, -3, 0);
             boss.swing(InteractionHand.MAIN_HAND);
@@ -145,6 +182,190 @@ public class Exp9AttacksHandle {
             spawnParticles(target.position());
         }
 
+
+        private void spawnParticles(Vec3 pos) {
+            if (boss.level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 10, 0.5, 0.5, 0.5, 0);
+                boss.playSound(SoundEvents.LIGHTNING_BOLT_THUNDER, 2, 1);
+            }
+        }
+
+        private void spawnThunder(Vec3 pos) {
+            if (boss.level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 10, 0.5, 0.5, 0.5, 0);
+                boss.SpawnThunderBolt(pos);
+            }
+        }
+    }
+
+    public static class TeleportComboGoal extends Goal {
+        private final KetExperiment009BossEntity boss;
+        private LivingEntity target;
+        private int phase = 0;
+        private int ticks = 0;
+        private int delay = 5;
+        private final Random random = new Random();
+
+
+        public TeleportComboGoal(KetExperiment009BossEntity boss) {
+            this.boss = boss;
+        }
+
+        @Override
+        public boolean canUse() {
+            this.target = boss.getTarget();
+
+            if (target instanceof Player player && (player.isCreative() || player.isSpectator())) {
+                return false; // Evita atacar jogadores no modo criativo ou spectator
+            }
+
+            return target != null && target.isOnGround() && (boss.distanceTo(target) >= 7.5 && boss.distanceTo(target) <= 18) && (boss.isPhase2() || (!boss.isPhase2() && random.nextFloat() <= 0.25f));
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            if (target instanceof Player player) {
+                if (player.isCreative() || player.isSpectator()) {
+                    return false;
+                }
+            }
+
+
+            return phase < 7 && target != null && target.isAlive();
+        }
+
+
+        @Override
+        public void start() {
+            super.start();
+            phase = 0;
+            ticks = 0;
+            this.delay = this.boss.isPhase2() && this.boss.computeHealthRatio() <= 0.30f ? 3 : 5;
+            teleportToTarget();
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            ticks++;
+
+            if (ticks % delay == 0) {
+                switch (phase) {
+                    case 1, 2, 3, 4 -> followAttackAndKnockback();
+                    case 5 -> UpperCut();
+                    case 6 -> hammerSmash();
+                }
+                phase++;
+            }
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            whenStopUsing();
+        }
+
+        private void whenStopUsing() {
+            if (!boss.isOnGround()) { // Se o boss estiver no ar
+                double x = boss.getX();
+                double z = boss.getZ();
+
+                // Obtém a altura do primeiro bloco sólido abaixo
+                int groundY = boss.level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, (int) x, (int) z);
+
+                // Define a nova posição para o teleporte (levemente acima do chão para evitar clipagem)
+                Vec3 smashPos = new Vec3(x, groundY + 0.5, z);
+
+                // Teleporta o boss para o chão dinamicamente
+                boss.teleportTo(smashPos.x, smashPos.y, smashPos.z);
+                boss.SpawnThunderBolt(smashPos);
+                boss.setAttackCoolDown(0);
+            }
+        }
+
+        private void teleportToTarget() {
+            SummonTeleportParticles();
+            boss.teleportTo(target.position().x, target.position().y, target.position().z);
+            boss.setAttackCoolDown(0);
+            this.boss.swing(InteractionHand.MAIN_HAND);
+            Vec3 knockDir = target.getLookAngle().scale(-1).add(0, 0.1f, 0);
+            Vec3 newPos = target.position().add(0, 0, 0);
+            if (target.isBlocking()) {
+                target.knockback(2, knockDir.x, knockDir.z);
+            } else {
+                target.knockback(4, knockDir.x, knockDir.z);
+            }
+            target.hurt(boss.ThunderDmg, 4);
+            spawnThunder(newPos);
+        }
+
+
+        private void followAttackAndKnockback() {
+            SummonTeleportParticles();
+            Vec3 knockDir = target.getLookAngle().scale(-1).add(0, 0.1f, 0);
+            boss.teleportTo(target.getX(), target.getY(), target.getZ());
+            target.setDeltaMovement(knockDir);
+            this.boss.swing(InteractionHand.MAIN_HAND);
+            target.hurt(boss.ThunderDmg, 2);
+            spawnParticles(target.position());
+        }
+
+        private void UpperCut() {
+            // Aplica O Rastro de particulas para simular velocidade
+            SummonTeleportParticles();
+			
+            // Aplica o impacto ao alvo
+            target.setDeltaMovement(0, 3, 0);
+            boss.teleportTo(target.getX(), target.getY(), target.getZ());
+            boss.swing(InteractionHand.MAIN_HAND);
+            target.hurt(boss.ThunderDmg, 4);
+            boss.setAttackCoolDown(0);
+
+            // Aplica Slow Falling no boss e no target por 4 segundos (80 ticks)
+            MobEffectInstance slowFallingEffect = new MobEffectInstance(MobEffects.SLOW_FALLING, 40, 0, false, false);
+            target.addEffect(slowFallingEffect);
+            boss.addEffect(slowFallingEffect);
+
+            // Spawn de partículas no local do impacto
+            spawnParticles(target.position());
+        }
+
+        private void hammerSmash() {
+            // Aplica O Rastro de particulas para simular velocidade
+            SummonTeleportParticles();
+
+            // Aplica o impacto ao alvo
+            target.setDeltaMovement(0, -3, 0);
+            boss.teleportTo(target.getX(), target.getY(), target.getZ());
+            boss.swing(InteractionHand.MAIN_HAND);
+            target.hurt(boss.ThunderDmg, 4);
+            boss.setAttackCoolDown(0);
+
+            // Remove Slow Falling do boss e do target.
+            //target.removeEffect(MobEffects.SLOW_FALLING);
+            boss.removeEffect(MobEffects.SLOW_FALLING);
+
+            // Spawn de partículas no local do impacto
+            spawnParticles(target.position());
+        }
+
+        private void SummonTeleportParticles() {
+            Vec3 posDifference = target.position().subtract(this.boss.position());
+            int maxAmount = 20;
+
+            for (int i = 0; i <= maxAmount; i++) {
+                double ratio = (double) i / maxAmount;
+                Vec3 spawnPos = this.boss.getEyePosition().add(posDifference.scale(ratio));
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                        this.boss.getLevel(),
+                        ChangedAddonParticles.thunderSpark(1),
+                        spawnPos,
+                        0.25f, 0.25f, 0.25f,
+                        5, // quantidade por ponto
+                        1  // speed
+                );
+            }
+        }
 
         private void spawnParticles(Vec3 pos) {
             if (boss.level instanceof ServerLevel serverLevel) {
@@ -351,10 +572,16 @@ public class Exp9AttacksHandle {
     public static class ThunderPathway extends Goal {
 
         public final KetExperiment009BossEntity boss;
+        private int ticks;
+        private int thunderIndex;
+        private int MaxThunderIndex;
+        private boolean running;
+        private Vec3 forward; // Recalcula para cada tick
 
         public ThunderPathway(KetExperiment009BossEntity boss) {
             super();
             this.boss = boss;
+            this.MaxThunderIndex = 10;
         }
 
         @Override
@@ -366,37 +593,48 @@ public class Exp9AttacksHandle {
             return boss.getAttackCoolDown() >= 100 && distance >= 5;
         }
 
-
         public LivingEntity getTarget() {
             return this.boss.getTarget();
         }
 
         @Override
         public void start() {
-            run();
+            this.ticks = 0;
+            this.thunderIndex = 0;
+            this.running = true;
+            this.forward = this.boss.getLookAngle().scale(5);
+            this.boss.setAttackCoolDown(0); // Reseta o cooldown da IA
         }
 
-        public void run() {
-            thunderPathway();
-            boss.setAttackCoolDown(0); // Reseta a AI
+        @Override
+        public boolean canContinueToUse() {
+            return running;
         }
 
-        private void thunderPathway() {
-            if (this.getTarget() != null && this.boss.level instanceof ServerLevel) {
-                Vec3 forward = this.boss.getLookAngle().scale(5); // Direção para frente (ajustada pela rotação da entidade)
-                for (int i = 0; i < 5; i++) {
-                    if (this.boss.isPhase2()) {
-                        forward = this.boss.getLookAngle().scale(5); // Direção para frente, se estiver na fase 2
-                    }
+        @Override
+        public void tick() {
+            ticks++;
 
-                    Vec3 startPos = this.boss.position();
-                    Vec3 currentPos = startPos.add(forward.scale(i)); // Avança na direção do olhar
-                    this.boss.SpawnThunderBolt(currentPos);
+            // Spawna um thunder a cada 2 ticks
+            if (ticks % 2 == 0 && thunderIndex < MaxThunderIndex) {
+                if (this.boss.isPhase2()) {
+                    forward = this.boss.getLookAngle().scale(MaxThunderIndex); // Recalcula se necessário
                 }
+
+                Vec3 startPos = this.boss.position();
+                Vec3 currentPos = startPos.add(forward.scale((double) thunderIndex / MaxThunderIndex));
+                this.boss.SpawnThunderBolt(currentPos);
+
+                thunderIndex++;
+            }
+
+            // Quando terminar os 5 spawns, finaliza
+            if (thunderIndex >= MaxThunderIndex) {
+                running = false;
             }
         }
-
     }
+
 
     public static class ThunderStorm extends Goal {
 
@@ -518,4 +756,167 @@ public class Exp9AttacksHandle {
             BossAbilitiesHandle.ExplosionBurst(this.boss);
         }
     }
+
+    public static class ThunderBoltImpactAttack extends Goal {
+        private final KetExperiment009BossEntity boss;
+        private final List<BlockPos> thunderPositions = new ArrayList<>();
+        private int tickDelay = -1;
+        private int thunderIndex = 0;
+
+        public ThunderBoltImpactAttack(KetExperiment009BossEntity boss) {
+            this.boss = boss;
+        }
+
+        @Override
+        public boolean canUse() {
+            LivingEntity target = boss.getTarget();
+            if (target == null) return false;
+
+            boolean isClose = boss.distanceTo(target) <= 3;
+            boolean timePassed = boss.tickCount - boss.getLastHurtByMobTimestamp() > 80; // 4s
+
+            return isClose && timePassed;
+        }
+
+        @Override
+        public void start() {
+            thunderPositions.clear();
+            thunderIndex = 0;
+            tickDelay = 2;
+
+            BlockPos center = boss.blockPosition();
+
+            // Cria uma área circular de 4x4 (raio ~2)
+            for (int x = -2; x <= 2; x++) {
+                for (int z = -2; z <= 2; z++) {
+                    if (x * x + z * z <= 4) { // raio <= 2.0 (círculo)
+                        thunderPositions.add(center.offset(x, 0, z));
+                    }
+                }
+            }
+
+            // Embaralhar (opcional)
+            Collections.shuffle(thunderPositions);
+        }
+
+        @Override
+        public void tick() {
+            if (tickDelay > 0) {
+                tickDelay--;
+                return;
+            }
+
+            if (thunderIndex < thunderPositions.size()) {
+                BlockPos pos = thunderPositions.get(thunderIndex);
+
+                // Summona trovão visual
+                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(boss.level);
+                if (lightning != null) {
+                    lightning.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+                    lightning.setVisualOnly(true);
+                    boss.level.addFreshEntity(lightning);
+                }
+
+                // Knockback vertical se tiver entidade perto
+                AABB hitbox = new AABB(pos).inflate(1.5); // raio de impacto
+                List<LivingEntity> nearby = boss.level.getEntitiesOfClass(LivingEntity.class, hitbox, e -> e != boss && e.isAlive());
+
+                for (LivingEntity e : nearby) {
+                    e.setDeltaMovement(e.getDeltaMovement().x, 1.2, e.getDeltaMovement().z);
+                    e.hurtMarked = true;
+                    e.hurt(boss.ThunderDmg, 2.5f);
+                }
+
+                thunderIndex++;
+                tickDelay = 2;
+            }
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return thunderIndex < thunderPositions.size();
+        }
+
+        @Override
+        public void stop() {
+            thunderPositions.clear();
+            thunderIndex = 0;
+            tickDelay = -1;
+        }
+    }
+
+    public static class ThunderBoltAreaAttack extends Goal {
+        private final KetExperiment009BossEntity boss;
+        private final List<LivingEntity> targets = new ArrayList<>();
+        private int tickDelay = -1;
+        private int thunderIndex = 0;
+
+        public ThunderBoltAreaAttack(KetExperiment009BossEntity boss) {
+            this.boss = boss;
+        }
+
+        @Override
+        public boolean canUse() {
+            LivingEntity target = boss.getTarget();
+            if (target == null) return false;
+
+            boolean isClose = boss.distanceTo(target) <= 3;
+            boolean timePassed = boss.tickCount - boss.getLastHurtByMobTimestamp() > 80; // 4 segundos
+
+            return isClose && timePassed;
+        }
+
+        @Override
+        public void start() {
+            // Coleta as entidades próximas uma vez
+            AABB area = boss.getBoundingBox().inflate(3); // raio de 3 blocos
+            List<LivingEntity> nearbyEntities = boss.level.getEntitiesOfClass(LivingEntity.class, area, e -> e != boss && e.isAlive());
+            targets.clear();
+            targets.addAll(nearbyEntities);
+
+            tickDelay = 2; // delay inicial antes do primeiro trovão
+            thunderIndex = 0;
+        }
+
+        @Override
+        public void tick() {
+            if (tickDelay > 0) {
+                tickDelay--;
+                return;
+            }
+
+            if (thunderIndex < targets.size()) {
+                LivingEntity entity = targets.get(thunderIndex);
+
+                // Summona trovão visual
+                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(boss.level);
+                if (lightning != null) {
+                    lightning.moveTo(entity.getX(), entity.getY(), entity.getZ());
+                    lightning.setVisualOnly(true);
+                    boss.level.addFreshEntity(lightning);
+                }
+
+                // Aplica knockback vertical
+                entity.setDeltaMovement(entity.getDeltaMovement().x, 1.2, entity.getDeltaMovement().z);
+                entity.hurtMarked = true;
+
+                thunderIndex++;
+                tickDelay = 5; // delay entre cada trovão (5 ticks = 0.25s)
+            }
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return thunderIndex < targets.size();
+        }
+
+        @Override
+        public void stop() {
+            targets.clear();
+            tickDelay = -1;
+            thunderIndex = 0;
+        }
+    }
+
+
 }

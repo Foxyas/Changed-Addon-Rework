@@ -48,6 +48,10 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     }
 
     public static void ExplosionBurst(Entity boss) {
+        if (boss.getLevel().isClientSide()) {
+            return;
+        }
+
         int radius = 3; // Raio da explosão
         int radiusY = 3;
         BlockPos center = boss.blockPosition();

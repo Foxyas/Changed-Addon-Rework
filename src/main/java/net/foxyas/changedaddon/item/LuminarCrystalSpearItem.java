@@ -42,7 +42,7 @@ public class LuminarCrystalSpearItem extends Item implements Vanishable {
 	public static final float SHOOT_POWER = 2.5F;
 	private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 	public LuminarCrystalSpearItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(500));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(500).fireResistant());
 		ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", 9.0D, AttributeModifier.Operation.ADDITION));
 		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", (double)-2.9F, AttributeModifier.Operation.ADDITION));

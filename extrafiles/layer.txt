@@ -1,0 +1,61 @@
+private static class DEVRENDER<T extends ChangedEntity, M extends EntityModel<T> & HeadedModel> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
+
+        private final M model;
+
+        public DEVRENDER(RenderLayerParent<T, M> parent, M model) {
+            super(parent);
+            this.model = model;
+        }
+
+
+        @Override
+        public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+            // Aplica o scale
+            poseStack.pushPose();
+            poseStack.scale(DEBUG.HeadPosX, DEBUG.HeadPosY, DEBUG.HeadPosZ);
+            poseStack.translate(DEBUG.HeadPosT, DEBUG.HeadPosK, DEBUG.HeadPosL);
+
+            // Define o tipo de render que brilha mas não é outline
+            RenderType renderType = RenderType.energySwirl(this.getTextureLocation(entity), DEBUG.HeadPosB, DEBUG.HeadPosJ);
+
+            // Usa uma cor customizada com transparência
+            VertexConsumer vc = bufferSource.getBuffer(renderType);
+            Color3 RenderCor = entity.getBasicPlayerInfo().getHairColor();
+
+
+            // Aplica a cor definida por RenderCor
+            float r = RenderCor.red();
+            float g = RenderCor.green();
+            float b = RenderCor.blue();
+            float alpha = DEBUG.HeadPosV;
+
+            this.model.renderToBuffer(poseStack, vc, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, alpha);
+            poseStack.popPose();
+        }
+
+        @Override
+        public void renderFirstPersonOnArms(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector, float partialTick) {
+            FirstPersonLayer.super.renderFirstPersonOnArms(poseStack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
+             // Aplica o scale
+            poseStack.pushPose();
+            poseStack.scale(DEBUG.HeadPosX, DEBUG.HeadPosY, DEBUG.HeadPosZ);
+            poseStack.translate(DEBUG.HeadPosT, DEBUG.HeadPosK, DEBUG.HeadPosL);
+
+            // Define o tipo de render que brilha mas não é outline
+            RenderType renderType = RenderType.energySwirl(this.getTextureLocation(entity), DEBUG.HeadPosB, DEBUG.HeadPosJ);
+
+            // Usa uma cor customizada com transparência
+            VertexConsumer vc = bufferSource.getBuffer(renderType);
+            Color3 RenderCor = entity.getBasicPlayerInfo().getHairColor();
+
+
+            // Aplica a cor definida por RenderCor
+            float r = RenderCor.red();
+            float g = RenderCor.green();
+            float b = RenderCor.blue();
+            float alpha = DEBUG.HeadPosV;
+
+            this.model.renderToBuffer(poseStack, vc, packedLight, OverlayTexture.NO_OVERLAY, r, g, b, alpha);
+            poseStack.popPose();
+        }
+    }

@@ -2,6 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import com.mojang.math.Vector3f;
+import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
@@ -24,11 +25,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
@@ -43,8 +47,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +63,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean Phase2;
     private int AttackCoolDown;
+    private boolean shouldBleed;
 
     public void setAttackCoolDown(int attackCoolDown) {
         AttackCoolDown = attackCoolDown;
@@ -89,7 +94,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1));
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12.5);
         attributes.getInstance(Attributes.ARMOR).setBaseValue(12.5);
-        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(6);
         attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
         attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.85);
     }
@@ -179,7 +184,10 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         this.goalSelector.addGoal(10, new Exp9AttacksHandle.ThunderStorm(this));
         this.goalSelector.addGoal(5, new Exp9AttacksHandle.TeleportAttack(this));
         this.goalSelector.addGoal(3, new Exp9AttacksHandle.TeleportComboGoal(this));
+        this.goalSelector.addGoal(3, new Exp9AttacksHandle.TeleportUpperCutComboGoal(this));
         this.goalSelector.addGoal(6, new Exp9AttacksHandle.BurstAttack(this));
+        this.goalSelector.addGoal(8, new Exp9AttacksHandle.ThunderBoltImpactAttack(this));
+        this.goalSelector.addGoal(7, new Exp9AttacksHandle.ThunderBoltAreaAttack(this));
     }
 
     @Override
@@ -294,7 +302,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 425);
-        builder = builder.add(Attributes.ARMOR, 40);
+        builder = builder.add(Attributes.ARMOR, 12.5);
         builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
         builder = builder.add(Attributes.FOLLOW_RANGE, 16);
         builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
@@ -316,6 +324,8 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             Phase2 = tag.getBoolean("Phase2");
         if (tag.contains("AttackCoolDown"))
             AttackCoolDown = tag.getInt("AttackCoolDown");
+        if (tag.contains("Bleeding"))
+            shouldBleed = tag.getBoolean("Bleeding");
     }
 
     @Override
@@ -323,6 +333,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Phase2", Phase2);
         tag.putInt("AttackCoolDown", AttackCoolDown);
+        tag.putBoolean("Bleeding", shouldBleed);
     }
 
     @Override
@@ -330,21 +341,76 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         super.visualTick(level);
     }
 
+    public boolean isBleeding() {
+        return shouldBleed;
+    }
+
+    @Override
+    protected void onEffectAdded(@NotNull MobEffectInstance mobEffectInstance, @Nullable Entity entity) {
+        super.onEffectAdded(mobEffectInstance, entity);
+        if (this.getUnderlyingPlayer() == null && mobEffectInstance.getEffect() == MobEffects.HEAL && this.isBleeding()) {
+            this.shouldBleed = false;
+        }
+    }
+
+    @Override
+    public void die(@NotNull DamageSource damageSource) {
+        if (damageSource instanceof EntityDamageSource entityDamageSource && entityDamageSource.getDirectEntity() != null) {
+            this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1, 1);
+            for (int theta = 0; theta < 360; theta += 25) { // Ângulo horizontal
+                double angleTheta = Math.toRadians(theta);
+                for (int phi = 0; phi <= 180; phi += 25) { // Ângulo vertical
+                    double anglePhi = Math.toRadians(phi);
+                    double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
+                    double y = this.getY() + Math.cos(anglePhi) * 4.0;
+                    double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
+                    Vec3 pos = new Vec3(x, y, z);
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                            this.getLevel(),
+                            ParticleTypes.ELECTRIC_SPARK,
+                            pos,
+                            0.1f, 0.1f, 0.1f,
+                            5, 1
+                    );
+                }
+            }
+            this.playSound(SoundEvents.GENERIC_EXPLODE, 1, 1);
+        }
+        super.die(damageSource);
+    }
+
     @Override
     public void baseTick() {
         super.baseTick();
         if (this.getUnderlyingPlayer() == null) {
+            if (shouldBleed && this.computeHealthRatio() > 0.10 && this.tickCount % 4 == 0){
+                this.setHealth(this.getHealth() - 0.05f);
+            }
             if (this.AttackCoolDown < 100) {
                 this.AttackCoolDown += this.isPhase2() ? 2 : 1;
             }
             if (this.isPhase2()) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.position().add(0, 1f, 0), 0.3f, 0.5f, 0.3f, 15, 0.2f);
+                if (this.shouldBleed) {
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.position().add(0, 1f, 0), 0.3f, 0.5f, 0.3f, 15, 0.2f);
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.35f, 0.50f, 0.35f, 5, 1);
+                }
+                if (this.computeHealthRatio() <= 0.35f) {
+                    removeStatModifiers();
+                    applyStatModifierAllOutPhase();
+                    this.shouldBleed = true;
+                }
+                else {
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.35f, 0.50f, 0.35f, 5, 1);
+                    applyStatModifier(this, 1.5);
+                }
+                /*
                 Color[] colors = new Color[2];
                 colors[0] = new Color(70, 199, 255);
                 colors[1] = new Color(13, 160, 208);
                 ParticleOptions dustColor = getParticleOptions(colors[0], colors[1]);
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), dustColor, this.position().add(0, 0.5, 0), 0.35f, 0.70f, 0.35f, 5, 0);
-                applyStatModifier(this, 1.5);
+                */
+
             } else {
                 removeStatModifiers();
             }
@@ -401,6 +467,14 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     	applyModifierIfAbsent(entity, Attributes.KNOCKBACK_RESISTANCE, "a06083b0-291d-4a72-85de-73bd93ffb739", "KnockbackResistanceMultiplier", multiplier - 1);
     	//applyModifierIfAbsent(entity, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710", "SpeedMultiplier", (multiplier - 1) * 0.5);
 	}
+
+    public void applyStatModifierAllOutPhase() {
+        applyModifierIfAbsent(this, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", -0.25f);
+        applyModifierIfAbsent(this, Attributes.ARMOR, "a06083b0-291d-4a72-85de-73bd93ffb737", "ArmorMultiplier", 0.75f);
+        applyModifierIfAbsent(this, Attributes.ARMOR_TOUGHNESS, "a06083b0-291d-4a72-85de-73bd93ffb738", "ArmorToughnessMultiplier", 0.5f);
+        applyModifierIfAbsent(this, Attributes.KNOCKBACK_RESISTANCE, "a06083b0-291d-4a72-85de-73bd93ffb739", "KnockbackResistanceMultiplier", 0.5f);
+        //applyModifierIfAbsent(entity, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710", "SpeedMultiplier", (multiplier - 1) * 0.5);
+    }
 
 	private void applyModifierIfAbsent(LivingEntity entity, Attribute attribute, String uuid, String name, double value) {
     	AttributeInstance attributeInstance = entity.getAttribute(attribute);
