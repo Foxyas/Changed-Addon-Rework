@@ -29,7 +29,7 @@ import java.util.Random;
 
 public class Exp9AttacksHandle {
 
-    public static class TeleportUpperCutComboGoal extends Goal {
+    public static class TeleportAirComboGoal extends Goal {
         private final KetExperiment009BossEntity boss;
         private LivingEntity target;
         private int phase = 0;
@@ -38,7 +38,7 @@ public class Exp9AttacksHandle {
         private final Random random = new Random();
 
 
-        public TeleportUpperCutComboGoal(KetExperiment009BossEntity boss) {
+        public TeleportAirComboGoal(KetExperiment009BossEntity boss) {
             this.boss = boss;
         }
 
@@ -125,6 +125,7 @@ public class Exp9AttacksHandle {
                 return;
             }
             target.teleportTo(newPos.x, newPos.y, newPos.z);
+            target.invulnerableTime = 0;
             target.hurt(boss.ThunderDmg, 4);
 
             // Aplica Slow Falling no boss e no target por 4 segundos (80 ticks)
@@ -160,6 +161,7 @@ public class Exp9AttacksHandle {
             boss.teleportTo(target.getX(), target.getY(), target.getZ());
             target.setDeltaMovement(knockDir);
             this.boss.swing(InteractionHand.MAIN_HAND);
+            target.invulnerableTime = 0;
             target.hurt(boss.ThunderDmg, 2);
             spawnParticles(target.position());
         }
@@ -171,6 +173,7 @@ public class Exp9AttacksHandle {
             // Aplica o impacto ao alvo
             target.setDeltaMovement(0, -3, 0);
             boss.swing(InteractionHand.MAIN_HAND);
+            target.invulnerableTime = 0;
             target.hurt(boss.ThunderDmg, 4);
             boss.setAttackCoolDown(0);
 
@@ -295,6 +298,7 @@ public class Exp9AttacksHandle {
             } else {
                 target.knockback(4, knockDir.x, knockDir.z);
             }
+            target.invulnerableTime = 0;
             target.hurt(boss.ThunderDmg, 4);
             spawnThunder(newPos);
         }
@@ -306,6 +310,7 @@ public class Exp9AttacksHandle {
             boss.teleportTo(target.getX(), target.getY(), target.getZ());
             target.setDeltaMovement(knockDir);
             this.boss.swing(InteractionHand.MAIN_HAND);
+            target.invulnerableTime = 0;
             target.hurt(boss.ThunderDmg, 2);
             spawnParticles(target.position());
         }
@@ -319,6 +324,7 @@ public class Exp9AttacksHandle {
             target.setDeltaMovement(0, 3, 0);
             boss.teleportTo(target.getX(), target.getY(), target.getZ());
             boss.swing(InteractionHand.MAIN_HAND);
+            target.invulnerableTime = 0;
             target.hurt(boss.ThunderDmg, 4);
             boss.setAttackCoolDown(0);
 
@@ -339,6 +345,7 @@ public class Exp9AttacksHandle {
             target.setDeltaMovement(0, -3, 0);
             boss.teleportTo(target.getX(), target.getY(), target.getZ());
             boss.swing(InteractionHand.MAIN_HAND);
+            target.invulnerableTime = 0;
             target.hurt(boss.ThunderDmg, 4);
             boss.setAttackCoolDown(0);
 

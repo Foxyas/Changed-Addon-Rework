@@ -177,14 +177,14 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(8, new Exp9AttacksHandle.ThunderPathway(this));
+        this.goalSelector.addGoal(9, new Exp9AttacksHandle.ThunderPathway(this));
         this.goalSelector.addGoal(8, new Exp9AttacksHandle.ThunderShock(this));
         this.goalSelector.addGoal(5, new Exp9AttacksHandle.ThunderSpeed(this));
         this.goalSelector.addGoal(5, new Exp9AttacksHandle.ThunderWave(this));
         this.goalSelector.addGoal(10, new Exp9AttacksHandle.ThunderStorm(this));
         this.goalSelector.addGoal(5, new Exp9AttacksHandle.TeleportAttack(this));
-        this.goalSelector.addGoal(3, new Exp9AttacksHandle.TeleportComboGoal(this));
-        this.goalSelector.addGoal(3, new Exp9AttacksHandle.TeleportUpperCutComboGoal(this));
+        this.goalSelector.addGoal(4, new Exp9AttacksHandle.TeleportComboGoal(this));
+        this.goalSelector.addGoal(4, new Exp9AttacksHandle.TeleportAirComboGoal(this));
         this.goalSelector.addGoal(6, new Exp9AttacksHandle.BurstAttack(this));
         this.goalSelector.addGoal(8, new Exp9AttacksHandle.ThunderBoltImpactAttack(this));
         this.goalSelector.addGoal(7, new Exp9AttacksHandle.ThunderBoltAreaAttack(this));

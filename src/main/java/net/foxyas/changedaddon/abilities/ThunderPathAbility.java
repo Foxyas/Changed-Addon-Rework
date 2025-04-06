@@ -45,6 +45,8 @@ public class ThunderPathAbility extends AbstractAbility<ThunderPathAbility.Insta
 
         public int MaxThunderIndex = 10;
 
+        public Vec3 startPos = Vec3.ZERO;
+
         @Override
         public void saveData(CompoundTag tag) {
             super.saveData(tag);
@@ -107,12 +109,11 @@ public class ThunderPathAbility extends AbstractAbility<ThunderPathAbility.Insta
 
         @Override
         public void startUsing() {
-
+        	startPos = owner.getEntity().position();
         }
 
         @Override
         public void tick() {
-
             if (!(owner.getEntity() instanceof Player player) || !(owner.getLevel() instanceof ServerLevel serverLevel))
                 return;
 
@@ -125,8 +126,7 @@ public class ThunderPathAbility extends AbstractAbility<ThunderPathAbility.Insta
 
 
             if (ticks % 4 == 0 && thunderIndex < MaxThunderIndex) {
-                Vec3 startPos = owner.getEntity().position();
-                Vec3 currentPos = startPos.add(forwardCap).add(forward.scale((double) thunderIndex / MaxThunderIndex));
+                Vec3 currentPos = this.startPos.add(forwardCap).add(forward.scale((double) thunderIndex / MaxThunderIndex));
 
                 LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(serverLevel);
                 if (bolt != null) {
@@ -140,8 +140,8 @@ public class ThunderPathAbility extends AbstractAbility<ThunderPathAbility.Insta
 
             if (thunderIndex >= MaxThunderIndex) {
                 thunderIndex = 0;
-                abilityInstance.getController().applyCoolDown(); // Para a habilidade
-                return;
+                abilityInstance.getController().deactivateAbility(); // Para a habilidade
+                abilityInstance.getController().applyCoolDown();
             }
         }
 
