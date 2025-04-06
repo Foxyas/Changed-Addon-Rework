@@ -7966,7 +7966,7 @@
       "type": "restructure",
       "sortid": 443,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "dazed_latex_meteor",
       "metadata": {
         "files": [

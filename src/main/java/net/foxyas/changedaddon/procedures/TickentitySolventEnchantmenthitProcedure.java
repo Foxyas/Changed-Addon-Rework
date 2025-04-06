@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.Experiment009Entity;
+import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -84,6 +84,11 @@ public class TickentitySolventEnchantmenthitProcedure {
 	private static void applyEffects(LivingHurtEvent event, Entity target, int enchantLevel) {
 		// Multiplica o dano baseado no nível do encantamento
 		double multiplier = event.getAmount() * calculateDamageMultiplier(enchantLevel);
+
+		if (target instanceof KetExperiment009BossEntity) {
+			multiplier = event.getAmount() * (calculateDamageMultiplier(enchantLevel) / 2);
+		}
+		
 		event.setAmount((float) (multiplier));
 
 		// Aplica som e partículas

@@ -366,7 +366,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                     double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
                     Vec3 pos = new Vec3(x, y, z);
                     PlayerUtilProcedure.ParticlesUtil.sendParticles(
-                            this.getLevel(),
+                            entityDamageSource.getDirectEntity().getLevel(),
                             ParticleTypes.ELECTRIC_SPARK,
                             pos,
                             0.1f, 0.1f, 0.1f,
@@ -469,9 +469,9 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 	}
 
     public void applyStatModifierAllOutPhase() {
-        applyModifierIfAbsent(this, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", -0.25f);
-        applyModifierIfAbsent(this, Attributes.ARMOR, "a06083b0-291d-4a72-85de-73bd93ffb737", "ArmorMultiplier", 0.75f);
-        applyModifierIfAbsent(this, Attributes.ARMOR_TOUGHNESS, "a06083b0-291d-4a72-85de-73bd93ffb738", "ArmorToughnessMultiplier", 0.5f);
+        applyModifierIfAbsent(this, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", 0.25f);
+        applyModifierIfAbsent(this, Attributes.ARMOR, "a06083b0-291d-4a72-85de-73bd93ffb737", "ArmorMultiplier", 1.25f);
+        applyModifierIfAbsent(this, Attributes.ARMOR_TOUGHNESS, "a06083b0-291d-4a72-85de-73bd93ffb738", "ArmorToughnessMultiplier", 1.25f);
         applyModifierIfAbsent(this, Attributes.KNOCKBACK_RESISTANCE, "a06083b0-291d-4a72-85de-73bd93ffb739", "KnockbackResistanceMultiplier", 0.5f);
         //applyModifierIfAbsent(entity, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710", "SpeedMultiplier", (multiplier - 1) * 0.5);
     }
