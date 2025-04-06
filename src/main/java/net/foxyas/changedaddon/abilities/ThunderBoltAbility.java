@@ -1,11 +1,9 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -38,7 +36,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 	public boolean canUse(IAbstractChangedEntity entity) {
 		Player player = (Player) entity.getEntity();
 		TransfurVariant<?> Variant = entity.getChangedEntity().getSelfVariant();
-		return player.getFoodData().getFoodLevel() >= 10 && Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get() || Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get() && !Spectator(entity.getEntity());
+		return player.getFoodData().getFoodLevel() >= 10 && (Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get() || Variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) && !Spectator(entity.getEntity());
 	}
 
 	public static boolean Spectator(Entity entity){
@@ -95,7 +93,7 @@ public class ThunderBoltAbility extends SimpleAbility {
 	}
 
 
-	
+
 	private static boolean isHandEmpty(Entity entity, InteractionHand hand) {
 		return entity instanceof LivingEntity livingEntity && livingEntity.getItemInHand(hand).getItem() == Blocks.AIR.asItem();
 	}

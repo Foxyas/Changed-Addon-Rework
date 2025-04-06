@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.AbstractAbility;

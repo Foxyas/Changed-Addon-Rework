@@ -1,12 +1,10 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 
 public class SoftenAbilityInstance extends AbstractAbilityInstance {
 

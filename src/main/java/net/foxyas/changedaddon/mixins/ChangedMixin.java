@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
+import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.Changed;
 import net.minecraftforge.eventbus.api.IEventBus;
 import org.spongepowered.asm.mixin.Mixin;

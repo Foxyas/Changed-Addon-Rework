@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.variants;
 
 import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
+import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -188,7 +188,8 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<KetExperiment009Entity>> KET_EXPERIMENT_009 = register("form_ket_experiment009",TransfurVariant.Builder.of(ChangedAddonModEntities.KET_EXPERIMENT_009)
             .reducedFall().jumpStrength(1.4F).abilities(List.of(
                     entityType -> ChangedAddonAbilities.THUNDERBOLT.get(),
-                    entityType -> ChangedAddonAbilities.SHOCKWAVE.get()
+                    entityType -> ChangedAddonAbilities.SHOCKWAVE.get(),
+                    entityType -> ChangedAddonAbilities.THUNDER_PATH.get()
             )).transfurMode(TransfurMode.ABSORPTION).nightVision());
 
     public static final RegistryObject<TransfurVariant<Experiment10Entity>> EXPERIMENT_10 = register("form_experiment_10",TransfurVariant.Builder.of(ChangedAddonModEntities.EXPERIMENT_10)
@@ -207,7 +208,8 @@ public class ChangedAddonTransfurVariants {
             .reducedFall().jumpStrength(1.75F)
             .abilities(List.of(
                     entityType -> ChangedAddonAbilities.THUNDERBOLT.get(),
-                    entityType -> ChangedAddonAbilities.SHOCKWAVE.get()
+                    entityType -> ChangedAddonAbilities.SHOCKWAVE.get(),
+                    entityType -> ChangedAddonAbilities.THUNDER_PATH.get()
             )).transfurMode(TransfurMode.ABSORPTION)
             .scares(List.of(Zombie.class,WitherSkeleton.class, AbstractVillager.class, Skeleton.class, AbstractGolem.class))
             .nightVision());

@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -16,7 +16,6 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PsychicPulseAbility extends SimpleAbility {
 

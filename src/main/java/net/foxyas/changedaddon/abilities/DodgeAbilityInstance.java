@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;

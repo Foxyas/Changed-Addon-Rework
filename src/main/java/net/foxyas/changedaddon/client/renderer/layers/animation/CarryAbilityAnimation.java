@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.client.renderer.layers.animation;
 
-import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
+import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

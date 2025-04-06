@@ -1,6 +1,5 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
-import net.foxyas.changedaddon.client.gui.PatOverlay;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.init.*;
 import net.minecraft.world.entity.LivingEntity;

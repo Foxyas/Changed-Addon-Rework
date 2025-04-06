@@ -10,8 +10,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 
-import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
-import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
+import net.foxyas.changedaddon.abilities.DodgeAbilityInstance;
+import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 
 @Mod.EventBusSubscriber
 public class ProcessAbilities {

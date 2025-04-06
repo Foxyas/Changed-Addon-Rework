@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
-import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
+import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
+import net.foxyas.changedaddon.abilities.DodgeAbilityInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;

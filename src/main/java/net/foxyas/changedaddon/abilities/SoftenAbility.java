@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.function.BiFunction;
 
 public class SoftenAbility extends AbstractAbility<SoftenAbilityInstance> {
     public SoftenAbility() {

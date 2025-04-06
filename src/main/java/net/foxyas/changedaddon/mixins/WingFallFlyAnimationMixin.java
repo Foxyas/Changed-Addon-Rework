@@ -14,8 +14,8 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.wing.DragonWingFallFlyAnimator;
 
-import net.foxyas.changedaddon.ability.WingFlapAbility;
-import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
+import net.foxyas.changedaddon.abilities.WingFlapAbility;
+import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 
 @Mixin(value = DragonWingFallFlyAnimator.class, remap = false)
 public class WingFallFlyAnimationMixin {

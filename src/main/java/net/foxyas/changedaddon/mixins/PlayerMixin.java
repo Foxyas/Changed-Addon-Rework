@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.ability.ChangedAddonAbilities;
-import net.foxyas.changedaddon.ability.ClawsAbility;
+import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
+import net.foxyas.changedaddon.abilities.ClawsAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;

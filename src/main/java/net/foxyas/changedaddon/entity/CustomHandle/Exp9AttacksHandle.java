@@ -313,7 +313,8 @@ public class Exp9AttacksHandle {
         private void UpperCut() {
             // Aplica O Rastro de particulas para simular velocidade
             SummonTeleportParticles();
-			
+
+			
             // Aplica o impacto ao alvo
             target.setDeltaMovement(0, 3, 0);
             boss.teleportTo(target.getX(), target.getY(), target.getZ());
@@ -701,7 +702,7 @@ public class Exp9AttacksHandle {
 
         @Override
         public boolean canUse() {
-            return boss.getTarget() != null && boss.getHealth() / boss.getMaxHealth() <= 0.5 && this.boss.distanceTo(boss.getTarget()) >= 8 && this.boss.getAttackCoolDown() >= 50;
+            return boss.getTarget() != null && (boss.isOnGround() || boss.getTarget().isOnGround()) && boss.getHealth() / boss.getMaxHealth() <= 0.5 && this.boss.distanceTo(boss.getTarget()) >= 8 && this.boss.getAttackCoolDown() >= 50;
         }
 
         @Override
@@ -822,7 +823,7 @@ public class Exp9AttacksHandle {
                 List<LivingEntity> nearby = boss.level.getEntitiesOfClass(LivingEntity.class, hitbox, e -> e != boss && e.isAlive());
 
                 for (LivingEntity e : nearby) {
-                    e.setDeltaMovement(e.getDeltaMovement().x, 1.2, e.getDeltaMovement().z);
+                    e.setDeltaMovement(e.getDeltaMovement().x, 0.5f, e.getDeltaMovement().z);
                     e.hurtMarked = true;
                     e.hurt(boss.ThunderDmg, 2.5f);
                 }
@@ -897,7 +898,7 @@ public class Exp9AttacksHandle {
                 }
 
                 // Aplica knockback vertical
-                entity.setDeltaMovement(entity.getDeltaMovement().x, 1.2, entity.getDeltaMovement().z);
+                entity.setDeltaMovement(entity.getDeltaMovement().x, 0.5f, entity.getDeltaMovement().z);
                 entity.hurtMarked = true;
 
                 thunderIndex++;

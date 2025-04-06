@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;

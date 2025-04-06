@@ -1,5 +1,5 @@
 
-package net.foxyas.changedaddon.ability;
+package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -24,6 +24,7 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
 	public static final DeferredRegister<AbstractAbility<?>> REGISTRY = ABILITY.createDeferred(ChangedAddonMod.MODID);
 	public static final RegistryObject<LeapAbility> LEAP = REGISTRY.register("leap", LeapAbility::new);
 	public static final RegistryObject<ThunderBoltAbility> THUNDERBOLT = REGISTRY.register("thunderbolt",ThunderBoltAbility::new);
+	public static final RegistryObject<ThunderPathAbility> THUNDER_PATH = REGISTRY.register("thunder_path",ThunderPathAbility::new);
 	public static final RegistryObject<PsychicPulseAbility> PSYCHIC_PULSE = REGISTRY.register("psychic_pulse",PsychicPulseAbility::new);
 	public static final RegistryObject<PsychicHoldAbility> PSYCHIC_HOLD = REGISTRY.register("psychic_hold",PsychicHoldAbility::new);
 	public static final RegistryObject<ShockWaveAbility> SHOCKWAVE = REGISTRY.register("shock_wave",ShockWaveAbility::new);
