@@ -370,7 +370,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                             ParticleTypes.ELECTRIC_SPARK,
                             pos,
                             0.1f, 0.1f, 0.1f,
-                            5, 1
+                            5, 0.1f
                     );
                 }
             }

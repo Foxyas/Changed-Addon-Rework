@@ -114,16 +114,18 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void startUsing() {
         if(entity.getEntity() instanceof Player player){
-            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + getDodgeStaminaRatio()),true);
+            if (this.getController().getHoldTicks() == 0) {
+                player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()), true);
+            }
         }
     }
 
     @Override
     public void tick() {
         SetDodgeActivate(canUse());
-        if(entity.getEntity() instanceof Player player){
-            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + getDodgeStaminaRatio()),true);
-        }
+        /*if(entity.getEntity() instanceof Player player) {
+            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),true);
+        }*/
     }
 
     @Override
@@ -140,7 +142,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
                 DodgeAmount++;
                 DodgeRegenCooldown = 5;
                 if(entity.getEntity() instanceof Player player){
-                    player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", + DodgeAmount),true);
+                    player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),true);
                 }
             } else {
                 DodgeRegenCooldown--;
