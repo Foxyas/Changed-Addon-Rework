@@ -121,10 +121,12 @@ public class ThunderPathAbility extends AbstractAbility<ThunderPathAbility.Insta
             int ticks = abilityInstance.getController().getHoldTicks();
 
             Vec3 forward = owner.getEntity().getLookAngle().scale(ReachAmount(owner)); // pega só uma vez no início
+            Vec3 forwardCap = owner.getEntity().getLookAngle().scale(2f); // pega só uma vez no início
+
 
             if (ticks % 4 == 0 && thunderIndex < MaxThunderIndex) {
                 Vec3 startPos = owner.getEntity().position();
-                Vec3 currentPos = startPos.add(forward.scale((double) thunderIndex / MaxThunderIndex));
+                Vec3 currentPos = startPos.add(forwardCap).add(forward.scale((double) thunderIndex / MaxThunderIndex));
 
                 LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(serverLevel);
                 if (bolt != null) {
