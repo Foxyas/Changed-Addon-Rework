@@ -16,7 +16,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 
 public class SignalCatcherItem extends Item {
 	public SignalCatcherItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
 	}
 
 	@Override

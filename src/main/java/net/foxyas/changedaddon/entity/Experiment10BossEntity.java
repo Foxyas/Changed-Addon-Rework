@@ -340,7 +340,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         SetAttack(this);
         SetSpeed(this);
         TpEntity(this);
-        CrawSystem(this.getTarget());
+        CrawlSystem(this.getTarget());
         thisBurstAttack();
     }
 
@@ -352,7 +352,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
 
-    public void CrawSystem(LivingEntity target) {
+    public void CrawlSystem(LivingEntity target) {
         if (target != null) {
             setCrawlingPoseIfNeeded(target);
             crawlToTarget(target);

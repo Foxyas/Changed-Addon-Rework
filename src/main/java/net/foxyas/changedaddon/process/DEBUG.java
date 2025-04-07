@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.process;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.procedures.*;
 import net.foxyas.changedaddon.process.util.DelayedTask;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.minecraft.core.particles.ParticleType;
@@ -83,6 +84,8 @@ public class DEBUG {
             PlayerUtilProcedure.ParticlesUtil.sendParticles(event.player.getLevel(), ParticleTypes.GLOW, event.player.getEyePosition().add(FoxyasUtils.getRelativePosition(event.player,DeltaX,DeltaY,DeltaZ,true)),0f,0f,0f,4,0);
 
         }
+        //Player player = event.player;
+        //player.displayClientMessage(new TextComponent("Dot = " + DotValueOfViewProcedure.execute(player,player.getMainHandItem())), false);
     }
 
 

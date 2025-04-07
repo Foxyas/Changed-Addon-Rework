@@ -147,7 +147,10 @@ public class ThunderPathAbility extends AbstractAbility<ThunderPathAbility.Insta
 
         @Override
         public void stopUsing() {
-
+			if (thunderIndex > 0) {
+                thunderIndex = 0;
+                this.getController().applyCoolDown();
+            }
         }
 
         @Override

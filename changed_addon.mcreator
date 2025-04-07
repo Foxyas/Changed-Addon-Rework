@@ -7723,7 +7723,9 @@
       "metadata": {
         "files": [
           "src/main/java/net/foxyas/changedaddon/item/SignalCatcherItem.java",
-          "src/main/resources/assets/changed_addon/models/item/signal_catcher.json"
+          "src/main/resources/assets/changed_addon/models/item/signal_catcher.json",
+          "src/main/resources/assets/changed_addon/models/item/signal_catcher_0.json",
+          "src/main/resources/assets/changed_addon/models/item/signal_catcher_1.json"
         ]
       },
       "path": "~/Items"
@@ -12596,6 +12598,30 @@
           "src/main/java/net/foxyas/changedaddon/client/renderer/LuminarCrystalSpearRenderer.java",
           "src/main/java/net/foxyas/changedaddon/item/LuminarCrystalSpearItem.java",
           "src/main/resources/assets/changed_addon/models/item/luminar_crystal_spear.json"
+        ]
+      }
+    },
+    {
+      "name": "DotValueOfView",
+      "type": "procedure",
+      "sortid": 656,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "dot_value_of_view",
+      "metadata": {
+        "return_type": "number",
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/procedures/DotValueOfViewProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "itemstack",
+            "type": "itemstack"
+          }
         ]
       }
     }

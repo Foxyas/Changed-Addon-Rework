@@ -3,12 +3,49 @@
   "_type": "item",
   "definition": {
     "renderType": 0,
-    "texture": "signal_catcher_texture",
+    "texture": "signal_catcher_1",
     "customModelName": "Normal",
-    "customProperties": {},
-    "states": [],
+    "customProperties": {
+      "dot_value": {
+        "name": "DotValueOfView"
+      }
+    },
+    "states": [
+      {
+        "renderType": 0,
+        "texture": "signal_catcher_2",
+        "customModelName": "Normal",
+        "stateMap": [
+          {
+            "property": {
+              "min": -1.7976931348623157E308,
+              "max": 1.7976931348623157E308,
+              "name": "CUSTOM:dot_value",
+              "type": "number"
+            },
+            "value": 0.55
+          }
+        ]
+      },
+      {
+        "renderType": 0,
+        "texture": "signal_catcher_3",
+        "customModelName": "Normal",
+        "stateMap": [
+          {
+            "property": {
+              "min": -1.7976931348623157E308,
+              "max": 1.7976931348623157E308,
+              "name": "CUSTOM:dot_value",
+              "type": "number"
+            },
+            "value": 0.95
+          }
+        ]
+      }
+    ],
     "name": "Signal Catcher",
-    "rarity": "RARE",
+    "rarity": "COMMON",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
     },

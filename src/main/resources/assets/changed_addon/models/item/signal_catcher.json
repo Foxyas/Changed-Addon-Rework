@@ -1,6 +1,20 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/signal_catcher_texture"
-  }
+    "layer0": "changed_addon:items/signal_catcher_1"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "changed_addon:signal_catcher_dot_value": 0.55
+      },
+      "model": "changed_addon:item/signal_catcher_0"
+    },
+    {
+      "predicate": {
+        "changed_addon:signal_catcher_dot_value": 0.95
+      },
+      "model": "changed_addon:item/signal_catcher_1"
+    }
+  ]
 }
