@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.resources.ResourceLocation;
@@ -293,9 +294,12 @@ public class MusicPlayerProcedure {
             return serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
         } else if (player.level.isClientSide()) {
             Minecraft minecraft = Minecraft.getInstance();
-            return Objects.requireNonNull(minecraft.getConnection())
-                    .getPlayerInfo(player.getGameProfile().getId())
-                    .getGameMode() == GameType.SPECTATOR;
+            ClientPacketListener connection = minecraft.getConnection();
+            if (connection != null){
+                var f = connection
+                        .getPlayerInfo(player.getGameProfile().getId());
+                return f != null && f.getGameMode() == GameType.SPECTATOR;
+            }
         }
 
         return false;
