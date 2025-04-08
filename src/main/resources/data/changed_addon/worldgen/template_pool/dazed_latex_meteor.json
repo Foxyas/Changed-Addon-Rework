@@ -8,7 +8,14 @@
         "element_type": "minecraft:single_pool_element",
         "location": "changed_addon:dazed_latex_meteor",
         "projection": "rigid",
-        "processors": "minecraft:empty"
+        "processors": [
+          {
+            "processor_type": "changed_addon:offset_spawn",
+            "x": 5,
+            "y": 10,
+            "z": 5
+          }
+        ]
       }
     },
     {
@@ -17,7 +24,14 @@
         "element_type": "minecraft:single_pool_element",
         "location": "changed_addon:dazed_latex_meteor_side_opened",
         "projection": "rigid",
-        "processors": "minecraft:empty"
+        "processors": [
+          {
+            "processor_type": "changed_addon:offset_spawn",
+            "x": 5,
+            "y": 10,
+            "z": 5
+          }
+        ]
       }
     },
     {
@@ -26,7 +40,14 @@
         "element_type": "minecraft:single_pool_element",
         "location": "changed_addon:dazed_latex_meteor_closed",
         "projection": "rigid",
-        "processors": "minecraft:empty"
+        "processors": [
+          {
+            "processor_type": "changed_addon:offset_spawn",
+            "x": 5,
+            "y": 10,
+            "z": 5
+          }
+        ]
       }
     }
   ]
