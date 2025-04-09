@@ -2,24 +2,10 @@ package net.foxyas.changedaddon.effect.particles;
 
 import com.mojang.serialization.Codec;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.common.Mod;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import com.mojang.serialization.Codec;
-import net.ltxprogrammer.changed.Changed;
-import net.ltxprogrammer.changed.effect.particle.*;
-import net.ltxprogrammer.changed.entity.Emote;
-import net.ltxprogrammer.changed.util.Color3;
+import net.foxyas.changedaddon.item.LaserPointer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -37,9 +23,14 @@ import java.util.function.Function;
 public class ChangedAddonParticles {
     private static final Map<ResourceLocation, ParticleType<?>> REGISTRY = new HashMap<>();
     public static final ParticleType<ThunderSparkOption> THUNDER_SPARK = register(new ResourceLocation(ChangedAddonMod.MODID, "thunder_spark"), ThunderSparkOption.DESERIALIZER, ThunderSparkOption::codec);
+    public static final ParticleType<LaserPointParticle.Option> LAZER_POINT = register(new ResourceLocation(ChangedAddonMod.MODID, "laser_point"), LaserPointParticle.Option.DESERIALIZER, LaserPointParticle.Option::codec);
 
     public static ThunderSparkOption thunderSpark(int lifeSpam) {
         return new ThunderSparkOption(THUNDER_SPARK, lifeSpam);
+    }
+
+    public static LaserPointParticle.Option laserPoint(Entity entity) {
+        return new LaserPointParticle.Option(entity);
     }
 
 
