@@ -3,27 +3,74 @@ package net.foxyas.changedaddon.item;
 import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
 
 public class LaserPointer extends Item implements SpecializedAnimations {
+
+    public static enum DefaultColors {
+        RED(new Color3(255, 0, 0)),
+        GREEN(new Color3(0, 255, 0)),
+        BLUE(new Color3(0, 0, 255)),
+        YELLOW(new Color3(255, 255, 0)),
+        CYAN(new Color3(0, 255, 255)),
+        MAGENTA(new Color3(255, 0, 255)),
+        ORANGE(new Color3(255, 165, 0)),
+        PINK(new Color3(255, 105, 180)),
+        PURPLE(new Color3(128, 0, 128)),
+        WHITE(new Color3(255, 255, 255)),
+        BLACK(new Color3(0, 0, 0)),
+        GRAY(new Color3(128, 128, 128)),
+        LIGHT_GRAY(new Color3(211, 211, 211)),
+        LIME(new Color3(50, 205, 50)),
+        BROWN(new Color3(139, 69, 19)),
+        NAVY(new Color3(0, 0, 128));
+
+        public final Color3 color;
+
+        DefaultColors(Color3 color) {
+            this.color = color;
+        }
+
+        // Construtor sem argumentos, caso queira usar valores padrão depois
+        DefaultColors() {
+            this.color = new Color3(255, 255, 255); // fallback: branco
+        }
+
+        public Color3 getColor() {
+            return color;
+        }
+    }
+
     public LaserPointer() {
         super(new Properties().stacksTo(1).tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
     }
@@ -31,20 +78,20 @@ public class LaserPointer extends Item implements SpecializedAnimations {
     @Override
     public @NotNull ItemStack getDefaultInstance() {
         ItemStack stack = super.getDefaultInstance();
-        stack.getOrCreateTag().putInt("Color", new Color3(140, 0, 0).toInt()); // Cor padrão vermelha
+        stack.getOrCreateTag().putString("Color", new Color3(140, 0, 0).toHexCode()); // Cor padrão vermelha
         return stack;
     }
 
-    public static int getColor(ItemStack stack) {
+    public static String getColor(ItemStack stack) {
         if (stack.hasTag() && stack.getTag().contains("Color")) {
-            return stack.getTag().getInt("Color");
+            return Objects.requireNonNull(Color3.parseHex(stack.getTag().getString("Color"))).toHexCode();
         }
-        return new Color3(140, 0, 0).toInt(); // Cor padrão se não tiver NBT
+        return new Color3(140, 0, 0).toHexCode(); // Cor padrão se não tiver NBT
     }
 
     public static Color3 getColorAsColor3(ItemStack stack) {
         if (stack.hasTag() && stack.getTag().contains("Color")) {
-            return Color3.fromInt(stack.getTag().getInt("Color"));
+            return Color3.parseHex(stack.getTag().getString("Color"));
         }
         return new Color3(140, 0, 0); // Cor padrão se não tiver NBT
     }
@@ -60,21 +107,65 @@ public class LaserPointer extends Item implements SpecializedAnimations {
     }
 
     @Override
+    public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
+        if (this.allowdedIn(tab)) {
+            for (DefaultColors color : DefaultColors.values()) {
+                ItemStack stack = new ItemStack(this);
+                stack.getOrCreateTag().putString("Color", color.getColor().toHexCode());
+                items.add(stack);
+            }
+        }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        if (flag.isAdvanced()) {
+            // Suponha que você tenha salvo os valores RGB no NBT
+            CompoundTag tag = stack.getOrCreateTag();
+            if (tag.contains("Color")) {
+                String hex = tag.getString("Color");
+                tooltip.add(new TextComponent("Color: " + hex).withStyle((e) -> e.withColor(TextColor.parseColor(hex))));
+            }
+        }
+
+    }
+
+
+    @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide) {
-            // Obtém a posição para onde o jogador está olhando
-            var result = player.pick(64.0D, 0.0F, false);
-            if (result.getType() == HitResult.Type.BLOCK) {
-                var hitPos = result.getLocation();
+            HitResult result = player.pick(64.0D, 0.0F, false);
+            EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(player, 64);
+            Vec3 hitPos = result.getLocation();
+            Direction face = Direction.UP; // fallback para quando mirar no ar
 
-                // Spawna a partícula na posição do bloco atingido
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(level,
-                        ChangedAddonParticles.laserPoint(player, LaserPointer.getColorAsColor3(stack), 0.5f),
-                        hitPos.x, hitPos.y, hitPos.z,
-                        0.0, 0.0, 0.0,1,0
-                );
+            // Se for translúcido, refazer raycast ignorando blocos
+            if (result instanceof BlockHitResult blockResult &&
+                    level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+
+                Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
+                        .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
+                BlockHitResult blockHitResult = manualRaycastIgnoringBlocks(level, player, 64, blockSet);
+                hitPos = applyOffset(result.getLocation(), blockHitResult.getDirection(), -0.05D);
+                spawnLaserParticle(level, player, stack, hitPos);
+
+            } else if (result instanceof BlockHitResult blockResult && !level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+                hitPos = applyOffset(result.getLocation(), blockResult.getDirection(), -0.05D);
+                spawnLaserParticle(level, player, stack, hitPos);
+
+            } else if (entityHitResult != null) {
+                face = Direction.getNearest(entityHitResult.getLocation().x, entityHitResult.getLocation().y, entityHitResult.getLocation().z);
+                hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05D);
+                spawnLaserParticle(level, player, stack, hitPos);
+
+            } else if (result.getType() == HitResult.Type.MISS) {
+                // Mira no ar: define uma posição "alvo" no ar baseada na direção do olhar
+                Vec3 lookVec = player.getLookAngle();
+                hitPos = player.getEyePosition().add(lookVec.scale(64.0D));
+                spawnLaserParticle(level, player, stack, hitPos);
             }
 
             player.startUsingItem(hand);
@@ -83,6 +174,27 @@ public class LaserPointer extends Item implements SpecializedAnimations {
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
+
+    // Utilitário para aplicar deslocamento da face atingida
+    private Vec3 applyOffset(Vec3 hitPos, Direction face, double offset) {
+        return hitPos.subtract(
+                face.getStepX() * offset,
+                face.getStepY() * offset,
+                face.getStepZ() * offset
+        );
+    }
+
+    // Envia partícula do laser
+    private void spawnLaserParticle(Level level, Player player, ItemStack stack, Vec3 pos) {
+        PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                level,
+                ChangedAddonParticles.laserPoint(player, LaserPointer.getColorAsColor3(stack), 1f),
+                pos.x, pos.y, pos.z,
+                0.0, 0.0, 0.0,
+                1, 0
+        );
+    }
+
 
     @Nullable
     @Override

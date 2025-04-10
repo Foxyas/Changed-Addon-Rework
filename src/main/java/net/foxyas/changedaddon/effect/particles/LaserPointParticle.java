@@ -5,23 +5,39 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.item.LaserPointer;
+import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.Util;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-//import net.foxyas.changedaddon.process.DEBUG;
-import net.minecraft.core.Direction;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
 
 public class LaserPointParticle extends TextureSheetParticle {
     public static class Option implements ParticleOptions {
@@ -177,11 +193,14 @@ public class LaserPointParticle extends TextureSheetParticle {
     	if (entity instanceof LivingEntity owner && owner.isAlive()) {
         	ItemStack heldItem = owner.getUseItem();
         	if (!heldItem.isEmpty() && heldItem.getItem() instanceof LaserPointer && owner.isUsingItem()) {
-	
+
             	HitResult result = owner.pick(64.0D, 0.0F, true);
-            	if (result.getType() == HitResult.Type.BLOCK) {
-                	BlockHitResult blockResult = (BlockHitResult) result;
-	
+                EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(owner,64);
+            	if (result instanceof BlockHitResult blockResult) {
+                    if (level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)){
+                        Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags()).getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
+                        blockResult = manualRaycastIgnoringBlocks(level, owner, 64, blockSet);
+                    }
                 	Vec3 hitPos = blockResult.getLocation();
                 	Direction face = blockResult.getDirection(); // ← face colidida
 	
@@ -222,7 +241,79 @@ public class LaserPointParticle extends TextureSheetParticle {
                     	// Reset da idade para não desaparecer
                     	this.age = 0;
                 	}
-	            }
+	            } else if (entityHitResult != null) {
+                    Vec3 hitPos = entityHitResult.getLocation();
+                    Direction face = entityHitResult.getEntity().getDirection();// ← face colidida
+
+                    // Aplica offset para trás da face atingida
+                    double offset = -0.05D;
+                    hitPos = hitPos.subtract(
+                            face.getStepX() * offset,
+                            face.getStepY() * offset,
+                            face.getStepZ() * offset
+                    );
+
+                    double dx = hitPos.x - this.x;
+                    double dy = hitPos.y - this.y;
+                    double dz = hitPos.z - this.z;
+
+                    double distanceSquared = dx * dx + dy * dy + dz * dz;
+                    double distance = Math.sqrt(distanceSquared);
+
+                    if (distance >= 0.001) {
+                        // Normaliza o vetor de direção
+                        double ndx = dx * 1; //Math.max(1, distance);
+                        double ndy = dy * 1; //Math.max(1, distance);
+                        double ndz = dz * 1; //Math.max(1, distance);
+
+                        // Define a velocidade base
+                        double speed = 0.5;
+
+                        // Aplica a velocidade ajustada
+                        this.xd = ndx * speed;
+                        this.yd = ndy * speed;
+                        this.zd = ndz * speed;
+
+                        // Move a partícula
+                        this.x += this.xd;
+                        this.y += this.yd;
+                        this.z += this.zd;
+
+                        // Reset da idade para não desaparecer
+                        this.age = 0;
+                    }
+                } else {
+                    Vec3 hitPos = result.getLocation();
+                    double dx = hitPos.x - this.x;
+                    double dy = hitPos.y - this.y;
+                    double dz = hitPos.z - this.z;
+
+                    double distanceSquared = dx * dx + dy * dy + dz * dz;
+                    double distance = Math.sqrt(distanceSquared);
+
+                    if (distance >= 0.001) {
+                        // Normaliza o vetor de direção
+                        double ndx = dx * 1; //Math.max(1, distance);
+                        double ndy = dy * 1; //Math.max(1, distance);
+                        double ndz = dz * 1; //Math.max(1, distance);
+
+                        // Define a velocidade base
+                        double speed = 0.5;
+
+                        // Aplica a velocidade ajustada
+                        this.xd = ndx * speed;
+                        this.yd = ndy * speed;
+                        this.zd = ndz * speed;
+
+                        // Move a partícula
+                        this.x += this.xd;
+                        this.y += this.yd;
+                        this.z += this.zd;
+
+                        // Reset da idade para não desaparecer
+                        this.age = 0;
+                    }
+                }
         	} else {
             	this.remove(); // Jogador parou de usar
 	        }
@@ -230,8 +321,6 @@ public class LaserPointParticle extends TextureSheetParticle {
         	this.remove(); // Dono sumiu
 	    }
 	}
-
-
 
     @Override
     public ParticleRenderType getRenderType() {

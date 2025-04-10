@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.client.renderer.items;
 
+import net.foxyas.changedaddon.item.LaserPointer;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.Item;
@@ -10,11 +11,9 @@ public class LaserItemDynamicRender {
         Minecraft.getInstance().getItemColors().register(
                 (stack, tintIndex) -> {
                     if (tintIndex == 0) { // Só aplica a cor no layer certo
-                        if (stack.hasTag() && stack.getTag().contains("Color")) {
-                            return stack.getTag().getInt("Color");
-                        }
+                        return LaserPointer.getColorAsColor3(stack).toInt();
                     }
-                    return 0xFFFFFFF; // Cor padrão (branco)
+                    return -1; // Cor padrão (branco)
                 },
                 item.get()
         );
@@ -23,11 +22,9 @@ public class LaserItemDynamicRender {
         Minecraft.getInstance().getItemColors().register(
                 (stack, tintIndex) -> {
                     if (tintIndex == 0) { // Só aplica a cor no layer certo
-                        if (stack.hasTag() && stack.getTag().contains("Color")) {
-                            return stack.getTag().getInt("Color");
-                        }
+                        return LaserPointer.getColorAsColor3(stack).toInt();
                     }
-                    return 0xFFFFFFF; // Cor padrão (branco)
+                    return -1; // Cor padrão (branco)
                 },
                 item
         );

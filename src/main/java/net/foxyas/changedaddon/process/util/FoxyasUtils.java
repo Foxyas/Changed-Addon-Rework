@@ -1,11 +1,44 @@
 package net.foxyas.changedaddon.process.util;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Set;
+
 public class FoxyasUtils {
+
+	public static BlockHitResult manualRaycastIgnoringBlocks(Level level, Entity entity, double maxDistance, Set<Block> ignoredBlocks) {
+		Vec3 start = entity.getEyePosition(1.0F);
+		Vec3 lookVec = entity.getViewVector(1.0F);
+		Vec3 end = start.add(lookVec.scale(maxDistance));
+
+		double stepSize = 0.1; // tamanho do passo
+		Vec3 currentPos = start;
+		double steps = maxDistance / stepSize;
+
+		for (int i = 0; i < steps; i++) {
+			BlockPos blockPos = new BlockPos(currentPos);
+			BlockState state = level.getBlockState(blockPos);
+
+			if (!ignoredBlocks.contains(state.getBlock()) && state.isSolidRender(level, blockPos)) {
+				// Retorna o hit manual quando encontra um bloco não ignorado
+				return new BlockHitResult(currentPos, Direction.getNearest(lookVec.x, lookVec.y, lookVec.z), blockPos, true);
+			}
+
+			currentPos = currentPos.add(lookVec.scale(stepSize));
+		}
+
+		// Nada atingido
+		return BlockHitResult.miss(end, Direction.getNearest(lookVec.x, lookVec.y, lookVec.z), new BlockPos(end));
+	}
 
 	public static Vec3 getRelativePositionEyes(Entity entity, float deltaX, float deltaY, float deltaZ) {
 		// Obtém os vetores locais da entidade

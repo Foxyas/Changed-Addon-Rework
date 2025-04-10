@@ -10,10 +10,9 @@
         "projection": "rigid",
         "processors": [
           {
-            "processor_type": "changed_addon:offset_spawn",
-            "x": 5,
-            "y": 10,
-            "z": 5
+            "processor_type": "minecraft:gravity",
+            "heightmap": "WORLD_SURFACE_WG",
+            "offset": -10
           }
         ]
       }
@@ -26,10 +25,9 @@
         "projection": "rigid",
         "processors": [
           {
-            "processor_type": "changed_addon:offset_spawn",
-            "x": 5,
-            "y": 10,
-            "z": 5
+            "processor_type": "minecraft:gravity",
+            "heightmap": "WORLD_SURFACE_WG",
+            "offset": -10
           }
         ]
       }
@@ -42,10 +40,9 @@
         "projection": "rigid",
         "processors": [
           {
-            "processor_type": "changed_addon:offset_spawn",
-            "x": 5,
-            "y": 10,
-            "z": 5
+            "processor_type": "minecraft:gravity",
+            "heightmap": "WORLD_SURFACE_WG",
+            "offset": -10
           }
         ]
       }
