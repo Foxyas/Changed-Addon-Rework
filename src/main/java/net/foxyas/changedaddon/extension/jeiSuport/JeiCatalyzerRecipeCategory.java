@@ -9,15 +9,15 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.recipes.CatalyzerRecipe;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 @Deprecated
-public class JeiCatalyzerRecipeCategory implements IRecipeCategory<JeiCatalyzerRecipe> {
+public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe> {
     public final static ResourceLocation UID = new ResourceLocation("changed_addon", "jei_catalyzer");
     public final static ResourceLocation TEXTURE = new ResourceLocation("changed_addon", "textures/screens/jei_catalyzer_screen.png");
     private final IDrawable background;
@@ -29,7 +29,7 @@ public class JeiCatalyzerRecipeCategory implements IRecipeCategory<JeiCatalyzerR
     }
 
     @Override
-    public mezz.jei.api.recipe.RecipeType<JeiCatalyzerRecipe> getRecipeType() {
+    public mezz.jei.api.recipe.RecipeType<CatalyzerRecipe> getRecipeType() {
         return JeiSuport.JeiCatalyzer_Type;
     }
 
@@ -50,8 +50,8 @@ public class JeiCatalyzerRecipeCategory implements IRecipeCategory<JeiCatalyzerR
 
     @Deprecated
     @Override
-    public Class<? extends JeiCatalyzerRecipe> getRecipeClass() {
-        return JeiCatalyzerRecipe.class;
+    public Class<? extends CatalyzerRecipe> getRecipeClass() {
+        return CatalyzerRecipe.class;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class JeiCatalyzerRecipeCategory implements IRecipeCategory<JeiCatalyzerR
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, JeiCatalyzerRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, CatalyzerRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 12, 18).addIngredients(recipe.getIngredients().get(0));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 18).addItemStack(recipe.getResultItem());
 

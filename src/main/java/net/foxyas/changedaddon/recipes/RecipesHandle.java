@@ -2,8 +2,6 @@ package net.foxyas.changedaddon.recipes;
 
 import net.foxyas.changedaddon.block.AdvancedUnifuserBlock;
 import net.foxyas.changedaddon.block.AdvancedCatalyzerBlock;
-import net.foxyas.changedaddon.extension.jeiSuport.JeiCatalyzerRecipe;
-import net.foxyas.changedaddon.extension.jeiSuport.JeiUnifuserRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
@@ -22,7 +20,7 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiUnifuserRecipe
-            List<JeiUnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(JeiUnifuserRecipe.Type.INSTANCE);
+            List<UnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(UnifuserRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com os inputs fornecidos
             SimpleContainer container = new SimpleContainer(3);
@@ -31,7 +29,7 @@ public class RecipesHandle {
             container.setItem(2, input3);
 
             // Verifica cada receita para ver se ela corresponde aos inputs fornecidos
-            for (JeiUnifuserRecipe recipe : unifuserRecipes) {
+            for (UnifuserRecipe recipe : unifuserRecipes) {
                 if (recipe.matches(container, serverLevel)) {
                     return true; // Receita correspondente encontrada
                 }
@@ -45,14 +43,14 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiCatalyzerRecipe
-            List<JeiCatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(JeiCatalyzerRecipe.Type.INSTANCE);
+            List<CatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(CatalyzerRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com o input fornecido
             SimpleContainer container = new SimpleContainer(1);
             container.setItem(0, input);
 
             // Verifica cada receita para ver se ela corresponde ao input fornecido
-            for (JeiCatalyzerRecipe recipe : catalyzerRecipes) {
+            for (CatalyzerRecipe recipe : catalyzerRecipes) {
                 if (recipe.matches(container, serverLevel)) {
                     return true; // Receita correspondente encontrada
                 }
@@ -66,7 +64,7 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiUnifuserRecipe
-            List<JeiUnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(JeiUnifuserRecipe.Type.INSTANCE);
+            List<UnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(UnifuserRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com os inputs fornecidos
             SimpleContainer container = new SimpleContainer(3);
@@ -75,7 +73,7 @@ public class RecipesHandle {
             container.setItem(2, input3);
 
             // Verifica cada receita para ver se ela corresponde aos inputs fornecidos
-            for (JeiUnifuserRecipe recipe : unifuserRecipes) {
+            for (UnifuserRecipe recipe : unifuserRecipes) {
                 NonNullList<Ingredient> ingredients = recipe.getIngredients();
                 if (!ingredients.get(0).test(input1))
                     continue;
@@ -94,14 +92,14 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiCatalyzerRecipe
-            List<JeiCatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(JeiCatalyzerRecipe.Type.INSTANCE);
+            List<CatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(CatalyzerRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com o input fornecido
             SimpleContainer container = new SimpleContainer(1);
             container.setItem(0, input);
 
             // Verifica cada receita para ver se ela corresponde ao input fornecido
-            for (JeiCatalyzerRecipe recipe : catalyzerRecipes) {
+            for (CatalyzerRecipe recipe : catalyzerRecipes) {
                 NonNullList<Ingredient> ingredients = recipe.getIngredients();
                 if (!ingredients.get(0).test(input))
                     continue;
@@ -117,7 +115,7 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiUnifuserRecipe
-            List<JeiUnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(JeiUnifuserRecipe.Type.INSTANCE);
+            List<UnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(UnifuserRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com os inputs fornecidos
             SimpleContainer container = new SimpleContainer(3);
@@ -126,7 +124,7 @@ public class RecipesHandle {
             container.setItem(2, input3);
 
             // Verifica cada receita para ver se ela corresponde aos inputs fornecidos
-            for (JeiUnifuserRecipe recipe : unifuserRecipes) {
+            for (UnifuserRecipe recipe : unifuserRecipes) {
                 NonNullList<Ingredient> ingredients = recipe.getIngredients();
                 if (!ingredients.get(0).test(input1))
                     continue;
@@ -146,14 +144,14 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiCatalyzerRecipe
-            List<JeiCatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(JeiCatalyzerRecipe.Type.INSTANCE);
+            List<CatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(CatalyzerRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com o input fornecido
             SimpleContainer container = new SimpleContainer(1);
             container.setItem(0, input);
 
             // Verifica cada receita para ver se ela corresponde ao input fornecido
-            for (JeiCatalyzerRecipe recipe : catalyzerRecipes) {
+            for (CatalyzerRecipe recipe : catalyzerRecipes) {
                 NonNullList<Ingredient> ingredients = recipe.getIngredients();
                 if (!ingredients.get(0).test(input))
                     continue;
@@ -168,7 +166,7 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiUnifuserRecipe
-            List<JeiUnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(JeiUnifuserRecipe.Type.INSTANCE);
+            List<UnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(UnifuserRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com os inputs fornecidos
             SimpleContainer container = new SimpleContainer(3);
@@ -177,7 +175,7 @@ public class RecipesHandle {
             container.setItem(2, input3);
 
             // Verifica cada receita para ver se ela corresponde aos inputs fornecidos
-            for (JeiUnifuserRecipe recipe : unifuserRecipes) {
+            for (UnifuserRecipe recipe : unifuserRecipes) {
                 NonNullList<Ingredient> ingredients = recipe.getIngredients();
                 if (!ingredients.get(0).test(input1))
                     continue;
@@ -196,14 +194,14 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiCatalyzerRecipe
-            List<JeiCatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(JeiCatalyzerRecipe.Type.INSTANCE);
+            List<CatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(CatalyzerRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com o input fornecido
             SimpleContainer container = new SimpleContainer(1);
             container.setItem(0, input);
 
             // Verifica cada receita para ver se ela corresponde ao input fornecido
-            for (JeiCatalyzerRecipe recipe : catalyzerRecipes) {
+            for (CatalyzerRecipe recipe : catalyzerRecipes) {
                 NonNullList<Ingredient> ingredients = recipe.getIngredients();
                 if (!ingredients.get(0).test(input))
                     continue;
@@ -218,14 +216,14 @@ public class RecipesHandle {
             RecipeManager recipeManager = serverLevel.getRecipeManager();
 
             // Obtém todas as receitas do tipo JeiCatalyzerRecipe
-            List<JeiCatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(JeiCatalyzerRecipe.Type.INSTANCE);
+            List<CatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(CatalyzerRecipe.Type.INSTANCE);
 
             // Cria um contêiner simples com o input fornecido
             SimpleContainer container = new SimpleContainer(1);
             container.setItem(0, input);
 
             // Verifica cada receita para ver se ela corresponde ao input fornecido
-            for (JeiCatalyzerRecipe recipe : catalyzerRecipes) {
+            for (CatalyzerRecipe recipe : catalyzerRecipes) {
                 NonNullList<Ingredient> ingredients = recipe.getIngredients();
                 if (!ingredients.get(0).test(input))
                     continue;

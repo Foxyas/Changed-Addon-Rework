@@ -9,6 +9,8 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.recipes.CatalyzerRecipe;
+import net.foxyas.changedaddon.recipes.UnifuserRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -26,8 +28,8 @@ import java.util.Objects;
 
 @JeiPlugin
 public class JeiSuport implements IModPlugin {
-    public static mezz.jei.api.recipe.RecipeType<JeiCatalyzerRecipe> JeiCatalyzer_Type = new mezz.jei.api.recipe.RecipeType<>(JeiCatalyzerRecipeCategory.UID, JeiCatalyzerRecipe.class);
-    public static mezz.jei.api.recipe.RecipeType<JeiUnifuserRecipe> JeiUnifuser_Type = new mezz.jei.api.recipe.RecipeType<>(JeiUnifuserRecipeCategory.UID, JeiUnifuserRecipe.class);
+    public static mezz.jei.api.recipe.RecipeType<CatalyzerRecipe> JeiCatalyzer_Type = new mezz.jei.api.recipe.RecipeType<>(JeiCatalyzerRecipeCategory.UID, CatalyzerRecipe.class);
+    public static mezz.jei.api.recipe.RecipeType<UnifuserRecipe> JeiUnifuser_Type = new mezz.jei.api.recipe.RecipeType<>(JeiUnifuserRecipeCategory.UID, UnifuserRecipe.class);
 
 
     @Override
@@ -44,10 +46,10 @@ public class JeiSuport implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
-        List<JeiCatalyzerRecipe> JeiCatalyzerRecipes = recipeManager.getAllRecipesFor(JeiCatalyzerRecipe.Type.INSTANCE);
-        registration.addRecipes(JeiCatalyzer_Type, JeiCatalyzerRecipes);
-        List<JeiUnifuserRecipe> JeiUnifuserRecipes = recipeManager.getAllRecipesFor(JeiUnifuserRecipe.Type.INSTANCE);
-        registration.addRecipes(JeiUnifuser_Type, JeiUnifuserRecipes);
+        List<CatalyzerRecipe> catalyzerRecipes = recipeManager.getAllRecipesFor(CatalyzerRecipe.Type.INSTANCE);
+        registration.addRecipes(JeiCatalyzer_Type, catalyzerRecipes);
+        List<UnifuserRecipe> unifuserRecipes = recipeManager.getAllRecipesFor(UnifuserRecipe.Type.INSTANCE);
+        registration.addRecipes(JeiUnifuser_Type, unifuserRecipes);
 
         //Items Info
         JeiDescriptionHandler.registerDescriptions(registration);

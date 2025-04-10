@@ -1,6 +1,7 @@
-package net.foxyas.changedaddon.extension.jeiSuport;
+package net.foxyas.changedaddon.recipes;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,19 +15,17 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
-public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
+public class UnifuserRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
     private final float ProgressSpeed;
-    private final float NitrogenUsage;
 
-    public JeiCatalyzerRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems,float ProgressSpeed,float NitrogenUsage) {
+    public UnifuserRecipe(ResourceLocation id, ItemStack output, NonNullList<Ingredient> recipeItems, float ProgressSpeed) {
         this.id = id;
         this.output = output;
         this.recipeItems = recipeItems;
         this.ProgressSpeed = ProgressSpeed;
-        this.NitrogenUsage = NitrogenUsage;
     }
 
     @Override
@@ -40,7 +39,7 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
             // Percorre todos os itens da lista de ingredientes
             for (Ingredient ingredient : recipeItems) {
                 // Verifica se pelo menos um item da lista atende às condições
-                if (ingredient.test(pContainer.getItem(2))) {
+                if (ingredient.test(pContainer.getItem(3))) {
                     return true;
                 }
             }
@@ -48,7 +47,6 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
 
         return false; // Retorna false se a lista de ingredientes estiver vazia ou nenhum item atender às condições
     }
-
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -74,10 +72,6 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
         return ProgressSpeed;
     }
 
-    public float getNitrogenUsage() {
-        return NitrogenUsage;
-    }
-
     @Override
     public ResourceLocation getId() {
         return id;
@@ -93,51 +87,54 @@ public class JeiCatalyzerRecipe implements Recipe<SimpleContainer> {
         return Serializer.INSTANCE;
     }
 
-    public static class Type implements RecipeType<JeiCatalyzerRecipe> {
+    public static class Type implements RecipeType<UnifuserRecipe> {
         private Type() {
         }
 
         public static final Type INSTANCE = new Type();
-        public static final String ID = "catalyzer";
+        public static final String ID = "unifuser";
     }
 
-    public static class Serializer implements RecipeSerializer<JeiCatalyzerRecipe>, IForgeRegistryEntry<RecipeSerializer<?>> {
+    public static class Serializer implements RecipeSerializer<UnifuserRecipe>, IForgeRegistryEntry<RecipeSerializer<?>> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "catalyzer");
+        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "unifuser");
 
         @Override
-        public JeiCatalyzerRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
+        public UnifuserRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
             JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
-            NonNullList<Ingredient> inputs = NonNullList.withSize(1, Ingredient.EMPTY);
-            inputs.set(0, Ingredient.fromJson(ingredients.get(0)));
-            float ProgressSpeed  = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
-            float NitrogenUsage  = GsonHelper.getAsFloat(pSerializedRecipe, "NitrogenUsage", 0.0f);
+            NonNullList<Ingredient> inputs = NonNullList.withSize(ingredients.size(), Ingredient.EMPTY);
 
-            return new JeiCatalyzerRecipe(pRecipeId, output, inputs, ProgressSpeed, NitrogenUsage);
+            for (int i = 0; i < ingredients.size(); i++) {
+                JsonElement ingredientElement = ingredients.get(i);
+                Ingredient ingredient = Ingredient.fromJson(ingredientElement);
+                inputs.set(i, ingredient);
+            }
+
+            float ProgressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
+
+            return new UnifuserRecipe(pRecipeId, output, inputs, ProgressSpeed);
         }
 
         @Override
-        public @Nullable JeiCatalyzerRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+        public @Nullable UnifuserRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
             NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
             for (int i = 0; i < inputs.size(); i++) {
                 inputs.set(i, Ingredient.fromNetwork(buf));
             }
             ItemStack output = buf.readItem();
             float ProgressSpeed = buf.readFloat();
-            float NitrogenUsage = buf.readFloat();
-            return new JeiCatalyzerRecipe(id, output, inputs, ProgressSpeed, NitrogenUsage);
+            return new UnifuserRecipe(id, output, inputs, ProgressSpeed);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buf, JeiCatalyzerRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buf, UnifuserRecipe recipe) {
             buf.writeInt(recipe.getIngredients().size());
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buf);
             }
             buf.writeItemStack(recipe.getResultItem(), false);
             buf.writeFloat(recipe.getProgressSpeed());
-            buf.writeFloat(recipe.getNitrogenUsage());
         }
 
         @Override
