@@ -15,5 +15,5 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 
 public class ChangedAddonModParticleTypes {
 	public static final DeferredRegister<ParticleType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ChangedAddonMod.MODID);
-	public static final RegistryObject<ParticleType<?>> SOLVENT_PARTICLE = REGISTRY.register("solvent_particle", () -> new SimpleParticleType(false));
+	public static final RegistryObject<ParticleType<?>> SOLVENT_PARTICLE = REGISTRY.register("solvent_particle", () -> new SimpleParticleType(true));
 }

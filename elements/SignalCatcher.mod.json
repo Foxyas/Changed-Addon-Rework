@@ -8,6 +8,9 @@
     "customProperties": {
       "dot_value": {
         "name": "DotValueOfView"
+      },
+      "cord_set": {
+        "name": "IsSignalCatcherCordsSet"
       }
     },
     "states": [
@@ -24,6 +27,15 @@
               "type": "number"
             },
             "value": 0.55
+          },
+          {
+            "property": {
+              "min": -1.7976931348623157E308,
+              "max": 1.7976931348623157E308,
+              "name": "CUSTOM:cord_set",
+              "type": "number"
+            },
+            "value": 1.0
           }
         ]
       },
@@ -40,6 +52,15 @@
               "type": "number"
             },
             "value": 0.95
+          },
+          {
+            "property": {
+              "min": -1.7976931348623157E308,
+              "max": 1.7976931348623157E308,
+              "name": "CUSTOM:cord_set",
+              "type": "number"
+            },
+            "value": 1.0
           }
         ]
       }

@@ -1,0 +1,7 @@
+{
+  "_fv": 47,
+  "_type": "procedure",
+  "definition": {
+    "procedurexml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><variables><variable type=\"MCItem\" id=\"stack\">stack</variable></variables><block type=\"event_trigger\" deletable=\"false\" x=\"40\" y=\"40\"><field name=\"trigger\">no_ext_trigger</field><next><block type=\"variables_set_itemstack\"><mutation xmlns=\"http://www.w3.org/1999/xhtml\" is_player_var=\"false\" has_entity=\"false\"></mutation><field name=\"VAR\">local:stack</field><value name=\"VAL\"><block type=\"itemstack_to_mcitem\"></block></value><next><block type=\"return_number\"><value name=\"return\"><block type=\"math_number\"><field name=\"NUM\">0</field></block></value></block></next></block></next></block></xml>"
+  }
+}

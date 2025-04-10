@@ -22,6 +22,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 
 import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryProcedure;
 import net.foxyas.changedaddon.procedures.LaethinPropertyValueProviderProcedure;
+import net.foxyas.changedaddon.procedures.IsSignalCatcherCordsSetProcedure;
 import net.foxyas.changedaddon.procedures.DotValueOfViewProcedure;
 import net.foxyas.changedaddon.item.YellowWolfCrystalFragmentItem;
 import net.foxyas.changedaddon.item.WhiteWolfCrystalFragmentItem;
@@ -223,6 +224,7 @@ public class ChangedAddonModItems {
 					(itemStackToRender, clientWorld, entity, itemEntityId) -> (float) LaethinPropertyValueProviderProcedure.execute(itemStackToRender));
 			ItemProperties.register(TRANSFUR_TOTEM.get(), new ResourceLocation("changed_addon:transfur_totem_glowtick"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) TransfurTotemItemInInventoryProcedure.execute(entity));
 			ItemProperties.register(SIGNAL_CATCHER.get(), new ResourceLocation("changed_addon:signal_catcher_dot_value"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) DotValueOfViewProcedure.execute(entity, itemStackToRender));
+			ItemProperties.register(SIGNAL_CATCHER.get(), new ResourceLocation("changed_addon:signal_catcher_cord_set"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) IsSignalCatcherCordsSetProcedure.execute(itemStackToRender));
 		});
 	}
 
