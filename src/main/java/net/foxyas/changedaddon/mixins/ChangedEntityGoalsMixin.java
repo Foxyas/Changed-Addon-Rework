@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.entity.CustomHandle.SleepingWithOwnerGoal;
+import net.foxyas.changedaddon.entity.goals.FollowAndLookAtLaser;
+import net.foxyas.changedaddon.entity.goals.SleepingWithOwnerGoal;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
@@ -12,13 +14,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ChangedEntity.class)
 public class ChangedEntityGoalsMixin {
 
-    @Inject(method = "registerGoals",at = @At("HEAD"))
-    private void addExtraGoal(CallbackInfo ci){
+    @Inject(method = "registerGoals", at = @At("HEAD"))
+    private void addExtraGoal(CallbackInfo ci) {
         ChangedEntity thisFixed = ((ChangedEntity) (Object) this);
-        if (thisFixed instanceof AbstractDarkLatexWolf){
+        if (thisFixed instanceof AbstractDarkLatexWolf) {
             thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal.BipedSleepGoal(thisFixed, true, SleepingWithOwnerGoal.BipedSleepGoal.BedSearchType.NEAREST));
-        } else if (thisFixed instanceof DarkLatexWolfPup){
+        } else if (thisFixed instanceof DarkLatexWolfPup) {
             thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal(thisFixed, true));
+        }
+        if (thisFixed.getSelfVariant() != null
+                && (thisFixed.getSelfVariant().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE)
+                || thisFixed.getSelfVariant().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE))) {
+            thisFixed.goalSelector.addGoal(5, new FollowAndLookAtLaser(thisFixed, 0.4));
         }
     }
 }

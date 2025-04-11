@@ -14,6 +14,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.LaserPointer;
+import net.foxyas.changedaddon.network.packets.KeyPressPacket;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
@@ -140,8 +141,6 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ChangedAddonBlockEntitys {
-
-
 		public static final DeferredRegister<BlockEntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ChangedAddonMod.MODID);
 		public static final RegistryObject<BlockEntityType<SnepPlushBlockEntity>> SNEP_PLUSH = REGISTRY.register("snep_plushe", () -> BlockEntityType.Builder.of(SnepPlushBlockEntity::new, ChangedAddonModBlocks.SNEP_PLUSH.get()).build(null));
 		public static final RegistryObject<BlockEntityType<ContainmentContainerBlockEntity>> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container_block_entity", () -> BlockEntityType.Builder.of(ContainmentContainerBlockEntity::new, ChangedAddonModBlocks.CONTAINMENT_CONTAINER.get()).build(null));
@@ -166,6 +165,14 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		public static final FacilityPieceCollection Exp10FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp10room"), new ResourceLocation("changed_addon:chests/experiment_10_loot_normal")));
 		public static final FacilityPieceCollection LuminarCrystalsFacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:luminar_crystal_room"), new ResourceLocation("changed:chests/high_tier_lab.json")));
 
+	}
+
+	@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+	public static class ChangedAddonPacketsRegistry {
+		@SubscribeEvent
+		public static void registerPackets(FMLConstructModEvent event) {
+			ChangedAddonMod.addNetworkMessage(KeyPressPacket.class, KeyPressPacket::encode, KeyPressPacket::decode, KeyPressPacket::handle);
+		}
 	}
 
     private static RegistryObject<Item> RegisterBlockItem(RegistryObject<Block> block, CreativeModeTab tab) {

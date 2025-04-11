@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
+import net.foxyas.changedaddon.entity.goals.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -16,14 +17,15 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +38,8 @@ import java.util.stream.Collectors;
 import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
 
 public class LaserPointer extends Item implements SpecializedAnimations {
+
+    public static final float MAX_LASER_REACH = 32;
 
     public static enum DefaultColors {
         RED(new Color3(255, 0, 0)),
@@ -137,13 +141,20 @@ public class LaserPointer extends Item implements SpecializedAnimations {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide) {
-            HitResult result = player.pick(64.0D, 0.0F, false);
-            EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(player, 64);
+            HitResult result = player.pick(MAX_LASER_REACH, 0.0F, false);
+            EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(player, LaserPointer.MAX_LASER_REACH);
             Vec3 hitPos = result.getLocation();
             Direction face = Direction.UP; // fallback para quando mirar no ar
 
-            // Se for translúcido, refazer raycast ignorando blocos
-            if (result instanceof BlockHitResult blockResult &&
+            if (entityHitResult != null) {
+                face = Direction.getNearest(entityHitResult.getLocation().x, entityHitResult.getLocation().y, entityHitResult.getLocation().z);
+                hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05D);
+                spawnLaserParticle(level, player, stack, hitPos);
+            }  else if (result instanceof BlockHitResult blockResult && level.getBlockState(blockResult.getBlockPos()).isAir()) {
+                // Mira no ar: define uma posição "alvo" no ar baseada na direção do olhar
+                spawnLaserParticle(level, player, stack, hitPos);
+            } else if (result instanceof BlockHitResult blockResult &&
+                // Se for translúcido, refazer raycast ignorando blocos
                     level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
 
                 Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
@@ -155,17 +166,22 @@ public class LaserPointer extends Item implements SpecializedAnimations {
             } else if (result instanceof BlockHitResult blockResult && !level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
                 hitPos = applyOffset(result.getLocation(), blockResult.getDirection(), -0.05D);
                 spawnLaserParticle(level, player, stack, hitPos);
+            }
 
-            } else if (entityHitResult != null) {
-                face = Direction.getNearest(entityHitResult.getLocation().x, entityHitResult.getLocation().y, entityHitResult.getLocation().z);
-                hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05D);
-                spawnLaserParticle(level, player, stack, hitPos);
+            double radius = 16.0; // Raio de busca
+            List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, new AABB(hitPos,hitPos).inflate(radius) ,(e) -> {
+                if (e instanceof Mob mob) {
+                    return mob.goalSelector.getAvailableGoals().stream().anyMatch(g -> g.getGoal() instanceof FollowAndLookAtLaser);
+                }
+                return false;
+            });
 
-            } else if (result.getType() == HitResult.Type.MISS) {
-                // Mira no ar: define uma posição "alvo" no ar baseada na direção do olhar
-                Vec3 lookVec = player.getLookAngle();
-                hitPos = player.getEyePosition().add(lookVec.scale(64.0D));
-                spawnLaserParticle(level, player, stack, hitPos);
+            for (LivingEntity livingEntity : nearbyMobs) {
+                for (Goal goal : ((Mob) livingEntity).goalSelector.getAvailableGoals().stream().map(WrappedGoal::getGoal).toList()) {
+                    if (goal instanceof FollowAndLookAtLaser followGoal) {
+                        followGoal.setLaserTarget(hitPos);
+                    }
+                }
             }
 
             player.startUsingItem(hand);
@@ -174,6 +190,13 @@ public class LaserPointer extends Item implements SpecializedAnimations {
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
+
+
+    @Override
+    public void releaseUsing(ItemStack itemstack, Level world, LivingEntity entity, int time) {
+        super.releaseUsing(itemstack, world, entity, time);
+    }
+
 
     // Utilitário para aplicar deslocamento da face atingida
     private Vec3 applyOffset(Vec3 hitPos, Direction face, double offset) {

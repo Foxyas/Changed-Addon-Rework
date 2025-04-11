@@ -223,6 +223,24 @@
             "enablecomment": true,
             "onlyComment": false,
             "entityType": "CUSTOM:Buny"
+          },
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Make the Laser Moviment be smooth, it may cause the particule to be slower",
+            "vardisplay": "Laser Smooth Moviment",
+            "varname": "smooth_laser_moviment",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
           }
         ]
       },

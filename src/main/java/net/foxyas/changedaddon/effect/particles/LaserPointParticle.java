@@ -4,6 +4,7 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -99,17 +100,19 @@ public class LaserPointParticle extends TextureSheetParticle {
                     Codec.FLOAT.fieldOf("alpha").forGetter(Option::getColorAlpha)
             ).apply(builder, Option::new));
         }
+
         private final int entityId, color;
         private float alpha;
         private final Entity entity;
 
-        public Option(int entityId , int color, float alpha) {
+        public Option(int entityId, int color, float alpha) {
             this.entityId = entityId;
             this.entity = null;
             this.color = color;
             this.alpha = alpha;
         }
-        public Option(Entity entity, int color,float alpha) {
+
+        public Option(Entity entity, int color, float alpha) {
             this.entity = entity;
             this.entityId = entity.getId();
             this.color = color;
@@ -124,7 +127,7 @@ public class LaserPointParticle extends TextureSheetParticle {
             return color;
         }
 
-        public Color3 getColorAsColor3(){
+        public Color3 getColorAsColor3() {
             return Color3.fromInt(color);
         }
 
@@ -168,10 +171,10 @@ public class LaserPointParticle extends TextureSheetParticle {
     }
 
 
-
     private final Entity entity;
 
     public final SpriteSet spriteSet;
+
     public LaserPointParticle(ClientLevel level, double x, double y, double z, double dx, double dy, double dz,
                               LaserPointParticle.Option data, SpriteSet sprites) {
         super(level, x, y, z, dx, dy, dz);
@@ -186,141 +189,90 @@ public class LaserPointParticle extends TextureSheetParticle {
         this.pickSprite(sprites);
     }
 
-   	@Override
-	public void tick() {
-	    super.tick();
-	
-    	if (entity instanceof LivingEntity owner && owner.isAlive()) {
-        	ItemStack heldItem = owner.getUseItem();
-        	if (!heldItem.isEmpty() && heldItem.getItem() instanceof LaserPointer && owner.isUsingItem()) {
+    @Override
+    public void tick() {
+        super.tick();
 
-            	HitResult result = owner.pick(64.0D, 0.0F, true);
-                EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(owner,64);
-            	if (result instanceof BlockHitResult blockResult) {
-                    if (level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)){
-                        Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags()).getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
-                        blockResult = manualRaycastIgnoringBlocks(level, owner, 64, blockSet);
-                    }
-                	Vec3 hitPos = blockResult.getLocation();
-                	Direction face = blockResult.getDirection(); // ← face colidida
-	
-                	// Aplica offset para trás da face atingida
-                	double offset = -0.05D;
-                	hitPos = hitPos.subtract(
-                    	face.getStepX() * offset,
-                    	face.getStepY() * offset,
-	                    face.getStepZ() * offset
-                	);
-	
-                	double dx = hitPos.x - this.x;
-                	double dy = hitPos.y - this.y;
-                	double dz = hitPos.z - this.z;
-	
-                	double distanceSquared = dx * dx + dy * dy + dz * dz;
-                	double distance = Math.sqrt(distanceSquared);
-	
-                	if (distance >= 0.001) {
-                    	// Normaliza o vetor de direção
-                    	double ndx = dx * 1; //Math.max(1, distance);
-                    	double ndy = dy * 1; //Math.max(1, distance);
-                    	double ndz = dz * 1; //Math.max(1, distance);
-	
-                    	// Define a velocidade base
-                    	double speed = 0.5;
-	
-                    	// Aplica a velocidade ajustada
-                    	this.xd = ndx * speed;
-                    	this.yd = ndy * speed;
-                    	this.zd = ndz * speed;
-	
-                    	// Move a partícula
-                    	this.x += this.xd;
-                    	this.y += this.yd;
-                    	this.z += this.zd;
-	
-                    	// Reset da idade para não desaparecer
-                    	this.age = 0;
-                	}
-	            } else if (entityHitResult != null) {
-                    Vec3 hitPos = entityHitResult.getLocation();
-                    Direction face = entityHitResult.getEntity().getDirection();// ← face colidida
+        if (!(entity instanceof LivingEntity owner) || !owner.isAlive()) {
+            this.remove(); // Dono sumiu
+            return;
+        }
 
-                    // Aplica offset para trás da face atingida
-                    double offset = -0.05D;
-                    hitPos = hitPos.subtract(
-                            face.getStepX() * offset,
-                            face.getStepY() * offset,
-                            face.getStepZ() * offset
-                    );
+        ItemStack heldItem = owner.getUseItem();
+        if (heldItem.isEmpty() || !(heldItem.getItem() instanceof LaserPointer) || !owner.isUsingItem()) {
+            this.remove(); // Jogador parou de usar
+            return;
+        }
 
-                    double dx = hitPos.x - this.x;
-                    double dy = hitPos.y - this.y;
-                    double dz = hitPos.z - this.z;
+        HitResult result = owner.pick(LaserPointer.MAX_LASER_REACH, 0.0F, true);
+        Vec3 hitPos;
+        Direction face = null;
 
-                    double distanceSquared = dx * dx + dy * dy + dz * dz;
-                    double distance = Math.sqrt(distanceSquared);
+        EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(owner, LaserPointer.MAX_LASER_REACH);
+        if (entityHitResult != null) {
+            hitPos = entityHitResult.getLocation();
+            face = entityHitResult.getEntity().getDirection();
+        } else if (result instanceof BlockHitResult blockResult) {
+            BlockHitResult finalResult = blockResult;
 
-                    if (distance >= 0.001) {
-                        // Normaliza o vetor de direção
-                        double ndx = dx * 1; //Math.max(1, distance);
-                        double ndy = dy * 1; //Math.max(1, distance);
-                        double ndz = dz * 1; //Math.max(1, distance);
+            if (level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+                Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
+                        .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
+                finalResult = manualRaycastIgnoringBlocks(level, owner, LaserPointer.MAX_LASER_REACH, blockSet);
+            }
 
-                        // Define a velocidade base
-                        double speed = 0.5;
+            hitPos = finalResult.getLocation();
+            face = finalResult.getDirection();
+        } else {
+            hitPos = result.getLocation(); // fallback (geralmente miss)
+        }
 
-                        // Aplica a velocidade ajustada
-                        this.xd = ndx * speed;
-                        this.yd = ndy * speed;
-                        this.zd = ndz * speed;
+        if (face != null) {
+            // Aplica offset dinâmico baseado na direção
+            double offset = -0.05D;
+            hitPos = hitPos.subtract(
+                    face.getStepX() * offset,
+                    face.getStepY() * offset,
+                    face.getStepZ() * offset
+            );
+        }
 
-                        // Move a partícula
-                        this.x += this.xd;
-                        this.y += this.yd;
-                        this.z += this.zd;
+        if (ChangedAddonClientConfigsConfiguration.SMOOTH_LASER_MOVIMENT.get()) {
+            moveToward(hitPos);
+        } else {
+            SetToward(hitPos);
+        }
+    }
 
-                        // Reset da idade para não desaparecer
-                        this.age = 0;
-                    }
-                } else {
-                    Vec3 hitPos = result.getLocation();
-                    double dx = hitPos.x - this.x;
-                    double dy = hitPos.y - this.y;
-                    double dz = hitPos.z - this.z;
+    private void moveToward(Vec3 target) {
+        double dx = target.x - this.x;
+        double dy = target.y - this.y;
+        double dz = target.z - this.z;
 
-                    double distanceSquared = dx * dx + dy * dy + dz * dz;
-                    double distance = Math.sqrt(distanceSquared);
+        double distanceSquared = dx * dx + dy * dy + dz * dz;
 
-                    if (distance >= 0.001) {
-                        // Normaliza o vetor de direção
-                        double ndx = dx * 1; //Math.max(1, distance);
-                        double ndy = dy * 1; //Math.max(1, distance);
-                        double ndz = dz * 1; //Math.max(1, distance);
+        if (distanceSquared >= 0.001) {
+            double speed = 0.5;
+            this.xd = dx * speed;
+            this.yd = dy * speed;
+            this.zd = dz * speed;
 
-                        // Define a velocidade base
-                        double speed = 0.5;
+            this.x += this.xd;
+            this.y += this.yd;
+            this.z += this.zd;
 
-                        // Aplica a velocidade ajustada
-                        this.xd = ndx * speed;
-                        this.yd = ndy * speed;
-                        this.zd = ndz * speed;
+            this.age = 0; // Reset idade para manter a partícula viva
+        }
+    }
 
-                        // Move a partícula
-                        this.x += this.xd;
-                        this.y += this.yd;
-                        this.z += this.zd;
+    private void SetToward(Vec3 target) {
+        this.x = target.x;
+        this.y = target.y;
+        this.z = target.z;
 
-                        // Reset da idade para não desaparecer
-                        this.age = 0;
-                    }
-                }
-        	} else {
-            	this.remove(); // Jogador parou de usar
-	        }
-    	} else {
-        	this.remove(); // Dono sumiu
-	    }
-	}
+        this.age = 0; // Reset idade para manter a partícula viva
+    }
+
 
     @Override
     public ParticleRenderType getRenderType() {

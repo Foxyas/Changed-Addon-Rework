@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.CustomHandle;
+package net.foxyas.changedaddon.entity.goals;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.entity.Emote;

@@ -55,6 +55,40 @@ public class FoxyasUtils {
 		return entity.getEyePosition().add(offset);
 	}
 
+	public static Vec3 getRelativePositionEyes(Entity entity, double deltaX, double deltaY, double deltaZ) {
+		// Obtém os vetores locais da entidade
+		Vec3 forward = entity.getViewVector(1.0f); // Direção que a entidade está olhando (Surge)
+		Vec3 up = entity.getUpVector(1.0F); // Vetor "para cima" da entidade (Heave)
+		Vec3 right = forward.cross(up).normalize(); // Calcula o vetor para a direita (Sway)
+
+		// Combina os deslocamentos locais
+		Vec3 offset = right.scale(-deltaX) // Sway (esquerda/direita)
+				.add(up.scale(deltaY)) // Heave (cima/baixo)
+				.add(forward.scale(deltaZ)); // Surge (frente/trás)
+
+		// Retorna a nova posição baseada no deslocamento local
+		return entity.getEyePosition().add(offset);
+	}
+
+	public static Vec3 getRelativePositionEyes(Entity entity, Vec3 vec3) {
+		double deltaX ,deltaY, deltaZ;
+		deltaX = vec3.x;
+		deltaY = vec3.y;
+		deltaZ = vec3.z;
+		// Obtém os vetores locais da entidade
+		Vec3 forward = entity.getViewVector(1.0f); // Direção que a entidade está olhando (Surge)
+		Vec3 up = entity.getUpVector(1.0F); // Vetor "para cima" da entidade (Heave)
+		Vec3 right = forward.cross(up).normalize(); // Calcula o vetor para a direita (Sway)
+
+		// Combina os deslocamentos locais
+		Vec3 offset = right.scale(-deltaX) // Sway (esquerda/direita)
+				.add(up.scale(deltaY)) // Heave (cima/baixo)
+				.add(forward.scale(deltaZ)); // Surge (frente/trás)
+
+		// Retorna a nova posição baseada no deslocamento local
+		return entity.getEyePosition().add(offset);
+	}
+
 	public static Vec3 getRelativePositionCommandStyle(Entity entity, double deltaX, double deltaY, double deltaZ) {
         Vec2 rotation = entity.getRotationVector(); // Obtém a rotação (Yaw e Pitch)
         Vec3 position = entity.position(); // Posição atual da entidade

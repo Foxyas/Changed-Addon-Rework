@@ -16,6 +16,7 @@ public class ChangedAddonClientConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> WING_FLAP_INFO;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PAW_STYLE_PAT_OVERLAY;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_EXTRA_HAND;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> SMOOTH_LASER_MOVIMENT;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PLANTOIDS_VARIABLE;
 	static {
 		BUILDER.push("MusicPlayer");
@@ -38,6 +39,7 @@ public class ChangedAddonClientConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Extra Animations");
 		SHOW_EXTRA_HAND = BUILDER.comment("allow the show of the extra hand in some contexts like fall fly").define("Show Extra Hand", false);
+		SMOOTH_LASER_MOVIMENT = BUILDER.comment("Make the Laser Moviment be smooth, it may cause the particule to be slower").define("Laser Smooth Moviment", true);
 		BUILDER.pop();
 		BUILDER.push("ModelsHandle");
 		PLANTOIDS_VARIABLE = BUILDER.comment("Turn off the Plantoids [Female Chest Features]").define("Turn Off the Plantoids", false);

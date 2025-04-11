@@ -122,6 +122,39 @@ public class PlayerUtilProcedure {
     }
 
     @Nullable
+    public static Entity getEntityPlayerLookingAt(Entity player, double range) {
+        Level world = player.level;
+        Vec3 startVec = player.getEyePosition(1.0F); // Player's eye position
+        Vec3 lookVec = player.getLookAngle(); // Player's look direction
+        Vec3 endVec = startVec.add(lookVec.scale(range)); // End point of the line of sight
+
+        Entity closestEntity = null;
+        double closestDistance = range;
+
+        // Iterate over all entities within range
+        for (Entity entity : world.getEntities(player, player.getBoundingBox().expandTowards(lookVec.scale(range)).inflate(1.0D))) {
+            // Ignore entities in spectator mode
+            if (entity.isSpectator()) {
+                continue;
+            }
+
+            AABB entityBoundingBox = entity.getBoundingBox().inflate(entity.getPickRadius());
+
+            // Check if the line of sight intersects the entity's bounding box
+            if (entityBoundingBox.contains(startVec) || entityBoundingBox.clip(startVec, endVec).isPresent()) {
+                double distanceToEntity = startVec.distanceTo(entity.position());
+
+                if (distanceToEntity < closestDistance) {
+                    closestEntity = entity;
+                    closestDistance = distanceToEntity;
+                }
+            }
+        }
+
+        return closestEntity; // Return the closest entity the player is looking at
+    }
+
+    @Nullable
     public static Entity getEntityLookingAt(Entity entity, double reach) {
         double distance = reach * reach;
         Vec3 eyePos = entity.getEyePosition(1.0f);
@@ -329,6 +362,33 @@ public class PlayerUtilProcedure {
                 return entities.filter(entity -> entity.getStringUUID().equals(uuid)).findFirst().orElse(null);
             } catch (Exception e) {
                 ChangedAddonMod.LOGGER.error(e.getMessage()); // Log the exception for debugging purposes
+                return null;
+            }
+        }
+
+        @Nullable
+        public static Entity getEntityByName(LevelAccessor world, String name) {
+            try {
+                Stream<Entity> entities;
+
+                if (world instanceof ClientLevel clientLevel) {
+                    entities = StreamSupport.stream(clientLevel.entitiesForRendering().spliterator(), false);
+                } else if (world instanceof ServerLevel serverLevel) {
+                    entities = StreamSupport.stream(serverLevel.getAllEntities().spliterator(), false);
+                } else {
+                    return null;
+                }
+
+                return entities
+                        .filter(entity -> {
+                            String entityName = entity.getName().getString();
+                            return entityName.equalsIgnoreCase(name);
+                        })
+                        .findFirst()
+                        .orElse(null);
+
+            } catch (Exception e) {
+                ChangedAddonMod.LOGGER.error("Error getting entity by name: " + e.getMessage());
                 return null;
             }
         }

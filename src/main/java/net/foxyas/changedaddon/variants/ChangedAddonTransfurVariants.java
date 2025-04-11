@@ -107,6 +107,7 @@ public class ChangedAddonTransfurVariants {
                     .nightVision().extraJumps(2)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_PULSE)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_HOLD)
+                    .addAbility(ChangedAddonAbilities.PSYCHIC_GRAB)
                     .addAbility(ChangedAbilities.SWITCH_GENDER)
                     .transfurMode(TransfurMode.NONE));
 
@@ -115,6 +116,7 @@ public class ChangedAddonTransfurVariants {
                     .nightVision().extraJumps(2)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_PULSE)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_HOLD)
+                    .addAbility(ChangedAddonAbilities.PSYCHIC_GRAB)
                     .addAbility(ChangedAbilities.SWITCH_GENDER)
                     .transfurMode(TransfurMode.NONE));
 

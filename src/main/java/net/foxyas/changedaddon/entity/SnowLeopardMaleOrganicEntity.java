@@ -1,7 +1,6 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.entity.CustomHandle.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
