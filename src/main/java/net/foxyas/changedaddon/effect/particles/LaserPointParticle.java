@@ -7,9 +7,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.FoxyasUtils;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.init.ChangedTags;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.BlockPos;
@@ -39,6 +43,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
+import net.minecraft.world.entity.player.Player;
 
 public class LaserPointParticle extends TextureSheetParticle {
     public static class Option implements ParticleOptions {
@@ -190,6 +195,11 @@ public class LaserPointParticle extends TextureSheetParticle {
     }
 
     @Override
+    public int getLightColor(float p_105562_) {
+        return 15728880;
+    }
+
+    @Override
     public void tick() {
         super.tick();
 
@@ -197,6 +207,13 @@ public class LaserPointParticle extends TextureSheetParticle {
             this.remove(); // Dono sumiu
             return;
         }
+
+        if (owner instanceof Player player && ProcessTransfur.getPlayerTransfurVariantSafe(player).map(
+                transfurVariantInstance -> transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)
+        ).orElse(false)) {
+            this.setSize(1f , 1f);
+        }
+
 
         ItemStack heldItem = owner.getUseItem();
         if (heldItem.isEmpty() || !(heldItem.getItem() instanceof LaserPointer) || !owner.isUsingItem()) {
@@ -223,6 +240,7 @@ public class LaserPointParticle extends TextureSheetParticle {
 
             hitPos = finalResult.getLocation();
             face = finalResult.getDirection();
+            hitPos = FoxyasUtils.applyOffset(hitPos,face,-0.01f);
         } else {
             hitPos = result.getLocation(); // fallback (geralmente miss)
         }

@@ -150,11 +150,11 @@ public class LaserPointer extends Item implements SpecializedAnimations {
                 face = Direction.getNearest(entityHitResult.getLocation().x, entityHitResult.getLocation().y, entityHitResult.getLocation().z);
                 hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05D);
                 spawnLaserParticle(level, player, stack, hitPos);
-            }  else if (result instanceof BlockHitResult blockResult && level.getBlockState(blockResult.getBlockPos()).isAir()) {
+            } else if (result instanceof BlockHitResult blockResult && level.getBlockState(blockResult.getBlockPos()).isAir()) {
                 // Mira no ar: define uma posição "alvo" no ar baseada na direção do olhar
                 spawnLaserParticle(level, player, stack, hitPos);
             } else if (result instanceof BlockHitResult blockResult &&
-                // Se for translúcido, refazer raycast ignorando blocos
+                    // Se for translúcido, refazer raycast ignorando blocos
                     level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
 
                 Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
@@ -169,7 +169,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
             }
 
             double radius = 16.0; // Raio de busca
-            List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, new AABB(hitPos,hitPos).inflate(radius) ,(e) -> {
+            List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, new AABB(hitPos, hitPos).inflate(radius), (e) -> {
                 if (e instanceof Mob mob) {
                     return mob.goalSelector.getAvailableGoals().stream().anyMatch(g -> g.getGoal() instanceof FollowAndLookAtLaser);
                 }
@@ -179,7 +179,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
             for (LivingEntity livingEntity : nearbyMobs) {
                 for (Goal goal : ((Mob) livingEntity).goalSelector.getAvailableGoals().stream().map(WrappedGoal::getGoal).toList()) {
                     if (goal instanceof FollowAndLookAtLaser followGoal) {
-                        followGoal.setLaserTarget(hitPos);
+                        followGoal.setLaserTarget(hitPos, player);
                     }
                 }
             }
@@ -197,6 +197,50 @@ public class LaserPointer extends Item implements SpecializedAnimations {
         super.releaseUsing(itemstack, world, entity, time);
     }
 
+    @Override
+    public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+        super.onUsingTick(stack, player, count);
+        if (!player.getLevel().isClientSide) {
+            HitResult result = player.pick(MAX_LASER_REACH, 0.0F, false);
+            EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(player, LaserPointer.MAX_LASER_REACH);
+            Vec3 hitPos = result.getLocation();
+            Direction face = Direction.UP; // fallback para quando mirar no ar
+
+            if (entityHitResult != null) {
+                face = Direction.getNearest(entityHitResult.getLocation().x, entityHitResult.getLocation().y, entityHitResult.getLocation().z);
+                hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05D);
+            } else if (result instanceof BlockHitResult blockResult && player.getLevel().getBlockState(blockResult.getBlockPos()).isAir()) {
+                // Mira no ar: define uma posição "alvo" no ar baseada na direção do olhar
+            } else if (result instanceof BlockHitResult blockResult &&
+                    // Se for translúcido, refazer raycast ignorando blocos
+                    player.getLevel().getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+
+                Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
+                        .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
+                BlockHitResult blockHitResult = manualRaycastIgnoringBlocks(player.getLevel(), player, 64, blockSet);
+                hitPos = applyOffset(result.getLocation(), blockHitResult.getDirection(), -0.05D);
+
+            } else if (result instanceof BlockHitResult blockResult && !player.getLevel().getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+                hitPos = applyOffset(result.getLocation(), blockResult.getDirection(), -0.05D);
+            }
+
+            double radius = 16.0; // Raio de busca
+            List<LivingEntity> nearbyMobs = player.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(hitPos, hitPos).inflate(radius), (e) -> {
+                if (e instanceof Mob mob) {
+                    return mob.goalSelector.getAvailableGoals().stream().anyMatch(g -> g.getGoal() instanceof FollowAndLookAtLaser);
+                }
+                return false;
+            });
+
+            for (LivingEntity livingEntity : nearbyMobs) {
+                for (Goal goal : ((Mob) livingEntity).goalSelector.getAvailableGoals().stream().map(WrappedGoal::getGoal).toList()) {
+                    if (goal instanceof FollowAndLookAtLaser followGoal) {
+                        followGoal.setLaserTarget(hitPos, player);
+                    }
+                }
+            }
+        }
+    }
 
     // Utilitário para aplicar deslocamento da face atingida
     private Vec3 applyOffset(Vec3 hitPos, Direction face, double offset) {

@@ -20,25 +20,37 @@ public class FoxyasUtils {
 		Vec3 lookVec = entity.getViewVector(1.0F);
 		Vec3 end = start.add(lookVec.scale(maxDistance));
 
-		double stepSize = 0.1; // tamanho do passo
+		double stepSize = 0.1;
 		Vec3 currentPos = start;
-		double steps = maxDistance / stepSize;
+		int steps = (int) (maxDistance / stepSize);
 
 		for (int i = 0; i < steps; i++) {
 			BlockPos blockPos = new BlockPos(currentPos);
 			BlockState state = level.getBlockState(blockPos);
 
 			if (!ignoredBlocks.contains(state.getBlock()) && state.isSolidRender(level, blockPos)) {
-				// Retorna o hit manual quando encontra um bloco não ignorado
-				return new BlockHitResult(currentPos, Direction.getNearest(lookVec.x, lookVec.y, lookVec.z), blockPos, true);
+				Direction direction = Direction.getNearest(lookVec.x, lookVec.y, lookVec.z);
+				//Vec3 hitPos = applyOffset(currentPos, direction, -0.05D);
+				return new BlockHitResult(currentPos, direction, blockPos, true);
 			}
 
 			currentPos = currentPos.add(lookVec.scale(stepSize));
 		}
 
-		// Nada atingido
-		return BlockHitResult.miss(end, Direction.getNearest(lookVec.x, lookVec.y, lookVec.z), new BlockPos(end));
+		Direction missDirection = Direction.getNearest(lookVec.x, lookVec.y, lookVec.z);
+		Vec3 missPos = applyOffset(end, missDirection, -0.05D);
+		return BlockHitResult.miss(missPos, missDirection, new BlockPos(end));
 	}
+
+	// Utilitário para aplicar deslocamento da face atingida
+	public static Vec3 applyOffset(Vec3 hitPos, Direction face, double offset) {
+		return hitPos.subtract(
+				face.getStepX() * offset,
+				face.getStepY() * offset,
+				face.getStepZ() * offset
+		);
+	}
+
 
 	public static Vec3 getRelativePositionEyes(Entity entity, float deltaX, float deltaY, float deltaZ) {
 		// Obtém os vetores locais da entidade

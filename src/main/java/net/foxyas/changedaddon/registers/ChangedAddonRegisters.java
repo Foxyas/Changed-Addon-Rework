@@ -14,6 +14,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.LaserPointer;
+import net.foxyas.changedaddon.item.armor.ColorfulShorts;
 import net.foxyas.changedaddon.network.packets.KeyPressPacket;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
@@ -23,6 +24,7 @@ import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoom
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -104,6 +106,8 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final RegistryObject<Item> LASER_POINTER = ITEMS_REGISTRY.register("laser_pointer", LaserPointer::new);
 
+	public static final RegistryObject<Item> COLORFUL_SHORTS = ITEMS_REGISTRY.register("colorful_shorts", ColorfulShorts::new);
+
 	@SubscribeEvent
 	public static void registerItems(FMLConstructModEvent event) {
 		ChangedAddonRegisters.ITEMS_REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -116,6 +120,8 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 		// Dynamic Color
 		LaserItemDynamicRender.DynamicLaserColor(LASER_POINTER);
+		ColorfulShorts.DynamicColor(COLORFUL_SHORTS);
+
 	}
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)

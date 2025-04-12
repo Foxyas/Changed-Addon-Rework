@@ -14,6 +14,7 @@ import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.minecraft.client.Camera;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -75,7 +76,24 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 			return this.renderType;
 		}
 
-		public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector) {
+		@Override
+		public void renderFirstPersonOnFace(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, Camera camera) {
+			FirstPersonLayer.super.renderFirstPersonOnFace(stack, bufferSource, packedLight, entity, camera);
+		}
+
+		@Override
+		public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector, float partialTick) {
+			FirstPersonLayer.super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
+			if (entity.getUnderlyingPlayer() != null){
+				stack.pushPose();
+				stack.scale(1.0002F, 1.0002F, 1.0002F);
+				EntityModel<T> var8 = this.getParentModel();
+				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
+					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+				}
+				stack.popPose();
+			}
+
 			if (entity.getUnderlyingPlayer() == null && entity instanceof KetExperiment009BossEntity ketExperiment009 && ketExperiment009.isPhase2()){
 				stack.pushPose();
 				stack.scale(1.0002F, 1.0002F, 1.0002F);
@@ -87,14 +105,6 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 			}
 
 			if (entity.getUnderlyingPlayer() == null && entity.getHealth() <= entity.getMaxHealth() * healthThreshold) {
-				stack.pushPose();
-				stack.scale(1.0002F, 1.0002F, 1.0002F);
-				EntityModel<T> var8 = this.getParentModel();
-				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
-				}
-				stack.popPose();
-			} else if (entity.getUnderlyingPlayer() != null){
 				stack.pushPose();
 				stack.scale(1.0002F, 1.0002F, 1.0002F);
 				EntityModel<T> var8 = this.getParentModel();

@@ -75,7 +75,9 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && entity.getEntity().distanceTo(getTargetByID(entity.getEntity().getLevel(), TargetID)) > 10) {
+		if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && entity.getEntity().isShiftKeyDown()) {
+            return true;
+        } else if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && entity.getEntity().distanceTo(getTargetByID(entity.getEntity().getLevel(), TargetID)) > 10) {
             return false;
         } else if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && getTargetByID(entity.getEntity().getLevel(), TargetID) instanceof Player player && isSpectator(player)) {
             return false;

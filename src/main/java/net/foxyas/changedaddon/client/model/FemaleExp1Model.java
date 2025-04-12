@@ -2,12 +2,12 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.client.renderer.layers.animation.PsychicGrabAbilityAnimation;
 import net.foxyas.changedaddon.entity.Exp1FemaleEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
-import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.tfanimations.HelperModel;
 import net.ltxprogrammer.changed.client.animations.Limb;
 import net.ltxprogrammer.changed.client.tfanimations.TransfurHelper;
@@ -179,6 +179,7 @@ public class FemaleExp1Model extends AdvancedHumanoidModel<Exp1FemaleEntity> imp
     public void setupAnim(@NotNull Exp1FemaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        PsychicGrabAbilityAnimation.playAnimation(entity,this);
     }
 
     /*public PoseStack getPlacementCorrectors(CorrectorType type) {
