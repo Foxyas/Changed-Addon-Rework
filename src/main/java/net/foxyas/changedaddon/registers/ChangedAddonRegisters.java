@@ -103,10 +103,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final RegistryObject<Item> DARK_LATEX_HEAD_CAP = ITEMS_REGISTRY.register("dark_latex_coat_cap",
 			() -> new DarkLatexCoatItem.HeadPart(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
-
 	public static final RegistryObject<Item> LASER_POINTER = ITEMS_REGISTRY.register("laser_pointer", LaserPointer::new);
-
-	public static final RegistryObject<Item> COLORFUL_SHORTS = ITEMS_REGISTRY.register("colorful_shorts", ColorfulShorts::new);
 
 	@SubscribeEvent
 	public static void registerItems(FMLConstructModEvent event) {
@@ -120,8 +117,6 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 		// Dynamic Color
 		LaserItemDynamicRender.DynamicLaserColor(LASER_POINTER);
-		ColorfulShorts.DynamicColor(COLORFUL_SHORTS);
-
 	}
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
