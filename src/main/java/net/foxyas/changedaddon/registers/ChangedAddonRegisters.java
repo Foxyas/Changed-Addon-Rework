@@ -14,7 +14,6 @@ import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.LaserPointer;
-import net.foxyas.changedaddon.item.armor.ColorfulShorts;
 import net.foxyas.changedaddon.network.packets.KeyPressPacket;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
