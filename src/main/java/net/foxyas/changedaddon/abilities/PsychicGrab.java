@@ -17,6 +17,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -143,10 +145,10 @@ public class PsychicGrab extends SimpleAbility {
     @Override
     public void tick(IAbstractChangedEntity entity) {
         super.tick(entity);
-        if (entity.getEntity() instanceof Player player) {
+        /*if (entity.getEntity() instanceof Player player) {
             this.controller = abilityInstance.getController();
             player.displayClientMessage(new TextComponent("Hold Ticks:" + controller.getHoldTicks()), true);
-        }
+        }*/ // it works
         Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
         if (target != null) {
             if (entity.getEntity().isShiftKeyDown()) {
@@ -156,6 +158,12 @@ public class PsychicGrab extends SimpleAbility {
                         TargetID = PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6).getUUID();
                     }
                     return;
+                }
+            }
+            if (target instanceof Projectile projectile){
+                if (projectile instanceof Arrow arrow && arrow.isOnGround()){
+                    arrow.setOnGround(false);
+                    target.setDeltaMovement((look.subtract(target.position())));
                 }
             }
             look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
