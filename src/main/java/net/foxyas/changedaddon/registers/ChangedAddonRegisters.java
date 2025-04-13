@@ -14,6 +14,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.LaserPointer;
+import net.foxyas.changedaddon.item.armor.DyeableShorts;
 import net.foxyas.changedaddon.network.packets.KeyPressPacket;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
@@ -103,6 +104,8 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 	public static final RegistryObject<Item> DARK_LATEX_HEAD_CAP = ITEMS_REGISTRY.register("dark_latex_coat_cap",
 			() -> new DarkLatexCoatItem.HeadPart(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 	public static final RegistryObject<Item> LASER_POINTER = ITEMS_REGISTRY.register("laser_pointer", LaserPointer::new);
+
+	public static final RegistryObject<Item> DYEABLE_SHORTS = ITEMS_REGISTRY.register("dyeable_shorts", DyeableShorts::new);
 
 	@SubscribeEvent
 	public static void registerItems(FMLConstructModEvent event) {

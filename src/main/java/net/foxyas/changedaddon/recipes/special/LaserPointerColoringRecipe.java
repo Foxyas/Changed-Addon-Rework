@@ -13,10 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
-public class LazerPointerColoringRecipe extends CustomRecipe {
-    public LazerPointerColoringRecipe(ResourceLocation id) {
+public class LaserPointerColoringRecipe extends CustomRecipe {
+    public LaserPointerColoringRecipe(ResourceLocation id) {
         super(id);
     }
 
@@ -93,24 +92,24 @@ public class LazerPointerColoringRecipe extends CustomRecipe {
         return ChangedAddonModRecipeTypes.LAZER_POINTER_COLORING.get();
     }
 
-    public static class Serializer implements RecipeSerializer<LazerPointerColoringRecipe> {
+    public static class Serializer implements RecipeSerializer<LaserPointerColoringRecipe> {
 
         public static final ResourceLocation ID = new ResourceLocation("changed_addon", "coloring_laser");
 
         @Override
-        public LazerPointerColoringRecipe fromJson(ResourceLocation id, JsonObject json) {
+        public LaserPointerColoringRecipe fromJson(ResourceLocation id, JsonObject json) {
             // Nenhum dado necessário no JSON
-            return new LazerPointerColoringRecipe(id);
+            return new LaserPointerColoringRecipe(id);
         }
 
         @Override
-        public LazerPointerColoringRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        public LaserPointerColoringRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
             // Nenhum dado transmitido, então só retorna a instância
-            return new LazerPointerColoringRecipe(id);
+            return new LaserPointerColoringRecipe(id);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, LazerPointerColoringRecipe recipe) {
+        public void toNetwork(FriendlyByteBuf buffer, LaserPointerColoringRecipe recipe) {
             // Nada para escrever
         }
 

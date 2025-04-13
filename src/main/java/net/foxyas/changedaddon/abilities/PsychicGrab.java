@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
+import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
@@ -9,10 +10,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -20,7 +23,6 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -29,13 +31,18 @@ public class PsychicGrab extends SimpleAbility {
     public Vec3 look = Vec3.ZERO;
     public UUID TargetID = UUID.fromString("0-0-0-0-0"); //Fail Safe
 
+    private AbstractAbilityInstance abilityInstance;
+    private Controller controller;
+
     @Override
     public SimpleAbilityInstance makeInstance(IAbstractChangedEntity entity) {
         offset = new Vec3(0, 0, 3);
         if (entity.getEntity() instanceof Player player) {
             look = FoxyasUtils.getRelativePositionEyes(player, offset.scale(0.1));
         }
-        return super.makeInstance(entity);
+        SimpleAbilityInstance simpleAbilityInstance = super.makeInstance(entity);
+        this.abilityInstance = simpleAbilityInstance;
+        return simpleAbilityInstance;
     }
 
     @Nullable
@@ -65,22 +72,29 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        return (getTargetByID(entity.getEntity().getLevel(), TargetID) != null) ? UseType.HOLD : UseType.INSTANT;
+        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        return (target != null) ? UseType.HOLD : UseType.INSTANT;
     }
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        return (getTargetByID(entity.getEntity().getLevel(), TargetID) == null) ? 15 : 0;
+        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        return (target == null) ? 15 : 0;
     }
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-		if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && entity.getEntity().isShiftKeyDown()) {
-            return true;
-        } else if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && entity.getEntity().distanceTo(getTargetByID(entity.getEntity().getLevel(), TargetID)) > 10) {
-            return false;
-        } else if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && getTargetByID(entity.getEntity().getLevel(), TargetID) instanceof Player player && isSpectator(player)) {
-            return false;
+        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        LivingEntity self = entity.getEntity();
+        if (target != null) {
+            if (entity.getEntity().distanceTo(target) > 10) {
+                return false;
+            } else if (target instanceof Player player && isSpectator(player)) {
+                return false;
+            }
+            if (self.hurtTime > 0 && self.getLastHurtByMob() == target) {
+                return false;
+            }
         }
 
         return !isSpectator(entity.getEntity());
@@ -88,10 +102,17 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public boolean canKeepUsing(IAbstractChangedEntity entity) {
-        if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && entity.getEntity().distanceTo(getTargetByID(entity.getEntity().getLevel(), TargetID)) > 10) {
-            return false;
-        } else if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null && getTargetByID(entity.getEntity().getLevel(), TargetID) instanceof Player player && isSpectator(player)) {
-            return false;
+        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        LivingEntity self = entity.getEntity();
+        if (target != null) {
+            if (entity.getEntity().distanceTo(target) > 10) {
+                return false;
+            } else if (target instanceof Player player && isSpectator(player)) {
+                return false;
+            }
+            if (self.hurtTime > 0 && self.getLastHurtByMob() == target) {
+                return false;
+            }
         }
 
         return !isSpectator(entity.getEntity());
@@ -102,13 +123,14 @@ public class PsychicGrab extends SimpleAbility {
         if (entity.getLevel().isClientSide()) {
             super.startUsing(entity);
         }
+        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
         if (entity.getEntity().isShiftKeyDown() || getTargetByID(entity.getLevel(), TargetID) == null) {
             if (PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) == null) {
                 return;
             }
             TargetID = PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6).getUUID();
         } else {
-            if (!getTargetByID(entity.getEntity().getLevel(), TargetID).isAlive()) {
+            if (!target.isAlive()) {
                 if (PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) == null) {
                     return;
                 }
@@ -121,7 +143,12 @@ public class PsychicGrab extends SimpleAbility {
     @Override
     public void tick(IAbstractChangedEntity entity) {
         super.tick(entity);
-        if (getTargetByID(entity.getEntity().getLevel(), TargetID) != null) {
+        if (entity.getEntity() instanceof Player player) {
+            this.controller = abilityInstance.getController();
+            player.displayClientMessage(new TextComponent("Hold Ticks:" + controller.getHoldTicks()), true);
+        }
+        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        if (target != null) {
             if (entity.getEntity().isShiftKeyDown()) {
                 if (entity.getAbilityInstance(this) != null && entity.getAbilityInstance(this).getController().getHoldTicks() <= 3) {
                     if (PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) != null
@@ -132,7 +159,7 @@ public class PsychicGrab extends SimpleAbility {
                 }
             }
             look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
-            getTargetByID(entity.getEntity().getLevel(), TargetID).setDeltaMovement((look.subtract(getTargetByID(entity.getEntity().getLevel(), TargetID).position())));
+            target.setDeltaMovement((look.subtract(target.position())));
         }
     }
 
