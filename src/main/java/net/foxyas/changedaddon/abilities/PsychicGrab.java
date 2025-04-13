@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.abilities;
 
+import net.foxyas.changedaddon.mixins.AbstractArrowAccessor;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -17,6 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
@@ -138,6 +140,24 @@ public class PsychicGrab extends SimpleAbility {
                 }
                 TargetID = PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6).getUUID();
             }
+
+            if (target instanceof Projectile projectile) {
+                if (projectile instanceof AbstractArrow arrow) {
+                    if (arrow instanceof AbstractArrowAccessor arrowAccessor) {
+                        if (arrowAccessor.inGround()) {
+                            arrowAccessor.setInGround(false);
+                        }
+                    }
+                    /*CompoundTag tag = new CompoundTag();
+                    arrow.addAdditionalSaveData(tag);
+                    boolean inGround = tag.contains("inGround") && tag.getBoolean("inGround");
+                    if (inGround){
+                        tag.putBoolean("inGround",false);
+                        arrow.readAdditionalSaveData(tag);
+                    }*/
+                    target.setDeltaMovement((look.subtract(target.position())));
+                }
+            }
         }
         super.startUsing(entity);
     }
@@ -160,12 +180,23 @@ public class PsychicGrab extends SimpleAbility {
                     return;
                 }
             }
-            if (target instanceof Projectile projectile){
-                if (projectile instanceof Arrow arrow && arrow.isOnGround()){
-                    arrow.setOnGround(false);
+            /*if (target instanceof Projectile projectile) {
+                if (projectile instanceof AbstractArrow arrow) {
+                    if (arrow instanceof AbstractArrowAccessor arrowAccessor) {
+                        if (arrowAccessor.inGround()) {
+                            arrowAccessor.setInGround(false);
+                        }
+                    }
+                    /*CompoundTag tag = new CompoundTag();
+                    arrow.addAdditionalSaveData(tag);
+                    boolean inGround = tag.contains("inGround") && tag.getBoolean("inGround");
+                    if (inGround){
+                        tag.putBoolean("inGround",false);
+                        arrow.readAdditionalSaveData(tag);
+                    }*\/
                     target.setDeltaMovement((look.subtract(target.position())));
                 }
-            }
+            }*/
             look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
             target.setDeltaMovement((look.subtract(target.position())));
         }
