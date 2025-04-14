@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
+import net.minecraft.client.multiplayer.ClientLevel;
 
 public class PsychicGrab extends SimpleAbility {
     public Vec3 offset = Vec3.ZERO;
@@ -69,12 +70,11 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
-        Collection<Component> Descriptions = super.getAbilityDescription(entity);
-        Descriptions.add(new TranslatableComponent("changed_addon.ability.psychic_grab.description"));
-        return Descriptions;
+        Collection<Component> descriptions = new ArrayList<>(super.getAbilityDescription(entity));
+        descriptions.add(new TranslatableComponent("changed_addon.ability.psychic_grab.description"));
+        return descriptions;
     }
 
-    @OnlyIn(Dist.DEDICATED_SERVER)
     public @Nullable Entity getTargetByID(Level level, UUID uuid) {
         if (level instanceof ServerLevel serverLevel) {
             return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(serverLevel, uuid.toString());
@@ -82,9 +82,11 @@ public class PsychicGrab extends SimpleAbility {
         return null;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public @Nullable Entity getTargetByIDInClientSide(Level level, UUID uuid) {
-        return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(level, uuid.toString());
+        if (level instanceof ClientLevel clientLevel) {
+            return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(clientLevel, uuid.toString());
+        }
+        return null;
     }
 
     @Override

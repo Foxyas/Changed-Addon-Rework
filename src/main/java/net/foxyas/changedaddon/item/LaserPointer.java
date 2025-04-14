@@ -30,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -42,36 +43,39 @@ public class LaserPointer extends Item implements SpecializedAnimations {
     public static final float MAX_LASER_REACH = 32;
 
     public static enum DefaultColors {
-        RED(new Color3(255, 0, 0)),
-        GREEN(new Color3(0, 255, 0)),
-        BLUE(new Color3(0, 0, 255)),
-        YELLOW(new Color3(255, 255, 0)),
-        CYAN(new Color3(0, 255, 255)),
-        MAGENTA(new Color3(255, 0, 255)),
-        ORANGE(new Color3(255, 165, 0)),
-        PINK(new Color3(255, 105, 180)),
-        PURPLE(new Color3(128, 0, 128)),
-        WHITE(new Color3(255, 255, 255)),
-        BLACK(new Color3(0, 0, 0)),
-        GRAY(new Color3(128, 128, 128)),
-        LIGHT_GRAY(new Color3(211, 211, 211)),
-        LIME(new Color3(50, 205, 50)),
-        BROWN(new Color3(139, 69, 19)),
-        NAVY(new Color3(0, 0, 128));
+        RED(new Color(255, 0, 0)),
+        GREEN(new Color(0, 255, 0)),
+        BLUE(new Color(0, 0, 255)),
+        YELLOW(new Color(255, 255, 0)),
+        CYAN(new Color(0, 255, 255)),
+        MAGENTA(new Color(255, 0, 255)),
+        ORANGE(new Color(255, 165, 0)),
+        PINK(new Color(255, 105, 180)),
+        PURPLE(new Color(128, 0, 128)),
+        WHITE(new Color(255, 255, 255)),
+        GRAY(new Color(128, 128, 128)),
+        LIGHT_GRAY(new Color(211, 211, 211)),
+        LIME(new Color(50, 205, 50)),
+        BROWN(new Color(139, 69, 19)),
+        NAVY(new Color(0, 0, 128));
 
-        public final Color3 color;
+        public final Color color;
 
-        DefaultColors(Color3 color) {
+        DefaultColors(Color color) {
             this.color = color;
         }
 
         // Construtor sem argumentos, caso queira usar valores padrão depois
         DefaultColors() {
-            this.color = new Color3(255, 255, 255); // fallback: branco
+            this.color = new Color(255, 255, 255); // fallback: branco
         }
 
-        public Color3 getColor() {
+        public Color getColor() {
             return color;
+        }
+
+        public int getColorToInt() {
+            return color.getRGB();
         }
     }
 
@@ -82,22 +86,29 @@ public class LaserPointer extends Item implements SpecializedAnimations {
     @Override
     public @NotNull ItemStack getDefaultInstance() {
         ItemStack stack = super.getDefaultInstance();
-        stack.getOrCreateTag().putString("Color", new Color3(140, 0, 0).toHexCode()); // Cor padrão vermelha
+        stack.getOrCreateTag().putInt("Color", DefaultColors.RED.getColorToInt()); // Cor padrão vermelha
         return stack;
     }
 
-    public static String getColor(ItemStack stack) {
+    public static int getColor(ItemStack stack) {
         if (stack.hasTag() && stack.getTag().contains("Color")) {
-            return Objects.requireNonNull(Color3.parseHex(stack.getTag().getString("Color"))).toHexCode();
+            return stack.getTag().getInt("Color");
         }
-        return new Color3(140, 0, 0).toHexCode(); // Cor padrão se não tiver NBT
+        return DefaultColors.RED.getColorToInt(); // Cor padrão se não tiver NBT
+    }
+
+    public static Color getColorAsColor(ItemStack stack) {
+        if (stack.hasTag() && stack.getTag().contains("Color")) {
+            return new Color(stack.getTag().getInt("Color"));
+        }
+        return DefaultColors.RED.getColor(); // Cor padrão se não tiver NBT
     }
 
     public static Color3 getColorAsColor3(ItemStack stack) {
         if (stack.hasTag() && stack.getTag().contains("Color")) {
-            return Color3.parseHex(stack.getTag().getString("Color"));
+            return Color3.fromInt(stack.getTag().getInt("Color"));
         }
-        return new Color3(140, 0, 0); // Cor padrão se não tiver NBT
+        return Color3.fromInt(DefaultColors.RED.getColorToInt()); // Cor padrão se não tiver NBT
     }
 
     @Override
@@ -115,7 +126,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
         if (this.allowdedIn(tab)) {
             for (DefaultColors color : DefaultColors.values()) {
                 ItemStack stack = new ItemStack(this);
-                stack.getOrCreateTag().putString("Color", color.getColor().toHexCode());
+                stack.getOrCreateTag().putInt("Color", color.getColorToInt());
                 items.add(stack);
             }
         }
@@ -128,11 +139,16 @@ public class LaserPointer extends Item implements SpecializedAnimations {
             // Suponha que você tenha salvo os valores RGB no NBT
             CompoundTag tag = stack.getOrCreateTag();
             if (tag.contains("Color")) {
-                String hex = tag.getString("Color");
+                Color color = new Color(tag.getInt("Color"));
+                String hex = getHex(color);
                 tooltip.add(new TextComponent("Color: " + hex).withStyle((e) -> e.withColor(TextColor.parseColor(hex))));
             }
         }
 
+    }
+
+    public static String getHex(Color color) {
+        return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
     }
 
 
@@ -160,7 +176,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
                 Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
                         .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
                 BlockHitResult blockHitResult = manualRaycastIgnoringBlocks(level, player, 64, blockSet);
-                hitPos = applyOffset(result.getLocation(), blockHitResult.getDirection(), -0.05D);
+                hitPos = applyOffset(result.getLocation(), blockHitResult.getDirection(), 0f);
                 spawnLaserParticle(level, player, stack, hitPos);
 
             } else if (result instanceof BlockHitResult blockResult && !level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {

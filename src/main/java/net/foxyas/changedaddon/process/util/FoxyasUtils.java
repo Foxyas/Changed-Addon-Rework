@@ -31,6 +31,7 @@ public class FoxyasUtils {
 			if (!ignoredBlocks.contains(state.getBlock()) && state.isSolidRender(level, blockPos)) {
 				Direction direction = Direction.getNearest(lookVec.x, lookVec.y, lookVec.z);
 				//Vec3 hitPos = applyOffset(currentPos, direction, -0.05D);
+				currentPos = applyOffset(currentPos, direction, 0.05D);
 				return new BlockHitResult(currentPos, direction, blockPos, true);
 			}
 

@@ -43,6 +43,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
+
 import net.minecraft.world.entity.player.Player;
 
 public class LaserPointParticle extends TextureSheetParticle {
@@ -185,6 +186,7 @@ public class LaserPointParticle extends TextureSheetParticle {
         super(level, x, y, z, dx, dy, dz);
         this.spriteSet = sprites;
         this.setSize(0.1f, 0.1f);
+        this.quadSize = 0.1f;
         this.setAlpha(data.getColorAlpha());
         this.lifetime = 100; // você pode ajustar isso
         this.entity = level.getEntity(data.getEntityId());
@@ -208,10 +210,11 @@ public class LaserPointParticle extends TextureSheetParticle {
             return;
         }
 
-        if (owner instanceof Player player && ProcessTransfur.getPlayerTransfurVariantSafe(player).map(
+        if (level.isClientSide() && Minecraft.getInstance().player != null && ProcessTransfur.getPlayerTransfurVariantSafe(Minecraft.getInstance().player).map(
                 transfurVariantInstance -> transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)
         ).orElse(false)) {
-            this.setSize(1f , 1f);
+            this.setSize(0.35f, 0.35f);
+            this.quadSize = 0.35f;
         }
 
 
@@ -226,6 +229,8 @@ public class LaserPointParticle extends TextureSheetParticle {
         Direction face = null;
 
         EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(owner, LaserPointer.MAX_LASER_REACH);
+
+        boolean Subtract = false;
         if (entityHitResult != null) {
             hitPos = entityHitResult.getLocation();
             face = entityHitResult.getEntity().getDirection();
@@ -236,18 +241,19 @@ public class LaserPointParticle extends TextureSheetParticle {
                 Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
                         .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
                 finalResult = manualRaycastIgnoringBlocks(level, owner, LaserPointer.MAX_LASER_REACH, blockSet);
+                Subtract = true;
             }
 
             hitPos = finalResult.getLocation();
             face = finalResult.getDirection();
-            hitPos = FoxyasUtils.applyOffset(hitPos,face,-0.01f);
+            hitPos = FoxyasUtils.applyOffset(hitPos, face, !Subtract ? -0.01f : 0.05f);
         } else {
             hitPos = result.getLocation(); // fallback (geralmente miss)
         }
 
         if (face != null) {
             // Aplica offset dinâmico baseado na direção
-            double offset = -0.05D;
+            double offset = !Subtract ? -0.05D : 0.05D;
             hitPos = hitPos.subtract(
                     face.getStepX() * offset,
                     face.getStepY() * offset,
