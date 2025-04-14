@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,13 +23,14 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class PsychicGrab extends SimpleAbility {
     public Vec3 offset = Vec3.ZERO;
@@ -67,28 +69,39 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
-        return super.getAbilityDescription(entity);
+        Collection<Component> Descriptions = super.getAbilityDescription(entity);
+        Descriptions.add(new TranslatableComponent("changed_addon.ability.psychic_grab.description"));
+        return Descriptions;
     }
 
+    @OnlyIn(Dist.DEDICATED_SERVER)
     public @Nullable Entity getTargetByID(Level level, UUID uuid) {
+        if (level instanceof ServerLevel serverLevel) {
+            return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(serverLevel, uuid.toString());
+        }
+        return null;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public @Nullable Entity getTargetByIDInClientSide(Level level, UUID uuid) {
         return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(level, uuid.toString());
     }
 
     @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
         return (target != null) ? UseType.HOLD : UseType.INSTANT;
     }
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
         return (target == null) ? 15 : 0;
     }
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
         LivingEntity self = entity.getEntity();
         if (target != null) {
             if (entity.getEntity().distanceTo(target) > 10) {
@@ -106,7 +119,7 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public boolean canKeepUsing(IAbstractChangedEntity entity) {
-        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
         LivingEntity self = entity.getEntity();
         if (target != null) {
             if (entity.getEntity().distanceTo(target) > 10) {
@@ -125,7 +138,7 @@ public class PsychicGrab extends SimpleAbility {
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
         if (entity.getLevel().isClientSide()) {
-            super.startUsing(entity);
+            return;
         }
         Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
         if (entity.getEntity().isShiftKeyDown() || getTargetByID(entity.getLevel(), TargetID) == null) {

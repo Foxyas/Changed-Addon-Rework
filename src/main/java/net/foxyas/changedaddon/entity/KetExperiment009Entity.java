@@ -53,7 +53,7 @@ public class KetExperiment009Entity extends ChangedEntity {
         super(type, world);
         this.setAttributes(getAttributes());
         maxUpStep = 0.6f;
-        xpReward = 150;
+        xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
     }

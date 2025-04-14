@@ -40,6 +40,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -359,6 +360,19 @@ public class PlayerUtilProcedure {
                     return null;
                 }
 
+                return entities.filter(entity -> entity.getStringUUID().equals(uuid)).findFirst().orElse(null);
+            } catch (Exception e) {
+                ChangedAddonMod.LOGGER.error(e.getMessage()); // Log the exception for debugging purposes
+                return null;
+            }
+        }
+
+        @OnlyIn(Dist.DEDICATED_SERVER)
+        @Nullable
+        public static Entity getEntityByUUID(ServerLevel serverLevel, String uuid) {
+            try {
+                Stream<Entity> entities;
+                entities = StreamSupport.stream(serverLevel.getAllEntities().spliterator(), false);
                 return entities.filter(entity -> entity.getStringUUID().equals(uuid)).findFirst().orElse(null);
             } catch (Exception e) {
                 ChangedAddonMod.LOGGER.error(e.getMessage()); // Log the exception for debugging purposes

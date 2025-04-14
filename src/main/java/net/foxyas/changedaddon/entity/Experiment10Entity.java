@@ -58,7 +58,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         super(type, world);
         this.setAttributes(getAttributes());
         maxUpStep = 0.6f;
-        xpReward = 3000;
+        xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
     }

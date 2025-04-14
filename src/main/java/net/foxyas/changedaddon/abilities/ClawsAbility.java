@@ -36,7 +36,7 @@ public class ClawsAbility extends SimpleAbility {
 
 	@Override
 	public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-		return new ResourceLocation("changed_addon:textures/screens/normal_paw.png");
+		return new ResourceLocation("changed_addon:textures/screens/claw.png");
 	}
 
 	@Override

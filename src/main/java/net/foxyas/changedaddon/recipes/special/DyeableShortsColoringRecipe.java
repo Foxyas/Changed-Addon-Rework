@@ -105,7 +105,7 @@ public class DyeableShortsColoringRecipe extends CustomRecipe {
 
     public static class Serializer implements RecipeSerializer<DyeableShortsColoringRecipe> {
 
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "coloring_shorts");
+        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "shorts_coloring");
 
         @Override
         public DyeableShortsColoringRecipe fromJson(ResourceLocation id, JsonObject json) {

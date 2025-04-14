@@ -19,7 +19,7 @@ public class ChangedAddonModRecipeTypes {
 
     // Registrar suas receitas especiais
     public static final RegistryObject<RecipeSerializer<?>> LAZER_POINTER_COLORING =
-            SERIALIZERS.register("lazer_pointer_coloring", LaserPointerColoringRecipe.Serializer::new);
+            SERIALIZERS.register("laser_pointer_coloring", LaserPointerColoringRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<?>> SHORTS_COLORING =
             SERIALIZERS.register("shorts_coloring", DyeableShortsColoringRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<CatalyzerRecipe>> CATALYZER_RECIPE =

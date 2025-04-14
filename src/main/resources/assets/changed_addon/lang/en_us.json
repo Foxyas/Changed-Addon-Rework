@@ -490,6 +490,7 @@
   "changed_addon.latex_totem.tittle.text_1": "§o§n§l§3⚡ The Artifact Resonates ⚡",
   "gui.changed_addon.fight_tokeepconsciousnessminigame.button_fight": "           Fight            ",
   "changed_addon.jei_descriptions.potwithcammonia": "Grants enough Untransfur Effect to fully reverse your transformation when consumed.",
+  "changed_addon.ability.psychic_grab.description": "Allows the user to psychically grab a nearby entity — whether alive or not — and control its movement. Use the arrow keys to adjust the held position (hold Shift to move it forward or backward), letting you pull the target closer, lift it, or shift it sideways. ⚠️ This ability may behave inconsistently or appear jittery on low-performance systems or in laggy environments.",
   "gui.changed_addon.catlyzergui.label_full": "Full",
   "item.changed_addon.painite_shovel": "Painite Shovel",
   "gui.changed_addon.unifusergui.tooltip_display_litixcamonia_multiplier": "Display Litix-Camonia Multiplier Recipe",

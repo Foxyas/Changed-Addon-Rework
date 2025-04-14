@@ -194,12 +194,12 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
             return; // Garante que o código só execute no servidor
         }
 
-        int radius = 6; // Raio da explosão
-        int radiusY = 6;
+        int radius = 3; // Raio da explosão
+        int radiusY = 3;
         BlockPos center = boss.blockPosition();
         Level world = boss.getLevel();
 
-        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 2.0f, Explosion.BlockInteraction.BREAK);
+        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 1.0f, Explosion.BlockInteraction.BREAK);
 
         Explosion explosionReference = new Explosion(world, boss, boss.getX(), boss.getY(), boss.getZ(), 4.0f, false, Explosion.BlockInteraction.NONE);
 
