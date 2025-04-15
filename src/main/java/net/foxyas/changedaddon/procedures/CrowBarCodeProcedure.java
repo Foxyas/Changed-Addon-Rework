@@ -48,15 +48,21 @@ public class CrowBarCodeProcedure {
 			return;
 		}
 		if (DoorState.getBlock() instanceof AbstractLabDoor abstractLabDoor) {
-			if (abstractLabDoor.openDoor(DoorState, world, pos) && player.getCooldowns().isOnCooldown(ChangedAddonModItems.CROW_BAR.get())) {
-				player.getCooldowns().addCooldown(itemStack.getItem(),60);
+			if ((player.getCooldowns().isOnCooldown(ChangedAddonModItems.CROW_BAR.get()))) {
+				return;
+			}
+			if (abstractLabDoor.openDoor(DoorState, world, pos)) {
+				player.getCooldowns().addCooldown(itemStack.getItem(), 60);
 			}
 		} else if (DoorState.getBlock() instanceof AbstractLargeLabDoor abstractLargeLabDoor) {
 			if (DoorState.getValue(AbstractLargeLabDoor.SECTION) != NineSection.CENTER) {
 				return;
 			} else {
-				if (abstractLargeLabDoor.openDoor(DoorState, world, pos) && player.getCooldowns().isOnCooldown(ChangedAddonModItems.CROW_BAR.get())) {
-					player.getCooldowns().addCooldown(itemStack.getItem(),60);
+				if ((player.getCooldowns().isOnCooldown(ChangedAddonModItems.CROW_BAR.get()))) {
+					return;
+				}
+				if (abstractLargeLabDoor.openDoor(DoorState, world, pos) && !(player.getCooldowns().isOnCooldown(ChangedAddonModItems.CROW_BAR.get()))) {
+					player.getCooldowns().addCooldown(itemStack.getItem(), 60);
 				}
 			}
 		}
