@@ -54,7 +54,7 @@ public class DodgeAbilityHandleProcedure {
             return;
         }
 
-        if (player.invulnerableTime > 0 || player.hurtTime > 0)
+        if (player.invulnerableTime > 5 || player.hurtTime > 5)
             return;
 
         double distance = attacker.distanceTo(target);

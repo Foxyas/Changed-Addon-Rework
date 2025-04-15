@@ -75,7 +75,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public boolean canKeepUsing() {
-        return dodgeAmount > 0;
+        return dodgeAmount > 0 && !isSpectator(entity.getEntity());
     }
 
     @Override
@@ -90,11 +90,13 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void tick() {
-        setDodgeActivate(canUse());
+    	super.tick();
+        //setDodgeActivate(canUse());
     }
 
     @Override
     public void stopUsing() {
+    	super.stopUsing();
         if (isDodgeActive()) {
             setDodgeActivate(false);
         }
@@ -102,6 +104,8 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void tickIdle() {
+    	super.tickIdle();
+    	
         boolean nonHurtFrame = entity.getEntity().hurtTime <= 5 && entity.getEntity().hurtDuration <= 5;
         if (nonHurtFrame && !isDodgeActive() && dodgeAmount < maxDodgeAmount) {
             if (dodgeRegenCooldown <= 0) {
