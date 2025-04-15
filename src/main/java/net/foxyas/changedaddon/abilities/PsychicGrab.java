@@ -89,24 +89,31 @@ public class PsychicGrab extends SimpleAbility {
         return null;
     }
 
+    public @Nullable Entity getTarget(Level level, UUID uuid) {
+        return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(level, uuid.toString());
+    }
+
     @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
+        Entity target = getTarget(entity.getEntity().getLevel(), TargetID);
         return (target != null) ? UseType.HOLD : UseType.INSTANT;
     }
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
+        Entity target = getTarget(entity.getLevel(), TargetID);
         return (target == null) ? 15 : 0;
     }
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
+        Entity target = getTarget(entity.getLevel(), TargetID);
         LivingEntity self = entity.getEntity();
         if (target != null) {
             if (entity.getEntity().distanceTo(target) > 10) {
+            	if (self.isShiftKeyDown()){
+            		return true;
+            	}
                 return false;
             } else if (target instanceof Player player && isSpectator(player)) {
                 return false;
@@ -121,7 +128,7 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public boolean canKeepUsing(IAbstractChangedEntity entity) {
-        Entity target = !entity.getLevel().isClientSide() ? getTargetByID(entity.getEntity().getLevel(), TargetID) : getTargetByIDInClientSide(entity.getLevel(), TargetID);
+        Entity target = getTarget(entity.getLevel(), TargetID);
         LivingEntity self = entity.getEntity();
         if (target != null) {
             if (entity.getEntity().distanceTo(target) > 10) {
@@ -142,7 +149,7 @@ public class PsychicGrab extends SimpleAbility {
         if (entity.getLevel().isClientSide()) {
             return;
         }
-        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        Entity target = getTarget(entity.getLevel(), TargetID);
         if (entity.getEntity().isShiftKeyDown() || getTargetByID(entity.getLevel(), TargetID) == null) {
             if (PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) == null) {
                 return;
@@ -161,6 +168,7 @@ public class PsychicGrab extends SimpleAbility {
                     if (arrow instanceof AbstractArrowAccessor arrowAccessor) {
                         if (arrowAccessor.inGround()) {
                             arrowAccessor.setInGround(false);
+                            arrow.setDeltaMovement((look.subtract(target.position())));
                         }
                     }
                     /*CompoundTag tag = new CompoundTag();
@@ -170,7 +178,6 @@ public class PsychicGrab extends SimpleAbility {
                         tag.putBoolean("inGround",false);
                         arrow.readAdditionalSaveData(tag);
                     }*/
-                    target.setDeltaMovement((look.subtract(target.position())));
                 }
             }
         }
@@ -184,7 +191,7 @@ public class PsychicGrab extends SimpleAbility {
             this.controller = abilityInstance.getController();
             player.displayClientMessage(new TextComponent("Hold Ticks:" + controller.getHoldTicks()), true);
         }*/ // it works
-        Entity target = getTargetByID(entity.getEntity().getLevel(), TargetID);
+        Entity target = getTarget(entity.getLevel(), TargetID);
         if (target != null) {
             if (entity.getEntity().isShiftKeyDown()) {
                 if (entity.getAbilityInstance(this) != null && entity.getAbilityInstance(this).getController().getHoldTicks() <= 3) {
