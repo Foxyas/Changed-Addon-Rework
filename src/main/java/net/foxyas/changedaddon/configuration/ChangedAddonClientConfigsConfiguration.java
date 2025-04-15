@@ -18,6 +18,7 @@ public class ChangedAddonClientConfigsConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_EXTRA_HAND;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SMOOTH_LASER_MOVIMENT;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PLANTOIDS_VARIABLE;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> DIETS_DISPLAY_INFO;
 	static {
 		BUILDER.push("MusicPlayer");
 		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
@@ -43,6 +44,9 @@ public class ChangedAddonClientConfigsConfiguration {
 		BUILDER.pop();
 		BUILDER.push("ModelsHandle");
 		PLANTOIDS_VARIABLE = BUILDER.comment("Turn off the Plantoids [Female Chest Features]").define("Turn Off the Plantoids", false);
+		BUILDER.pop();
+		BUILDER.push("Textual Info ");
+		DIETS_DISPLAY_INFO = BUILDER.comment("Displays a text when the player consumes food favorable to their transformation species").define("Diets Display Info", true);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

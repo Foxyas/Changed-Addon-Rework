@@ -99,6 +99,7 @@ public class ChangedAddonModBlocks {
 		public static void clientSetup(FMLClientSetupEvent event) {
 			LatexInsulatorBlock.registerRenderLayer();
 			DarklatexpuddleBlock.registerRenderLayer();
+			SignalBlockBlock.registerRenderLayer();
 			SnepPlushBlock.registerRenderLayer();
 			WolfPlushBlock.registerRenderLayer();
 			ContainmentContainerBlock.registerRenderLayer();

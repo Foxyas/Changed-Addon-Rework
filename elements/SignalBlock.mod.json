@@ -2,14 +2,14 @@
   "_fv": 47,
   "_type": "block",
   "definition": {
-    "texture": "signal_block_pulse_texture",
+    "texture": "signal_block0",
     "textureTop": "signal_block_pulse_texture",
     "textureLeft": "signal_block_pulse_texture",
     "textureFront": "signal_block_pulse_texture",
     "textureRight": "signal_block_pulse_texture",
     "textureBack": "signal_block_pulse_texture",
-    "renderType": 10,
-    "customModelName": "Normal",
+    "renderType": 2,
+    "customModelName": "signalblock:default",
     "rotationMode": 0,
     "enablePitch": false,
     "emissiveRendering": true,
@@ -18,9 +18,9 @@
     "particleTexture": "",
     "tintType": "No tint",
     "isItemTinted": false,
-    "hasTransparency": false,
+    "hasTransparency": true,
     "connectedSides": false,
-    "transparencyType": "SOLID",
+    "transparencyType": "CUTOUT_MIPPED",
     "disableOffset": false,
     "boundingBoxes": [
       {
@@ -52,7 +52,7 @@
     "enchantPowerBonus": 0.0,
     "plantsGrowOn": false,
     "canRedstoneConnect": false,
-    "lightOpacity": 15,
+    "lightOpacity": 0,
     "material": {
       "value": "ROCK"
     },

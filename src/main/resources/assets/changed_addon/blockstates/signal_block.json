@@ -1,7 +1,33 @@
 {
   "variants": {
-    "": {
-      "model": "changed_addon:block/signal_block"
-    }
+    "facing=north,variant=default":  { "model": "changed_addon:block/signal_block" },
+    "facing=east,variant=default":   { "model": "changed_addon:block/signal_block", "y": 90 },
+    "facing=south,variant=default":  { "model": "changed_addon:block/signal_block", "y": 180 },
+    "facing=west,variant=default":   { "model": "changed_addon:block/signal_block", "y": 270 },
+
+    "facing=north,variant=variant_1":  { "model": "changed_addon:block/signal_block1" },
+    "facing=east,variant=variant_1":   { "model": "changed_addon:block/signal_block1", "y": 90 },
+    "facing=south,variant=variant_1":  { "model": "changed_addon:block/signal_block1", "y": 180 },
+    "facing=west,variant=variant_1":   { "model": "changed_addon:block/signal_block1", "y": 270 },
+
+    "facing=north,variant=variant_2":  { "model": "changed_addon:block/signal_block2" },
+    "facing=east,variant=variant_2":   { "model": "changed_addon:block/signal_block2", "y": 90 },
+    "facing=south,variant=variant_2":  { "model": "changed_addon:block/signal_block2", "y": 180 },
+    "facing=west,variant=variant_2":   { "model": "changed_addon:block/signal_block2", "y": 270 },
+
+    "facing=north,variant=variant_3":  { "model": "changed_addon:block/signal_block3" },
+    "facing=east,variant=variant_3":   { "model": "changed_addon:block/signal_block3", "y": 90 },
+    "facing=south,variant=variant_3":  { "model": "changed_addon:block/signal_block3", "y": 180 },
+    "facing=west,variant=variant_3":   { "model": "changed_addon:block/signal_block3", "y": 270 },
+
+    "facing=north,variant=variant_4":  { "model": "changed_addon:block/signal_block4" },
+    "facing=east,variant=variant_4":   { "model": "changed_addon:block/signal_block4", "y": 90 },
+    "facing=south,variant=variant_4":  { "model": "changed_addon:block/signal_block4", "y": 180 },
+    "facing=west,variant=variant_4":   { "model": "changed_addon:block/signal_block4", "y": 270 },
+
+    "facing=north,variant=variant_5":  { "model": "changed_addon:block/signal_block5" },
+    "facing=east,variant=variant_5":   { "model": "changed_addon:block/signal_block5", "y": 90 },
+    "facing=south,variant=variant_5":  { "model": "changed_addon:block/signal_block5", "y": 180 },
+    "facing=west,variant=variant_5":   { "model": "changed_addon:block/signal_block5", "y": 270 }
   }
 }

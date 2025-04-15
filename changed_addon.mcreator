@@ -7636,7 +7636,7 @@
       "type": "block",
       "sortid": 41,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "signal_block",
       "metadata": {
         "files": [

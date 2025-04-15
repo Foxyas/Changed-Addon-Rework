@@ -1,8 +1,8 @@
 {
   "parent": "changed_addon:custom/signalblock",
   "textures": {
-    "all": "changed_addon:blocks/signal_block0",
+    "all": "changed_addon:blocks/signal_block1",
     "particle": "changed_addon:blocks/signal_block0",
-    "0": "changed_addon:blocks/signal_block0"
+    "0": "changed_addon:blocks/signal_block1"
   }
 }

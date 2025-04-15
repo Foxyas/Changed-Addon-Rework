@@ -1,0 +1,40 @@
+{
+  "mappings": {
+    "default": {
+      "map": {
+        "0": "signal_block0"
+      },
+      "name": "default"
+    },
+    "variant_1": {
+      "map": {
+        "0": "signal_block1"
+      },
+      "name": "variant_1"
+    },
+    "variant_2": {
+      "map": {
+        "0": "signal_block2"
+      },
+      "name": "variant_2"
+    },
+    "variant_3": {
+      "map": {
+        "0": "signal_block3"
+      },
+      "name": "variant_3"
+    },
+    "variant_4": {
+      "map": {
+        "0": "signal_block4"
+      },
+      "name": "variant_4"
+    },
+    "variant_5": {
+      "map": {
+        "0": "signal_block5"
+      },
+      "name": "variant_5"
+    }
+  }
+}

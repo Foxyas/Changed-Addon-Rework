@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
@@ -16,6 +17,8 @@ import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -69,9 +72,6 @@ public class CreatureDietsHandleProcedure {
 
         if (!item.isEdible()) return;
 
-        boolean isWarnsOn = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-                .orElse(new ChangedAddonModVariables.PlayerVariables()).showwarns;
-
         List<DietType> dietType = determineDietType(ChangedEntity, variant);
         if (dietType.isEmpty()) return;
 
@@ -80,14 +80,18 @@ public class CreatureDietsHandleProcedure {
         if (isForWork) {
             if (dietType.stream().anyMatch((diet -> diet.isDietItem(item)))) {
                 applyFoodEffects(player, item, true);
-                if (isWarnsOn) {
+                if (!world.isClientSide()) {
+                    world.playSound(null,player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1 , 1.5f);
+                } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
                     player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
                 }
             } else if (Debuffs) {
                 if (dietType.stream().noneMatch((diet -> diet.isDietItem(item))) && !DietType.isNotFoodItem(item) && ShouldGiveDebuffs) {
                     applyFoodEffects(player, item, false);
                     applyMobEffects(player);
-                    if (isWarnsOn) {
+                    if (!world.isClientSide()) {
+                        world.playSound(null,player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1 , 0f);
+                    } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
                         player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
                     }
                 }

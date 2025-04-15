@@ -28,7 +28,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     }
 
     public boolean isDodgeActive() {
-        return this.getController().getHoldTicks() > 0;
+        return dodgeActive;
     }
 
     public void setDodgeActivate(boolean active) {
@@ -90,23 +90,26 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void tick() {
-    	super.tick();
-        //setDodgeActivate(canUse());
+    	//super.tick();
+		if (entity.getEntity() instanceof Player player) {
+			if (!(player.getLevel().isClientSide())){
+				player.displayClientMessage(
+				new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()), true);
+			}
+        }
+        setDodgeActivate(canUse());
     }
 
     @Override
     public void stopUsing() {
-    	super.stopUsing();
-        if (isDodgeActive()) {
-            setDodgeActivate(false);
-        }
+    	//super.stopUsing();
+    	setDodgeActivate(false);
     }
 
     @Override
     public void tickIdle() {
     	super.tickIdle();
-    	
-        boolean nonHurtFrame = entity.getEntity().hurtTime <= 5 && entity.getEntity().hurtDuration <= 5;
+        boolean nonHurtFrame = entity.getEntity().hurtTime <= 10 && entity.getEntity().invulnerableTime <= 10;
         if (nonHurtFrame && !isDodgeActive() && dodgeAmount < maxDodgeAmount) {
             if (dodgeRegenCooldown <= 0) {
                 addDodgeAmount();

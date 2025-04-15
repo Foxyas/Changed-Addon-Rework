@@ -50,7 +50,7 @@ public class DodgeAbilityHandleProcedure {
             return;
 
         if (dodge.getDodgeAmount() <= 0) {
-            dodge.setDodgeActivate(false);
+            dodge.getController().deactivateAbility();
             return;
         }
 
@@ -75,10 +75,10 @@ public class DodgeAbilityHandleProcedure {
     }
 
     private static void applyDodgeEffects(Player player, DodgeAbilityInstance dodge, ServerLevel serverLevel, LivingAttackEvent event) {
-        player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", dodge.getDodgeStaminaRatio()), true);
         dodge.subDodgeAmount();
-        player.invulnerableTime = 30;
-        player.hurtDuration = 60;
+        player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", dodge.getDodgeStaminaRatio()), false);
+        player.invulnerableTime = 20;
+        player.hurtDuration = 20;
         player.hurtTime = player.hurtDuration;
         player.causeFoodExhaustion(8f);
         event.setCanceled(true);

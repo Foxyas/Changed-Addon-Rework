@@ -266,6 +266,29 @@
             "entityType": "CUSTOM:Buny"
           }
         ]
+      },
+      {
+        "category": "Textual Info ",
+        "entries": [
+          {
+            "item": {
+              "value": ""
+            },
+            "silkTouchMode": 0,
+            "block": {
+              "value": ""
+            },
+            "logicField": 0,
+            "numberField": 0.0,
+            "textDefault": "",
+            "comment": "Displays a text when the player consumes food favorable to their transformation species",
+            "vardisplay": "Diets Display Info",
+            "varname": "diets_display_info",
+            "enablecomment": true,
+            "onlyComment": false,
+            "entityType": "CUSTOM:Buny"
+          }
+        ]
       }
     ],
     "file": "changed_addon-client",
