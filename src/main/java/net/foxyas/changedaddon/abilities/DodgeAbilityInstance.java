@@ -7,146 +7,134 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 
 public class DodgeAbilityInstance extends AbstractAbilityInstance {
+    private int dodgeAmount = 4;
+    private int maxDodgeAmount = 4;
+    private boolean dodgeActive = false;
 
-    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity){
-        super(ability,entity);
+    private final int defaultRegenCooldown = 20;
+    private int dodgeRegenCooldown = defaultRegenCooldown;
+
+    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
+        super(ability, entity);
     }
 
-    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity, int Dodges){
-        super(ability,entity);
-        this.MaxDodgeAmount = Dodges;
-    }
-    private int DodgeAmount = 4;
-    private int MaxDodgeAmount = 4;
-    private boolean DodgeActivate = false;
-
-    public final int DefaultDodgeRegenCooldown = 20;
-    public int DodgeRegenCooldown = 20;
-
-    public boolean isDodgeActivate(){
-        return DodgeActivate;
+    public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity, int maxDodge) {
+        this(ability, entity);
+        this.maxDodgeAmount = maxDodge;
+        this.dodgeAmount = maxDodge;
     }
 
-    public void SetDodgeActivate(boolean set){
-        DodgeActivate = set;
-    }
-    public int getDodgeAmount(){
-        return DodgeAmount;
-    }
-    public int getMaxDodgeAmount(){
-        return MaxDodgeAmount;
+    public boolean isDodgeActive() {
+        return this.getController().getHoldTicks() > 0;
     }
 
-    public void setDodgeAmount(int set){
-        DodgeAmount = set;
+    public void setDodgeActivate(boolean active) {
+        this.dodgeActive = active;
     }
 
-    public void addDodgeAmount(){
-        DodgeAmount++;
+    public int getDodgeAmount() {
+        return dodgeAmount;
     }
 
-    public void subDodgeAmount(){
-        DodgeAmount--;
+    public void setDodgeAmount(int amount) {
+        dodgeAmount = Math.min(amount, maxDodgeAmount);
     }
 
-    public void setMaxDodgeAmount(int set){
-        MaxDodgeAmount = set;
+    public void addDodgeAmount() {
+        if (dodgeAmount < maxDodgeAmount) dodgeAmount++;
     }
 
-    public void addMaxDodgeAmount(){
-        MaxDodgeAmount++;
+    public void subDodgeAmount() {
+        if (dodgeAmount > 0) dodgeAmount--;
     }
 
-    public void subMaxDodgeAmount(){
-        MaxDodgeAmount--;
+    public int getMaxDodgeAmount() {
+        return maxDodgeAmount;
     }
 
+    public void setMaxDodgeAmount(int max) {
+        maxDodgeAmount = max;
+        dodgeAmount = Math.min(dodgeAmount, max); // Adjust current amount if needed
+    }
+
+    public float getDodgeStaminaRatio() {
+        return ((float) dodgeAmount / maxDodgeAmount) * 100f;
+    }
+
+    public static boolean isSpectator(Entity entity) {
+        return entity instanceof Player player && player.isSpectator();
+    }
 
     @Override
     public boolean canUse() {
-        return DodgeAmount > 0 && !Spectator(entity.getEntity());
-    }
-
-    public static boolean Spectator(Entity entity){
-        if (entity instanceof Player player1){
-            return player1.isSpectator();
-        }
-        return true;
+        return dodgeAmount > 0 && !isSpectator(entity.getEntity());
     }
 
     @Override
     public boolean canKeepUsing() {
-        return DodgeAmount > 0;
+        return dodgeAmount > 0;
     }
-
-    @Override
-    public void readData(CompoundTag tag) {
-        super.readData(tag);
-        if(tag.contains("DodgeAmount")){
-            DodgeAmount = tag.getInt("DodgeAmount");
-        }
-        if(tag.contains("MaxDodgeAmount")){
-            MaxDodgeAmount = tag.getInt("MaxDodgeAmount");
-        }
-        if(tag.contains("DodgeRegenCooldown")){
-            DodgeRegenCooldown = tag.getInt("DodgeRegenCooldown");
-        }
-        if(tag.contains("DodgeActivate")){
-            DodgeActivate = tag.getBoolean("DodgeActivate");
-        }
-    }
-
-    @Override
-    public void saveData(CompoundTag tag) {
-        super.saveData(tag);
-        tag.putInt("DodgeAmount",DodgeAmount);
-        tag.putInt("MaxDodgeAmount",MaxDodgeAmount);
-        tag.putInt("DodgeRegenCooldown",DodgeRegenCooldown);
-        tag.putBoolean("DodgeActivate",DodgeActivate);
-    }
-
-    public float getDodgeStaminaRatio(){
-        return (float) DodgeAmount / getMaxDodgeAmount() * 100;
-    };
 
     @Override
     public void startUsing() {
-        if(entity.getEntity() instanceof Player player){
-            if (this.getController().getHoldTicks() == 0) {
-                player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()), true);
-            }
+        if (entity.getEntity() instanceof Player player && this.getController().getHoldTicks() == 0) {
+            player.displayClientMessage(
+                    new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),
+                    true
+            );
         }
     }
 
     @Override
     public void tick() {
-        SetDodgeActivate(canUse());
-        /*if(entity.getEntity() instanceof Player player) {
-            player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),true);
-        }*/
+        setDodgeActivate(canUse());
     }
 
     @Override
     public void stopUsing() {
-        if(isDodgeActivate()){
-            SetDodgeActivate(false);
+        if (isDodgeActive()) {
+            setDodgeActivate(false);
         }
     }
 
     @Override
     public void tickIdle() {
-        if(!isDodgeActivate() && DodgeAmount < MaxDodgeAmount){
-            if(DodgeRegenCooldown < 0) {
-                DodgeAmount++;
-                DodgeRegenCooldown = 5;
-                if(entity.getEntity() instanceof Player player){
-                    player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),true);
+        boolean nonHurtFrame = entity.getEntity().hurtTime <= 5 && entity.getEntity().hurtDuration <= 5;
+        if (nonHurtFrame && !isDodgeActive() && dodgeAmount < maxDodgeAmount) {
+            if (dodgeRegenCooldown <= 0) {
+                addDodgeAmount();
+                dodgeRegenCooldown = 5;
+
+                if (entity.getEntity() instanceof Player player) {
+                    player.displayClientMessage(
+                            new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),
+                            true
+                    );
                 }
             } else {
-                DodgeRegenCooldown--;
+                dodgeRegenCooldown--;
             }
         }
+    }
+
+    @Override
+    public void readData(CompoundTag tag) {
+        super.readData(tag);
+        if (tag.contains("DodgeAmount")) dodgeAmount = tag.getInt("DodgeAmount");
+        if (tag.contains("MaxDodgeAmount")) maxDodgeAmount = tag.getInt("MaxDodgeAmount");
+        if (tag.contains("DodgeRegenCooldown")) dodgeRegenCooldown = tag.getInt("DodgeRegenCooldown");
+        if (tag.contains("DodgeActivate")) dodgeActive = tag.getBoolean("DodgeActivate");
+    }
+
+    @Override
+    public void saveData(CompoundTag tag) {
+        super.saveData(tag);
+        tag.putInt("DodgeAmount", dodgeAmount);
+        tag.putInt("MaxDodgeAmount", maxDodgeAmount);
+        tag.putInt("DodgeRegenCooldown", dodgeRegenCooldown);
+        tag.putBoolean("DodgeActivate", dodgeActive);
     }
 }

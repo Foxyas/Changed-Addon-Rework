@@ -25,129 +25,95 @@ public class DodgeAbilityHandleProcedure {
     public static void onEntityAttacked(LivingAttackEvent event) {
         LivingEntity target = event.getEntityLiving();
         Entity attacker = event.getSource().getEntity();
-        if (target instanceof Player player) {
-            Level world = target.level;
-            if (target == null) {
-                return;
-            }
-            if (attacker == null) {
-                return;
-            }
 
-            // Get the position of the attacker
-            Vec3 attackerPos = attacker.position();
-            // Get the look direction of the attacker
-            Vec3 lookDirection = attacker.getLookAngle().normalize();
-            // Get the look direction of the target
-            Vec3 targetlookDirection = target.getLookAngle();
+        if (!(target instanceof Player player) || attacker == null)
+            return;
 
-            // Calculate the position behind the attacker
-            double distanceBehind = 2; // Distance to teleport behind the attacker
-            Vec3 Dodgetype1 = attackerPos.subtract(lookDirection.scale(distanceBehind));
-            Vec3 Dodgetype2 = targetlookDirection.scale(-1);
-            TransfurVariantInstance<?> TransfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (TransfurVariantInstance == null) {
-                return;
-            }
-            DodgeAbilityInstance DodgeAbility = (DodgeAbilityInstance) TransfurVariantInstance.abilityInstances.get(ChangedAddonAbilities.DODGE.get());
-            if (DodgeAbility == null) {
-                return;
-            }
-            int DodgeAmount = DodgeAbility.getDodgeAmount();
-            //int MaxDodgeAmount = DodgeAbility.getMaxDodgeAmount();
-            double distance = attacker.distanceTo(target);
-            boolean IsDodgeActivate = DodgeAbility.isDodgeActivate();
-            //boolean nonAnyIframe = player.invulnerableTime <= 0 && player.hurtTime <= 0;
-            boolean nonIframe = player.invulnerableTime <= 0;
-            boolean nonHurtFrame = player.hurtTime <= 0;
-            if (nonIframe || nonHurtFrame) {
-                if (IsDodgeActivate) {
-                    if (DodgeAmount > 0) {
-                        if (distance <= 4) {
-                            // Teleport the target to the new position
-                            BlockPos Location = new BlockPos(Dodgetype1.x(), target.getY(), Dodgetype1.z());
-                            if (world instanceof ServerLevel serverLevel) {
-                                player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", DodgeAmount), true);
-                                DodgeAbility.subDodgeAmount();
-                                SpawnDodgeParticles(serverLevel,player,0.5f,0.3f,0.3f,0.3f,10,0.25f);
-                                if (world.isEmptyBlock(Location) || world.isEmptyBlock(Location.above())) {
-                                    target.teleportTo(Location.getX(), Location.getY(), Location.getZ());
-                                }
-                                player.invulnerableTime = 30;
-                                player.hurtDuration = 20;
-                                player.hurtTime = player.hurtDuration;
-                                event.setCanceled(true);
-                            }
-                            ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f, 1);
-                        } else {
-                            if (world instanceof ServerLevel serverLevel) {
-                                player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", DodgeAmount), true);
-                                DodgeAbility.subDodgeAmount();
-                                player.invulnerableTime = 30;
-                                player.hurtDuration = 20;
-                                player.hurtTime = player.hurtDuration;
-                                event.setCanceled(true);
-                                SpawnDodgeParticles(serverLevel,player,0.5f,0.3f,0.3f,0.3f,10,0.25f);
-                            }
-                            DodgeAttack(player, attacker);
-                            ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f, 1);
-                        }
-                    } else {
-                        DodgeAbility.SetDodgeActivate(false);
-                    }
-                }
-            }
-        }
-    }
-    public static void SpawnDodgeParticles(ServerLevel serverLevel,Entity entity,float middle, float XV,float YV,float ZV, int count,float speed) {
-        // Enviar as partículas
-            serverLevel.sendParticles(ParticleTypes.POOF,
-                    entity.getX(), entity.getY() + middle, entity.getZ(), count, XV, YV, ZV, speed);
-    }
+        Level world = target.level;
 
-    public static void DodgeDash(LivingEntity target, boolean set) {
-        double deltaX = -Math.sin((target.getYRot() / 180) * (float) Math.PI);
-        double deltaY = -Math.sin((target.getXRot() / 180) * (float) Math.PI);
-        double deltaZ = Math.cos((target.getYRot() / 180) * (float) Math.PI);
-        double speed = 1.05;
-        double motionX = deltaX * speed;
-        double motionY = deltaY * speed;
-        double motionZ = deltaZ * speed;
-        target.setDeltaMovement(target.getDeltaMovement().add(motionX, motionY, motionZ));
-    }
-
-    public static void DodgeDash(Player target, boolean set) {
-        double deltaX = -Math.sin((target.getYRot() / 180) * (float) Math.PI);
-        double deltaY = -Math.sin((target.getXRot() / 180) * (float) Math.PI);
-        double deltaZ = Math.cos((target.getYRot() / 180) * (float) Math.PI);
-        double speed = 1.05;
-        double motionX = deltaX * speed;
-        double motionY = deltaY * speed;
-        double motionZ = deltaZ * speed;
-        if (!set) {
-            target.setDeltaMovement(target.getDeltaMovement().add(-motionX, 0, -motionZ));
-        } else {
-            target.setDeltaMovement(-motionX, target.getDeltaMovement().y, -motionZ);
-        }
-    }
-
-    public static void DodgeDashtype2(Player target, boolean set) {
-        Vec3 targetlookDirection = target.getLookAngle().normalize();
-        Vec3 MotionApply = targetlookDirection.scale(1.25);
-        double motionX = MotionApply.x;
-        double motionY = MotionApply.y;
-        double motionZ = MotionApply.z;
-        if (!set) {
-            target.setDeltaMovement(target.getDeltaMovement().add(-motionX, 0, -motionZ));
-        } else {
-            target.setDeltaMovement(-motionX, target.getDeltaMovement().y, -motionZ);
-        }
-    }
-
-    public static void DodgeAttack(Entity Dodger, Entity attacker) {
         Vec3 attackerPos = attacker.position();
-        Vec3 DodgerPos = Dodger.position();
-        Vec3 DodgeMotion = attackerPos.subtract(DodgerPos).scale(-0.25);
-        Dodger.setDeltaMovement(DodgeMotion.x, Dodger.getDeltaMovement().y, DodgeMotion.z);
+        Vec3 lookDirection = attacker.getLookAngle().normalize();
+        Vec3 targetLookDirection = target.getLookAngle();
+
+        double distanceBehind = 2;
+        Vec3 dodgePosBehind = attackerPos.subtract(lookDirection.scale(distanceBehind));
+
+        TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (variant == null)
+            return;
+
+        DodgeAbilityInstance dodge = (DodgeAbilityInstance) variant.abilityInstances.get(ChangedAddonAbilities.DODGE.get());
+        if (dodge == null)
+            return;
+
+        if (!dodge.isDodgeActive())
+            return;
+
+        if (dodge.getDodgeAmount() <= 0) {
+            dodge.setDodgeActivate(false);
+            return;
+        }
+
+        if (player.invulnerableTime > 0 || player.hurtTime > 0)
+            return;
+
+        double distance = attacker.distanceTo(target);
+
+        if (world instanceof ServerLevel serverLevel) {
+            applyDodgeEffects(player, dodge, serverLevel, event);
+            if (distance <= 1.5f) {
+                BlockPos teleportPos = new BlockPos(dodgePosBehind.x, target.getY(), dodgePosBehind.z);
+                if (world.isEmptyBlock(teleportPos) || world.isEmptyBlock(teleportPos.above())) {
+                    target.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
+                }
+            } else {
+                dodgeAwayFromAttacker(player, attacker);
+            }
+
+            ChangedSounds.broadcastSound(player, ChangedSounds.BOW2, 2.5f, 1);
+        }
+    }
+
+    private static void applyDodgeEffects(Player player, DodgeAbilityInstance dodge, ServerLevel serverLevel, LivingAttackEvent event) {
+        player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", dodge.getDodgeStaminaRatio()), true);
+        dodge.subDodgeAmount();
+        player.invulnerableTime = 30;
+        player.hurtDuration = 60;
+        player.hurtTime = player.hurtDuration;
+        player.causeFoodExhaustion(8f);
+        event.setCanceled(true);
+        spawnDodgeParticles(serverLevel, player, 0.5f, 0.3f, 0.3f, 0.3f, 10, 0.25f);
+    }
+
+    private static void spawnDodgeParticles(ServerLevel level, Entity entity, float middle, float xV, float yV, float zV, int count, float speed) {
+        level.sendParticles(ParticleTypes.POOF,
+                entity.getX(), entity.getY() + middle, entity.getZ(), count, xV, yV, zV, speed);
+    }
+
+    public static void dashBackwards(Player target, boolean includeY) {
+        Vec3 look = target.getLookAngle().normalize();
+        Vec3 motion = look.scale(1.25);
+        Vec3 finalMotion = includeY ?
+                new Vec3(-motion.x, target.getDeltaMovement().y, -motion.z) :
+                target.getDeltaMovement().add(-motion.x, 0, -motion.z);
+
+        target.setDeltaMovement(finalMotion);
+    }
+
+    public static void dashInFacingDirection(LivingEntity target) {
+        double yaw = Math.toRadians(target.getYRot());
+        double pitch = Math.toRadians(target.getXRot());
+        double x = -Math.sin(yaw);
+        double y = -Math.sin(pitch);
+        double z = Math.cos(yaw);
+        double speed = 1.05;
+
+        Vec3 motion = new Vec3(x * speed, y * speed, z * speed);
+        target.setDeltaMovement(target.getDeltaMovement().add(motion));
+    }
+
+    private static void dodgeAwayFromAttacker(Entity dodger, Entity attacker) {
+        Vec3 motion = attacker.position().subtract(dodger.position()).scale(-0.25);
+        dodger.setDeltaMovement(motion.x, dodger.getDeltaMovement().y, motion.z);
     }
 }

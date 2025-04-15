@@ -352,10 +352,10 @@ public class PlayerUtilProcedure {
             try {
                 Stream<Entity> entities;
 
-                if (world instanceof ClientLevel clientLevel) {
-                    entities = StreamSupport.stream(clientLevel.entitiesForRendering().spliterator(), false);
-                } else if (world instanceof ServerLevel serverLevel) {
+                if (world instanceof ServerLevel serverLevel) {
                     entities = StreamSupport.stream(serverLevel.getAllEntities().spliterator(), false);
+                } else if (world instanceof ClientLevel clientLevel) {
+                    entities = StreamSupport.stream(clientLevel.entitiesForRendering().spliterator(), false);
                 } else {
                     return null;
                 }
@@ -367,7 +367,7 @@ public class PlayerUtilProcedure {
             }
         }
 
-        @OnlyIn(Dist.DEDICATED_SERVER)
+
         @Nullable
         public static Entity getEntityByUUID(ServerLevel serverLevel, String uuid) {
             try {
