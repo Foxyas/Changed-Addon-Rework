@@ -577,5 +577,9 @@
   "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
   "changed_addon.ability.carry": "Carry",
   "gui.changed_addon.unifusergui.label_next_page": "Next Page",
-  "key.categories.changed_addon": "Changed Addon Keybinds"
+  "key.categories.changed_addon": "Changed Addon Keybinds",
+  "entity.changed_addon.exp1_male": "Exp 1 Male",
+  "entity.changed_addon.exp1_female": "Exp 1 Female",
+  "entity.changed_addon.luminarctic_leopard_male": "Luminarctic Leopard",
+  "entity.changed_addon.luminarctic_leopard_female": "Female Luminarctic Leopard"
 }
