@@ -973,7 +973,7 @@
       "type": "block",
       "sortid": 22,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "painite_ore",
       "metadata": {
         "files": [
@@ -1909,171 +1909,6 @@
       "path": "~/Guis"
     },
     {
-      "name": "Show10porcentbar",
-      "type": "procedure",
-      "sortid": 170,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_10porcentbar",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Show10porcentbarProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Show25porcentbar",
-      "type": "procedure",
-      "sortid": 171,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_25porcentbar",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Show25porcentbarProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/GUI Procedures"
-    },
-    {
-      "name": "Show50porcentbar",
-      "type": "procedure",
-      "sortid": 172,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_50porcentbar",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Show50porcentbarProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/GUI Procedures"
-    },
-    {
-      "name": "Show75porcentbar",
-      "type": "procedure",
-      "sortid": 173,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_75porcentbar",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Show75porcentbarProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/GUI Procedures"
-    },
-    {
-      "name": "Show90porcentbar",
-      "type": "procedure",
-      "sortid": 174,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_90porcentbar",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Show90porcentbarProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/GUI Procedures"
-    },
-    {
       "name": "Showfullbar",
       "type": "procedure",
       "sortid": 175,
@@ -2084,39 +1919,6 @@
         "return_type": "logic",
         "files": [
           "src/main/java/net/foxyas/changedaddon/procedures/ShowfullbarProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/GUI Procedures"
-    },
-    {
-      "name": "Show0porcentbar",
-      "type": "procedure",
-      "sortid": 176,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "show_0porcentbar",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Show0porcentbarProcedure.java"
         ],
         "dependencies": [
           {
@@ -2976,22 +2778,6 @@
       "path": "~/Recipes"
     },
     {
-      "name": "Experiment009",
-      "type": "livingentity",
-      "sortid": 216,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "experiment_009",
-      "metadata": {
-        "files": [
-          "src/main/resources/assets/changed_addon/models/item/experiment_009_spawn_egg.json",
-          "src/main/java/net/foxyas/changedaddon/client/renderer/Experiment009Renderer.java",
-          "src/main/java/net/foxyas/changedaddon/entity/Experiment009Entity.java"
-        ]
-      },
-      "path": "~/Entity"
-    },
-    {
       "name": "Experiment009OnInitialEntitySpawn",
       "type": "procedure",
       "sortid": 217,
@@ -3042,62 +2828,6 @@
           {
             "name": "entity",
             "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Experiment009phase2",
-      "type": "livingentity",
-      "sortid": 219,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "experiment_009_phase_2",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/entity/Experiment009phase2Entity.java",
-          "src/main/java/net/foxyas/changedaddon/client/renderer/Experiment009phase2Renderer.java",
-          "src/main/resources/assets/changed_addon/models/item/experiment_009_phase_2_spawn_egg.json"
-        ]
-      },
-      "path": "~/Entity"
-    },
-    {
-      "name": "Experiment009EntityDies",
-      "type": "procedure",
-      "sortid": 220,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "experiment_009_entity_dies",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009EntityDiesProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "damagesource",
-            "type": "damagesource"
-          },
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
           },
           {
             "name": "world",
@@ -5169,26 +4899,6 @@
       "path": "~/Procedures"
     },
     {
-      "name": "PainiteItemInInventoryTick",
-      "type": "procedure",
-      "sortid": 318,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "painite_item_in_inventory_tick",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/PainiteItemInInventoryTickProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "LatexInfection",
       "type": "attribute",
       "sortid": 319,
@@ -5288,46 +4998,6 @@
       "path": "~/CustomCode"
     },
     {
-      "name": "Experiment009latexdmg",
-      "type": "procedure",
-      "sortid": 325,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "experiment_009latexdmg",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009latexdmgProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "sourceentity",
-            "type": "entity"
-          },
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
       "name": "Iflatexentity",
       "type": "procedure",
       "sortid": 326,
@@ -5392,34 +5062,6 @@
           {
             "name": "world",
             "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Experiment009IsHurt",
-      "type": "procedure",
-      "sortid": 328,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "experiment_009_is_hurt",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009IsHurtProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "damagesource",
-            "type": "damagesource"
-          },
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "amount",
-            "type": "number"
           }
         ]
       },
@@ -5643,27 +5285,6 @@
           {
             "name": "world",
             "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Ifnotexperiment009",
-      "type": "procedure",
-      "sortid": 337,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ifnotexperiment_009",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Ifnotexperiment009Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
           }
         ]
       },
@@ -6582,30 +6203,6 @@
           {
             "name": "world",
             "type": "world"
-          }
-        ]
-      },
-      "path": "~/Procedures"
-    },
-    {
-      "name": "Experiment009EntityIsHurt",
-      "type": "procedure",
-      "sortid": 375,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "experiment_009_entity_is_hurt",
-      "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/Experiment009EntityIsHurtProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "amount",
-            "type": "number"
           }
         ]
       },
@@ -11328,7 +10925,7 @@
       "type": "block",
       "sortid": 19,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "iridium_ore",
       "metadata": {
         "files": [
@@ -11414,7 +11011,7 @@
       "type": "block",
       "sortid": 20,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "iridium_block",
       "metadata": {
         "files": [
@@ -12869,20 +12466,20 @@
       "death.attack.OverDose": "%1$s get a §4OverDose§r",
       "entity.changed_addon.luminarctic_leopard": "Luminarctic Leopard",
       "item.changed_addon.female_luminarctic_leopard_spawn_egg": "Luminarctic Female Leopard Spawn Egg",
-      "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
+      "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want to link your form?",
       "entity.minecraft.villager.changed_addon.scientist": "Scientist",
       "advancements.crystal_adventurer.title": "Gooey Crystal Adventurer",
       "advancements.timesthesyringewasuseadvancement_2.title": "where are the side effects?",
       "item.changed_addon.litix_camonia": "Litix-Camonia",
       "changed_addon.ability.thunder": "Thunder Bolt",
-      "block.changed_addon.wolf_plush": "Wolf Plush",
-      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "advancements.untransfuradvancement_2.descr": "You untransfur with the Syringe of Litix-Camonia",
+      "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
+      "block.changed_addon.wolf_plush": "Wolf Plush",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
-      "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
       "item.changed_addon.signal_catcher": "Signal Catcher",
+      "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
       "text.changed_addon.additionalHealth": "Additional Health \u003d %s",
       "changedaddon.untransfur.Immune.fluid": "I\u0027m not affected by this fluid",
@@ -12891,10 +12488,9 @@
       "item.minecraft.potion.effect.transfur_sickness_potion": "Potion of Transfur Sickness ",
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
       "item.changed_addon.partial_snow_leopard_spawn_egg": "Snow Leopard Partial Spawn Egg",
-      "entity.changed_addon.experiment_009_phase_2": "Experiment 009 Phase 2",
       "advancements.untransfuritemadvancement.title": "Untransfur?!",
-      "item.minecraft.lingering_potion.effect.transfur_sickness_potion": "Lingering Potion of Transfur Sickness ",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
+      "item.minecraft.lingering_potion.effect.transfur_sickness_potion": "Lingering Potion of Transfur Sickness ",
       "gui.changed_addon.bookpagenumber_4.label_n": "N",
       "entity.changed_addon.latex_snow_fox_male": "Male Latex Snow Fox",
       "death.attack.OverDose.player": "%1$s get a §4OverDose§r while fighting with %2$s",
@@ -12904,11 +12500,10 @@
       "entity.changed_addon.latex_snow_leopard_partial": "Partial Snow Leopard",
       "item.changed_addon.dark_latex_coat": "Dark Latex Coat",
       "block.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
-      "entity.changed_addon.experiment_009": "Experiment 009",
       "text.changed_addon.additionalHealth.Hearts": " Hearts",
       "gui.changed_addon.bookrecipepage_8.label_s_seeds": "S \u003d ANY SEEDS",
-      "entity.changed_addon.exp_6": "Exp 6",
       "entity.changed_addon.experiment_10_boss": "Experiment 10",
+      "entity.changed_addon.exp_6": "Exp 6",
       "gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants": "F \u003d ANY FLOWERS OR PLANTS",
       "item.changed_addon.hazard_suit_helmet": "Hazard Helmet",
       "item.changed_addon.painite": "Painite",
@@ -12926,12 +12521,12 @@
       "changed_addon.ability.soften.description": "Allow the player to pass through blocks with holes",
       "item.changed_addon.painite_armor_leggings": "Netherite Leggings with Painite trim",
       "changed_addon.ability.shock_wave": "Shockwave",
-      "block.changed_addon.yellow_wolf_crystal_small": "Small Yellow Wolf Crystal",
       "effect.changed_addon.transfur_sickness.description": "Make Changed entities less effective when attempting to transfur humanoid entities.",
+      "block.changed_addon.yellow_wolf_crystal_small": "Small Yellow Wolf Crystal",
       "block.changed_addon.iridium_ore": "Deepslate Iridium Ore",
       "key.changed_addon.turn_off_transfur": "Turn Off Transfur",
-      "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "effect.changed_addon.latex_contamination": "Latex Contamination",
+      "gui.changed_addon.unifusergui.tooltip_display_pot_with_litixcamonia_r": "Display Pot With Litix-Camonia Recipe",
       "gui.changed_addon.unifusergui.label_full": "Full",
       "gui.changed_addon.catlyzergui.tooltip_display_recipes": "Display Recipes",
       "advancements.obtain_red_crystal_dagger.title": "§4Red§r Crystal Dagger!",
@@ -12939,36 +12534,36 @@
       "block.changed_addon.white_wolf_crystal_small": "Small White Wolf Crystal",
       "item.changed_addon.snepsi": "Snepsi",
       "subtitles.music.boss.luminarctic_leopard": "Misstake playing",
-      "changed_addon.ability.dodge.dodge_amount_left": "Stamina: %1$s",
       "config.changed_addon.changed_addon_configs": "changed_addon-server",
+      "changed_addon.ability.dodge.dodge_amount_left": "Stamina: %1$s",
       "gui.changed_addon.tranfur_sounds_gui.label_transfursounds": "TransfurSounds",
       "advancements.pat_advancement.descr": "Your pat was so good that it helped someone get better",
-      "item.changed_addon.raw_iridium": "Raw Iridium",
-      "gamerule.giveBookOnStart": "Start With Book ",
       "gui.changed_addon.foxyas_gui_2.button_aa": "yes",
+      "gamerule.giveBookOnStart": "Start With Book ",
+      "item.changed_addon.raw_iridium": "Raw Iridium",
       "gui.changed_addon.bookrecipepage_8.label_f": "F",
       "key.changed_addon.pat_message": "You pat {0}",
       "item.changed_addon.exp_1_female_spawn_egg": "Exp1 Female Spawn Egg",
       "gui.changed_addon.bookrecipepage_8.label_m": "M",
       "item.changed_addon.ammonia_particles_jei_illustrative": "16 Ammonia Particles ",
       "changed_addon.entity_dialogues.exp9.reaction.range_attacks": "§l§o§3YOU\u0027RE COWARD! Is distance all you can rely on? How PATHETIC!!!",
-      "changed_addon.gui.catalyzer.nitrogen_usage": "ProgressSpeed is %1$s per tick and use %2$s of Nitrogen Power",
       "changed_addon.gui.recipe_progress": "ProgressSpeed is %s per tick",
-      "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
+      "changed_addon.gui.catalyzer.nitrogen_usage": "ProgressSpeed is %1$s per tick and use %2$s of Nitrogen Power",
       "gui.changed_addon.bookrecipepage_9.label_pany_potion": "L\u003d ANY LATEX OR BLOOD SYRINGE",
+      "gui.changed_addon.book_recipe_page_11.label_unifuser": "Unifuser",
       "gui.changed_addon.book_recipe_page_11.label_g": "G",
       "item.changed_addon.experiment_10_spawn_egg": "Experiment 10 Spawn Egg",
       "item.changed_addon.exp_9_latex_base": "Exp9 Latex Base",
       "gui.changed_addon.bookrecipepage_8.label_s": "S",
       "gui.changed_addon.informant_gui.form": "Form ID",
-      "item.changed_addon.empty_spray": "Empty Spray",
-      "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
       "block.changed_addon.foxta_can": "§bFoxta Can§r",
+      "item.changed_addon.spawneggoffoxyas": "Foxyas Spawn Egg",
+      "item.changed_addon.empty_spray": "Empty Spray",
       "item.changed_addon.electric_katana": "§bElectric Katana",
       "entity.changed_addon.erik": "Erik",
-      "changed_addon.jei_descriptions.laethin_syringe": "When using Untransfur you Instantly and don\u0027t have a chance to fail",
-      "advancements.obtain_a_electric_katana.title": "A Shocking upgrade!",
       "changed_addon.ability.dodge.dodge_amount": "Stamina: %1$s",
+      "advancements.obtain_a_electric_katana.title": "A Shocking upgrade!",
+      "changed_addon.jei_descriptions.laethin_syringe": "When using Untransfur you Instantly and don\u0027t have a chance to fail",
       "advancements.timesthesyringewasused_advancement.title": "Confused indecision?",
       "gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c": "Display Recipe of Syringe with Catalyzed DNA",
       "death.attack.untransfurfail.player": "%1$s dies for a fail untransfurmation attempt while fighting %2$s",
@@ -13029,7 +12624,6 @@
       "item.changed_addon.pat_icon": "DEVITEM 7",
       "changed_addon.ability.thunder_path": "Thunder Path",
       "gui.changed_addon.bookrecipepage_7.label_catalyzer": "Catalyzer",
-      "item.changed_addon.experiment_009_phase_2_spawn_egg": "Experiment 009 Phase 2 Spawn Egg",
       "block.changed_addon.advanced_catalyzer": "Advanced Catalyzer",
       "gui.changed_addon.foxyasgui.label_pls_dont_kill_me": "pls dont kill me,i can trade orange juice with you,i just need 2",
       "changed_addon.ability.turn_feral.can": "You §acan§r Turn Feral",
@@ -13251,7 +12845,6 @@
       "item.changed_addon.laethinminator": "Laethinminator",
       "block.changed_addon.snep_plush": "Snep Plush",
       "gui.changed_addon.bookpagenumber_4.button_close": "Close",
-      "item.changed_addon.experiment_009_spawn_egg": "Experiment 009 Spawn Egg",
       "gui.changed_addon.bookpagenumber_5.button_close": "Close",
       "item.changed_addon.laethin": "Laethin",
       "changedaddon.friendlymode.when_on": "Activating Friendly mode deactivates assimilation",
@@ -13438,6 +13031,7 @@
       "changed_addon.jei_descriptions.diffusion_syringe": "Untransfurs you back to human form while summoning your previous transfur form.",
       "effect.changed_addon.transfur_sickness": "§o§cTransfur Sickness",
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
+      "entity.changed_addon.ket_experiment009_boss": "Ket Experiment 009",
       "changed_addon.ability.carry": "Carry",
       "gui.changed_addon.unifusergui.label_next_page": "Next Page",
       "key.categories.changed_addon": "Changed Addon Keybinds"

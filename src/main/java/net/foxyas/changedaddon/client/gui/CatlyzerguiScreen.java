@@ -16,13 +16,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.CatlyzerguiMenu;
-import net.foxyas.changedaddon.procedures.ShowfullbarProcedure;
-import net.foxyas.changedaddon.procedures.Show90porcentbarProcedure;
-import net.foxyas.changedaddon.procedures.Show75porcentbarProcedure;
-import net.foxyas.changedaddon.procedures.Show50porcentbarProcedure;
-import net.foxyas.changedaddon.procedures.Show25porcentbarProcedure;
-import net.foxyas.changedaddon.procedures.Show10porcentbarProcedure;
-import net.foxyas.changedaddon.procedures.Show0porcentbarProcedure;
 import net.foxyas.changedaddon.procedures.RecipeProgressProcedure;
 import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
 import net.foxyas.changedaddon.procedures.IfShowUnifuserRecipesProcedure;

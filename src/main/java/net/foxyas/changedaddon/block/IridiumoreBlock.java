@@ -1,6 +1,9 @@
 
 package net.foxyas.changedaddon.block;
 
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.level.block.OreBlock;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.FluidState;
@@ -17,10 +20,13 @@ import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.procedures.IridiumoreBlockDestroyedByPlayerProcedure;
 import net.foxyas.changedaddon.procedures.IridiumoreBlockDestroyedByExplosionProcedure;
+import net.minecraftforge.common.TierSortingRegistry;
 
-public class IridiumoreBlock extends Block {
+public class IridiumoreBlock extends OreBlock {
 	public IridiumoreBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.QUARTZ).sound(SoundType.STONE).strength(20f, 25f).requiresCorrectToolForDrops());
+		super(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.QUARTZ).sound(SoundType.STONE).strength(20f, 25f).requiresCorrectToolForDrops(),
+				UniformInt.of(20,40)
+		);
 	}
 
 	@Override
@@ -35,21 +41,20 @@ public class IridiumoreBlock extends Block {
 
 	@Override
 	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem)
-			return tieredItem.getTier().getLevel() >= 3;
+		if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem) {
+			return TierSortingRegistry.isCorrectTierForDrops(Tiers.DIAMOND, state) || tieredItem.getTier().getLevel() >= 3;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean onDestroyedByPlayer(BlockState blockstate, Level world, BlockPos pos, Player entity, boolean willHarvest, FluidState fluid) {
 		boolean retval = super.onDestroyedByPlayer(blockstate, world, pos, entity, willHarvest, fluid);
-		IridiumoreBlockDestroyedByPlayerProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
 		return retval;
 	}
 
 	@Override
 	public void wasExploded(Level world, BlockPos pos, Explosion e) {
 		super.wasExploded(world, pos, e);
-		IridiumoreBlockDestroyedByExplosionProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
 	}
 }

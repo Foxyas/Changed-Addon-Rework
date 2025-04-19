@@ -12,7 +12,6 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
 
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
-import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
 
 import javax.annotation.Nullable;
 
@@ -34,17 +33,7 @@ public class KillExperiment009ProcedureProcedure {
 	private static void execute(@Nullable Event event, Entity entity, Entity sourceentity) {
 		if (entity == null || sourceentity == null)
 			return;
-		if (entity instanceof Experiment009phase2Entity) {
-			if (sourceentity instanceof ServerPlayer _player) {
-				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:kill_experiment_009"));
-				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-				if (!_ap.isDone()) {
-					Iterator _iterator = _ap.getRemainingCriteria().iterator();
-					while (_iterator.hasNext())
-						_player.getAdvancements().award(_adv, (String) _iterator.next());
-				}
-			}
-		} else if (entity instanceof KetExperiment009BossEntity) {
+		if (entity instanceof KetExperiment009BossEntity) {
 			if (sourceentity instanceof ServerPlayer _player) {
 				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:kill_experiment_009"));
 				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);

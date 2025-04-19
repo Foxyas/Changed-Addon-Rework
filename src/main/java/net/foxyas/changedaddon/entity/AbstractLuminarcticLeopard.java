@@ -51,8 +51,6 @@ import net.minecraft.sounds.SoundEvents;
 
 public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
 
-
-
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
         @SubscribeEvent
@@ -282,11 +280,11 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
-        Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(300f);
+        Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(500f);
         Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(15f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2.5f);
-        this.setHealth(300f);
+        this.setHealth(500f);
         //this.setAbsorptionAmount(75f);
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
@@ -300,23 +298,25 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     public boolean hurt(@NotNull DamageSource source, float amount) {
         this.AbilitiesTicksCooldown -= 5 + (0.05f * amount);
 
+        // Ignora dano de espinhos
         if (source instanceof EntityDamageSource entityDamageSource && entityDamageSource.isThorns()) {
             return false;
         }
 
+        // Imune a projéteis
         if (source.isProjectile()) {
             return false;
         }
 
+        // Dano de fogo ou explosão extremamente reduzido
         if (source.isFire() || source.isExplosion()) {
             return super.hurt(source, amount * 0.01f);
         }
 
-        Entity attacker = source.getDirectEntity();
-        if (attacker == null) {
-            attacker = source.getEntity();
-        }
+        // Obtém entidade causadora do dano (direta ou indireta)
+        Entity attacker = source.getDirectEntity() != null ? source.getDirectEntity() : source.getEntity();
 
+        // Dano sem atacante direto ou indireto
         if (attacker == null) {
             if (source == ChangedAddonDamageSources.SOLVENT) {
                 return super.hurt(source, amount * 0.5f);
@@ -324,34 +324,32 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
             return super.hurt(source, amount * 0.25f);
         }
 
-        if (source.getDirectEntity() == null) {
-            super.hurt(source, amount);
-        }
+        // Se o atacante tiver o encantamento SOLVENT, recebe meio dano
+        if (attacker instanceof LivingEntity livingEntity) {
+            if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 1) {
+                return super.hurt(source, amount * 0.5f);
+            }
 
-        if (attacker instanceof LivingEntity livingEntity
-                && (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 1)) {
-            return super.hurt(source, amount * 0.5f);
-        } else {
-            amount = amount / 6;
-            if (amount > 2) {
-                if (amount < 4) {
-                    this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2;
+            // Caso contrário, reduz o dano e aplica lógica de esquiva
+            float reducedAmount = amount / 6f;
+            if (reducedAmount > 2f) {
+                if (reducedAmount < 4f) {
+                    this.DodgeAnimTicks = getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2;
                 }
-                return super.hurt(source, amount);
+                return super.hurt(source, reducedAmount);
             } else {
-                if (attacker == this) {
-                    this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
-                    Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
-                    this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
-                    return false;
-                } else {
-                    this.DodgeAnimTicks = this.getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
-                    Vec3 pos = new Vec3(attacker.getX(), attacker.position().y + 1.5, attacker.position().z);
-                    this.lookAt(EntityAnchorArgument.Anchor.EYES, pos);
-                    return false;
-                }
+                // Animação de esquiva e "ignorar" o dano
+                this.DodgeAnimTicks = getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks;
+
+                Vec3 lookPos = new Vec3(attacker.getX(), attacker.getY() + 1.5, attacker.getZ());
+                this.lookAt(EntityAnchorArgument.Anchor.EYES, lookPos);
+                return false;
             }
         }
+
+        // Caso nada acima se aplique, recebe dano normalmente
+        return super.hurt(source, amount);
     }
+
 
 }

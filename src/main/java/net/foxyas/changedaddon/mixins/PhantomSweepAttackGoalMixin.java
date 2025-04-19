@@ -27,7 +27,7 @@ import java.util.List;
 public abstract class PhantomSweepAttackGoalMixin extends Goal {
     @Shadow private boolean isScaredOfCat;
 
-    @Shadow @Final private Phantom this$0;
+    @Shadow @Final Phantom this$0;
 
     @Shadow private int catSearchTick;
 

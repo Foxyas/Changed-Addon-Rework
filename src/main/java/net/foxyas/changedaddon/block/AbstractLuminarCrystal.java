@@ -1,9 +1,13 @@
 package net.foxyas.changedaddon.block;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
 import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
 import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -16,19 +20,19 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -56,45 +60,45 @@ import java.util.Random;
 
 public class AbstractLuminarCrystal {
 
-    public static void spawnParticleOnFace(ServerLevel level, BlockPos pos, Direction direction , int count, float particleSpeed) {
+    public static void spawnParticleOnFace(ServerLevel level, BlockPos pos, Direction direction, int count, float particleSpeed) {
         ParticleOptions p_144961_ = ParticleTypes.END_ROD;
         Vec3 vec3 = Vec3.atCenterOf(pos);
         int i = direction.getStepX();
         int j = direction.getStepY();
         int k = direction.getStepZ();
-        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)i * 0.55D);
-        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)j * 0.55D);
-        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)k * 0.55D);
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) k * 0.55D);
         double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, 0.05, 0.05, 0.05, count, particleSpeed);
     }
 
-    public static void spawnEndRodParticleOnFace(ServerLevel level, BlockPos pos, Direction direction , int count, float particleSpeed) {
+    public static void spawnEndRodParticleOnFace(ServerLevel level, BlockPos pos, Direction direction, int count, float particleSpeed) {
         ParticleOptions p_144961_ = ParticleTypes.END_ROD;
         Vec3 vec3 = Vec3.atCenterOf(pos);
         int i = direction.getStepX();
         int j = direction.getStepY();
         int k = direction.getStepZ();
-        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)i * 0.55D);
-        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)j * 0.55D);
-        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)k * 0.55D);
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) k * 0.55D);
         double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, d3, d4, d5, count, particleSpeed);
     }
 
-    public static void spawnSnowParticleOnFace(ServerLevel level, BlockPos pos, Direction direction , int count, float particleSpeed) {
+    public static void spawnSnowParticleOnFace(ServerLevel level, BlockPos pos, Direction direction, int count, float particleSpeed) {
         ParticleOptions p_144961_ = ParticleTypes.SNOWFLAKE;
         Vec3 vec3 = Vec3.atCenterOf(pos);
         int i = direction.getStepX();
         int j = direction.getStepY();
         int k = direction.getStepZ();
-        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)i * 0.55D);
-        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)j * 0.55D);
-        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double)k * 0.55D);
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) k * 0.55D);
         double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
         double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
@@ -225,7 +229,7 @@ public class AbstractLuminarCrystal {
             if (state.getValue(DEFROST)) {
                 if (random.nextFloat() >= 0.99f) {
                     for (Direction direction : Direction.values()) {
-                            AbstractLuminarCrystal.spawnParticleOnFace(level, pos, direction, 1, 0f);
+                        AbstractLuminarCrystal.spawnParticleOnFace(level, pos, direction, 1, 0f);
                     }
                 }
                 level.scheduleTick(pos, this, 70);
@@ -237,7 +241,7 @@ public class AbstractLuminarCrystal {
                     if (random.nextFloat() >= 0.80f) {
                         BlockPos relative = pos.relative(direction);
                         BlockState relativeState = level.getBlockState(relative);
-                        if (relativeState.getBlock() instanceof AbstractLuminarCrystal.CrystalSmall){
+                        if (relativeState.getBlock() instanceof AbstractLuminarCrystal.CrystalSmall) {
                             continue;
                         }
 
@@ -365,7 +369,7 @@ public class AbstractLuminarCrystal {
                 if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
                     return;
                 }
-                if (!livingEntity.canBeAffected(EffectInstance) || livingEntity instanceof AbstractLuminarcticLeopard){
+                if (!livingEntity.canBeAffected(EffectInstance) || livingEntity instanceof AbstractLuminarcticLeopard) {
                     return;
                 }
 
@@ -443,19 +447,40 @@ public class AbstractLuminarCrystal {
 
         @Override
         public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-            List<AbstractLuminarcticLeopard> lumiList = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
+            List<AbstractLuminarcticLeopard> nearbyLeopards = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
 
-            for (AbstractLuminarcticLeopard boss : lumiList) {
-                if (boss.canAttack(player) && boss.hasLineOfSight(player)) { // Verifica se pode atacar e ver o jogador
-                    if (player.getLevel() instanceof ServerLevel) {
-                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
+            // Se nenhum leopardo estiver por perto, invoca um novo
+            if (nearbyLeopards.isEmpty() && level instanceof ServerLevel serverLevel) {
+                boolean shouldSpawnFemale = level.random.nextBoolean();
+                var leopardType = shouldSpawnFemale
+                        ? ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get()
+                        : ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get();
+
+                AbstractLuminarcticLeopard newLeopard = leopardType.create(serverLevel);
+                if (newLeopard != null) {
+                    newLeopard.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
+                    newLeopard.setPos(pos.getX(), pos.getY(), pos.getZ());
+                    newLeopard.setTarget(player);
+                    level.addFreshEntity(newLeopard);
+                    newLeopard.playSound(SoundEvents.ENDERMAN_SCREAM, 1, 0);
+                }
+            }
+            // Se houver leopardo por perto, reagem ao jogador
+            else {
+                for (AbstractLuminarcticLeopard leopard : nearbyLeopards) {
+                    if (leopard.canAttack(player) && leopard.hasLineOfSight(player)) {
+                        if (level instanceof ServerLevel) {
+                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
+                        }
+                        leopard.setTarget(player);
+                        level.playSound(null, pos, SoundEvents.ENDERMAN_STARE, SoundSource.MASTER, 1, 0);
                     }
-                    boss.setTarget(player); // Define o jogador como alvo
                 }
             }
 
             return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
         }
+
 
     }
 }

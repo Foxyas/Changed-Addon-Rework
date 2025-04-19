@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.block;
 
+import net.ltxprogrammer.changed.block.NonLatexCoverableBlock;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,7 +17,7 @@ import net.minecraft.core.BlockPos;
 import java.util.List;
 import java.util.Collections;
 
-public class ReinforcedCrossBlock extends Block {
+public class ReinforcedCrossBlock extends Block implements NonLatexCoverableBlock{
 	public ReinforcedCrossBlock() {
 		super(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.NETHERITE_BLOCK).strength(20f, 30f).requiresCorrectToolForDrops());
 	}

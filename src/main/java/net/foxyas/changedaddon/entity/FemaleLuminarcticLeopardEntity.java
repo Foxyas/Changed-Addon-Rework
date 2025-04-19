@@ -56,15 +56,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
-
-	@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-	public static class SpawnHandle {
-		@SubscribeEvent
-		public static void SpawnHandles(BiomeLoadingEvent event) {
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), 30, 1, 4));
-		}
-	}
-
 	public FemaleLuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), world);
 	}
@@ -168,12 +159,6 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(
-				ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(),
-				SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				AbstractLuminarcticLeopard::canSpawnNear
-		);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

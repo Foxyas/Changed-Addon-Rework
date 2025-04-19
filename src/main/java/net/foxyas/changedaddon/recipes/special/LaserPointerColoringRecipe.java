@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.recipes.special;
 
 import com.google.gson.JsonObject;
+import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.recipes.ChangedAddonModRecipeTypes;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.util.Color3;
@@ -75,7 +76,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
 
             ItemStack result = pointer.copy();
             result.setCount(1);
-            result.getOrCreateTag().putString("Color", Color3.fromInt(finalColor).toHexCode());
+            LaserPointer.setLaserColor(result, finalColor);
             return result;
         }
 

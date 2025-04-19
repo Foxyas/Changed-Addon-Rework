@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC",
+    "DED",
+    " F "
+  ],
+  "key": {
+    "A": { "item": "minecraft:netherite_ingot" },
+    "B": { "item": "minecraft:netherite_block" },
+    "C": { "item": "minecraft:tnt" },
+    "D": { "item": "minecraft:string" },
+    "E": { "item": "minecraft:blaze_rod" },
+    "F": { "item": "minecraft:stick" }
+  },
+  "result": {
+    "item": "changed_addon:the_decimator",
+    "count": 1
+  }
+}

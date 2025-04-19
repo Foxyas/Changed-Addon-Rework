@@ -19,14 +19,6 @@ public abstract class EnchantmentMixin {
 
     @Inject(method = "canEnchant",at = @At("TAIL"),cancellable = true)
     public void InfinityMixin_2(ItemStack itemStack, CallbackInfoReturnable<Boolean> cir){
-        Enchantment self = (Enchantment) (Object) this;
-        if (self == Enchantments.LOYALTY
-                || self == Enchantments.IMPALING
-                || self == Enchantments.SHARPNESS){
-            if (itemStack.getItem() instanceof LuminarCrystalSpearItem) {
-                cir.setReturnValue(true);
-            }
-        }
     }
 
 }

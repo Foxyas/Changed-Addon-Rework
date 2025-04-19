@@ -16,7 +16,9 @@ public class CanLeapProcedure {
 		TransfurVariant<?> Variant = TransfurVariant.getEntityVariant(LatexInstace.getChangedEntity());
 		if (Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)){
 			if (Variant.is(ChangedAddonTransfurVariants.LATEX_SNEP.get())
-					|| Variant.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD.get())){
+					|| Variant.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD.get())
+					|| Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10.get())
+					|| Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())){
 				return false;
 			}
 			return true;

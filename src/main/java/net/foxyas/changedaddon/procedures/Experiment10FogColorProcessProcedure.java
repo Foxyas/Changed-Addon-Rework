@@ -21,10 +21,8 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
-import net.foxyas.changedaddon.entity.Experiment10Entity;
-import net.foxyas.changedaddon.entity.Experiment009phase2Entity;
-import net.foxyas.changedaddon.entity.Experiment009Entity;
+import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
 
 import javax.annotation.Nullable;
 
@@ -167,7 +165,7 @@ public class Experiment10FogColorProcessProcedure {
 				return false;
 			}
 		}.checkGamemode(entity))) {
-			if (!(((Entity) world.getEntitiesOfClass(Experiment10Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+			if (!(((Entity) world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
 				Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 					return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 				}
@@ -181,7 +179,7 @@ public class Experiment10FogColorProcessProcedure {
 				}
 			}
 		}
-		if (!(((Entity) world.getEntitiesOfClass(KetExperiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
+		if (!(((Entity) world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
 			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
 				return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
 			}
@@ -191,32 +189,6 @@ public class Experiment10FogColorProcessProcedure {
 					_fogColors.setRed(0 / 255.0F);
 					_fogColors.setGreen(194 / 255.0F);
 					_fogColors.setBlue(219 / 255.0F);
-				}
-			}
-		}
-		if (!(((Entity) world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-				return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-			}
-		}.compareDistOf(x, y, z)).findFirst().orElse(null)) == (null))) {
-			if (entity.getPersistentData().getBoolean("NoAI") == false) {
-				if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-					_fogColors.setRed(0 / 255.0F);
-					_fogColors.setGreen(0 / 255.0F);
-					_fogColors.setBlue(0 / 255.0F);
-				}
-			}
-		}
-		if (!(((Entity) world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-			Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-				return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-			}
-		}.compareDistOf(x, y, z)).findFirst().orElse(null)) == (null))) {
-			if (entity.getPersistentData().getBoolean("NoAI") == false) {
-				if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-					_fogColors.setRed(0 / 255.0F);
-					_fogColors.setGreen(0 / 255.0F);
-					_fogColors.setBlue(0 / 255.0F);
 				}
 			}
 		}

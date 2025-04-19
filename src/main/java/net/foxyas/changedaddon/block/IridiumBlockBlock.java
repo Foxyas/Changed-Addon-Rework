@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.block;
 
+import net.ltxprogrammer.changed.block.NonLatexCoverableBlock;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.material.Material;
@@ -17,7 +18,7 @@ import net.minecraft.core.BlockPos;
 import java.util.List;
 import java.util.Collections;
 
-public class IridiumBlockBlock extends Block {
+public class IridiumBlockBlock extends Block implements NonLatexCoverableBlock {
 	public IridiumBlockBlock() {
 		super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.SNOW).sound(SoundType.NETHERITE_BLOCK).strength(30f, 50f).requiresCorrectToolForDrops());
 	}

@@ -28,10 +28,11 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModFluids;
 
 import javax.annotation.Nullable;
+import net.minecraft.sounds.SoundEvents;
 
 public class LaethinminatorItem extends Item implements SpecializedAnimations {
 	public LaethinminatorItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(160).rarity(Rarity.UNCOMMON));
+		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(320).rarity(Rarity.UNCOMMON));
 	}
 
 	public int getUseDuration(ItemStack stack) {
@@ -49,7 +50,7 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
-		return InteractionResultHolder.consume(itemstack);
+		return InteractionResultHolder.pass(itemstack);
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 			return;
 		}
 		
-		if (stack.getDamageValue() >= stack.getMaxDamage() - 1) {
+		if (stack.getDamageValue() >= stack.getMaxDamage() - 1 || entity.isShiftKeyDown()) {
 			BlockHitResult hitResult = level.clip(new ClipContext(player.getEyePosition(1.0F), // Posição inicial (olhos do jogador)
 					player.getEyePosition(1.0F).add(player.getLookAngle().scale(5.0)), // Posição final (olhando 5 blocos à frente)
 					ClipContext.Block.OUTLINE, // Modo de colisão com blocos
@@ -71,6 +72,7 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 				BlockState state = level.getBlockState(pos);
 				if (state.getFluidState().is(ChangedAddonModFluids.LITIX_CAMONIA_FLUID.get()) || state.getFluidState().is(ChangedAddonModFluids.FLOWING_LITIX_CAMONIA_FLUID.get())) {
 					stack.setDamageValue(0);
+					entity.playSound(SoundEvents.BUCKET_FILL, 1f, 1f);
 				}
 			}
 			entity.stopUsingItem(); // Stop before breaking

@@ -220,7 +220,7 @@ public class PsychicGrab extends SimpleAbility {
                 }
             }*/
             look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
-            target.setDeltaMovement((look.subtract(target.position())));
+            target.setDeltaMovement((look.subtract(target.position())).scale(0.1));
         }
     }
 

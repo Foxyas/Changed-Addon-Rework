@@ -70,7 +70,7 @@ public class TickentitySolventEnchantmenthitProcedure {
 	private static boolean shouldAffectEntity(Entity entity) {
 		return entity instanceof Player player && ProcessTransfur.isPlayerLatex(player)
 				|| (entity.getType().is(ChangedTags.EntityTypes.LATEX)
-				&& entity instanceof ChangedEntity) || entity instanceof Experiment009Entity;
+				&& entity instanceof ChangedEntity);
 	}
 
 	private static boolean isValidWeapon(Entity entity) {
@@ -84,11 +84,6 @@ public class TickentitySolventEnchantmenthitProcedure {
 	private static void applyEffects(LivingHurtEvent event, Entity target, int enchantLevel) {
 		// Multiplica o dano baseado no nível do encantamento
 		double multiplier = event.getAmount() * calculateDamageMultiplier(enchantLevel);
-
-		if (target instanceof KetExperiment009BossEntity) {
-			multiplier = event.getAmount() * (calculateDamageMultiplier(enchantLevel) / 2);
-		}
-		
 		event.setAmount((float) (multiplier));
 
 		// Aplica som e partículas

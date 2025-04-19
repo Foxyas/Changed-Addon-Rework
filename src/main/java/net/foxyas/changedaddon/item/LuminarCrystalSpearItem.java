@@ -1,37 +1,32 @@
 
 package net.foxyas.changedaddon.item;
 
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
+import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.projectile.ThrownTrident;
-import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.server.level.ServerPlayer;
-
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
-
-import com.google.common.collect.Multimap;
-import com.google.common.collect.ImmutableMultimap;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
@@ -59,6 +54,30 @@ public class LuminarCrystalSpearItem extends Item implements Vanishable {
 
 	public int getUseDuration(ItemStack itemStack) {
 		return 72000;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return true;
+	}
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		if (enchantment == Enchantments.SWEEPING_EDGE){
+			return false;
+		}
+		return enchantment.category == EnchantmentCategory.TRIDENT
+				|| enchantment.category == EnchantmentCategory.WEAPON
+				|| enchantment.category == EnchantmentCategory.BREAKABLE
+				|| super.canApplyAtEnchantingTable(stack, enchantment);
+	}
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		return true;
+	}
+
+	@Override
+	public int getEnchantmentValue() {
+		return Items.TRIDENT.getEnchantmentValue(); // você pode usar 1 (tridente usa esse valor) ou ajustar para mais
 	}
 
 	public void releaseUsing(ItemStack itemStack, Level world, LivingEntity livingEntity, int time) {
@@ -154,9 +173,5 @@ public class LuminarCrystalSpearItem extends Item implements Vanishable {
 
 	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
 		return slot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(slot);
-	}
-
-	public int getEnchantmentValue() {
-		return 1;
 	}
 }

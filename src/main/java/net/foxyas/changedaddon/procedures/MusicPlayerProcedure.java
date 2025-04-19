@@ -38,9 +38,7 @@ public class MusicPlayerProcedure {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            //PlayBossMusic(event, event.player.level, event.player);
             newPlayBossMusic(event.player.level, event.player);
-            //PlayBossMusic2(event, event.player.level, event.player);
         }
     }
 
@@ -57,13 +55,11 @@ public class MusicPlayerProcedure {
         List<Experiment10BossEntity> exp10Entities = world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
         List<AbstractLuminarcticLeopard> LumiEntities = world.getEntitiesOfClass(AbstractLuminarcticLeopard.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
         List<KetExperiment009BossEntity> ketExp9Entities = world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
-        List<Experiment009phase2Entity> exp009Phase2Entities = world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true);
 
         // Verificações de proximidade
         boolean exp10Close = !exp10Entities.isEmpty();
         boolean LumiClose = !LumiEntities.isEmpty();
         boolean ketExp9Close = !ketExp9Entities.isEmpty();
-        boolean exp009Phase2Close = !exp009Phase2Entities.isEmpty();
 
         if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get()) {
             Minecraft minecraft = Minecraft.getInstance();
@@ -93,15 +89,14 @@ public class MusicPlayerProcedure {
             boolean isLumiThemePlaying = musicManager.isPlayingMusic(LumiThemeMusicInstance);
 
 
-            if ((exp009Phase2Close || ketExp9Close)) {
+            if ((ketExp9Close)) {
                 if (!isExp009Phase2ThemePlaying) {
                     if (!exp10Close && !LumiClose) {
                         musicManager.startPlaying(exp009Phase2ThemeMusicInstance);
                     }
                 }
 
-                if (exp009Phase2Entities.stream().anyMatch(Experiment009phase2Entity::isDeadOrDying)
-                        || ketExp9Entities.stream().anyMatch(KetExperiment009BossEntity::isDeadOrDying)) {
+                if (ketExp9Entities.stream().anyMatch(KetExperiment009BossEntity::isDeadOrDying)) {
                     soundManager.stop(new ResourceLocation("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
                 }
             } else if (isExp009Phase2ThemePlaying) {
@@ -110,7 +105,7 @@ public class MusicPlayerProcedure {
 
             if (exp10Close) {
                 if (!isExp10ThemePlaying) {
-                    if (!exp009Phase2Close && !ketExp9Close) {
+                    if (!ketExp9Close) {
                         musicManager.startPlaying(exp10ThemeMusicInstance);
                     }
                 }
@@ -124,7 +119,7 @@ public class MusicPlayerProcedure {
 
             if (LumiClose && LumiEntities.stream().anyMatch((e) -> e.getTarget() == player)) {
                 if (!isLumiThemePlaying) {
-                    if (!exp10Close && !ketExp9Close && !exp009Phase2Close)  {
+                    if (!exp10Close && !ketExp9Close)  {
                         musicManager.startPlaying(LumiThemeMusicInstance);
                     }
                 }
@@ -137,153 +132,6 @@ public class MusicPlayerProcedure {
             }
         }
     }
-
-    public static void PlayBossMusic(@Nullable Event event, LevelAccessor world, Entity entity) {
-        if (entity == null) {
-            return;
-        }
-
-        double x = entity.getX();
-        double y = entity.getY();
-        double z = entity.getZ();
-
-
-        Entity Exp10 = world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
-                    Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                        return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-                    }
-                }.compareDistOf(x, y, z)).findFirst().orElse(null);
-                //Entity Exp10
-
-        Entity Lumi = world.getEntitiesOfClass(AbstractLuminarcticLeopard.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
-            Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-            }
-        }.compareDistOf(x, y, z)).findFirst().orElse(null);
-
-        Entity Ket = world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
-            Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-            }
-        }.compareDistOf(x, y, z)).findFirst().orElse(null);
-        //Entity Experiment009 KET
-
-        Entity Experiment009 = world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
-            Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-            }
-        }.compareDistOf(x, y, z)).findFirst().orElse(null);
-        //Entity Experiment009Phase1
-
-        Entity Experiment009Phase2 = world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).stream().sorted(new Object() {
-            Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-            }
-        }.compareDistOf(x, y, z)).findFirst().orElse(null);
-        //Entity Experiment009Phase2
-
-        boolean Exp009Phase1IsClose = !world.getEntitiesOfClass(Experiment009Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
-        boolean Exp009Phase2IsClose = !world.getEntitiesOfClass(Experiment009phase2Entity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
-
-        boolean KetExp9IsClose = !world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty()
-                || !world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
-
-        boolean Exp10Close = !world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty()
-                || !world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
-
-        boolean LumiClose = !world.getEntitiesOfClass(AbstractLuminarcticLeopard.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty();
-
-
-
-        if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get()) {
-            boolean canwork = false;
-
-            Minecraft minecraft = Minecraft.getInstance();
-            MusicManager musicManager = minecraft.getMusicManager();
-
-            boolean Spectator = new Object() {
-                public boolean checkGameMode(Player _player) {
-                    if (_player instanceof ServerPlayer _serverPlayer) {
-                        return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                    } else if (_player.level.isClientSide()) {
-                        return Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(_player.getGameProfile().getId()) != null
-                                && Objects.requireNonNull(Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId())).getGameMode() == GameType.SPECTATOR;
-                    }
-                    return false;
-                }
-            }.checkGameMode((Player) entity);
-
-
-            if (!Spectator) {
-                canwork = true;
-            }
-
-            //Sound Events
-            SoundEvent Experiment009Phase2Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme_phase2"));
-            SoundEvent Experiment009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment009_theme"));
-            SoundEvent Experiment10Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
-
-            //Music Creator
-            Music Experiment009_Theme_MusicInstance = new Music(Objects.requireNonNull(Experiment009Music), 0, 0, true);
-            Music Experiment10_Theme_MusicInstance = new Music(Objects.requireNonNull(Experiment10Music), 0, 0, true);
-            Music Experiment009_phase2_theme_MusicInstance = new Music(Objects.requireNonNull(Experiment009Phase2Music), 0, 0, true);
-
-            //Check if theme is playing
-            boolean isExperiment009ThemePlaying = musicManager.isPlayingMusic(Experiment009_Theme_MusicInstance);
-            boolean isExperiment10ThemePlaying = musicManager.isPlayingMusic(Experiment10_Theme_MusicInstance);
-            boolean isExperiment009Phase2ThemePlaying = musicManager.isPlayingMusic(Experiment009_phase2_theme_MusicInstance);
-
-            if (Exp009Phase2IsClose || KetExp9IsClose && canwork) {
-                if (KetExp9IsClose && !isExperiment009Phase2ThemePlaying) {
-                    musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
-                }
-                if (!isExperiment009Phase2ThemePlaying) {
-                    musicManager.startPlaying(Experiment009_phase2_theme_MusicInstance);
-                } else if (Experiment009Phase2 != null && !Experiment009Phase2.isAlive()) {
-                    if (isExperiment009Phase2ThemePlaying) {
-                        minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
-                    }
-                }
-                if (Ket != null && !Ket.isAlive()) {
-                    if (isExperiment009Phase2ThemePlaying) {
-                        minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
-                    }
-                }
-                //If the 009 KET is not alive
-            } else if (!Exp009Phase2IsClose && !KetExp9IsClose && isExperiment009Phase2ThemePlaying) {
-                minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme_phase2"), SoundSource.MUSIC);
-            } else if (Exp009Phase1IsClose && canwork) {
-                if (!isExperiment009ThemePlaying) {
-                    musicManager.startPlaying(Experiment009_Theme_MusicInstance);
-                } else if (isExperiment009ThemePlaying && Experiment009 != null) {
-                    if (!Experiment009.isAlive()) {
-                        minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme"), SoundSource.MUSIC);
-                    }
-                }
-            } else if (!Exp009Phase1IsClose && isExperiment009ThemePlaying) {
-                minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment009_theme"), SoundSource.MUSIC);
-            } else if (Exp10Close && canwork) {
-                if (!isExperiment10ThemePlaying) {
-                    musicManager.startPlaying(Experiment10_Theme_MusicInstance);
-                } else if (isExperiment10ThemePlaying && Exp10 != null) {
-                    if (!Exp10.isAlive()) {
-                        minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
-                    }
-                }
-            } else if (!Exp10Close && !LumiClose && isExperiment10ThemePlaying) {
-                minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
-            } else if (LumiClose && canwork) {
-                if (!isExperiment10ThemePlaying) {
-                    musicManager.startPlaying(Experiment10_Theme_MusicInstance);
-                } else if (isExperiment10ThemePlaying && Lumi != null) {
-                    if (!Lumi.isAlive()) {
-                        minecraft.getSoundManager().stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
-                    }
-                }
-            }
-
-        } // <- This end the client side part,All before that is in client side
-    } //End of the Void
 
     private static boolean isSpectator(Entity entity) {
         if (!(entity instanceof Player player)) {
@@ -348,80 +196,6 @@ public class MusicPlayerProcedure {
         for (String musicKey : bossMusicKeys) {
             ResourceLocation musicResource = new ResourceLocation(ChangedAddonMod.MODID, musicKey);
             soundManager.stop(musicResource, SoundSource.MUSIC);
-        }
-    }
-
-
-    public static void PlayBossMusic2(@Nullable Event event, LevelAccessor world, Entity entity) {
-        if (entity == null || !world.isClientSide() || !(entity instanceof Player player)) return;
-
-        boolean spectator = checkGameMode(player);
-        if (!ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get() || spectator) return;
-
-        Minecraft minecraft = Minecraft.getInstance();
-        MusicManager musicManager = minecraft.getMusicManager();
-        SoundManager soundManager = minecraft.getSoundManager();
-
-        Vec3 playerPos = entity.position();
-
-        // Obter bosses próximos e filtrar pela menor distância
-        Optional<LivingEntity> optionalBossEntity = world.getEntitiesOfClass(LivingEntity.class,
-                        AABB.ofSize(playerPos, 64, 64, 64))
-                .stream()
-                .min(Comparator.comparingDouble(boss -> boss.distanceToSqr(playerPos)));
-
-        // Se não houver bosses próximos, interrompe qualquer música do boss
-        if (optionalBossEntity.isEmpty()) {
-            stopAllBossMusic(soundManager);
-            return;
-        }
-
-        LivingEntity bossEntity = optionalBossEntity.get();
-
-        if (bossEntity instanceof BossWithMusic bossWithMusic && bossWithMusic.ShouldPlayMusic()) {
-            SoundEvent bossMusic = bossWithMusic.BossMusicTheme().getAsSoundEvent();
-
-            if (bossMusic == null) return;
-
-            // Checa se alguma música de boss já está tocando
-            if (isAnyBossMusicPlaying(musicManager, BossMusicTheme.values())) {
-                return; // Não toca nenhuma nova música
-            }
-
-            Music musicInstance = bossWithMusic.BossMusicTheme().getAsMusic();
-            ResourceLocation musicResource = ForgeRegistries.SOUND_EVENTS.getKey(bossMusic);
-
-            // Se o boss estiver vivo e a música ainda não estiver tocando, inicia a música
-            if (bossEntity.isAlive() && !musicManager.isPlayingMusic(musicInstance)) {
-                musicManager.startPlaying(musicInstance);
-            }
-            // Se o boss morreu ou saiu do alcance, interrompe a música específica
-            else if (!bossEntity.isAlive() && musicManager.isPlayingMusic(musicInstance)) {
-                soundManager.stop(musicResource, SoundSource.MUSIC);
-            }
-        }
-        /*
-        * Hard Coded Entities Bellow
-        */
-
-        else if (bossEntity instanceof Experiment009phase2Entity) {
-            SoundEvent bossMusic = BossMusicTheme.EXP9.getAsSoundEvent();
-            Music musicInstance = BossMusicTheme.EXP9.getAsMusic();
-            ResourceLocation musicResource = ForgeRegistries.SOUND_EVENTS.getKey(bossMusic);
-            if (bossMusic == null) return;
-
-            // Checa se alguma música de boss já está tocando
-            if (isAnyBossMusicPlaying(musicManager, BossMusicTheme.values())) {
-                return; // Não toca nenhuma nova música
-            }
-            // Se o boss estiver vivo e a música ainda não estiver tocando, inicia a música
-            if (bossEntity.isAlive() && !musicManager.isPlayingMusic(musicInstance)) {
-                musicManager.startPlaying(musicInstance);
-            }
-            // Se o boss morreu ou saiu do alcance, interrompe a música específica
-            else if (!bossEntity.isAlive() && musicManager.isPlayingMusic(musicInstance)) {
-                soundManager.stop(musicResource, SoundSource.MUSIC);
-            }
         }
     }
 

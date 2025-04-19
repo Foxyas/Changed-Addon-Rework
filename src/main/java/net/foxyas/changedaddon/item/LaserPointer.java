@@ -37,6 +37,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
+import net.minecraft.core.BlockPos;
 
 public class LaserPointer extends Item implements SpecializedAnimations {
 
@@ -91,6 +92,28 @@ public class LaserPointer extends Item implements SpecializedAnimations {
     }
 
     public static int getColor(ItemStack stack) {
+        if (stack.hasTag() && stack.getTag().contains("Color")) {
+            return stack.getTag().getInt("Color");
+        }
+        return DefaultColors.RED.getColorToInt(); // Cor padrão se não tiver NBT
+    }
+
+    public static int setLaserColor(ItemStack stack, Color color) {
+        if (stack.getItem() instanceof LaserPointer laserPointer) {
+            stack.getOrCreateTag().putInt("Color", color.getRGB());
+        }
+
+        if (stack.hasTag() && stack.getTag().contains("Color")) {
+            return stack.getTag().getInt("Color");
+        }
+        return DefaultColors.RED.getColorToInt(); // Cor padrão se não tiver NBT
+    }
+
+    public static int setLaserColor(ItemStack stack, int color) {
+        if (stack.getItem() instanceof LaserPointer laserPointer) {
+            stack.getOrCreateTag().putInt("Color", color);
+        }
+
         if (stack.hasTag() && stack.getTag().contains("Color")) {
             return stack.getTag().getInt("Color");
         }
@@ -168,7 +191,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
                 spawnLaserParticle(level, player, stack, hitPos);
             } else if (result instanceof BlockHitResult blockResult && level.getBlockState(blockResult.getBlockPos()).isAir()) {
                 // Mira no ar: define uma posição "alvo" no ar baseada na direção do olhar
-                spawnLaserParticle(level, player, stack, hitPos);
+                spawnLaserParticle(level, player, stack, blockResult.getLocation());
             } else if (result instanceof BlockHitResult blockResult &&
                     // Se for translúcido, refazer raycast ignorando blocos
                     level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
@@ -204,7 +227,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
+        return InteractionResultHolder.pass(stack);
     }
 
 
@@ -277,6 +300,17 @@ public class LaserPointer extends Item implements SpecializedAnimations {
                 1, 0
         );
     }
+
+    private void spawnLaserParticle(Level level, Player player, ItemStack stack, BlockPos pos) {
+        PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                level,
+                ChangedAddonParticles.laserPoint(player, LaserPointer.getColorAsColor3(stack), 1f),
+                pos.getX(), pos.getY(), pos.getZ(),
+                0.0, 0.0, 0.0,
+                1, 0
+        );
+    }
+
 
 
     @Nullable

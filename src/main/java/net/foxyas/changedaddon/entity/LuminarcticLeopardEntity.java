@@ -71,15 +71,6 @@ import net.minecraft.network.chat.TextComponent;
 
 public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 
-	@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-	public static class SpawnHandle {
-		@SubscribeEvent
-		public static void SpawnHandles(BiomeLoadingEvent event) {
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), 30, 1, 1));
-		}
-	}
-
-
 	public LuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), world);
 	}
@@ -183,12 +174,6 @@ public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 	}
 
 	public static void init() {
-		SpawnPlacements.register(
-				ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(),
-				SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				AbstractLuminarcticLeopard::canSpawnNear
-		);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

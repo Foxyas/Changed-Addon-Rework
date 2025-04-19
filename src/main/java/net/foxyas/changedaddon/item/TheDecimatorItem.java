@@ -61,7 +61,7 @@ public class TheDecimatorItem extends Item {
 
     @Override
     public float getDestroySpeed(ItemStack itemstack, BlockState blockstate) {
-        return 1f;
+        return 1.5f;
     }
 
     @Override
@@ -84,10 +84,6 @@ public class TheDecimatorItem extends Item {
 
     @Override
     public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, book) > 0) {
-            return false;
-        }
-
         return super.isBookEnchantable(stack, book);
     }
 
