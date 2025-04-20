@@ -12241,6 +12241,33 @@
           }
         ]
       }
+    },
+    {
+      "name": "Lynx",
+      "type": "livingentity",
+      "sortid": 658,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "lynx",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/entity/LynxEntity.java",
+          "src/main/java/net/foxyas/changedaddon/client/renderer/LynxRenderer.java"
+        ]
+      }
+    },
+    {
+      "name": "LuminarCrystalSpearRecipe",
+      "type": "recipe",
+      "sortid": 659,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "luminar_crystal_spear_recipe",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/recipes/luminar_crystal_spear_recipe.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -12769,6 +12796,7 @@
       "advancements.changedaddon_advancement.title": "Changed Addon",
       "gamerule.dolatexinfection": "Do Latex Infection",
       "gamerule.fighttokeepconsciousness.description": "Allow the Fight to keep consciousness minigame (overwrite keep consciousness like a perm on)",
+      "entity.changed_addon.lynx": "Lynx",
       "gui.changed_addon.bookpagenumber_3.button_close": "Close",
       "gui.changed_addon.bookpagenumber_4.label_n_any_latex_or_blood_syringe": "N \u003d ANY LATEX OR BLOOD SYRINGE",
       "gui.changed_addon.bookrecipepage_8.label_m2": "M",

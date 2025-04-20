@@ -24,6 +24,7 @@ import net.foxyas.changedaddon.entity.PuroKindFemaleEntity;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
 import net.foxyas.changedaddon.entity.PrototypeEntity;
 import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
+import net.foxyas.changedaddon.entity.LynxEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
@@ -157,6 +158,10 @@ public class ChangedAddonModEntities {
 					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<LuminarCrystalSpearEntity>> LUMINAR_CRYSTAL_SPEAR = register("projectile_luminar_crystal_spear", EntityType.Builder.<LuminarCrystalSpearEntity>of(LuminarCrystalSpearEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(LuminarCrystalSpearEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
+	public static final RegistryObject<EntityType<LynxEntity>> LYNX = register("lynx",
+			EntityType.Builder.<LynxEntity>of(LynxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LynxEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -192,6 +197,7 @@ public class ChangedAddonModEntities {
 			LuminarcticLeopardEntity.init();
 			FemaleLuminarcticLeopardEntity.init();
 			LatexSquidTigerSharkEntity.init();
+			LynxEntity.init();
 		});
 	}
 
@@ -224,5 +230,6 @@ public class ChangedAddonModEntities {
 		event.put(LUMINARCTIC_LEOPARD.get(), LuminarcticLeopardEntity.createAttributes().build());
 		event.put(FEMALE_LUMINARCTIC_LEOPARD.get(), FemaleLuminarcticLeopardEntity.createAttributes().build());
 		event.put(LATEX_SQUID_TIGER_SHARK.get(), LatexSquidTigerSharkEntity.createAttributes().build());
+		event.put(LYNX.get(), LynxEntity.createAttributes().build());
 	}
 }
