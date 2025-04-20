@@ -1,16 +1,15 @@
 package net.foxyas.changedaddon.block;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
-import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
 import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedMaterials;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -28,17 +27,22 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.*;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -54,8 +58,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 
 public class AbstractLuminarCrystal {
@@ -196,17 +202,17 @@ public class AbstractLuminarCrystal {
 
         @Override
         public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-            List<AbstractLuminarcticLeopard> lumiList = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
-
-            for (AbstractLuminarcticLeopard boss : lumiList) {
-                if (boss.canAttack(player) && boss.hasLineOfSight(player)) { // Verifica se pode atacar e ver o jogador
-                    if (player.getLevel() instanceof ServerLevel) {
-                        player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
+            if (!(player.isCreative() || player.isSpectator())) {
+                List<AbstractLuminarcticLeopard> lumiList = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
+                for (AbstractLuminarcticLeopard boss : lumiList) {
+                    if (boss.canAttack(player) && boss.hasLineOfSight(player)) { // Verifica se pode atacar e ver o jogador
+                        if (player.getLevel() instanceof ServerLevel) {
+                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
+                        }
+                        boss.setTarget(player); // Define o jogador como alvo
                     }
-                    boss.setTarget(player); // Define o jogador como alvo
                 }
             }
-
             return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
         }
 
@@ -363,20 +369,28 @@ public class AbstractLuminarCrystal {
 
         @Override
         public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-            super.entityInside(state, level, pos, entity);
-            if (entity instanceof LivingEntity livingEntity) {
-                MobEffectInstance EffectInstance = new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true);
-                if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
-                    return;
-                }
-                if (!livingEntity.canBeAffected(EffectInstance) || livingEntity instanceof AbstractLuminarcticLeopard) {
-                    return;
-                }
+            if (!(entity instanceof AbstractLuminarcticLeopard)) {
+                super.entityInside(state, level, pos, entity);
+                if (entity instanceof LivingEntity livingEntity) {
+                    MobEffectInstance EffectInstance = new MobEffectInstance(MobEffects.WITHER, 20 * 20, 1, false, true, true);
+                    if (livingEntity instanceof Player player && (player.isCreative() || player.isSpectator())) {
+                        return;
+                    }
+                    if (!livingEntity.canBeAffected(EffectInstance) || livingEntity instanceof AbstractLuminarcticLeopard) {
+                        return;
+                    }
+                    if (livingEntity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null) {
+                        Stream<TransfurVariant<?>> variantStream = Stream.of(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD.get(), ChangedAddonTransfurVariants.FEMALE_LUMINARCTIC_LEOPARD.get());
+                        if (variantStream.anyMatch((variant -> variant.is(ProcessTransfur.getPlayerTransfurVariant(player).getParent())))) {
+                            return;
+                        }
+                    }
 
-                if (!livingEntity.hasEffect(MobEffects.WITHER)) {
-                    livingEntity.addEffect(EffectInstance);
+                    if (!livingEntity.hasEffect(MobEffects.WITHER)) {
+                        livingEntity.addEffect(EffectInstance);
+                    }
+                    livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 5);
                 }
-                livingEntity.setTicksFrozen(livingEntity.getTicksFrozen() + 5);
             }
         }
 
@@ -446,41 +460,66 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
+        public PushReaction getPistonPushReaction(BlockState p_60584_) {
+            return super.getPistonPushReaction(p_60584_);
+        }
+
+        @Override
         public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-            List<AbstractLuminarcticLeopard> nearbyLeopards = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
-
-            // Se nenhum leopardo estiver por perto, invoca um novo
-            if (nearbyLeopards.isEmpty() && level instanceof ServerLevel serverLevel) {
-                boolean shouldSpawnFemale = level.random.nextBoolean();
-                var leopardType = shouldSpawnFemale
-                        ? ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get()
-                        : ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get();
-
-                AbstractLuminarcticLeopard newLeopard = leopardType.create(serverLevel);
-                if (newLeopard != null) {
-                    newLeopard.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
-                    newLeopard.setPos(pos.getX(), pos.getY(), pos.getZ());
-                    newLeopard.setTarget(player);
-                    level.addFreshEntity(newLeopard);
-                    newLeopard.playSound(SoundEvents.ENDERMAN_SCREAM, 1, 0);
-                }
-            }
-            // Se houver leopardo por perto, reagem ao jogador
-            else {
-                for (AbstractLuminarcticLeopard leopard : nearbyLeopards) {
-                    if (leopard.canAttack(player) && leopard.hasLineOfSight(player)) {
-                        if (level instanceof ServerLevel) {
-                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
-                        }
-                        leopard.setTarget(player);
-                        level.playSound(null, pos, SoundEvents.ENDERMAN_STARE, SoundSource.MASTER, 1, 0);
-                    }
-                }
-            }
-
             return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
         }
 
+        @Override
+        public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+            if (!level.isClientSide && !oldState.is(newState.getBlock())) {
+                ServerLevel serverLevel = level instanceof ServerLevel ? (ServerLevel) level : null;
+                if (serverLevel == null) return;
 
+                // Procura a entidade viva mais próxima (excluindo leopardos)
+                LivingEntity closestEntity = level.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(8)).stream()
+                        .filter(entity -> {
+                            if (entity instanceof Player player) {
+                                return !player.isSpectator() && !player.isCreative();
+                            }
+
+
+                            return !(entity instanceof AbstractLuminarcticLeopard);
+                        })
+                        .min(Comparator.comparingDouble(entity -> entity.distanceToSqr(pos.getX(), pos.getY(), pos.getZ())))
+                        .orElse(null);
+
+                // Leopardo já existente
+                List<AbstractLuminarcticLeopard> nearbyLeopards = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
+
+                if (!nearbyLeopards.isEmpty()) {
+                    if (closestEntity != null) {
+                        for (AbstractLuminarcticLeopard leopard : nearbyLeopards) {
+                            if (leopard.canAttack(closestEntity) && leopard.hasLineOfSight(closestEntity)) {
+                                leopard.setTarget(closestEntity);
+                                level.playSound(null, pos, SoundEvents.ENDERMAN_SCREAM, SoundSource.MASTER, 1, 0);
+                            }
+                        }
+                    }
+                } else {
+                    // Spawna novo leopardo
+                    var leopardType = level.random.nextBoolean()
+                            ? ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get()
+                            : ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get();
+
+                    AbstractLuminarcticLeopard newLeopard = leopardType.create(serverLevel);
+                    if (newLeopard != null) {
+                        if (oldState.getValue(HEARTED)) {
+                            newLeopard.setBoss(true);
+                        }
+                        newLeopard.setPos(pos.getX(), pos.getY(), pos.getZ());
+                        newLeopard.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
+                        newLeopard.setTarget(closestEntity);
+                        level.addFreshEntity(newLeopard);
+                        newLeopard.playSound(SoundEvents.ENDERMAN_SCREAM, 1, 0);
+                    }
+                }
+            }
+            super.onRemove(oldState, level, pos, newState, isMoving);
+        }
     }
 }

@@ -56,6 +56,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
+
 	public FemaleLuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), world);
 	}
@@ -72,7 +73,7 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 	protected void setAttributes(AttributeMap attributes) {
 		//Attack stats
 		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6));
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(6.0f);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(4.0f);
 		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(
 				AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK) + 1.5f
 		);

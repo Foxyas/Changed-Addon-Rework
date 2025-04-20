@@ -87,7 +87,7 @@ public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 	protected void setAttributes(AttributeMap attributes) {
 		//Attack stats
 		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6));
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(6.0f);
+		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(4.0f);
 		attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(
 				AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK) + 1.5f
 		);

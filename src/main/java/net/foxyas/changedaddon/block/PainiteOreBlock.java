@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.block;
 
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.OreBlock;
 import net.minecraft.world.level.material.MaterialColor;
@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
 
@@ -43,7 +42,8 @@ public class PainiteOreBlock extends OreBlock {
 
 	@Override
 	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem() instanceof PickaxeItem tieredItem) {
+		ItemStack selectedItem = player.getInventory().getSelected();
+		if (selectedItem.getItem() instanceof TieredItem tieredItem && tieredItem.isCorrectToolForDrops(selectedItem,state)) {
 			return TierSortingRegistry.isCorrectTierForDrops(Tiers.NETHERITE, state) || tieredItem.getTier().getLevel() >= 4;
 		}
 		return false;

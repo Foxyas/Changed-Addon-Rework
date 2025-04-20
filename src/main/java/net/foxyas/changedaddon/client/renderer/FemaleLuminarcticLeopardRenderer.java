@@ -57,19 +57,19 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
 
 	@Override
 	public void render(FemaleLuminarcticLeopardEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		if (entity.DodgeAnimTicks != 0) {
+		if (entity.getDodgeAnimTicks() != 0) {
 			poseStack.pushPose();
 
 			// Calcula a rotação com base no progresso da animação de esquiva
 			float dodgeProgress;
-			if (entity.DodgeAnimTicks < 0) {
-				dodgeProgress = (float) entity.DodgeAnimTicks / -entity.DodgeAnimMaxTicks;
-				float rotationAngle = 90.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
+			if (entity.getDodgeAnimTicks() < 0) {
+				dodgeProgress = (float) entity.getDodgeAnimTicks() / -entity.DodgeAnimMaxTicks;
+				float rotationAngle = 65.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
 				// Aplica a rotação no eixo X
 				poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationAngle));
 			} else {
-				dodgeProgress = (float) entity.DodgeAnimTicks / entity.DodgeAnimMaxTicks;
-				float rotationAngle = 90.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
+				dodgeProgress = (float) entity.getDodgeAnimTicks() / entity.DodgeAnimMaxTicks;
+				float rotationAngle = 65.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
 
 				// Aplica a rotação no eixo X
 				poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationAngle));
@@ -86,6 +86,10 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
 
 	@Override
 	public ResourceLocation getTextureLocation(FemaleLuminarcticLeopardEntity entity) {
+		if (entity.getUnderlyingPlayer() != null) {
+			return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female_no_eyes.png");
+		}
+
 		return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female.png");
 	}
 
@@ -205,11 +209,6 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
 					} else {
 						customEyesLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
 					}
-				} else {
-					if (entity instanceof FemaleLuminarcticLeopardEntity LUMI && LUMI.isActivatedAbility()) {
-						this.customGlowEyesLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
-					}
-					this.customEyesLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
 				}
 			}
 		}

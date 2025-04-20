@@ -120,13 +120,15 @@ public class DissolveAbilityInstance extends AbstractAbilityInstance {
         }
         if (!isSet() && !player.isShiftKeyDown()) {
             SetTp(player);
+            return;
         }
         if (isSet() && player.isShiftKeyDown()){
             UnSet();
+            return;
         }
         if (isSet() && !player.isShiftKeyDown() && Distance(player.position(),new Vec3(this.LocationX,this.LocationY,this.LocationZ)) <= 1000) {
             player.teleportTo(this.LocationX,this.LocationY,this.LocationZ);
-            player.hurt(DamageSource.MAGIC.bypassInvul(),4f);
+            player.hurt(DamageSource.MAGIC.bypassArmor(), 4f);
             ChangedSounds.broadcastSound(player, ChangedSounds.POISON,2.5f,1);
             if (player.getLevel() instanceof ServerLevel serverLevel){
                 serverLevel.sendParticles(ChangedParticles.drippingLatex(Instance.getParent().getColors().getFirst()), player.getX(), player.getY() + 1, player.getZ(), 5, 0.2, 0.3, 0.2, 0);
@@ -135,7 +137,6 @@ public class DissolveAbilityInstance extends AbstractAbilityInstance {
                 //TP POS
                 serverLevel.sendParticles(ChangedParticles.drippingLatex(Instance.getParent().getColors().getFirst()), getLocationX(), getLocationY() + 1, getLocationZ(), 5, 0.2, 0.3, 0.2, 0);
                 serverLevel.sendParticles(ChangedParticles.drippingLatex(Instance.getParent().getColors().getSecond()), getLocationX(), getLocationY() + 1, getLocationZ(), 5, 0.2, 0.3, 0.2, 0);
-
             }
         } else if (Distance(player.position(),new Vec3(this.LocationX,this.LocationY,this.LocationZ)) > 1000) {
             player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dissolve.warn.too_far"),true);

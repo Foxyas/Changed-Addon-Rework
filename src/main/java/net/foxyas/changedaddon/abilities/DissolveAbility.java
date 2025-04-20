@@ -33,7 +33,7 @@ public class DissolveAbility extends AbstractAbility<DissolveAbilityInstance> {
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        return Objects.requireNonNull(entity.getAbilityInstance(this)).isSet() ? 600 : 20;
+        return Objects.requireNonNull(entity.getAbilityInstance(this)).isSet() ? 200 : 20;
     }
 
     @Override
