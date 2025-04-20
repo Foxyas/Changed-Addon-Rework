@@ -125,6 +125,15 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
             BossEvent.BossBarOverlay.NOTCHED_6 // Estilo da barra
     );
 
+    @Override
+    protected int getExperienceReward(Player player) {
+            if (this.isBoss()){
+                return super.getExperienceReward(player) * 50;
+            }
+
+        return super.getExperienceReward(player);
+    }
+
     boolean ActivatedAbility = false;
     public float AbilitiesTicksCooldown = 20;
     public int SuperAbilitiesTicksCooldown = 0;
@@ -327,7 +336,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
 
     public void handleBoss(){
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(500f);
-        Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(15f);
+        Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(25f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2.5f);
         this.setHealth(500f);
