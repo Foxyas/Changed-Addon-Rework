@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "changed_addon:blocks/wall_white_cracked",
+    "particle": "changed_addon:blocks/wall_white_cracked"
+  }
+}

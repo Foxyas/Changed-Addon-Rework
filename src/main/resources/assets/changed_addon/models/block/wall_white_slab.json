@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "bottom": "changed_addon:blocks/wall_white",
+    "top": "changed_addon:blocks/wall_white",
+    "side": "changed_addon:blocks/wall_white"
+  }
+}

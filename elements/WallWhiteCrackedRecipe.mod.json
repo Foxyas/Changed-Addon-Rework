@@ -1,0 +1,22 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Smelting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 1.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "smeltingInputStack": {
+      "value": "TAG:changed:wall_white"
+    },
+    "smeltingReturnStack": {
+      "value": "CUSTOM:WallWhiteCracked"
+    },
+    "name": "wall_white_cracked_recipe",
+    "namespace": "mod"
+  }
+}

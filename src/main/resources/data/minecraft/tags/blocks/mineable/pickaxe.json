@@ -28,6 +28,9 @@
     "changed_addon:blue_wolf_crystal_small",
     "changed_addon:white_wolf_crystal_small",
     "changed_addon:goo_core",
-    "changed_addon:generator"
+    "changed_addon:generator",
+    "changed_addon:wall_white_stair",
+    "changed_addon:wall_white_slab",
+    "changed_addon:wall_white_cracked"
   ]
 }

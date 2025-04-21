@@ -19,6 +19,9 @@ import net.foxyas.changedaddon.block.YellowWolfCrystalBlockBlock;
 import net.foxyas.changedaddon.block.WolfPlushBlock;
 import net.foxyas.changedaddon.block.WhiteWolfCrystalSmallBlock;
 import net.foxyas.changedaddon.block.WhiteWolfCrystalBlockBlock;
+import net.foxyas.changedaddon.block.WallWhiteStairBlock;
+import net.foxyas.changedaddon.block.WallWhiteSlabBlock;
+import net.foxyas.changedaddon.block.WallWhiteCrackedBlock;
 import net.foxyas.changedaddon.block.UnifuserBlock;
 import net.foxyas.changedaddon.block.SnepsiCanBlock;
 import net.foxyas.changedaddon.block.SnepPlushBlock;
@@ -92,6 +95,9 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
+	public static final RegistryObject<Block> WALL_WHITE_STAIR = REGISTRY.register("wall_white_stair", () -> new WallWhiteStairBlock());
+	public static final RegistryObject<Block> WALL_WHITE_SLAB = REGISTRY.register("wall_white_slab", () -> new WallWhiteSlabBlock());
+	public static final RegistryObject<Block> WALL_WHITE_CRACKED = REGISTRY.register("wall_white_cracked", () -> new WallWhiteCrackedBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

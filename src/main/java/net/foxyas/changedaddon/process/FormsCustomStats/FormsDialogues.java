@@ -26,6 +26,10 @@ public class FormsDialogues {
 			UUID.fromString("520f7606-1276-46b1-be2d-b307cc6eddd7"),
 			UUID.fromString("f0358d36-d4b5-4aa9-aac6-e9b62bf55a03"),
 			UUID.fromString("145f75e9-2636-4c96-99cd-0dbd0973a1d0"));
+
+	private static final List<UUID> FBNames = List.of(
+			UUID.fromString("66220457-29ea-4093-9389-5c4b571d4bda"));
+
 	
 	@SubscribeEvent
 	public static void SendDeathTexts(LivingDeathEvent event) {
@@ -130,6 +134,14 @@ public class FormsDialogues {
 				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
 				if (YTNames.contains(player.getUUID())){
 					player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp9.transfur.text.secret"), false);
+				}
+			}
+		}
+		if (changedVariantEvent.newVariant.is(ChangedAddonTransfurVariants.EXP1_MALE.get()) || changedVariantEvent.newVariant.is(ChangedAddonTransfurVariants.EXP1_FEMALE.get())){
+			if (changedVariantEvent.livingEntity instanceof Player player){
+				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
+				if (FBNames.contains(player.getUUID())){
+					player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.transfur.text.secret"), false);
 				}
 			}
 		}

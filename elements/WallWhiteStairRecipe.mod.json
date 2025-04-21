@@ -1,0 +1,22 @@
+{
+  "_fv": 47,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Stone cutting",
+    "recipeRetstackSize": 1,
+    "group": "",
+    "cookingBookCategory": "MISC",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "craftingBookCategory": "MISC",
+    "recipeShapeless": false,
+    "stoneCuttingInputStack": {
+      "value": "TAG:changed:crafting_white_block"
+    },
+    "stoneCuttingReturnStack": {
+      "value": "CUSTOM:WallWhiteStair"
+    },
+    "name": "wall_white_stair_recipe",
+    "namespace": "mod"
+  }
+}

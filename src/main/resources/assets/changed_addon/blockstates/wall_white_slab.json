@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "changed_addon:block/wall_white_slab"
+    },
+    "type=top": {
+      "model": "changed_addon:block/wall_white_slab_top"
+    },
+    "type=double": {
+      "model": "changed_addon:block/wall_white_slab_full"
+    }
+  }
+}

@@ -214,6 +214,9 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> MEANINGLESS_STRAFE_MUSIC_DISC = REGISTRY.register("meaningless_strafe_music_disc", () -> new MeaninglessstrafemusicdiscItem());
 	public static final RegistryObject<Item> LUMINAR_CRYSTAL_SPEAR = REGISTRY.register("luminar_crystal_spear", () -> new LuminarCrystalSpearItem());
 	public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD_HEARTED = REGISTRY.register("luminar_crystal_shard_hearted", () -> new LuminarCrystalShardHeartedItem());
+	public static final RegistryObject<Item> WALL_WHITE_STAIR = block(ChangedAddonModBlocks.WALL_WHITE_STAIR, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> WALL_WHITE_SLAB = block(ChangedAddonModBlocks.WALL_WHITE_SLAB, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+	public static final RegistryObject<Item> WALL_WHITE_CRACKED = block(ChangedAddonModBlocks.WALL_WHITE_CRACKED, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
