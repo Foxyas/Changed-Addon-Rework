@@ -102,7 +102,7 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<ReynEntity>> REYN = register("form_reyn", TransfurVariant.Builder.of(ChangedAddonEntitys.REYN)
             .stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of()));
     public static final RegistryObject<TransfurVariant<LynxEntity>> LYNX = register("form_lynx", TransfurVariant.Builder.of(ChangedAddonEntitys.LYNX)
-            .stepSize(0.7F).jumpStrength(1.35f).reducedFall().addAbility(ChangedAddonAbilities.CLAWS_ABILITY).breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)));
+            .stepSize(0.7F).jumpStrength(1.35f).reducedFall().addAbility(ChangedAddonAbilities.LEAP).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)));
 
     //Experiments
     public static final RegistryObject<TransfurVariant<Exp1MaleEntity>> EXP1_MALE = register("form_exp1/male",

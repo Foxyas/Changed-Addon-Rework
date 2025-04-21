@@ -22,6 +22,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.Minecraft;
 
+import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+
 import javax.annotation.Nullable;
 
 import java.util.List;
@@ -42,19 +44,16 @@ public class ShowExtraTransfurInfoProcedure {
 		if (entity == null || tooltip == null)
 			return;
 		String Item_form = "";
-		boolean canFlyOrGlide = false;
 		double Hp = 0;
 		double Speed = 0;
 		double landSpeed = 0;
 		double JumpLevel = 0;
+		boolean canFlyOrGlide = false;
+		boolean isCreative = false;
+		boolean haveInformantBlock = false;
 		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")) || itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_tipped_arrow"))
 				|| itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_flask"))) {
-			if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_ket_experiment009_boss")) {
-				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
-			} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_experiment_10_boss")) {
-				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
-			}
-			if (new Object() {
+			isCreative = new Object() {
 				public boolean checkGamemode(Entity _ent) {
 					if (_ent instanceof ServerPlayer _serverPlayer) {
 						return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
@@ -64,7 +63,12 @@ public class ShowExtraTransfurInfoProcedure {
 					}
 					return false;
 				}
-			}.checkGamemode(entity)) {
+			}.checkGamemode(entity);
+			haveInformantBlock = entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonModBlocks.INFORMANTBLOCK.get())) : false;
+			if (haveInformantBlock || isCreative) {
+				if (haveInformantBlock) {
+					tooltip.add(new TextComponent(("Hold \u00A76<Shift>\u00A7r to show the stats of the" + new TranslatableComponent(net.ltxprogrammer.changed.item.Syringe.getVariantDescriptionId(itemstack)).getString() + " Transfur")));
+				}
 				if (Screen.hasShiftDown()) {
 					Item_form = itemstack.getOrCreateTag().getString("form");
 					Hp = (double) VariantUtilProcedure.GetExtraHp(Item_form, (Player) entity);
@@ -87,9 +91,16 @@ public class ShowExtraTransfurInfoProcedure {
 					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_wolfy")) {
 					tooltip.add(new TextComponent("\u00A78Dev Helper OC Transfur\u00A7r"));
+				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_lynx")) {
+					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				} else if ((itemstack.getOrCreateTag().getString("form")).startsWith("changed_addon:form_experiment_10")) {
 					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				}
+			}
+			if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_ket_experiment009_boss")) {
+				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
+			} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_experiment_10_boss")) {
+				tooltip.add(new TextComponent("\u00A78Boss Version\u00A7r"));
 			}
 		}
 	}

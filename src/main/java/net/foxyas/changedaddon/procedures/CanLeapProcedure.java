@@ -18,7 +18,8 @@ public class CanLeapProcedure {
 			if (Variant.is(ChangedAddonTransfurVariants.LATEX_SNEP.get())
 					|| Variant.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD.get())
 					|| Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10.get())
-					|| Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())){
+					|| Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())
+					|| Variant.is(ChangedAddonTransfurVariants.LYNX.get())){
 				return false;
 			}
 			return true;
