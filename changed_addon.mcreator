@@ -12268,6 +12268,32 @@
           "src/main/java/net/foxyas/changedaddon/item/LuminarCrystalShardHeartedItem.java"
         ]
       }
+    },
+    {
+      "name": "CrystalsAddicted",
+      "type": "achievement",
+      "sortid": 661,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "crystals_addicted",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/crystals_addicted.json"
+        ]
+      }
+    },
+    {
+      "name": "PantsDyer",
+      "type": "achievement",
+      "sortid": 662,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "pants_dyer",
+      "metadata": {
+        "files": [
+          "src/main/resources/data/changed_addon/advancements/pants_dyer.json"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -12517,6 +12543,7 @@
       "gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe": "Put The Powders or Syringe",
       "item.changed_addon.partial_snow_leopard_spawn_egg": "Snow Leopard Partial Spawn Egg",
       "advancements.untransfuritemadvancement.title": "Untransfur?!",
+      "advancements.crystals_addicted.descr": "Your addiction to collecting ALL types of crystals is beyond comprehension.",
       "gui.changed_addon.bookpagenumber_3.label_unifuser": "Unifuser",
       "item.minecraft.lingering_potion.effect.transfur_sickness_potion": "Lingering Potion of Transfur Sickness ",
       "gui.changed_addon.bookpagenumber_4.label_n": "N",
@@ -12604,6 +12631,7 @@
       "entity.changed_addon.snow_leopard_female_organic": "Female BioSynth Snow Leopard",
       "itemGroup.tabchanged_addon_combat_optional": "Changed Addon Plus Combat Optional",
       "gui.changed_addon.book_recipe_page_11.label_p": "L",
+      "advancements.pants_dyer.descr": "You gave those shorts a splash of color. Style and laser safe? That’s a win-win.",
       "item.changed_addon.catalyzeddna": "Catalyzed DNA",
       "entity.changed_addon.latex_snow_fox_female": "Female Latex Snow Fox",
       "advancements.hazy_purple.title": "Hazy Purple",
@@ -13034,6 +13062,7 @@
       "advancements.catlyzer_advancement.title": "A Catalyzer?",
       "item.changed_addon.snow_leopard_male_organic_spawn_egg": "Male BioSynth Snow Leopard Spawn Egg",
       "gui.changed_addon.bookpagenumber_4.label_catalyzer": "Catalyzer",
+      "advancements.pants_dyer.title": "With a touch of dye",
       "item.changed_addon.foxta.desc": "Now made with 200% more oranges! Only $2.99! Tastes like Heaven!",
       "effect.changed_addon.latex_solvent.description": "Inflicts damage on latex entities, with damage increasing as the effect strengthens.",
       "advancements.obtain_red_electric_katana.descr": "Memories is Broken, truths go unspoken, you even forgot your name!!, Obtain §4Red§r Electric Katana!",
@@ -13059,10 +13088,12 @@
       "item.changed_addon.exp_6_spawn_egg": "Exp6 Spawn Egg",
       "changed_addon.jei_descriptions.diffusion_syringe": "Untransfurs you back to human form while summoning your previous transfur form.",
       "effect.changed_addon.transfur_sickness": "§o§cTransfur Sickness",
+      "advancements.crystals_addicted.title": "Crystals Addicted",
       "advancements.friendly_transfur.descr": "You get Transfured by Foxyas",
       "entity.changed_addon.ket_experiment009_boss": "Ket Experiment 009",
       "changed_addon.ability.carry": "Carry",
       "gui.changed_addon.unifusergui.label_next_page": "Next Page",
+      "item.changed_addon.lynx_spawn_egg": "Lynx Spawn Egg",
       "key.categories.changed_addon": "Changed Addon Keybinds"
     }
   },

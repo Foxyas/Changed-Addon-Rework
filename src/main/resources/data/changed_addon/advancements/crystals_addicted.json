@@ -1,0 +1,215 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:luminar_crystal_shard_hearted"
+    },
+    "title": {
+      "translate": "advancements.crystals_addicted.title"
+    },
+    "description": {
+      "translate": "advancements.crystals_addicted.descr"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "changed_addon:luminar_crystal_shard_hearted": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:luminar_crystal_shard_hearted"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:dark_latex_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:dark_latex_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:dark_dragon_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:dark_dragon_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:beifeng_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:beifeng_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:wolf_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed:wolf_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:orange_wolf_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:orange_wolf_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:white_wolf_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:white_wolf_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:yellow_wolf_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:yellow_wolf_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:blue_wolf_crystal_fragment": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:blue_wolf_crystal_fragment"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    },
+    "changed_addon:luminar_crystal_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:luminar_crystal_shard"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "changed_addon:dark_latex_crystal_fragment"
+    ],
+    [
+      "changed_addon:dark_dragon_crystal_fragment"
+    ],
+    [
+      "changed_addon:beifeng_crystal_fragment"
+    ],
+    [
+      "changed_addon:wolf_crystal_fragment"
+    ],
+    [
+      "changed_addon:orange_wolf_crystal_fragment"
+    ],
+    [
+      "changed_addon:white_wolf_crystal_fragment"
+    ],
+    [
+      "changed_addon:yellow_wolf_crystal_fragment"
+    ],
+    [
+      "changed_addon:blue_wolf_crystal_fragment"
+    ],
+    [
+      "changed_addon:luminar_crystal_shard"
+    ],
+    [
+      "changed_addon:luminar_crystal_shard_hearted"
+    ]
+  ],
+  "rewards": {
+    "experience": 2500
+  },
+  "parent": "changed_addon:crystal_collector"
+}

@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:dyeable_shorts"
+    },
+    "title": {
+      "translate": "advancements.pants_dyer.title"
+    },
+    "description": {
+      "translate": "advancements.pants_dyer.descr"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "pants_dyer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:dyeable_shorts"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}
