@@ -81,6 +81,9 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> REINFORCED_WALL_SILVER_TILED = REGISTRY.register("reinforced_wall_silver_tiled", () -> new ReinforcedwallsilvertiledBlock());
 	public static final RegistryObject<Block> REINFORCED_WALL_CAUTION = REGISTRY.register("reinforced_wall_caution", () -> new ReinforcedWallCautionBlock());
 	public static final RegistryObject<Block> REINFORCED_CROSS_BLOCK = REGISTRY.register("reinforced_cross_block", () -> new ReinforcedCrossBlock());
+	public static final RegistryObject<Block> WALL_WHITE_CRACKED = REGISTRY.register("wall_white_cracked", () -> new WallWhiteCrackedBlock());
+	public static final RegistryObject<Block> WALL_WHITE_STAIR = REGISTRY.register("wall_white_stair", () -> new WallWhiteStairBlock());
+	public static final RegistryObject<Block> WALL_WHITE_SLAB = REGISTRY.register("wall_white_slab", () -> new WallWhiteSlabBlock());
 	public static final RegistryObject<Block> BLUE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("blue_wolf_crystal_block", () -> new BlueWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> ORANGE_WOLF_CRYSTAL_BLOCK = REGISTRY.register("orange_wolf_crystal_block", () -> new OrangeWolfCrystalBlockBlock());
 	public static final RegistryObject<Block> YELLOW_WOLF_CRYSTAL_BLOCK = REGISTRY.register("yellow_wolf_crystal_block", () -> new YellowWolfCrystalBlockBlock());
@@ -95,9 +98,6 @@ public class ChangedAddonModBlocks {
 	public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", () -> new GeneratorBlock());
 	public static final RegistryObject<Block> FOXTA_CAN = REGISTRY.register("foxta_can", () -> new FoxtaCanBlock());
 	public static final RegistryObject<Block> SNEPSI_CAN = REGISTRY.register("snepsi_can", () -> new SnepsiCanBlock());
-	public static final RegistryObject<Block> WALL_WHITE_STAIR = REGISTRY.register("wall_white_stair", () -> new WallWhiteStairBlock());
-	public static final RegistryObject<Block> WALL_WHITE_SLAB = REGISTRY.register("wall_white_slab", () -> new WallWhiteSlabBlock());
-	public static final RegistryObject<Block> WALL_WHITE_CRACKED = REGISTRY.register("wall_white_cracked", () -> new WallWhiteCrackedBlock());
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 	public static class ClientSideHandler {

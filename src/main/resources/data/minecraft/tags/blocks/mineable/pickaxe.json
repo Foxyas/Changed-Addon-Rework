@@ -17,6 +17,9 @@
     "changed_addon:reinforced_wall_silver_tiled",
     "changed_addon:reinforced_wall_caution",
     "changed_addon:reinforced_cross_block",
+    "changed_addon:wall_white_cracked",
+    "changed_addon:wall_white_stair",
+    "changed_addon:wall_white_slab",
     "changed_addon:blue_wolf_crystal_block",
     "changed_addon:orange_wolf_crystal_block",
     "changed_addon:yellow_wolf_crystal_block",
@@ -28,9 +31,6 @@
     "changed_addon:blue_wolf_crystal_small",
     "changed_addon:white_wolf_crystal_small",
     "changed_addon:goo_core",
-    "changed_addon:generator",
-    "changed_addon:wall_white_stair",
-    "changed_addon:wall_white_slab",
-    "changed_addon:wall_white_cracked"
+    "changed_addon:generator"
   ]
 }
