@@ -75,6 +75,9 @@ class JeiDescriptionHandler {
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.POTWITHCAMONIA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.potwithcammonia"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.diffusion_syringe"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.iridium_use"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.INFORMANTBLOCK.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.informantblock"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.LUNARROSE_HELMET.get()), VanillaTypes.ITEM_STACK, new TextComponent(new TranslatableComponent("changed_addon.jei_descriptions.lunar_rose").getString().replace("#","\n")));
+
 
         addSharedDescriptions(registration, List.of(
                 ChangedAddonModItems.BLUE_WOLF_CRYSTAL_FRAGMENT.get(),

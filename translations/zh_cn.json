@@ -83,6 +83,7 @@
   "item.changed_addon.exp_1_female_spawn_egg": "雌性实验体1刷怪蛋",
   "gui.changed_addon.bookrecipepage_8.label_m": "M",
   "item.changed_addon.ammonia_particles_jei_illustrative": "16份阿莫尼亚颗粒",
+  "changed_addon.jei_descriptions.lunar_rose": "月华幽语\n暮色低语，花影藏，\n无声微光，命定殇。\n生于幽镜，藏皎皎，\n凝作寒泪，映光芒。\n无形之手，交相牵，\n匠心巧筑，共缠绵。\n非火铸炼，无炉锻，\n唯在星辉中绽然。\n觅隐而行，智慧燃，\n唯有知者，得其焕。",
   "changed_addon.gui.recipe_progress": "进程速率为%s每刻",
   "changed_addon.gui.catalyzer.nitrogen_usage": "进程速率为%1$s每刻，使用%2$s点氮气加速",
   "gui.changed_addon.bookrecipepage_9.label_pany_potion": "L\u003d 任意胶液或血液注射器",

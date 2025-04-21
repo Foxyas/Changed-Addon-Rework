@@ -53,8 +53,8 @@ public class LaserPointParticle extends TextureSheetParticle {
             public @NotNull LaserPointParticle.Option fromNetwork(@NotNull ParticleType<LaserPointParticle.Option> type, FriendlyByteBuf buffer) {
                 int entityId = buffer.readInt();
                 int color = buffer.readInt(); // <- nova cor
-                float alpha = buffer.readFloat();
-                return new LaserPointParticle.Option(entityId, color, alpha);
+                //float alpha = buffer.readFloat();
+                return new LaserPointParticle.Option(entityId, color, 255);
             }
 
             @Override
