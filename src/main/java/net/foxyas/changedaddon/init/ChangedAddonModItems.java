@@ -53,6 +53,7 @@ import net.foxyas.changedaddon.item.MeaninglessstrafemusicdiscItem;
 import net.foxyas.changedaddon.item.LunarroseItem;
 import net.foxyas.changedaddon.item.LuminarCrystalSpearItem;
 import net.foxyas.changedaddon.item.LuminarCrystalShardItem;
+import net.foxyas.changedaddon.item.LuminarCrystalShardHeartedItem;
 import net.foxyas.changedaddon.item.LitixCamoniaSprayItem;
 import net.foxyas.changedaddon.item.LitixCamoniaItem;
 import net.foxyas.changedaddon.item.LitixCamoniaFluidItem;
@@ -212,6 +213,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", () -> new PatIconItem());
 	public static final RegistryObject<Item> MEANINGLESS_STRAFE_MUSIC_DISC = REGISTRY.register("meaningless_strafe_music_disc", () -> new MeaninglessstrafemusicdiscItem());
 	public static final RegistryObject<Item> LUMINAR_CRYSTAL_SPEAR = REGISTRY.register("luminar_crystal_spear", () -> new LuminarCrystalSpearItem());
+	public static final RegistryObject<Item> LUMINAR_CRYSTAL_SHARD_HEARTED = REGISTRY.register("luminar_crystal_shard_hearted", () -> new LuminarCrystalShardHeartedItem());
 
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {

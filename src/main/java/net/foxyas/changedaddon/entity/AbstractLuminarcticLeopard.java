@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
@@ -32,7 +33,9 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
@@ -41,6 +44,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -77,6 +81,27 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
                     PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                     target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
                     target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntityDrop(LivingDropsEvent event) {
+            LivingEntity entity = event.getEntityLiving();
+            Level level = entity.level;
+
+            // Verifica se é um mob específico, por exemplo um Luminarctic Leopard
+            if (entity instanceof AbstractLuminarcticLeopard leopard) {
+                // Verifica se tem a NBT isBoss = 1b
+                if (leopard.isBoss()) {
+                    // Cria o item que será dropado
+                    ItemStack item = new ItemStack(ChangedAddonModItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
+
+                    // Cria o drop
+                    ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), item);
+
+                    // Adiciona à lista de drops
+                    event.getDrops().add(drop);
                 }
             }
         }
@@ -117,8 +142,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         return currentEntities < maxEntitiesNear; // Já tem muitas entidades perto, impedir novo spawn
         // Condições atendidas, pode spawnar
     }
-
-
+    
     public final ServerBossEvent bossBar = new ServerBossEvent(
             this.getDisplayName(), // Nome exibido na boss bar
             BossEvent.BossBarColor.WHITE, // Cor da barra
@@ -127,9 +151,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
 
     @Override
     protected int getExperienceReward(Player player) {
-            if (this.isBoss()){
-                return super.getExperienceReward(player) * 50;
-            }
+        if (this.isBoss()) {
+            return super.getExperienceReward(player) * 50;
+        }
 
         return super.getExperienceReward(player);
     }
@@ -156,7 +180,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     public void setDodgeAnimTicks(int ticks) {
         this.entityData.set(DODGE_ANIM_TICKS, ticks);
     }
-    
+
     public final int DodgeAnimMaxTicks = 20;
 
     private boolean isBoss = false;
@@ -334,7 +358,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
     }
 
-    public void handleBoss(){
+    public void handleBoss() {
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(500f);
         Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(25f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
