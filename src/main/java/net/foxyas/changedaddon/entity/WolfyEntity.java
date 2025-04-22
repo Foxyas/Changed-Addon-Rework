@@ -61,7 +61,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 
 	@Override
 	public boolean tryAbsorbTarget(LivingEntity target, IAbstractChangedEntity source, float amount, @org.jetbrains.annotations.Nullable List<TransfurVariant<?>> possibleMobFusions) {
-		return super.tryAbsorbTarget(target, source, 0, possibleMobFusions);
+		return false;
 	}
 
 
