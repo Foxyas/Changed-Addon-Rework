@@ -139,7 +139,7 @@ public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	public double getTorsoYOffset(ChangedEntity self) {

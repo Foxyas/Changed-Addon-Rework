@@ -157,7 +157,7 @@ public class Exp6Entity extends AbstractCanTameSnepChangedEntity {
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	public double getTorsoYOffset(ChangedEntity self) {

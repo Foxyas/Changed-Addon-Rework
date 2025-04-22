@@ -119,7 +119,8 @@ public class ReynEntity extends ChangedEntity {
 
 		// Considera escuro se o nível de luz total for menor ou igual a 9 (ponto de spawn de mobs)
 		return skyLight <= 9;
-	}*/
+	}
+*/
 
 	@Override
 	public Color3 getHairColor(int i) {
@@ -188,7 +189,7 @@ public class ReynEntity extends ChangedEntity {
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	@Override

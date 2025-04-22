@@ -131,7 +131,7 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	@Override

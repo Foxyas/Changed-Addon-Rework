@@ -253,7 +253,7 @@ public class DazedEntity extends ChangedEntity {
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	@Override

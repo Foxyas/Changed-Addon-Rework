@@ -163,7 +163,7 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
 
     @Override
     public double getMyRidingOffset() {
-        return -0.35D;
+        return super.getMyRidingOffset();
     }
 
     public double getTorsoYOffset(ChangedEntity self) {

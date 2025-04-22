@@ -185,9 +185,8 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
     @Override
     public double getMyRidingOffset() {
-        return -0.35D;
+        return super.getMyRidingOffset();
     }
-
     @Override
     public SoundEvent getHurtSound(DamageSource ds) {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));

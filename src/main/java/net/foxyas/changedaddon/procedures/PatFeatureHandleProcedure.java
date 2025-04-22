@@ -13,9 +13,11 @@ import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.registers.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Emote;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
@@ -44,7 +46,25 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.Objects;
+
 public class PatFeatureHandleProcedure {
+
+    public static boolean isPossibleToPat(Player player) {
+        var variant = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (variant != null) {
+            var ability = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (ability != null
+                    && ability.suited
+                    && ability.grabbedHasControl) {
+                return false;
+            }
+        }
+
+
+        return GrabEntityAbility.getGrabber(player) == null;
+    }
+
     //Thanks gengyoubo for the code
     public static void execute(LevelAccessor world, Entity entity) {
         if (entity == null) return;
@@ -54,7 +74,7 @@ public class PatFeatureHandleProcedure {
 
         if (isInSpectatorMode(entity)) return;
 
-        if (entity instanceof Player p && !(PatOverlay.isPossibleToPat(p))) return;
+        if (entity instanceof Player p && !(isPossibleToPat(p))) return;
 
         if (targetEntity instanceof Experiment10Entity || targetEntity instanceof KetExperiment009Entity
                 || targetEntity instanceof Experiment10BossEntity || targetEntity instanceof KetExperiment009BossEntity) {
@@ -83,7 +103,13 @@ public class PatFeatureHandleProcedure {
         Vec3 toVec = eyePos.add(viewVec.x * reach, viewVec.y * reach, viewVec.z * reach);
         AABB aabb = entity.getBoundingBox().expandTowards(viewVec.scale(reach)).inflate(1.0D, 1.0D, 1.0D);
 
-        EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(entity, eyePos, toVec, aabb, e -> !e.isSpectator(), distance);
+        EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(entity, eyePos, toVec, aabb, e -> {
+            if (e.isSpectator()) return false;
+            if (!(e instanceof LivingEntity le)) return false;
+            if (GrabEntityAbility.getGrabber(le) == null) return true;
+            LivingEntity livingEntity = Objects.requireNonNull(GrabEntityAbility.getGrabber(le)).getEntity();
+            return livingEntity != entity;
+        }, distance);
 
         if (entityHitResult != null) {
             Entity hitEntity = entityHitResult.getEntity();

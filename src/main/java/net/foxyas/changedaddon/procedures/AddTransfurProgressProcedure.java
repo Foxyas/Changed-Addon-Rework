@@ -221,8 +221,8 @@ public class AddTransfurProgressProcedure {
 			ProcessTransfur.progressTransfur((LivingEntity) player, 15, ChangedAddonTransfurVariants.EXP6.get(), TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 		} else if (type == 5) {
 			ProcessTransfur.progressTransfur((LivingEntity) player, 15, ChangedAddonTransfurVariants.LATEX_SNEP.get(), TransfurContext.hazard(TransfurCause.FACE_HAZARD));
+		}  else if (type == 6) {
+			ProcessTransfur.progressTransfur((LivingEntity) player, 15, ChangedAddonTransfurVariants.SNEPSI_LEOPARD.get(), TransfurContext.hazard(TransfurCause.FACE_HAZARD));
 		}
-
-
 	}
 }

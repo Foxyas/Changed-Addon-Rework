@@ -17,6 +17,7 @@ import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
@@ -76,11 +77,11 @@ public class ChangedAddonTransfurVariants {
 
     public static final RegistryObject<TransfurVariant<LatexSnowFoxEntity>> ADDON_LATEX_SNOW_FOX_MALE = register("form_latex_snow_fox/male",
             () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_MALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX)
-                    .nightVision());
+                    .nightVision().scares(Rabbit.class));
 
     public static final RegistryObject<TransfurVariant<LatexSnowFoxFemaleEntity>> ADDON_LATEX_SNOW_FOX_FEMALE = register("form_latex_snow_fox/female",
             () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_FEMALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
-                    .nightVision());
+                    .nightVision().scares(Rabbit.class));
 
     public static final RegistryObject<TransfurVariant<DazedEntity>> DAZED_LATEX = register("form_dazed_latex", TransfurVariant.Builder.of(ChangedAddonModEntities.DAZED)
             .transfurMode(TransfurMode.ABSORPTION).addAbility(ChangedAddonAbilities.DAZED_PUDDLE_ABILITY).scares(List.of()).nightVision());
@@ -92,7 +93,15 @@ public class ChangedAddonTransfurVariants {
             () -> TransfurVariant.Builder.of(/*LATEX_WHITE_TIGER.get(),*/ChangedAddonModEntities.MIRROR_WHITE_TIGER)
                     .stepSize(0.7F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
 
+    public static final RegistryObject<TransfurVariant<SnepsiLeopardEntity>> SNEPSI_LEOPARD = register("form_snepsi_leopard",
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.SNEPSI_LEOPARD)
+                    .stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
 
+    public static final RegistryObject<TransfurVariant<FoxtaFoxyEntity>> FOXTA_FOXY = register("form_foxta_foxy",
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.FOXTA_FOXY)
+                    .stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Rabbit.class)).nightVision());
+
+    //Partials
     public static final RegistryObject<TransfurVariant<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("form_latex_snow_leopard_partial", TransfurVariant.Builder.of(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL)
             .stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
 

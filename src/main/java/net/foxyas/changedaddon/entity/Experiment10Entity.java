@@ -175,7 +175,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 
     @Override
     public double getMyRidingOffset() {
-        return -0.35D;
+        return super.getMyRidingOffset();
     }
 
     @Override

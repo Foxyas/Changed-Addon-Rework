@@ -202,7 +202,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 
     @Override
     public double getMyRidingOffset() {
-        return -0.35D;
+        return super.getMyRidingOffset();
     }
 
     @Override

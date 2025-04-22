@@ -12,6 +12,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.foxyas.changedaddon.client.renderer.WolfyRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardMaleOrganicRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardFemaleOrganicRenderer;
+import net.foxyas.changedaddon.client.renderer.SnepsiLeopardRenderer;
 import net.foxyas.changedaddon.client.renderer.ReynRenderer;
 import net.foxyas.changedaddon.client.renderer.PuroKindRenderer;
 import net.foxyas.changedaddon.client.renderer.PuroKindFemaleRenderer;
@@ -27,6 +28,7 @@ import net.foxyas.changedaddon.client.renderer.LatexSnepRenderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009BossRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
+import net.foxyas.changedaddon.client.renderer.FoxtaFoxyRenderer;
 import net.foxyas.changedaddon.client.renderer.FemaleLuminarcticLeopardRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10BossRenderer;
@@ -72,5 +74,7 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), FemaleLuminarcticLeopardRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SQUID_TIGER_SHARK.get(), LatexSquidTigerSharkRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LYNX.get(), LynxRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.FOXTA_FOXY.get(), FoxtaFoxyRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.SNEPSI_LEOPARD.get(), SnepsiLeopardRenderer::new);
 	}
 }

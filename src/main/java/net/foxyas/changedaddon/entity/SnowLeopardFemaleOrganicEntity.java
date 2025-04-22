@@ -155,7 +155,7 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameSnepChangedEn
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	public double getTorsoYOffset(ChangedEntity self) {

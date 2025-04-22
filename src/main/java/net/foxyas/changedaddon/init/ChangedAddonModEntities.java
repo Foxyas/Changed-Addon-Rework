@@ -19,6 +19,7 @@ import net.minecraft.world.entity.Entity;
 import net.foxyas.changedaddon.entity.WolfyEntity;
 import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
 import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
+import net.foxyas.changedaddon.entity.SnepsiLeopardEntity;
 import net.foxyas.changedaddon.entity.ReynEntity;
 import net.foxyas.changedaddon.entity.PuroKindFemaleEntity;
 import net.foxyas.changedaddon.entity.PuroKindEntity;
@@ -34,6 +35,7 @@ import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
+import net.foxyas.changedaddon.entity.FoxtaFoxyEntity;
 import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.Experiment10BossEntity;
@@ -162,6 +164,14 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<LynxEntity>of(LynxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LynxEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<FoxtaFoxyEntity>> FOXTA_FOXY = register("foxta_foxy",
+			EntityType.Builder.<FoxtaFoxyEntity>of(FoxtaFoxyEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FoxtaFoxyEntity::new)
+
+					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<SnepsiLeopardEntity>> SNEPSI_LEOPARD = register("snepsi_leopard",
+			EntityType.Builder.<SnepsiLeopardEntity>of(SnepsiLeopardEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SnepsiLeopardEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -198,6 +208,8 @@ public class ChangedAddonModEntities {
 			FemaleLuminarcticLeopardEntity.init();
 			LatexSquidTigerSharkEntity.init();
 			LynxEntity.init();
+			FoxtaFoxyEntity.init();
+			SnepsiLeopardEntity.init();
 		});
 	}
 
@@ -231,5 +243,7 @@ public class ChangedAddonModEntities {
 		event.put(FEMALE_LUMINARCTIC_LEOPARD.get(), FemaleLuminarcticLeopardEntity.createAttributes().build());
 		event.put(LATEX_SQUID_TIGER_SHARK.get(), LatexSquidTigerSharkEntity.createAttributes().build());
 		event.put(LYNX.get(), LynxEntity.createAttributes().build());
+		event.put(FOXTA_FOXY.get(), FoxtaFoxyEntity.createAttributes().build());
+		event.put(SNEPSI_LEOPARD.get(), SnepsiLeopardEntity.createAttributes().build());
 	}
 }

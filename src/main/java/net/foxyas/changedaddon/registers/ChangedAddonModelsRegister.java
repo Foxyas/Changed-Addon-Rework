@@ -47,6 +47,8 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(LuminarcticFemaleLeopardModel.LAYER_LOCATION, LuminarcticFemaleLeopardModel::createBodyLayer);
         event.registerLayerDefinition(LatexSquidTigerSharkModel.LAYER_LOCATION, LatexSquidTigerSharkModel::createBodyLayer);
         event.registerLayerDefinition(LynxModel.LAYER_LOCATION, LynxModel::createBodyLayer);
+        event.registerLayerDefinition(SnepsiLeopardModel.LAYER_LOCATION, SnepsiLeopardModel::createBodyLayer);
+        event.registerLayerDefinition(FoxtaFoxyModel.LAYER_LOCATION, FoxtaFoxyModel::createBodyLayer);
 
         //Armors
         event.registerLayerDefinition(ArmorLatexSquidTigerSharkModel.INNER_ARMOR, () -> ArmorLatexSquidTigerSharkModel.createArmorLayer(ArmorModel.INNER));

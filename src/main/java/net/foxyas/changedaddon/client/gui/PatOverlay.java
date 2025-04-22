@@ -29,6 +29,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import static net.foxyas.changedaddon.procedures.PatFeatureHandleProcedure.isPossibleToPat;
 //import net.foxyas.changedaddon.process.DEBUG;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
@@ -156,20 +158,7 @@ public class PatOverlay {
 
 
 
-    public static boolean isPossibleToPat(Player player) {
-        var variant = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (variant != null) {
-            var ability = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-            if (ability != null
-                    && ability.suited
-                    && ability.grabbedHasControl) {
-                return false;
-            }
-        }
 
-
-        return GrabEntityAbility.getGrabber(player) == null;
-    }
 
     public static boolean isKeySet(){
         String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();

@@ -1,6 +1,10 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import org.jetbrains.annotations.NotNull;
 
 import net.minecraft.world.level.Level;
@@ -84,7 +88,9 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
             }
             //serverPlayer.displayClientMessage(new TextComponent("Drink this = " + Snepsi_Drink_Amount),false);
         }*/
-
+        if (entity.getLevel().random.nextFloat() <= 0.001f) {
+            ProcessTransfur.progressTransfur(entity, 15, ChangedAddonTransfurVariants.FOXTA_FOXY.get(), TransfurContext.hazard(TransfurCause.FACE_HAZARD));
+        }
         return retval;
     }
 

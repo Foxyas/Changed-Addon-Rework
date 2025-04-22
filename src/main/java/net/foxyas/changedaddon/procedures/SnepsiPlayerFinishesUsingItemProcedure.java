@@ -34,7 +34,7 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
                 } else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_latex_snep")) {
                     AddTransfurProgressProcedure.SnepsiTransfur(entity, 5);
                 } else {
-                    AddTransfurProgressProcedure.SnepsiTransfur(entity, 1);
+                    AddTransfurProgressProcedure.SnepsiTransfur(entity, serverPlayer.getLevel().random.nextFloat() <= 0.001f ? 6 : 1);
                 }
             }
             /*int Snepsi_Drink_Amount = stats.getValue(Stats.ITEM_USED.get(ChangedAddonModItems.SNEPSI.get()));

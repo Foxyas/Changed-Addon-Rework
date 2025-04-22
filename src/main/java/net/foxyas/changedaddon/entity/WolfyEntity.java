@@ -137,7 +137,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	@Override

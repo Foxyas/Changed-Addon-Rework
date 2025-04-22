@@ -125,7 +125,7 @@ public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowW
 
 	@Override
 	public double getMyRidingOffset() {
-		return -0.35D;
+		return super.getMyRidingOffset();
 	}
 
 	@Override
