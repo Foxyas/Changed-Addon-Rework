@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public class SnepsiSnowLeopardRenderer extends AdvancedHumanoidRenderer<SnepsiLeopardEntity, SnepsiLeopardModel, ArmorLatexMaleCatModel<SnepsiLeopardEntity>> {
-	public SnepsiSnowLeopardRenderer(EntityRendererProvider.Context context) {
+public class SnepsiLeopardRenderer extends AdvancedHumanoidRenderer<SnepsiLeopardEntity, SnepsiLeopardModel, ArmorLatexMaleCatModel<SnepsiLeopardEntity>> {
+	public SnepsiLeopardRenderer(EntityRendererProvider.Context context) {
 		super(context, new SnepsiLeopardModel(context.bakeLayer(SnepsiLeopardModel.LAYER_LOCATION)), ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5F);
 		this.addLayer(new LatexParticlesLayer<>(this, this.getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
