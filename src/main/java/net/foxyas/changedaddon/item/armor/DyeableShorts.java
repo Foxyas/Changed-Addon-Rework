@@ -18,9 +18,50 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
+
 
 public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedItemProperties {
+
+	public static enum DefaultColors {
+        RED(new Color(255, 0, 0)),
+        GREEN(new Color(0, 255, 0)),
+        BLUE(new Color(0, 0, 255)),
+        YELLOW(new Color(255, 255, 0)),
+        CYAN(new Color(0, 255, 255)),
+        MAGENTA(new Color(255, 0, 255)),
+        ORANGE(new Color(255, 165, 0)),
+        PINK(new Color(255, 105, 180)),
+        WHITE(new Color(255, 255, 255));
+
+        public final Color color;
+
+        DefaultColors(Color color) {
+            this.color = color;
+        }
+
+        // Construtor sem argumentos, caso queira usar valores padrão depois
+        DefaultColors() {
+            this.color = new Color(255, 255, 255); // fallback: branco
+        }
+
+        public Color getColor() {
+            return color;
+        }
+
+        public int getColorToInt() {
+            return color.getRGB();
+        }
+    }
+
+	
     public DyeableShorts() {
         super(MATERIAL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
     }
@@ -33,18 +74,30 @@ public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedI
         return ChangedSounds.EQUIP3;
     }
 
+    @Override
+    public @NotNull ItemStack getDefaultInstance() {
+        ItemStack stack = super.getDefaultInstance();
+        this.setColor(stack, Color3.WHITE.toInt());
+        return stack;
+    }
+
+
     public SoundEvent getBreakSound(ItemStack itemStack) {
         return ChangedSounds.SLASH10;
     }
 
+
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
         if (this.allowdedIn(tab)) {
-            ItemStack stack = new ItemStack(this);
-            this.setColor(stack, Color3.WHITE.toInt());
-            items.add(stack);
+            for (DefaultColors color : DefaultColors.values()) {
+                ItemStack stack = new ItemStack(this);
+                this.setColor(stack, color.getColorToInt());
+                items.add(stack);
+            }
         }
     }
+
 
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {

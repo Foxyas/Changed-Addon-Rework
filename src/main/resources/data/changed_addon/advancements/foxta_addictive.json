@@ -4,10 +4,10 @@
       "item": "changed_addon:foxta"
     },
     "title": {
-      "translate": "advancements.foxta_adctive.title"
+      "translate": "advancements.snepsi_addictive.title"
     },
     "description": {
-      "translate": "advancements.foxta_adctive.descr"
+      "translate": "advancements.snepsi_addictive.descr"
     },
     "frame": "challenge",
     "show_toast": true,
