@@ -1,4 +1,3 @@
-/*
 package net.foxyas.changedaddon.mixins;
 
 import net.minecraft.client.renderer.PostChain;
@@ -14,4 +13,3 @@ public interface PostChainMixin {
     @Accessor("passes")
     List<PostPass> getPasses();
 }
-*/

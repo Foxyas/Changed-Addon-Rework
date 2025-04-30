@@ -50,6 +50,8 @@ public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> impl
 		var tailPrimary = Tail.getChild("TailPrimary");
 		var tailSecondary = tailPrimary.getChild("TailSecondary");
 		var tailTertiary = tailSecondary.getChild("TailTertiary");
+		var tailQuaternary = tailTertiary.getChild("TailQuaternary");
+
 
 		var leftLowerLeg = LeftLeg.getChild("LeftLowerLeg");
 		var leftFoot = leftLowerLeg.getChild("LeftFoot");
@@ -60,7 +62,7 @@ public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> impl
 				.addPreset(AnimatorPresets.wolfLike(
 						Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
 						Torso, LeftArm, RightArm,
-						Tail, List.of(tailPrimary, tailSecondary, tailTertiary),
+						Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary),
 						LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
 	}
 
@@ -133,13 +135,13 @@ public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> impl
 
 		PartDefinition Right = ExtraFur.addOrReplaceChild("Right", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r1 = Right.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(33, 88).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.9107F, -2.1023F, 0.0F, 0.0F, 0.0F, -0.4363F));
+		PartDefinition cube_r1 = Right.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(33, 88).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.9107F, -2.1024F, 0.0F, 0.0F, 0.0F, -0.4363F));
 
 		PartDefinition cube_r2 = Right.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(33, 88).mirror().addBox(0.25F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-4.5F, -1.0F, 0.0F, 0.0F, 0.0F, -0.4363F));
 
 		PartDefinition Left = ExtraFur.addOrReplaceChild("Left", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-		PartDefinition cube_r3 = Left.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(33, 88).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.9107F, -2.1023F, 0.0F, 0.0F, 0.0F, 0.4363F));
+		PartDefinition cube_r3 = Left.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(33, 88).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.9107F, -2.1024F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
 		PartDefinition cube_r4 = Left.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(33, 88).addBox(-1.25F, -0.75F, -3.0F, 1.0F, 2.0F, 6.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(4.5F, -1.0F, 0.0F, 0.0F, 0.0F, 0.4363F));
 
@@ -159,13 +161,17 @@ public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> impl
 
 		PartDefinition Base_r3 = TailTertiary.addOrReplaceChild("Base_r3", CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, -0.7F, -1.95F, 4.0F, 4.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offsetAndRotation(0.0F, 0.0F, 1.0F, 1.8326F, 0.0F, 0.0F));
 
+		PartDefinition TailQuaternary = TailTertiary.addOrReplaceChild("TailQuaternary", CubeListBuilder.create(), PartPose.offset(0.0F, 0.4F, 2.6F));
+
+		PartDefinition Base_r4 = TailQuaternary.addOrReplaceChild("Base_r4", CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, 1.3F, -1.95F, 4.0F, 4.0F, 4.0F, new CubeDeformation(-0.95F)), PartPose.offsetAndRotation(0.0F, 0.1F, -1.2F, 2.0071F, 0.0F, 0.0F));
+
 		PartDefinition NeckFur = Torso.addOrReplaceChild("NeckFur", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 		PartDefinition cube_r5 = NeckFur.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(47, 84).addBox(-3.0F, 0.75F, -0.25F, 6.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F))
-		.texOffs(47, 84).addBox(-3.0F, -0.25F, -1.0F, 6.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0893F, 0.8977F, 2.5F, -0.5672F, 0.0F, 0.0F));
+		.texOffs(47, 84).addBox(-3.0F, -0.25F, -1.0F, 6.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0893F, 0.8976F, 2.5F, -0.5672F, 0.0F, 0.0F));
 
 		PartDefinition cube_r6 = NeckFur.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(33, 84).addBox(-3.0F, 1.0F, -1.0F, 6.0F, 2.0F, 1.0F, new CubeDeformation(-0.1F))
-		.texOffs(33, 84).addBox(-3.0F, 0.0F, -0.25F, 6.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0893F, 0.8977F, -2.5F, 0.5672F, 0.0F, 0.0F));
+		.texOffs(33, 84).addBox(-3.0F, 0.0F, -0.25F, 6.0F, 2.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.0893F, 0.8976F, -2.5F, 0.5672F, 0.0F, 0.0F));
 
 		PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(16, 40).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
 		.texOffs(0, 65).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 10.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offset(-5.0F, 1.5F, 0.0F));

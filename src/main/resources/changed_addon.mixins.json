@@ -28,6 +28,8 @@
   },
   "client": [
     "AdvancedHumanoidRendererMixin",
+    "GameRendererMixin",
+    "PostChainMixin",
     "renderHandMixin"
   ]
 }

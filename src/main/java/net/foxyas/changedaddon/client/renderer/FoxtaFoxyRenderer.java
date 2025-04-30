@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class FoxtaFoxyRenderer extends AdvancedHumanoidRenderer<FoxtaFoxyEntity, FoxtaFoxyModel, ArmorLatexMaleWolfModel<FoxtaFoxyEntity>> {
 	public FoxtaFoxyRenderer(EntityRendererProvider.Context context) {
 		super(context, new FoxtaFoxyModel(context.bakeLayer(FoxtaFoxyModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5F);
-		this.addLayer(new LatexParticlesLayer<>(this, this.getModel()));
+		//this.addLayer(new LatexParticlesLayer<>(this, this.getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
 		this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));

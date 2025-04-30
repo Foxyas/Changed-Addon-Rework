@@ -1,4 +1,3 @@
-/*
 package net.foxyas.changedaddon.mixins;
 
 import com.mojang.blaze3d.shaders.Uniform;
@@ -90,4 +89,3 @@ public class GameRendererMixin {
         }
     }
 }
-*/
