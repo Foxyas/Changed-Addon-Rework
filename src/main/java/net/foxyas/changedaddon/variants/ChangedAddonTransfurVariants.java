@@ -61,6 +61,10 @@ public class ChangedAddonTransfurVariants {
         return List.of(REYN.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
     }
 
+    public static List<TransfurVariant<?>> getBossesVariantsList() {
+        return List.of(KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get());
+    }
+
     public static final RegistryObject<TransfurVariant<PuroKindEntity>> ADDON_PURO_KIND_MALE = register("form_puro_kind/male", TransfurVariant.Builder.of(ChangedAddonModEntities.PURO_KIND)
             .transfurMode(TransfurMode.REPLICATION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilities.CARRY).scares(List.of()));
 
@@ -181,12 +185,12 @@ public class ChangedAddonTransfurVariants {
             () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LUMINARCTIC_LEOPARD)
                     .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.35F)
                     .abilities(List.of(
-                            entityType -> ChangedAddonAbilities.CLAWS_ABILITY.get(),
-                            entityType -> ChangedAbilities.GRAB_ENTITY_ABILITY.get(),
-                            entityType -> ChangedAddonAbilities.DODGE.get(),
-                            entityType -> ChangedAddonAbilities.LEAP.get(),
-                            entityType -> ChangedAbilities.HYPNOSIS.get(),
-                            entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
+                                    entityType -> ChangedAddonAbilities.CLAWS_ABILITY.get(),
+                                    entityType -> ChangedAbilities.GRAB_ENTITY_ABILITY.get(),
+                                    entityType -> ChangedAddonAbilities.DODGE.get(),
+                                    entityType -> ChangedAddonAbilities.LEAP.get(),
+                                    entityType -> ChangedAbilities.HYPNOSIS.get(),
+                                    entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
                             )
                     )
                     .scares(List.of(Creeper.class)).nightVision());
@@ -195,12 +199,12 @@ public class ChangedAddonTransfurVariants {
             () -> TransfurVariant.Builder.of(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD)
                     .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.35F)
                     .abilities(List.of(
-                            entityType -> ChangedAddonAbilities.CLAWS_ABILITY.get(),
-                            entityType -> ChangedAbilities.GRAB_ENTITY_ABILITY.get(),
-                            entityType -> ChangedAddonAbilities.DODGE.get(),
-                            entityType -> ChangedAddonAbilities.LEAP.get(),
-                            entityType -> ChangedAbilities.HYPNOSIS.get(),
-                            entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
+                                    entityType -> ChangedAddonAbilities.CLAWS_ABILITY.get(),
+                                    entityType -> ChangedAbilities.GRAB_ENTITY_ABILITY.get(),
+                                    entityType -> ChangedAddonAbilities.DODGE.get(),
+                                    entityType -> ChangedAddonAbilities.LEAP.get(),
+                                    entityType -> ChangedAbilities.HYPNOSIS.get(),
+                                    entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
                             )
                     )
                     .scares(List.of(Creeper.class)).nightVision());

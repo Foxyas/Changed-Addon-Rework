@@ -15,13 +15,15 @@ public class BossesExpUseProcedure {
 
 	@SubscribeEvent
 	public static void VariantGet(LatexSyringe.UsedOnBlock event) {
-		TransfurVariant<?> SyringeVariant;
-		SyringeVariant = event.syringeVariant;
-		var PlayerVariant = event.syringeVariant;
-		if (PlayerVariant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get() 
-		|| PlayerVariant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get() 
-		|| PlayerVariant == ChangedAddonTransfurVariants.EXPERIMENT_10.get()
-		|| PlayerVariant == ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get()) {
+		TransfurVariant<?> variant = event.syringeVariant;
+		if (event.player.isCreative()) {
+			return;
+		}
+		
+		if (variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get()
+		|| variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()
+		|| variant == ChangedAddonTransfurVariants.EXPERIMENT_10.get()
+		|| variant == ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get()) {
 			event.setCanceled(true);
 			event.player.displayClientMessage(new TranslatableComponent("changed_addon.latex_syringe.not_valid"), true);
 		}
