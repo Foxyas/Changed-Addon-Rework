@@ -17,5 +17,11 @@ public class PsychicGrabKeyHandler {
         if (PsychicGrab.Keys.contains(event.getKey()) && Minecraft.getInstance().screen == null) {
             ChangedAddonMod.PACKET_HANDLER.sendToServer(new KeyPressPacket(event.getKey()));
         }
+
+        if (true){
+            if (PsychicGrab.Keys.contains(event.getKey())) {
+                ChangedAddonMod.PACKET_HANDLER.sendToServer(new KeyPressPacket(event.getKey()));
+            }
+        }
     }
 }

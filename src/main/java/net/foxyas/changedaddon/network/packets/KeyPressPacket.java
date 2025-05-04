@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.network.packets;
 
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.abilities.PsychicGrab;
+import net.foxyas.changedaddon.process.DEBUG;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,6 +43,10 @@ public class KeyPressPacket {
                         psychicGrab.addOffset(key, player);
                     }
                 }));
+
+                if (true) {
+                    DEBUG.addOffset(key,player);
+                }
             }
         });
         context.setPacketHandled(true);
