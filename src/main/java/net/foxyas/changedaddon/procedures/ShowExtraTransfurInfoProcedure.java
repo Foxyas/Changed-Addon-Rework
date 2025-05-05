@@ -43,7 +43,6 @@ public class ShowExtraTransfurInfoProcedure {
 	private static void execute(@Nullable Event event, Entity entity, ItemStack itemstack, List<Component> tooltip) {
 		if (entity == null || tooltip == null)
 			return;
-		String Item_form = "";
 		double Hp = 0;
 		double Speed = 0;
 		double landSpeed = 0;
@@ -51,6 +50,8 @@ public class ShowExtraTransfurInfoProcedure {
 		boolean canFlyOrGlide = false;
 		boolean isCreative = false;
 		boolean haveInformantBlock = false;
+		String Item_form = "";
+		String form = "";
 		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")) || itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_tipped_arrow"))
 				|| itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_flask"))) {
 			isCreative = new Object() {
@@ -83,17 +84,8 @@ public class ShowExtraTransfurInfoProcedure {
 							+ (new TranslatableComponent("text.changed_addon.jumpStrength").getString() + "" + (JumpLevel >= 1 ? "\u00A7a+" + Math.round(JumpLevel * 100) + "%" : "\u00A7c-" + Math.round(JumpLevel * 100) + "%")) + "§r\n"
 							+ (new TranslatableComponent("text.changed_addon.canGlide/Fly").getString() + "" + (canFlyOrGlide == true ? "\u00A7a" + canFlyOrGlide + "\u00A7r" : "\u00A7c" + canFlyOrGlide + "\u00A7r")))));
 				}
-				if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_buny")) {
-					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
-				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_exp6")) {
-					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
-				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_reyn")) {
-					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
-				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_wolfy")) {
-					tooltip.add(new TextComponent("\u00A78Dev Helper OC Transfur\u00A7r"));
-				} else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_lynx")) {
-					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
-				} else if ((itemstack.getOrCreateTag().getString("form")).startsWith("changed_addon:form_experiment_10")) {
+				form = itemstack.getOrCreateTag().getString("form");
+				if (net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants.isVariantOC(form, entity.getLevel())) {
 					tooltip.add(new TextComponent("\u00A78OC Transfur\u00A7r"));
 				}
 			}

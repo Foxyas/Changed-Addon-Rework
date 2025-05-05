@@ -1,12 +1,11 @@
 package net.foxyas.changedaddon.process;
 
-import com.mojang.math.Vector3d;
 import net.foxyas.changedaddon.process.util.DelayedTask;
+import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.foxyas.changedaddon.process.util.ModelUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -108,19 +107,13 @@ public class DEBUG {
                 return;
             }
             Vec3 pos;
-            if (HeadPosJ == 2) {
-                pos = ModelUtils.getWorldPositionFromModelPart(player.getMainArm() == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm, HeadPosX, HeadPosY, HeadPosZ, player,new Vec3(HeadPosT, HeadPosV, HeadPosB), false);
-            } else if (HeadPosJ == 3) {
-                pos = ModelUtils.getModelPartWorldPosition(humanoidModel.rightArm, player, new Vec3(HeadPosX, HeadPosY, HeadPosZ));
-            }  else {
-                pos = ModelUtils.getModelPartWorldPosition(humanoidModel.rightArm, HeadPosX, HeadPosY, HeadPosZ, player, HeadPosK == 1, HeadPosL == 1, new float[]{HeadPosT, HeadPosV, HeadPosB});
-            }
+            pos = ModelUtils.getWorldPositionFromModelPart(player.getMainArm() == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm, HeadPosX, HeadPosY, HeadPosZ, player, new Vec3(HeadPosT, HeadPosV, HeadPosB), false);
             player.displayClientMessage(new TextComponent(pos.toString()), true);
 
-            if (player.level.random.nextFloat() >= DeltaX) {
+            if (player.level.random.nextFloat() >= 0) {
                 player.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
                         pos.x, pos.y, pos.z,
-                        0, 0, 0);
+                        0.1, 0.3, 0.1);
             }
 
         }

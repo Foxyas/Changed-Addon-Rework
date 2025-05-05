@@ -29,6 +29,7 @@ import net.foxyas.changedaddon.client.renderer.KetExperiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009BossRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxtaFoxyRenderer;
+import net.foxyas.changedaddon.client.renderer.FengQIFoxRenderer;
 import net.foxyas.changedaddon.client.renderer.FemaleLuminarcticLeopardRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10BossRenderer;
@@ -76,5 +77,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.LYNX.get(), LynxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.FOXTA_FOXY.get(), FoxtaFoxyRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.SNEPSI_LEOPARD.get(), SnepsiLeopardRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_FOX.get(), FengQIFoxRenderer::new);
 	}
 }

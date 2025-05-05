@@ -36,6 +36,7 @@ import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.entity.FoxtaFoxyEntity;
+import net.foxyas.changedaddon.entity.FengQIFoxEntity;
 import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.Experiment10Entity;
 import net.foxyas.changedaddon.entity.Experiment10BossEntity;
@@ -172,6 +173,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<SnepsiLeopardEntity>of(SnepsiLeopardEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SnepsiLeopardEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<FengQIFoxEntity>> FENG_QI_FOX = register("feng_qi_fox",
+			EntityType.Builder.<FengQIFoxEntity>of(FengQIFoxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FengQIFoxEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -210,6 +215,7 @@ public class ChangedAddonModEntities {
 			LynxEntity.init();
 			FoxtaFoxyEntity.init();
 			SnepsiLeopardEntity.init();
+			FengQIFoxEntity.init();
 		});
 	}
 
@@ -245,5 +251,6 @@ public class ChangedAddonModEntities {
 		event.put(LYNX.get(), LynxEntity.createAttributes().build());
 		event.put(FOXTA_FOXY.get(), FoxtaFoxyEntity.createAttributes().build());
 		event.put(SNEPSI_LEOPARD.get(), SnepsiLeopardEntity.createAttributes().build());
+		event.put(FENG_QI_FOX.get(), FengQIFoxEntity.createAttributes().build());
 	}
 }

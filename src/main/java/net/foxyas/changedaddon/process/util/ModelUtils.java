@@ -10,9 +10,10 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
@@ -79,7 +80,7 @@ public class ModelUtils {
 
         // Aplica as transformações da entidade (opcional)
         stack.translate(entity.getX(), entity.getEyeY(), entity.getZ());
-        stack.mulPose(Vector3f.YP.rotationDegrees(-entity.getYRot()));
+        stack.mulPose(Vector3f.YP.rotationDegrees(entity instanceof Player player ? -player.yBodyRotO : -entity.yRotO));
         if (affectEntityXrot){
 			stack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
         }
@@ -149,6 +150,41 @@ public class ModelUtils {
         Vector3f localVector = new Vector3f((float) local.x, (float) local.y, (float) local.z);
         localVector.transform(rotation);
         return new Vec3(localVector.x(), localVector.y(), localVector.z());
+    }
+
+    public static Vec3 getRelativePositionModelPartStyle(Entity entity, ModelPart part, double deltaX, double deltaY, double deltaZ) {
+        Vec3 position = entity.position(); // Posição base da entidade
+
+        // Obtém rotações do ModelPart (em radianos)
+        float pitch = part.xRot;
+        float yaw = part.yRot;
+        float roll = part.zRot;
+
+        // Matriz de rotação baseada nas rotações locais (pitch, yaw, roll)
+        // Aqui você pode criar vetores base com base nisso
+
+        // Cálculo similar ao anterior, adaptado
+        float yawRad = yaw + (float) Math.PI / 2;
+        float pitchRad = -pitch;
+        float pitchRad90 = -pitch + (float) Math.PI / 2;
+
+        float cosYaw = Mth.cos(yawRad);
+        float sinYaw = Mth.sin(yawRad);
+        float cosPitch = Mth.cos(pitchRad);
+        float sinPitch = Mth.sin(pitchRad);
+        float cosPitch90 = Mth.cos(pitchRad90);
+        float sinPitch90 = Mth.sin(pitchRad90);
+
+        Vec3 forward = new Vec3(cosYaw * cosPitch, sinPitch, sinYaw * cosPitch);
+        Vec3 up = new Vec3(cosYaw * cosPitch90, sinPitch90, sinYaw * cosPitch90);
+        Vec3 right = forward.cross(up).scale(-1.0D);
+
+        double newX = forward.x * deltaZ + up.x * deltaY + right.x * deltaX;
+        double newY = forward.y * deltaZ + up.y * deltaY + right.y * deltaX;
+        double newZ = forward.z * deltaZ + up.z * deltaY + right.z * deltaX;
+
+        return new Vec3(position.x + newX, position.y + newY, position.z + newZ);
+
     }
 
     /**

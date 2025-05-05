@@ -1,14 +1,11 @@
 package net.foxyas.changedaddon.variants;
 
-import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.LatexType;
-import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.entity.UseItemMode;
+import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.GenderedPair;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
@@ -17,17 +14,20 @@ import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.animal.AbstractGolem;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -58,12 +58,41 @@ public class ChangedAddonTransfurVariants {
     public static final DeferredRegister<TransfurVariant<?>> REGISTRY = ChangedRegistry.TRANSFUR_VARIANT.createDeferred(ChangedAddonMod.MODID);
 
     public static List<TransfurVariant<?>> getRemovedVariantsList() {
-        return List.of(REYN.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
+        return List.of(REYN.get(), FENG_QI_FOX.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
     }
+
 
     public static List<TransfurVariant<?>> getBossesVariantsList() {
         return List.of(KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get());
     }
+
+    protected static List<TransfurVariant<?>> getOcVariantList() {
+        return List.of(REYN.get(), LYNX.get(), FENG_QI_FOX.get(), FOXTA_FOXY.get(), SNEPSI_LEOPARD.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get());
+    }
+
+    public static boolean isVariantOC(TransfurVariant<?> transfurVariant, @Nullable Level level) {
+        if (level != null && transfurVariant.getEntityType().create(level) instanceof PatronOC) {
+            return true;
+        } else return getOcVariantList().contains(transfurVariant);
+    }
+
+    public static boolean isVariantOC(ResourceLocation transfurVariantID, @Nullable Level level) {
+        TransfurVariant<?> variantFromID = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(transfurVariantID);
+        if (variantFromID != null){
+            return isVariantOC(variantFromID, level);
+        }
+        return false;
+    }
+
+    public static boolean isVariantOC(String transfurVariantString, @Nullable Level level) {
+        ResourceLocation transfurVariantID = new ResourceLocation(transfurVariantString);
+        TransfurVariant<?> variantFromID = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(transfurVariantID);
+        if (variantFromID != null){
+            return isVariantOC(variantFromID, level);
+        }
+        return false;
+    }
+
 
     public static final RegistryObject<TransfurVariant<PuroKindEntity>> ADDON_PURO_KIND_MALE = register("form_puro_kind/male", TransfurVariant.Builder.of(ChangedAddonModEntities.PURO_KIND)
             .transfurMode(TransfurMode.REPLICATION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilities.CARRY).scares(List.of()));
@@ -90,8 +119,6 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<DazedEntity>> DAZED_LATEX = register("form_dazed_latex", TransfurVariant.Builder.of(ChangedAddonModEntities.DAZED)
             .transfurMode(TransfurMode.ABSORPTION).addAbility(ChangedAddonAbilities.DAZED_PUDDLE_ABILITY).scares(List.of()).nightVision());
 
-    public static final RegistryObject<TransfurVariant<BunyEntity>> BUNY = register("form_buny", TransfurVariant.Builder.of(ChangedAddonModEntities.BUNY)
-            .jumpStrength(1.5F).reducedFall().transfurMode(TransfurMode.ABSORPTION).scares(List.of()));
 
     public static final RegistryObject<TransfurVariant<MirrorWhiteTigerEntity>> MIRROR_WHITE_TIGER = register("form_mirror_white_tiger_female",
             () -> TransfurVariant.Builder.of(/*LATEX_WHITE_TIGER.get(),*/ChangedAddonModEntities.MIRROR_WHITE_TIGER)
@@ -116,6 +143,10 @@ public class ChangedAddonTransfurVariants {
             .stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of()));
     public static final RegistryObject<TransfurVariant<LynxEntity>> LYNX = register("form_lynx", TransfurVariant.Builder.of(ChangedAddonEntitys.LYNX)
             .stepSize(0.7F).jumpStrength(1.35f).reducedFall().addAbility(ChangedAddonAbilities.LEAP).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)));
+    public static final RegistryObject<TransfurVariant<FengQIFoxEntity>> FENG_QI_FOX = register("form_feng_qi_fox", TransfurVariant.Builder.of(ChangedAddonModEntities.FENG_QI_FOX)
+            .stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Rabbit.class)).nightVision());
+    public static final RegistryObject<TransfurVariant<BunyEntity>> BUNY = register("form_buny", TransfurVariant.Builder.of(ChangedAddonModEntities.BUNY)
+            .jumpStrength(1.5F).reducedFall().transfurMode(TransfurMode.ABSORPTION).scares(List.of()));
 
     //Experiments
     public static final RegistryObject<TransfurVariant<Exp1MaleEntity>> EXP1_MALE = register("form_exp1/male",
