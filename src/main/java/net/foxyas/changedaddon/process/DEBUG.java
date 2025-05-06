@@ -1,13 +1,19 @@
 package net.foxyas.changedaddon.process;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.process.util.DelayedTask;
 import net.foxyas.changedaddon.process.util.ModelUtils;
+import net.ltxprogrammer.changed.client.ModelPartStem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ServerChatEvent;
@@ -25,6 +31,7 @@ public class DEBUG {
     public static float HeadPosX, HeadPosY, HeadPosZ = 0;
 
     public static boolean PARTICLETEST = false;
+    public static boolean PARTICLETEST2 = false;
     public static float DeltaX, DeltaY, DeltaZ = 0;
     public static String ENTITYUUID = "";
 
@@ -32,6 +39,8 @@ public class DEBUG {
     public static void DEBUG(ServerChatEvent event) {
         if (event.getMessage().startsWith("testDeltas")) {
             PARTICLETEST = !PARTICLETEST;
+        } else if (event.getMessage().startsWith("test2Deltas")) {
+            PARTICLETEST2 = !PARTICLETEST2;
         } else if (event.getMessage().startsWith("setDeltaPos")) {
             String a = event.getMessage().replace("setDeltaPos", "");
             if (a.startsWith("x")) {
@@ -111,17 +120,17 @@ public class DEBUG {
                 return;
             }
             Vec3 pos;
-            pos = ModelUtils.getWorldPositionFromModelPart(player.getMainArm() == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm, new Vector3f(HeadPosX, HeadPosY, HeadPosZ), player, new Vec3(HeadPosT, HeadPosV, HeadPosB), new Vec3(HeadPosK, HeadPosL, HeadPosJ), false);
-            player.displayClientMessage(new TextComponent(pos.toString()), true);
+            //pos = getPartWorldPosForParticles(entity, player.getMainArm() == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm, HeadPosX);
+            //player.displayClientMessage(new TextComponent(pos.toString()), true);
 
-            if (player.level.random.nextFloat() >= 0) {
+            /*if (player.level.random.nextFloat() >= 0) {
                 player.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
                         pos.x, pos.y, pos.z,
                         DeltaX, DeltaY, DeltaZ);
-            }
-
+            }*/
         }
     }
+
 
 
     private static double convert(String s) {

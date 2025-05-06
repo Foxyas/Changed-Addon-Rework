@@ -43,10 +43,6 @@ public class KeyPressPacket {
                         psychicGrab.addOffset(key, player);
                     }
                 }));
-
-                if (true) {
-                    DEBUG.addOffset(key,player);
-                }
             }
         });
         context.setPacketHandled(true);

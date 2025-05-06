@@ -10,13 +10,16 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 /**
  * Utility class for working with model parts and transformations in entity models.
@@ -71,6 +74,42 @@ public class ModelUtils {
 
         return new Vec3(pos.x(), pos.y(), pos.z());
     }
+
+    public static AABB getModelPartBounds(ModelPart part) {
+        ModelPart.Cube partCube = part.getRandomCube(new Random());
+        return new AABB(partCube.minX, partCube.minY, partCube.minZ, partCube.maxX, partCube.maxY, partCube.maxZ);
+    }
+
+    public static AABB getModelPartBounds(ModelPart part, ModelPart.Cube partCube) {
+        return new AABB(partCube.minX, partCube.minY, partCube.minZ, partCube.maxX, partCube.maxY, partCube.maxZ);
+    }
+
+
+    public static Vec3 getPartWorldPosForParticles(Entity entity, ModelPart part, float partialTicks) {
+        // Interpola posição da entidade
+        double x = Mth.lerp(partialTicks, entity.xOld, entity.getX());
+        double y = Mth.lerp(partialTicks, entity.yOld, entity.getEyeY());
+        double z = Mth.lerp(partialTicks, entity.zOld, entity.getZ());
+
+        // Interpola rotação da entidade (apenas yaw, já que é o corpo girando horizontalmente)
+        float bodyYawRad = (float) Math.toRadians(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()));
+
+        // Posição local da parte (convertida para escala real)
+        Vec3 local = new Vec3(part.x, part.y, part.z).scale(0.0625f);
+
+        // Aplica rotações do ModelPart (pitch, yaw, roll) — ordem Z (roll), Y (yaw), X (pitch)
+        local = local.zRot(part.zRot);
+        local = local.yRot(part.yRot);
+        local = local.xRot(part.xRot);
+        local = local.xRot((float) Math.toRadians(0)); //change 0 to something
+
+        // Aplica rotação da entidade (corpo)
+        local = local.yRot(-bodyYawRad); // negativa porque é coordenada local -> world
+
+        // Soma com posição da entidade
+        return new Vec3(x + local.x, y + local.y, z + local.z);
+    }
+
 
     /**
      * Applies the inverse rotation of a {@link ModelPart} to the given {@link PoseStack}, effectively mirroring the part.

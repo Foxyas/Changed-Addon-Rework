@@ -243,7 +243,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             return false;
         if (source.getMsgId().equals("witherSkull"))
             return false;
-        if (source == DamageSource.IN_WALL){
+        if (source == DamageSource.IN_WALL) {
             Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
                     ? this.getLevel().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 32d, true)
                     : this.getTarget());
@@ -370,7 +370,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                             ParticleTypes.ELECTRIC_SPARK,
                             pos,
                             0.1f, 0.1f, 0.1f,
-                            5, 0.1f
+                            5, 0.025f
                     );
                 }
             }
@@ -383,24 +383,35 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     public void baseTick() {
         super.baseTick();
         if (this.getUnderlyingPlayer() == null) {
-            if (shouldBleed && this.computeHealthRatio() > 0.10 && this.tickCount % 4 == 0){
+            if (shouldBleed && this.computeHealthRatio() > 0.10 && this.tickCount % 4 == 0) {
                 this.setHealth(this.getHealth() - 0.05f);
             }
             if (this.AttackCoolDown < 100) {
                 this.AttackCoolDown += this.isPhase2() ? 2 : 1;
             }
-            if (this.isPhase2()) {
-                if (this.shouldBleed) {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.position().add(0, 1f, 0), 0.3f, 0.5f, 0.3f, 15, 0.01f);
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.25f, 0.25f, 0.25f, 5, 1);
+            if (this.getRandom().nextFloat() < 1 - Math.min(0.75, computeHealthRatio())) {
+                if (this.isPhase2()) {
+                    if (this.shouldBleed) {
+                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
+                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
+                    } else {
+                        if (this.getRandom().nextFloat() > 0.75) {
+                            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
+                        }
+                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
+                    }
+                } else {
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
                 }
+            }
+
+
+            if (this.isPhase2()) {
                 if (this.computeHealthRatio() <= 0.35f) {
                     removeStatModifiers();
                     applyStatModifierAllOutPhase();
                     this.shouldBleed = true;
-                }
-                else {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.25f, 0.25f, 0.25f, 5, 1);
+                } else {
                     applyStatModifier(this, 1.5);
                 }
                 /*
@@ -410,7 +421,6 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                 ParticleOptions dustColor = getParticleOptions(colors[0], colors[1]);
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), dustColor, this.position().add(0, 0.5, 0), 0.35f, 0.70f, 0.35f, 5, 0);
                 */
-
             } else {
                 removeStatModifiers();
             }
@@ -427,6 +437,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         removeModifierUUID(this, Attributes.KNOCKBACK_RESISTANCE, "a06083b0-291d-4a72-85de-73bd93ffb739");
         //removeModifierUUID(this, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710");
     }
+
     public void removeStatModifiers(LivingEntity entity) {
         removeModifierUUID(entity, Attributes.ATTACK_DAMAGE, "AttackMultiplier");
         removeModifierUUID(entity, Attributes.ARMOR, "ArmorMultiplier");
@@ -461,12 +472,12 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 
 
     public void applyStatModifier(LivingEntity entity, double multiplier) {
-    	applyModifierIfAbsent(entity, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", multiplier - 1);
-    	applyModifierIfAbsent(entity, Attributes.ARMOR, "a06083b0-291d-4a72-85de-73bd93ffb737", "ArmorMultiplier", multiplier - 1);
-    	applyModifierIfAbsent(entity, Attributes.ARMOR_TOUGHNESS, "a06083b0-291d-4a72-85de-73bd93ffb738", "ArmorToughnessMultiplier", multiplier - 1);
-    	applyModifierIfAbsent(entity, Attributes.KNOCKBACK_RESISTANCE, "a06083b0-291d-4a72-85de-73bd93ffb739", "KnockbackResistanceMultiplier", multiplier - 1);
-    	//applyModifierIfAbsent(entity, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710", "SpeedMultiplier", (multiplier - 1) * 0.5);
-	}
+        applyModifierIfAbsent(entity, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", multiplier - 1);
+        applyModifierIfAbsent(entity, Attributes.ARMOR, "a06083b0-291d-4a72-85de-73bd93ffb737", "ArmorMultiplier", multiplier - 1);
+        applyModifierIfAbsent(entity, Attributes.ARMOR_TOUGHNESS, "a06083b0-291d-4a72-85de-73bd93ffb738", "ArmorToughnessMultiplier", multiplier - 1);
+        applyModifierIfAbsent(entity, Attributes.KNOCKBACK_RESISTANCE, "a06083b0-291d-4a72-85de-73bd93ffb739", "KnockbackResistanceMultiplier", multiplier - 1);
+        //applyModifierIfAbsent(entity, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710", "SpeedMultiplier", (multiplier - 1) * 0.5);
+    }
 
     public void applyStatModifierAllOutPhase() {
         applyModifierIfAbsent(this, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", 0.25f);
@@ -476,16 +487,15 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         //applyModifierIfAbsent(entity, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710", "SpeedMultiplier", (multiplier - 1) * 0.5);
     }
 
-	private void applyModifierIfAbsent(LivingEntity entity, Attribute attribute, String uuid, String name, double value) {
-    	AttributeInstance attributeInstance = entity.getAttribute(attribute);
-    	if (attributeInstance == null) return;
+    private void applyModifierIfAbsent(LivingEntity entity, Attribute attribute, String uuid, String name, double value) {
+        AttributeInstance attributeInstance = entity.getAttribute(attribute);
+        if (attributeInstance == null) return;
 
-    	UUID modifierUUID = UUID.fromString(uuid);
-    	if (attributeInstance.getModifier(modifierUUID) == null) { // Verifica se o modificador já existe
-        	attributeInstance.addTransientModifier(new AttributeModifier(modifierUUID, name, value, AttributeModifier.Operation.MULTIPLY_TOTAL));
-    	}
-	}
-
+        UUID modifierUUID = UUID.fromString(uuid);
+        if (attributeInstance.getModifier(modifierUUID) == null) { // Verifica se o modificador já existe
+            attributeInstance.addTransientModifier(new AttributeModifier(modifierUUID, name, value, AttributeModifier.Operation.MULTIPLY_TOTAL));
+        }
+    }
 
 
     @NotNull
@@ -588,7 +598,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         PlayerUtilProcedure.ParticlesUtil.sendParticles(player.getLevel(),
                 ChangedParticles.emote(this, Emote.ANGRY),
                 this.getX(),
-                this.getY() + (double)this.getDimensions(this.getPose()).height + 0.65,
+                this.getY() + (double) this.getDimensions(this.getPose()).height + 0.65,
                 this.getZ(),
                 0.0f,
                 0.0f,
