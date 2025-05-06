@@ -27,6 +27,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.phys.Vec3;
+import net.foxyas.changedaddon.process.DEBUG;
 
 public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetExperiment009BossEntity, KetBossModel, ArmorLatexMaleWolfModel<KetExperiment009BossEntity>> {
 	public KetExperiment009BossRenderer(EntityRendererProvider.Context context) {
@@ -41,7 +42,7 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 	@Override
 	public void render(KetExperiment009BossEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 		super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
-		Vec3 pos = ModelUtils.getWorldPositionFromModelPart(this.model.getRandomModelPart(entity.getRandom())new Vector3f(HeadPosX, HeadPosY, HeadPosZ), entity, new Vec3(HeadPosT, HeadPosV, HeadPosB), new Vec3(HeadPosK, HeadPosL, HeadPosJ), false);
+		Vec3 pos = ModelUtils.getWorldPositionFromModelPart(this.model.getRandomModelPart(entity.getRandom()),new Vector3f(DEBUG.HeadPosX, DEBUG.HeadPosY, DEBUG.HeadPosZ), entity, new Vec3(DEBUG.HeadPosT, DEBUG.HeadPosV, DEBUG.HeadPosB), new Vec3(DEBUG.HeadPosK, DEBUG.HeadPosL, DEBUG.HeadPosJ), false);
 		if (entity.level.random.nextFloat() >= 0.99) {
 			entity.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
 					pos.x, pos.y, pos.z,
