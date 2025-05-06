@@ -391,8 +391,8 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             }
             if (this.isPhase2()) {
                 if (this.shouldBleed) {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.position().add(0, 1f, 0), 0.3f, 0.5f, 0.3f, 15, 0.2f);
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.35f, 0.50f, 0.35f, 5, 1);
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.position().add(0, 1f, 0), 0.3f, 0.5f, 0.3f, 15, 0.01f);
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.25f, 0.25f, 0.25f, 5, 1);
                 }
                 if (this.computeHealthRatio() <= 0.35f) {
                     removeStatModifiers();
@@ -400,7 +400,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                     this.shouldBleed = true;
                 }
                 else {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.35f, 0.50f, 0.35f, 5, 1);
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition(), 0.25f, 0.25f, 0.25f, 5, 1);
                     applyStatModifier(this, 1.5);
                 }
                 /*

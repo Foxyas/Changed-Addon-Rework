@@ -3,9 +3,10 @@ package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.KetBossModel;
-import net.foxyas.changedaddon.client.model.KetModel;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
+import net.foxyas.changedaddon.process.util.ModelUtils;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
@@ -22,8 +23,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.phys.Vec3;
 
 public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetExperiment009BossEntity, KetBossModel, ArmorLatexMaleWolfModel<KetExperiment009BossEntity>> {
 	public KetExperiment009BossRenderer(EntityRendererProvider.Context context) {
@@ -36,9 +39,21 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 	}
 
 	@Override
+	public void render(KetExperiment009BossEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+		super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
+		Vec3 pos = ModelUtils.getWorldPositionFromModelPart(this.model.getRandomModelPart(entity.getRandom()),new Vector3f(0,1f,0),entity,null,null,false);
+		if (entity.level.random.nextFloat() >= 0.5) {
+			entity.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
+					pos.x, pos.y, pos.z,
+					0, 0, 0);
+		}
+	}
+
+	@Override
 	public ResourceLocation getTextureLocation(KetExperiment009BossEntity entity) {
 		return new ResourceLocation("changed_addon:textures/entities/kettexture.png");
 	}
+
 
 	private static class CustomEmissiveBodyLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
 		private final RenderType renderType;

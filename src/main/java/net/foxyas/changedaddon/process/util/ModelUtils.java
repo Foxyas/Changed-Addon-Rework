@@ -10,11 +10,11 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -22,80 +22,49 @@ import javax.annotation.Nullable;
  * Utility class for working with model parts and transformations in entity models.
  */
 public class ModelUtils {
-    public static Vec3 getModelPartWorldPosition(ModelPart part, Entity entity, Vec3 offset) {
-        // Posição local (pode ser modificada dependendo de onde você quer o ponto no ModelPart)
-
-        // Obtém as transformações do ModelPart (posição e rotação)
-        // A rotação e a escala podem ser aplicadas manualmente
-        Vec3 rotatedPos = applyRotation(offset, part.yRot);  // Parte rotacionada do ModelPart
-
-        // A posição do ModelPart no mundo é a posição da entidade + as transformações do ModelPart
-
-        // Aplica o offset
-        return new Vec3(
-                rotatedPos.x + entity.getX(),
-                rotatedPos.y + entity.getY(),
-                rotatedPos.z + entity.getZ()
-        );
-    }
-    public static Vec3 getModelPartWorldPosition(ModelPart part, float offsetX, float offsetY, float offsetZ, @Nullable Entity entity, boolean relative, boolean rotate, float[] floats) {
-        Vector3f local = new Vector3f(offsetX, offsetY, offsetZ);
-
-        if (entity == null) {
-            return new Vec3(local.x(), local.y(), local.z());
-        }
-
-        if (rotate) {
-            local.transform(Quaternion.fromXYZ(part.xRot * floats[0], part.yRot *  floats[1], part.zRot *  floats[2]));
-        }
-
-        Quaternion entityRot = Quaternion.fromYXZ(-(entity.yRotO * ((float) Math.PI / 180f)), 0f, 0f);
-        local.transform(entityRot);
-
-        if (relative) {
-            return new Vec3(local);
-        }
-
-        return entity.position().add(local.x(), local.y(), local.z());
-    }
-
     /**
      * Calculates the world position from a model part using a custom transform approach with rotation mirroring support.
      *
-     * @param part             The model part to use.
-     * @param offsetX          X offset relative to the model part.
-     * @param offsetY          Y offset relative to the model part.
-     * @param offsetZ          Z offset relative to the model part.
-     * @param entity           The entity used for base position and orientation.
-     * @param v                Rotation vector (in degrees).
-     * @param affectEntityXrot Whether to apply the entity's X rotation to the transformation.
+     * @param part                 The model part to use.
+     * @param Offset               offset relative to the model part.
+     * @param entity               The entity used for base position and orientation.
+     * @param entityPosOffset      offset relative to the entity position part.
+     * @param Rotation             Rotation vector (in degrees).
+     * @param affectEntityViewXrot Whether to apply the entity's X rotation to the transformation.
      * @return The resulting world-space position as a {@link Vec3}.
      */
 
-    public static Vec3 getWorldPositionFromModelPart(ModelPart part, float offsetX, float offsetY, float offsetZ, Entity entity, Vec3 v, boolean affectEntityXrot) {
-		// if using a player the best offset positions is v.x() = 180, offsetX = 0.65 if right hand and -0.65 if not, offsetY being -1.1
+    public static Vec3 getWorldPositionFromModelPart(ModelPart part, Vector3f Offset, @NotNull Entity entity, @Nullable Vec3 entityPosOffset, @Nullable Vec3 Rotation, boolean affectEntityViewXrot) {
+        // if using a player arms the best offset positions is Rotation.x() = 180, entityPosOffset.y = 0.45 if sneaking and -0.2 if not
+        // Also Remember to make some offset checks for positions ofc
+        if (Rotation == null) {
+            Rotation = new Vec3(180, 0, 0);
+        } else if (entityPosOffset == null) {
+            entityPosOffset = new Vec3(0, 0.2d, 0);
+        }
 
-    
         PoseStack stack = new PoseStack();
 
         // Aplica as transformações da entidade (opcional)
-        stack.translate(entity.getX(), entity.getEyeY(), entity.getZ());
+        stack.translate(entity.getX() + entityPosOffset.x(), entity.getEyeY() + entityPosOffset.y() + (entity instanceof Player player && player.isShiftKeyDown() ? 0.225d : 0d), entity.getZ() + entityPosOffset.z());
         stack.mulPose(Vector3f.YP.rotationDegrees(entity instanceof Player player ? -player.yBodyRotO : -entity.yRotO));
-        if (affectEntityXrot){
-			stack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
+        if (affectEntityViewXrot) {
+            stack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
         }
 
         // Aplica as transformações do ModelPart
-        part.xRot *= -1;
-        part.yRot *= -1;
+        part.xRot *= 1;
+        part.yRot *= 1;
         part.zRot *= 1;
-        stack.mulPose(Vector3f.YP.rotationDegrees((float) v.x()));
+        stack.mulPose(Vector3f.YP.rotationDegrees((float) Rotation.y()));
+        stack.mulPose(Vector3f.XP.rotationDegrees((float) Rotation.x()));
+        stack.mulPose(Vector3f.ZP.rotationDegrees((float) Rotation.z()));
         part.translateAndRotate(stack);
-        
+
 
         // Aplica o offset local
         Matrix4f matrix = stack.last().pose();
-        Vector4f pos = new Vector4f(offsetX, offsetY, offsetZ, 1.0F);
+        Vector4f pos = new Vector4f(Offset.x(), Offset.y(), Offset.z(), 1.0F);
         pos.transform(matrix);
 
         return new Vec3(pos.x(), pos.y(), pos.z());
@@ -107,7 +76,7 @@ public class ModelUtils {
      * @param part  The model part whose rotation should be mirrored.
      * @param stack The pose stack to apply transformations to.
      */
-    
+
     public static void applyMirroredRotation(ModelPart part, PoseStack stack) {
         stack.mulPose(Vector3f.ZP.rotation(-part.zRot));
         stack.mulPose(Vector3f.YP.rotation(-part.yRot));
@@ -146,45 +115,23 @@ public class ModelUtils {
      */
 
     public static Vec3 applyRotationToVec3(Vec3 local, float xRot, float yRot, float zRot) {
-        Quaternion rotation = Quaternion.fromYXZ(yRot, xRot, zRot); // Ordem mais correta
+        if (xRot == 0 && yRot == 0 && zRot == 0) {
+            return local;
+        }
+        Quaternion q = Quaternion.ONE.copy(); // Identidade
+
+        if (zRot != 0.0F) {
+            q.mul(Vector3f.ZP.rotationDegrees(zRot));
+        }
+        if (yRot != 0.0F) {
+            q.mul(Vector3f.YP.rotationDegrees(yRot));
+        }
+        if (xRot != 0.0F) {
+            q.mul(Vector3f.XP.rotationDegrees(xRot));
+        }
         Vector3f localVector = new Vector3f((float) local.x, (float) local.y, (float) local.z);
-        localVector.transform(rotation);
+        localVector.transform(q);
         return new Vec3(localVector.x(), localVector.y(), localVector.z());
-    }
-
-    public static Vec3 getRelativePositionModelPartStyle(Entity entity, ModelPart part, double deltaX, double deltaY, double deltaZ) {
-        Vec3 position = entity.position(); // Posição base da entidade
-
-        // Obtém rotações do ModelPart (em radianos)
-        float pitch = part.xRot;
-        float yaw = part.yRot;
-        float roll = part.zRot;
-
-        // Matriz de rotação baseada nas rotações locais (pitch, yaw, roll)
-        // Aqui você pode criar vetores base com base nisso
-
-        // Cálculo similar ao anterior, adaptado
-        float yawRad = yaw + (float) Math.PI / 2;
-        float pitchRad = -pitch;
-        float pitchRad90 = -pitch + (float) Math.PI / 2;
-
-        float cosYaw = Mth.cos(yawRad);
-        float sinYaw = Mth.sin(yawRad);
-        float cosPitch = Mth.cos(pitchRad);
-        float sinPitch = Mth.sin(pitchRad);
-        float cosPitch90 = Mth.cos(pitchRad90);
-        float sinPitch90 = Mth.sin(pitchRad90);
-
-        Vec3 forward = new Vec3(cosYaw * cosPitch, sinPitch, sinYaw * cosPitch);
-        Vec3 up = new Vec3(cosYaw * cosPitch90, sinPitch90, sinYaw * cosPitch90);
-        Vec3 right = forward.cross(up).scale(-1.0D);
-
-        double newX = forward.x * deltaZ + up.x * deltaY + right.x * deltaX;
-        double newY = forward.y * deltaZ + up.y * deltaY + right.y * deltaX;
-        double newZ = forward.z * deltaZ + up.z * deltaY + right.z * deltaX;
-
-        return new Vec3(position.x + newX, position.y + newY, position.z + newZ);
-
     }
 
     /**
@@ -203,4 +150,99 @@ public class ModelUtils {
 
         return livingRenderer.getModel();
     }
+
+    /*
+    public static Vec3 getViewVectorOLD(ModelPart part) {
+        Quaternion rotation = getRotationQuaternion(part);
+        Vector3f forward = new Vector3f(0, 0, 1); // Z é "para frente"
+        forward.transform(rotation);
+        return new Vec3(forward.x(), forward.y(), forward.z());
+    }
+
+    public static Vec3 getUpVectorOLD(ModelPart part) {
+        Quaternion rotation = getRotationQuaternion(part);
+        Vector3f up = new Vector3f(0, 1, 0); // Y é "para cima"
+        up.transform(rotation);
+        return new Vec3(up.x(), up.y(), up.z());
+    }
+
+    public static float getPointViewXRot(ModelPart part) {
+        return part.xRot;
+    }
+
+    public static float getPointViewYRot(ModelPart part) {
+        return part.yRot;
+    }
+
+    public static Vec3 getPointViewVector(ModelPart part) {
+        return calculatePointViewVector(getPointViewXRot(part), getPointViewYRot(part));
+    }
+
+    public static Vec3 calculatePointViewVector(float p_20172_, float p_20173_) {
+        float f = p_20172_ * ((float)Math.PI / 180F);
+        float f1 = -p_20173_ * ((float)Math.PI / 180F);
+        float f2 = Mth.cos(f1);
+        float f3 = Mth.sin(f1);
+        float f4 = Mth.cos(f);
+        float f5 = Mth.sin(f);
+        return new Vec3((double)(f3 * f4), (double)(-f5), (double)(f2 * f4));
+    }
+    public static Vec3 getPointUpVector(ModelPart part) {
+        return calculatePointViewUpVector(getPointViewXRot(part), getPointViewYRot(part));
+    }
+
+    public static Vec3 calculatePointViewUpVector(float p_20215_, float p_20216_) {
+        return calculatePointViewVector(p_20215_ - 90.0F, p_20216_);
+    }
+
+
+    public static Quaternion getRotationQuaternion(ModelPart part) {
+        // Cria o quaternário baseado nas rotações em ordem ZYX
+        Quaternion q = Quaternion.ONE.copy(); // identidade
+        if (part.zRot != 0.0F) {
+            q.mul(Vector3f.ZP.rotation(part.zRot));
+        }
+        if (part.yRot != 0.0F) {
+            q.mul(Vector3f.YP.rotation(part.yRot));
+        }
+        if (part.xRot != 0.0F) {
+            q.mul(Vector3f.XP.rotation(part.xRot));
+        }
+        return q;
+    }
+
+    public static Vec3 getRelativePositionModel(Entity entity, ModelPart part, double deltaX, double deltaY, double deltaZ) {
+        if (entity == null) {
+            return Vec3.ZERO;
+        }
+
+        // Obtém os vetores locais da entidade
+        Vec3 forward = getPointViewVector(part); // Direção que a entidade está olhando (Surge)
+        Vec3 up = getPointUpVector(part); // Vetor "para cima" da entidade (Heave)
+        Vec3 right = forward.cross(up).normalize(); // Calcula o vetor para a direita (Sway)
+
+        // Combina os deslocamentos locais
+        Vec3 offset = right.scale(deltaX) // Sway (esquerda/direita)
+                .add(up.scale(deltaY)) // Heave (cima/baixo)
+                .add(forward.scale(deltaZ)); // Surge (frente/trás)
+
+        // Aplica rotação do corpo da entidade (yaw global)
+        float yawRad = entity.getYRot() * ((float) Math.PI / 180F); // Inverso porque o Minecraft gira para esquerda com yaw positivo
+        double cos = Math.cos(yawRad);
+        double sin = Math.sin(yawRad);
+
+        double x = offset.x * cos - offset.z * sin;
+        double z = offset.x * sin + offset.z * cos;
+
+        Vec3 rotatedOffset = new Vec3(x, offset.y, z);
+
+        // Retorna a nova posição baseada no deslocamento local
+        //offset = applyRotationToVec3(offset, HeadPosT, HeadPosV, HeadPosB);
+        HeadPosK = part.x / 16;
+        HeadPosL = part.y / 16;
+        HeadPosJ = part.z / 16;
+        return entity.position().add(HeadPosT, HeadPosV, HeadPosB).add(rotatedOffset);
+    }*/
+
+
 }

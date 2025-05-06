@@ -1,11 +1,12 @@
 package net.foxyas.changedaddon.process;
 
+import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.process.util.DelayedTask;
-import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.foxyas.changedaddon.process.util.ModelUtils;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -16,6 +17,8 @@ import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
+import static net.foxyas.changedaddon.procedures.PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID;
+
 @Mod.EventBusSubscriber
 public class DEBUG {
     public static float HeadPosT, HeadPosV, HeadPosB, HeadPosK, HeadPosL, HeadPosJ = 0;
@@ -23,7 +26,7 @@ public class DEBUG {
 
     public static boolean PARTICLETEST = false;
     public static float DeltaX, DeltaY, DeltaZ = 0;
-    public static String COLORSTRING = "#ffffff";
+    public static String ENTITYUUID = "";
 
     @SubscribeEvent
     public static void DEBUG(ServerChatEvent event) {
@@ -63,8 +66,8 @@ public class DEBUG {
                 HeadPosZ = (float) convert(a.replace("z", ""));
             }
         }
-        if (event.getMessage().startsWith("setColor:")) {
-            COLORSTRING = event.getMessage().replace("setColor:", "");
+        if (event.getMessage().startsWith("setEntity:")) {
+            ENTITYUUID = event.getMessage().replace("setEntity:", "");
         }
         if (event.getMessage().startsWith("Show info")) {
             event.getPlayer().displayClientMessage(new TextComponent("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL + "\n" + "J = " + HeadPosJ), false);
@@ -102,18 +105,19 @@ public class DEBUG {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.CLIENT) {
             Player player = event.player;
-            var model = ModelUtils.getModelOf(player);
+            Entity entity = getEntityByUUID(player.level, ENTITYUUID);
+            var model = ModelUtils.getModelOf(entity);
             if (!(model instanceof HumanoidModel<?> humanoidModel)) {
                 return;
             }
             Vec3 pos;
-            pos = ModelUtils.getWorldPositionFromModelPart(player.getMainArm() == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm, HeadPosX, HeadPosY, HeadPosZ, player, new Vec3(HeadPosT, HeadPosV, HeadPosB), false);
+            pos = ModelUtils.getWorldPositionFromModelPart(player.getMainArm() == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm, new Vector3f(HeadPosX, HeadPosY, HeadPosZ), player, new Vec3(HeadPosT, HeadPosV, HeadPosB), new Vec3(HeadPosK, HeadPosL, HeadPosJ), false);
             player.displayClientMessage(new TextComponent(pos.toString()), true);
 
             if (player.level.random.nextFloat() >= 0) {
                 player.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
                         pos.x, pos.y, pos.z,
-                        0.1, 0.3, 0.1);
+                        DeltaX, DeltaY, DeltaZ);
             }
 
         }

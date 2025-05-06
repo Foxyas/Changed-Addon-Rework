@@ -6034,9 +6034,6 @@
       "locked_code": false,
       "registry_name": "show_transfur_totem_itemtip",
       "metadata": {
-        "files": [
-          "src/main/java/net/foxyas/changedaddon/procedures/ShowTransfurTotemItemtipProcedure.java"
-        ],
         "dependencies": [
           {
             "name": "itemstack",
