@@ -41,8 +41,8 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 	@Override
 	public void render(KetExperiment009BossEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 		super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
-		Vec3 pos = ModelUtils.getWorldPositionFromModelPart(this.model.getRandomModelPart(entity.getRandom()),new Vector3f(0,1f,0),entity,null,null,false);
-		if (entity.level.random.nextFloat() >= 0.5) {
+		Vec3 pos = ModelUtils.getWorldPositionFromModelPart(this.model.getRandomModelPart(entity.getRandom())new Vector3f(HeadPosX, HeadPosY, HeadPosZ), entity, new Vec3(HeadPosT, HeadPosV, HeadPosB), new Vec3(HeadPosK, HeadPosL, HeadPosJ), false);
+		if (entity.level.random.nextFloat() >= 0.99) {
 			entity.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
 					pos.x, pos.y, pos.z,
 					0, 0, 0);
