@@ -39,7 +39,9 @@ public class ModelUtils {
         // Also Remember to make some offset checks for positions ofc
         if (Rotation == null) {
             Rotation = new Vec3(180, 0, 0);
-        } else if (entityPosOffset == null) {
+        } 
+
+        if (entityPosOffset == null) {
             entityPosOffset = new Vec3(0, 0.2d, 0);
         }
 
