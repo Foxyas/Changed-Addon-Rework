@@ -9846,7 +9846,7 @@
       "name": "Phase2EntitysHandle",
       "type": "procedure",
       "sortid": 539,
-      "compiles": true,
+      "compiles": false,
       "locked_code": true,
       "registry_name": "phase_2_entitys_handle",
       "metadata": {

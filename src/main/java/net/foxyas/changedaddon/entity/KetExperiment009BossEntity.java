@@ -28,6 +28,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
@@ -64,6 +65,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     private boolean Phase2;
     private int AttackCoolDown;
     private boolean shouldBleed;
+    private boolean lastBreath = false;
 
     public void setAttackCoolDown(int attackCoolDown) {
         AttackCoolDown = attackCoolDown;
@@ -291,8 +293,25 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
-        this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+
+        float maxHealth = this.getMaxHealth();
+        float currentHealth = this.getHealth();
+        float healthRatio = currentHealth / maxHealth;
+
+        // Se estiver com menos de 40% da vida, simula que 40% é o "cheio" da barra
+        if (healthRatio <= 0.4f) {
+            this.bossInfo.setProgress(healthRatio / 0.4f); // estica a barra
+            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10){
+                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
+            }
+        } else {
+            this.bossInfo.setProgress(healthRatio);
+            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6){
+                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
+            }
+        }
     }
+
 
     public static void init() {
     }
@@ -314,6 +333,14 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         this.Phase2 = set;
     }
 
+    public void setPhase3(boolean set) {
+        this.lastBreath = set;
+    }
+
+    public boolean isPhase3() {
+        return this.lastBreath;
+    }
+
     public boolean isPhase2() {
         return this.Phase2;
     }
@@ -322,6 +349,8 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         super.readAdditionalSaveData(tag);
         if (tag.contains("Phase2"))
             Phase2 = tag.getBoolean("Phase2");
+        if (tag.contains("Phase3"))
+            lastBreath = tag.getBoolean("Phase2");
         if (tag.contains("AttackCoolDown"))
             AttackCoolDown = tag.getInt("AttackCoolDown");
         if (tag.contains("Bleeding"))
@@ -332,6 +361,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Phase2", Phase2);
+        tag.putBoolean("Phase3", lastBreath);
         tag.putInt("AttackCoolDown", AttackCoolDown);
         tag.putBoolean("Bleeding", shouldBleed);
     }
@@ -389,13 +419,13 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             if (this.AttackCoolDown < 100) {
                 this.AttackCoolDown += this.isPhase2() ? 2 : 1;
             }
-            if (this.getRandom().nextFloat() < 1 - Math.min(0.75, computeHealthRatio())) {
+            if (this.getRandom().nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
                 if (this.isPhase2()) {
                     if (this.shouldBleed) {
                         PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
-                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
+                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
                     } else {
-                        if (this.getRandom().nextFloat() > 0.75) {
+                        if (this.getRandom().nextFloat() > 0.95) {
                             PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
                         }
                         PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);

@@ -20,6 +20,7 @@
         { "name": "BlueMatrix",  "type": "float",     "count": 3,  "values": [ 0.0, 0.0, 1.0 ] },
         { "name": "Offset",      "type": "float",     "count": 3,  "values": [ 0.0, 0.0, 0.0 ] },
         { "name": "ColorScale",  "type": "float",     "count": 3,  "values": [ 1.0, 1.0, 1.0 ] },
-        { "name": "Saturation",  "type": "float",     "count": 1,  "values": [ 1.8 ] }
+        { "name": "Saturation",  "type": "float",     "count": 1,  "values": [ 1.8 ] },
+        { "name": "Contrast",  "type": "float",     "count": 1,  "values": [ 1.0 ] }
     ]
 }

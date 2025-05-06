@@ -14,6 +14,7 @@ uniform vec3 BlueMatrix;
 uniform vec3 Offset;
 uniform vec3 ColorScale;
 uniform float Saturation;
+uniform float Contrast;
 
 out vec4 fragColor;
 
@@ -34,5 +35,8 @@ void main() {
     vec3 Chroma = OutColor - Luma;
     OutColor = (Chroma * Saturation) + Luma;
 
-    fragColor = vec4(OutColor, 1.0);
+    // Contrast
+    OutColor = (OutColor - 0.5f) * Contrast + 0.5f;
+
+    fragColor = vec4(OutColor, 1.0f);
 }

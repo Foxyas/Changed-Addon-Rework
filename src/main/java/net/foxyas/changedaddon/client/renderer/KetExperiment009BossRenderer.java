@@ -33,7 +33,7 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 	public KetExperiment009BossRenderer(EntityRendererProvider.Context context) {
 	super(context, new KetBossModel(context.bakeLayer(KetBossModel.LAYER_LOCATION)),
 				ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.750f));
+		this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.75f));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	//  this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#66FFFF"))));
@@ -42,12 +42,6 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
 	@Override
 	public void render(KetExperiment009BossEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 		super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
-		Vec3 pos = ModelUtils.getWorldPositionFromModelPart(this.model.getRandomModelPart(entity.getRandom()),new Vector3f(DEBUG.HeadPosX, DEBUG.HeadPosY, DEBUG.HeadPosZ), entity, new Vec3(DEBUG.HeadPosT, DEBUG.HeadPosV, DEBUG.HeadPosB), new Vec3(DEBUG.HeadPosK, DEBUG.HeadPosL, DEBUG.HeadPosJ), false);
-		if (entity.level.random.nextFloat() >= 0.99) {
-			entity.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
-					pos.x, pos.y, pos.z,
-					0, 0, 0);
-		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.mixins;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.process.DEBUG;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PostChain;
@@ -58,12 +59,20 @@ public class GameRendererMixin {
                 if (postPassList != null && !postPassList.isEmpty()){
                     for (PostPass postPass : postPassList) {
                         Uniform uniform = postPass.getEffect().getUniform("Saturation");
+                        Uniform uniform2 = postPass.getEffect().getUniform("Contrast");
                         if (uniform != null) {
                            if (player.isShiftKeyDown()) {
-                               uniform.set(2f);
+                               uniform.set(DEBUG.HeadPosJ);
                            } else {
-                               uniform.set(0f);
+                               uniform.set(DEBUG.HeadPosK);
                            }
+                        } 
+                        if (uniform2 != null) {
+                            if (player.isShiftKeyDown()) {
+                                uniform2.set(DEBUG.HeadPosX);
+                            } else {
+                                uniform2.set(DEBUG.HeadPosY);
+                            }
                         }
                     }
                 }
