@@ -2,14 +2,11 @@ package net.foxyas.changedaddon.mixins;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.process.DEBUG;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.PostPass;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
@@ -24,10 +21,13 @@ import java.io.IOException;
 import java.util.List;
 
 @Mixin(GameRenderer.class)
-public class GameRendererMixin {
+public abstract class GameRendererMixin {
     @Shadow
     @Final
     private Minecraft minecraft;
+
+    @Shadow
+    public abstract void render(float p_109094_, long p_109095_, boolean p_109096_);
 
     @Unique
     private PostChain changed_Addon_Rework$colorblindChain;
@@ -38,49 +38,58 @@ public class GameRendererMixin {
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V", shift = At.Shift.AFTER))
     private void verdant$addColorblindFilter(float partialTicks, long nanoTime, boolean renderLevel, CallbackInfo ci) {
-        if (this.changed_Addon_Rework$colorblindChain == null) {
-            changed_Addon_Rework$loadShaders();
-        }
+        if (changed_Addon_Rework$ShouldWork()) {
+            if (this.changed_Addon_Rework$colorblindChain == null) {
+                changed_Addon_Rework$loadShaders();
+            }
 
-        int w = this.minecraft.getMainRenderTarget().width;
-        int h = this.minecraft.getMainRenderTarget().height;
+            int w = this.minecraft.getMainRenderTarget().width;
+            int h = this.minecraft.getMainRenderTarget().height;
 
 
-        if (w != changed_Addon_Rework$prevWidth || h != changed_Addon_Rework$prevHeight) {
-            this.changed_Addon_Rework$colorblindChain.resize(w, h);
-            changed_Addon_Rework$prevWidth = w;
-            changed_Addon_Rework$prevHeight = h;
-        }
+            if (w != changed_Addon_Rework$prevWidth || h != changed_Addon_Rework$prevHeight) {
+                this.changed_Addon_Rework$colorblindChain.resize(w, h);
+                changed_Addon_Rework$prevWidth = w;
+                changed_Addon_Rework$prevHeight = h;
+            }
 
-        Player player = this.minecraft.player;
-        if (player != null && player.getMainHandItem().is(Items.DEBUG_STICK)) {
-            if (this.changed_Addon_Rework$colorblindChain instanceof PostChainMixin postChainMixin){
-                List<PostPass> postPassList = postChainMixin.getPasses();
-                if (postPassList != null && !postPassList.isEmpty()){
-                    for (PostPass postPass : postPassList) {
-                        Uniform uniform = postPass.getEffect().getUniform("Saturation");
-                        Uniform uniform2 = postPass.getEffect().getUniform("Contrast");
-                        if (uniform != null) {
-                           if (player.isShiftKeyDown()) {
-                               uniform.set(DEBUG.HeadPosJ);
-                           } else {
-                               uniform.set(DEBUG.HeadPosK);
-                           }
-                        } 
-                        if (uniform2 != null) {
-                            if (player.isShiftKeyDown()) {
-                                uniform2.set(DEBUG.HeadPosX);
-                            } else {
-                                uniform2.set(DEBUG.HeadPosY);
+            Player player = this.minecraft.player;
+            if (player != null && player.getMainHandItem().is(Items.DEBUG_STICK)) {
+                if (this.changed_Addon_Rework$colorblindChain instanceof PostChainMixin postChainMixin) {
+                    List<PostPass> postPassList = postChainMixin.getPasses();
+                    if (postPassList != null && !postPassList.isEmpty()) {
+                        for (PostPass postPass : postPassList) {
+                            Uniform uniform = postPass.getEffect().getUniform("Saturation");
+                            Uniform uniform2 = postPass.getEffect().getUniform("Contrast");
+                            if (uniform != null) {
+                                if (player.isShiftKeyDown()) {
+                                    uniform.set(1);
+                                } else {
+                                    uniform.set(2);
+                                }
+                            }
+                            if (uniform2 != null) {
+                                if (player.isShiftKeyDown()) {
+                                    uniform2.set(1);
+                                } else {
+                                    uniform2.set(2);
+                                }
                             }
                         }
                     }
+
                 }
 
+                this.changed_Addon_Rework$colorblindChain.process(partialTicks);
             }
 
-            this.changed_Addon_Rework$colorblindChain.process(partialTicks);
         }
+
+    }
+
+    @Unique
+    private boolean changed_Addon_Rework$ShouldWork() {
+        return false;
     }
 
     @Unique

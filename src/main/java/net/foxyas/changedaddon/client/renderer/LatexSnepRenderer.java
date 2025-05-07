@@ -24,7 +24,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.Pose;
-//import net.foxyas.changedaddon.process.DEBUG;
 import org.jetbrains.annotations.NotNull;
 
 public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity, LatexSnepModel, ArmorNoneModel<LatexSnepEntity>> {

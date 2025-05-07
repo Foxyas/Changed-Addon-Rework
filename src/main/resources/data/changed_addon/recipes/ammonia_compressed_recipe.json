@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "012",
-    "3 5",
+    "345",
     "678"
   ],
   "key": {
@@ -17,6 +17,9 @@
     },
     "3": {
       "item": "changed_addon:ammoniaparticle"
+    },
+    "4": {
+      "item": "changed_addon:biomass"
     },
     "5": {
       "item": "changed_addon:ammoniaparticle"

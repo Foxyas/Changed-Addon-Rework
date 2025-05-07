@@ -31,7 +31,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static net.foxyas.changedaddon.procedures.PatFeatureHandleProcedure.isPossibleToPat;
-//import net.foxyas.changedaddon.process.DEBUG;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class PatOverlay {

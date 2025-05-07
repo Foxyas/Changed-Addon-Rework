@@ -68,7 +68,7 @@ public class JeiUnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe
 
         // Exibir o campo progress como um texto ou barra de progresso
         float progressSpeed = recipe.getProgressSpeed();
-        builder.addSlot(RecipeIngredientRole.CATALYST, 64, 36).addItemStack(new ItemStack(ChangedAddonModItems.UNIFUSERBLOCK_ILLUSTRATIVE_ITEM.get())) // Substitua por um item adequado
+        builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 64, 36).addItemStack(new ItemStack(ChangedAddonModItems.UNIFUSERBLOCK_ILLUSTRATIVE_ITEM.get())) // Substitua por um item adequado
                 .addTooltipCallback((recipeSlotView, tooltip) -> {
                     // Adiciona uma nova linha ao tooltip com o progresso da receita
                     tooltip.add(new TranslatableComponent("changed_addon.gui.recipe_progress", progressSpeed));

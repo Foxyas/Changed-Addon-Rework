@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -14,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public class UnifuserRecipe implements Recipe<SimpleContainer> {
     private final ResourceLocation id;
@@ -26,6 +28,10 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
         this.output = output;
         this.recipeItems = recipeItems;
         this.ProgressSpeed = ProgressSpeed;
+    }
+
+    public CompoundTag getTagOfIngredient(Ingredient ingredient){
+        return Arrays.stream(ingredient.getItems()).findAny().orElse(ItemStack.EMPTY).getOrCreateTag();
     }
 
     @Override

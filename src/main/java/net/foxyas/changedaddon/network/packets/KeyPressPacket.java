@@ -2,15 +2,11 @@ package net.foxyas.changedaddon.network.packets;
 
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.abilities.PsychicGrab;
-import net.foxyas.changedaddon.process.DEBUG;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import org.lwjgl.glfw.GLFW;
 
-import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class KeyPressPacket {

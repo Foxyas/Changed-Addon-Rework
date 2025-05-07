@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import net.foxyas.changedaddon.abilities.CarryAbility;
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
-//import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;

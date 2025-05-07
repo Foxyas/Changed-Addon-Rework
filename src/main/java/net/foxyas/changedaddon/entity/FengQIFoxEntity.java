@@ -135,9 +135,17 @@ public class FengQIFoxEntity extends ChangedEntity implements GenderedEntity, Po
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
-		this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#e24340"));
-		return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+        /*setEyeStyle(EyeStyle.TALL);
+        CompoundTag dataIndex0 = new CompoundTag();
+        this.saveWithoutId(dataIndex0);
+        dataIndex0.getCompound("LocalVariantInfo").putFloat("scale", 1);
+        this.load(dataIndex0);*/
+        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#e24340"));
+        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#e24340"));
+        return retval;
+
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
