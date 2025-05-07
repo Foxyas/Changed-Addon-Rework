@@ -75,6 +75,58 @@ public class ModelUtils {
         return new Vec3(pos.x(), pos.y(), pos.z());
     }
 
+    /**
+     * Calculates the world position from a model part using a custom transform approach with rotation mirroring support.
+     *
+     * @param part                 The model part to use.
+     * @param Offset               offset relative to the model part.
+     * @param vec3                 variable used on the Matrix4f
+     * @param entity               The entity used for base position and orientation.
+     * @param entityPosOffset      offset relative to the entity position part.
+     * @param Rotation             Rotation vector (in degrees).
+     * @param affectEntityViewXrot Whether to apply the entity's X rotation to the transformation.
+     * @return The resulting world-space position as a {@link Vec3}.
+     */
+
+    public static Vec3 getWorldSpaceFromModelPart(ModelPart part, Vector3f Offset, Vector3f vec3, @NotNull Entity entity, @Nullable Vec3 entityPosOffset, @Nullable Vec3 Rotation, boolean affectEntityViewXrot) {
+        // if using a player arms the best offset positions is Rotation.x() = 180, entityPosOffset.y = 0.45 if sneaking and -0.2 if not
+        // Also Remember to make some offset checks for positions ofc
+        if (Rotation == null) {
+            Rotation = new Vec3(180, 0, 0);
+        }
+
+        if (entityPosOffset == null) {
+            entityPosOffset = new Vec3(0, -0.3, 0);
+        }
+
+        PoseStack stack = new PoseStack();
+
+        // Applies entity transformations (optional but recommended)
+        stack.translate(entity.getX() + entityPosOffset.x(), entity.getEyeY() + entityPosOffset.y() + (entity instanceof Player player && player.isShiftKeyDown() ? 0.225d : 0d), entity.getZ() + entityPosOffset.z());
+        stack.mulPose(Vector3f.YP.rotationDegrees(entity instanceof Player player ? -player.yBodyRotO : -entity.yRotO));
+        if (affectEntityViewXrot) {
+            stack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
+        }
+
+        // Applies the ModelPart transformations
+        part.xRot *= 1;
+        part.yRot *= 1;
+        part.zRot *= 1;
+        stack.mulPose(Vector3f.YP.rotationDegrees((float) Rotation.y()));
+        stack.mulPose(Vector3f.XP.rotationDegrees((float) Rotation.x()));
+        stack.mulPose(Vector3f.ZP.rotationDegrees((float) Rotation.z()));
+        part.translateAndRotate(stack);
+        stack.translate(Offset.x(),Offset.y(),Offset.z());
+
+
+        // Aplica o offset local
+        Matrix4f matrix = stack.last().pose();
+        Vector4f pos = new Vector4f(vec3.x(), vec3.y(), vec3.z(), 1.0F);
+        pos.transform(matrix);
+
+        return new Vec3(pos.x(), pos.y(), pos.z());
+    }
+
     public static AABB getModelPartBounds(ModelPart part) {
         ModelPart.Cube partCube = part.getRandomCube(new Random());
         return new AABB(partCube.minX, partCube.minY, partCube.minZ, partCube.maxX, partCube.maxY, partCube.maxZ);
