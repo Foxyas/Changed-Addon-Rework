@@ -1,0 +1,22 @@
+{
+    "targets": [
+        "swap"
+    ],
+    "passes": [
+        {
+            "name": "changed_addon:vision_coloring",
+            "intarget": "minecraft:main",
+            "outtarget": "swap",
+            "uniforms": [
+                { "name": "Saturation", "values": [ 0.0 ] }
+,
+                { "name": "Contrast", "values": [ 1.0 ] }
+            ]
+        },
+        {
+            "name": "blit",
+            "intarget": "swap",
+            "outtarget": "minecraft:main"
+        }
+    ]
+}

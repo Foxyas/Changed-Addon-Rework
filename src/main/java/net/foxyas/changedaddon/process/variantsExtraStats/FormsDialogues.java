@@ -1,6 +1,5 @@
-package net.foxyas.changedaddon.process.FormsCustomStats;
+package net.foxyas.changedaddon.process.variantsExtraStats;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -11,9 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.Level;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 

@@ -16,6 +16,7 @@ import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.item.armor.DyeableShorts;
 import net.foxyas.changedaddon.network.packets.KeyPressPacket;
+import net.foxyas.changedaddon.network.packets.SyncTransfurVisionsPacket;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
@@ -183,6 +184,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		@SubscribeEvent
 		public static void registerPackets(FMLConstructModEvent event) {
 			ChangedAddonMod.addNetworkMessage(KeyPressPacket.class, KeyPressPacket::encode, KeyPressPacket::decode, KeyPressPacket::handle);
+			ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode, SyncTransfurVisionsPacket::decode, SyncTransfurVisionsPacket::handle);
 		}
 	}
 

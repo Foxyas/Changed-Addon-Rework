@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.process.FormsCustomStats;
+package net.foxyas.changedaddon.process.variantsExtraStats;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
