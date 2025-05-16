@@ -328,13 +328,13 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
 
 		
 		if (!entity.isSleeping()) {
-    		float breathingOffset = Mth.sin(entity.tickCount * 0.1f) * 0.25f;
+    		float breathingOffset = Mth.sin(entity.tickCount * 0.1f) * 0.15f;
     		this.Torso.y += breathingOffset;
     		this.Head.y += breathingOffset;
 		} else {
-			float breathingOffset = Mth.sin(entity.tickCount * 0.1f) * 0.25f;
-    		this.Torso.x += breathingOffset;
-    		this.Head.x += breathingOffset;
+			float breathingOffset = Mth.sin(entity.tickCount * 0.1f) * 0.15f;
+    		this.Torso.z += breathingOffset;
+    		this.Head.z += breathingOffset;
 		}
 
 		
