@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
+import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -325,6 +326,20 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
             this.Torso.setPos(0.0F, 15.0F, 0.0F);
         }
 
+		
+		if (!entity.isSleeping()) {
+    		float breathingOffset = Mth.sin(entity.tickCount * 0.1f) * 0.25f;
+    		this.Torso.y += breathingOffset;
+    		this.Head.y += breathingOffset;
+		} else {
+			float breathingOffset = Mth.sin(entity.tickCount * 0.1f) * 0.25f;
+    		this.Torso.x += breathingOffset;
+    		this.Head.x += breathingOffset;
+		}
+
+		
+        //this.Torso.setPos(Torso.x,Torso.y + (float) FoxyasUtils.getTorsoYOffset(entity), Torso.z); // This also Works
+        //this.Head.setPos(Head.x,Head.y + (float) FoxyasUtils.getTorsoYOffset(entity), Head.z); // This also Works
     }
 
     @Override
@@ -371,7 +386,6 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
         if (entity.getPose() == Pose.SWIMMING || entity.getPose() == Pose.FALL_FLYING) {
             this.Tail.xRot = 0 * Mth.DEG_TO_RAD;
         }
-
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 

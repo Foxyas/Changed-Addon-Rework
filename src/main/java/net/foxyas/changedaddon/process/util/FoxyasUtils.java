@@ -159,4 +159,23 @@ public class FoxyasUtils {
         return (double)(Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
     }
 
+    public static double getTorsoYOffset(ChangedEntity self, float scale) {
+	    float ageAdjusted = (float) self.tickCount * 0.33333334F * 0.25F * 0.15F;
+	    float ageSin = Mth.sin(ageAdjusted * (float) Math.PI * 0.5F);
+	    float ageCos = Mth.cos(ageAdjusted * (float) Math.PI * 0.5F);
+	    float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
+	
+	    float baseOscillation = Mth.lerp(
+	        Mth.lerp(
+            	1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F),
+            	ageSin * ageSin * ageSin * ageSin,
+	            1.0F - ageCos * ageCos * ageCos * ageCos
+        	),
+	        0.95F, 0.87F
+    	);
+
+    	return baseOscillation * scale + bpiSize;
+	}
+
+
 }
