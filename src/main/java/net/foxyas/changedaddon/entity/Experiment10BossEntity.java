@@ -187,6 +187,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     public double getMyRidingOffset() {
         return super.getMyRidingOffset();
     }
+
     @Override
     public SoundEvent getHurtSound(DamageSource ds) {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
@@ -238,7 +239,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
     @Override
     public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
-        if (mobEffectInstance.getEffect() == MobEffects.WITHER){
+        if (mobEffectInstance.getEffect() == MobEffects.WITHER) {
             return false;
         }
 
@@ -514,16 +515,27 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
     @Override
     public void WhenPattedReaction(Player player) {
+        if (!player.getLevel().isClientSide) {
+            return;
+        }
         List<TranslatableComponent> translatableComponentList = new ArrayList<>();
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_0"));
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_1"));
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_2"));
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_3"));
-
+        player.getLevel().addParticle(
+                ChangedParticles.emote(this, Emote.ANGRY),
+                this.getX(),
+                this.getY() + (double) this.getDimensions(this.getPose()).height + 0.65,
+                this.getZ(),
+                0.0f,
+                0.0f,
+                0.0f
+        );
         PlayerUtilProcedure.ParticlesUtil.sendParticles(player.getLevel(),
                 ChangedParticles.emote(this, Emote.ANGRY),
                 this.getX(),
-                this.getY() + (double)this.getDimensions(this.getPose()).height + 0.65,
+                this.getY() + (double) this.getDimensions(this.getPose()).height + 0.65,
                 this.getZ(),
                 0.0f,
                 0.0f,

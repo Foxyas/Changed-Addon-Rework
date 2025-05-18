@@ -620,6 +620,9 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 
     @Override
     public void WhenPattedReaction(Player player) {
+        if (!player.getLevel().isClientSide) {
+            return;
+        }
         List<TranslatableComponent> translatableComponentList = new ArrayList<>();
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp9.pat.type_1"));
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp9.pat.type_2"));

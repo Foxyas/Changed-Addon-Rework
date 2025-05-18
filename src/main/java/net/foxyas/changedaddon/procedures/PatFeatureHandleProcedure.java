@@ -138,12 +138,15 @@ public class PatFeatureHandleProcedure {
             }
             if (player instanceof Player p && !p.level.isClientSide()) {
                 p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
-				if (target instanceof CustomPatReaction pat) {
-					pat.WhenPattedReaction(p);
+
+            } else if (player instanceof Player p) {
+                if (target instanceof CustomPatReaction pat) {
+                    pat.WhenPattedReaction(p);
                     pat.WhenPattedReaction();
                     //p.displayClientMessage(new TextComponent("pat_message:" + target.getDisplayName().getString()), false);
-				}
+                }
             }
+
         }
     }
 
@@ -169,19 +172,22 @@ public class PatFeatureHandleProcedure {
                 p.swing(getSwingHand(player), true);
                 serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
                 // Dispara o trigger personalizado
-                SpawnEmote(p, target);
+
                 if (p instanceof ServerPlayer sp) {
                     GiveStealthPatAdvancement(sp, target);
                 }
 
+
+
+                // Exibe mensagens
+                p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
+            } else {
                 if (target instanceof CustomPatReaction e) {
                     e.WhenPattedReaction(p);
                     e.WhenPattedReaction();
                     //p.displayClientMessage(new TextComponent("pat_message:" + target.getDisplayName().getString()), false);
                 }
-
-                // Exibe mensagens
-                p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
+                SpawnEmote(p, target);
             }
 
 
@@ -284,21 +290,20 @@ public class PatFeatureHandleProcedure {
         }
     }
 
-    public static void SpawnEmote(Player player, Entity target){
-        if (target instanceof ChangedEntity changedEntity){
-            if (changedEntity.getTarget() == player){
+    public static void SpawnEmote(Player player, Entity target) {
+        if (target instanceof ChangedEntity changedEntity) {
+            if (changedEntity.getTarget() == player) {
                 return;
             }
             if (shouldBeConfused(player, target)) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(player.getLevel(),
+                player.getLevel().addParticle(
                         ChangedParticles.emote(changedEntity, Emote.CONFUSED),
                         target.getX(),
                         target.getY() + (double) target.getDimensions(target.getPose()).height + 0.65,
                         target.getZ(),
                         0.0f,
                         0.0f,
-                        0.0f, 1, 0f
-                );
+                        0.0f);
             }
         }
     }
