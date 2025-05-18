@@ -145,15 +145,17 @@ public class SleepingWithOwnerGoal extends Goal {
         @Override
         public void start() {
             if (bedPos != null && pet instanceof PathfinderMob pathfinderPet) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(owner.getLevel(),
-                        ChangedParticles.emote(pet, Emote.IDEA),
-                        pet.getX(),
-                        pet.getY() + (double)pet.getDimensions(pet.getPose()).height + 0.65,
-                        pet.getZ(),
-                        0.0f,
-                        0.0f,
-                        0.0f, 1, 0f
-                );
+                if (owner.getLevel().isClientSide()) {
+                    owner.getLevel().addParticle(
+                            ChangedParticles.emote(pet, Emote.IDEA),
+                            pet.getX(),
+                            pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,
+                            pet.getZ(),
+                            0.0f,
+                            0.0f,
+                            0.0f
+                    );
+                }
                 pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.7);
                 if (!isDogOrCat) {
                     pet.playSound(SoundEvents.CAT_PURREOW, 1.0F, 1.0F); // Toca o som de ronronar
@@ -201,15 +203,17 @@ public class SleepingWithOwnerGoal extends Goal {
                         // Verifica novamente antes de dormir
                         if (!bedState.getValue(BedBlock.OCCUPIED)) {
                             pet.startSleeping(bedPos);
-                            PlayerUtilProcedure.ParticlesUtil.sendParticles(owner.getLevel(),
-                                    ChangedParticles.emote(pet, Emote.HEART),
-                                    pet.getX(),
-                                    pet.getY() + (double)pet.getDimensions(pet.getPose()).height + 0.65,
-                                    pet.getZ(),
-                                    0.0f,
-                                    0.0f,
-                                    0.0f, 1, 0f
-                            );
+                            if (owner.getLevel().isClientSide()) {
+                                owner.getLevel().addParticle(
+                                        ChangedParticles.emote(pet, Emote.HEART),
+                                        pet.getX(),
+                                        pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,
+                                        pet.getZ(),
+                                        0.0f,
+                                        0.0f,
+                                        0.0f
+                                );
+                            }
                             // Atualiza o estado da cama para ocupada
                             pet.level.setBlockAndUpdate(bedPos, bedState.setValue(BedBlock.OCCUPIED, true));
 
@@ -400,15 +404,17 @@ public class SleepingWithOwnerGoal extends Goal {
     @Override
     public void start() {
         if (bedPos != null && pet instanceof PathfinderMob pathfinderPet) {
-        	PlayerUtilProcedure.ParticlesUtil.sendParticles(owner.getLevel(),
+            if (owner.getLevel().isClientSide()) {
+                owner.getLevel().addParticle(
                         ChangedParticles.emote(pet, Emote.IDEA),
                         pet.getX(),
-                        pet.getY() + (double)pet.getDimensions(pet.getPose()).height + 0.65,
+                        pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,
                         pet.getZ(),
                         0.0f,
                         0.0f,
-                        0.0f, 1, 0f
-            );
+                        0.0f
+                );
+            }
             // Move o pet para a cama com velocidade reduzida
             pathfinderPet.getNavigation().moveTo(bedPos.getX() + 0.5, bedPos.getY(), bedPos.getZ() + 0.5, 0.7);
             if (!isDogOrCat) {
@@ -439,15 +445,17 @@ public class SleepingWithOwnerGoal extends Goal {
                 //}
                 if (sleepTimer >= 10) {
                     if (!pet.isSleeping()) {
-                    	PlayerUtilProcedure.ParticlesUtil.sendParticles(owner.getLevel(),
-                        ChangedParticles.emote(pet, Emote.HEART),
-                        pet.getX(),
-                        pet.getY() + (double)pet.getDimensions(pet.getPose()).height + 0.65,
-                        pet.getZ(),
-                        0.0f,
-                        0.0f,
-                        0.0f, 1, 0f
-                		);
+                        if (owner.getLevel().isClientSide()) {
+                            owner.getLevel().addParticle(
+                                    ChangedParticles.emote(pet, Emote.HEART),
+                                    pet.getX(),
+                                    pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,
+                                    pet.getZ(),
+                                    0.0f,
+                                    0.0f,
+                                    0.0f
+                            );
+                        }
                 		
                         pet.startSleeping(bedPos);
                     }

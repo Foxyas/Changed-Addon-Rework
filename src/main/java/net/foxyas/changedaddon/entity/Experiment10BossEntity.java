@@ -532,15 +532,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
                 0.0f,
                 0.0f
         );
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(player.getLevel(),
-                ChangedParticles.emote(this, Emote.ANGRY),
-                this.getX(),
-                this.getY() + (double) this.getDimensions(this.getPose()).height + 0.65,
-                this.getZ(),
-                0.0f,
-                0.0f,
-                0.0f, 1, 0f
-        );
         player.displayClientMessage(translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size())), false);
     }
 }
