@@ -41,6 +41,7 @@ import net.foxyas.changedaddon.client.renderer.Exp1FemaleRenderer;
 import net.foxyas.changedaddon.client.renderer.ErikRenderer;
 import net.foxyas.changedaddon.client.renderer.DazedRenderer;
 import net.foxyas.changedaddon.client.renderer.BunyRenderer;
+import net.foxyas.changedaddon.client.renderer.BagelRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ChangedAddonModEntityRenderers {
@@ -78,5 +79,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.FOXTA_FOXY.get(), FoxtaFoxyRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.SNEPSI_LEOPARD.get(), SnepsiLeopardRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_FOX.get(), FengQIFoxRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.BAGEL.get(), BagelRenderer::new);
 	}
 }
