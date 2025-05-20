@@ -324,6 +324,12 @@ public class AbstractLuminarCrystal {
         public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
             return Shapes.empty();
         }
+        
+        
+		@Override
+		public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+			return 0;
+		}
 
         @Override
         public boolean canBeReplaced(@NotNull BlockState thisState, @NotNull Fluid fluid) {
