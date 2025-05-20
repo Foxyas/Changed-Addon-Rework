@@ -331,6 +331,12 @@ public class AbstractLuminarCrystal {
 			return 0;
 		}
 
+		@Override
+        public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+            return 4;
+        }
+
+
         @Override
         public boolean canBeReplaced(@NotNull BlockState thisState, @NotNull Fluid fluid) {
             if (fluid instanceof LavaFluid || (fluid instanceof WaterFluid)) {
@@ -403,11 +409,6 @@ public class AbstractLuminarCrystal {
         @Override
         public boolean propagatesSkylightDown(@NotNull BlockState state, @NotNull BlockGetter reader, @NotNull BlockPos pos) {
             return true;
-        }
-
-        @Override
-        public int getLightBlock(@NotNull BlockState state, @NotNull BlockGetter worldIn, @NotNull BlockPos pos) {
-            return 4;
         }
 
         @Override
