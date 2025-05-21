@@ -51,6 +51,7 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(FoxtaFoxyModel.LAYER_LOCATION, FoxtaFoxyModel::createBodyLayer);
         event.registerLayerDefinition(FengQIFoxModel.LAYER_LOCATION, FengQIFoxModel::createBodyLayer);
         event.registerLayerDefinition(BagelModel.LAYER_LOCATION, BagelModel::createBodyLayer);
+        event.registerLayerDefinition(LatexSnepSharkModel.LAYER_LOCATION, LatexSnepSharkModel::createBodyLayer);
 
         //Armors
         event.registerLayerDefinition(ArmorLatexSquidTigerSharkModel.INNER_ARMOR, () -> ArmorLatexSquidTigerSharkModel.createArmorLayer(ArmorModel.INNER));

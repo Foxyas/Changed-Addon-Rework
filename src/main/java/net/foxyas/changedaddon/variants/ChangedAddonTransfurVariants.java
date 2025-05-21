@@ -78,7 +78,7 @@ public class ChangedAddonTransfurVariants {
 
     public static boolean isVariantOC(ResourceLocation transfurVariantID, @Nullable Level level) {
         TransfurVariant<?> variantFromID = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(transfurVariantID);
-        if (variantFromID != null){
+        if (variantFromID != null) {
             return isVariantOC(variantFromID, level);
         }
         return false;
@@ -87,7 +87,7 @@ public class ChangedAddonTransfurVariants {
     public static boolean isVariantOC(String transfurVariantString, @Nullable Level level) {
         ResourceLocation transfurVariantID = new ResourceLocation(transfurVariantString);
         TransfurVariant<?> variantFromID = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(transfurVariantID);
-        if (variantFromID != null){
+        if (variantFromID != null) {
             return isVariantOC(variantFromID, level);
         }
         return false;
@@ -101,19 +101,19 @@ public class ChangedAddonTransfurVariants {
             .transfurMode(TransfurMode.ABSORPTION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilities.CARRY).scares(List.of()));
 
     public static final RegistryObject<TransfurVariant<SnowLeopardMaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_MALE = register("form_biosynth_snow_leopard/male",
-            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_MALE.get(),*/ChangedAddonModEntities.SNOW_LEOPARD_MALE_ORGANIC)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.SNOW_LEOPARD_MALE_ORGANIC)
                     .transfurMode(TransfurMode.REPLICATION).nightVision().breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilities.CARRY).addAbility(ChangedAddonAbilities.TURN_FERAL_SNEP).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)));
 
     public static final RegistryObject<TransfurVariant<SnowLeopardFemaleOrganicEntity>> ORGANIC_SNOW_LEOPARD_FEMALE = register("form_biosynth_snow_leopard/female",
-            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_FEMALE.get(),*/ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.SNOW_LEOPARD_FEMALE_ORGANIC)
                     .transfurMode(TransfurMode.ABSORPTION).nightVision().breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F).addAbility(ChangedAddonAbilities.CARRY).addAbility(ChangedAddonAbilities.TURN_FERAL_SNEP).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)));
 
     public static final RegistryObject<TransfurVariant<LatexSnowFoxEntity>> ADDON_LATEX_SNOW_FOX_MALE = register("form_latex_snow_fox/male",
-            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_MALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX)
                     .nightVision().scares(Rabbit.class));
 
     public static final RegistryObject<TransfurVariant<LatexSnowFoxFemaleEntity>> ADDON_LATEX_SNOW_FOX_FEMALE = register("form_latex_snow_fox/female",
-            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_FEMALE.get(),*/ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE)
                     .nightVision().scares(Rabbit.class));
 
     public static final RegistryObject<TransfurVariant<DazedEntity>> DAZED_LATEX = register("form_dazed_latex", TransfurVariant.Builder.of(ChangedAddonModEntities.DAZED)
@@ -121,7 +121,7 @@ public class ChangedAddonTransfurVariants {
 
 
     public static final RegistryObject<TransfurVariant<MirrorWhiteTigerEntity>> MIRROR_WHITE_TIGER = register("form_mirror_white_tiger_female",
-            () -> TransfurVariant.Builder.of(/*LATEX_WHITE_TIGER.get(),*/ChangedAddonModEntities.MIRROR_WHITE_TIGER)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.MIRROR_WHITE_TIGER)
                     .stepSize(0.7F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<SnepsiLeopardEntity>> SNEPSI_LEOPARD = register("form_snepsi_leopard",
@@ -131,6 +131,11 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<FoxtaFoxyEntity>> FOXTA_FOXY = register("form_foxta_foxy",
             () -> TransfurVariant.Builder.of(ChangedAddonModEntities.FOXTA_FOXY)
                     .stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Rabbit.class)).nightVision());
+
+
+    public static final RegistryObject<TransfurVariant<LatexSnepSharkEntity>> LATEX_SNEP_SHARK = register("form_latex_snep_shark",
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNEP_SHARK)
+                    .nightVision());
 
     //Partials
     public static final RegistryObject<TransfurVariant<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("form_latex_snow_leopard_partial", TransfurVariant.Builder.of(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL)
@@ -148,12 +153,12 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<BunyEntity>> BUNY = register("form_buny", TransfurVariant.Builder.of(ChangedAddonModEntities.BUNY)
             .jumpStrength(1.5F).reducedFall().transfurMode(TransfurMode.ABSORPTION).scares(List.of()));
     public static final RegistryObject<TransfurVariant<BagelEntity>> BAGEL = register("form_bagel",
-            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_MALE.get(),*/ChangedAddonModEntities.BAGEL)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.BAGEL)
                     .nightVision().scares(Rabbit.class));
 
     //Experiments
     public static final RegistryObject<TransfurVariant<Exp1MaleEntity>> EXP1_MALE = register("form_exp1/male",
-            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_MALE.get(),*/ChangedAddonModEntities.EXP_1_MALE)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.EXP_1_MALE)
                     .nightVision().extraJumps(2)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_PULSE)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_HOLD)
@@ -162,7 +167,7 @@ public class ChangedAddonTransfurVariants {
                     .transfurMode(TransfurMode.NONE));
 
     public static final RegistryObject<TransfurVariant<Exp1FemaleEntity>> EXP1_FEMALE = register("form_exp1/female",
-            () -> TransfurVariant.Builder.of(/*WHITE_LATEX_WOLF_FEMALE.get(),*/ChangedAddonModEntities.EXP_1_FEMALE)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.EXP_1_FEMALE)
                     .nightVision().extraJumps(2)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_PULSE)
                     .addAbility(ChangedAddonAbilities.PSYCHIC_HOLD)
@@ -171,7 +176,7 @@ public class ChangedAddonTransfurVariants {
                     .transfurMode(TransfurMode.NONE));
 
     public static final RegistryObject<TransfurVariant<Exp2MaleEntity>> EXP2_MALE = register("form_exp2/male",
-            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_MALE.get(),*/ChangedAddonModEntities.EXP_2_MALE)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.EXP_2_MALE)
                     .transfurMode(TransfurMode.REPLICATION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F)
                     .addAbility(ChangedAbilities.SWITCH_GENDER)
                     .addAbility(ChangedAddonAbilities.DODGE)
@@ -180,7 +185,7 @@ public class ChangedAddonTransfurVariants {
                     .scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<Exp2FemaleEntity>> EXP2_FEMALE = register("form_exp2/female",
-            () -> TransfurVariant.Builder.of(/*LATEX_SNOW_LEOPARD_FEMALE.get(),*/ChangedAddonModEntities.EXP_2_FEMALE)
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.EXP_2_FEMALE)
                     .transfurMode(TransfurMode.ABSORPTION).breatheMode(TransfurVariant.BreatheMode.NORMAL).reducedFall().jumpStrength(1.3F)
                     .addAbility(ChangedAbilities.SWITCH_GENDER)
                     .addAbility(ChangedAddonAbilities.DODGE)

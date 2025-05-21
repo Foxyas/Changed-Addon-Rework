@@ -31,6 +31,7 @@ import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
 import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
+import net.foxyas.changedaddon.entity.LatexSnepSharkEntity;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
@@ -182,6 +183,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<BagelEntity>of(BagelEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(BagelEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<LatexSnepSharkEntity>> LATEX_SNEP_SHARK = register("latex_snep_shark",
+			EntityType.Builder.<LatexSnepSharkEntity>of(LatexSnepSharkEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(LatexSnepSharkEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -222,6 +227,7 @@ public class ChangedAddonModEntities {
 			SnepsiLeopardEntity.init();
 			FengQIFoxEntity.init();
 			BagelEntity.init();
+			LatexSnepSharkEntity.init();
 		});
 	}
 
@@ -259,5 +265,6 @@ public class ChangedAddonModEntities {
 		event.put(SNEPSI_LEOPARD.get(), SnepsiLeopardEntity.createAttributes().build());
 		event.put(FENG_QI_FOX.get(), FengQIFoxEntity.createAttributes().build());
 		event.put(BAGEL.get(), BagelEntity.createAttributes().build());
+		event.put(LATEX_SNEP_SHARK.get(), LatexSnepSharkEntity.createAttributes().build());
 	}
 }
