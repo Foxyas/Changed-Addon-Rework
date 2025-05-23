@@ -17,6 +17,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import net.minecraft.resources.ResourceLocation;
 
 public class FoxtaFoxyModel extends AdvancedHumanoidModel<FoxtaFoxyEntity> implements AdvancedHumanoidModelInterface<FoxtaFoxyEntity, FoxtaFoxyModel> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon","foxta_fox"), "main");

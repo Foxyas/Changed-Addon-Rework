@@ -16,6 +16,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import net.minecraft.resources.ResourceLocation;
 
 public class FengQIFoxModel extends AdvancedHumanoidModel<FengQIFoxEntity> implements AdvancedHumanoidModelInterface<FengQIFoxEntity, FengQIFoxModel> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "feng_qi_fox"), "main");
