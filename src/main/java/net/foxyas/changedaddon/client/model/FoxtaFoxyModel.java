@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class FoxtaFoxyModel extends AdvancedHumanoidModel<FoxtaFoxyEntity> implements AdvancedHumanoidModelInterface<FoxtaFoxyEntity, FoxtaFoxyModel> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Changed.modResource("foxta_fox"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon","foxta_fox"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;
