@@ -24,8 +24,8 @@ import net.foxyas.changedaddon.client.renderer.LuminarCrystalSpearRenderer;
 import net.foxyas.changedaddon.client.renderer.LatexSquidTigerSharkRenderer;
 import net.foxyas.changedaddon.client.renderer.LatexSnowFoxRenderer;
 import net.foxyas.changedaddon.client.renderer.LatexSnowFoxFemaleRenderer;
-import net.foxyas.changedaddon.client.renderer.LatexSnepSharkRenderer;
 import net.foxyas.changedaddon.client.renderer.LatexSnepRenderer;
+import net.foxyas.changedaddon.client.renderer.LatexDragonSnowLeopardSharkRenderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009BossRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
@@ -81,6 +81,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.SNEPSI_LEOPARD.get(), SnepsiLeopardRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_FOX.get(), FengQIFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.BAGEL.get(), BagelRenderer::new);
-		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNEP_SHARK.get(), LatexSnepSharkRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), LatexDragonSnowLeopardSharkRenderer::new);
 	}
 }

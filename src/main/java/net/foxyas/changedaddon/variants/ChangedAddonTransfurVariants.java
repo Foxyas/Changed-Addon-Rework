@@ -14,7 +14,6 @@ import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.animal.AbstractGolem;
-import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.monster.piglin.Piglin;
@@ -133,8 +132,8 @@ public class ChangedAddonTransfurVariants {
                     .stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Rabbit.class)).nightVision());
 
 
-    public static final RegistryObject<TransfurVariant<LatexSnepSharkEntity>> LATEX_SNEP_SHARK = register("form_latex_snep_shark",
-            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_SNEP_SHARK)
+    public static final RegistryObject<TransfurVariant<LatexDragonSnowLeopardSharkEntity>> LATEX_DRAGON_SNEP_SHARK = register("form_latex_dragon_snow_leopard_shark",
+            () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK).glide()
                     .nightVision());
 
     //Partials
