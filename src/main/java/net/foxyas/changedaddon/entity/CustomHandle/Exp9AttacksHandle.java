@@ -739,6 +739,43 @@ public class Exp9AttacksHandle {
         }
     }
 
+    public static class RandomTeleportAttack extends Goal {
+        private final KetExperiment009BossEntity boss;
+
+        public RandomTeleportAttack(KetExperiment009BossEntity boss) {
+            this.boss = boss;
+        }
+
+        @Override
+        public boolean canUse() {
+            return boss.getTarget() != null && (boss.isOnGround() || boss.getTarget().isOnGround()) && boss.getRandom().nextFloat() <= (boss.isPhase2() ? 0.35f : 0.25f) && this.boss.distanceTo(boss.getTarget()) >= 1.5;
+        }
+
+        @Override
+        public void start() {
+            Teleport();
+        }
+
+        public void Teleport() {
+            LivingEntity target = boss.getTarget();
+            if (target == null) {
+                return;
+            }
+            Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
+            boss.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+            target.hurt(boss.ThunderDmg, 2);
+        }
+
+        public static void Teleport(KetExperiment009BossEntity boss, LivingEntity target) {
+            if (target == null) {
+                return;
+            }
+            Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
+            boss.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+            target.hurt(boss.ThunderDmg, 2);
+        }
+    }
+
     public static class BurstAttack extends Goal {
         private final KetExperiment009BossEntity boss;
 

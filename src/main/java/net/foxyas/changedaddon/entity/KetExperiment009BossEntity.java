@@ -185,6 +185,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         this.goalSelector.addGoal(5, new Exp9AttacksHandle.ThunderWave(this));
         this.goalSelector.addGoal(10, new Exp9AttacksHandle.ThunderStorm(this));
         this.goalSelector.addGoal(5, new Exp9AttacksHandle.TeleportAttack(this));
+        this.goalSelector.addGoal(20, new Exp9AttacksHandle.RandomTeleportAttack(this));
         this.goalSelector.addGoal(4, new Exp9AttacksHandle.TeleportComboGoal(this));
         this.goalSelector.addGoal(4, new Exp9AttacksHandle.TeleportAirComboGoal(this));
         this.goalSelector.addGoal(6, new Exp9AttacksHandle.BurstAttack(this));

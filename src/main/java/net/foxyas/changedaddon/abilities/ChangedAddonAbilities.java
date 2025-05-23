@@ -45,7 +45,7 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
 
     public static List<EntityType<?>> getCanGlideEntites() {
         //["form_dark_dragon", "form_dark_latex_yufeng", "form_latex_pink_yuin_dragon", "form_latex_red_dragon"]
-        return List.of(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), ChangedEntities.DARK_LATEX_YUFENG.get(), ChangedEntities.LATEX_PINK_YUIN_DRAGON.get(), ChangedEntities.DARK_DRAGON.get(), ChangedEntities.LATEX_RED_DRAGON.get());
+        return List.of(ChangedEntities.DARK_LATEX_YUFENG.get(), ChangedEntities.LATEX_PINK_YUIN_DRAGON.get(), ChangedEntities.DARK_DRAGON.get(), ChangedEntities.LATEX_RED_DRAGON.get());
     }
 
     public static void addUniversalAbilities(TransfurVariant.UniversalAbilitiesEvent event) {
