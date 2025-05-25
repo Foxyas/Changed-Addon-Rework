@@ -324,14 +324,14 @@ public class AbstractLuminarCrystal {
         public @NotNull VoxelShape getCollisionShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
             return Shapes.empty();
         }
-        
-        
-		@Override
-		public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-			return 0;
-		}
 
-		@Override
+
+        @Override
+        public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+            return 0;
+        }
+
+        @Override
         public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
             return 4;
         }
@@ -477,6 +477,11 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
+        public void destroy(LevelAccessor p_49860_, BlockPos p_49861_, BlockState p_49862_) {
+            super.destroy(p_49860_, p_49861_, p_49862_);
+        }
+
+        @Override
         public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
             if (!level.isClientSide && !oldState.is(newState.getBlock())) {
                 ServerLevel serverLevel = level instanceof ServerLevel ? (ServerLevel) level : null;
@@ -488,8 +493,6 @@ public class AbstractLuminarCrystal {
                             if (entity instanceof Player player) {
                                 return !player.isSpectator() && !player.isCreative();
                             }
-
-
                             return !(entity instanceof AbstractLuminarcticLeopard);
                         })
                         .min(Comparator.comparingDouble(entity -> entity.distanceToSqr(pos.getX(), pos.getY(), pos.getZ())))
@@ -518,9 +521,21 @@ public class AbstractLuminarCrystal {
                         if (oldState.getValue(HEARTED)) {
                             newLeopard.setBoss(true);
                         }
-                        newLeopard.setPos(pos.getX(), pos.getY(), pos.getZ());
+
+                        BlockPos spawnPos = pos;
+
+                        /*if (oldState.hasProperty(BlockStateProperties.FACING)) {
+                            Direction facing = oldState.getValue(BlockStateProperties.FACING);
+                            spawnPos = pos.relative(facing);
+                        }
+*/
+
+                        Vec3 spawnVec = new Vec3(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D);
+                        newLeopard.setPos(spawnVec.x, spawnVec.y, spawnVec.z);
                         newLeopard.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
-                        newLeopard.setTarget(closestEntity);
+                        if (closestEntity != null) {
+                            newLeopard.setTarget(closestEntity);
+                        }
                         level.addFreshEntity(newLeopard);
                         newLeopard.playSound(SoundEvents.ENDERMAN_SCREAM, 1, 0);
                     }

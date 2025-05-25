@@ -5,6 +5,8 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -19,6 +21,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,7 +46,7 @@ public class ModelUtils {
         // Also Remember to make some offset checks for positions ofc
         if (Rotation == null) {
             Rotation = new Vec3(180, 0, 0);
-        } 
+        }
 
         if (entityPosOffset == null) {
             entityPosOffset = new Vec3(0, 0.2d, 0);
@@ -75,6 +79,32 @@ public class ModelUtils {
         return new Vec3(pos.x(), pos.y(), pos.z());
     }
 
+    public static List<ModelPart> getTailFromModelIfAny(AdvancedHumanoidModel<?> model) {
+        List<ModelPart> tailParts = new ArrayList<>();
+
+        try {
+            ModelPart tail = model.getTorso().getChild("Tail");
+            tailParts.add(tail);
+
+            ModelPart primary = tail.getChild("TailPrimary");
+            tailParts.add(primary);
+
+            ModelPart secondary = primary.getChild("TailSecondary");
+            tailParts.add(secondary);
+
+            ModelPart tertiary = secondary.getChild("TailTertiary");
+            tailParts.add(tertiary);
+
+            ModelPart quaternary = tertiary.getChild("TailQuaternary");
+            tailParts.add(quaternary);
+        } catch (Exception ignored) {
+            // Se qualquer etapa falhar, retorna as partes válidas até o erro
+        }
+
+        return tailParts;
+    }
+
+
     /**
      * Calculates the world position from a model part using a custom transform approach with rotation mirroring support.
      *
@@ -103,7 +133,7 @@ public class ModelUtils {
 
         // Applies entity transformations (optional but recommended)
         stack.translate(entity.getX() + entityPosOffset.x(), entity.getEyeY() + entityPosOffset.y() + (entity instanceof Player player && player.isShiftKeyDown() ? 0.225d : 0d), entity.getZ() + entityPosOffset.z());
-        stack.mulPose(Vector3f.YP.rotationDegrees(entity instanceof Player player ? -player.yBodyRotO : -entity.yRotO));
+        stack.mulPose(Vector3f.YP.rotationDegrees(entity instanceof LivingEntity livingEntity ? -livingEntity.yBodyRotO : -entity.yRotO));
         if (affectEntityViewXrot) {
             stack.mulPose(Vector3f.XP.rotationDegrees(entity.getXRot()));
         }
@@ -116,7 +146,7 @@ public class ModelUtils {
         stack.mulPose(Vector3f.XP.rotationDegrees((float) Rotation.x()));
         stack.mulPose(Vector3f.ZP.rotationDegrees((float) Rotation.z()));
         part.translateAndRotate(stack);
-        stack.translate(Offset.x(),Offset.y(),Offset.z());
+        stack.translate(Offset.x(), Offset.y(), Offset.z());
 
 
         // Aplica o offset local

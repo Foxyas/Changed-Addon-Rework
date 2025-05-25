@@ -3,8 +3,12 @@ package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.KetBossModel;
+import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
+import net.foxyas.changedaddon.process.util.FoxyasUtils;
+import net.foxyas.changedaddon.process.util.ModelUtils;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
@@ -15,6 +19,7 @@ import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfM
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Camera;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -23,103 +28,245 @@ import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetExperiment009BossEntity, KetBossModel, ArmorLatexMaleWolfModel<KetExperiment009BossEntity>> {
-	public KetExperiment009BossRenderer(EntityRendererProvider.Context context) {
-	super(context, new KetBossModel(context.bakeLayer(KetBossModel.LAYER_LOCATION)),
-				ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.75f));
-		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
-		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-	//  this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#66FFFF"))));
-	}
+    public KetExperiment009BossRenderer(EntityRendererProvider.Context context) {
+        super(context, new KetBossModel(context.bakeLayer(KetBossModel.LAYER_LOCATION)),
+                ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
+        this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.75f));
+        //this.addLayer(new ParticlesTrailsLayer<>(this));
+        this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+        this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
+        //  this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#66FFFF"))));
+    }
 
-	@Override
-	public void render(KetExperiment009BossEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
-	}
+    @Override
+    public void render(KetExperiment009BossEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
+    }
 
-	@Override
-	public ResourceLocation getTextureLocation(KetExperiment009BossEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/kettexture.png");
-	}
-
-
-	private static class CustomEmissiveBodyLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
-		private final RenderType renderType;
-		private final ResourceLocation emissiveTexture;
-		private final float healthThreshold;
-
-		public CustomEmissiveBodyLayer(RenderLayerParent<T, M> p_116964_, ResourceLocation emissiveTexture,float healthThreshold) {
-			super(p_116964_);
-			this.renderType = RenderType.eyes(emissiveTexture);
-			this.emissiveTexture = emissiveTexture;
-			this.healthThreshold = healthThreshold;
-		}
-		public ResourceLocation getEmissiveTexture() {
-			return this.emissiveTexture;
-		}
-
-		@Override
-		public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-			if (entity.getUnderlyingPlayer() == null && entity instanceof KetExperiment009BossEntity ketExperiment009 && ketExperiment009.isPhase2()){
-				VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
-				this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-			}
-
-			if (entity.getUnderlyingPlayer() == null && entity.getHealth() <= entity.getMaxHealth() * healthThreshold) {
-				VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
-				this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-			} else if (entity.getUnderlyingPlayer() != null){
-				VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
-				this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-			}
-		}
+    @Override
+    public ResourceLocation getTextureLocation(KetExperiment009BossEntity entity) {
+        return new ResourceLocation("changed_addon:textures/entities/kettexture.png");
+    }
 
 
-		public RenderType renderType() {
-			return this.renderType;
-		}
+    private static class ParticlesTrailsLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
 
-		@Override
-		public void renderFirstPersonOnFace(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, Camera camera) {
-			FirstPersonLayer.super.renderFirstPersonOnFace(stack, bufferSource, packedLight, entity, camera);
-		}
+        public ParticlesTrailsLayer(RenderLayerParent<T, M> p_116964_) {
+            super(p_116964_);
+        }
 
-		@Override
-		public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector, float partialTick) {
-			FirstPersonLayer.super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
-			if (entity.getUnderlyingPlayer() != null){
-				stack.pushPose();
-				stack.scale(1.0002F, 1.0002F, 1.0002F);
-				EntityModel<T> var8 = this.getParentModel();
-				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
-				}
-				stack.popPose();
-			}
+        @Override
+        public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity,
+                           float limbSwing, float limbSwingAmount, float partialTicks,
+                           float ageInTicks, float netHeadYaw, float headPitch) {
+            if (!(entity instanceof KetExperiment009BossEntity ket)) return;
 
-			if (entity.getUnderlyingPlayer() == null && entity instanceof KetExperiment009BossEntity ketExperiment009 && ketExperiment009.isPhase2()){
-				stack.pushPose();
-				stack.scale(1.0002F, 1.0002F, 1.0002F);
-				EntityModel<T> var8 = this.getParentModel();
-				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
-				}
-				stack.popPose();
-			}
+            if (entity.getRandom().nextFloat() <= 0.05f && (!ket.isPhase2() && !ket.isPhase3()) && this.getParentModel() instanceof AdvancedHumanoidModel<?> model) {
+                List<ModelPart> modelPartList = new ArrayList<>(List.of(
+                        model.getHead(),
+                        model.getTorso()
+                ));
+                modelPartList.addAll(ModelUtils.getTailFromModelIfAny(model));
+                modelPartList.addAll(List.of(
+                        model.getArm(HumanoidArm.RIGHT),
+                        model.getArm(HumanoidArm.LEFT),
+                        model.getLeg(HumanoidArm.RIGHT),
+                        model.getLeg(HumanoidArm.LEFT)
+                ));
 
-			if (entity.getUnderlyingPlayer() == null && entity.getHealth() <= entity.getMaxHealth() * healthThreshold) {
-				stack.pushPose();
-				stack.scale(1.0002F, 1.0002F, 1.0002F);
-				EntityModel<T> var8 = this.getParentModel();
-				if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-					FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
-				}
-				stack.popPose();
-			}
-		}
-	}
+                Vector3f offset = new Vector3f(0, -0.10f, 0);
+                Vector3f vec = new Vector3f(0, 0.85f, 0);
+                Vec3 entityOffset = Vec3.ZERO;
+                Vec3 rotation = new Vec3(180, 0, 0);
+
+                ModelPart part = modelPartList.get(entity.getRandom().nextInt(modelPartList.size()));
+                Vec3 worldPos;
+                if (part == model.getHead()) {
+                    worldPos = FoxyasUtils.getRelativePositionEyes(entity, new Vec3(0, 0, 0.1f));
+                } else if (ModelUtils.getTailFromModelIfAny(model).stream().anyMatch(modelPart -> modelPart == part)) {
+                    Vector3f vector3f = offset.copy();
+                    vector3f.add(0, 0, 0.5f);
+                    worldPos = ModelUtils.getWorldSpaceFromModelPart(
+                            part,
+                            vector3f,
+                            vec,
+                            entity,
+                            entityOffset,
+                            rotation,
+                            false
+                    );
+                } else {
+                    worldPos = ModelUtils.getWorldSpaceFromModelPart(
+                            part,
+                            offset,
+                            vec,
+                            entity,
+                            entityOffset,
+                            rotation,
+                            false
+                    );
+                }
+                if (entity.getRandom().nextFloat() <= 0.05f) {
+                    if (part == model.getHead()) {
+                        entity.getLevel().addParticle(
+                                ChangedAddonParticles.thunderSpark(1),
+                                worldPos.x() + entity.getRandom().nextDouble(-0.5, 0.5), worldPos.y() + entity.getRandom().nextDouble(-0.5, 0.5), worldPos.z() + entity.getRandom().nextDouble(-0.5, 0.5),
+                                0, 0, 0
+                        );
+                    } else {
+                        entity.getLevel().addParticle(
+                                ChangedAddonParticles.thunderSpark(1),
+                                worldPos.x() + entity.getRandom().nextDouble(-0.25, 0.25),
+                                worldPos.y() + entity.getRandom().nextDouble(-0.25, 0.25),
+                                worldPos.z() + entity.getRandom().nextDouble(-0.25, 0.25),
+                                0, 0, 0
+                        );
+                    }
+                }
+            }
+        }
+
+
+        public @NotNull RenderType renderType() {
+            return RenderType.cutoutMipped();
+        }
+
+        @Override
+        public void renderFirstPersonOnFace(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, Camera camera) {
+            FirstPersonLayer.super.renderFirstPersonOnFace(stack, bufferSource, packedLight, entity, camera);
+            /*if (!(entity instanceof KetExperiment009BossEntity ket)) return;
+            if (entity.tickCount % 20 == 1 && (!ket.isPhase2() && !ket.isPhase3()) && this.getParentModel() instanceof AdvancedHumanoidModel<?> model) {
+                List<ModelPart> modelPartList = new ArrayList<>(List.of(
+                        model.getHead(),
+                        model.getTorso()
+                ));
+                modelPartList.addAll(ModelUtils.getTailFromModelIfAny(model));
+                modelPartList.addAll(List.of(
+                        model.getArm(HumanoidArm.RIGHT),
+                        model.getArm(HumanoidArm.LEFT),
+                        model.getLeg(HumanoidArm.RIGHT),
+                        model.getLeg(HumanoidArm.LEFT)
+                ));
+
+                Vector3f offset = new Vector3f(0, -0.10f, 0);
+                Vector3f vec = new Vector3f(0, 0.85f, 0);
+                Vec3 entityOffset = Vec3.ZERO;
+                Vec3 rotation = new Vec3(180, 0, 0);
+
+                for (ModelPart part : modelPartList) {
+                    Vec3 worldPos;
+                    if (part == model.getHead()) {
+                        worldPos = FoxyasUtils.getRelativePositionEyes(entity, new Vec3(0, 0, 0.4f));
+                    } else {
+                        worldPos = ModelUtils.getWorldSpaceFromModelPart(
+                                part,
+                                offset,
+                                vec,
+                                entity,
+                                entityOffset,
+                                rotation,
+                                false
+                        );
+                    }
+
+                    entity.getLevel().addParticle(
+                            ChangedAddonParticles.thunderSpark(1),
+                            worldPos.x(), worldPos.y(), worldPos.z(),
+                            0.25f, 0.25f, 0.25f
+                    );
+                }
+            }*/
+        }
+
+        @Override
+        public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector, float partialTick) {
+            FirstPersonLayer.super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
+        }
+    }
+
+    private static class CustomEmissiveBodyLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
+        private final RenderType renderType;
+        private final ResourceLocation emissiveTexture;
+        private final float healthThreshold;
+
+        public CustomEmissiveBodyLayer(RenderLayerParent<T, M> p_116964_, ResourceLocation emissiveTexture, float healthThreshold) {
+            super(p_116964_);
+            this.renderType = RenderType.eyes(emissiveTexture);
+            this.emissiveTexture = emissiveTexture;
+            this.healthThreshold = healthThreshold;
+        }
+
+        public ResourceLocation getEmissiveTexture() {
+            return this.emissiveTexture;
+        }
+
+        @Override
+        public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+            if (entity.getUnderlyingPlayer() == null && entity instanceof KetExperiment009BossEntity ketExperiment009 && ketExperiment009.isPhase2()) {
+                VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
+                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
+
+            if (entity.getUnderlyingPlayer() == null && entity.getHealth() <= entity.getMaxHealth() * healthThreshold) {
+                VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
+                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            } else if (entity.getUnderlyingPlayer() != null) {
+                VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
+                this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
+        }
+
+
+        public RenderType renderType() {
+            return this.renderType;
+        }
+
+        @Override
+        public void renderFirstPersonOnFace(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, Camera camera) {
+            FirstPersonLayer.super.renderFirstPersonOnFace(stack, bufferSource, packedLight, entity, camera);
+        }
+
+        @Override
+        public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector, float partialTick) {
+            FirstPersonLayer.super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
+            if (entity.getUnderlyingPlayer() != null) {
+                stack.pushPose();
+                stack.scale(1.0002F, 1.0002F, 1.0002F);
+                EntityModel<T> var8 = this.getParentModel();
+                if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
+                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+                }
+                stack.popPose();
+            }
+
+            if (entity.getUnderlyingPlayer() == null && entity instanceof KetExperiment009BossEntity ketExperiment009 && ketExperiment009.isPhase2()) {
+                stack.pushPose();
+                stack.scale(1.0002F, 1.0002F, 1.0002F);
+                EntityModel<T> var8 = this.getParentModel();
+                if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
+                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+                }
+                stack.popPose();
+            }
+
+            if (entity.getUnderlyingPlayer() == null && entity.getHealth() <= entity.getMaxHealth() * healthThreshold) {
+                stack.pushPose();
+                stack.scale(1.0002F, 1.0002F, 1.0002F);
+                EntityModel<T> var8 = this.getParentModel();
+                if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
+                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stackCorrector, stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+                }
+                stack.popPose();
+            }
+        }
+    }
 
 }
 

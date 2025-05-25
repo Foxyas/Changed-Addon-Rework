@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
+import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
@@ -24,6 +25,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -53,7 +55,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Random;
 
-public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
+public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements CrawlFeature {
 
     public boolean isBoss() {
         return isBoss;
@@ -61,6 +63,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
 
     public void setBoss(boolean boss) {
         isBoss = boss;
+    }
+
+    public boolean isAggro() {
+        return Aggro;
+    }
+
+    public void setAggro(boolean aggro) {
+        Aggro = aggro;
     }
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
@@ -142,7 +152,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         return currentEntities < maxEntitiesNear; // Já tem muitas entidades perto, impedir novo spawn
         // Condições atendidas, pode spawnar
     }
-    
+
     public final ServerBossEvent bossBar = new ServerBossEvent(
             this.getDisplayName(), // Nome exibido na boss bar
             BossEvent.BossBarColor.WHITE, // Cor da barra
@@ -185,6 +195,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
 
     private boolean isBoss = false;
 
+    private boolean Aggro = false;
+
     //public int DEVATTACKTESTTICK = 0;
     public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
@@ -214,15 +226,10 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
     public void baseTick() {
         super.baseTick();
         if (this.getUnderlyingPlayer() == null) {
-            if (!this.level.isClientSide && this.isBoss()) {
-                this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
-            }
-
 		/*if (this.DEVATTACKTESTTICK != 0){
 			this.AbilitiesTicksCooldown = 0;
 			this.ActivatedAbility = true;
 		}*/
-
             if (!this.isNoAi()) {
                 int ticks = this.getDodgeAnimTicks();
                 if (ticks > 0) {
@@ -281,6 +288,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
                         }
                     }
                 }
+            }
+            if (!this.level.isClientSide && this.isBoss()) {
+                this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
             }
         }
     }
@@ -353,8 +363,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard {
         if (this.isBoss()) {
             handleBoss();
         }
-
-
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
     }
 
