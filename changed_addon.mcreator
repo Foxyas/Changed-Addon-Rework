@@ -6616,7 +6616,7 @@
       "name": "LatexSnowFox",
       "type": "livingentity",
       "sortid": 35,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_snow_fox",
       "metadata": {
@@ -7909,7 +7909,7 @@
       "name": "Experiment10",
       "type": "livingentity",
       "sortid": 452,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10",
       "metadata": {
@@ -10529,7 +10529,7 @@
       "name": "Experiment10Boss",
       "type": "livingentity",
       "sortid": 576,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "experiment_10_boss",
       "metadata": {
@@ -10682,7 +10682,7 @@
       "name": "SnepPlush",
       "type": "block",
       "sortid": 61,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "snep_plush",
       "metadata": {
@@ -11317,7 +11317,7 @@
       "name": "LatexSnep",
       "type": "livingentity",
       "sortid": 608,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_snep",
       "metadata": {
@@ -11433,7 +11433,7 @@
       "name": "WhiteWolfCrystalBlock",
       "type": "block",
       "sortid": 78,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "white_wolf_crystal_block",
       "metadata": {
@@ -11450,7 +11450,7 @@
       "name": "BlueWolfCrystalBlock",
       "type": "block",
       "sortid": 75,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "blue_wolf_crystal_block",
       "metadata": {
@@ -11552,7 +11552,7 @@
       "name": "WhiteWolfCrystalSmall",
       "type": "block",
       "sortid": 84,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "white_wolf_crystal_small",
       "metadata": {
@@ -11962,7 +11962,7 @@
       "name": "LatexSquidTigerShark",
       "type": "livingentity",
       "sortid": 636,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_squid_tiger_shark",
       "metadata": {
@@ -12390,7 +12390,7 @@
       "name": "FoxtaFoxy",
       "type": "livingentity",
       "sortid": 652,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "foxta_foxy",
       "metadata": {
@@ -12446,7 +12446,7 @@
       "name": "LatexDragonSnowLeopardShark",
       "type": "livingentity",
       "sortid": 655,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "latex_dragon_snow_leopard_shark",
       "metadata": {
