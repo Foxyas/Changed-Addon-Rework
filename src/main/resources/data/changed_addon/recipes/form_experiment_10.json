@@ -2,7 +2,7 @@
   "type": "changed:infuser",
   "ingredients": [
     {
-      "item": "changed_addon:exp_10_latex_base"
+      "item": "changed_addon:red_latex_goo"
     },
     {
       "item": "minecraft:netherite_ingot"
