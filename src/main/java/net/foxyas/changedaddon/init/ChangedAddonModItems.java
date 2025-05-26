@@ -37,6 +37,7 @@ import net.foxyas.changedaddon.item.SpawneggoffoxyasItem;
 import net.foxyas.changedaddon.item.SnepsiItem;
 import net.foxyas.changedaddon.item.SnepIconItem;
 import net.foxyas.changedaddon.item.SignalCatcherItem;
+import net.foxyas.changedaddon.item.RedLatexGooItem;
 import net.foxyas.changedaddon.item.RawIridiumItem;
 import net.foxyas.changedaddon.item.PotwithcamoniaItem;
 import net.foxyas.changedaddon.item.PatIconItem;
@@ -144,6 +145,7 @@ public class ChangedAddonModItems {
 	public static final RegistryObject<Item> EXPERIMENT_10_DNA = REGISTRY.register("experiment_10_dna", () -> new Experiment10DnaItem());
 	public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", () -> new Exp10LatexBaseItem());
 	public static final RegistryObject<Item> EXP_10_CONTAINMENT_VIAL = REGISTRY.register("exp_10_containment_vial", () -> new BossExperiment10SpawnEggItem());
+	public static final RegistryObject<Item> RED_LATEX_GOO = REGISTRY.register("red_latex_goo", () -> new RedLatexGooItem());
 	public static final RegistryObject<Item> INFORMANTBLOCK = block(ChangedAddonModBlocks.INFORMANTBLOCK, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 	public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", () -> new AccessoriesItem.Chestplate());
 	public static final RegistryObject<Item> CRYSTAL_DAGGER_RED = REGISTRY.register("crystal_dagger_red", () -> new CrystalAddagerRedItem());
