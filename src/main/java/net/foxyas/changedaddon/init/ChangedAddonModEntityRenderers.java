@@ -53,6 +53,7 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX.get(), LatexSnowFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LUMINAR_CRYSTAL_SPEAR.get(), LuminarCrystalSpearRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_FOX.get(), FengQIFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.DAZED.get(), DazedRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND.get(), PuroKindRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND_FEMALE.get(), PuroKindFemaleRenderer::new);
@@ -79,7 +80,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.LYNX.get(), LynxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.FOXTA_FOXY.get(), FoxtaFoxyRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.SNEPSI_LEOPARD.get(), SnepsiLeopardRenderer::new);
-		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_FOX.get(), FengQIFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.BAGEL.get(), BagelRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), LatexDragonSnowLeopardSharkRenderer::new);
 	}

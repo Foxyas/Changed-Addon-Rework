@@ -73,6 +73,10 @@ public class ChangedAddonModEntities {
 					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<LuminarCrystalSpearEntity>> LUMINAR_CRYSTAL_SPEAR = register("projectile_luminar_crystal_spear", EntityType.Builder.<LuminarCrystalSpearEntity>of(LuminarCrystalSpearEntity::new, MobCategory.MISC)
 			.setCustomClientFactory(LuminarCrystalSpearEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
+	public static final RegistryObject<EntityType<FengQIFoxEntity>> FENG_QI_FOX = register("feng_qi_fox",
+			EntityType.Builder.<FengQIFoxEntity>of(FengQIFoxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FengQIFoxEntity::new)
+
+					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<DazedEntity>> DAZED = register("dazed",
 			EntityType.Builder.<DazedEntity>of(DazedEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(DazedEntity::new)
 
@@ -175,10 +179,6 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<SnepsiLeopardEntity>of(SnepsiLeopardEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(SnepsiLeopardEntity::new)
 
 					.sized(0.7f, 1.93f));
-	public static final RegistryObject<EntityType<FengQIFoxEntity>> FENG_QI_FOX = register("feng_qi_fox",
-			EntityType.Builder.<FengQIFoxEntity>of(FengQIFoxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FengQIFoxEntity::new)
-
-					.sized(0.7f, 1.93f));
 	public static final RegistryObject<EntityType<BagelEntity>> BAGEL = register("bagel",
 			EntityType.Builder.<BagelEntity>of(BagelEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(BagelEntity::new)
 
@@ -200,6 +200,7 @@ public class ChangedAddonModEntities {
 			FoxyasEntity.init();
 			LatexSnowFoxEntity.init();
 			LatexSnowFoxFemaleEntity.init();
+			FengQIFoxEntity.init();
 			DazedEntity.init();
 			PuroKindEntity.init();
 			PuroKindFemaleEntity.init();
@@ -226,7 +227,6 @@ public class ChangedAddonModEntities {
 			LynxEntity.init();
 			FoxtaFoxyEntity.init();
 			SnepsiLeopardEntity.init();
-			FengQIFoxEntity.init();
 			BagelEntity.init();
 			LatexDragonSnowLeopardSharkEntity.init();
 		});
@@ -238,6 +238,7 @@ public class ChangedAddonModEntities {
 		event.put(FOXYAS.get(), FoxyasEntity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX.get(), LatexSnowFoxEntity.createAttributes().build());
 		event.put(LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleEntity.createAttributes().build());
+		event.put(FENG_QI_FOX.get(), FengQIFoxEntity.createAttributes().build());
 		event.put(DAZED.get(), DazedEntity.createAttributes().build());
 		event.put(PURO_KIND.get(), PuroKindEntity.createAttributes().build());
 		event.put(PURO_KIND_FEMALE.get(), PuroKindFemaleEntity.createAttributes().build());
@@ -264,7 +265,6 @@ public class ChangedAddonModEntities {
 		event.put(LYNX.get(), LynxEntity.createAttributes().build());
 		event.put(FOXTA_FOXY.get(), FoxtaFoxyEntity.createAttributes().build());
 		event.put(SNEPSI_LEOPARD.get(), SnepsiLeopardEntity.createAttributes().build());
-		event.put(FENG_QI_FOX.get(), FengQIFoxEntity.createAttributes().build());
 		event.put(BAGEL.get(), BagelEntity.createAttributes().build());
 		event.put(LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), LatexDragonSnowLeopardSharkEntity.createAttributes().build());
 	}
