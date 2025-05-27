@@ -44,6 +44,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -205,42 +206,35 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        String id = source.getMsgId();
+
         if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
             return false;
-        if (source == DamageSource.FALL)
-            return false;
-        if (source == DamageSource.CACTUS)
-            return false;
-        if (source == DamageSource.DROWN)
-            return false;
-        if (source == DamageSource.LIGHTNING_BOLT)
-            return false;
-        if (source.getMsgId().equals("trident")) {
-            if (this.getLevel().random.nextFloat() <= 0.25f) {
-                if (source.getEntity() instanceof Player player) {
-                    player.displayClientMessage(new TranslatableComponent("changed_addon.entity_dialogues.exp10.reaction.range_attacks"), true);
-                }
+
+        switch (id) {
+            case "fall", "cactus", "drown", "lightningBolt", "anvil", "dragonBreath", "wither", "witherSkull" -> {
+                return false;
             }
-            return super.hurt(source, amount * 0.5f);
+            case "trident" -> {
+                maybeSendReactionToPlayer(source);
+                return super.hurt(source, amount * 0.5f);
+            }
         }
-        if (source == DamageSource.ANVIL)
-            return false;
-        if (source == DamageSource.DRAGON_BREATH)
-            return false;
-        if (source == DamageSource.WITHER)
-            return false;
-        if (source.getMsgId().equals("witherSkull"))
-            return false;
+
         if (source.isProjectile()) {
-            if (this.getLevel().random.nextFloat() <= 0.25f) {
-                if (source.getEntity() instanceof Player player) {
-                    player.displayClientMessage(new TranslatableComponent("changed_addon.entity_dialogues.exp10.reaction.range_attacks"), true);
-                }
-            }
+            maybeSendReactionToPlayer(source);
             return super.hurt(source, amount * 0.5f);
         }
+
         return super.hurt(source, amount);
     }
+
+    private void maybeSendReactionToPlayer(DamageSource source) {
+        if (this.getLevel().random.nextFloat() <= 0.25f && source.getEntity() instanceof Player player) {
+            player.displayClientMessage(new TranslatableComponent("changed_addon.entity_dialogues.exp10.reaction.range_attacks"), true);
+        }
+    }
+
 
     @Override
     public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
@@ -384,54 +378,43 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     public void crawlToTarget(LivingEntity target) {
-        double targetEyeY = target.getEyeY();
-        double entityEyeY = this.getEyeY();
-
         if (target.getPose() == Pose.SWIMMING && this.getPose() == Pose.SWIMMING) {
-            double deltaX = target.getX() - this.getX();
-            double deltaY = target.getY() - this.getY();
-            double deltaZ = target.getZ() - this.getZ();
-            double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+            Vec3 delta = target.position().subtract(this.position());
+            double distance = delta.length();
 
             if (distance > 1.0) {
-                double speed = 0.00015;
-                double motionX = deltaX / distance * speed;
-                double motionY = deltaY / distance * speed;
-                double motionZ = deltaZ / distance * speed;
-                this.setDeltaMovement(this.getDeltaMovement().add(motionX, motionY, motionZ));
+                Vec3 motion = delta.normalize().scale(0.00015);
+                this.setDeltaMovement(this.getDeltaMovement().add(motion));
             }
         }
     }
 
+
     public void updateSwimmingMovement() {
-        if (this.isInWater()) {
-            if (this.getTarget() != null) {
-                LivingEntity target = this.getTarget();
-                double deltaX = target.getX() - this.getX();
-                double deltaY = target.getY() - this.getY();
-                double deltaZ = target.getZ() - this.getZ();
-                double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-
-                if (distance > 0) {
-                    double speed = 0.07;
-                    double motionX = deltaX / distance * speed;
-                    double motionY = deltaY / distance * speed;
-                    double motionZ = deltaZ / distance * speed;
-                    this.setDeltaMovement(this.getDeltaMovement().add(motionX, motionY, motionZ));
-                }
-            }
-
-            if (this.isEyeInFluid(FluidTags.WATER)) {
-                this.setPose(Pose.SWIMMING);
-                this.setSwimming(true);
-            } else if (this.getPose() == Pose.SWIMMING && !this.isEyeInFluid(FluidTags.WATER)) {
+        if (!this.isInWater()) {
+            if (this.getPose() == Pose.SWIMMING && level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
                 this.setPose(Pose.STANDING);
                 this.setSwimming(false);
             }
-        } else if (this.getPose() == Pose.SWIMMING && !this.isInWater() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
-            this.setPose(Pose.STANDING);
+            return;
+        }
+
+        LivingEntity target = this.getTarget();
+        if (target != null) {
+            Vec3 delta = target.position().subtract(this.position());
+            double distance = delta.length();
+            if (distance > 0) {
+                Vec3 motion = delta.normalize().scale(0.07);
+                this.setDeltaMovement(this.getDeltaMovement().add(motion));
+            }
+        }
+
+        if (this.isEyeInFluid(FluidTags.WATER)) {
+            this.setPose(Pose.SWIMMING);
+            this.setSwimming(true);
         }
     }
+
 
     public void SetDefense(Experiment10BossEntity entity) {
         AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "ArmorChange", 20, AttributeModifier.Operation.ADDITION);

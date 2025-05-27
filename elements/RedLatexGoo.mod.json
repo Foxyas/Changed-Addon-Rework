@@ -7,7 +7,7 @@
     "customModelName": "Normal",
     "customProperties": {},
     "states": [],
-    "name": "Red Latex Goo",
+    "name": "§4Red Latex Goo",
     "rarity": "RARE",
     "creativeTab": {
       "value": "CUSTOM:ChangedAddon"
@@ -26,7 +26,9 @@
     "damageOnCrafting": false,
     "enableMeleeDamage": false,
     "damageVsEntity": 0.0,
-    "specialInfo": [],
+    "specialInfo": [
+      "§4A Strange goo"
+    ],
     "hasGlow": false,
     "guiBoundTo": "<NONE>",
     "inventorySize": 9,

@@ -4,7 +4,7 @@
   "definition": {
     "type": "Logic",
     "displayName": "Fight to keep consciousness",
-    "description": "Allow the Fight to keep consciousness minigame (overwrite keep consciousness like a perm on)",
+    "description": "Allow the Fight to keep consciousness QuickTime Event to happen (it only happens when the player will lose their conscience otherwise no)",
     "category": "PLAYER",
     "defaultValueLogic": false,
     "defaultValueNumber": 0
