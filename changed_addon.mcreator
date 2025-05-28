@@ -12469,6 +12469,34 @@
           "src/main/java/net/foxyas/changedaddon/item/RedLatexGooItem.java"
         ]
       }
+    },
+    {
+      "name": "CrystalGasCatMale",
+      "type": "livingentity",
+      "sortid": 656,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "crystal_gas_cat_male",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/CrystalGasCatMaleRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/CrystalGasCatMaleEntity.java"
+        ]
+      }
+    },
+    {
+      "name": "CrystalGasCatFemale",
+      "type": "livingentity",
+      "sortid": 657,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "crystal_gas_cat_female",
+      "metadata": {
+        "files": [
+          "src/main/java/net/foxyas/changedaddon/client/renderer/CrystalGasCatFemaleRenderer.java",
+          "src/main/java/net/foxyas/changedaddon/entity/CrystalGasCatFemaleEntity.java"
+        ]
+      }
     }
   ],
   "variable_elements": [
@@ -13023,6 +13051,7 @@
       "item.changed_addon.ket_experiment_009_spawn_egg": "Ket Experiment 009 Spawn Egg",
       "item.changed_addon.painite_axe": "Painite Axe",
       "text.changed_addon.jumpStrength": "Jump Strength \u003d %s",
+      "entity.changed_addon.crystal_gas_cat_female": "Crystal Gas Cat Female",
       "advancements.ammoniapoweradvancement.descr": "Craft a ammonia particle",
       "death.attack.untransfurfail": "%1$s dies when the untransfurmation attempt fails",
       "gui.changed_addon.book_pagenumber_1.tooltip_show_the_recipes_of_changed_addo3": "Show The Recipes Of Changed Addon Mod",
@@ -13286,6 +13315,7 @@
       "changed_addon.ability.carry": "Carry",
       "gui.changed_addon.unifusergui.label_next_page": "Next Page",
       "item.changed_addon.lynx_spawn_egg": "Lynx Spawn Egg",
+      "entity.changed_addon.crystal_gas_cat_male": "Crystal Gas Cat Male",
       "key.categories.changed_addon": "Changed Addon Keybinds"
     }
   },

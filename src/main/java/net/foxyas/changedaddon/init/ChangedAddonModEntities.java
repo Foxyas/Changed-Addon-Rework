@@ -48,6 +48,8 @@ import net.foxyas.changedaddon.entity.Exp1MaleEntity;
 import net.foxyas.changedaddon.entity.Exp1FemaleEntity;
 import net.foxyas.changedaddon.entity.ErikEntity;
 import net.foxyas.changedaddon.entity.DazedEntity;
+import net.foxyas.changedaddon.entity.CrystalGasCatMaleEntity;
+import net.foxyas.changedaddon.entity.CrystalGasCatFemaleEntity;
 import net.foxyas.changedaddon.entity.BunyEntity;
 import net.foxyas.changedaddon.entity.BagelEntity;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -188,6 +190,14 @@ public class ChangedAddonModEntities {
 					.setCustomClientFactory(LatexDragonSnowLeopardSharkEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<CrystalGasCatMaleEntity>> CRYSTAL_GAS_CAT_MALE = register("crystal_gas_cat_male",
+			EntityType.Builder.<CrystalGasCatMaleEntity>of(CrystalGasCatMaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CrystalGasCatMaleEntity::new)
+
+					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<CrystalGasCatFemaleEntity>> CRYSTAL_GAS_CAT_FEMALE = register("crystal_gas_cat_female",
+			EntityType.Builder.<CrystalGasCatFemaleEntity>of(CrystalGasCatFemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CrystalGasCatFemaleEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -229,6 +239,8 @@ public class ChangedAddonModEntities {
 			SnepsiLeopardEntity.init();
 			BagelEntity.init();
 			LatexDragonSnowLeopardSharkEntity.init();
+			CrystalGasCatMaleEntity.init();
+			CrystalGasCatFemaleEntity.init();
 		});
 	}
 
@@ -267,5 +279,7 @@ public class ChangedAddonModEntities {
 		event.put(SNEPSI_LEOPARD.get(), SnepsiLeopardEntity.createAttributes().build());
 		event.put(BAGEL.get(), BagelEntity.createAttributes().build());
 		event.put(LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), LatexDragonSnowLeopardSharkEntity.createAttributes().build());
+		event.put(CRYSTAL_GAS_CAT_MALE.get(), CrystalGasCatMaleEntity.createAttributes().build());
+		event.put(CRYSTAL_GAS_CAT_FEMALE.get(), CrystalGasCatFemaleEntity.createAttributes().build());
 	}
 }

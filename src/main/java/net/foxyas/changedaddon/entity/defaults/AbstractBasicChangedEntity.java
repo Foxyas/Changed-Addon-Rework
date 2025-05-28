@@ -33,8 +33,6 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public abstract class AbstractBasicChangedEntity extends ChangedEntity {
 
-    private Pair<Color3, Color3> color3s;
-
     public AbstractBasicChangedEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
     }

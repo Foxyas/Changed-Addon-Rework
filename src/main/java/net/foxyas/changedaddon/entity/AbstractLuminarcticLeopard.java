@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
+import net.foxyas.changedaddon.client.model.DodgeType;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
@@ -45,6 +46,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -100,7 +103,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             LivingEntity entity = event.getEntityLiving();
             Level level = entity.level;
 
-            // Verifica se é um mob específico, por exemplo um Luminarctic Leopard
+            // Verifica se é um mob específico, por exemplo, um Luminarctic Leopard
             if (entity instanceof AbstractLuminarcticLeopard leopard) {
                 // Verifica se tem a NBT isBoss = 1b
                 if (leopard.isBoss()) {
@@ -176,11 +179,15 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
     private static final EntityDataAccessor<Integer> DODGE_ANIM_TICKS =
             SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DODGE_TYPE =
+            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
+
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DODGE_ANIM_TICKS, 0);
+        this.entityData.define(DODGE_TYPE, 0);
     }
 
     public int getDodgeAnimTicks() {
@@ -189,6 +196,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     public void setDodgeAnimTicks(int ticks) {
         this.entityData.set(DODGE_ANIM_TICKS, ticks);
+    }
+
+    public int getDodgeType() {
+        return this.entityData.get(DODGE_TYPE);
+    }
+
+    public void setDodgeType(int dodgeType) {
+        this.entityData.set(DODGE_TYPE, dodgeType);
     }
 
     public final int DodgeAnimMaxTicks = 20;
@@ -329,6 +344,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         if (tag.contains("DodgeAnimTicks")) {
             this.setDodgeAnimTicks(tag.getInt("DodgeAnimTicks"));
         }
+        if (tag.contains("dodgeType")) {
+            this.setDodgeType(tag.getInt("dodgeType"));
+        }
         if (tag.contains("DashingTicks")) {
             this.DashingTicks = tag.getInt("DashingTicks");
         }
@@ -351,6 +369,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         tag.putInt("SuperAbilitiesTicksCooldown", SuperAbilitiesTicksCooldown);
         tag.putInt("PassivesTicksCooldown", PassivesTicksCooldown);
         tag.putInt("DodgeAnimTicks", this.getDodgeAnimTicks());
+        tag.putInt("dodgeType", this.getDodgeType());
         tag.putInt("DashingTicks", DashingTicks);
         tag.putInt("GlowStage", GlowStage);
         tag.putBoolean("isBoss", this.isBoss);
@@ -393,6 +412,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         if (source.isProjectile() && this.isBoss()) {
             // Animação de esquiva e "ignorar" o dano
             this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
+            this.setDodgeType(this.getRandom().nextInt(2) + 1);
+
 
             Entity attacker = source.getDirectEntity() != null ? source.getDirectEntity() : source.getEntity();
             if (attacker != null) {
@@ -431,11 +452,13 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             if (reducedAmount > 2f) {
                 if (reducedAmount < 4f) {
                     this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2);
+                    this.setDodgeType(this.getRandom().nextInt(2) + 1);
                 }
                 return super.hurt(source, reducedAmount);
             } else {
                 // Animação de esquiva e "ignorar" o dano
                 this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
+  				this.setDodgeType(this.getRandom().nextInt(2) + 1);
 
                 Vec3 lookPos = new Vec3(attacker.getX(), attacker.getY() + 1.5, attacker.getZ());
                 this.lookAt(EntityAnchorArgument.Anchor.EYES, lookPos);

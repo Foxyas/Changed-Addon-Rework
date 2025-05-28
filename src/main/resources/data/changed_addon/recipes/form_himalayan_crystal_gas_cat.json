@@ -1,0 +1,25 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:string"
+    },
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "changed:wolf_gas_canister"
+    },
+    {
+      "item": "changed_addon:blue_wolf_crystal_fragment"
+    }
+  ],
+  "gendered": true,
+  "form": "changed_addon:form_himalayan_crystal_gas_cat"
+}
