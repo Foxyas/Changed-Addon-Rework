@@ -119,6 +119,9 @@ public class ChangedAddonTransfurVariants {
     //Partials
     public static final RegistryObject<TransfurVariant<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("form_latex_snow_leopard_partial", TransfurVariant.Builder.of(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL).stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
 
+    //Bosses
+    public static final RegistryObject<TransfurVariant<VoidFoxEntity>> VOID_FOX = register("form_void_fox", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.VOID_FOX).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).jumpStrength(1.1f).nightVision().scares(List.of(Creeper.class,Rabbit.class)));
+
     //OCs
     public static final RegistryObject<TransfurVariant<WolfyEntity>> WOLFY = register("form_wolfy", TransfurVariant.Builder.of(ChangedAddonModEntities.WOLFY).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).transfurMode(TransfurMode.NONE).scares(List.of()).nightVision());
     public static final RegistryObject<TransfurVariant<ReynEntity>> REYN = register("form_reyn", TransfurVariant.Builder.of(ChangedAddonEntitys.REYN).stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of()));

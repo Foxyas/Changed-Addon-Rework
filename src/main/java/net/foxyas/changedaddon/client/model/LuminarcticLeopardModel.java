@@ -31,6 +31,7 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
     private final ModelPart LeftArmFur;
     private final ModelPart Tail;
     private final HumanoidAnimator<LuminarcticLeopardEntity, LuminarcticLeopardModel> animator;
+
     public float dodgeProgress = 0;
     public float partialTicks = 0;
     public boolean isReverse = false;
@@ -240,55 +241,53 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
     public void prepareMobModel(LuminarcticLeopardEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
 
-        if (true) {
-            // Cabeça
-            this.Head.x = 0;
-            this.Head.y = 0;
-            this.Head.z = 0;
-            this.Head.xRot = 0;
-            this.Head.yRot = 0;
-            this.Head.zRot = 0;
+        // Cabeça
+        this.Head.x = 0;
+        this.Head.y = 0;
+        this.Head.z = 0;
+        this.Head.xRot = 0;
+        this.Head.yRot = 0;
+        this.Head.zRot = 0;
 
-            // Tronco
-            this.Torso.x = 0;
-            this.Torso.y = 0;
-            this.Torso.z = 0;
-            this.Torso.xRot = 0;
-            this.Torso.yRot = 0;
-            this.Torso.zRot = 0;
+        // Tronco
+        this.Torso.x = 0;
+        this.Torso.y = 0;
+        this.Torso.z = 0;
+        this.Torso.xRot = 0;
+        this.Torso.yRot = 0;
+        this.Torso.zRot = 0;
 
-            // Braço esquerdo
-            this.LeftArm.x = 0;
-            this.LeftArm.y = 0;
-            this.LeftArm.z = 0;
-            this.LeftArm.xRot = 0;
-            this.LeftArm.yRot = 0;
-            this.LeftArm.zRot = 0;
+        // Braço esquerdo
+        this.LeftArm.x = 0;
+        this.LeftArm.y = 0;
+        this.LeftArm.z = 0;
+        this.LeftArm.xRot = 0;
+        this.LeftArm.yRot = 0;
+        this.LeftArm.zRot = 0;
 
-            // Braço direito
-            this.RightArm.x = 0;
-            this.RightArm.y = 0;
-            this.RightArm.z = 0;
-            this.RightArm.xRot = 0;
-            this.RightArm.yRot = 0;
-            this.RightArm.zRot = 0;
+        // Braço direito
+        this.RightArm.x = 0;
+        this.RightArm.y = 0;
+        this.RightArm.z = 0;
+        this.RightArm.xRot = 0;
+        this.RightArm.yRot = 0;
+        this.RightArm.zRot = 0;
 
-            // Perna esquerda
-            this.LeftLeg.x = 0;
-            this.LeftLeg.y = 0;
-            this.LeftLeg.z = 0;
-            this.LeftLeg.xRot = 0;
-            this.LeftLeg.yRot = 0;
-            this.LeftLeg.zRot = 0;
+        // Perna esquerda
+        this.LeftLeg.x = 0;
+        this.LeftLeg.y = 0;
+        this.LeftLeg.z = 0;
+        this.LeftLeg.xRot = 0;
+        this.LeftLeg.yRot = 0;
+        this.LeftLeg.zRot = 0;
 
-            // Perna direita
-            this.RightLeg.x = 0;
-            this.RightLeg.y = 0;
-            this.RightLeg.z = 0;
-            this.RightLeg.xRot = 0;
-            this.RightLeg.yRot = 0;
-            this.RightLeg.zRot = 0;
-        }
+        // Perna direita
+        this.RightLeg.x = 0;
+        this.RightLeg.y = 0;
+        this.RightLeg.z = 0;
+        this.RightLeg.xRot = 0;
+        this.RightLeg.yRot = 0;
+        this.RightLeg.zRot = 0;
     }
 
     //public PoseStack getPlacementCorrectors(CorrectorType type) {

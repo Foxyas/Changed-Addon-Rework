@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
-import net.foxyas.changedaddon.client.model.DodgeType;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
@@ -26,7 +25,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -38,6 +36,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -46,8 +45,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -387,7 +384,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     public void handleBoss() {
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(500f);
-        Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(25f);
+        Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(17.5f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR_TOUGHNESS)).setBaseValue(2.5f);
         this.setHealth(500f);
@@ -401,15 +398,10 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
-        this.AbilitiesTicksCooldown -= 5 + (0.05f * amount);
-
-        // Ignora dano de espinhos
-        if (source instanceof EntityDamageSource entityDamageSource && entityDamageSource.isThorns()) {
-            return false;
-        }
+        this.AbilitiesTicksCooldown -= (0.05f * amount);
 
         // Imune a projéteis
-        if (source.isProjectile() && this.isBoss()) {
+        if (source.isProjectile() && source.getDirectEntity() instanceof AbstractArrow abstractArrow && abstractArrow.getPierceLevel() < 0 && this.isBoss()) {
             // Animação de esquiva e "ignorar" o dano
             this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
             this.setDodgeType(this.getRandom().nextInt(2) + 1);
@@ -427,7 +419,10 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
         // Dano de fogo ou explosão extremamente reduzido
         if (this.isBoss() && (source.isFire() || source.isExplosion())) {
-            return super.hurt(source, amount * 0.01f);
+            if (source.isFire()) {
+                return super.hurt(source, amount * 0.75f);
+            }
+            return super.hurt(source, amount * 0.25f);
         }
 
         // Obtém entidade causadora do dano (direta ou indireta)
@@ -436,15 +431,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         // Dano sem atacante direto ou indireto
         if (attacker == null && this.isBoss()) {
             if (source == ChangedAddonDamageSources.SOLVENT) {
-                return super.hurt(source, amount * 0.5f);
+                return super.hurt(source, amount * 1.25f);
             }
             return super.hurt(source, amount * 0.25f);
         }
 
-        // Se o atacante tiver o encantamento SOLVENT, recebe meio dano
         if (attacker instanceof LivingEntity livingEntity && this.isBoss()) {
             if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 1) {
-                return super.hurt(source, amount * 0.5f);
+                return super.hurt(source, amount * 1.25f);
             }
 
             // Caso contrário, reduz o dano e aplica lógica de esquiva

@@ -54,6 +54,7 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(LatexDragonSnowLeopardSharkModel.LAYER_LOCATION, LatexDragonSnowLeopardSharkModel::createBodyLayer);
         event.registerLayerDefinition(HimalayanCrystalGasCatModel.LAYER_LOCATION, HimalayanCrystalGasCatModel::createBodyLayer);
         event.registerLayerDefinition(HimalayanCrystalGasCatFemaleModel.LAYER_LOCATION, HimalayanCrystalGasCatFemaleModel::createBodyLayer);
+        event.registerLayerDefinition(VoidFoxModel.LAYER_LOCATION, VoidFoxModel::createBodyLayer);
 
         //Armors
         event.registerLayerDefinition(ArmorLatexSquidTigerSharkModel.INNER_ARMOR, () -> ArmorLatexSquidTigerSharkModel.createArmorLayer(ArmorModel.INNER));

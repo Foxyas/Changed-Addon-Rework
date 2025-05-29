@@ -57,7 +57,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         BlockPos center = boss.blockPosition();
         Level world = boss.getLevel();
 
-        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 2.5f, Explosion.BlockInteraction.DESTROY);
+        world.explode(boss, boss.getX(), boss.getY(), boss.getZ(), 1, Explosion.BlockInteraction.DESTROY);
         for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(1.5))) {
             if (entity == boss) {
                 continue;
@@ -249,7 +249,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 // Para cada entidade dentro da área do dash
                 for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3))) {
                     if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
-                        entity.hurt(DamageSource.mobAttack(boss), 8.0F);
+                        entity.hurt(DamageSource.mobAttack(boss), 4.0f);
                         entity.knockback(1.5, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
 
                         // Cria partículas de glow no local da entidade atingida
@@ -278,7 +278,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SNOWFLAKE, pos, 0.3f, 0.2f, 0.3f, 15, 0);
                 for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3.0))) {
                     if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
-                        entity.hurt(DamageSource.mobAttack(boss), 8.0F);
+                        entity.hurt(DamageSource.mobAttack(boss), 4.0f);
                         entity.knockback(1.0, boss.getX() - entity.getX(), boss.getZ() - entity.getZ());
                     }
                 }
@@ -294,7 +294,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
             PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.CLOUD, boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(6.0))) {
                 if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
-                    entity.hurt(DamageSource.mobAttack(boss), 12.0f);
+                    entity.hurt(DamageSource.mobAttack(boss), 4.0f);
                     if (!entity.getLevel().isClientSide()) {
                         entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 80, 2));
                     }
@@ -326,9 +326,9 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(5.0))) {
                 if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
-                    entity.hurt(DamageSource.mobAttack(boss), 12.0F);
+                    entity.hurt(DamageSource.mobAttack(boss), 4.0f);
                     if (!entity.getLevel().isClientSide()) {
-                        entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 1));
+                        entity.addEffect(new MobEffectInstance(MobEffects.POISON, 20, 1));
                     }
                 }
             }
@@ -382,9 +382,9 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                         && entityHitResult != null && entityHitResult.getEntity() == boss) {
                     if (!player.getLevel().isClientSide()) {
                         if (ProcessTransfur.isPlayerNotLatex(player)) {
-                            player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2)); // Aplica "Radiação"
+                            player.addEffect(new MobEffectInstance(MobEffects.WITHER, 30, 2)); // Aplica "Radiação"
                         } else {
-                            player.addEffect(new MobEffectInstance(MobEffects.POISON, 100, 2)); // Aplica "Radiação"
+                            player.addEffect(new MobEffectInstance(MobEffects.POISON, 30, 2)); // Aplica "Radiação"
                         }
                     }
 						/*if (entity != null && boss != null){

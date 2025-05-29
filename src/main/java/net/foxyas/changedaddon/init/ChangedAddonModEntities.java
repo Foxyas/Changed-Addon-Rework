@@ -17,6 +17,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
 import net.foxyas.changedaddon.entity.WolfyEntity;
+import net.foxyas.changedaddon.entity.VoidFoxEntity;
 import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
 import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
 import net.foxyas.changedaddon.entity.SnepsiLeopardEntity;
@@ -198,6 +199,10 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<CrystalGasCatFemaleEntity>of(CrystalGasCatFemaleEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(CrystalGasCatFemaleEntity::new)
 
 					.sized(0.7f, 1.93f));
+	public static final RegistryObject<EntityType<VoidFoxEntity>> VOID_FOX = register("void_fox",
+			EntityType.Builder.<VoidFoxEntity>of(VoidFoxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(VoidFoxEntity::new)
+
+					.sized(0.7f, 1.93f));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -241,6 +246,7 @@ public class ChangedAddonModEntities {
 			LatexDragonSnowLeopardSharkEntity.init();
 			CrystalGasCatMaleEntity.init();
 			CrystalGasCatFemaleEntity.init();
+			VoidFoxEntity.init();
 		});
 	}
 
@@ -281,5 +287,6 @@ public class ChangedAddonModEntities {
 		event.put(LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), LatexDragonSnowLeopardSharkEntity.createAttributes().build());
 		event.put(CRYSTAL_GAS_CAT_MALE.get(), CrystalGasCatMaleEntity.createAttributes().build());
 		event.put(CRYSTAL_GAS_CAT_FEMALE.get(), CrystalGasCatFemaleEntity.createAttributes().build());
+		event.put(VOID_FOX.get(), VoidFoxEntity.createAttributes().build());
 	}
 }

@@ -1,0 +1,31 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "srcalpha",
+    "dstrgb": "1-srcalpha"
+  },
+  "vertex": "changed_addon:light_ray",
+  "fragment": "changed_addon:light_ray",
+  "attributes": [
+    "Position",
+    "UV0"
+  ],
+  "uniforms": [
+    {
+      "name": "Color",
+      "type": "vec4",
+      "count": 4,
+      "values": [1.0, 1.0, 1.0, 1.0]
+    },
+    {
+      "name": "Radius",
+      "type": "float",
+      "count": 1,
+      "values": [0.5]
+    }
+  ],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "defines": []
+}

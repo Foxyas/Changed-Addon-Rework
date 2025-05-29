@@ -57,24 +57,23 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
 
 	@Override
 	public void render(FemaleLuminarcticLeopardEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		if (entity.getDodgeAnimTicks() != 0) {
+		float dodgeTicks = entity.getDodgeAnimTicks();
+		float dodgeProgress = Math.abs(dodgeTicks) / (float) entity.DodgeAnimMaxTicks;
+
+		this.model.dodgeProgress = dodgeProgress;
+		this.model.partialTicks = partialTicks;
+		this.model.isReverse = dodgeTicks < 0;
+
+		// Passa o progresso e direção para o modelo
+		if (dodgeProgress > 0) {
 			poseStack.pushPose();
-
-			// Calcula a rotação com base no progresso da animação de esquiva
-			float dodgeProgress;
-			if (entity.getDodgeAnimTicks() < 0) {
-				dodgeProgress = (float) entity.getDodgeAnimTicks() / -entity.DodgeAnimMaxTicks;
-				float rotationAngle = 65.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
-				// Aplica a rotação no eixo X
-				poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationAngle));
-			} else {
-				dodgeProgress = (float) entity.getDodgeAnimTicks() / entity.DodgeAnimMaxTicks;
-				float rotationAngle = 65.0F * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
-
-				// Aplica a rotação no eixo X
+			float rotationAngle = (entity.getDodgeType() == 1 ? 65.0F : 45.0f) * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
+			// Aplica a rotação no eixo X
+			if (dodgeTicks > 0) {
 				poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationAngle));
+			} else {
+				poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationAngle));
 			}
-
 			// Renderiza o modelo normalmente (chama o super ou código adicional aqui)
 			super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
 			poseStack.popPose(); // Restaura a pose original

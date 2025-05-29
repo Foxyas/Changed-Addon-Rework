@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
-import net.foxyas.changedaddon.client.model.DodgeType;
 import net.foxyas.changedaddon.client.model.LuminarcticLeopardModel;
 import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;

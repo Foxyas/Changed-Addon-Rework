@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.client.model;
+package net.foxyas.changedaddon.client.model.dodges;
 
 public enum DodgeType {
 

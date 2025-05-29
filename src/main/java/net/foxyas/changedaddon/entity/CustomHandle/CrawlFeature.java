@@ -10,8 +10,8 @@ import net.minecraft.world.phys.Vec3;
 
 public interface CrawlFeature {
 
-    default void crawlingSystem(ChangedEntity livingEntity, LivingEntity target) {
-        updateSwimmingMovement(livingEntity);
+    default void crawlingSystem(ChangedEntity livingEntity, LivingEntity target, float swimSpeed) {
+        updateSwimmingMovement(livingEntity, swimSpeed);
         if (target != null) {
             setCrawlingPoseIfNeeded(livingEntity,target);
             crawlToTarget(livingEntity,target);
@@ -20,6 +20,10 @@ public interface CrawlFeature {
                 livingEntity.setPose(Pose.SWIMMING);
             }
         }
+    }
+
+    default void crawlingSystem(ChangedEntity livingEntity, LivingEntity target) {
+        crawlingSystem(livingEntity,target, 0.07f);
     }
 
     default void OnlyCrawlingSystem(LivingEntity livingEntity, LivingEntity target) {
@@ -52,11 +56,15 @@ public interface CrawlFeature {
         }
     }
 
-    default void updateSwimmingMovement(ChangedEntity livingEntity) {
+    default void updateSwimmingMovement(ChangedEntity livingEntity, float speed) {
         if (livingEntity.isInWater()) {
             if (livingEntity.getTarget() != null) {
                 Vec3 direction = livingEntity.getTarget().position().subtract(livingEntity.position()).normalize();
-                livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(direction.scale(0.07)));
+                if (livingEntity.isEyeInFluid(FluidTags.WATER)) {
+                    livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(direction.scale(speed)));
+                } else {
+                    livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(direction.scale(speed / 4)));
+                }
             }
             if (livingEntity.isEyeInFluid(FluidTags.WATER)) {
                 livingEntity.setPose(Pose.SWIMMING);
