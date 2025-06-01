@@ -22,6 +22,12 @@ public class BossMusicHandler {
     public static void tick(ClientLevel level) {
         if (mc.player == null || level == null) return;
 
+        if (currentBoss != null && currentSound != null) {
+            if (currentBoss.getSelf().isDeadOrDying() && (mc.getSoundManager().isActive(currentSound) || !currentSound.isStopped())) {
+                stopMusic();
+            }
+        }
+
         IHasBossMusic closestBoss = null;
         double closestDistanceSq = Double.MAX_VALUE;
 

@@ -1,9 +1,12 @@
 package net.foxyas.changedaddon.entity.goals;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -39,17 +42,20 @@ public class DashAttack extends Goal {
     @Override
     public boolean canUse() {
         this.target = dasher.getTarget();
+        if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         return target != null && target.isAlive();
     }
 
     @Override
     public boolean canContinueToUse() {
-        return tickCount < (PREPARE_TIME + MAX_DASH_TICKS);
+        return isDashing || tickCount < (PREPARE_TIME + MAX_DASH_TICKS);
     }
 
     @Override
     public void start() {
-        tickCount = 0;
+        if (tickCount >= PREPARE_TIME + MAX_DASH_TICKS) {
+            tickCount = 0;
+        }
         isDashing = false;
         dashDirection = Vec3.ZERO;
     }
@@ -57,17 +63,20 @@ public class DashAttack extends Goal {
     @Override
     public void tick() {
         tickCount++;
+        if (target instanceof Player player) {
+            player.displayClientMessage(new TextComponent("Ticks = " + tickCount), true);
+        }
 
         // Preparando o dash
         if (tickCount < PREPARE_TIME) {
             dasher.getNavigation().stop();
             dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            if (tickCount % 2 == 0) {
+                dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
+            }
             if (dasher.getLevel() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
-            }
-            if (tickCount % 5 == 0) {
-                dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
             }
             return;
         }
@@ -80,6 +89,9 @@ public class DashAttack extends Goal {
         if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
+            if (dasher.horizontalCollision) {
+                tickCount += 5;
+            }
 
             // Detecta entidades na frente
             Vec3 forward = dasher.getLookAngle();
@@ -94,11 +106,15 @@ public class DashAttack extends Goal {
                 double distance = difference.length();
                 if (distance > 0.1) {
                     Vec3 knockback = difference.normalize().scale(distance * KNOCKBACK_MULTIPLIER);
-                    entity.hurt(DamageSource.mobAttack(dasher), 6.0F);
+                    dasher.swing(InteractionHand.MAIN_HAND);
+                    if (!entity.isBlocking()) {
+                        entity.hurt(DamageSource.mobAttack(dasher), 6.0F);
+                    }
                     dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                     entity.setDeltaMovement(entity.getDeltaMovement().add(knockback));
                 }
             }
+            this.isDashing = false;
         }
     }
 

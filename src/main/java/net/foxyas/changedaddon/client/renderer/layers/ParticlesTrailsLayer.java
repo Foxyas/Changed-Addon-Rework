@@ -21,13 +21,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import net.minecraft.world.entity.Entity;
+import java.util.Random;
 
 public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
 
     private static final Vector3f DEFAULT_OFFSET = new Vector3f(0, -0.10f, 0);
     private static final Vector3f WORLD_OFFSET = new Vector3f(0, 0.85f, 0);
     private static final Vec3 ENTITY_ROTATION = new Vec3(180, 0, 0);
-    private float spawnProbability = 0.05f;
+    private float spawnProbability = 0.025f;
 
     private final ParticleOptions[] particles;
 
@@ -65,10 +67,10 @@ public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends 
             worldPos = getWorldPositionFromPart(entity, model, poseStack, part);
         }*/
 
-        ModelPart selectedPart = getRandomPart(parts);
+        ModelPart selectedPart = getRandomPart(parts, entity.getRandom());
         worldPos = getWorldPositionFromPart(entity, model, selectedPart);
 
-        if (ThreadLocalRandom.current().nextFloat() <= spawnProbability) {
+        if (entity.getRandom().nextFloat() <= spawnProbability) {
             spawnParticle(entity, selectedPart == model.getHead(), worldPos);
         }
     }
@@ -85,8 +87,8 @@ public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends 
         return parts;
     }
 
-    private ModelPart getRandomPart(List<ModelPart> parts) {
-        return parts.get(ThreadLocalRandom.current().nextInt(parts.size()));
+    private ModelPart getRandomPart(List<ModelPart> parts, Random random) {
+        return parts.get(random.nextInt(parts.size()));
     }
 
     private Vec3 getWorldPositionFromPart(T entity, AdvancedHumanoidModel<?> model, ModelPart part) {
@@ -103,9 +105,9 @@ public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends 
 
     private void spawnParticle(T entity, boolean isHead, Vec3 pos) {
         for (ParticleOptions particle : particles) {
-            double dx = ThreadLocalRandom.current().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
-            double dy = ThreadLocalRandom.current().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
-            double dz = ThreadLocalRandom.current().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
+            double dx = entity.getRandom().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
+            double dy = entity.getRandom().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
+            double dz = entity.getRandom().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
 
             entity.getLevel().addParticle(
                     particle,

@@ -10,10 +10,19 @@ import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+
+import java.util.List;
 
 public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, VoidFoxModel, ArmorLatexMaleWolfModel<VoidFoxEntity>> {
     public VoidFoxRenderer(EntityRendererProvider.Context context) {
@@ -48,7 +57,62 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
         } else {
             super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
         }
+
+
+        if (this.entityRenderDispatcher.distanceToSqr(entity) > 4096.0D) return;
+
+        // Monta os Component exatamente como você queria
+        List<Component> debugLines = List.of(
+                new TextComponent("HP: " + entity.getHealth())
+                        .withStyle(style -> style.withColor(ChatFormatting.RED).withBold(true)),
+
+                new TextComponent("Phase: " + entity.getAttackInUse())
+                        .withStyle(style -> style.withColor(ChatFormatting.YELLOW)),
+
+                new TextComponent("Attack1Cooldown: " + entity.getAttack1Cooldown())
+                        .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
+
+                new TextComponent("Attack2Cooldown: " + entity.getAttack2Cooldown())
+                        .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
+
+                new TextComponent("Attack3Cooldown: " + entity.getAttack3Cooldown())
+                        .withStyle(style -> style.withColor(ChatFormatting.AQUA))
+        );
+
+        renderDebugText(debugLines, poseStack, bufferSource, entity, packedLight);
     }
+
+    private void renderDebugText(List<Component> lines, PoseStack poseStack, MultiBufferSource bufferSource, LivingEntity entity, int packedLight) {
+        Font font = Minecraft.getInstance().font;
+        float scale = 0.025F;
+        int lineHeight = 10;
+        int totalHeight = lines.size() * lineHeight;
+        double yOffset = entity.getBbHeight() + 0.5D + lines.size() * 0.1f;
+
+        poseStack.pushPose();
+        poseStack.translate(0.0D, yOffset, 0.0D);
+        poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation()); // vira para o jogador
+        poseStack.scale(-scale, -scale, scale); // escala pequena
+
+        for (int i = 0; i < lines.size(); i++) {
+            Component line = lines.get(i);
+            float y = -totalHeight / 2.0F + i * lineHeight;
+            font.drawInBatch(line,
+                    -font.width("HP: " + entity.getHealth()) / 2.0F,
+                    y,                          // Y da linha
+                    0xFFFFFF,                   // Cor base (pode ser qualquer, será sobrescrita por .withStyle)
+                    false,                      // Sem sombra
+                    poseStack.last().pose(),    // Matrix do PoseStack
+                    bufferSource,               // Buffer vindo do método render
+                    false,                      // seeThrough (normalmente false)
+                    0,                          // background color (0 = transparente)
+                    packedLight                 // luz do ambiente
+            );
+        }
+
+        poseStack.popPose();
+    }
+
 
     @Override
     public ResourceLocation getTextureLocation(VoidFoxEntity entity) {

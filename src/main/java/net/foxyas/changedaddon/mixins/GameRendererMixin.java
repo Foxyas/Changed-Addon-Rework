@@ -41,6 +41,9 @@ public abstract class GameRendererMixin {
     //@Unique
     //private PostChain changed_Addon_Rework$lightBloomEffectChain;
 
+    //@Unique
+    //private PostChain changed_Addon_Rework$MotionBlurEffectChain;
+
     @Unique
     private int changed_Addon_Rework$prevWidth = -1, changed_Addon_Rework$prevHeight = -1;
 
@@ -63,7 +66,7 @@ public abstract class GameRendererMixin {
 
                     this.changed_Addon_Rework$colorblindChain.process(partialTicks);
                 }
-            }/* else if (player.getMainHandItem().is(Items.DEBUG_STICK)) {
+            } /* else if (player.getMainHandItem().is(Items.DEBUG_STICK)) {
                 if (this.changed_Addon_Rework$lightBloomEffectChain == null) {
                     changed_Addon_Rework$loadLightBloomShader();
                 } else {
@@ -76,6 +79,20 @@ public abstract class GameRendererMixin {
                     }
 
                     this.changed_Addon_Rework$lightBloomEffectChain.process(partialTicks);
+                }
+            } else if (player.getMainHandItem().is(Items.STICK)) {
+                if (this.changed_Addon_Rework$MotionBlurEffectChain == null) {
+                    changed_Addon_Rework$loadMotionBlurShader();
+                } else {
+                    int w = this.minecraft.getMainRenderTarget().width;
+                    int h = this.minecraft.getMainRenderTarget().height;
+                    if (w != changed_Addon_Rework$prevWidth || h != changed_Addon_Rework$prevHeight) {
+                        this.changed_Addon_Rework$MotionBlurEffectChain.resize(w, h);
+                        changed_Addon_Rework$prevWidth = w;
+                        changed_Addon_Rework$prevHeight = h;
+                    }
+
+                    this.changed_Addon_Rework$MotionBlurEffectChain.process(partialTicks);
                 }
             }*/
         }
@@ -149,5 +166,20 @@ public abstract class GameRendererMixin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }*/
+
+    /*@Unique
+    private void changed_Addon_Rework$loadMotionBlurShader() {
+        try {
+            this.changed_Addon_Rework$MotionBlurEffectChain = new PostChain(
+                    this.minecraft.getTextureManager(),
+                    this.minecraft.getResourceManager(),
+                    this.minecraft.getMainRenderTarget(),
+                    new ResourceLocation(ChangedAddonMod.MODID, "shaders/post/motion_blur_post_effect.json")
+            );
+            this.changed_Addon_Rework$MotionBlurEffectChain.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
 }

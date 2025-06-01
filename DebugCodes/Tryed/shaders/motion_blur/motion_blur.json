@@ -1,0 +1,27 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "changed_addon:screenquad",
+  "fragment": "changed_addon:motion_blur",
+  "samplers": [
+    {
+      "name": "DiffuseSampler"
+    },
+    {
+      "name": "PreviousFrameSampler"
+    }
+  ],
+  "uniforms": [
+    {
+      "name": "blurAmount",
+      "type": "float",
+      "count": 1,
+      "values": [
+        1.0
+      ]
+    }
+  ]
+}

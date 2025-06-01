@@ -13,11 +13,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class FadingBossMusicSound extends AbstractTickableSoundInstance {
     private static final float MAX_VOLUME = 1.0f;
     private static final int DEFAULT_FADE_TICKS = 40;
-
+    private final LivingEntity trackedEntity;
     private int fadeInTicks;
     private int fadeOutTicks = -1;
     private boolean stopped = false;
-    private final LivingEntity trackedEntity;
 
     public FadingBossMusicSound(SoundEvent soundEvent, LivingEntity entity) {
         super(soundEvent, SoundSource.MASTER);
@@ -52,16 +51,24 @@ public class FadingBossMusicSound extends AbstractTickableSoundInstance {
 
     @Override
     public void tick() {
-        if (trackedEntity == null || trackedEntity.isDeadOrDying()) {
+        if (trackedEntity == null) {
             startFadeOut();
             this.looping = false;
+            this.stopped = true;
+            this.stop();
         }
 
         if (trackedEntity != null && trackedEntity.isAlive()) {
             this.x = trackedEntity.getX();
             this.y = trackedEntity.getY();
             this.z = trackedEntity.getZ();
+        } else if (trackedEntity != null && trackedEntity.isDeadOrDying()) {
+            startFadeOut();
+            this.looping = false;
+            this.stopped = true;
+            this.stop();
         }
+
         if (fadeOutTicks >= 0) {
             fadeOutTicks--;
             volume = MAX_VOLUME * (fadeOutTicks / (float) DEFAULT_FADE_TICKS);

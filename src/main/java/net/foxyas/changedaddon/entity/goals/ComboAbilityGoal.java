@@ -5,6 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -30,6 +32,7 @@ public class ComboAbilityGoal extends Goal {
     private final float damage;
     private final SoundEvent[] impactSound;
     private final ParticleOptions[] impactParticle;
+    private boolean shouldEnd = false;
 
     public ComboAbilityGoal(Mob attacker, float minRange, float maxRange, float damage, int delay, SoundEvent[] impactSounds, ParticleOptions[] impactParticle) {
         this.attacker = attacker;
@@ -47,14 +50,16 @@ public class ComboAbilityGoal extends Goal {
 
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         return target != null && target.isOnGround() &&
-               attacker.distanceTo(target) >= minRange && attacker.distanceTo(target) <= maxRange &&
-               attacker.getRandom().nextFloat() < 0.5f;
+                attacker.distanceTo(target) >= minRange && attacker.distanceTo(target) <= maxRange &&
+                attacker.getRandom().nextFloat() < 0.5f;
     }
 
     @Override
     public boolean canContinueToUse() {
-		if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
-    
+        if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
+        if (shouldEnd) {
+            return false;
+        }
         return phase <= 22 && target != null && target.isAlive();
     }
 
@@ -70,10 +75,9 @@ public class ComboAbilityGoal extends Goal {
         ticks++;
         if (ticks % delay == 0) {
             switch (phase) {
-                case 0,1,2,3,4 -> teleportAndKnockback(4f / Math.max(1, phase));
-                case 6,7,8,9,10 -> teleportAndKnockbackInAir(10f / phase);
-                case 12,13,14,15,16,18,19,20,21 -> teleportAndKnockbackInAir(10f / phase);
-                case 5,11,17 -> uppercut();
+                case 0, 1, 2, 3, 4 -> teleportAndKnockback(4f / Math.max(1, phase));
+                case 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20, 21 -> teleportAndKnockbackInAir(1);
+                case 5, 11, 17 -> uppercut();
                 case 22 -> slam();
             }
             phase++;
@@ -82,13 +86,18 @@ public class ComboAbilityGoal extends Goal {
 
     @Override
     public void stop() {
+        if (shouldEnd && phase < 22) {
+            slam();
+        }
         if (!attacker.isOnGround()) {
             BlockPos pos = attacker.blockPosition();
             int groundY = attacker.level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, pos.getX(), pos.getZ());
             attacker.teleportTo(pos.getX() + 0.5, groundY + 0.5, pos.getZ() + 0.5);
-            spawnImpactEffect(attacker.position(),3);
+            spawnImpactEffect(attacker.position(), 3);
             spawnImpactParticleEffect(target.position(), 2);
         }
+
+        shouldEnd = false;
     }
 
     private void teleportToTarget() {
@@ -96,7 +105,12 @@ public class ComboAbilityGoal extends Goal {
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
-        target.hurt(DamageSource.mobAttack(attacker), damage);
+        if (!target.isBlocking()) {
+            target.hurt(DamageSource.mobAttack(attacker), damage);
+        } else {
+            target.getLevel().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
+            this.shouldEnd = true;
+        }
         spawnImpactEffect(target.position(), 0);
         spawnImpactParticleEffect(target.position(), 0);
     }
@@ -115,7 +129,12 @@ public class ComboAbilityGoal extends Goal {
         target.setDeltaMovement(knockDir);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
-        target.hurt(DamageSource.mobAttack(attacker), damage / 2);
+        if (!target.isBlocking()) {
+            target.hurt(DamageSource.mobAttack(attacker), damage / 2);
+        } else {
+            target.getLevel().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
+            this.shouldEnd = true;
+        }
         spawnImpactEffect(target.position(), 0);
         spawnImpactParticleEffect(target.position(), 0);
     }
@@ -127,7 +146,12 @@ public class ComboAbilityGoal extends Goal {
         target.setDeltaMovement(knockDir);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
-        target.hurt(DamageSource.mobAttack(attacker), damage / 2);
+        if (!target.isBlocking()) {
+            target.hurt(DamageSource.mobAttack(attacker), damage / 2);
+        } else {
+            target.getLevel().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
+            this.shouldEnd = true;
+        }
         applySlowFalling(target);
         spawnImpactEffect(target.position(), 0);
         spawnImpactParticleEffect(target.position(), 0);
@@ -139,7 +163,12 @@ public class ComboAbilityGoal extends Goal {
         target.setDeltaMovement(0, 1.5, 0);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
-        target.hurt(DamageSource.mobAttack(attacker), damage);
+        if (!target.isBlocking()) {
+            target.hurt(DamageSource.mobAttack(attacker), damage);
+        } else {
+            target.getLevel().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
+            this.shouldEnd = true;
+        }
         applySlowFalling(target);
         spawnImpactEffect(target.position(), 1);
         spawnImpactParticleEffect(target.position(), 1);
@@ -151,7 +180,11 @@ public class ComboAbilityGoal extends Goal {
         target.setDeltaMovement(0, -2, 0);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
-        target.hurt(DamageSource.mobAttack(attacker), damage);
+        if (!target.isBlocking()) {
+            target.hurt(DamageSource.mobAttack(attacker), damage);
+        } else {
+            target.getLevel().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
+        }
         spawnImpactEffect(target.position(), 2);
         spawnImpactParticleEffect(target.position(), 2);
         removeSlowFalling();

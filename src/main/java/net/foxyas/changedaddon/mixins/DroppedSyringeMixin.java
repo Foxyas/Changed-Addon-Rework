@@ -1,8 +1,10 @@
 package net.foxyas.changedaddon.mixins;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.block.entity.DroppedSyringeBlockEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.nbt.CompoundTag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -11,6 +13,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Mixin(value = DroppedSyringeBlockEntity.class)
 public abstract class DroppedSyringeMixin {
@@ -22,12 +28,12 @@ public abstract class DroppedSyringeMixin {
     @Inject(method = "getVariant", at = @At("RETURN"), cancellable = true, remap = false)
     private void checkAllowBossTag(CallbackInfoReturnable<TransfurVariant<?>> cir) {
         if (!changed_Addon_Rework$AllowBosses) {
-            if (this.variant == ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get()) {
-                this.variant = ChangedAddonTransfurVariants.EXPERIMENT_10.get();
-                cir.setReturnValue(ChangedAddonTransfurVariants.EXPERIMENT_10.get());
-            } else if (this.variant == ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get()) {
-                this.variant = ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get();
-                cir.setReturnValue(ChangedAddonTransfurVariants.KET_EXPERIMENT_009.get());
+            if (ChangedAddonTransfurVariants.getBossesVariantsList().contains(this.variant)) {
+                List<TransfurVariant<?>> list = new ArrayList<>(TransfurVariant.getPublicTransfurVariants().toList());
+                list.removeIf(transfurVariant -> ChangedAddonTransfurVariants.getBossesVariantsList().contains(transfurVariant));
+                TransfurVariant<?> transfurVariant = list.get(new Random().nextInt(list.size()));
+                this.variant = transfurVariant;
+                cir.setReturnValue(transfurVariant);
             }
         }
     }

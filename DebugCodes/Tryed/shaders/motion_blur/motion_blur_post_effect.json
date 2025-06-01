@@ -1,0 +1,36 @@
+{
+  "targets": [
+    "minecraft:main",
+    "final",
+    "swapA",
+    "swapB",
+    "swap",
+    "motionBlurPrevFrame"
+  ],
+  "passes": [
+    {
+      "name": "blit",
+      "intarget": "motionBlurPrevFrame",
+      "outtarget": "swap"
+    },
+    {
+      "name": "changed_addon:motion_blur",
+      "intarget": "minecraft:main",
+      "outtarget": "final",
+      "auxtargets": [
+        {
+          "name": "PreviousFrameSampler",
+          "id": "motionBlurPrevFrame"
+        }
+      ],
+      "uniforms": [
+        { "name": "blurAmount", "values": [0.4] }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "final",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}
