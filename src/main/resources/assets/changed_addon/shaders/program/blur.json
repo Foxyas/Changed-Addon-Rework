@@ -1,0 +1,21 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "changed_addon:blur",
+  "fragment": "changed_addon:blur",
+  "attributes": ["Position", "UV0"],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "uniforms": [
+    {
+      "name": "BlurDirection",
+      "type": "float",
+      "count": 2,
+      "values": [1.0, 0.0]
+    }
+  ]
+}

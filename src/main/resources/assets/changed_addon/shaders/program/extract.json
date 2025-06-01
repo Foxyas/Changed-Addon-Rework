@@ -1,0 +1,14 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "zero"
+  },
+  "vertex": "changed_addon:extract",
+  "fragment": "changed_addon:extract",
+  "attributes": ["Position", "UV0"],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "uniforms": []
+}

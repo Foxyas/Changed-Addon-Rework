@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.mixins;
 
 import com.mojang.blaze3d.shaders.Uniform;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVision;
 import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVisions;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -11,6 +12,7 @@ import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.PostPass;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,6 +39,9 @@ public abstract class GameRendererMixin {
     private PostChain changed_Addon_Rework$colorblindChain;
 
     @Unique
+    private PostChain changed_Addon_Rework$lightBloomEffectChain;
+
+    @Unique
     private int changed_Addon_Rework$prevWidth = -1, changed_Addon_Rework$prevHeight = -1;
 
 
@@ -47,17 +52,31 @@ public abstract class GameRendererMixin {
             if (changed_Addon_Rework$ShouldWork(player)) {
                 if (this.changed_Addon_Rework$colorblindChain == null) {
                     changed_Addon_Rework$loadShaders();
-                }
-                int w = this.minecraft.getMainRenderTarget().width;
-                int h = this.minecraft.getMainRenderTarget().height;
-                if (w != changed_Addon_Rework$prevWidth || h != changed_Addon_Rework$prevHeight) {
-                    this.changed_Addon_Rework$colorblindChain.resize(w, h);
-                    changed_Addon_Rework$prevWidth = w;
-                    changed_Addon_Rework$prevHeight = h;
-                }
+                } else {
+                    int w = this.minecraft.getMainRenderTarget().width;
+                    int h = this.minecraft.getMainRenderTarget().height;
+                    if (w != changed_Addon_Rework$prevWidth || h != changed_Addon_Rework$prevHeight) {
+                        this.changed_Addon_Rework$colorblindChain.resize(w, h);
+                        changed_Addon_Rework$prevWidth = w;
+                        changed_Addon_Rework$prevHeight = h;
+                    }
 
-                this.changed_Addon_Rework$colorblindChain.process(partialTicks);
+                    this.changed_Addon_Rework$colorblindChain.process(partialTicks);
+                }
+            } else if (player.getMainHandItem().is(Items.DEBUG_STICK)) {
+                if (this.changed_Addon_Rework$lightBloomEffectChain == null) {
+                    changed_Addon_Rework$loadLightBloomShader();
+                } else {
+                    int w = this.minecraft.getMainRenderTarget().width;
+                    int h = this.minecraft.getMainRenderTarget().height;
+                    if (w != changed_Addon_Rework$prevWidth || h != changed_Addon_Rework$prevHeight) {
+                        this.changed_Addon_Rework$lightBloomEffectChain.resize(w, h);
+                        changed_Addon_Rework$prevWidth = w;
+                        changed_Addon_Rework$prevHeight = h;
+                    }
 
+                    this.changed_Addon_Rework$lightBloomEffectChain.process(partialTicks);
+                }
             }
         }
     }
@@ -66,7 +85,7 @@ public abstract class GameRendererMixin {
     private boolean changed_Addon_Rework$ShouldWork(Player player) {
         TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (variantInstance != null) {
-            this.changed_Addon_Rework$transfurVariantVision = TransfurVariantVisions.getTransfurVariantVision(player.getLevel(),variantInstance.getFormId());
+            this.changed_Addon_Rework$transfurVariantVision = TransfurVariantVisions.getTransfurVariantVision(player.getLevel(), variantInstance.getFormId());
             return TransfurVariantVisions.getTransfurVariantVision(player.getLevel(), variantInstance.getFormId()) != null;
         }
 
@@ -112,6 +131,21 @@ public abstract class GameRendererMixin {
                     new ResourceLocation(changed_Addon_Rework$transfurVariantVision.getVisionEffect().toString())
             );
             this.changed_Addon_Rework$colorblindChain.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Unique
+    private void changed_Addon_Rework$loadLightBloomShader() {
+        try {
+            this.changed_Addon_Rework$lightBloomEffectChain = new PostChain(
+                    this.minecraft.getTextureManager(),
+                    this.minecraft.getResourceManager(),
+                    this.minecraft.getMainRenderTarget(),
+                    new ResourceLocation(ChangedAddonMod.MODID, "shaders/post/light_bloom.json")
+            );
+            this.changed_Addon_Rework$lightBloomEffectChain.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ package net.foxyas.changedaddon.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.VoidFoxModel;
+import net.foxyas.changedaddon.client.renderer.layers.ParticlesTrailsLayer;
 import net.foxyas.changedaddon.entity.VoidFoxEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
@@ -11,12 +12,14 @@ import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfM
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 
 public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, VoidFoxModel, ArmorLatexMaleWolfModel<VoidFoxEntity>> {
     public VoidFoxRenderer(EntityRendererProvider.Context context) {
         super(context, new VoidFoxModel(context.bakeLayer(VoidFoxModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
-        this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer.fixedColorGlowing(Color3.WHITE), CustomEyesLayer.fixedColorGlowing(Color3.WHITE), CustomEyesLayer::noRender,CustomEyesLayer::noRender));
+        this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer.fixedColorGlowing(Color3.WHITE), CustomEyesLayer.fixedColorGlowing(Color3.WHITE), CustomEyesLayer::noRender, CustomEyesLayer::noRender));
+        this.addLayer(new ParticlesTrailsLayer<>(this, 0.25f, ParticleTypes.ASH, ParticleTypes.SOUL_FIRE_FLAME));
     }
 
     @Override
@@ -38,6 +41,7 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
             } else {
                 poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationAngle));
             }
+
             // Renderiza o modelo normalmente (chama o super ou código adicional aqui)
             super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
             poseStack.popPose(); // Restaura a pose original

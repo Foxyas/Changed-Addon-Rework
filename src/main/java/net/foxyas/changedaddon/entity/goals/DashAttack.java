@@ -1,0 +1,108 @@
+package net.foxyas.changedaddon.entity.goals;
+
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.damagesource.DamageSource;
+
+import java.util.EnumSet;
+import java.util.List;
+
+public class DashAttack extends Goal {
+
+    private static final int PREPARE_TIME = 60; // 3 seconds
+    private static final int MAX_DASH_TICKS = 20;
+    private static final double DETECTION_DISTANCE = 3.5D;
+    private static final double KNOCKBACK_MULTIPLIER = 1.5;
+
+    private final Mob dasher;
+    private LivingEntity target;
+
+    private int tickCount = 0;
+    private boolean isDashing = false;
+
+    private Vec3 dashDirection = Vec3.ZERO;
+    private float strength = 1.0f;
+
+    public DashAttack(Mob dasher) {
+        this.dasher = dasher;
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+    }
+
+    @Override
+    public boolean canUse() {
+        this.target = dasher.getTarget();
+        return target != null && target.isAlive();
+    }
+
+    @Override
+    public boolean canContinueToUse() {
+        return tickCount < (PREPARE_TIME + MAX_DASH_TICKS);
+    }
+
+    @Override
+    public void start() {
+        tickCount = 0;
+        isDashing = false;
+        dashDirection = Vec3.ZERO;
+    }
+
+    @Override
+    public void tick() {
+        tickCount++;
+
+        // Preparando o dash
+        if (tickCount < PREPARE_TIME) {
+            dasher.getNavigation().stop();
+            dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            if (dasher.getLevel() instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
+                serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
+            }
+            if (tickCount % 5 == 0) {
+                dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
+            }
+            return;
+        }
+
+        if (!isDashing) {
+            dashDirection = dasher.getLookAngle().normalize().scale(strength);
+            isDashing = true;
+        }
+
+        if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
+            // Aplica o movimento
+            dasher.setDeltaMovement(dashDirection);
+
+            // Detecta entidades na frente
+            Vec3 forward = dasher.getLookAngle();
+            Vec3 origin = dasher.position();
+            AABB detectionBox = dasher.getBoundingBox().expandTowards(forward.scale(DETECTION_DISTANCE)).inflate(1.0);
+
+            List<LivingEntity> entities = dasher.level.getEntitiesOfClass(LivingEntity.class, detectionBox, e -> e != dasher && e.isAlive());
+
+            for (LivingEntity entity : entities) {
+                // Aplica dano e knockback baseado na distância
+                Vec3 difference = entity.position().subtract(dasher.position());
+                double distance = difference.length();
+                if (distance > 0.1) {
+                    Vec3 knockback = difference.normalize().scale(distance * KNOCKBACK_MULTIPLIER);
+                    entity.hurt(DamageSource.mobAttack(dasher), 6.0F);
+                    dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
+                    entity.setDeltaMovement(entity.getDeltaMovement().add(knockback));
+                }
+            }
+        }
+    }
+
+    public void setStrength(float strength) {
+        this.strength = strength;
+    }
+}

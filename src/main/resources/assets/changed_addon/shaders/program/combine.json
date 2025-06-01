@@ -1,0 +1,15 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "one",
+    "dstrgb": "one"
+  },
+  "vertex": "changed_addon:combine",
+  "fragment": "changed_addon:combine",
+  "attributes": ["Position", "UV0"],
+  "samplers": [
+    { "name": "DiffuseSampler" },
+    { "name": "Bloom" }
+  ],
+  "uniforms": []
+}

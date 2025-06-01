@@ -1,0 +1,79 @@
+package net.foxyas.changedaddon.process.util.sounds;
+
+import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
+import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
+public class FadingBossMusicSound extends AbstractTickableSoundInstance {
+    private static final float MAX_VOLUME = 1.0f;
+    private static final int DEFAULT_FADE_TICKS = 40;
+
+    private int fadeInTicks;
+    private int fadeOutTicks = -1;
+    private boolean stopped = false;
+    private final LivingEntity trackedEntity;
+
+    public FadingBossMusicSound(SoundEvent soundEvent, LivingEntity entity) {
+        super(soundEvent, SoundSource.MASTER);
+        this.trackedEntity = entity;
+        this.looping = true;
+        this.volume = 1.0f;
+        this.pitch = 1.0f;
+        this.fadeInTicks = DEFAULT_FADE_TICKS;
+    }
+
+    public void startFadeOut() {
+        this.fadeOutTicks = DEFAULT_FADE_TICKS;
+    }
+
+    public boolean isStopped() {
+        return stopped;
+    }
+
+    public LivingEntity getTrackedEntity() {
+        return trackedEntity;
+    }
+
+    @Override
+    public boolean isRelative() {
+        return super.isRelative();
+    }
+
+    @Override
+    public boolean isLooping() {
+        return super.isLooping();
+    }
+
+    @Override
+    public void tick() {
+        if (trackedEntity == null || trackedEntity.isDeadOrDying()) {
+            startFadeOut();
+            this.looping = false;
+        }
+
+        if (trackedEntity != null && trackedEntity.isAlive()) {
+            this.x = trackedEntity.getX();
+            this.y = trackedEntity.getY();
+            this.z = trackedEntity.getZ();
+        }
+        if (fadeOutTicks >= 0) {
+            fadeOutTicks--;
+            volume = MAX_VOLUME * (fadeOutTicks / (float) DEFAULT_FADE_TICKS);
+            if (fadeOutTicks <= 0) {
+                stopped = true;
+                this.stop();
+            }
+        } else if (fadeInTicks > 0) {
+            fadeInTicks--;
+            volume = MAX_VOLUME * (1.0f - fadeInTicks / (float) DEFAULT_FADE_TICKS);
+        } else {
+            volume = MAX_VOLUME;
+        }
+    }
+}

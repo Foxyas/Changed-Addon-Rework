@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
-import net.foxyas.changedaddon.process.util.DEBUG;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -308,55 +307,6 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
     public void setupAnim(@NotNull LuminarcticLeopardEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-
-        if (true) {
-            // Cabeça
-            this.Head.x += DEBUG.HeadPosX;
-            this.Head.y += DEBUG.HeadPosY;
-            this.Head.z += DEBUG.HeadPosZ;
-            this.Head.xRot += DEBUG.HeadRotX;
-            this.Head.yRot += DEBUG.HeadRotY;
-            this.Head.zRot += DEBUG.HeadRotZ;
-
-            // Tronco
-            this.Torso.x += DEBUG.TorsoPosX;
-            this.Torso.y += DEBUG.TorsoPosY;
-            this.Torso.z += DEBUG.TorsoPosZ;
-            this.Torso.xRot += DEBUG.TorsoRotX;
-            this.Torso.yRot += DEBUG.TorsoRotY;
-            this.Torso.zRot += DEBUG.TorsoRotZ;
-
-            // Braço esquerdo
-            this.LeftArm.x += DEBUG.LeftArmPosX;
-            this.LeftArm.y += DEBUG.LeftArmPosY;
-            this.LeftArm.z += DEBUG.LeftArmPosZ;
-            this.LeftArm.xRot += DEBUG.LeftArmRotX;
-            this.LeftArm.yRot += DEBUG.LeftArmRotY;
-            this.LeftArm.zRot += DEBUG.LeftArmRotZ;
-            // Braço direito
-            this.RightArm.x += DEBUG.RightArmPosX;
-            this.RightArm.y += DEBUG.RightArmPosY;
-            this.RightArm.z += DEBUG.RightArmPosZ;
-            this.RightArm.xRot += DEBUG.RightArmRotX;
-            this.RightArm.yRot += DEBUG.RightArmRotY;
-            this.RightArm.zRot += DEBUG.RightArmRotZ;
-
-            // Perna esquerda
-            this.LeftLeg.x += DEBUG.LeftLegPosX;
-            this.LeftLeg.y += DEBUG.LeftLegPosY;
-            this.LeftLeg.z += DEBUG.LeftLegPosZ;
-            this.LeftLeg.xRot += DEBUG.LeftLegRotX;
-            this.LeftLeg.yRot += DEBUG.LeftLegRotY;
-            this.LeftLeg.zRot += DEBUG.LeftLegRotZ;
-
-            // Perna direita
-            this.RightLeg.x += DEBUG.RightLegPosX;
-            this.RightLeg.y += DEBUG.RightLegPosY;
-            this.RightLeg.z += DEBUG.RightLegPosZ;
-            this.RightLeg.xRot += DEBUG.RightLegRotX;
-            this.RightLeg.yRot += DEBUG.RightLegRotY;
-            this.RightLeg.zRot += DEBUG.RightLegRotZ;
-        }
 
         if (dodgeProgress > 0) {
             playDodgeAnim(entity.getDodgeType(), dodgeProgress);

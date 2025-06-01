@@ -1,0 +1,47 @@
+{
+  "targets": [
+    "bright",
+    "hblur",
+    "vblur",
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "changed_addon:extract",
+      "intarget": "minecraft:main",
+      "outtarget": "bright"
+    },
+    {
+      "name": "changed_addon:blur",
+      "intarget": "bright",
+      "outtarget": "hblur",
+      "uniforms": [
+        { "name": "BlurDirection", "values": [1.0, 0.0] }
+      ]
+    },
+    {
+      "name": "changed_addon:blur",
+      "intarget": "hblur",
+      "outtarget": "vblur",
+      "uniforms": [
+        { "name": "BlurDirection", "values": [0.0, 1.0] }
+      ]
+    },
+    {
+      "name": "changed_addon:combine",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "auxiliary": [
+        {
+          "name": "Bloom",
+          "id": "vblur"
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

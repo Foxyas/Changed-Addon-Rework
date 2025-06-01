@@ -8,8 +8,7 @@
             "intarget": "minecraft:main",
             "outtarget": "swap",
             "uniforms": [
-                { "name": "Saturation", "values": [ 0.0 ] }
-,
+                { "name": "Saturation", "values": [ 0.0 ] },
                 { "name": "Contrast", "values": [ 1.0 ] }
             ]
         },
