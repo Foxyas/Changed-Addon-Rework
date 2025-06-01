@@ -63,7 +63,7 @@ public abstract class GameRendererMixin {
 
                     this.changed_Addon_Rework$colorblindChain.process(partialTicks);
                 }
-            } /*else if (player.getMainHandItem().is(Items.DEBUG_STICK)) {
+            }/* else if (player.getMainHandItem().is(Items.DEBUG_STICK)) {
                 if (this.changed_Addon_Rework$lightBloomEffectChain == null) {
                     changed_Addon_Rework$loadLightBloomShader();
                 } else {
@@ -77,7 +77,7 @@ public abstract class GameRendererMixin {
 
                     this.changed_Addon_Rework$lightBloomEffectChain.process(partialTicks);
                 }
-            }*/
+            }*/
         }
     }
 
@@ -149,5 +149,5 @@ public abstract class GameRendererMixin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }*/
 }

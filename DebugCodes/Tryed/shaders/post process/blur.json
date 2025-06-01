@@ -4,7 +4,7 @@
     "srcrgb": "one",
     "dstrgb": "zero"
   },
-  "vertex": "changed_addon:blur",
+  "vertex": "sobel",
   "fragment": "changed_addon:blur",
   "attributes": ["Position", "UV0"],
   "samplers": [

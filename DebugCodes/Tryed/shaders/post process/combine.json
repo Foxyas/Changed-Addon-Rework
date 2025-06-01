@@ -4,7 +4,7 @@
     "srcrgb": "one",
     "dstrgb": "one"
   },
-  "vertex": "changed_addon:combine",
+  "vertex": "sobel",
   "fragment": "changed_addon:combine",
   "attributes": ["Position", "UV0"],
   "samplers": [

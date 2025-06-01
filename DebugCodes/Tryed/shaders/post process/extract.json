@@ -4,7 +4,7 @@
     "srcrgb": "one",
     "dstrgb": "zero"
   },
-  "vertex": "changed_addon:extract",
+  "vertex": "sobel",
   "fragment": "changed_addon:extract",
   "attributes": ["Position", "UV0"],
   "samplers": [
