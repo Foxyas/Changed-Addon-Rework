@@ -13,6 +13,7 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
+import net.foxyas.changedaddon.item.GoldenOrange;
 import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.item.armor.DyeableShorts;
 import net.foxyas.changedaddon.network.packets.KeyPressPacket;
@@ -48,6 +49,8 @@ import net.minecraftforge.registries.RegistryObject;
 public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final DeferredRegister<Item> ITEMS_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
+
+	public static final RegistryObject<Item> GOLDEN_ORANGE = REGISTRY.register("golden_orange", GoldenOrange::new);
 
 	public static final RegistryObject<Item> LATEX_SNOW_FOX_SPAWN_EGG = ITEMS_REGISTRY.register("latex_snow_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.LATEX_SNOW_FOX, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 

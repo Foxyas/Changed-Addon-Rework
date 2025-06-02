@@ -50,8 +50,8 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     private static final int MAX_DODGING_TICKS = 20;
     private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown;
     private int AttackInUse;
-    private static final int MAX_COOLDOWN = 500;
-    public static final int MAX_1_COOLDOWN = 80;
+    private static final int MAX_COOLDOWN = 220;
+    public static final int MAX_1_COOLDOWN = 120;
     public static final int MAX_2_COOLDOWN = 120;
 
     public VoidFoxEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -111,7 +111,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.addGoal(5, new ComboAbilityGoal(
+        this.goalSelector.addGoal(1, new ComboAbilityGoal(
                 this, 3f, 18f, 8f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -139,7 +139,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             public void start() {
                 super.start();
                 VoidFoxEntity.this.setAttack1Cooldown(0);
+            }
+
+            @Override
+            public void tick() {
                 VoidFoxEntity.this.AttackInUse = 1;
+                super.tick();
             }
 
             @Override
@@ -166,7 +171,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void start() {
                 super.start();
+            }
+
+            @Override
+            public void tick() {
                 VoidFoxEntity.this.AttackInUse = 2;
+                super.tick();
             }
 
             @Override
@@ -187,7 +197,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                         SoundEvents.LIGHTNING_BOLT_THUNDER},
                 new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH});
 
-        this.goalSelector.addGoal(2,
+        this.goalSelector.addGoal(1,
                 new BossComboAbilityGoal(
                         this,
                         3,
@@ -215,7 +225,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     @Override
                     public void start() {
                         super.start();
+                    }
+
+                    @Override
+                    public void tick() {
                         VoidFoxEntity.this.AttackInUse = 3;
+                        super.tick();
                     }
 
                     @Override
@@ -253,7 +268,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     @Override
                     public void start() {
                         super.start();
+                    }
+
+                    @Override
+                    public void tick() {
                         VoidFoxEntity.this.AttackInUse = 4;
+                        super.tick();
                     }
 
                     @Override

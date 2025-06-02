@@ -43,7 +43,7 @@ public class DashAttack extends Goal {
     public boolean canUse() {
         this.target = dasher.getTarget();
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
-        return target != null && target.isAlive();
+        return target != null && target.isAlive() && target.distanceTo(dasher) >= 3.5f;
     }
 
     @Override
@@ -71,6 +71,7 @@ public class DashAttack extends Goal {
         if (tickCount < PREPARE_TIME) {
             dasher.getNavigation().stop();
             dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            dashDirection = dasher.getLookAngle().normalize().scale(strength);
             if (tickCount % 2 == 0) {
                 dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
             }
@@ -82,14 +83,13 @@ public class DashAttack extends Goal {
         }
 
         if (!isDashing) {
-            dashDirection = dasher.getLookAngle().normalize().scale(strength);
             isDashing = true;
         }
 
         if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
-            if (dasher.horizontalCollision) {
+            if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
                 tickCount += 5;
             }
 

@@ -115,7 +115,7 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<FoxtaFoxyEntity>> FOXTA_FOXY = register("form_foxta_foxy", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.FOXTA_FOXY).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Rabbit.class)).nightVision());
 
 
-    public static final RegistryObject<TransfurVariant<LatexDragonSnowLeopardSharkEntity>> LATEX_DRAGON_SNEP_SHARK = register("form_latex_dragon_snow_leopard_shark", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK).glide().nightVision().addAbility(entityType -> ChangedAddonAbilities.WING_FLAP_ABILITY.get()));
+    public static final RegistryObject<TransfurVariant<LatexDragonSnowLeopardSharkEntity>> LATEX_DRAGON_SNEP_SHARK = register("form_latex_dragon_snow_leopard_shark", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK).glide().gills().nightVision().addAbility(entityType -> ChangedAddonAbilities.WING_FLAP_ABILITY.get()));
     //Partials
     public static final RegistryObject<TransfurVariant<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("form_latex_snow_leopard_partial", TransfurVariant.Builder.of(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL).stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
 
