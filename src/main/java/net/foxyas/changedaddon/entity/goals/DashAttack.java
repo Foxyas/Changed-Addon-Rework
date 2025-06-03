@@ -71,7 +71,7 @@ public class DashAttack extends Goal {
         if (tickCount < PREPARE_TIME) {
             dasher.getNavigation().stop();
             dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            dashDirection = dasher.getLookAngle().normalize().scale(strength);
+            dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
             if (tickCount % 2 == 0) {
                 dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
             }

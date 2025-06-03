@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import net.minecraft.world.entity.Entity;
 import java.util.Random;
+import net.minecraft.client.Minecraft;
 
 public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
 
@@ -70,7 +71,7 @@ public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends 
         ModelPart selectedPart = getRandomPart(parts, entity.getRandom());
         worldPos = getWorldPositionFromPart(entity, model, selectedPart);
 
-        if (entity.getRandom().nextFloat() <= spawnProbability) {
+        if (entity.getRandom().nextFloat() <= spawnProbability && !Minecraft.getInstance().isPaused()) {
             spawnParticle(entity, selectedPart == model.getHead(), worldPos);
         }
     }

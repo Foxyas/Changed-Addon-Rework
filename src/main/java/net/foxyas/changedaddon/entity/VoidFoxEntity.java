@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
 import net.foxyas.changedaddon.entity.goals.BossComboAbilityGoal;
 import net.foxyas.changedaddon.entity.goals.ComboAbilityGoal;
 import net.foxyas.changedaddon.entity.goals.DashAttack;
+import net.foxyas.changedaddon.entity.goals.SimpleComboAbilityGoal;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -50,7 +51,8 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     private static final int MAX_DODGING_TICKS = 20;
     private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown;
     private int AttackInUse;
-    private static final int MAX_COOLDOWN = 220;
+    public int timesUsedAttack1,timesUsedAttack2,timesUsedAttack3,timesUsedAttack4 = 0;
+    private static final int MAX_COOLDOWN = 120;
     public static final int MAX_1_COOLDOWN = 120;
     public static final int MAX_2_COOLDOWN = 120;
 
@@ -110,35 +112,31 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     protected void registerGoals() {
         super.registerGoals();
-
-        this.goalSelector.addGoal(1, new ComboAbilityGoal(
-                this, 3f, 18f, 8f, 5,
-                new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
-                        SoundEvents.PLAYER_ATTACK_CRIT,
-                        SoundEvents.PLAYER_ATTACK_CRIT,
-                        SoundEvents.LIGHTNING_BOLT_THUNDER},
-                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH}
-        ) {
+        this.goalSelector.addGoal(1, new DashAttack(this) {
             @Override
             public boolean canUse() {
-                if (VoidFoxEntity.this.getAttack1Cooldown() < VoidFoxEntity.getMaxCooldown()) {
+                if (VoidFoxEntity.this.getAttack2Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
                     return false;
                 }
-
                 if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 1) {
                     return false;
                 }
 
-                if (VoidFoxEntity.this.getRandom().nextFloat() <= 0.01) {
+                if (VoidFoxEntity.this.timesUsedAttack1 >= 4) {
                     return false;
                 }
+
                 return super.canUse();
             }
 
             @Override
             public void start() {
                 super.start();
-                VoidFoxEntity.this.setAttack1Cooldown(0);
+
+                VoidFoxEntity.this.timesUsedAttack1 ++;
+                VoidFoxEntity.this.timesUsedAttack2 = 0;
+                VoidFoxEntity.this.timesUsedAttack3 = 0;
+                VoidFoxEntity.this.timesUsedAttack4 = 0;
             }
 
             @Override
@@ -150,18 +148,34 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void stop() {
                 super.stop();
+                VoidFoxEntity.this.setAttack2Cooldown(0);
                 VoidFoxEntity.this.AttackInUse = 0;
             }
         });
 
-
-        this.goalSelector.addGoal(1, new DashAttack(this) {
+        this.goalSelector.addGoal(1, new ComboAbilityGoal(
+                this, 3f, 18f, 8f, 5,
+                new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
+                        SoundEvents.PLAYER_ATTACK_CRIT,
+                        SoundEvents.PLAYER_ATTACK_CRIT,
+                        SoundEvents.LIGHTNING_BOLT_THUNDER},
+                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH}
+        ){
             @Override
             public boolean canUse() {
-                if (VoidFoxEntity.this.getAttack2Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
+                if (VoidFoxEntity.this.getAttack1Cooldown() < VoidFoxEntity.getMaxCooldown()) {
                     return false;
                 }
+
                 if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 2) {
+                    return false;
+                }
+
+                if (VoidFoxEntity.this.timesUsedAttack2 >= 4) {
+                    return false;
+                }
+
+                if (VoidFoxEntity.this.getRandom().nextFloat() >= 0.25f) {
                     return false;
                 }
 
@@ -171,6 +185,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void start() {
                 super.start();
+                VoidFoxEntity.this.setAttack1Cooldown(0);
+
+                VoidFoxEntity.this.timesUsedAttack1 = 0;
+                VoidFoxEntity.this.timesUsedAttack2 ++;
+                VoidFoxEntity.this.timesUsedAttack3 = 0;
+                VoidFoxEntity.this.timesUsedAttack4 = 0;
             }
 
             @Override
@@ -182,108 +202,116 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void stop() {
                 super.stop();
-                VoidFoxEntity.this.setAttack2Cooldown(0);
                 VoidFoxEntity.this.AttackInUse = 0;
             }
         });
 
-
-        BossComboAbilityGoal.DefaultCombos defaultCombos = new BossComboAbilityGoal.DefaultCombos(this,
-                getTarget(),
-                6,
+        this.goalSelector.addGoal(1, new SimpleComboAbilityGoal(
+                this, 2,3f, 18f, 8f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.LIGHTNING_BOLT_THUNDER},
-                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH});
-
-        this.goalSelector.addGoal(1,
-                new BossComboAbilityGoal(
-                        this,
-                        3,
-                        3f,
-                        7f,
-                        0.5f,
-                        defaultCombos::uppercut,
-                        defaultCombos::slam,
-                        livingEntity -> defaultCombos.teleportAndKnockbackInAir(3),
-                        livingEntity -> defaultCombos.teleportAndKnockback(2),
-                        livingEntity -> defaultCombos.teleportAndKnockback(1)
-                ) {
-                    @Override
-                    public boolean canUse() {
-                        if (VoidFoxEntity.this.getAttack3Cooldown() < VoidFoxEntity.MAX_2_COOLDOWN) {
-                            return false;
-                        }
-                        if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 3) {
-                            return false;
-                        }
-
-                        return super.canUse();
-                    }
-
-                    @Override
-                    public void start() {
-                        super.start();
-                    }
-
-                    @Override
-                    public void tick() {
-                        VoidFoxEntity.this.AttackInUse = 3;
-                        super.tick();
-                    }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        VoidFoxEntity.this.setAttack3Cooldown(0);
-                        VoidFoxEntity.this.AttackInUse = 0;
-                    }
+                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH}
+        ){
+            @Override
+            public boolean canUse() {
+                if (VoidFoxEntity.this.getAttack3Cooldown() < VoidFoxEntity.getMaxCooldown()) {
+                    return false;
                 }
-        );
 
-        this.goalSelector.addGoal(3,
-                new BossComboAbilityGoal(
-                        this,
-                        1,
-                        1f,
-                        4f,
-                        0.5f,
-                        defaultCombos::uppercut,
-                        defaultCombos::slam,
-                        livingEntity -> defaultCombos.teleportAndKnockbackInAir(5)
-                ) {
-                    @Override
-                    public boolean canUse() {
-                        if (VoidFoxEntity.this.getAttack3Cooldown() < VoidFoxEntity.MAX_2_COOLDOWN) {
-                            return false;
-                        }
-                        if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 4) {
-                            return false;
-                        }
-
-                        return super.canUse();
-                    }
-
-                    @Override
-                    public void start() {
-                        super.start();
-                    }
-
-                    @Override
-                    public void tick() {
-                        VoidFoxEntity.this.AttackInUse = 4;
-                        super.tick();
-                    }
-
-                    @Override
-                    public void stop() {
-                        super.stop();
-                        VoidFoxEntity.this.setAttack3Cooldown(0);
-                        VoidFoxEntity.this.AttackInUse = 0;
-                    }
+                if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 3) {
+                    return false;
                 }
-        );
+
+                if (VoidFoxEntity.this.timesUsedAttack3 >= 4) {
+                    return false;
+                }
+
+                if (VoidFoxEntity.this.getRandom().nextFloat() >= 0.70f) {
+                    return false;
+                }
+
+                return super.canUse();
+            }
+
+            @Override
+            public void start() {
+                super.start();
+                VoidFoxEntity.this.setAttack3Cooldown(0);
+
+                VoidFoxEntity.this.timesUsedAttack1 = 0;
+                VoidFoxEntity.this.timesUsedAttack2 = 0;
+                VoidFoxEntity.this.timesUsedAttack3 ++;
+                VoidFoxEntity.this.timesUsedAttack4 = 0;
+            }
+
+            @Override
+            public void tick() {
+                VoidFoxEntity.this.AttackInUse = 3;
+                super.tick();
+            }
+
+            @Override
+            public void stop() {
+                super.stop();
+                VoidFoxEntity.this.AttackInUse = 0;
+            }
+        });
+
+        this.goalSelector.addGoal(1, new ComboAbilityGoal(
+                this, 6f, 18f, 8f, 5,
+                new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
+                        SoundEvents.PLAYER_ATTACK_CRIT,
+                        SoundEvents.PLAYER_ATTACK_CRIT,
+                        SoundEvents.LIGHTNING_BOLT_THUNDER},
+                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH}
+        ){
+            @Override
+            public boolean canUse() {
+                if (VoidFoxEntity.this.getAttack3Cooldown() < VoidFoxEntity.getMaxCooldown()) {
+                    return false;
+                }
+
+                if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 4) {
+                    return false;
+                }
+
+                if (VoidFoxEntity.this.timesUsedAttack4 >= 4) {
+                    return false;
+                }
+
+                if (VoidFoxEntity.this.getRandom().nextFloat() >= 0.5) {
+                    return false;
+                }
+
+                return super.canUse();
+            }
+
+            @Override
+            public void start() {
+                super.start();
+                VoidFoxEntity.this.setAttack3Cooldown(0);
+
+                VoidFoxEntity.this.timesUsedAttack1 = 0;
+                VoidFoxEntity.this.timesUsedAttack2 = 0;
+                VoidFoxEntity.this.timesUsedAttack3 = 0;
+                VoidFoxEntity.this.timesUsedAttack4 ++;
+            }
+
+            @Override
+            public void tick() {
+                VoidFoxEntity.this.AttackInUse = 4;
+                super.tick();
+            }
+
+            @Override
+            public void stop() {
+                super.stop();
+                VoidFoxEntity.this.AttackInUse = 0;
+            }
+        });
+
 
     }
 
@@ -375,6 +403,10 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         if (tag.contains("Attack2Cooldown")) this.Attack2Cooldown = tag.getInt("Attack2Cooldown");
         if (tag.contains("Attack3Cooldown")) this.Attack3Cooldown = tag.getInt("Attack3Cooldown");
         if (tag.contains("AttackInUse")) this.Attack3Cooldown = tag.getInt("AttackInUse");
+        if (tag.contains("timeUsedAttack1")) this.timesUsedAttack1 = tag.getInt("timeUsedAttack1");
+        if (tag.contains("timeUsedAttack2")) this.timesUsedAttack2 = tag.getInt("timeUsedAttack2");
+        if (tag.contains("timeUsedAttack3")) this.timesUsedAttack3 = tag.getInt("timeUsedAttack3");
+        if (tag.contains("timeUsedAttack4")) this.timesUsedAttack4 = tag.getInt("timeUsedAttack4");
     }
 
     @Override
@@ -385,6 +417,10 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         tag.putInt("Attack2Cooldown", this.Attack2Cooldown);
         tag.putInt("Attack3Cooldown", this.Attack3Cooldown);
         tag.putInt("AttackInUse", this.AttackInUse);
+        tag.putInt("timeUsedAttack1", this.timesUsedAttack1);
+        tag.putInt("timeUsedAttack2", this.timesUsedAttack2);
+        tag.putInt("timeUsedAttack3", this.timesUsedAttack3);
+        tag.putInt("timeUsedAttack4", this.timesUsedAttack4);
     }
 
     @Override
