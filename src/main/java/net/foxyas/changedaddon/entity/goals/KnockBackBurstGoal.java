@@ -44,6 +44,10 @@ public class KnockBackBurstGoal extends Goal {
         if (ticks >= checkInterval) {
             ticks = 0;
 
+			// reset
+            recentDamage = 0;
+            recentHits = 0;
+
             // Verifica se tomou muito dano e não revidou muito
             if (recentDamage >= damageThreshold && recentHits <= 1) {
                 // reset

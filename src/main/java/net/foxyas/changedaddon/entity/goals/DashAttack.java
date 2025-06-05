@@ -58,6 +58,14 @@ public class DashAttack extends Goal {
         return isDashing || tickCount < (PREPARE_TIME + MAX_DASH_TICKS);
     }
 
+    public Vec3 getDashDirection() {
+        return dashDirection;
+    }
+
+    public void setDashDirection(Vec3 dashDirection) {
+        this.dashDirection = dashDirection;
+    }
+
     @Override
     public void start() {
         if (tickCount >= PREPARE_TIME + MAX_DASH_TICKS) {

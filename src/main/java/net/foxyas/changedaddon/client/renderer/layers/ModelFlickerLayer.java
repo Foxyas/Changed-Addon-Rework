@@ -28,14 +28,14 @@ public class ModelFlickerLayer<M extends AdvancedHumanoidModel<T>, T extends Cha
         float flicker = (float) Math.sin((entity.tickCount + partialTicks) * flickerSpeed) * intensity * 0.05f;
 
         poseStack.pushPose();
-        poseStack.translate(flicker, flicker, flicker);
+        poseStack.translate(flicker, flicker * (1 + 0.25f), flicker);
 
         // Obtenha o modelo e textura do parent
         M model = this.getParentModel();
         ResourceLocation texture = this.getTextureLocation(entity);
 
         VertexConsumer buffer = bufferSource.getBuffer(RenderType.energySwirl(texture, 0, 0));
-        float alpha = 0.45f;
+        float alpha = 0.3f;
 
         model.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
         model.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);

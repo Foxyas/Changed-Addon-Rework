@@ -40,6 +40,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -463,6 +464,17 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         boolean willHit = randomValue <= value;
 
         if (source.getEntity() != null) {
+            if (computeHealthRatio() > 0.5f) {
+                if (((this.getHealth() - amount) / this.getMaxHealth()) <= 0.5f) {
+                    if (source.getEntity() instanceof Player player) {
+                        player.displayClientMessage(new TextComponent("I will hasten the arrival of your death").withStyle((style -> {
+                            Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                            returnStyle = returnStyle.withItalic(true);
+                            return returnStyle;
+                        })), true);
+                    }
+                }
+            }
             if (VoidFoxEntity.this.AttackInUse > 0) {
                 if (VoidFoxEntity.this.AttackInUse != 1) {
                     return super.hurt(source, amount);
@@ -559,18 +571,26 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             if (AttackInUse != 0) {
                 return;
             }
+            int value = isMoreOp() ? 4 : 2;
+
             if (this.Attack1Cooldown < MAX_COOLDOWN) {
-                if (this.tickCount % 5 == 1) {
+                float delay = isMoreOp() ? 2 : 5;
+                if (this.tickCount % delay == 1) {
                     this.Attack1Cooldown++;
                 }
             }
             if (this.Attack2Cooldown < MAX_1_COOLDOWN) {
-                this.Attack2Cooldown++;
+                this.Attack2Cooldown += value;
             }
             if (this.Attack3Cooldown < MAX_2_COOLDOWN) {
-                this.Attack3Cooldown++;
+                this.Attack3Cooldown += value;
             }
         }
+    }
+
+
+    public boolean isMoreOp() {
+        return this.computeHealthRatio() <= 0.5f;
     }
 
 
@@ -598,9 +618,38 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         crawlingSystem(this, this.getTarget());
         tickDodgeTicks();
         tickAttackTicks();
+
+        handleChanges();
+
         if (!this.level.isClientSide) {
-            this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
+            if (this.computeHealthRatio() <= 0.5) {
+                this.bossBar.setProgress(computeHealthRatio() / 0.5f);
+                this.bossBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
+            } else {
+                this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
+                this.bossBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
+            }
         }
+    }
+
+    private void handleChanges() {
+        this.goalSelector.getRunningGoals().forEach((wrappedGoal -> {
+            if (wrappedGoal.getGoal() instanceof DashAttack dashAttack) {
+                if (this.isMoreOp()) {
+                    if (dashAttack.isChargingDash()) {
+                        dashAttack.setTickCount(dashAttack.getTickCount() + 5);
+                    }
+                    dashAttack.setDashDirection(dashAttack.getDashDirection().scale(2.5f));
+                }
+            }
+        }));
+
+        if (this.isMoreOp()) {
+            if (this.hurtDuration <= 0 && this.tickCount % 5 == 0) {
+                this.setHealth(this.getHealth() + this.getRandom().nextFloat(0.25f,1.25f));
+            }
+        }
+
     }
 
     @Override
@@ -609,7 +658,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         this.bossBar.addPlayer(player);
         player.displayClientMessage(
                 new TextComponent("An ominous presence looms in the region...\nAre you prepared to face the consequences of your actions?").withStyle((style -> {
-                    Style returnStyle = style.withColor(ChatFormatting.BLACK);
+                    Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
                     returnStyle = returnStyle.withItalic(true);
                     return returnStyle;
                 })),
