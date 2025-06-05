@@ -175,6 +175,7 @@ public class CreatureDietsHandleProcedure {
         return entity.getType().getRegistryName().toString().contains("fox") ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getMaleVariant()) ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getFemaleVariant()) ||
+                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.FOX_LIKE)||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:fox_diet")));
     }
