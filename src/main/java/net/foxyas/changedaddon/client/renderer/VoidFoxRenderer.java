@@ -4,6 +4,7 @@ package net.foxyas.changedaddon.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.VoidFoxModel;
+import net.foxyas.changedaddon.client.renderer.layers.ModelFlickerLayer;
 import net.foxyas.changedaddon.client.renderer.layers.ParticlesTrailsLayer;
 import net.foxyas.changedaddon.entity.VoidFoxEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
@@ -30,6 +31,7 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer.fixedColorGlowing(Color3.WHITE), CustomEyesLayer.fixedColorGlowing(Color3.WHITE), CustomEyesLayer::noRender, CustomEyesLayer::noRender));
         this.addLayer(new ParticlesTrailsLayer<>(this, 0.025f, ParticleTypes.ASH));
         this.addLayer(new ParticlesTrailsLayer<>(this, 0.0025f, ParticleTypes.END_ROD));
+        this.addLayer(new ModelFlickerLayer<>(this));
     }
 
     @Override
@@ -51,37 +53,34 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
             } else {
                 poseStack.mulPose(Vector3f.YN.rotationDegrees(rotationAngle));
             }
-
             // Renderiza o modelo normalmente (chama o super ou código adicional aqui)
             super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
             poseStack.popPose(); // Restaura a pose original
         } else {
             super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
         }
-
-
-        if (this.entityRenderDispatcher.distanceToSqr(entity) > 4096.0D) return;
-
-        // Monta os Component exatamente como você queria
-        List<Component> debugLines = List.of(
-                new TextComponent("HP: " + entity.getHealth())
-                        .withStyle(style -> style.withColor(ChatFormatting.RED).withBold(true)),
-
-                new TextComponent("Phase: " + entity.getAttackInUse())
-                        .withStyle(style -> style.withColor(ChatFormatting.YELLOW)),
-
-                new TextComponent("Attack1Cooldown: " + entity.getAttack1Cooldown())
-                        .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
-
-                new TextComponent("Attack2Cooldown: " + entity.getAttack2Cooldown())
-                        .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
-
-                new TextComponent("Attack3Cooldown: " + entity.getAttack3Cooldown())
-                        .withStyle(style -> style.withColor(ChatFormatting.AQUA))
-        );
-
-        renderDebugText(debugLines, poseStack, bufferSource, entity, packedLight);
     }
+        /*if (this.entityRenderDispatcher.distanceToSqr(entity) < 4096.0D) {
+            // Monta os Component exatamente como você queria
+            List<Component> debugLines = List.of(
+                    new TextComponent("HP: " + entity.getHealth())
+                            .withStyle(style -> style.withColor(ChatFormatting.RED).withBold(true)),
+
+                    new TextComponent("Phase: " + entity.getAttackInUse())
+                            .withStyle(style -> style.withColor(ChatFormatting.YELLOW)),
+
+                    new TextComponent("Attack1Cooldown: " + entity.getAttack1Cooldown())
+                            .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
+
+                    new TextComponent("Attack2Cooldown: " + entity.getAttack2Cooldown())
+                            .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
+
+                    new TextComponent("Attack3Cooldown: " + entity.getAttack3Cooldown())
+                            .withStyle(style -> style.withColor(ChatFormatting.AQUA))
+            );
+
+            renderDebugText(debugLines, poseStack, bufferSource, entity, packedLight);
+        }*/
 
     private void renderDebugText(List<Component> lines, PoseStack poseStack, MultiBufferSource bufferSource, LivingEntity entity, int packedLight) {
         Font font = Minecraft.getInstance().font;

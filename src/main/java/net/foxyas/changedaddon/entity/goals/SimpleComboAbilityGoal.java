@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.goals;
 
+import net.foxyas.changedaddon.entity.VoidFoxEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
@@ -230,6 +231,12 @@ public class SimpleComboAbilityGoal extends Goal {
         if (attacker.level instanceof ServerLevel serverLevel) {
             if (type <= impactParticle.length) {
                 serverLevel.sendParticles(impactParticle[type], pos.x, pos.y, pos.z, 3, 0, 0, 0, 0);
+            }
+
+            if (type != 1 && type != 2 && attacker instanceof VoidFoxEntity voidFoxEntity) {
+                if (voidFoxEntity.getMainHandItem().isEmpty()) {
+                    voidFoxEntity.doClawsAttackEffect();
+                }
             }
         }
     }

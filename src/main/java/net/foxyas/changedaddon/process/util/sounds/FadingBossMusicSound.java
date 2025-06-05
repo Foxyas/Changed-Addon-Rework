@@ -3,11 +3,16 @@ package net.foxyas.changedaddon.process.util.sounds;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
+import net.minecraft.client.resources.sounds.Sound;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.client.sounds.WeighedSoundEvents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
 public class FadingBossMusicSound extends AbstractTickableSoundInstance {
@@ -17,9 +22,11 @@ public class FadingBossMusicSound extends AbstractTickableSoundInstance {
     private int fadeInTicks;
     private int fadeOutTicks = -1;
     private boolean stopped = false;
+    public SoundEvent currentSound = null;
 
     public FadingBossMusicSound(SoundEvent soundEvent, LivingEntity entity) {
         super(soundEvent, SoundSource.MASTER);
+        this.currentSound = soundEvent;
         this.trackedEntity = entity;
         this.looping = true;
         this.volume = 1.0f;
@@ -51,6 +58,9 @@ public class FadingBossMusicSound extends AbstractTickableSoundInstance {
 
     @Override
     public void tick() {
+        if (isStopped()) {
+            this.stop();
+        }
         if (trackedEntity == null) {
             startFadeOut();
             this.looping = false;
@@ -82,5 +92,10 @@ public class FadingBossMusicSound extends AbstractTickableSoundInstance {
         } else {
             volume = MAX_VOLUME;
         }
+    }
+
+    @Override
+    public @NotNull WeighedSoundEvents resolve(SoundManager p_119591_) {
+        return super.resolve(p_119591_);
     }
 }

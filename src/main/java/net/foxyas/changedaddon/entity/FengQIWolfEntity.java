@@ -25,13 +25,13 @@ import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class FengQIFoxEntity extends ChangedEntity implements GenderedEntity, PowderSnowWalkable {
+public class FengQIWolfEntity extends ChangedEntity implements GenderedEntity, PowderSnowWalkable {
 
-	public FengQIFoxEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.FENG_QI_FOX.get(), world);
+	public FengQIWolfEntity(PlayMessages.SpawnEntity packet, Level world) {
+		this(ChangedAddonModEntities.FENG_QI_WOLF.get(), world);
 	}
 
-	public FengQIFoxEntity(EntityType<FengQIFoxEntity> type, Level world) {
+	public FengQIWolfEntity(EntityType<FengQIWolfEntity> type, Level world) {
 		super(type, world);
 		maxUpStep = 0.6f;
 		xpReward = 5;

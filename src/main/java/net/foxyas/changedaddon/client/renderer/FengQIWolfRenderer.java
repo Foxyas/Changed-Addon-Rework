@@ -1,8 +1,8 @@
 
 package net.foxyas.changedaddon.client.renderer;
 
-import net.foxyas.changedaddon.client.model.FengQIFoxModel;
-import net.foxyas.changedaddon.entity.FengQIFoxEntity;
+import net.foxyas.changedaddon.client.model.FengQIWolfModel;
+import net.foxyas.changedaddon.entity.FengQIWolfEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
@@ -11,9 +11,9 @@ import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfM
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-public class FengQIFoxRenderer extends AdvancedHumanoidRenderer<FengQIFoxEntity, FengQIFoxModel, ArmorLatexMaleWolfModel<FengQIFoxEntity>> {
-	public FengQIFoxRenderer(EntityRendererProvider.Context context) {
-		super(context, new FengQIFoxModel(context.bakeLayer(FengQIFoxModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5F);
+public class FengQIWolfRenderer extends AdvancedHumanoidRenderer<FengQIWolfEntity, FengQIWolfModel, ArmorLatexMaleWolfModel<FengQIWolfEntity>> {
+	public FengQIWolfRenderer(EntityRendererProvider.Context context) {
+		super(context, new FengQIWolfModel(context.bakeLayer(FengQIWolfModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5F);
 		//this.addLayer(new LatexParticlesLayer<>(this, this.getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
@@ -21,7 +21,7 @@ public class FengQIFoxRenderer extends AdvancedHumanoidRenderer<FengQIFoxEntity,
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(FengQIFoxEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/feng_qi_fox.png");
+	public ResourceLocation getTextureLocation(FengQIWolfEntity entity) {
+		return new ResourceLocation("changed_addon:textures/entities/feng_qi_wolf.png");
 	}
 }

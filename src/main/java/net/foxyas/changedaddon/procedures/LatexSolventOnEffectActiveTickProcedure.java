@@ -28,7 +28,7 @@ public class LatexSolventOnEffectActiveTickProcedure {
 		if (entity instanceof ChangedEntity changedEntity && changedEntity.getType().is(ChangedTags.EntityTypes.LATEX)) {
 			MobEffectInstance SolventEffectInstace = changedEntity.getEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get());
 			if (SolventEffectInstace != null){
-				changedEntity.hurt(ChangedAddonDamageSources.SOLVENT, SolventEffectInstace.getAmplifier() * 2);
+				changedEntity.hurt(ChangedAddonDamageSources.SOLVENT, SolventEffectInstace.getAmplifier() + 1 * 2);
 			}
 		}
 	}

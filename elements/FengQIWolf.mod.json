@@ -2,10 +2,10 @@
   "_fv": 47,
   "_type": "livingentity",
   "definition": {
-    "mobName": "Feng QI Fox",
+    "mobName": "Feng QI Wolf",
     "mobLabel": "",
     "mobModelName": "Biped",
-    "mobModelTexture": "feng_qi_fox.java.png",
+    "mobModelTexture": "feng_qi_wolf.png",
     "mobModelGlowTexture": "",
     "solidBoundingBox": {
       "fixedValue": false
@@ -109,8 +109,8 @@
     "rangedItemType": "Default item",
     "rangedAttackInterval": 20,
     "rangedAttackRadius": 10.0,
-    "spawnThisMob": false,
-    "doesDespawnWhenIdle": false,
+    "spawnThisMob": true,
+    "doesDespawnWhenIdle": true,
     "spawningProbability": 20,
     "mobSpawningType": "monster",
     "minNumberOfMobsPerGroup": 4,

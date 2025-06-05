@@ -105,7 +105,12 @@ public class DarkLatexCoatItem extends ArmorItem {
             public HumanoidModel<?> getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
                 // Criar o modelo de armadura com base na classe DarkLatexCoat
                 HumanoidModel<?> armorModel = new HumanoidModel<>(new ModelPart(Collections.emptyList(), Map.of("head", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatHead(),  // Para a parte da cabeça
-                        "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatBody(), "left_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatLeftArm(), "right_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatRightArm(), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+                        "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+                        "body", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatBody(),
+                        "left_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatLeftArm(),
+                        "right_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatRightArm(),
+                        "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+                        "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
 
                 // Ajustar os estados do modelo (agachado, montado, jovem)
                 armorModel.crouching = living.isShiftKeyDown();
@@ -142,7 +147,12 @@ public class DarkLatexCoatItem extends ArmorItem {
                 public HumanoidModel<?> getArmorModel(LivingEntity living, ItemStack stack, EquipmentSlot slot, HumanoidModel defaultModel) {
                     // Criar o modelo de armadura com base na classe DarkLatexCoat
                     HumanoidModel<?> armorModel = new HumanoidModel<>(new ModelPart(Collections.emptyList(), Map.of("head", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatHead(),  // Para a parte da cabeça
-                            "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "body", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatBody(), "left_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatLeftArm(), "right_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatRightArm(), "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()), "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
+                            "hat", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+                            "body", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatBody(),
+                            "left_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatLeftArm(),
+                            "right_arm", new DarkLatexCoatModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(DarkLatexCoatModel.LAYER_LOCATION)).getPuroCoatRightArm(),
+                            "right_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()),
+                            "left_leg", new ModelPart(Collections.emptyList(), Collections.emptyMap()))));
 
                     // Ajustar os estados do modelo (agachado, montado, jovem)
                     armorModel.crouching = living.isShiftKeyDown();

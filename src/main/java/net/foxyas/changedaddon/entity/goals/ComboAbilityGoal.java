@@ -217,6 +217,12 @@ public class ComboAbilityGoal extends Goal {
             if (type <= impactParticle.length) {
                 serverLevel.sendParticles(impactParticle[type], pos.x, pos.y, pos.z, 3, 0, 0, 0, 0);
             }
+
+            if (type != 1 && type != 2 && attacker instanceof VoidFoxEntity voidFoxEntity) {
+                if (voidFoxEntity.getMainHandItem().isEmpty()) {
+                    voidFoxEntity.doClawsAttackEffect();
+                }
+            }
         }
     }
 }

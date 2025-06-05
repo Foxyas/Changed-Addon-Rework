@@ -414,7 +414,11 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             }
             return false;
         } else if (source.isProjectile() && !this.isBoss()) {
-            return super.hurt(source, amount * 1f);
+            return super.hurt(source, amount);
+        } else if (source.isProjectile() &&
+                source.getDirectEntity() instanceof AbstractArrow abstractArrow &&
+                abstractArrow.getPierceLevel() > 0 && this.isBoss()) {
+            return super.hurt(source, amount);
         }
 
         // Dano de fogo ou explosão extremamente reduzido
@@ -432,12 +436,16 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         if (attacker == null && this.isBoss()) {
             if (source == ChangedAddonDamageSources.SOLVENT) {
                 return super.hurt(source, amount * 1.25f);
+            } else if (source.getMsgId().contains("latex_solvent")) {
+                return super.hurt(source, amount * 1.25f);
             }
             return super.hurt(source, amount * 0.25f);
         }
 
         if (attacker instanceof LivingEntity livingEntity && this.isBoss()) {
             if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 1) {
+                return super.hurt(source, amount * 1.25f);
+            } else if (source.getMsgId().contains("latex_solvent")) {
                 return super.hurt(source, amount * 1.25f);
             }
 

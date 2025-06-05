@@ -31,7 +31,7 @@ import net.foxyas.changedaddon.client.renderer.KetExperiment009Renderer;
 import net.foxyas.changedaddon.client.renderer.KetExperiment009BossRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxyasRenderer;
 import net.foxyas.changedaddon.client.renderer.FoxtaFoxyRenderer;
-import net.foxyas.changedaddon.client.renderer.FengQIFoxRenderer;
+import net.foxyas.changedaddon.client.renderer.FengQIWolfRenderer;
 import net.foxyas.changedaddon.client.renderer.FemaleLuminarcticLeopardRenderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10Renderer;
 import net.foxyas.changedaddon.client.renderer.Experiment10BossRenderer;
@@ -56,7 +56,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX.get(), LatexSnowFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.LUMINAR_CRYSTAL_SPEAR.get(), LuminarCrystalSpearRenderer::new);
-		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_FOX.get(), FengQIFoxRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.DAZED.get(), DazedRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND.get(), PuroKindRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.PURO_KIND_FEMALE.get(), PuroKindFemaleRenderer::new);
@@ -88,5 +87,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.CRYSTAL_GAS_CAT_MALE.get(), CrystalGasCatMaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.CRYSTAL_GAS_CAT_FEMALE.get(), CrystalGasCatFemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.VOID_FOX.get(), VoidFoxRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_WOLF.get(), FengQIWolfRenderer::new);
 	}
 }

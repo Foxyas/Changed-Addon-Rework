@@ -20,7 +20,8 @@ import java.util.Random;
 
 @Mixin(value = DroppedSyringeBlockEntity.class)
 public abstract class DroppedSyringeMixin {
-    @Shadow
+
+    @Shadow (remap = false)
     private TransfurVariant<?> variant;
     @Unique
     private boolean changed_Addon_Rework$AllowBosses = false;

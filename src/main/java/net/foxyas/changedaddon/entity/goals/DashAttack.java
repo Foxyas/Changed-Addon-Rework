@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -39,6 +38,14 @@ public class DashAttack extends Goal {
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
+    public int getTickCount() {
+        return tickCount;
+    }
+
+    public void setTickCount(int tickCount) {
+        this.tickCount = tickCount;
+    }
+
     @Override
     public boolean canUse() {
         this.target = dasher.getTarget();
@@ -60,6 +67,14 @@ public class DashAttack extends Goal {
         dashDirection = Vec3.ZERO;
     }
 
+    public boolean isChargingDash(){
+        return !(tickCount > PREPARE_TIME);
+    }
+
+    public boolean isDashing() {
+        return isDashing;
+    }
+
     @Override
     public void tick() {
         tickCount++;
@@ -72,13 +87,12 @@ public class DashAttack extends Goal {
             dasher.getNavigation().stop();
             dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
-            if (tickCount % 2 == 0) {
-                dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
-            }
+            dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
             if (dasher.getLevel() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
             }
+            isDashing = false;
             return;
         }
 
@@ -109,8 +123,10 @@ public class DashAttack extends Goal {
                     dasher.swing(InteractionHand.MAIN_HAND);
                     if (!entity.isBlocking()) {
                         entity.hurt(DamageSource.mobAttack(dasher), 6.0F);
+                        dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
+                    } else {
+                        dasher.getLevel().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
                     }
-                    dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                     entity.setDeltaMovement(entity.getDeltaMovement().add(knockback));
                 }
             }

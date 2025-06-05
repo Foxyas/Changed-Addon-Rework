@@ -26,6 +26,11 @@ public class BossMusicHandler {
             if (currentBoss.getSelf().isDeadOrDying() && (mc.getSoundManager().isActive(currentSound) || !currentSound.isStopped())) {
                 stopMusic();
             }
+
+            if (currentBoss != null && currentSound != null && currentSound.getLocation() != currentBoss.getBossMusic()) {
+                stopMusic();
+                playMusic(currentBoss);
+            }
         }
 
         IHasBossMusic closestBoss = null;
@@ -56,6 +61,9 @@ public class BossMusicHandler {
     }
 
     private static void playMusic(IHasBossMusic boss) {
+        if (boss == null) {
+            return;
+        }
         ResourceLocation music = boss.getBossMusic();
         SoundEvent event = ForgeRegistries.SOUND_EVENTS.getValue(music);
 

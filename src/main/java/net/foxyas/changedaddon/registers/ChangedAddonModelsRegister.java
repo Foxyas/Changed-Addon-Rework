@@ -49,7 +49,7 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(LynxModel.LAYER_LOCATION, LynxModel::createBodyLayer);
         event.registerLayerDefinition(SnepsiLeopardModel.LAYER_LOCATION, SnepsiLeopardModel::createBodyLayer);
         event.registerLayerDefinition(FoxtaFoxyModel.LAYER_LOCATION, FoxtaFoxyModel::createBodyLayer);
-        event.registerLayerDefinition(FengQIFoxModel.LAYER_LOCATION, FengQIFoxModel::createBodyLayer);
+        event.registerLayerDefinition(FengQIWolfModel.LAYER_LOCATION, FengQIWolfModel::createBodyLayer);
         event.registerLayerDefinition(BagelModel.LAYER_LOCATION, BagelModel::createBodyLayer);
         event.registerLayerDefinition(LatexDragonSnowLeopardSharkModel.LAYER_LOCATION, LatexDragonSnowLeopardSharkModel::createBodyLayer);
         event.registerLayerDefinition(HimalayanCrystalGasCatModel.LAYER_LOCATION, HimalayanCrystalGasCatModel::createBodyLayer);
