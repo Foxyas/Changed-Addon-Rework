@@ -40,6 +40,7 @@ public class ChangedAddonTransfurVariants {
 
     public static class TransfurVariantTags {
         public static final TagKey<TransfurVariant<?>> WOLF_LIKE = create("wolf_like");
+        public static final TagKey<TransfurVariant<?>> FOX_LIKE = create("fox_like");
         public static final TagKey<TransfurVariant<?>> SHARK_LIKE = create("shark_like");
         public static final TagKey<TransfurVariant<?>> CAT_LIKE = create("cat_like");
         public static final TagKey<TransfurVariant<?>> LEOPARD_LIKE = create("leopard_like");
