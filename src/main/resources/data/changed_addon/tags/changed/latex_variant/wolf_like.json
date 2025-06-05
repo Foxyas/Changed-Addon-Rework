@@ -16,7 +16,8 @@
     "changed:form_latex_squid_dog/female",
     "changed:form_latex_benign_wolf",
     "changed:form_white_wolf/male",
-    "changed:form_white_wolf/female",
+    "changed:form_white_wolf/female",
+    "changed_addon:form_feng_qi_wolf",
     "changed_addon:form_latex_squid_tiger_shark"
   ]
 }
