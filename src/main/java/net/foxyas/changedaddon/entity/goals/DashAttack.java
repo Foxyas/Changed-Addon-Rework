@@ -31,6 +31,7 @@ public class DashAttack extends Goal {
     private boolean isDashing = false;
 
     private Vec3 dashDirection = Vec3.ZERO;
+    private float dashSpeed = 1.0f;
     private float strength = 1.0f;
 
     public DashAttack(Mob dasher) {
@@ -66,6 +67,15 @@ public class DashAttack extends Goal {
         this.dashDirection = dashDirection;
     }
 
+    public float getDashSpeed() {
+        return this.dashSpeed;
+    }
+
+    public void setDashSpeed(float dashSpeed) {
+        this.dashSpeed = dashSpeed;
+    }
+
+
     @Override
     public void start() {
         if (tickCount >= PREPARE_TIME + MAX_DASH_TICKS) {
@@ -86,6 +96,9 @@ public class DashAttack extends Goal {
     @Override
     public void tick() {
         tickCount++;
+
+        this.dashDirection.scale(this.dashSpeed);
+        
         if (target instanceof Player player) {
             player.displayClientMessage(new TextComponent("Ticks = " + tickCount), true);
         }

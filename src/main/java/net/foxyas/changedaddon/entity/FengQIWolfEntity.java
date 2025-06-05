@@ -28,7 +28,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 public class FengQIWolfEntity extends ChangedEntity implements GenderedEntity, PowderSnowWalkable {
 
 	public FengQIWolfEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.FENG_QI_WOLF.get(), world);
+		this(ChangedAddonModEntities.FENGQI_WOLF.get(), world);
 	}
 
 	public FengQIWolfEntity(EntityType<FengQIWolfEntity> type, Level world) {

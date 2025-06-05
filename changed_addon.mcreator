@@ -12501,7 +12501,7 @@
       "sortid": 659,
       "compiles": true,
       "locked_code": true,
-      "registry_name": "feng_qi_wolf",
+      "registry_name": "fengqi_wolf",
       "metadata": {
         "files": [
           "src/main/java/net/foxyas/changedaddon/entity/FengQIWolfEntity.java",
@@ -12736,6 +12736,7 @@
       "item.changed_addon.female_luminarctic_leopard_spawn_egg": "Luminarctic Female Leopard Spawn Egg",
       "gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really": "oh human, why? but if you really want",
       "changedaddon.fight_concience.give_up": "You §4gave up§r trying to resist.",
+      "entity.changed_addon.fengqi_wolf": "Feng QI Wolf",
       "gui.changed_addon.transfur_totem_gui.label_link_your_form": "Want to link your form?",
       "entity.minecraft.villager.changed_addon.scientist": "Scientist",
       "advancements.crystal_adventurer.title": "Gooey Crystal Adventurer",
@@ -12746,6 +12747,7 @@
       "death.attack.assimilation.player": "%1$s was assimilated by %2$s",
       "block.changed_addon.wolf_plush": "Wolf Plush",
       "advancements.litixcamonia_adcancement.title": "Litix-Camonia!?",
+      "item.changed_addon.fengqi_wolf_spawn_egg": "Feng QI Wolf",
       "item.changed_addon.signal_catcher": "Signal Catcher",
       "gamerule.doDarkLatexMaskTransfur": "Can Dark Latex Mask Transfur",
       "gui.changed_addon.book_pagenumber_2.label_click_in_item_for_recipe": "CLICK IN ITEM FOR RECIPE",
@@ -12965,7 +12967,6 @@
       "advancements.compressed_ammonia_advancement.descr": "You craft an Ammonia Compressed",
       "gui.changed_addon.book_pagenumber_2.button_back": "Back",
       "gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl": "oranges and one glass bottle for that",
-      "entity.changed_addon.feng_qi_wolf": "Feng QI Wolf",
       "advancements.latex_insulator_advancement.title": "Latex Insulator",
       "key.changed_addon.open_extra_details": "Open Transfur Extra",
       "block.changed_addon.blue_wolf_crystal_block": "Blue Wolf Crystal Block",

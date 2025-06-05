@@ -199,7 +199,7 @@ public class ChangedAddonModEntities {
 			EntityType.Builder.<VoidFoxEntity>of(VoidFoxEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(VoidFoxEntity::new)
 
 					.sized(0.7f, 1.93f));
-	public static final RegistryObject<EntityType<FengQIWolfEntity>> FENG_QI_WOLF = register("feng_qi_wolf",
+	public static final RegistryObject<EntityType<FengQIWolfEntity>> FENGQI_WOLF = register("fengqi_wolf",
 			EntityType.Builder.<FengQIWolfEntity>of(FengQIWolfEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FengQIWolfEntity::new)
 
 					.sized(0.7f, 1.93f));
@@ -287,6 +287,6 @@ public class ChangedAddonModEntities {
 		event.put(CRYSTAL_GAS_CAT_MALE.get(), CrystalGasCatMaleEntity.createAttributes().build());
 		event.put(CRYSTAL_GAS_CAT_FEMALE.get(), CrystalGasCatFemaleEntity.createAttributes().build());
 		event.put(VOID_FOX.get(), VoidFoxEntity.createAttributes().build());
-		event.put(FENG_QI_WOLF.get(), FengQIWolfEntity.createAttributes().build());
+		event.put(FENGQI_WOLF.get(), FengQIWolfEntity.createAttributes().build());
 	}
 }

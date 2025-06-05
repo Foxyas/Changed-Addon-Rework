@@ -107,7 +107,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final RegistryObject<Item> SNEPSI_LEOPARD_SPAWN_EGG = ITEMS_REGISTRY.register("snepsi_leopard_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.SNEPSI_LEOPARD, Color3.getColor("#95D161").toInt(), Color3.getColor("#B5DF90").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-	public static final RegistryObject<Item> FENG_QI_WOLF_SPAWN_EGG = ITEMS_REGISTRY.register("feng_qi_wolf_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.FENG_QI_WOLF, Color3.getColor("#93c6fd").toInt(), Color3.getColor("#FAC576").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+	public static final RegistryObject<Item> FENGQI_WOLF_SPAWN_EGG = ITEMS_REGISTRY.register("fengqi_wolf_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.FENGQI_WOLF, Color3.getColor("#93c6fd").toInt(), Color3.getColor("#FAC576").toInt(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
 	public static final RegistryObject<Item> BAGEL_SPAWN_EGG = ITEMS_REGISTRY.register("bagel_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.BAGEL, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
@@ -117,7 +117,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
 	public static final RegistryObject<Item> CRYSTAL_GAS_CAT_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("crystal_gas_cat_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.CRYSTAL_GAS_CAT_FEMALE, 0x9c9c9c, 0x262626, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-	public static final RegistryObject<Item> VOID_FOX_SPAWN_EGG = ITEMS_REGISTRY.register("void_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.VOID_FOX, 0x000000, 0xffffff, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+	public static final RegistryObject<Item> VOID_FOX_SPAWN_EGG = ITEMS_REGISTRY.register("void_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonModEntities.VOID_FOX, 0x393939, 0xffffff, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 	
 	public static final RegistryObject<Item> DARK_LATEX_COAT = ITEMS_REGISTRY.register("dark_latex_coat",
 			() -> new DarkLatexCoatItem(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));

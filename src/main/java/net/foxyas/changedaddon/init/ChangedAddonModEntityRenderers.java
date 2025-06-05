@@ -87,6 +87,6 @@ public class ChangedAddonModEntityRenderers {
 		event.registerEntityRenderer(ChangedAddonModEntities.CRYSTAL_GAS_CAT_MALE.get(), CrystalGasCatMaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.CRYSTAL_GAS_CAT_FEMALE.get(), CrystalGasCatFemaleRenderer::new);
 		event.registerEntityRenderer(ChangedAddonModEntities.VOID_FOX.get(), VoidFoxRenderer::new);
-		event.registerEntityRenderer(ChangedAddonModEntities.FENG_QI_WOLF.get(), FengQIWolfRenderer::new);
+		event.registerEntityRenderer(ChangedAddonModEntities.FENGQI_WOLF.get(), FengQIWolfRenderer::new);
 	}
 }

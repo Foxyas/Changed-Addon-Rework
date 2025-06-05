@@ -18,7 +18,7 @@ import java.util.List;
 import net.minecraft.resources.ResourceLocation;
 
 public class FengQIWolfModel extends AdvancedHumanoidModel<FengQIWolfEntity> implements AdvancedHumanoidModelInterface<FengQIWolfEntity, FengQIWolfModel> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "feng_qi_wolf"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "fengqi_wolf"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;

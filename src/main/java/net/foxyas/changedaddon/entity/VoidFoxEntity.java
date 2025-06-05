@@ -11,6 +11,7 @@ import net.foxyas.changedaddon.entity.goals.SimpleComboAbilityGoal;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -34,6 +35,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -42,6 +44,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -49,6 +52,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -114,7 +118,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    public void RegisterHit(){
+    public void RegisterHit() {
         this.goalSelector.getAvailableGoals().forEach((wrappedGoal -> {
             if (wrappedGoal.getGoal() instanceof KnockBackBurstGoal knockBackBurstGoal) {
                 knockBackBurstGoal.registerHit();
@@ -122,7 +126,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         }));
     }
 
-    public void RegisterDamage(float amount){
+    public void RegisterDamage(float amount) {
         this.goalSelector.getAvailableGoals().forEach((wrappedGoal -> {
             if (wrappedGoal.getGoal() instanceof KnockBackBurstGoal knockBackBurstGoal) {
                 knockBackBurstGoal.registerDamage(amount);
@@ -390,7 +394,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     }
 
 
-    public void doClawsAttackEffect(){// Efeito visual
+    public void doClawsAttackEffect() {// Efeito visual
         double d0 = (double) (-Mth.sin(this.getYRot() * 0.017453292F)) * 1;
         double d1 = (double) Mth.cos(this.getYRot() * 0.017453292F) * 1;
         if (this.level instanceof ServerLevel serverLevel) {
@@ -464,17 +468,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         boolean willHit = randomValue <= value;
 
         if (source.getEntity() != null) {
-            if (computeHealthRatio() > 0.5f) {
-                if (((this.getHealth() - amount) / this.getMaxHealth()) <= 0.5f) {
-                    if (source.getEntity() instanceof Player player) {
-                        player.displayClientMessage(new TextComponent("I will hasten the arrival of your death").withStyle((style -> {
-                            Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
-                            returnStyle = returnStyle.withItalic(true);
-                            return returnStyle;
-                        })), true);
-                    }
-                }
-            }
             if (VoidFoxEntity.this.AttackInUse > 0) {
                 if (VoidFoxEntity.this.AttackInUse != 1) {
                     return super.hurt(source, amount);
@@ -512,12 +505,26 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         public static void WhenAttack(LivingAttackEvent event) {
             LivingEntity target = event.getEntityLiving();
             Entity source = event.getSource().getEntity();
+            float amount = event.getAmount();
 
             if (source instanceof VoidFoxEntity voidFoxEntity) {
                 voidFoxEntity.RegisterHit();
                 /*if (voidFoxEntity.getMainHandItem().isEmpty()) {
                     voidFoxEntity.doClawsAttackEffect();
                 }*/
+            } else if (target instanceof VoidFoxEntity voidFox) {
+            	if (source != null && voidFox.computeHealthRatio() > 0.5f) {
+                	if (((voidFox.getHealth() - amount) / voidFox.getMaxHealth()) <= 0.5f) {
+                    	if (source instanceof Player player) {
+                        	player.displayClientMessage(new TextComponent("I will hasten the arrival of your death").withStyle((style -> {
+                            	Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+    	                        returnStyle = returnStyle.withItalic(true);
+	                            return returnStyle;
+                        	})), true);
+                    	}
+                	}
+            	}
+
             }
         }
     }
@@ -639,14 +646,14 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     if (dashAttack.isChargingDash()) {
                         dashAttack.setTickCount(dashAttack.getTickCount() + 5);
                     }
-                    dashAttack.setDashDirection(dashAttack.getDashDirection().scale(2.5f));
+                    dashAttack.setDashSpeed(2.5f);
                 }
             }
         }));
 
         if (this.isMoreOp()) {
             if (this.hurtDuration <= 0 && this.tickCount % 5 == 0) {
-                this.setHealth(this.getHealth() + this.getRandom().nextFloat(0.25f,1.25f));
+                this.setHealth(this.getHealth() + this.getRandom().nextFloat(0.25f, 1.25f));
             }
         }
 
@@ -686,27 +693,51 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     protected void setAttributes(AttributeMap attributes) {
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((7.5));
-        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((500));
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((60f));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
-        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.1);
-        attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
-        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(10);
-        attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
-        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.25f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.25f);
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(6);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(6);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0.5);
         attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
-        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(2);
+        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(3);
+    }
+
+    @Override
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
+        if (this.getUnderlyingPlayer() == null) {
+            handleBoss();
+        }
+        return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
+    }
+
+    public void handleBoss() {
+        //this.setAbsorptionAmount(75f);
+        Objects.requireNonNull(this.getAttribute(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((7.5));
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue((500));
+        this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
+        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(1.1);
+        this.getAttribute(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(10);
+        this.getAttribute(Attributes.ARMOR).setBaseValue(20);
+        this.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
+        this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+        this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(2);
+        this.setHealth(500f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
     }
 
     @Override
     public ResourceLocation getBossMusic() {
         if (this.computeHealthRatio() <= 0.5f) {
-			assert ChangedAddonSounds.EXP10_THEME != null;
-			return ChangedAddonSounds.EXP10_THEME.getLocation();
+            assert ChangedAddonSounds.EXP10_THEME != null;
+            return ChangedAddonSounds.EXP10_THEME.getLocation();
         }
 
 
-		assert ChangedAddonSounds.EXP9_THEME != null;
-		return ChangedAddonSounds.EXP9_THEME.getLocation();
+        assert ChangedAddonSounds.EXP9_THEME != null;
+        return ChangedAddonSounds.EXP9_THEME.getLocation();
     }
 
     @Override

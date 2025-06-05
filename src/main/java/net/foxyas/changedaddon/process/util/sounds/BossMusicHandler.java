@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.process.util.sounds;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +39,7 @@ public class BossMusicHandler {
 
         for (Entity entity : level.entitiesForRendering()) {
             if (!(entity instanceof IHasBossMusic boss)) continue;
+            if (entity instanceof ChangedEntity changedEntity && changedEntity.getUnderlyingPlayer() != null) continue;
             if (!entity.isAlive()) continue;
 
             double distSq = entity.distanceToSqr(mc.player);

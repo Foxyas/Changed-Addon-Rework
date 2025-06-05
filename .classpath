@@ -37,7 +37,12 @@
 			<attribute name="gradle_used_by_scope" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.21_mapped_official_1.18.2/forge-1.18.2-40.2.21_mapped_official_1.18.2-sources.jar" kind="lib" path="C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.21_mapped_official_1.18.2/forge-1.18.2-40.2.21_mapped_official_1.18.2.jar">
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/net/ltxprogrammer/changed/Changed-m1.18.2-f40.2.0/v0.14c_mapped_official_1.18.2/Changed-m1.18.2-f40.2.0-v0.14c_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.21_mapped_official_1.18.2/forge-1.18.2-40.2.21_mapped_official_1.18.2-sources.jar" kind="lib" path="C:/Users/User/Documents/ChangedWorkSpace/Changed-Addon-Rework/build/fg_cache/net/minecraftforge/forge/1.18.2-40.2.21_mapped_official_1.18.2/forge-1.18.2-40.2.21_mapped_official_1.18.2-recomp.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
@@ -453,6 +458,81 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/org.glassfish/javax.json/1.0.4/ef782abad0d3f1d30644c4023a6bbc6fe371e23a/javax.json-1.0.4-sources.jar" kind="lib" path="C:/Users/User/.mcreator/gradle/caches/modules-2/files-2.1/org.glassfish/javax.json/1.0.4/3178f73569fd7a1e5ffc464e680f7a8cc784b85a/javax.json-1.0.4.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/advanced-xray-256256/3712732_mapped_official_1.18.2/advanced-xray-256256-3712732_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/lightspeedmod-821790/4594803_mapped_official_1.18.2/lightspeedmod-821790-4594803_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/forge-carpet-547361/3930877_mapped_official_1.18.2/forge-carpet-547361-3930877_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/embeddium-908741/5322305_mapped_official_1.18.2/embeddium-908741-5322305_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/oculus-581495/4578744_mapped_official_1.18.2/oculus-581495-4578744_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/custom-player-models-439870/4840534_mapped_official_1.18.2/custom-player-models-439870-4840534_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/spark-361579/4505375_mapped_official_1.18.2/spark-361579-4505375_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/hardcore-revival-274036/3830873_mapped_official_1.18.2/hardcore-revival-274036-3830873_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/balm-531761/4442615_mapped_official_1.18.2/balm-531761-4442615_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/appleskin-248787/4770822_mapped_official_1.18.2/appleskin-248787-4770822_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/catalogue-459701/3803098_mapped_official_1.18.2/catalogue-459701-3803098_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/configured-457570/4462832_mapped_official_1.18.2/configured-457570-4462832_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/carry-on-274259/5141758_mapped_official_1.18.2/carry-on-274259-5141758_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/in-game-account-switcher-232676/4589915_mapped_official_1.18.2/in-game-account-switcher-232676-4589915_mapped_official_1.18.2.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/User/.mcreator/gradle/caches/forge_gradle/deobf_dependencies/curse/maven/forgetmechunk-forge-632973/4041502_mapped_official_1.18.2/forgetmechunk-forge-632973-4041502_mapped_official_1.18.2.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
