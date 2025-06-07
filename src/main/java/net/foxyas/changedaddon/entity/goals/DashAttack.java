@@ -100,7 +100,7 @@ public class DashAttack extends Goal {
         this.dashDirection.scale(this.dashSpeed);
         
         if (target instanceof Player player) {
-            player.displayClientMessage(new TextComponent("Ticks = " + tickCount), true);
+            //player.displayClientMessage(new TextComponent("Ticks = " + tickCount), true);
         }
 
         // Preparando o dash
@@ -108,10 +108,10 @@ public class DashAttack extends Goal {
             dasher.getNavigation().stop();
             dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
-            dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 1, (float) tickCount / PREPARE_TIME);
+            dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
             if (dasher.getLevel() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
-                serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
+                serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.05f);
             }
             isDashing = false;
             return;

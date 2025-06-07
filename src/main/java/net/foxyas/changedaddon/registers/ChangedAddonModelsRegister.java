@@ -3,11 +3,13 @@ package net.foxyas.changedaddon.registers;
 import net.foxyas.changedaddon.client.model.*;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
+import net.foxyas.changedaddon.client.renderer.EmptyProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
 import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
+import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -73,12 +75,13 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(ContainmentContainerRenderer.FluidModelPart.LAYER_LOCATION, ContainmentContainerRenderer.FluidModelPart::createBodyLayer);
     }
 
-    /*
-     *@SubscribeEvent
-     *public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-     *	return;
-     *}
-     */
+
+     @SubscribeEvent
+     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+         event.registerEntityRenderer(ChangedAddonEntitys.PARTICLE_PROJECTILE.get(),
+                 EmptyProjectileRenderer::new); // Nenhum render (somente partículas no tick)
+     }
+
 
     @SubscribeEvent
     public static void registerComplexEntityRenderers(RegisterComplexRenderersEvent event) {

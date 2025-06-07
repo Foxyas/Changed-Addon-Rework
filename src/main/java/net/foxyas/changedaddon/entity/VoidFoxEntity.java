@@ -4,12 +4,11 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
-import net.foxyas.changedaddon.entity.goals.ComboAbilityGoal;
-import net.foxyas.changedaddon.entity.goals.DashAttack;
-import net.foxyas.changedaddon.entity.goals.KnockBackBurstGoal;
-import net.foxyas.changedaddon.entity.goals.SimpleComboAbilityGoal;
+import net.foxyas.changedaddon.entity.goals.*;
+import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
+import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.LatexType;
@@ -42,6 +41,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -58,9 +58,9 @@ import java.util.Objects;
 
 public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBossMusic {
     private static final int MAX_DODGING_TICKS = 20;
-    private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown;
+    private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown, Attack4Cooldown, Attack5Cooldown;
     private int AttackInUse;
-    public int timesUsedAttack1, timesUsedAttack2, timesUsedAttack3, timesUsedAttack4 = 0;
+    public int timesUsedAttack1, timesUsedAttack2, timesUsedAttack3, timesUsedAttack4, timesUsedAttack5 = 0;
     private static final int MAX_COOLDOWN = 120;
     public static final int MAX_1_COOLDOWN = 120;
     public static final int MAX_2_COOLDOWN = 120;
@@ -138,6 +138,46 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new KnockBackBurstGoal(this, 10));
+        this.goalSelector.addGoal(1, new ProjectileAttackGoal(this, ChangedAddonEntitys.PARTICLE_PROJECTILE.get()) {
+            @Override
+            public boolean canUse() {
+                if (VoidFoxEntity.this.getAttack5Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
+                    return false;
+                }
+                if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 5) {
+                    return false;
+                }
+
+                if (VoidFoxEntity.this.timesUsedAttack5 >= 5) {
+                    return false;
+                }
+                return super.canUse();
+            }
+
+            @Override
+            public void start() {
+                super.start();
+
+                VoidFoxEntity.this.timesUsedAttack1 = 0;
+                VoidFoxEntity.this.timesUsedAttack2 = 0;
+                VoidFoxEntity.this.timesUsedAttack3 = 0;
+                VoidFoxEntity.this.timesUsedAttack4 = 0;
+                VoidFoxEntity.this.timesUsedAttack5++;
+            }
+
+            @Override
+            public void tick() {
+                VoidFoxEntity.this.AttackInUse = 5;
+                super.tick();
+            }
+
+            @Override
+            public void stop() {
+                super.stop();
+                VoidFoxEntity.this.setAttack4Cooldown(0);
+                VoidFoxEntity.this.AttackInUse = 0;
+            }
+        });
         this.goalSelector.addGoal(1, new DashAttack(this) {
             @Override
             public boolean canUse() {
@@ -163,6 +203,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
                 VoidFoxEntity.this.timesUsedAttack3 = 0;
                 VoidFoxEntity.this.timesUsedAttack4 = 0;
+                VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -217,6 +258,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                 VoidFoxEntity.this.timesUsedAttack2++;
                 VoidFoxEntity.this.timesUsedAttack3 = 0;
                 VoidFoxEntity.this.timesUsedAttack4 = 0;
+                VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -270,6 +312,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
                 VoidFoxEntity.this.timesUsedAttack3++;
                 VoidFoxEntity.this.timesUsedAttack4 = 0;
+                VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -317,12 +360,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void start() {
                 super.start();
-                VoidFoxEntity.this.setAttack3Cooldown(0);
+                VoidFoxEntity.this.setAttack4Cooldown(0);
 
                 VoidFoxEntity.this.timesUsedAttack1 = 0;
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
                 VoidFoxEntity.this.timesUsedAttack3 = 0;
                 VoidFoxEntity.this.timesUsedAttack4++;
+                VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -357,6 +401,14 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         Attack3Cooldown = attack3Cooldown;
     }
 
+    public void setAttack4Cooldown(int attack4Cooldown) {
+        Attack4Cooldown = attack4Cooldown;
+    }
+
+    public void setAttack5Cooldown(int attack5Cooldown) {
+        Attack5Cooldown = attack5Cooldown;
+    }
+
     public int getAttack1Cooldown() {
         return Attack1Cooldown;
     }
@@ -367,6 +419,14 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
     public int getAttack3Cooldown() {
         return Attack3Cooldown;
+    }
+
+    public int getAttack4Cooldown() {
+        return Attack4Cooldown;
+    }
+
+    public int getAttack5Cooldown() {
+        return Attack5Cooldown;
     }
 
     public static EntityDataAccessor<Integer> getDodgeAnimTicks() {
@@ -437,28 +497,45 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         if (tag.contains("dodgeTicks")) {
             this.setDodgingTicks(tag.getInt("dodgeTicks"));
         }
-        if (tag.contains("Attack1Cooldown")) this.Attack1Cooldown = tag.getInt("Attack1Cooldown");
-        if (tag.contains("Attack2Cooldown")) this.Attack2Cooldown = tag.getInt("Attack2Cooldown");
-        if (tag.contains("Attack3Cooldown")) this.Attack3Cooldown = tag.getInt("Attack3Cooldown");
-        if (tag.contains("AttackInUse")) this.Attack3Cooldown = tag.getInt("AttackInUse");
-        if (tag.contains("timeUsedAttack1")) this.timesUsedAttack1 = tag.getInt("timeUsedAttack1");
-        if (tag.contains("timeUsedAttack2")) this.timesUsedAttack2 = tag.getInt("timeUsedAttack2");
-        if (tag.contains("timeUsedAttack3")) this.timesUsedAttack3 = tag.getInt("timeUsedAttack3");
-        if (tag.contains("timeUsedAttack4")) this.timesUsedAttack4 = tag.getInt("timeUsedAttack4");
+
+        if (tag.contains("AttacksHandle")) {
+            CompoundTag attackTag = tag.getCompound("AttacksHandle");
+
+            if (attackTag.contains("Attack1Cooldown")) this.Attack1Cooldown = attackTag.getInt("Attack1Cooldown");
+            if (attackTag.contains("Attack2Cooldown")) this.Attack2Cooldown = attackTag.getInt("Attack2Cooldown");
+            if (attackTag.contains("Attack3Cooldown")) this.Attack3Cooldown = attackTag.getInt("Attack3Cooldown");
+            if (attackTag.contains("Attack4Cooldown")) this.Attack4Cooldown = attackTag.getInt("Attack4Cooldown");
+            if (attackTag.contains("Attack5Cooldown")) this.Attack5Cooldown = attackTag.getInt("Attack5Cooldown");
+            if (attackTag.contains("AttackInUse")) this.AttackInUse = attackTag.getInt("AttackInUse");
+
+            if (attackTag.contains("timeUsedAttack1")) this.timesUsedAttack1 = attackTag.getInt("timeUsedAttack1");
+            if (attackTag.contains("timeUsedAttack2")) this.timesUsedAttack2 = attackTag.getInt("timeUsedAttack2");
+            if (attackTag.contains("timeUsedAttack3")) this.timesUsedAttack3 = attackTag.getInt("timeUsedAttack3");
+            if (attackTag.contains("timeUsedAttack4")) this.timesUsedAttack4 = attackTag.getInt("timeUsedAttack4");
+            if (attackTag.contains("timeUsedAttack5")) this.timesUsedAttack5 = attackTag.getInt("timeUsedAttack5");
+        }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+
         tag.putInt("dodgeTicks", this.getDodgingTicks());
-        tag.putInt("Attack1Cooldown", this.Attack1Cooldown);
-        tag.putInt("Attack2Cooldown", this.Attack2Cooldown);
-        tag.putInt("Attack3Cooldown", this.Attack3Cooldown);
-        tag.putInt("AttackInUse", this.AttackInUse);
-        tag.putInt("timeUsedAttack1", this.timesUsedAttack1);
-        tag.putInt("timeUsedAttack2", this.timesUsedAttack2);
-        tag.putInt("timeUsedAttack3", this.timesUsedAttack3);
-        tag.putInt("timeUsedAttack4", this.timesUsedAttack4);
+
+        CompoundTag attackTag = new CompoundTag();
+        attackTag.putInt("Attack1Cooldown", this.Attack1Cooldown);
+        attackTag.putInt("Attack2Cooldown", this.Attack2Cooldown);
+        attackTag.putInt("Attack3Cooldown", this.Attack3Cooldown);
+        attackTag.putInt("Attack4Cooldown", this.Attack4Cooldown);
+        attackTag.putInt("Attack5Cooldown", this.Attack5Cooldown);
+        attackTag.putInt("AttackInUse", this.AttackInUse);
+        attackTag.putInt("timeUsedAttack1", this.timesUsedAttack1);
+        attackTag.putInt("timeUsedAttack2", this.timesUsedAttack2);
+        attackTag.putInt("timeUsedAttack3", this.timesUsedAttack3);
+        attackTag.putInt("timeUsedAttack4", this.timesUsedAttack4);
+        attackTag.putInt("timeUsedAttack5", this.timesUsedAttack5);
+
+        tag.put("AttacksHandle", attackTag);
     }
 
     @Override
@@ -512,18 +589,18 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                 /*if (voidFoxEntity.getMainHandItem().isEmpty()) {
                     voidFoxEntity.doClawsAttackEffect();
                 }*/
-            } else if (target instanceof VoidFoxEntity voidFox) {
-            	if (source != null && voidFox.computeHealthRatio() > 0.5f) {
-                	if (((voidFox.getHealth() - amount) / voidFox.getMaxHealth()) <= 0.5f) {
-                    	if (source instanceof Player player) {
-                        	player.displayClientMessage(new TextComponent("I will hasten the arrival of your death").withStyle((style -> {
-                            	Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
-    	                        returnStyle = returnStyle.withItalic(true);
-	                            return returnStyle;
-                        	})), true);
-                    	}
-                	}
-            	}
+            } else if (target instanceof VoidFoxEntity voidFox) {
+                if (source != null && voidFox.computeHealthRatio() > 0.5f) {
+                    if (((voidFox.getHealth() - amount) / voidFox.getMaxHealth()) <= 0.5f) {
+                        if (source instanceof Player player) {
+                            player.displayClientMessage(new TextComponent("I will hasten the arrival of your death").withStyle((style -> {
+                                Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                                returnStyle = returnStyle.withItalic(true);
+                                return returnStyle;
+                            })), true);
+                        }
+                    }
+                }
 
             }
         }
@@ -591,6 +668,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
             if (this.Attack3Cooldown < MAX_2_COOLDOWN) {
                 this.Attack3Cooldown += value;
+            }
+            if (this.Attack4Cooldown < MAX_2_COOLDOWN) {
+                this.Attack4Cooldown += value;
+            }
+            if (this.Attack5Cooldown < MAX_2_COOLDOWN) {
+                this.Attack5Cooldown += value;
             }
         }
     }
@@ -726,6 +809,11 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(2);
         this.setHealth(500f);
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity entity) {
+        super.setTarget(entity);
     }
 
     @Override
