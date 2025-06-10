@@ -6,9 +6,7 @@ import net.ltxprogrammer.changed.client.renderer.animate.upperbody.AbstractUpper
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 
 public class CustomWingedDragonUpperBodyInitAnimator<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends AbstractUpperBodyAnimator<T, M> {
@@ -21,14 +19,14 @@ public class CustomWingedDragonUpperBodyInitAnimator<T extends ChangedEntity, M 
     }
 
     public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!entity.isEyeInFluid(FluidTags.WATER)) {
-            boolean fallFlying = entity.getFallFlyingTicks() > 4;
-            this.torso.yRot = 0.0F;
-            this.torso.zRot = 0.0F;
-            this.rightArm.z = 0.0F;
-            this.rightArm.x = -this.core.torsoWidth;
-            this.leftArm.z = 0.0F;
-            this.leftArm.x = this.core.torsoWidth;
+        boolean fallFlying = entity.getFallFlyingTicks() > 4;
+        this.torso.yRot = 0.0F;
+        this.torso.zRot = 0.0F;
+        this.rightArm.z = 0.0F;
+        this.rightArm.x = -this.core.torsoWidth;
+        this.leftArm.z = 0.0F;
+        this.leftArm.x = this.core.torsoWidth;
+        if (entity.isFlying() || entity.isFallFlying()) {
             float f = 1.0F;
             if (fallFlying) {
                 f = (float) entity.getDeltaMovement().lengthSqr();
