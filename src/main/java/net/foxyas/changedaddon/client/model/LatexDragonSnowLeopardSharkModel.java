@@ -2,16 +2,17 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.client.model.animations.CustomWingedDragonUpperBodyInitAnimator;
 import net.foxyas.changedaddon.entity.LatexDragonSnowLeopardSharkEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
-import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmBobAnimator;
-import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
-import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.bipedal.DragonBipedalCreativeFlyAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.camera.DragonCameraCreativeFlyAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.tail.DragonTailCreativeFlyAnimator;
-import net.ltxprogrammer.changed.client.renderer.animate.upperbody.*;
+import net.ltxprogrammer.changed.client.renderer.animate.upperbody.DragonHeadCreativeFlyAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.upperbody.DragonHeadInitAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.upperbody.DragonUpperBodyCreativeFlyAnimator;
+import net.ltxprogrammer.changed.client.renderer.animate.upperbody.DragonUpperBodyCrouchAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -23,9 +24,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
-import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.*;
+import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.dragonWinged;
 
 public class LatexDragonSnowLeopardSharkModel extends AdvancedHumanoidModel<LatexDragonSnowLeopardSharkEntity> implements AdvancedHumanoidModelInterface<LatexDragonSnowLeopardSharkEntity, LatexDragonSnowLeopardSharkModel> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "latex_dragon_snep_shark"), "main");
@@ -42,9 +44,11 @@ public class LatexDragonSnowLeopardSharkModel extends AdvancedHumanoidModel<Late
 
     public static class Animator {
 
+        private static final ModelPart NULL_PART = new ModelPart(List.of(), Map.of());
+
         public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> dragonWingedUpperBody(ModelPart head, ModelPart torso, ModelPart leftArm, ModelPart rightArm) {
             return (animator) -> {
-                animator.addAnimator(new WingedDragonUpperBodyInitAnimator(head, torso, leftArm, rightArm)).addAnimator(new DragonUpperBodyCreativeFlyAnimator(head, torso, leftArm, rightArm)).addAnimator(new DragonUpperBodyCrouchAnimator(head, torso, leftArm, rightArm));
+                animator.addAnimator(new CustomWingedDragonUpperBodyInitAnimator(head, torso, leftArm, rightArm)).addAnimator(new DragonUpperBodyCreativeFlyAnimator(head, torso, leftArm, rightArm)).addAnimator(new DragonUpperBodyCrouchAnimator(head, torso, leftArm, rightArm));
             };
         }
         public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>>

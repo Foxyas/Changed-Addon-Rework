@@ -58,9 +58,9 @@ import java.util.Objects;
 
 public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBossMusic {
     private static final int MAX_DODGING_TICKS = 20;
-    private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown, Attack4Cooldown, Attack5Cooldown;
+    private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown, Attack4Cooldown/*, Attack5Cooldown*/;
     private int AttackInUse;
-    public int timesUsedAttack1, timesUsedAttack2, timesUsedAttack3, timesUsedAttack4, timesUsedAttack5 = 0;
+    public int timesUsedAttack1, timesUsedAttack2, timesUsedAttack3, timesUsedAttack4/*, timesUsedAttack5*/ = 0;
     private static final int MAX_COOLDOWN = 120;
     public static final int MAX_1_COOLDOWN = 120;
     public static final int MAX_2_COOLDOWN = 120;
@@ -138,47 +138,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new KnockBackBurstGoal(this, 10));
-        this.goalSelector.addGoal(1, new ProjectileAttackGoal(this, ChangedAddonEntitys.PARTICLE_PROJECTILE.get()) {
-            @Override
-            public boolean canUse() {
-                if (VoidFoxEntity.this.getAttack5Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
-                    return false;
-                }
-                if (VoidFoxEntity.this.AttackInUse > 0 && VoidFoxEntity.this.AttackInUse != 5) {
-                    return false;
-                }
-
-                if (VoidFoxEntity.this.timesUsedAttack5 >= 5) {
-                    return false;
-                }
-                return super.canUse();
-            }
-
-            @Override
-            public void start() {
-                super.start();
-
-                VoidFoxEntity.this.timesUsedAttack1 = 0;
-                VoidFoxEntity.this.timesUsedAttack2 = 0;
-                VoidFoxEntity.this.timesUsedAttack3 = 0;
-                VoidFoxEntity.this.timesUsedAttack4 = 0;
-                VoidFoxEntity.this.timesUsedAttack5++;
-            }
-
-            @Override
-            public void tick() {
-                VoidFoxEntity.this.AttackInUse = 5;
-                super.tick();
-            }
-
-            @Override
-            public void stop() {
-                super.stop();
-                VoidFoxEntity.this.setAttack4Cooldown(0);
-                VoidFoxEntity.this.AttackInUse = 0;
-            }
-        });
-        this.goalSelector.addGoal(1, new DashAttack(this) {
+        this.goalSelector.addGoal(1, new VoidFoxDashAttack(this, ChangedAddonEntitys.PARTICLE_PROJECTILE.get()) {
             @Override
             public boolean canUse() {
                 if (VoidFoxEntity.this.getAttack2Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
@@ -188,7 +148,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     return false;
                 }
 
-                if (VoidFoxEntity.this.timesUsedAttack1 >= 4) {
+                if (VoidFoxEntity.this.timesUsedAttack1 >= 2) {
                     return false;
                 }
 
@@ -199,11 +159,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             public void start() {
                 super.start();
 
-                VoidFoxEntity.this.timesUsedAttack1++;
+                VoidFoxEntity.this.setAttack2Cooldown(0);
+                VoidFoxEntity.this.timesUsedAttack1 += 1;
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
                 VoidFoxEntity.this.timesUsedAttack3 = 0;
                 VoidFoxEntity.this.timesUsedAttack4 = 0;
-                VoidFoxEntity.this.timesUsedAttack5 = 0;
+                //VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -215,7 +176,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void stop() {
                 super.stop();
-                VoidFoxEntity.this.setAttack2Cooldown(0);
                 VoidFoxEntity.this.AttackInUse = 0;
             }
         });
@@ -238,13 +198,14 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     return false;
                 }
 
-                if (VoidFoxEntity.this.timesUsedAttack2 >= 4) {
+                if (VoidFoxEntity.this.timesUsedAttack2 >= 2) {
                     return false;
                 }
 
                 if (VoidFoxEntity.this.getRandom().nextFloat() >= 0.25f) {
                     return false;
                 }
+
 
                 return super.canUse();
             }
@@ -253,12 +214,11 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             public void start() {
                 super.start();
                 VoidFoxEntity.this.setAttack1Cooldown(0);
-
                 VoidFoxEntity.this.timesUsedAttack1 = 0;
-                VoidFoxEntity.this.timesUsedAttack2++;
+                VoidFoxEntity.this.timesUsedAttack2 += 1;
                 VoidFoxEntity.this.timesUsedAttack3 = 0;
                 VoidFoxEntity.this.timesUsedAttack4 = 0;
-                VoidFoxEntity.this.timesUsedAttack5 = 0;
+                //VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -300,6 +260,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     return false;
                 }
 
+
                 return super.canUse();
             }
 
@@ -307,12 +268,11 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             public void start() {
                 super.start();
                 VoidFoxEntity.this.setAttack3Cooldown(0);
-
                 VoidFoxEntity.this.timesUsedAttack1 = 0;
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
-                VoidFoxEntity.this.timesUsedAttack3++;
+                VoidFoxEntity.this.timesUsedAttack3 += 1;
                 VoidFoxEntity.this.timesUsedAttack4 = 0;
-                VoidFoxEntity.this.timesUsedAttack5 = 0;
+                //VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -338,7 +298,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         ) {
             @Override
             public boolean canUse() {
-                if (VoidFoxEntity.this.getAttack3Cooldown() < VoidFoxEntity.getMaxCooldown()) {
+                if (VoidFoxEntity.this.getAttack4Cooldown() < VoidFoxEntity.getMaxCooldown()) {
                     return false;
                 }
 
@@ -354,6 +314,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     return false;
                 }
 
+
                 return super.canUse();
             }
 
@@ -361,12 +322,11 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             public void start() {
                 super.start();
                 VoidFoxEntity.this.setAttack4Cooldown(0);
-
                 VoidFoxEntity.this.timesUsedAttack1 = 0;
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
                 VoidFoxEntity.this.timesUsedAttack3 = 0;
-                VoidFoxEntity.this.timesUsedAttack4++;
-                VoidFoxEntity.this.timesUsedAttack5 = 0;
+                VoidFoxEntity.this.timesUsedAttack4 += 1;
+                //VoidFoxEntity.this.timesUsedAttack5 = 0;
             }
 
             @Override
@@ -405,9 +365,9 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         Attack4Cooldown = attack4Cooldown;
     }
 
-    public void setAttack5Cooldown(int attack5Cooldown) {
+    /*public void setAttack5Cooldown(int attack5Cooldown) {
         Attack5Cooldown = attack5Cooldown;
-    }
+    }*/
 
     public int getAttack1Cooldown() {
         return Attack1Cooldown;
@@ -425,9 +385,9 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         return Attack4Cooldown;
     }
 
-    public int getAttack5Cooldown() {
+    /*public int getAttack5Cooldown() {
         return Attack5Cooldown;
-    }
+    }*/
 
     public static EntityDataAccessor<Integer> getDodgeAnimTicks() {
         return DODGE_ANIM_TICKS;
@@ -505,14 +465,14 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             if (attackTag.contains("Attack2Cooldown")) this.Attack2Cooldown = attackTag.getInt("Attack2Cooldown");
             if (attackTag.contains("Attack3Cooldown")) this.Attack3Cooldown = attackTag.getInt("Attack3Cooldown");
             if (attackTag.contains("Attack4Cooldown")) this.Attack4Cooldown = attackTag.getInt("Attack4Cooldown");
-            if (attackTag.contains("Attack5Cooldown")) this.Attack5Cooldown = attackTag.getInt("Attack5Cooldown");
+            //if (attackTag.contains("Attack5Cooldown")) this.Attack5Cooldown = attackTag.getInt("Attack5Cooldown");
             if (attackTag.contains("AttackInUse")) this.AttackInUse = attackTag.getInt("AttackInUse");
 
             if (attackTag.contains("timeUsedAttack1")) this.timesUsedAttack1 = attackTag.getInt("timeUsedAttack1");
             if (attackTag.contains("timeUsedAttack2")) this.timesUsedAttack2 = attackTag.getInt("timeUsedAttack2");
             if (attackTag.contains("timeUsedAttack3")) this.timesUsedAttack3 = attackTag.getInt("timeUsedAttack3");
             if (attackTag.contains("timeUsedAttack4")) this.timesUsedAttack4 = attackTag.getInt("timeUsedAttack4");
-            if (attackTag.contains("timeUsedAttack5")) this.timesUsedAttack5 = attackTag.getInt("timeUsedAttack5");
+            //if (attackTag.contains("timeUsedAttack5")) this.timesUsedAttack5 = attackTag.getInt("timeUsedAttack5");
         }
     }
 
@@ -527,13 +487,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         attackTag.putInt("Attack2Cooldown", this.Attack2Cooldown);
         attackTag.putInt("Attack3Cooldown", this.Attack3Cooldown);
         attackTag.putInt("Attack4Cooldown", this.Attack4Cooldown);
-        attackTag.putInt("Attack5Cooldown", this.Attack5Cooldown);
+        //attackTag.putInt("Attack5Cooldown", this.Attack5Cooldown);
         attackTag.putInt("AttackInUse", this.AttackInUse);
         attackTag.putInt("timeUsedAttack1", this.timesUsedAttack1);
         attackTag.putInt("timeUsedAttack2", this.timesUsedAttack2);
         attackTag.putInt("timeUsedAttack3", this.timesUsedAttack3);
         attackTag.putInt("timeUsedAttack4", this.timesUsedAttack4);
-        attackTag.putInt("timeUsedAttack5", this.timesUsedAttack5);
+        //attackTag.putInt("timeUsedAttack5", this.timesUsedAttack5);
 
         tag.put("AttacksHandle", attackTag);
     }
@@ -550,7 +510,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                     return super.hurt(source, amount);
                 } else {
                     this.goalSelector.getRunningGoals().forEach((wrappedGoal -> {
-                        if (wrappedGoal.getGoal() instanceof DashAttack dashAttack) {
+                        if (wrappedGoal.getGoal() instanceof VoidFoxDashAttack dashAttack) {
                             if (dashAttack.isChargingDash()) {
                                 dashAttack.setTickCount(dashAttack.getTickCount() + 5);
                             }
@@ -669,12 +629,12 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             if (this.Attack3Cooldown < MAX_2_COOLDOWN) {
                 this.Attack3Cooldown += value;
             }
-            if (this.Attack4Cooldown < MAX_2_COOLDOWN) {
+            if (this.Attack4Cooldown < MAX_COOLDOWN) {
                 this.Attack4Cooldown += value;
             }
-            if (this.Attack5Cooldown < MAX_2_COOLDOWN) {
+            /*if (this.Attack5Cooldown < MAX_1_COOLDOWN) {
                 this.Attack5Cooldown += value;
-            }
+            }*/
         }
     }
 
@@ -700,6 +660,11 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     public void visualTick(Level level) {
         super.visualTick(level);
+    }
+
+    @Override
+    protected boolean isAffectedByFluids() {
+        return false;
     }
 
     @Override
@@ -735,8 +700,11 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         }));
 
         if (this.isMoreOp()) {
-            if (this.hurtDuration <= 0 && this.tickCount % 5 == 0) {
-                this.setHealth(this.getHealth() + this.getRandom().nextFloat(0.25f, 1.25f));
+            float value = this.getRandom().nextFloat(0.25f, 1.25f);
+            if (!((value + getHealth()) / this.getMaxHealth() > 0.5f)) {
+                if ((this.hurtTime <= 0) && this.tickCount % 10 == 0) {
+                    this.heal(value);
+                }
             }
         }
 
@@ -747,7 +715,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         super.startSeenByPlayer(player);
         this.bossBar.addPlayer(player);
         player.displayClientMessage(
-                new TextComponent("An ominous presence looms in the region...\nAre you prepared to face the consequences of your actions?").withStyle((style -> {
+                new TextComponent("A dark presence spreads through the land...\nWill you dare to confront its origin?").withStyle((style -> {
                     Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
                     returnStyle = returnStyle.withItalic(true);
                     return returnStyle;
