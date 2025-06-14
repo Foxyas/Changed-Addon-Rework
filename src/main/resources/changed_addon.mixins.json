@@ -16,7 +16,7 @@
     "DroppedSyringeMixin",
     "EnchantmentMixin",
     "InfinityEnchantmentMixin",
-    "PhantomSweepAttackGoalMixin",
+    "PhantomAIMixin",
     "PlayerMixin",
     "RandomVariantFunctionMixin",
     "TransfurVariantInstanceMixin",

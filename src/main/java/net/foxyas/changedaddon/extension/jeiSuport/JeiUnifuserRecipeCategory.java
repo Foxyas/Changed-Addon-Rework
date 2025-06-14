@@ -50,11 +50,13 @@ public class JeiUnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe
 
     @Deprecated
     @Override
+    @SuppressWarnings("removal")
     public Class<? extends UnifuserRecipe> getRecipeClass() {
         return UnifuserRecipe.class;
     }
 
     @Override
+    @SuppressWarnings("removal")
     public ResourceLocation getUid() {
         return UID;
     }

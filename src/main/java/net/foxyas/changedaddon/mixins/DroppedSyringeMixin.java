@@ -29,7 +29,8 @@ public abstract class DroppedSyringeMixin {
     @Inject(method = "getVariant", at = @At("RETURN"), cancellable = true, remap = false)
     private void checkAllowBossTag(CallbackInfoReturnable<TransfurVariant<?>> cir) {
         if (!changed_Addon_Rework$AllowBosses) {
-            if (ChangedAddonTransfurVariants.getBossesVariantsList().contains(this.variant)) {
+            if (ChangedAddonTransfurVariants.getBossesVariantsList().contains(this.variant)
+                    || ChangedAddonTransfurVariants.getVariantsRemovedFromSyringes().contains(this.variant)) {
                 List<TransfurVariant<?>> list = new ArrayList<>(TransfurVariant.getPublicTransfurVariants().toList());
                 list.removeIf(transfurVariant -> ChangedAddonTransfurVariants.getBossesVariantsList().contains(transfurVariant));
                 TransfurVariant<?> transfurVariant = list.get(new Random().nextInt(list.size()));

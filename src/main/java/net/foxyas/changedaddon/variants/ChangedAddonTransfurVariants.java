@@ -28,6 +28,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -60,6 +62,14 @@ public class ChangedAddonTransfurVariants {
         return List.of(VOID_FOX.get(), REYN.get(), FENGQI_WOLF.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
     }
 
+    public static Collection<TransfurVariant<?>> getVariantsRemovedFromSyringes() {
+        ArrayList<TransfurVariant<?>> SyringeItemRemovedList,DroppedSyringeRemovedList;
+        SyringeItemRemovedList = new ArrayList<>(getRemovedVariantsList());
+        DroppedSyringeRemovedList = new ArrayList<>(List.of(LUMINARCTIC_LEOPARD.get(),FEMALE_LUMINARCTIC_LEOPARD.get()));
+        SyringeItemRemovedList.addAll(DroppedSyringeRemovedList);
+
+        return SyringeItemRemovedList;
+    }
 
     public static List<TransfurVariant<?>> getBossesVariantsList() {
         return List.of(KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get(), VOID_FOX.get());

@@ -15,6 +15,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 @Deprecated
 public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe> {
@@ -48,14 +49,16 @@ public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerReci
         return this.icon;
     }
 
+    @SuppressWarnings("removal")
     @Deprecated
     @Override
-    public Class<? extends CatalyzerRecipe> getRecipeClass() {
+    public @NotNull Class<? extends CatalyzerRecipe> getRecipeClass() {
         return CatalyzerRecipe.class;
     }
 
+    @SuppressWarnings("removal")
     @Override
-    public ResourceLocation getUid() {
+    public @NotNull ResourceLocation getUid() {
         return UID;
     }
 

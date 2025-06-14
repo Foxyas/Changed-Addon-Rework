@@ -23,20 +23,21 @@ import java.util.UUID;
 
 public class VariantUtilProcedure {
 
-	private static final Cacheable<AttributeMap> BASE_ATTRIBUTES = Cacheable.of(() -> {
-		return new AttributeMap(Player.createAttributes().build());
-	});
+	private static final Cacheable<AttributeMap> BASE_ATTRIBUTES = Cacheable.of(() -> new AttributeMap(Player.createAttributes().build()));
 
 	public static float GetLandSpeed(String stringvariant,Player player) {
 		try {
 			ResourceLocation form = new ResourceLocation(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-				ChangedEntity InstanceEntity = variant.getEntityType().create(player.level);
+                ChangedEntity InstanceEntity = null;
+                if (variant != null) {
+                    InstanceEntity = variant.getEntityType().create(player.level);
+                }
                 assert InstanceEntity != null;
                 InstanceEntity.setUnderlyingPlayer(player);
 				var Instance = UniversalDist.createVariantFor(variant,player);
-				return variant == null ? 0f : (float) ((InstanceEntity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * 0.1F) / BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
+				return (float) (InstanceEntity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * 0.1F / BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
 			} else {
 				return 0f;
 			}
@@ -51,11 +52,14 @@ public class VariantUtilProcedure {
 			ResourceLocation form = new ResourceLocation(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-				ChangedEntity InstanceEntity = variant.getEntityType().create(player.level);
-				assert InstanceEntity != null;
+                ChangedEntity InstanceEntity = null;
+                if (variant != null) {
+                    InstanceEntity = variant.getEntityType().create(player.level);
+                }
+                assert InstanceEntity != null;
 				InstanceEntity.setUnderlyingPlayer(player);
 				var Instance = UniversalDist.createVariantFor(variant,player);
-				return variant == null ? 0f : (float) (InstanceEntity.getAttributeBaseValue(ForgeMod.SWIM_SPEED.get()) / BASE_ATTRIBUTES.get().getBaseValue(ForgeMod.SWIM_SPEED.get()));
+				return (float) (InstanceEntity.getAttributeBaseValue(ForgeMod.SWIM_SPEED.get()) / BASE_ATTRIBUTES.get().getBaseValue(ForgeMod.SWIM_SPEED.get()));
 			} else {
 				return 0f;
 			}
@@ -70,10 +74,13 @@ public class VariantUtilProcedure {
 			ResourceLocation form = new ResourceLocation(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-				ChangedEntity Instance = variant.getEntityType().create(player.level);
-				assert Instance != null;
+                ChangedEntity Instance = null;
+                if (variant != null) {
+                    Instance = variant.getEntityType().create(player.level);
+                }
+                assert Instance != null;
 				Instance.setUnderlyingPlayer(player);
-				return variant == null ? 0 : (Instance.getMaxHealth() - Player.MAX_HEALTH);
+				return Instance.getMaxHealth() - Player.MAX_HEALTH;
 			} else {
 				return 0;
 			}
