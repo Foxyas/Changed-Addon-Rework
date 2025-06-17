@@ -2,8 +2,10 @@ package net.foxyas.changedaddon.recipes;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.recipes.special.DyeableShortsColoringRecipe;
+import net.foxyas.changedaddon.recipes.special.HaydenTransfurRecipe;
 import net.foxyas.changedaddon.recipes.special.LaserPointerColoringRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
@@ -22,6 +24,8 @@ public class ChangedAddonModRecipeTypes {
             SERIALIZERS.register("laser_pointer_coloring", LaserPointerColoringRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<?>> SHORTS_COLORING =
             SERIALIZERS.register("shorts_coloring", DyeableShortsColoringRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<?>> HAYDEN_SYRINGE_RECIPE =
+            SERIALIZERS.register("hayden_syringe_recipe", HaydenTransfurRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<CatalyzerRecipe>> CATALYZER_RECIPE =
             SERIALIZERS.register("catalyzer", () -> CatalyzerRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<UnifuserRecipe>> UNIFUSER_RECIPE =
