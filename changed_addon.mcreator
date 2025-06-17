@@ -12514,7 +12514,7 @@
       "type": "livingentity",
       "sortid": 660,
       "compiles": true,
-      "locked_code": false,
+      "locked_code": true,
       "registry_name": "hayden_fennec_fox",
       "metadata": {
         "files": [
