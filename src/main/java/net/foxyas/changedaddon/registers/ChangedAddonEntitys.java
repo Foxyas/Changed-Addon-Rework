@@ -24,7 +24,7 @@ public class ChangedAddonEntitys extends ChangedAddonModEntities {
                     .sized(0.7f, 1.93f));
 
 	public static final RegistryObject<EntityType<ParticleProjectile>> PARTICLE_PROJECTILE = register("particle_projectile",
-			EntityType.Builder.<ParticleProjectile>of(ParticleProjectile::new, MobCategory.MONSTER)
+			EntityType.Builder.<ParticleProjectile>of(ParticleProjectile::new, MobCategory.MISC)
 					.setShouldReceiveVelocityUpdates(true)
 					.clientTrackingRange(64)
 					.updateInterval(1)
