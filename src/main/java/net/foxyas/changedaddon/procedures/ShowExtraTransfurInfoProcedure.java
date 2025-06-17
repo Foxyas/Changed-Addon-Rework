@@ -53,37 +53,42 @@ public class ShowExtraTransfurInfoProcedure {
                 double landSpeed = VariantUtilProcedure.GetLandSpeed(form, entity);
                 double jumpStrength = VariantUtilProcedure.GetJumpStrength(form);
                 boolean canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(form);
+                int index = 3;
 
                 double extraHp = (hp) / 2.0;
-                tooltip.add(new TranslatableComponent("text.changed_addon.additionalHealth")
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.additionalHealth")
                         .append("")
                         .append(extraHp == 0
                                 ? new TextComponent("§7None§r")
                                 : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
                         .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts")));
 
+                index++;
                 double landSpeedPct = (landSpeed - 1) * 100;
-                tooltip.add(new TranslatableComponent("text.changed_addon.landspeed")
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.landspeed")
                         .append("")
                         .append(landSpeedPct == 0
                                 ? new TextComponent("§7None§r")
                                 : new TextComponent((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%")));
 
+                index++;
                 double swimSpeedPct = (swimSpeed - 1) * 100;
-                tooltip.add(new TranslatableComponent("text.changed_addon.swimspeed")
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.swimspeed")
                         .append("")
                         .append(swimSpeedPct == 0
                                 ? new TextComponent("§7None§r")
                                 : new TextComponent((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%")));
 
+                index++;
                 double jumpStrengthPct = (jumpStrength - 1) * 100;
-                tooltip.add(new TranslatableComponent("text.changed_addon.jumpStrength")
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.jumpStrength")
                         .append("")
                         .append(jumpStrengthPct == 0
                                 ? new TextComponent("§7None§r")
                                 : new TextComponent((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%")));
 
-                tooltip.add(new TranslatableComponent("text.changed_addon.canGlide/Fly")
+                index++;
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.canGlide/Fly")
                         .append("")
                         .append(canFlyOrGlide
                                 ? new TextComponent("§aTrue§r")

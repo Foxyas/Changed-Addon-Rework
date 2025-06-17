@@ -18,14 +18,39 @@ import org.jetbrains.annotations.NotNull;
 
 import static net.minecraft.client.renderer.entity.LivingEntityRenderer.getOverlayCoords;
 
+
+
+
 public class CustomClothesLayer<E extends ChangedEntity, M extends AdvancedHumanoidModel<E>> extends RenderLayer<E, M> implements FirstPersonLayer<E> {
     private final M model;
     private final ResourceLocation clothesTexture;
+    private final boolean poseStackStyle;
+    private final float scale;
 
+    /**
+     *
+     * This Layer Need to have some cubes in the model for work better
+     * @param
+     **/
     public CustomClothesLayer(RenderLayerParent<E, M> p_117346_, M model, ResourceLocation clothesTexture) {
         super(p_117346_);
         this.model = model;
         this.clothesTexture = clothesTexture;
+        this.poseStackStyle = false;
+        this.scale = 1;
+    }
+
+    /**
+     *
+     * This Layer Need to have some cubes in the model for work better
+     * @param poseStackStyle define if it will scale the pose stack or just use cubes [set true if you want scale the poseStack]
+     **/
+    public CustomClothesLayer(RenderLayerParent<E, M> p_117346_, M model, ResourceLocation clothesTexture, boolean poseStackStyle, float poseStackScale) {
+        super(p_117346_);
+        this.model = model;
+        this.clothesTexture = clothesTexture;
+        this.poseStackStyle = poseStackStyle;
+        this.scale = poseStackScale;
     }
 
     @Override
@@ -41,7 +66,9 @@ public class CustomClothesLayer<E extends ChangedEntity, M extends AdvancedHuman
         poseStack.pushPose();
         model.prepareMobModel(entity, limbSwing, limbSwingAmount, partialTicks);
         model.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        poseStack.scale(1.0025f + zFightOffset, 1.0025f + zFightOffset, 1.0025f + zFightOffset);
+        if (poseStackStyle) {
+            poseStack.scale( scale + zFightOffset, scale + zFightOffset, scale + zFightOffset);
+        }
         if (color != null) {
             model.renderToBuffer(poseStack, vertexConsumer, packedLight, getOverlayCoords(entity, 0.0f), color.red(), color.green(), color.blue(), alpha);
         } else {
