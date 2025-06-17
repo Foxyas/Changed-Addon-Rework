@@ -22,6 +22,6 @@ public class HaydenFennecFoxRenderer extends AdvancedHumanoidRenderer<HaydenFenn
     }
 
     public ResourceLocation getTextureLocation(HaydenFennecFoxEntity entity) {
-        return new ResourceLocation(ChangedAddonMod.MODID,"textures/hayden_fennec_fox.png");
+        return new ResourceLocation(ChangedAddonMod.MODID,"textures/entities/hayden_fennec_fox.png");
     }
 }
