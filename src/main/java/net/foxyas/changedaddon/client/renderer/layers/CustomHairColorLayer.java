@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
-import net.foxyas.changedaddon.init.ChangedAddonModConfigs;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -14,7 +13,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 
@@ -32,7 +30,7 @@ public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends 
         this.IsFemaleOrNot = textureBase.getPath().contains("female"); //Auto Select
     }
 
-    public CustomHairColorLayer(RenderLayerParent<T, M> parent, M model, ResourceLocation textureBase,boolean Female) {
+    public CustomHairColorLayer(RenderLayerParent<T, M> parent, M model, ResourceLocation textureBase, boolean Female) {
         super(parent);
         this.model = model;
         this.renderTypeDark = RenderType.entityCutout(new ResourceLocation(textureBase.getNamespace(), textureBase.getPath() + "_dark.png"));
@@ -41,12 +39,12 @@ public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends 
     }
 
     public void render(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if(!ChangedAddonClientConfigsConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot){
+        if (!ChangedAddonClientConfigsConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot) {
             return;
-        } else if(!ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot){
+        } else if (!ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot) {
             return;
         }
-        
+
         if (!entity.isInvisible()) {
             BasicPlayerInfo info = entity.getBasicPlayerInfo();
             Color3 coatColor = info.getHairColor();
@@ -60,9 +58,9 @@ public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends 
     }
 
     public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector) {
-		if(!ChangedAddonClientConfigsConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot){
+        if (!ChangedAddonClientConfigsConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot) {
             return;
-        } else if(!ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot){
+        } else if (!ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot) {
             return;
         }
         BasicPlayerInfo info = entity.getBasicPlayerInfo();

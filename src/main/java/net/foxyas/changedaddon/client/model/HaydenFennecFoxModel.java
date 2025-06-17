@@ -116,7 +116,8 @@ public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxE
         PartDefinition Hair = Head.addOrReplaceChild("Hair", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new CubeDeformation(0.2F))
                 .texOffs(24, 8).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 6.0F, 8.0F, new CubeDeformation(0.3F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(28, 28).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -0.5F, 0.0F));
+        PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(28, 28).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(60, 28).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new CubeDeformation(0.095F)), PartPose.offset(0.0F, -0.5F, 0.0F));
 
         PartDefinition Tail = Torso.addOrReplaceChild("Tail", CubeListBuilder.create(), PartPose.offset(0.0F, 10.0F, 0.4F));
 
@@ -136,7 +137,27 @@ public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxE
 
         PartDefinition Base_r4 = TailQuaternary.addOrReplaceChild("Base_r4", CubeListBuilder.create().texOffs(0, 73).addBox(-2.0F, -1.2F, -1.95F, 4.0F, 4.0F, 4.0F, new CubeDeformation(-0.45F)), PartPose.offsetAndRotation(0.0F, -0.7F, 3.0F, 2.0071F, 0.0F, 0.0F));
 
-        PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(16, 41).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(-5.0F, 1.5F, 0.0F));
+        PartDefinition Bandana = Torso.addOrReplaceChild("Bandana", CubeListBuilder.create(), PartPose.offset(0.0F, -0.3F, 0.0F));
+
+        PartDefinition neck = Bandana.addOrReplaceChild("neck", CubeListBuilder.create().texOffs(72, 60).addBox(-4.0F, -28.3F, -2.0F, 8.0F, 2.0F, 4.0F, new CubeDeformation(0.25F))
+                .texOffs(72, 66).addBox(-4.0F, -26.0F, -2.0F, 8.0F, 2.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offset(0.0F, 28.3F, 0.0F));
+
+        PartDefinition knot = Bandana.addOrReplaceChild("knot", CubeListBuilder.create().texOffs(76, 72).addBox(-1.0F, -28.5F, 2.01F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.25F)), PartPose.offset(0.0F, 28.3F, 0.0F));
+
+        PartDefinition right = knot.addOrReplaceChild("right", CubeListBuilder.create(), PartPose.offset(-0.9F, -26.5F, 5.0F));
+
+        PartDefinition cube_r19 = right.addOrReplaceChild("cube_r19", CubeListBuilder.create().texOffs(80, 74).mirror().addBox(-1.0F, -2.0F, -0.99F, 0.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.9599F, 0.0F));
+
+        PartDefinition cube_r20 = right.addOrReplaceChild("cube_r20", CubeListBuilder.create().texOffs(78, 77).mirror().addBox(-1.0F, -1.0F, -0.99F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(-1.5F, -0.5F, 1.0F, 0.0F, -0.9599F, 0.0F));
+
+        PartDefinition left = knot.addOrReplaceChild("left", CubeListBuilder.create(), PartPose.offset(2.4F, -27.0F, 6.0F));
+
+        PartDefinition cube_r21 = left.addOrReplaceChild("cube_r21", CubeListBuilder.create().texOffs(80, 77).addBox(1.0F, -1.0F, -0.99F, 0.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.9599F, 0.0F));
+
+        PartDefinition cube_r22 = left.addOrReplaceChild("cube_r22", CubeListBuilder.create().texOffs(76, 74).addBox(1.0F, -2.0F, -0.99F, 0.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.5F, 0.5F, -1.0F, 0.0F, 0.9599F, 0.0F));
+
+        PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(16, 41).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(71, 12).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offset(-5.0F, 1.5F, 0.0F));
 
         PartDefinition RightArmPawBeans = RightArm.addOrReplaceChild("RightArmPawBeans", CubeListBuilder.create().texOffs(0, 93).addBox(-2.0F, 9.525F, -0.6175F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 89).addBox(-2.0F, 9.6F, -2.575F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.05F))
@@ -144,7 +165,8 @@ public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxE
                 .texOffs(0, 91).addBox(-0.075F, 9.6F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.05F))
                 .texOffs(0, 91).addBox(-2.925F, 9.6F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.05F)), PartPose.offset(0.0F, -0.5F, 0.55F));
 
-        PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(32, 44).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, 1.5F, 0.0F));
+        PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(32, 44).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F))
+                .texOffs(68, 44).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offset(5.0F, 1.5F, 0.0F));
 
         PartDefinition LeftArmPawBeans = LeftArm.addOrReplaceChild("LeftArmPawBeans", CubeListBuilder.create().texOffs(8, 93).mirror().addBox(0.0F, 9.525F, -0.6175F, 2.0F, 1.0F, 2.0F, new CubeDeformation(0.0F)).mirror(false)
                 .texOffs(8, 89).mirror().addBox(1.0F, 9.6F, -2.575F, 1.0F, 1.0F, 1.0F, new CubeDeformation(-0.05F)).mirror(false)
