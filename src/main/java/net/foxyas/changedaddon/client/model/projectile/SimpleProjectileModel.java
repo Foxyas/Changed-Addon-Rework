@@ -25,21 +25,27 @@ public class SimpleProjectileModel<T extends Entity> extends EntityModel<T> {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
 
-		PartDefinition main = partdefinition.addOrReplaceChild("main", CubeListBuilder.create().texOffs(0, 0).addBox(-1.5F, -6.0F, -1.5F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-0.75F))
-		.texOffs(0, 6).addBox(-1.0F, -4.8F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
-		.texOffs(8, 10).addBox(-1.0F, -6.2F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
-		.texOffs(8, 6).addBox(-0.3F, -5.5F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
-		.texOffs(0, 10).addBox(-1.0F, -5.5F, -0.3F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
-		.texOffs(0, 14).addBox(-1.0F, -5.5F, -1.7F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
-		.texOffs(12, 0).addBox(-1.7F, -5.5F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+		PartDefinition main = partdefinition.addOrReplaceChild("main", CubeListBuilder.create().texOffs(0, 0).addBox(-1.5F, -1.5F, -1.5F, 3.0F, 3.0F, 3.0F, new CubeDeformation(-0.75F))
+				.texOffs(0, 6).addBox(-1.0F, -0.3F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
+				.texOffs(8, 10).addBox(-1.0F, -1.7F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
+				.texOffs(8, 6).addBox(-0.3F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
+				.texOffs(0, 10).addBox(-1.0F, -1.0F, -0.3F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
+				.texOffs(0, 14).addBox(-1.0F, -1.0F, -1.7F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F))
+				.texOffs(12, 0).addBox(-1.7F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, new CubeDeformation(-0.75F)), PartPose.offset(0.0F, 0, 0.0F));
 
 		return LayerDefinition.create(meshdefinition, 32, 32);
 	}
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.main.yRot = netHeadYaw * ((float)Math.PI / 180F);
-		this.main.xRot = netHeadYaw * ((float)Math.PI / 180F);
+		this.main.yRot = ageInTicks * ((float)Math.PI / 180F);
+		this.main.xRot = ageInTicks * ((float)Math.PI / 180F);
+	}
+
+	@Override
+	public void prepareMobModel(T p_102614_, float p_102615_, float p_102616_, float p_102617_) {
+		super.prepareMobModel(p_102614_, p_102615_, p_102616_, p_102617_);
+
 	}
 
 	@Override

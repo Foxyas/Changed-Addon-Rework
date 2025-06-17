@@ -21,8 +21,8 @@ import java.util.List;
 
 public class VoidFoxDashAttack extends Goal {
 
-    private static final int PREPARE_TIME = 60; // 3 seconds
-    private static final int MAX_DASH_TICKS = 20;
+    public static final int PREPARE_TIME = 60; // 3 seconds
+    public static final int MAX_DASH_TICKS = 20;
     private static final double DETECTION_DISTANCE = 3.5D;
     private static final double KNOCKBACK_MULTIPLIER = 1.5;
 

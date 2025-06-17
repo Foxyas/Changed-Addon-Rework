@@ -42,6 +42,7 @@ public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityM
         float f1 = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float f2 = (float)entity.tickCount + partialTicks;
         poseStack.pushPose();
+        poseStack.translate(0.0D, 0.15F, 0.0D);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f2 * 0.1F) * 180.0F));
         poseStack.mulPose(Vector3f.XP.rotationDegrees(Mth.cos(f2 * 0.1F) * 180.0F));
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(f2 * 0.15F) * 360.0F));

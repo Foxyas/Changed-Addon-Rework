@@ -200,6 +200,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
             double speed = 0.35;
             double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (distance <= 0.25f && livingTarget.isBlocking() && this.getLevel().getEntitiesOfClass(AbstractGenericParticleProjectile.class, this.getBoundingBox().inflate(3)).size() >= 5) {
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                this.discard();
+            }
+
             if (distance > 0.001) {
                 this.setDeltaMovement(dx / distance * speed, dy / distance * speed, dz / distance * speed);
                 this.hasImpulse = true;

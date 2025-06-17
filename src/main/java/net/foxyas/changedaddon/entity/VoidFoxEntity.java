@@ -64,6 +64,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     private static final int MAX_COOLDOWN = 120;
     public static final int MAX_1_COOLDOWN = 120;
     public static final int MAX_2_COOLDOWN = 120;
+    private int ticksInUse;
 
     public VoidFoxEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonModEntities.VOID_FOX.get(), world);
@@ -185,7 +186,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         });
 
         this.goalSelector.addGoal(1, new ComboAbilityGoal(
-                this, 3f, 18f, 8f, 5,
+                this, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -239,7 +240,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         });
 
         this.goalSelector.addGoal(1, new SimpleComboAbilityGoal(
-                this, 2, 3f, 18f, 8f, 5,
+                this, 2, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -293,7 +294,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         });
 
         this.goalSelector.addGoal(1, new ComboAbilityGoal(
-                this, 6f, 18f, 8f, 5,
+                this, 6f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -513,13 +514,24 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                 if (VoidFoxEntity.this.AttackInUse != 1) {
                     return super.hurt(source, amount);
                 } else {
-                    this.goalSelector.getRunningGoals().forEach((wrappedGoal -> {
-                        if (wrappedGoal.getGoal() instanceof VoidFoxDashAttack dashAttack) {
-                            if (dashAttack.isChargingDash()) {
-                                dashAttack.setTickCount(dashAttack.getTickCount() + 5);
+                    if (!isMoreOp()) {
+                        this.goalSelector.getRunningGoals().forEach((wrappedGoal -> {
+                            if (wrappedGoal.getGoal() instanceof VoidFoxDashAttack dashAttack) {
+                                if (dashAttack.isChargingDash()) {
+                                    dashAttack.setTickCount(dashAttack.getTickCount() + 5);
+                                }
                             }
-                        }
-                    }));
+                        }));
+                    } else {
+                        this.goalSelector.getRunningGoals().forEach((wrappedGoal -> {
+                            if (wrappedGoal.getGoal() instanceof VoidFoxDashAttack dashAttack) {
+                                if (dashAttack.isChargingDash()) {
+                                    dashAttack.setTickCount(dashAttack.getTickCount() + 1);
+                                }
+                            }
+                        }));
+                        return super.hurt(source, amount);
+                    }
                 }
 
             }
@@ -617,9 +629,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     public void tickAttackTicks() {
         if (!this.isNoAi()) {
             if (AttackInUse != 0) {
+                ticksInUse++;
+                if (ticksInUse > 260) {
+                    AttackInUse = 0;
+                }
                 return;
             }
-            int value = isMoreOp() ? 4 : 2;
+            int value = isMoreOp() ? 3 : 1;
 
             if (this.Attack1Cooldown < MAX_COOLDOWN) {
                 float delay = isMoreOp() ? 2 : 5;
@@ -693,12 +709,14 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
     private void handleChanges() {
         this.goalSelector.getRunningGoals().forEach((wrappedGoal -> {
-            if (wrappedGoal.getGoal() instanceof DashAttack dashAttack) {
+            if (wrappedGoal.getGoal() instanceof VoidFoxDashAttack dashAttack) {
                 if (this.isMoreOp()) {
-                    if (dashAttack.isChargingDash()) {
-                        dashAttack.setTickCount(dashAttack.getTickCount() + 5);
+                    if (dashAttack.isChargingDash() && dashAttack.getTickCount() >= VoidFoxDashAttack.PREPARE_TIME / 2) {
+                        dashAttack.setDashSpeed(2.5f);
+                        if (!this.getLevel().isClientSide() && this.random.nextFloat() < 0.25f) {
+                            dashAttack.setTickCount(10);
+                        }
                     }
-                    dashAttack.setDashSpeed(2.5f);
                 }
             }
         }));
