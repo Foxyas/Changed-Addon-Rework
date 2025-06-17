@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.client.model.*;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.client.renderer.EmptyProjectileRenderer;
+import net.foxyas.changedaddon.client.renderer.SimpleProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
@@ -80,7 +81,7 @@ public class ChangedAddonModelsRegister {
      @SubscribeEvent
      public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
          event.registerEntityRenderer(ChangedAddonEntitys.PARTICLE_PROJECTILE.get(),
-                 EmptyProjectileRenderer::new); // Nenhum render (somente partículas no tick)
+                 SimpleProjectileRenderer::new); // Nenhum render (somente partículas no tick)
      }
 
 

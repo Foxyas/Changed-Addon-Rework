@@ -29,8 +29,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
     @Nullable
     private UUID targetUUID;
+
     @Nullable
     protected Entity target = null;
+
+    @Nullable
+    protected Vec3 targetPos = null;
 
     protected ParticleOptions particle = ParticleTypes.END_ROD;
     private int lifeSpamWithoutTarget;
@@ -89,6 +93,20 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
         tag.putInt("ticksWandering", lifeSpamWithoutTarget);
 
+        if (targetPos != null) {
+            tag.putDouble("TargetX", targetPos.x);
+            tag.putDouble("TargetY", targetPos.y);
+            tag.putDouble("TargetZ", targetPos.z);
+        }
+
+        if (tag.contains("TargetX") && tag.contains("TargetY") && tag.contains("TargetZ")) {
+            double x = tag.getDouble("TargetX");
+            double y = tag.getDouble("TargetY");
+            double z = tag.getDouble("TargetZ");
+            this.targetPos = new Vec3(x, y, z);
+        }
+
+
         if (this.targetUUID != null) {
             tag.putUUID("target", this.targetUUID);
         }
@@ -105,13 +123,64 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         }
     }
 
+    public void setTargetPos(@Nullable Vec3 targetPos) {
+        this.targetPos = targetPos;
+    }
+
+    public @Nullable Vec3 getTargetPos() {
+        return targetPos;
+    }
+
+    public int getLifeSpamWithoutTarget() {
+        return lifeSpamWithoutTarget;
+    }
+
+    public void setLifeSpamWithoutTarget(int lifeSpamWithoutTarget) {
+        this.lifeSpamWithoutTarget = lifeSpamWithoutTarget;
+    }
+
+    public void setTarget(@Nullable Entity target) {
+        this.target = target;
+    }
+
+    public void setTargetUUID(@Nullable UUID targetUUID) {
+        this.targetUUID = targetUUID;
+    }
+
     @Override
     public void tick() {
         super.tick();
         this.setRemainingFireTicks(0);
+
+        // Se só tiver posição fixa
+        if (this.getTarget() == null && targetPos != null) {
+            if (this.inGround || this.onGround) {
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                this.discard();
+            }
+            this.lifeSpamWithoutTarget = 0;
+            double dx = targetPos.x() - getX();
+            double dy = targetPos.y() - getY();
+            double dz = targetPos.z() - getZ();
+
+            double speed = 0.35;
+            double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (distance <= 0.25f) {
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                this.discard();
+            }
+
+            if (distance > 0.001) {
+                this.setDeltaMovement(dx / distance * speed, dy / distance * speed, dz / distance * speed);
+                this.hasImpulse = true;
+            }
+        }
+
         if (!(this.getTarget() instanceof LivingEntity livingTarget)) {
             return;
         }
+
 
         if (!level.isClientSide && livingTarget.isAlive()) {
             if (this.inGround || this.onGround) {
@@ -243,7 +312,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
     @Override
     public boolean shouldBeSaved() {
-        return false;
+        return getOwner() != null;
     }
 
     @Override

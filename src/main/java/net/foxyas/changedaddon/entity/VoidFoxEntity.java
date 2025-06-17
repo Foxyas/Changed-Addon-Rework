@@ -76,7 +76,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         setNoAi(false);
         setPersistenceRequired();
     }
-    
+
     public boolean causeFallDamage(float p_148859_, float p_148860_, DamageSource p_148861_) {
         return false;
     }

@@ -177,7 +177,11 @@ public class VoidFoxDashAttack extends Goal {
 
     private void shootProjectile(LivingEntity target) {
         Level level = dasher.level;
-        spawnProjectilesInCircle(dasher, target, new Vec3(0, 0.5, 0), 2, 4, level);
+        switch (dasher.getRandom().nextInt(3)){
+            case 0 -> spawnProjectilesInCircle(dasher, target, new Vec3(0, 0.5, 0), 2, 4, level);
+            case 1 -> spawnProjectilesInXCircleTargetInPlayer(dasher, target, new Vec3(0, 0, 0), 2, 8, level);
+            case 2 -> spawnProjectilesInXCircleTargetInPlayerPos(dasher, target, new Vec3(0, 0, 0), 2, 8, level);
+        }
     }
 
     public void spawnProjectilesInCircle(LivingEntity entity, LivingEntity target, Vec3 offset, double radius, int count, Level level) {
@@ -186,13 +190,68 @@ public class VoidFoxDashAttack extends Goal {
         for (int i = 0; i < count; i++) {
             double angle = 2 * Math.PI * i / count;
             Vec3 dir = new Vec3(1, 0, 0).zRot((float) angle)
-                    .yRot((float) Math.toRadians(-target.getYRot()))
+                    .yRot((float) Math.toRadians(-dasher.getYRot()))
                     .normalize();
             Vec3 spawnPos = center.add(dir.scale(radius));
 
             // Spawn do projétil
             if (!level.isClientSide()) {
                 ParticleProjectile projectile = new ParticleProjectile(projectileType, dasher, dasher.getLevel(), target);
+                projectile.setPos(spawnPos);
+                projectile.setNoGravity(true);
+                projectile.setOwner(dasher);
+                projectile.teleport = false;
+
+                Vec3 direction = target.getEyePosition(1.0F).subtract(dasher.getEyePosition(0.5f)).normalize();
+                projectile.shoot(direction.x, direction.y, direction.z, 1.5f, 0.0f);
+
+
+                entity.level.addFreshEntity(projectile);
+            }
+        }
+        dasher.swing(InteractionHand.MAIN_HAND);
+    }
+
+    public void spawnProjectilesInXCircleTargetInPlayer(LivingEntity entity, LivingEntity target, Vec3 offset, double radius, int count, Level level) {
+        Vec3 center = target.getEyePosition().add(offset); // centro do círculo com offset
+
+        for (int i = 0; i < count; i++) {
+            double angle = 2 * Math.PI * i / count;
+            Vec3 dir = new Vec3(1, 0, 0).yRot((float) angle)
+                    .normalize();
+            Vec3 spawnPos = center.add(dir.scale(radius));
+
+            // Spawn do projétil
+            if (!level.isClientSide()) {
+                ParticleProjectile projectile = new ParticleProjectile(projectileType, dasher, dasher.getLevel(), target);
+                projectile.setPos(spawnPos);
+                projectile.setNoGravity(true);
+                projectile.setOwner(dasher);
+                projectile.teleport = false;
+
+                Vec3 direction = target.getEyePosition(1.0F).subtract(dasher.getEyePosition(0.5f)).normalize();
+                projectile.shoot(direction.x, direction.y, direction.z, 1.5f, 0.0f);
+
+
+                entity.level.addFreshEntity(projectile);
+            }
+        }
+        dasher.swing(InteractionHand.MAIN_HAND);
+    }
+
+    public void spawnProjectilesInXCircleTargetInPlayerPos(LivingEntity entity, LivingEntity target, Vec3 offset, double radius, int count, Level level) {
+        Vec3 center = target.getEyePosition().add(offset); // centro do círculo com offset
+
+        for (int i = 0; i < count; i++) {
+            double angle = 2 * Math.PI * i / count;
+            Vec3 dir = new Vec3(1, 0, 0).xRot((float) angle)
+                    .normalize();
+            Vec3 spawnPos = center.add(dir.scale(radius));
+
+            // Spawn do projétil
+            if (!level.isClientSide()) {
+                ParticleProjectile projectile = new ParticleProjectile(projectileType, dasher, dasher.getLevel(), null);
+                projectile.setTargetPos(target.position());
                 projectile.setPos(spawnPos);
                 projectile.setNoGravity(true);
                 projectile.setOwner(dasher);
