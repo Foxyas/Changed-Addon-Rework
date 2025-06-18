@@ -143,7 +143,8 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(1, new KnockBackBurstGoal(this, 10));
-        this.goalSelector.addGoal(1, new VoidFoxDashAttack(this, ChangedAddonEntitys.PARTICLE_PROJECTILE.get()) {
+        this.goalSelector.addGoal(1, new SImpleFlyingSlamAttack(this, 2, 2.5f, 3f, 5));
+        this.goalSelector.addGoal(2, new VoidFoxDashAttack(this, ChangedAddonEntitys.PARTICLE_PROJECTILE.get()) {
             @Override
             public boolean canUse() {
                 if (VoidFoxEntity.this.getAttack2Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
@@ -185,7 +186,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
         });
 
-        this.goalSelector.addGoal(1, new ComboAbilityGoal(
+        this.goalSelector.addGoal(2, new ComboAbilityGoal(
                 this, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -239,7 +240,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
         });
 
-        this.goalSelector.addGoal(1, new SimpleComboAbilityGoal(
+        this.goalSelector.addGoal(3, new SimpleComboAbilityGoal(
                 this, 2, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -293,7 +294,8 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
         });
 
-        this.goalSelector.addGoal(1, new ComboAbilityGoal(
+
+        this.goalSelector.addGoal(2, new ComboAbilityGoal(
                 this, 6f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -639,6 +641,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                 ticksInUse++;
                 if (ticksInUse > 260) {
                     AttackInUse = 0;
+                    ticksInUse = 0;
                 }
                 return;
             }
@@ -718,11 +721,8 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         this.goalSelector.getRunningGoals().forEach((wrappedGoal -> {
             if (wrappedGoal.getGoal() instanceof VoidFoxDashAttack dashAttack) {
                 if (this.isMoreOp()) {
-                    if (dashAttack.isChargingDash() && dashAttack.getTickCount() >= VoidFoxDashAttack.PREPARE_TIME / 2) {
+                    if (dashAttack.isChargingDash()) {
                         dashAttack.setDashSpeed(2.5f);
-                        if (!this.getLevel().isClientSide() && this.random.nextFloat() < 0.25f) {
-                            dashAttack.setTickCount(10);
-                        }
                     }
                 }
             }
