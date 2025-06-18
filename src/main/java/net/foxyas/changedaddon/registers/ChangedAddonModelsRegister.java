@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.client.model.*;
+import net.foxyas.changedaddon.client.model.armors.ArmorLatexDragonSnowLeopardSharkModel;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.client.model.projectile.SimpleProjectileModel;
@@ -67,6 +68,8 @@ public class ChangedAddonModelsRegister {
         //Armors
         event.registerLayerDefinition(ArmorLatexSquidTigerSharkModel.INNER_ARMOR, () -> ArmorLatexSquidTigerSharkModel.createArmorLayer(ArmorModel.INNER));
         event.registerLayerDefinition(ArmorLatexSquidTigerSharkModel.OUTER_ARMOR, () -> ArmorLatexSquidTigerSharkModel.createArmorLayer(ArmorModel.OUTER));
+        event.registerLayerDefinition(ArmorLatexDragonSnowLeopardSharkModel.INNER_ARMOR, () -> ArmorLatexDragonSnowLeopardSharkModel.createArmorLayer(ArmorModel.INNER));
+        event.registerLayerDefinition(ArmorLatexDragonSnowLeopardSharkModel.OUTER_ARMOR, () -> ArmorLatexDragonSnowLeopardSharkModel.createArmorLayer(ArmorModel.OUTER));
 
         //Non Anthro Entities Model
         event.registerLayerDefinition(LatexSnepModel.LAYER_LOCATION, LatexSnepModel::createBodyLayer);

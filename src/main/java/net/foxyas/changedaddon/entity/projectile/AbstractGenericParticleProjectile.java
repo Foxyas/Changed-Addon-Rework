@@ -208,7 +208,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
                 this.discard();
             }
 
-            if (distance > 0.001) {
+            if (distance > 0.1f) {
                 this.setDeltaMovement(dx / distance * speed, dy / distance * speed, dz / distance * speed);
                 this.hasImpulse = true;
             }
@@ -293,14 +293,20 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
             this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
             this.discard();
         } else {
-            this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
-            this.setYRot(this.getYRot() + 180.0F);
-            this.yRotO += 180.0F;
-            if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
-                if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
-                    this.spawnAtLocation(this.getPickupItem(), 0.1F);
-                }
+            if (this.random.nextFloat() >= 0.10f) {
+                this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
+                this.setYRot(this.getYRot() + 180.0F);
+                this.yRotO += 180.0F;
+                if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
+                    if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                        this.spawnAtLocation(this.getPickupItem(), 0.1F);
+                    }
 
+                    this.discard();
+                }
+            } else {
+                this.discard();
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 5, 0.5f);
                 this.discard();
             }
         }

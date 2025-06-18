@@ -547,6 +547,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
 
         }
+        if (source.getDirectEntity() != null &&
+                source.getDirectEntity().getType().getRegistryName() != null &&
+                source.getDirectEntity().getType().getRegistryName().toString().contains("bullet")) {
+            this.RegisterDamage(amount);
+            this.setDodging(source.getEntity(), true);
+            return false;
+        }
 
         this.setDodging(source.getEntity(), false);
         return super.hurt(source, amount);

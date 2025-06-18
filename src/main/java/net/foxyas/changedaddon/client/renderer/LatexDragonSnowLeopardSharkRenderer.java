@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.LatexDragonSnowLeopardSharkModel;
+import net.foxyas.changedaddon.client.model.armors.ArmorLatexDragonSnowLeopardSharkModel;
 import net.foxyas.changedaddon.entity.LatexDragonSnowLeopardSharkEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
@@ -11,9 +12,9 @@ import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleShark
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
-public class LatexDragonSnowLeopardSharkRenderer extends AdvancedHumanoidRenderer<LatexDragonSnowLeopardSharkEntity, LatexDragonSnowLeopardSharkModel, ArmorLatexMaleSharkModel<LatexDragonSnowLeopardSharkEntity>> {
+public class LatexDragonSnowLeopardSharkRenderer extends AdvancedHumanoidRenderer<LatexDragonSnowLeopardSharkEntity, LatexDragonSnowLeopardSharkModel, ArmorLatexDragonSnowLeopardSharkModel<LatexDragonSnowLeopardSharkEntity>> {
     public LatexDragonSnowLeopardSharkRenderer(EntityRendererProvider.Context context) {
-        super(context, new LatexDragonSnowLeopardSharkModel(context.bakeLayer(LatexDragonSnowLeopardSharkModel.LAYER_LOCATION)), ArmorLatexMaleSharkModel::new, ArmorLatexMaleSharkModel.INNER_ARMOR, ArmorLatexMaleSharkModel.OUTER_ARMOR, 0.5F);
+        super(context, new LatexDragonSnowLeopardSharkModel(context.bakeLayer(LatexDragonSnowLeopardSharkModel.LAYER_LOCATION)), ArmorLatexDragonSnowLeopardSharkModel::new, ArmorLatexDragonSnowLeopardSharkModel.INNER_ARMOR, ArmorLatexDragonSnowLeopardSharkModel.OUTER_ARMOR, 0.5F);
         this.addLayer(new LatexParticlesLayer(this, this.model));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(new CustomEyesLayer(this, context.getModelSet()));
