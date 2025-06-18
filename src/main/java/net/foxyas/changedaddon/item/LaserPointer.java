@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.goals.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 import net.ltxprogrammer.changed.util.Color3;
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.*;
@@ -37,6 +39,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
+import static net.foxyas.changedaddon.process.util.FoxyasUtils.rayTraceBlocks;
+
 import net.minecraft.core.BlockPos;
 
 public class LaserPointer extends Item implements SpecializedAnimations {
@@ -199,6 +203,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
                 Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
                         .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
                 BlockHitResult blockHitResult = manualRaycastIgnoringBlocks(level, player, 64, blockSet);
+                //BlockHitResult blockHitResult = rayTraceBlocks(level, FoxyasUtils.createClipContext(player, 64, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE), (blockState -> blockSet.contains(blockState.getBlock())));
                 hitPos = applyOffset(result.getLocation(), blockHitResult.getDirection(), 0f);
                 spawnLaserParticle(level, player, stack, hitPos);
 
