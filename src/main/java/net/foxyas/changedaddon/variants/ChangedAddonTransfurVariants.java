@@ -4,13 +4,12 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
+import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.beast.GreenLizard;
 import net.ltxprogrammer.changed.entity.variant.GenderedPair;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.ltxprogrammer.changed.init.ChangedTags;
+import net.ltxprogrammer.changed.init.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.animal.AbstractGolem;
@@ -63,9 +62,9 @@ public class ChangedAddonTransfurVariants {
     }
 
     public static Collection<TransfurVariant<?>> getVariantsRemovedFromSyringes() {
-        ArrayList<TransfurVariant<?>> SyringeItemRemovedList,DroppedSyringeRemovedList;
+        ArrayList<TransfurVariant<?>> SyringeItemRemovedList, DroppedSyringeRemovedList;
         SyringeItemRemovedList = new ArrayList<>(getRemovedVariantsList());
-        DroppedSyringeRemovedList = new ArrayList<>(List.of(LUMINARCTIC_LEOPARD.get(),FEMALE_LUMINARCTIC_LEOPARD.get()));
+        DroppedSyringeRemovedList = new ArrayList<>(List.of(LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get()));
         SyringeItemRemovedList.addAll(DroppedSyringeRemovedList);
 
         return SyringeItemRemovedList;
@@ -76,7 +75,7 @@ public class ChangedAddonTransfurVariants {
     }
 
     protected static List<TransfurVariant<?>> getOcVariantList() {
-        return List.of(HIMALAYAN_CRYSTAL_GAS_CAT_MALE.get(), HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE.get(), REYN.get(), LYNX.get(), FENGQI_WOLF.get(), FOXTA_FOXY.get(), SNEPSI_LEOPARD.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get());
+        return List.of(BLUE_LIZARD.get(), HAYDEN_FENNEC_FOX.get(), HIMALAYAN_CRYSTAL_GAS_CAT_MALE.get(), HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE.get(), REYN.get(), LYNX.get(), FENGQI_WOLF.get(), FOXTA_FOXY.get(), SNEPSI_LEOPARD.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get());
     }
 
     public static boolean isVariantOC(TransfurVariant<?> transfurVariant, @Nullable Level level) {
@@ -102,7 +101,6 @@ public class ChangedAddonTransfurVariants {
         return false;
     }
 
-
     public static final RegistryObject<TransfurVariant<PuroKindEntity>> ADDON_PURO_KIND_MALE = register("form_puro_kind/male", TransfurVariant.Builder.of(ChangedAddonModEntities.PURO_KIND).transfurMode(TransfurMode.REPLICATION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilities.CARRY).scares(List.of()));
 
     public static final RegistryObject<TransfurVariant<PuroKindFemaleEntity>> ADDON_PURO_KIND_FEMALE = register("form_puro_kind/female", TransfurVariant.Builder.of(ChangedAddonModEntities.PURO_KIND_FEMALE).transfurMode(TransfurMode.ABSORPTION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilities.CARRY).scares(List.of()));
@@ -127,15 +125,16 @@ public class ChangedAddonTransfurVariants {
 
     public static final RegistryObject<TransfurVariant<LatexDragonSnowLeopardSharkEntity>> LATEX_DRAGON_SNEP_SHARK = register("form_latex_dragon_snow_leopard_shark", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK).glide().gills().nightVision().addAbility(entityType -> ChangedAddonAbilities.WING_FLAP_ABILITY.get()));
     //Partials
-    public static final RegistryObject<TransfurVariant<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("form_latex_snow_leopard_partial", TransfurVariant.Builder.of(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL).stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
+    public static final RegistryObject<TransfurVariant<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("form_latex_snow_leopard_partial", TransfurVariant.Builder.of(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL).stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Creeper.class)).nightVision());
 
     //Bosses
     public static final RegistryObject<TransfurVariant<VoidFoxEntity>> VOID_FOX = register("form_void_fox", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.VOID_FOX).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).jumpStrength(1.1f).nightVision().scares(List.of(Creeper.class, Rabbit.class)));
 
     //OCs
+    public static final RegistryObject<TransfurVariant<BlueLizard>> BLUE_LIZARD = register("form_blue_lizard", TransfurVariant.Builder.of(ChangedAddonEntities.BLUE_LIZARD).stepSize(0.7F).sound(ChangedSounds.SOUND3.getLocation()));
     public static final RegistryObject<TransfurVariant<WolfyEntity>> WOLFY = register("form_wolfy", TransfurVariant.Builder.of(ChangedAddonModEntities.WOLFY).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).transfurMode(TransfurMode.NONE).scares(List.of()).nightVision());
-    public static final RegistryObject<TransfurVariant<ReynEntity>> REYN = register("form_reyn", TransfurVariant.Builder.of(ChangedAddonEntitys.REYN).stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of()));
-    public static final RegistryObject<TransfurVariant<LynxEntity>> LYNX = register("form_lynx", TransfurVariant.Builder.of(ChangedAddonEntitys.LYNX).stepSize(0.7F).jumpStrength(1.35f).reducedFall().addAbility(ChangedAddonAbilities.LEAP).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)));
+    public static final RegistryObject<TransfurVariant<ReynEntity>> REYN = register("form_reyn", TransfurVariant.Builder.of(ChangedAddonEntities.REYN).stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of()));
+    public static final RegistryObject<TransfurVariant<LynxEntity>> LYNX = register("form_lynx", TransfurVariant.Builder.of(ChangedAddonEntities.LYNX).stepSize(0.7F).jumpStrength(1.35f).reducedFall().addAbility(ChangedAddonAbilities.LEAP).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of(Creeper.class)));
     public static final RegistryObject<TransfurVariant<FengQIWolfEntity>> FENGQI_WOLF = register("form_fengqi_wolf", TransfurVariant.Builder.of(ChangedAddonModEntities.FENGQI_WOLF).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS_ABILITY).scares(List.of(Rabbit.class)).nightVision());
     public static final RegistryObject<TransfurVariant<BunyEntity>> BUNY = register("form_buny", TransfurVariant.Builder.of(ChangedAddonModEntities.BUNY).jumpStrength(1.5F).reducedFall().transfurMode(TransfurMode.ABSORPTION).scares(List.of()));
     public static final RegistryObject<TransfurVariant<BagelEntity>> BAGEL = register("form_bagel", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.BAGEL).nightVision().scares(Rabbit.class));

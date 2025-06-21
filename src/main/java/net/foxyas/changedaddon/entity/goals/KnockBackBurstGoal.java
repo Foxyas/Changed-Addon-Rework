@@ -44,7 +44,8 @@ public class KnockBackBurstGoal extends Goal {
         if (ticks >= checkInterval) {
             ticks = 0;
 
-			// reset
+			
+// reset
             recentDamage = 0;
             recentHits = 0;
 
@@ -89,6 +90,11 @@ public class KnockBackBurstGoal extends Goal {
         }
 
         cooldownTimer = cooldown;
+    }
+
+    @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
     }
 
     /**

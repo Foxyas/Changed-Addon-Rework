@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.projectile;
 
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -167,6 +168,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
             double speed = 0.35;
             double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            this.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos);
 
             if (distance <= 0.25f) {
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
@@ -202,6 +204,8 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
             double speed = 0.35;
             double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            this.lookAt(EntityAnchorArgument.Anchor.EYES, livingTarget.position());
 
             if (distance <= 0.25f && livingTarget.isBlocking() && this.getLevel().getEntitiesOfClass(AbstractGenericParticleProjectile.class, this.getBoundingBox().inflate(3)).size() >= 5) {
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
@@ -293,7 +297,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
             this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
             this.discard();
         } else {
-            if (this.random.nextFloat() >= 0.10f) {
+            /*if (this.random.nextFloat() >= 0.10f) {
                 this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
                 this.setYRot(this.getYRot() + 180.0F);
                 this.yRotO += 180.0F;
@@ -304,7 +308,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
                     this.discard();
                 }
-            } else {
+            } else*/ {
                 this.discard();
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 5, 0.5f);
                 this.discard();

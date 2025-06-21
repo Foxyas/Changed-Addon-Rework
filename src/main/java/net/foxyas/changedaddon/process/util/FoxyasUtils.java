@@ -5,7 +5,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +24,19 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FoxyasUtils {
+
+    public static void repairArmor(LivingEntity entity, int amountPerPiece) {
+        for (ItemStack armorPiece : entity.getArmorSlots()) {
+            if (!armorPiece.isEmpty() && armorPiece.isDamageableItem()) {
+                int damage = armorPiece.getDamageValue();
+                if (damage > 0) {
+                    int repaired = Math.min(damage, amountPerPiece);
+                    armorPiece.setDamageValue(damage - repaired);
+                }
+            }
+        }
+    }
+
 
     public static ClipContext createClipContext(Player player, double distance, ClipContext.Block blockMode, ClipContext.Fluid fluidMode) {
         Vec3 start = player.getEyePosition(1.0F);

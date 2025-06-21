@@ -5,10 +5,10 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
 import net.foxyas.changedaddon.entity.goals.*;
-import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
-import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
+import net.foxyas.changedaddon.process.util.FoxyasUtils;
+import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.LatexType;
@@ -37,11 +37,9 @@ import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -142,9 +140,21 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(1, new KnockBackBurstGoal(this, 10));
-        this.goalSelector.addGoal(1, new SImpleFlyingSlamAttack(this, 2, 2.5f, 3f, 5));
-        this.goalSelector.addGoal(2, new VoidFoxDashAttack(this, ChangedAddonEntitys.PARTICLE_PROJECTILE.get()) {
+        this.goalSelector.addGoal(10, new SImpleAntiFlyingAttack(this, 0, 32f, 3f, 20){
+            @Override
+            public void start() {
+                super.start();
+                if (getTarget() instanceof Player player) {
+                    player.displayClientMessage(new TextComponent("Flying will not help you").withStyle((style -> {
+                        Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                        returnStyle = returnStyle.withItalic(true);
+                        return returnStyle;
+                    })), true);
+                }
+            }
+        });
+        this.goalSelector.addGoal(15, new KnockBackBurstGoal(this, 10));
+        this.goalSelector.addGoal(5, new VoidFoxDashAttack(this, ChangedAddonEntities.PARTICLE_PROJECTILE.get()) {
             @Override
             public boolean canUse() {
                 if (VoidFoxEntity.this.getAttack2Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
@@ -164,7 +174,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void start() {
                 super.start();
-
+                if (getTarget() instanceof Player player) {
+                    player.displayClientMessage(new TextComponent("Here i go!").withStyle((style -> {
+                        Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                        returnStyle = returnStyle.withItalic(true);
+                        return returnStyle;
+                    })), true);
+                }
                 VoidFoxEntity.this.setAttack2Cooldown(0);
                 VoidFoxEntity.this.timesUsedAttack1 += 1;
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
@@ -186,7 +202,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
         });
 
-        this.goalSelector.addGoal(2, new ComboAbilityGoal(
+        this.goalSelector.addGoal(4, new ComboAbilityGoal(
                 this, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -219,6 +235,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void start() {
                 super.start();
+                if (getTarget() instanceof Player player) {
+                    player.displayClientMessage(new TextComponent("Lest DANCE").withStyle((style -> {
+                        Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                        returnStyle = returnStyle.withItalic(true);
+                        return returnStyle;
+                    })), true);
+                }
                 VoidFoxEntity.this.setAttack1Cooldown(0);
                 VoidFoxEntity.this.timesUsedAttack1 = 0;
                 VoidFoxEntity.this.timesUsedAttack2 += 1;
@@ -235,12 +258,24 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
             @Override
             public void stop() {
+                if (this.isShouldEnd()) {
+                    if (getTarget() != null) {
+                        FoxyasUtils.repairArmor(getTarget(), 25);
+                    }
+                    if (getTarget() instanceof Player player) {
+                        player.displayClientMessage(new TextComponent("Heh nice one").withStyle((style -> {
+                            Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                            returnStyle = returnStyle.withItalic(true);
+                            return returnStyle;
+                        })), true);
+                    }
+                }
                 super.stop();
                 VoidFoxEntity.this.AttackInUse = 0;
             }
         });
 
-        this.goalSelector.addGoal(3, new SimpleComboAbilityGoal(
+        this.goalSelector.addGoal(4, new SimpleComboAbilityGoal(
                 this, 2, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -273,6 +308,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             @Override
             public void start() {
                 super.start();
+                if (getTarget() instanceof Player player) {
+                    player.displayClientMessage(new TextComponent("can you keep up with me?").withStyle((style -> {
+                        Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                        returnStyle = returnStyle.withItalic(true);
+                        return returnStyle;
+                    })), true);
+                }
                 VoidFoxEntity.this.setAttack3Cooldown(0);
                 VoidFoxEntity.this.timesUsedAttack1 = 0;
                 VoidFoxEntity.this.timesUsedAttack2 = 0;
@@ -289,14 +331,26 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
             @Override
             public void stop() {
+                if (this.isShouldEnd()) {
+                    if (getTarget() != null) {
+                        FoxyasUtils.repairArmor(getTarget(), 25);
+                    }
+                    if (getTarget() instanceof Player player) {
+                        player.displayClientMessage(new TextComponent("Heh it seems so").withStyle((style -> {
+                            Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                            returnStyle = returnStyle.withItalic(true);
+                            return returnStyle;
+                        })), true);
+                    }
+                }
                 super.stop();
                 VoidFoxEntity.this.AttackInUse = 0;
             }
         });
 
 
-        this.goalSelector.addGoal(2, new ComboAbilityGoal(
-                this, 6f, 18f, 3f, 5,
+        this.goalSelector.addGoal(4, new SimpleComboAbilityGoal(
+                this, 3, 3f, 18f, 3f, 2,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.PLAYER_ATTACK_CRIT,
@@ -327,6 +381,13 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
             @Override
             public void start() {
+                if (getTarget() instanceof Player player) {
+                    player.displayClientMessage(new TextComponent("can you keep up with me like this?").withStyle((style -> {
+                        Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                        returnStyle = returnStyle.withItalic(true);
+                        return returnStyle;
+                    })), true);
+                }
                 super.start();
                 VoidFoxEntity.this.setAttack4Cooldown(0);
                 VoidFoxEntity.this.timesUsedAttack1 = 0;
@@ -344,6 +405,18 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
             @Override
             public void stop() {
+                if (this.isShouldEnd()) {
+                    if (getTarget() != null) {
+                        FoxyasUtils.repairArmor(getTarget(), 25);
+                    }
+                    if (getTarget() instanceof Player player) {
+                        player.displayClientMessage(new TextComponent("Wow yeah it seems so").withStyle((style -> {
+                            Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                            returnStyle = returnStyle.withItalic(true);
+                            return returnStyle;
+                        })), true);
+                    }
+                }
                 super.stop();
                 VoidFoxEntity.this.AttackInUse = 0;
             }

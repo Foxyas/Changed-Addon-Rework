@@ -1,20 +1,12 @@
 package net.foxyas.changedaddon.entity.projectile;
 
-import net.foxyas.changedaddon.entity.goals.ProjectileAttackGoal;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
+import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class ParticleProjectile extends AbstractGenericParticleProjectile {
 
@@ -28,7 +20,7 @@ public class ParticleProjectile extends AbstractGenericParticleProjectile {
     }
 
     public ParticleProjectile(Level level, LivingEntity target) {
-        this(ChangedAddonEntitys.PARTICLE_PROJECTILE.get(), level);
+        this(ChangedAddonEntities.PARTICLE_PROJECTILE.get(), level);
         this.target = target;
     }
 

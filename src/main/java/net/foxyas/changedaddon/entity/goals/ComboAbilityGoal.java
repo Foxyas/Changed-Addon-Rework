@@ -44,6 +44,10 @@ public class ComboAbilityGoal extends Goal {
         this.impactParticle = impactParticle;
     }
 
+    public boolean isShouldEnd() {
+        return shouldEnd;
+    }
+
     @Override
     public boolean canUse() {
         target = attacker.getTarget();

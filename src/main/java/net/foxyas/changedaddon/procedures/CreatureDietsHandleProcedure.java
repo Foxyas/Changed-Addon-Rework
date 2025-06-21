@@ -142,6 +142,7 @@ public class CreatureDietsHandleProcedure {
         if (isFoxDiet(ChangedEntity, variant)) dietTypeList.add(DietType.FOX);
         if (isAquaticDiet(ChangedEntity, variant)) dietTypeList.add(DietType.AQUATIC);
         if (isDragonDiet(ChangedEntity, variant)) dietTypeList.add(DietType.DRAGON);
+        if (isSweetTooth(ChangedEntity, variant)) dietTypeList.add(DietType.SWEET_TOOTH);
 
         return dietTypeList;
     }
@@ -197,6 +198,11 @@ public class CreatureDietsHandleProcedure {
                         new ResourceLocation("changed_addon:dragon_diet")));
     }
 
+    private static boolean isSweetTooth(ChangedEntity entity, TransfurVariant<?> variant) {
+        return variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
+                        new ResourceLocation("changed_addon:sweet_tooth")));
+    }
+
     private enum DietType {
         CAT(List.of(
                 Items.COD, Items.COOKED_COD, Items.SALMON, Items.COOKED_SALMON,
@@ -223,6 +229,9 @@ public class CreatureDietsHandleProcedure {
                 Items.DRIED_KELP, Items.COD, Items.COOKED_COD, Items.SALMON,
                 Items.COOKED_SALMON, Items.PUFFERFISH, Items.TROPICAL_FISH
         ), "changed_addon:aquatic_diet_list"),
+        SWEET_TOOTH(List.of(
+                Items.COOKIE, Items.SWEET_BERRIES
+        ), "changed_addon:sweet_tooth_list"),
         SPECIAL(List.of(
                 ChangedItems.ORANGE.get(), ChangedAddonModItems.FOXTA.get()
         ), "changed_addon:special_diet_list");

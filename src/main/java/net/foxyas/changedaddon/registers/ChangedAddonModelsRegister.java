@@ -5,14 +5,14 @@ import net.foxyas.changedaddon.client.model.armors.ArmorLatexDragonSnowLeopardSh
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.client.model.projectile.SimpleProjectileModel;
-import net.foxyas.changedaddon.client.renderer.EmptyProjectileRenderer;
+import net.foxyas.changedaddon.client.renderer.BlueLizardRenderer;
 import net.foxyas.changedaddon.client.renderer.SimpleProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
+import net.foxyas.changedaddon.entity.BlueLizard;
 import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
-import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -61,6 +61,8 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(HimalayanCrystalGasCatFemaleModel.LAYER_LOCATION, HimalayanCrystalGasCatFemaleModel::createBodyLayer);
         event.registerLayerDefinition(VoidFoxModel.LAYER_LOCATION, VoidFoxModel::createBodyLayer);
         event.registerLayerDefinition(HaydenFennecFoxModel.LAYER_LOCATION, HaydenFennecFoxModel::createBodyLayer);
+        event.registerLayerDefinition(BlueLizardModel.LAYER_LOCATION, BlueLizardModel::createBodyLayer);
+
 
         //Projectiles
         event.registerLayerDefinition(SimpleProjectileModel.LAYER_LOCATION, SimpleProjectileModel::createBodyLayer);
@@ -87,15 +89,17 @@ public class ChangedAddonModelsRegister {
 
      @SubscribeEvent
      public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-         event.registerEntityRenderer(ChangedAddonEntitys.PARTICLE_PROJECTILE.get(),
+         event.registerEntityRenderer(ChangedAddonEntities.PARTICLE_PROJECTILE.get(),
                  SimpleProjectileRenderer::new); // Nenhum render (somente partículas no tick)
+         event.registerEntityRenderer(ChangedAddonEntities.BLUE_LIZARD.get(),
+                 BlueLizardRenderer::new);
      }
 
 
     @SubscribeEvent
     public static void registerComplexEntityRenderers(RegisterComplexRenderersEvent event) {
-        event.registerEntityRenderer(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), "default", SnowLeopardPartialRenderer.forModelSize(false));
-        event.registerEntityRenderer(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), "slim", SnowLeopardPartialRenderer.forModelSize(true));
+        event.registerEntityRenderer(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL.get(), "default", SnowLeopardPartialRenderer.forModelSize(false));
+        event.registerEntityRenderer(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL.get(), "slim", SnowLeopardPartialRenderer.forModelSize(true));
     }
 
 	/*

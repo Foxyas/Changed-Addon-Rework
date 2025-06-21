@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -52,6 +53,11 @@ public class VoidFoxDashAttack extends Goal {
     }
 
     @Override
+    public boolean isInterruptable() {
+        return false;
+    }
+
+    @Override
     public boolean canUse() {
         this.target = dasher.getTarget();
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
@@ -77,7 +83,6 @@ public class VoidFoxDashAttack extends Goal {
         tickCount++;
 
         this.dashDirection.scale(this.dashSpeed);
-
         if (target instanceof Player player) {
             //player.displayClientMessage(new TextComponent("Ticks = " + tickCount), true);
         }
@@ -128,6 +133,9 @@ public class VoidFoxDashAttack extends Goal {
                         entity.hurt(DamageSource.mobAttack(dasher), 6.0F);
                         dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                     } else {
+                        if (dasher.getLevel() instanceof ServerLevel serverLevel) {
+                            serverLevel.sendParticles(ParticleTypes.CRIT, entity.getX(), entity.getY(0.5), entity.getZ(), 4, 0.25, 0.25, 0.25, 0.05);
+                        }
                         dasher.getLevel().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
                     }
                     entity.setDeltaMovement(entity.getDeltaMovement().add(knockback));

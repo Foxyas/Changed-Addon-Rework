@@ -46,6 +46,10 @@ public class SimpleComboAbilityGoal extends Goal {
         this.impactParticle = impactParticle;
     }
 
+    public boolean isShouldEnd() {
+        return shouldEnd;
+    }
+
     public Mob getAttacker() {
         return attacker;
     }

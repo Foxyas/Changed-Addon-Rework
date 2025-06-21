@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.registers.ChangedAddonEntitys;
+import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable,ComplexRenderer {
 	public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonEntitys.SNOW_LEOPARD_PARTIAL.get(), world);
+		this(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL.get(), world);
 	}
 
 	public SnowLeopardPartialEntity(EntityType<SnowLeopardPartialEntity> type, Level world) {
