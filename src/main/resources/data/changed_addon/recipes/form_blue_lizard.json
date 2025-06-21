@@ -1,0 +1,21 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    {
+      "item": "changed:latex_base"
+    },
+    {
+      "item": "changed:white_latex_goo"
+    },
+    {
+      "item": "minecraft:scute"
+    },
+    {
+      "item": "minecraft:light_blue_dye"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
+  "form": "changed_addon:form_blue_lizard"
+}
