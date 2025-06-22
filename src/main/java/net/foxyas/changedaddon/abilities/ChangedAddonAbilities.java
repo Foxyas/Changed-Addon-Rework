@@ -2,7 +2,6 @@
 package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
@@ -33,13 +32,14 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
     public static final RegistryObject<CarryAbility> CARRY = REGISTRY.register("carry", CarryAbility::new);
     public static final RegistryObject<DissolveAbility> DISSOLVE = REGISTRY.register("warp", DissolveAbility::new);
     public static final RegistryObject<WitherWaveAbility> WITHER_WAVE = REGISTRY.register("wither_wave", WitherWaveAbility::new);
-    public static final RegistryObject<DazedPuddleAbility> DAZED_PUDDLE_ABILITY = REGISTRY.register("dazed_puddle", DazedPuddleAbility::new);
+    public static final RegistryObject<DazedPuddleAbility> DAZED_PUDDLE = REGISTRY.register("dazed_puddle", DazedPuddleAbility::new);
     public static final RegistryObject<SoftenAbility> SOFTEN_ABILITY = REGISTRY.register("soften", SoftenAbility::new);
     public static final RegistryObject<CustomInteraction> CUSTOM_INTERACTION = REGISTRY.register("custom_interaction", CustomInteraction::new);
     public static final RegistryObject<TurnFeralSnepAbility> TURN_FERAL_SNEP = REGISTRY.register("turn_feral", TurnFeralSnepAbility::new);
     public static final RegistryObject<WingFlapAbility> WING_FLAP_ABILITY = REGISTRY.register("wing_flap", WingFlapAbility::new);
-    public static final RegistryObject<ClawsAbility> CLAWS_ABILITY = REGISTRY.register("claws", ClawsAbility::new);
+    public static final RegistryObject<ClawsAbility> CLAWS = REGISTRY.register("claws", ClawsAbility::new);
     public static final RegistryObject<PsychicGrab> PSYCHIC_GRAB = REGISTRY.register("psychic_grab", PsychicGrab::new);
+    public static final RegistryObject<AdvancedHearingAbility> ADVANCED_HEARING = REGISTRY.register("advanced_hearing", AdvancedHearingAbility::new);
 
     //TODO:Create Abilities For The New Form/Boss
 

@@ -37,9 +37,9 @@ public class PlayerMixin {
             return;
         //System.out.println("Ataque carregado o suficiente!");
         ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
-            AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS_ABILITY.get());
+            AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get());
             if (abilityInstance != null) {
-                AbstractAbility<?> clawAbility = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS_ABILITY.get()).ability;
+                AbstractAbility<?> clawAbility = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get()).ability;
                 if (clawAbility instanceof ClawsAbility ability && ability.isActive && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
                     //System.out.println("Habilidade ativada!");
                     // ⚔ Área de efeito: Raio de 1.5 blocos ao redor do alvo

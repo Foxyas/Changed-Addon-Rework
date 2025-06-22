@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#$#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:gold_ingot"
+    },
+    "$": {
+      "item": "changed:orange"
+    }
+  },
+  "result": {
+    "item": "changed_addon:golden_orange",
+    "count": 1
+  }
+}

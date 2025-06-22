@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.variantsExtraStats.FormDietEvent;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
@@ -29,6 +30,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -79,18 +81,18 @@ public class CreatureDietsHandleProcedure {
 
         if (isForWork) {
             if (dietType.stream().anyMatch((diet -> diet.isDietItem(item)))) {
-                applyFoodEffects(player, item, true);
+                applyFoodEffects(variant, player, item, true);
                 if (!world.isClientSide()) {
-                    world.playSound(null,player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1 , 1.5f);
+                    world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 1.5f);
                 } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
                     player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
                 }
             } else if (Debuffs) {
                 if (dietType.stream().noneMatch((diet -> diet.isDietItem(item))) && !DietType.isNotFoodItem(item) && ShouldGiveDebuffs) {
-                    applyFoodEffects(player, item, false);
+                    applyFoodEffects(variant, player, item, false);
                     applyMobEffects(player);
                     if (!world.isClientSide()) {
-                        world.playSound(null,player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1 , 0f);
+                        world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 0f);
                     } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
                         player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
                     }
@@ -107,13 +109,13 @@ public class CreatureDietsHandleProcedure {
         player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
     }
 
-    private static void applyMobEffects(Player player){
+    private static void applyMobEffects(Player player) {
         player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 60, 3, false, true, true));
         player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 160, 0, false, true, true,
                 new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
     }
 
-    private static void applyFoodEffects(Player player, ItemStack item, boolean isGoodFood) {
+    private static void applyFoodEffects(TransfurVariant<?> variant, Player player, ItemStack item, boolean isGoodFood) {
         int additionalFood;
         float additionalSaturation;
         if (isGoodFood) {
@@ -123,10 +125,11 @@ public class CreatureDietsHandleProcedure {
             additionalFood = -Objects.requireNonNull(item.getFoodProperties(player)).getNutrition() / 4;
             additionalSaturation = -Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier() / 4;
         }
-        if (!(player.getFoodData().getFoodLevel() >= 20)) {
-            player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() + additionalFood);
-        } else if (!(player.getFoodData().getSaturationLevel() >= 20)) {
-            player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
+        FormDietEvent formDietEvent = new FormDietEvent(variant, player, isGoodFood, item, additionalFood, additionalSaturation);
+        if (!MinecraftForge.EVENT_BUS.post(formDietEvent)) {
+            additionalFood = formDietEvent.additionalFood;
+            additionalSaturation = formDietEvent.additionalSaturation;
+            player.getFoodData().eat(additionalFood, additionalSaturation);
         }
     }
 
@@ -176,7 +179,7 @@ public class CreatureDietsHandleProcedure {
         return entity.getType().getRegistryName().toString().contains("fox") ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getMaleVariant()) ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getFemaleVariant()) ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.FOX_LIKE)||
+                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.FOX_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                         new ResourceLocation("changed_addon:fox_diet")));
     }
@@ -200,7 +203,7 @@ public class CreatureDietsHandleProcedure {
 
     private static boolean isSweetTooth(ChangedEntity entity, TransfurVariant<?> variant) {
         return variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:sweet_tooth")));
+                new ResourceLocation("changed_addon:sweet_tooth")));
     }
 
     private enum DietType {
