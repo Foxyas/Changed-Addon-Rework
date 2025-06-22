@@ -16,6 +16,8 @@ public class TransfurVariantsDietEvent {
         if (event.getVariant() != null && event.getVariant().is(ChangedAddonTransfurVariants.HAYDEN_FENNEC_FOX)) {
             if (event.getItemStack().is(Items.COOKIE)) {
                 event.getEntity().addEffect(new MobEffectInstance(MobEffects.REGENERATION, 20 * 5, 1));
+                event.additionalFood *= 4;
+                event.additionalSaturation *= 8;
             }
         }
     }
