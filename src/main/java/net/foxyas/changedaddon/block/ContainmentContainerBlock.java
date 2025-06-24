@@ -36,15 +36,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -162,7 +159,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random p_60465_) {
 		level.scheduleTick(pos, this, this.getDelayAfterPlace());
 		if (pos.getY() >= level.getMinBuildHeight() && !this.canSurvive(state,level,pos)) {
-			Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonRegisters.ChangedAddonBlockEntitys.CONTAINMENT_CONTAINER.get());
+			Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonRegisters.ChangedAddonBlockEntities.CONTAINMENT_CONTAINER.get());
 			CompoundTag blockData = blockEntity.map(BlockEntity::saveWithFullMetadata).orElse(null);
 			level.setBlock(pos, Blocks.AIR.defaultBlockState(), 67);
 			FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level, pos, state);
@@ -279,7 +276,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 	}
 
 	public void onLand(Level level, BlockPos pos, BlockState state, BlockState fellOn, FallingBlockEntity falling) {
-		Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonRegisters.ChangedAddonBlockEntitys.CONTAINMENT_CONTAINER.get());
+		Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonRegisters.ChangedAddonBlockEntities.CONTAINMENT_CONTAINER.get());
 		blockEntity.ifPresent((container) -> {
 			if (falling.blockData != null) {
 				container.load(falling.blockData);

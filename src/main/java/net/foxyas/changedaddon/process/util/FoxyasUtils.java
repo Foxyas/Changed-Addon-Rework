@@ -1,6 +1,11 @@
 package net.foxyas.changedaddon.process.util;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -24,6 +29,26 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FoxyasUtils {
+
+    public static void renderTextInWorld(PoseStack poseStack, MultiBufferSource bufferSource, String text, double x, double y, double z) {
+        Minecraft mc = Minecraft.getInstance();
+        Font font = mc.font;
+
+        poseStack.pushPose();
+
+        poseStack.translate(x, y, z);
+        poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
+        poseStack.scale(-0.025F, -0.025F, 0.025F); // escala do texto
+
+        Matrix4f matrix = poseStack.last().pose();
+        float backgroundOpacity = mc.options.getBackgroundOpacity(0.25F);
+        int backgroundColor = (int) (backgroundOpacity * 255.0F) << 24;
+
+        font.drawInBatch(text, -font.width(text) / 2f, 0, 0xFFFFFF, false, matrix, bufferSource, false, backgroundColor, 15728880);
+
+        poseStack.popPose();
+    }
+
 
     public static void repairArmor(LivingEntity entity, int amountPerPiece) {
         for (ItemStack armorPiece : entity.getArmorSlots()) {
@@ -49,16 +74,15 @@ public class FoxyasUtils {
      * Forked From TAC mod
      * that allows to pass a predicate to ignore certain blocks when checking for collisions.
      *
-     * @param world     the world to perform the ray trace
-     * @param context   the ray trace context
+     * @param world           the world to perform the ray trace
+     * @param context         the ray trace context
      * @param ignorePredicate the block state predicate
      * @return a result of the raytrace
      */
-    public static BlockHitResult rayTraceBlocks(Level world, ClipContext context, Predicate<BlockState> ignorePredicate)
-    {
+    public static BlockHitResult rayTraceBlocks(Level world, ClipContext context, Predicate<BlockState> ignorePredicate) {
         return performRayTrace(context, (rayTraceContext, blockPos) -> {
             BlockState blockState = world.getBlockState(blockPos);
-            if(ignorePredicate.test(blockState)) return null;
+            if (ignorePredicate.test(blockState)) return null;
             FluidState fluidState = world.getFluidState(blockPos);
             Vec3 startVec = rayTraceContext.getFrom();
             Vec3 endVec = rayTraceContext.getTo();
@@ -81,16 +105,12 @@ public class FoxyasUtils {
         //return new BlockRayTraceMeta(r);
     }
 
-    public static <T> T performRayTrace(ClipContext context, BiFunction<ClipContext, BlockPos, T> hitFunction, Function<ClipContext, T> missFactory)
-    {
+    public static <T> T performRayTrace(ClipContext context, BiFunction<ClipContext, BlockPos, T> hitFunction, Function<ClipContext, T> missFactory) {
         Vec3 startVec = context.getFrom();
         Vec3 endVec = context.getTo();
-        if(startVec.equals(endVec))
-        {
+        if (startVec.equals(endVec)) {
             return missFactory.apply(context);
-        }
-        else
-        {
+        } else {
             double startX = Mth.lerp(-0.0000001, endVec.x, startVec.x);
             double startY = Mth.lerp(-0.0000001, endVec.y, startVec.y);
             double startZ = Mth.lerp(-0.0000001, endVec.z, startVec.z);
@@ -102,8 +122,7 @@ public class FoxyasUtils {
             int blockZ = Mth.floor(endZ);
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(blockX, blockY, blockZ);
             T t = hitFunction.apply(context, mutablePos);
-            if(t != null)
-            {
+            if (t != null) {
                 return t;
             }
 
@@ -120,35 +139,25 @@ public class FoxyasUtils {
             double d13 = d10 * (signY > 0 ? 1.0D - Mth.frac(endY) : Mth.frac(endY));
             double d14 = d11 * (signZ > 0 ? 1.0D - Mth.frac(endZ) : Mth.frac(endZ));
 
-            while(d12 <= 1.0D || d13 <= 1.0D || d14 <= 1.0D)
-            {
-                if(d12 < d13)
-                {
-                    if(d12 < d14)
-                    {
+            while (d12 <= 1.0D || d13 <= 1.0D || d14 <= 1.0D) {
+                if (d12 < d13) {
+                    if (d12 < d14) {
                         blockX += signX;
                         d12 += d9;
-                    }
-                    else
-                    {
+                    } else {
                         blockZ += signZ;
                         d14 += d11;
                     }
-                }
-                else if(d13 < d14)
-                {
+                } else if (d13 < d14) {
                     blockY += signY;
                     d13 += d10;
-                }
-                else
-                {
+                } else {
                     blockZ += signZ;
                     d14 += d11;
                 }
 
                 T t1 = hitFunction.apply(context, mutablePos.set(blockX, blockY, blockZ));
-                if(t1 != null)
-                {
+                if (t1 != null) {
                     return t1;
                 }
             }
@@ -294,30 +303,30 @@ public class FoxyasUtils {
     }
 
     public static double getTorsoYOffset(ChangedEntity self) {
-        float ageAdjusted = (float)self.tickCount * 0.33333334F * 0.25F * 0.15F;
+        float ageAdjusted = (float) self.tickCount * 0.33333334F * 0.25F * 0.15F;
         float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
         float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
         float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-        return (double)(Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
+        return (double) (Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
     }
 
     public static double getTorsoYOffset(ChangedEntity self, float scale) {
-	    float ageAdjusted = (float) self.tickCount * 0.33333334F * 0.25F * 0.15F;
-	    float ageSin = Mth.sin(ageAdjusted * (float) Math.PI * 0.5F);
-	    float ageCos = Mth.cos(ageAdjusted * (float) Math.PI * 0.5F);
-	    float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-	
-	    float baseOscillation = Mth.lerp(
-	        Mth.lerp(
-            	1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F),
-            	ageSin * ageSin * ageSin * ageSin,
-	            1.0F - ageCos * ageCos * ageCos * ageCos
-        	),
-	        0.95F, 0.87F
-    	);
+        float ageAdjusted = (float) self.tickCount * 0.33333334F * 0.25F * 0.15F;
+        float ageSin = Mth.sin(ageAdjusted * (float) Math.PI * 0.5F);
+        float ageCos = Mth.cos(ageAdjusted * (float) Math.PI * 0.5F);
+        float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
 
-    	return baseOscillation * scale + bpiSize;
-	}
+        float baseOscillation = Mth.lerp(
+                Mth.lerp(
+                        1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F),
+                        ageSin * ageSin * ageSin * ageSin,
+                        1.0F - ageCos * ageCos * ageCos * ageCos
+                ),
+                0.95F, 0.87F
+        );
+
+        return baseOscillation * scale + bpiSize;
+    }
 
 
 }

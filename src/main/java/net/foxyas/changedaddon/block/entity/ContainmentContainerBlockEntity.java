@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.block.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
@@ -27,7 +26,7 @@ public class ContainmentContainerBlockEntity extends BlockEntity {
 	//public double poseZ;
 
 	public ContainmentContainerBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonRegisters.ChangedAddonBlockEntitys.CONTAINMENT_CONTAINER.get(), position, state);
+		super(ChangedAddonRegisters.ChangedAddonBlockEntities.CONTAINMENT_CONTAINER.get(), position, state);
 		this.transfurVariant = null;
 		//this.poseX = 0;
 		//this.poseY = 0;
