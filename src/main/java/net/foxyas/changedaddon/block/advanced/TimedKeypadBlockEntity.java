@@ -67,16 +67,20 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
 
     }
 
-    private void playUnlockSuccess() {
+    public void playUnlockSuccess() {
         this.playSound(ChangedSounds.CHIME2, 1.0F, 1.0F);
     }
 
-    private void playUnlockFail() {
+    public void playUnlockFail() {
         this.playSound(ChangedSounds.BUZZER1, 1.0F, 1.0F);
     }
 
-    private void playLock() {
+    public void playLock() {
         this.playSound(ChangedSounds.KEY, 1.0F, 1.0F);
+    }
+
+    public void playTimerAdjust(boolean isPositive) {
+        this.playSound(ChangedSounds.KEY, 1.0F, isPositive ? 1f : 0.75f);
     }
 
     @Override
@@ -128,7 +132,6 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
             ticks = 0;
         }
     }
-
 
     @Override
     public void useCode(List<Byte> attemptedCode) {

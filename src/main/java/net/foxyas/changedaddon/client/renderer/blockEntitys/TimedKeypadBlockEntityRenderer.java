@@ -51,9 +51,21 @@ public class TimedKeypadBlockEntityRenderer implements BlockEntityRenderer<Timed
         String text = "" + blockEntity.getTimer();
         var font = Minecraft.getInstance().font;
 
+        // Ajusta a escala com base na quantidade de dígitos
+        int length = text.length();
+        float baseScale = 0.01f;
+        float scale = baseScale;
+
+        if (length >= 4) {
+            scale *= 1 - (1f / length); // Acha mais se for 4+ dígitos
+            poseStack.translate(0f, -0.005, 0f);
+        } else if (length == 1) {
+            scale *= 1.2f; // Aumenta para apenas 1 dígito
+        }
+
         poseStack.pushPose();
         //poseStack.translate(0, 0, -0.501);
-        poseStack.scale(0.01f, -0.01f, 0.01f);
+        poseStack.scale(scale, -scale, scale);
 
         font.drawInBatch(
                 text,
