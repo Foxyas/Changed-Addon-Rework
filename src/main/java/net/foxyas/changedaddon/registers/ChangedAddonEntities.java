@@ -2,8 +2,10 @@ package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.entity.BlueLizard;
 import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
+import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.ltxprogrammer.changed.init.ChangedMobCategories;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -17,7 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonEntities extends ChangedAddonModEntities {
     public static final RegistryObject<EntityType<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("latex_snow_leopard_partial",
-            EntityType.Builder.<SnowLeopardPartialEntity>of(SnowLeopardPartialEntity::new, MobCategory.MONSTER)
+            EntityType.Builder.<SnowLeopardPartialEntity>of(SnowLeopardPartialEntity::new, ChangedMobCategories.CHANGED)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64).setUpdateInterval(3)
                     .setCustomClientFactory(SnowLeopardPartialEntity::new)
@@ -25,10 +27,19 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
                     .sized(0.7f, 1.93f));
 
     public static final RegistryObject<EntityType<BlueLizard>> BLUE_LIZARD = register("blue_lizard",
-            EntityType.Builder.<BlueLizard>of(BlueLizard::new, MobCategory.MONSTER)
+            EntityType.Builder.<BlueLizard>of(BlueLizard::new, ChangedMobCategories.CHANGED)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64).setUpdateInterval(3)
                     .setCustomClientFactory(BlueLizard::new)
+                    .clientTrackingRange(10)
+
+                    .sized(0.7f, 1.93f));
+
+    public static final RegistryObject<EntityType<AvaliEntity>> AVALI = register("avali",
+            EntityType.Builder.<AvaliEntity>of(AvaliEntity::new, ChangedMobCategories.CHANGED)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setTrackingRange(64).setUpdateInterval(3)
+                    .setCustomClientFactory(AvaliEntity::new)
                     .clientTrackingRange(10)
 
                     .sized(0.7f, 1.93f));
@@ -53,6 +64,7 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
             SnowLeopardPartialEntity.init();
             ParticleProjectile.init();
 			BlueLizard.init();
+            AvaliEntity.init();
         });
     }
 
@@ -60,6 +72,7 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(SNOW_LEOPARD_PARTIAL.get(), SnowLeopardPartialEntity.createAttributes().build());
 		event.put(BLUE_LIZARD.get(), BlueLizard.createAttributes().build());
+        event.put(AVALI.get(), AvaliEntity.createAttributes().build());
     }
 
 }

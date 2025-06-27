@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.client.model.*;
+import net.foxyas.changedaddon.client.model.advanced.AvaliModel;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexDragonSnowLeopardSharkModel;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
@@ -8,6 +9,7 @@ import net.foxyas.changedaddon.client.model.projectile.SimpleProjectileModel;
 import net.foxyas.changedaddon.client.renderer.BlueLizardRenderer;
 import net.foxyas.changedaddon.client.renderer.SimpleProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
+import net.foxyas.changedaddon.client.renderer.advanced.AvaliRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
 import net.foxyas.changedaddon.entity.BlueLizard;
@@ -62,6 +64,7 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(VoidFoxModel.LAYER_LOCATION, VoidFoxModel::createBodyLayer);
         event.registerLayerDefinition(HaydenFennecFoxModel.LAYER_LOCATION, HaydenFennecFoxModel::createBodyLayer);
         event.registerLayerDefinition(BlueLizardModel.LAYER_LOCATION, BlueLizardModel::createBodyLayer);
+        event.registerLayerDefinition(AvaliModel.LAYER_LOCATION, AvaliModel::createBodyLayer);
 
 
         //Projectiles
@@ -93,6 +96,8 @@ public class ChangedAddonModelsRegister {
                  SimpleProjectileRenderer::new); // Nenhum render (somente partículas no tick)
          event.registerEntityRenderer(ChangedAddonEntities.BLUE_LIZARD.get(),
                  BlueLizardRenderer::new);
+         event.registerEntityRenderer(ChangedAddonEntities.AVALI.get(),
+                 AvaliRenderer::new);
      }
 
 

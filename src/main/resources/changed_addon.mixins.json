@@ -16,7 +16,6 @@
     "DroppedSyringeMixin",
     "EnchantmentMixin",
     "InfinityEnchantmentMixin",
-    "KeypadBlockMixin",
     "MobAccessor",
     "PhantomAIMixin",
     "PlayerMixin",

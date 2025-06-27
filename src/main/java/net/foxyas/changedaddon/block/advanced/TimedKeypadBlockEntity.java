@@ -5,10 +5,12 @@ import net.ltxprogrammer.changed.block.KeypadBlock;
 import net.ltxprogrammer.changed.block.entity.KeypadBlockEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -38,8 +40,12 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
         return canTick;
     }
 
+    public void addTimer(int timer) {
+        this.timer = Math.max(0, Math.min(this.timer + timer, 1000));
+    }
+
     public void setTimer(int timer) {
-        this.timer = timer;
+        this.timer = Math.max(0, Math.min(timer, 1000));
     }
 
     public int getTimer() {
@@ -120,9 +126,11 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
                 timer--;
             } else if (timer < 0) {
                 timer = 0;
+                lockKeypad(level, pos, getBlockState());
+                this.playLock();
                 canTick = false;
             } else {
-                level.setBlockAndUpdate(pos, this.getBlockState().setValue(KeypadBlock.POWERED, Boolean.FALSE));
+                lockKeypad(level, pos, getBlockState());
                 this.playLock();
                 canTick = false;
             }
@@ -131,6 +139,12 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
         if (ticks >= 4096) {
             ticks = 0;
         }
+    }
+
+    public void lockKeypad(Level level, BlockPos blockPos, BlockState state) {
+        level.setBlockAndUpdate(blockPos, this.getBlockState().setValue(KeypadBlock.POWERED, Boolean.FALSE));
+        level.updateNeighborsAt(blockPos, state.getBlock());
+        level.updateNeighborsAt(blockPos.relative(state.getValue(KeypadBlock.FACING).getOpposite()), state.getBlock());
     }
 
     @Override

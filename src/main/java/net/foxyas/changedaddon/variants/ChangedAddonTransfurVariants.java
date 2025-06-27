@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.variants;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.entity.*;
+import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
@@ -129,6 +130,9 @@ public class ChangedAddonTransfurVariants {
     //Bosses
     public static final RegistryObject<TransfurVariant<VoidFoxEntity>> VOID_FOX = register("form_void_fox", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.VOID_FOX).addAbility(ChangedAddonAbilities.CLAWS).jumpStrength(1.1f).nightVision().scares(List.of(Creeper.class, Rabbit.class)));
 
+    //Advanced
+    public static final RegistryObject<TransfurVariant<AvaliEntity>> AVALI = register("form_avali", TransfurVariant.Builder.of(ChangedAddonEntities.AVALI).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).glide().transfurMode(TransfurMode.NONE).scares(List.of()).nightVision());
+
     //OCs
     public static final RegistryObject<TransfurVariant<WolfyEntity>> WOLFY = register("form_wolfy", TransfurVariant.Builder.of(ChangedAddonModEntities.WOLFY).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).transfurMode(TransfurMode.NONE).scares(List.of()).nightVision());
     public static final RegistryObject<TransfurVariant<ReynEntity>> REYN = register("form_reyn", TransfurVariant.Builder.of(ChangedAddonEntities.REYN).stepSize(0.7F).jumpStrength(1.0f).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).scares(List.of()));
@@ -139,7 +143,7 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<HaydenFennecFoxEntity>> HAYDEN_FENNEC_FOX = register("form_hayden_fennec_fox", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.HAYDEN_FENNEC_FOX).addAbility(ChangedAddonAbilities.ADVANCED_HEARING).reducedFall().nightVision().scares(Rabbit.class));
     public static final RegistryObject<TransfurVariant<CrystalGasCatMaleEntity>> HIMALAYAN_CRYSTAL_GAS_CAT_MALE = register("form_himalayan_crystal_gas_cat/male", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.CRYSTAL_GAS_CAT_MALE).addAbility(ChangedAddonAbilities.CLAWS).jumpStrength(1.1f).nightVision().scares(List.of(Creeper.class, Rabbit.class)));
     public static final RegistryObject<TransfurVariant<CrystalGasCatFemaleEntity>> HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE = register("form_himalayan_crystal_gas_cat/female", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.CRYSTAL_GAS_CAT_FEMALE).addAbility(ChangedAddonAbilities.CLAWS).jumpStrength(1.1f).nightVision().scares(List.of(Creeper.class, Rabbit.class)));
-    public static final RegistryObject<TransfurVariant<BlueLizard>> BLUE_LIZARD = register("form_blue_lizard", TransfurVariant.Builder.of(ChangedAddonEntities.BLUE_LIZARD).addAbility(ChangedAddonAbilities.DODGE).stepSize(0.7F).sound(ChangedSounds.SOUND3.getLocation()).nightVision‎());
+    public static final RegistryObject<TransfurVariant<BlueLizard>> BLUE_LIZARD = register("form_blue_lizard", TransfurVariant.Builder.of(ChangedAddonEntities.BLUE_LIZARD).addAbility(ChangedAddonAbilities.DODGE).stepSize(0.7F).sound(ChangedSounds.SOUND3.getLocation()).nightVision());
 
     //Experiments
     public static final RegistryObject<TransfurVariant<Exp1MaleEntity>> EXP1_MALE = register("form_exp1/male", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.EXP_1_MALE).nightVision().extraJumps(2).addAbility(ChangedAddonAbilities.PSYCHIC_PULSE).addAbility(ChangedAddonAbilities.PSYCHIC_HOLD).addAbility(ChangedAddonAbilities.PSYCHIC_GRAB).addAbility(ChangedAbilities.SWITCH_GENDER).transfurMode(TransfurMode.NONE));

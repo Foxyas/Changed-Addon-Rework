@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.defaults;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.HairStyle;
 import net.ltxprogrammer.changed.entity.LatexType;
+import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
@@ -30,7 +31,6 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
         super(type, level);
     }
 
-
     protected void setAttributes(AttributeMap attributes) {
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
@@ -48,6 +48,10 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
         return Color3.getColor("#E5E5E5");
     }
 
+    @Override
+    public TransfurMode getTransfurMode() {
+        return TransfurMode.NONE;
+    }
 
     @Override
     public LatexType getLatexType() {

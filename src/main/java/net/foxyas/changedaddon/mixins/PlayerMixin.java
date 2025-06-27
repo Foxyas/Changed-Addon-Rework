@@ -2,8 +2,11 @@ package net.foxyas.changedaddon.mixins;
 
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.abilities.ClawsAbility;
+import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -12,21 +15,29 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
 @Mixin(Player.class)
-public class PlayerMixin {
+public abstract class PlayerMixin {
+
+    @Shadow
+    public abstract ItemStack getItemBySlot(EquipmentSlot p_36257_);
 
     @Inject(method = "attack", at = @At("HEAD"))
     private void CustomClawSweepAttack(Entity entity, CallbackInfo ci) {
@@ -70,5 +81,34 @@ public class PlayerMixin {
             }
         }));
 
+    }
+
+    @Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
+    protected void tryToStartFallFlying(CallbackInfoReturnable<Boolean> ci) {
+        Player player = (Player) (Object) this;
+        TransfurVariantInstance<?> latexVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (latexVariant != null && latexVariant.getParent().canGlide) {
+            if (latexVariant.getParent() instanceof ExtraVariantStats extraVariantStats) {
+                if (extraVariantStats.getFlyType().canGlide() && !player.isOnGround() && !player.isFallFlying() && !player.isInWater() && !player.hasEffect(MobEffects.LEVITATION)) {
+                    player.startFallFlying();
+                    ci.setReturnValue(true);
+                    ci.cancel();
+
+                    //player.respawn();
+                } else if (!extraVariantStats.getFlyType().canGlide() && !player.isOnGround() && !player.isFallFlying() && !player.isInWater() && !player.hasEffect(MobEffects.LEVITATION)) {
+                    ItemStack itemstack = this.getItemBySlot(EquipmentSlot.CHEST);
+                    if (itemstack.canElytraFly(player)) {
+                        player.startFallFlying();
+                        ci.setReturnValue(true);
+                        ci.cancel();
+
+                        //player.respawn();
+                    } else {
+                        ci.setReturnValue(false);
+                        ci.cancel();
+                    }
+                }
+            }
+        }
     }
 }

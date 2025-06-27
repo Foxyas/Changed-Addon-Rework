@@ -115,7 +115,7 @@ public class LynxEntity extends ChangedEntity implements PowderSnowWalkable, Ext
 	}
 
 	@Override
-	public float BlockBreakSpeed() {
+	public float extraBlockBreakSpeed() {
 		return 0.35f;
 	}
 }

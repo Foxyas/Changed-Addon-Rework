@@ -2,13 +2,11 @@ package net.foxyas.changedaddon.block.advanced;
 
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters.ChangedAddonBlocks;
-import net.ltxprogrammer.changed.block.AbstractCustomShapeEntityBlock;
 import net.ltxprogrammer.changed.block.KeypadBlock;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,8 +14,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.DirectionalBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -43,7 +39,7 @@ public class TimedKeypad extends KeypadBlock {
 
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
-        if (player.isShiftKeyDown()) {
+        if (player.isShiftKeyDown() && !state.getValue(KeypadBlock.POWERED)) {
             /*player.displayClientMessage(new TextComponent("Pos:" + (hitResult.getLocation().subtract(hitResult.getBlockPos().getX(),
                             hitResult.getBlockPos().getY(),
                             hitResult.getBlockPos().getZ()))),
@@ -57,7 +53,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInside(relative, 0.0624f, 0.0626f, 0.185f, 0.25f, 0.75f, 0.814f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() + 1);
+                        keypad.addTimer(1);
                         keypad.playTimerAdjust(true);
                     }
                     return InteractionResult.SUCCESS;
@@ -75,7 +71,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInside(relative, 0.0624f, 0.0626f, 0.185f, 0.25f, 0.8772f, 0.9404f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() - 1);
+                        keypad.addTimer(-1);
                         keypad.playTimerAdjust(false);
                     }
                     return InteractionResult.SUCCESS;
@@ -84,7 +80,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInside(relative, 0.9374f, 0.9376f, 0.185f, 0.25f, 0.186f, 0.25f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() + 1);
+                        keypad.addTimer(1);
                         keypad.playTimerAdjust(true);
                     }
                     return InteractionResult.SUCCESS;
@@ -102,7 +98,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInside(relative, 0.9374f, 0.9376f, 0.185f, 0.25f, 0.0596f, 0.1228f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() - 1);
+                        keypad.addTimer(-1);
                         keypad.playTimerAdjust(false);
                     }
                     return InteractionResult.SUCCESS;
@@ -111,7 +107,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInsideWithDirection(relative, direction, 0.9374f, 0.9376f, 0.185f, 0.25f, 0.75f, 0.814f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() + 1);
+                        keypad.addTimer(1);
                         keypad.playTimerAdjust(true);
                     }
                     return InteractionResult.SUCCESS;
@@ -129,7 +125,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInsideWithDirection(relative, direction, 0.9374f, 0.9376f, 0.185f, 0.25f, 0.880f, 0.9432f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() - 1);
+                        keypad.addTimer(-1);
                         keypad.playTimerAdjust(false);
                     }
                     return InteractionResult.SUCCESS;
@@ -138,7 +134,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInsideWithDirection(relative, direction, 0.0624f, 0.0626f, 0.185f, 0.25f, 0.186f, 0.25f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() + 1);
+                        keypad.addTimer(1);
                         keypad.playTimerAdjust(true);
                     }
                     return InteractionResult.SUCCESS;
@@ -156,7 +152,7 @@ public class TimedKeypad extends KeypadBlock {
                 if (isInsideWithDirection(relative, direction, 0.0624f, 0.0626f, 0.185f, 0.25f, 0.0596f, 0.1228f)) {
                     BlockEntity blockEntity = level.getBlockEntity(pos);
                     if (blockEntity instanceof TimedKeypadBlockEntity keypad) {
-                        keypad.setTimer(keypad.getTimer() - 1);
+                        keypad.addTimer(-1);
                         keypad.playTimerAdjust(false);
                     }
                     return InteractionResult.SUCCESS;
@@ -164,7 +160,7 @@ public class TimedKeypad extends KeypadBlock {
             }
 
 
-            return InteractionResult.SUCCESS;
+            return super.use(state, level, pos, player, hand, hitResult);
         }
 
         return super.use(state, level, pos, player, hand, hitResult);
@@ -201,7 +197,7 @@ public class TimedKeypad extends KeypadBlock {
         if (!level.isClientSide && stack.hasTag() && stack.getTag().contains("TimerValue")) {
             BlockEntity be = level.getBlockEntity(pos);
             if (be instanceof TimedKeypadBlockEntity keypad) {
-                keypad.setTimer(stack.getTag().getInt("TimerValue"));
+                keypad.addTimer(stack.getTag().getInt("TimerValue"));
                 keypad.setCanTick(true);
             }
         }
