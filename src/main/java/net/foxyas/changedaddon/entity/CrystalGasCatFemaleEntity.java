@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.ltxprogrammer.changed.entity.*;
-import net.ltxprogrammer.changed.entity.beast.AbstractWatermelonCat;
+import net.ltxprogrammer.changed.entity.beast.LatexWatermelonCat;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -25,14 +25,13 @@ import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 
 import java.util.Objects;
 
-public class CrystalGasCatFemaleEntity extends AbstractWatermelonCat implements GenderedEntity, PowderSnowWalkable {
+public class CrystalGasCatFemaleEntity extends LatexWatermelonCat implements GenderedEntity, PowderSnowWalkable {
 	public CrystalGasCatFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.CRYSTAL_GAS_CAT_FEMALE.get(), world);
 	}
 
 	public CrystalGasCatFemaleEntity(EntityType<CrystalGasCatFemaleEntity> type, Level world) {
 		super(type, world);
-		maxUpStep = 0.6f;
 		xpReward = 0;
 		setNoAi(false);
 	}
