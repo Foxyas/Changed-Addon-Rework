@@ -455,13 +455,13 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             float reducedAmount = amount / 6f;
             if (reducedAmount > 2f) {
                 if (reducedAmount < 4f) {
-                    this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2);
+                    this.setDodgeAnimTicks(level().random.nextBoolean() ? DodgeAnimMaxTicks / 2 : -DodgeAnimMaxTicks / 2);
                     this.setDodgeType(this.getRandom().nextInt(2) + 1);
                 }
                 return super.hurt(source, reducedAmount);
             } else {
                 // Animação de esquiva e "ignorar" o dano
-                this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
+                this.setDodgeAnimTicks(level().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
   				this.setDodgeType(this.getRandom().nextInt(2) + 1);
 
                 Vec3 lookPos = new Vec3(attacker.getX(), attacker.getY() + 1.5, attacker.getZ());
