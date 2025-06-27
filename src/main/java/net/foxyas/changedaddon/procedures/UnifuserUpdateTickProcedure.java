@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -37,7 +37,7 @@ public class UnifuserUpdateTickProcedure {
 				AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 				BlockEntity _ent = world.getBlockEntity(pos);
 				if (_ent != null)
-					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+					_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 				return _retval.get();
 			}
 		}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == Blocks.AIR.asItem() && (new Object() {
@@ -45,7 +45,7 @@ public class UnifuserUpdateTickProcedure {
 				AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 				BlockEntity _ent = world.getBlockEntity(pos);
 				if (_ent != null)
-					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+					_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 				return _retval.get();
 			}
 		}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == Blocks.AIR.asItem() && (new Object() {
@@ -53,7 +53,7 @@ public class UnifuserUpdateTickProcedure {
 				AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 				BlockEntity _ent = world.getBlockEntity(pos);
 				if (_ent != null)
-					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+					_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 				return _retval.get();
 			}
 		}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == Blocks.AIR.asItem()) {
@@ -115,7 +115,7 @@ public class UnifuserUpdateTickProcedure {
 				AtomicInteger _retval = new AtomicInteger(0);
 				BlockEntity _ent = world.getBlockEntity(pos);
 				if (_ent != null)
-					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+					_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 				return _retval.get();
 			}
 		}.getAmount(world, new BlockPos(x, y, z), 3) < ((new Object() {
@@ -123,7 +123,7 @@ public class UnifuserUpdateTickProcedure {
 				AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 				BlockEntity _ent = world.getBlockEntity(pos);
 				if (_ent != null)
-					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+					_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 				return _retval.get();
 			}
 		}.getItemStack(world, new BlockPos(x, y, z), 3))).getMaxStackSize()) {
@@ -162,7 +162,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0));
@@ -171,7 +171,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1));
@@ -180,7 +180,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 2));
@@ -190,7 +190,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == Items.DIAMOND && (new Object() {
@@ -198,7 +198,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == Blocks.TINTED_GLASS.asItem()) {
@@ -207,7 +207,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == Items.DIAMOND && (new Object() {
@@ -215,7 +215,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == Blocks.TINTED_GLASS.asItem()) {
@@ -304,7 +304,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonModItems.LUNARROSE_HELMET.get() || (new Object() {
@@ -312,7 +312,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -321,7 +321,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -335,7 +335,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -354,11 +354,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});
@@ -464,7 +464,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == output.getItem() || (new Object() {
@@ -472,7 +472,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -481,7 +481,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -495,7 +495,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -509,7 +509,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 2;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -528,11 +528,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});
@@ -557,7 +557,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() && (new Object() {
@@ -565,7 +565,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.LAETHIN.get() && (new Object() {
@@ -573,7 +573,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == Blocks.AIR.asItem()) {
@@ -582,7 +582,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() && (new Object() {
@@ -590,7 +590,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.LAETHIN.get() && (new Object() {
@@ -598,7 +598,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == Blocks.AIR.asItem()) {
@@ -687,7 +687,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() || (new Object() {
@@ -695,7 +695,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -704,7 +704,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -718,7 +718,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -737,11 +737,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});
@@ -765,7 +765,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.AMMONIA.get() && (new Object() {
@@ -773,7 +773,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.ANTI_LATEX_BASE.get()) {
@@ -782,7 +782,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.AMMONIA.get() && (new Object() {
@@ -790,7 +790,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.ANTI_LATEX_BASE.get()) {
@@ -879,7 +879,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() || (new Object() {
@@ -887,7 +887,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -896,7 +896,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -910,7 +910,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -929,11 +929,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});
@@ -957,7 +957,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() && (new Object() {
@@ -965,7 +965,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.LAETHIN.get() && ((new Object() {
@@ -973,7 +973,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
@@ -981,7 +981,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
@@ -990,7 +990,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() && (new Object() {
@@ -998,7 +998,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonModItems.LAETHIN.get() && ((new Object() {
@@ -1006,7 +1006,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
@@ -1014,7 +1014,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
@@ -1103,7 +1103,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get() || (new Object() {
@@ -1111,7 +1111,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -1120,7 +1120,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1134,7 +1134,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 2;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1153,11 +1153,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});
@@ -1181,7 +1181,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == Items.POTION && (new Object() {
@@ -1189,7 +1189,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() && (new Object() {
@@ -1197,7 +1197,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ChangedAddonModItems.CATALYZEDDNA.get()) {
@@ -1206,7 +1206,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == Items.POTION && (new Object() {
@@ -1214,7 +1214,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LITIX_CAMONIA.get() && (new Object() {
@@ -1222,7 +1222,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ChangedAddonModItems.CATALYZEDDNA.get()) {
@@ -1311,7 +1311,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonModItems.POTWITHCAMONIA.get() || (new Object() {
@@ -1319,7 +1319,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -1328,7 +1328,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1342,7 +1342,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1356,7 +1356,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 2;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1375,11 +1375,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});
@@ -1403,7 +1403,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == Items.DIAMOND && (new Object() {
@@ -1411,7 +1411,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == Blocks.TINTED_GLASS.asItem()) {
@@ -1420,7 +1420,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == Items.DIAMOND && (new Object() {
@@ -1428,7 +1428,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == Blocks.TINTED_GLASS.asItem()) {
@@ -1517,7 +1517,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonModItems.LUNARROSE_HELMET.get() || (new Object() {
@@ -1525,7 +1525,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -1534,7 +1534,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1548,7 +1548,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1567,11 +1567,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});
@@ -1595,7 +1595,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LAETHIN.get() && (new Object() {
@@ -1603,7 +1603,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 1)).is(ItemTags.create(ResourceLocation.parse("changed_addon:gooey"))) && ((new Object() {
@@ -1611,7 +1611,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
@@ -1619,7 +1619,7 @@ public class UnifuserUpdateTickProcedure {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
 						if (_ent != null)
-							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+							_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
 				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
@@ -1628,7 +1628,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0));
@@ -1637,7 +1637,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonModItems.LAETHIN.get() && (new Object() {
@@ -1645,7 +1645,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 1)).is(ItemTags.create(ResourceLocation.parse("changed_addon:gooey"))) && ((new Object() {
@@ -1653,7 +1653,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
@@ -1661,7 +1661,7 @@ public class UnifuserUpdateTickProcedure {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
 							if (_ent != null)
-								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+								_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
 					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
@@ -1756,7 +1756,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonModItems.LAETHIN_SYRINGE.get() || (new Object() {
@@ -1764,7 +1764,7 @@ public class UnifuserUpdateTickProcedure {
 									AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 									BlockEntity _ent = world.getBlockEntity(pos);
 									if (_ent != null)
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 									return _retval.get();
 								}
 							}.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == Blocks.AIR.asItem()) {
@@ -1773,7 +1773,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 0;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1787,7 +1787,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 2;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1801,7 +1801,7 @@ public class UnifuserUpdateTickProcedure {
 									if (_ent != null) {
 										final int _slotid = 1;
 										final int _amount = 1;
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable) {
 												ItemStack _stk = capability.getStackInSlot(_slotid).copy();
 												_stk.shrink(_amount);
@@ -1820,11 +1820,11 @@ public class UnifuserUpdateTickProcedure {
 												AtomicInteger _retval = new AtomicInteger(0);
 												BlockEntity _ent = world.getBlockEntity(pos);
 												if (_ent != null)
-													_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
+													_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).getCount()));
 												return _retval.get();
 											}
 										}.getAmount(world, new BlockPos(x, y, z), 3)));
-										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
+										_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
 											if (capability instanceof IItemHandlerModifiable)
 												((IItemHandlerModifiable) capability).setStackInSlot(_slotid, _setstack);
 										});

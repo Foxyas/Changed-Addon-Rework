@@ -1,7 +1,6 @@
 
 package net.foxyas.changedaddon.entity;
 
-import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
@@ -14,24 +13,24 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -42,9 +41,6 @@ import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
@@ -63,7 +59,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class KetExperiment009BossEntity extends ChangedEntity implements BossWithMusic, CustomPatReaction {
 
-    public final EntityDamageSource ThunderDmg = new EntityDamageSource(DamageSource.LIGHTNING_BOLT.getMsgId(), this);
+    public final DamageSource ThunderDmg = new DamageSource(this.level().damageSources().lightningBolt().typeHolder(), this);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean Phase2;
     private int AttackCoolDown;
@@ -85,10 +81,14 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     public KetExperiment009BossEntity(EntityType<KetExperiment009BossEntity> type, Level world) {
         super(type, world);
         this.setAttributes(getAttributes());
-        maxUpStep = 0.6f;
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    @Override
+    public float maxUpStep() {
+        return 0.6f;
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -165,17 +165,12 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         return HairStyle.Collection.MALE.getStyles();
     }
 
-    @Override
-    public Color3 getDripColor() {
-        return Color3.getColor("#E2E2E2");
-    }
-
     public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.WHITE;
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -225,7 +220,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     public boolean hurt(DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
             return false;
-        if (source == DamageSource.FALL)
+        if (source.is(DamageTypes.FALL))
             return false;
         if (source == DamageSource.CACTUS)
             return false;
