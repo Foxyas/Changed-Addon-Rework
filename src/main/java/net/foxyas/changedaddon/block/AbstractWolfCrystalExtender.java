@@ -8,7 +8,6 @@ import net.ltxprogrammer.changed.block.WolfCrystalBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
-import net.ltxprogrammer.changed.init.ChangedMaterials;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
@@ -31,8 +30,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -52,7 +51,7 @@ public class AbstractWolfCrystalExtender {
 
         @SubscribeEvent
         public static void colorTheCrystal(PlayerInteractEvent.RightClickBlock event) {
-            Level level = event.getWorld();
+            Level level = event.getLevel();
             BlockPos pos = event.getPos();
             ItemStack itemStack = event.getItemStack();
             BlockState currentState = level.getBlockState(pos);
@@ -76,15 +75,15 @@ public class AbstractWolfCrystalExtender {
                     if (!newBlock.defaultBlockState().equals(currentState)) {
                         level.setBlockAndUpdate(pos, newBlock.defaultBlockState());
                         playDyeUseSound(level, pos);
-                        event.getPlayer().swing(event.getHand());
+                        event.getEntity().swing(event.getHand());
 
                         // Consome o corante se o jogador não estiver no modo criativo
-                        if (!event.getPlayer().isCreative()) {
+                        if (!event.getEntity().isCreative()) {
                             itemStack.shrink(1);
                         }
 
                         // Código para conceder um avanço ao jogador
-                        grantAdvancement(event.getPlayer(), "changed_addon:crystal_dyer");
+                        grantAdvancement(event.getEntity(), "changed_addon:crystal_dyer");
                     }
                 }
             }
@@ -103,7 +102,7 @@ public class AbstractWolfCrystalExtender {
         private static void grantAdvancement(Player player, String advancementId) {
             if (player instanceof ServerPlayer serverPlayer) {
                 Advancement advancement = serverPlayer.server.getAdvancements()
-                        .getAdvancement(new ResourceLocation(advancementId));
+                        .getAdvancement(ResourceLocation.parse(advancementId));
                 if (advancement != null) {
                     AdvancementProgress progress = serverPlayer.getAdvancements().getOrStartProgress(advancement);
                     if (!progress.isDone()) {
@@ -120,11 +119,12 @@ public class AbstractWolfCrystalExtender {
 
         public AbstractWolfCrystalBlock() {
             super(
-                    BlockBehaviour.Properties.of(Material.ICE_SOLID, MaterialColor.COLOR_RED)
-                    .friction(0.98F)
-                    .sound(SoundType.AMETHYST)
-                    .strength(2.0F, 2.0F)
-                 );
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_RED)
+                            .friction(0.98F)
+                            .sound(SoundType.AMETHYST)
+                            .strength(2.0F, 2.0F)
+            );
         }
 
 
@@ -132,10 +132,7 @@ public class AbstractWolfCrystalExtender {
         public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, net.minecraftforge.common.IPlantable plantable) {
 
             BlockState plant = plantable.getPlant(world, pos.relative(facing));
-            if (plant.getBlock() instanceof WolfCrystal)
-                return true;
-            else
-                return false;
+            return plant.getBlock() instanceof WolfCrystal;
         }
 
         @Override
@@ -163,12 +160,15 @@ public class AbstractWolfCrystalExtender {
             }
         }
     }
+
     public static abstract class AbstractWolfCrystalSmall extends TransfurCrystalBlock {
 
         public AbstractWolfCrystalSmall(Supplier<? extends Item> fragment) {
             super(ChangedTransfurVariants.CRYSTAL_WOLF, fragment,
 
-                    BlockBehaviour.Properties.of(ChangedMaterials.LATEX_CRYSTAL)
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_RED)
+                            .pushReaction(PushReaction.DESTROY)
                             .sound(SoundType.AMETHYST_CLUSTER)
                             .noOcclusion()
                             .dynamicShape()
@@ -180,7 +180,8 @@ public class AbstractWolfCrystalExtender {
         public AbstractWolfCrystalSmall() {
             super(ChangedTransfurVariants.CRYSTAL_WOLF, ChangedItems.WOLF_CRYSTAL_FRAGMENT,
 
-                    BlockBehaviour.Properties.of(ChangedMaterials.LATEX_CRYSTAL)
+                    BlockBehaviour.Properties.of()
+
                             .sound(SoundType.AMETHYST_CLUSTER)
                             .noOcclusion()
                             .dynamicShape()

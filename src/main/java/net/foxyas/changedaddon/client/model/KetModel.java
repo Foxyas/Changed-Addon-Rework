@@ -26,7 +26,7 @@ import java.util.List;
 
 public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> implements AdvancedHumanoidModelInterface<KetExperiment009Entity,KetModel> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "ket_exp_009"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "ket_exp_009"), "main");
 
 	private final ModelPart RightLeg;
 	private final ModelPart LeftLeg;

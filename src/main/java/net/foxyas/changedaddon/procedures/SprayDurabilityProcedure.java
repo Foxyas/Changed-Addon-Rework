@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.chat.Component;
 
 import net.foxyas.changedaddon.init.ChangedAddonModItems;

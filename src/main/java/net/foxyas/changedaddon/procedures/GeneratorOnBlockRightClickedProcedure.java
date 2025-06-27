@@ -6,7 +6,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.core.BlockPos;
 
 public class GeneratorOnBlockRightClickedProcedure {
@@ -30,7 +30,7 @@ public class GeneratorOnBlockRightClickedProcedure {
 				if (world instanceof Level _level)
 					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 			}
-			if (entity instanceof Player _player && !_player.level.isClientSide())
+			if (entity instanceof Player _player && !_player.level().isClientSide())
 				_player.displayClientMessage(new TextComponent("generator disabled"), true);
 		} else if ((new Object() {
 			public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
@@ -49,7 +49,7 @@ public class GeneratorOnBlockRightClickedProcedure {
 				if (world instanceof Level _level)
 					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 			}
-			if (entity instanceof Player _player && !_player.level.isClientSide())
+			if (entity instanceof Player _player && !_player.level().isClientSide())
 				_player.displayClientMessage(new TextComponent("generator enabled"), true);
 		}
 	}

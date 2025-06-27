@@ -14,8 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.Registry;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -73,7 +72,7 @@ public class PatOverlay {
                                     /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
                                      *   PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
                                } else {
-                                   ResourceLocation TEXTURE = new ResourceLocation("changed_addon:textures/screens/paw_normal.png");
+                                   ResourceLocation TEXTURE = ResourceLocation.parse("changed_addon:textures/screens/paw_normal.png");
                                    Minecraft mc = Minecraft.getInstance();
                                    PoseStack poseStack = event.getMatrixStack();
                                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -114,8 +113,8 @@ public class PatOverlay {
 
     private static boolean isPatableEntity(Player player, Entity patEntity) {
     	// Verifica se a entidade está dentro das tags definidas como 'patable entities'
-    	boolean isPatableByTag = patEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
-        	    new ResourceLocation("changed_addon:patable_entitys")));
+    	boolean isPatableByTag = patEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE,
+        	    ResourceLocation.parse("changed_addon:patable_entitys")));
 
     	// Verifica se a visão do jogador está limpa até a entidade
     	if (!isLineOfSightClear(player, patEntity)) {
@@ -138,7 +137,7 @@ public class PatOverlay {
 
 
 	private static boolean isLineOfSightClear(Player player, Entity entity) {
-    	var level = player.getLevel();
+    	var level = player.level();
     	var playerEyePos = player.getEyePosition(1.0F); // Posição dos olhos do jogador
     	var entityEyePos = entity.getBoundingBox().getCenter(); // Centro da entidade
 
@@ -165,17 +164,17 @@ public class PatOverlay {
     }
 
 
-    private static TranslatableComponent getPatInfo(Entity lookedEntity) {
+    private static Component getPatInfo(Entity lookedEntity) {
         String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
         if (lookedEntity instanceof LivingEntity) {
-            TranslatableComponent patMessage = new TranslatableComponent("changed_addon.info.is_patable", key.isEmpty() ? "Not Key Set" : key, lookedEntity.getDisplayName().getString());
+            Component patMessage = Component.translatable("changed_addon.info.is_patable", key.isEmpty() ? "Not Key Set" : key, lookedEntity.getDisplayName().getString());
             patMessage.withStyle(style ->
                     style.withColor(Color3.getColor("#FFFFFF").toInt())
                             //.withBold(true)
                             .withItalic(true));
             return patMessage;
         } else {
-            return new TranslatableComponent("");
+            return Component.translatable("");
         }
     }
 

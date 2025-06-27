@@ -13,8 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
@@ -45,8 +44,8 @@ public class UnifuserOnBlockRightClickedProcedure {
 					if (world instanceof Level _level)
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
-				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent(("you stop the " + new TranslatableComponent(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
+				if (entity instanceof Player _player && !_player.level().isClientSide())
+					_player.displayClientMessage(new TextComponent(("you stop the " + Component.translatable(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
 			} else {
 				if (!world.isClientSide()) {
 					BlockPos _bp = new BlockPos(x, y, z);
@@ -57,8 +56,8 @@ public class UnifuserOnBlockRightClickedProcedure {
 					if (world instanceof Level _level)
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
-				if (entity instanceof Player _player && !_player.level.isClientSide())
-					_player.displayClientMessage(new TextComponent(("you start the " + new TranslatableComponent(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
+				if (entity instanceof Player _player && !_player.level().isClientSide())
+					_player.displayClientMessage(new TextComponent(("you start the " + Component.translatable(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
 			}
 		} else {
 			{

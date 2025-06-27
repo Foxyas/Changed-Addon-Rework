@@ -24,6 +24,6 @@ public class SnepsiLeopardRenderer extends AdvancedHumanoidRenderer<SnepsiLeopar
 
 	@Override
 	public @NotNull ResourceLocation getTextureLocation(@NotNull SnepsiLeopardEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/snepsi_snow_leopard.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/snepsi_snow_leopard.png");
 	}
 }

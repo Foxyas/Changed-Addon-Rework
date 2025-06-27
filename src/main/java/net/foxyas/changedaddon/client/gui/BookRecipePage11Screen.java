@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
@@ -41,7 +40,7 @@ public class BookRecipePage11Screen extends AbstractContainerScreen<BookRecipePa
 		this.imageHeight = 144;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/book_recipe_page_11.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/book_recipe_page_11.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -58,13 +57,13 @@ public class BookRecipePage11Screen extends AbstractContainerScreen<BookRecipePa
 		RenderSystem.setShaderTexture(0, texture);
 		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserscreen.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/unifuserscreen.png"));
 		this.blit(ms, this.leftPos + 34, this.topPos + 23, 0, 0, 200, 104, 200, 104);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_white_slot.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/laething_white_slot.png"));
 		this.blit(ms, this.leftPos + 49, this.topPos + 68, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_syringe_slot.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/laething_syringe_slot.png"));
 		this.blit(ms, this.leftPos + 189, this.topPos + 80, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.disableBlend();
@@ -86,11 +85,11 @@ public class BookRecipePage11Screen extends AbstractContainerScreen<BookRecipePa
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_unifuser"), 45, 35, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_pany_potion"), 7, 9, -256);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_p"), 90, 83, -256);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_g_any_gooey_item"), 168, 9, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.label_g"), 54, 97, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.book_recipe_page_11.label_unifuser"), 45, 35, -16777216);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.book_recipe_page_11.label_pany_potion"), 7, 9, -256);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.book_recipe_page_11.label_p"), 90, 83, -256);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.book_recipe_page_11.label_g_any_gooey_item"), 168, 9, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.book_recipe_page_11.label_g"), 54, 97, -12829636);
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class BookRecipePage11Screen extends AbstractContainerScreen<BookRecipePa
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_back = new Button(this.leftPos + 164, this.topPos + -21, 46, 20, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.button_back"), e -> {
+		button_back = new Button(this.leftPos + 164, this.topPos + -21, 46, 20, Component.translatable("gui.changed_addon.book_recipe_page_11.button_back"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookRecipePage11ButtonMessage(0, x, y, z));
 				BookRecipePage11ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -111,7 +110,7 @@ public class BookRecipePage11Screen extends AbstractContainerScreen<BookRecipePa
 		});
 		guistate.put("button:button_back", button_back);
 		this.addRenderableWidget(button_back);
-		button_close = new Button(this.leftPos + 215, this.topPos + -21, 51, 20, new TranslatableComponent("gui.changed_addon.book_recipe_page_11.button_close"), e -> {
+		button_close = new Button(this.leftPos + 215, this.topPos + -21, 51, 20, Component.translatable("gui.changed_addon.book_recipe_page_11.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookRecipePage11ButtonMessage(1, x, y, z));
 				BookRecipePage11ButtonMessage.handleButtonAction(entity, 1, x, y, z);
@@ -119,7 +118,7 @@ public class BookRecipePage11Screen extends AbstractContainerScreen<BookRecipePa
 		});
 		guistate.put("button:button_close", button_close);
 		this.addRenderableWidget(button_close);
-		imagebutton_recipe_buttom_normal = new ImageButton(this.leftPos + 122, this.topPos + 106, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_recipe_buttom_normal.png"), 20, 36, e -> {
+		imagebutton_recipe_buttom_normal = new ImageButton(this.leftPos + 122, this.topPos + 106, 20, 18, 0, 0, 18, ResourceLocation.parse("changed_addon:textures/screens/atlas/imagebutton_recipe_buttom_normal.png"), 20, 36, e -> {
 		});
 		guistate.put("button:imagebutton_recipe_buttom_normal", imagebutton_recipe_buttom_normal);
 		this.addRenderableWidget(imagebutton_recipe_buttom_normal);

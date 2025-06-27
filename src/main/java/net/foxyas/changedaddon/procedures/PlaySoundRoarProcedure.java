@@ -18,13 +18,13 @@ public class PlaySoundRoarProcedure {
 				if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_ket_experiment009")) {
 					{
 						Entity _ent = entity;
-						if (!_ent.level.isClientSide() && _ent.getServer() != null)
+						if (!_ent.level().isClientSide() && _ent.getServer() != null)
 							_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:monster2 hostile @a ~ ~ ~ 35 0 0");
 					}
 				} else {
 					{
 						Entity _ent = entity;
-						if (!_ent.level.isClientSide() && _ent.getServer() != null)
+						if (!_ent.level().isClientSide() && _ent.getServer() != null)
 							_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:monster2 hostile @a ~ ~ ~ 5 1");
 					}
 				}

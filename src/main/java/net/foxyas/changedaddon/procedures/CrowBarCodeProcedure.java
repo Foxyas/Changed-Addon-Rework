@@ -78,7 +78,7 @@ public class CrowBarCodeProcedure {
 		ItemStack CrowBar = ItemStack.EMPTY;
 		CrowBar = new ItemStack(ChangedAddonModItems.CROW_BAR.get());
 		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == CrowBar.getItem()) {
-			if (blockstate.is(BlockTags.create(new ResourceLocation("changed_addon:lab_doors")))) {
+			if (blockstate.is(BlockTags.create(ResourceLocation.parse("changed_addon:lab_doors")))) {
 				if (!(blockstate.getBlock().getStateDefinition().getProperty("open") instanceof BooleanProperty _getbp5 && blockstate.getValue(_getbp5))) {
 					sx = -2;
 					for (int index0 = 0; index0 < 5; index0++) {
@@ -87,7 +87,7 @@ public class CrowBarCodeProcedure {
 							sz = -2;
 							for (int index2 = 0; index2 < 5; index2++) {
 								if ((world.getBlockState(new BlockPos(x + sx, y + sy, z + sz))).getBlock() == ForgeRegistries.BLOCKS
-										.getValue(new ResourceLocation(((ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).toLowerCase(java.util.Locale.ENGLISH)))) {
+										.getValue(ResourceLocation.parse(((ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).toLowerCase(java.util.Locale.ENGLISH)))) {
 									{
 										BlockPos _pos = new BlockPos(x + sx, y + sy, z + sz);
 										BlockState _bs = world.getBlockState(_pos);
@@ -106,7 +106,7 @@ public class CrowBarCodeProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 								}
@@ -116,7 +116,7 @@ public class CrowBarCodeProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 								}
@@ -135,7 +135,7 @@ public class CrowBarCodeProcedure {
 							_entity.swing(InteractionHand.MAIN_HAND, true);
 					}
 				}
-			} else if (blockstate.is(BlockTags.create(new ResourceLocation("changed_addon:lab_big_doors")))) {
+			} else if (blockstate.is(BlockTags.create(ResourceLocation.parse("changed_addon:lab_big_doors")))) {
 				if (!(blockstate.getBlock().getStateDefinition().getProperty("open") instanceof BooleanProperty _getbp22 && blockstate.getValue(_getbp22))) {
 					if ((blockstate.getBlock().getStateDefinition().getProperty("section") instanceof EnumProperty _getep24 ? blockstate.getValue(_getep24).toString() : "").equals("CENTER")) {
 						sx = -2;
@@ -145,7 +145,7 @@ public class CrowBarCodeProcedure {
 								sz = -2;
 								for (int index5 = 0; index5 < 5; index5++) {
 									if ((world.getBlockState(new BlockPos(x + sx, y + sy, z + sz))).getBlock() == ForgeRegistries.BLOCKS
-											.getValue(new ResourceLocation(((ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).toLowerCase(java.util.Locale.ENGLISH)))) {
+											.getValue(ResourceLocation.parse(((ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString())).toLowerCase(java.util.Locale.ENGLISH)))) {
 										{
 											BlockPos _pos = new BlockPos(x + sx, y + sy, z + sz);
 											BlockState _bs = world.getBlockState(_pos);
@@ -164,7 +164,7 @@ public class CrowBarCodeProcedure {
 								public boolean checkGamemode(Entity _ent) {
 									if (_ent instanceof ServerPlayer _serverPlayer) {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-									} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+									} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 										return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 									}
@@ -174,7 +174,7 @@ public class CrowBarCodeProcedure {
 								public boolean checkGamemode(Entity _ent) {
 									if (_ent instanceof ServerPlayer _serverPlayer) {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-									} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+									} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 										return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 									}

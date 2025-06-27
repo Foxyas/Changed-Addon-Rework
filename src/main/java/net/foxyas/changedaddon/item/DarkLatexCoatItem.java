@@ -51,7 +51,7 @@ public class DarkLatexCoatItem extends ArmorItem {
 
             @Override
             public @NotNull SoundEvent getEquipSound() {
-                return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:armor_equip")) != null ? ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:armor_equip")) : ChangedSounds.EQUIP1;
+                return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("changed_addon:armor_equip")) != null ? ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("changed_addon:armor_equip")) : ChangedSounds.EQUIP1;
             }
 
             @Override
@@ -95,7 +95,7 @@ public class DarkLatexCoatItem extends ArmorItem {
     @Nullable
     @Override
     public SoundEvent getEquipSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:armor_equip"));
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("changed_addon:armor_equip"));
     }
 
     // Método para definir o modelo da armadura no lado do cliente

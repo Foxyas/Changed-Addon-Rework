@@ -9,7 +9,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.chat.TextComponent;
+
 import net.ltxprogrammer.changed.Changed;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
@@ -29,7 +29,7 @@ public class SetDefaultValueProcedure {
 		Objects.requireNonNull(livingEntity.getAttributes().getInstance(ChangedAttributes.TRANSFUR_TOLERANCE.get())).setBaseValue(DefaultValue);
 		{
 			Objects.requireNonNull(livingEntity.getAttributes().getInstance(ChangedAttributes.TRANSFUR_TOLERANCE.get())).setBaseValue(DefaultValue);
-			if (entity instanceof Player _player && !_player.level.isClientSide())
+			if (entity instanceof Player _player && !_player.level().isClientSide())
 				_player.displayClientMessage(new TextComponent("Value has been set to default §6<"+ DefaultValue + ">"), false);
 
 			if (entity instanceof Player) {

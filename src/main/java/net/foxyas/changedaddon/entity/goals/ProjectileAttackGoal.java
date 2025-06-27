@@ -62,7 +62,7 @@ public class ProjectileAttackGoal extends Goal {
 
         if (attackCooldown > 0) {
             attackCooldown--;
-            if (mob.getLevel() instanceof ServerLevel serverLevel) {
+            if (mob.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, mob.getX(), mob.getEyeY(), mob.getZ(), 4, 0.25, 0.5, 0.25, 0.5f);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, mob.getX(), mob.getEyeY(), mob.getZ(), 4, 0.25, 0.5, 0.25, 0.05f);
             }
@@ -99,7 +99,7 @@ public class ProjectileAttackGoal extends Goal {
 
             // Spawn do projétil
 
-            ParticleProjectile projectile = new ParticleProjectile(projectileType, mob, mob.getLevel(), target);
+            ParticleProjectile projectile = new ParticleProjectile(projectileType, mob, mob.level(), target);
             projectile.setPos(spawnPos);
             projectile.setNoGravity(true);
             projectile.setOwner(mob);

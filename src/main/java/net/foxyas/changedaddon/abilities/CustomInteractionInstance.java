@@ -10,8 +10,8 @@ import net.minecraft.world.entity.player.Player;
 
 public class CustomInteractionInstance extends AbstractAbilityInstance {
 
-    public CustomInteractionInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity){
-        super(ability,entity);
+    public CustomInteractionInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
+        super(ability, entity);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
 
     @Override
     public void startUsing() {
-        if (entity.getChangedEntity() instanceof LatexSnepEntity latexSnepEntity){
+        if (entity.getChangedEntity() instanceof LatexSnepEntity latexSnepEntity) {
             latexSnepEntity.WantLoaf = !latexSnepEntity.WantLoaf;
         } else if (entity.getChangedEntity() instanceof AbstractLuminarcticLeopard lumi) {
             lumi.GlowStage = lumi.GlowStage >= 1 ? 0 : 1;
@@ -50,8 +50,8 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
     }
 
     public void onSelected() {
-        if (entity.getEntity() instanceof Player player && ability.getSelectedDisplayText(this.entity) != null){
-            player.displayClientMessage(ability.getSelectedDisplayText(this.entity),true);
+        if (entity.getEntity() instanceof Player player && ability.getSelectedDisplayText(this.entity) != null) {
+            player.displayClientMessage(ability.getSelectedDisplayText(this.entity), true);
         }
     }
 }

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.commands.CommandSourceStack;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
@@ -16,18 +16,18 @@ public class ToggleresettransfuradvancementsProcedure {
 			return;
 		if (BoolArgumentType.getBool(arguments, "turn") == true) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == true) {
-				if (entity instanceof Player _player && !_player.level.isClientSide())
+				if (entity instanceof Player _player && !_player.level().isClientSide())
 					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed, it already had that value"), false);
 			} else {
-				if (entity instanceof Player _player && !_player.level.isClientSide())
+				if (entity instanceof Player _player && !_player.level().isClientSide())
 					_player.displayClientMessage(new TextComponent("You Activated the Transfur Reset Achievements"), false);
 			}
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == false) {
-				if (entity instanceof Player _player && !_player.level.isClientSide())
+				if (entity instanceof Player _player && !_player.level().isClientSide())
 					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed, it already had that value"), false);
 			} else {
-				if (entity instanceof Player _player && !_player.level.isClientSide())
+				if (entity instanceof Player _player && !_player.level().isClientSide())
 					_player.displayClientMessage(new TextComponent("You Disabled Reset Transfur Achievements"), false);
 			}
 		}

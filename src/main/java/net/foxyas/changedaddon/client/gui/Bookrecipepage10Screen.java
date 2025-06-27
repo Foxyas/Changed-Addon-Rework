@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
@@ -39,7 +38,7 @@ public class Bookrecipepage10Screen extends AbstractContainerScreen<Bookrecipepa
 		this.imageHeight = 102;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/bookrecipepage_10.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/bookrecipepage_10.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -56,7 +55,7 @@ public class Bookrecipepage10Screen extends AbstractContainerScreen<Bookrecipepa
 		RenderSystem.setShaderTexture(0, texture);
 		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unlatexbase_craft.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/unlatexbase_craft.png"));
 		this.blit(ms, this.leftPos + 12, this.topPos + 19, 0, 0, 121, 64, 121, 64);
 
 		RenderSystem.disableBlend();
@@ -90,7 +89,7 @@ public class Bookrecipepage10Screen extends AbstractContainerScreen<Bookrecipepa
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_back = new Button(this.leftPos + 39, this.topPos + -21, 46, 20, new TranslatableComponent("gui.changed_addon.bookrecipepage_10.button_back"), e -> {
+		button_back = new Button(this.leftPos + 39, this.topPos + -21, 46, 20, Component.translatable("gui.changed_addon.bookrecipepage_10.button_back"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookrecipepage10ButtonMessage(0, x, y, z));
 				Bookrecipepage10ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -98,7 +97,7 @@ public class Bookrecipepage10Screen extends AbstractContainerScreen<Bookrecipepa
 		});
 		guistate.put("button:button_back", button_back);
 		this.addRenderableWidget(button_back);
-		button_close = new Button(this.leftPos + 90, this.topPos + -21, 51, 20, new TranslatableComponent("gui.changed_addon.bookrecipepage_10.button_close"), e -> {
+		button_close = new Button(this.leftPos + 90, this.topPos + -21, 51, 20, Component.translatable("gui.changed_addon.bookrecipepage_10.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookrecipepage10ButtonMessage(1, x, y, z));
 				Bookrecipepage10ButtonMessage.handleButtonAction(entity, 1, x, y, z);

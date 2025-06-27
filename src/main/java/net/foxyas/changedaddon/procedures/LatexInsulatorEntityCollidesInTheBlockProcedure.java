@@ -7,8 +7,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.core.Registry;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
@@ -19,9 +18,9 @@ public class LatexInsulatorEntityCollidesInTheBlockProcedure {
 		if (entity == null)
 			return;
 		entity.fallDistance = 0;
-		if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
+		if (entity.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("changed_addon:latexentity")))) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
-				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 					_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 300, 0, false, false));
 				if (entity instanceof LivingEntity _entity)
 					_entity.hurt(new DamageSource("latex_solvent").bypassArmor(), 1);
@@ -29,7 +28,7 @@ public class LatexInsulatorEntityCollidesInTheBlockProcedure {
 		}
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur == false) {
-				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 					_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
 				if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
 					if (entity instanceof LivingEntity _entity)
@@ -37,8 +36,8 @@ public class LatexInsulatorEntityCollidesInTheBlockProcedure {
 				}
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
-					if (entity instanceof Player _player && !_player.level.isClientSide())
-						_player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.untransfur.Immune").getString())), true);
+					if (entity instanceof Player _player && !_player.level().isClientSide())
+						_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.untransfur.Immune").getString())), true);
 				}
 			}
 		}

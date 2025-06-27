@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class FoxyasguiDisableItemstackPlacementProcedure {
 	public static boolean execute(ItemStack itemstack) {
-		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:orange"))) {
+		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:orange"))) {
 			return false;
 		}
 		return true;

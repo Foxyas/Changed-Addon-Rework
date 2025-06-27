@@ -29,7 +29,7 @@ import com.google.common.collect.ImmutableSet;
 public class ChangedAddonModVillagerProfessions {
 	private static final Map<String, ProfessionPoiType> POI_TYPES = new HashMap<>();
 	public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.PROFESSIONS, ChangedAddonMod.MODID);
-	public static final RegistryObject<VillagerProfession> SCIENTIST = registerProfession("scientist", () -> ChangedAddonModBlocks.UNIFUSER.get(), () -> ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.brewing_stand.brew")));
+	public static final RegistryObject<VillagerProfession> SCIENTIST = registerProfession("scientist", () -> ChangedAddonModBlocks.UNIFUSER.get(), () -> ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("block.brewing_stand.brew")));
 
 	private static RegistryObject<VillagerProfession> registerProfession(String name, Supplier<Block> block, Supplier<SoundEvent> soundEvent) {
 		POI_TYPES.put(name, new ProfessionPoiType(block, null));

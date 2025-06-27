@@ -60,7 +60,7 @@ public class FishLatexEntityProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof ServerPlayer _player) {
-			Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:bigone"));
+			Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:bigone"));
 			AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 			if (!_ap.isDone()) {
 				Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -75,7 +75,7 @@ public class FishLatexEntityProcedure {
 	public static void onPlayerFishItem(ItemFishedEvent event) {
     	if (event != null && event.getPlayer() != null) {
         	Player player = event.getPlayer();
-        	LevelAccessor world = player.getLevel();
+        	LevelAccessor world = player.level();
         	FishingHook hookEntity = event.getHookEntity();
 
         	// Obtem o item em uso do jogador

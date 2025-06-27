@@ -30,7 +30,7 @@ public class AdvancementTriggersProcedure {
 	// Method to grant the advancement
 	public static void OrganicAdvancementGive(Player player) {
 		// Ensure we are on the server side
-		if (!player.level.isClientSide()) {
+		if (!player.level().isClientSide()) {
 			// Get the player's server
 			var server = player.getServer();
 			if (server != null) {
@@ -38,7 +38,7 @@ public class AdvancementTriggersProcedure {
 				var advancementManager = server.getAdvancements();
 
 				// Locate the specific advancement using its ResourceLocation
-				var organicAdvancement = advancementManager.getAdvancement(new ResourceLocation("changed_addon", "organic_transfur_advancement"));
+				var organicAdvancement = advancementManager.getAdvancement(ResourceLocation.parse("changed_addon", "organic_transfur_advancement"));
 
 				// Grant the advancement if it exists
 				if (organicAdvancement != null) {

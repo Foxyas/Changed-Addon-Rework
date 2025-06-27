@@ -18,7 +18,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import java.util.List;
 
 public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxEntity> implements AdvancedHumanoidModelInterface<HaydenFennecFoxEntity, HaydenFennecFoxModel> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChangedAddonMod.MODID,"hayden_fennec_fox"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse(ChangedAddonMod.MODID,"hayden_fennec_fox"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;

@@ -28,6 +28,6 @@ public class BunyRenderer extends AdvancedHumanoidRenderer<BunyEntity, BunyModel
 
 	@Override
 	public ResourceLocation getTextureLocation(BunyEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/buny.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/buny.png");
 	}
 }

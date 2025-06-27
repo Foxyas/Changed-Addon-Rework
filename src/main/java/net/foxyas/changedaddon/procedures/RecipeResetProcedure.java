@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.chat.TextComponent;
+
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 
@@ -24,7 +24,7 @@ public class RecipeResetProcedure {
 				capability.syncPlayerVariables(entity);
 			});
 		}
-		if (entity instanceof Player _player && !_player.level.isClientSide())
+		if (entity instanceof Player _player && !_player.level().isClientSide())
 			_player.displayClientMessage(new TextComponent("Recipes Reseted (Page 1)"), true);
 	}
 }

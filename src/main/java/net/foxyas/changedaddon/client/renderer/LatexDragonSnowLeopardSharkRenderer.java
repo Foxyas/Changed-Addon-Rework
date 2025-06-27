@@ -22,6 +22,6 @@ public class LatexDragonSnowLeopardSharkRenderer extends AdvancedHumanoidRendere
     }
 
     public ResourceLocation getTextureLocation(LatexDragonSnowLeopardSharkEntity p_114482_) {
-        return new ResourceLocation("changed_addon:textures/entities/latex_dragon_snep_shark.png");
+        return ResourceLocation.parse("changed_addon:textures/entities/latex_dragon_snep_shark.png");
     }
 }

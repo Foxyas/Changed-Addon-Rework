@@ -120,7 +120,7 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
 
     }
 
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "squid_tiger_shark"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "squid_tiger_shark"), "main");
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart LeftArm;

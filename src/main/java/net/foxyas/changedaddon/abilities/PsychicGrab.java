@@ -7,12 +7,11 @@ import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -20,26 +19,33 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.*;
-import net.minecraft.client.multiplayer.ClientLevel;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
+import java.util.UUID;
 
 public class PsychicGrab extends SimpleAbility {
+    public static final Set<Integer> Keys = Set.of(
+            GLFW.GLFW_KEY_UP,
+            GLFW.GLFW_KEY_DOWN,
+            GLFW.GLFW_KEY_LEFT,
+            GLFW.GLFW_KEY_RIGHT
+    );
     public Vec3 offset = Vec3.ZERO;
     public Vec3 look = Vec3.ZERO;
     public UUID TargetID = UUID.fromString("0-0-0-0-0"); //Fail Safe
-
     private AbstractAbilityInstance abilityInstance;
     private Controller controller;
+
+    public static boolean isSpectator(Entity entity) {
+        return entity instanceof Player player && player.isSpectator();
+    }
 
     @Override
     public SimpleAbilityInstance makeInstance(IAbstractChangedEntity entity) {
@@ -59,19 +65,18 @@ public class PsychicGrab extends SimpleAbility {
     }
 
     @Override
-    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
-        return new TranslatableComponent("changed_addon.ability.psychic_grab");
+    public Component getAbilityName(IAbstractChangedEntity entity) {
+        return Component.translatable("changed_addon.ability.psychic_grab");
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return new ResourceLocation("changed_addon:textures/screens/psychic_hold.png"); // Placeholder
+        return ResourceLocation.parse("changed_addon:textures/screens/psychic_hold.png"); // Placeholder
     }
 
     @Override
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
         Collection<Component> descriptions = new ArrayList<>(super.getAbilityDescription(entity));
-        descriptions.add(new TranslatableComponent("changed_addon.ability.psychic_grab.description"));
+        descriptions.add(Component.translatable("changed_addon.ability.psychic_grab.description"));
         return descriptions;
     }
 
@@ -95,7 +100,7 @@ public class PsychicGrab extends SimpleAbility {
 
     @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        Entity target = getTarget(entity.getEntity().getLevel(), TargetID);
+        Entity target = getTarget(entity.getEntity().level(), TargetID);
         return (target != null) ? UseType.HOLD : UseType.INSTANT;
     }
 
@@ -111,10 +116,7 @@ public class PsychicGrab extends SimpleAbility {
         LivingEntity self = entity.getEntity();
         if (target != null) {
             if (entity.getEntity().distanceTo(target) > 10) {
-            	if (self.isShiftKeyDown()){
-            		return true;
-            	}
-                return false;
+                return self.isShiftKeyDown();
             } else if (target instanceof Player player && isSpectator(player)) {
                 return false;
             }
@@ -189,7 +191,7 @@ public class PsychicGrab extends SimpleAbility {
         super.tick(entity);
         /*if (entity.getEntity() instanceof Player player) {
             this.controller = abilityInstance.getController();
-            player.displayClientMessage(new TextComponent("Hold Ticks:" + controller.getHoldTicks()), true);
+            player.displayClientMessage(Component.literal("Hold Ticks:" + controller.getHoldTicks()), true);
         }*/ // it works
         Entity target = getTarget(entity.getLevel(), TargetID);
         if (target != null) {
@@ -284,15 +286,4 @@ public class PsychicGrab extends SimpleAbility {
                 Mth.clamp(newOffset.z, 0, 4)
         );
     }
-
-    public static boolean isSpectator(Entity entity) {
-        return entity instanceof Player player && player.isSpectator();
-    }
-
-    public static final Set<Integer> Keys = Set.of(
-            GLFW.GLFW_KEY_UP,
-            GLFW.GLFW_KEY_DOWN,
-            GLFW.GLFW_KEY_LEFT,
-            GLFW.GLFW_KEY_RIGHT
-    );
 }

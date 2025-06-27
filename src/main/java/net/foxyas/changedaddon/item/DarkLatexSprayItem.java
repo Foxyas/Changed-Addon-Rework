@@ -24,7 +24,7 @@ public class DarkLatexSprayItem extends Item {
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
 		super.useOn(context);
-		DarkLatexSprayRightClickProcedure.execute(context.getLevel(), context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), context.getLevel().getBlockState(context.getClickedPos()), context.getPlayer(),
+		DarkLatexSprayRightClickProcedure.execute(context.level(), context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), context.level().getBlockState(context.getClickedPos()), context.getPlayer(),
 				context.getItemInHand());
 		return InteractionResult.SUCCESS;
 	}

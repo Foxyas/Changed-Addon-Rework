@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
@@ -39,7 +38,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		this.imageHeight = 90;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/book_pagenumber_1.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/book_pagenumber_1.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -47,7 +46,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		super.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
 		if (mouseX > leftPos + 4 && mouseX < leftPos + 28 && mouseY > topPos + 30 && mouseY < topPos + 54)
-			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.tooltip_show_the_recipes_of_changed_addo3"), mouseX, mouseY);
+			this.renderTooltip(ms, Component.translatable("gui.changed_addon.book_pagenumber_1.tooltip_show_the_recipes_of_changed_addo3"), mouseX, mouseY);
 	}
 
 	@Override
@@ -76,7 +75,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.label_empty"), 14, 36, -16777216);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.book_pagenumber_1.label_empty"), 14, 36, -16777216);
 	}
 
 	@Override
@@ -89,7 +88,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_close = new Button(this.leftPos + 146, this.topPos + 95, 51, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.button_close"), e -> {
+		button_close = new Button(this.leftPos + 146, this.topPos + 95, 51, 20, Component.translatable("gui.changed_addon.book_pagenumber_1.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber1ButtonMessage(0, x, y, z));
 				BookPagenumber1ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -97,7 +96,7 @@ public class BookPagenumber1Screen extends AbstractContainerScreen<BookPagenumbe
 		});
 		guistate.put("button:button_close", button_close);
 		this.addRenderableWidget(button_close);
-		button_changed_addon_recipes = new Button(this.leftPos + 33, this.topPos + 32, 134, 20, new TranslatableComponent("gui.changed_addon.book_pagenumber_1.button_changed_addon_recipes"), e -> {
+		button_changed_addon_recipes = new Button(this.leftPos + 33, this.topPos + 32, 134, 20, Component.translatable("gui.changed_addon.book_pagenumber_1.button_changed_addon_recipes"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new BookPagenumber1ButtonMessage(1, x, y, z));
 				BookPagenumber1ButtonMessage.handleButtonAction(entity, 1, x, y, z);

@@ -8,8 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.Screen;
 
@@ -42,10 +41,10 @@ public class ShowTransfurTotemItemtipProcedure {
 				if (Screen.hasShiftDown() && !Screen.hasAltDown() && !Screen.hasControlDown()) {
 					tooltip.add(new TextComponent(("\u00A76Form=" + itemstack.getOrCreateTag().getString("form"))));
 				} else if (Screen.hasAltDown() && Screen.hasControlDown()) {
-					tooltip.add(new TextComponent((new TranslatableComponent("item.changed_addon.transfur_totem.desc_1").getString())));
+					tooltip.add(new TextComponent((Component.translatable("item.changed_addon.transfur_totem.desc_1").getString())));
 				} else {
 					ID = net.ltxprogrammer.changed.item.Syringe.getVariantDescriptionId(itemstack);
-					tooltip.add(new TextComponent(("\u00A76(" + new TranslatableComponent(ID).getString() + ")")));
+					tooltip.add(new TextComponent(("\u00A76(" + Component.translatable(ID).getString() + ")")));
 				}
 			}
 		}

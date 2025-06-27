@@ -47,7 +47,7 @@ public class ChangedAddonShaders {
         event.registerShader(
                 new ShaderInstance(
                         event.getResourceManager(),
-                        new ResourceLocation(ChangedAddonMod.MODID, "light_ray"),
+                        ResourceLocation.parse(ChangedAddonMod.MODID, "light_ray"),
                         DefaultVertexFormat.NEW_ENTITY
                 ),
                 shader -> lightRayShaders = shader

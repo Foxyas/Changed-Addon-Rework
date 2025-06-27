@@ -976,7 +976,7 @@ public class UnifuserUpdateTickProcedure {
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
-				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:blood_syringe")) || (new Object() {
+				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
 					public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
@@ -984,7 +984,7 @@ public class UnifuserUpdateTickProcedure {
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
-				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")))) {
+				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
 					if ((new Object() {
 						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -1009,7 +1009,7 @@ public class UnifuserUpdateTickProcedure {
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
-					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:blood_syringe")) || (new Object() {
+					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
 						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
@@ -1017,7 +1017,7 @@ public class UnifuserUpdateTickProcedure {
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
-					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")))) {
+					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);
@@ -1606,7 +1606,7 @@ public class UnifuserUpdateTickProcedure {
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
-				}.getItemStack(world, new BlockPos(x, y, z), 1)).is(ItemTags.create(new ResourceLocation("changed_addon:gooey"))) && ((new Object() {
+				}.getItemStack(world, new BlockPos(x, y, z), 1)).is(ItemTags.create(ResourceLocation.parse("changed_addon:gooey"))) && ((new Object() {
 					public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
@@ -1614,7 +1614,7 @@ public class UnifuserUpdateTickProcedure {
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
-				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:blood_syringe")) || (new Object() {
+				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
 					public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 						BlockEntity _ent = world.getBlockEntity(pos);
@@ -1622,7 +1622,7 @@ public class UnifuserUpdateTickProcedure {
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 						return _retval.get();
 					}
-				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")))) {
+				}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
 					a = (new Object() {
 						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -1648,7 +1648,7 @@ public class UnifuserUpdateTickProcedure {
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
-					}.getItemStack(world, new BlockPos(x, y, z), 1)).is(ItemTags.create(new ResourceLocation("changed_addon:gooey"))) && ((new Object() {
+					}.getItemStack(world, new BlockPos(x, y, z), 1)).is(ItemTags.create(ResourceLocation.parse("changed_addon:gooey"))) && ((new Object() {
 						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
@@ -1656,7 +1656,7 @@ public class UnifuserUpdateTickProcedure {
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
-					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:blood_syringe")) || (new Object() {
+					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe")) || (new Object() {
 						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
 							BlockEntity _ent = world.getBlockEntity(pos);
@@ -1664,7 +1664,7 @@ public class UnifuserUpdateTickProcedure {
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
 							return _retval.get();
 						}
-					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe")))) {
+					}.getItemStack(world, new BlockPos(x, y, z), 2)).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe")))) {
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);
 							BlockEntity _blockEntity = world.getBlockEntity(_bp);

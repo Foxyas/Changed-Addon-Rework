@@ -38,9 +38,9 @@ public class OpennewworldwithmymodProcedure {
 		if (entity == null)
 			return;
 		if (!(entity instanceof ServerPlayer _plr0 && _plr0.level instanceof ServerLevel
-				&& _plr0.getAdvancements().getOrStartProgress(_plr0.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:changedaddon_advancement"))).isDone())) {
+				&& _plr0.getAdvancements().getOrStartProgress(_plr0.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:changedaddon_advancement"))).isDone())) {
 			if (entity instanceof ServerPlayer _player) {
-				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:changedaddon_advancement"));
+				Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:changedaddon_advancement"));
 				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 				if (!_ap.isDone()) {
 					Iterator _iterator = _ap.getRemainingCriteria().iterator();

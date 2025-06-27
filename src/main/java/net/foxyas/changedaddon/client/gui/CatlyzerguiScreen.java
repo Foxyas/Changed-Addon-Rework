@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
@@ -52,7 +51,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
         this.imageHeight = 170;
     }
 
-    private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/catlyzergui.png");
+    private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/catlyzergui.png");
 
     @Override
     public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -61,18 +60,18 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
         this.renderTooltip(ms, mouseX, mouseY);
         if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
             if (mouseX > leftPos + -60 && mouseX < leftPos + -36 && mouseY > topPos + 147 && mouseY < topPos + 171)
-                this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c"), mouseX, mouseY);
+                this.renderTooltip(ms, Component.translatable("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_syringe_with_c"), mouseX, mouseY);
         if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
             if (mouseX > leftPos + -84 && mouseX < leftPos + -60 && mouseY > topPos + 147 && mouseY < topPos + 171)
-                this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_partic"), mouseX, mouseY);
+                this.renderTooltip(ms, Component.translatable("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_partic"), mouseX, mouseY);
         if (IfShowCatlyzerRecipePage1Procedure.execute(entity))
             if (mouseX > leftPos + -108 && mouseX < leftPos + -84 && mouseY > topPos + 147 && mouseY < topPos + 171)
-                this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder"), mouseX, mouseY);
+                this.renderTooltip(ms, Component.translatable("gui.changed_addon.catlyzergui.tooltip_display_recipe_of_ammonia_powder"), mouseX, mouseY);
         if (IfisEmptyProcedure.execute(entity))
             if (mouseX > leftPos + 18 && mouseX < leftPos + 42 && mouseY > topPos + 40 && mouseY < topPos + 64)
-                this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe"), mouseX, mouseY);
+                this.renderTooltip(ms, Component.translatable("gui.changed_addon.catlyzergui.tooltip_put_the_powders_or_syringe"), mouseX, mouseY);
         if (mouseX > leftPos + 87 && mouseX < leftPos + 111 && mouseY > topPos + 61 && mouseY < topPos + 85)
-            this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.catlyzergui.tooltip_display_recipes"), mouseX, mouseY);
+            this.renderTooltip(ms, Component.translatable("gui.changed_addon.catlyzergui.tooltip_display_recipes"), mouseX, mouseY);
     }
 
     @Override
@@ -83,23 +82,23 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
         RenderSystem.setShaderTexture(0, texture);
         this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
         if (IfShowUnifuserRecipesProcedure.execute(entity)) {
-            RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserextragui.png"));
+            RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/unifuserextragui.png"));
             this.blit(ms, this.leftPos + -111, this.topPos + -7, 0, 0, 110, 187, 110, 187);
         }
         if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
-            RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/catalyzeddna_recipe.png"));
+            RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/catalyzeddna_recipe.png"));
             this.blit(ms, this.leftPos + -107, this.topPos + 0, 0, 0, 100, 45, 100, 45);
         }
         if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
-            RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniapowderrecipe.png"));
+            RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/ammoniapowderrecipe.png"));
             this.blit(ms, this.leftPos + -107, this.topPos + 47, 0, 0, 100, 45, 100, 45);
         }
         if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
-            RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniarecipe.png"));
+            RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/ammoniarecipe.png"));
             this.blit(ms, this.leftPos + -107, this.topPos + 94, 0, 0, 100, 45, 100, 45);
         }
 
-        RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/catlyzergui_new.png"));
+        RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/catlyzergui_new.png"));
         this.blit(ms, this.leftPos + 0, this.topPos + 0, 0, 0, 200, 170, 200, 170);
 
         double progress;
@@ -114,10 +113,10 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 
         int progressInt = (int) progress;
 
-        RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/empty_bar.png"));
+        RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/empty_bar.png"));
         this.blit(ms, this.leftPos + 83, this.topPos + 46, 0, 0, 32, 12, 32, 12);
 
-        RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/bar_full.png"));
+        RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/bar_full.png"));
         this.blit(ms, this.leftPos + 83 + 2, this.topPos + 46 + 2, 0, 0, progressInt, 8, progressInt, 8);
 
         assert this.minecraft != null;
@@ -127,8 +126,8 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
         boolean showSyringe = (gameTime % animationPeriod) < (animationPeriod / 2);
 
         ResourceLocation icon = showSyringe
-                ? new ResourceLocation("changed_addon:textures/screens/syringes.png")
-                : new ResourceLocation("changed_addon:textures/screens/dusts.png");
+                ? ResourceLocation.parse("changed_addon:textures/screens/syringes.png")
+                : ResourceLocation.parse("changed_addon:textures/screens/dusts.png");
 
         int yOffset = showSyringe ? 44 : 45;
         RenderSystem.setShaderTexture(0, icon);
@@ -162,7 +161,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
 
                 BlockstartinfoProcedure.execute(world, x, y, z), 6, 20, -12829636);
         if (IfBlockisfullProcedure.execute(world, x, y, z))
-            this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.catlyzergui.label_full"), 151, 65, -12829636);
+            this.font.draw(poseStack, Component.translatable("gui.changed_addon.catlyzergui.label_full"), 151, 65, -12829636);
         this.font.draw(poseStack,
 
                 RecipeProgressProcedure.execute(world, x, y, z), 90, 34, -12829636);
@@ -178,7 +177,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
     public void init() {
         super.init();
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-        imagebutton_knowledge_book = new ImageButton(this.leftPos + 89, this.topPos + 65, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_knowledge_book.png"), 20, 36, e -> {
+        imagebutton_knowledge_book = new ImageButton(this.leftPos + 89, this.topPos + 65, 20, 18, 0, 0, 18, ResourceLocation.parse("changed_addon:textures/screens/atlas/imagebutton_knowledge_book.png"), 20, 36, e -> {
             if (true) {
                 ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(0, x, y, z));
                 CatlyzerguiButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -186,7 +185,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
         });
         guistate.put("button:imagebutton_knowledge_book", imagebutton_knowledge_book);
         this.addRenderableWidget(imagebutton_knowledge_book);
-        imagebutton_20221106_142902 = new ImageButton(this.leftPos + -104, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_20221106_142902.png"), 16, 32, e -> {
+        imagebutton_20221106_142902 = new ImageButton(this.leftPos + -104, this.topPos + 152, 16, 16, 0, 0, 16, ResourceLocation.parse("changed_addon:textures/screens/atlas/imagebutton_20221106_142902.png"), 16, 32, e -> {
             if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
                 ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(1, x, y, z));
                 CatlyzerguiButtonMessage.handleButtonAction(entity, 1, x, y, z);
@@ -200,7 +199,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
         };
         guistate.put("button:imagebutton_20221106_142902", imagebutton_20221106_142902);
         this.addRenderableWidget(imagebutton_20221106_142902);
-        imagebutton_impureammoniawithslot = new ImageButton(this.leftPos + -80, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_impureammoniawithslot.png"), 16, 32, e -> {
+        imagebutton_impureammoniawithslot = new ImageButton(this.leftPos + -80, this.topPos + 152, 16, 16, 0, 0, 16, ResourceLocation.parse("changed_addon:textures/screens/atlas/imagebutton_impureammoniawithslot.png"), 16, 32, e -> {
             if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
                 ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(2, x, y, z));
                 CatlyzerguiButtonMessage.handleButtonAction(entity, 2, x, y, z);
@@ -214,7 +213,7 @@ public class CatlyzerguiScreen extends AbstractContainerScreen<CatlyzerguiMenu> 
         };
         guistate.put("button:imagebutton_impureammoniawithslot", imagebutton_impureammoniawithslot);
         this.addRenderableWidget(imagebutton_impureammoniawithslot);
-        imagebutton_catalyzed_dna_slot = new ImageButton(this.leftPos + -56, this.topPos + 152, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_catalyzed_dna_slot.png"), 16, 32, e -> {
+        imagebutton_catalyzed_dna_slot = new ImageButton(this.leftPos + -56, this.topPos + 152, 16, 16, 0, 0, 16, ResourceLocation.parse("changed_addon:textures/screens/atlas/imagebutton_catalyzed_dna_slot.png"), 16, 32, e -> {
             if (IfShowCatlyzerRecipePage1Procedure.execute(entity)) {
                 ChangedAddonMod.PACKET_HANDLER.sendToServer(new CatlyzerguiButtonMessage(3, x, y, z));
                 CatlyzerguiButtonMessage.handleButtonAction(entity, 3, x, y, z);

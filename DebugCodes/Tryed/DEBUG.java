@@ -87,7 +87,7 @@ public class DEBUG {
         if (event.getMessage().startsWith("Show Info")) {
             new DelayedTask(40, event.getPlayer(), (livingEntity) -> {
                 if (livingEntity instanceof Player player) {
-                    player.displayClientMessage(new TextComponent("X = " + StructureHandle.isStructureNearby(event.getPlayer().getLevel(), event.getPlayer().getOnPos(), "changed_addon:dazed_latex_meteor", 3)), false);
+                    player.displayClientMessage(new TextComponent("X = " + StructureHandle.isStructureNearby(event.getPlayer().level(), event.getPlayer().getOnPos(), "changed_addon:dazed_latex_meteor", 3)), false);
                 }
             });
         }

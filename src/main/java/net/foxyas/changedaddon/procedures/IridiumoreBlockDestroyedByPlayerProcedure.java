@@ -23,7 +23,7 @@ public class IridiumoreBlockDestroyedByPlayerProcedure {
 			public boolean checkGamemode(Entity _ent) {
 				if (_ent instanceof ServerPlayer _serverPlayer) {
 					return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-				} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+				} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 					return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 				}
 				return false;
@@ -31,7 +31,7 @@ public class IridiumoreBlockDestroyedByPlayerProcedure {
 		}.checkGamemode(entity))) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof PickaxeItem) {
 				if (!(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) != 0)) {
-					if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().getLevel() : 0) >= 4) {
+					if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().level() : 0) >= 4) {
 						if (world instanceof Level _level && !_level.isClientSide())
 							_level.addFreshEntity(new ExperienceOrb(_level, x, y, z, 40));
 					}

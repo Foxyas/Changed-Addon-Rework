@@ -10,7 +10,6 @@ import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
 import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.init.ChangedMaterials;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -22,6 +21,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -45,7 +45,7 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.*;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -60,7 +60,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Stream;
 
 
@@ -119,7 +118,8 @@ public class AbstractLuminarCrystal {
         private static final int NEIGHBORS_TO_MELT = 2;
 
         public Block() {
-            super(Properties.of(Material.ICE_SOLID, MaterialColor.SNOW)
+            super(Properties.of()
+                    .mapColor(MapColor.ICE)
                     .friction(0.98F)
                     .sound(SoundType.AMETHYST)
                     .strength(2.0F, 8.0F).hasPostProcess((blockState, blockGetter, blockPos) -> true)
@@ -169,7 +169,7 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void tick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
+        public void tick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
             super.tick(state, level, pos, random);
 
             if (state.getValue(DEFROST)) {
@@ -183,7 +183,7 @@ public class AbstractLuminarCrystal {
                 BlockPos above = pos.above();
                 if (level.getBlockState(above).is(Blocks.AIR)) {
                     level.setBlock(above, ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState(), 3);
-                    level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 1.0f);
+                    level.playSound(null, pos, ChangedSounds.ICE2.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
 
                 }
                 //level.scheduleTick(pos, this, 20); //delay de 20 ticks antes de agir
@@ -206,7 +206,7 @@ public class AbstractLuminarCrystal {
                 List<AbstractLuminarcticLeopard> lumiList = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
                 for (AbstractLuminarcticLeopard boss : lumiList) {
                     if (boss.canAttack(player) && boss.hasLineOfSight(player)) { // Verifica se pode atacar e ver o jogador
-                        if (player.getLevel() instanceof ServerLevel) {
+                        if (player.level() instanceof ServerLevel) {
                             player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));
                         }
                         boss.setTarget(player); // Define o jogador como alvo
@@ -217,21 +217,21 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootBuilder) {
+        public List<ItemStack> getDrops(BlockState blockState, LootParams.Builder lootBuilder) {
             ResourceLocation resourcelocation = this.getLootTable();
             if (resourcelocation == BuiltInLootTables.EMPTY) {
                 return Collections.emptyList();
             } else {
-                LootContext lootcontext = lootBuilder.withParameter(LootContextParams.BLOCK_STATE, blockState).create(LootContextParamSets.BLOCK);
+                LootParams lootcontext = lootBuilder.withParameter(LootContextParams.BLOCK_STATE, blockState).create(LootContextParamSets.BLOCK);
                 ServerLevel serverlevel = lootcontext.getLevel();
-                LootTable loottable = serverlevel.getServer().getLootTables().get(resourcelocation);
+                LootTable loottable = serverlevel.getServer().getLootData().getLootTable(resourcelocation);
                 return loottable.getRandomItems(lootcontext);
             }
 
         }
 
         @Override
-        public void randomTick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
+        public void randomTick(BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
             if (state.getValue(DEFROST)) {
                 if (random.nextFloat() >= 0.99f) {
                     for (Direction direction : Direction.values()) {
@@ -252,7 +252,8 @@ public class AbstractLuminarCrystal {
                         }
 
                         // Verifica se o bloco pode ser substituído
-                        if (relativeState.isAir() || relativeState.getFluidState().isSourceOfType(Fluids.WATER) && (relativeState.getMaterial().isReplaceable() && !(relativeState.getFluidState().getType() instanceof LavaFluid))) {
+                        if (relativeState.isAir() || relativeState.getFluidState().isSourceOfType(Fluids.WATER) && (relativeState.canBeReplaced()
+                                && !(relativeState.getFluidState().getType() instanceof LavaFluid))) {
                             BlockState smallCrystalStage = ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
                             smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.FACING, direction);
                             smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.WATERLOGGED, relativeState.getFluidState().isSourceOfType(Fluids.WATER));
@@ -264,7 +265,7 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Random random) {
+        public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
             super.animateTick(state, level, pos, random);
         }
 
@@ -295,7 +296,8 @@ public class AbstractLuminarCrystal {
 
         public CrystalSmall() {
             super(ChangedAddonModItems.LUMINAR_CRYSTAL_SHARD,
-                    BlockBehaviour.Properties.of(ChangedMaterials.LATEX_CRYSTAL)
+                    BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY)
+                            .pushReaction(PushReaction.DESTROY)
                             .sound(SoundType.AMETHYST_CLUSTER)
                             .noOcclusion()
                             .dynamicShape()
@@ -340,11 +342,7 @@ public class AbstractLuminarCrystal {
         @Override
         public boolean canBeReplaced(@NotNull BlockState thisState, @NotNull Fluid fluid) {
             if (fluid instanceof LavaFluid || (fluid instanceof WaterFluid)) {
-                if (thisState.getValue(HEARTED)) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return !thisState.getValue(HEARTED);
             }
             return super.canBeReplaced(thisState, fluid);
         }
@@ -362,7 +360,7 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void randomTick(@NotNull BlockState thisState, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull Random random) {
+        public void randomTick(@NotNull BlockState thisState, @NotNull ServerLevel serverLevel, @NotNull BlockPos pos, @NotNull RandomSource random) {
             super.randomTick(thisState, serverLevel, pos, random);
             if (random.nextFloat() >= 0.99f) {
                 for (Direction direction : Direction.values()) {
@@ -417,14 +415,14 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public List<ItemStack> getDrops(BlockState blockState, LootContext.Builder lootBuilder) {
+        public List<ItemStack> getDrops(BlockState blockState, LootParams.Builder lootBuilder) {
             ResourceLocation resourcelocation = this.getLootTable();
             if (resourcelocation == BuiltInLootTables.EMPTY) {
                 return Collections.emptyList();
             } else {
-                LootContext lootcontext = lootBuilder.withParameter(LootContextParams.BLOCK_STATE, blockState).create(LootContextParamSets.BLOCK);
+                LootParams lootcontext = lootBuilder.withParameter(LootContextParams.BLOCK_STATE, blockState).create(LootContextParamSets.BLOCK);
                 ServerLevel serverlevel = lootcontext.getLevel();
-                LootTable loottable = serverlevel.getServer().getLootTables().get(resourcelocation);
+                LootTable loottable = serverlevel.getServer().getLootData().getLootTable(resourcelocation);
                 return loottable.getRandomItems(lootcontext);
             }
 
@@ -462,7 +460,7 @@ public class AbstractLuminarCrystal {
         }
 
         @Override
-        public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Random random) {
+        public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull RandomSource random) {
             super.animateTick(state, level, pos, random);
         }
 

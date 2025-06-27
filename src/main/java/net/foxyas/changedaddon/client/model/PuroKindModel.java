@@ -38,7 +38,7 @@ class ModelAnimation{
 }
 
 public class PuroKindModel extends AdvancedHumanoidModel<PuroKindEntity> implements AdvancedHumanoidModelInterface<PuroKindEntity,PuroKindModel> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "puro_kind"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "puro_kind"), "main");
 
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;

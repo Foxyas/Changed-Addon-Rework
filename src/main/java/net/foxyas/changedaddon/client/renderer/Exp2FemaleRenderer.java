@@ -17,7 +17,7 @@ public class Exp2FemaleRenderer extends AdvancedHumanoidRenderer<Exp2FemaleEntit
 				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotArmFur));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/female_snep_hair")));
+		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), ResourceLocation.parse("changed_addon:textures/entities/female_snep_hair")));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	}
@@ -25,21 +25,21 @@ public class Exp2FemaleRenderer extends AdvancedHumanoidRenderer<Exp2FemaleEntit
 	@Override
 	public ResourceLocation getTextureLocation(Exp2FemaleEntity entity) {
 		if(entity.getUnderlyingPlayer() == null){
-		return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
 		}
 
 		if (entity.getUnderlyingPlayer() != null && entity.getHealth() / entity.getMaxHealth() <= 0.60 && entity.getHealth() / entity.getMaxHealth() > 0.30){
-			return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard_hurt.png");
+			return ResourceLocation.parse("changed_addon:textures/entities/femaleexp2_snow_leopard_hurt.png");
 		}
 		if (entity.getUnderlyingPlayer() != null && entity.getHealth() / entity.getMaxHealth() <= 0.30){
-			return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard_badly_hurt.png");
+			return ResourceLocation.parse("changed_addon:textures/entities/femaleexp2_snow_leopard_badly_hurt.png");
 		}
 		if (entity.getUnderlyingPlayer() != null && !(entity.getHealth() / entity.getMaxHealth() <= 0.60)){
-			return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
+			return ResourceLocation.parse("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
 		}
 		
 
 
-		return new ResourceLocation("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/femaleexp2_snow_leopard.png");
 	}
 }

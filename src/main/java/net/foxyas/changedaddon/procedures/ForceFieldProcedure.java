@@ -23,7 +23,7 @@ public class ForceFieldProcedure {
 				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(10 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 						.collect(Collectors.toList());
 				for (Entity entityiterator : _entfound) {
-					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("minecraft:impact_projectiles")))) {
+					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("minecraft:impact_projectiles")))) {
 						entityiterator.setDeltaMovement(new Vec3((entityiterator.getDeltaMovement().x() + -(entityiterator.getDeltaMovement().x())), (entityiterator.getDeltaMovement().y() + -(entityiterator.getDeltaMovement().y())),
 								(entityiterator.getDeltaMovement().z() + -(entityiterator.getDeltaMovement().z()))));
 					}
@@ -35,7 +35,7 @@ public class ForceFieldProcedure {
 				List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(5 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
 						.collect(Collectors.toList());
 				for (Entity entityiterator : _entfound) {
-					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("minecraft:impact_projectiles")))) {
+					if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("minecraft:impact_projectiles")))) {
 						entityiterator.setDeltaMovement(new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z()))));
 					}
 				}

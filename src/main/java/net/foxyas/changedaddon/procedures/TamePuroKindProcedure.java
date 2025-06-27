@@ -41,10 +41,10 @@ public class TamePuroKindProcedure {
 			String uuid = "";
 		if (entity instanceof PuroKindEntity || entity instanceof PuroKindFemaleEntity) {
 			if (!Wolf.isTame()) {
-				if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:orange"))) {
+				if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:orange"))) {
 					if (sourceentity instanceof Player _owner)
 						Wolf.tame(_owner);
-				} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:orange"))) {
+				} else if ((sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:orange"))) {
 					if (sourceentity instanceof Player _owner)
 						Wolf.tame(_owner);
 					}

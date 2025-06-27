@@ -35,7 +35,7 @@ import java.util.Set;
 @Mod.EventBusSubscriber
 public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowWalkable,GenderedEntity {
 
-	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("taiga")/*, new ResourceLocation("icy") */);
+	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(ResourceLocation.parse("taiga")/*, ResourceLocation.parse("icy") */);
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName()))
@@ -130,12 +130,12 @@ public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowW
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
 	}
 
 	public static void init() {

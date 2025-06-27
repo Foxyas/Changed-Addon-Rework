@@ -29,8 +29,8 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
 public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends LatexHumanoidArmorModel<T, ArmorLatexSquidTigerSharkModel<T>> implements DoubleArmedModel {
-    public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
-    public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
+    public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(ResourceLocation.parse("changed_addon", "squid_tiger_shark_armor")).get();
+    public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(ResourceLocation.parse("changed_addon", "squid_tiger_shark_armor")).get();
 
     private final ModelPart Head;
     private final ModelPart Torso;
@@ -60,7 +60,8 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
 
         /*var Tail = this.Torso.getChild("Tail");
         ModelPart tailPrimary = Tail.getChild("TailPrimary");
-        ModelPart tailSecondary = tailPrimary.getChild("TailSecondary");*/
+        ModelPart tailSecondary = tailPrimary.getChild("TailSecondary");
+*/
 
         var upperRightTentacle = List.of(Torso.getChild("RightUpperTentacle"));
         var upperLeftTentacle = List.of(Torso.getChild("LeftUpperTentacle"));

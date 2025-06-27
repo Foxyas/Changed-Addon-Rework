@@ -32,7 +32,7 @@ public class SnepPlushBlockEntityRenderer implements BlockEntityRenderer<SnepPlu
 
     // Classe estática para o modelo extra
     public static class SnepPlushExtraModel extends Model {
-        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "snep_plushe_extra_model"), "main");
+        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "snep_plushe_extra_model"), "main");
         private final ModelPart Head;
 
         public SnepPlushExtraModel(ModelPart root) {
@@ -97,7 +97,7 @@ public class SnepPlushBlockEntityRenderer implements BlockEntityRenderer<SnepPlu
         // Renderize a parte brilhante do modelo
         snepPlushExtraModel.getHead().render(
                 poseStack,
-                bufferSource.getBuffer(RenderType.eyes(new ResourceLocation("changed_addon:textures/blocks/snow_leopard_plush_glow_eye.png"))),
+                bufferSource.getBuffer(RenderType.eyes(ResourceLocation.parse("changed_addon:textures/blocks/snow_leopard_plush_glow_eye.png"))),
                 light,
                 overlay
         	);

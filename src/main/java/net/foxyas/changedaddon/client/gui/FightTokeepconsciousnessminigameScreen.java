@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
@@ -40,7 +39,7 @@ public class FightTokeepconsciousnessminigameScreen extends AbstractContainerScr
 		this.imageHeight = 166;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/fight_tokeepconsciousnessminigame.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/fight_tokeepconsciousnessminigame.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -75,7 +74,7 @@ public class FightTokeepconsciousnessminigameScreen extends AbstractContainerScr
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.fight_tokeepconsciousnessminigame.label_fast_you_only_have_4_seconds"), 18, 9, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.fight_tokeepconsciousnessminigame.label_fast_you_only_have_4_seconds"), 18, 9, -12829636);
 		this.font.draw(poseStack,
 
 				FightTokeepconsciousnessminigameValueProcedure.execute(entity), 74, 53, -12829636);
@@ -91,7 +90,7 @@ public class FightTokeepconsciousnessminigameScreen extends AbstractContainerScr
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_fight = new Button(this.leftPos + 17, this.topPos + 72, 166, 20, new TranslatableComponent("gui.changed_addon.fight_tokeepconsciousnessminigame.button_fight"), e -> {
+		button_fight = new Button(this.leftPos + 17, this.topPos + 72, 166, 20, Component.translatable("gui.changed_addon.fight_tokeepconsciousnessminigame.button_fight"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FightTokeepconsciousnessminigameButtonMessage(0, x, y, z));
 				FightTokeepconsciousnessminigameButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -99,7 +98,7 @@ public class FightTokeepconsciousnessminigameScreen extends AbstractContainerScr
 		});
 		guistate.put("button:button_fight", button_fight);
 		this.addRenderableWidget(button_fight);
-		button_give_up = new Button(this.leftPos + 17, this.topPos + 136, 166, 20, new TranslatableComponent("gui.changed_addon.fight_tokeepconsciousnessminigame.button_give_up"), e -> {
+		button_give_up = new Button(this.leftPos + 17, this.topPos + 136, 166, 20, Component.translatable("gui.changed_addon.fight_tokeepconsciousnessminigame.button_give_up"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FightTokeepconsciousnessminigameButtonMessage(1, x, y, z));
 				FightTokeepconsciousnessminigameButtonMessage.handleButtonAction(entity, 1, x, y, z);

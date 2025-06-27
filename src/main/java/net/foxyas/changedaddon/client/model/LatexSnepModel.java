@@ -24,7 +24,7 @@ import java.util.List;
 
 public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> implements AdvancedHumanoidModelInterface<LatexSnepEntity, LatexSnepModel> {
 
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "latex_snep"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "latex_snep"), "main");
     // Grupo principal: Animal e corpo
 
     private final ModelPart Animal;

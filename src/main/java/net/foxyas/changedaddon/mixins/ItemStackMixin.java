@@ -21,11 +21,11 @@ public abstract class ItemStackMixin {
     @Inject(method = "isCorrectToolForDrops",at = @At("HEAD"),cancellable = true)
     private void AllowItemsDrops(BlockState state, CallbackInfoReturnable<Boolean> cir){
         if (this.getItem() instanceof PickaxeItem tieredItem){
-            if (tieredItem.getTier().getLevel() >= Tiers.DIAMOND.getLevel()){
+            if (tieredItem.getTier().level() >= Tiers.DIAMOND.level()){
                 if (state.is(ChangedAddonModBlocks.IRIDIUM_ORE.get()) || state.is(ChangedAddonModBlocks.IRIDIUM_BLOCK.get())) {
                     cir.setReturnValue(true);
                 }
-            } else if (tieredItem.getTier().getLevel() >= Tiers.NETHERITE.getLevel()){
+            } else if (tieredItem.getTier().level() >= Tiers.NETHERITE.level()){
                if (state.is(ChangedAddonModBlocks.PAINITE_ORE.get()) || state.is(ChangedAddonModBlocks.PAINITE_BLOCK.get())){
                    cir.setReturnValue(true);
                }

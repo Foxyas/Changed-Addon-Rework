@@ -8,7 +8,7 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -99,7 +99,7 @@ public class KetExperiment009Entity extends ChangedEntity {
 
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:humanoids")));
+        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("changed:humanoids")));
     }
 
     @Override
@@ -159,12 +159,12 @@ public class KetExperiment009Entity extends ChangedEntity {
 
     @Override
     public SoundEvent getHurtSound(DamageSource ds) {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
     }
 
     @Override
     public SoundEvent getDeathSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
     }
 
     @Override
@@ -180,7 +180,7 @@ public class KetExperiment009Entity extends ChangedEntity {
         if (source == DamageSource.LIGHTNING_BOLT)
             return false;
         if (source.getMsgId().equals("trident")) {
-            if (this.getLevel().random.nextFloat() <= 0.25f) {
+            if (this.level().random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
                     player.displayClientMessage(new TextComponent("§l§o§3YOU'RE COWARD! Is distance all you can rely on? How PATHETIC!!!"), true);
                 }
@@ -196,7 +196,7 @@ public class KetExperiment009Entity extends ChangedEntity {
         if (source.getMsgId().equals("witherSkull"))
             return false;
         if (source.isProjectile()) {
-            if (this.getLevel().random.nextFloat() <= 0.25f) {
+            if (this.level().random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
                     player.displayClientMessage(new TextComponent("§l§o§4Coward! Is distance all you can rely on? How PATHETIC!!!"), true);
                 }
@@ -291,7 +291,7 @@ public class KetExperiment009Entity extends ChangedEntity {
     }
 
     public void SpawnThunderBolt(Vec3 pos){
-        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level());
         if (lightning != null) {
             lightning.moveTo(pos.x(), pos.y(), pos.z());
             lightning.setCause(null);

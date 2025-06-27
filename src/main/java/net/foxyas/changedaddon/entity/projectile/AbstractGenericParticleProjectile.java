@@ -75,7 +75,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         if (this.target != null && !this.target.isRemoved()) {
             return this.target;
         } else if (this.targetUUID != null && this.level instanceof ServerLevel) {
-            this.target = ((ServerLevel)this.level).getEntity(this.targetUUID);
+            this.target = ((ServerLevel)this.level()).getEntity(this.targetUUID);
             return this.target;
         } else {
             return null;
@@ -207,7 +207,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
             this.lookAt(EntityAnchorArgument.Anchor.EYES, livingTarget.position());
 
-            if (distance <= 0.25f && livingTarget.isBlocking() && this.getLevel().getEntitiesOfClass(AbstractGenericParticleProjectile.class, this.getBoundingBox().inflate(3)).size() >= 5) {
+            if (distance <= 0.25f && livingTarget.isBlocking() && this.level().getEntitiesOfClass(AbstractGenericParticleProjectile.class, this.getBoundingBox().inflate(3)).size() >= 5) {
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.discard();
             }
@@ -283,7 +283,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
                     }
                 }
 
-                if (!this.level.isClientSide && entity1 instanceof LivingEntity) {
+                if (!this.level().isClientSide && entity1 instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
                     EnchantmentHelper.doPostDamageEffects((LivingEntity)entity1, livingentity);
                 }
@@ -301,7 +301,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
                 this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
                 this.setYRot(this.getYRot() + 180.0F);
                 this.yRotO += 180.0F;
-                if (!this.level.isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
+                if (!this.level().isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
                     if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
                         this.spawnAtLocation(this.getPickupItem(), 0.1F);
                     }

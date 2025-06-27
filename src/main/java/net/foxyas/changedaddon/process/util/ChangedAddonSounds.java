@@ -7,8 +7,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ChangedAddonSounds {
 
-    public static final SoundEvent EXP10_THEME = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
-    public static final SoundEvent EXP9_THEME = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.exp9"));
-    public static final SoundEvent HAMMER_SWING = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "hammer_swing"));
-    public static final SoundEvent HAMMER_GUN_SHOT = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "hammer_gun_shot"));
+    public static final SoundEvent EXP10_THEME = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(ChangedAddonMod.MODID, "experiment10_theme"));
+    public static final SoundEvent EXP9_THEME = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(ChangedAddonMod.MODID, "music.boss.exp9"));
+    public static final SoundEvent HAMMER_SWING = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(ChangedAddonMod.MODID, "hammer_swing"));
+    public static final SoundEvent HAMMER_GUN_SHOT = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(ChangedAddonMod.MODID, "hammer_gun_shot"));
 }

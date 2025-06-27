@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.client.Minecraft;
 import net.minecraft.advancements.AdvancementProgress;
@@ -42,13 +42,13 @@ public class TransfurTotemItemInInventoryTickProcedure {
 				if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_latex_benign_wolf")) {
 					SummonDripParticlesProcedure.execute(entity);
 					PlayerUtilProcedure.UnTransfurPlayer(entity);
-					if (entity instanceof Player _player && !_player.level.isClientSide())
+					if (entity instanceof Player _player && !_player.level().isClientSide())
 						_player.displayClientMessage(new TextComponent("The totem you were carrying has been activated"), true);
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
-							_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.totem.use")), SoundSource.NEUTRAL, 1, 1);
+							_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("item.totem.use")), SoundSource.NEUTRAL, 1, 1);
 						} else {
-							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.totem.use")), SoundSource.NEUTRAL, 1, 1, false);
+							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("item.totem.use")), SoundSource.NEUTRAL, 1, 1, false);
 						}
 					}
 					if (entity instanceof Player _player)
@@ -56,7 +56,7 @@ public class TransfurTotemItemInInventoryTickProcedure {
 					if (world.isClientSide())
 						Minecraft.getInstance().gameRenderer.displayItemActivation(itemstack);
 					if (entity instanceof ServerPlayer _player) {
-						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:transfur_totem_advancement_2"));
+						Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:transfur_totem_advancement_2"));
 						AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 						if (!_ap.isDone()) {
 							Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -69,13 +69,13 @@ public class TransfurTotemItemInInventoryTickProcedure {
 				if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_latex_benign_wolf")) {
 					SummonDripParticlesProcedure.execute(entity);
 					PlayerUtilProcedure.UnTransfurPlayer(entity);
-					if (entity instanceof Player _player && !_player.level.isClientSide())
+					if (entity instanceof Player _player && !_player.level().isClientSide())
 						_player.displayClientMessage(new TextComponent("The totem you were carrying has been activated"), true);
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
-							_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.totem.use")), SoundSource.NEUTRAL, 1, 1);
+							_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("item.totem.use")), SoundSource.NEUTRAL, 1, 1);
 						} else {
-							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.totem.use")), SoundSource.NEUTRAL, 1, 1, false);
+							_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("item.totem.use")), SoundSource.NEUTRAL, 1, 1, false);
 						}
 					}
 					if (entity instanceof Player _player)
@@ -83,7 +83,7 @@ public class TransfurTotemItemInInventoryTickProcedure {
 					if (world.isClientSide())
 						Minecraft.getInstance().gameRenderer.displayItemActivation(itemstack);
 					if (entity instanceof ServerPlayer _player) {
-						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:transfur_totem_advancement_2"));
+						Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:transfur_totem_advancement_2"));
 						AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 						if (!_ap.isDone()) {
 							Iterator _iterator = _ap.getRemainingCriteria().iterator();

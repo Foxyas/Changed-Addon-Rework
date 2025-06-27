@@ -13,7 +13,7 @@ public class ClientEvents {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END && Minecraft.getInstance().level != null) {
-            BossMusicHandler.tick(Minecraft.getInstance().level);
+            BossMusicHandler.tick(Minecraft.getInstance().level());
         }
     }
 }

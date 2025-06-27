@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -116,7 +116,7 @@ public class TheDecimatorItem extends Item {
             }
             // 💥 Partículas para indicar o ataque em área
             if (ChangedAddonSounds.HAMMER_SWING != null) {
-                player.level.playSound(null, player.getX(), player.getY(), player.getZ(), ChangedAddonSounds.HAMMER_SWING, SoundSource.PLAYERS, 1f, 1f);
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), ChangedAddonSounds.HAMMER_SWING, SoundSource.PLAYERS, 1f, 1f);
             }
             double d0 = (double) (-Mth.sin(player.getYRot() * 0.017453292F)) * 1;
             double d1 = (double) Mth.cos(player.getYRot() * 0.017453292F) * 1;
@@ -124,7 +124,7 @@ public class TheDecimatorItem extends Item {
             if (var7 instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK, player.getX() + d0, player.getY(0.5), player.getZ() + d1, 0, d0, 0.0, d1, 0.0);
             }
-            //((ServerLevel) player.level).sendParticles(ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0);
+            //((ServerLevel) player.level()).sendParticles(ParticleTypes.SWEEP_ATTACK, target.getX(), target.getY() + 1, target.getZ(), 1, 0, 0, 0, 0);
         }
         return super.onLeftClickEntity(stack, player, target);
     }
@@ -140,7 +140,7 @@ public class TheDecimatorItem extends Item {
         if (player == null)
             return InteractionResult.PASS; // Evita NullPointerException
         if (!player.getCooldowns().isOnCooldown(context.getItemInHand().getItem())) {
-            Level world = context.getLevel();
+            Level world = context.level();
             BlockPos pos = context.getClickedPos();
             Direction face = context.getClickedFace(); // Obtém a face do bloco que foi clicada
             // Área de ataque fixa (raio de 3 blocos em todas as direções)

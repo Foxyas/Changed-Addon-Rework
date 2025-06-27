@@ -19,7 +19,7 @@ public class LogicHandle {
         if (context instanceof EntityCollisionContext entityContext) {
             Entity collidingEntity = entityContext.getEntity();
 
-            if (collidingEntity != null && state.is(BlockTags.create(new ResourceLocation("changed_addon:passable_blocks")))) {
+            if (collidingEntity != null && state.is(BlockTags.create(ResourceLocation.parse("changed_addon:passable_blocks")))) {
                 // Verifica se a entidade é um jogador
                 if (collidingEntity instanceof Player player) {
                     // Verifica uma condição específica do jogador (no caso, ProcessTransfur)

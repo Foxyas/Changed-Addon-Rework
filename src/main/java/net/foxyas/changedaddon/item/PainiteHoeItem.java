@@ -25,7 +25,7 @@ public class PainiteHoeItem extends HoeItem {
 				return 1f;
 			}
 
-			public int getLevel() {
+			public int level() {
 				return 5;
 			}
 

@@ -6,7 +6,7 @@ public class Modeljack_model<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation("modid", "jack_model"), "main");
+			ResourceLocation.parse("modid", "jack_model"), "main");
 	private final ModelPart Head;
 	private final ModelPart Torso;
 	private final ModelPart RightArm;

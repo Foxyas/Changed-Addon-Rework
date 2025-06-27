@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
@@ -36,7 +35,7 @@ public class TransfurTotemGuiScreen extends AbstractContainerScreen<TransfurTote
 		this.imageHeight = 70;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/transfur_totem_gui.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/transfur_totem_gui.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -71,8 +70,8 @@ public class TransfurTotemGuiScreen extends AbstractContainerScreen<TransfurTote
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.transfur_totem_gui.label_link_your_form"), 6, 6, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon"), 0, 18, -16777216);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.transfur_totem_gui.label_link_your_form"), 6, 6, -16777216);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.transfur_totem_gui.label_press_the_totem_icon"), 0, 18, -16777216);
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class TransfurTotemGuiScreen extends AbstractContainerScreen<TransfurTote
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		imagebutton_transfur_totem_button = new ImageButton(this.leftPos + 54, this.topPos + 37, 18, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_transfur_totem_button.png"), 18, 36, e -> {
+		imagebutton_transfur_totem_button = new ImageButton(this.leftPos + 54, this.topPos + 37, 18, 18, 0, 0, 18, ResourceLocation.parse("changed_addon:textures/screens/atlas/imagebutton_transfur_totem_button.png"), 18, 36, e -> {
 		});
 		guistate.put("button:imagebutton_transfur_totem_button", imagebutton_transfur_totem_button);
 		this.addRenderableWidget(imagebutton_transfur_totem_button);

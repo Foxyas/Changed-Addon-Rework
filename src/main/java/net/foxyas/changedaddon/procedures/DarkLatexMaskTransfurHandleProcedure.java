@@ -37,7 +37,7 @@ public class DarkLatexMaskTransfurHandleProcedure {
 			return;
 		if ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.DO_DARK_LATEX_MASK_TRANSFUR)) > 0) {
 			if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-				if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:dark_latex_mask"))) {
+				if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:dark_latex_mask"))) {
 					if (entity.getPersistentData().getDouble("HoldingDarkLatexMask") < (world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.DO_DARK_LATEX_MASK_TRANSFUR))) {
 						entity.getPersistentData().putDouble("HoldingDarkLatexMask", (entity.getPersistentData().getDouble("HoldingDarkLatexMask") + 1));
 					} else {
@@ -51,7 +51,7 @@ public class DarkLatexMaskTransfurHandleProcedure {
 						AddTransfurProgressProcedure.addDarkLatex(entity, 20);
 						entity.getPersistentData().putDouble("HoldingDarkLatexMask", 0);
 					}
-				} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:dark_latex_mask"))) {
+				} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:dark_latex_mask"))) {
 					if (entity.getPersistentData().getDouble("HoldingDarkLatexMask") < (world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.DO_DARK_LATEX_MASK_TRANSFUR))) {
 						entity.getPersistentData().putDouble("HoldingDarkLatexMask", (entity.getPersistentData().getDouble("HoldingDarkLatexMask") + 1));
 					} else {

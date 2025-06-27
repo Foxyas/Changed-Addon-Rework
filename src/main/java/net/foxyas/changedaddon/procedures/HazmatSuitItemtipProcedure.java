@@ -48,14 +48,14 @@ public class HazmatSuitItemtipProcedure {
 		HazmatArmorBuff3 = new AttributeModifier(UUID.fromString("0-0-0-0-7"), "Hazard Armor Transfur Tolerance Buff", 2.5, AttributeModifier.Operation.ADDITION);
 		if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.HEAD) {
 			if (itemstack.getItem() == ChangedAddonModItems.HAZMAT_SUIT_HELMET.get()) {
-				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("changed:transfur_tolerance")), HazmatArmorBuff);
+				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse("changed:transfur_tolerance")), HazmatArmorBuff);
 				_event.addModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(), HazardArmor3);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, HazardDebuff);
 			}
 		}
 		if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.CHEST) {
 			if (itemstack.getItem() == ChangedAddonModItems.HAZMAT_SUIT_CHESTPLATE.get()) {
-				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("changed:transfur_tolerance")), HazmatArmorBuff2);
+				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse("changed:transfur_tolerance")), HazmatArmorBuff2);
 				_event.addModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(), HazardArmor);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, HazardDebuff);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, HazardDebuff2);
@@ -63,7 +63,7 @@ public class HazmatSuitItemtipProcedure {
 		}
 		if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.LEGS) {
 			if (itemstack.getItem() == ChangedAddonModItems.HAZMAT_SUIT_LEGGINGS.get()) {
-				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("changed:transfur_tolerance")), HazmatArmorBuff3);
+				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse("changed:transfur_tolerance")), HazmatArmorBuff3);
 				_event.addModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(), HazardArmor2);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, HazardDebuff);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, HazardDebuff2);
@@ -71,7 +71,7 @@ public class HazmatSuitItemtipProcedure {
 		}
 		if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.FEET) {
 			if (itemstack.getItem() == ChangedAddonModItems.HAZMAT_SUIT_BOOTS.get()) {
-				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("changed:transfur_tolerance")), HazmatArmorBuff);
+				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse("changed:transfur_tolerance")), HazmatArmorBuff);
 				_event.addModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(), HazardArmor3);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, HazardDebuff);
 			}

@@ -42,7 +42,7 @@ class FemaleModelAnimation{
 }
 
 public class PuroKindFemaleModel extends AdvancedHumanoidModel<PuroKindFemaleEntity> implements AdvancedHumanoidModelInterface<PuroKindFemaleEntity,PuroKindFemaleModel> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "female_puro_kind"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "female_puro_kind"), "main");
 
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;

@@ -17,9 +17,9 @@ import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 
 public abstract class LitixCamoniaFluidFluid extends ForgeFlowingFluid {
 	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(ChangedAddonModFluids.LITIX_CAMONIA_FLUID, ChangedAddonModFluids.FLOWING_LITIX_CAMONIA_FLUID,
-			FluidAttributes.builder(new ResourceLocation("changed_addon:blocks/ammoniafluid"), new ResourceLocation("changed_addon:blocks/ammoniafluid"))
+			FluidAttributes.builder(ResourceLocation.parse("changed_addon:blocks/ammoniafluid"), ResourceLocation.parse("changed_addon:blocks/ammoniafluid"))
 
-					.sound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty"))))
+					.sound(ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("item.bucket.empty"))))
 			.explosionResistance(100f)
 
 			.slopeFindDistance(2).bucket(ChangedAddonModItems.LITIX_CAMONIA_FLUID_BUCKET).block(() -> (LiquidBlock) ChangedAddonModBlocks.LITIX_CAMONIA_FLUID.get());

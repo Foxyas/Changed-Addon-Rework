@@ -28,7 +28,7 @@ public class OverDoseAdvancementDetailProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, Advancement advancement, Entity entity) {
 		if (advancement == null || entity == null)
 			return;
-		if (world instanceof Level _lvl && _lvl.getServer() != null ? _lvl.getServer().getAdvancements().getAdvancement(new ResourceLocation("changed_addon:over_dose")).equals(advancement) : false) {
+		if (world instanceof Level _lvl && _lvl.getServer() != null ? _lvl.getServer().getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:over_dose")).equals(advancement) : false) {
 			entity.hurt((new DamageSource("OverDose")), 10);
 		}
 	}

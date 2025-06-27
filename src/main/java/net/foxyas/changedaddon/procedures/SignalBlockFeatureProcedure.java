@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -80,11 +80,11 @@ public class SignalBlockFeatureProcedure {
 		if (!foundPositions.isEmpty()) {
 			BlockPos firstFound = foundPositions.get(0);
 			updatePlayerState(player, itemstack, firstFound.getX(), firstFound.getY(), firstFound.getZ(), cooldown);
-			if (player.level.isClientSide()) {
+			if (player.level().isClientSide()) {
 				displayFoundLocations(player, foundPositions);
 			}
 			playSounds(world, x, y, z, firstFound);
-		} else if (!player.level.isClientSide()) {
+		} else if (!player.level().isClientSide()) {
 			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
 		}
 	}
@@ -122,11 +122,11 @@ public class SignalBlockFeatureProcedure {
 		if (!foundPositions.isEmpty()) {
 			BlockPos firstFound = foundPositions.get(0);
 			updatePlayerState(player, itemstack, firstFound.getX(), firstFound.getY(), firstFound.getZ(), cooldown);
-			if (player.level.isClientSide()) {
+			if (player.level().isClientSide()) {
 				displayFoundLocations(player, foundPositions);
 			}
 			playSounds(world, player.getX(), player.getY(), player.getZ(), firstFound);
-		} else if (!player.level.isClientSide()) {
+		} else if (!player.level().isClientSide()) {
 			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
 		}
 	}
@@ -176,7 +176,7 @@ public class SignalBlockFeatureProcedure {
 		if (!foundPositions.isEmpty()) {
 			displayFoundLocations(player, foundPositions);
 			playSounds(world, x, y, z, foundPositions.get(0));
-		} else if (!player.level.isClientSide()) {
+		} else if (!player.level().isClientSide()) {
 			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
 		}
 	}
@@ -223,7 +223,7 @@ public class SignalBlockFeatureProcedure {
 
 	private static void playSound(LevelAccessor world, BlockPos pos, String soundEvent, SoundSource source, float volume) {
 		if (world instanceof Level level) {
-			ResourceLocation soundLocation = new ResourceLocation(soundEvent);
+			ResourceLocation soundLocation = ResourceLocation.parse(soundEvent);
 			if (!level.isClientSide()) {
 				level.playSound(null, pos, Objects.requireNonNull(ForgeRegistries.SOUND_EVENTS.getValue(soundLocation)), source, volume, 0);
 			} else {

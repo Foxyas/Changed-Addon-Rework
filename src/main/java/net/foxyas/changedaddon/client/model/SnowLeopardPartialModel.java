@@ -44,10 +44,10 @@ class PartialModelAnimation{
 
 public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPartialEntity> implements AdvancedHumanoidModelInterface<SnowLeopardPartialEntity, SnowLeopardPartialModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION_HUMAN = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "main");
-    public static final ModelLayerLocation LAYER_LOCATION_HUMAN_SLIM = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "main_slim");
-    public static final ModelLayerLocation LAYER_LOCATION_LATEX = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "latex");
-    public static final ModelLayerLocation LAYER_LOCATION_LATEX_SLIM = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "latex_slim");
+    public static final ModelLayerLocation LAYER_LOCATION_HUMAN = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "snow_leopard_partial"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION_HUMAN_SLIM = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "snow_leopard_partial"), "main_slim");
+    public static final ModelLayerLocation LAYER_LOCATION_LATEX = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "snow_leopard_partial"), "latex");
+    public static final ModelLayerLocation LAYER_LOCATION_LATEX_SLIM = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "snow_leopard_partial"), "latex_slim");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;

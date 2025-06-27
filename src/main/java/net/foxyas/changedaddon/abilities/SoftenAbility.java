@@ -4,7 +4,6 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collection;
@@ -16,19 +15,18 @@ public class SoftenAbility extends AbstractAbility<SoftenAbilityInstance> {
     }
 
     @Override
-    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
-        return new TranslatableComponent("changed_addon.ability.soften");
+    public Component getAbilityName(IAbstractChangedEntity entity) {
+        return Component.translatable("changed_addon.ability.soften");
     }
 
     @Override
     public Collection<Component> getAbilityDescription(IAbstractChangedEntity entity) {
-        Collection<Component> Description = List.of(new TranslatableComponent("changed_addon.ability.soften.description"));
+        Collection<Component> Description = List.of(Component.translatable("changed_addon.ability.soften.description"));
         return Description;
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return new ResourceLocation("changed_addon:textures/screens/gooey_paw.png");
+        return ResourceLocation.parse("changed_addon:textures/screens/gooey_paw.png");
     }
 
     @Override

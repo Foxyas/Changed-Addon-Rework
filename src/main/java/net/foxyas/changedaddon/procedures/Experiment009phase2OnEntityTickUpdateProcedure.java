@@ -15,8 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
@@ -108,7 +107,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 												.collect(Collectors.toList());
 										for (Entity entityiterator : _entfound) {
 											if (!(entityiterator == entity)) {
-												if (entityiterator instanceof Player _player && !_player.level.isClientSide())
+												if (entityiterator instanceof Player _player && !_player.level().isClientSide())
 													_player.displayClientMessage(new TextComponent("\u00A7l\u00A7o\u00A73You CANT ESCAPE FROM ME!!"), true);
 												entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
 													@Override
@@ -128,11 +127,11 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 															_itemName = _itemStack.getDisplayName();
 														}
 														if (_attacker != null && _itemName != null) {
-															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+															return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
 														} else if (_attacker != null) {
-															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+															return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName);
 														} else {
-															return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+															return Component.translatable("death.attack." + "lightningBolt", _entityName);
 														}
 													}
 												})), (float) attackDmg);
@@ -163,7 +162,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 												.collect(Collectors.toList());
 										for (Entity entityiterator : _entfound) {
 											if (!(entityiterator == entity)) {
-												if (entityiterator instanceof Player _player && !_player.level.isClientSide())
+												if (entityiterator instanceof Player _player && !_player.level().isClientSide())
 													_player.displayClientMessage(new TextComponent("\u00A7o\u00A73Come Back Here \u00A7lNOW!"), true);
 												entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
 													@Override
@@ -183,11 +182,11 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 															_itemName = _itemStack.getDisplayName();
 														}
 														if (_attacker != null && _itemName != null) {
-															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+															return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
 														} else if (_attacker != null) {
-															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+															return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName);
 														} else {
-															return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+															return Component.translatable("death.attack." + "lightningBolt", _entityName);
 														}
 													}
 												})), (float) attackDmg2);
@@ -236,11 +235,11 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 																		_itemName = _itemStack.getDisplayName();
 																	}
 																	if (_attacker != null && _itemName != null) {
-																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+																		return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
 																	} else if (_attacker != null) {
-																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+																		return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName);
 																	} else {
-																		return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+																		return Component.translatable("death.attack." + "lightningBolt", _entityName);
 																	}
 																}
 															})), (float) attackDmg3);
@@ -313,11 +312,11 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 															_itemName = _itemStack.getDisplayName();
 														}
 														if (_attacker != null && _itemName != null) {
-															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+															return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
 														} else if (_attacker != null) {
-															return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+															return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName);
 														} else {
-															return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+															return Component.translatable("death.attack." + "lightningBolt", _entityName);
 														}
 													}
 												})), (float) weakattackdmg);
@@ -372,11 +371,11 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 																			_itemName = _itemStack.getDisplayName();
 																		}
 																		if (_attacker != null && _itemName != null) {
-																			return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+																			return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
 																		} else if (_attacker != null) {
-																			return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+																			return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName);
 																		} else {
-																			return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+																			return Component.translatable("death.attack." + "lightningBolt", _entityName);
 																		}
 																	}
 																})), (float) strongattackdmg);
@@ -403,7 +402,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 				}
 			}
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.5833) {// Summon Particle
-				PlayerUtilProcedure.ParticlesUtil.sendColorTransitionParticles(entity.getLevel(), entity.getX(), entity.getY(), entity.getZ(), 0.0f, 0.57f, 0.82f, // Cores inicial em escala 0-1
+				PlayerUtilProcedure.ParticlesUtil.sendColorTransitionParticles(entity.level(), entity.getX(), entity.getY(), entity.getZ(), 0.0f, 0.57f, 0.82f, // Cores inicial em escala 0-1
 						0.0f, 0.69f, 0.78f, // Cores final em escala 0-1
 						1.0f, // Tamanho da partícula
 						0.2f, // Velocidade X
@@ -451,7 +450,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 								}
@@ -461,7 +460,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 								}

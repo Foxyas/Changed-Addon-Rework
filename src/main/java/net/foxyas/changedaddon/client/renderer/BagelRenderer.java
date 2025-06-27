@@ -38,11 +38,10 @@ public class BagelRenderer extends AdvancedHumanoidRenderer<BagelEntity, BagelMo
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-        this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon:textures/entities/bagel_transfur_glow.png")));
+        this.addLayer(new EmissiveBodyLayer<>(this, ResourceLocation.parse("changed_addon:textures/entities/bagel_transfur_glow.png")));
     }
 
-    @Override
-    public ResourceLocation getTextureLocation(BagelEntity entity) {
-        return new ResourceLocation("changed_addon:textures/entities/bagel_transfur.png");
+        public ResourceLocation getTextureLocation(BagelEntity entity) {
+        return ResourceLocation.parse("changed_addon:textures/entities/bagel_transfur.png");
     }
 }

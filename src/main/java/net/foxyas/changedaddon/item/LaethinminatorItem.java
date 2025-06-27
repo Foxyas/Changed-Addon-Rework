@@ -86,7 +86,7 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 			livingEntity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 		});
 		
-		ChangedAddonLaethinminatorUtil.shootDynamicLaser(player.getLevel(), player, 16, 5, 5);
+		ChangedAddonLaethinminatorUtil.shootDynamicLaser(player.level(), player, 16, 5, 5);
 	}
 
 	@Nullable

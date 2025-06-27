@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
@@ -42,7 +41,7 @@ public class FoxyasGui2Screen extends AbstractContainerScreen<FoxyasGui2Menu> {
 		this.imageHeight = 166;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/foxyas_gui_2.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/foxyas_gui_2.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -77,10 +76,10 @@ public class FoxyasGui2Screen extends AbstractContainerScreen<FoxyasGui2Menu> {
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really"), 4, 5, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it"), 5, 17, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.foxyas_gui_2.label_oh_human_why_but_if_you_really"), 4, 5, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it"), 5, 17, -12829636);
 		if (IfplayerhaveDealTrueProcedure.execute(entity))
-			this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it1"), 8, 36, -12829636);
+			this.font.draw(poseStack, Component.translatable("gui.changed_addon.foxyas_gui_2.label_it_i_can_do_it1"), 8, 36, -12829636);
 	}
 
 	@Override
@@ -93,7 +92,7 @@ public class FoxyasGui2Screen extends AbstractContainerScreen<FoxyasGui2Menu> {
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_deal = new Button(this.leftPos + 135, this.topPos + 32, 46, 20, new TranslatableComponent("gui.changed_addon.foxyas_gui_2.button_deal"), e -> {
+		button_deal = new Button(this.leftPos + 135, this.topPos + 32, 46, 20, Component.translatable("gui.changed_addon.foxyas_gui_2.button_deal"), e -> {
 			if (IfplayerHaveDealFalseProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FoxyasGui2ButtonMessage(0, x, y, z));
 				FoxyasGui2ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -107,7 +106,7 @@ public class FoxyasGui2Screen extends AbstractContainerScreen<FoxyasGui2Menu> {
 		};
 		guistate.put("button:button_deal", button_deal);
 		this.addRenderableWidget(button_deal);
-		button_no = new Button(this.leftPos + 48, this.topPos + 51, 35, 20, new TranslatableComponent("gui.changed_addon.foxyas_gui_2.button_no"), e -> {
+		button_no = new Button(this.leftPos + 48, this.topPos + 51, 35, 20, Component.translatable("gui.changed_addon.foxyas_gui_2.button_no"), e -> {
 			if (IfplayerhaveDealTrueProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FoxyasGui2ButtonMessage(1, x, y, z));
 				FoxyasGui2ButtonMessage.handleButtonAction(entity, 1, x, y, z);
@@ -121,7 +120,7 @@ public class FoxyasGui2Screen extends AbstractContainerScreen<FoxyasGui2Menu> {
 		};
 		guistate.put("button:button_no", button_no);
 		this.addRenderableWidget(button_no);
-		button_aa = new Button(this.leftPos + 6, this.topPos + 51, 35, 20, new TranslatableComponent("gui.changed_addon.foxyas_gui_2.button_aa"), e -> {
+		button_aa = new Button(this.leftPos + 6, this.topPos + 51, 35, 20, Component.translatable("gui.changed_addon.foxyas_gui_2.button_aa"), e -> {
 			if (IfplayerhaveDealTrueProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FoxyasGui2ButtonMessage(2, x, y, z));
 				FoxyasGui2ButtonMessage.handleButtonAction(entity, 2, x, y, z);

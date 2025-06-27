@@ -35,7 +35,7 @@ public class KillExperiment009ProcedureProcedure {
 			return;
 		if (entity instanceof KetExperiment009BossEntity) {
 			if (sourceentity instanceof ServerPlayer _player) {
-				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:kill_experiment_009"));
+				Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:kill_experiment_009"));
 				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 				if (!_ap.isDone()) {
 					Iterator _iterator = _ap.getRemainingCriteria().iterator();

@@ -16,7 +16,6 @@ import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -59,7 +58,7 @@ public class CreatureDietsHandleProcedure {
         if (latexInstance == null) return;
 
 
-        Level world = player.getLevel();
+        Level world = player.level();
 
         if (world.isClientSide) {
             return;
@@ -84,8 +83,8 @@ public class CreatureDietsHandleProcedure {
                 applyFoodEffects(variant, player, item, true);
                 if (!world.isClientSide()) {
                     world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 1.5f);
-                } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
-                    player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
+                } else if (player.level().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
+                    player.displayClientMessage(Component.translatable("changedaddon.diets.good_food"), true);
                 }
             } else if (Debuffs) {
                 if (dietType.stream().noneMatch((diet -> diet.isDietItem(item))) && !DietType.isNotFoodItem(item) && ShouldGiveDebuffs) {
@@ -93,8 +92,8 @@ public class CreatureDietsHandleProcedure {
                     applyMobEffects(player);
                     if (!world.isClientSide()) {
                         world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 0f);
-                    } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
-                        player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
+                    } else if (player.level().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
+                        player.displayClientMessage(Component.translatable("changedaddon.diets.bad_food"), true);
                     }
                 }
             }
@@ -155,7 +154,7 @@ public class CreatureDietsHandleProcedure {
                 variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) ||
                 variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:cat_diet")));
+                        ResourceLocation.parse("changed_addon:cat_diet")));
     }
 
     private static boolean isWolfDiet(ChangedEntity entity, TransfurVariant<?> variant) {
@@ -164,7 +163,7 @@ public class CreatureDietsHandleProcedure {
                 entity instanceof AbstractLatexWolf ||
                 variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.WOLF_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:wolf_diet")));
+                        ResourceLocation.parse("changed_addon:wolf_diet")));
     }
 
     private static boolean isSpecialDiet(TransfurVariant<?> variant) {
@@ -172,7 +171,7 @@ public class CreatureDietsHandleProcedure {
                 variant.is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getMaleVariant()) ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getFemaleVariant()) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:special_diet")));
+                        ResourceLocation.parse("changed_addon:special_diet")));
     }
 
     private static boolean isFoxDiet(ChangedEntity entity, TransfurVariant<?> variant) {
@@ -181,29 +180,29 @@ public class CreatureDietsHandleProcedure {
                 variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getFemaleVariant()) ||
                 variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.FOX_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:fox_diet")));
+                        ResourceLocation.parse("changed_addon:fox_diet")));
     }
 
     private static boolean isAquaticDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity instanceof AquaticEntity ||
                 variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.SHARK_LIKE) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed:aquatic_like"))) ||
+                        ResourceLocation.parse("changed:aquatic_like"))) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:aquatic_diet")));
+                        ResourceLocation.parse("changed_addon:aquatic_diet")));
     }
 
     private static boolean isDragonDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("dragon") ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed:dragon_like"))) ||
+                        ResourceLocation.parse("changed:dragon_like"))) ||
                 variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:dragon_diet")));
+                        ResourceLocation.parse("changed_addon:dragon_diet")));
     }
 
     private static boolean isSweetTooth(ChangedEntity entity, TransfurVariant<?> variant) {
         return variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                new ResourceLocation("changed_addon:sweet_tooth")));
+                ResourceLocation.parse("changed_addon:sweet_tooth")));
     }
 
     private enum DietType {
@@ -249,7 +248,7 @@ public class CreatureDietsHandleProcedure {
 
         public boolean isDietItem(ItemStack item) {
             return dietItems.contains(item.getItem()) ||
-                    item.is(ItemTags.create(new ResourceLocation(dietTag)));
+                    item.is(ItemTags.create(ResourceLocation.parse(dietTag)));
         }
 
         public static boolean isNotFoodItem(ItemStack item) {
@@ -264,7 +263,7 @@ public class CreatureDietsHandleProcedure {
             } else if (item.is(Items.POTION)) {
                 return true;
             } else if (NonFoodItemslist.contains(item.getItem())
-                    || item.is(ItemTags.create(new ResourceLocation("changed_addon:is_not_food")))) {
+                    || item.is(ItemTags.create(ResourceLocation.parse("changed_addon:is_not_food")))) {
                 return true;
             } else return item.is(Items.GOLDEN_APPLE);
         }

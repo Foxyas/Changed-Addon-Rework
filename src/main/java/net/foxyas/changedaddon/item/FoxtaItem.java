@@ -23,7 +23,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -68,7 +67,7 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        list.add(new TranslatableComponent("item.changed_addon.foxta.desc"));
+        list.add(Component.translatable("item.changed_addon.foxta.desc"));
     }
 
     @Override
@@ -79,7 +78,7 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
             // Distância percorrida no ar
             int Foxta_Drink_Amount = stats.getValue(Stats.ITEM_USED.get(ChangedAddonModItems.FOXTA.get()));
             if (Foxta_Drink_Amount >= 100) {
-                Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:foxta_adctive"));
+                Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:foxta_adctive"));
                 assert _adv != null;
                 AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
                 if (!_ap.isDone()) {
@@ -88,7 +87,7 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
             }
             //serverPlayer.displayClientMessage(new TextComponent("Drink this = " + Snepsi_Drink_Amount),false);
         }*/
-        if (entity.getLevel().random.nextFloat() <= 0.001f) {
+        if (entity.level().random.nextFloat() <= 0.001f) {
             ProcessTransfur.progressTransfur(entity, 15, ChangedAddonTransfurVariants.FOXTA_FOXY.get(), TransfurContext.hazard(TransfurCause.FACE_HAZARD));
         }
         return retval;
@@ -96,11 +95,11 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
 
 
     private static final ModelResourceLocation GUIMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "foxta_gui"), "inventory");
+            new ModelResourceLocation(ResourceLocation.parse("changed_addon", "foxta_gui"), "inventory");
     private static final ModelResourceLocation HANDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "foxta_hand"), "inventory");
+            new ModelResourceLocation(ResourceLocation.parse("changed_addon", "foxta_hand"), "inventory");
     private static final ModelResourceLocation GROUNDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "foxta_ground"), "inventory");
+            new ModelResourceLocation(ResourceLocation.parse("changed_addon", "foxta_ground"), "inventory");
 
 
     @Override

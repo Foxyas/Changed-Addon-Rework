@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +13,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -55,13 +55,13 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return recipeItems;
+    public ItemStack assemble(SimpleContainer simpleContainer, RegistryAccess registryAccess) {
+        return output;
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer) {
-        return output;
+    public NonNullList<Ingredient> getIngredients() {
+        return recipeItems;
     }
 
     @Override
@@ -70,8 +70,12 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return output.copy();
+    }
+
+    public ItemStack getOutput() {
+        return output;
     }
 
     public float getProgressSpeed() {
@@ -101,14 +105,14 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
         public static final String ID = "unifuser";
     }
 
-    public static class Serializer implements RecipeSerializer<UnifuserRecipe>, IForgeRegistryEntry<RecipeSerializer<?>> {
+    public static class Serializer implements RecipeSerializer<UnifuserRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "unifuser");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("changed_addon", "unifuser");
 
         @Override
-        public UnifuserRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
-            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pSerializedRecipe, "output"));
-            JsonArray ingredients = GsonHelper.getAsJsonArray(pSerializedRecipe, "ingredients");
+        public UnifuserRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "output"));
+            JsonArray ingredients = GsonHelper.getAsJsonArray(json, "ingredients");
             NonNullList<Ingredient> inputs = NonNullList.withSize(ingredients.size(), Ingredient.EMPTY);
 
             for (int i = 0; i < ingredients.size(); i++) {
@@ -117,20 +121,21 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
                 inputs.set(i, ingredient);
             }
 
-            float ProgressSpeed = GsonHelper.getAsFloat(pSerializedRecipe, "ProgressSpeed", 1.0f);
+            float progressSpeed = GsonHelper.getAsFloat(json, "ProgressSpeed", 1.0f);
 
-            return new UnifuserRecipe(pRecipeId, output, inputs, ProgressSpeed);
+            return new UnifuserRecipe(recipeId, output, inputs, progressSpeed);
         }
 
         @Override
         public @Nullable UnifuserRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-            for (int i = 0; i < inputs.size(); i++) {
+            int size = buf.readInt();
+            NonNullList<Ingredient> inputs = NonNullList.withSize(size, Ingredient.EMPTY);
+            for (int i = 0; i < size; i++) {
                 inputs.set(i, Ingredient.fromNetwork(buf));
             }
             ItemStack output = buf.readItem();
-            float ProgressSpeed = buf.readFloat();
-            return new UnifuserRecipe(id, output, inputs, ProgressSpeed);
+            float progressSpeed = buf.readFloat();
+            return new UnifuserRecipe(id, output, inputs, progressSpeed);
         }
 
         @Override
@@ -139,23 +144,9 @@ public class UnifuserRecipe implements Recipe<SimpleContainer> {
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buf);
             }
-            buf.writeItemStack(recipe.getResultItem(), false);
+            buf.writeItem(recipe.getOutput());
             buf.writeFloat(recipe.getProgressSpeed());
         }
-
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return this;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return (Class<RecipeSerializer<?>>) (Class<?>) RecipeSerializer.class;
-        }
     }
+
 }

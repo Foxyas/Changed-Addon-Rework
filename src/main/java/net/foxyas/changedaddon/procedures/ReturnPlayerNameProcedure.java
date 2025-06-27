@@ -8,7 +8,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.client.multiplayer.ClientLevel;
 
 import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
@@ -27,7 +26,7 @@ public class ReturnPlayerNameProcedure {
 		String owner = "";
 		if ((entity instanceof Player _plr ? _plr.containerMenu instanceof UnifuserguiMenu : false)
 				&& (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY)
-						.is(ItemTags.create(new ResourceLocation("changed_addon:bloodtype_syringe")))) {
+						.is(ItemTags.create(ResourceLocation.parse("changed_addon:bloodtype_syringe")))) {
 			TEST = (new Object() {
 				public Entity get(LevelAccessor _world, String _uuid) {
 					try {
@@ -47,11 +46,11 @@ public class ReturnPlayerNameProcedure {
 			}).get(world, ((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("owner")));
 		} else if ((entity instanceof Player _plr ? _plr.containerMenu instanceof UnifuserguiMenu : false)
 				&& !((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY)
-						.is(ItemTags.create(new ResourceLocation("changed_addon:bloodtype_syringe"))))) {
+						.is(ItemTags.create(ResourceLocation.parse("changed_addon:bloodtype_syringe"))))) {
 			TEST = null;
 		}
-		no_owner = new TranslatableComponent("text.changed.syringe.no_owner").getString();
-		owner = new TranslatableComponent("text.changed.syringe.owner").getString();
+		no_owner = Component.translatable("text.changed.syringe.no_owner").getString();
+		owner = Component.translatable("text.changed.syringe.owner").getString();
 		if (TEST == null) {
 			return no_owner;
 		}

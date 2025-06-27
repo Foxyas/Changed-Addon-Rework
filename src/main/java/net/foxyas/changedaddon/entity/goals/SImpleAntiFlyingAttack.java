@@ -85,7 +85,7 @@ public class SImpleAntiFlyingAttack extends Goal {
     @Override
     public void start() {
         shootProjectile(target);
-        attacker.getLevel().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
+        attacker.level().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
         if (attacker.getEyePosition().distanceTo(target.getEyePosition()) <= 2f) {
             teleportAndKnockbackInAir(1);
         }
@@ -114,7 +114,7 @@ public class SImpleAntiFlyingAttack extends Goal {
                     && !player.isOnGround() && player.getAbilities().flying) {
                 if (attacker.distanceTo(target) >= 2) {
                     shootProjectile(target);
-                    attacker.getLevel().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
+                    attacker.level().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
                 } else if (attacker.distanceTo(target) <= 2 && attacker.isOnGround()) {
                     slam();
                 }
@@ -124,7 +124,7 @@ public class SImpleAntiFlyingAttack extends Goal {
                     slam();
                 } else {
                     shootProjectile(target);
-                    attacker.getLevel().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
+                    attacker.level().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
                 }
             }
             if (!target.isOnGround()) {
@@ -132,13 +132,13 @@ public class SImpleAntiFlyingAttack extends Goal {
                     slam();
                 } else {
                     shootProjectile(target);
-                    attacker.getLevel().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
+                    attacker.level().playSound(null, attacker, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, 1);
                 }
             }
         } else {
             attacker.getNavigation().stop();
             attacker.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            if (attacker.getLevel() instanceof ServerLevel serverLevel) {
+            if (attacker.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, attacker.getX(), attacker.getEyeY(), attacker.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, attacker.getX(), attacker.getEyeY(), attacker.getZ(), 4, 0.25, 0.5, 0.25, 0.05f);
             }
@@ -174,7 +174,7 @@ public class SImpleAntiFlyingAttack extends Goal {
         if (!target.isBlocking()) {
             target.hurt(DamageSource.mobAttack(attacker), damage / 2);
         } else {
-            target.getLevel().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
+            target.level().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
         }
         applySlowFalling(target);
         spawnImpactEffect(target.position(), 0);
@@ -195,7 +195,7 @@ public class SImpleAntiFlyingAttack extends Goal {
         if (!target.isBlocking()) {
             target.hurt(DamageSource.mobAttack(attacker), damage);
         } else {
-            target.getLevel().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
+            target.level().playSound(null, target, SoundEvents.SHIELD_BLOCK, SoundSource.PLAYERS, 1, 1);
         }
         spawnImpactEffect(target.position(), 2);
         spawnImpactParticleEffect(target.position(), 2);
@@ -255,7 +255,7 @@ public class SImpleAntiFlyingAttack extends Goal {
 
             // Spawn do projétil
             if (!level.isClientSide()) {
-                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), target);
+                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.level(), target);
                 projectile.setPos(spawnPos);
                 projectile.setNoGravity(true);
                 projectile.setOwner(attacker);
@@ -282,7 +282,7 @@ public class SImpleAntiFlyingAttack extends Goal {
 
             // Spawn do projétil
             if (!level.isClientSide()) {
-                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), target);
+                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.level(), target);
                 projectile.setPos(spawnPos);
                 projectile.setNoGravity(true);
                 projectile.setOwner(attacker);
@@ -309,7 +309,7 @@ public class SImpleAntiFlyingAttack extends Goal {
 
             // Spawn do projétil
             if (!level.isClientSide()) {
-                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), null);
+                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.level(), null);
                 projectile.setTargetPos(target.position());
                 projectile.setPos(spawnPos);
                 projectile.setNoGravity(true);

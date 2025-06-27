@@ -48,20 +48,20 @@ public class PlayerUtilProcedure {
 
     public static void TransfurPlayer(Entity entity, TransfurVariant<?> latexVariant) {
         LivingEntity livingEntity = (LivingEntity) entity;
-        ProcessTransfur.transfur(livingEntity, entity.getLevel(), latexVariant, true);
+        ProcessTransfur.transfur(livingEntity, entity.level(), latexVariant, true);
     }
 
     public static void TransfurPlayer(Entity entity, String id) {
         ResourceLocation form;
         try {
-            form = new ResourceLocation(id);
+            form = ResourceLocation.parse(id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         LivingEntity livingEntity = (LivingEntity) entity;
         if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
             TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-            ProcessTransfur.transfur(livingEntity, entity.getLevel(), latexVariant, true);
+            ProcessTransfur.transfur(livingEntity, entity.level(), latexVariant, true);
         }
     }
 
@@ -221,7 +221,7 @@ public class PlayerUtilProcedure {
 
 
     public static boolean isLineOfSightClear(Player player, Entity entity) {
-        var level = player.getLevel();
+        var level = player.level();
         var playerEyePos = player.getEyePosition(1.0F); // Posição dos olhos do jogador
         var entityEyePos = entity.getBoundingBox().getCenter(); // Centro da entidade
 

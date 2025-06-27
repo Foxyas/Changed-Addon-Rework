@@ -45,7 +45,7 @@ public class DyeableShortsColoringRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public ItemStack assemble(SimpleContainer container, RegistryAccess registryAccess) {
         ItemStack pants = ItemStack.EMPTY;
 
         int totalR = 0;
@@ -105,7 +105,7 @@ public class DyeableShortsColoringRecipe extends CustomRecipe {
 
     public static class Serializer implements RecipeSerializer<DyeableShortsColoringRecipe> {
 
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "shorts_coloring");
+        public static final ResourceLocation ID = ResourceLocation.parse("changed_addon", "shorts_coloring");
 
         @Override
         public DyeableShortsColoringRecipe fromJson(ResourceLocation id, JsonObject json) {

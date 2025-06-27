@@ -9,8 +9,8 @@ import net.minecraft.nbt.CompoundTag;
 public class SoftenAbilityInstance extends AbstractAbilityInstance {
 
 
-    public SoftenAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity){
-        super(ability,entity);
+    public SoftenAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
+        super(ability, entity);
     }
 
     @Override
@@ -27,7 +27,7 @@ public class SoftenAbilityInstance extends AbstractAbilityInstance {
     public void startUsing() {
     }
 
-    public boolean isActivate(){
+    public boolean isActivate() {
         return this.getController().getHoldTicks() > 0;
     }
 

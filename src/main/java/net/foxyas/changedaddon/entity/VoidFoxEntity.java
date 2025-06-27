@@ -20,7 +20,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -501,7 +501,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK, this.getX() + d0, this.getY(0.5), this.getZ() + d1, 0, d0, 0.0, d1, 0.0);
             serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK, this.getX() + d0, this.getY(0.6), this.getZ() + d1, 0, d0, 0.0, d1, 0.0);
             serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK, this.getX() + d0, this.getY(0.7), this.getZ() + d1, 0, d0, 0.0, d1, 0.0);
-            this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1f, 0.75f);
+            this.level().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1f, 0.75f);
         }
     }
 
@@ -779,7 +779,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
         handleChanges();
 
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             if (this.computeHealthRatio() <= 0.5) {
                 this.bossBar.setProgress(computeHealthRatio() / 0.5f);
                 this.bossBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);

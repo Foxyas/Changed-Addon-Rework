@@ -1,7 +1,8 @@
 package net.foxyas.changedaddon.abilities;
 
-import net.ltxprogrammer.changed.ability.*;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Objects;
@@ -14,8 +15,8 @@ public class DissolveAbility extends AbstractAbility<DissolveAbilityInstance> {
 
 
     @Override
-    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
-        return new TranslatableComponent("changed_addon.ability.dissolve");
+    public Component getAbilityName(IAbstractChangedEntity entity) {
+        return Component.translatable("changed_addon.ability.dissolve");
     }
 
     @Override
@@ -41,9 +42,8 @@ public class DissolveAbility extends AbstractAbility<DissolveAbilityInstance> {
         return true;
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return new ResourceLocation("changed_addon:textures/screens/dodge_ability.png");
+        return ResourceLocation.parse("changed_addon:textures/screens/dodge_ability.png");
     }
 
 }

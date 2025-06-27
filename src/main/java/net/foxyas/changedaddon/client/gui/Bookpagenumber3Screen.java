@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
@@ -41,7 +40,7 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		this.imageHeight = 144;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/bookpagenumber_3.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/bookpagenumber_3.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -58,25 +57,25 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		RenderSystem.setShaderTexture(0, texture);
 		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unifuserscreen.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/unifuserscreen.png"));
 		this.blit(ms, this.leftPos + 35, this.topPos + 20, 0, 0, 200, 104, 200, 104);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamonia_slot.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/litixcamonia_slot.png"));
 		this.blit(ms, this.leftPos + 190, this.topPos + 77, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/unlatexbasebutton_slot.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/unlatexbasebutton_slot.png"));
 		this.blit(ms, this.leftPos + 50, this.topPos + 90, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/ammoniabutton.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/ammoniabutton.png"));
 		this.blit(ms, this.leftPos + 50, this.topPos + 65, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/litixcamonia_slot.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/litixcamonia_slot.png"));
 		this.blit(ms, this.leftPos + 90, this.topPos + 37, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/laething_white_slot.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/laething_white_slot.png"));
 		this.blit(ms, this.leftPos + 90, this.topPos + 56, 0, 0, 16, 16, 16, 16);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/empty_slot.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/empty_slot.png"));
 		this.blit(ms, this.leftPos + 109, this.topPos + 46, 0, 0, 16, 16, 16, 16);
 
 		RenderSystem.disableBlend();
@@ -98,8 +97,8 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_unifuser"), 45, 30, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.label_or"), 70, 50, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookpagenumber_3.label_unifuser"), 45, 30, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookpagenumber_3.label_or"), 70, 50, -12829636);
 	}
 
 	@Override
@@ -112,7 +111,7 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_back = new Button(this.leftPos + 165, this.topPos + -22, 46, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.button_back"), e -> {
+		button_back = new Button(this.leftPos + 165, this.topPos + -22, 46, 20, Component.translatable("gui.changed_addon.bookpagenumber_3.button_back"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber3ButtonMessage(0, x, y, z));
 				Bookpagenumber3ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -120,7 +119,7 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		});
 		guistate.put("button:button_back", button_back);
 		this.addRenderableWidget(button_back);
-		button_close = new Button(this.leftPos + 215, this.topPos + -22, 51, 20, new TranslatableComponent("gui.changed_addon.bookpagenumber_3.button_close"), e -> {
+		button_close = new Button(this.leftPos + 215, this.topPos + -22, 51, 20, Component.translatable("gui.changed_addon.bookpagenumber_3.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookpagenumber3ButtonMessage(1, x, y, z));
 				Bookpagenumber3ButtonMessage.handleButtonAction(entity, 1, x, y, z);
@@ -128,7 +127,7 @@ public class Bookpagenumber3Screen extends AbstractContainerScreen<Bookpagenumbe
 		});
 		guistate.put("button:button_close", button_close);
 		this.addRenderableWidget(button_close);
-		imagebutton_recipe_buttom_normal = new ImageButton(this.leftPos + 131, this.topPos + 100, 20, 18, 0, 0, 18, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_recipe_buttom_normal.png"), 20, 36, e -> {
+		imagebutton_recipe_buttom_normal = new ImageButton(this.leftPos + 131, this.topPos + 100, 20, 18, 0, 0, 18, ResourceLocation.parse("changed_addon:textures/screens/atlas/imagebutton_recipe_buttom_normal.png"), 20, 36, e -> {
 		});
 		guistate.put("button:imagebutton_recipe_buttom_normal", imagebutton_recipe_buttom_normal);
 		this.addRenderableWidget(imagebutton_recipe_buttom_normal);

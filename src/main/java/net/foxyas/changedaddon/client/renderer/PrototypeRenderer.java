@@ -16,13 +16,13 @@ public class PrototypeRenderer extends MobRenderer<PrototypeEntity, ModelProtoTy
 		this.addLayer(new EyesLayer<PrototypeEntity, ModelProtoTypeMob<PrototypeEntity>>(this) {
 			@Override
 			public RenderType renderType() {
-				return RenderType.eyes(new ResourceLocation("changed_addon:textures/entities/glowprototype.png"));
+				return RenderType.eyes(ResourceLocation.parse("changed_addon:textures/entities/glowprototype.png"));
 			}
 		});
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(PrototypeEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/prototype.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/prototype.png");
 	}
 }

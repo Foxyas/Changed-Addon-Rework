@@ -30,7 +30,7 @@ public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity,
 	public LatexSnepRenderer(EntityRendererProvider.Context context) {
 		super(context, new LatexSnepModel(context.bakeLayer(LatexSnepModel.LAYER_LOCATION)),
 				ArmorNoneModel::new, ArmorNoneModel.INNER_ARMOR, ArmorNoneModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new CustomCatEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/latex_snep_right_eye.png"), new ResourceLocation("changed_addon:textures/entities/latex_snep_left_eye.png") , new ResourceLocation("changed_addon:textures/entities/latex_snep_sclera.png")));
+		this.addLayer(new CustomCatEyesLayer<>(this, ResourceLocation.parse("changed_addon:textures/entities/latex_snep_right_eye.png"), ResourceLocation.parse("changed_addon:textures/entities/latex_snep_left_eye.png") , ResourceLocation.parse("changed_addon:textures/entities/latex_snep_sclera.png")));
 	}
 
 
@@ -53,7 +53,7 @@ public class LatexSnepRenderer extends AdvancedHumanoidRenderer<LatexSnepEntity,
 
 	@Override
 	public ResourceLocation getTextureLocation(LatexSnepEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/latex_snep.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/latex_snep.png");
 	}
 
 

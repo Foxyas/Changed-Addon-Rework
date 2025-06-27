@@ -11,15 +11,14 @@ import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.recipes.UnifuserRecipe;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 @Deprecated
 public class JeiUnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe> {
-    public final static ResourceLocation UID = new ResourceLocation("changed_addon", "jei_unifuser");
-    public final static ResourceLocation TEXTURE = new ResourceLocation("changed_addon", "textures/screens/jei_unifuser_screen.png");
+    public final static ResourceLocation UID = ResourceLocation.parse("changed_addon", "jei_unifuser");
+    public final static ResourceLocation TEXTURE = ResourceLocation.parse("changed_addon", "textures/screens/jei_unifuser_screen.png");
     private final IDrawable background;
     private final IDrawable icon;
 
@@ -35,7 +34,7 @@ public class JeiUnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe
 
     @Override
     public Component getTitle() {
-        return new TextComponent((new TranslatableComponent("block.changed_addon.unifuser").getString()));
+        return new TextComponent((Component.translatable("block.changed_addon.unifuser").getString()));
     }
 
     @Override
@@ -73,7 +72,7 @@ public class JeiUnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe
         builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 64, 36).addItemStack(new ItemStack(ChangedAddonModItems.UNIFUSERBLOCK_ILLUSTRATIVE_ITEM.get())) // Substitua por um item adequado
                 .addTooltipCallback((recipeSlotView, tooltip) -> {
                     // Adiciona uma nova linha ao tooltip com o progresso da receita
-                    tooltip.add(new TranslatableComponent("changed_addon.gui.recipe_progress", progressSpeed));
+                    tooltip.add(Component.translatable("changed_addon.gui.recipe_progress", progressSpeed));
                 });
     }
 }

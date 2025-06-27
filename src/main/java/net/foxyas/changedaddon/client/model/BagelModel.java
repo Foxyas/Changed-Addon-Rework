@@ -23,7 +23,7 @@ import java.util.List;
 
 public class BagelModel extends AdvancedHumanoidModel<BagelEntity> implements AdvancedHumanoidModelInterface<BagelEntity, BagelModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "bagel"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "bagel"), "main");
 
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;

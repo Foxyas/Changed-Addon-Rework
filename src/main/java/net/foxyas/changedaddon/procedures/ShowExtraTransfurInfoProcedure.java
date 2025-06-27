@@ -6,8 +6,7 @@ import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,7 +41,7 @@ public class ShowExtraTransfurInfoProcedure {
 
         if (hasInformantBlock || isCreative) {
             if (hasInformantBlock && !Screen.hasShiftDown()) {
-                String variantName = new TranslatableComponent(Syringe.getVariantDescriptionId(itemstack)).getString();
+                String variantName = Component.translatable(Syringe.getVariantDescriptionId(itemstack)).getString();
                 tooltip.add(new TextComponent("Hold ").append(new TextComponent("<Shift>").withStyle(style -> style.withColor(0xFFD700)))
                         .append(" to show the stats of the " + variantName + " Transfur"));
             }
@@ -56,16 +55,16 @@ public class ShowExtraTransfurInfoProcedure {
                 int index = 3;
 
                 double extraHp = (hp) / 2.0;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.additionalHealth")
+                tooltip.add(index, Component.translatable("text.changed_addon.additionalHealth")
                         .append("")
                         .append(extraHp == 0
                                 ? new TextComponent("§7None§r")
                                 : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
-                        .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts")));
+                        .append(Component.translatable("text.changed_addon.additionalHealth.Hearts")));
 
                 index++;
                 double landSpeedPct = (landSpeed - 1) * 100;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.landspeed")
+                tooltip.add(index, Component.translatable("text.changed_addon.landspeed")
                         .append("")
                         .append(landSpeedPct == 0
                                 ? new TextComponent("§7None§r")
@@ -73,7 +72,7 @@ public class ShowExtraTransfurInfoProcedure {
 
                 index++;
                 double swimSpeedPct = (swimSpeed - 1) * 100;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.swimspeed")
+                tooltip.add(index, Component.translatable("text.changed_addon.swimspeed")
                         .append("")
                         .append(swimSpeedPct == 0
                                 ? new TextComponent("§7None§r")
@@ -81,21 +80,21 @@ public class ShowExtraTransfurInfoProcedure {
 
                 index++;
                 double jumpStrengthPct = (jumpStrength - 1) * 100;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.jumpStrength")
+                tooltip.add(index, Component.translatable("text.changed_addon.jumpStrength")
                         .append("")
                         .append(jumpStrengthPct == 0
                                 ? new TextComponent("§7None§r")
                                 : new TextComponent((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%")));
 
                 index++;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.canGlide/Fly")
+                tooltip.add(index, Component.translatable("text.changed_addon.canGlide/Fly")
                         .append("")
                         .append(canFlyOrGlide
                                 ? new TextComponent("§aTrue§r")
                                 : new TextComponent("§cFalse§r")));
             }
 
-            if (ChangedAddonTransfurVariants.isVariantOC(form, entity.getLevel())) {
+            if (ChangedAddonTransfurVariants.isVariantOC(form, entity.level())) {
                 tooltip.add(new TextComponent("§8OC Transfur"));
             }
         }

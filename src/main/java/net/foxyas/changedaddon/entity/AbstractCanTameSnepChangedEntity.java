@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -196,7 +195,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
@@ -215,7 +214,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                         boolean shouldFollow = !this.isFollowingOwner();
                         this.setFollowOwner(shouldFollow);
 
-                        player.displayClientMessage(new TranslatableComponent(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
+                        player.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
                         this.jumping = false;
                         this.navigation.stop();
                         this.setTarget((LivingEntity) null);
@@ -309,7 +308,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         super.die(source);
 
         if (this.dead)
-            if (!this.level.isClientSide && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getOwner() instanceof ServerPlayer) {
+            if (!this.level().isClientSide && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getOwner() instanceof ServerPlayer) {
                 this.getOwner().sendMessage(deathMessage, Util.NIL_UUID);
             }
     }
@@ -335,7 +334,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                 || stack.is(Items.COOKED_COD)
                 || stack.is(Items.SALMON)
                 || stack.is(Items.COOKED_SALMON)
-                || stack.is(ItemTags.create(new ResourceLocation(tameType.Tag)));
+                || stack.is(ItemTags.create(ResourceLocation.parse(tameType.Tag)));
     }
 
     //Default Use Type
@@ -345,13 +344,13 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                 || stack.is(Items.COOKED_COD)
                 || stack.is(Items.SALMON)
                 || stack.is(Items.COOKED_SALMON)
-                || stack.is(ItemTags.create(new ResourceLocation("changed_addon:tame_items")));
+                || stack.is(ItemTags.create(ResourceLocation.parse("changed_addon:tame_items")));
     }
 
     //Preset Styles For Tame
     public InteractionResult Exp2Sytle(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
@@ -384,7 +383,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
 
     public InteractionResult BioSynthSnepStyle(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {

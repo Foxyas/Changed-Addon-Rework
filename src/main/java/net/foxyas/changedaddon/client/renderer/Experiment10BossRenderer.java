@@ -17,7 +17,7 @@ public class Experiment10BossRenderer extends AdvancedHumanoidRenderer<Experimen
 	public Experiment10BossRenderer(EntityRendererProvider.Context context) {
 		super(context, new Experiment10BossModel(context.bakeLayer(Experiment10BossModel.LAYER_LOCATION)),
 				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon","textures/entities/exp-010_emissive.png")));
+		this.addLayer(new EmissiveBodyLayer<>(this, ResourceLocation.parse("changed_addon","textures/entities/exp-010_emissive.png")));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.parseHex("#252525")),CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#ed1c24"))));
@@ -26,9 +26,9 @@ public class Experiment10BossRenderer extends AdvancedHumanoidRenderer<Experimen
 	@Override
 	public ResourceLocation getTextureLocation(Experiment10BossEntity entity) {
 		if (entity.getUnderlyingPlayer() == null && entity.getHealth() <= entity.getMaxHealth() * 0.6) {
-			return new ResourceLocation("changed_addon:textures/entities/exp-10-phase2.png");
+			return ResourceLocation.parse("changed_addon:textures/entities/exp-10-phase2.png");
 		} else {
-			return new ResourceLocation("changed_addon:textures/entities/exp-10.png");
+			return ResourceLocation.parse("changed_addon:textures/entities/exp-10.png");
 		}
 	}
 }

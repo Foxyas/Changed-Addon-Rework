@@ -146,7 +146,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
     @SubscribeEvent
     public static void clientLoad(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> ItemProperties.register(LUMINAR_CRYSTAL_SPEAR.get(), new ResourceLocation("throwing"),
+        event.enqueueWork(() -> ItemProperties.register(LUMINAR_CRYSTAL_SPEAR.get(), ResourceLocation.parse("throwing"),
                 (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F));
 
         // Dynamic Color
@@ -212,9 +212,9 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ChangedAddonFacilityPieces extends FacilityPieces {
-        public static final FacilityPieceCollection Exp9FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp009room"), new ResourceLocation("changed_addon:chests/experiment_009_loot_dna")));
-        public static final FacilityPieceCollection Exp10FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp10room"), new ResourceLocation("changed_addon:chests/experiment_10_loot_normal")));
-        public static final FacilityPieceCollection LuminarCrystalsFacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:luminar_crystal_room"), new ResourceLocation("changed:chests/high_tier_lab")));
+        public static final FacilityPieceCollection Exp9FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(ResourceLocation.parse("changed_addon:exp009room"), ResourceLocation.parse("changed_addon:chests/experiment_009_loot_dna")));
+        public static final FacilityPieceCollection Exp10FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(ResourceLocation.parse("changed_addon:exp10room"), ResourceLocation.parse("changed_addon:chests/experiment_10_loot_normal")));
+        public static final FacilityPieceCollection LuminarCrystalsFacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(ResourceLocation.parse("changed_addon:luminar_crystal_room"), ResourceLocation.parse("changed:chests/high_tier_lab")));
 
     }
 

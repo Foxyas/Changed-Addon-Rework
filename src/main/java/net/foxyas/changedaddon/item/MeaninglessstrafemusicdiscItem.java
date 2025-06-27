@@ -11,6 +11,6 @@ import net.foxyas.changedaddon.init.ChangedAddonModSounds;
 
 public class MeaninglessstrafemusicdiscItem extends RecordItem {
 	public MeaninglessstrafemusicdiscItem() {
-		super(15, ChangedAddonModSounds.REGISTRY.get(new ResourceLocation("changed_addon:music.boss.exp9")), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(1).rarity(Rarity.RARE));
+		super(15, ChangedAddonModSounds.REGISTRY.get(ResourceLocation.parse("changed_addon:music.boss.exp9")), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(1).rarity(Rarity.RARE));
 	}
 }

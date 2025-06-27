@@ -11,16 +11,15 @@ import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.recipes.CatalyzerRecipe;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 @Deprecated
 public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe> {
-    public final static ResourceLocation UID = new ResourceLocation("changed_addon", "jei_catalyzer");
-    public final static ResourceLocation TEXTURE = new ResourceLocation("changed_addon", "textures/screens/jei_catalyzer_screen.png");
+    public final static ResourceLocation UID = ResourceLocation.parse("changed_addon", "jei_catalyzer");
+    public final static ResourceLocation TEXTURE = ResourceLocation.parse("changed_addon", "textures/screens/jei_catalyzer_screen.png");
     private final IDrawable background;
     private final IDrawable icon;
 
@@ -36,7 +35,7 @@ public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerReci
 
     @Override
     public Component getTitle() {
-        return new TextComponent((new TranslatableComponent("block.changed_addon.catlyzer").getString()));
+        return new TextComponent((Component.translatable("block.changed_addon.catlyzer").getString()));
     }
 
     @Override
@@ -74,7 +73,7 @@ public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerReci
         builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 51, 36).addItemStack(new ItemStack(ChangedAddonModItems.CATLYZERBLOCK_ILLUSTRATIVE_ITEM.get())) // Substitua por um item adequado
                 .addTooltipCallback((recipeSlotView, tooltip) -> {
                     // Adiciona uma nova linha ao tooltip com o progresso da receita
-                    tooltip.add(new TranslatableComponent("changed_addon.gui.catalyzer.nitrogen_usage", progressSpeed, nitrogenUsage));
+                    tooltip.add(Component.translatable("changed_addon.gui.catalyzer.nitrogen_usage", progressSpeed, nitrogenUsage));
                 });
     }
 }

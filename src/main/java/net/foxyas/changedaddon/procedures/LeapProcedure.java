@@ -21,7 +21,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
@@ -69,7 +68,7 @@ public class LeapProcedure {
 									public boolean checkGamemode(Entity _ent) {
 										if (_ent instanceof ServerPlayer _serverPlayer) {
 											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-										} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+										} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 											return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 										}
@@ -78,12 +77,12 @@ public class LeapProcedure {
 								}.checkGamemode(entity))) {
 									if (entity instanceof Player _player)
 										_player.causeFoodExhaustion((float) 0.3);
-									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+									if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 								}
 								{
 									Entity _ent = entity;
-									if (!_ent.level.isClientSide() && _ent.getServer() != null)
+									if (!_ent.level().isClientSide() && _ent.getServer() != null)
 										_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
 								}
 							}
@@ -102,7 +101,7 @@ public class LeapProcedure {
 									public boolean checkGamemode(Entity _ent) {
 										if (_ent instanceof ServerPlayer _serverPlayer) {
 											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-										} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+										} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 											return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 										}
@@ -111,14 +110,14 @@ public class LeapProcedure {
 								}.checkGamemode(entity))) {
 									if (entity instanceof Player _player)
 										_player.causeFoodExhaustion((float) (motionY * 1.25));
-									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+									if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
 								}
 								if (!(entity instanceof ServerPlayer _plr28 && _plr28.level instanceof ServerLevel
-										&& _plr28.getAdvancements().getOrStartProgress(_plr28.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"))).isDone())) {
+										&& _plr28.getAdvancements().getOrStartProgress(_plr28.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:leaper"))).isDone())) {
 									if (motionY >= 0.75) {
 										if (entity instanceof ServerPlayer _player) {
-											Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"));
+											Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:leaper"));
 											AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 											if (!_ap.isDone()) {
 												Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -130,7 +129,7 @@ public class LeapProcedure {
 								}
 								{
 									Entity _ent = entity;
-									if (!_ent.level.isClientSide() && _ent.getServer() != null)
+									if (!_ent.level().isClientSide() && _ent.getServer() != null)
 										_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
 								}
 							}
@@ -143,7 +142,7 @@ public class LeapProcedure {
 						public boolean checkGamemode(Entity _ent) {
 							if (_ent instanceof ServerPlayer _serverPlayer) {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-							} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+							} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 								return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 							}
@@ -163,14 +162,14 @@ public class LeapProcedure {
 								entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
 								{
 									Entity _ent = entity;
-									if (!_ent.level.isClientSide() && _ent.getServer() != null)
+									if (!_ent.level().isClientSide() && _ent.getServer() != null)
 										_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
 								}
 								if (!(new Object() {
 									public boolean checkGamemode(Entity _ent) {
 										if (_ent instanceof ServerPlayer _serverPlayer) {
 											return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-										} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+										} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 											return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 													&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 										}
@@ -179,7 +178,7 @@ public class LeapProcedure {
 								}.checkGamemode(entity))) {
 									if (entity instanceof Player _player)
 										_player.causeFoodExhaustion((float) 0.1);
-									if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+									if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 										_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0));
 								}
 							}
@@ -206,7 +205,7 @@ public class LeapProcedure {
 														public boolean checkGamemode(Entity _ent) {
 															if (_ent instanceof ServerPlayer _serverPlayer) {
 																return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-															} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+															} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 																return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 																		&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 															}
@@ -215,14 +214,14 @@ public class LeapProcedure {
 													}.checkGamemode(entity))) {
 														if (entity instanceof Player _player)
 															_player.causeFoodExhaustion((float) 0.1);
-														if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+														if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 															_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 100, 0));
 													}
 													if (!(new Object() {
 														public boolean checkGamemode(Entity _ent) {
 															if (_ent instanceof ServerPlayer _serverPlayer) {
 																return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-															} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+															} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 																return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 																		&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 															}
@@ -232,7 +231,7 @@ public class LeapProcedure {
 														public boolean checkGamemode(Entity _ent) {
 															if (_ent instanceof ServerPlayer _serverPlayer) {
 																return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-															} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+															} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 																return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 																		&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 															}
@@ -262,21 +261,21 @@ public class LeapProcedure {
 																		_itemName = _itemStack.getDisplayName();
 																	}
 																	if (_attacker != null && _itemName != null) {
-																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
+																		return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
 																	} else if (_attacker != null) {
-																		return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
+																		return Component.translatable("death.attack." + "lightningBolt.player", _entityName, _attackerName);
 																	} else {
-																		return new TranslatableComponent("death.attack." + "lightningBolt", _entityName);
+																		return Component.translatable("death.attack." + "lightningBolt", _entityName);
 																	}
 																}
 															})), 3);
 															if (world instanceof Level _level) {
 																if (!_level.isClientSide()) {
 																	_level.playSound(null, new BlockPos(entityiterator.getX(), entityiterator.getY(), entityiterator.getZ()),
-																			ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0);
+																			ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0);
 																} else {
 																	_level.playLocalSound((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()),
-																			ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0, false);
+																			ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0, false);
 																}
 															}
 														}
@@ -306,7 +305,7 @@ public class LeapProcedure {
 								public boolean checkGamemode(Entity _ent) {
 									if (_ent instanceof ServerPlayer _serverPlayer) {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-									} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+									} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 										return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 									}
@@ -315,12 +314,12 @@ public class LeapProcedure {
 							}.checkGamemode(entity))) {
 								if (entity instanceof Player _player)
 									_player.causeFoodExhaustion((float) 0.8);
-								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+								if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 30, 0, false, false));
 							}
 							{
 								Entity _ent = entity;
-								if (!_ent.level.isClientSide() && _ent.getServer() != null)
+								if (!_ent.level().isClientSide() && _ent.getServer() != null)
 									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
 							}
 						} else if (entity instanceof LivingEntity _livEnt ? _livEnt.isFallFlying() : false) {
@@ -336,7 +335,7 @@ public class LeapProcedure {
 								public boolean checkGamemode(Entity _ent) {
 									if (_ent instanceof ServerPlayer _serverPlayer) {
 										return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-									} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+									} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 										return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 												&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 									}
@@ -345,12 +344,12 @@ public class LeapProcedure {
 							}.checkGamemode(entity))) {
 								if (entity instanceof Player _player)
 									_player.causeFoodExhaustion(4);
-								if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+								if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 									_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0, false, false));
 							}
 							{
 								Entity _ent = entity;
-								if (!_ent.level.isClientSide() && _ent.getServer() != null)
+								if (!_ent.level().isClientSide() && _ent.getServer() != null)
 									_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
 							}
 						}

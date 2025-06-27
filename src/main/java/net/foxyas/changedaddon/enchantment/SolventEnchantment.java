@@ -29,6 +29,6 @@ public class SolventEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack itemstack) {
-		return Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:latex_solvent_appliable"))).test(itemstack);
+		return Ingredient.of(ItemTags.create(ResourceLocation.parse("changed_addon:latex_solvent_appliable"))).test(itemstack);
 	}
 }

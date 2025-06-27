@@ -14,7 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
@@ -61,7 +61,7 @@ public class SnepsiRightclickedOnBlockProcedure {
 			if (direction == Direction.UP) {
 				world.setBlock(new BlockPos(x, y + 1, z), block, 3);
 				if (blockstate.getBlock() instanceof LiquidBlock) {
-					if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:water")))) {
+					if (blockstate.is(BlockTags.create(ResourceLocation.parse("minecraft:water")))) {
 						{
 							BlockPos _pos = new BlockPos(x, y + 1, z);
 							BlockState _bs = world.getBlockState(_pos);
@@ -73,7 +73,7 @@ public class SnepsiRightclickedOnBlockProcedure {
 			} else if (direction == Direction.DOWN) {
 				world.setBlock(new BlockPos(x, y - 1, z), block, 3);
 				if (blockstate.getBlock() instanceof LiquidBlock) {
-					if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:water")))) {
+					if (blockstate.is(BlockTags.create(ResourceLocation.parse("minecraft:water")))) {
 						{
 							BlockPos _pos = new BlockPos(x, y - 1, z);
 							BlockState _bs = world.getBlockState(_pos);
@@ -86,7 +86,7 @@ public class SnepsiRightclickedOnBlockProcedure {
 			if (direction == Direction.NORTH) {
 				world.setBlock(new BlockPos(x, y, z - 1), block, 3);
 				if (blockstate.getBlock() instanceof LiquidBlock) {
-					if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:water")))) {
+					if (blockstate.is(BlockTags.create(ResourceLocation.parse("minecraft:water")))) {
 						{
 							BlockPos _pos = new BlockPos(x, y, z - 1);
 							BlockState _bs = world.getBlockState(_pos);
@@ -98,7 +98,7 @@ public class SnepsiRightclickedOnBlockProcedure {
 			} else if (direction == Direction.SOUTH) {
 				world.setBlock(new BlockPos(x, y, z + 1), block, 3);
 				if (blockstate.getBlock() instanceof LiquidBlock) {
-					if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:water")))) {
+					if (blockstate.is(BlockTags.create(ResourceLocation.parse("minecraft:water")))) {
 						{
 							BlockPos _pos = new BlockPos(x, y, z + 1);
 							BlockState _bs = world.getBlockState(_pos);
@@ -111,7 +111,7 @@ public class SnepsiRightclickedOnBlockProcedure {
 			if (direction == Direction.WEST) {
 				world.setBlock(new BlockPos(x - 1, y, z), block, 3);
 				if (blockstate.getBlock() instanceof LiquidBlock) {
-					if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:water")))) {
+					if (blockstate.is(BlockTags.create(ResourceLocation.parse("minecraft:water")))) {
 						{
 							BlockPos _pos = new BlockPos(x - 1, y, z);
 							BlockState _bs = world.getBlockState(_pos);
@@ -123,7 +123,7 @@ public class SnepsiRightclickedOnBlockProcedure {
 			} else if (direction == Direction.EAST) {
 				world.setBlock(new BlockPos(x + 1, y, z), block, 3);
 				if (blockstate.getBlock() instanceof LiquidBlock) {
-					if (blockstate.is(BlockTags.create(new ResourceLocation("minecraft:water")))) {
+					if (blockstate.is(BlockTags.create(ResourceLocation.parse("minecraft:water")))) {
 						{
 							BlockPos _pos = new BlockPos(x + 1, y, z);
 							BlockState _bs = world.getBlockState(_pos);
@@ -134,7 +134,7 @@ public class SnepsiRightclickedOnBlockProcedure {
 				}
 			}
 		}
-		if (entity instanceof Player _player && !_player.level.isClientSide())
+		if (entity instanceof Player _player && !_player.level().isClientSide())
 			_player.displayClientMessage(new TextComponent(("face2 is " + direction)), false);
 	}
 }

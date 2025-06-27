@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -60,7 +59,7 @@ public class KeypadUpgradeEvent {
         }
 
         // Feedback opcional
-        // player.displayClientMessage(new TextComponent("Converted to Timed Keypad!"), true);
+        // player.displayClientMessage(Component.literal("Converted to Timed Keypad!"), true);
 
         // Cancelar uso padrão do clique
         event.setCanceled(true);

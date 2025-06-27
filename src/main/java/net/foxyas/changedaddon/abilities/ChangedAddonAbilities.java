@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.ChangedAddonMod;

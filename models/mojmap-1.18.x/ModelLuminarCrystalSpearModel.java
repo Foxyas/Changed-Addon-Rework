@@ -6,7 +6,7 @@ public class ModelLuminarCrystalSpearModel<T extends Entity> extends EntityModel
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation("modid", "luminarcrystalspearmodel"), "main");
+			ResourceLocation.parse("modid", "luminarcrystalspearmodel"), "main");
 	private final ModelPart IceSpikeBottom;
 	private final ModelPart Ice_Spike2;
 	private final ModelPart Ice_Spike3;

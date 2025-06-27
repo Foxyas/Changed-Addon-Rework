@@ -22,7 +22,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 
 public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityModel<T>> extends EntityRenderer<T> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(ChangedAddonMod.MODID, "textures/entities/white_ball_projectile.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.parse(ChangedAddonMod.MODID, "textures/entities/white_ball_projectile.png");
     private final EntityModel<T> model;
 
     public SimpleProjectileRenderer(EntityRendererProvider.Context context) {
@@ -57,8 +57,7 @@ public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityM
 
 
 
-    @Override
-    public ResourceLocation getTextureLocation(T entity) {
+        public ResourceLocation getTextureLocation(T entity) {
         return TEXTURE;
     }
 }

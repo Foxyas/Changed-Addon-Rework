@@ -86,7 +86,7 @@ public class Phase2EntitysHandleProcedure {
     }
 
     private static void playSound(Level level, BlockPos pos, String soundId, SoundSource source, float volume, float pitch) {
-        var sound = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(soundId));
+        var sound = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(soundId));
         if (sound == null) return;
 
         if (!level.isClientSide()) {

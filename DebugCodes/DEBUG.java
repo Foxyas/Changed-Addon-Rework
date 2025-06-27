@@ -72,7 +72,7 @@ public class DEBUG {
         if (event.getMessage().startsWith("Show Info")){
             new DelayedTask(40, event.getPlayer(), (livingEntity) -> {
                 if (livingEntity instanceof Player player){
-                    player.displayClientMessage(new TextComponent("X = " + StructureHandle.isStructureNearby(event.getPlayer().getLevel(),event.getPlayer().getOnPos(),"changed_addon:dazed_latex_meteor", 3)), false);
+                    player.displayClientMessage(new TextComponent("X = " + StructureHandle.isStructureNearby(event.getPlayer().level(),event.getPlayer().getOnPos(),"changed_addon:dazed_latex_meteor", 3)), false);
                 }
             });
         }
@@ -81,7 +81,7 @@ public class DEBUG {
     @SubscribeEvent
     public static void PARTICLETEST(TickEvent.PlayerTickEvent event){
         if (PARTICLETEST && event.player.isShiftKeyDown()) {
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(event.player.getLevel(), ParticleTypes.GLOW, event.player.getEyePosition().add(FoxyasUtils.getRelativePosition(event.player,DeltaX,DeltaY,DeltaZ,true)),0f,0f,0f,4,0);
+            PlayerUtilProcedure.ParticlesUtil.sendParticles(event.player.level(), ParticleTypes.GLOW, event.player.getEyePosition().add(FoxyasUtils.getRelativePosition(event.player,DeltaX,DeltaY,DeltaZ,true)),0f,0f,0f,4,0);
 
         }
         //Player player = event.player;

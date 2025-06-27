@@ -102,8 +102,8 @@ public abstract class GameRendererMixin {
     private boolean changed_Addon_Rework$ShouldWork(Player player) {
         TransfurVariantInstance<?> variantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (variantInstance != null) {
-            this.changed_Addon_Rework$transfurVariantVision = TransfurVariantVisions.getTransfurVariantVision(player.getLevel(), variantInstance.getFormId());
-            return TransfurVariantVisions.getTransfurVariantVision(player.getLevel(), variantInstance.getFormId()) != null;
+            this.changed_Addon_Rework$transfurVariantVision = TransfurVariantVisions.getTransfurVariantVision(player.level(), variantInstance.getFormId());
+            return TransfurVariantVisions.getTransfurVariantVision(player.level(), variantInstance.getFormId()) != null;
         }
 
 
@@ -145,7 +145,7 @@ public abstract class GameRendererMixin {
                     this.minecraft.getTextureManager(),
                     this.minecraft.getResourceManager(),
                     this.minecraft.getMainRenderTarget(),
-                    new ResourceLocation(changed_Addon_Rework$transfurVariantVision.getVisionEffect().toString())
+                    ResourceLocation.parse(changed_Addon_Rework$transfurVariantVision.getVisionEffect().toString())
             );
             this.changed_Addon_Rework$colorblindChain.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
         } catch (IOException e) {
@@ -160,13 +160,14 @@ public abstract class GameRendererMixin {
                     this.minecraft.getTextureManager(),
                     this.minecraft.getResourceManager(),
                     this.minecraft.getMainRenderTarget(),
-                    new ResourceLocation(ChangedAddonMod.MODID, "shaders/post/light_bloom.json")
+                    ResourceLocation.parse(ChangedAddonMod.MODID, "shaders/post/light_bloom.json")
             );
             this.changed_Addon_Rework$lightBloomEffectChain.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+*/
 
     /*@Unique
     private void changed_Addon_Rework$loadMotionBlurShader() {
@@ -175,11 +176,12 @@ public abstract class GameRendererMixin {
                     this.minecraft.getTextureManager(),
                     this.minecraft.getResourceManager(),
                     this.minecraft.getMainRenderTarget(),
-                    new ResourceLocation(ChangedAddonMod.MODID, "shaders/post/motion_blur_post_effect.json")
+                    ResourceLocation.parse(ChangedAddonMod.MODID, "shaders/post/motion_blur_post_effect.json")
             );
             this.changed_Addon_Rework$MotionBlurEffectChain.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+*/
 }

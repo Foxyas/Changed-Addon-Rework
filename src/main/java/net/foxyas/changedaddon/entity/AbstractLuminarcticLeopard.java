@@ -25,12 +25,14 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -77,10 +79,10 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public static class WhenAttackAEntity {
         @SubscribeEvent
         public static void WhenAttack(LivingAttackEvent event) {
-            LivingEntity target = event.getEntityLiving();
+            LivingEntity target = event.getEntity();
             Entity source = event.getSource().getEntity();
             if (source instanceof AbstractLuminarcticLeopard lumi && lumi.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level(), ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                 target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
                 target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
             } else if (source instanceof Player player) {
@@ -88,7 +90,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
                         && instance != null
                         && instance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAUSE_FREEZE_DMG)) {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level(), ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                     target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
                     target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
                 }
@@ -97,8 +99,8 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
         @SubscribeEvent
         public static void onEntityDrop(LivingDropsEvent event) {
-            LivingEntity entity = event.getEntityLiving();
-            Level level = entity.level;
+            LivingEntity entity = event.getEntity();
+            Level level = entity.level();
 
             // Verifica se é um mob específico, por exemplo, um Luminarctic Leopard
             if (entity instanceof AbstractLuminarcticLeopard leopard) {
@@ -160,12 +162,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     );
 
     @Override
-    protected int getExperienceReward(Player player) {
+    public int getExperienceReward() {
         if (this.isBoss()) {
-            return super.getExperienceReward(player) * 50;
+            return super.getExperienceReward() * 50;
         }
 
-        return super.getExperienceReward(player);
+        return super.getExperienceReward();
     }
 
     boolean ActivatedAbility = false;
@@ -289,7 +291,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                                     double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
                                     Vec3 pos = new Vec3(x, y, z);
                                     PlayerUtilProcedure.ParticlesUtil.sendParticles(
-                                            this.getLevel(),
+                                            this.level(),
                                             ParticleTypes.GLOW,
                                             pos,
                                             0.3f, 0.2f, 0.3f,
@@ -301,7 +303,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                     }
                 }
             }
-            if (!this.level.isClientSide && this.isBoss()) {
+            if (!this.level().isClientSide && this.isBoss()) {
                 this.bossBar.setProgress(this.getHealth() / this.getMaxHealth());
             }
         }
@@ -401,9 +403,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         this.AbilitiesTicksCooldown -= (0.05f * amount);
 
         // Imune a projéteis
-        if (source.isProjectile() && source.getDirectEntity() instanceof AbstractArrow abstractArrow && abstractArrow.getPierceLevel() < 0 && this.isBoss()) {
+        if (source.is(DamageTypeTags.IS_PROJECTILE) && source.getDirectEntity() instanceof AbstractArrow abstractArrow && abstractArrow.getPierceLevel() < 0 && this.isBoss()) {
             // Animação de esquiva e "ignorar" o dano
-            this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
+            this.setDodgeAnimTicks(level().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
             this.setDodgeType(this.getRandom().nextInt(2) + 1);
 
 
@@ -413,17 +415,17 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 this.lookAt(EntityAnchorArgument.Anchor.EYES, lookPos);
             }
             return false;
-        } else if (source.isProjectile() && !this.isBoss()) {
+        } else if (source.is(DamageTypeTags.IS_PROJECTILE) && !this.isBoss()) {
             return super.hurt(source, amount);
-        } else if (source.isProjectile() &&
+        } else if (source.is(DamageTypeTags.IS_PROJECTILE) &&
                 source.getDirectEntity() instanceof AbstractArrow abstractArrow &&
                 abstractArrow.getPierceLevel() > 0 && this.isBoss()) {
             return super.hurt(source, amount);
         }
 
         // Dano de fogo ou explosão extremamente reduzido
-        if (this.isBoss() && (source.isFire() || source.isExplosion())) {
-            if (source.isFire()) {
+        if (this.isBoss() && (source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_EXPLOSION))) {
+            if (source.is(DamageTypeTags.IS_FIRE)) {
                 return super.hurt(source, amount * 0.75f);
             }
             return super.hurt(source, amount * 0.25f);

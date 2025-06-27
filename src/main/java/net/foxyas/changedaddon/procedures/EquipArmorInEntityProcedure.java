@@ -6,7 +6,7 @@ import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -102,12 +102,12 @@ public class EquipArmorInEntityProcedure {
 		// Remove one unit of the new armor and equip it in the entity's slot
 		entity.setItemSlot(armorSlot, itemStack.split(1)); // Equip one unit of the new armor
 		if (armorItemStack.getEquipSound() != null) {
-			entity.level.playSound(null, entity.blockPosition(), armorItemStack.getEquipSound(), SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
+			entity.level().playSound(null, entity.blockPosition(), armorItemStack.getEquipSound(), SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
 		} else {
-			entity.level.playSound(null, entity.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
+			entity.level().playSound(null, entity.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
 		}
 		// Remove the item from the player's hand
-		if (!player.level.isClientSide()) {
+		if (!player.level().isClientSide()) {
 			// Check if the hand being used is the main or offhand
 			if (hand == InteractionHand.MAIN_HAND) {
 				player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY); // Clear the main hand item
@@ -139,7 +139,7 @@ public class EquipArmorInEntityProcedure {
 			if (!currentArmor.isEmpty()) {
 				// Remove the armor from the slot
 				entity.setItemSlot(clickedSlot, ItemStack.EMPTY);
-				entity.level.playSound(null, entity.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
+				entity.level().playSound(null, entity.blockPosition(), SoundEvents.ARMOR_EQUIP_GENERIC, SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
 				// Add the removed armor to the player's inventory or to the hand if empty
 				if (player.getItemInHand(hand).isEmpty()) {
 					player.setItemInHand(hand, currentArmor);

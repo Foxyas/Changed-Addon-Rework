@@ -27,12 +27,12 @@ public class VariantUtilProcedure {
 
 	public static float GetLandSpeed(String stringvariant,Player player) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
                 ChangedEntity InstanceEntity = null;
                 if (variant != null) {
-                    InstanceEntity = variant.getEntityType().create(player.level);
+                    InstanceEntity = variant.getEntityType().create(player.level());
                 }
                 assert InstanceEntity != null;
                 InstanceEntity.setUnderlyingPlayer(player);
@@ -49,12 +49,12 @@ public class VariantUtilProcedure {
 
 	public static float GetSwimSpeed(String stringvariant,Player player) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
                 ChangedEntity InstanceEntity = null;
                 if (variant != null) {
-                    InstanceEntity = variant.getEntityType().create(player.level);
+                    InstanceEntity = variant.getEntityType().create(player.level());
                 }
                 assert InstanceEntity != null;
 				InstanceEntity.setUnderlyingPlayer(player);
@@ -71,12 +71,12 @@ public class VariantUtilProcedure {
 
 	public static float GetExtraHp(String stringvariant,Player player) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
                 ChangedEntity Instance = null;
                 if (variant != null) {
-                    Instance = variant.getEntityType().create(player.level);
+                    Instance = variant.getEntityType().create(player.level());
                 }
                 assert Instance != null;
 				Instance.setUnderlyingPlayer(player);
@@ -92,7 +92,7 @@ public class VariantUtilProcedure {
 
 	public static int GetLegs(String stringvariant) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant == null ? 0 : variant.legCount;
@@ -107,7 +107,7 @@ public class VariantUtilProcedure {
 
 	public static boolean CanGlideandFly(String stringvariant) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant != null && variant.canGlide;
@@ -122,7 +122,7 @@ public class VariantUtilProcedure {
 
 	public static boolean CanClimb(String stringvariant) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant != null && variant.canClimb;
@@ -137,7 +137,7 @@ public class VariantUtilProcedure {
 
 	public static float GetJumpStrength(String stringvariant) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant == null ? 0f : variant.jumpStrength;
@@ -152,7 +152,7 @@ public class VariantUtilProcedure {
 
 	public static EntityType<?> GetEntity(String stringvariant, Level world) {
 		try {
-			ResourceLocation form = new ResourceLocation(stringvariant);
+			ResourceLocation form = ResourceLocation.parse(stringvariant);
 			if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
 				TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
 				return variant == null ? ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get().getEntityType() : variant.getEntityType();

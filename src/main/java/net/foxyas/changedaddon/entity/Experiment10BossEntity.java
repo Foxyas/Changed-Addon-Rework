@@ -17,8 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
@@ -128,7 +127,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:humanoids")));
+        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("changed:humanoids")));
     }
 
     @Override
@@ -196,12 +195,12 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
     @Override
     public SoundEvent getHurtSound(DamageSource ds) {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
     }
 
     @Override
     public SoundEvent getDeathSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
     }
 
     @Override
@@ -230,8 +229,8 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     private void maybeSendReactionToPlayer(DamageSource source) {
-        if (this.getLevel().random.nextFloat() <= 0.25f && source.getEntity() instanceof Player player) {
-            player.displayClientMessage(new TranslatableComponent("changed_addon.entity_dialogues.exp10.reaction.range_attacks"), true);
+        if (this.level().random.nextFloat() <= 0.25f && source.getEntity() instanceof Player player) {
+            player.displayClientMessage(Component.translatable("changed_addon.entity_dialogues.exp10.reaction.range_attacks"), true);
         }
     }
 
@@ -477,7 +476,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
             if (distance > 3) {
                 if (entity.getLastHurtByMob() == Target) {
                     entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
-                    this.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
+                    this.level().playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
                     TpCooldown = 40;
                 } else {
                     if (Targets != null && !(Targets instanceof ServerPlayer)) {
@@ -488,7 +487,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
                         }
                     }// Check if the entity in not null and is instance of server player if is will check if the gametype and if is not Creative and Spectator return true
                     entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
-                    this.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
+                    this.level().playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
                     TpCooldown = 40;
                 }
 
@@ -503,15 +502,15 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
     @Override
     public void WhenPattedReaction(Player player) {
-        if (!player.getLevel().isClientSide) {
+        if (!player.level().isClientSide) {
             return;
         }
-        List<TranslatableComponent> translatableComponentList = new ArrayList<>();
-        translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_0"));
-        translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_1"));
-        translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_2"));
-        translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp10.pat.type_3"));
-        player.getLevel().addParticle(
+        List<Component> ComponentList = new ArrayList<>();
+        ComponentList.add(Component.translatable("changed_addon.entity_dialogues.exp10.pat.type_0"));
+        ComponentList.add(Component.translatable("changed_addon.entity_dialogues.exp10.pat.type_1"));
+        ComponentList.add(Component.translatable("changed_addon.entity_dialogues.exp10.pat.type_2"));
+        ComponentList.add(Component.translatable("changed_addon.entity_dialogues.exp10.pat.type_3"));
+        player.level().addParticle(
                 ChangedParticles.emote(this, Emote.ANGRY),
                 this.getX(),
                 this.getY() + (double) this.getDimensions(this.getPose()).height + 0.65,
@@ -520,6 +519,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
                 0.0f,
                 0.0f
         );
-        player.displayClientMessage(translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size())), false);
+        player.displayClientMessage(ComponentList.get(this.getRandom().nextInt(ComponentList.size())), false);
     }
 }

@@ -44,7 +44,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public ItemStack assemble(SimpleContainer container, RegistryAccess registryAccess) {
         ItemStack pointer = ItemStack.EMPTY;
 
         int totalR = 0;
@@ -95,7 +95,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
 
     public static class Serializer implements RecipeSerializer<LaserPointerColoringRecipe> {
 
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "laser_pointer_coloring");
+        public static final ResourceLocation ID = ResourceLocation.parse("changed_addon", "laser_pointer_coloring");
 
         @Override
         public LaserPointerColoringRecipe fromJson(ResourceLocation id, JsonObject json) {

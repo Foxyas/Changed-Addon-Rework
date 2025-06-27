@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.CommandSourceStack;
 
@@ -25,7 +25,7 @@ public class GetExp10BossPermProcedure {
 				}
 			}
 		}.getEntity()).getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp10TransfurAllowed) {
-			if (entity instanceof Player _player && !_player.level.isClientSide())
+			if (entity instanceof Player _player && !_player.level().isClientSide())
 				_player.displayClientMessage(new TextComponent(((new Object() {
 					public Entity getEntity() {
 						try {
@@ -37,7 +37,7 @@ public class GetExp10BossPermProcedure {
 					}
 				}.getEntity()).getDisplayName().getString() + " is allowed")), true);
 		} else {
-			if (entity instanceof Player _player && !_player.level.isClientSide())
+			if (entity instanceof Player _player && !_player.level().isClientSide())
 				_player.displayClientMessage(new TextComponent(((new Object() {
 					public Entity getEntity() {
 						try {

@@ -20,8 +20,7 @@ public class AvaliRenderer extends AdvancedHumanoidRenderer<AvaliEntity, AvaliMo
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
     }
 
-    @Override
-    public ResourceLocation getTextureLocation(AvaliEntity entity) {
-        return new ResourceLocation("changed_addon:textures/entities/avali.png");
+        public ResourceLocation getTextureLocation(AvaliEntity entity) {
+        return ResourceLocation.parse("changed_addon:textures/entities/avali.png");
     }
 }

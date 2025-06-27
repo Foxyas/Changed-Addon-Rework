@@ -5,12 +5,10 @@ import net.ltxprogrammer.changed.block.KeypadBlock;
 import net.ltxprogrammer.changed.block.entity.KeypadBlockEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -44,12 +42,12 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
         this.timer = Math.max(0, Math.min(this.timer + timer, 1000));
     }
 
-    public void setTimer(int timer) {
-        this.timer = Math.max(0, Math.min(timer, 1000));
-    }
-
     public int getTimer() {
         return timer;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = Math.max(0, Math.min(timer, 1000));
     }
 
     @Override

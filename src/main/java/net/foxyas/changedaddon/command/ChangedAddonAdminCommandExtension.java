@@ -7,7 +7,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,7 +29,7 @@ public class ChangedAddonAdminCommandExtension {
                                         .then(Commands.argument("maxPos", BlockPosArgument.blockPos())
                                                 .then(Commands.literal("white_latex")
                                                         .executes(ctx -> {
-                                                            ServerLevel world = ctx.getSource().getLevel();
+                                                            ServerLevel world = ctx.getSource().level();
                                                             BlockPos minPos = BlockPosArgument.getLoadedBlockPos(ctx, "minPos");
                                                             BlockPos maxPos = BlockPosArgument.getLoadedBlockPos(ctx, "maxPos");
 
@@ -48,7 +48,7 @@ public class ChangedAddonAdminCommandExtension {
                                                         })
                                                 ).then(Commands.literal("dark_latex")
                                                         .executes(ctx -> {
-                                                            ServerLevel world = ctx.getSource().getLevel();
+                                                            ServerLevel world = ctx.getSource().level();
                                                             BlockPos minPos = BlockPosArgument.getLoadedBlockPos(ctx, "minPos");
                                                             BlockPos maxPos = BlockPosArgument.getLoadedBlockPos(ctx, "maxPos");
 
@@ -67,7 +67,7 @@ public class ChangedAddonAdminCommandExtension {
                                                         })
                                                 ).then(Commands.literal("neutral")
                                                         .executes(ctx -> {
-                                                            ServerLevel world = ctx.getSource().getLevel();
+                                                            ServerLevel world = ctx.getSource().level();
                                                             BlockPos minPos = BlockPosArgument.getLoadedBlockPos(ctx, "minPos");
                                                             BlockPos maxPos = BlockPosArgument.getLoadedBlockPos(ctx, "maxPos");
 

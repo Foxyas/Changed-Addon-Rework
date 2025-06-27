@@ -64,15 +64,15 @@ repositories {
         url "https://cursemaven.com"
     }
 
-    maven {
+    /*maven {
         name = "Changed"
         url = "https://raw.githubusercontent.com/LtxProgrammer/Changed-Minecraft-Mod/master/mcmodsrepo/"
-    }
+    }*/
 
-    /*maven {
+    maven {
         name = "Changed_Local_file"
         url uri("${rootProject.projectDir}/libs")
-    }*/
+    }
 
 
   /* maven {

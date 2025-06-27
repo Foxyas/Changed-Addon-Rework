@@ -144,7 +144,7 @@ public class Exp9AttacksHandle {
                 double ratio = (double) i / maxAmount;
                 Vec3 spawnPos = this.boss.getEyePosition().add(posDifference.scale(ratio));
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(
-                        this.boss.getLevel(),
+                        this.boss.level(),
                         ChangedAddonParticles.thunderSpark(1),
                         spawnPos,
                         0.25f, 0.25f, 0.25f,
@@ -365,7 +365,7 @@ public class Exp9AttacksHandle {
                 double ratio = (double) i / maxAmount;
                 Vec3 spawnPos = this.boss.getEyePosition().add(posDifference.scale(ratio));
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(
-                        this.boss.getLevel(),
+                        this.boss.level(),
                         ChangedAddonParticles.thunderSpark(1),
                         spawnPos,
                         0.25f, 0.25f, 0.25f,
@@ -546,7 +546,7 @@ public class Exp9AttacksHandle {
 
                     BlockHitResult hitResult = this.boss.level.clip(new ClipContext(this.boss.getEyePosition(1f), this.boss.getEyePosition(1f).add(this.boss.getViewVector(1f).scale(5)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, this.boss)); //adicione aqui um get block
                     //BlockState blockState = this.boss.level.getBlockState(new BlockPos(pos));
-                    var state = this.boss.getLevel().getBlockState(hitResult.getBlockPos());
+                    var state = this.boss.level().getBlockState(hitResult.getBlockPos());
 
                     // Verificando se o bloco é metálico (exemplo usando ferro, mas pode ser expandido)
                     if (hitResult.getType() == HitResult.Type.MISS) {
@@ -855,7 +855,7 @@ public class Exp9AttacksHandle {
                 BlockPos pos = thunderPositions.get(thunderIndex);
 
                 // Summona trovão visual
-                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(boss.level);
+                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(boss.level());
                 if (lightning != null) {
                     lightning.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
                     lightning.setVisualOnly(true);
@@ -934,7 +934,7 @@ public class Exp9AttacksHandle {
                 LivingEntity entity = targets.get(thunderIndex);
 
                 // Summona trovão visual
-                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(boss.level);
+                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(boss.level());
                 if (lightning != null) {
                     lightning.moveTo(entity.getX(), entity.getY(), entity.getZ());
                     lightning.setVisualOnly(true);

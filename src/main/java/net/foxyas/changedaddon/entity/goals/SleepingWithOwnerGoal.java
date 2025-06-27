@@ -145,8 +145,8 @@ public class SleepingWithOwnerGoal extends Goal {
         @Override
         public void start() {
             if (bedPos != null && pet instanceof PathfinderMob pathfinderPet) {
-                if (owner.getLevel().isClientSide()) {
-                    owner.getLevel().addParticle(
+                if (owner.level().isClientSide()) {
+                    owner.level().addParticle(
                             ChangedParticles.emote(pet, Emote.IDEA),
                             pet.getX(),
                             pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,
@@ -203,8 +203,8 @@ public class SleepingWithOwnerGoal extends Goal {
                         // Verifica novamente antes de dormir
                         if (!bedState.getValue(BedBlock.OCCUPIED)) {
                             pet.startSleeping(bedPos);
-                            if (owner.getLevel().isClientSide()) {
-                                owner.getLevel().addParticle(
+                            if (owner.level().isClientSide()) {
+                                owner.level().addParticle(
                                         ChangedParticles.emote(pet, Emote.HEART),
                                         pet.getX(),
                                         pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,
@@ -404,8 +404,8 @@ public class SleepingWithOwnerGoal extends Goal {
     @Override
     public void start() {
         if (bedPos != null && pet instanceof PathfinderMob pathfinderPet) {
-            if (owner.getLevel().isClientSide()) {
-                owner.getLevel().addParticle(
+            if (owner.level().isClientSide()) {
+                owner.level().addParticle(
                         ChangedParticles.emote(pet, Emote.IDEA),
                         pet.getX(),
                         pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,
@@ -445,8 +445,8 @@ public class SleepingWithOwnerGoal extends Goal {
                 //}
                 if (sleepTimer >= 10) {
                     if (!pet.isSleeping()) {
-                        if (owner.getLevel().isClientSide()) {
-                            owner.getLevel().addParticle(
+                        if (owner.level().isClientSide()) {
+                            owner.level().addParticle(
                                     ChangedParticles.emote(pet, Emote.HEART),
                                     pet.getX(),
                                     pet.getY() + (double) pet.getDimensions(pet.getPose()).height + 0.65,

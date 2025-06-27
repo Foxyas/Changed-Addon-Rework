@@ -6,7 +6,7 @@ public class ModelNewHyperFlower<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation("modid", "newhyperflower"), "main");
+			ResourceLocation.parse("modid", "newhyperflower"), "main");
 	private final ModelPart HyperFlowerModel;
 
 	public ModelNewHyperFlower(ModelPart root) {

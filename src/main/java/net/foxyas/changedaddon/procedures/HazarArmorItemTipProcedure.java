@@ -50,7 +50,7 @@ public class HazarArmorItemTipProcedure {
 		}
 		if (event instanceof ItemAttributeModifierEvent _event && _event.getSlotType() == EquipmentSlot.CHEST) {
 			if (itemstack.getItem() == ChangedAddonModItems.HAZARD_SUIT_CHESTPLATE.get()) {
-				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("changed:transfur_damage")), HazardDebuff3);
+				_event.addModifier(ForgeRegistries.ATTRIBUTES.getValue(ResourceLocation.parse("changed:transfur_damage")), HazardDebuff3);
 				_event.addModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(), HazardArmor);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, HazardDebuff);
 				_event.addModifier(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, HazardDebuff2);

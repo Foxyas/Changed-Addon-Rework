@@ -27,6 +27,6 @@ public class PuroKindRenderer extends AdvancedHumanoidRenderer<PuroKindEntity, P
 
 	@Override
 	public ResourceLocation getTextureLocation(PuroKindEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/puro_kind_texture.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/puro_kind_texture.png");
 	}
 }

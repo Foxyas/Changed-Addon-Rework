@@ -56,7 +56,7 @@ public class Exp2StatsProcedure {
 						public boolean checkGamemode(Entity _ent) {
 							if (_ent instanceof ServerPlayer _serverPlayer) {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-							} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+							} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 								return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 							}
@@ -66,14 +66,14 @@ public class Exp2StatsProcedure {
 						public boolean checkGamemode(Entity _ent) {
 							if (_ent instanceof ServerPlayer _serverPlayer) {
 								return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-							} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+							} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 								return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 										&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 							}
 							return false;
 						}
 					}.checkGamemode(immediatesourceentity))) {
-						if (immediatesourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+						if (immediatesourceentity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 							_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 					}
 				}
@@ -87,7 +87,7 @@ public class Exp2StatsProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 								}
@@ -97,14 +97,14 @@ public class Exp2StatsProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 								}
 								return false;
 							}
 						}.checkGamemode(entity))) {
-							if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+							if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 								_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 						}
 					}
@@ -119,7 +119,7 @@ public class Exp2StatsProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 								}
@@ -129,14 +129,14 @@ public class Exp2StatsProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 								}
 								return false;
 							}
 						}.checkGamemode(entity))) {
-							if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+							if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 								_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 						}
 					}
@@ -151,7 +151,7 @@ public class Exp2StatsProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
 								}
@@ -161,14 +161,14 @@ public class Exp2StatsProcedure {
 							public boolean checkGamemode(Entity _ent) {
 								if (_ent instanceof ServerPlayer _serverPlayer) {
 									return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-								} else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
+								} else if (_ent.level().isClientSide() && _ent instanceof Player _player) {
 									return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
 											&& Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
 								}
 								return false;
 							}
 						}.checkGamemode(immediatesourceentity))) {
-							if (immediatesourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+							if (immediatesourceentity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 								_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
 						}
 					}

@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,20 +13,19 @@ public class TurnFeralSnepAbility extends AbstractAbility<TurnFeralSnepAbilityIn
     }
 
     @Override
-    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
-        return new TranslatableComponent("changed_addon.ability.turn_feral");
+    public Component getAbilityName(IAbstractChangedEntity entity) {
+        return Component.translatable("changed_addon.ability.turn_feral");
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return new ResourceLocation("changed_addon:textures/screens/normal_paw.png");
+        return ResourceLocation.parse("changed_addon:textures/screens/normal_paw.png");
     }
 
     @Nullable
     @Override
     public Component getSelectedDisplayText(IAbstractChangedEntity entity) {
-        if (entity.getChangedEntity() instanceof LatexSnepEntity){
-            return new TranslatableComponent("changed_addon.ability.turn_feral.can");
+        if (entity.getChangedEntity() instanceof LatexSnepEntity) {
+            return Component.translatable("changed_addon.ability.turn_feral.can");
         }
         return super.getSelectedDisplayText(entity);
     }

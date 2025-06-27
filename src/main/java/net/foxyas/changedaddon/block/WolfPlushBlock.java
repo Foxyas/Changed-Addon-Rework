@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.WolfPlushBlockEntity;
@@ -23,9 +22,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -38,125 +36,124 @@ import java.util.List;
 import java.util.Random;
 
 public class WolfPlushBlock extends Block implements EntityBlock {
-	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-	public WolfPlushBlock() {
-		super(BlockBehaviour.Properties.of(Material.WOOL).sound(SoundType.WOOL).strength(0.5f, 5f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
-	}
+    public WolfPlushBlock() {
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL).sound(SoundType.WOOL).strength(0.5f, 5f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
 
-	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
-		return true;
-	}
+    @OnlyIn(Dist.CLIENT)
+    public static void registerRenderLayer() {
+        ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.WOLF_PLUSH.get(), renderType -> renderType == RenderType.cutoutMipped());
+    }
 
-	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		return 0;
-	}
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+        return true;
+    }
 
-	@Override
-	public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-		return Shapes.empty();
-	}
+    @Override
+    public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
+        return 0;
+    }
 
-	@Override
-	public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, Mob entity) {
-		return BlockPathTypes.BLOCKED;
-	}
+    @Override
+    public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Shapes.empty();
+    }
 
+    @Override
+    public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, Mob entity) {
+        return BlockPathTypes.BLOCKED;
+    }
 
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-		return switch (state.getValue(FACING)) {
-			default -> box(4, 0, 4, 12, 18, 12.5);
-			case NORTH -> box(4, 0, 3.5, 12, 18, 12);
-			case EAST -> box(4, 0, 4, 12.5, 18, 12);
-			case WEST -> box(3.5, 0, 4, 12, 18, 12);
-		};
-	}
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return switch (state.getValue(FACING)) {
+            case NORTH -> box(4, 0, 3.5, 12, 18, 12);
+            case EAST -> box(4, 0, 4, 12.5, 18, 12);
+            case WEST -> box(3.5, 0, 4, 12, 18, 12);
+            default -> box(4, 0, 4, 12, 18, 12.5);
+        };
+    }
 
-	@Override
-	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-		builder.add(FACING);
-	}
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FACING);
+    }
 
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-	}
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
 
-	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
-	}
+    public BlockState rotate(BlockState state, Rotation rot) {
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
+    }
 
-	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
-	}
+    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
+    }
 
-	@Override
-	public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
-		return 20;
-	}
+    @Override
+    public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+        return 20;
+    }
 
-	@Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-		if (!dropsOriginal.isEmpty())
-			return dropsOriginal;
-		return Collections.singletonList(new ItemStack(this, 1));
-	}
+    @Override
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
+        List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+        if (!dropsOriginal.isEmpty())
+            return dropsOriginal;
+        return Collections.singletonList(new ItemStack(this, 1));
+    }
 
-	@Override
-	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		double hitX = hit.getLocation().x;
-		double hitY = hit.getLocation().y;
-		double hitZ = hit.getLocation().z;
-		Direction direction = hit.getDirection();
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof WolfPlushBlockEntity PlusheBlockEntity){
-			if (!PlusheBlockEntity.isSqueezed()){
-				InteractPlushesProcedure.execute(world, x, y, z);
-				PlusheBlockEntity.squeezedTicks = 4;
-			}
-		}
-		return InteractionResult.SUCCESS;
-	}
+    @Override
+    public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
+        super.use(blockstate, world, pos, entity, hand, hit);
+        int x = pos.getX();
+        int y = pos.getY();
+        int z = pos.getZ();
+        double hitX = hit.getLocation().x;
+        double hitY = hit.getLocation().y;
+        double hitZ = hit.getLocation().z;
+        Direction direction = hit.getDirection();
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        if (blockEntity instanceof WolfPlushBlockEntity PlusheBlockEntity) {
+            if (!PlusheBlockEntity.isSqueezed()) {
+                InteractPlushesProcedure.execute(world, x, y, z);
+                PlusheBlockEntity.squeezedTicks = 4;
+            }
+        }
+        return InteractionResult.SUCCESS;
+    }
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new WolfPlushBlockEntity(pos, state);
-	}
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new WolfPlushBlockEntity(pos, state);
+    }
 
-	@Override
-	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
-		super.onPlace(blockstate, world, pos, oldState, moving);
-		world.scheduleTick(pos, this, 10);
-	}
+    @Override
+    public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
+        super.onPlace(blockstate, world, pos, oldState, moving);
+        world.scheduleTick(pos, this, 10);
+    }
 
-	@Override
-	public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, Random p_60465_) {
-		super.tick(state, serverLevel, pos, p_60465_);
-		BlockEntity blockEntity = serverLevel.getBlockEntity(pos);
-		if (blockEntity instanceof WolfPlushBlockEntity WolfPlushBlockEntity && WolfPlushBlockEntity.isSqueezed()){
-			WolfPlushBlockEntity.subSqueezedTicks(1);
-		}
-		serverLevel.scheduleTick(pos, this, 10);
-	}
+    @Override
+    public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, Random p_60465_) {
+        super.tick(state, serverLevel, pos, p_60465_);
+        BlockEntity blockEntity = serverLevel.getBlockEntity(pos);
+        if (blockEntity instanceof WolfPlushBlockEntity WolfPlushBlockEntity && WolfPlushBlockEntity.isSqueezed()) {
+            WolfPlushBlockEntity.subSqueezedTicks(1);
+        }
+        serverLevel.scheduleTick(pos, this, 10);
+    }
 
-	@Override
-	public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
-		super.triggerEvent(state, world, pos, eventID, eventParam);
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		return blockEntity != null && blockEntity.triggerEvent(eventID, eventParam);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.WOLF_PLUSH.get(), renderType -> renderType == RenderType.cutoutMipped());
-	}
+    @Override
+    public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
+        super.triggerEvent(state, world, pos, eventID, eventParam);
+        BlockEntity blockEntity = world.getBlockEntity(pos);
+        return blockEntity != null && blockEntity.triggerEvent(eventID, eventParam);
+    }
 }

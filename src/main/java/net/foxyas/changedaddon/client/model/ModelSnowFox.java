@@ -35,7 +35,7 @@ import static net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator
 
 public class ModelSnowFox extends AdvancedHumanoidModel<LatexSnowFoxEntity> implements AdvancedHumanoidModelInterface<LatexSnowFoxEntity,ModelSnowFox> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_fox"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "snow_fox"), "main");
 
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;

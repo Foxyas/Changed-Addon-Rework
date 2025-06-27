@@ -28,7 +28,7 @@ public class ChangedaddoncommandrootCommand {
 		event.getDispatcher().register(Commands.literal("changed-addon")
 
 				.then(Commands.literal("RecipesPageReset").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -40,7 +40,7 @@ public class ChangedaddoncommandrootCommand {
 					RecipeResetProcedure.execute(entity);
 					return 0;
 				})).then(Commands.literal("toggle_reset_transfur_advancement").then(Commands.literal("info").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -52,7 +52,7 @@ public class ChangedaddoncommandrootCommand {
 					InforesettransfuradvancementProcedure.execute(entity);
 					return 0;
 				})).then(Commands.argument("turn", BoolArgumentType.bool()).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -64,7 +64,7 @@ public class ChangedaddoncommandrootCommand {
 					ToggleresettransfuradvancementsProcedure.execute(arguments, entity);
 					return 0;
 				}))).then(Commands.literal("toggle_addon_warns").then(Commands.argument("warns", BoolArgumentType.bool()).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -76,7 +76,7 @@ public class ChangedaddoncommandrootCommand {
 					TooglewarnsProcedure.execute(arguments, entity);
 					return 0;
 				})).then(Commands.literal("info").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -88,7 +88,7 @@ public class ChangedaddoncommandrootCommand {
 					InfoaddonwarnsProcedure.execute(entity);
 					return 0;
 				}))).then(Commands.literal("Size_Manipulator").then(Commands.argument("size", DoubleArgumentType.doubleArg()).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();

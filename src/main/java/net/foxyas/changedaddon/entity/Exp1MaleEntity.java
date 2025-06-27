@@ -36,7 +36,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 @Mod.EventBusSubscriber
 public class Exp1MaleEntity extends ChangedEntity implements GenderedEntity,PowderSnowWalkable {
-	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("snowy_plains"), new ResourceLocation("snowy_taiga"), new ResourceLocation("snowy_beach"));
+	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(ResourceLocation.parse("snowy_plains"), ResourceLocation.parse("snowy_taiga"), ResourceLocation.parse("snowy_beach"));
 
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
@@ -153,12 +153,12 @@ public class Exp1MaleEntity extends ChangedEntity implements GenderedEntity,Powd
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
 	}
 
 	public static void init() {

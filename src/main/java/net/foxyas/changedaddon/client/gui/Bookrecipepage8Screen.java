@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
@@ -39,7 +38,7 @@ public class Bookrecipepage8Screen extends AbstractContainerScreen<Bookrecipepag
 		this.imageHeight = 144;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/bookrecipepage_8.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/bookrecipepage_8.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -56,7 +55,7 @@ public class Bookrecipepage8Screen extends AbstractContainerScreen<Bookrecipepag
 		RenderSystem.setShaderTexture(0, texture);
 		this.blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
 
-		RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/impureammoniacraft.png"));
+		RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/impureammoniacraft.png"));
 		this.blit(ms, this.leftPos + 17, this.topPos + 47, 0, 0, 100, 52, 100, 52);
 
 		RenderSystem.disableBlend();
@@ -78,18 +77,18 @@ public class Bookrecipepage8Screen extends AbstractContainerScreen<Bookrecipepag
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants"), 9, 5, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_s_seeds"), 9, 15, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m_meet"), 9, 25, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m"), 41, 83, -16777114);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m1"), 26, 68, -16777114);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m2"), 41, 54, -16777114);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_s"), 41, 68, -256);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_3"), 100, 85, -1);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_f"), 26, 83, -16711732);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_f1"), 27, 54, -16711732);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_f2"), 56, 54, -16711732);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_f3"), 56, 83, -16711732);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants"), 9, 5, -16777216);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_s_seeds"), 9, 15, -16777216);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_m_meet"), 9, 25, -16777216);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_m"), 41, 83, -16777114);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_m1"), 26, 68, -16777114);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_m2"), 41, 54, -16777114);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_s"), 41, 68, -256);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_3"), 100, 85, -1);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_f"), 26, 83, -16711732);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_f1"), 27, 54, -16711732);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_f2"), 56, 54, -16711732);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.bookrecipepage_8.label_f3"), 56, 83, -16711732);
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class Bookrecipepage8Screen extends AbstractContainerScreen<Bookrecipepag
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_back = new Button(this.leftPos + 38, this.topPos + -23, 46, 20, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.button_back"), e -> {
+		button_back = new Button(this.leftPos + 38, this.topPos + -23, 46, 20, Component.translatable("gui.changed_addon.bookrecipepage_8.button_back"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookrecipepage8ButtonMessage(0, x, y, z));
 				Bookrecipepage8ButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -110,7 +109,7 @@ public class Bookrecipepage8Screen extends AbstractContainerScreen<Bookrecipepag
 		});
 		guistate.put("button:button_back", button_back);
 		this.addRenderableWidget(button_back);
-		button_close = new Button(this.leftPos + 89, this.topPos + -23, 51, 20, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.button_close"), e -> {
+		button_close = new Button(this.leftPos + 89, this.topPos + -23, 51, 20, Component.translatable("gui.changed_addon.bookrecipepage_8.button_close"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new Bookrecipepage8ButtonMessage(1, x, y, z));
 				Bookrecipepage8ButtonMessage.handleButtonAction(entity, 1, x, y, z);

@@ -62,7 +62,7 @@ public class SmalltickupdateProcedure {
 				if (!(entityiterator == entity)) {
 					if (entityiterator instanceof FoxyasEntity) {
 						if (entity instanceof ServerPlayer _player) {
-							Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gooey_friend"));
+							Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:gooey_friend"));
 							AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 							if (!_ap.isDone()) {
 								Iterator _iterator = _ap.getRemainingCriteria().iterator();
@@ -78,7 +78,7 @@ public class SmalltickupdateProcedure {
 				|| (entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonModItems.POTWITHCAMONIA.get())) : false)
 				|| (entity instanceof Player _playerHasItem ? _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINGE.get())) : false)) {
 			if (entity instanceof ServerPlayer _player) {
-				Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuritemadvancement"));
+				Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:untransfuritemadvancement"));
 				AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 				if (!_ap.isDone()) {
 					Iterator _iterator = _ap.getRemainingCriteria().iterator();

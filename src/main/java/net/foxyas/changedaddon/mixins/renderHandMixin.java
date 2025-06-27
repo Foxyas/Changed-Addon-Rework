@@ -104,7 +104,7 @@ public class renderHandMixin {
 
             if (carryTarget instanceof LivingEntity) {
                 boolean isHumanoidOrTagValid = carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS) ||
-                        carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")));
+                        carryTarget.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("changed_addon:can_carry")));
 
                 return isHumanoidOrTagValid && (player.getFirstPassenger() == null || player.getFirstPassenger() != carryTarget);
             }

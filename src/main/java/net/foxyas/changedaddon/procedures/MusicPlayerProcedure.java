@@ -74,9 +74,9 @@ public class MusicPlayerProcedure {
             }
 
             // Eventos de som
-            SoundEvent exp009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.exp9"));
-            SoundEvent exp10Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
-            SoundEvent LumiMusic = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.luminarctic_leopard"));
+            SoundEvent exp009Music = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(ChangedAddonMod.MODID, "music.boss.exp9"));
+            SoundEvent exp10Music = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(ChangedAddonMod.MODID, "experiment10_theme"));
+            SoundEvent LumiMusic = ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(ChangedAddonMod.MODID, "music.boss.luminarctic_leopard"));
 
             // Instâncias de música
             Music exp10ThemeMusicInstance = new Music(Objects.requireNonNull(exp10Music), 0, 0, true);
@@ -97,10 +97,10 @@ public class MusicPlayerProcedure {
                 }
 
                 if (ketExp9Entities.stream().anyMatch(KetExperiment009BossEntity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
+                    soundManager.stop(ResourceLocation.parse("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
                 }
             } else if (isExp009Phase2ThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
+                soundManager.stop(ResourceLocation.parse("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
             }
 
             if (exp10Close) {
@@ -111,10 +111,10 @@ public class MusicPlayerProcedure {
                 }
 
                 if (exp10Entities.stream().anyMatch(LivingEntity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
+                    soundManager.stop(ResourceLocation.parse("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
                 }
             } else if (isExp10ThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
+                soundManager.stop(ResourceLocation.parse("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
             }
 
             if (LumiClose && LumiEntities.stream().anyMatch((e) -> e.getTarget() == player)) {
@@ -125,10 +125,10 @@ public class MusicPlayerProcedure {
                 }
 
                 if (LumiEntities.stream().anyMatch(LivingEntity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
+                    soundManager.stop(ResourceLocation.parse("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
                 }
             } else if (isLumiThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
+                soundManager.stop(ResourceLocation.parse("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
             }
         }
     }
@@ -140,7 +140,7 @@ public class MusicPlayerProcedure {
 
         if (player instanceof ServerPlayer serverPlayer) {
             return serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-        } else if (player.level.isClientSide()) {
+        } else if (player.level().isClientSide()) {
             Minecraft minecraft = Minecraft.getInstance();
             ClientPacketListener connection = minecraft.getConnection();
             if (connection != null){
@@ -165,7 +165,7 @@ public class MusicPlayerProcedure {
         MusicManager musicManager = minecraft.getMusicManager();
         SoundManager soundManager = minecraft.getSoundManager();
 
-        ResourceLocation musicResource = new ResourceLocation(ChangedAddonMod.MODID, musicKey);
+        ResourceLocation musicResource = ResourceLocation.parse(ChangedAddonMod.MODID, musicKey);
         SoundEvent soundEvent = ForgeRegistries.SOUND_EVENTS.getValue(musicResource);
 
         if (soundEvent == null) {
@@ -194,7 +194,7 @@ public class MusicPlayerProcedure {
         };
 
         for (String musicKey : bossMusicKeys) {
-            ResourceLocation musicResource = new ResourceLocation(ChangedAddonMod.MODID, musicKey);
+            ResourceLocation musicResource = ResourceLocation.parse(ChangedAddonMod.MODID, musicKey);
             soundManager.stop(musicResource, SoundSource.MUSIC);
         }
     }
@@ -230,7 +230,7 @@ public class MusicPlayerProcedure {
     public static boolean checkGameMode(Player _player) {
         if (_player instanceof ServerPlayer _serverPlayer) {
             return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-        } else if (_player.level.isClientSide()) {
+        } else if (_player.level().isClientSide()) {
             return Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(_player.getGameProfile().getId()) != null
                     && Objects.requireNonNull(Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId())).getGameMode() == GameType.SPECTATOR;
         }

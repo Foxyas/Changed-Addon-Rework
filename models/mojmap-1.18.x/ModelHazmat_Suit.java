@@ -6,7 +6,7 @@ public class ModelHazmat_Suit<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation("modid", "hazmat_suit"), "main");
+			ResourceLocation.parse("modid", "hazmat_suit"), "main");
 	private final ModelPart Head;
 	private final ModelPart Body;
 	private final ModelPart RightArm;

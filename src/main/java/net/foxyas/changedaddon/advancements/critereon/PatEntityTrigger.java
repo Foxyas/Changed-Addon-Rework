@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.TriggerInstance> {
 
     // Definindo o ID do trigger
-    private static final ResourceLocation ID = new ResourceLocation("changed_addon", "pat_entity_trigger");
+    private static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("changed_addon", "pat_entity_trigger");
 
     @Override
     public @NotNull ResourceLocation getId() {
@@ -24,7 +24,7 @@ public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.Tr
     }
 
     @Override
-    protected @NotNull TriggerInstance createInstance(JsonObject p_66248_, EntityPredicate.Composite p_66249_, DeserializationContext p_66250_) {
+    protected @NotNull TriggerInstance createInstance(JsonObject p_66248_, @NotNull ContextAwarePredicate playerPredicate, @NotNull DeserializationContext p_66250_) {
         // Verificação de presença de cada slot de armadura e desserialização dos predicados
         ItemPredicate headSlot = p_66248_.has("head") ? ItemPredicate.fromJson(p_66248_.get("head")) : ItemPredicate.ANY;
         ItemPredicate chestSlot = p_66248_.has("chest") ? ItemPredicate.fromJson(p_66248_.get("chest")) : ItemPredicate.ANY;
@@ -35,7 +35,7 @@ public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.Tr
         EntityTypePredicate entityType = p_66248_.has("entity_type") ? EntityTypePredicate.fromJson(p_66248_.get("entity_type")) : EntityTypePredicate.ANY;
 
         // Criar e retornar a instância do TriggerInstance
-        return new TriggerInstance(p_66249_, headSlot, chestSlot, legsSlot, feetSlot, entityType);
+        return new TriggerInstance(playerPredicate, headSlot, chestSlot, legsSlot, feetSlot, entityType);
     }
 
     public void Trigger(ServerPlayer player,Entity entity){
@@ -51,7 +51,7 @@ public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.Tr
         private final ItemPredicate feetSlot;
         private final EntityTypePredicate entityType;
 
-        public TriggerInstance(EntityPredicate.Composite playerPredicate, ItemPredicate headSlot, ItemPredicate chestSlot, ItemPredicate legsSlot, ItemPredicate feetSlot, EntityTypePredicate entityType) {
+        public TriggerInstance(ContextAwarePredicate playerPredicate, ItemPredicate headSlot, ItemPredicate chestSlot, ItemPredicate legsSlot, ItemPredicate feetSlot, EntityTypePredicate entityType) {
             super(PatEntityTrigger.ID, playerPredicate);
             this.headSlot = headSlot;
             this.chestSlot = chestSlot;
@@ -75,7 +75,7 @@ public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.Tr
             return wearingCorrectArmor && correctEntityType;
         }
 
-        // Serializando o trigger para JSON
+        // Serializando o ‘trigger’ para JSON
         public @NotNull JsonObject serializeToJson(@NotNull SerializationContext context) {
             JsonObject jsonObject = super.serializeToJson(context);
             if (headSlot != null) jsonObject.add("head", headSlot.serializeToJson());

@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -10,7 +11,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 
@@ -56,7 +56,7 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer) {
+    public ItemStack assemble(SimpleContainer simpleContainer, RegistryAccess registryAccess) {
         return output;
     }
 
@@ -66,7 +66,11 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
+        return output.copy();
+    }
+
+    public ItemStack getOutput() {
         return output.copy();
     }
 
@@ -101,9 +105,9 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
         public static final String ID = "catalyzer";
     }
 
-    public static class Serializer implements RecipeSerializer<CatalyzerRecipe>, IForgeRegistryEntry<RecipeSerializer<?>> {
+    public static class Serializer implements RecipeSerializer<CatalyzerRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "catalyzer");
+        public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("changed_addon", "catalyzer");
 
         @Override
         public CatalyzerRecipe fromJson(ResourceLocation pRecipeId, JsonObject pSerializedRecipe) {
@@ -135,24 +139,9 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
             for (Ingredient ing : recipe.getIngredients()) {
                 ing.toNetwork(buf);
             }
-            buf.writeItemStack(recipe.getResultItem(), false);
+            buf.writeItemStack(recipe.getOutput(), false);
             buf.writeFloat(recipe.getProgressSpeed());
             buf.writeFloat(recipe.getNitrogenUsage());
-        }
-
-        @Override
-        public ResourceLocation getRegistryName() {
-            return ID;
-        }
-
-        @Override
-        public RecipeSerializer<?> setRegistryName(ResourceLocation name) {
-            return this;
-        }
-
-        @Override
-        public Class<RecipeSerializer<?>> getRegistryType() {
-            return (Class<RecipeSerializer<?>>) (Class<?>) RecipeSerializer.class;
         }
     }
 }

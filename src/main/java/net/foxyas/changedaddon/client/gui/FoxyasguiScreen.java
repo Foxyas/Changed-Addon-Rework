@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.Button;
@@ -40,7 +39,7 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 		this.imageHeight = 177;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/foxyasgui.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/foxyasgui.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -75,9 +74,9 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.foxyasgui.label_hello_im_foxyas_i_dont_want_to"), 5, 4, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.foxyasgui.label_pls_dont_kill_me"), 5, 18, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl"), 5, 32, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.foxyasgui.label_hello_im_foxyas_i_dont_want_to"), 5, 4, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.foxyasgui.label_pls_dont_kill_me"), 5, 18, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.foxyasgui.label_i_just_need_2_oranges_and_one_gl"), 5, 32, -12829636);
 	}
 
 	@Override
@@ -90,7 +89,7 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		button_trade = new Button(this.leftPos + 224, this.topPos + 115, 51, 20, new TranslatableComponent("gui.changed_addon.foxyasgui.button_trade"), e -> {
+		button_trade = new Button(this.leftPos + 224, this.topPos + 115, 51, 20, Component.translatable("gui.changed_addon.foxyasgui.button_trade"), e -> {
 			if (true) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FoxyasguiButtonMessage(0, x, y, z));
 				FoxyasguiButtonMessage.handleButtonAction(entity, 0, x, y, z);
@@ -98,7 +97,7 @@ public class FoxyasguiScreen extends AbstractContainerScreen<FoxyasguiMenu> {
 		});
 		guistate.put("button:button_trade", button_trade);
 		this.addRenderableWidget(button_trade);
-		button_i_want_be_transfured_by_you = new Button(this.leftPos + 13, this.topPos + 66, 165, 20, new TranslatableComponent("gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you"), e -> {
+		button_i_want_be_transfured_by_you = new Button(this.leftPos + 13, this.topPos + 66, 165, 20, Component.translatable("gui.changed_addon.foxyasgui.button_i_want_be_transfured_by_you"), e -> {
 			if (IfplayerarenttransfurProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new FoxyasguiButtonMessage(1, x, y, z));
 				FoxyasguiButtonMessage.handleButtonAction(entity, 1, x, y, z);

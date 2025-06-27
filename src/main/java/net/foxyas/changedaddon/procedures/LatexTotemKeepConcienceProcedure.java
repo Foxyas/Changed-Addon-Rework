@@ -7,8 +7,7 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,8 +26,8 @@ public class LatexTotemKeepConcienceProcedure {
 			if (!event.keepConscious) {
 				event.shouldKeepConscious = true;
 				if (event.player instanceof ServerPlayer serverPlayer){
-					TranslatableComponent text = new TranslatableComponent("changed_addon.latex_totem.tittle.text_1");
-					TranslatableComponent text2 = new TranslatableComponent("changed_addon.latex_totem.tittle.text_2");
+					Component text = Component.translatable("changed_addon.latex_totem.tittle.text_1");
+					Component text2 = Component.translatable("changed_addon.latex_totem.tittle.text_2");
 					//serverPlayer.sendMessage(text, ChatType.CHAT,serverPlayer.getUUID());
 					serverPlayer.displayClientMessage(text, true);
 					serverPlayer.sendMessage(text, ChatType.CHAT,serverPlayer.getUUID());

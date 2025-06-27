@@ -22,9 +22,9 @@ public class Experiment009OnInitialEntitySpawnProcedure {
 		AttributeModifier HardModeBuff = null;
 		if (world instanceof Level _level) {
 			if (!_level.isClientSide()) {
-				_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.power_select")), SoundSource.HOSTILE, 100000, 0);
+				_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("block.beacon.power_select")), SoundSource.HOSTILE, 100000, 0);
 			} else {
-				_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.power_select")), SoundSource.HOSTILE, 100000, 0, false);
+				_level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("block.beacon.power_select")), SoundSource.HOSTILE, 100000, 0, false);
 			}
 		}
 		HardModeBuff = new AttributeModifier(UUID.fromString("d6aa1721-3594-4b7b-ad84-977d7b14a94d"), "gameruleBuff", ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100),

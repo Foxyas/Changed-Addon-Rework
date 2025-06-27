@@ -5,15 +5,12 @@ import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.entity.EntityTypeTest;
 
@@ -46,12 +43,11 @@ public class AdvancedHearingAbility extends SimpleAbility {
 
     @Override
     public Component getAbilityName(IAbstractChangedEntity entity) {
-        return new TranslatableComponent("changed_addon.ability.advanced_hearing");
+        return Component.translatable("changed_addon.ability.advanced_hearing");
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return new ResourceLocation("changed_addon:textures/screens/advanced_hearing.png");
+        return ResourceLocation.parse("changed_addon:textures/screens/advanced_hearing.png");
     }
 
     @Override
@@ -78,18 +74,18 @@ public class AdvancedHearingAbility extends SimpleAbility {
     public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
         var User = entity.getEntity();
-        if (!User.getLevel().isClientSide()) {
+        if (!User.level().isClientSide()) {
             User.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 20 * 3), User);
         }
-        List<PathfinderMob> livingEntityList = User.getLevel().getEntities(EntityTypeTest.forClass(PathfinderMob.class), User.getBoundingBox().inflate(30), (e) -> !e.isShiftKeyDown() && e != User && e instanceof Enemy);
+        List<PathfinderMob> livingEntityList = User.level().getEntities(EntityTypeTest.forClass(PathfinderMob.class), User.getBoundingBox().inflate(30), (e) -> !e.isShiftKeyDown() && e != User && e instanceof Enemy);
         if (!livingEntityList.isEmpty()) {
             for (PathfinderMob living : livingEntityList) {
                 living.addEffect(new MobEffectInstance(MobEffects.GLOWING, 20 * 10), User);
                 if (living instanceof MobAccessor mobAccessor) {
                     if (User instanceof Player player) {
-                    	if (mobAccessor.callGetAmbientSound() != null) {
-							living.getLevel().playSound(player, living, mobAccessor.callGetAmbientSound(), SoundSource.AMBIENT, 2f, 1f);
-                    	}
+                        if (mobAccessor.callGetAmbientSound() != null) {
+                            living.level().playSound(player, living, mobAccessor.callGetAmbientSound(), SoundSource.AMBIENT, 2f, 1f);
+                        }
                     }
                 }
             }

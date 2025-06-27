@@ -88,7 +88,7 @@ public class DazedEntity extends ChangedEntity {
 	}
 
 	
-	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("plains"));
+	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(ResourceLocation.parse("plains"));
 
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
@@ -258,12 +258,12 @@ public class DazedEntity extends ChangedEntity {
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
 	}
 
 	public static void init() {
@@ -281,7 +281,7 @@ public class DazedEntity extends ChangedEntity {
 		} else if (p_33009_.getBrightness(LightLayer.BLOCK, p_33010_) > 5) {
 			return false;
 		} else {
-			int i = p_33009_.getLevel().isThundering() ? p_33009_.getMaxLocalRawBrightness(p_33010_, 10) : p_33009_.getMaxLocalRawBrightness(p_33010_);
+			int i = p_33009_.level().isThundering() ? p_33009_.getMaxLocalRawBrightness(p_33010_, 10) : p_33009_.getMaxLocalRawBrightness(p_33010_);
 			return i <= p_33011_.nextInt(8);
 		}
 	}

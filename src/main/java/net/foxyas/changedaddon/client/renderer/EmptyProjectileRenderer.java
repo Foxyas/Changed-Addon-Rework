@@ -10,7 +10,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 
 public class EmptyProjectileRenderer<T extends AbstractArrow> extends EntityRenderer<T> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(ChangedAddonMod.MODID, "textures/entities/empty.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.parse(ChangedAddonMod.MODID, "textures/entities/empty.png");
 
     public EmptyProjectileRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -25,8 +25,7 @@ public class EmptyProjectileRenderer<T extends AbstractArrow> extends EntityRend
 
     }
 
-    @Override
-    public ResourceLocation getTextureLocation(T entity) {
+        public ResourceLocation getTextureLocation(T entity) {
         return TEXTURE;
     }
 }

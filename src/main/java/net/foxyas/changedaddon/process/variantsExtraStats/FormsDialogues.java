@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -44,76 +43,76 @@ public class FormsDialogues {
 			
 			if (PlayerVariant != null && TRANSFUR_VARIANT_LIST.contains(PlayerVariant.getParent())){
 				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
-				if (player.getLevel().getLevelData().isHardcore()){
+				if (player.level().getLevelData().isHardcore()){
 					if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())){
-						var randomSelector = player.getLevel().getRandom().nextInt(10);
+						var randomSelector = player.level().getRandom().nextInt(10);
 						if (randomSelector <= 4){ // 4 in 10 of chance
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp10.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp10.death.text1"),false);
 						} else{
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp10.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp10.death.text2"),false);
 						}
 					} else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get())) {
-						var randomSelector = player.getLevel().getRandom().nextInt(10);
+						var randomSelector = player.level().getRandom().nextInt(10);
 						if (randomSelector <= 4){ // 4 in 10 of chance
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp9.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp9.death.text1"),false);
 						} else{
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp9.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp9.death.text2"),false);
 						}
 					} else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_MALE.get())
 							|| PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_FEMALE.get())) {
-						var randomSelector = player.getLevel().getRandom().nextInt(15);
+						var randomSelector = player.level().getRandom().nextInt(15);
 						if (randomSelector <= 3){ // 3 in 11 of chance
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text1"),false);
 						} else if (randomSelector <= 6) { //3 in 11 of chance
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text2"),false);
 						} else if (randomSelector <= 9) { //3 in 11 of chance
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text3"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text3"),false);
 						} else if (randomSelector <= 12) { //3 in 11 of chance
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text4",player.getDisplayName().getString()),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text4",player.getDisplayName().getString()),false);
 						} // 2 in 11 for not talk [numbers 10 or 11]
 					} else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_MALE.get())
 							|| PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_FEMALE.get())) {
-						var randomSelector = player.getLevel().getRandom().nextInt(10);
+						var randomSelector = player.level().getRandom().nextInt(10);
 						if (randomSelector <= 4){ // 4 in 10 of chance
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp2.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp2.death.text1"),false);
 						} else if (randomSelector >= 7) { //3 in 10 of chance [7,6 or 5]
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp2.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp2.death.text2"),false);
 						} // 3 in 10 for not talk
 					}
 				} else {
 					if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())){
-						var randomSelector = player.getLevel().getRandom().nextInt(100);
+						var randomSelector = player.level().getRandom().nextInt(100);
 						if (randomSelector <= 4){ // 4%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp10.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp10.death.text1"),false);
 						} else{
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp10.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp10.death.text2"),false);
 						}
 					} else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get())) {
-						var randomSelector = player.getLevel().getRandom().nextInt(100);
+						var randomSelector = player.level().getRandom().nextInt(100);
 						if (randomSelector <= 4){ // 4%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp9.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp9.death.text1"),false);
 						} else{
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp9.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp9.death.text2"),false);
 						}
 					} else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_MALE.get())
 							|| PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP1_FEMALE.get())) {
-						var randomSelector = player.getLevel().getRandom().nextInt(100);
+						var randomSelector = player.level().getRandom().nextInt(100);
 						if (randomSelector <= 3){ // 3%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text1"),false);
 						} else if (randomSelector <= 6) { //6%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text2"),false);
 						} else if (randomSelector <= 9) { //9%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text3"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text3"),false);
 						} else if (randomSelector <= 12) { //12%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.death.text4",player.getDisplayName().getString()),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.death.text4",player.getDisplayName().getString()),false);
 						}
 					} else if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_MALE.get())
 							|| PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXP2_FEMALE.get())) {
-						var randomSelector = player.getLevel().getRandom().nextInt(100);
+						var randomSelector = player.level().getRandom().nextInt(100);
 						if (randomSelector <= 4){ //4%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp2.death.text1"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp2.death.text1"),false);
 						} else if (randomSelector <= 7) { //7%
-							player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp2.death.text2"),false);
+							player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp2.death.text2"),false);
 						}
 					}
 				}
@@ -130,7 +129,7 @@ public class FormsDialogues {
 			if (changedVariantEvent.livingEntity instanceof Player player){
 				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
 				if (YTNames.contains(player.getUUID())){
-					player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp9.transfur.text.secret"), false);
+					player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp9.transfur.text.secret"), false);
 				}
 			}
 		}
@@ -138,7 +137,7 @@ public class FormsDialogues {
 			if (changedVariantEvent.livingEntity instanceof Player player){
 				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
 				if (FBNames.contains(player.getUUID())){
-					player.displayClientMessage(new TranslatableComponent("changed_addon.form_dialogues.exp1.transfur.text.secret"), false);
+					player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.transfur.text.secret"), false);
 				}
 			}
 		}

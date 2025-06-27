@@ -4,17 +4,15 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.LivingEntity;
 
 public class DodgeAbilityInstance extends AbstractAbilityInstance {
+    private final int defaultRegenCooldown = 20;
     private int dodgeAmount = 4;
     private int maxDodgeAmount = 4;
     private boolean dodgeActive = false;
-
-    private final int defaultRegenCooldown = 20;
     private int dodgeRegenCooldown = defaultRegenCooldown;
 
     public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
@@ -25,6 +23,10 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         this(ability, entity);
         this.maxDodgeAmount = maxDodge;
         this.dodgeAmount = maxDodge;
+    }
+
+    public static boolean isSpectator(Entity entity) {
+        return entity instanceof Player player && player.isSpectator();
     }
 
     public boolean isDodgeActive() {
@@ -64,10 +66,6 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         return ((float) dodgeAmount / maxDodgeAmount) * 100f;
     }
 
-    public static boolean isSpectator(Entity entity) {
-        return entity instanceof Player player && player.isSpectator();
-    }
-
     @Override
     public boolean canUse() {
         return dodgeAmount > 0 && !isSpectator(entity.getEntity());
@@ -82,7 +80,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     public void startUsing() {
         if (entity.getEntity() instanceof Player player && this.getController().getHoldTicks() == 0) {
             player.displayClientMessage(
-                    new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),
+                    Component.translatable("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),
                     true
             );
         }
@@ -90,25 +88,25 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void tick() {
-    	//super.tick();
-		if (entity.getEntity() instanceof Player player) {
-			if (!(player.getLevel().isClientSide())){
-				player.displayClientMessage(
-				new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()), true);
-			}
+        //super.tick();
+        if (entity.getEntity() instanceof Player player) {
+            if (!(player.level().isClientSide())) {
+                player.displayClientMessage(
+                        Component.translatable("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()), true);
+            }
         }
         setDodgeActivate(canUse());
     }
 
     @Override
     public void stopUsing() {
-    	//super.stopUsing();
-    	setDodgeActivate(false);
+        //super.stopUsing();
+        setDodgeActivate(false);
     }
 
     @Override
     public void tickIdle() {
-    	super.tickIdle();
+        super.tickIdle();
         boolean nonHurtFrame = entity.getEntity().hurtTime <= 10 && entity.getEntity().invulnerableTime <= 10;
         if (nonHurtFrame && !isDodgeActive() && dodgeAmount < maxDodgeAmount) {
             if (dodgeRegenCooldown <= 0) {
@@ -117,7 +115,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
                 if (entity.getEntity() instanceof Player player) {
                     player.displayClientMessage(
-                            new TranslatableComponent("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),
+                            Component.translatable("changed_addon.ability.dodge.dodge_amount", getDodgeStaminaRatio()),
                             true
                     );
                 }

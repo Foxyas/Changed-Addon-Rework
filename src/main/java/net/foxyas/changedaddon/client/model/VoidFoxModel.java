@@ -23,7 +23,7 @@ import java.util.List;
 
 public class VoidFoxModel extends AdvancedHumanoidModel<VoidFoxEntity> implements AdvancedHumanoidModelInterface<VoidFoxEntity, VoidFoxModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ChangedAddonMod.MODID, "void_fox"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse(ChangedAddonMod.MODID, "void_fox"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart Head;

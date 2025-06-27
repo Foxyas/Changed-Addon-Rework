@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.effect.particles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.network.chat.TextComponent;
+
 
 import javax.annotation.Nullable;
 

@@ -14,7 +14,7 @@ import net.minecraft.world.entity.projectile.ShulkerBullet;
 
 public class SimpleProjectileModel<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "simple_projectile_model"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "simple_projectile_model"), "main");
 	private final ModelPart main;
 
 	public SimpleProjectileModel(ModelPart root) {

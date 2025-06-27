@@ -8,7 +8,6 @@ import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -52,7 +51,7 @@ public class SnepsiItem extends Item implements SpecializedItemRendering {
     @Override
     public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, world, list, flag);
-        list.add(new TranslatableComponent("item.changed_addon.snepsi.desc"));
+        list.add(Component.translatable("item.changed_addon.snepsi.desc"));
     }
 
     @Override
@@ -67,11 +66,11 @@ public class SnepsiItem extends Item implements SpecializedItemRendering {
     }
 
     private static final ModelResourceLocation GUIMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "snepsi_gui"), "inventory");
+            new ModelResourceLocation(ResourceLocation.parse("changed_addon", "snepsi_gui"), "inventory");
     private static final ModelResourceLocation HANDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "snepsi_hand"), "inventory");
+            new ModelResourceLocation(ResourceLocation.parse("changed_addon", "snepsi_hand"), "inventory");
     private static final ModelResourceLocation GROUNDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "snepsi_ground"), "inventory");
+            new ModelResourceLocation(ResourceLocation.parse("changed_addon", "snepsi_ground"), "inventory");
 
 
     @Override

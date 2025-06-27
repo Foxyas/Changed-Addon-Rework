@@ -51,7 +51,7 @@ public class ChangedAddonTransfurVariants {
         }
 
         private static TagKey<TransfurVariant<?>> create(String name) {
-            return TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon", name));
+            return TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), ResourceLocation.parse("changed_addon", name));
         }
     }
 
@@ -93,7 +93,7 @@ public class ChangedAddonTransfurVariants {
     }
 
     public static boolean isVariantOC(String transfurVariantString, @Nullable Level level) {
-        ResourceLocation transfurVariantID = new ResourceLocation(transfurVariantString);
+        ResourceLocation transfurVariantID = ResourceLocation.parse(transfurVariantString);
         TransfurVariant<?> variantFromID = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(transfurVariantID);
         if (variantFromID != null) {
             return isVariantOC(variantFromID, level);

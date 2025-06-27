@@ -24,6 +24,6 @@ public class FoxtaFoxyRenderer extends AdvancedHumanoidRenderer<FoxtaFoxyEntity,
 
 	@Override
 	public @NotNull ResourceLocation getTextureLocation(@NotNull FoxtaFoxyEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/foxta_fox.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/foxta_fox.png");
 	}
 }

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.goals;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -108,8 +108,8 @@ public class DashAttack extends Goal {
             dasher.getNavigation().stop();
             dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
-            dasher.getLevel().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
-            if (dasher.getLevel() instanceof ServerLevel serverLevel) {
+            dasher.level().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
+            if (dasher.level() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
                 serverLevel.sendParticles(ParticleTypes.END_ROD, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.05f);
             }
@@ -144,9 +144,9 @@ public class DashAttack extends Goal {
                     dasher.swing(InteractionHand.MAIN_HAND);
                     if (!entity.isBlocking()) {
                         entity.hurt(DamageSource.mobAttack(dasher), 6.0F);
-                        dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
+                        dasher.level().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                     } else {
-                        dasher.getLevel().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
+                        dasher.level().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
                     }
                     entity.setDeltaMovement(entity.getDeltaMovement().add(knockback));
                 }

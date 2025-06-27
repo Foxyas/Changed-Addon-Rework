@@ -41,7 +41,7 @@ public class StructureHandle {
      * @return true se a estrutura pode gerar na área, false caso contrário.
      */
     public static boolean isStructureNearby(ServerLevel level, BlockPos pos, String structureId, int chunkRange) {
-        ResourceKey<StructureSet> structureKey = ResourceKey.create(BuiltinRegistries.STRUCTURE_SETS.key(), new ResourceLocation(structureId));
+        ResourceKey<StructureSet> structureKey = ResourceKey.create(BuiltinRegistries.STRUCTURE_SETS.key(), ResourceLocation.parse(structureId));
         return isStructureNearby(level, pos, structureKey, chunkRange);
     }
 
@@ -56,7 +56,7 @@ public class StructureHandle {
      * @return true se a estrutura pode gerar na área, false caso contrário.
      */
     public static boolean isStructureNearby(Level clevel, BlockPos pos, String structureId, int chunkRange) {
-        ResourceKey<StructureSet> structureKey = ResourceKey.create(BuiltinRegistries.STRUCTURE_SETS.key(), new ResourceLocation(structureId));
+        ResourceKey<StructureSet> structureKey = ResourceKey.create(BuiltinRegistries.STRUCTURE_SETS.key(), ResourceLocation.parse(structureId));
         return clevel instanceof ServerLevel level && isStructureNearby(level, pos, structureKey, chunkRange);
     }
 }

@@ -22,7 +22,7 @@ public class HyperFlowerProcedure {
 		boolean close = false;
 		if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == false) {
 			if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.REGENERATION) : false)) {
-				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 					_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 1, false, false));
 			}
 			{
@@ -33,9 +33,9 @@ public class HyperFlowerProcedure {
 					if (!(entityiterator == entity)) {
 						if (!(entityiterator instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.REGENERATION) : false)) {
 							if ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(MobEffects.REGENERATION) ? _livEnt.getEffect(MobEffects.REGENERATION).getAmplifier() : 0) < 3) {
-								if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+								if (entityiterator instanceof LivingEntity _entity && !_entity.level().isClientSide())
 									_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 3, false, false));
-								if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+								if (entityiterator instanceof LivingEntity _entity && !_entity.level().isClientSide())
 									_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 270, 1, false, false));
 							}
 						}
@@ -47,7 +47,7 @@ public class HyperFlowerProcedure {
 				&& (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_puro_kind")
 						|| ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_light_latex_wolf"))) {
 			if (!(entity instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.REGENERATION) : false)) {
-				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+				if (entity instanceof LivingEntity _entity && !_entity.level().isClientSide())
 					_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 1, false, false));
 			}
 			{
@@ -58,9 +58,9 @@ public class HyperFlowerProcedure {
 					if (!(entityiterator == entity)) {
 						if (!(entityiterator instanceof LivingEntity _livEnt ? _livEnt.hasEffect(MobEffects.REGENERATION) : false)) {
 							if ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(MobEffects.REGENERATION) ? _livEnt.getEffect(MobEffects.REGENERATION).getAmplifier() : 0) < 3) {
-								if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+								if (entityiterator instanceof LivingEntity _entity && !_entity.level().isClientSide())
 									_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 60, 3, false, false));
-								if (entityiterator instanceof LivingEntity _entity && !_entity.level.isClientSide())
+								if (entityiterator instanceof LivingEntity _entity && !_entity.level().isClientSide())
 									_entity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 270, 1, false, false));
 							}
 						}

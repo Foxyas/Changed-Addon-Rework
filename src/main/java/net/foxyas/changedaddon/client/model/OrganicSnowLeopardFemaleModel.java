@@ -20,7 +20,7 @@ import java.util.List;
 
 public class OrganicSnowLeopardFemaleModel extends AdvancedHumanoidModel<SnowLeopardFemaleOrganicEntity> implements AdvancedHumanoidModelInterface<SnowLeopardFemaleOrganicEntity,OrganicSnowLeopardFemaleModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "organic_snow_leopard_female"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "organic_snow_leopard_female"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart Head;

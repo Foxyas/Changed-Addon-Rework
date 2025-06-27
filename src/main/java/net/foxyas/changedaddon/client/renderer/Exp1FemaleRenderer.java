@@ -31,6 +31,6 @@ public class Exp1FemaleRenderer extends AdvancedHumanoidRenderer<Exp1FemaleEntit
 
 	@Override
 	public ResourceLocation getTextureLocation(Exp1FemaleEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/latex_snowfox_female_new.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/latex_snowfox_female_new.png");
 	}
 }

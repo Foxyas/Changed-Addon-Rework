@@ -36,7 +36,7 @@ public class SnowLeopardPartialRenderer extends AdvancedHumanoidRenderer<SnowLeo
 	}
 
 	private static ResourceLocation getTexture(boolean slim) {
-		return new ResourceLocation("changed_addon", slim ? "textures/entities/snow_leopard_partial_slim.png" : "textures/entities/snow_leopard_partial.png");
+		return ResourceLocation.parse("changed_addon", slim ? "textures/entities/snow_leopard_partial_slim.png" : "textures/entities/snow_leopard_partial.png");
 	}
 
 	@Override

@@ -21,7 +21,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 public class ModelNecklaces<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "model_necklaces"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "model_necklaces"), "main");
 	public final ModelPart Necklaces;
 	public final ModelPart Necklace3d;
 

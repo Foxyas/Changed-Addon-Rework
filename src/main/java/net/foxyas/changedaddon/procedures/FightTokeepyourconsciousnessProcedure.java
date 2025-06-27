@@ -20,8 +20,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.nbt.CompoundTag;
@@ -40,7 +39,7 @@ public class FightTokeepyourconsciousnessProcedure {
 
 	@SubscribeEvent
 	public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
-		if (!event.player.getLevel().isClientSide() && !event.keepConscious && event.player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHTTOKEEPCONSCIOUSNESS)){
+		if (!event.player.level().isClientSide() && !event.keepConscious && event.player.level().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHTTOKEEPCONSCIOUSNESS)){
 			event.shouldKeepConscious = true;
 			if (event.player instanceof ServerPlayer _ent) {
 				BlockPos _bpos = event.player.getOnPos();
@@ -67,7 +66,7 @@ public class FightTokeepyourconsciousnessProcedure {
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
-			if (!event.player.level.isClientSide()) { // Executar apenas no servidor
+			if (!event.player.level().isClientSide()) { // Executar apenas no servidor
 				execute(event, event.player.level, event.player.getX(), event.player.getY(), event.player.getZ(), event.player);
 			}
 		}
@@ -84,7 +83,7 @@ public class FightTokeepyourconsciousnessProcedure {
 
 					if (playerVars.consciousness_fight_progress >= 25) {
 						// Vitória no minigame
-						player.displayClientMessage(new TextComponent(new TranslatableComponent("changedaddon.fight_concience.success").getString()), true);
+						player.displayClientMessage(new TextComponent(Component.translatable("changedaddon.fight_concience.success").getString()), true);
 						updatePlayerVariables(playerVars, false, 0, false, entity);
 
 					} else {

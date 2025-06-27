@@ -21,7 +21,7 @@ public class TransfurVariantVision {
         if (!path.endsWith(".json")) {
             path += ".json";
         }
-        return new ResourceLocation(input.getNamespace(), path);
+        return ResourceLocation.parse(input.getNamespace(), path);
     }
 
     public ResourceLocation getVisionEffect() {
@@ -36,8 +36,8 @@ public class TransfurVariantVision {
         String effectStr = GsonHelper.getAsString(json, "visionEffect");
         String formStr = GsonHelper.getAsString(json, "form");
         return new TransfurVariantVision(
-            new ResourceLocation(effectStr),
-            new ResourceLocation(formStr)
+            ResourceLocation.parse(effectStr),
+            ResourceLocation.parse(formStr)
         );
     }
 }

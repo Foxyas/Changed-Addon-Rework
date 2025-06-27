@@ -25,16 +25,16 @@ public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends 
     public CustomHairColorLayer(RenderLayerParent<T, M> parent, M model, ResourceLocation textureBase) {
         super(parent);
         this.model = model;
-        this.renderTypeDark = RenderType.entityCutout(new ResourceLocation(textureBase.getNamespace(), textureBase.getPath() + "_dark.png"));
-        this.renderTypeLight = RenderType.entityCutout(new ResourceLocation(textureBase.getNamespace(), textureBase.getPath() + "_light.png"));
+        this.renderTypeDark = RenderType.entityCutout(ResourceLocation.parse(textureBase.getNamespace(), textureBase.getPath() + "_dark.png"));
+        this.renderTypeLight = RenderType.entityCutout(ResourceLocation.parse(textureBase.getNamespace(), textureBase.getPath() + "_light.png"));
         this.IsFemaleOrNot = textureBase.getPath().contains("female"); //Auto Select
     }
 
     public CustomHairColorLayer(RenderLayerParent<T, M> parent, M model, ResourceLocation textureBase, boolean Female) {
         super(parent);
         this.model = model;
-        this.renderTypeDark = RenderType.entityCutout(new ResourceLocation(textureBase.getNamespace(), textureBase.getPath() + "_dark.png"));
-        this.renderTypeLight = RenderType.entityCutout(new ResourceLocation(textureBase.getNamespace(), textureBase.getPath() + "_light.png"));
+        this.renderTypeDark = RenderType.entityCutout(ResourceLocation.parse(textureBase.getNamespace(), textureBase.getPath() + "_dark.png"));
+        this.renderTypeLight = RenderType.entityCutout(ResourceLocation.parse(textureBase.getNamespace(), textureBase.getPath() + "_light.png"));
         this.IsFemaleOrNot = Female; //Manual Select
     }
 

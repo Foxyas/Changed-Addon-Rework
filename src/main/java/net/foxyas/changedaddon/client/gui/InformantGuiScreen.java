@@ -5,7 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.EditBox;
@@ -43,7 +42,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 		this.imageHeight = 195;
 	}
 
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/informant_gui.png");
+	private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/informant_gui.png");
 
 	@Override
 	public void render(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
@@ -52,10 +51,10 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 		form.render(ms, mouseX, mouseY, partialTicks);
 		this.renderTooltip(ms, mouseX, mouseY);
 		if (mouseX > leftPos + 4 && mouseX < leftPos + 28 && mouseY > topPos + 4 && mouseY < topPos + 28)
-			this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_type_the_form"), mouseX, mouseY);
+			this.renderTooltip(ms, Component.translatable("gui.changed_addon.informant_gui.tooltip_type_the_form"), mouseX, mouseY);
 		if (IfisEmptyProcedure.execute(entity))
 			if (mouseX > leftPos + 147 && mouseX < leftPos + 171 && mouseY > topPos + 4 && mouseY < topPos + 28)
-				this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
+				this.renderTooltip(ms, Component.translatable("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
 	}
 
 	@Override
@@ -99,7 +98,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 		this.font.draw(poseStack,
 
 				ShowLegCountProcedure.execute(world, entity, guistate), 5, 94, -12829636);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.informant_gui.label_empty"), 13, 10, -12829636);
+		this.font.draw(poseStack, Component.translatable("gui.changed_addon.informant_gui.label_empty"), 13, 10, -12829636);
 		this.font.draw(poseStack,
 
 				ShowJumpStrengthProcedure.execute(world, entity, guistate), 5, 69, -12829636);
@@ -118,16 +117,16 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 	public void init() {
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		form = new EditBox(this.font, this.leftPos + 27, this.topPos + 5, 120, 20, new TranslatableComponent("gui.changed_addon.informant_gui.form")) {
+		form = new EditBox(this.font, this.leftPos + 27, this.topPos + 5, 120, 20, Component.translatable("gui.changed_addon.informant_gui.form")) {
 			{
-				setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
+				setSuggestion(Component.translatable("gui.changed_addon.informant_gui.form").getString());
 			}
 
 			@Override
 			public void insertText(String text) {
 				super.insertText(text);
 				if (getValue().isEmpty())
-					setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
+					setSuggestion(Component.translatable("gui.changed_addon.informant_gui.form").getString());
 				else
 					setSuggestion(null);
 			}
@@ -136,7 +135,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 			public void moveCursorTo(int pos) {
 				super.moveCursorTo(pos);
 				if (getValue().isEmpty())
-					setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
+					setSuggestion(Component.translatable("gui.changed_addon.informant_gui.form").getString());
 				else
 					setSuggestion(null);
 			}

@@ -47,7 +47,7 @@ public abstract class LunarroseItem extends ArmorItem {
 
 			@Override
 			public SoundEvent getEquipSound() {
-				return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(""));
+				return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse(""));
 			}
 
 			@Override

@@ -25,8 +25,7 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -84,7 +83,7 @@ public class PatFeatureHandleProcedure {
                 handleLatexEntity(entity, targetEntity, world);
             } else if (targetEntity instanceof Player) {
                 handlePlayerEntity(entity, (Player) targetEntity, world);
-            } else if (targetEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:patable_entitys")))) {
+            } else if (targetEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("changed_addon:patable_entitys")))) {
                 handlePatableEntity(entity, targetEntity, world);
             }
         }
@@ -123,7 +122,7 @@ public class PatFeatureHandleProcedure {
     private static boolean isInSpectatorMode(Entity entity) {
         if (entity instanceof ServerPlayer serverPlayer) {
             return serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-        } else if (entity.level.isClientSide() && entity instanceof Player player) {
+        } else if (entity.level().isClientSide() && entity instanceof Player player) {
             return Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
         }
         return false;
@@ -136,8 +135,8 @@ public class PatFeatureHandleProcedure {
             if (player instanceof Player) {
                 ((Player) player).swing(getSwingHand(player), true);
             }
-            if (player instanceof Player p && !p.level.isClientSide()) {
-                p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
+            if (player instanceof Player p && !p.level().isClientSide()) {
+                p.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
 
             } else if (player instanceof Player p) {
                 if (target instanceof CustomPatReaction pat) {
@@ -180,7 +179,7 @@ public class PatFeatureHandleProcedure {
 
 
                 // Exibe mensagens
-                p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
+                p.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
             } else {
                 if (target instanceof CustomPatReaction e) {
                     e.WhenPattedReaction(p);
@@ -235,9 +234,9 @@ public class PatFeatureHandleProcedure {
                 }
             }
 
-            if (player instanceof Player p && !p.level.isClientSide()) {
-                p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
-                target.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_received", player.getDisplayName().getString()), true);
+            if (player instanceof Player p && !p.level().isClientSide()) {
+                p.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
+                target.displayClientMessage(Component.translatable("key.changed_addon.pat_received", player.getDisplayName().getString()), true);
             }
         }
     }
@@ -251,8 +250,8 @@ public class PatFeatureHandleProcedure {
             if (world instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.HEART, target.getX(), target.getY() + 1, target.getZ(), 7, 0.3, 0.3, 0.3, 1);
             }
-            if (player instanceof Player p && !p.level.isClientSide()) {
-                p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
+            if (player instanceof Player p && !p.level().isClientSide()) {
+                p.displayClientMessage(Component.translatable("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
             }
         }
     }
@@ -260,7 +259,7 @@ public class PatFeatureHandleProcedure {
     private static boolean isInCreativeMode(Entity entity) {
         if (entity instanceof ServerPlayer serverPlayer) {
             return serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-        } else if (entity.level.isClientSide() && entity instanceof Player player) {
+        } else if (entity.level().isClientSide() && entity instanceof Player player) {
             return Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
         }
         return false;
@@ -276,7 +275,7 @@ public class PatFeatureHandleProcedure {
 
     public static void GivePatAdvancement(Entity entity) {
         if (entity instanceof ServerPlayer _player) {
-            Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:pat_advancement"));
+            Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:pat_advancement"));
             assert _adv != null;
             if (_player.getAdvancements().getOrStartProgress(_adv).isDone()) {
                 return;
@@ -296,7 +295,7 @@ public class PatFeatureHandleProcedure {
                 return;
             }
             if (shouldBeConfused(player, target)) {
-                player.getLevel().addParticle(
+                player.level().addParticle(
                         ChangedParticles.emote(changedEntity, Emote.CONFUSED),
                         target.getX(),
                         target.getY() + (double) target.getDimensions(target.getPose()).height + 0.65,
@@ -319,7 +318,7 @@ public class PatFeatureHandleProcedure {
 
     public static void GiveStealthPatAdvancement(Entity entity, Entity target) {
         if (entity instanceof ServerPlayer _player) {
-			/*Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:stealthpats"));
+			/*Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:stealthpats"));
             assert _adv != null;
             if (_player.getAdvancements().getOrStartProgress(_adv).isDone()){
 				return;

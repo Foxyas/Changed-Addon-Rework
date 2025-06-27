@@ -18,7 +18,7 @@ import net.minecraft.client.Minecraft;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.network.chat.TextComponent;
+
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class UntransfurOverlayOverlay {
@@ -59,10 +59,10 @@ public class UntransfurOverlayOverlay {
 			
 			
 			if (canshow) {
-				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress.png"));
+				RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress.png"));
 				Minecraft.getInstance().gui.blit(event.getMatrixStack(), 10, posY - 73, 0, 0, 14, 5, 14, 5);
 
-				RenderSystem.setShaderTexture(0, new ResourceLocation("changed_addon:textures/screens/untransfurprogress_full.png"));
+				RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress_full.png"));
 				Minecraft.getInstance().gui.blit(event.getMatrixStack(), 11, posY - 72, 0, 0, intprogress, 3, intprogress, 3);
 				
 

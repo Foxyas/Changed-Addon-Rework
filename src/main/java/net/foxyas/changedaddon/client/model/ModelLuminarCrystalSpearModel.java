@@ -21,7 +21,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 public class ModelLuminarCrystalSpearModel<T extends Entity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in
 	// the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "model_luminar_crystal_spear_model"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "model_luminar_crystal_spear_model"), "main");
 	public final ModelPart IceSpikeBottom;
 	public final ModelPart Ice_Spike2;
 	public final ModelPart Ice_Spike3;

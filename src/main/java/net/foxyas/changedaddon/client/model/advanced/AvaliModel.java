@@ -38,7 +38,7 @@ public class AvaliModel extends AdvancedHumanoidModel<AvaliEntity> implements Ad
 		}
 	}
 
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "avali_model"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.parse("changed_addon", "avali_model"), "main");
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart RightArm;

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.stats.Stats;
 import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.item.ItemStack;
@@ -34,12 +34,12 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
                 } else if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_latex_snep")) {
                     AddTransfurProgressProcedure.SnepsiTransfur(entity, 5);
                 } else {
-                    AddTransfurProgressProcedure.SnepsiTransfur(entity, serverPlayer.getLevel().random.nextFloat() <= 0.001f ? 6 : 1);
+                    AddTransfurProgressProcedure.SnepsiTransfur(entity, serverPlayer.level().random.nextFloat() <= 0.001f ? 6 : 1);
                 }
             }
             /*int Snepsi_Drink_Amount = stats.getValue(Stats.ITEM_USED.get(ChangedAddonModItems.SNEPSI.get()));
             if (Snepsi_Drink_Amount >= 100) {
-                Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:snepsi_adctive"));
+                Advancement _adv = serverPlayer.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:snepsi_adctive"));
                 assert _adv != null;
                 AdvancementProgress _ap = serverPlayer.getAdvancements().getOrStartProgress(_adv);
                 if (!_ap.isDone()) {

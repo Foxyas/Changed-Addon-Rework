@@ -51,8 +51,8 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
 		));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-		this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female_ability_active.png")));
-		this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowFelineEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_feline_eyes_female.png")));
+		this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowLayer<>(this, ResourceLocation.parse("changed_addon:textures/entities/luminarctic_leopard_female_ability_active.png")));
+		this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowFelineEyesLayer<>(this, ResourceLocation.parse("changed_addon:textures/entities/luminarctic_leopard_feline_eyes_female.png")));
 	}
 
 	@Override
@@ -86,10 +86,10 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
 	@Override
 	public ResourceLocation getTextureLocation(FemaleLuminarcticLeopardEntity entity) {
 		if (entity.getUnderlyingPlayer() != null) {
-			return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female_no_eyes.png");
+			return ResourceLocation.parse("changed_addon:textures/entities/luminarctic_leopard_female_no_eyes.png");
 		}
 
-		return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/luminarctic_leopard_female.png");
 	}
 
 	private static class thisConditionalLayers {

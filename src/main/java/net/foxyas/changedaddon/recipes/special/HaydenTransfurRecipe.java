@@ -52,7 +52,7 @@ public class HaydenTransfurRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv) {
+    public ItemStack assemble(SimpleContainer container, RegistryAccess registryAccess) {
         ItemStack center = inv.getItem(4);
         if (center.is(ChangedItems.LATEX_SYRINGE.get())) {
             TransfurVariant<?> variant = Syringe.getVariant(center);
@@ -77,7 +77,7 @@ public class HaydenTransfurRecipe extends CustomRecipe {
 
     public static class Serializer implements RecipeSerializer<HaydenTransfurRecipe> {
 
-        public static final ResourceLocation ID = new ResourceLocation("changed_addon", "hayden_syringe_recipe");
+        public static final ResourceLocation ID = ResourceLocation.parse("changed_addon", "hayden_syringe_recipe");
 
         @Override
         public HaydenTransfurRecipe fromJson(ResourceLocation id, JsonObject json) {

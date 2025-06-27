@@ -6,7 +6,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.client.gui.components.EditBox;
 
 import java.util.function.Supplier;
@@ -26,14 +25,14 @@ public class ShowLegCountProcedure {
 			type_form = type_form.replace("\\", "");
 			if ((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
 				int LegsAmount = VariantUtilProcedure.GetLegs(type_form);
-				return new TranslatableComponent("text.changed_addon.legs").getString() + "" + LegsAmount * 1;
+				return Component.translatable("text.changed_addon.legs").getString() + "" + LegsAmount * 1;
 			}
 		}
 		if (!((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem())) {
 			Item_form = (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("form");
 			int LegsAmount = VariantUtilProcedure.GetLegs(Item_form);
-			return new TranslatableComponent("text.changed_addon.legs").getString() + "" + LegsAmount * 1;
+			return Component.translatable("text.changed_addon.legs").getString() + "" + LegsAmount * 1;
 		}
-		return (new TranslatableComponent("text.changed_addon.legs").getString()).replace("%s", "???");
+		return (Component.translatable("text.changed_addon.legs").getString()).replace("%s", "???");
 	}
 }

@@ -50,7 +50,7 @@ public class CarryAbilityAnimation {
             Entity entity1 = PlayerUtilProcedure.getEntityPlayerLookingAt(entity.getUnderlyingPlayer(), 3);
             if (isWithCarryAbilitySelected && entity1 instanceof LivingEntity livingEntity) {
                 if (livingEntity.getType().is(ChangedTags.EntityTypes.HUMANOIDS)
-                        || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))
+                        || livingEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("changed_addon:can_carry")))
                         && entity.getFirstPassenger() == null) {
 
                     if (entity.getMainHandItem().isEmpty()) {

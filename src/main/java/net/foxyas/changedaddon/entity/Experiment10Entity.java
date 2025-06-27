@@ -11,7 +11,7 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -103,7 +103,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
     }
 
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:humanoids")));
+        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.parse("changed:humanoids")));
     }
 
     @Override
@@ -180,12 +180,12 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 
     @Override
     public SoundEvent getHurtSound(DamageSource ds) {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
     }
 
     @Override
     public SoundEvent getDeathSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
     }
 
     @Override
@@ -201,7 +201,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         if (source == DamageSource.LIGHTNING_BOLT)
             return false;
         if (source.getMsgId().equals("trident")) {
-            if (this.getLevel().random.nextFloat() <= 0.25f) {
+            if (this.level().random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
                     player.displayClientMessage(new TextComponent("§l§o§3YOU'RE COWARD! Is distance all you can rely on? How PATHETIC!!!"), true);
                 }
@@ -217,7 +217,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         if (source.getMsgId().equals("witherSkull"))
             return false;
         if (source.isProjectile()) {
-            if (this.getLevel().random.nextFloat() <= 0.25f) {
+            if (this.level().random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
                     player.displayClientMessage(new TextComponent("§l§o§4Coward! Is distance all you can rely on? How PATHETIC!!!"), true);
                 }
@@ -462,7 +462,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
             if (distance > 3) {
                 if (entity.getLastHurtByMob() == Target) {
                     entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
-                    this.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
+                    this.level().playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
                     TpCooldown = 40;
                 } else {
                     if (Targets != null && !(Targets instanceof ServerPlayer)) {
@@ -473,7 +473,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
                         }
                     }// Check if the entity in not null and is instance of server player if is will check if the gametype and if is not Creative and Spectator return true
                     entity.teleportTo(Target.getX(), Target.getY(), Target.getZ());
-                    this.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
+                    this.level().playLocalSound(entity.getX(), entity.getY(), entity.getZ(), ChangedSounds.BOW2, SoundSource.HOSTILE, 10, 1, true);
                     TpCooldown = 40;
                 }
 

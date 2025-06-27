@@ -110,7 +110,7 @@ public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends 
             double dy = entity.getRandom().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
             double dz = entity.getRandom().nextDouble(isHead ? -0.5 : -0.25, isHead ? 0.5 : 0.25);
 
-            entity.getLevel().addParticle(
+            entity.level().addParticle(
                     particle,
                     pos.x() + dx, pos.y() + dy, pos.z() + dz,
                     0, 0, 0

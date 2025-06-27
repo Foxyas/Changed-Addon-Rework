@@ -7,7 +7,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.commands.CommandSourceStack;
 
 import com.mojang.brigadier.context.CommandContext;
@@ -30,7 +30,7 @@ public class SetmaxTransfurToleranceProcedure {
 			throw new RuntimeException(e);
 		}
 		Objects.requireNonNull(livingEntity.getAttributes().getInstance(ChangedAttributes.TRANSFUR_TOLERANCE.get())).setBaseValue(MaxNumber);
-		if (entity instanceof Player _player && !_player.level.isClientSide())
+		if (entity instanceof Player _player && !_player.level().isClientSide())
 			_player.displayClientMessage(new TextComponent(("The Maximum Transfur Tolerance has been set to §6" + ReturnMaxTransfurToleranceProcedure.execute(livingEntity))), false);
 
 		if (entity instanceof Player || entity instanceof ServerPlayer) {

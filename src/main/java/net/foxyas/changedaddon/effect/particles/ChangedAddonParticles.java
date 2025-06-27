@@ -23,8 +23,8 @@ import java.util.function.Function;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonParticles {
     private static final Map<ResourceLocation, ParticleType<?>> REGISTRY = new HashMap<>();
-    public static final ParticleType<ThunderSparkOption> THUNDER_SPARK = register(new ResourceLocation(ChangedAddonMod.MODID, "thunder_spark"), ThunderSparkOption.DESERIALIZER, ThunderSparkOption::codec);
-    public static final ParticleType<LaserPointParticle.Option> LAZER_POINT = register(new ResourceLocation(ChangedAddonMod.MODID, "laser_point"), LaserPointParticle.Option.DESERIALIZER, LaserPointParticle.Option::codec);
+    public static final ParticleType<ThunderSparkOption> THUNDER_SPARK = register(ResourceLocation.parse(ChangedAddonMod.MODID, "thunder_spark"), ThunderSparkOption.DESERIALIZER, ThunderSparkOption::codec);
+    public static final ParticleType<LaserPointParticle.Option> LAZER_POINT = register(ResourceLocation.parse(ChangedAddonMod.MODID, "laser_point"), LaserPointParticle.Option.DESERIALIZER, LaserPointParticle.Option::codec);
 
     public static ThunderSparkOption thunderSpark(int lifeSpam) {
         return new ThunderSparkOption(THUNDER_SPARK, lifeSpam);

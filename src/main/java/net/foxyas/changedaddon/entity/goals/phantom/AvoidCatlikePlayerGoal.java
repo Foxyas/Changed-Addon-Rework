@@ -58,7 +58,7 @@ public class AvoidCatlikePlayerGoal extends Goal {
         if (!list.isEmpty()) {
             for (LivingEntity entity : list) {
                 if (entity instanceof Player player) {
-                    phantom.level.playSound(
+                    phantom.level().playSound(
                             null,
                             player.blockPosition(),
                             SoundEvents.CAT_HISS,

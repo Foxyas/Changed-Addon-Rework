@@ -9,8 +9,8 @@ import net.foxyas.changedaddon.init.ChangedAddonModItems;
 
 public class UnifuserguiDisableItemstackPlacementProcedure {
 	public static boolean execute(ItemStack itemstack) {
-		if (itemstack.getItem() == ChangedAddonModItems.CATALYZEDDNA.get() || itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:blood_syringe"))
-				|| itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe"))) {
+		if (itemstack.getItem() == ChangedAddonModItems.CATALYZEDDNA.get() || itemstack.getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:blood_syringe"))
+				|| itemstack.getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:latex_syringe"))) {
 			return false;
 		}
 		return true;

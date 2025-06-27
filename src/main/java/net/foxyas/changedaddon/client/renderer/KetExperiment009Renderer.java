@@ -29,7 +29,7 @@ public class KetExperiment009Renderer extends AdvancedHumanoidRenderer<KetExperi
 	public KetExperiment009Renderer(EntityRendererProvider.Context context) {
 	super(context, new KetModel(context.bakeLayer(KetModel.LAYER_LOCATION)),
 				ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.7f));
+		this.addLayer(new CustomEmissiveBodyLayer<>(this, ResourceLocation.parse("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.7f));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
 	//  this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#66FFFF"))));
@@ -37,7 +37,7 @@ public class KetExperiment009Renderer extends AdvancedHumanoidRenderer<KetExperi
 
 	@Override
 	public ResourceLocation getTextureLocation(KetExperiment009Entity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/kettexture.png");
+		return ResourceLocation.parse("changed_addon:textures/entities/kettexture.png");
 	}
 
 	private static class CustomEmissiveBodyLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {

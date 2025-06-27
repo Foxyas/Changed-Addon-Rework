@@ -106,7 +106,7 @@ public class ReynEntity extends ChangedEntity {
 		BlockPos entityPos = this.blockPosition();
 
 		// Nível de luz no bloco (inclui luz de blocos e luz do céu)
-		Level level = this.getLevel();
+		Level level = this.level();
 
 		// Obtém a luz do bloco (luz artificial, como tochas)
 		int blockLight = level.getBrightness(LightLayer.BLOCK, entityPos);
@@ -194,12 +194,12 @@ public class ReynEntity extends ChangedEntity {
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
 	}
 
 	public static void init() {

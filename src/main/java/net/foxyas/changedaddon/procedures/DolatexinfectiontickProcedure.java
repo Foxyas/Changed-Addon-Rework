@@ -47,7 +47,7 @@ public class DolatexinfectiontickProcedure {
     }
 
     public static void setInfected(Player player, boolean value) {
-        if (!player.level.isClientSide) {
+        if (!player.level().isClientSide) {
             player.getPersistentData().putBoolean("transfur_infected", value);
         }
     }
@@ -66,7 +66,7 @@ public class DolatexinfectiontickProcedure {
     public static void execute(Player player) {
         if (player == null) return;
 
-		if (!player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION)) {
+		if (!player.level().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION)) {
 			return;
 		}
 
@@ -76,8 +76,8 @@ public class DolatexinfectiontickProcedure {
         int tickCounter = (int) playerVariables.LatexInfectionCooldown;
 
         float transfurProgress = ProcessTransfur.getPlayerTransfurProgress(player);
-        float mathnumber = getValueToApply(player.getLevel(), player);
-        int tickDelay = getTickDelayForDifficulty(player.getLevel());
+        float mathnumber = getValueToApply(player.level(), player);
+        int tickDelay = getTickDelayForDifficulty(player.level());
         var PlayerTolerance = ProcessTransfur.getEntityTransfurTolerance(player);
 
         if (ChangedAddonConfigsConfiguration.ALWAYS_INFECT.get()) {
@@ -124,7 +124,7 @@ public class DolatexinfectiontickProcedure {
         if (player instanceof ServerPlayer serverPlayer) {
             GameType gameMode = serverPlayer.gameMode.getGameModeForPlayer();
             return gameMode == GameType.SURVIVAL || gameMode == GameType.ADVENTURE;
-        } else if (player.level.isClientSide() && player instanceof AbstractClientPlayer clientPlayer) {
+        } else if (player.level().isClientSide() && player instanceof AbstractClientPlayer clientPlayer) {
             PlayerInfo playerInfo = Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(clientPlayer.getGameProfile().getId());
             return playerInfo != null && playerInfo.getGameMode() != GameType.SPECTATOR && playerInfo.getGameMode() != GameType.CREATIVE;
         }

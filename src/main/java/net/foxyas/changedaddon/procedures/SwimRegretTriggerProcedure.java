@@ -47,7 +47,7 @@ public class SwimRegretTriggerProcedure {
 			if (VariantUtilProcedure.GetSwimSpeed(type_form, (Player) entity) <= 0.95) {
 				if (entity.getPersistentData().getDouble("TransfurData.SlowSwimInWaterTicks") >= 600) {
 					if (entity instanceof ServerPlayer _player) {
-						Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:swim_regret"));
+						Advancement _adv = _player.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:swim_regret"));
 						AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
 						if (!_ap.isDone()) {
 							Iterator _iterator = _ap.getRemainingCriteria().iterator();

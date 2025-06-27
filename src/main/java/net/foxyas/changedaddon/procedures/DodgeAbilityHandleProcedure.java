@@ -7,7 +7,6 @@ import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -76,7 +75,7 @@ public class DodgeAbilityHandleProcedure {
 
     private static void applyDodgeEffects(Player player, DodgeAbilityInstance dodge, ServerLevel serverLevel, LivingAttackEvent event) {
         dodge.subDodgeAmount();
-        player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", dodge.getDodgeStaminaRatio()), false);
+        player.displayClientMessage(Component.translatable("changed_addon.ability.dodge.dodge_amount_left", dodge.getDodgeStaminaRatio()), false);
         player.invulnerableTime = 20;
         player.hurtDuration = 20;
         player.hurtTime = player.hurtDuration;

@@ -136,12 +136,12 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource ds) {
-		return SoundEvents.OCELOT_HURT; //ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+		return SoundEvents.OCELOT_HURT; //ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return SoundEvents.OCELOT_DEATH; //ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+		return SoundEvents.OCELOT_DEATH; //ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
 	}
 
 	@Override
@@ -166,7 +166,7 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 
 	public InteractionResult LatexSnepInteraction(Player player, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
-		if (this.level.isClientSide) {
+		if (this.level().isClientSide) {
 			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
 		} else {

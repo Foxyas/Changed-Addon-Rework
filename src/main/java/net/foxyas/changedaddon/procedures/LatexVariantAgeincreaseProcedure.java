@@ -35,7 +35,7 @@ public class LatexVariantAgeincreaseProcedure {
 		if (entity == null)
 			return;
 		double number = 0;
-		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:white_latex_goo"))) {
+		if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("changed:white_latex_goo"))) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true
 					&& ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_dark_latex_pup")) {
 				setPlayerLatexAge.execute((Player) entity, 5000, true);

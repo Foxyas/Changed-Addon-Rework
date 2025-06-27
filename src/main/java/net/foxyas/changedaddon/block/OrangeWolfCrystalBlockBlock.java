@@ -1,24 +1,15 @@
-
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.List;
-import java.util.Collections;
 import java.util.Random;
 
 public class OrangeWolfCrystalBlockBlock extends AbstractWolfCrystalExtender.AbstractWolfCrystalBlock {
@@ -34,7 +25,7 @@ public class OrangeWolfCrystalBlockBlock extends AbstractWolfCrystalExtender.Abs
         if (plant.getBlock() instanceof OrangeWolfCrystalSmallBlock)
             return true;
         else
-			return super.canSustainPlant(state, world, pos, facing, plantable);
+            return super.canSustainPlant(state, world, pos, facing, plantable);
     }
 
     public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {

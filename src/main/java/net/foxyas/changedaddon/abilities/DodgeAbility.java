@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.abilities;
 
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
@@ -16,13 +16,12 @@ public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
     }
 
     @Override
-    public TranslatableComponent getAbilityName(IAbstractChangedEntity entity) {
-        return new TranslatableComponent("changed_addon.ability.dodge");
+    public Component getAbilityName(IAbstractChangedEntity entity) {
+        return Component.translatable("changed_addon.ability.dodge");
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return new ResourceLocation("changed_addon:textures/screens/dodge_ability.png");
+        return ResourceLocation.parse("changed_addon:textures/screens/dodge_ability.png");
     }
 
     @Override

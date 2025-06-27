@@ -47,7 +47,7 @@ public class ElectricKatanaItem extends SwordItem implements SpecializedItemRend
 			}
 
 			public Ingredient getRepairIngredient() {
-				return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))));
+				return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(ResourceLocation.parse("changed_addon:tsc_katana_repair"))));
 			}
 		}, 3, -2.3f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
 	}
@@ -65,13 +65,13 @@ public class ElectricKatanaItem extends SwordItem implements SpecializedItemRend
 	}
 
 	private static final ModelResourceLocation GUI_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_item_full"), "inventory");
+			new ModelResourceLocation(ResourceLocation.parse("changed_addon","electric_katana_blue_item_full"), "inventory");
 	private static final ModelResourceLocation HANDLE_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_3d"), "inventory");
+			new ModelResourceLocation(ResourceLocation.parse("changed_addon","electric_katana_3d"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_laser"), "inventory");
+			new ModelResourceLocation(ResourceLocation.parse("changed_addon","electric_katana_blue_laser"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_GUI_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_glow"), "inventory");
+			new ModelResourceLocation(ResourceLocation.parse("changed_addon","electric_katana_red_glow"), "inventory");
 
 	@Nullable
 	@Override

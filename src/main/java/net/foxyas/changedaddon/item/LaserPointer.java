@@ -13,7 +13,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -244,7 +244,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
         super.onUsingTick(stack, player, count);
-        if (!player.getLevel().isClientSide) {
+        if (!player.level().isClientSide) {
             HitResult result = player.pick(MAX_LASER_REACH, 0.0F, false);
             EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(player, LaserPointer.MAX_LASER_REACH);
             Vec3 hitPos = result.getLocation();
@@ -253,23 +253,23 @@ public class LaserPointer extends Item implements SpecializedAnimations {
             if (entityHitResult != null) {
                 face = Direction.getNearest(entityHitResult.getLocation().x, entityHitResult.getLocation().y, entityHitResult.getLocation().z);
                 hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05D);
-            } else if (result instanceof BlockHitResult blockResult && player.getLevel().getBlockState(blockResult.getBlockPos()).isAir()) {
+            } else if (result instanceof BlockHitResult blockResult && player.level().getBlockState(blockResult.getBlockPos()).isAir()) {
                 // Mira no ar: define uma posição "alvo" no ar baseada na direção do olhar
             } else if (result instanceof BlockHitResult blockResult &&
                     // Se for translúcido, refazer raycast ignorando blocos
-                    player.getLevel().getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+                    player.level().getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
 
                 Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
                         .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
-                BlockHitResult blockHitResult = manualRaycastIgnoringBlocks(player.getLevel(), player, 64, blockSet);
+                BlockHitResult blockHitResult = manualRaycastIgnoringBlocks(player.level(), player, 64, blockSet);
                 hitPos = applyOffset(result.getLocation(), blockHitResult.getDirection(), -0.05D);
 
-            } else if (result instanceof BlockHitResult blockResult && !player.getLevel().getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+            } else if (result instanceof BlockHitResult blockResult && !player.level().getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
                 hitPos = applyOffset(result.getLocation(), blockResult.getDirection(), -0.05D);
             }
 
             double radius = 16.0; // Raio de busca
-            List<LivingEntity> nearbyMobs = player.getLevel().getEntitiesOfClass(LivingEntity.class, new AABB(hitPos, hitPos).inflate(radius), (e) -> {
+            List<LivingEntity> nearbyMobs = player.level().getEntitiesOfClass(LivingEntity.class, new AABB(hitPos, hitPos).inflate(radius), (e) -> {
                 if (e instanceof Mob mob) {
                     return mob.goalSelector.getAvailableGoals().stream().anyMatch(g -> g.getGoal() instanceof FollowAndLookAtLaser);
                 }

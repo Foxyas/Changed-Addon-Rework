@@ -45,10 +45,10 @@ public class DazedRenderer extends AdvancedHumanoidRenderer<DazedEntity, DazedLa
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull DazedEntity entity) {
         if (entity.isMorphed()){
-            return new ResourceLocation("changed_addon:textures/entities/dazed_creature_puddle.png");
+            return ResourceLocation.parse("changed_addon:textures/entities/dazed_creature_puddle.png");
         }
 
-        return new ResourceLocation("changed_addon:textures/entities/dazed_creature.png");
+        return ResourceLocation.parse("changed_addon:textures/entities/dazed_creature.png");
     }
 
     public static class ConditionalCustomEyesLayer<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends RenderLayer<T, M> {

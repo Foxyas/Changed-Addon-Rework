@@ -123,7 +123,7 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof Player player){
-			if(player.getLevel().random.nextInt(10) > 5) {
+			if(player.level().random.nextInt(10) > 5) {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF_HORNED.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
@@ -131,7 +131,7 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof LivingEntity player){
-			if(player.getLevel().random.nextInt(10) > 5) {
+			if(player.level().random.nextInt(10) > 5) {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			} else {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.CRYSTAL_WOLF_HORNED.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
@@ -146,29 +146,29 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof Player player){
-			if(player.getLevel().random.nextInt(6) <= 1) {
+			if(player.level().random.nextInt(6) <= 1) {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 2)){
+			} else if ((player.level().random.nextInt(6) == 2)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_DRAGON.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 3)){
+			} else if ((player.level().random.nextInt(6) == 3)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 4)){
+			} else if ((player.level().random.nextInt(6) == 4)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_YUFENG.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 5)){
+			} else if ((player.level().random.nextInt(6) == 5)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
 		if (entity instanceof LivingEntity player){
-			if(player.getLevel().random.nextInt(6) <= 1) {
+			if(player.level().random.nextInt(6) <= 1) {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 2)){
+			} else if ((player.level().random.nextInt(6) == 2)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_DRAGON.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 3)){
+			} else if ((player.level().random.nextInt(6) == 3)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PUP.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 4)){
+			} else if ((player.level().random.nextInt(6) == 4)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_YUFENG.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(6) == 5)){
+			} else if ((player.level().random.nextInt(6) == 5)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
@@ -181,17 +181,17 @@ public class AddTransfurProgressProcedure {
 		}
 
 		if (entity instanceof Player player){
-			if(player.getLevel().random.nextInt(3) == 1) {
+			if(player.level().random.nextInt(3) == 1) {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(3) == 2)){
+			} else if ((player.level().random.nextInt(3) == 2)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}
 
 		if (entity instanceof LivingEntity player){
-			if(player.getLevel().random.nextInt(3) == 1) {
+			if(player.level().random.nextInt(3) == 1) {
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.Gendered.DARK_LATEX_WOLVES.getRandomVariant(new Random()),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-			} else if ((player.getLevel().random.nextInt(3) == 2)){
+			} else if ((player.level().random.nextInt(3) == 2)){
 				ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.DARK_LATEX_WOLF_PARTIAL.get(),TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			}
 		}

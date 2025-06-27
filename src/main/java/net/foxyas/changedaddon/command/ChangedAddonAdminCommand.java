@@ -35,7 +35,7 @@ public class ChangedAddonAdminCommand {
 	public static void registerCommand(RegisterCommandsEvent event) {
 		event.getDispatcher().register(Commands.literal("changed-addon-admin").requires(s -> s.hasPermission(2))
 				.then(Commands.literal("allow_boss_transfur").then(Commands.literal("Ket_Exp_009").then(Commands.literal("get").then(Commands.argument("player", EntityArgument.player()).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -47,7 +47,7 @@ public class ChangedAddonAdminCommand {
 					GetBossPermProcedure.execute(arguments, entity);
 					return 0;
 				}))).then(Commands.literal("set").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("set", BoolArgumentType.bool()).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -59,7 +59,7 @@ public class ChangedAddonAdminCommand {
 					SetBossPermProcedure.execute(arguments, entity);
 					return 0;
 				}))))).then(Commands.literal("Exp_10").then(Commands.literal("get").then(Commands.argument("player", EntityArgument.player()).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -71,7 +71,7 @@ public class ChangedAddonAdminCommand {
 					GetExp10BossPermProcedure.execute(arguments, entity);
 					return 0;
 				}))).then(Commands.literal("set").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("set", BoolArgumentType.bool()).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -83,7 +83,7 @@ public class ChangedAddonAdminCommand {
 					SetExp10BossPermProcedure.execute(arguments, entity);
 					return 0;
 				})))))).then(Commands.literal("SetTransfurProgress").then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -95,7 +95,7 @@ public class ChangedAddonAdminCommand {
 					AddTransfurProgressCommandProcedure.execute(arguments, entity);
 					return 0;
 				})).then(Commands.literal("set").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -107,7 +107,7 @@ public class ChangedAddonAdminCommand {
 					SetTransfurProgressCommandProcedure.execute(arguments, entity);
 					return 0;
 				})))).then(Commands.literal("SetPlayerTransfurProgress").then(Commands.argument("Target", EntityArgument.player()).then(Commands.argument("Number", DoubleArgumentType.doubleArg()).then(Commands.literal("add").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -119,7 +119,7 @@ public class ChangedAddonAdminCommand {
 					AddPlayerTransfurProgressProcedure.execute(arguments, entity);
 					return 0;
 				})).then(Commands.literal("set").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -131,7 +131,7 @@ public class ChangedAddonAdminCommand {
 					SetPlayerTransfurProgressCommandProcedure.execute(arguments, entity);
 					return 0;
 				}))))).then(Commands.literal("SetMaxTransfurTolerance").then(Commands.argument("target", EntityArgument.player()).then(Commands.argument("MaxNumber", DoubleArgumentType.doubleArg(0.1)).executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -143,7 +143,7 @@ public class ChangedAddonAdminCommand {
 					SetmaxTransfurToleranceProcedure.execute(arguments, entity);
 					return 0;
 				})).then(Commands.literal("Default").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();
@@ -155,7 +155,7 @@ public class ChangedAddonAdminCommand {
 					SetDefaultValueProcedure.execute(arguments, entity);
 					return 0;
 				})))).then(Commands.literal("GetMaxTransfurTolerance").executes(arguments -> {
-					ServerLevel world = arguments.getSource().getLevel();
+					ServerLevel world = arguments.getSource().level();
 					double x = arguments.getSource().getPosition().x();
 					double y = arguments.getSource().getPosition().y();
 					double z = arguments.getSource().getPosition().z();

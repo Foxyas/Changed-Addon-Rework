@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.goals;
 
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
+
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -66,7 +66,7 @@ public class KnockBackBurstGoal extends Goal {
         recentDamage = 0;
         recentHits = 0;
 
-        Level level = mob.getLevel();
+        Level level = mob.level();
         AABB area = mob.getBoundingBox().inflate(4.0); // raio da explosão de knockback
         List<LivingEntity> players = level.getEntitiesOfClass(LivingEntity.class, area, (livingEntity -> livingEntity != mob));
 
@@ -77,7 +77,7 @@ public class KnockBackBurstGoal extends Goal {
                 double dist = Math.max(0.1, Math.sqrt(dx * dx + dz * dz));
                 livingEntity.push((dx / dist) * knockbackForce, 0.5, (dz / dist) * knockbackForce);
                 livingEntity.hurtMarked = true; // força sincronização de movimento no cliente
-                livingEntity.getLevel().playSound(null, mob, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 1, 1);
+                livingEntity.level().playSound(null, mob, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 1, 1);
                 if (livingEntity instanceof Player player) {
                     player.displayClientMessage(new TextComponent("That's ENOUGH").withStyle((style) -> {
                         Style newStyle = style;

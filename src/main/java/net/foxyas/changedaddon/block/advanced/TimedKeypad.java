@@ -32,15 +32,39 @@ public class TimedKeypad extends KeypadBlock {
         super();
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public static void registerRenderLayer() {
+        ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.TIMED_KEYPAD.get(), renderType -> renderType == RenderType.cutout());
+    }
+
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new TimedKeypadBlockEntity(blockPos, blockState);
     }
 
+/*
+    void oldLogic(){
+    if (relative.y > 0.185f && relative.y < 0.25f) {
+                Direction direction = state.getValue(HorizontalDirectionalBlock.FACING);
+                if (direction == Direction.NORTH) {
+                    if (relative.x == 0.0625f || (relative.x >= 0.0624 && relative.x < 0.0626) ){
+                        if (relative.z > 0.75f && relative.z < 0.8125) {
+                            BlockEntity blockEntity = level.getBlockEntity(pos);
+                            if (blockEntity instanceof TimedKeypadBlockEntity timedKeypadBlockEntity) {
+                                timedKeypadBlockEntity.setTimer(timedKeypadBlockEntity.getTimer() + 10);
+                            }
+                            return InteractionResult.SUCCESS;
+                        }
+                    }
+                }
+            }
+    }
+*/
+
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hitResult) {
         if (player.isShiftKeyDown() && !state.getValue(KeypadBlock.POWERED)) {
-            /*player.displayClientMessage(new TextComponent("Pos:" + (hitResult.getLocation().subtract(hitResult.getBlockPos().getX(),
+            /*player.displayClientMessage(Component.literal("Pos:" + (hitResult.getLocation().subtract(hitResult.getBlockPos().getX(),
                             hitResult.getBlockPos().getY(),
                             hitResult.getBlockPos().getZ()))),
                     true);*/
@@ -166,26 +190,6 @@ public class TimedKeypad extends KeypadBlock {
         return super.use(state, level, pos, player, hand, hitResult);
     }
 
-/*
-    void oldLogic(){
-    if (relative.y > 0.185f && relative.y < 0.25f) {
-                Direction direction = state.getValue(HorizontalDirectionalBlock.FACING);
-                if (direction == Direction.NORTH) {
-                    if (relative.x == 0.0625f || (relative.x >= 0.0624 && relative.x < 0.0626) ){
-                        if (relative.z > 0.75f && relative.z < 0.8125) {
-                            BlockEntity blockEntity = level.getBlockEntity(pos);
-                            if (blockEntity instanceof TimedKeypadBlockEntity timedKeypadBlockEntity) {
-                                timedKeypadBlockEntity.setTimer(timedKeypadBlockEntity.getTimer() + 10);
-                            }
-                            return InteractionResult.SUCCESS;
-                        }
-                    }
-                }
-            }
-    }
-*/
-
-
     @Override
     public void tick(BlockState blockState, ServerLevel level, BlockPos blockPos, Random random) {
         super.tick(blockState, level, blockPos, random);
@@ -203,7 +207,6 @@ public class TimedKeypad extends KeypadBlock {
         }
     }
 
-
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide ? null : createTickerHelper(
@@ -220,12 +223,6 @@ public class TimedKeypad extends KeypadBlock {
     public boolean triggerEvent(BlockState p_49226_, Level p_49227_, BlockPos p_49228_, int p_49229_, int p_49230_) {
         return super.triggerEvent(p_49226_, p_49227_, p_49228_, p_49229_, p_49230_);
     }
-
-    @OnlyIn(Dist.CLIENT)
-    public static void registerRenderLayer() {
-        ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.TIMED_KEYPAD.get(), renderType -> renderType == RenderType.cutout());
-    }
-
 
     // pixelX, pixelY, pixelZ vão de 0 a 15 (inclusive)
     private boolean isInsidePixel(Vec3 relative, int px, int py, int pz) {

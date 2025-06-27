@@ -34,7 +34,7 @@ public class SummonEntityProcedure {
 			entityToSpawn.setYHeadRot(0);
 			Player _ent = player;
 
-			if (!_ent.level.isClientSide() && _ent.getServer() != null){
+			if (!_ent.level().isClientSide() && _ent.getServer() != null){
 				if (entityToSpawn instanceof Mob mob){
 					mob.finalizeSpawn(_level,world.getCurrentDifficultyAt(entityToSpawn.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 				}

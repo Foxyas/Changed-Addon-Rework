@@ -223,12 +223,12 @@ public class ChangedAddonModItems {
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			ItemProperties.register(LAETHIN.get(), new ResourceLocation("changed_addon:laethin_type"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) LaethinPropertyValueProviderProcedure.execute(itemStackToRender));
-			ItemProperties.register(LAETHIN_SYRINGE.get(), new ResourceLocation("changed_addon:laethin_syringe_type"),
+			ItemProperties.register(LAETHIN.get(), ResourceLocation.parse("changed_addon:laethin_type"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) LaethinPropertyValueProviderProcedure.execute(itemStackToRender));
+			ItemProperties.register(LAETHIN_SYRINGE.get(), ResourceLocation.parse("changed_addon:laethin_syringe_type"),
 					(itemStackToRender, clientWorld, entity, itemEntityId) -> (float) LaethinPropertyValueProviderProcedure.execute(itemStackToRender));
-			ItemProperties.register(TRANSFUR_TOTEM.get(), new ResourceLocation("changed_addon:transfur_totem_glowtick"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) TransfurTotemItemInInventoryProcedure.execute(entity));
-			ItemProperties.register(SIGNAL_CATCHER.get(), new ResourceLocation("changed_addon:signal_catcher_dot_value"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) DotValueOfViewProcedure.execute(entity, itemStackToRender));
-			ItemProperties.register(SIGNAL_CATCHER.get(), new ResourceLocation("changed_addon:signal_catcher_cord_set"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) IsSignalCatcherCordsSetProcedure.execute(itemStackToRender));
+			ItemProperties.register(TRANSFUR_TOTEM.get(), ResourceLocation.parse("changed_addon:transfur_totem_glowtick"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) TransfurTotemItemInInventoryProcedure.execute(entity));
+			ItemProperties.register(SIGNAL_CATCHER.get(), ResourceLocation.parse("changed_addon:signal_catcher_dot_value"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) DotValueOfViewProcedure.execute(entity, itemStackToRender));
+			ItemProperties.register(SIGNAL_CATCHER.get(), ResourceLocation.parse("changed_addon:signal_catcher_cord_set"), (itemStackToRender, clientWorld, entity, itemEntityId) -> (float) IsSignalCatcherCordsSetProcedure.execute(itemStackToRender));
 		});
 	}
 

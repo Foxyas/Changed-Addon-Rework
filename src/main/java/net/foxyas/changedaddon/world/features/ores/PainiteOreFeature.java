@@ -62,7 +62,7 @@ public class PainiteOreFeature extends OreFeature {
 
 	public boolean place(FeaturePlaceContext<OreConfiguration> context) {
 		WorldGenLevel world = context.level();
-		if (!generate_dimensions.contains(world.getLevel().dimension()))
+		if (!generate_dimensions.contains(world.level().dimension()))
 			return false;
 		int x = context.origin().getX();
 		int y = context.origin().getY();
@@ -80,7 +80,7 @@ public class PainiteOreFeature extends OreFeature {
 
 		@SubscribeEvent
 		public static void init(FMLCommonSetupEvent event) {
-			Registry.register(Registry.RULE_TEST, new ResourceLocation("changed_addon:painite_ore_match"), CUSTOM_MATCH);
+			Registry.register(Registry.RULE_TEST, ResourceLocation.parse("changed_addon:painite_ore_match"), CUSTOM_MATCH);
 		}
 
 		public boolean test(BlockState blockstate, Random random) {
