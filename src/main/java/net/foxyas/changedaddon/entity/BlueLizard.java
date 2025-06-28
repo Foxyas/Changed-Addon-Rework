@@ -1,13 +1,11 @@
 package net.foxyas.changedaddon.entity;
 
-import java.util.List;
-
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.HairStyle;
-import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.HairStyle.Collection;
+import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,6 +17,8 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class BlueLizard extends AbstractBasicChangedEntity {
     public BlueLizard(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.BLUE_LIZARD.get(), world);
@@ -28,10 +28,15 @@ public class BlueLizard extends AbstractBasicChangedEntity {
         super(p_19870_, p_19871_);
     }
 
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
+        return builder;
+    }
+
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.05f);
-        attributes.getInstance((Attribute)ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1F);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1F);
     }
 
     public TransfurMode getTransfurMode() {
@@ -48,10 +53,5 @@ public class BlueLizard extends AbstractBasicChangedEntity {
 
     public @Nullable List<HairStyle> getValidHairStyles() {
         return Collection.EMPTY;
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
-        return builder;
     }
 }

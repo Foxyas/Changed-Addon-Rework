@@ -45,7 +45,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent(("you stop the " + Component.translatable(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
+					_player.displayClientMessage(Component.literal(("you stop the " + Component.translatable(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
 			} else {
 				if (!world.isClientSide()) {
 					BlockPos _bp = new BlockPos(x, y, z);
@@ -57,7 +57,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 				}
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent(("you start the " + Component.translatable(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
+					_player.displayClientMessage(Component.literal(("you start the " + Component.translatable(("block." + (ForgeRegistries.BLOCKS.getKey(blockstate.getBlock()).toString()).replace(":", "."))).getString())), true);
 			}
 		} else {
 			{
@@ -66,7 +66,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 					NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 						@Override
 						public Component getDisplayName() {
-							return new TextComponent("Unifusergui");
+							return Component.literal("Unifusergui");
 						}
 
 						@Override

@@ -25,6 +25,6 @@ public class RecipeResetProcedure {
 			});
 		}
 		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent("Recipes Reseted (Page 1)"), true);
+			_player.displayClientMessage(Component.literal("Recipes Reseted (Page 1)"), true);
 	}
 }

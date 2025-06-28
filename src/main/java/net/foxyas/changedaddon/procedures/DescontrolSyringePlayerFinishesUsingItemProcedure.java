@@ -79,7 +79,7 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
 				}
 			}
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.untransfur.diffusion").getString())), true);
+				_player.displayClientMessage(Component.literal((Component.translatable("changedaddon.untransfur.diffusion").getString())), true);
 			if (world instanceof Level _level) {
 				if (!_level.isClientSide()) {
 					_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("changed_addon:untransfursound")), SoundSource.NEUTRAL, 1, 1);
@@ -89,7 +89,7 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
 			}
 		} else {
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.untransfur.no_effect").getString())), true);
+				_player.displayClientMessage(Component.literal((Component.translatable("changedaddon.untransfur.no_effect").getString())), true);
 		}
 		if (!(new Object() {
 			public boolean checkGamemode(Entity _ent) {

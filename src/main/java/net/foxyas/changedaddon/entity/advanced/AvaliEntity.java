@@ -21,6 +21,10 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         this(ChangedAddonEntities.AVALI.get(), world);
     }
 
+    public AvaliEntity(EntityType<? extends ChangedEntity> type, Level level) {
+        super(type, level);
+    }
+
     @Override
     protected void setAttributes(AttributeMap attributes) {
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
@@ -34,11 +38,6 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
     }
 
-    public AvaliEntity(EntityType<? extends ChangedEntity> type, Level level) {
-        super(type, level);
-    }
-
-    @Override
     public Color3 getDripColor() {
         return Color3.WHITE;
     }

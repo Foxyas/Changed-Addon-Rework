@@ -7,12 +7,12 @@ import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,12 +32,26 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
         super(type, level);
     }
 
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
+        builder = builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3f);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 2);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
+
     protected void setAttributes(AttributeMap attributes) {
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.1f);
-        attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.95f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(0.95f);
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
         attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
         attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
@@ -64,7 +79,7 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -98,19 +113,5 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
     @Override
     public SoundEvent getDeathSound() {
         return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
-    }
-
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
-        builder = builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3f);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 24);
-        builder = builder.add(Attributes.ARMOR, 2);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
     }
 }

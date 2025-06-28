@@ -65,7 +65,7 @@ public class TranfurSoundsGuiButtonMessage {
 	}
 
 	public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
-		Level world = entity.level;
+		Level world = entity.level();
 		HashMap guistate = TranfurSoundsGuiMenu.guistate;
 		// security measure to prevent arbitrary chunk generation
 		if (!world.hasChunkAt(new BlockPos(x, y, z)))

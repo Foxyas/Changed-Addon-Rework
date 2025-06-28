@@ -212,7 +212,7 @@ public class LaserPointParticle extends TextureSheetParticle {
             return;
         }
 
-        if (level.isClientSide() && Minecraft.getInstance().player != null && ProcessTransfur.getPlayerTransfurVariantSafe(Minecraft.getInstance().player).map(
+        if (level().isClientSide() && Minecraft.getInstance().player != null && ProcessTransfur.getPlayerTransfurVariantSafe(Minecraft.getInstance().player).map(
                 transfurVariantInstance -> transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)
         ).orElse(false)) {
             this.setSize(0.35f, 0.35f);
@@ -239,7 +239,7 @@ public class LaserPointParticle extends TextureSheetParticle {
         } else if (result instanceof BlockHitResult blockResult) {
             BlockHitResult finalResult = blockResult;
 
-            if (level.getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
+            if (level().getBlockState(blockResult.getBlockPos()).is(ChangedTags.Blocks.LASER_TRANSLUCENT)) {
                 Set<Block> blockSet = Objects.requireNonNull(ForgeRegistries.BLOCKS.tags())
                         .getTag(ChangedTags.Blocks.LASER_TRANSLUCENT).stream().collect(Collectors.toSet());
                 finalResult = manualRaycastIgnoringBlocks(level, owner, LaserPointer.MAX_LASER_REACH, blockSet);

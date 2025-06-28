@@ -29,7 +29,7 @@ public class FoxyasRightClickedOnEntityProcedure {
 				NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 					@Override
 					public Component getDisplayName() {
-						return new TextComponent("Foxyasgui");
+						return Component.literal("Foxyasgui");
 					}
 
 					@Override

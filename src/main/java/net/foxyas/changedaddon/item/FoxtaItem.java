@@ -85,7 +85,7 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
                     for (String string : _ap.getRemainingCriteria()) serverPlayer.getAdvancements().award(_adv, string);
                 }
             }
-            //serverPlayer.displayClientMessage(new TextComponent("Drink this = " + Snepsi_Drink_Amount),false);
+            //serverPlayer.displayClientMessage(Component.literal("Drink this = " + Snepsi_Drink_Amount),false);
         }*/
         if (entity.level().random.nextFloat() <= 0.001f) {
             ProcessTransfur.progressTransfur(entity, 15, ChangedAddonTransfurVariants.FOXTA_FOXY.get(), TransfurContext.hazard(TransfurCause.FACE_HAZARD));

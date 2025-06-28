@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
@@ -79,15 +79,15 @@ public class DEBUG {
             ENTITYUUID = event.getMessage().replace("setEntity:", "");
         }
         if (event.getMessage().startsWith("Show info")) {
-            event.getPlayer().displayClientMessage(new TextComponent("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL + "\n" + "J = " + HeadPosJ), false);
+            event.getPlayer().displayClientMessage(Component.literal("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL + "\n" + "J = " + HeadPosJ), false);
         }
         if (event.getMessage().startsWith("Show1")) {
-            event.getPlayer().displayClientMessage(new TextComponent("X = " + DeltaX + "\n" + "Y = " + DeltaY + "\n" + "Z = " + DeltaZ), false);
+            event.getPlayer().displayClientMessage(Component.literal("X = " + DeltaX + "\n" + "Y = " + DeltaY + "\n" + "Z = " + DeltaZ), false);
         }
         if (event.getMessage().startsWith("Show Info")) {
             new DelayedTask(40, event.getPlayer(), (livingEntity) -> {
                 if (livingEntity instanceof Player player) {
-                    player.displayClientMessage(new TextComponent("X = " + StructureHandle.isStructureNearby(event.getPlayer().level(), event.getPlayer().getOnPos(), "changed_addon:dazed_latex_meteor", 3)), false);
+                    player.displayClientMessage(Component.literal("X = " + StructureHandle.isStructureNearby(event.getPlayer().level(), event.getPlayer().getOnPos(), "changed_addon:dazed_latex_meteor", 3)), false);
                 }
             });
         }
@@ -121,7 +121,7 @@ public class DEBUG {
             }
             Vec3 pos;
             //pos = getPartWorldPosForParticles(entity, player.getMainArm() == HumanoidArm.RIGHT ? humanoidModel.rightArm : humanoidModel.leftArm, HeadPosX);
-            //player.displayClientMessage(new TextComponent(pos.toString()), true);
+            //player.displayClientMessage(Component.literal(pos.toString()), true);
 
             /*if (player.level.random.nextFloat() >= 0) {
                 player.level.addParticle(ParticleTypes.ELECTRIC_SPARK,

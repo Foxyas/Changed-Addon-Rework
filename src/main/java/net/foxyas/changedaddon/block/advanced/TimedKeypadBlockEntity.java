@@ -65,8 +65,8 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
     }
 
     private void playSound(SoundEvent event, float volume, float pitch) {
-        if (this.level.getServer() != null) {
-            ChangedSounds.broadcastSound(this.level.getServer(), event, this.worldPosition, volume, pitch);
+        if (this.level().getServer() != null) {
+            ChangedSounds.broadcastSound(this.level().getServer(), event, this.worldPosition, volume, pitch);
         }
 
     }
@@ -108,7 +108,7 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
 
 
     public void tick(@NotNull Level level, BlockPos pos) {
-        if (level.isClientSide()) {
+        if (level().isClientSide()) {
             return;
         }
         if (!canTick) {

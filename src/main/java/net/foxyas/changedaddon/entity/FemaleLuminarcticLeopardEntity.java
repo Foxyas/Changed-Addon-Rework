@@ -1,57 +1,27 @@
-
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
-import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
-import net.minecraft.world.BossEvent;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.network.NetworkHooks;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.protocol.Packet;
-
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
@@ -63,11 +33,25 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 
     public FemaleLuminarcticLeopardEntity(EntityType<FemaleLuminarcticLeopardEntity> type, Level world) {
         super(type, world);
-        maxUpStep = 0.6f;
+
         xpReward = XP_REWARD_HUGE;
         this.setAttributes(this.getAttributes());
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 6);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 1.25f);
+        builder = builder.add(Attributes.MAX_HEALTH, 60F);
+        builder = builder.add(Attributes.ARMOR, 8F);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 8);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -104,7 +88,7 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -133,7 +117,7 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
         float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
         float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
         float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-        return (double) (Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
+        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
     }
 
     public double getTorsoYOffsetForFallFly(ChangedEntity self) {
@@ -157,20 +141,6 @@ public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
     @Override
     public SoundEvent getDeathSound() {
         return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
-    }
-
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 6);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 1.25f);
-        builder = builder.add(Attributes.MAX_HEALTH, 60F);
-        builder = builder.add(Attributes.ARMOR, 8F);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 8);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
     }
 
     @Override

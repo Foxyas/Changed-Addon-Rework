@@ -24,13 +24,13 @@ import net.minecraft.world.phys.Vec3;
 
 public class SImpleAntiFlyingAttack extends Goal {
     private final Mob attacker;
-    private LivingEntity target;
-    private int ticks = 0;
     private final int delay;
     private final float minRange;
     private final float maxRange;
     private final float damage;
     private final EntityType<? extends AbstractArrow> projectileType = ChangedAddonEntities.PARTICLE_PROJECTILE.get();
+    private LivingEntity target;
+    private int ticks = 0;
 
     public SImpleAntiFlyingAttack(Mob attacker, float minRange, float maxRange, float damage, int delay) {
         this.attacker = attacker;

@@ -34,7 +34,7 @@ public class JeiUnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe
 
     @Override
     public Component getTitle() {
-        return new TextComponent((Component.translatable("block.changed_addon.unifuser").getString()));
+        return Component.literal((Component.translatable("block.changed_addon.unifuser").getString()));
     }
 
     @Override

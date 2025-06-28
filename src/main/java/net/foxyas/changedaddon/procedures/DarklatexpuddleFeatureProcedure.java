@@ -49,7 +49,7 @@ public class DarklatexpuddleFeatureProcedure {
 						}
 					}.getValue(world, new BlockPos(x, y, z), "cooldown") <= 0) {
 						if (world instanceof ServerLevel _level)
-							_level.getServer().getCommands().performCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", new TextComponent(""), _level.getServer(), null).withSuppressedOutput(),
+							_level.getServer().getCommands().performCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", Component.literal(""), _level.getServer(), null).withSuppressedOutput(),
 									("playsound " + "changed_addon:warn " + "block " + "@a[nbt={ForgeCaps:{\"changed_addon:player_variables\":{aredarklatex:1b}}}] " + "~ ~ ~ " + 20 + 0 + 1));
 						if (!world.isClientSide()) {
 							BlockPos _bp = new BlockPos(x, y, z);

@@ -35,7 +35,7 @@ public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerReci
 
     @Override
     public Component getTitle() {
-        return new TextComponent((Component.translatable("block.changed_addon.catlyzer").getString()));
+        return Component.literal((Component.translatable("block.changed_addon.catlyzer").getString()));
     }
 
     @Override

@@ -49,14 +49,14 @@ public class SignalCatherToolTipProcedure {
 			deltaZ = itemstack.getOrCreateTag().getDouble("z") - entity.getZ();
 			distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
 			if (!Screen.hasShiftDown()) {
-				tooltip.add(new TextComponent("Hold \u00A76<Shift>\u00A7r for Info"));
+				tooltip.add(Component.literal("Hold \u00A76<Shift>\u00A7r for Info"));
 			} else {
-				tooltip.add(new TextComponent("Hold \u00A7b<Right Click>\u00A7r For scan a 32 blocks area"));
-				tooltip.add(new TextComponent("Hold \u00A7c<Shift + Right Click>\u00A7r For Super scan and scan a 120 blocks area"));
+				tooltip.add(Component.literal("Hold \u00A7b<Right Click>\u00A7r For scan a 32 blocks area"));
+				tooltip.add(Component.literal("Hold \u00A7c<Shift + Right Click>\u00A7r For Super scan and scan a 120 blocks area"));
 			}
-			tooltip.add(new TextComponent(("\u00A7oCords \u00A7l" + itemstack.getOrCreateTag().getDouble("x") + " " + itemstack.getOrCreateTag().getDouble("y") + " " + itemstack.getOrCreateTag().getDouble("z"))));
+			tooltip.add(Component.literal(("\u00A7oCords \u00A7l" + itemstack.getOrCreateTag().getDouble("x") + " " + itemstack.getOrCreateTag().getDouble("y") + " " + itemstack.getOrCreateTag().getDouble("z"))));
 			if (itemstack.getOrCreateTag().getBoolean("set") == true) {
-				tooltip.add(new TextComponent(("\u00A7oDistance \u00A7l" + Math.round(distance))));
+				tooltip.add(Component.literal(("\u00A7oDistance \u00A7l" + Math.round(distance))));
 			}
 		}
 	}

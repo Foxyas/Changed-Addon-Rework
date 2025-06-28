@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.process.util;
 
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,23 +46,23 @@ public class DEBUG {
             float value = (float) convert(parts[1]);
 
             applyValue(key, value);
-            event.getPlayer().sendMessage(new TextComponent("§a[DEBUG] " + key + " = " + value), event.getPlayer().getUUID());
+            event.getPlayer().sendMessage(Component.literal("§a[DEBUG] " + key + " = " + value), event.getPlayer().getUUID());
             event.setCanceled(true);
         }
 
         if (msg.equalsIgnoreCase("Show info")) {
             Player p = event.getPlayer();
-            p.sendMessage(new TextComponent("§6[Head] Pos(" + HeadPosX + "," + HeadPosY + "," + HeadPosZ + ") Rot(" + HeadRotX + "," + HeadRotY + "," + HeadRotZ + ")"), p.getUUID());
-            p.sendMessage(new TextComponent("§6[Torso] Pos(" + TorsoPosX + "," + TorsoPosY + "," + TorsoPosZ + ") Rot(" + TorsoRotX + "," + TorsoRotY + "," + TorsoRotZ + ")"), p.getUUID());
-            p.sendMessage(new TextComponent("§6[LeftArm] Pos(" + LeftArmPosX + "," + LeftArmPosY + "," + LeftArmPosZ + ") Rot(" + LeftArmRotX + "," + LeftArmRotY + "," + LeftArmRotZ + ")"), p.getUUID());
-            p.sendMessage(new TextComponent("§6[RightArm] Pos(" + RightArmPosX + "," + RightArmPosY + "," + RightArmPosZ + ") Rot(" + RightArmRotX + "," + RightArmRotY + "," + RightArmRotZ + ")"), p.getUUID());
-            p.sendMessage(new TextComponent("§6[LeftLeg] Pos(" + LeftLegPosX + "," + LeftLegPosY + "," + LeftLegPosZ + ") Rot(" + LeftLegRotX + "," + LeftLegRotY + "," + LeftLegRotZ + ")"), p.getUUID());
-            p.sendMessage(new TextComponent("§6[RightLeg] Pos(" + RightLegPosX + "," + RightLegPosY + "," + RightLegPosZ + ") Rot(" + RightLegRotX + "," + RightLegRotY + "," + RightLegRotZ + ")"), p.getUUID());
+            p.sendMessage(Component.literal("§6[Head] Pos(" + HeadPosX + "," + HeadPosY + "," + HeadPosZ + ") Rot(" + HeadRotX + "," + HeadRotY + "," + HeadRotZ + ")"), p.getUUID());
+            p.sendMessage(Component.literal("§6[Torso] Pos(" + TorsoPosX + "," + TorsoPosY + "," + TorsoPosZ + ") Rot(" + TorsoRotX + "," + TorsoRotY + "," + TorsoRotZ + ")"), p.getUUID());
+            p.sendMessage(Component.literal("§6[LeftArm] Pos(" + LeftArmPosX + "," + LeftArmPosY + "," + LeftArmPosZ + ") Rot(" + LeftArmRotX + "," + LeftArmRotY + "," + LeftArmRotZ + ")"), p.getUUID());
+            p.sendMessage(Component.literal("§6[RightArm] Pos(" + RightArmPosX + "," + RightArmPosY + "," + RightArmPosZ + ") Rot(" + RightArmRotX + "," + RightArmRotY + "," + RightArmRotZ + ")"), p.getUUID());
+            p.sendMessage(Component.literal("§6[LeftLeg] Pos(" + LeftLegPosX + "," + LeftLegPosY + "," + LeftLegPosZ + ") Rot(" + LeftLegRotX + "," + LeftLegRotY + "," + LeftLegRotZ + ")"), p.getUUID());
+            p.sendMessage(Component.literal("§6[RightLeg] Pos(" + RightLegPosX + "," + RightLegPosY + "," + RightLegPosZ + ") Rot(" + RightLegRotX + "," + RightLegRotY + "," + RightLegRotZ + ")"), p.getUUID());
         }
 
         if (msg.equalsIgnoreCase("Show1")) {
             Player p = event.getPlayer();
-            p.sendMessage(new TextComponent("§b[Delta] X=" + DeltaX + " Y=" + DeltaY + " Z=" + DeltaZ), p.getUUID());
+            p.sendMessage(Component.literal("§b[Delta] X=" + DeltaX + " Y=" + DeltaY + " Z=" + DeltaZ), p.getUUID());
         }
     }
 

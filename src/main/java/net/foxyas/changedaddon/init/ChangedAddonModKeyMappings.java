@@ -4,13 +4,13 @@
  */
 package net.foxyas.changedaddon.init;
 
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.client.Minecraft;
@@ -92,12 +92,12 @@ public class ChangedAddonModKeyMappings {
 	};
 
 	@SubscribeEvent
-	public static void registerKeyBindings(FMLClientSetupEvent event) {
-		ClientRegistry.registerKeyBinding(OPEN_EXTRA_DETAILS);
-		ClientRegistry.registerKeyBinding(LEAP_KEY);
-		ClientRegistry.registerKeyBinding(TURN_OFF_TRANSFUR);
-		ClientRegistry.registerKeyBinding(PAT_KEY);
-		ClientRegistry.registerKeyBinding(OPEN_STRUGGLE_MENU);
+	public static void registerKeyBindings(RegisterKeyMappingsEvent event) {
+		event.register(OPEN_EXTRA_DETAILS);
+		event.register(LEAP_KEY);
+		event.register(TURN_OFF_TRANSFUR);
+		event.register(PAT_KEY);
+		event.register(OPEN_STRUGGLE_MENU);
 	}
 
 	@Mod.EventBusSubscriber({Dist.CLIENT})

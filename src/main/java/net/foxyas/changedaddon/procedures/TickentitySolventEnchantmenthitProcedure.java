@@ -110,7 +110,7 @@ public class TickentitySolventEnchantmenthitProcedure {
 	*/
 
 	private static void playSoundAndParticles(Entity entity) {
-		Level level = entity.level;
+		Level level = entity.level();
 
 		// Toca som de extinção de fogo
 		if (entity instanceof Player player) {

@@ -54,7 +54,7 @@ public class PainiteOreFeature extends OreFeature {
 	}
 
 	public static final Set<ResourceLocation> GENERATE_BIOMES = null;
-	private final Set<ResourceKey<Level>> generate_dimensions = Set.of(Level.OVERWORLD);
+	private final Set<ResourceKey<Level>> generate_dimensions = Set.of(level().OVERWORLD);
 
 	public PainiteOreFeature() {
 		super(OreConfiguration.CODEC);

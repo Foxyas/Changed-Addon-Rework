@@ -31,7 +31,7 @@ public class SetmaxTransfurToleranceProcedure {
 		}
 		Objects.requireNonNull(livingEntity.getAttributes().getInstance(ChangedAttributes.TRANSFUR_TOLERANCE.get())).setBaseValue(MaxNumber);
 		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent(("The Maximum Transfur Tolerance has been set to §6" + ReturnMaxTransfurToleranceProcedure.execute(livingEntity))), false);
+			_player.displayClientMessage(Component.literal(("The Maximum Transfur Tolerance has been set to §6" + ReturnMaxTransfurToleranceProcedure.execute(livingEntity))), false);
 
 		if (entity instanceof Player || entity instanceof ServerPlayer) {
 			ChangedAddonMod.LOGGER.info((entity.getDisplayName().getString() + " Set the max Transfur Tolerance to " + MaxNumber));

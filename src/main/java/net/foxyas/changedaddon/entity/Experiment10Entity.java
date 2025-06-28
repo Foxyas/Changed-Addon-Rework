@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
@@ -9,9 +8,7 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,10 +54,26 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
     public Experiment10Entity(EntityType<Experiment10Entity> type, Level world) {
         super(type, world);
         this.setAttributes(getAttributes());
-        maxUpStep = 0.6f;
+
         xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 300);
+        builder = builder.add(Attributes.ARMOR, 20);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
+        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
+        return builder;
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -116,7 +129,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
 
     @Override
     public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
-        if (mobEffectInstance.getEffect() == MobEffects.WITHER){
+        if (mobEffectInstance.getEffect() == MobEffects.WITHER) {
             return false;
         }
 
@@ -143,7 +156,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         return HairStyle.Collection.FEMALE.getStyles();
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.getColor("#181818");
     }
@@ -151,7 +163,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
     public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.DARK;
     }
-
 
     @Override
     public Packet<?> getAddEntityPacket() {
@@ -203,7 +214,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         if (source.getMsgId().equals("trident")) {
             if (this.level().random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
-                    player.displayClientMessage(new TextComponent("§l§o§3YOU'RE COWARD! Is distance all you can rely on? How PATHETIC!!!"), true);
+                    player.displayClientMessage(Component.literal("§l§o§3YOU'RE COWARD! Is distance all you can rely on? How PATHETIC!!!"), true);
                 }
             }
             return super.hurt(source, amount * 0.5f);
@@ -219,7 +230,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         if (source.isProjectile()) {
             if (this.level().random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
-                    player.displayClientMessage(new TextComponent("§l§o§4Coward! Is distance all you can rely on? How PATHETIC!!!"), true);
+                    player.displayClientMessage(Component.literal("§l§o§4Coward! Is distance all you can rely on? How PATHETIC!!!"), true);
                 }
             }
             return super.hurt(source, amount * 0.5f);
@@ -237,7 +248,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         this.load(dataIndex0);
         return retval;
     }
-
 
     @Override
     public boolean canChangeDimensions() {
@@ -262,34 +272,17 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         //this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
-    public static void init() {
-    }
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 300);
-        builder = builder.add(Attributes.ARMOR, 20);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
-        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
-        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
-        return builder;
-    }
-
     @Override
     public Gender getGender() {
         return Gender.FEMALE;
     }
 
-    public void setPhase2(boolean set) {
-        this.Phase2 = set;
-    }
-
     public boolean isPhase2() {
         return this.Phase2;
+    }
+
+    public void setPhase2(boolean set) {
+        this.Phase2 = set;
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -330,7 +323,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
             setCrawlingPoseIfNeeded(target);
             crawlToTarget(target);
         } else {
-            if (!this.isSwimming() && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
+            if (!this.isSwimming() && !this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
                 this.setPose(Pose.SWIMMING);
             }
         }
@@ -345,7 +338,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
                 this.setPose(Pose.SWIMMING);
             }
         } else {
-            if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
+            if (!this.isSwimming() && this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
                 this.setPose(Pose.STANDING);
             }
         }
@@ -396,7 +389,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
                 this.setPose(Pose.STANDING);
                 this.setSwimming(false);
             }
-        } else if (this.getPose() == Pose.SWIMMING && !this.isInWater() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
+        } else if (this.getPose() == Pose.SWIMMING && !this.isInWater() && this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
             this.setPose(Pose.STANDING);
         }
     }

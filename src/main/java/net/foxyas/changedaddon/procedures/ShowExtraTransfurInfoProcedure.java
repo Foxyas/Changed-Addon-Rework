@@ -42,7 +42,7 @@ public class ShowExtraTransfurInfoProcedure {
         if (hasInformantBlock || isCreative) {
             if (hasInformantBlock && !Screen.hasShiftDown()) {
                 String variantName = Component.translatable(Syringe.getVariantDescriptionId(itemstack)).getString();
-                tooltip.add(new TextComponent("Hold ").append(new TextComponent("<Shift>").withStyle(style -> style.withColor(0xFFD700)))
+                tooltip.add(Component.literal("Hold ").append(Component.literal("<Shift>").withStyle(style -> style.withColor(0xFFD700)))
                         .append(" to show the stats of the " + variantName + " Transfur"));
             }
 
@@ -58,8 +58,8 @@ public class ShowExtraTransfurInfoProcedure {
                 tooltip.add(index, Component.translatable("text.changed_addon.additionalHealth")
                         .append("")
                         .append(extraHp == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
+                                ? Component.literal("§7None§r")
+                                : Component.literal((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
                         .append(Component.translatable("text.changed_addon.additionalHealth.Hearts")));
 
                 index++;
@@ -67,40 +67,40 @@ public class ShowExtraTransfurInfoProcedure {
                 tooltip.add(index, Component.translatable("text.changed_addon.landspeed")
                         .append("")
                         .append(landSpeedPct == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%")));
+                                ? Component.literal("§7None§r")
+                                : Component.literal((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%")));
 
                 index++;
                 double swimSpeedPct = (swimSpeed - 1) * 100;
                 tooltip.add(index, Component.translatable("text.changed_addon.swimspeed")
                         .append("")
                         .append(swimSpeedPct == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%")));
+                                ? Component.literal("§7None§r")
+                                : Component.literal((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%")));
 
                 index++;
                 double jumpStrengthPct = (jumpStrength - 1) * 100;
                 tooltip.add(index, Component.translatable("text.changed_addon.jumpStrength")
                         .append("")
                         .append(jumpStrengthPct == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%")));
+                                ? Component.literal("§7None§r")
+                                : Component.literal((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%")));
 
                 index++;
                 tooltip.add(index, Component.translatable("text.changed_addon.canGlide/Fly")
                         .append("")
                         .append(canFlyOrGlide
-                                ? new TextComponent("§aTrue§r")
-                                : new TextComponent("§cFalse§r")));
+                                ? Component.literal("§aTrue§r")
+                                : Component.literal("§cFalse§r")));
             }
 
             if (ChangedAddonTransfurVariants.isVariantOC(form, entity.level())) {
-                tooltip.add(new TextComponent("§8OC Transfur"));
+                tooltip.add(Component.literal("§8OC Transfur"));
             }
         }
 
         if (form.equals("changed_addon:form_ket_experiment009_boss") || form.equals("changed_addon:form_experiment_10_boss")) {
-            tooltip.add(new TextComponent("§8Boss Version"));
+            tooltip.add(Component.literal("§8Boss Version"));
         }
     }
 

@@ -36,15 +36,15 @@ public class ShowTransfurTotemItemtipProcedure {
 		String ID = "";
 		if (itemstack.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get()) {
 			if ((itemstack.getOrCreateTag().getString("form")).isEmpty()) {
-				tooltip.add(new TextComponent("\u00A76No Form Linked"));
+				tooltip.add(Component.literal("\u00A76No Form Linked"));
 			} else {
 				if (Screen.hasShiftDown() && !Screen.hasAltDown() && !Screen.hasControlDown()) {
-					tooltip.add(new TextComponent(("\u00A76Form=" + itemstack.getOrCreateTag().getString("form"))));
+					tooltip.add(Component.literal(("\u00A76Form=" + itemstack.getOrCreateTag().getString("form"))));
 				} else if (Screen.hasAltDown() && Screen.hasControlDown()) {
-					tooltip.add(new TextComponent((Component.translatable("item.changed_addon.transfur_totem.desc_1").getString())));
+					tooltip.add(Component.literal((Component.translatable("item.changed_addon.transfur_totem.desc_1").getString())));
 				} else {
 					ID = net.ltxprogrammer.changed.item.Syringe.getVariantDescriptionId(itemstack);
-					tooltip.add(new TextComponent(("\u00A76(" + Component.translatable(ID).getString() + ")")));
+					tooltip.add(Component.literal(("\u00A76(" + Component.translatable(ID).getString() + ")")));
 				}
 			}
 		}

@@ -20,7 +20,7 @@ public class ThunderSparkParticle extends TextureSheetParticle {
         this.lifetime = (int) Math.max(1, (15 * sparkData.getEnergyCharge()) + (this.random.nextInt(6) - 3));
         /*
          * assert Minecraft.getInstance().player != null;
-         * Minecraft.getInstance().player.displayClientMessage(new TextComponent("data = " + sparkData.getEnergyCharge()), true);
+         * Minecraft.getInstance().player.displayClientMessage(Component.literal("data = " + sparkData.getEnergyCharge()), true);
          */
 
         this.gravity = 0f;

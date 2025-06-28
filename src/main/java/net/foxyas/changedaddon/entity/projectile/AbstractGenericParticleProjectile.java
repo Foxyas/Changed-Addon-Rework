@@ -30,9 +30,7 @@ import java.util.UUID;
 
 public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
-    @Nullable
-    private UUID targetUUID;
-
+    public boolean teleport = false;
     @Nullable
     protected Entity target = null;
 
@@ -40,8 +38,9 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
     protected Vec3 targetPos = null;
 
     protected ParticleOptions particle = ParticleTypes.END_ROD;
+    @Nullable
+    private UUID targetUUID;
     private int lifeSpamWithoutTarget;
-    public boolean teleport = false;
 
     protected AbstractGenericParticleProjectile(EntityType<? extends AbstractArrow> type, Level level) {
         super(type, level);
@@ -60,6 +59,17 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         super(type, shooter, level);
     }
 
+    public @Nullable Entity getTarget() {
+        if (this.target != null && !this.target.isRemoved()) {
+            return this.target;
+        } else if (this.targetUUID != null && this.level() instanceof ServerLevel) {
+            this.target = ((ServerLevel) this.level()).getEntity(this.targetUUID);
+            return this.target;
+        } else {
+            return null;
+        }
+    }
+
     public void setTarget(@Nullable LivingEntity target) {
         this.target = target;
         if (target != null) {
@@ -67,27 +77,24 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         }
     }
 
-    public void setParticle(ParticleOptions particle) {
-        this.particle = particle;
-    }
-
-    public @Nullable Entity getTarget() {
-        if (this.target != null && !this.target.isRemoved()) {
-            return this.target;
-        } else if (this.targetUUID != null && this.level instanceof ServerLevel) {
-            this.target = ((ServerLevel)this.level()).getEntity(this.targetUUID);
-            return this.target;
-        } else {
-            return null;
-        }
+    public void setTarget(@Nullable Entity target) {
+        this.target = target;
     }
 
     public @Nullable UUID getTargetUUID() {
         return targetUUID;
     }
 
+    public void setTargetUUID(@Nullable UUID targetUUID) {
+        this.targetUUID = targetUUID;
+    }
+
     public ParticleOptions getParticle() {
         return particle;
+    }
+
+    public void setParticle(ParticleOptions particle) {
+        this.particle = particle;
     }
 
     @Override
@@ -126,12 +133,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         }
     }
 
-    public void setTargetPos(@Nullable Vec3 targetPos) {
-        this.targetPos = targetPos;
-    }
-
     public @Nullable Vec3 getTargetPos() {
         return targetPos;
+    }
+
+    public void setTargetPos(@Nullable Vec3 targetPos) {
+        this.targetPos = targetPos;
     }
 
     public int getLifeSpamWithoutTarget() {
@@ -140,14 +147,6 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
     public void setLifeSpamWithoutTarget(int lifeSpamWithoutTarget) {
         this.lifeSpamWithoutTarget = lifeSpamWithoutTarget;
-    }
-
-    public void setTarget(@Nullable Entity target) {
-        this.target = target;
-    }
-
-    public void setTargetUUID(@Nullable UUID targetUUID) {
-        this.targetUUID = targetUUID;
     }
 
     @Override
@@ -188,13 +187,13 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
         if (!level.isClientSide && livingTarget.isAlive()) {
             if (this.inGround || this.onGround) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 20, 0.5f);
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.discard();
             }
             this.lifeSpamWithoutTarget = 0;
             if (livingTarget instanceof Player player) {
                 if (player.isCreative() || player.isSpectator()) {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 20, 0.5f);
+                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                     this.discard();
                 }
             }
@@ -217,22 +216,22 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
                 this.hasImpulse = true;
             }
         } else if (!level.isClientSide && livingTarget.isDeadOrDying()) {
-            this.lifeSpamWithoutTarget ++;
+            this.lifeSpamWithoutTarget++;
             if (this.lifeSpamWithoutTarget >= 120) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 20, 0.5f);
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.lifeSpamWithoutTarget = 0;
                 this.discard();
             }
         } else if (!level.isClientSide() && (this.getOwner() == null
                 || (this.getOwner() instanceof LivingEntity livingEntity && livingEntity.isDeadOrDying()))) {
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 20, 0.5f);
+            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
             this.discard();
         }
 
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.3f,0.3f,0.3f, 1, 0.005f);
+        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.3f, 0.3f, 0.3f, 1, 0.005f);
 
         // Partículas
-        /*if (level.isClientSide) {
+        /*if (level().isClientSide) {
             for (int i = 0; i < 2; ++i) {
                 double offsetX = (random.nextDouble() - 0.5) * 0.2;
                 double offsetY = (random.nextDouble() - 0.5) * 0.2;
@@ -255,12 +254,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
     @Override
     protected void onHitEntity(@NotNull EntityHitResult result) {
         Entity entity = result.getEntity();
-        float f = (float)this.getDeltaMovement().length();
-        int i = Mth.ceil(Mth.clamp((double)f * this.getBaseDamage(), 0.0D, 2.147483647E9D));
+        float f = (float) this.getDeltaMovement().length();
+        int i = Mth.ceil(Mth.clamp((double) f * this.getBaseDamage(), 0.0D, 2.147483647E9D));
 
         if (this.isCritArrow()) {
             long j = this.random.nextInt(i / 2 + 2);
-            i = (int)Math.min(j + (long)i, 2147483647L);
+            i = (int) Math.min(j + (long) i, 2147483647L);
         }
 
         Entity entity1 = this.getOwner();
@@ -270,14 +269,14 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         } else {
             damagesource = DamageSource.arrow(this, entity1);
             if (entity1 instanceof LivingEntity) {
-                ((LivingEntity)entity1).setLastHurtMob(entity);
+                ((LivingEntity) entity1).setLastHurtMob(entity);
             }
         }
 
-        if (entity.hurt(damagesource, (float)i)) {
+        if (entity.hurt(damagesource, (float) i)) {
             if (entity instanceof LivingEntity livingentity) {
                 if (this.getKnockback() > 0) {
-                    Vec3 vec3 = this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double)this.getKnockback() * 0.6D);
+                    Vec3 vec3 = this.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale((double) this.getKnockback() * 0.6D);
                     if (vec3.lengthSqr() > 0.0D) {
                         livingentity.push(vec3.x, 0.1D, vec3.z);
                     }
@@ -285,12 +284,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
                 if (!this.level().isClientSide && entity1 instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity)entity1, livingentity);
+                    EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
                 }
 
                 this.doPostHurtEffects(livingentity);
                 if (livingentity != entity1 && livingentity instanceof Player && entity1 instanceof ServerPlayer && !this.isSilent()) {
-                    ((ServerPlayer)entity1).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
+                    ((ServerPlayer) entity1).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
                 }
             }
 
@@ -308,9 +307,10 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
                     this.discard();
                 }
-            } else*/ {
+            } else*/
+            {
                 this.discard();
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 5, 0.5f);
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 5, 0.5f);
                 this.discard();
             }
         }
@@ -319,7 +319,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
         //super.onHitBlock(result);
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f,0.05f,0.05f, 20, 0.5f);
+        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
         this.discard();
     }
 
@@ -340,10 +340,10 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         if (!level.isClientSide) {
             boolean blocked = targetHit.isBlocking();
             if (!blocked && this.getOwner() instanceof LivingEntity owner && this.teleport) {
-                if (targetHit.getRandom().nextFloat() <= 0.25f){
-                    targetHit.teleportTo(owner.getX(),owner.getY(), owner.getZ());
+                if (targetHit.getRandom().nextFloat() <= 0.25f) {
+                    targetHit.teleportTo(owner.getX(), owner.getY(), owner.getZ());
                 } else {
-                    owner.teleportTo(targetHit.getX(),targetHit.getY(), targetHit.getZ());
+                    owner.teleportTo(targetHit.getX(), targetHit.getY(), targetHit.getZ());
                 }
             }
         }

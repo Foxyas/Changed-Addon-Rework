@@ -17,7 +17,7 @@ public class SetBossPermProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent(("The Perm of the " + (new Object() {
+			_player.displayClientMessage(Component.literal(("The Perm of the " + (new Object() {
 				public Entity getEntity() {
 					try {
 						return EntityArgument.getEntity(arguments, "target");

@@ -42,7 +42,7 @@ public class FormsDialogues {
 			ChangedAddonTransfurVariants.EXP2_FEMALE.get());
 			
 			if (PlayerVariant != null && TRANSFUR_VARIANT_LIST.contains(PlayerVariant.getParent())){
-				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
+				//ChangedAddonMod.LOGGER.log(level().INFO,"THE EVENT HAPPEN");
 				if (player.level().getLevelData().isHardcore()){
 					if (PlayerVariant.getParent().is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())){
 						var randomSelector = player.level().getRandom().nextInt(10);
@@ -127,7 +127,7 @@ public class FormsDialogues {
 		}
 		if (changedVariantEvent.newVariant.is(ChangedAddonTransfurVariants.KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get())){
 			if (changedVariantEvent.livingEntity instanceof Player player){
-				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
+				//ChangedAddonMod.LOGGER.log(level().INFO,"THE EVENT HAPPEN");
 				if (YTNames.contains(player.getUUID())){
 					player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp9.transfur.text.secret"), false);
 				}
@@ -135,7 +135,7 @@ public class FormsDialogues {
 		}
 		if (changedVariantEvent.newVariant.is(ChangedAddonTransfurVariants.EXP1_MALE.get()) || changedVariantEvent.newVariant.is(ChangedAddonTransfurVariants.EXP1_FEMALE.get())){
 			if (changedVariantEvent.livingEntity instanceof Player player){
-				//ChangedAddonMod.LOGGER.log(Level.INFO,"THE EVENT HAPPEN");
+				//ChangedAddonMod.LOGGER.log(level().INFO,"THE EVENT HAPPEN");
 				if (FBNames.contains(player.getUUID())){
 					player.displayClientMessage(Component.translatable("changed_addon.form_dialogues.exp1.transfur.text.secret"), false);
 				}

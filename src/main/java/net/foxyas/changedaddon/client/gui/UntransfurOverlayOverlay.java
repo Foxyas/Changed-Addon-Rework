@@ -7,7 +7,7 @@ import org.checkerframework.checker.units.qual.h;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.level.Level;
@@ -23,8 +23,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class UntransfurOverlayOverlay {
 	@SubscribeEvent(priority = EventPriority.NORMAL)
-	public static void eventHandler(RenderGameOverlayEvent.Pre event) {
-		if (event.getType() == RenderGameOverlayEvent.ElementType.ALL) {
+	public static void eventHandler(RenderGuiOverlayEvent.Pre event) {
+		if (true) {
 			int w = event.getWindow().getGuiScaledWidth();
 			int h = event.getWindow().getGuiScaledHeight();
 			int posX = w;
@@ -35,7 +35,7 @@ public class UntransfurOverlayOverlay {
 			double z = 0;
 			Player entity = Minecraft.getInstance().player;
 			if (entity != null) {
-				world = entity.level;
+				world = entity.level();
 				x = entity.getX();
 				y = entity.getY();
 				z = entity.getZ();
@@ -60,13 +60,13 @@ public class UntransfurOverlayOverlay {
 			
 			if (canshow) {
 				RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress.png"));
-				Minecraft.getInstance().gui.blit(event.getMatrixStack(), 10, posY - 73, 0, 0, 14, 5, 14, 5);
+				Minecraft.getInstance().gui.blit(event.getGuiGraphics(), 10, posY - 73, 0, 0, 14, 5, 14, 5);
 
 				RenderSystem.setShaderTexture(0, ResourceLocation.parse("changed_addon:textures/screens/untransfurprogress_full.png"));
-				Minecraft.getInstance().gui.blit(event.getMatrixStack(), 11, posY - 72, 0, 0, intprogress, 3, intprogress, 3);
+				Minecraft.getInstance().gui.blit(event.getGuiGraphics(), 11, posY - 72, 0, 0, intprogress, 3, intprogress, 3);
 				
 
-				//Minecraft.getInstance().font.draw(event.getMatrixStack(), intprogress + "%", 9, posY + -105, -1);
+				//Minecraft.getInstance().font.draw(event.getGuiGraphics(), intprogress + "%", 9, posY + -105, -1);
 
 
 			}

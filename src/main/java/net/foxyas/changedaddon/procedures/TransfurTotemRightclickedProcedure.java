@@ -60,7 +60,7 @@ public class TransfurTotemRightclickedProcedure {
 						}
 					} else {
 						if (entity instanceof Player _player && !_player.level().isClientSide())
-							_player.displayClientMessage(new TextComponent("Any form linked please link one \u00A7e<Shift+Click>"), true);
+							_player.displayClientMessage(Component.literal("Any form linked please link one \u00A7e<Shift+Click>"), true);
 					}
 				} else {
 					if ((itemstack.getOrCreateTag().getString("form")).equals("changed_addon:form_puro_kind/female")) {
@@ -68,7 +68,7 @@ public class TransfurTotemRightclickedProcedure {
 					}
 					if ((itemstack.getOrCreateTag().getString("form")).isEmpty()) {
 						if (entity instanceof Player _player && !_player.level().isClientSide())
-							_player.displayClientMessage(new TextComponent("Any form linked please link one \u00A7e<Shift+Click>"), true);
+							_player.displayClientMessage(Component.literal("Any form linked please link one \u00A7e<Shift+Click>"), true);
 					} else {
 						form = itemstack.getOrCreateTag().getString("form");
 						PlayerUtilProcedure.TransfurPlayer(entity, form);
@@ -115,7 +115,7 @@ public class TransfurTotemRightclickedProcedure {
 								if (entity instanceof Player _player)
 									_player.getCooldowns().addCooldown(itemstack.getItem(), 50);
 								if (entity instanceof Player _player && !_player.level().isClientSide())
-									_player.displayClientMessage(new TextComponent((Component.translatable("changed_addon.latex_totem.notvalid").getString())), true);
+									_player.displayClientMessage(Component.literal((Component.translatable("changed_addon.latex_totem.notvalid").getString())), true);
 							} else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:special")) {
 								itemstack.getOrCreateTag().putString("form", "changed:form_light_latex_wolf");
 								if (world.isClientSide())

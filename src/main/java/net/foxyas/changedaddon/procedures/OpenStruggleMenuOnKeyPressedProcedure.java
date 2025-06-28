@@ -31,7 +31,7 @@ public class OpenStruggleMenuOnKeyPressedProcedure {
 					NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 						@Override
 						public Component getDisplayName() {
-							return new TextComponent("FightTokeepconsciousnessminigame");
+							return Component.literal("FightTokeepconsciousnessminigame");
 						}
 
 						@Override

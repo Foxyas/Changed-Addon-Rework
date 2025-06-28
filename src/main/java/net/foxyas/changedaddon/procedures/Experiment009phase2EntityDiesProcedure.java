@@ -12,6 +12,6 @@ public class Experiment009phase2EntityDiesProcedure {
 		ItemStack disc_1 = ItemStack.EMPTY;
 		ItemStack disc_2 = ItemStack.EMPTY;
 		if (sourceentity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent((Component.translatable("changed_addon.entity_dialogues.exp9.dead").getString())), false);
+			_player.displayClientMessage(Component.literal((Component.translatable("changed_addon.entity_dialogues.exp9.dead").getString())), false);
 	}
 }

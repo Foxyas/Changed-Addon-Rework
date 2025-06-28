@@ -49,9 +49,9 @@ public class ShowSolventDmgProcedure {
 		if (!(itemstack.getItem() instanceof BowItem) && !(itemstack.getItem() instanceof CrossbowItem)) {
 			if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), itemstack) != 0) {
 				if (Screen.hasShiftDown()) {
-					tooltip.add(new TextComponent(("\u00A7r\u00A7e+" + math * 100 + "%\u00A7r \u00A7nLatex Solvent Damage")));
+					tooltip.add(Component.literal(("\u00A7r\u00A7e+" + math * 100 + "%\u00A7r \u00A7nLatex Solvent Damage")));
 				} else {
-					tooltip.add(new TextComponent("Press \u00A7e<Shift>\u00A7r for show tooltip"));
+					tooltip.add(Component.literal("Press \u00A7e<Shift>\u00A7r for show tooltip"));
 				}
 			}
 		}

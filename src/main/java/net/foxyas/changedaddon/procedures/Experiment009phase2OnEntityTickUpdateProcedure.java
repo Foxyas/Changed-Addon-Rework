@@ -108,7 +108,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 										for (Entity entityiterator : _entfound) {
 											if (!(entityiterator == entity)) {
 												if (entityiterator instanceof Player _player && !_player.level().isClientSide())
-													_player.displayClientMessage(new TextComponent("\u00A7l\u00A7o\u00A73You CANT ESCAPE FROM ME!!"), true);
+													_player.displayClientMessage(Component.literal("\u00A7l\u00A7o\u00A73You CANT ESCAPE FROM ME!!"), true);
 												entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
 													@Override
 													public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
@@ -163,7 +163,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
 										for (Entity entityiterator : _entfound) {
 											if (!(entityiterator == entity)) {
 												if (entityiterator instanceof Player _player && !_player.level().isClientSide())
-													_player.displayClientMessage(new TextComponent("\u00A7o\u00A73Come Back Here \u00A7lNOW!"), true);
+													_player.displayClientMessage(Component.literal("\u00A7o\u00A73Come Back Here \u00A7lNOW!"), true);
 												entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
 													@Override
 													public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {

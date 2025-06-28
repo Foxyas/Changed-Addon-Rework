@@ -22,16 +22,16 @@ import java.util.Random;
 
 public class ComboAbilityGoal extends Goal {
     private final Mob attacker;
-    private LivingEntity target;
-    private int phase = 0;
-    private int ticks = 0;
-    private int delay = 5;
     private final Random random = new Random();
     private final float minRange;
     private final float maxRange;
     private final float damage;
     private final SoundEvent[] impactSound;
     private final ParticleOptions[] impactParticle;
+    private LivingEntity target;
+    private int phase = 0;
+    private int ticks = 0;
+    private int delay = 5;
     private boolean shouldEnd = false;
 
     public ComboAbilityGoal(Mob attacker, float minRange, float maxRange, float damage, int delay, SoundEvent[] impactSounds, ParticleOptions[] impactParticle) {

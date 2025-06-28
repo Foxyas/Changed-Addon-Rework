@@ -42,7 +42,7 @@ public class OpenTranfurExtraProcedure {
 						NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 							@Override
 							public Component getDisplayName() {
-								return new TextComponent("TranfurSoundsGui");
+								return Component.literal("TranfurSoundsGui");
 							}
 
 							@Override
@@ -55,7 +55,7 @@ public class OpenTranfurExtraProcedure {
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level().isClientSide())
-						_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.when_not.transfur").getString())), true);
+						_player.displayClientMessage(Component.literal((Component.translatable("changedaddon.when_not.transfur").getString())), true);
 				}
 			}
 		}

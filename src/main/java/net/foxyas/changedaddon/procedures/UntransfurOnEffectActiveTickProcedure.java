@@ -133,7 +133,7 @@ public class UntransfurOnEffectActiveTickProcedure {
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level().isClientSide())
-						_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.untransfur.no_effect").getString())), true);
+						_player.displayClientMessage(Component.literal((Component.translatable("changedaddon.untransfur.no_effect").getString())), true);
 				}
 			}
 		}

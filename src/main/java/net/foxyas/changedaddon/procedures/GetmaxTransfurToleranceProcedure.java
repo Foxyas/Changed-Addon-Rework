@@ -10,6 +10,6 @@ public class GetmaxTransfurToleranceProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent(("The maximum Transfur Tolerance is \u00A76" + ReturnMaxTransfurToleranceProcedure.execute((LivingEntity) entity))), false);
+			_player.displayClientMessage(Component.literal(("The maximum Transfur Tolerance is \u00A76" + ReturnMaxTransfurToleranceProcedure.execute((LivingEntity) entity))), false);
 	}
 }

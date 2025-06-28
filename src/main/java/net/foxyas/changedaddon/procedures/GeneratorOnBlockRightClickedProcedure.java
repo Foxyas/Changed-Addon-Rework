@@ -31,7 +31,7 @@ public class GeneratorOnBlockRightClickedProcedure {
 					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 			}
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(new TextComponent("generator disabled"), true);
+				_player.displayClientMessage(Component.literal("generator disabled"), true);
 		} else if ((new Object() {
 			public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {
 				BlockEntity blockEntity = world.getBlockEntity(pos);
@@ -50,7 +50,7 @@ public class GeneratorOnBlockRightClickedProcedure {
 					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
 			}
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(new TextComponent("generator enabled"), true);
+				_player.displayClientMessage(Component.literal("generator enabled"), true);
 		}
 	}
 }

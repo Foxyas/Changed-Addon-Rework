@@ -25,7 +25,7 @@ public class ParticleProjectile extends AbstractGenericParticleProjectile {
     }
 
     public ParticleProjectile(EntityType<? extends AbstractArrow> type, Level level, LivingEntity target) {
-        this(type,level);
+        this(type, level);
         this.target = target;
     }
 
@@ -42,17 +42,16 @@ public class ParticleProjectile extends AbstractGenericParticleProjectile {
         super(type, shooter, level);
     }
 
-    public ParticleProjectile(EntityType<? extends AbstractArrow> type, LivingEntity shooter, Level level, LivingEntity target){
+    public ParticleProjectile(EntityType<? extends AbstractArrow> type, LivingEntity shooter, Level level, LivingEntity target) {
         this(type, shooter, level);
         this.target = target;
     }
 
+    public static void init() {
+    }
 
     @Override
     protected void onHitEntity(@NotNull EntityHitResult result) {
         super.onHitEntity(result);
-    }
-
-    public static void init() {
     }
 }

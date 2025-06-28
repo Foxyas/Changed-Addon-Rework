@@ -28,7 +28,7 @@ public class OpenBookRecipe5Procedure {
 				NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 					@Override
 					public Component getDisplayName() {
-						return new TextComponent("Bookrecipepage9");
+						return Component.literal("Bookrecipepage9");
 					}
 
 					@Override

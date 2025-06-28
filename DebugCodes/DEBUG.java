@@ -6,7 +6,7 @@ import net.foxyas.changedaddon.process.util.DelayedTask;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.TickEvent;
@@ -64,15 +64,15 @@ public class DEBUG {
             COLORSTRING = event.getMessage().replace("setColor:","");
         }
         if (event.getMessage().startsWith("Show info")){
-            event.getPlayer().displayClientMessage(new TextComponent("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL + "\n" + "J = " + HeadPosJ),false);
+            event.getPlayer().displayClientMessage(Component.literal("X = " + HeadPosX + "\n" + "Y = " + HeadPosY + "\n" + "Z = " + HeadPosZ + "\n" + "T = " + HeadPosT + "\n" + "V = " + HeadPosV + "\n" + "B = " + HeadPosB + "\n" + "K = " + HeadPosK + "\n" + "L = " + HeadPosL + "\n" + "J = " + HeadPosJ),false);
         }
         if (event.getMessage().startsWith("Show1")){
-            event.getPlayer().displayClientMessage(new TextComponent("X = " + DeltaX + "\n" + "Y = " + DeltaY + "\n" + "Z = " + DeltaZ),false);
+            event.getPlayer().displayClientMessage(Component.literal("X = " + DeltaX + "\n" + "Y = " + DeltaY + "\n" + "Z = " + DeltaZ),false);
         }
         if (event.getMessage().startsWith("Show Info")){
             new DelayedTask(40, event.getPlayer(), (livingEntity) -> {
                 if (livingEntity instanceof Player player){
-                    player.displayClientMessage(new TextComponent("X = " + StructureHandle.isStructureNearby(event.getPlayer().level(),event.getPlayer().getOnPos(),"changed_addon:dazed_latex_meteor", 3)), false);
+                    player.displayClientMessage(Component.literal("X = " + StructureHandle.isStructureNearby(event.getPlayer().level(),event.getPlayer().getOnPos(),"changed_addon:dazed_latex_meteor", 3)), false);
                 }
             });
         }
@@ -85,7 +85,7 @@ public class DEBUG {
 
         }
         //Player player = event.player;
-        //player.displayClientMessage(new TextComponent("Dot = " + DotValueOfViewProcedure.execute(player,player.getMainHandItem())), false);
+        //player.displayClientMessage(Component.literal("Dot = " + DotValueOfViewProcedure.execute(player,player.getMainHandItem())), false);
     }
 
 

@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
@@ -30,138 +29,137 @@ import java.util.List;
 import java.util.Objects;
 
 public class PuroKindFemaleEntity extends AbstractDarkLatexWolf {
-	public PuroKindFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.PURO_KIND_FEMALE.get(), world);
-	}
+    public PuroKindFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonModEntities.PURO_KIND_FEMALE.get(), world);
+    }
 
-	public PuroKindFemaleEntity(EntityType<PuroKindFemaleEntity> type, Level world) {
-		super(type, world);
-		maxUpStep = 0.6f;
-		xpReward = AbstractDarkLatexWolf.XP_REWARD_MEDIUM;
-		this.setAttributes(this.getAttributes());
-		setNoAi(false);
-		setPersistenceRequired();
-	}
+    public PuroKindFemaleEntity(EntityType<PuroKindFemaleEntity> type, Level world) {
+        super(type, world);
 
-	protected void setAttributes(AttributeMap attributes) {
-		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0F);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.08f);
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
-		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
-		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
-	}
+        xpReward = AbstractDarkLatexWolf.XP_REWARD_MEDIUM;
+        this.setAttributes(this.getAttributes());
+        setNoAi(false);
+        setPersistenceRequired();
+    }
 
-	@Override
-	public TransfurMode getTransfurMode() {
-		return TransfurMode.REPLICATION;
-	}
+    public static void init() {
+    }
 
-	@Override
-	public HairStyle getDefaultHairStyle() {
-		return HairStyle.BALD.get();
-	}
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
 
-	public @Nullable List<HairStyle> getValidHairStyles() {
-		return HairStyle.Collection.getAll();
-	}
+    protected void setAttributes(AttributeMap attributes) {
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0F);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.08f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+    }
+
+    @Override
+    public TransfurMode getTransfurMode() {
+        return TransfurMode.REPLICATION;
+    }
 
 	/*@Override
 	public LatexType getLatexType() {
 		return LatexType.DARK_LATEX;
 	}*/
 
-	@Override
-	public Color3 getHairColor(int layer) {
-		return Color3.DARK;
-	}
+    @Override
+    public HairStyle getDefaultHairStyle() {
+        return HairStyle.BALD.get();
+    }
 
-	@Override
-	public Gender getGender() {
-		return Gender.FEMALE;
-	}
+    public @Nullable List<HairStyle> getValidHairStyles() {
+        return HairStyle.Collection.getAll();
+    }
 
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    @Override
+    public Color3 getHairColor(int layer) {
+        return Color3.DARK;
+    }
 
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
+    @Override
+    public Gender getGender() {
+        return Gender.FEMALE;
+    }
 
-	}
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-	@Override
-	public Color3 getDripColor() {
-		Color3 color = Color3.getColor("#000000");
-		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#393939");
-		} else {
-			color = Color3.getColor("#303030");
-		}
-		return color;
-	}
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
 
-	public Color3 getTransfurColor(TransfurCause cause) {
+    }
+
+    public Color3 getDripColor() {
+        Color3 color = Color3.getColor("#000000");
+        if (level().random.nextInt(10) > 5) {
+            color = Color3.getColor("#393939");
+        } else {
+            color = Color3.getColor("#303030");
+        }
+        return color;
+    }
+
+    public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.getColor("#303030");
     }
 
+    @Override
+    public MobType getMobType() {
+        return MobType.UNDEFINED;
+    }
 
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
-	}
+    @Override
+    public double getMyRidingOffset() {
+        return super.getMyRidingOffset();
+    }
 
-	@Override
-	public double getMyRidingOffset() {
-		return super.getMyRidingOffset();
-	}
+    public double getTorsoYOffset(ChangedEntity self) {
+        float ageAdjusted = (float) self.tickCount * 0.33333334F * 0.25F * 0.15F;
+        float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
+        float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
+        float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
+        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
+    }
 
-	public double getTorsoYOffset(ChangedEntity self) {
-		float ageAdjusted = (float)self.tickCount * 0.33333334F * 0.25F * 0.15F;
-		float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
-		float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
-		float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-		return (double)(Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
-	}
+    public double getTorsoYOffsetForFallFly(ChangedEntity self) {
+        float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
+        return 0.375 + bpiSize;
+    }
 
-	public double getTorsoYOffsetForFallFly(ChangedEntity self) {
-		float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-		return 0.375 + bpiSize;
-	}
+    @Override
+    public double getPassengersRidingOffset() {
+        if (this.getPose() == Pose.STANDING || this.getPose() == Pose.CROUCHING) {
+            return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
+        }
+        return getTorsoYOffsetForFallFly(this);
+    }
 
-	@Override
-	public double getPassengersRidingOffset() {
-		if (this.getPose() == Pose.STANDING || this.getPose() == Pose.CROUCHING) {
-			return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
-		}
-		return getTorsoYOffsetForFallFly(this);
-	}
+    @Override
+    public SoundEvent getHurtSound(DamageSource ds) {
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
+    }
 
-	@Override
-	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
-	}
-
-	@Override
-	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
-	}
-
-	public static void init() {
-	}
-
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 24);
-		builder = builder.add(Attributes.ARMOR, 0);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		return builder;
-	}
+    @Override
+    public SoundEvent getDeathSound() {
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
+    }
 }

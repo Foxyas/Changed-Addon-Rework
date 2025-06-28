@@ -28,7 +28,7 @@ public class Openpage2Procedure {
 				NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 					@Override
 					public Component getDisplayName() {
-						return new TextComponent("BookPagenumber2");
+						return Component.literal("BookPagenumber2");
 					}
 
 					@Override

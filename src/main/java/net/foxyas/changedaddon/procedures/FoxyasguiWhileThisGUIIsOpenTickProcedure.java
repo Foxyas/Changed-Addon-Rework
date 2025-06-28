@@ -35,7 +35,7 @@ public class FoxyasguiWhileThisGUIIsOpenTickProcedure {
 							NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
 								@Override
 								public Component getDisplayName() {
-									return new TextComponent("FoxyasGui2");
+									return Component.literal("FoxyasGui2");
 								}
 
 								@Override

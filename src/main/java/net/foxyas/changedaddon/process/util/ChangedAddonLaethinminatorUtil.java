@@ -54,8 +54,8 @@ public class ChangedAddonLaethinminatorUtil {
                 .add(0.0, -0.5, 0.0);          // Ajusta altura
 
         // Gera um ângulo de disparo aleatório
-        //float randX = (level.random.nextFloat(90.0F) - 45.0F) * 0.5F;
-        //float randY = (level.random.nextFloat(90.0F) - 45.0F) * 0.5F;
+        //float randX = (level().random.nextFloat(90.0F) - 45.0F) * 0.5F;
+        //float randY = (level().random.nextFloat(90.0F) - 45.0F) * 0.5F;
 
         // Converte os ângulos de rotação (pitch e yaw) em um vetor direcional
         float pitch = (player.getXRot()) * ((float) Math.PI / 180F); // Converte para radianos

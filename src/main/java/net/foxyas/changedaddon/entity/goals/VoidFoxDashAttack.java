@@ -5,7 +5,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -84,7 +83,7 @@ public class VoidFoxDashAttack extends Goal {
 
         this.dashDirection.scale(this.dashSpeed);
         if (target instanceof Player player) {
-            //player.displayClientMessage(new TextComponent("Ticks = " + tickCount), true);
+            //player.displayClientMessage(Component.literal("Ticks = " + tickCount), true);
         }
 
         // Preparando o dash
@@ -185,7 +184,7 @@ public class VoidFoxDashAttack extends Goal {
 
     private void shootProjectile(LivingEntity target) {
         Level level = dasher.level;
-        switch (dasher.getRandom().nextInt(3)){
+        switch (dasher.getRandom().nextInt(3)) {
             case 0 -> spawnProjectilesInCircle(dasher, target, new Vec3(0, 0.5, 0), 2, 4, level);
             case 1 -> spawnProjectilesInXCircleTargetInPlayer(dasher, target, new Vec3(0, 0, 0), 2, 8, level);
             case 2 -> spawnProjectilesInXCircleTargetInPlayerPos(dasher, target, new Vec3(0, 0, 0), 2, 8, level);

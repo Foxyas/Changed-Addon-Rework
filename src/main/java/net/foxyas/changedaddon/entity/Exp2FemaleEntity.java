@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
@@ -43,20 +42,34 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
 
     public Exp2FemaleEntity(EntityType<Exp2FemaleEntity> type, Level world) {
         super(type, world);
-        maxUpStep = 0.6f;
+
         xpReward = ChangedEntity.XP_REWARD_LARGE;
         this.setAttributes(this.getAttributes());
         setNoAi(false);
         setPersistenceRequired();
     }
 
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
+
     protected void setAttributes(AttributeMap attributes) {
-		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((30));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.18F);
-        attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.065f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.065f);
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
         attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
         attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
@@ -83,14 +96,14 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else if (istransfur && this.random.nextInt(12) == 0) { //One in 12
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
 
                 return InteractionResult.SUCCESS;
@@ -107,7 +120,7 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
 
     @Override
     public TransfurMode getTransfurMode() {
-        if (level.random.nextInt() > 5) {
+        if (level().random.nextInt() > 5) {
             return TransfurMode.ABSORPTION;
         }
         return TransfurMode.REPLICATION;
@@ -124,7 +137,7 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
 
     @Override
     public HairStyle getDefaultHairStyle() {
-        if (level.random.nextInt(10) > 5) {
+        if (level().random.nextInt(10) > 5) {
             return HairStyle.LONG_MESSY.get();
         }
         return HairStyle.LONG_KEPT.get();
@@ -171,7 +184,7 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
         float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
         float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
         float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-        return (double) (Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
+        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
     }
 
     public double getTorsoYOffsetForFallFly(ChangedEntity self) {
@@ -197,26 +210,12 @@ public class Exp2FemaleEntity extends AbstractCanTameSnepChangedEntity implement
         return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
     }
 
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 24);
-        builder = builder.add(Attributes.ARMOR, 0);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
-    }
-
     @Override
     public void WhenPattedReaction() {
         List<SoundEvent> soundEvents = new ArrayList<>();
         soundEvents.add(SoundEvents.CAT_AMBIENT);
         soundEvents.add(SoundEvents.CAT_PURR);
         soundEvents.add(SoundEvents.CAT_PURREOW);
-        this.playSound(soundEvents.get(this.random.nextInt(soundEvents.size())),2.5f,1);
+        this.playSound(soundEvents.get(this.random.nextInt(soundEvents.size())), 2.5f, 1);
     }
 }

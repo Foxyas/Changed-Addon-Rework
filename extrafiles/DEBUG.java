@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.process.util;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -22,7 +22,7 @@ public class DEBUG {
         Player player = event.getPlayer();
 
         if (!msg.equals("test")) return;
-        player.displayClientMessage(new TextComponent("Executando teste de partículas em círculo..."), false);
+        player.displayClientMessage(Component.literal("Executando teste de partículas em círculo..."), false);
         test = !test;
 
     }

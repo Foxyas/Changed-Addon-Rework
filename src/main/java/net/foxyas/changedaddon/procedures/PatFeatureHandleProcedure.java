@@ -142,7 +142,7 @@ public class PatFeatureHandleProcedure {
                 if (target instanceof CustomPatReaction pat) {
                     pat.WhenPattedReaction(p);
                     pat.WhenPattedReaction();
-                    //p.displayClientMessage(new TextComponent("pat_message:" + target.getDisplayName().getString()), false);
+                    //p.displayClientMessage(Component.literal("pat_message:" + target.getDisplayName().getString()), false);
                 }
             }
 
@@ -184,7 +184,7 @@ public class PatFeatureHandleProcedure {
                 if (target instanceof CustomPatReaction e) {
                     e.WhenPattedReaction(p);
                     e.WhenPattedReaction();
-                    //p.displayClientMessage(new TextComponent("pat_message:" + target.getDisplayName().getString()), false);
+                    //p.displayClientMessage(Component.literal("pat_message:" + target.getDisplayName().getString()), false);
                 }
                 SpawnEmote(p, target);
             }

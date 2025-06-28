@@ -30,7 +30,7 @@ public class SetDefaultValueProcedure {
 		{
 			Objects.requireNonNull(livingEntity.getAttributes().getInstance(ChangedAttributes.TRANSFUR_TOLERANCE.get())).setBaseValue(DefaultValue);
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(new TextComponent("Value has been set to default §6<"+ DefaultValue + ">"), false);
+				_player.displayClientMessage(Component.literal("Value has been set to default §6<"+ DefaultValue + ">"), false);
 
 			if (entity instanceof Player) {
 				ChangedAddonMod.LOGGER.info((entity.getDisplayName().getString() + " Set the max Transfur Tolerance to " + "default §6<"+ DefaultValue +">"));

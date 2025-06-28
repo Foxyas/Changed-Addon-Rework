@@ -17,18 +17,18 @@ public class ToggleresettransfuradvancementsProcedure {
 		if (BoolArgumentType.getBool(arguments, "turn") == true) {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == true) {
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed, it already had that value"), false);
+					_player.displayClientMessage(Component.literal("\u00A7cNothing changed, it already had that value"), false);
 			} else {
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent("You Activated the Transfur Reset Achievements"), false);
+					_player.displayClientMessage(Component.literal("You Activated the Transfur Reset Achievements"), false);
 			}
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements == false) {
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent("\u00A7cNothing changed, it already had that value"), false);
+					_player.displayClientMessage(Component.literal("\u00A7cNothing changed, it already had that value"), false);
 			} else {
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent("You Disabled Reset Transfur Achievements"), false);
+					_player.displayClientMessage(Component.literal("You Disabled Reset Transfur Achievements"), false);
 			}
 		}
 		{

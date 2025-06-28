@@ -71,12 +71,12 @@ public class AbstractLuminarCrystal {
         int i = direction.getStepX();
         int j = direction.getStepY();
         int k = direction.getStepZ();
-        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) i * 0.55D);
-        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) j * 0.55D);
-        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) k * 0.55D);
-        double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
-        double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
-        double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) k * 0.55D);
+        double d3 = i == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
+        double d4 = j == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
+        double d5 = k == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
         PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, 0.05, 0.05, 0.05, count, particleSpeed);
     }
 
@@ -86,12 +86,12 @@ public class AbstractLuminarCrystal {
         int i = direction.getStepX();
         int j = direction.getStepY();
         int k = direction.getStepZ();
-        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) i * 0.55D);
-        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) j * 0.55D);
-        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) k * 0.55D);
-        double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
-        double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
-        double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) k * 0.55D);
+        double d3 = i == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
+        double d4 = j == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
+        double d5 = k == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
         PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, d3, d4, d5, count, particleSpeed);
     }
 
@@ -101,12 +101,12 @@ public class AbstractLuminarCrystal {
         int i = direction.getStepX();
         int j = direction.getStepY();
         int k = direction.getStepZ();
-        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) i * 0.55D);
-        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) j * 0.55D);
-        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level.random, -0.5D, 0.5D) : (double) k * 0.55D);
-        double d3 = i == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
-        double d4 = j == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
-        double d5 = k == 0 ? Mth.nextDouble(level.random, -1.0D, 1.0D) : 0.0D;
+        double d0 = vec3.x + (i == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) i * 0.55D);
+        double d1 = vec3.y + (j == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) j * 0.55D);
+        double d2 = vec3.z + (k == 0 ? Mth.nextDouble(level().random, -0.5D, 0.5D) : (double) k * 0.55D);
+        double d3 = i == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
+        double d4 = j == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
+        double d5 = k == 0 ? Mth.nextDouble(level().random, -1.0D, 1.0D) : 0.0D;
         PlayerUtilProcedure.ParticlesUtil.sendParticles(level, p_144961_, d0, d1, d2, 0.2, 0.2, 0.2, count, particleSpeed);
     }
 
@@ -181,7 +181,7 @@ public class AbstractLuminarCrystal {
                 level.scheduleTick(pos, this, 70); //delay de 20 ticks antes de agir
             } else {
                 BlockPos above = pos.above();
-                if (level.getBlockState(above).is(Blocks.AIR)) {
+                if (level().getBlockState(above).is(Blocks.AIR)) {
                     level.setBlock(above, ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState(), 3);
                     level.playSound(null, pos, ChangedSounds.ICE2.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
 
@@ -189,7 +189,7 @@ public class AbstractLuminarCrystal {
                 //level.scheduleTick(pos, this, 20); //delay de 20 ticks antes de agir
             }
 		/*BlockPos above = pos.above();
-		if (level.getBlockState(above).is(Blocks.AIR)) {
+		if (level().getBlockState(above).is(Blocks.AIR)) {
 			level.setBlock(above, ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_SMALL.get().defaultBlockState(), 3);
 			level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 1.0f);
 		}*/

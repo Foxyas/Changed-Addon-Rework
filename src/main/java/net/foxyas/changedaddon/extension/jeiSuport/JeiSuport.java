@@ -75,7 +75,7 @@ class JeiDescriptionHandler {
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINGE.get()), VanillaTypes.ITEM_STACK, Component.translatable("changed_addon.jei_descriptions.diffusion_syringe"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, Component.translatable("changed_addon.jei_descriptions.iridium_use"));
         registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.INFORMANTBLOCK.get()), VanillaTypes.ITEM_STACK, Component.translatable("changed_addon.jei_descriptions.informantblock"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.LUNARROSE_HELMET.get()), VanillaTypes.ITEM_STACK, new TextComponent(Component.translatable("changed_addon.jei_descriptions.lunar_rose").getString().replace("#","\n")));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.LUNARROSE_HELMET.get()), VanillaTypes.ITEM_STACK, Component.literal(Component.translatable("changed_addon.jei_descriptions.lunar_rose").getString().replace("#","\n")));
 
 
         addSharedDescriptions(registration, List.of(
@@ -96,7 +96,7 @@ class JeiDescriptionHandler {
             float math = SolventMath(i) * 100;
             EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBookWithSolvent);
             String text = Component.translatable("enchantment.changed_addon.solvent.jei_desc", math).getString().replace(" T ","% ");
-            registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TextComponent(text));
+            registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, Component.literal(text));
         }
     }
 

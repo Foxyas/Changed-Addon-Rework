@@ -138,7 +138,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
     }
 
     public ContainmentContainerBlockEntity getBlockEntity(BlockState state, BlockGetter level, BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof ContainmentContainerBlockEntity blockEntity) {
+        if (level().getBlockEntity(pos) instanceof ContainmentContainerBlockEntity blockEntity) {
             return blockEntity;
         }
         return null;
@@ -210,7 +210,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 
     @Override
     public void wasExploded(Level level, BlockPos blockPos, Explosion explosion) {
-        var blockEntity = this.getBlockEntity(level.getBlockState(blockPos), level, blockPos);
+        var blockEntity = this.getBlockEntity(level().getBlockState(blockPos), level, blockPos);
         if (blockEntity != null && blockEntity.getTransfurVariant() != null) {
             if (blockEntity.getTransfurVariant().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
                 ChangedEntity changedEntity = blockEntity.getTransfurVariant().getEntityType().create(level);

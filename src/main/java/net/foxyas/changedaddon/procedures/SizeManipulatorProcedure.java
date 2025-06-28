@@ -33,9 +33,9 @@ public class SizeManipulatorProcedure {
 
 		/*
 		* if(newSize < 1.0f - SIZE_TOLERANCE) {
-		*		player.displayClientMessage(new TextComponent ("Size value is too low: " + newSize + ", The Size Value is going to be auto set to 0.95"),true);
+		*		player.displayClientMessage(Component.literal ("Size value is too low: " + newSize + ", The Size Value is going to be auto set to 0.95"),true);
 		*	} else if (newSize > 1.0f + SIZE_TOLERANCE) {
-		*		player.displayClientMessage(new TextComponent ("Size value is too high: " + newSize + ", The Size Value is going to be auto set to 1.05"),true);
+		*		player.displayClientMessage(Component.literal ("Size value is too high: " + newSize + ", The Size Value is going to be auto set to 1.05"),true);
 		*	}
 		*/
 	}
@@ -45,7 +45,7 @@ public class SizeManipulatorProcedure {
 			float newSize = getSize(amount,true);
 			Changed.config.client.basicPlayerInfo.setSize(newSize); // Change Size
 			ChangedAddonMod.LOGGER.info("Size changed to: " + newSize + " for player: " + player.getName().getString()); // Command Classic Log
-			player.displayClientMessage(new TextComponent("Size changed to: " + newSize), false); // Chat log for the player
+			player.displayClientMessage(Component.literal("Size changed to: " + newSize), false); // Chat log for the player
 		} else {
 			ChangedAddonMod.LOGGER.atError().log("Entity is not a player, cannot change size."); // Command Classic Error
 		}

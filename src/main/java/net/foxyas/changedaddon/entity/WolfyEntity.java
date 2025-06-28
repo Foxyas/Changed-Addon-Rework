@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
@@ -34,79 +33,92 @@ import java.util.List;
 import java.util.Objects;
 
 public class WolfyEntity extends AbstractDarkLatexWolf {
-	public WolfyEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.WOLFY.get(), world);
-	}
+    public WolfyEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonModEntities.WOLFY.get(), world);
+    }
 
-	public WolfyEntity(EntityType<WolfyEntity> type, Level world) {
-		super(type, world);
-		maxUpStep = 0.6f;
-		xpReward = 0;
-		this.setAttributes(getAttributes());
-		setNoAi(false);
-		setPersistenceRequired();
-	}
+    public WolfyEntity(EntityType<WolfyEntity> type, Level world) {
+        super(type, world);
 
-	protected void setAttributes(AttributeMap attributes) {
-		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((1));
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((14));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0f);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.20f);
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.5f);
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(2);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
-		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
-		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
-	}
+        xpReward = 0;
+        this.setAttributes(getAttributes());
+        setNoAi(false);
+        setPersistenceRequired();
+    }
 
-	@Override
-	public boolean tryAbsorbTarget(LivingEntity target, IAbstractChangedEntity source, float amount, @org.jetbrains.annotations.Nullable List<TransfurVariant<?>> possibleMobFusions) {
-		return false;
-	}
+    public static void init() {
+    }
 
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 14);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 2);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
 
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    protected void setAttributes(AttributeMap attributes) {
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((1));
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((14));
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0f);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.20f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(0.5f);
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(2);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+    }
 
-	@Override
-	public TransfurMode getTransfurMode() {
-		return TransfurMode.NONE;
-	}
+    @Override
+    public boolean tryAbsorbTarget(LivingEntity target, IAbstractChangedEntity source, float amount, @org.jetbrains.annotations.Nullable List<TransfurVariant<?>> possibleMobFusions) {
+        return false;
+    }
 
-	@Override
-	public HairStyle getDefaultHairStyle() {
-		return HairStyle.BALD.get();
-	}
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-	public @Nullable List<HairStyle> getValidHairStyles() {
-		return HairStyle.Collection.getAll();
-	}
+    @Override
+    public TransfurMode getTransfurMode() {
+        return TransfurMode.NONE;
+    }
 
 	/*@Override
 	public LatexType getLatexType() {
 		return LatexType.DARK_LATEX;
 	}*/
 
-	@Override
-	public Color3 getHairColor(int layer) {
-		return Color3.DARK;
-	}
+    @Override
+    public HairStyle getDefaultHairStyle() {
+        return HairStyle.BALD.get();
+    }
 
-	@Override
-	public Gender getGender() {
-		return Gender.MALE;
-	}
+    public @Nullable List<HairStyle> getValidHairStyles() {
+        return HairStyle.Collection.getAll();
+    }
 
-	@Override
-	public boolean isMaskless() {
-		return true;
-	}
+    @Override
+    public Color3 getHairColor(int layer) {
+        return Color3.DARK;
+    }
 
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
+    @Override
+    public Gender getGender() {
+        return Gender.MALE;
+    }
+
+    @Override
+    public boolean isMaskless() {
+        return true;
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
 		/*this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
@@ -118,71 +130,56 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(5, new FloatGoal(this));*/
 
-	}
+    }
 
-	@Override
-	public Color3 getDripColor() {
-		Color3 color = Color3.getColor("#000000");
-		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#393939");
-		} else {
-			color = Color3.getColor("#303030");
-		}
-		return color;
-	}
+    public Color3 getDripColor() {
+        Color3 color = Color3.getColor("#000000");
+        if (level().random.nextInt(10) > 5) {
+            color = Color3.getColor("#393939");
+        } else {
+            color = Color3.getColor("#303030");
+        }
+        return color;
+    }
 
-	public Color3 getTransfurColor(TransfurCause cause) {
+    public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.getColor("#303030");
     }
 
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
-	}
+    @Override
+    public MobType getMobType() {
+        return MobType.UNDEFINED;
+    }
 
-	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return false;
-	}
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
 
-	@Override
-	public double getMyRidingOffset() {
-		return super.getMyRidingOffset();
-	}
+    @Override
+    public double getMyRidingOffset() {
+        return super.getMyRidingOffset();
+    }
 
-	@Override
-	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
-	}
+    @Override
+    public SoundEvent getHurtSound(DamageSource ds) {
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
+    }
 
-	@Override
-	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
-	}
-	
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (source == DamageSource.LIGHTNING_BOLT)
-			return false;
-		if (source.isExplosion())
-			return false;
-		if (source.isFire())
-			return false;
-		return super.hurt(source, amount);
-	}
+    @Override
+    public SoundEvent getDeathSound() {
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
+    }
 
-
-	public static void init() {
-	}
-
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 14);
-		builder = builder.add(Attributes.ARMOR, 0);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 2);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		return builder;
-	}
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        if (source == DamageSource.LIGHTNING_BOLT)
+            return false;
+        if (source.isExplosion())
+            return false;
+        if (source.isFire())
+            return false;
+        return super.hurt(source, amount);
+    }
 
 }

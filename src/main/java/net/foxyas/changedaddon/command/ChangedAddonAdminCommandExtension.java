@@ -37,12 +37,12 @@ public class ChangedAddonAdminCommandExtension {
                                                             int SAFE_LIMIT = 32768;
 
                                                             if (value > SAFE_LIMIT) {
-                                                                ctx.getSource().sendFailure(new TextComponent("Too many blocks selected: " + value + " > " + SAFE_LIMIT));
+                                                                ctx.getSource().sendFailure(Component.literal("Too many blocks selected: " + value + " > " + SAFE_LIMIT));
                                                                 return 0;
                                                             }
 
                                                             AffectBlocksProcedure.execute(world, minPos, maxPos, LatexType.WHITE_LATEX);
-                                                            ctx.getSource().sendSuccess(new TextComponent("Set Infection of " + value + " blocks to white_latex"), true);
+                                                            ctx.getSource().sendSuccess(Component.literal("Set Infection of " + value + " blocks to white_latex"), true);
                                                             return 1;
 
                                                         })
@@ -56,12 +56,12 @@ public class ChangedAddonAdminCommandExtension {
                                                             int SAFE_LIMIT = 32768;
 
                                                             if (value > SAFE_LIMIT) {
-                                                                ctx.getSource().sendFailure(new TextComponent("Too many blocks selected: " + value + " > " + SAFE_LIMIT));
+                                                                ctx.getSource().sendFailure(Component.literal("Too many blocks selected: " + value + " > " + SAFE_LIMIT));
                                                                 return 0;
                                                             }
 
                                                             AffectBlocksProcedure.execute(world, minPos, maxPos, LatexType.DARK_LATEX);
-                                                            ctx.getSource().sendSuccess(new TextComponent("Set Infection of " + value + " blocks to dark_latex"), true);
+                                                            ctx.getSource().sendSuccess(Component.literal("Set Infection of " + value + " blocks to dark_latex"), true);
                                                             return 1;
 
                                                         })
@@ -75,12 +75,12 @@ public class ChangedAddonAdminCommandExtension {
                                                             int SAFE_LIMIT = 32768;
 
                                                             if (value > SAFE_LIMIT) {
-                                                                ctx.getSource().sendFailure(new TextComponent("Too many blocks selected: " + value + " > " + SAFE_LIMIT));
+                                                                ctx.getSource().sendFailure(Component.literal("Too many blocks selected: " + value + " > " + SAFE_LIMIT));
                                                                 return 0;
                                                             }
 
                                                             AffectBlocksProcedure.execute(world, minPos, maxPos, LatexType.NEUTRAL);
-                                                            ctx.getSource().sendSuccess(new TextComponent("Set Infection of " + value + " blocks to neutral"), true);
+                                                            ctx.getSource().sendSuccess(Component.literal("Set Infection of " + value + " blocks to neutral"), true);
                                                             return 1;
 
                                                         })

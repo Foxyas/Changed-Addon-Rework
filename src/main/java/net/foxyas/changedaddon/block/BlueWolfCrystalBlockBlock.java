@@ -29,7 +29,7 @@ public class BlueWolfCrystalBlockBlock extends AbstractWolfCrystalExtender.Abstr
     public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         super.tick(state, level, pos, random);
         BlockPos above = pos.above();
-        if (level.getBlockState(above).is(Blocks.AIR)) {
+        if (level().getBlockState(above).is(Blocks.AIR)) {
             level.setBlock(above, ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_SMALL.get().defaultBlockState(), 3);
             level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 1.0f);
         }

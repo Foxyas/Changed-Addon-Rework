@@ -25,7 +25,7 @@ public class PotwithcamoniaPlayerFinishesUsingItemProcedure {
 					_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.UNTRANSFUR.get(), 1800, 0, false, false));
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 					if (entity instanceof Player _player && !_player.level().isClientSide())
-						_player.displayClientMessage(new TextComponent("for some reason this seems to have slowed effect"), true);
+						_player.displayClientMessage(Component.literal("for some reason this seems to have slowed effect"), true);
 				}
 			}
 		}

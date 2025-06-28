@@ -43,7 +43,7 @@ public class TransfurTotemItemInInventoryTickProcedure {
 					SummonDripParticlesProcedure.execute(entity);
 					PlayerUtilProcedure.UnTransfurPlayer(entity);
 					if (entity instanceof Player _player && !_player.level().isClientSide())
-						_player.displayClientMessage(new TextComponent("The totem you were carrying has been activated"), true);
+						_player.displayClientMessage(Component.literal("The totem you were carrying has been activated"), true);
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("item.totem.use")), SoundSource.NEUTRAL, 1, 1);
@@ -70,7 +70,7 @@ public class TransfurTotemItemInInventoryTickProcedure {
 					SummonDripParticlesProcedure.execute(entity);
 					PlayerUtilProcedure.UnTransfurPlayer(entity);
 					if (entity instanceof Player _player && !_player.level().isClientSide())
-						_player.displayClientMessage(new TextComponent("The totem you were carrying has been activated"), true);
+						_player.displayClientMessage(Component.literal("The totem you were carrying has been activated"), true);
 					if (world instanceof Level _level) {
 						if (!_level.isClientSide()) {
 							_level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("item.totem.use")), SoundSource.NEUTRAL, 1, 1);

@@ -13,6 +13,6 @@ public class CommandSetmaxTransfurToleranceProcedure {
 		if (entity == null)
 			return;
 		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent(("The maximum Transfur Tolerance has been set to \u00A76" + DoubleArgumentType.getDouble(arguments, "MaxNumber"))), false);
+			_player.displayClientMessage(Component.literal(("The maximum Transfur Tolerance has been set to \u00A76" + DoubleArgumentType.getDouble(arguments, "MaxNumber"))), false);
 	}
 }

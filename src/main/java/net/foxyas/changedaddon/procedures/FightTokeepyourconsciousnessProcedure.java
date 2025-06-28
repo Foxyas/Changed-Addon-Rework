@@ -46,7 +46,7 @@ public class FightTokeepyourconsciousnessProcedure {
 				NetworkHooks.openGui(_ent, new MenuProvider() {
 					@Override
 					public Component getDisplayName() {
-						return new TextComponent("FightTokeepconsciousnessminigame");
+						return Component.literal("FightTokeepconsciousnessminigame");
 					}
 
 					@Override
@@ -83,12 +83,12 @@ public class FightTokeepyourconsciousnessProcedure {
 
 					if (playerVars.consciousness_fight_progress >= 25) {
 						// Vitória no minigame
-						player.displayClientMessage(new TextComponent(Component.translatable("changedaddon.fight_concience.success").getString()), true);
+						player.displayClientMessage(Component.literal(Component.translatable("changedaddon.fight_concience.success").getString()), true);
 						updatePlayerVariables(playerVars, false, 0, false, entity);
 
 					} else {
 						// Falha no minigame
-						player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
+						player.displayClientMessage(Component.literal("You \u00A74Lose \u00A7rYour Conscience"), true);
 						SummonEntityProcedure.execute((Level) world, player);
 						PlayerUtilProcedure.UnTransfurPlayer(entity);
 						if (entity instanceof LivingEntity livingEntity) {

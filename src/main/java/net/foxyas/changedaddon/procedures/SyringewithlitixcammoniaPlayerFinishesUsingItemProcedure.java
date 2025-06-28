@@ -43,7 +43,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 						_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
 					if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 						if (entity instanceof Player _player && !_player.level().isClientSide())
-							_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.untransfur.sloweffect").getString())), true);
+							_player.displayClientMessage(Component.literal((Component.translatable("changedaddon.untransfur.sloweffect").getString())), true);
 					}
 				} else {
 					SummonDripParticlesProcedure.execute(entity);
@@ -130,12 +130,12 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
 				UntransfurFail.bypassArmor();
 				entity.hurt(UntransfurFail, 15);
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.untransfur.fail").getString())), true);
+					_player.displayClientMessage(Component.literal((Component.translatable("changedaddon.untransfur.fail").getString())), true);
 			}
 		} else {
 			if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns == true) {
 				if (entity instanceof Player _player && !_player.level().isClientSide())
-					_player.displayClientMessage(new TextComponent((Component.translatable("changedaddon.untransfur.no_effect").getString())), true);
+					_player.displayClientMessage(Component.literal((Component.translatable("changedaddon.untransfur.no_effect").getString())), true);
 			}
 		}
 		if (!(new Object() {

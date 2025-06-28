@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
@@ -6,24 +5,18 @@ import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
@@ -40,9 +33,6 @@ import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
@@ -70,10 +60,26 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     public Experiment10BossEntity(EntityType<Experiment10BossEntity> type, Level world) {
         super(type, world);
         this.setAttributes(getAttributes());
-        maxUpStep = 0.6f;
+
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 300);
+        builder = builder.add(Attributes.ARMOR, 20);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
+        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
+        return builder;
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -81,7 +87,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);
-        attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12);
         attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
         attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
@@ -98,7 +104,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     public @NotNull BossMusicTheme BossMusicTheme() {
         return BossMusicTheme.EXP10;
     }
-
 
     @Override
     public boolean startRiding(@NotNull Entity EntityIn, boolean force) {
@@ -158,7 +163,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         return HairStyle.Collection.FEMALE.getStyles();
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.getColor("#181818");
     }
@@ -166,7 +170,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.DARK;
     }
-
 
     @Override
     public Packet<?> getAddEntityPacket() {
@@ -234,7 +237,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         }
     }
 
-
     @Override
     public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
         if (mobEffectInstance.getEffect() == MobEffects.WITHER) {
@@ -254,7 +256,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         this.load(dataIndex0);
         return retval;
     }
-
 
     @Override
     public boolean canChangeDimensions() {
@@ -279,34 +280,17 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
-    public static void init() {
-    }
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 300);
-        builder = builder.add(Attributes.ARMOR, 20);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
-        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
-        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
-        return builder;
-    }
-
     @Override
     public Gender getGender() {
         return Gender.FEMALE;
     }
 
-    public void setPhase2(boolean set) {
-        this.Phase2 = set;
-    }
-
     public boolean isPhase2() {
         return this.Phase2;
+    }
+
+    public void setPhase2(boolean set) {
+        this.Phase2 = set;
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -355,7 +339,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
             setCrawlingPoseIfNeeded(target);
             crawlToTarget(target);
         } else {
-            if (!this.isSwimming() && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
+            if (!this.isSwimming() && !this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
                 this.setPose(Pose.SWIMMING);
             }
         }
@@ -370,7 +354,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
                 this.setPose(Pose.SWIMMING);
             }
         } else {
-            if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
+            if (!this.isSwimming() && this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
                 this.setPose(Pose.STANDING);
             }
         }

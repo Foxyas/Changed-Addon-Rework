@@ -25,19 +25,19 @@ public class ChangedAddonCommandRootCommandExtension {
 							CommandSourceStack source = context.getSource();
 
 							if (!(source.getEntity() instanceof ServerPlayer player)) {
-								source.sendFailure(new TextComponent("This command can only be used by players."));
+								source.sendFailure(Component.literal("This command can only be used by players."));
 								return 0;
 							}
 
 							ItemStack heldItem = player.getMainHandItem();
 							if (!(heldItem.getItem() instanceof BlockItem blockItem)) {
-								source.sendFailure(new TextComponent("You must be holding a block item."));
+								source.sendFailure(Component.literal("You must be holding a block item."));
 								return 0;
 							}
 
 							Block block = blockItem.getBlock();
 							if (!(block instanceof TimedKeypad)) {
-								source.sendFailure(new TextComponent("The block must be a TimedKeypad."));
+								source.sendFailure(Component.literal("The block must be a TimedKeypad."));
 								return 0;
 							}
 
@@ -45,7 +45,7 @@ public class ChangedAddonCommandRootCommandExtension {
 							CompoundTag tag = heldItem.getOrCreateTag();
 							tag.putInt("TimerValue", timerValue);
 
-							source.sendSuccess(new TextComponent("Timer set to " + timerValue + "."), true);
+							source.sendSuccess(Component.literal("Timer set to " + timerValue + "."), true);
 							return 1;
 						})
 				)

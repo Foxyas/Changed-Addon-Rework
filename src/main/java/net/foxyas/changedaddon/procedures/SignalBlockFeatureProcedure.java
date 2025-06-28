@@ -85,7 +85,7 @@ public class SignalBlockFeatureProcedure {
 			}
 			playSounds(world, x, y, z, firstFound);
 		} else if (!player.level().isClientSide()) {
-			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
+			player.displayClientMessage(Component.literal("No Signal Block Found"), false);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class SignalBlockFeatureProcedure {
 			}
 			playSounds(world, player.getX(), player.getY(), player.getZ(), firstFound);
 		} else if (!player.level().isClientSide()) {
-			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
+			player.displayClientMessage(Component.literal("No Signal Block Found"), false);
 		}
 	}
 
@@ -177,7 +177,7 @@ public class SignalBlockFeatureProcedure {
 			displayFoundLocations(player, foundPositions);
 			playSounds(world, x, y, z, foundPositions.get(0));
 		} else if (!player.level().isClientSide()) {
-			player.displayClientMessage(new TextComponent("No Signal Block Found"), false);
+			player.displayClientMessage(Component.literal("No Signal Block Found"), false);
 		}
 	}
 
@@ -192,20 +192,20 @@ public class SignalBlockFeatureProcedure {
 	private static void displayFoundLocations(Player player, List<BlockPos> positions) {
     boolean isCreative = player.isCreative();
 
-    player.displayClientMessage(new TextComponent("Signal Blocks found at:"), false); // Mensagem inicial
+    player.displayClientMessage(Component.literal("Signal Blocks found at:"), false); // Mensagem inicial
 
     for (int i = 0; i < positions.size(); i++) {
         	BlockPos pos = positions.get(i);
 
         	// Cria o texto básico da posição
         	String positionText = String.format("Block %d: [%d, %d, %d]", i + 1, pos.getX(), pos.getY(), pos.getZ());
-        	TextComponent message = new TextComponent(positionText);
+        	Component message = Component.literal(positionText);
 
         	if (isCreative) {
             	// Adiciona eventos ao texto apenas para jogadores criativos
             	Style style = Style.EMPTY
                     	.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/tp %d %d %d", pos.getX(), pos.getY(), pos.getZ())))
-                    	.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TextComponent("Click to copy the teleport command")));
+                    	.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("Click to copy the teleport command")));
 
             	message.setStyle(style);
         	}

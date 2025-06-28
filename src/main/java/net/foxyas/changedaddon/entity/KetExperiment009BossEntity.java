@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
@@ -66,14 +65,6 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     private boolean shouldBleed;
     private boolean lastBreath = false;
 
-    public void setAttackCoolDown(int attackCoolDown) {
-        AttackCoolDown = attackCoolDown;
-    }
-
-    public int getAttackCoolDown() {
-        return AttackCoolDown;
-    }
-
     public KetExperiment009BossEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS.get(), world);
     }
@@ -84,6 +75,37 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 425);
+        builder = builder.add(Attributes.ARMOR, 12.5);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
+        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
+        return builder;
+    }
+
+    @NotNull
+    private static ParticleOptions getParticleOptions(Color StartColor, Color EndColor) {
+        Vector3f startColor = new Vector3f((float) StartColor.getRed() / 255, (float) StartColor.getGreen() / 255, (float) StartColor.getBlue() / 255);
+        Vector3f endColor = new Vector3f((float) EndColor.getRed() / 255, (float) EndColor.getGreen() / 255, (float) EndColor.getBlue() / 255);
+        return new DustColorTransitionOptions(startColor, endColor, 1);
+    }
+
+    public int getAttackCoolDown() {
+        return AttackCoolDown;
+    }
+
+    public void setAttackCoolDown(int attackCoolDown) {
+        AttackCoolDown = attackCoolDown;
     }
 
     @Override
@@ -300,48 +322,31 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         // Se estiver com menos de 40% da vida, simula que 40% é o "cheio" da barra
         if (healthRatio <= 0.4f) {
             this.bossInfo.setProgress(healthRatio / 0.4f); // estica a barra
-            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10){
+            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
             }
         } else {
             this.bossInfo.setProgress(healthRatio);
-            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6){
+            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
             }
         }
-    }
-
-
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 425);
-        builder = builder.add(Attributes.ARMOR, 12.5);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
-        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
-        return builder;
-    }
-
-    public void setPhase2(boolean set) {
-        this.Phase2 = set;
-    }
-
-    public void setPhase3(boolean set) {
-        this.lastBreath = set;
     }
 
     public boolean isPhase3() {
         return this.lastBreath;
     }
 
+    public void setPhase3(boolean set) {
+        this.lastBreath = set;
+    }
+
     public boolean isPhase2() {
         return this.Phase2;
+    }
+
+    public void setPhase2(boolean set) {
+        this.Phase2 = set;
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -499,7 +504,6 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         }
     }
 
-
     public void applyStatModifier(LivingEntity entity, double multiplier) {
         applyModifierIfAbsent(entity, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", multiplier - 1);
         applyModifierIfAbsent(entity, Attributes.ARMOR, "a06083b0-291d-4a72-85de-73bd93ffb737", "ArmorMultiplier", multiplier - 1);
@@ -526,21 +530,13 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         }
     }
 
-
-    @NotNull
-    private static ParticleOptions getParticleOptions(Color StartColor, Color EndColor) {
-        Vector3f startColor = new Vector3f((float) StartColor.getRed() / 255, (float) StartColor.getGreen() / 255, (float) StartColor.getBlue() / 255);
-        Vector3f endColor = new Vector3f((float) EndColor.getRed() / 255, (float) EndColor.getGreen() / 255, (float) EndColor.getBlue() / 255);
-        return new DustColorTransitionOptions(startColor, endColor, 1);
-    }
-
     public void SpawnThunderBolt(BlockPos pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level());
         if (lightning != null) {
             lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
             lightning.setCause(null);
             lightning.setDamage(6f);
-            this.level.addFreshEntity(lightning);
+            this.level().addFreshEntity(lightning);
             PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
         }
     }
@@ -550,7 +546,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         if (lightning != null) {
             lightning.moveTo(pos.x(), pos.y(), pos.z());
             lightning.setCause(null);
-            this.level.addFreshEntity(lightning);
+            this.level().addFreshEntity(lightning);
             PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
         }
     }
@@ -574,7 +570,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             setCrawlingPoseIfNeeded(target);
             crawlToTarget(target);
         } else {
-            if (!this.isSwimming() && !this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
+            if (!this.isSwimming() && !this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ())).isAir()) {
                 this.setPose(Pose.SWIMMING);
             }
         }
@@ -586,7 +582,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                 this.setPose(Pose.SWIMMING);
             }
         } else {
-            if (!this.isSwimming() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
+            if (!this.isSwimming() && this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
                 this.setPose(Pose.STANDING);
             }
         }
@@ -612,7 +608,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                 this.setPose(Pose.STANDING);
                 this.setSwimming(false);
             }
-        } else if (this.getPose() == Pose.SWIMMING && !this.isInWater() && this.level.getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
+        } else if (this.getPose() == Pose.SWIMMING && !this.isInWater() && this.level().getBlockState(new BlockPos(this.getX(), this.getEyeY(), this.getZ()).above()).isAir()) {
             this.setPose(Pose.STANDING);
         }
     }

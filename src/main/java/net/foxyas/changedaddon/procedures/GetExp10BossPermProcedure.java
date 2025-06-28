@@ -26,7 +26,7 @@ public class GetExp10BossPermProcedure {
 			}
 		}.getEntity()).getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp10TransfurAllowed) {
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(new TextComponent(((new Object() {
+				_player.displayClientMessage(Component.literal(((new Object() {
 					public Entity getEntity() {
 						try {
 							return EntityArgument.getEntity(arguments, "player");
@@ -38,7 +38,7 @@ public class GetExp10BossPermProcedure {
 				}.getEntity()).getDisplayName().getString() + " is allowed")), true);
 		} else {
 			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(new TextComponent(((new Object() {
+				_player.displayClientMessage(Component.literal(((new Object() {
 					public Entity getEntity() {
 						try {
 							return EntityArgument.getEntity(arguments, "player");

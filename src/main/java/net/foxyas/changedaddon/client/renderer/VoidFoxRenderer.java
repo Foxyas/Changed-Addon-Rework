@@ -63,19 +63,19 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
         /*if (this.entityRenderDispatcher.distanceToSqr(entity) < 4096.0D) {
             // Monta os Component exatamente como você queria
             List<Component> debugLines = List.of(
-                    new TextComponent("HP: " + entity.getHealth())
+                    Component.literal("HP: " + entity.getHealth())
                             .withStyle(style -> style.withColor(ChatFormatting.RED).withBold(true)),
 
-                    new TextComponent("Phase: " + entity.getAttackInUse())
+                    Component.literal("Phase: " + entity.getAttackInUse())
                             .withStyle(style -> style.withColor(ChatFormatting.YELLOW)),
 
-                    new TextComponent("Attack1Cooldown: " + entity.getAttack1Cooldown())
+                    Component.literal("Attack1Cooldown: " + entity.getAttack1Cooldown())
                             .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
 
-                    new TextComponent("Attack2Cooldown: " + entity.getAttack2Cooldown())
+                    Component.literal("Attack2Cooldown: " + entity.getAttack2Cooldown())
                             .withStyle(style -> style.withColor(ChatFormatting.AQUA)),
 
-                    new TextComponent("Attack3Cooldown: " + entity.getAttack3Cooldown())
+                    Component.literal("Attack3Cooldown: " + entity.getAttack3Cooldown())
                             .withStyle(style -> style.withColor(ChatFormatting.AQUA))
             );
 

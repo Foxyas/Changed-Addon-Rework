@@ -46,7 +46,7 @@ public class SnepsiPlayerFinishesUsingItemProcedure {
                     for (String string : _ap.getRemainingCriteria()) serverPlayer.getAdvancements().award(_adv, string);
                 }
             }*/
-            //serverPlayer.displayClientMessage(new TextComponent("Drink this = " + Snepsi_Drink_Amount),false);
+            //serverPlayer.displayClientMessage(Component.literal("Drink this = " + Snepsi_Drink_Amount),false);
         }
 
     }

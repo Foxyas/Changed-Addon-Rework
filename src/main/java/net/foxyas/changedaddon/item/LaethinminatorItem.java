@@ -79,7 +79,7 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 			return;
 		}
 		
-		if (level.isClientSide)
+		if (level().isClientSide)
 			return;
 			
 		stack.hurtAndBreak(1, entity, (livingEntity) -> {

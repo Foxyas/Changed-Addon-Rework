@@ -21,6 +21,6 @@ public class UnlatexbaseItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TextComponent("Made From Latex Base and Ammonia"));
+		list.add(Component.literal("Made From Latex Base and Ammonia"));
 	}
 }

@@ -26,7 +26,7 @@ public class Phase2EntitysHandleProcedure {
         Entity entity = event.getEntity();
         if (!(entity instanceof LivingEntity livingEntity)) return;
 
-        Level level = entity.level;
+        Level level = entity.level();
         float damage = event.getAmount();
         float currentHealth = livingEntity.getHealth();
         float maxHealth = livingEntity.getMaxHealth();

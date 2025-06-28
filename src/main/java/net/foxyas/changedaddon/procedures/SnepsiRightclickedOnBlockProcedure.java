@@ -135,6 +135,6 @@ public class SnepsiRightclickedOnBlockProcedure {
 			}
 		}
 		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent(("face2 is " + direction)), false);
+			_player.displayClientMessage(Component.literal(("face2 is " + direction)), false);
 	}
 }

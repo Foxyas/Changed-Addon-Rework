@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.goals;
 
 import net.minecraft.network.chat.Style;
-
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,12 +18,11 @@ public class KnockBackBurstGoal extends Goal {
     private final Mob mob;
     private final double damageThreshold;
     private final int checkInterval = 20; // ticks (1 segundo)
+    private final float knockbackForce = 2.5f;
+    private final int cooldown = 100; // 5 segundos de cooldown
     private int ticks;
     private float recentDamage;
     private int recentHits;
-
-    private final float knockbackForce = 2.5f;
-    private final int cooldown = 100; // 5 segundos de cooldown
     private int cooldownTimer;
 
     public KnockBackBurstGoal(Mob mob, double damageThreshold) {
@@ -44,7 +42,7 @@ public class KnockBackBurstGoal extends Goal {
         if (ticks >= checkInterval) {
             ticks = 0;
 
-			
+
 // reset
             recentDamage = 0;
             recentHits = 0;
@@ -79,7 +77,7 @@ public class KnockBackBurstGoal extends Goal {
                 livingEntity.hurtMarked = true; // força sincronização de movimento no cliente
                 livingEntity.level().playSound(null, mob, SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE, 1, 1);
                 if (livingEntity instanceof Player player) {
-                    player.displayClientMessage(new TextComponent("That's ENOUGH").withStyle((style) -> {
+                    player.displayClientMessage(Component.literal("That's ENOUGH").withStyle((style) -> {
                         Style newStyle = style;
                         Color color = new Color(0, 0, 0);
                         newStyle = newStyle.withColor(color.getRGB()).withBold(true).withItalic(true);

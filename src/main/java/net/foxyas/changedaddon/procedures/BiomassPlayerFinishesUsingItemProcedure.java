@@ -11,6 +11,6 @@ public class BiomassPlayerFinishesUsingItemProcedure {
 		if (entity instanceof Player _player)
 			_player.causeFoodExhaustion((float) (4 * 4));
 		if (entity instanceof Player _player && !_player.level().isClientSide())
-			_player.displayClientMessage(new TextComponent((Component.translatable("item.changed_addon.biomass.eat").getString())), true);
+			_player.displayClientMessage(Component.literal((Component.translatable("item.changed_addon.biomass.eat").getString())), true);
 	}
 }

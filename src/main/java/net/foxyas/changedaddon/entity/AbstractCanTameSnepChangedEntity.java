@@ -9,11 +9,11 @@ import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -28,7 +28,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,12 +45,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopard implements TamableLatexEntity {
+    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.BYTE);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     public AbstractCanTameSnepChangedEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
         super(type, level);
     }
-
-    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.BYTE);
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
     protected void registerGoals() {
         super.registerGoals();
@@ -63,7 +61,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_FLAGS_ID, (byte)0);
+        this.entityData.define(DATA_FLAGS_ID, (byte) 0);
         this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
     }
 
@@ -81,7 +79,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         //this.setPose(Pose.SLEEPING);
     }
 
-    public boolean isBiped(){
+    public boolean isBiped() {
         return true;
     }
 
@@ -123,15 +121,17 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
 
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        if (livingEntity == this.getOwner())
-            return false;
-        return true;
+        return livingEntity != this.getOwner();
     }
 
     @Nullable
     @Override
     public UUID getOwnerUUID() {
         return this.entityData.get(DATA_OWNERUUID_ID).orElse(null);
+    }
+
+    public void setOwnerUUID(@Nullable UUID uuid) {
+        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
     }
 
     public boolean isPreventingPlayerRest(Player player) {
@@ -146,11 +146,11 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
             particleoptions = ParticleTypes.SMOKE;
         }
 
-        for(int i = 0; i < 7; ++i) {
+        for (int i = 0; i < 7; ++i) {
             double d0 = this.random.nextGaussian() * 0.02D;
             double d1 = this.random.nextGaussian() * 0.02D;
             double d2 = this.random.nextGaussian() * 0.02D;
-            this.level.addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
+            this.level().addParticle(particleoptions, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
         }
 
     }
@@ -171,14 +171,10 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     public LivingEntity getOwner() {
         try {
             UUID uuid = this.getOwnerUUID();
-            return uuid == null ? null : this.level.getPlayerByUUID(uuid);
+            return uuid == null ? null : this.level().getPlayerByUUID(uuid);
         } catch (IllegalArgumentException illegalargumentexception) {
             return null;
         }
-    }
-
-    public void setOwnerUUID(@Nullable UUID uuid) {
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
     }
 
     public void tame(Player player) {
@@ -203,10 +199,10 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                 if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
                     itemstack.shrink(1);
                     this.heal(2.0F);
-                    if (this.level instanceof ServerLevel _level){
+                    if (this.level() instanceof ServerLevel _level) {
                         _level.sendParticles(ParticleTypes.HEART, (this.getX()), (this.getY() + 1), (this.getZ()), 7, 0.3, 0.3, 0.3, 1); //Spawn Heal Particles
                     }
-                    this.gameEvent(GameEvent.MOB_INTERACT, this.eyeBlockPosition());
+                    this.gameEvent(GameEvent.ENTITY_INTERACT, this);
                     return InteractionResult.SUCCESS;
                 } else {
                     InteractionResult interactionresult = super.mobInteract(player, hand);
@@ -217,7 +213,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                         player.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
                         this.jumping = false;
                         this.navigation.stop();
-                        this.setTarget((LivingEntity) null);
+                        this.setTarget(null);
                         return InteractionResult.SUCCESS;
                     }
                 }
@@ -236,9 +232,9 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     public void setFollowOwner(boolean value) {
         byte b0 = this.entityData.get(DATA_FLAGS_ID);
         if (value) {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 | 1));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 | 1));
         } else {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 & -2));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 & -2));
         }
 
     }
@@ -257,9 +253,9 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     public void setTame(boolean tame) {
         byte b0 = this.entityData.get(DATA_FLAGS_ID);
         if (tame) {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 | 4));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 | 4));
         } else {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 & -5));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 & -5));
         }
 
         this.reassessTameGoals();
@@ -308,27 +304,15 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         super.die(source);
 
         if (this.dead)
-            if (!this.level().isClientSide && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getOwner() instanceof ServerPlayer) {
-                this.getOwner().sendMessage(deathMessage, Util.NIL_UUID);
+            if (!this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getOwner() instanceof ServerPlayer) {
+                if (this.getOwner() instanceof Player player) {
+                    player.displayClientMessage(deathMessage, false);
+                }
             }
     }
 
-    //Public enum TameType that just hold a string for the Items tag Logic
-    public enum TameType implements IExtensibleEnum {
-        CAT("changed_addon:cat_tame_items"),
-        DOG("changed_addon:dog_tame_items");
-
-        public final String Tag;
-        TameType(String tag){
-            this.Tag = tag;
-        }
-        public static TameType create(String name,String tag){
-            throw new NotImplementedException("Not extended");
-        }
-    }
-
     //TameType Use Type
-    public boolean isTameItem(ItemStack stack,TameType tameType) {
+    public boolean isTameItem(ItemStack stack, TameType tameType) {
         return stack.is(Items.COD)
                 || stack.is(ChangedItems.ORANGE.get())
                 || stack.is(Items.COOKED_COD)
@@ -364,14 +348,14 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte)7);
-                } else if(istransfur && this.random.nextInt(12) == 0) { //One in 12
+                    this.level().broadcastEntityEvent(this, (byte) 7);
+                } else if (istransfur && this.random.nextInt(12) == 0) { //One in 12
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte)7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte)6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
 
                 return InteractionResult.SUCCESS;
@@ -397,20 +381,36 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte)7);
-                } else if(isTransfur && this.random.nextInt(6) == 0) {
+                    this.level().broadcastEntityEvent(this, (byte) 7);
+                } else if (isTransfur && this.random.nextInt(6) == 0) {
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte)7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level.broadcastEntityEvent(this, (byte)6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
 
                 return InteractionResult.SUCCESS;
             }
 
             return super.mobInteract(player, hand);
+        }
+    }
+
+    //Public enum TameType that just hold a string for the Items tag Logic
+    public enum TameType implements IExtensibleEnum {
+        CAT("changed_addon:cat_tame_items"),
+        DOG("changed_addon:dog_tame_items");
+
+        public final String Tag;
+
+        TameType(String tag) {
+            this.Tag = tag;
+        }
+
+        public static TameType create(String name, String tag) {
+            throw new NotImplementedException("Not extended");
         }
     }
 }

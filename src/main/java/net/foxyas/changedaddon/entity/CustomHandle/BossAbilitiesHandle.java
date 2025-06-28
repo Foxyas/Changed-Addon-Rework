@@ -12,6 +12,7 @@ import net.ltxprogrammer.changed.util.CameraUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -26,15 +27,11 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FrostedIceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.sounds.SoundSource;
 
 // Class for handling boss abilities
 public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
@@ -350,7 +347,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
             Vec3 directionToBoss = boss.position().subtract(player.position()).normalize(); // Vetor direção do jogador para o boss
             double dotProduct = lookVec.dot(directionToBoss); // Produto escalar para verificar alinhamento
 
-            //player.displayClientMessage(new TextComponent("Dot Value = " + dotProduct), true); //Debug
+            //player.displayClientMessage(Component.literal("Dot Value = " + dotProduct), true); //Debug
             // Se o ângulo entre o olhar e o boss for menor que 30 graus
             if (dotProduct > 0.95) { // ~30 graus de tolerância (cos(30º) ≈ 0.866)
                 // Verifica se a visão está limpa
@@ -427,12 +424,12 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         Level level = boss.level();
         level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, self, AABB.ofSize(self.position(), 3.0, 3.0, 3.0)).forEach((mob) -> {
             if (mob.getTarget() != null && mob.getTarget().is(self)) {
-                mob.setTarget((LivingEntity) null);
+                mob.setTarget(null);
             }
         });
         level.getNearbyEntities(LivingEntity.class, TargetingConditions.DEFAULT, self, AABB.ofSize(self.position(), 10.0, 10.0, 10.0)).forEach((livingEntity) -> {
             if (!(livingEntity.getLookAngle().dot(self.getEyePosition().subtract(livingEntity.getEyePosition()).normalize()) < 0.8500000238418579)) {
-                if (!(livingEntity instanceof Player) || (Boolean) Changed.config.server.playerControllingAbilities.get()) {
+                if (!(livingEntity instanceof Player) || Changed.config.server.playerControllingAbilities.get()) {
                     CameraUtil.tugEntityLookDirection(livingEntity, self, 0.125);
                     if (!livingEntity.level().isClientSide()) {
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 120, 2, false, false), self);

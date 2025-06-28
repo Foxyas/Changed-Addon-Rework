@@ -26,7 +26,7 @@ public class KeypadUpgradeEvent {
         BlockState state = level.getBlockState(pos);
 
         // Verifica se está no servidor
-        if (level.isClientSide()) return;
+        if (level().isClientSide()) return;
 
         // Verifica se está agachado e segurando relógio
         if (!player.isShiftKeyDown()) return;

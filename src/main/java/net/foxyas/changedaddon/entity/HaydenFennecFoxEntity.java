@@ -1,38 +1,19 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
+import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.network.NetworkHooks;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.protocol.Packet;
-
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -44,7 +25,7 @@ public class HaydenFennecFoxEntity extends AbstractBasicOrganicChangedEntity {
 
     public HaydenFennecFoxEntity(EntityType<HaydenFennecFoxEntity> type, Level world) {
         super(type, world);
-        maxUpStep = 0.6f;
+
         xpReward = 0;
         setNoAi(false);
         setPersistenceRequired();
@@ -69,23 +50,28 @@ public class HaydenFennecFoxEntity extends AbstractBasicOrganicChangedEntity {
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
-        if (source.getDirectEntity() instanceof LivingEntity living) {
-            if (source instanceof EntityDamageSource entityDamageSource) {
-				if (entityDamageSource.msgId.contains("mob")) {
-					return super.hurt(entityDamageSource, amount * 0.9f);
-				}
+        if (source.getDirectEntity() instanceof LivingEntity) {
+            // Checar o ID do DamageType
+            var optionalKey = source.typeHolder().unwrapKey();
+            if (optionalKey.isPresent()) {
+                ResourceLocation id = optionalKey.get().location();
+
+                // Verifica se é um tipo que queremos (exemplo: contém "mob" no nome)
+                if (id.getPath().contains("mob")) {
+                    return super.hurt(source, amount * 0.9f);
+                }
             }
         }
 
         return super.hurt(source, amount);
     }
 
+
     @Override
     public TransfurMode getTransfurMode() {
         return TransfurMode.NONE;
     }
 
-    @Override
     public Color3 getDripColor() {
         return this.random.nextBoolean() ? Color3.getColor("F6DC70") : Color3.getColor("F0E4B9");
     }

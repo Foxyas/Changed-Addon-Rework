@@ -78,7 +78,7 @@ public class TransfurTotemEntityRightClickProcedure {
 											}
 										}
 										if (entity instanceof Player _player && !_player.level().isClientSide())
-											_player.displayClientMessage(new TextComponent((Component.translatable("changed_addon.latex_totem.notvalid").getString())), true);
+											_player.displayClientMessage(Component.literal((Component.translatable("changed_addon.latex_totem.notvalid").getString())), true);
 									}
 								} else {
 									if (sourceentity instanceof Player _player)
@@ -122,7 +122,7 @@ public class TransfurTotemEntityRightClickProcedure {
 											}
 										}
 										if (entity instanceof Player _player && !_player.level().isClientSide())
-											_player.displayClientMessage(new TextComponent((Component.translatable("changed_addon.latex_totem.notvalid").getString())), true);
+											_player.displayClientMessage(Component.literal((Component.translatable("changed_addon.latex_totem.notvalid").getString())), true);
 									}
 								} else {
 									if (sourceentity instanceof Player _player)

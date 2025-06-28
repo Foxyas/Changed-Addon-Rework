@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
@@ -9,6 +8,7 @@ import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,110 +24,110 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class BunyEntity extends ChangedEntity {
-	public BunyEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.BUNY.get(), world);
-	}
+    public BunyEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonModEntities.BUNY.get(), world);
+    }
 
-	public BunyEntity(EntityType<BunyEntity> type, Level world) {
-		super(type, world);
-		maxUpStep = 0.6f;
-		xpReward = 0;
-		this.setAttributes(this.getAttributes());
-		setNoAi(false);
-		setPersistenceRequired();
-	}
+    public BunyEntity(EntityType<BunyEntity> type, Level world) {
+        super(type, world);
 
-	protected void setAttributes(AttributeMap attributes) {
-		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((30));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15f);
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.75f);
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
-		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
-		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
-	}
+        xpReward = 0;
+        this.setAttributes(this.getAttributes());
+        setNoAi(false);
+        setPersistenceRequired();
+    }
 
-	/*@Override
-	protected boolean targetSelectorTest(LivingEntity livingEntity) {
-		return false;
-	}*/ //Maybe later
-	@Override
-	public Color3 getHairColor(int i) {
-		return Color3.getColor("#9c8c73");
-	}
+    public static void init() {
+    }
 
-	@Override
-	public LatexType getLatexType() {
-		return LatexType.NEUTRAL;
-	}
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
 
-	@Override
-	public TransfurMode getTransfurMode() {
-		return TransfurMode.NONE;
-	}
+    protected void setAttributes(AttributeMap attributes) {
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((30));
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(0.75f);
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+    }
 
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    /*@Override
+    protected boolean targetSelectorTest(LivingEntity livingEntity) {
+        return false;
+    }*/ //Maybe later
+    @Override
+    public Color3 getHairColor(int i) {
+        return Color3.getColor("#9c8c73");
+    }
 
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
+    @Override
+    public LatexType getLatexType() {
+        return LatexType.NEUTRAL;
+    }
 
-	}
+    @Override
+    public TransfurMode getTransfurMode() {
+        return TransfurMode.NONE;
+    }
 
-	@Override
-	public Color3 getDripColor() {
-		return Color3.getColor("#fee9c8");
-	}
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-	public Color3 getTransfurColor(TransfurCause cause) {
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+
+    }
+
+    public Color3 getDripColor() {
         return Color3.getColor("#fee9c8");
     }
 
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
-	}
+    public Color3 getTransfurColor(TransfurCause cause) {
+        return Color3.getColor("#fee9c8");
+    }
 
-	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return false;
-	}
+    @Override
+    public MobType getMobType() {
+        return MobType.UNDEFINED;
+    }
 
-	@Override
-	public double getMyRidingOffset() {
-		return super.getMyRidingOffset();
-	}
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
 
-	@Override
-	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.rabbit.hurt"));
-	}
+    @Override
+    public double getMyRidingOffset() {
+        return super.getMyRidingOffset();
+    }
 
-	@Override
-	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
-	}
+    @Override
+    public SoundEvent getHurtSound(DamageSource ds) {
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.rabbit.hurt"));
+    }
 
-	public static void init() {
-	}
-
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 24);
-		builder = builder.add(Attributes.ARMOR, 0);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		return builder;
-	}
+    @Override
+    public SoundEvent getDeathSound() {
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
+    }
 }

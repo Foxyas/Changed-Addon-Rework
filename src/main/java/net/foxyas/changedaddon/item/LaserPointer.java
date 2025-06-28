@@ -168,7 +168,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
             if (tag.contains("Color")) {
                 Color color = new Color(tag.getInt("Color"));
                 String hex = getHex(color);
-                tooltip.add(new TextComponent("Color: " + hex).withStyle((e) -> e.withColor(TextColor.parseColor(hex))));
+                tooltip.add(Component.literal("Color: " + hex).withStyle((e) -> e.withColor(TextColor.parseColor(hex))));
             }
         }
 

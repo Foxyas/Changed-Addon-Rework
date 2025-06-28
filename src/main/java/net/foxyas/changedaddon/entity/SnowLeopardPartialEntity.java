@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
@@ -25,92 +24,92 @@ import net.minecraftforge.network.PlayMessages;
 
 import java.util.Objects;
 
-public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable,ComplexRenderer {
-	public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL.get(), world);
-	}
+public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable, ComplexRenderer {
+    public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL.get(), world);
+    }
 
-	public SnowLeopardPartialEntity(EntityType<SnowLeopardPartialEntity> type, Level world) {
-		super(type, world);
-		maxUpStep = 0.6f;
-		xpReward = 0;
-		this.setAttributes(getAttributes());
-		setNoAi(false);
-		setPersistenceRequired();
-	}
+    public SnowLeopardPartialEntity(EntityType<SnowLeopardPartialEntity> type, Level world) {
+        super(type, world);
 
-	protected void setAttributes(AttributeMap attributes) {
-		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((2));
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0F);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.10f);
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(4);
-		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
-		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
-	}
+        xpReward = 0;
+        this.setAttributes(getAttributes());
+        setNoAi(false);
+        setPersistenceRequired();
+    }
 
-	public static void init() {
-	}
+    public static void init() {
+    }
 
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-		builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder.add(Attributes.MAX_HEALTH, 24);
-		builder.add(Attributes.ARMOR, 4);
-		builder.add(Attributes.ATTACK_DAMAGE, 3);
-		builder.add(Attributes.FOLLOW_RANGE, 40);
-		return builder;
-	}
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder.add(Attributes.MAX_HEALTH, 24);
+        builder.add(Attributes.ARMOR, 4);
+        builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder.add(Attributes.FOLLOW_RANGE, 40);
+        return builder;
+    }
 
-	@Override
-	public TransfurMode getTransfurMode() {
-		return TransfurMode.NONE;
-	}
+    protected void setAttributes(AttributeMap attributes) {
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((2));
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0F);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.10f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.0f);
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(4);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+    }
 
-	public boolean causeFallDamage(float p_148859_, float p_148860_, DamageSource p_148861_) {
-		return false;
-	}
+    @Override
+    public TransfurMode getTransfurMode() {
+        return TransfurMode.NONE;
+    }
 
-	public int getTicksRequiredToFreeze() {
-		return 420;
-	}
+    public boolean causeFallDamage(float p_148859_, float p_148860_, DamageSource p_148861_) {
+        return false;
+    }
 
-	public Color3 getDripColor() {
-		return this.level.random.nextInt(10) > 3 ? Color3.GRAY : Color3.WHITE;
-	}
+    public int getTicksRequiredToFreeze() {
+        return 420;
+    }
 
-	public Color3 getHairColor(int layer) {
-		return Color3.WHITE;
-	}
+    public Color3 getDripColor() {
+        return this.level().random.nextInt(10) > 3 ? Color3.GRAY : Color3.WHITE;
+    }
 
-	public LatexType getLatexType() {
-		return LatexType.NEUTRAL;
-	}
+    public Color3 getHairColor(int layer) {
+        return Color3.WHITE;
+    }
 
-	@Override
-	protected boolean targetSelectorTest(LivingEntity livingEntity) {
-		return false;
-	}
+    public LatexType getLatexType() {
+        return LatexType.NEUTRAL;
+    }
 
-	@OnlyIn(Dist.CLIENT)
-	public ResourceLocation getSkinTextureLocation() {
-		if (getUnderlyingPlayer() instanceof AbstractClientPlayer clientPlayer)
-			return clientPlayer.getSkinTextureLocation();
-		return DefaultPlayerSkin.getDefaultSkin(this.getUUID());
-	}
+    @Override
+    protected boolean targetSelectorTest(LivingEntity livingEntity) {
+        return false;
+    }
 
-	@OnlyIn(Dist.CLIENT)
-	public String getModelName() {
-		if (getUnderlyingPlayer() instanceof AbstractClientPlayer clientPlayer)
-			return clientPlayer.getModelName();
-		return DefaultPlayerSkin.getSkinModelName(this.getUUID());
-	}
+    @OnlyIn(Dist.CLIENT)
+    public ResourceLocation getSkinTextureLocation() {
+        if (getUnderlyingPlayer() instanceof AbstractClientPlayer clientPlayer)
+            return clientPlayer.getSkinTextureLocation();
+        return DefaultPlayerSkin.getDefaultSkin(this.getUUID());
+    }
 
-	@Override
-	public Gender getGender() {
-		return Gender.MALE;
-	}
+    @OnlyIn(Dist.CLIENT)
+    public String getModelName() {
+        if (getUnderlyingPlayer() instanceof AbstractClientPlayer clientPlayer)
+            return clientPlayer.getModelName();
+        return DefaultPlayerSkin.getSkinModelName(this.getUUID());
+    }
+
+    @Override
+    public Gender getGender() {
+        return Gender.MALE;
+    }
 }
