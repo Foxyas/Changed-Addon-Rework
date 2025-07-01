@@ -57,7 +57,8 @@ public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends 
         return color.brightness() < 0.5F ? this.renderTypeDark : this.renderTypeLight;
     }
 
-    public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector) {
+    @Override
+    public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector, float partialTick) {
         if (!ChangedAddonClientConfigsConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot) {
             return;
         } else if (!ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot) {
