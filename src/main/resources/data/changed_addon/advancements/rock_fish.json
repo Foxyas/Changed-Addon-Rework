@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:changed/aquatic_swimming",
+  "display": {
+    "icon": {
+      "item": "minecraft:lava_bucket"
+    },
+    "title": {
+      "translate": "advancements.main.rock_fish.title"
+    },
+    "description": {
+      "translate": "advancements.main.rock_fish.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "lava_swimming": {
+      "trigger": "changed_addon:lava_swimming"
+    }
+  },
+  "requirements": [
+    [
+      "lava_swimming"
+    ]
+  ],
+  "rewards": {
+    "experience": 550
+  }
+}

@@ -24,6 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements ExtraVariantStats {
 
@@ -31,6 +32,7 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
     private static final EntityDataAccessor<Integer> SECONDARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STRIPES_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<String> STYLE_OF_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.STRING);
+    public final Set<String> StyleTypes = Set.of("male", "female");
 
 
     public AvaliEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
@@ -82,21 +84,40 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        saveColors(tag);
+    }
+
+    public void saveColors(CompoundTag originalTag) {
+        CompoundTag tag = new CompoundTag();
         tag.putInt("PrimaryColor", getPrimaryColor().toInt());
         tag.putInt("SecondaryColor", getSecondaryColor().toInt());
         tag.putInt("StripesColor", getStripesColor().toInt());
         tag.putString("StyleOfColor", getStyleOfColor());
+        originalTag.put("TransfurColorData", tag);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        readColors(tag);
+    }
+
+    public void readColors(CompoundTag originalTag) {
+        CompoundTag tag = originalTag.getCompound("TransfurColorData");
         if (tag.contains("PrimaryColor")) setPrimaryColor(Color3.fromInt(tag.getInt("PrimaryColor")));
         if (tag.contains("SecondaryColor")) setSecondaryColor(Color3.fromInt(tag.getInt("SecondaryColor")));
         if (tag.contains("StripesColor")) setStripesColor(Color3.fromInt(tag.getInt("StripesColor")));
         if (tag.contains("StyleOfColor")) setStyleOfColor(tag.getString("StyleOfColor"));
     }
 
+    @Override
+    public void visualTick(Level level) {
+        super.visualTick(level);
+
+        if (!getStyleOfColor().equals("male") && !getStyleOfColor().equals("female")) {
+            this.setStyleOfColor("male");
+        }
+    }
 
     @Override
     public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
@@ -119,6 +140,14 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
 
     public Color3 getPrimaryColor() {
         return Color3.fromInt(this.entityData.get(PRIMARY_COLOR));
+    }
+
+    public void setColor(int layer, Color3 color3){
+        switch (layer) {
+            case 1 -> setSecondaryColor(color3);
+            case 2 -> setStripesColor(color3);
+            default -> setPrimaryColor(color3);
+        };
     }
 
     public void setPrimaryColor(Color3 color) {

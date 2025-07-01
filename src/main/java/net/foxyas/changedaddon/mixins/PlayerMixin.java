@@ -2,16 +2,19 @@ package net.foxyas.changedaddon.mixins;
 
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
 import net.foxyas.changedaddon.abilities.ClawsAbility;
+import net.foxyas.changedaddon.registers.ChangedAddonCriteriaTriggers;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +27,8 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -80,7 +85,6 @@ public abstract class PlayerMixin {
                 }
             }
         }));
-
     }
 
     @Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)

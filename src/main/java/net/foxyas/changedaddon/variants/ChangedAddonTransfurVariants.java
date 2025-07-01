@@ -7,8 +7,10 @@ import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
 import net.ltxprogrammer.changed.entity.variant.GenderedPair;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -52,6 +54,17 @@ public class ChangedAddonTransfurVariants {
 
         private static TagKey<TransfurVariant<?>> create(String name) {
             return TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon", name));
+        }
+
+        public static boolean isAquaticDiet(TransfurVariantInstance<?> variantInstance) {
+            ChangedEntity entity = variantInstance.getChangedEntity();
+            TransfurVariant<?> variant = variantInstance.getParent();
+            return entity instanceof AquaticEntity ||
+                    variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.SHARK_LIKE) ||
+                    variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
+                            new ResourceLocation("changed:aquatic_like"))) ||
+                    variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
+                            new ResourceLocation("changed_addon:aquatic_diet")));
         }
     }
 

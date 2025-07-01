@@ -1,17 +1,20 @@
 package net.foxyas.changedaddon.mixins;
 
+import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -78,6 +81,27 @@ public abstract class TransfurVariantInstanceMixin {
         }
 
     }
+
+    @Inject(method = "save", at = @At("RETURN"), cancellable = true)
+    private void InjectData(CallbackInfoReturnable<CompoundTag> cir) {
+        if (this.getChangedEntity() instanceof AvaliEntity avaliEntity) {
+            avaliEntity.saveColors(cir.getReturnValue());
+        }
+    }
+
+    @Inject(method = "load", at = @At("RETURN"), cancellable = true)
+    private void readInjectedData(CompoundTag tag, CallbackInfo cir) {
+        loadTransfurColorData(tag);
+    }
+
+
+    @Unique
+    private void loadTransfurColorData(CompoundTag tag){
+        if (this.getChangedEntity() instanceof AvaliEntity avaliEntity) {
+            avaliEntity.readColors(tag);
+        }
+    }
+
 
 
     /*@Inject(method = "canWear", at = @At("HEAD"), cancellable = true)

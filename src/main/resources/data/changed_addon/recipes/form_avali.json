@@ -1,0 +1,13 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    { "item": "minecraft:feather" },
+    { "item": "minecraft:feather" },
+    { "item": "minecraft:feather" },
+    { "item": "changed:latex_base" },
+    { "item": "changed:white_latex_goo" },
+    { "item": "minecraft:bone" }
+  ],
+  "gendered": false,
+  "form": "changed_addon:form_avali"
+}
