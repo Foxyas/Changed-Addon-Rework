@@ -30,11 +30,7 @@ public class PlayerLavaSwimHandler {
             TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
             if (transfurVariantInstance != null && ChangedAddonTransfurVariants.TransfurVariantTags.isAquaticDiet(transfurVariantInstance)) {
                 if (isInLava && hasFireResist) {
-                    player.setForcedPose(Pose.SWIMMING);
-                    player.setSprinting(true);
                     ChangedAddonCriteriaTriggers.LAVA_SWIMMING_TRIGGER.trigger(serverPlayer);
-                } else if (player.getForcedPose() == Pose.SWIMMING && !isInLava) {
-                    player.setForcedPose(null); // ou retornar à pose anterior
                 }
             }
 
