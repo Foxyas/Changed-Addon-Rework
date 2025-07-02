@@ -422,7 +422,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                 this.setHealth(this.getHealth() - 0.05f);
             }
             if (this.AttackCoolDown < 100) {
-                this.AttackCoolDown += this.isPhase2() ? 2 : 1;
+                this.AttackCoolDown += this.isPhase3() ? 2 : 1;
             }
             if (this.getRandom().nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
                 if (this.isPhase2()) {
