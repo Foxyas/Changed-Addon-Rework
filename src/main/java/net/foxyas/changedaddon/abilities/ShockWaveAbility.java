@@ -29,7 +29,6 @@ public class ShockWaveAbility extends SimpleAbility {
         return new TranslatableComponent("changed_addon.ability.shock_wave");
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/thunder_wave.png"); //Place holder
     }

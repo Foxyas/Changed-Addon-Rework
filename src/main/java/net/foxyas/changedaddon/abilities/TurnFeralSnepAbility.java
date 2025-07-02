@@ -18,7 +18,6 @@ public class TurnFeralSnepAbility extends AbstractAbility<TurnFeralSnepAbilityIn
         return new TranslatableComponent("changed_addon.ability.turn_feral");
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/normal_paw.png");
     }

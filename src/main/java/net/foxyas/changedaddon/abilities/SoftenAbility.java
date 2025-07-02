@@ -26,7 +26,6 @@ public class SoftenAbility extends AbstractAbility<SoftenAbilityInstance> {
         return Description;
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/gooey_paw.png");
     }

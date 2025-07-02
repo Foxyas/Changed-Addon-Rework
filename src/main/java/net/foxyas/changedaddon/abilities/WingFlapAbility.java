@@ -23,7 +23,6 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
         super(WingFlapAbility.AbilityInstance::new);
     }
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         if (entity.getEntity() instanceof Player player){
             AbilityInstance Instance = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(this);
