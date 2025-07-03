@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.registers;
 import net.foxyas.changedaddon.entity.BlueLizard;
 import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
+import net.foxyas.changedaddon.entity.advanced.KitsuneEntity;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.init.ChangedMobCategories;
@@ -40,6 +41,15 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64).setUpdateInterval(3)
                     .setCustomClientFactory(AvaliEntity::new)
+                    .clientTrackingRange(10)
+
+                    .sized(0.7f, 1.93f));
+
+    public static final RegistryObject<EntityType<KitsuneEntity>> KITSUNE = register("kitsune",
+            EntityType.Builder.<KitsuneEntity>of(KitsuneEntity::new, ChangedMobCategories.CHANGED)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setTrackingRange(64).setUpdateInterval(3)
+                    .setCustomClientFactory(KitsuneEntity::new)
                     .clientTrackingRange(10)
 
                     .sized(0.7f, 1.93f));

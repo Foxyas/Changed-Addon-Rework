@@ -2,13 +2,17 @@
 package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.client.renderer.items.LaserItemDynamicRender;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedTags;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -48,6 +52,7 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
         return List.of(ChangedEntities.DARK_LATEX_YUFENG.get(), ChangedEntities.LATEX_PINK_YUIN_DRAGON.get(), ChangedEntities.DARK_DRAGON.get(), ChangedEntities.LATEX_RED_DRAGON.get());
     }
 
+
     public static void addUniversalAbilities(TransfurVariant.UniversalAbilitiesEvent event) {
         event.addAbility(event.isOfTag(ChangedTags.EntityTypes.LATEX).and(event.isNotOfTag(ChangedTags.EntityTypes.PARTIAL_LATEX)), SOFTEN_ABILITY);
         event.addAbility(entityType -> getCanGlideEntites().contains(entityType), WING_FLAP_ABILITY);
@@ -56,6 +61,11 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
     @SubscribeEvent
     public static void registerAbilities(FMLConstructModEvent event) {
         ChangedAddonAbilities.REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+
+    @SubscribeEvent
+    public static void clientLoad(FMLClientSetupEvent event) {
+        //Todo Ability Dynamic Changer
     }
 
 }
