@@ -94,7 +94,9 @@ public class VoidFoxDashAttack extends Goal {
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
             if (tickCount % 20 == 0) {
                 shootProjectile(target);
-                dasher.getLevel().playSound(null, dasher, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
+                if (!dasher.getLevel().isClientSide()) {
+                    dasher.getLevel().playSound(null, dasher, SoundEvents.EVOKER_PREPARE_ATTACK, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);
+                }
             }
             if (dasher.getLevel() instanceof ServerLevel serverLevel) {
                 serverLevel.sendParticles(ParticleTypes.ENCHANT, dasher.getX(), dasher.getEyeY(), dasher.getZ(), 4, 0.25, 0.5, 0.25, 0.5);
@@ -129,15 +131,20 @@ public class VoidFoxDashAttack extends Goal {
                 if (distance > 0.1) {
                     Vec3 knockback = difference.normalize().scale(distance * KNOCKBACK_MULTIPLIER);
                     dasher.swing(InteractionHand.MAIN_HAND);
-                    if (!entity.isBlocking()) {
-                        entity.hurt(DamageSource.mobAttack(dasher), 6.0F);
+                    if (entity.hurt(DamageSource.mobAttack(dasher), 6.0F)){
+                        dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1, 1);
                         dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                     } else {
                         if (dasher.getLevel() instanceof ServerLevel serverLevel) {
                             serverLevel.sendParticles(ParticleTypes.CRIT, entity.getX(), entity.getY(0.5), entity.getZ(), 4, 0.25, 0.25, 0.25, 0.05);
                         }
-                        dasher.getLevel().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
+                        if (entity.isBlocking()) {
+                            if (dasher.getLevel().isClientSide()) {
+                                dasher.getLevel().playSound(null, entity, SoundEvents.SHIELD_BLOCK, SoundSource.HOSTILE, 1, 1);
+                            }
+                        }
                     }
+
                     entity.setDeltaMovement(entity.getDeltaMovement().add(knockback));
                 }
             }

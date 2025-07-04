@@ -3,7 +3,8 @@ package net.foxyas.changedaddon.registers;
 import net.foxyas.changedaddon.entity.BlueLizard;
 import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
-import net.foxyas.changedaddon.entity.advanced.KitsuneEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexKitsuneMaleEntity;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.init.ChangedMobCategories;
@@ -45,11 +46,20 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
 
                     .sized(0.7f, 1.93f));
 
-    public static final RegistryObject<EntityType<KitsuneEntity>> KITSUNE = register("kitsune",
-            EntityType.Builder.<KitsuneEntity>of(KitsuneEntity::new, ChangedMobCategories.CHANGED)
+    public static final RegistryObject<EntityType<LatexKitsuneMaleEntity>> LATEX_KITSUNE_MALE = register("latex_kitsune_male",
+            EntityType.Builder.<LatexKitsuneMaleEntity>of(LatexKitsuneMaleEntity::new, ChangedMobCategories.CHANGED)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64).setUpdateInterval(3)
-                    .setCustomClientFactory(KitsuneEntity::new)
+                    .setCustomClientFactory(LatexKitsuneMaleEntity::new)
+                    .clientTrackingRange(10)
+
+                    .sized(0.7f, 1.93f));
+
+    public static final RegistryObject<EntityType<LatexKitsuneFemaleEntity>> LATEX_KITSUNE_FEMALE = register("latex_kitsune_female",
+            EntityType.Builder.<LatexKitsuneFemaleEntity>of(LatexKitsuneFemaleEntity::new, ChangedMobCategories.CHANGED)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setTrackingRange(64).setUpdateInterval(3)
+                    .setCustomClientFactory(LatexKitsuneFemaleEntity::new)
                     .clientTrackingRange(10)
 
                     .sized(0.7f, 1.93f));
@@ -83,6 +93,8 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
         event.put(SNOW_LEOPARD_PARTIAL.get(), SnowLeopardPartialEntity.createAttributes().build());
 		event.put(BLUE_LIZARD.get(), BlueLizard.createAttributes().build());
         event.put(AVALI.get(), AvaliEntity.createAttributes().build());
+        event.put(LATEX_KITSUNE_MALE.get(), AvaliEntity.createAttributes().build());
+        event.put(LATEX_KITSUNE_FEMALE.get(), AvaliEntity.createAttributes().build());
     }
 
 }

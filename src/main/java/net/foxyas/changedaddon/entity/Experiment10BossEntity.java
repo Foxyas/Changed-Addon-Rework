@@ -5,6 +5,8 @@ import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
+import net.foxyas.changedaddon.entity.goals.LeapSmashGoal;
+import net.foxyas.changedaddon.entity.goals.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.entity.*;
@@ -177,6 +179,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(10, new LeapSmashGoal(this));
     }
 
     @Override

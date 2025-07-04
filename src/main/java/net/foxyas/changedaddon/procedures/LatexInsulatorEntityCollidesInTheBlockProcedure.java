@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +20,7 @@ public class LatexInsulatorEntityCollidesInTheBlockProcedure {
 		if (entity == null)
 			return;
 		entity.fallDistance = 0;
-		if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
+		if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
 			if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
 				if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
 					_entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 300, 0, false, false));

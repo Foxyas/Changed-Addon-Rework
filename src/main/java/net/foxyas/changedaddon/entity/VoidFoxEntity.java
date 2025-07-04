@@ -140,7 +140,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(10, new SImpleAntiFlyingAttack(this, 0, 32f, 3f, 20){
+        this.goalSelector.addGoal(10, new SimpleAntiFlyingAttack(this, 0, 32f, 1f, 40){
             @Override
             public void start() {
                 super.start();
@@ -205,10 +205,10 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         this.goalSelector.addGoal(4, new ComboAbilityGoal(
                 this, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
-                        SoundEvents.PLAYER_ATTACK_CRIT,
+                        SoundEvents.PLAYER_ATTACK_STRONG,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.LIGHTNING_BOLT_THUNDER},
-                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH}
+                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.EXPLOSION, ParticleTypes.FLASH}
         ) {
             @Override
             public boolean canUse() {
@@ -278,10 +278,10 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         this.goalSelector.addGoal(4, new SimpleComboAbilityGoal(
                 this, 2, 3f, 18f, 3f, 5,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
-                        SoundEvents.PLAYER_ATTACK_CRIT,
+                        SoundEvents.PLAYER_ATTACK_STRONG,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.LIGHTNING_BOLT_THUNDER},
-                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH}
+                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.EXPLOSION, ParticleTypes.FLASH}
         ) {
             @Override
             public boolean canUse() {
@@ -352,10 +352,10 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         this.goalSelector.addGoal(4, new SimpleComboAbilityGoal(
                 this, 3, 3f, 18f, 3f, 2,
                 new SoundEvent[]{SoundEvents.PLAYER_ATTACK_SWEEP,
-                        SoundEvents.PLAYER_ATTACK_CRIT,
+                        SoundEvents.PLAYER_ATTACK_STRONG,
                         SoundEvents.PLAYER_ATTACK_CRIT,
                         SoundEvents.LIGHTNING_BOLT_THUNDER},
-                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.FLASH, ParticleTypes.FLASH}
+                new ParticleOptions[]{ParticleTypes.FLASH, ParticleTypes.EXPLOSION, ParticleTypes.FLASH}
         ) {
             @Override
             public boolean canUse() {

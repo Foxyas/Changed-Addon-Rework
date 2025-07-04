@@ -1,6 +1,8 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:screens/wing_flap_ability_start"
+    "layer0": "changed_addon:screens/wing_flap_ability_start",
+    "layer1": "changed_addon:screens/wing_flap_ability_mid",
+    "layer2": "changed_addon:screens/wing_flap_ability_final"
   }
 }

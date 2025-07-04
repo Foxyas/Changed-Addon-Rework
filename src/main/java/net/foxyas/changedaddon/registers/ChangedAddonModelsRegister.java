@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.client.model.*;
 import net.foxyas.changedaddon.client.model.advanced.AvaliModel;
+import net.foxyas.changedaddon.client.model.advanced.LatexKitsuneFemaleModel;
+import net.foxyas.changedaddon.client.model.advanced.LatexKitsuneMaleModel;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexDragonSnowLeopardSharkModel;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
@@ -10,9 +12,10 @@ import net.foxyas.changedaddon.client.renderer.BlueLizardRenderer;
 import net.foxyas.changedaddon.client.renderer.SimpleProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
 import net.foxyas.changedaddon.client.renderer.advanced.AvaliRenderer;
+import net.foxyas.changedaddon.client.renderer.advanced.LatexKitsuneFemaleRenderer;
+import net.foxyas.changedaddon.client.renderer.advanced.LatexKitsuneMaleRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
-import net.foxyas.changedaddon.entity.BlueLizard;
 import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
 import net.minecraftforge.api.distmarker.Dist;
@@ -65,6 +68,9 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(HaydenFennecFoxModel.LAYER_LOCATION, HaydenFennecFoxModel::createBodyLayer);
         event.registerLayerDefinition(BlueLizardModel.LAYER_LOCATION, BlueLizardModel::createBodyLayer);
         event.registerLayerDefinition(AvaliModel.LAYER_LOCATION, AvaliModel::createBodyLayer);
+        event.registerLayerDefinition(LatexKitsuneMaleModel.LAYER_LOCATION, LatexKitsuneMaleModel::createBodyLayer);
+        event.registerLayerDefinition(LatexKitsuneFemaleModel.LAYER_LOCATION, LatexKitsuneFemaleModel::createBodyLayer);
+
 
 
         //Projectiles
@@ -92,12 +98,17 @@ public class ChangedAddonModelsRegister {
 
      @SubscribeEvent
      public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-         event.registerEntityRenderer(ChangedAddonEntities.PARTICLE_PROJECTILE.get(),
-                 SimpleProjectileRenderer::new); // Nenhum render (somente partículas no tick)
          event.registerEntityRenderer(ChangedAddonEntities.BLUE_LIZARD.get(),
                  BlueLizardRenderer::new);
          event.registerEntityRenderer(ChangedAddonEntities.AVALI.get(),
                  AvaliRenderer::new);
+         event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_FEMALE.get(),
+                 LatexKitsuneFemaleRenderer::new);
+         event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_MALE.get(),
+                 LatexKitsuneMaleRenderer::new);
+
+         event.registerEntityRenderer(ChangedAddonEntities.PARTICLE_PROJECTILE.get(),
+                 SimpleProjectileRenderer::new);
      }
 
 

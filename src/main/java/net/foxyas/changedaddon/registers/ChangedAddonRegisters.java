@@ -128,7 +128,9 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
     public static final RegistryObject<Item> AVALI_SPAWN_EGG = ITEMS_REGISTRY.register("avali_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.AVALI, 0xffffff, 0xffffff, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-    public static final RegistryObject<Item> KITSUNE_SPAWN_EGG = ITEMS_REGISTRY.register("kitsune_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.AVALI, 0xffffff, 0xffffff, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+    public static final RegistryObject<Item> LATEX_KITSUNE_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_kitsune_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_MALE, 0xffffff, 0xffffff, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
+    public static final RegistryObject<Item> LATEX_KITSUNE_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_kitsune_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_FEMALE, 0xffffff, 0xffffff, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
     public static final RegistryObject<Item> DARK_LATEX_COAT = ITEMS_REGISTRY.register("dark_latex_coat",
             () -> new DarkLatexCoatItem(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));

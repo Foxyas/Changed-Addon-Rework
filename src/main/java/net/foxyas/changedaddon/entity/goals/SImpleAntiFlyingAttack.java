@@ -3,8 +3,11 @@ package net.foxyas.changedaddon.entity.goals;
 import net.foxyas.changedaddon.entity.VoidFoxEntity;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,9 +23,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
-public class SImpleAntiFlyingAttack extends Goal {
+public class SimpleAntiFlyingAttack extends Goal {
     private final Mob attacker;
     private LivingEntity target;
     private int ticks = 0;
@@ -32,7 +37,7 @@ public class SImpleAntiFlyingAttack extends Goal {
     private final float damage;
     private final EntityType<? extends AbstractArrow> projectileType = ChangedAddonEntities.PARTICLE_PROJECTILE.get();
 
-    public SImpleAntiFlyingAttack(Mob attacker, float minRange, float maxRange, float damage, int delay) {
+    public SimpleAntiFlyingAttack(Mob attacker, float minRange, float maxRange, float damage, int delay) {
         this.attacker = attacker;
         this.minRange = minRange;
         this.maxRange = maxRange;
@@ -255,10 +260,7 @@ public class SImpleAntiFlyingAttack extends Goal {
 
             // Spawn do projétil
             if (!level.isClientSide()) {
-                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), target);
-                projectile.setPos(spawnPos);
-                projectile.setNoGravity(true);
-                projectile.setOwner(attacker);
+                ParticleProjectile projectile = getParticleProjectile(target, spawnPos);
                 projectile.teleport = false;
 
                 Vec3 direction = target.getEyePosition(1.0F).subtract(attacker.getEyePosition(0.5f)).normalize();
@@ -282,10 +284,7 @@ public class SImpleAntiFlyingAttack extends Goal {
 
             // Spawn do projétil
             if (!level.isClientSide()) {
-                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), target);
-                projectile.setPos(spawnPos);
-                projectile.setNoGravity(true);
-                projectile.setOwner(attacker);
+                ParticleProjectile projectile = getParticleProjectile(target, spawnPos);
                 projectile.teleport = false;
 
                 Vec3 direction = target.getEyePosition(1.0F).subtract(attacker.getEyePosition(0.5f)).normalize();
@@ -296,6 +295,26 @@ public class SImpleAntiFlyingAttack extends Goal {
             }
         }
         attacker.swing(InteractionHand.MAIN_HAND);
+    }
+
+    private @NotNull ParticleProjectile getParticleProjectile(LivingEntity target, Vec3 spawnPos) {
+        ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), target){
+            @Override
+            protected void onHitEntity(@NotNull EntityHitResult result) {
+                super.onHitEntity(result);
+                if (result.getEntity() instanceof Player player && player.getAbilities().flying) {
+                    player.displayClientMessage(new TextComponent("Flying will not help you! so is better STOP!").withStyle((style -> {
+                        Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                        returnStyle = returnStyle.withItalic(true);
+                        return returnStyle;
+                    })), true);
+                }
+            }
+        };
+        projectile.setPos(spawnPos);
+        projectile.setNoGravity(true);
+        projectile.setOwner(attacker);
+        return projectile;
     }
 
     public void spawnProjectilesInXCircleTargetInPlayerPos(LivingEntity entity, LivingEntity target, Vec3 offset, double radius, int count, Level level) {
@@ -309,7 +328,19 @@ public class SImpleAntiFlyingAttack extends Goal {
 
             // Spawn do projétil
             if (!level.isClientSide()) {
-                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), null);
+                ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), null) {
+                    @Override
+                    protected void onHitEntity(@NotNull EntityHitResult result) {
+                        super.onHitEntity(result);
+                        if (result.getEntity() instanceof Player player && player.getAbilities().flying) {
+                            player.displayClientMessage(new TextComponent("Flying will not help you! so is better STOP!").withStyle((style -> {
+                                Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                                returnStyle = returnStyle.withItalic(true);
+                                return returnStyle;
+                            })), true);
+                        }
+                    }
+                };
                 projectile.setTargetPos(target.position());
                 projectile.setPos(spawnPos);
                 projectile.setNoGravity(true);
