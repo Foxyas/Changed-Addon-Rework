@@ -22,6 +22,6 @@ public class LatexKitsuneMaleRenderer extends AdvancedHumanoidRenderer<LatexKits
 
     @Override
     public ResourceLocation getTextureLocation(LatexKitsuneMaleEntity entity) {
-        return new ResourceLocation("changed_addon:textures/entities/latex_kitsune_Male/latex_kitsune_male.png");
+        return new ResourceLocation("changed_addon:textures/entities/latex_kitsune_male/latex_kitsune_male.png");
     }
 }

@@ -85,6 +85,8 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
             ParticleProjectile.init();
 			BlueLizard.init();
             AvaliEntity.init();
+            LatexKitsuneMaleEntity.init();
+            LatexKitsuneFemaleEntity.init();
         });
     }
 
@@ -93,8 +95,8 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
         event.put(SNOW_LEOPARD_PARTIAL.get(), SnowLeopardPartialEntity.createAttributes().build());
 		event.put(BLUE_LIZARD.get(), BlueLizard.createAttributes().build());
         event.put(AVALI.get(), AvaliEntity.createAttributes().build());
-        event.put(LATEX_KITSUNE_MALE.get(), AvaliEntity.createAttributes().build());
-        event.put(LATEX_KITSUNE_FEMALE.get(), AvaliEntity.createAttributes().build());
+        event.put(LATEX_KITSUNE_MALE.get(), LatexKitsuneMaleEntity.createAttributes().build());
+        event.put(LATEX_KITSUNE_FEMALE.get(), LatexKitsuneFemaleEntity.createAttributes().build());
     }
 
 }
