@@ -3,10 +3,7 @@ package net.foxyas.changedaddon.client.renderer.advanced;
 import net.foxyas.changedaddon.client.model.advanced.LatexKitsuneFemaleModel;
 import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
+import net.ltxprogrammer.changed.client.renderer.layers.*;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexFemaleWolfModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +15,7 @@ public class LatexKitsuneFemaleRenderer extends AdvancedHumanoidRenderer<LatexKi
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
+        this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon:textures/entities/latex_kitsune_female/latex_kitsune_female_stripes.png")));
     }
 
     @Override
