@@ -132,7 +132,7 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
     public static final RegistryObject<Item> LATEX_KITSUNE_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_kitsune_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_FEMALE, 0xffffff, 0xffffff, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
-    public static final RegistryObject<Item> LATEX_CALICO_CAT_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_calico_cat_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CALICO_CAT, 0xd67053, 0x67423f, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+    public static final RegistryObject<Item> LATEX_CALICO_CAT_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_calico_cat_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CALICO_CAT, 0xffece4, 0x67423f, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
     public static final RegistryObject<Item> DARK_LATEX_COAT = ITEMS_REGISTRY.register("dark_latex_coat",
             () -> new DarkLatexCoatItem(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
