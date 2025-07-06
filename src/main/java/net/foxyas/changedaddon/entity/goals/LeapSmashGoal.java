@@ -111,6 +111,8 @@ public class LeapSmashGoal extends Goal {
                     int breakerId = mob.getId();
                     int stage = 5;
                     serverLevel.destroyBlockProgress(breakerId, pos, stage);
+                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0, 0, 1);
+
                 }
 
             }
@@ -144,6 +146,6 @@ public class LeapSmashGoal extends Goal {
     public void stop() {
         leapTicks = 0;
         wasInAir = false;
-        cooldown = 40;
+        cooldown = 60;
     }
 }

@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.goals;
 
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.entity.Emote;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.init.ChangedParticles;

@@ -6,20 +6,15 @@ import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.goals.LeapSmashGoal;
-import net.foxyas.changedaddon.entity.goals.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
@@ -43,14 +38,10 @@ import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -84,7 +75,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((325));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);
-        attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12);
         attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
         attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
@@ -172,7 +163,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -183,7 +174,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     @Override
-    public MobType getMobType() {
+    public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
     }
 
@@ -198,13 +189,13 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     @Override
-    public SoundEvent getHurtSound(DamageSource ds) {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
+        return SoundEvents.GENERIC_HURT;
     }
 
     @Override
-    public SoundEvent getDeathSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+    public @NotNull SoundEvent getDeathSound() {
+        return SoundEvents.GENERIC_DEATH;
     }
 
     @Override
@@ -249,7 +240,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
         SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
         setEyeStyle(EyeStyle.TALL);
         CompoundTag dataIndex0 = new CompoundTag();
@@ -266,13 +257,13 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer player) {
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);
     }

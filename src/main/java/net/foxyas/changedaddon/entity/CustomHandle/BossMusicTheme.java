@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.IExtensibleEnum;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public enum BossMusicTheme{

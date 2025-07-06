@@ -69,6 +69,7 @@ public class TeleportAbility extends SimpleAbility {
             float pitch = random.nextFloat() + 1;
 			float volume = 0.5f;
             player.getLevel().playSound(null, player, SoundEvents.FOX_TELEPORT, SoundSource.MASTER, volume, pitch);
+            player.causeFoodExhaustion(4f);
         }
     }
 

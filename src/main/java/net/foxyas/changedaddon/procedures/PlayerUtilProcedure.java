@@ -440,7 +440,7 @@ public class PlayerUtilProcedure {
         public static void sendColorTransitionParticles(Level level, Player player,
                                                         Color startColor, Color endColor,
                                                         float size, float XV, float YV, float ZV, int count, float speed) {
-            sendColorTransitionParticles(level, player.getX(), player.getY(), player.getZ(), startColor.getRed(), startColor.getGreen(), startColor.getBlue(), endColor.getRed(), endColor.getGreen(), endColor.getBlue(), size, XV, YV, ZV, count, speed);
+            sendColorTransitionParticles(level, player.getX(), player.getY(), player.getZ(), startColor.getRed() / 255f, startColor.getGreen() / 255f, startColor.getBlue() / 255f, endColor.getRed() / 255f, endColor.getGreen() / 255f, endColor.getBlue() / 255f, size, XV, YV, ZV, count, speed);
         }
 
         public static void sendDripParticles(Level level, Entity entity, float middle,
