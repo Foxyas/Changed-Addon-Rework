@@ -39,6 +39,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -426,6 +427,20 @@ public class PlayerUtilProcedure {
                 serverLevel.sendParticles(particleOptions,
                         x, y + 1, z, count, XV, YV, ZV, speed);
             }
+        }
+
+
+        public static void sendColorTransitionParticles(Level level, Player player,
+                                                        float redStart, float greenStart, float blueStart,
+                                                        float redEnd, float greenEnd, float blueEnd,
+                                                        float size, float XV, float YV, float ZV, int count, float speed) {
+            sendColorTransitionParticles(level, player.getX(), player.getY(), player.getZ(), redStart, greenStart, blueStart, redEnd, greenEnd, blueEnd, size, XV, YV, ZV, count, speed);
+        }
+
+        public static void sendColorTransitionParticles(Level level, Player player,
+                                                        Color startColor, Color endColor,
+                                                        float size, float XV, float YV, float ZV, int count, float speed) {
+            sendColorTransitionParticles(level, player.getX(), player.getY(), player.getZ(), startColor.getRed(), startColor.getGreen(), startColor.getBlue(), endColor.getRed(), endColor.getGreen(), endColor.getBlue(), size, XV, YV, ZV, count, speed);
         }
 
         public static void sendDripParticles(Level level, Entity entity, float middle,

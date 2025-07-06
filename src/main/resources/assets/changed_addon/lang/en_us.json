@@ -642,5 +642,6 @@
   "text.changed_addon.jumpStrength": "Jump Strength \u003d %s",
   "text.changed_addon.landspeed": "Land Speed \u003d %s",
   "text.changed_addon.legs": "Amount of Legs \u003d %s",
-  "text.changed_addon.swimspeed": "Swim Speed \u003d %s"
+  "text.changed_addon.swimspeed": "Swim Speed \u003d %s",
+  "changed_addon.ability.teleport": "Teleport Ability"
 }
