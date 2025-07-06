@@ -1,0 +1,14 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    { "item": "changed:latex_base" },
+    { "item": "changed:white_latex_goo" },
+    { "tag": "forge:dyes/orange" },
+    { "tag": "forge:dyes/brown" },
+    { "item": "minecraft:string" },
+    { "item": "minecraft:feather" },
+    { "item": "minecraft:salmon" }
+  ],
+  "gendered": false,
+  "form": "changed_addon:form_latex_calico_cat"
+}

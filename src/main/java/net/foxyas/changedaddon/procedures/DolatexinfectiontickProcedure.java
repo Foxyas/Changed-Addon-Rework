@@ -66,7 +66,7 @@ public class DolatexinfectiontickProcedure {
     public static void execute(Player player) {
         if (player == null) return;
 
-		if (!player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.DOLATEXINFECTION)) {
+		if (!player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.DO_LATEX_INFECTION)) {
 			return;
 		}
 

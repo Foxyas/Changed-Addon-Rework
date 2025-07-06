@@ -1,14 +1,12 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.TickEvent;
 
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -19,12 +17,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.FightTokeepconsciousnessminigameMenu;
@@ -40,7 +36,7 @@ public class FightTokeepyourconsciousnessProcedure {
 
 	@SubscribeEvent
 	public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
-		if (!event.player.getLevel().isClientSide() && !event.keepConscious && event.player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHTTOKEEPCONSCIOUSNESS)){
+		if (!event.player.getLevel().isClientSide() && !event.keepConscious && event.player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS)){
 			event.shouldKeepConscious = true;
 			if (event.player instanceof ServerPlayer _ent) {
 				BlockPos _bpos = event.player.getOnPos();

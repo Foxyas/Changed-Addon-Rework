@@ -10,6 +10,8 @@
     "changed_addon:form_foxta_foxy",
     "changed_addon:form_void_fox",
     "changed_addon:form_hayden_fennec_fox",
-    "changed:form_latex_fennec_fox"
+    "changed:form_latex_fennec_fox",
+    "changed_addon:form_latex_kitsune/male",
+    "changed_addon:form_latex_kitsune/female"
   ]
 }

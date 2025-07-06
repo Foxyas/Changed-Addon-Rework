@@ -1,0 +1,13 @@
+{
+  "type": "changed:infuser",
+  "ingredients": [
+    { "item": "changed:latex_base" },
+    { "item": "changed:white_latex_goo" },
+    { "item": "minecraft:glowstone_dust" },
+    { "item": "minecraft:sweet_berries" },
+    { "tag": "forge:dyes/red" },
+    { "item": "minecraft:ender_pearl" }
+  ],
+  "gendered": true,
+  "form": "changed_addon:form_latex_kitsune"
+}
