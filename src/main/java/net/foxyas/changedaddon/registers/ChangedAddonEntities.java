@@ -1,11 +1,9 @@
 package net.foxyas.changedaddon.registers;
 
-import net.foxyas.changedaddon.entity.BlueLizard;
-import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
-import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexKitsuneMaleEntity;
-import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
+import net.foxyas.changedaddon.entity.*;
+import net.foxyas.changedaddon.entity.advanced.*;
+import net.foxyas.changedaddon.entity.projectile.*;
+import net.foxyas.changedaddon.entity.simple.*;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.init.ChangedMobCategories;
 import net.minecraft.world.entity.Entity;
@@ -65,6 +63,16 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
                     .sized(0.7f, 1.93f));
 
 
+    public static final RegistryObject<EntityType<LatexCalicoCatEntity>> LATEX_CALICO_CAT = register("latex_calico_cat",
+            EntityType.Builder.<LatexCalicoCatEntity>of(LatexCalicoCatEntity::new, ChangedMobCategories.CHANGED)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setTrackingRange(64).setUpdateInterval(3)
+                    .setCustomClientFactory(LatexCalicoCatEntity::new)
+                    .clientTrackingRange(10)
+
+                    .sized(0.7f, 1.93f));
+
+
     public static final RegistryObject<EntityType<ParticleProjectile>> PARTICLE_PROJECTILE = register("particle_projectile",
             EntityType.Builder.<ParticleProjectile>of(ParticleProjectile::new, MobCategory.MISC)
                     .setShouldReceiveVelocityUpdates(true)
@@ -87,6 +95,7 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
             AvaliEntity.init();
             LatexKitsuneMaleEntity.init();
             LatexKitsuneFemaleEntity.init();
+            LatexCalicoCatEntity.init();
         });
     }
 
@@ -97,6 +106,7 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
         event.put(AVALI.get(), AvaliEntity.createAttributes().build());
         event.put(LATEX_KITSUNE_MALE.get(), LatexKitsuneMaleEntity.createAttributes().build());
         event.put(LATEX_KITSUNE_FEMALE.get(), LatexKitsuneFemaleEntity.createAttributes().build());
+        event.put(LATEX_CALICO_CAT.get(), LatexCalicoCatEntity.createAttributes().build());
     }
 
 }

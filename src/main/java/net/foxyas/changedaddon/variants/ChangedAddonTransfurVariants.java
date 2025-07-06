@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
 import net.foxyas.changedaddon.entity.advanced.LatexKitsuneMaleEntity;
+import net.foxyas.changedaddon.entity.simple.LatexCalicoCatEntity;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
@@ -136,12 +137,14 @@ public class ChangedAddonTransfurVariants {
 
     public static final RegistryObject<TransfurVariant<FoxtaFoxyEntity>> FOXTA_FOXY = register("form_foxta_foxy", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.FOXTA_FOXY).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS).scares(List.of(Rabbit.class)).nightVision());
 
-    public static final RegistryObject<TransfurVariant<LatexKitsuneMaleEntity>> LATEX_KITSUNE_MALE = register("form_latex_kitsune_male", () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_KITSUNE_MALE).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS).scares(List.of(Rabbit.class)).nightVision());
+    public static final RegistryObject<TransfurVariant<LatexKitsuneMaleEntity>> LATEX_KITSUNE_MALE = register("form_latex_kitsune/male", () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_KITSUNE_MALE).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS).scares(List.of(Rabbit.class)).nightVision());
 
-    public static final RegistryObject<TransfurVariant<LatexKitsuneFemaleEntity>> LATEX_KITSUNE_FEMALE = register("form_latex_kitsune_female", () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_KITSUNE_FEMALE).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS).scares(List.of(Rabbit.class)).nightVision());
+    public static final RegistryObject<TransfurVariant<LatexKitsuneFemaleEntity>> LATEX_KITSUNE_FEMALE = register("form_latex_kitsune/female", () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_KITSUNE_FEMALE).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS).scares(List.of(Rabbit.class)).nightVision());
 
+    public static final RegistryObject<TransfurVariant<LatexCalicoCatEntity>> LATEX_CALICO_CAT = register("form_latex_calico_cat", () -> TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_CALICO_CAT).stepSize(0.7F).breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS).scares(List.of(Creeper.class)).nightVision());
 
     public static final RegistryObject<TransfurVariant<LatexDragonSnowLeopardSharkEntity>> LATEX_DRAGON_SNEP_SHARK = register("form_latex_dragon_snow_leopard_shark", () -> TransfurVariant.Builder.of(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK).glide().gills().nightVision().addAbility(entityType -> ChangedAddonAbilities.WING_FLAP_ABILITY.get()));
+
     //Partials
     public static final RegistryObject<TransfurVariant<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("form_latex_snow_leopard_partial", TransfurVariant.Builder.of(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL).stepSize(0.7F).jumpStrength(1.3F).reducedFall().breatheMode(TransfurVariant.BreatheMode.NORMAL).addAbility(ChangedAddonAbilities.CLAWS).scares(List.of(Creeper.class)).nightVision());
 
@@ -203,6 +206,7 @@ public class ChangedAddonTransfurVariants {
         public static final GenderedPair<Exp2MaleEntity, Exp2FemaleEntity> EXP2 = new GenderedPair<>(EXP2_MALE, EXP2_FEMALE);
         public static final GenderedPair<LuminarcticLeopardEntity, FemaleLuminarcticLeopardEntity> LUMINARCTIC_LEOPARDS = new GenderedPair<>(LUMINARCTIC_LEOPARD, FEMALE_LUMINARCTIC_LEOPARD);
         public static final GenderedPair<CrystalGasCatMaleEntity, CrystalGasCatFemaleEntity> HIMALAYAN_CRYSTAL_GAS_CAT = new GenderedPair<>(HIMALAYAN_CRYSTAL_GAS_CAT_MALE, HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE);
+        public static final GenderedPair<LatexKitsuneMaleEntity, LatexKitsuneFemaleEntity> KITSUNES = new GenderedPair<>(LATEX_KITSUNE_MALE, LATEX_KITSUNE_FEMALE);
     }
 
 

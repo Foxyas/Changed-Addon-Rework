@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.client.model.armors.ArmorLatexDragonSnowLeopardSh
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.client.model.projectile.SimpleProjectileModel;
+import net.foxyas.changedaddon.client.model.simple.LatexCalicoCatModel;
 import net.foxyas.changedaddon.client.renderer.BlueLizardRenderer;
 import net.foxyas.changedaddon.client.renderer.SimpleProjectileRenderer;
 import net.foxyas.changedaddon.client.renderer.SnowLeopardPartialRenderer;
@@ -16,6 +17,7 @@ import net.foxyas.changedaddon.client.renderer.advanced.LatexKitsuneFemaleRender
 import net.foxyas.changedaddon.client.renderer.advanced.LatexKitsuneMaleRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
+import net.foxyas.changedaddon.client.renderer.simple.LatexCalicoCatRenderer;
 import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
 import net.minecraftforge.api.distmarker.Dist;
@@ -70,6 +72,8 @@ public class ChangedAddonModelsRegister {
         event.registerLayerDefinition(AvaliModel.LAYER_LOCATION, AvaliModel::createBodyLayer);
         event.registerLayerDefinition(LatexKitsuneMaleModel.LAYER_LOCATION, LatexKitsuneMaleModel::createBodyLayer);
         event.registerLayerDefinition(LatexKitsuneFemaleModel.LAYER_LOCATION, LatexKitsuneFemaleModel::createBodyLayer);
+        event.registerLayerDefinition(LatexCalicoCatModel.LAYER_LOCATION, LatexCalicoCatModel::createBodyLayer);
+
 
 
 
@@ -106,6 +110,8 @@ public class ChangedAddonModelsRegister {
                  LatexKitsuneFemaleRenderer::new);
          event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_MALE.get(),
                  LatexKitsuneMaleRenderer::new);
+         event.registerEntityRenderer(ChangedAddonEntities.LATEX_CALICO_CAT.get(),
+                 LatexCalicoCatRenderer::new);
 
          event.registerEntityRenderer(ChangedAddonEntities.PARTICLE_PROJECTILE.get(),
                  SimpleProjectileRenderer::new);
