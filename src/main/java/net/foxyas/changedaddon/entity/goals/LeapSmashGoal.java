@@ -65,6 +65,7 @@ public class LeapSmashGoal extends Goal {
         mob.setDeltaMovement(dir.x * horizontalBoost, verticalBoost, dir.z * horizontalBoost);
         mob.getNavigation().stop();
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        mob.getLevel().playSound(null, mob.blockPosition(), SoundEvents.GOAT_LONG_JUMP, SoundSource.HOSTILE, 1.0F, 0.9F);
 
         mob.getLevel().broadcastEntityEvent(mob, (byte) 4); // Play jump animation
         mob.getJumpControl().jump();
@@ -111,8 +112,6 @@ public class LeapSmashGoal extends Goal {
                     int breakerId = mob.getId();
                     int stage = 5;
                     serverLevel.destroyBlockProgress(breakerId, pos, stage);
-                    serverLevel.sendParticles(ParticleTypes.EXPLOSION_EMITTER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0, 0, 1);
-
                 }
 
             }
@@ -146,6 +145,6 @@ public class LeapSmashGoal extends Goal {
     public void stop() {
         leapTicks = 0;
         wasInAir = false;
-        cooldown = 60;
+        cooldown = 40;
     }
 }

@@ -53,10 +53,10 @@ public class DashPunchGoal extends Goal {
 
         mob.getNavigation().stop();
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
-        mob.getLevel().playSound(null, mob.blockPosition(), SoundEvents.GOAT_SCREAMING_PREPARE_RAM, SoundSource.HOSTILE, 1.0F, 1.0F);
-        for (LivingEntity living : mob.getLevel().getNearbyEntities(LivingEntity.class, TargetingConditions.forCombat(), mob, mob.getBoundingBox().inflate(4, 4, 4))) {
+        mob.getLevel().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
+        for (LivingEntity living : mob.getLevel().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(4), (livingEntity -> !livingEntity.isSpectator() && !livingEntity.is(mob)))) {
             Vec3 knock = living.position().subtract(mob.position()).normalize().scale(1.2);
-            living.push(knock.x, 0.4, knock.z);
+            living.push(knock.x, knock.y, knock.z);
         }
     }
 
@@ -109,8 +109,8 @@ public class DashPunchGoal extends Goal {
 
     private void handleDashing() {
         dashTicks++;
-        Vec3 direction = target.position().subtract(mob.position()).normalize().scale(0.9);
-        mob.setDeltaMovement(direction.x, 0, direction.z);
+        Vec3 direction = mob.getDeltaMovement().add(target.position().subtract(mob.position()).normalize().scale(1));
+        mob.setDeltaMovement(direction.x, direction.y, direction.z);
         mob.hurtMarked = true;  // Forces client update
 
         // Check for impact
@@ -129,13 +129,13 @@ public class DashPunchGoal extends Goal {
         Level level = mob.getLevel();
 
         // Reverse knockback on self
-        Vec3 reverse = mob.position().subtract(target.position()).normalize().scale(0.6);
-        mob.setDeltaMovement(reverse.x, 0.3, reverse.z);
+        Vec3 reverse = mob.position().subtract(target.position()).normalize().scale(2);
+        mob.push(reverse.x, reverse.y, reverse.z);
         mob.hurtMarked = true;
 
         // Knockback on target
-        Vec3 knock = target.position().subtract(mob.position()).normalize().scale(1.2);
-        target.push(knock.x, 0.4, knock.z);
+        Vec3 knock = target.position().subtract(mob.position()).normalize().scale(2);
+        target.push(knock.x, knock.y, knock.z);
         // Damage
         target.hurt(DamageSource.mobAttack(mob), 6.0F);
 
@@ -157,10 +157,9 @@ public class DashPunchGoal extends Goal {
     @Override
     public void stop() {
         phase = Phase.IDLE;
-        cooldown = 60;
+        cooldown = 40;
         chargeTicks = 0;
         dashTicks = 0;
-        mob.setDeltaMovement(Vec3.ZERO);
     }
 
     @Override

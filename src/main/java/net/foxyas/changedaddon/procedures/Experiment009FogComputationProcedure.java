@@ -53,14 +53,7 @@ public class Experiment009FogComputationProcedure {
 	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity, EntityViewRenderEvent viewport) {
 		if (entity == null || viewport == null)
 			return;
-		double A = 0;
-		double deltaZ = 0;
-		double distance = 0;
-		double deltaX = 0;
-		double deltaY = 0;
-		Entity exp10 = null;
-		Entity exp9 = null;
-		if (!(new Object() {
+        if (!(new Object() {
 			public boolean checkGamemode(Entity _ent) {
 				if (_ent instanceof ServerPlayer _serverPlayer) {
 					return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
@@ -97,60 +90,6 @@ public class Experiment009FogComputationProcedure {
 				if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
 					_renderFogEvent.setNearPlaneDistance(1);
 					_renderFogEvent.setFarPlaneDistance(10);
-				}
-			}
-			exp10 = (Entity) world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-				Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-					return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-				}
-			}.compareDistOf(x, y, z)).findFirst().orElse(null);
-			exp9 = (Entity) world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-				Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-					return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-				}
-			}.compareDistOf(x, y, z)).findFirst().orElse(null);
-			if (!(exp10 == (null))) {
-				if (entity.getPersistentData().getBoolean("NoAI") == false) {
-					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-						_renderFogEvent.setFogShape(FogShape.SPHERE);
-					}
-					deltaX = exp10.getX() - entity.getX();
-					deltaY = exp10.getY() - entity.getY();
-					deltaZ = exp10.getZ() - entity.getZ();
-					distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-					if (distance <= 10) {
-						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-							_renderFogEvent.setNearPlaneDistance(1);
-							_renderFogEvent.setFarPlaneDistance(10);
-						}
-					} else {
-						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-							_renderFogEvent.setNearPlaneDistance(1);
-							_renderFogEvent.setFarPlaneDistance((float) distance);
-						}
-					}
-				}
-			}
-			if (!(exp9 == (null))) {
-				if (entity.getPersistentData().getBoolean("NoAI") == false) {
-					if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-						_renderFogEvent.setFogShape(FogShape.SPHERE);
-					}
-					deltaX = exp9.getX() - entity.getX();
-					deltaY = exp9.getY() - entity.getY();
-					deltaZ = exp9.getZ() - entity.getZ();
-					distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-					if (distance <= 10) {
-						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-							_renderFogEvent.setNearPlaneDistance(1);
-							_renderFogEvent.setFarPlaneDistance(10);
-						}
-					} else {
-						if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-							_renderFogEvent.setNearPlaneDistance(1);
-							_renderFogEvent.setFarPlaneDistance((float) distance);
-						}
-					}
 				}
 			}
 		}

@@ -173,8 +173,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         super.registerGoals();
         this.goalSelector.addGoal(10, new LeapSmashGoal(this));
         this.goalSelector.addGoal(15, new DashPunchGoal(this));
-        this.goalSelector.addGoal(15, new ThrowBlockAtTargetGoal(this));
-
     }
 
     @Override

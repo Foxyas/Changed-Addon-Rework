@@ -7,9 +7,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.TierSortingRegistry;
@@ -48,7 +48,7 @@ public class ThrowBlockAtTargetGoal extends Goal {
 
         if (!blockState.isAir() && weakBlock && level instanceof ServerLevel serverLevel) {
             // Remove the block
-            level.setBlockAndUpdate(below, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+            level.setBlockAndUpdate(below, Blocks.AIR.defaultBlockState());
 
             // Create FallingBlock
             FallingBlockEntity fallingBlock = FallingBlockEntity.fall(
