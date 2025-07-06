@@ -21,6 +21,6 @@ public class LatexCalicoCatRenderer extends AdvancedHumanoidRenderer<LatexCalico
     }
 
     public ResourceLocation getTextureLocation(LatexCalicoCatEntity p_114482_) {
-        return new ResourceLocation("changed_addon","textures/latex_calico_cat/latex_calico_cat.png");
+        return new ResourceLocation("changed_addon","textures/entities/latex_calico_cat/latex_calico_cat.png");
     }
 }
