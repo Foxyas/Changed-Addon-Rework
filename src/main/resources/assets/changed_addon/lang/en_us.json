@@ -271,6 +271,7 @@
 
   "entity.changed_addon.avali": "Avali",
   "entity.changed_addon.bagel": "Bagel",
+  "entity.changed_addon.blue_lizard": "Blue Lizard",
   "entity.changed_addon.biosynth_snow_leopard_female": "Female BioSynth Snow Leopard",
   "entity.changed_addon.biosynth_snow_leopard_male": "Male BioSynth Snow Leopard",
   "entity.changed_addon.buny": "Bnuy",
@@ -323,6 +324,11 @@
   "entity.changed_addon.snow_leopard_male_organic": "Male BioSynth Snow Leopard",
   "entity.changed_addon.void_fox": "Void Fox",
   "entity.changed_addon.wolfy": "Wolfy",
+
+  "entity.changed_addon.projectile_luminar_crystal_spear": "Luminar Crystal Spear",
+  "entity.changed_addon.particle_projectile": "Light Particle",
+
+
   "entity.minecraft.villager.changed_addon.scientist": "Scientist",
 
   "fluid.changed_addon.litix_camonia_fluid": "Litix Camonia Fluid",
@@ -478,7 +484,6 @@
   "item.changed_addon.bagel_spawn_egg": "Bagel Spawn Egg",
   "item.changed_addon.biomass": "Biomass",
   "item.changed_addon.biomass.eat": "This tastes §o§iHorrible§r and definitely does not taste like §echeese§r",
-  "item.changed_addon.blue_lizard": "Blue Lizard",
   "item.changed_addon.blue_lizard_spawn_egg": "Blue Lizard",
   "item.changed_addon.blue_wolf_crystal_fragment": "§bBlue§r Wolf Crystal Fragment",
   "item.changed_addon.buny_spawn_egg": "Bnuy Spawn Egg",

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.client.renderer.advanced;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.model.BagelModel;
 import net.foxyas.changedaddon.client.model.advanced.AvaliModel;
 import net.foxyas.changedaddon.client.renderer.layers.AvaliColorsLayer;
@@ -11,6 +12,7 @@ import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleDrago
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class AvaliRenderer extends AdvancedHumanoidRenderer<AvaliEntity, AvaliModel, ArmorLatexMaleDragonModel<AvaliEntity>> {
     public AvaliRenderer(EntityRendererProvider.Context context) {
@@ -25,7 +27,13 @@ public class AvaliRenderer extends AdvancedHumanoidRenderer<AvaliEntity, AvaliMo
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AvaliEntity entity) {
+    protected void scale(@NotNull AvaliEntity avaliEntity, @NotNull PoseStack poseStack, float partialTick) {
+        super.scale(avaliEntity, poseStack, partialTick);
+        poseStack.scale(0.95F, 0.95F, 0.95F);
+    }
+
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(@NotNull AvaliEntity entity) {
         return new ResourceLocation("changed_addon:textures/entities/avali.png");
     }
 }

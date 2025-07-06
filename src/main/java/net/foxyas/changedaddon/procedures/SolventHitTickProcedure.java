@@ -38,12 +38,12 @@ public class SolventHitTickProcedure {
 		// Toca som de extinção de fogo
 		if (entity instanceof Player player) {
 			if (level instanceof ServerLevel serverLevel) {
-				serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.MASTER, 2.5f, 0);
+				serverLevel.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.MASTER, 0.5f, 0);
 			} else {
-				level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.MASTER, 2.5f, 0, true);
+				level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.FIRE_EXTINGUISH, SoundSource.MASTER, 0.5f, 0, true);
 			}
 		} else {
-			entity.playSound(SoundEvents.FIRE_EXTINGUISH, 2.5f, 0);
+			entity.playSound(SoundEvents.FIRE_EXTINGUISH, 0.5f, 0);
 		}
 
 		// Emite partículas
