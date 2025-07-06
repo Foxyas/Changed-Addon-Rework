@@ -5,7 +5,9 @@ import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
+import net.foxyas.changedaddon.entity.goals.DashPunchGoal;
 import net.foxyas.changedaddon.entity.goals.LeapSmashGoal;
+import net.foxyas.changedaddon.entity.goals.ThrowBlockAtTargetGoal;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -93,7 +95,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         return BossMusicTheme.EXP10;
     }
 
-
     @Override
     public boolean startRiding(@NotNull Entity EntityIn, boolean force) {
         if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
@@ -171,6 +172,9 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(10, new LeapSmashGoal(this));
+        this.goalSelector.addGoal(15, new DashPunchGoal(this));
+        this.goalSelector.addGoal(15, new ThrowBlockAtTargetGoal(this));
+
     }
 
     @Override
