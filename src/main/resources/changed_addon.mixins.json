@@ -6,6 +6,7 @@
   "refmap": "changed_addon.refmap.json",
   "mixins": [
     "AbstractArrowAccessor",
+    "AbstractLatexBlockMixin",
     "AnimationsMixin",
     "AvoidEntityGoalMixin",
     "BlockMixin",

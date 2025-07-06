@@ -43,6 +43,11 @@ public class BoneMealExpansion {
 
             if (!level.isClientSide && stack.is(Items.BONE_MEAL)) {
                 if (AbstractLatexBlock.isLatexed(state)) {
+                    if (event.getUseItem() == Event.Result.ALLOW || event.getUseBlock() == Event.Result.ALLOW) {
+                        if (!player.isShiftKeyDown()) {
+                            return;
+                        }
+                    }
                     event.setUseBlock(Event.Result.DENY);
                     event.setUseItem(Event.Result.DENY);
 
