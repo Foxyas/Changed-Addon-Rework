@@ -16,7 +16,7 @@ public class BlueLizardRenderer extends AdvancedHumanoidRenderer<BlueLizard, Blu
         super(context, new BlueLizardModel(context.bakeLayer(BlueLizardModel.LAYER_LOCATION)), ArmorLatexMaleDragonModel::new, ArmorLatexMaleDragonModel.INNER_ARMOR, ArmorLatexMaleDragonModel.OUTER_ARMOR, 0.5F);
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         //this.addLayer(new CustomCoatLayer(this, (BlueLizardModel)this.getModel(), Changed.modResource("textures/green_lizard_hair")));
-        this.addLayer(new CustomEyesLayer(this, context.getModelSet()));
+        //this.addLayer(new CustomEyesLayer(this, context.getModelSet()));
         this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
     }
 
