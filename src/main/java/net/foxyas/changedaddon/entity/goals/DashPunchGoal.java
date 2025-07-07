@@ -54,9 +54,9 @@ public class DashPunchGoal extends Goal {
         mob.getNavigation().stop();
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         mob.getLevel().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
-        for (LivingEntity living : mob.getLevel().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(4), (livingEntity -> !livingEntity.isSpectator() && !livingEntity.is(mob)))) {
+        for (LivingEntity living : mob.getLevel().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(8), (livingEntity -> !livingEntity.isSpectator() && !livingEntity.is(mob)))) {
             Vec3 knock = living.position().subtract(mob.position()).normalize().scale(1.2);
-            living.push(knock.x, knock.y, knock.z);
+            living.push(knock.x, knock.y * 1.25f, knock.z);
         }
     }
 
@@ -130,13 +130,13 @@ public class DashPunchGoal extends Goal {
 
         // Reverse knockback on self
         Vec3 reverse = mob.position().subtract(target.position()).normalize().scale(2);
-        mob.setDeltaMovement(reverse.x, reverse.y, reverse.z);
+        mob.setDeltaMovement(reverse.x, reverse.y * 1.25f, reverse.z);
         mob.hurtMarked = true;
         mob.hasImpulse = true;
 
         // Knockback on target
         Vec3 knock = target.position().subtract(mob.position()).normalize().scale(2);
-        target.push(knock.x, knock.y, knock.z);
+        target.push(knock.x, knock.y * 1.25f, knock.z);
         // Damage
         target.hurt(DamageSource.mobAttack(mob), 6.0F);
 
