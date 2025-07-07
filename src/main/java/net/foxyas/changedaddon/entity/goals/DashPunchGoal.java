@@ -109,7 +109,7 @@ public class DashPunchGoal extends Goal {
 
     private void handleDashing() {
         dashTicks++;
-        Vec3 direction = mob.getDeltaMovement().add(target.position().subtract(mob.position()).normalize().scale(1));
+        Vec3 direction = mob.getDeltaMovement().add(target.position().subtract(mob.position()).normalize().scale(0.6));
         mob.setDeltaMovement(direction.x, direction.y, direction.z);
         mob.hurtMarked = true;  // Forces client update
 
@@ -120,7 +120,7 @@ public class DashPunchGoal extends Goal {
         }
 
         // Safety timeout
-        if (dashTicks > 40) {
+        if (dashTicks > 25) {
             stop();
         }
     }
@@ -130,8 +130,9 @@ public class DashPunchGoal extends Goal {
 
         // Reverse knockback on self
         Vec3 reverse = mob.position().subtract(target.position()).normalize().scale(2);
-        mob.push(reverse.x, reverse.y, reverse.z);
+        mob.setDeltaMovement(reverse.x, reverse.y, reverse.z);
         mob.hurtMarked = true;
+        mob.hasImpulse = true;
 
         // Knockback on target
         Vec3 knock = target.position().subtract(mob.position()).normalize().scale(2);
