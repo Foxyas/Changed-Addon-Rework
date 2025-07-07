@@ -14,7 +14,7 @@ public class ServerTransfurVariantInstanceMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/ai/navigation/PathNavigation;moveTo(Lnet/minecraft/world/level/pathfinder/Path;D)Z",
-                    shift = At.Shift.BY),
+                    shift = At.Shift.BY , remap = true),
             cancellable = true)
     private void tickInjector(CallbackInfo ci) {
         ServerTransfurVariantInstance<?> self = (ServerTransfurVariantInstance<?>) (Object) this;
@@ -27,7 +27,7 @@ public class ServerTransfurVariantInstanceMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/ai/navigation/PathNavigation;setSpeedModifier(D)V",
-                    shift = At.Shift.BY),
+                    shift = At.Shift.BY, remap = true),
             cancellable = true)
     private void tickInjectorSpeedModifier(CallbackInfo ci) {
         ServerTransfurVariantInstance<?> self = (ServerTransfurVariantInstance<?>) (Object) this;
@@ -35,4 +35,5 @@ public class ServerTransfurVariantInstanceMixin {
             ci.cancel();
         }
     }
+
 }
