@@ -28,7 +28,7 @@ public class AbstractLatexBlockMixin {
 
 
     @Inject(method = "randomTick(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Ljava/util/Random;Lnet/ltxprogrammer/changed/entity/LatexType;)V",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z", shift = At.Shift.BY, remap = false),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z", shift = At.Shift.BY, remap = true),
             cancellable = true, remap = false)
     private static void injectMethod(BlockState state, ServerLevel level, BlockPos position, Random random, LatexType latexType, CallbackInfo ci) {
         boolean gameRule = level.getGameRules().getBoolean(ChangedAddonModGameRules.NEED_FULL_SOURCE_TO_SPREAD);
