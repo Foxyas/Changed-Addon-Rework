@@ -29,11 +29,9 @@ public class ChangedAddonCommandRootCommandExtension {
     @SubscribeEvent
     public static void registerCommand(RegisterCommandsEvent event) {
 		event.getDispatcher().register(
-				Commands.literal("changed-addon")
-						.requires(cs -> cs.getEntity() instanceof Player player
+				Commands.literal("changed-addon").then(Commands.literal("TransfurColors").requires(cs -> cs.getEntity() instanceof Player player
 								&& ExtraVariantStats.PlayerHasTransfurWithExtraColors(player)
 								&& cs.hasPermission(0))
-						.then(Commands.literal("TransfurColors")
 								.then(Commands.literal("setColor")
 										.then(Commands.argument("color", IntegerArgumentType.integer())
 												.then(Commands.argument("layer", IntegerArgumentType.integer(0, 2)) // Supondo máx 3 layers
