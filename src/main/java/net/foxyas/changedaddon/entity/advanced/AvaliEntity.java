@@ -177,5 +177,4 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
     public void setStyleOfColor(String style) {
         this.entityData.set(STYLE_OF_COLOR, style);
     }
-
 }

@@ -3,14 +3,17 @@ package net.foxyas.changedaddon.command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.foxyas.changedaddon.block.advanced.TimedKeypad;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
+import net.foxyas.changedaddon.variants.IDynamicCoatColors;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.commands.CommandRuntimeException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
@@ -28,60 +31,111 @@ import net.minecraftforge.fml.common.Mod;
 public class ChangedAddonCommandRootCommandExtension {
     @SubscribeEvent
     public static void registerCommand(RegisterCommandsEvent event) {
-		event.getDispatcher().register(
-				Commands.literal("changed-addon").then(Commands.literal("TransfurColors").requires(cs -> cs.getEntity() instanceof Player player
-								&& ExtraVariantStats.PlayerHasTransfurWithExtraColors(player)
-								&& cs.hasPermission(0))
-								.then(Commands.literal("setColor")
-										.then(Commands.argument("color", IntegerArgumentType.integer())
-												.then(Commands.argument("layer", IntegerArgumentType.integer(0, 2)) // Supondo máx 3 layers
-														.executes(context -> {
-															Player player = context.getSource().getPlayerOrException();
-															int color = IntegerArgumentType.getInteger(context, "color");
-															int layer = IntegerArgumentType.getInteger(context, "layer");
+        LiteralCommandNode<CommandSourceStack> TransfurColorsCommandNode = event.getDispatcher().register(
+                Commands.literal("changed-addon")
+                        .then(Commands.literal("TransfurColors")
+                                .then(Commands.literal("setColor")
+                                        .then(Commands.argument("hexColor", StringArgumentType.word())
+                                                .then(Commands.argument("layer", IntegerArgumentType.integer(0, 2)) // Supondo máx 3 layers
+                                                        .executes(context -> {
+                                                            Player player = context.getSource().getPlayerOrException();
+                                                            if (!IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
+                                                                throw new CommandRuntimeException(new TextComponent("You don't have any extra colors!"));
+                                                            }
+                                                            String color = StringArgumentType.getString(context, "color");
+                                                            int layer = IntegerArgumentType.getInteger(context, "layer");
+                                                            Color3 color3 = Color3.parseHex(color);
+                                                            if (color3 == null) {
+                                                                context.getSource().sendFailure(new TextComponent("Failed to parse color from hex code. Are you sure you are using the correct code?"));
+                                                                return 0;
+                                                            }
 
-															if (ExtraVariantStats.PlayerHasTransfurWithExtraColors(player)) {
-																TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
-																if (transfur != null && transfur.getChangedEntity() instanceof AvaliEntity avaliEntity) {
-																	avaliEntity.setColor(layer, Color3.fromInt(color));
-																	context.getSource().sendSuccess(new TextComponent("Set color for layer " + layer), true);
-																	return 1;
-																}
-															}
+                                                            if (IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
+                                                                TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
+                                                                if (transfur != null && transfur.getChangedEntity() instanceof AvaliEntity avaliEntity) {
+                                                                    avaliEntity.setColor(layer, color3);
+                                                                    context.getSource().sendSuccess(new TextComponent("Set color for layer " + layer), true);
+                                                                    return 1;
+                                                                } else if (transfur != null && transfur.getChangedEntity() instanceof IDynamicCoatColors dynamicColors) {
+                                                                    dynamicColors.setColor(layer, color3);
+                                                                    context.getSource().sendSuccess(new TextComponent("Set color for layer " + layer), true);
+                                                                    return 1;
+                                                                }
+                                                            }
 
-															context.getSource().sendFailure(new TextComponent("Failed to set color."));
-															return 0;
-														}))))
-								.then(Commands.literal("setStyle")
-										.then(Commands.argument("style", StringArgumentType.word()).suggests(((commandContext, suggestionsBuilder) -> {
-											if (commandContext.getSource().getEntity() instanceof Player player){
-                                                TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-												if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof AvaliEntity avaliEntity) {
-													avaliEntity.StyleTypes.forEach(suggestionsBuilder::suggest);
-												}
-											}
-											return suggestionsBuilder.buildFuture();
-												}))
-												.executes(context -> {
-													Player player = context.getSource().getPlayerOrException();
-													String style = StringArgumentType.getString(context, "style");
+                                                            context.getSource().sendFailure(new TextComponent("Failed to set color."));
+                                                            return 0;
+                                                        })))
+                                        .then(Commands.argument("color", IntegerArgumentType.integer())
+                                                .then(Commands.argument("layer", IntegerArgumentType.integer(0, 2)) // Supondo máx 3 layers
+                                                        .executes(context -> {
+                                                            Player player = context.getSource().getPlayerOrException();
+                                                            if (!IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
+                                                                throw new CommandRuntimeException(new TextComponent("You don't have any extra colors!"));
+                                                            }
+                                                            int color = IntegerArgumentType.getInteger(context, "color");
+                                                            int layer = IntegerArgumentType.getInteger(context, "layer");
+                                                            Color3 color3 = Color3.fromInt(color);
+                                                            if (color3 == null) {
+                                                                context.getSource().sendFailure(new TextComponent("Failed to parse color. Are you sure you are using the correct way to execute the command?"));
+                                                                return 0;
+                                                            }
 
-													if (ExtraVariantStats.PlayerHasTransfurWithExtraColors(player)) {
-														TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
-														if (transfur != null && transfur.getChangedEntity() instanceof AvaliEntity avaliEntity) {
-															avaliEntity.setStyleOfColor(style);
-															context.getSource().sendSuccess(new TextComponent("Set style to " + style), true);
-															return 1;
-														}
-													}
+                                                            if (IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
+                                                                TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
+                                                                if (transfur != null && transfur.getChangedEntity() instanceof AvaliEntity avaliEntity) {
+                                                                    avaliEntity.setColor(layer, color3);
+                                                                    context.getSource().sendSuccess(new TextComponent("Set color for layer " + layer), true);
+                                                                    return 1;
+                                                                } else if (transfur != null && transfur.getChangedEntity() instanceof IDynamicCoatColors dynamicColors) {
+                                                                    dynamicColors.setColor(layer, color3);
+                                                                    context.getSource().sendSuccess(new TextComponent("Set color for layer " + layer), true);
+                                                                    return 1;
+                                                                }
+                                                            }
 
-													context.getSource().sendFailure(new TextComponent("Failed to set style."));
-													return 0;
-												})))
-						)
-		);
+                                                            context.getSource().sendFailure(new TextComponent("Failed to set color."));
+                                                            return 0;
+                                                        }))))
+                                .then(Commands.literal("setStyle")
+                                        .then(Commands.argument("style", StringArgumentType.word()).suggests(((commandContext, suggestionsBuilder) -> {
+                                                    if (commandContext.getSource().getEntity() instanceof Player player) {
+                                                        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+                                                        if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof AvaliEntity avaliEntity) {
+                                                            avaliEntity.StyleTypes.forEach(suggestionsBuilder::suggest);
+                                                        }
+                                                    }
+                                                    return suggestionsBuilder.buildFuture();
+                                                }))
+                                                .executes(context -> {
+                                                    Player player = context.getSource().getPlayerOrException();
+                                                    if (!IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
+                                                        throw new CommandRuntimeException(new TextComponent("You don't have any extra colors!"));
+                                                    }
+                                                    String style = StringArgumentType.getString(context, "style");
 
-		event.getDispatcher().register(Commands.literal("setTimerInKeypad")
+                                                    if (IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
+                                                        TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
+                                                        if (transfur != null && transfur.getChangedEntity() instanceof AvaliEntity avaliEntity) {
+                                                            avaliEntity.setStyleOfColor(style);
+                                                            context.getSource().sendSuccess(new TextComponent("Set style to " + style), true);
+                                                            return 1;
+                                                        } else if (transfur != null && transfur.getChangedEntity() instanceof IDynamicCoatColors dynamicColors) {
+                                                            dynamicColors.setStyleOfColor(style);
+                                                            context.getSource().sendSuccess(new TextComponent("Set style to " + style), true);
+                                                            return 1;
+                                                        }
+                                                    }
+
+                                                    context.getSource().sendFailure(new TextComponent("Failed to set style."));
+                                                    return 0;
+                                                })))
+                        ));
+
+
+        event.getDispatcher().register(Commands.literal("setTransfurColor").redirect(TransfurColorsCommandNode.getChild("TransfurColors")));
+
+        event.getDispatcher().register(Commands.literal("setTimerInKeypad")
                 .then(Commands.argument("timer", IntegerArgumentType.integer(0, 9999))
                         .requires(cs -> cs.hasPermission(0)) // Minimum permission
                         .executes(context -> {
