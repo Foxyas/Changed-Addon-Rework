@@ -6,6 +6,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.foxyas.changedaddon.block.advanced.TimedKeypad;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
+import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.foxyas.changedaddon.variants.IDynamicCoatColors;
@@ -29,55 +30,38 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
 public class ChangedAddonCommandRootCommandExtension {
+
+    public static int StringToInt(String s) {
+        try {
+            return Integer.parseInt(s.trim());
+        } catch (Exception ignored) {
+        }
+        return 0;
+    }
+
+
     @SubscribeEvent
     public static void registerCommand(RegisterCommandsEvent event) {
         LiteralCommandNode<CommandSourceStack> TransfurColorsCommandNode = event.getDispatcher().register(
                 Commands.literal("changed-addon")
                         .then(Commands.literal("TransfurColors")
                                 .then(Commands.literal("setColor")
-                                        .then(Commands.argument("hexColor", StringArgumentType.word())
+                                        .then(Commands.argument("colorOrHex", StringArgumentType.word())
                                                 .then(Commands.argument("layer", IntegerArgumentType.integer(0, 2)) // Supondo máx 3 layers
                                                         .executes(context -> {
                                                             Player player = context.getSource().getPlayerOrException();
                                                             if (!IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
                                                                 throw new CommandRuntimeException(new TextComponent("You don't have any extra colors!"));
                                                             }
-                                                            String color = StringArgumentType.getString(context, "color");
-                                                            int layer = IntegerArgumentType.getInteger(context, "layer");
-                                                            Color3 color3 = Color3.parseHex(color);
+                                                            Color3 color3;
+                                                            String StringColor = StringArgumentType.getString(context, "colorOrHex");
+                                                            color3 = Color3.parseHex(StringColor);
                                                             if (color3 == null) {
-                                                                context.getSource().sendFailure(new TextComponent("Failed to parse color from hex code. Are you sure you are using the correct code?"));
-                                                                return 0;
+                                                                color3 = Color3.fromInt(StringToInt(StringColor));
                                                             }
-
-                                                            if (IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
-                                                                TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
-                                                                if (transfur != null && transfur.getChangedEntity() instanceof AvaliEntity avaliEntity) {
-                                                                    avaliEntity.setColor(layer, color3);
-                                                                    context.getSource().sendSuccess(new TextComponent("Set color for layer " + layer), true);
-                                                                    return 1;
-                                                                } else if (transfur != null && transfur.getChangedEntity() instanceof IDynamicCoatColors dynamicColors) {
-                                                                    dynamicColors.setColor(layer, color3);
-                                                                    context.getSource().sendSuccess(new TextComponent("Set color for layer " + layer), true);
-                                                                    return 1;
-                                                                }
-                                                            }
-
-                                                            context.getSource().sendFailure(new TextComponent("Failed to set color."));
-                                                            return 0;
-                                                        })))
-                                        .then(Commands.argument("color", IntegerArgumentType.integer())
-                                                .then(Commands.argument("layer", IntegerArgumentType.integer(0, 2)) // Supondo máx 3 layers
-                                                        .executes(context -> {
-                                                            Player player = context.getSource().getPlayerOrException();
-                                                            if (!IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
-                                                                throw new CommandRuntimeException(new TextComponent("You don't have any extra colors!"));
-                                                            }
-                                                            int color = IntegerArgumentType.getInteger(context, "color");
                                                             int layer = IntegerArgumentType.getInteger(context, "layer");
-                                                            Color3 color3 = Color3.fromInt(color);
                                                             if (color3 == null) {
-                                                                context.getSource().sendFailure(new TextComponent("Failed to parse color. Are you sure you are using the correct way to execute the command?"));
+                                                                context.getSource().sendFailure(new TextComponent("Failed to parse color. Are you sure you are using the correct code?"));
                                                                 return 0;
                                                             }
 
@@ -109,9 +93,6 @@ public class ChangedAddonCommandRootCommandExtension {
                                                 }))
                                                 .executes(context -> {
                                                     Player player = context.getSource().getPlayerOrException();
-                                                    if (!IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
-                                                        throw new CommandRuntimeException(new TextComponent("You don't have any extra colors!"));
-                                                    }
                                                     String style = StringArgumentType.getString(context, "style");
 
                                                     if (IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
@@ -120,8 +101,8 @@ public class ChangedAddonCommandRootCommandExtension {
                                                             avaliEntity.setStyleOfColor(style);
                                                             context.getSource().sendSuccess(new TextComponent("Set style to " + style), true);
                                                             return 1;
-                                                        } else if (transfur != null && transfur.getChangedEntity() instanceof IDynamicCoatColors dynamicColors) {
-                                                            dynamicColors.setStyleOfColor(style);
+                                                        } else if (transfur != null && transfur.getChangedEntity() instanceof IDynamicCoatColors dynamicColor) {
+                                                            dynamicColor.setStyleOfColor(style);
                                                             context.getSource().sendSuccess(new TextComponent("Set style to " + style), true);
                                                             return 1;
                                                         }
