@@ -46,7 +46,7 @@ public class ChangedAddonCommandRootCommandExtension {
                 Commands.literal("changed-addon")
                         .then(Commands.literal("TransfurColors")
                                 .then(Commands.literal("setColor")
-                                        .then(Commands.argument("colorOrHex", StringArgumentType.word())
+                                        .then(Commands.argument("colorOrHex", StringArgumentType.string())
                                                 .then(Commands.argument("layer", IntegerArgumentType.integer(0, 2)) // Supondo máx 3 layers
                                                         .executes(context -> {
                                                             Player player = context.getSource().getPlayerOrException();
