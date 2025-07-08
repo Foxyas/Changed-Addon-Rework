@@ -227,6 +227,8 @@ public class TimedKeypad extends KeypadBlock {
     }
 
 
+
+
     // pixelX, pixelY, pixelZ vão de 0 a 15 (inclusive)
     private boolean isInsidePixel(Vec3 relative, int px, int py, int pz) {
         final float pixelSize = 1.0f / 16.0f;

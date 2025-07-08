@@ -1,0 +1,8 @@
+{
+  "parent": "changed_addon:custom/paws_scanner",
+  "textures": {
+    "all": "changed_addon:blocks/paws_scanner/activated",
+    "particle": "changed_addon:blocks/paws_scanner/activated",
+    "0": "changed_addon:blocks/paws_scanner/activated"
+  }
+}

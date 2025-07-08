@@ -3,8 +3,10 @@ package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.*;
+import net.foxyas.changedaddon.block.advanced.PawsScanner;
 import net.foxyas.changedaddon.block.advanced.TimedKeypad;
 import net.foxyas.changedaddon.block.advanced.TimedKeypadBlockEntity;
+import net.foxyas.changedaddon.block.advanced.HandScanner;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
@@ -144,6 +146,8 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
     public static final RegistryObject<Item> DYEABLE_SHORTS = ITEMS_REGISTRY.register("dyeable_shorts", DyeableShorts::new);
 
     public static final RegistryObject<Item> TIMED_KEYPAD = RegisterBlockItem(ITEMS_REGISTRY, ChangedAddonBlocks.TIMED_KEYPAD, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+    public static final RegistryObject<Item> HAND_SCANNER = RegisterBlockItem(ITEMS_REGISTRY, ChangedAddonBlocks.HAND_SCANNER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
+    public static final RegistryObject<Item> PAWS_SCANNER = RegisterBlockItem(ITEMS_REGISTRY, ChangedAddonBlocks.PAWS_SCANNER, ChangedAddonModTabs.TAB_CHANGED_ADDON);
 
     @SubscribeEvent
     public static void registerItems(FMLConstructModEvent event) {
@@ -183,11 +187,15 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ChangedAddonBlocks extends ChangedAddonModBlocks {
         public static final RegistryObject<Block> TIMED_KEYPAD = REGISTRY.register("timed_keypad", TimedKeypad::new);
+        public static final RegistryObject<Block> HAND_SCANNER = REGISTRY.register("hand_scanner", HandScanner::new);
+        public static final RegistryObject<Block> PAWS_SCANNER = REGISTRY.register("paws_scanner", PawsScanner::new);
+
 
         @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
         public static class ClientSideHandler {
             @SubscribeEvent
             public static void clientSetup(FMLClientSetupEvent event) {
+                HandScanner.registerRenderLayer();
                 //TimedKeypad.registerRenderLayer();
             }
         }
@@ -235,6 +243,10 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 
     private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> REGISTRY, RegistryObject<Block> block, CreativeModeTab tab) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+    }
+
+    private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> REGISTRY, String id, RegistryObject<Block> block, CreativeModeTab tab) {
+        return REGISTRY.register(id, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
     }
 
     private static RegistryObject<Item> RegisterBlockItem(RegistryObject<Block> block, CreativeModeTab tab) {

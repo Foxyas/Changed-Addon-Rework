@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=north,powered=false,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_locked"
+    },
+    "facing=east,powered=false,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_locked",
+      "y": 90
+    },
+    "facing=south,powered=false,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_locked",
+      "y": 180
+    },
+    "facing=west,powered=false,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_locked",
+      "y": 270
+    },
+    "facing=north,powered=false,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_locked"
+    },
+    "facing=east,powered=false,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_locked",
+      "y": 90
+    },
+    "facing=south,powered=false,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_locked",
+      "y": 180
+    },
+    "facing=west,powered=false,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_locked",
+      "y": 270
+    },
+    "facing=north,powered=true,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_unlocked"
+    },
+    "facing=east,powered=true,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_unlocked",
+      "y": 90
+    },
+    "facing=south,powered=true,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_unlocked",
+      "y": 180
+    },
+    "facing=west,powered=true,lock_type=transfurred": {
+      "model": "changed_addon:block/hand_scanner_transfurred_unlocked",
+      "y": 270
+    },
+    "facing=north,powered=true,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_unlocked"
+    },
+    "facing=east,powered=true,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_unlocked",
+      "y": 90
+    },
+    "facing=south,powered=true,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_unlocked",
+      "y": 180
+    },
+    "facing=west,powered=true,lock_type=human": {
+      "model": "changed_addon:block/hand_scanner_human_unlocked",
+      "y": 270
+    }
+  }
+}

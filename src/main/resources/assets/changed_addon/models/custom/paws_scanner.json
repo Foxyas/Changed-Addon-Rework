@@ -1,0 +1,80 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"elements": [
+		{
+			"from": [1, 0, 3],
+			"to": [15, 0.75, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0.25, 8]},
+			"faces": {
+				"north": {"uv": [0, 15, 9.3334, 15.3334], "texture": "#0"},
+				"east": {"uv": [0, 15.6666, 6.6666, 15.99993], "texture": "#0"},
+				"south": {"uv": [0, 14.66667, 9.33333, 15.00007], "texture": "#0"},
+				"west": {"uv": [0, 15.33333, 6.6667, 15.66673], "texture": "#0"},
+				"up": {"uv": [0, 7.66667, 9.3334, 14.6667], "texture": "#0"},
+				"down": {"uv": [9.33333, 6.6666, 15.99993, 15.99993], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"from": [2.5, 0.75, 7.7],
+			"to": [13.5, 1, 12.95],
+			"rotation": {"angle": 0, "axis": "y", "origin": [10.5, 1.125, 13.8]},
+			"faces": {
+				"north": {"uv": [5, 5.33333, 6, 6.33333], "texture": "#0"},
+				"east": {"uv": [5, 5.33333, 6, 6.33333], "texture": "#0"},
+				"south": {"uv": [5, 5.33333, 6, 6.33333], "texture": "#0"},
+				"west": {"uv": [5, 5.33333, 6, 6.33333], "texture": "#0"},
+				"up": {"uv": [0, 6.6667, 11, 1.6667], "texture": "#0"},
+				"down": {"uv": [5, 5.33333, 6, 6.33333], "texture": "#0"}
+			}
+		}
+	],
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 3, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 3, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 3, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 3, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 3, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [90, -180, 0]
+		},
+		"head": {
+			"rotation": [0, -180, 0],
+			"translation": [0, 14.25, 0.5]
+		},
+		"fixed": {
+			"rotation": [90, -180, -180],
+			"translation": [0, 0, -8]
+		}
+	},
+	"groups": [
+		0,
+		{
+			"name": "pressureplate",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [1]
+		}
+	]
+}
