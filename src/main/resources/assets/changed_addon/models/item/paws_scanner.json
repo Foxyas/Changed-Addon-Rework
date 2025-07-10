@@ -1,5 +1,5 @@
 {
-  "parent": "changed_addon:block/paws_scanner_deactivated",
+  "parent": "changed_addon:block/paws_scanner_activated",
   "display": {
     "thirdperson": {
       "rotation": [

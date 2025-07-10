@@ -1,33 +1,29 @@
 package net.foxyas.changedaddon.block.advanced;
 
 import com.google.common.collect.ImmutableMap;
-import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.LeverBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -44,7 +40,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.function.Function;
@@ -208,13 +204,22 @@ public class PawsScanner extends Block {
 
     @Override
     public void entityInside(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
-        if (!level.isClientSide && !state.getValue(POWERED)) {
-            if (shouldActivate(state, level, pos , entity)) {
-                level.setBlock(pos, state.setValue(POWERED, true), 3);
-                level.updateNeighborsAt(pos, this);
-                ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.CHIME2, pos, 1.0F, 1.0F);
-                level.scheduleTick(pos, this, 10); // Delay para reavaliar
+        if (entity instanceof ChangedEntity || entity instanceof Player) {
+            if (!level.isClientSide && !state.getValue(POWERED)) {
+                if (shouldActivate(state, level, pos, entity)) {
+                    level.setBlock(pos, state.setValue(POWERED, true), 3);
+                    updateRedstoneSignal(level, pos);
+                    ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.CHIME2, pos, 1.0F, 1.0F);
+                    level.scheduleTick(pos, this, 10); // Delay para reavaliar
+                }
             }
+        }
+    }
+
+    public void updateRedstoneSignal(Level level, BlockPos pos) {
+        level.updateNeighborsAt(pos, this);
+        for (Direction direction : Direction.values()) {
+            level.updateNeighborsAt(pos.relative(direction), this);
         }
     }
 
@@ -225,11 +230,11 @@ public class PawsScanner extends Block {
 
         if (hasEntity && !isPowered) {
             level.setBlock(pos, state.setValue(POWERED, true), 3);
-            level.updateNeighborsAt(pos, this);
+            updateRedstoneSignal(level, pos);
             ChangedSounds.broadcastSound(level.getServer(), ChangedSounds.CHIME2, pos, 1.0F, 1.0F);
         } else if (!hasEntity && isPowered) {
             level.setBlock(pos, state.setValue(POWERED, false), 3);
-            level.updateNeighborsAt(pos, this);
+            updateRedstoneSignal(level, pos);
             ChangedSounds.broadcastSound(level.getServer(), ChangedSounds.KEY, pos, 0.6F, 1.0F);
         }
 
@@ -241,26 +246,50 @@ public class PawsScanner extends Block {
 
     private boolean shouldActivate(BlockState state, Level level, BlockPos pos) {
         VoxelShape shape = getShapeOfPawsScanner(state, level, pos, CollisionContext.empty());
-        AABB aabb = shape.bounds().move(new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(0,0.25f,0));
+        AABB aabb = shape.bounds().move(new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(0, 0.25f, 0));
+        //debugSpawnParticlesInShape(level, aabb, pos);
+
+        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, aabb,
+                living -> living instanceof ChangedEntity changedEntity ||
+                        living instanceof Player player && !player.isSpectator() && ProcessTransfur.getPlayerTransfurVariant(player) != null);
 
         // Permite ChangedEntity ou Player com variant
-        return !level.getEntitiesOfClass(Entity.class, aabb, entity ->
-                entity instanceof ChangedEntity ||
-                        (entity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null)
-        ).isEmpty();
+        return list.stream().anyMatch((living -> living.getItemBySlot(EquipmentSlot.FEET).isEmpty()));
     }
 
     private boolean shouldActivate(BlockState state, Level level, BlockPos pos, Entity stepEntity) {
         VoxelShape shape = getShapeOfPawsScanner(state, level, pos, CollisionContext.empty());
-        AABB aabb = shape.bounds().move(new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(0,0.25f,0));
+        AABB aabb = shape.bounds().move(new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(0, 0.25f, 0));
+        //debugSpawnParticlesInShape(stepEntity.level, aabb, pos);
+
+        List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, aabb,
+                living -> living instanceof ChangedEntity changedEntity ||
+                        living instanceof Player player && !player.isSpectator() && ProcessTransfur.getPlayerTransfurVariant(player) != null);
 
         // Permite ChangedEntity ou Player com variant
-        return !level.getEntitiesOfClass(Entity.class, aabb, entity ->
-                entity instanceof ChangedEntity ||
-                        (entity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null)
-        ).isEmpty();
+        return list.stream().anyMatch((living -> living.getItemBySlot(EquipmentSlot.FEET).isEmpty()));
     }
 
+    private void debugSpawnParticlesInShape(Level level, AABB box, BlockPos pos) {
+        double step = 0.2;  // granularidade do grid de pontos para as partículas
+
+        for (double x = box.minX; x <= box.maxX; x += step) {
+            for (double y = box.minY; y <= box.maxY; y += step) {
+                for (double z = box.minZ; z <= box.maxZ; z += step) {
+                    level.addParticle(ParticleTypes.HAPPY_VILLAGER, true, x, y, z, 0, 0, 0);
+                }
+            }
+        }
+    }
+
+    @Override
+    public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos pos, @NotNull BlockPos neighborPos) {
+        if (!canSurvive(state, level, pos)) {
+            level.destroyBlock(pos, true);
+            return Blocks.AIR.defaultBlockState();
+        }
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+    }
 
     @Override
     public boolean canSurvive(@NotNull BlockState state, LevelReader level, BlockPos pos) {

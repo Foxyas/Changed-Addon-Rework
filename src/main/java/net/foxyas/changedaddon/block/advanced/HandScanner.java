@@ -38,6 +38,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.function.Function;
 
+@SuppressWarnings("deprecation")
 public class HandScanner extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty POWERED = LeverBlock.POWERED;
@@ -155,7 +156,7 @@ public class HandScanner extends Block {
         if (!state.getValue(POWERED)) {
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
             level.setBlock(pos, state.setValue(POWERED, true), 3);
-            level.updateNeighborsAt(pos, state.getBlock());
+            updateRedstoneSignal(level, pos, state.getBlock());
             level.scheduleTick(pos, this, 5);
             /*if (!player.isShiftKeyDown()) {
                 level.scheduleTick(pos, this, 30);
@@ -164,11 +165,18 @@ public class HandScanner extends Block {
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.KEY, pos, 0.5F, 1.0F);
             level.setBlock(pos, state.setValue(POWERED, false), 3);
-            level.updateNeighborsAt(pos, state.getBlock());
+            updateRedstoneSignal(level, pos, state.getBlock());
             level.scheduleTick(pos, this, 5);
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    public void updateRedstoneSignal(Level level, BlockPos pos, Block block) {
+        level.updateNeighborsAt(pos, this);
+        for (Direction direction : Direction.values()) {
+            level.updateNeighborsAt(pos.relative(direction), block);
+        }
     }
 
 
