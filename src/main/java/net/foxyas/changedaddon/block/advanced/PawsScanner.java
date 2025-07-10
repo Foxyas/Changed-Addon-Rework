@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.block.advanced;
 
 import com.google.common.collect.ImmutableMap;
+import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -35,6 +36,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -47,6 +49,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.function.Function;
 
+@SuppressWarnings("deprecation")
 public class PawsScanner extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty POWERED = LeverBlock.POWERED;
@@ -131,6 +134,33 @@ public class PawsScanner extends Block {
         };
     }
 
+    // Shapes por direção
+    protected static final VoxelShape PAWS_SCANNER_SHAPE_NORTH = Shapes.or(
+            Block.box(2.5, 0.75, 7.7, 13.5, 1, 12.95)
+    );
+
+    protected static final VoxelShape PAWS_SCANNER_SHAPE_SOUTH = Shapes.or(
+            Block.box(2.5, 0.75, 3.05, 13.5, 1, 8.3)
+    );
+
+    protected static final VoxelShape PAWS_SCANNER_SHAPE_EAST = Shapes.or(
+            Block.box(3.05, 0.75, 2.5, 8.3, 1, 13.5)
+    );
+
+    protected static final VoxelShape PAWS_SCANNER_SHAPE_WEST = Shapes.or(
+            Block.box(7.7, 0.75, 2.5, 12.95, 1, 13.5)
+    );
+
+
+    public @NotNull VoxelShape getShapeOfPawsScanner(BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        return switch (state.getValue(FACING)) {
+            case SOUTH -> PAWS_SCANNER_SHAPE_SOUTH;
+            case WEST -> PAWS_SCANNER_SHAPE_EAST;
+            case EAST -> PAWS_SCANNER_SHAPE_WEST;
+            default -> PAWS_SCANNER_SHAPE_NORTH;
+        };
+    }
+
     @Override
     public @NotNull VoxelShape getVisualShape(BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return switch (state.getValue(FACING)) {
@@ -157,59 +187,83 @@ public class PawsScanner extends Block {
     }
 
     @Override
-    public boolean isSignalSource(BlockState state) {
-        return state.getValue(POWERED);
+    public boolean isSignalSource(@NotNull BlockState state) {
+        return true;
     }
 
     @Override
-    public int getSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    public int getSignal(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull Direction direction) {
         return state.getValue(POWERED) ? 15 : 0;
     }
 
     @Override
-    public int getDirectSignal(BlockState state, BlockGetter level, BlockPos pos, Direction direction) {
+    public int getDirectSignal(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull Direction direction) {
         return state.getValue(POWERED) ? 15 : 0;
     }
 
     @Override
-    public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
         return InteractionResult.PASS;
     }
 
     @Override
-    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        super.entityInside(state, level, pos, entity);
-        if (!level.isClientSide) {
-            if (entity instanceof ChangedEntity changedEntity) {
-                if (!state.getValue(POWERED)) {
-                    ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.CHIME2, pos, 1.0F, 1.0F);
-                    level.setBlock(pos, state.setValue(POWERED, true), 3);
-                    level.updateNeighborsAt(pos, state.getBlock());
-                    level.scheduleTick(pos, this, 40);
-                }
-            } else if (entity instanceof Player player) {
-                TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
-                if (!state.getValue(POWERED)) {
-                    ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.CHIME2, pos, 1.0F, 1.0F);
-                    level.setBlock(pos, state.setValue(POWERED, true), 3);
-                    level.updateNeighborsAt(pos, state.getBlock());
-                    level.scheduleTick(pos, this, 40);
-                }
+    public void entityInside(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Entity entity) {
+        if (!level.isClientSide && !state.getValue(POWERED)) {
+            if (shouldActivate(state, level, pos , entity)) {
+                level.setBlock(pos, state.setValue(POWERED, true), 3);
+                level.updateNeighborsAt(pos, this);
+                ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.CHIME2, pos, 1.0F, 1.0F);
+                level.scheduleTick(pos, this, 10); // Delay para reavaliar
             }
         }
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
-        super.tick(state, world, pos, random);
-        if (state.getValue(POWERED)) {
-            world.setBlock(pos, state.setValue(POWERED, false), 3);
-            world.updateNeighborsAt(pos, state.getBlock());
+    public void tick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull Random random) {
+        boolean hasEntity = shouldActivate(state, level, pos);
+        boolean isPowered = state.getValue(POWERED);
+
+        if (hasEntity && !isPowered) {
+            level.setBlock(pos, state.setValue(POWERED, true), 3);
+            level.updateNeighborsAt(pos, this);
+            ChangedSounds.broadcastSound(level.getServer(), ChangedSounds.CHIME2, pos, 1.0F, 1.0F);
+        } else if (!hasEntity && isPowered) {
+            level.setBlock(pos, state.setValue(POWERED, false), 3);
+            level.updateNeighborsAt(pos, this);
+            ChangedSounds.broadcastSound(level.getServer(), ChangedSounds.KEY, pos, 0.6F, 1.0F);
+        }
+
+        if (hasEntity) {
+            level.scheduleTick(pos, this, 10);
         }
     }
 
+
+    private boolean shouldActivate(BlockState state, Level level, BlockPos pos) {
+        VoxelShape shape = getShapeOfPawsScanner(state, level, pos, CollisionContext.empty());
+        AABB aabb = shape.bounds().move(new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(0,0.25f,0));
+
+        // Permite ChangedEntity ou Player com variant
+        return !level.getEntitiesOfClass(Entity.class, aabb, entity ->
+                entity instanceof ChangedEntity ||
+                        (entity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null)
+        ).isEmpty();
+    }
+
+    private boolean shouldActivate(BlockState state, Level level, BlockPos pos, Entity stepEntity) {
+        VoxelShape shape = getShapeOfPawsScanner(state, level, pos, CollisionContext.empty());
+        AABB aabb = shape.bounds().move(new Vec3(pos.getX(), pos.getY(), pos.getZ()).add(0,0.25f,0));
+
+        // Permite ChangedEntity ou Player com variant
+        return !level.getEntitiesOfClass(Entity.class, aabb, entity ->
+                entity instanceof ChangedEntity ||
+                        (entity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null)
+        ).isEmpty();
+    }
+
+
     @Override
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+    public boolean canSurvive(@NotNull BlockState state, LevelReader level, BlockPos pos) {
         BlockPos belowPos = pos.below();
         return level.getBlockState(belowPos).isFaceSturdy(level, belowPos, Direction.UP);
     }

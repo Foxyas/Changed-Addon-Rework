@@ -53,7 +53,7 @@ public class ShowExtraTransfurInfoProcedure {
                 double landSpeed = VariantUtilProcedure.GetLandSpeed(form, entity);
                 double jumpStrength = VariantUtilProcedure.GetJumpStrength(form);
                 boolean canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(form);
-                int index = 3;
+                int index = Math.min(tooltip.size(), 3);
 
                 double extraHp = (hp) / 2.0;
                 tooltip.add(index, new TranslatableComponent("text.changed_addon.additionalHealth")
