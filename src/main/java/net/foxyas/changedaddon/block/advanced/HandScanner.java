@@ -2,7 +2,9 @@ package net.foxyas.changedaddon.block.advanced;
 
 import com.google.common.collect.ImmutableMap;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -142,10 +144,11 @@ public class HandScanner extends Block {
             return InteractionResult.SUCCESS;
         }
 
-        boolean isTransfurred = ProcessTransfur.isPlayerTransfurred(player);
+        TransfurVariantInstance<?> playerTransfur = ProcessTransfur.getPlayerTransfurVariant(player);
+        boolean isTransfurred = playerTransfur != null;
 
         LockType lockType = state.getValue(LOCK_TYPE);
-        boolean allow = (lockType == LockType.HUMAN && !isTransfurred) || (lockType == LockType.TRANSFURRED && isTransfurred);
+        boolean allow = (lockType == LockType.HUMAN && (!isTransfurred || playerTransfur.is(ChangedTransfurVariants.LATEX_HUMAN))) || (lockType == LockType.TRANSFURRED && (isTransfurred && !playerTransfur.is(ChangedTransfurVariants.LATEX_HUMAN)));
 
         if (!allow) {
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BUZZER1, pos, 1.0F, 1.0F);

@@ -38,7 +38,7 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
     public KetExperiment009BossRenderer(EntityRendererProvider.Context context) {
         super(context, new KetBossModel(context.bakeLayer(KetBossModel.LAYER_LOCATION)),
                 ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
-        this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ketmodel_glowtexture.png"), 0.75f));
+        this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ket_glow_layer.png"), 0.75f));
         //this.addLayer(new ParticlesTrailsLayer<>(this));
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
@@ -46,13 +46,13 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
     }
 
     @Override
-    public void render(KetExperiment009BossEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(@NotNull KetExperiment009BossEntity entity, float yRot, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
         super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(KetExperiment009BossEntity entity) {
-        return new ResourceLocation("changed_addon:textures/entities/kettexture.png");
+    public @NotNull ResourceLocation getTextureLocation(@NotNull KetExperiment009BossEntity entity) {
+        return new ResourceLocation("changed_addon:textures/entities/ket_texture.png");
     }
 
     private static class CustomEmissiveBodyLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
@@ -72,7 +72,7 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
         }
 
         @Override
-        public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
             if (entity.getUnderlyingPlayer() == null && entity instanceof KetExperiment009BossEntity ketExperiment009 && ketExperiment009.isPhase2()) {
                 VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
                 this.getParentModel().renderToBuffer(poseStack, vertexConsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
@@ -88,7 +88,7 @@ public class KetExperiment009BossRenderer extends AdvancedHumanoidRenderer<KetEx
         }
 
 
-        public RenderType renderType() {
+        public @NotNull RenderType renderType() {
             return this.renderType;
         }
 

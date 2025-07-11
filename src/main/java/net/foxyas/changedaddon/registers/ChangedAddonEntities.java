@@ -72,6 +72,15 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
 
                     .sized(0.7f, 1.93f));
 
+    public static final RegistryObject<EntityType<ProtogenEntity>> PROTOGEN = register("protogen",
+            EntityType.Builder.<ProtogenEntity>of(ProtogenEntity::new, ChangedMobCategories.CHANGED)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setTrackingRange(64).setUpdateInterval(3)
+                    .setCustomClientFactory(ProtogenEntity::new)
+                    .clientTrackingRange(10)
+
+                    .sized(0.7f, 1.93f));
+
 
     public static final RegistryObject<EntityType<ParticleProjectile>> PARTICLE_PROJECTILE = register("particle_projectile",
             EntityType.Builder.<ParticleProjectile>of(ParticleProjectile::new, MobCategory.MISC)

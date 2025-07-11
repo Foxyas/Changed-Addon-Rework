@@ -3,7 +3,9 @@ package net.foxyas.changedaddon.block.advanced;
 import com.google.common.collect.ImmutableMap;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -250,8 +252,8 @@ public class PawsScanner extends Block {
         //debugSpawnParticlesInShape(level, aabb, pos);
 
         List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, aabb,
-                living -> living instanceof ChangedEntity changedEntity ||
-                        living instanceof Player player && !player.isSpectator() && ProcessTransfur.getPlayerTransfurVariant(player) != null);
+                living -> living instanceof ChangedEntity changedEntity && changedEntity.getType() != ChangedEntities.LATEX_HUMAN.get() ||
+                        living instanceof Player player && !player.isSpectator() && ProcessTransfur.getPlayerTransfurVariant(player) != null && !ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedTransfurVariants.LATEX_HUMAN));
 
         // Permite ChangedEntity ou Player com variant
         return list.stream().anyMatch((living -> living.getItemBySlot(EquipmentSlot.FEET).isEmpty()));
@@ -263,8 +265,8 @@ public class PawsScanner extends Block {
         //debugSpawnParticlesInShape(stepEntity.level, aabb, pos);
 
         List<LivingEntity> list = level.getEntitiesOfClass(LivingEntity.class, aabb,
-                living -> living instanceof ChangedEntity changedEntity ||
-                        living instanceof Player player && !player.isSpectator() && ProcessTransfur.getPlayerTransfurVariant(player) != null);
+                living -> living instanceof ChangedEntity changedEntity && changedEntity.getType() != ChangedEntities.LATEX_HUMAN.get() ||
+                        living instanceof Player player && !player.isSpectator() && ProcessTransfur.getPlayerTransfurVariant(player) != null && !ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedTransfurVariants.LATEX_HUMAN));
 
         // Permite ChangedEntity ou Player com variant
         return list.stream().anyMatch((living -> living.getItemBySlot(EquipmentSlot.FEET).isEmpty()));
