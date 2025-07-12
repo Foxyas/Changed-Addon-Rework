@@ -21,6 +21,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
@@ -62,10 +65,8 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
 
     public final EntityDamageSource ThunderDmg = new EntityDamageSource(DamageSource.LIGHTNING_BOLT.getMsgId(), this);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
-    private boolean Phase2;
     private int AttackCoolDown;
     private boolean shouldBleed;
-    private boolean lastBreath = false;
 
     public void setAttackCoolDown(int attackCoolDown) {
         AttackCoolDown = attackCoolDown;
@@ -86,6 +87,19 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+
+    private static final EntityDataAccessor<Boolean> PHASE2 =
+            SynchedEntityData.defineId(KetExperiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> PHASE3 =
+            SynchedEntityData.defineId(KetExperiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(PHASE2, false);
+        this.entityData.define(PHASE3, false);
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -172,7 +186,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -194,7 +208,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     }
 
     @Override
-    public MobType getMobType() {
+    public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
     }
 
@@ -209,12 +223,12 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     }
 
     @Override
-    public SoundEvent getHurtSound(DamageSource ds) {
+    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
     }
 
     @Override
-    public SoundEvent getDeathSound() {
+    public @NotNull SoundEvent getDeathSound() {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
     }
 
@@ -264,7 +278,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
         SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
         setEyeStyle(EyeStyle.TALL);
         CompoundTag dataIndex0 = new CompoundTag();
@@ -280,13 +294,13 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer player) {
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);
     }
@@ -302,12 +316,12 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         // Se estiver com menos de 40% da vida, simula que 40% é o "cheio" da barra
         if (healthRatio <= 0.4f) {
             this.bossInfo.setProgress(healthRatio / 0.4f); // estica a barra
-            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10){
+            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
             }
         } else {
             this.bossInfo.setProgress(healthRatio);
-            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6){
+            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
             }
         }
@@ -331,27 +345,27 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     }
 
     public void setPhase2(boolean set) {
-        this.Phase2 = set;
+        this.entityData.set(PHASE2, set);
     }
 
     public void setPhase3(boolean set) {
-        this.lastBreath = set;
+        this.entityData.set(PHASE3, set);
     }
 
     public boolean isPhase3() {
-        return this.lastBreath;
+        return this.entityData.get(PHASE3);
     }
 
     public boolean isPhase2() {
-        return this.Phase2;
+        return this.entityData.get(PHASE2);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Phase2"))
-            Phase2 = tag.getBoolean("Phase2");
+            setPhase2(tag.getBoolean("Phase2"));
         if (tag.contains("Phase3"))
-            lastBreath = tag.getBoolean("Phase2");
+            setPhase3(tag.getBoolean("Phase3"));
         if (tag.contains("AttackCoolDown"))
             AttackCoolDown = tag.getInt("AttackCoolDown");
         if (tag.contains("Bleeding"))
@@ -361,8 +375,8 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Phase2", Phase2);
-        tag.putBoolean("Phase3", lastBreath);
+        tag.putBoolean("Phase2", isPhase2());
+        tag.putBoolean("Phase3", isPhase3());
         tag.putInt("AttackCoolDown", AttackCoolDown);
         tag.putBoolean("Bleeding", shouldBleed);
     }

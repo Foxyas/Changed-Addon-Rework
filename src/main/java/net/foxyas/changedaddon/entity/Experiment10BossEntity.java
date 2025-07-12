@@ -19,6 +19,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
@@ -57,7 +60,6 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 public class Experiment10BossEntity extends ChangedEntity implements GenderedEntity, BossWithMusic, CustomPatReaction {
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private float TpCooldown;
-    private boolean Phase2;
 
     public Experiment10BossEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), world);
@@ -70,6 +72,15 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    private static final EntityDataAccessor<Boolean> PHASE2 =
+            SynchedEntityData.defineId(Experiment10BossEntity.class, EntityDataSerializers.BOOLEAN);
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(PHASE2, false);
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -299,11 +310,11 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     public void setPhase2(boolean set) {
-        this.Phase2 = set;
+        this.entityData.set(PHASE2, set);
     }
 
     public boolean isPhase2() {
-        return this.Phase2;
+        return this.entityData.get(PHASE2);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -311,7 +322,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         if (tag.contains("Tp_Cooldown"))
             TpCooldown = tag.getFloat("Tp_Cooldown");
         if (tag.contains("Phase2")) {
-            Phase2 = tag.getBoolean("Phase2");
+            setPhase2(tag.getBoolean("Phase2"));
         }
     }
 
@@ -319,7 +330,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putFloat("Tp_Cooldown", TpCooldown);
-        tag.putBoolean("Phase2", Phase2);
+        tag.putBoolean("Phase2", isPhase2());
     }
 
     @Override
