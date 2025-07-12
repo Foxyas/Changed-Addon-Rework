@@ -44,7 +44,7 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
             return scale;
         }
 
-        public static UseItemMode create(String name, float scale) {
+        public static SizeScaling create(String name, float scale) {
             throw new NotImplementedException("Not extended");
         }
     }
@@ -135,13 +135,13 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("size_scale")) {
-            setDimensionScale(tag.getFloat("size_scale"));
-        }
         readColors(tag);
     }
 
     public void readColors(CompoundTag originalTag) {
+        if (originalTag.contains("size_scale")) {
+            setDimensionScale(originalTag.getFloat("size_scale"));
+        }
         CompoundTag tag = originalTag.getCompound("TransfurColorData");
         if (tag.contains("PrimaryColor")) setPrimaryColor(Color3.fromInt(tag.getInt("PrimaryColor")));
         if (tag.contains("SecondaryColor")) setSecondaryColor(Color3.fromInt(tag.getInt("SecondaryColor")));
