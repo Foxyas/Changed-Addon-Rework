@@ -105,6 +105,7 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
             LatexKitsuneMaleEntity.init();
             LatexKitsuneFemaleEntity.init();
             LatexCalicoCatEntity.init();
+            ProtogenEntity.init();
         });
     }
 
@@ -116,6 +117,7 @@ public class ChangedAddonEntities extends ChangedAddonModEntities {
         event.put(LATEX_KITSUNE_MALE.get(), LatexKitsuneMaleEntity.createAttributes().build());
         event.put(LATEX_KITSUNE_FEMALE.get(), LatexKitsuneFemaleEntity.createAttributes().build());
         event.put(LATEX_CALICO_CAT.get(), LatexCalicoCatEntity.createAttributes().build());
+        event.put(PROTOGEN.get(), ProtogenEntity.createAttributes().build());
     }
 
 }

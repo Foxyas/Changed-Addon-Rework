@@ -48,6 +48,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.awt.*;
+
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonRegisters extends ChangedAddonModItems {
@@ -135,6 +137,9 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
     public static final RegistryObject<Item> LATEX_KITSUNE_FEMALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_kitsune_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_FEMALE, 0xfff6f6, 0xffeeee, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
 
     public static final RegistryObject<Item> LATEX_CALICO_CAT_MALE_SPAWN_EGG = ITEMS_REGISTRY.register("latex_calico_cat_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CALICO_CAT, 0xffece4, 0xd56f53, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
+    public static final RegistryObject<Item> PROTOGEN_SPAWN_EGG = ITEMS_REGISTRY.register("protogen_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOGEN, new Color(255,255,255).getRGB(), new Color(0, 196, 255).getRGB(), new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));
+
 
     public static final RegistryObject<Item> DARK_LATEX_COAT = ITEMS_REGISTRY.register("dark_latex_coat",
             () -> new DarkLatexCoatItem(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)));

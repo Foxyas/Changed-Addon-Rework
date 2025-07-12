@@ -23,8 +23,8 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> impleme
 
     private final ModelPart Head;
     private final ModelPart Ears;
-    private final ModelPart EarRight;
-    private final ModelPart EarLeft;
+    private final ModelPart RightEar;
+    private final ModelPart LeftEar;
     private final ModelPart sigils;
     private final ModelPart visor;
     private final ModelPart middle;
@@ -54,8 +54,8 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> impleme
         super(root);
         this.Head = root.getChild("Head");
         this.Ears = this.Head.getChild("Ears");
-        this.EarRight = this.Ears.getChild("EarRight");
-        this.EarLeft = this.Ears.getChild("EarLeft");
+		this.RightEar = this.Ears.getChild("RightEar");
+		this.LeftEar = this.Ears.getChild("LeftEar");
         this.sigils = this.Head.getChild("sigils");
         this.visor = this.Head.getChild("visor");
         this.middle = this.visor.getChild("middle");
@@ -80,7 +80,7 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> impleme
 
         animator = HumanoidAnimator.of(this).hipOffset(-1.5f)
                 .addPreset(AnimatorPresets.wolfLike(
-                        Head, Head.getChild("LeftEar"), Head.getChild("RightEar"),
+                        Head, Ears.getChild("LeftEar"), Ears.getChild("RightEar"),
                         Torso, LeftArm, RightArm,
                         Tail, List.of(TailPrimary, TailSecondary, TailTertiary, TailQuaternary),
                         LeftLeg, LeftLowerLeg, LeftFoot, LeftPad, RightLeg, RightLowerLeg, RightFoot, RightPad));
@@ -95,21 +95,21 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> impleme
 
 		PartDefinition Ears = Head.addOrReplaceChild("Ears", CubeListBuilder.create(), PartPose.offset(-0.1067F, -3.9929F, -1.172F));
 
-		PartDefinition EarRight = Ears.addOrReplaceChild("EarRight", CubeListBuilder.create(), PartPose.offsetAndRotation(2.7297F, 0.0F, 0.6719F, 0.3491F, 0.0F, 0.0F));
+		PartDefinition RightEar = Ears.addOrReplaceChild("RightEar", CubeListBuilder.create(), PartPose.offsetAndRotation(2.7297F, 0.0F, 0.6719F, 0.3491F, 0.0F, 0.0F));
 
-		PartDefinition cube_r1 = EarRight.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(72, 37).addBox(-2.0003F, -0.3721F, 3.3982F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(1.0845F, -0.8379F, -0.3359F, 0.1745F, 0.384F, 0.0F));
+		PartDefinition cube_r1 = RightEar.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(72, 37).addBox(-2.0003F, -0.3721F, 3.3982F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(1.0845F, -0.8379F, -0.3359F, 0.1745F, 0.384F, 0.0F));
 
-		PartDefinition cube_r2 = EarRight.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(46, 0).addBox(-2.7562F, 0.6778F, -0.8014F, 2.0F, 2.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.9595F, -1.0879F, 0.0141F, -0.1734F, 0.4177F, -0.33F));
+		PartDefinition cube_r2 = RightEar.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(46, 0).addBox(-2.7562F, 0.6778F, -0.8014F, 2.0F, 2.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.9595F, -1.0879F, 0.0141F, -0.1734F, 0.4177F, -0.33F));
 
-		PartDefinition cube_r3 = EarRight.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(44, 33).addBox(-1.7903F, -0.1621F, -0.8014F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.9595F, -1.0879F, 0.0141F, 0.1745F, 0.384F, 0.0F));
+		PartDefinition cube_r3 = RightEar.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(44, 33).addBox(-1.7903F, -0.1621F, -0.8014F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.9595F, -1.0879F, 0.0141F, 0.1745F, 0.384F, 0.0F));
 
-		PartDefinition EarLeft = Ears.addOrReplaceChild("EarLeft", CubeListBuilder.create(), PartPose.offsetAndRotation(-2.7297F, 0.0F, 0.6719F, 0.3491F, 0.0F, 0.0F));
+		PartDefinition LeftEar = Ears.addOrReplaceChild("LeftEar", CubeListBuilder.create(), PartPose.offsetAndRotation(-2.7297F, 0.0F, 0.6719F, 0.3491F, 0.0F, 0.0F));
 
-		PartDefinition cube_r4 = EarLeft.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(72, 31).addBox(0.0003F, -0.3721F, 3.3982F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-1.0845F, -0.8379F, -0.3109F, 0.1745F, -0.384F, 0.0F));
+		PartDefinition cube_r4 = LeftEar.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(72, 31).addBox(0.0003F, -0.3721F, 3.3982F, 2.0F, 2.0F, 4.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(-1.0845F, -0.8379F, -0.3109F, 0.1745F, -0.384F, 0.0F));
 
-		PartDefinition cube_r5 = EarLeft.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(50, 10).addBox(0.7562F, 0.6778F, -0.8014F, 2.0F, 2.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.9595F, -1.0879F, 0.0141F, -0.1734F, -0.4177F, 0.33F));
+		PartDefinition cube_r5 = LeftEar.addOrReplaceChild("cube_r5", CubeListBuilder.create().texOffs(50, 10).addBox(0.7562F, 0.6778F, -0.8014F, 2.0F, 2.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.9595F, -1.0879F, 0.0141F, -0.1734F, -0.4177F, 0.33F));
 
-		PartDefinition cube_r6 = EarLeft.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 71).addBox(-0.2097F, -0.1621F, -0.8014F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.9595F, -1.0879F, 0.0141F, 0.1745F, -0.384F, 0.0F));
+		PartDefinition cube_r6 = LeftEar.addOrReplaceChild("cube_r6", CubeListBuilder.create().texOffs(0, 71).addBox(-0.2097F, -0.1621F, -0.8014F, 2.0F, 2.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-0.9595F, -1.0879F, 0.0141F, 0.1745F, -0.384F, 0.0F));
 
 		PartDefinition sigils = Head.addOrReplaceChild("sigils", CubeListBuilder.create(), PartPose.offset(2.9896F, -3.4738F, -1.5513F));
 
