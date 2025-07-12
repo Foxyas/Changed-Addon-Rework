@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.entity.LatexSnepEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
 
@@ -35,7 +36,15 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
         if (entity.getChangedEntity() instanceof LatexSnepEntity latexSnepEntity){
             latexSnepEntity.WantLoaf = !latexSnepEntity.WantLoaf;
         } else if (entity.getChangedEntity() instanceof AbstractLuminarcticLeopard lumi) {
-            lumi.GlowStage = lumi.GlowStage >= 1 ? 0 : 1;
+            switch (lumi.getGlowStage()) {
+                case AbstractLuminarcticLeopard.GLOW_NONE ->
+                        lumi.setGlowStage(AbstractLuminarcticLeopard.GLOW_PULSE);
+                case AbstractLuminarcticLeopard.GLOW_PULSE ->
+                        lumi.setGlowStage(AbstractLuminarcticLeopard.GLOW_ALWAYS);
+                case AbstractLuminarcticLeopard.GLOW_ALWAYS ->
+                        lumi.setGlowStage(AbstractLuminarcticLeopard.GLOW_NONE);
+            }
+
         }
     }
 
@@ -50,8 +59,9 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
     }
 
     public void onSelected() {
-        if (entity.getEntity() instanceof Player player && ability.getSelectedDisplayText(this.entity) != null){
-            player.displayClientMessage(ability.getSelectedDisplayText(this.entity),true);
+        Component text = ability.getSelectedDisplayText(this.entity);
+        if (entity.getEntity() instanceof Player player && text != null){
+            player.displayClientMessage(text,true);
         }
     }
 }

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.LuminarcticLeopardModel;
 import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.ltxprogrammer.changed.ability.HypnosisAbility;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
@@ -108,7 +109,7 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
                             super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
                         }
                     } else if (entity instanceof AbstractLuminarcticLeopard LUMI && LUMI.isActivatedAbility()) {
-                        if (LUMI.GlowStage >= 1) {
+                        if (LUMI.getGlowStage() == AbstractLuminarcticLeopard.GLOW_PULSE) {
                             VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
                             float pulseFactor = (float) (Math.sin(ageInTicks * 0.1f) + 1) / 2; // Varia entre 0 e 1 suavemente, simulando o efeito de pulsar
 
@@ -117,6 +118,15 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
                             float red = 1.0f - pulseFactor * intensity;
                             float green = 1.0f - pulseFactor * intensity;
                             float blue = 1.0f - pulseFactor * intensity;
+
+                            // Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
+                            this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
+                        } else if (LUMI.getGlowStage() == AbstractLuminarcticLeopard.GLOW_ALWAYS) {
+                            VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
+                            float red = 1.0f;
+                            float green = 1.0f;
+                            float blue = 1.0f;
+
                             // Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
                             this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
                         } else {
@@ -124,9 +134,10 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
                         }
                     }
                 }
+
                 if (entity instanceof AbstractLuminarcticLeopard WILD_LUMI && WILD_LUMI.getTarget() != null) {
                     // Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
-                    if (WILD_LUMI.GlowStage >= 1) {
+                    if (WILD_LUMI.getGlowStage() == AbstractLuminarcticLeopard.GLOW_PULSE) {
                         VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
                         float pulseFactor = (float) (Math.sin(ageInTicks * 0.1f) + 1) / 2; // Varia entre 0 e 1 suavemente, simulando o efeito de pulsar
 
@@ -135,6 +146,15 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
                         float red = 1.0f - pulseFactor * intensity;
                         float green = 1.0f - pulseFactor * intensity;
                         float blue = 1.0f - pulseFactor * intensity;
+
+                        // Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
+                        this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
+                    } else if (WILD_LUMI.getGlowStage() == AbstractLuminarcticLeopard.GLOW_ALWAYS) {
+                        VertexConsumer vertexConsumer = bufferSource.getBuffer(this.renderType());
+                        float red = 1.0f;
+                        float green = 1.0f;
+                        float blue = 1.0f;
+
                         // Aplicando o ajuste de cor nos olhos (com alpha e o efeito de pulsar)
                         this.getParentModel().renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
                     } else {
@@ -152,12 +172,12 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
                         if (instance.getController().getHoldTicks() > 0) {
                             super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
                         }
-                    } else if (entity instanceof LuminarcticLeopardEntity LUMI && LUMI.isActivatedAbility()) {
+                    } else if (entity instanceof FemaleLuminarcticLeopardEntity LUMI && LUMI.isActivatedAbility()) {
                         super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
                     }
                 }
 
-                if (entity instanceof LuminarcticLeopardEntity WILD_LUMI && WILD_LUMI.getTarget() != null) {
+                if (entity instanceof FemaleLuminarcticLeopardEntity WILD_LUMI && WILD_LUMI.getTarget() != null) {
                     super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, stackCorrector, partialTick);
                 }
             }

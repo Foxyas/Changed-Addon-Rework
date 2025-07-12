@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.effect.particles;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
@@ -13,9 +15,12 @@ import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.Util;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -199,6 +204,11 @@ public class LaserPointParticle extends TextureSheetParticle {
     }
 
     @Override
+    public void render(VertexConsumer p_107678_, Camera p_107679_, float p_107680_) {
+        super.render(p_107678_, p_107679_, p_107680_);
+    }
+
+    @Override
     public int getLightColor(float p_105562_) {
         return 15728880;
     }
@@ -286,9 +296,9 @@ public class LaserPointParticle extends TextureSheetParticle {
             this.x += this.xd;
             this.y += this.yd;
             this.z += this.zd;
-
-            this.age = 0; // Reset idade para manter a partícula viva
         }
+        this.age = 0; // Reset idade para manter a partícula viva
+
     }
 
     private void SetToward(Vec3 target) {
@@ -301,7 +311,7 @@ public class LaserPointParticle extends TextureSheetParticle {
 
 
     @Override
-    public ParticleRenderType getRenderType() {
+    public @NotNull ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_LIT;
     }
 }

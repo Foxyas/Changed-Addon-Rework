@@ -159,7 +159,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     );
 
     @Override
-    protected int getExperienceReward(Player player) {
+    protected int getExperienceReward(@NotNull Player player) {
         if (this.isBoss()) {
             return super.getExperienceReward(player) * 50;
         }
@@ -177,6 +177,11 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DODGE_TYPE =
             SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> GLOW_STAGE =
+            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
+    public static final int GLOW_NONE = 0;
+    public static final int GLOW_PULSE = 1;
+    public static final int GLOW_ALWAYS = 2;
 
 
     @Override
@@ -184,7 +189,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         super.defineSynchedData();
         this.entityData.define(DODGE_ANIM_TICKS, 0);
         this.entityData.define(DODGE_TYPE, 0);
+        this.entityData.define(GLOW_STAGE, 0);
     }
+
 
     public int getDodgeAnimTicks() {
         return this.entityData.get(DODGE_ANIM_TICKS);
@@ -202,6 +209,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         this.entityData.set(DODGE_TYPE, dodgeType);
     }
 
+    public int getGlowStage() {
+        return this.entityData.get(GLOW_STAGE);
+    }
+
+    public void setGlowStage(int stage) {
+        this.entityData.set(GLOW_STAGE, stage);
+    }
+
     public final int DodgeAnimMaxTicks = 20;
 
     private boolean isBoss = false;
@@ -213,7 +228,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         super(p_19870_, p_19871_);
     }
 
-    public int GlowStage = 0; //0 = normal and 1 = Pulse
 
     public boolean isActivatedAbility() {
         return ActivatedAbility;
@@ -253,12 +267,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                     if (this.AbilitiesTicksCooldown <= 0) {
                         this.bossAbilitiesHandle.tick();
                         if (this.getUnderlyingPlayer() == null) {
-                            this.GlowStage = 0;
+                            this.setGlowStage(GLOW_NONE);
                         }
                     } else {
                         this.AbilitiesTicksCooldown--;
                         if (this.getUnderlyingPlayer() == null) {
-                            this.GlowStage = 1;
+                            this.setGlowStage(GLOW_PULSE);
                         }
                     }
 
@@ -307,7 +321,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer player) {
+    public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
         if (this.isBoss()) {
             this.bossBar.addPlayer(player);
@@ -315,7 +329,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
         if (this.isBoss()) {
             this.bossBar.removePlayer(player);
@@ -347,7 +361,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             this.DashingTicks = tag.getInt("DashingTicks");
         }
         if (tag.contains("GlowStage")) {
-            this.GlowStage = tag.getInt("GlowStage");
+            this.setGlowStage(tag.getInt("GlowStage"));
         }
         if (tag.contains("isBoss")) {
             this.isBoss = tag.getBoolean("isBoss");
@@ -367,14 +381,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         tag.putInt("DodgeAnimTicks", this.getDodgeAnimTicks());
         tag.putInt("dodgeType", this.getDodgeType());
         tag.putInt("DashingTicks", DashingTicks);
-        tag.putInt("GlowStage", GlowStage);
+        tag.putInt("GlowStage", this.getGlowStage());
         tag.putBoolean("isBoss", this.isBoss);
         //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
 
     @Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_21434_, DifficultyInstance p_21435_, MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor p_21434_, @NotNull DifficultyInstance p_21435_, @NotNull MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
         if (this.isBoss()) {
             handleBoss();
         }

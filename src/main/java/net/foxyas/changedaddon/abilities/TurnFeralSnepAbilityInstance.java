@@ -12,6 +12,7 @@ import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +34,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
         };
     }*/
     private static final String OLD_TRANSFUR_VARIANT = "OldVariant";
+
     //private static final String NEW_TRANSFUR_VARIANT = "NewVariant";
     public TurnFeralSnepAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
@@ -51,28 +53,28 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void onSelected() {
         super.onSelected();
-        if (entity.getEntity() instanceof Player player){
+        if (entity.getEntity() instanceof Player player) {
             var Instance = ProcessTransfur.getPlayerTransfurVariant(player);
             if (this.OldVariant == null
-                    && Instance != null){
+                    && Instance != null) {
                 if (Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get()
-                        && Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP.get()){
+                        && Instance.getParent() != ChangedAddonTransfurVariants.LATEX_SNEP.get()) {
                     setOldVariant(entity.getSelfVariant());
                 }
+            } else if (Instance != null) {
+                Component text = ability.getSelectedDisplayText(this.entity);
+                if (Instance.getParent() == ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() && text != null) {
+                    player.displayClientMessage(text, true);
+                }
             }
- else if (Instance != null){
-            	if (Instance.getParent() ==	ChangedAddonTransfurVariants.LATEX_SNEP_FERAL_FORM.get() && ability.getSelectedDisplayText(this.entity) != null){
-            	player.displayClientMessage(ability.getSelectedDisplayText(this.entity),true);
-            	}
-            } 
         }
     }
 
     @Override
     public void saveData(CompoundTag tag) {
         super.saveData(tag);
-        if (this.OldVariant != null && OldVariant.getRegistryName() != null){
-            tag.putString(OLD_TRANSFUR_VARIANT,OldVariant.getRegistryName().toString());
+        if (this.OldVariant != null && OldVariant.getRegistryName() != null) {
+            tag.putString(OLD_TRANSFUR_VARIANT, OldVariant.getRegistryName().toString());
         }
         /*if (this.NewVariant != null && NewVariant.getRegistryName() != null){
             tag.putString(NEW_TRANSFUR_VARIANT,NewVariant.getRegistryName().toString());
@@ -83,14 +85,14 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     public void readData(CompoundTag tag) {
         super.readData(tag);
 
-        if (tag.contains(OLD_TRANSFUR_VARIANT)){
+        if (tag.contains(OLD_TRANSFUR_VARIANT)) {
             ResourceLocation form;
             try {
                 form = new ResourceLocation(tag.getString(OLD_TRANSFUR_VARIANT));
             } catch (Exception e) {
                 form = new ResourceLocation("");
             }
-            if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)){
+            if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
                 this.OldVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
             }
         }
@@ -139,7 +141,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
                 variantInstance.ifHasAbility(ChangedAddonAbilities.TURN_FERAL_SNEP.get(), abilityInstance ->
                         abilityInstance.setOldVariant(entity.getTransfurVariant())
                 );
-                entity.getEntity().getLevel().playSound(null,entity.getEntity(), ChangedSounds.POISON, SoundSource.PLAYERS,1,1);
+                entity.getEntity().getLevel().playSound(null, entity.getEntity(), ChangedSounds.POISON, SoundSource.PLAYERS, 1, 1);
             }
         }
     }
@@ -153,8 +155,10 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     }
 
     @Override
-    public void tick() {}
+    public void tick() {
+    }
 
     @Override
-    public void stopUsing() {}
+    public void stopUsing() {
+    }
 }
