@@ -25,6 +25,15 @@ public class CustomInteraction extends AbstractAbility<CustomInteractionInstance
         return new ResourceLocation("changed_addon:textures/screens/normal_paw.png");
     }
 
+    @Override
+    public int getCoolDown(IAbstractChangedEntity entity) {
+        if (entity.getChangedEntity() instanceof AvaliEntity){
+            return 160;
+        }
+
+        return super.getCoolDown(entity);
+    }
+
     @Nullable
     @Override
     public Component getSelectedDisplayText(IAbstractChangedEntity entity) {
