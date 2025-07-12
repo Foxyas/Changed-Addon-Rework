@@ -317,6 +317,7 @@
   "entity.changed_addon.lynx": "Lynx",
   "entity.changed_addon.mirror_white_tiger": "Mirror White Tiger",
   "entity.changed_addon.prototype": "Prototype",
+  "entity.changed_addon.protogen": "Protogen",
   "entity.changed_addon.puro_kind": "Puro Kind",
   "entity.changed_addon.puro_kind_female": "Puro Kind Female",
   "entity.changed_addon.puro_kind_male": "Puro Kind Male",
@@ -329,7 +330,6 @@
 
   "entity.changed_addon.projectile_luminar_crystal_spear": "Luminar Crystal Spear",
   "entity.changed_addon.particle_projectile": "Light Particle",
-
 
   "entity.minecraft.villager.changed_addon.scientist": "Scientist",
 
