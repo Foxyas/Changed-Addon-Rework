@@ -154,7 +154,7 @@ public class DazedEntity extends ChangedEntity {
 	@Override
 	public UseItemMode getItemUseMode() {
 		if (this.isMorphed()){
-			return this.PuddleForm;
+			return PuddleForm;
 		}
 		return super.getItemUseMode();
 	}

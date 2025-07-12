@@ -153,8 +153,8 @@ public class PawsScanner extends Block {
     public @NotNull VoxelShape getShapeOfPawsScanner(BlockState state, @NotNull BlockGetter blockGetter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return switch (state.getValue(FACING)) {
             case SOUTH -> PAWS_SCANNER_SHAPE_SOUTH;
-            case WEST -> PAWS_SCANNER_SHAPE_EAST;
-            case EAST -> PAWS_SCANNER_SHAPE_WEST;
+            case WEST -> PAWS_SCANNER_SHAPE_WEST;
+            case EAST -> PAWS_SCANNER_SHAPE_EAST;
             default -> PAWS_SCANNER_SHAPE_NORTH;
         };
     }

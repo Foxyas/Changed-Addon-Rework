@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;
@@ -29,6 +30,9 @@ public class CustomInteraction extends AbstractAbility<CustomInteractionInstance
     public Component getSelectedDisplayText(IAbstractChangedEntity entity) {
         if (entity.getChangedEntity() instanceof LatexSnepEntity || entity.getChangedEntity() instanceof AbstractLuminarcticLeopard){
             return new TranslatableComponent("changed_addon.ability.custom_interaction.have_interaction");
+        }
+        if (entity.getChangedEntity() instanceof AvaliEntity){
+            return new TranslatableComponent("changed_addon.ability.custom_interaction.have_interaction.avali");
         }
         return super.getSelectedDisplayText(entity);
     }

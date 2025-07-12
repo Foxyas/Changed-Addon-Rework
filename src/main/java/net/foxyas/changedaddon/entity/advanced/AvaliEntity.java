@@ -1,9 +1,11 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
+import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.UseItemMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
@@ -11,15 +13,15 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.IExtensibleEnum;
 import net.minecraftforge.network.PlayMessages;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,9 +30,29 @@ import java.util.Set;
 
 public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements ExtraVariantStats {
 
+    public enum SizeScaling implements IExtensibleEnum {
+        NORMAL(0.8f),
+        TALL(0.9f),
+        VERY_TALL(1.0f);
+
+        private final float scale;
+        SizeScaling(float size) {
+            scale = size;
+        }
+
+        public float getScale() {
+            return scale;
+        }
+
+        public static UseItemMode create(String name, float scale) {
+            throw new NotImplementedException("Not extended");
+        }
+    }
+
     private static final EntityDataAccessor<Integer> PRIMARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> SECONDARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STRIPES_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Float> SIZE_SCALE = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<String> STYLE_OF_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.STRING);
     public final Set<String> StyleTypes = Set.of("male", "female");
 
@@ -58,9 +80,9 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         this.entityData.define(PRIMARY_COLOR, Color3.WHITE.toInt());
         this.entityData.define(SECONDARY_COLOR, Color3.WHITE.toInt());
         this.entityData.define(STRIPES_COLOR, Color3.WHITE.toInt());
+        this.entityData.define(SIZE_SCALE, 0.8f);
         this.entityData.define(STYLE_OF_COLOR, "male");
     }
-
 
     public AvaliEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
@@ -87,6 +109,19 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         saveColors(tag);
     }
 
+    public float getDimensionScale() {
+        return this.entityData.get(SIZE_SCALE);
+    }
+
+    public void setDimensionScale(float scale) {
+        this.entityData.set(SIZE_SCALE, scale);
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(Pose pose) {
+        return super.getDimensions(pose).scale(this.getDimensionScale());
+    }
+
     public void saveColors(CompoundTag originalTag) {
         CompoundTag tag = new CompoundTag();
         tag.putInt("PrimaryColor", getPrimaryColor().toInt());
@@ -94,11 +129,15 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         tag.putInt("StripesColor", getStripesColor().toInt());
         tag.putString("StyleOfColor", getStyleOfColor());
         originalTag.put("TransfurColorData", tag);
+        originalTag.putFloat("size_scale", getDimensionScale());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        if (tag.contains("size_scale")) {
+            setDimensionScale(tag.getFloat("size_scale"));
+        }
         readColors(tag);
     }
 
@@ -130,7 +169,7 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         return super.finalizeSpawn(world, difficulty, reason, data, tag);
     }
 
-    public Color3 getColor(int layer){
+    public Color3 getColor(int layer) {
         return switch (layer) {
             case 1 -> getSecondaryColor();
             case 2 -> getStripesColor();
@@ -142,12 +181,13 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         return Color3.fromInt(this.entityData.get(PRIMARY_COLOR));
     }
 
-    public void setColor(int layer, Color3 color3){
+    public void setColor(int layer, Color3 color3) {
         switch (layer) {
             case 1 -> setSecondaryColor(color3);
             case 2 -> setStripesColor(color3);
             default -> setPrimaryColor(color3);
-        };
+        }
+        ;
     }
 
     public void setPrimaryColor(Color3 color) {

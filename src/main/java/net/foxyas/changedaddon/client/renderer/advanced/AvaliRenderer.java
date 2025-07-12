@@ -29,7 +29,8 @@ public class AvaliRenderer extends AdvancedHumanoidRenderer<AvaliEntity, AvaliMo
     @Override
     protected void scale(@NotNull AvaliEntity avaliEntity, @NotNull PoseStack poseStack, float partialTick) {
         super.scale(avaliEntity, poseStack, partialTick);
-        poseStack.scale(0.95F, 0.95F, 0.95F);
+        this.shadowRadius *= avaliEntity.getDimensionScale();
+        poseStack.scale(avaliEntity.getDimensionScale(), avaliEntity.getDimensionScale(), avaliEntity.getDimensionScale());
     }
 
     @Override

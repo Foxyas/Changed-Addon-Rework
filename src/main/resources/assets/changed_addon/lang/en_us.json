@@ -151,6 +151,7 @@
   "changed_addon.ability.claws.desc": "Activate your feline claws and unleash a sweeping attacks with your §mhands§r Paws.",
   "changed_addon.ability.custom_interaction": "Variant Custom Interaction ",
   "changed_addon.ability.custom_interaction.have_interaction": "This Variant §aHave§r Custom Interactions",
+  "changed_addon.ability.custom_interaction.have_interaction.avali": "This variant includes a custom size-changing interaction.",
   "changed_addon.ability.dissolve": "Dissolve Ability",
   "changed_addon.ability.dissolve.warn.too_far": "You are too far from the place to teleport there",
   "changed_addon.ability.dodge": "Dodge Ability",
