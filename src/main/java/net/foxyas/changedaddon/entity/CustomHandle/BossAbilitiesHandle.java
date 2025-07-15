@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.CustomHandle;
 
 import net.foxyas.changedaddon.block.LuminarCrystalBlockBlock;
-import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;

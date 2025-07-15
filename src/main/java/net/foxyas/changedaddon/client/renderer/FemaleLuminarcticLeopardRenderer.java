@@ -4,10 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.LuminarcticFemaleLeopardModel;
-import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
-import net.foxyas.changedaddon.entity.DazedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
-import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.ltxprogrammer.changed.ability.HypnosisAbility;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
@@ -51,8 +49,10 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
         ));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-        this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female_ability_active.png")));
-        this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowFelineEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_feline_eyes_female.png")));
+        this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/female/luminarctic_leopard_female_ability_active.png")));
+        this.addLayer(new FemaleLuminarcticLeopardRenderer.thisConditionalLayers.thisGlowFelineEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/female/luminarctic_leopard_feline_eyes_female.png")));
+        this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/crystals_layer.png")));
+
     }
 
     @Override
@@ -86,10 +86,10 @@ public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<F
     @Override
     public ResourceLocation getTextureLocation(FemaleLuminarcticLeopardEntity entity) {
         if (entity.getUnderlyingPlayer() != null) {
-            return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female_no_eyes.png");
+            return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/female/luminarctic_leopard_female_no_eyes.png");
         }
 
-        return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_female.png");
+        return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/female/luminarctic_leopard_female.png");
     }
 
     private static class thisConditionalLayers {

@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity;
+package net.foxyas.changedaddon.entity.defaults;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.AbstractLuminarCrystal;

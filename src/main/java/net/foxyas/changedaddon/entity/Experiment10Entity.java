@@ -230,11 +230,11 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
         SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-        setEyeStyle(EyeStyle.TALL);
-        CompoundTag dataIndex0 = new CompoundTag();
-        this.saveWithoutId(dataIndex0);
-        dataIndex0.getCompound("LocalVariantInfo").putFloat("scale", 1);
-        this.load(dataIndex0);
+        this.getBasicPlayerInfo().setSize(1f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+        this.getBasicPlayerInfo().setRightIrisColor(Color3.parseHex("#edbd25"));
+        this.getBasicPlayerInfo().setLeftIrisColor(Color3.parseHex("#edbd25"));
+        this.getBasicPlayerInfo().setScleraColor(Color3.parseHex("#edd725"));
         return retval;
     }
 

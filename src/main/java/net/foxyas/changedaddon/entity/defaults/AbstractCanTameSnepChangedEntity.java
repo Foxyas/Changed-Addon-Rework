@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity;
+package net.foxyas.changedaddon.entity.defaults;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;

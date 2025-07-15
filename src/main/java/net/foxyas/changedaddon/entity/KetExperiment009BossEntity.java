@@ -280,11 +280,8 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
         SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-        setEyeStyle(EyeStyle.TALL);
-        CompoundTag dataIndex0 = new CompoundTag();
-        this.saveWithoutId(dataIndex0);
-        dataIndex0.getCompound("LocalVariantInfo").putFloat("scale", 1);
-        this.load(dataIndex0);
+        this.getBasicPlayerInfo().setSize(1f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
         return retval;
     }
 

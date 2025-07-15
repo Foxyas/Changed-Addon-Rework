@@ -2,12 +2,19 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.ICoatLikeEntity;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -36,9 +43,7 @@ import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Exp2MaleEntity extends AbstractCanTameSnepChangedEntity implements CustomPatReaction {
-
-
+public class Exp2MaleEntity extends AbstractExp2SnepChangedEntity implements CustomPatReaction {
 	public Exp2MaleEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.EXP_2_MALE.get(), world);
 	}
@@ -64,7 +69,12 @@ public class Exp2MaleEntity extends AbstractCanTameSnepChangedEntity implements 
 		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
 	}
 
-	public InteractionResult Exp2(Player player, InteractionHand hand,Player Host) {
+	@Override
+	protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+		return Exp2(player,hand,this.getUnderlyingPlayer());
+	}
+
+	public InteractionResult Exp2(Player player, InteractionHand hand, Player Host) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		/*if(Host != null){
 			return super.mobInteract(player, hand);
@@ -74,24 +84,26 @@ public class Exp2MaleEntity extends AbstractCanTameSnepChangedEntity implements 
 			boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
 			return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
 		} else {
+			tryFuseBack(player, this);
+
 			if (!this.isTame() && this.isTameItem(itemstack)) {
 				if (!player.getAbilities().instabuild) {
 					itemstack.shrink(1);
 				}
-				boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+				boolean isTransfured = ProcessTransfur.isPlayerTransfurred(player);
 
-				if (!istransfur && this.random.nextInt(2) == 0) { // One in 2 chance
+				if (!isTransfured && this.random.nextInt(2) == 0) { // One in 2 chance
 					this.tame(player);
 					this.navigation.stop();
 					this.setTarget(null);
-					this.level.broadcastEntityEvent(this, (byte)7);
-				} else if(istransfur && this.random.nextInt(12) == 0) { //One in 12
+					this.level.broadcastEntityEvent(this, (byte) 7);
+				} else if (isTransfured && this.random.nextInt(12) == 0) { //One in 12
 					this.tame(player);
 					this.navigation.stop();
 					this.setTarget(null);
-					this.level.broadcastEntityEvent(this, (byte)7);
+					this.level.broadcastEntityEvent(this, (byte) 7);
 				} else {
-					this.level.broadcastEntityEvent(this, (byte)6);
+					this.level.broadcastEntityEvent(this, (byte) 6);
 				}
 
 				return InteractionResult.SUCCESS;
@@ -99,11 +111,6 @@ public class Exp2MaleEntity extends AbstractCanTameSnepChangedEntity implements 
 
 			return super.mobInteract(player, hand);
 		}
-	}
-
-	@Override
-	protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-		return Exp2(player,hand,this.getUnderlyingPlayer());
 	}
 
 	@Override

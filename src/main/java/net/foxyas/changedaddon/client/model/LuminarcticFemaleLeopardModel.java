@@ -124,6 +124,28 @@ public class LuminarcticFemaleLeopardModel extends AdvancedHumanoidModel<FemaleL
         PartDefinition Hair = Head.addOrReplaceChild("Hair", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -33.0F, -4.0F, 8.0F, 11.0F, 8.0F, new CubeDeformation(0.2F))
                 .texOffs(0, 19).addBox(-4.0F, -33.0F, -4.0F, 8.0F, 10.0F, 8.0F, new CubeDeformation(0.35F)), PartPose.offset(0.0F, 25.0F, 0.0F));
 
+        PartDefinition CheekCrystals = Head.addOrReplaceChild("CheekCrystals", CubeListBuilder.create(), PartPose.offset(0.0F, 0.3F, 0.0F));
+
+        PartDefinition RightCheekCrystal = CheekCrystals.addOrReplaceChild("RightCheekCrystal", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition cube_r1 = RightCheekCrystal.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(64, 89).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-3.9107F, -0.8024F, -0.5F, -1.5708F, -0.4363F, 0.0F));
+
+        PartDefinition cube_r2 = RightCheekCrystal.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(58, 92).mirror().addBox(0.25F, -0.75F, -3.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(-0.1F)).mirror(false), PartPose.offsetAndRotation(-4.5F, 0.3F, -0.5F, -1.5708F, -0.4363F, 0.0F));
+
+        PartDefinition RightCrystal = RightCheekCrystal.addOrReplaceChild("RightCrystal", CubeListBuilder.create(), PartPose.offset(0.0F, 24.2F, 1.0F));
+
+        PartDefinition RightCrystal_r1 = RightCrystal.addOrReplaceChild("RightCrystal_r1", CubeListBuilder.create().texOffs(76, 93).addBox(-3.9135F, -28.8F, -3.8937F, 3.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.8F, -1.0F, 0.0F, 1.1345F, 0.0F));
+
+        PartDefinition LeftCheekCrystal = CheekCrystals.addOrReplaceChild("LeftCheekCrystal", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        PartDefinition cube_r3 = LeftCheekCrystal.addOrReplaceChild("cube_r3", CubeListBuilder.create().texOffs(76, 89).addBox(-0.5F, -1.0F, -3.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.9107F, -0.8024F, -0.5F, -1.5708F, 0.4363F, 0.0F));
+
+        PartDefinition cube_r4 = LeftCheekCrystal.addOrReplaceChild("cube_r4", CubeListBuilder.create().texOffs(70, 92).addBox(-1.25F, -0.75F, -3.0F, 1.0F, 2.0F, 2.0F, new CubeDeformation(-0.1F)), PartPose.offsetAndRotation(4.5F, 0.3F, -0.5F, -1.5708F, 0.4363F, 0.0F));
+
+        PartDefinition LeftCrystal = LeftCheekCrystal.addOrReplaceChild("LeftCrystal", CubeListBuilder.create(), PartPose.offset(-1.5F, 24.2F, 0.6F));
+
+        PartDefinition LeftCrystal_r1 = LeftCrystal.addOrReplaceChild("LeftCrystal_r1", CubeListBuilder.create().texOffs(64, 93).addBox(1.0845F, -28.8F, -3.7813F, 3.0F, 3.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.5F, 0.8F, -0.6F, 0.0F, -1.1345F, 0.0F));
+
         PartDefinition Torso = partdefinition.addOrReplaceChild("Torso", CubeListBuilder.create().texOffs(0, 37).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 5.0F, 4.0F, new CubeDeformation(0.0F))
                 .texOffs(32, 0).addBox(-4.0F, 4.0F, -2.0F, 8.0F, 6.0F, 4.0F, new CubeDeformation(-0.3F))
                 .texOffs(42, 27).addBox(-4.0F, 8.6F, -2.0F, 8.0F, 3.0F, 4.0F, new CubeDeformation(0.1F)), PartPose.offset(0.0F, 0.0F, 0.0F));
@@ -203,6 +225,12 @@ public class LuminarcticFemaleLeopardModel extends AdvancedHumanoidModel<FemaleL
                 .texOffs(0, 87).mirror().addBox(-1.5F, 9.475F, -1.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
                 .texOffs(0, 91).mirror().addBox(-0.225F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false), PartPose.offset(0.0F, -0.5F, 0.0F));
 
+        PartDefinition RightArmCrystals = RightArm.addOrReplaceChild("RightArmCrystals", CubeListBuilder.create(), PartPose.offsetAndRotation(0.5F, 0.5F, 0.0F, 0.0F, 0.0F, -0.2618F));
+
+        PartDefinition CrystalZAxis_r1 = RightArmCrystals.addOrReplaceChild("CrystalZAxis_r1", CubeListBuilder.create().texOffs(56, 69).addBox(0.0F, -4.0F, -2.0F, 0.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.3F, -0.9F, 0.0F, 0.0F, 0.0F, -0.6109F));
+
+        PartDefinition CrystalXAxis_r1 = RightArmCrystals.addOrReplaceChild("CrystalXAxis_r1", CubeListBuilder.create().texOffs(56, 69).addBox(0.0F, -4.0F, -2.0F, 0.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(-1.3F, -0.9F, 0.0F, 0.0F, 1.5708F, -0.6109F));
+
         PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(20, 45).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(5.0F, 2.0F, 0.0F));
 
         PartDefinition LeftFur = LeftArm.addOrReplaceChild("LeftFur", CubeListBuilder.create().texOffs(80, 26).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, new CubeDeformation(0.15F)), PartPose.offset(0.0F, 0.0F, 0.0F));
@@ -211,6 +239,12 @@ public class LuminarcticFemaleLeopardModel extends AdvancedHumanoidModel<FemaleL
                 .texOffs(8, 89).mirror().addBox(1.8F, 9.975F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
                 .texOffs(8, 87).mirror().addBox(0.5F, 9.975F, -1.875F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false)
                 .texOffs(8, 91).mirror().addBox(-0.775F, 9.975F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)).mirror(false), PartPose.offset(0.0F, -1.0F, 0.0F));
+
+        PartDefinition LeftArmCrystals = LeftArm.addOrReplaceChild("LeftArmCrystals", CubeListBuilder.create(), PartPose.offsetAndRotation(-0.5F, 0.5F, 0.0F, 0.0F, 0.0F, 0.2618F));
+
+        PartDefinition CrystalZAxis_r2 = LeftArmCrystals.addOrReplaceChild("CrystalZAxis_r2", CubeListBuilder.create().texOffs(56, 73).mirror().addBox(0.0F, -4.0F, -2.0F, 0.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(1.3F, -0.9F, 0.0F, 0.0F, 0.0F, 0.6109F));
+
+        PartDefinition CrystalXAxis_r2 = LeftArmCrystals.addOrReplaceChild("CrystalXAxis_r2", CubeListBuilder.create().texOffs(56, 73).mirror().addBox(0.0F, -4.0F, -2.0F, 0.0F, 4.0F, 4.0F, new CubeDeformation(0.0F)).mirror(false), PartPose.offsetAndRotation(1.3F, -0.9F, 0.0F, 0.0F, -1.5708F, 0.6109F));
 
         PartDefinition RightLeg = partdefinition.addOrReplaceChild("RightLeg", CubeListBuilder.create(), PartPose.offset(-2.4F, 10.5F, 0.0F));
 

@@ -45,6 +45,8 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
     public static final RegistryObject<PsychicGrab> PSYCHIC_GRAB = REGISTRY.register("psychic_grab", PsychicGrab::new);
     public static final RegistryObject<AdvancedHearingAbility> ADVANCED_HEARING = REGISTRY.register("advanced_hearing", AdvancedHearingAbility::new);
     public static final RegistryObject<TeleportAbility> TELEPORT = REGISTRY.register("teleport", TeleportAbility::new);
+    public static final RegistryObject<UnfuseAbility> UNFUSE = REGISTRY.register("unfuse", UnfuseAbility::new);
+
 
 
     public static List<EntityType<?>> getCanGlideEntites() {

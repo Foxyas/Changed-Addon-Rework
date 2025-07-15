@@ -2,6 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
+import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;

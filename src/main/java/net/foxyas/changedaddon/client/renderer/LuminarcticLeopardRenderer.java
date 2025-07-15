@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.LuminarcticLeopardModel;
-import net.foxyas.changedaddon.entity.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
 import net.ltxprogrammer.changed.ability.HypnosisAbility;
@@ -50,8 +50,9 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
         ));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-        this.addLayer(new thisConditionalLayers.thisGlowLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_ability_active.png")));
-        this.addLayer(new thisConditionalLayers.thisGlowFelineEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_feline_eyes_male.png")));
+        this.addLayer(new thisConditionalLayers.thisGlowLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/male/luminarctic_leopard_ability_active.png")));
+        this.addLayer(new thisConditionalLayers.thisGlowFelineEyesLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/male/luminarctic_leopard_feline_eyes_male.png")));
+        this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/crystals_layer.png")));
     }
 
 	@Override
@@ -86,10 +87,10 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
 	@Override
     public ResourceLocation getTextureLocation(LuminarcticLeopardEntity entity) {
         if (entity.getUnderlyingPlayer() != null) {
-            return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard_no_eyes.png");
+            return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/male/luminarctic_leopard_no_eyes.png");
         }
 
-        return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopard.png");
+        return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/male/luminarctic_leopard.png");
     }
 
     private static class thisConditionalLayers {
