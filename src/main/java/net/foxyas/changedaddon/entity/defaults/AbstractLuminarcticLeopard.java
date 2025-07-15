@@ -250,6 +250,11 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     @Override
     public void baseTick() {
         super.baseTick();
+        if (tickCount < 4) {
+            if (this.isBoss()){
+                handleBoss();
+            }
+        }
         if (this.getUnderlyingPlayer() == null) {
 		/*if (this.DEVATTACKTESTTICK != 0){
 			this.AbilitiesTicksCooldown = 0;
