@@ -389,7 +389,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor p_21434_, @NotNull DifficultyInstance p_21435_, @NotNull MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
-        if (this.isBoss()) {
+        if (p_21438_ != null && p_21438_.contains("isBoss") && p_21438_.getBoolean("isBoss")) {
+            handleBoss();
+        } else if (this.isBoss()) {
             handleBoss();
         }
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
@@ -473,7 +475,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             } else {
                 // Animação de esquiva e "ignorar" o dano
                 this.setDodgeAnimTicks(getLevel().random.nextBoolean() ? DodgeAnimMaxTicks : -DodgeAnimMaxTicks);
-  				this.setDodgeType(this.getRandom().nextInt(2) + 1);
+                this.setDodgeType(this.getRandom().nextInt(2) + 1);
 
                 Vec3 lookPos = new Vec3(attacker.getX(), attacker.getY() + 1.5, attacker.getZ());
                 this.lookAt(EntityAnchorArgument.Anchor.EYES, lookPos);
