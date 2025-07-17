@@ -53,6 +53,7 @@ public class UseGrabAbilityGoal extends Goal {
         AbstractAbility.Controller controller = grabAbility.getController();
         grabAbility.getUseType().check(true, controller.exchangeKeyState(true), controller);
         grabAbility.startUsing(); // Inicia a habilidade (não inicia a grab ainda)
+        grabAbility.tick();
         ticks = 0;
     }
 
