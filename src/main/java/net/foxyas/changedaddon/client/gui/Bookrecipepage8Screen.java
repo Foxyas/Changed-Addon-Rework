@@ -80,7 +80,7 @@ public class Bookrecipepage8Screen extends AbstractContainerScreen<Bookrecipepag
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_f_flowers_or_plants"), 9, 5, -16777216);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_s_seeds"), 9, 15, -16777216);
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m_meet"), 9, 25, -16777216);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m_meat"), 9, 25, -16777216);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m"), 41, 83, -16777114);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m1"), 26, 68, -16777114);
 		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.bookrecipepage_8.label_m2"), 41, 54, -16777114);

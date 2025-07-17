@@ -77,7 +77,7 @@ public class ChangedAddonTransfurVariants {
     public static final DeferredRegister<TransfurVariant<?>> REGISTRY = ChangedRegistry.TRANSFUR_VARIANT.createDeferred(ChangedAddonMod.MODID);
 
     public static List<TransfurVariant<?>> getRemovedVariantsList() {
-        return List.of(VOID_FOX.get(), REYN.get(), FENGQI_WOLF.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
+        return List.of(VOID_FOX.get(), REYN.get(), FENGQI_WOLF.get(),KET_EXPERIMENT_009.get(), EXPERIMENT_10.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
     }
 
     public static Collection<TransfurVariant<?>> getVariantsRemovedFromSyringes() {

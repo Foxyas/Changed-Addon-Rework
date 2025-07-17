@@ -90,8 +90,8 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.17);
         attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1);
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(12);
-        attributes.getInstance(Attributes.ARMOR).setBaseValue(20);
-        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(12);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(10);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(6);
         attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
         attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.8);
     }

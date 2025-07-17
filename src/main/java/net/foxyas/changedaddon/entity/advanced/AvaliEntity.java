@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
-import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

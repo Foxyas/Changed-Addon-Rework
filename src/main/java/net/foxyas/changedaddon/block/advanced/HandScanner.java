@@ -35,6 +35,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Random;
@@ -58,8 +59,13 @@ public class HandScanner extends Block {
     }
 
     public HandScanner() {
-        super(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).sound(SoundType.METAL).strength(3.0F, 3.0F).dynamicShape());
+        super(Properties.of(Material.METAL, MaterialColor.COLOR_BLACK).isRedstoneConductor((state, blockGetter, blockPos) -> state.getValue(POWERED)).sound(SoundType.METAL).strength(3.0F, 3.0F).dynamicShape());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(POWERED, Boolean.FALSE).setValue(LOCK_TYPE, LockType.TRANSFURRED));
+    }
+
+    @Override
+    public boolean canConnectRedstone(BlockState state, BlockGetter level, BlockPos pos, @Nullable Direction direction) {
+        return super.canConnectRedstone(state, level, pos, direction);
     }
 
     @Override
@@ -165,6 +171,18 @@ public class HandScanner extends Block {
                 level.scheduleTick(pos, this, 30);
             }*/
         } else {
+            if (player.isShiftKeyDown()) {
+                ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
+                ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.KEY, pos, 0.5F, 1.0F);
+                if (state.getValue(LOCK_TYPE) == LockType.HUMAN) {
+                    level.setBlock(pos, state.setValue(LOCK_TYPE, LockType.TRANSFURRED), 3);
+                } else if (state.getValue(LOCK_TYPE) == LockType.TRANSFURRED) {
+                    level.setBlock(pos, state.setValue(LOCK_TYPE, LockType.HUMAN), 3);
+                }
+                level.scheduleTick(pos, this, 5);
+                return InteractionResult.SUCCESS;
+            }
+
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.KEY, pos, 0.5F, 1.0F);
             level.setBlock(pos, state.setValue(POWERED, false), 3);
@@ -181,6 +199,22 @@ public class HandScanner extends Block {
             level.updateNeighborsAt(pos.relative(direction), block);
         }
     }
+
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        if (!level.isClientSide) {
+            boolean isPowered = level.hasNeighborSignal(pos);
+
+            if (isPowered) {
+                if (state.getValue(LOCK_TYPE) == LockType.HUMAN) {
+                    level.setBlock(pos, state.setValue(LOCK_TYPE, LockType.TRANSFURRED), 3);
+                } else if (state.getValue(LOCK_TYPE) == LockType.TRANSFURRED) {
+                    level.setBlock(pos, state.setValue(LOCK_TYPE, LockType.HUMAN), 3);
+                }
+            }
+        }
+    }
+
 
 
     @Override
