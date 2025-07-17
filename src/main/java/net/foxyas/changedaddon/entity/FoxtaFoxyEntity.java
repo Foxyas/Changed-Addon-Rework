@@ -36,6 +36,7 @@ public class FoxtaFoxyEntity extends ChangedEntity implements GenderedEntity, Po
 		xpReward = 5;
 		this.setAttributes(this.getAttributes());
 		setNoAi(false);
+		setPersistenceRequired();
 	}
 
 	protected void setAttributes(AttributeMap attributes) {

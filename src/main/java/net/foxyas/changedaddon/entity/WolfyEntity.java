@@ -1,7 +1,11 @@
 
 package net.foxyas.changedaddon.entity;
 
+import net.foxyas.changedaddon.entity.goals.UseGrabAbilityGoal;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.HairStyle;
@@ -9,6 +13,7 @@ import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
@@ -28,12 +33,16 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
 public class WolfyEntity extends AbstractDarkLatexWolf {
+
+	public GrabEntityAbilityInstance grabEntityAbilityInstance;
+
 	public WolfyEntity(PlayMessages.SpawnEntity packet, Level world) {
 		this(ChangedAddonModEntities.WOLFY.get(), world);
 	}
@@ -45,14 +54,16 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 		this.setAttributes(getAttributes());
 		setNoAi(false);
 		setPersistenceRequired();
-	}
+		this.grabEntityAbilityInstance = new GrabEntityAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get(), IAbstractChangedEntity.forEntity(this));
+    }
 
-	protected void setAttributes(AttributeMap attributes) {
+	@SuppressWarnings("DataFlowIssue")
+    protected void setAttributes(AttributeMap attributes) {
 		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((1));
 		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((14));
 		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(25.0f);
 		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.20f);
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(0.5f);
+		attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(0.5f);
 		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(2);
 		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
 		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
@@ -66,7 +77,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public @NotNull Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -107,6 +118,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
+		this.goalSelector.addGoal(4, new UseGrabAbilityGoal(this,this.grabEntityAbilityInstance));
 		/*this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
 			protected double getAttackReachSqr(LivingEntity entity) {
@@ -135,7 +147,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
     }
 
 	@Override
-	public MobType getMobType() {
+	public @NotNull MobType getMobType() {
 		return MobType.UNDEFINED;
 	}
 
@@ -150,17 +162,17 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 	}
 
 	@Override
-	public SoundEvent getHurtSound(DamageSource ds) {
+	public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
 	}
 
 	@Override
-	public SoundEvent getDeathSound() {
+	public @NotNull SoundEvent getDeathSound() {
 		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
 	}
 	
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurt(@NotNull DamageSource source, float amount) {
 		if (source == DamageSource.LIGHTNING_BOLT)
 			return false;
 		if (source.isExplosion())
@@ -176,7 +188,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+		builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
 		builder = builder.add(Attributes.MAX_HEALTH, 14);
 		builder = builder.add(Attributes.ARMOR, 0);
