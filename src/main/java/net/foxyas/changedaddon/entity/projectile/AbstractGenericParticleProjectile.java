@@ -449,27 +449,25 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         if (this.isParryAble()) {
             Entity entity = damageSource.getDirectEntity();
             if (entity instanceof LivingEntity livingEntity) {
-                if (livingEntity.isBlocking()) {
-                    if (this.getOwner() != null && this.getTarget() != null) {
-                        Entity oTarget = this.getTarget();
-                        Entity oOwner = this.getOwner();
-                        this.setOwner(oTarget);
-                        this.setTarget(oOwner);
-                        this.setBaseDamage(5d);
-                        if (!oTarget.level.isClientSide() && oTarget.getLevel() instanceof ServerLevel serverLevel) {
-                            serverLevel.playSound(null, this.position().x, this.position().y, this.position().z, SoundEvents.SHIELD_BLOCK, SoundSource.MASTER, 1.0F, 1.0F);
-                            serverLevel.playSound(null, this.position().x, this.position().y, this.position().z, SoundEvents.ANVIL_LAND, SoundSource.MASTER, 0.5F, 1.2F);
-                            for (EquipmentSlot itemBySlot : EquipmentSlot.values()) {
-                                ItemStack stack = livingEntity.getItemBySlot(itemBySlot);
-                                stack.setDamageValue(Math.max(stack.getDamageValue() - 2, 0));
-                            }
+                if (this.getOwner() != null && this.getTarget() != null) {
+                    Entity oTarget = this.getTarget();
+                    Entity oOwner = this.getOwner();
+                    this.setOwner(oTarget);
+                    this.setTarget(oOwner);
+                    this.setBaseDamage(5d);
+                    if (!oTarget.level.isClientSide() && oTarget.getLevel() instanceof ServerLevel serverLevel) {
+                        serverLevel.playSound(null, this.position().x, this.position().y, this.position().z, SoundEvents.SHIELD_BLOCK, SoundSource.MASTER, 1.0F, 1.0F);
+                        serverLevel.playSound(null, this.position().x, this.position().y, this.position().z, SoundEvents.ANVIL_LAND, SoundSource.MASTER, 0.5F, 1.2F);
+                        for (EquipmentSlot itemBySlot : EquipmentSlot.values()) {
+                            ItemStack stack = livingEntity.getItemBySlot(itemBySlot);
+                            stack.setDamageValue(Math.max(stack.getDamageValue() - 2, 0));
                         }
-                        this.setDeltaMovement(this.getDeltaMovement().scale(-1));
-                        this.lifeSpamNearTarget = 0;
-                        this.lifeSpamWithoutTarget = 0;
-                        this.markHurt();
-                        return true;
                     }
+                    this.setDeltaMovement(this.getDeltaMovement().scale(-1));
+                    this.lifeSpamNearTarget = 0;
+                    this.lifeSpamWithoutTarget = 0;
+                    this.markHurt();
+                    return true;
                 }
             }
         }
