@@ -107,6 +107,7 @@ public class ComboAbilityGoal extends Goal {
     private void teleportToTarget() {
         if (target == null) return;
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
+        attacker.lookAt(target, 1, 1);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
@@ -131,6 +132,7 @@ public class ComboAbilityGoal extends Goal {
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         Vec3 knockDir = attacker.getLookAngle().scale(strength).add(0, 0.2, 0);
         target.setDeltaMovement(knockDir);
+        attacker.lookAt(target, 1, 1);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
@@ -148,6 +150,7 @@ public class ComboAbilityGoal extends Goal {
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         Vec3 knockDir = attacker.getLookAngle().scale(strength).add(0, 0.2, 0);
         target.setDeltaMovement(knockDir);
+        attacker.lookAt(target, 1, 1);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
@@ -165,6 +168,7 @@ public class ComboAbilityGoal extends Goal {
         if (target == null) return;
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         target.setDeltaMovement(0, 1.5, 0);
+        attacker.lookAt(target, 1, 1);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
@@ -182,6 +186,7 @@ public class ComboAbilityGoal extends Goal {
         if (target == null) return;
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         target.setDeltaMovement(0, -2, 0);
+        attacker.lookAt(target, 1, 1);
         attacker.swing(InteractionHand.MAIN_HAND);
         removeIframesFromTarget();
         if (!target.isBlocking()) {

@@ -125,6 +125,9 @@ public class BossComboAbilityGoal extends Goal {
         public void teleportToTarget() {
             if (target == null) return;
             attacker.teleportTo(target.getX(), target.getY(), target.getZ());
+            if (attacker instanceof Mob mob) {
+                mob.lookAt(target, 1, 1);
+            }
             attacker.swing(InteractionHand.MAIN_HAND);
             removeIframesFromTarget();
             target.hurt(DamageSource.mobAttack(attacker), damage);
@@ -144,6 +147,9 @@ public class BossComboAbilityGoal extends Goal {
             attacker.teleportTo(target.getX(), target.getY(), target.getZ());
             Vec3 knockDir = attacker.getLookAngle().scale(strength).add(0, 0.2, 0);
             target.setDeltaMovement(knockDir);
+            if (attacker instanceof Mob mob) {
+                mob.lookAt(target, 1, 1);
+            }
             attacker.swing(InteractionHand.MAIN_HAND);
             removeIframesFromTarget();
             target.hurt(DamageSource.mobAttack(attacker), damage / 2);
@@ -156,6 +162,9 @@ public class BossComboAbilityGoal extends Goal {
             attacker.teleportTo(target.getX(), target.getY(), target.getZ());
             Vec3 knockDir = attacker.getLookAngle().scale(strength).add(0, 0.2, 0);
             target.setDeltaMovement(knockDir);
+            if (attacker instanceof Mob mob) {
+                mob.lookAt(target, 1, 1);
+            }
             attacker.swing(InteractionHand.MAIN_HAND);
             removeIframesFromTarget();
             target.hurt(DamageSource.mobAttack(attacker), damage / 2);
@@ -168,6 +177,9 @@ public class BossComboAbilityGoal extends Goal {
             if (target == null) return;
             attacker.teleportTo(target.getX(), target.getY(), target.getZ());
             target.setDeltaMovement(0, 1.5, 0);
+            if (attacker instanceof Mob mob) {
+                mob.lookAt(target, 1, 1);
+            }
             attacker.swing(InteractionHand.MAIN_HAND);
             removeIframesFromTarget();
             target.hurt(DamageSource.mobAttack(attacker), damage);
@@ -180,6 +192,9 @@ public class BossComboAbilityGoal extends Goal {
             if (target == null) return;
             attacker.teleportTo(target.getX(), target.getY(), target.getZ());
             target.setDeltaMovement(0, -2, 0);
+            if (attacker instanceof Mob mob) {
+                mob.lookAt(target, 1, 1);
+            }
             attacker.swing(InteractionHand.MAIN_HAND);
             removeIframesFromTarget();
             target.hurt(DamageSource.mobAttack(attacker), damage);

@@ -54,6 +54,13 @@ public class DashPunchGoal extends Goal {
         mob.getNavigation().stop();
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         mob.getLevel().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
+        if (mob.level instanceof ServerLevel server) {
+            server.sendParticles(
+                    ParticleTypes.EXPLOSION_EMITTER,
+                    mob.getX(), mob.getEyeY(), mob.getZ(),
+                    1, 0, 0, 0, 0
+            );
+        }
         for (LivingEntity living : mob.getLevel().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(8), (livingEntity -> !livingEntity.isSpectator() && !livingEntity.is(mob)))) {
             Vec3 knock = living.position().subtract(mob.position()).normalize().scale(1.2);
             living.push(knock.x, knock.y * 1.25f, knock.z);
@@ -142,7 +149,7 @@ public class DashPunchGoal extends Goal {
 
         // Particles
         if (level instanceof ServerLevel server) {
-            server.sendParticles(ParticleTypes.EXPLOSION, mob.getX(), mob.getY(), mob.getZ(), 10, 0.5, 0.5, 0.5, 0.1);
+            server.sendParticles(ParticleTypes.EXPLOSION, mob.getX(), mob.getEyeY(), mob.getZ(), 10, 0.5, 0.5, 0.5, 0.1);
         }
 
         // Sound

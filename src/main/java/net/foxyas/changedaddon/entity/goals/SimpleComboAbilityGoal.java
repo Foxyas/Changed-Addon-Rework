@@ -140,6 +140,7 @@ public class SimpleComboAbilityGoal extends Goal {
         if (target == null) return;
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         attacker.swing(InteractionHand.MAIN_HAND);
+        attacker.lookAt(target, 1, 1);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
             target.hurt(DamageSource.mobAttack(attacker), damage);
@@ -164,6 +165,7 @@ public class SimpleComboAbilityGoal extends Goal {
         Vec3 knockDir = attacker.getLookAngle().scale(strength).add(0, 0.2, 0);
         target.setDeltaMovement(knockDir);
         attacker.swing(InteractionHand.MAIN_HAND);
+        attacker.lookAt(target, 1, 1);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
             target.hurt(DamageSource.mobAttack(attacker), damage / 2);
@@ -181,6 +183,8 @@ public class SimpleComboAbilityGoal extends Goal {
         Vec3 knockDir = attacker.getLookAngle().scale(strength).add(0, 0.2, 0);
         target.setDeltaMovement(knockDir);
         attacker.swing(InteractionHand.MAIN_HAND);
+        attacker.lookAt(target, 1, 1);
+
         removeIframesFromTarget();
         if (!target.isBlocking()) {
             target.hurt(DamageSource.mobAttack(attacker), damage / 2);
@@ -198,6 +202,7 @@ public class SimpleComboAbilityGoal extends Goal {
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         target.setDeltaMovement(0, 1.5, 0);
         attacker.swing(InteractionHand.MAIN_HAND);
+        attacker.lookAt(target, 1, 1);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
             target.hurt(DamageSource.mobAttack(attacker), damage);
@@ -215,6 +220,7 @@ public class SimpleComboAbilityGoal extends Goal {
         attacker.teleportTo(target.getX(), target.getY(), target.getZ());
         target.setDeltaMovement(0, -2, 0);
         attacker.swing(InteractionHand.MAIN_HAND);
+        attacker.lookAt(target, 1, 1);
         removeIframesFromTarget();
         if (!target.isBlocking()) {
             target.hurt(DamageSource.mobAttack(attacker), damage);

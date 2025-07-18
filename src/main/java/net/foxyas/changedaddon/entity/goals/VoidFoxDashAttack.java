@@ -112,6 +112,7 @@ public class VoidFoxDashAttack extends Goal {
         if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
+            dasher.getLookControl().setLookAt(dasher.getEyePosition().add(dashDirection));
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
                 tickCount += 5;
             }

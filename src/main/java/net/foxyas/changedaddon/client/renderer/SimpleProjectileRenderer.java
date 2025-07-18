@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.ModelLuminarCrystalSpearModel;
 import net.foxyas.changedaddon.client.model.projectile.SimpleProjectileModel;
 import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
+import net.foxyas.changedaddon.entity.projectile.AbstractGenericParticleProjectile;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -19,6 +20,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+
+import java.awt.*;
 
 public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityModel<T>> extends EntityRenderer<T> {
 
@@ -49,7 +52,16 @@ public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityM
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.eyes(TEXTURE));
 
         // Renderiza o modelo corretamente
-        this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        if (entity instanceof AbstractGenericParticleProjectile genericParticleProjectile) {
+            if (genericParticleProjectile.isParryAble()) {
+                Color parryAbleColor = new Color(255, 195, 0, 255);
+                this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, parryAbleColor.getRed() / 255f, parryAbleColor.getGreen() / 255f, parryAbleColor.getBlue() / 255f, parryAbleColor.getAlpha() / 255f);
+            } else {
+                this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            }
+        } else {
+            this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        }
 
         poseStack.popPose();
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);

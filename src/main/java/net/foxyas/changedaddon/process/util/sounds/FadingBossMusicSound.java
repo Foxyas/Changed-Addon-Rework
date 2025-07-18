@@ -29,7 +29,7 @@ public class FadingBossMusicSound extends AbstractTickableSoundInstance {
         this.currentSound = soundEvent;
         this.trackedEntity = entity;
         this.looping = true;
-        this.volume = 0.0f;
+        this.volume = 1.0f;
         this.pitch = 1.0f;
         this.fadeInTicks = DEFAULT_FADE_TICKS;
     }

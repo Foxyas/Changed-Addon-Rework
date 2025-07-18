@@ -5,7 +5,10 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
 import net.foxyas.changedaddon.entity.goals.*;
+import net.foxyas.changedaddon.entity.projectile.AbstractGenericParticleProjectile;
+import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.foxyas.changedaddon.registers.ChangedAddonEntities;
@@ -43,6 +46,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,7 +66,9 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     private static final int MAX_COOLDOWN = 120;
     public static final int MAX_1_COOLDOWN = 120;
     public static final int MAX_2_COOLDOWN = 120;
+    public int stunTicks = 0;
     private int ticksInUse;
+    private int ticksTakeDmgFromFire = 0;
 
     public VoidFoxEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonModEntities.VOID_FOX.get(), world);
@@ -140,7 +146,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(10, new SimpleAntiFlyingAttack(this, 0, 32f, 1f, 40){
+        this.goalSelector.addGoal(10, new SimpleAntiFlyingAttack(this, 0, 32f, 1f, 40) {
             @Override
             public void start() {
                 super.start();
@@ -268,6 +274,9 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                             returnStyle = returnStyle.withItalic(true);
                             return returnStyle;
                         })), true);
+                        {
+                            VoidFoxEntity.this.stunTicks = 120;
+                        }
                     }
                 }
                 super.stop();
@@ -341,6 +350,9 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                             returnStyle = returnStyle.withItalic(true);
                             return returnStyle;
                         })), true);
+                        {
+                            VoidFoxEntity.this.stunTicks = 120;
+                        }
                     }
                 }
                 super.stop();
@@ -415,6 +427,9 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                             returnStyle = returnStyle.withItalic(true);
                             return returnStyle;
                         })), true);
+                        {
+                            VoidFoxEntity.this.stunTicks = 120;
+                        }
                     }
                 }
                 super.stop();
@@ -583,6 +598,18 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         float randomValue = this.getRandom().nextFloat();
         float value = this.computeHealthRatio() <= 0.5f ? 0.75f : 0.5f;
         boolean willHit = randomValue <= value;
+        if (source.getEntity() instanceof AbstractGenericParticleProjectile
+                || source.getDirectEntity() instanceof AbstractGenericParticleProjectile) {
+            boolean f = super.hurt(source, amount * 3.5f);
+            this.invulnerableTime = 0;
+            this.hurtDuration = 1;
+            this.hurtDir = 1;
+            this.hurtTime = 1;
+            return f;
+        }
+        if (source.isFire()) {
+            ticksTakeDmgFromFire++;
+        }
 
         if (source.getEntity() != null) {
             if (VoidFoxEntity.this.AttackInUse > 0) {
@@ -710,6 +737,10 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
     public void tickAttackTicks() {
         if (!this.isNoAi()) {
+            if (this.stunTicks > 0) {
+                this.stunTicks--;
+                return;
+            }
             if (AttackInUse != 0) {
                 ticksInUse++;
                 if (ticksInUse > 260) {
@@ -780,6 +811,77 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         handleChanges();
 
         if (!this.level.isClientSide) {
+            if (ticksTakeDmgFromFire > 5) {
+                ticksTakeDmgFromFire = 0;
+                this.getLevel().playSound(null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
+                if (this.level instanceof ServerLevel server) {
+                    server.sendParticles(
+                            ParticleTypes.EXPLOSION_EMITTER,
+                            this.getX(), this.getEyeY(), this.getZ(),
+                            1, 0, 0, 0, 0
+                    );
+                }
+                for (LivingEntity living : this.getLevel().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(8), (livingEntity -> !livingEntity.isSpectator() && !livingEntity.is(this)))) {
+                    Vec3 knock = living.position().subtract(this.position()).normalize().scale(1.2);
+                    living.push(knock.x, knock.y * 1.25f, knock.z);
+                    if (living instanceof Player player) {
+                        player.displayClientMessage(new TextComponent("ENOUGH OF THIS").withStyle((style -> {
+                            Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                            returnStyle = returnStyle.withItalic(true);
+                            return returnStyle;
+                        })), true);
+                    }
+                }
+                this.getLevel().playSound(null, this.blockPosition(), SoundEvents.FIRE_EXTINGUISH, SoundSource.HOSTILE, 1.0F, 1.0F);
+                this.setRemainingFireTicks(0);
+                // int totalProjectiles = 12; // número de projéteis
+                double radius = 1.5;
+
+                for (int theta = 0; theta < 360; theta += 45) { // Ângulo horizontal (longitude)
+                    double angleTheta = Math.toRadians(theta);
+                    for (int phi = 0; phi <= 180; phi += 45) { // Ângulo vertical (latitude)
+                        double anglePhi = Math.toRadians(phi);
+
+                        // Direção do disparo (coordenadas cartesianas de uma esfera)
+                        double dx = Math.sin(anglePhi) * Math.cos(angleTheta);
+                        double dy = Math.cos(anglePhi);
+                        double dz = Math.sin(anglePhi) * Math.sin(angleTheta);
+
+                        // Posição inicial (esfera ao redor da entidade)
+                        double px = this.getX() + dx * radius;
+                        double py = this.getY() + dy * radius + 1.0; // leve ajuste de altura
+                        double pz = this.getZ() + dz * radius;
+
+                        ParticleProjectile projectile = new ParticleProjectile(ChangedAddonEntities.PARTICLE_PROJECTILE.get(), this.level);
+                        projectile.setSmoothMotion(true);
+                        projectile.setPos(px, py, pz);
+                        projectile.shoot(dx, dy, dz, 1.0f, 0.0f); // dispara na direção da esfera
+                        projectile.setOwner(this);
+                        projectile.setTarget(this.getTarget());
+                        projectile.setParryAble(true);
+
+                        this.level.addFreshEntity(projectile);
+                    }
+                }
+
+                /*
+                for (int i = 0; i < totalProjectiles; i++) {
+                    double angle = (2 * Math.PI / totalProjectiles) * i;
+                    double dx = Math.cos(angle);
+                    double dz = Math.sin(angle);
+                    double px = this.getX() + dx * radius;
+                    double py = this.getY() + 1.0; // altura levemente acima do chão
+                    double pz = this.getZ() + dz * radius;
+
+                    // Supondo que seu projétil seja uma entidade chamada "MyProjectileEntity"
+                    ParticleProjectile projectile = new ParticleProjectile(ChangedAddonEntities.PARTICLE_PROJECTILE.get(), this.level);
+                    projectile.setPos(px, py, pz);
+                    projectile.shoot(dx, 0.1, dz, 1.0f, 0.0f); // direção e velocidade
+                    projectile.setTarget(this.getTarget());
+
+                    this.level.addFreshEntity(projectile);
+                }*/
+            }
             if (this.computeHealthRatio() <= 0.5) {
                 this.bossBar.setProgress(computeHealthRatio() / 0.5f);
                 this.bossBar.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);

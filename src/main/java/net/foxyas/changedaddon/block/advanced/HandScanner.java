@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -24,6 +25,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -131,7 +133,7 @@ public class HandScanner extends Block {
 
     @Override
     public boolean isSignalSource(BlockState state) {
-        return state.getValue(POWERED);
+        return true;
     }
 
     @Override
@@ -156,22 +158,18 @@ public class HandScanner extends Block {
         LockType lockType = state.getValue(LOCK_TYPE);
         boolean allow = (lockType == LockType.HUMAN && (!isTransfurred || playerTransfur.is(ChangedTransfurVariants.LATEX_HUMAN))) || (lockType == LockType.TRANSFURRED && (isTransfurred && !playerTransfur.is(ChangedTransfurVariants.LATEX_HUMAN)));
 
-        if (!allow) {
-            ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BUZZER1, pos, 1.0F, 1.0F);
-            player.displayClientMessage(new TextComponent("You cannot use this lock in your current form!"), true);
-            return InteractionResult.CONSUME;
-        }
-
-        if (!state.getValue(POWERED)) {
-            ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
-            level.setBlock(pos, state.setValue(POWERED, true), 3);
-            updateRedstoneSignal(level, pos, state.getBlock());
-            level.scheduleTick(pos, this, 5);
-            /*if (!player.isShiftKeyDown()) {
-                level.scheduleTick(pos, this, 30);
-            }*/
-        } else {
-            if (player.isShiftKeyDown()) {
+        if (player.isShiftKeyDown()) {
+            boolean canChange = false;
+            for (Direction direction : Direction.values()) {
+                if (!level.getBlockState(pos.relative(direction)).is(BlockTags.BUTTONS) && !level.getBlockState(pos.relative(direction)).is(Blocks.LEVER)) {
+                    continue;
+                }
+                if (level.getSignal(pos, direction) > 0 && (level.getBlockState(pos.relative(direction)).getValue(POWERED) || level.getBlockState(pos.relative(direction)).getValue(BlockStateProperties.POWERED) )) {
+                    canChange = true;
+                    break;
+                }
+            }
+            if (canChange) {
                 ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
                 ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.KEY, pos, 0.5F, 1.0F);
                 if (state.getValue(LOCK_TYPE) == LockType.HUMAN) {
@@ -182,13 +180,28 @@ public class HandScanner extends Block {
                 level.scheduleTick(pos, this, 5);
                 return InteractionResult.SUCCESS;
             }
+        }
+
+        if (!allow) {
+            ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BUZZER1, pos, 1.0F, 1.0F);
+            player.displayClientMessage(new TextComponent("You cannot use this lock in your current form!"), true);
+            return InteractionResult.CONSUME;
+        }
+
+        if (!state.getValue(POWERED)) {
+            ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
+            level.setBlock(pos, state.setValue(POWERED, true), 3);
+            /*if (!player.isShiftKeyDown()) {
+                level.scheduleTick(pos, this, 30);
+            }*/
+        } else {
 
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.BLOW1, pos, 0.25F, 2.0F);
             ChangedSounds.broadcastSound(Objects.requireNonNull(level.getServer()), ChangedSounds.KEY, pos, 0.5F, 1.0F);
             level.setBlock(pos, state.setValue(POWERED, false), 3);
-            updateRedstoneSignal(level, pos, state.getBlock());
-            level.scheduleTick(pos, this, 5);
         }
+        updateRedstoneSignal(level, pos, state.getBlock());
+        level.scheduleTick(pos, this, 5);
 
         return InteractionResult.SUCCESS;
     }
@@ -201,20 +214,9 @@ public class HandScanner extends Block {
     }
 
     @Override
-    public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
-        if (!level.isClientSide) {
-            boolean isPowered = level.hasNeighborSignal(pos);
-
-            if (isPowered) {
-                if (state.getValue(LOCK_TYPE) == LockType.HUMAN) {
-                    level.setBlock(pos, state.setValue(LOCK_TYPE, LockType.TRANSFURRED), 3);
-                } else if (state.getValue(LOCK_TYPE) == LockType.TRANSFURRED) {
-                    level.setBlock(pos, state.setValue(LOCK_TYPE, LockType.HUMAN), 3);
-                }
-            }
-        }
+    public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block blockIn, @NotNull BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
     }
-
 
 
     @Override
