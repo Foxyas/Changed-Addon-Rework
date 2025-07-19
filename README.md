@@ -5,3 +5,33 @@
 [![Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/1aec26abb75544baec37249f42008b2fcc0e731f/assets/cozy/available/modrinth_vector.svg)](https://modrinth.com/mod/changed-addon-plus)
 [![Patreon](https://raw.githubusercontent.com/intergrav/devins-badges/1aec26abb75544baec37249f42008b2fcc0e731f/assets/cozy/donate/patreon-singular_vector.svg)](https://www.patreon.com/Changedaddonplus)
 
+
+
+## 💡 Looking for Help to "Un-MCreator" and Clean Up the Project!
+
+My mod has come a long way — and now it's time to take things to the next level by improving the codebase and leaving old limitations behind.
+
+A large part of the mod still contains remnants of its early development in **MCreator**, including redundant code, auto-generated structures, and a few messy design decisions.
+
+### 🛠️ What Does "Un-MCreator" Mean?
+
+We're aiming to:
+
+- 🧹 **Remove all unnecessary auto-generated MCreator code** that clutters the project.
+- 🧠 **Refactor classes and systems** for clarity, readability, and proper separation of concerns.
+- 🪓 **Eliminate redundancy** and unused or poorly implemented logic.
+- 📦 **Unify registries and initialization logic** using proper Forge/NeoForge standards.
+- 📚 **Improve code documentation** to make the project more contributor-friendly.
+- ⚙️ **Enhance performance and modularity**, making systems more reusable and less coupled.
+
+### 🤝 How You Can Help
+
+I'm currently looking for:
+
+- Developers experienced with **Minecraft Forge/NeoForge** (especially for versions 1.18.2 to 1.21.1).
+- Contributors passionate about **code cleanup and refactoring**.
+- Anyone interested in **learning real-world mod structure** and best practices through hands-on experience!
+
+If you enjoy cleaning up spaghetti code, optimizing structure, and turning chaos into maintainable systems — you're more than welcome to join the effort!
+
+Feel free to fork the repo, open PRs, or reach out with suggestions and improvements.
