@@ -6,9 +6,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import net.foxyas.changedaddon.configuration.ChangedaddoncommonConfiguration;
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedaddonCommonConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -16,9 +16,9 @@ public class ChangedAddonModConfigs {
 	@SubscribeEvent
 	public static void register(FMLConstructModEvent event) {
 		event.enqueueWork(() -> {
-			ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ChangedAddonConfigsConfiguration.SPEC, "changed_addon-server.toml");
-			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ChangedAddonClientConfigsConfiguration.SPEC, "changed_addon-client.toml");
-			ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ChangedaddoncommonConfiguration.SPEC, "changed_addon-common.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ChangedAddonServerConfiguration.SPEC, "changed_addon-server.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ChangedAddonClientConfiguration.SPEC, "changed_addon-client.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ChangedaddonCommonConfiguration.SPEC, "changed_addon-common.toml");
 		});
 	}
 }

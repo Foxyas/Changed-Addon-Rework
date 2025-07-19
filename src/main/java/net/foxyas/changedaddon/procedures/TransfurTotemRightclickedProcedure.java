@@ -20,7 +20,7 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 
 import java.util.Iterator;
 
@@ -91,7 +91,7 @@ public class TransfurTotemRightclickedProcedure {
 			} else {
 				if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
 					if ((itemstack.getOrCreateTag().getString("form")).isEmpty()) {
-						if (ChangedAddonConfigsConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
+						if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
 							if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
 								itemstack.getOrCreateTag().putString("form", ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
 								if (world.isClientSide())

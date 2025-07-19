@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.configuration;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class ChangedAddonConfigsConfiguration {
+public class ChangedAddonServerConfiguration {
 	public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 	public static final ForgeConfigSpec SPEC;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> ACCEPT_ALL_VARIANTS;

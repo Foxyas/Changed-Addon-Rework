@@ -243,6 +243,10 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
 
         if (!level.isClientSide && livingTarget.isAlive()) {
+            if (getOwner() != null && livingTarget.is(getOwner())){
+                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                this.discard();
+            }
             if (this.inGround || this.onGround) {
                 PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.discard();

@@ -12,7 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 
 import net.minecraft.network.chat.TextComponent;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 
 
 public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInstance> {
@@ -150,7 +150,7 @@ public class WingFlapAbility extends AbstractAbility<WingFlapAbility.AbilityInst
 			}
 
 
-			if (player.level.isClientSide() && ChangedAddonClientConfigsConfiguration.WING_FLAP_INFO.get()){
+			if (player.level.isClientSide() && ChangedAddonClientConfiguration.WING_FLAP_INFO.get()){
 				player.displayClientMessage(new TextComponent("Ticks = " + getController().getHoldTicks()), true);
 			}
         }

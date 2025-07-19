@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -39,9 +39,9 @@ public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends 
     }
 
     public void render(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!ChangedAddonClientConfigsConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot) {
+        if (!ChangedAddonClientConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot) {
             return;
-        } else if (!ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot) {
+        } else if (!ChangedAddonClientConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot) {
             return;
         }
 
@@ -59,9 +59,9 @@ public class CustomHairColorLayer<M extends AdvancedHumanoidModel<T>, T extends 
 
     @Override
     public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, T entity, HumanoidArm arm, PoseStack stackCorrector, float partialTick) {
-        if (!ChangedAddonClientConfigsConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot) {
+        if (!ChangedAddonClientConfiguration.FEMALE_SNEPS_HAIR.get() && IsFemaleOrNot) {
             return;
-        } else if (!ChangedAddonClientConfigsConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot) {
+        } else if (!ChangedAddonClientConfiguration.MALE_SNEPS_HAIR.get() && !IsFemaleOrNot) {
             return;
         }
         BasicPlayerInfo info = entity.getBasicPlayerInfo();

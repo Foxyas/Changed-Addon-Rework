@@ -1,10 +1,9 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.process.variantsExtraStats.FormDietEvent;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -14,7 +13,6 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -35,9 +33,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,7 +63,7 @@ public class CreatureDietsHandleProcedure {
 
         boolean isForWork = world.getGameRules().getBoolean(ChangedAddonModGameRules.CHANGED_ADDON_CREATURE_DIETS);
         boolean Debuffs;
-        Debuffs = ChangedAddonConfigsConfiguration.DEBUFFS.get();
+        Debuffs = ChangedAddonServerConfiguration.DEBUFFS.get();
 
         ChangedEntity ChangedEntity = latexInstance.getChangedEntity();
         TransfurVariant<?> variant = ChangedEntity.getSelfVariant();
@@ -77,14 +73,14 @@ public class CreatureDietsHandleProcedure {
         List<DietType> dietType = determineDietType(ChangedEntity, variant);
         if (dietType.isEmpty()) return;
 
-        boolean ShouldGiveDebuffs = (latexInstance.ageAsVariant < ChangedAddonConfigsConfiguration.AGE_NEED.get());
+        boolean ShouldGiveDebuffs = (latexInstance.ageAsVariant < ChangedAddonServerConfiguration.AGE_NEED.get());
 
         if (isForWork) {
             if (dietType.stream().anyMatch((diet -> diet.isDietItem(item)))) {
                 applyFoodEffects(variant, player, item, true);
                 if (!world.isClientSide()) {
                     world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 1.5f);
-                } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
+                } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
                     player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
                 }
             } else if (Debuffs) {
@@ -93,7 +89,7 @@ public class CreatureDietsHandleProcedure {
                     applyMobEffects(player);
                     if (!world.isClientSide()) {
                         world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 0f);
-                    } else if (player.getLevel().isClientSide() && ChangedAddonClientConfigsConfiguration.DIETS_DISPLAY_INFO.get()) {
+                    } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
                         player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
                     }
                 }

@@ -1,12 +1,11 @@
 package net.foxyas.changedaddon.effect.particles;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
@@ -14,26 +13,18 @@ import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -42,14 +33,11 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static net.foxyas.changedaddon.process.util.FoxyasUtils.manualRaycastIgnoringBlocks;
-
-import net.minecraft.world.entity.player.Player;
 
 public class LaserPointParticle extends TextureSheetParticle {
     public static class Option implements ParticleOptions {
@@ -273,7 +261,7 @@ public class LaserPointParticle extends TextureSheetParticle {
             );
         }
 
-        if (ChangedAddonClientConfigsConfiguration.SMOOTH_LASER_MOVIMENT.get()) {
+        if (ChangedAddonClientConfiguration.SMOOTH_LASER_MOVIMENT.get()) {
             moveToward(hitPos);
         } else {
             SetToward(hitPos);

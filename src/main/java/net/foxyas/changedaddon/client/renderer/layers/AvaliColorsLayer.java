@@ -1,12 +1,10 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
-import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.renderer.MultiBufferSource;

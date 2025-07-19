@@ -2,12 +2,10 @@ package net.foxyas.changedaddon.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModKeyMappings;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
@@ -38,7 +36,7 @@ public class PatOverlay {
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void eventHandler(RenderGameOverlayEvent.Pre event) {
 
-        if (!ChangedAddonClientConfigsConfiguration.PAT_OVERLAY.get()){
+        if (!ChangedAddonClientConfiguration.PAT_OVERLAY.get()){
             return;
         }
 
@@ -47,13 +45,13 @@ public class PatOverlay {
             int w = event.getWindow().getGuiScaledWidth();
             int h = event.getWindow().getGuiScaledHeight();
 
-            double posX = ChangedAddonClientConfigsConfiguration.PAT_OVERLAY_X.get();
-            double posY = h - ChangedAddonClientConfigsConfiguration.PAT_OVERLAY_Y.get();
+            double posX = ChangedAddonClientConfiguration.PAT_OVERLAY_X.get();
+            double posY = h - ChangedAddonClientConfiguration.PAT_OVERLAY_Y.get();
 
             float floatPosX = (float) posX;
             float floatPosY = (float) posY;
 
-            boolean DynamicChanges = ChangedAddonClientConfigsConfiguration.DYNAMIC_PAT_OVERLAY.get();
+            boolean DynamicChanges = ChangedAddonClientConfiguration.DYNAMIC_PAT_OVERLAY.get();
 
 
             Player entity = Minecraft.getInstance().player;
@@ -64,7 +62,7 @@ public class PatOverlay {
                     if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isEntityInPassiveStage(lookedEntity) && isKeySet()) {
                         if (!getPatInfo(entity).getString().isEmpty()){
                         	if (!lookedEntity.isInvisible() && isPossibleToPat(entity)){
-                               if (!ChangedAddonClientConfigsConfiguration.PAW_STYLE_PAT_OVERLAY.get()) {
+                               if (!ChangedAddonClientConfiguration.PAW_STYLE_PAT_OVERLAY.get()) {
                                     float EntityNameLength = PatInfo2(lookedEntity).getString().length();
                                     float MoveOverlayAmount = EntityNameLength * 2f;
                                     //EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;

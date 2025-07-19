@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import net.foxyas.changedaddon.abilities.CarryAbility;
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -84,7 +84,7 @@ public class renderHandMixin {
             return false;
         }
 
-        if (!ChangedAddonClientConfigsConfiguration.SHOW_EXTRA_HAND.get()){
+        if (!ChangedAddonClientConfiguration.SHOW_EXTRA_HAND.get()){
             return false;
         }
 

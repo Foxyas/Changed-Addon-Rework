@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
@@ -20,7 +20,7 @@ public class ChangedEntityTargetSelectorMixin {
     private void CancelTarget(LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir){
         ItemStack Head = livingEntity.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack Chest = livingEntity.getItemBySlot(EquipmentSlot.CHEST);
-        if (ChangedAddonConfigsConfiguration.DL_COAT_AFFECT_ALL.get()) {
+        if (ChangedAddonServerConfiguration.DL_COAT_AFFECT_ALL.get()) {
             if (isDarkLatexCoat(Head) && isDarkLatexCoat(Chest)){
                 //ChangedAddonMod.LOGGER.info("Evento cancelado: capacete e peitoral detectados");
                 cir.setReturnValue(false);

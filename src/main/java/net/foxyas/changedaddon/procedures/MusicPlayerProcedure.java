@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.configuration.ChangedAddonClientConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
@@ -58,7 +58,7 @@ public class MusicPlayerProcedure {
         boolean LumiClose = !LumiEntities.isEmpty();
         boolean ketExp9Close = !ketExp9Entities.isEmpty();
 
-        if (world.isClientSide() && ChangedAddonClientConfigsConfiguration.MUSICPLAYER.get()) {
+        if (world.isClientSide() && ChangedAddonClientConfiguration.MUSICPLAYER.get()) {
             Minecraft minecraft = Minecraft.getInstance();
             MusicManager musicManager = minecraft.getMusicManager();
             SoundManager soundManager = minecraft.getSoundManager();

@@ -21,7 +21,7 @@ import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 
 import javax.annotation.Nullable;
 
@@ -52,7 +52,7 @@ public class TransfurTotemEntityRightClickProcedure {
 					if (entity instanceof Player) {
 						if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur == true) {
 							if (a.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get() && (a.getOrCreateTag().getString("form")).isEmpty()) {
-								if (ChangedAddonConfigsConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
+								if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
 									if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
 										if (sourceentity instanceof Player _player)
 											_player.getCooldowns().addCooldown(a.getItem(), 20);
@@ -96,7 +96,7 @@ public class TransfurTotemEntityRightClickProcedure {
 									}
 								}
 							} else if (b.getItem() == ChangedAddonModItems.TRANSFUR_TOTEM.get() && (b.getOrCreateTag().getString("form")).isEmpty()) {
-								if (ChangedAddonConfigsConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
+								if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
 									if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
 										if (sourceentity instanceof Player _player)
 											_player.getCooldowns().addCooldown(b.getItem(), 20);

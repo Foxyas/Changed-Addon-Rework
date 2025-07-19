@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
@@ -80,7 +80,7 @@ public class DolatexinfectiontickProcedure {
         int tickDelay = getTickDelayForDifficulty(player.getLevel());
         var PlayerTolerance = ProcessTransfur.getEntityTransfurTolerance(player);
 
-        if (ChangedAddonConfigsConfiguration.ALWAYS_INFECT.get()) {
+        if (ChangedAddonServerConfiguration.ALWAYS_INFECT.get()) {
             if (transfurProgress > 0) {
                 if (!getInfected(player)) {
                     setInfected(player, true);

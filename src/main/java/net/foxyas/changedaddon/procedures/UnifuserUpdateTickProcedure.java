@@ -18,7 +18,7 @@ import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.recipes.RecipesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
-import net.foxyas.changedaddon.configuration.ChangedAddonConfigsConfiguration;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -155,7 +155,7 @@ public class UnifuserUpdateTickProcedure {
 				return false;
 			}
 		}.getValue(world, new BlockPos(x, y, z), "start_recipe")) == true) {
-			if (ChangedAddonConfigsConfiguration.CUSTOMRECIPES.get()) {
+			if (ChangedAddonServerConfiguration.CUSTOMRECIPES.get()) {
 				block = blockstate;
 				Slot0 = (new Object() {
 					public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
