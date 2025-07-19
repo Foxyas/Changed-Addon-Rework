@@ -28,7 +28,7 @@ We're aiming to:
 
 I'm currently looking for:
 
-- Developers experienced with **Minecraft Forge/NeoForge** (especially for versions 1.18.2 to 1.21.1).
+- Developers experienced with **Minecraft Forge** (especially for versions 1.18.2 to 1.20.1).
 - Contributors passionate about **code cleanup and refactoring**.
 - Anyone interested in **learning real-world mod structure** and best practices through hands-on experience!
 
