@@ -17,7 +17,7 @@ public class PlaySoundhissProcedure {
         if (entity == null)
             return;
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-            if (IfCatlatexProcedure.execute(entity)) {
+            if (IfCatLatexProcedure.execute(entity)) {
                 if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).act_cooldown) {
                     if (world instanceof Level _level) {
                         if (!_level.isClientSide()) {

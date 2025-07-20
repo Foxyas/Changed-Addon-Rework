@@ -20,7 +20,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
 
-import net.foxyas.changedaddon.procedures.HyperFlowerProcedure;
+import net.foxyas.changedaddon.procedures.LunarRoseProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.foxyas.changedaddon.client.model.ModelNewHyperFlower;
 
@@ -101,7 +101,7 @@ public abstract class LunarroseItem extends ArmorItem {
 
 		@Override
 		public void onArmorTick(ItemStack itemstack, Level world, Player entity) {
-			HyperFlowerProcedure.execute(world, entity, itemstack);
+			LunarRoseProcedure.execute(world, entity, itemstack);
 		}
 	}
 }

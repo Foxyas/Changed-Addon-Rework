@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.world.inventory.FightToKeepConsciousnessMinigameMenu;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -69,12 +70,13 @@ public class FightToKeepYourConsciousnessProcedure {
     }
 
     private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (entity.isAlive()) {
-            var playerVars = entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+        if (entity.isAlive() && entity instanceof Player player) {
+            ChangedAddonModVariables.PlayerVariables playerVars = entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null)
                     .orElse(new ChangedAddonModVariables.PlayerVariables());
+            TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
 
-            if (playerVars.transfur && playerVars.concience_Fight) {
-                if (entity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null
+            if (instance != null && playerVars.concience_Fight) {
+                if (ProcessTransfur.getPlayerTransfurVariant(player) != null
                         && ProcessTransfur.getPlayerTransfurVariant(player).ageAsVariant >= 100) {
 
                     if (playerVars.consciousness_fight_progress >= 25) {
@@ -84,12 +86,10 @@ public class FightToKeepYourConsciousnessProcedure {
 
                     } else {
                         // Falha no minigame
-                        player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
+                        player.displayClientMessage(new TextComponent("You §4Lose §rYour Conscience"), true);
                         SummonEntityProcedure.execute((Level) world, player);
                         PlayerUtil.UnTransfurPlayer(entity);
-                        if (entity instanceof LivingEntity livingEntity) {
-                            livingEntity.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
-                        }
+                        player.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
                         updatePlayerVariables(playerVars, false, 0, false, entity);
                     }
                 }

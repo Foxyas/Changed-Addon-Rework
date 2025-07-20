@@ -15,7 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.foxyas.changedaddon.world.inventory.TransfurSoundsGuiMenu;
 import net.foxyas.changedaddon.procedures.ReturnTypeTransfurSoundProcedure;
 import net.foxyas.changedaddon.procedures.IfDogLatexProcedure;
-import net.foxyas.changedaddon.procedures.IfCatlatexProcedure;
+import net.foxyas.changedaddon.procedures.IfCatLatexProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasGuiEntityDisplayProcedure;
 import net.foxyas.changedaddon.procedures.CooldownResetProcedure;
 import net.foxyas.changedaddon.procedures.CanRoarProcedure;
@@ -104,28 +104,28 @@ public class TransfurSoundsGuiScreen extends AbstractContainerScreen<TransfurSou
 		super.init();
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		button_1 = new Button(this.leftPos + 4, this.topPos + 6, 30, 20, new TranslatableComponent("gui.changed_addon.transfur_sounds_gui.button_1"), e -> {
-			if (IfCatlatexProcedure.execute(entity)) {
+			if (IfCatLatexProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TransfurSoundsGuiButtonMessage(0, x, y, z));
 				TransfurSoundsGuiButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
-				if (IfCatlatexProcedure.execute(entity))
+				if (IfCatLatexProcedure.execute(entity))
 					super.render(ms, gx, gy, ticks);
 			}
 		};
 		guistate.put("button:button_1", button_1);
 		this.addRenderableWidget(button_1);
 		button_2 = new Button(this.leftPos + 4, this.topPos + 28, 30, 20, new TranslatableComponent("gui.changed_addon.transfur_sounds_gui.button_2"), e -> {
-			if (IfCatlatexProcedure.execute(entity)) {
+			if (IfCatLatexProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TransfurSoundsGuiButtonMessage(1, x, y, z));
 				TransfurSoundsGuiButtonMessage.handleButtonAction(entity, 1, x, y, z);
 			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
-				if (IfCatlatexProcedure.execute(entity))
+				if (IfCatLatexProcedure.execute(entity))
 					super.render(ms, gx, gy, ticks);
 			}
 		};
@@ -174,28 +174,28 @@ public class TransfurSoundsGuiScreen extends AbstractContainerScreen<TransfurSou
 		guistate.put("button:button_5", button_5);
 		this.addRenderableWidget(button_5);
 		button_6 = new Button(this.leftPos + 4, this.topPos + 50, 30, 20, new TranslatableComponent("gui.changed_addon.transfur_sounds_gui.button_6"), e -> {
-			if (IfCatlatexProcedure.execute(entity)) {
+			if (IfCatLatexProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TransfurSoundsGuiButtonMessage(5, x, y, z));
 				TransfurSoundsGuiButtonMessage.handleButtonAction(entity, 5, x, y, z);
 			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
-				if (IfCatlatexProcedure.execute(entity))
+				if (IfCatLatexProcedure.execute(entity))
 					super.render(ms, gx, gy, ticks);
 			}
 		};
 		guistate.put("button:button_6", button_6);
 		this.addRenderableWidget(button_6);
 		button_7 = new Button(this.leftPos + 4, this.topPos + 72, 40, 20, new TranslatableComponent("gui.changed_addon.transfur_sounds_gui.button_7"), e -> {
-			if (IfCatlatexProcedure.execute(entity)) {
+			if (IfCatLatexProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TransfurSoundsGuiButtonMessage(6, x, y, z));
 				TransfurSoundsGuiButtonMessage.handleButtonAction(entity, 6, x, y, z);
 			}
 		}) {
 			@Override
 			public void render(PoseStack ms, int gx, int gy, float ticks) {
-				if (IfCatlatexProcedure.execute(entity))
+				if (IfCatLatexProcedure.execute(entity))
 					super.render(ms, gx, gy, ticks);
 			}
 		};

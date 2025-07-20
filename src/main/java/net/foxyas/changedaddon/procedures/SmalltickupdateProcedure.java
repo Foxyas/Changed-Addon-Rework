@@ -1,16 +1,20 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.entity.FoxyasEntity;
-import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
@@ -23,13 +27,13 @@ import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
-public class SmalltickupdateProcedure {
+public class SmallTickUpdateProcedure {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
@@ -44,178 +48,107 @@ public class SmalltickupdateProcedure {
     private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
         if (entity == null)
             return;
-        double cooldown = 0;
-        AttributeModifier OrganicSwingbuff = null;
-        AttributeModifier TransfurStats_Attack = null;
-        AttributeModifier TransfurStats_Defense = null;
-        AttributeModifier TransfurStats_Armor = null;
-        AttributeModifier Exp009Buff_attack = null;
-        AttributeModifier Exp009Buff_defense = null;
-        AttributeModifier Exp009Buff_armor = null;
-        {
-            final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
-            List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(4 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
-            for (Entity entityiterator : _entfound) {
-                if (!(entityiterator == entity)) {
-                    if (entityiterator instanceof FoxyasEntity) {
-                        if (entity instanceof ServerPlayer _player) {
-                            Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gooey_friend"));
-                            AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-                            if (!_ap.isDone()) {
-                                Iterator _iterator = _ap.getRemainingCriteria().iterator();
-                                while (_iterator.hasNext())
-                                    _player.getAdvancements().award(_adv, (String) _iterator.next());
-                            }
-                        }
+
+        final Vec3 _center = new Vec3(entity.getX(), entity.getY(), entity.getZ());
+        List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(2), e -> true)
+                .stream().sorted(Comparator.comparingDouble(e -> e.distanceToSqr(_center))).collect(Collectors.toList());
+        for (Entity entityiterator : _entfound) {
+            if (entityiterator != entity && entityiterator instanceof FoxyasEntity) {
+                if (entity instanceof ServerPlayer _player) {
+                    Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:gooey_friend"));
+                    AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(Objects.requireNonNull(_adv));
+                    if (!_ap.isDone()) {
+                        for (String s : _ap.getRemainingCriteria()) _player.getAdvancements().award(_adv, s);
                     }
                 }
             }
         }
-        if ((entity instanceof Player _playerHasItem && (_playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get()))
-                || _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.POTWITHCAMONIA.get()))
-                || _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get()))))) {
+
+        if (entity instanceof Player _playerHasItem && (
+                _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get())) ||
+                        _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.POTWITHCAMONIA.get())) ||
+                        _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get())))) {
             if (entity instanceof ServerPlayer _player) {
                 Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuritemadvancement"));
-                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(Objects.requireNonNull(_adv));
                 if (!_ap.isDone()) {
-                    Iterator _iterator = _ap.getRemainingCriteria().iterator();
-                    while (_iterator.hasNext())
-                        _player.getAdvancements().award(_adv, (String) _iterator.next());
+                    for (String s : _ap.getRemainingCriteria()) _player.getAdvancements().award(_adv, s);
                 }
             }
         }
-        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).human_Form) {
-                {
-                    boolean _setval = false;
-                    entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                        capability.human_Form = _setval;
-                        capability.syncPlayerVariables(entity);
-                    });
-                }
-            }
-        } else {
-            if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).human_Form) {
-                {
-                    boolean _setval = true;
-                    entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                        capability.human_Form = _setval;
-                        capability.syncPlayerVariables(entity);
-                    });
-                }
+
+        if (entity instanceof Player player) {
+            TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (variant != null) {
+                player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+                    capability.aredarklatex = variant.getFormId().toString().contains("dark_latex") || variant.getFormId().toString().contains("puro_kind");
+                    capability.syncPlayerVariables(entity);
+                });
             }
         }
-        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-            if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
-                    || ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("puro_kind")) {
-                if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).aredarklatex) {
-                    {
-                        boolean _setval = true;
-                        entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                            capability.aredarklatex = _setval;
-                            capability.syncPlayerVariables(entity);
-                        });
-                    }
-                }
-            } else {
-                if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).aredarklatex) {
-                    {
-                        boolean _setval = false;
-                        entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                            capability.aredarklatex = _setval;
-                            capability.syncPlayerVariables(entity);
-                        });
-                    }
-                }
-            }
-        } else {
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).aredarklatex) {
-                {
-                    boolean _setval = false;
-                    entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                        capability.aredarklatex = _setval;
-                        capability.syncPlayerVariables(entity);
-                    });
-                }
-            }
-        }
-        TransfurStats_Attack = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba758"), "transfur_stats", 9, AttributeModifier.Operation.ADDITION);
-        TransfurStats_Defense = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba759"), "transfur_stats", 24, AttributeModifier.Operation.ADDITION);
-        TransfurStats_Armor = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba760"), "transfur_stats", 12, AttributeModifier.Operation.ADDITION);
-        Exp009Buff_attack = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba751"), "transfur_stats", 4, AttributeModifier.Operation.ADDITION);
-        Exp009Buff_defense = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba752"), "transfur_stats", 8, AttributeModifier.Operation.ADDITION);
-        Exp009Buff_armor = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba753"), "transfur_stats", 6, AttributeModifier.Operation.ADDITION);
-        if (world.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
-                    && ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_ket_experiment009_boss")) {
-                if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009TransfurAllowed) {
+
+        AttributeModifier Exp009Buff_attack = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba751"), "transfur_stats", 4, AttributeModifier.Operation.ADDITION);
+        AttributeModifier Exp009Buff_defense = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba752"), "transfur_stats", 8, AttributeModifier.Operation.ADDITION);
+        AttributeModifier Exp009Buff_armor = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba753"), "transfur_stats", 6, AttributeModifier.Operation.ADDITION);
+
+        if (entity instanceof Player player) {
+            TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
+            String formId = variant != null ? variant.getFormId().toString() : "";
+
+            boolean isTransfurred = variant != null;
+            boolean isForm009Boss = formId.equals("changed_addon:form_ket_experiment009_boss");
+            boolean isForm010Boss = formId.equals("changed_addon:form_experiment_10_boss");
+
+            if (world.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
+                if (isTransfurred && isForm009Boss && !getPlayerVars(entity).Exp009TransfurAllowed) {
                     Exp009TransfurProcedure.execute(entity);
                 }
-            }
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
-                    && ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_experiment_10_boss")) {
-                if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp10TransfurAllowed) {
+                if (isTransfurred && isForm010Boss && !getPlayerVars(entity).Exp10TransfurAllowed) {
                     Exp009TransfurProcedure.exp10(entity);
                 }
             }
-        }
-        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
-                && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff) {
-            if (!(((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE).hasModifier(Exp009Buff_attack)))
-                ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE).addTransientModifier(Exp009Buff_attack);
-            if (!(((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).hasModifier(Exp009Buff_defense)))
-                ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).addTransientModifier(Exp009Buff_defense);
-            if (!(((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR_TOUGHNESS).hasModifier(Exp009Buff_armor)))
-                ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR_TOUGHNESS).addTransientModifier(Exp009Buff_armor);
-        } else {
-            ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE).removeModifier(Exp009Buff_attack);
-            ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR).removeModifier(Exp009Buff_defense);
-            ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.ARMOR_TOUGHNESS).removeModifier(Exp009Buff_armor);
-        }
-        if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get()) {
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-                if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff) {
-                    {
-                        boolean _setval = true;
-                        entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                            capability.Exp009Buff = _setval;
-                            capability.syncPlayerVariables(entity);
-                        });
-                    }
-                }
+
+            if (isTransfurred && getPlayerVars(entity).Exp009Buff) {
+                addModifier((LivingEntity) entity, Attributes.ATTACK_DAMAGE, Exp009Buff_attack);
+                addModifier((LivingEntity) entity, Attributes.ARMOR, Exp009Buff_defense);
+                addModifier((LivingEntity) entity, Attributes.ARMOR_TOUGHNESS, Exp009Buff_armor);
+            } else {
+                removeModifier((LivingEntity) entity, Attributes.ATTACK_DAMAGE, Exp009Buff_attack);
+                removeModifier((LivingEntity) entity, Attributes.ARMOR, Exp009Buff_defense);
+                removeModifier((LivingEntity) entity, Attributes.ARMOR_TOUGHNESS, Exp009Buff_armor);
             }
-        } else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get()) {
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-                if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff) {
-                    {
-                        boolean _setval = true;
-                        entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                            capability.Exp009Buff = _setval;
-                            capability.syncPlayerVariables(entity);
-                        });
-                    }
-                }
-            }
-        } else if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009Buff) {
-            if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-                {
-                    boolean _setval = false;
-                    entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                        capability.Exp009Buff = _setval;
-                        capability.syncPlayerVariables(entity);
-                    });
-                }
-            }
-            if (!((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get())
-                    && !((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get())) {
-                {
-                    boolean _setval = false;
-                    entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
-                        capability.Exp009Buff = _setval;
-                        capability.syncPlayerVariables(entity);
-                    });
-                }
+
+            boolean holdingTotem = ((LivingEntity) entity).getMainHandItem().getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get()
+                    || ((LivingEntity) entity).getOffhandItem().getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get();
+
+            if (holdingTotem && isTransfurred && !getPlayerVars(entity).Exp009Buff) {
+                setExp009Buff(entity, true);
+            } else if (!holdingTotem && getPlayerVars(entity).Exp009Buff) {
+                setExp009Buff(entity, false);
+            } else if (!isTransfurred && getPlayerVars(entity).Exp009Buff) {
+                setExp009Buff(entity, false);
             }
         }
+    }
+
+    private static ChangedAddonModVariables.PlayerVariables getPlayerVars(Entity entity) {
+        return entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables());
+    }
+
+    private static void setExp009Buff(Entity entity, boolean value) {
+        entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+            capability.Exp009Buff = value;
+            capability.syncPlayerVariables(entity);
+        });
+    }
+
+    private static void addModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+        if (!Objects.requireNonNull(entity.getAttribute(attribute)).hasModifier(modifier)) {
+            Objects.requireNonNull(entity.getAttribute(attribute)).addTransientModifier(modifier);
+        }
+    }
+
+    private static void removeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+        Objects.requireNonNull(entity.getAttribute(attribute)).removeModifier(modifier);
     }
 }

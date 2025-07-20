@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.Entity;
@@ -29,8 +31,9 @@ public class WolfyStatsProcedure {
     private static void execute(@Nullable Event event, DamageSource damagesource, Entity entity) {
         if (entity == null)
             return;
-        if (entity instanceof Player) {
-            if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_wolfy")) {
+        if (entity instanceof Player player) {
+            TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (instance.getFormId().toString().equals("changed_addon:form_wolfy")) {
                 if ((damagesource) instanceof EntityDamageSource _entityDamageSource && _entityDamageSource.isThorns()) {
                     if (event != null && event.isCancelable()) {
                         event.setCanceled(true);

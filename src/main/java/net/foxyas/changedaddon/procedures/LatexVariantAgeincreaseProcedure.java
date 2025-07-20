@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -17,7 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber
-public class LatexVariantAgeincreaseProcedure {
+public class LatexVariantAgeIncreaseProcedure {
     @SubscribeEvent
     public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
         if (event != null && event.getEntity() != null) {
@@ -34,11 +35,15 @@ public class LatexVariantAgeincreaseProcedure {
             return;
         double number = 0;
         if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:white_latex_goo"))) {
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
-                    && ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_dark_latex_pup")) {
-                ReturnTransfurModeProcedure.setPlayerLatexAge.execute((Player) entity, 5000, true);
-                if (world instanceof ServerLevel _level)
-                    _level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 5, 0.3, 0.5, 0.3, 1);
+            if (entity instanceof Player player) {
+                TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+                if (instance != null) {
+                    if (instance.getFormId().toString().equals("changed:form_dark_latex_pup")) {
+                        ReturnTransfurModeProcedure.setPlayerLatexAge.execute(player, 5000, true);
+                        if (world instanceof ServerLevel _level)
+                            _level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 5, 0.3, 0.5, 0.3, 1);
+                    }
+                }
             }
         }
     }
