@@ -2,15 +2,10 @@ package net.foxyas.changedaddon.command;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.foxyas.changedaddon.block.advanced.TimedKeypad;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
-import net.foxyas.changedaddon.process.util.FoxyasUtils;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
-import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.foxyas.changedaddon.variants.IDynamicCoatColors;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
@@ -118,7 +113,7 @@ public class ChangedAddonCommandRootCommandExtension {
 
         event.getDispatcher().register(Commands.literal("setTimerInKeypad")
                 .then(Commands.argument("timer", IntegerArgumentType.integer(0, 9999))
-                        .requires(cs -> cs.hasPermission(0)) // Minimum permission
+                        .requires(cs -> cs.hasPermission(Commands.LEVEL_ALL)) // Minimum permission
                         .executes(context -> {
                             CommandSourceStack source = context.getSource();
 

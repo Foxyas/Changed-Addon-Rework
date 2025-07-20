@@ -84,8 +84,8 @@ public class ChangedAddonModVariables {
 		}
 	}
 
-	public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<PlayerVariables>() {
-	});
+	public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    });
 
 	@Mod.EventBusSubscriber
 	private static class PlayerVariablesProvider implements ICapabilitySerializable<Tag> {

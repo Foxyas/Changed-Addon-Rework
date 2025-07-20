@@ -58,20 +58,20 @@ public class DelayedTask {
             System.err.println("Erro in the execution  of the DelayedTask with ID: " + id + "\n " + e.getMessage());
             //e.printStackTrace();
         } finally {
-            if (isCancelled()) {
+            if (isCancelled()) {// <-- in case of exception cancel() might not get called
                 destroy(); // Ensure the instance is removed correctly
             }
         }
     }
 
-    /*
+    /**
      * This is To Cancel The Action of the DelayedTask, Keep in mind that this will not destroy it from memory instantly
      */
     public void cancel() {
         this.cancelled = true;
     }
 
-    /*
+    /**
      * This is To Remove the DelayedTask from memory, Keep in Mind that this action can't be reversed
      */
     private void destroy() {
@@ -79,7 +79,7 @@ public class DelayedTask {
         MinecraftForge.EVENT_BUS.unregister(this);
     }
 
-    /*
+    /**
     * This is to pause the execution of the task
     */
     public void pause() {
@@ -87,7 +87,7 @@ public class DelayedTask {
         ChangedAddonMod.LOGGER.info("DelayedTask with ID: " + id + " was paused by an external code");
     }
 
-    /*
+    /**
      * This is to resume the execution of the task
      */
     public void resume() {

@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
@@ -40,16 +39,11 @@ import java.util.stream.Collectors;
 
 public class LeapProcedure {
     public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (entity == null)
-            return;
-        double motionZ = 0;
-        double deltaZ = 0;
-        double deltaX = 0;
-        double motionY = 0;
-        double deltaY = 0;
-        double motionX = 0;
-        double speed = 0;
-        double Yspeed = 0;
+        if (entity == null) return;
+
+        double deltaX, deltaY, deltaZ;
+        double motionX, motionY, motionZ;
+        double speed, ySpeed;
         if (entity instanceof Player player) {
             TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
             if (instance != null) {
@@ -87,16 +81,15 @@ public class LeapProcedure {
                                         if (!_ent.level.isClientSide() && _ent.getServer() != null)
                                             _ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
                                     }
-                                }
-                                if (entity.isShiftKeyDown()) {
+                                } else {
                                     deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
                                     deltaY = entity.level.clip(new ClipContext(entity.getEyePosition(1f), entity.getEyePosition(1f).add(entity.getViewVector(1f).scale(1)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, entity)).getBlockPos().getY()
                                             - entity.getY();
                                     deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
                                     speed = 0.15;
-                                    Yspeed = 0.5;
+                                    ySpeed = 0.5;
                                     motionX = deltaX * speed;
-                                    motionY = deltaY * Yspeed;
+                                    motionY = deltaY * ySpeed;
                                     motionZ = deltaZ * speed;
                                     entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
                                     if (!(new Object() {
