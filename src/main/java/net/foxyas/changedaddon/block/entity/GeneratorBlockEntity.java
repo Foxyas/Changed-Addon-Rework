@@ -25,7 +25,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
+import net.foxyas.changedaddon.world.inventory.GeneratorGuiMenu;
 import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
 
 import javax.annotation.Nullable;
@@ -96,7 +96,7 @@ public class GeneratorBlockEntity extends RandomizableContainerBlockEntity imple
 
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return new GeneratorguiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
+		return new GeneratorGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
 	}
 
 	@Override

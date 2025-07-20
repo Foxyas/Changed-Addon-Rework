@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.client.gui;
 
+import net.foxyas.changedaddon.network.GeneratorGuiButtonMessage;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,12 +11,11 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.Minecraft;
 
-import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
+import net.foxyas.changedaddon.world.inventory.GeneratorGuiMenu;
 import net.foxyas.changedaddon.procedures.IfisturnonProcedure;
 import net.foxyas.changedaddon.procedures.IfisturnoffProcedure;
 import net.foxyas.changedaddon.procedures.GeneratorguiValueProcedure;
 import net.foxyas.changedaddon.procedures.GeneratorguiValue2Procedure;
-import net.foxyas.changedaddon.network.GeneratorguiButtonMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.HashMap;
@@ -23,14 +23,14 @@ import java.util.HashMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
-public class GeneratorguiScreen extends AbstractContainerScreen<GeneratorguiMenu> {
-	private final static HashMap<String, Object> guistate = GeneratorguiMenu.guistate;
+public class GeneratorguiScreen extends AbstractContainerScreen<GeneratorGuiMenu> {
+	private final static HashMap<String, Object> guistate = GeneratorGuiMenu.guistate;
 	private final Level world;
 	private final int x, y, z;
 	private final Player entity;
 	ImageButton imagebutton_hitbox_16x16;
 
-	public GeneratorguiScreen(GeneratorguiMenu container, Inventory inventory, Component text) {
+	public GeneratorguiScreen(GeneratorGuiMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
 		this.world = container.world;
 		this.x = container.x;
@@ -104,8 +104,8 @@ public class GeneratorguiScreen extends AbstractContainerScreen<GeneratorguiMenu
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		imagebutton_hitbox_16x16 = new ImageButton(this.leftPos + 170, this.topPos + 73, 16, 16, 0, 0, 16, new ResourceLocation("changed_addon:textures/screens/atlas/imagebutton_hitbox_16x16.png"), 16, 32, e -> {
 			if (true) {
-				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GeneratorguiButtonMessage(0, x, y, z));
-				GeneratorguiButtonMessage.handleButtonAction(entity, 0, x, y, z);
+				ChangedAddonMod.PACKET_HANDLER.sendToServer(new GeneratorGuiButtonMessage(0, x, y, z));
+				GeneratorGuiButtonMessage.handleButtonAction(entity, 0, x, y, z);
 			}
 		});
 		guistate.put("button:imagebutton_hitbox_16x16", imagebutton_hitbox_16x16);

@@ -1,14 +1,12 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonModItems;
-import net.foxyas.changedaddon.item.CrowBarItem;
+import net.foxyas.changedaddon.item.CrowbarItem;
 import net.ltxprogrammer.changed.block.AbstractLabDoor;
 import net.ltxprogrammer.changed.block.AbstractLargeLabDoor;
 import net.ltxprogrammer.changed.block.NineSection;
-import net.ltxprogrammer.changed.block.QuarterSection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
@@ -44,7 +42,7 @@ public class CrowBarCodeProcedure {
 
 	private static void updateConnectedDoorBlocks(Level world, BlockPos pos, Player player, ItemStack itemStack) {
 		BlockState DoorState = world.getBlockState(pos);
-		if (!(itemStack.getItem() instanceof CrowBarItem)) {
+		if (!(itemStack.getItem() instanceof CrowbarItem)) {
 			return;
 		}
 		if (DoorState.getBlock() instanceof AbstractLabDoor abstractLabDoor) {

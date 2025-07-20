@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.client.multiplayer.ClientLevel;
 
-import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
+import net.foxyas.changedaddon.world.inventory.UnifuserGuiMenu;
 
 import java.util.stream.StreamSupport;
 import java.util.stream.Stream;
@@ -25,7 +25,7 @@ public class ReturnPlayerNameProcedure {
 		Entity TEST = null;
 		String no_owner = "";
 		String owner = "";
-		if ((entity instanceof Player _plr ? _plr.containerMenu instanceof UnifuserguiMenu : false)
+		if ((entity instanceof Player _plr ? _plr.containerMenu instanceof UnifuserGuiMenu : false)
 				&& (entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY)
 						.is(ItemTags.create(new ResourceLocation("changed_addon:bloodtype_syringe")))) {
 			TEST = (new Object() {
@@ -45,7 +45,7 @@ public class ReturnPlayerNameProcedure {
 					return null;
 				}
 			}).get(world, ((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY).getOrCreateTag().getString("owner")));
-		} else if ((entity instanceof Player _plr ? _plr.containerMenu instanceof UnifuserguiMenu : false)
+		} else if ((entity instanceof Player _plr ? _plr.containerMenu instanceof UnifuserGuiMenu : false)
 				&& !((entity instanceof Player _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get() instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY)
 						.is(ItemTags.create(new ResourceLocation("changed_addon:bloodtype_syringe"))))) {
 			TEST = null;

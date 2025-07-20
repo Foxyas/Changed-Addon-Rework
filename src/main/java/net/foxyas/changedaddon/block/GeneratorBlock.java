@@ -31,7 +31,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.world.inventory.GeneratorguiMenu;
+import net.foxyas.changedaddon.world.inventory.GeneratorGuiMenu;
 import net.foxyas.changedaddon.procedures.GeneratorUpdateTickProcedure;
 import net.foxyas.changedaddon.block.entity.GeneratorBlockEntity;
 
@@ -108,7 +108,7 @@ public class GeneratorBlock extends Block implements EntityBlock {
 
 				@Override
 				public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-					return new GeneratorguiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
+					return new GeneratorGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
 				}
 			}, pos);
 		}

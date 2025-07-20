@@ -19,7 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.world.inventory.UnifuserguiMenu;
+import net.foxyas.changedaddon.world.inventory.UnifuserGuiMenu;
 
 import io.netty.buffer.Unpooled;
 
@@ -72,7 +72,7 @@ public class UnifuserOnBlockRightClickedProcedure {
 
 						@Override
 						public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-							return new UnifuserguiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+							return new UnifuserGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
 						}
 					}, _bpos);
 				}

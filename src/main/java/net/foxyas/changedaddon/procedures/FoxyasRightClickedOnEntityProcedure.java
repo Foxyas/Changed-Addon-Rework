@@ -15,7 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
+import net.foxyas.changedaddon.world.inventory.FoxyasGuiMenu;
 
 import io.netty.buffer.Unpooled;
 
@@ -34,7 +34,7 @@ public class FoxyasRightClickedOnEntityProcedure {
 
 					@Override
 					public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-						return new FoxyasguiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+						return new FoxyasGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
 					}
 				}, _bpos);
 			}

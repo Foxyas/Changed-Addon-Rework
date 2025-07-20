@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.world.inventory.FightTokeepconsciousnessminigameMenu;
+import net.foxyas.changedaddon.world.inventory.FightToKeepConsciousnessMinigameMenu;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 
 import io.netty.buffer.Unpooled;
@@ -28,15 +28,15 @@ public class OpenStruggleMenuOnKeyPressedProcedure {
 			{
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos = new BlockPos(x, y, z);
-					NetworkHooks.openGui((ServerPlayer) _ent, new MenuProvider() {
+					NetworkHooks.openGui(_ent, new MenuProvider() {
 						@Override
 						public Component getDisplayName() {
-							return new TextComponent("FightTokeepconsciousnessminigame");
+							return new TextComponent("FightToKeepConsciousnessMinigame");
 						}
 
 						@Override
 						public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-							return new FightTokeepconsciousnessminigameMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
+							return new FightToKeepConsciousnessMinigameMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
 						}
 					}, _bpos);
 				}

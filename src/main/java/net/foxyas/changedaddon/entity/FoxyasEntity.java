@@ -4,7 +4,7 @@ package net.foxyas.changedaddon.entity;
 import io.netty.buffer.Unpooled;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.*;
-import net.foxyas.changedaddon.world.inventory.FoxyasguiMenu;
+import net.foxyas.changedaddon.world.inventory.FoxyasGuiMenu;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -207,7 +207,7 @@ public class FoxyasEntity extends Monster {
 					packetBuffer.writeBlockPos(sourceentity.blockPosition());
 					packetBuffer.writeByte(0);
 					packetBuffer.writeVarInt(FoxyasEntity.this.getId());
-					return new FoxyasguiMenu(id, inventory, packetBuffer);
+					return new FoxyasGuiMenu(id, inventory, packetBuffer);
 				}
 			}, buf -> {
 				buf.writeBlockPos(sourceentity.blockPosition());

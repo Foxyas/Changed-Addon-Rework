@@ -11,7 +11,6 @@ import net.minecraft.world.level.GameRules;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonModGameRules {
 	public static final GameRules.Key<GameRules.BooleanValue> FIGHT_TO_KEEP_CONSCIOUSNESS = GameRules.register("changed_addon:fightToKeepConsciousness", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
-	public static final GameRules.Key<GameRules.BooleanValue> GIVE_BOOK_ON_START = GameRules.register("giveBookOnStart", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final GameRules.Key<GameRules.BooleanValue> DO_LATEX_INFECTION = GameRules.register("doLatexInfection", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final GameRules.Key<GameRules.BooleanValue> PAINITE_GENERATION = GameRules.register("painiteGeneration", GameRules.Category.UPDATES, GameRules.BooleanValue.create(true));
 	public static final GameRules.Key<GameRules.IntegerValue> CHANGED_ADDON_HARD_MODE_BOSSES = GameRules.register("changed_addon:bossesDifficultScale", GameRules.Category.MOBS, GameRules.IntegerValue.create(0));

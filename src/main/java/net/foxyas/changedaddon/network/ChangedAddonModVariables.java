@@ -46,26 +46,26 @@ public class ChangedAddonModVariables {
 		@SubscribeEvent
 		public static void onPlayerLoggedInSyncPlayerVariables(PlayerEvent.PlayerLoggedInEvent event) {
 			if (!event.getPlayer().level.isClientSide())
-				((PlayerVariables) event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables())).syncPlayerVariables(event.getPlayer());
+				event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getPlayer());
 		}
 
 		@SubscribeEvent
 		public static void onPlayerRespawnedSyncPlayerVariables(PlayerEvent.PlayerRespawnEvent event) {
 			if (!event.getPlayer().level.isClientSide())
-				((PlayerVariables) event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables())).syncPlayerVariables(event.getPlayer());
+				event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getPlayer());
 		}
 
 		@SubscribeEvent
 		public static void onPlayerChangedDimensionSyncPlayerVariables(PlayerEvent.PlayerChangedDimensionEvent event) {
 			if (!event.getPlayer().level.isClientSide())
-				((PlayerVariables) event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables())).syncPlayerVariables(event.getPlayer());
+				event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getPlayer());
 		}
 
 		@SubscribeEvent
 		public static void clonePlayer(PlayerEvent.Clone event) {
 			event.getOriginal().revive();
-			PlayerVariables original = ((PlayerVariables) event.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()));
-			PlayerVariables clone = ((PlayerVariables) event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()));
+			PlayerVariables original = event.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
+			PlayerVariables clone = event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
 			clone.transfur = original.transfur;
 			clone.LatexForm = original.LatexForm;
 			clone.showwarns = original.showwarns;
@@ -74,9 +74,6 @@ public class ChangedAddonModVariables {
 			clone.organic_transfur = original.organic_transfur;
 			clone.human_Form = original.human_Form;
 			clone.reset_transfur_advancements = original.reset_transfur_advancements;
-			clone.ShowRecipes = original.ShowRecipes;
-			clone.UnifuserRecipePage = original.UnifuserRecipePage;
-			clone.CatlyzerRecipePage = original.CatlyzerRecipePage;
 			clone.aredarklatex = original.aredarklatex;
 			clone.UntransfurProgress = original.UntransfurProgress;
 			clone.Exp009TransfurAllowed = original.Exp009TransfurAllowed;
@@ -134,9 +131,6 @@ public class ChangedAddonModVariables {
 		public boolean human_Form = true;
 		public boolean reset_transfur_advancements = false;
 		public boolean act_cooldown = false;
-		public boolean ShowRecipes = false;
-		public double UnifuserRecipePage = 1.0;
-		public double CatlyzerRecipePage = 1.0;
 		public boolean aredarklatex = false;
 		public double LatexInfectionCooldown = 0.0;
 		public double UntransfurProgress = 0.0;
@@ -163,9 +157,6 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("human_Form", human_Form);
 			nbt.putBoolean("reset_transfur_advancements", reset_transfur_advancements);
 			nbt.putBoolean("act_cooldown", act_cooldown);
-			nbt.putBoolean("ShowRecipes", ShowRecipes);
-			nbt.putDouble("UnifuserRecipePage", UnifuserRecipePage);
-			nbt.putDouble("CatlyzerRecipePage", CatlyzerRecipePage);
 			nbt.putBoolean("aredarklatex", aredarklatex);
 			nbt.putDouble("LatexInfectionCooldown", LatexInfectionCooldown);
 			nbt.putDouble("UntransfurProgress", UntransfurProgress);
@@ -189,9 +180,6 @@ public class ChangedAddonModVariables {
 			human_Form = nbt.getBoolean("human_Form");
 			reset_transfur_advancements = nbt.getBoolean("reset_transfur_advancements");
 			act_cooldown = nbt.getBoolean("act_cooldown");
-			ShowRecipes = nbt.getBoolean("ShowRecipes");
-			UnifuserRecipePage = nbt.getDouble("UnifuserRecipePage");
-			CatlyzerRecipePage = nbt.getDouble("CatlyzerRecipePage");
 			aredarklatex = nbt.getBoolean("aredarklatex");
 			LatexInfectionCooldown = nbt.getDouble("LatexInfectionCooldown");
 			UntransfurProgress = nbt.getDouble("UntransfurProgress");
@@ -222,7 +210,7 @@ public class ChangedAddonModVariables {
 			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> {
 				if (!context.getDirection().getReceptionSide().isServer()) {
-					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()));
+					PlayerVariables variables = Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
 					variables.transfur = message.data.transfur;
 					variables.LatexForm = message.data.LatexForm;
 					variables.showwarns = message.data.showwarns;
@@ -234,9 +222,6 @@ public class ChangedAddonModVariables {
 					variables.human_Form = message.data.human_Form;
 					variables.reset_transfur_advancements = message.data.reset_transfur_advancements;
 					variables.act_cooldown = message.data.act_cooldown;
-					variables.ShowRecipes = message.data.ShowRecipes;
-					variables.UnifuserRecipePage = message.data.UnifuserRecipePage;
-					variables.CatlyzerRecipePage = message.data.CatlyzerRecipePage;
 					variables.aredarklatex = message.data.aredarklatex;
 					variables.LatexInfectionCooldown = message.data.LatexInfectionCooldown;
 					variables.UntransfurProgress = message.data.UntransfurProgress;
