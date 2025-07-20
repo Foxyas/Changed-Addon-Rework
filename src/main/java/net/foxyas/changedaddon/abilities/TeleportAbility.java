@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.abilities;
 
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
@@ -63,7 +63,7 @@ public class TeleportAbility extends SimpleAbility {
             Vec3 location = blockHitResult.getLocation();
             Color startColor = new Color(0xffeeee);
             Color endColor = new Color(0xFFCECE);
-            PlayerUtilProcedure.ParticlesUtil.sendColorTransitionParticles(player.getLevel(), player, startColor, endColor, 1, 0.25f, 0.25f, 0.25f, 10, 0.25f);
+            PlayerUtil.ParticlesUtil.sendColorTransitionParticles(player.getLevel(), player, startColor, endColor, 1, 0.25f, 0.25f, 0.25f, 10, 0.25f);
             player.teleportToWithTicket(location.x, location.y, location.z);
             Random random = entity.getLevel().getRandom();
             float pitch = random.nextFloat() + 1;

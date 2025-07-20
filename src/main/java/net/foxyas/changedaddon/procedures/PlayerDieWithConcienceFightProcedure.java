@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -37,7 +38,7 @@ public class PlayerDieWithConcienceFightProcedure {
                     capability.syncPlayerVariables(entity);
                 });
             }
-            PlayerUtilProcedure.UnTransfurPlayer(entity);
+            PlayerUtil.UnTransfurPlayer(entity);
         }
     }
 }

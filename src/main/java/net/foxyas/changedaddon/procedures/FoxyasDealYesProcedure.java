@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +15,7 @@ public class FoxyasDealYesProcedure {
         if (entity == null)
             return;
         entity.getPersistentData().putBoolean("Deal", false);
-        PlayerUtilProcedure.TransfurPlayer(entity, "changed:form_white_latex_wolf/male");
+        PlayerUtil.TransfurPlayer(entity, "changed:form_white_latex_wolf/male");
         if (entity instanceof Player _player)
             _player.closeContainer();
         if (entity instanceof ServerPlayer _player) {

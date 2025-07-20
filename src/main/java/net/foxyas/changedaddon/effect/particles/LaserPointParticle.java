@@ -7,7 +7,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.item.LaserPointer;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -228,7 +228,7 @@ public class LaserPointParticle extends TextureSheetParticle {
         Vec3 hitPos;
         Direction face = null;
 
-        EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(owner, LaserPointer.MAX_LASER_REACH);
+        EntityHitResult entityHitResult = PlayerUtil.getEntityHitLookingAt(owner, LaserPointer.MAX_LASER_REACH);
 
         boolean Subtract = false;
         if (entityHitResult != null) {

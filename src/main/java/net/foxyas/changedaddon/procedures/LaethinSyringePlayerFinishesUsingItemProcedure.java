@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
@@ -45,7 +46,7 @@ public class LaethinSyringePlayerFinishesUsingItemProcedure {
                 }
             } else {
                 SummonDripParticlesProcedure.execute(entity);
-                PlayerUtilProcedure.UnTransfurPlayer(entity);
+                PlayerUtil.UnTransfurPlayer(entity);
                 if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements) {
                     new Object() {
                         private int ticks = 0;

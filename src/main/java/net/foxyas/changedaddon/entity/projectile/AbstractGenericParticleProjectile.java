@@ -1,13 +1,12 @@
 package net.foxyas.changedaddon.entity.projectile;
 
 import net.foxyas.changedaddon.entity.VoidFoxEntity;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -35,7 +34,6 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
@@ -196,12 +194,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         this.setRemainingFireTicks(0);
 
         if (this.tickCount > 400) {
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+            PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
             this.discard();
         }
 
         if (this.lifeSpamNearTarget >= 100) {
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+            PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
             this.lifeSpamWithoutTarget = 0;
             this.discard();
         }
@@ -210,7 +208,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         // Se só tiver posição fixa
         if (this.getTarget() == null && targetPos != null) {
             if (this.inGround || this.onGround) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.discard();
             }
             this.lifeSpamWithoutTarget = 0;
@@ -244,17 +242,17 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
         if (!level.isClientSide && livingTarget.isAlive()) {
             if (getOwner() != null && livingTarget.is(getOwner())){
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.discard();
             }
             if (this.inGround || this.onGround) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.discard();
             }
             this.lifeSpamWithoutTarget = 0;
             if (livingTarget instanceof Player player) {
                 if (player.isCreative() || player.isSpectator()) {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                    PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                     this.discard();
                 }
             }
@@ -284,17 +282,17 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         } else if (!level.isClientSide && livingTarget.isDeadOrDying()) {
             this.lifeSpamWithoutTarget++;
             if (this.lifeSpamWithoutTarget >= 120) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+                PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.lifeSpamWithoutTarget = 0;
                 this.discard();
             }
         } else if (!level.isClientSide() && (this.getOwner() == null
                 || (this.getOwner() instanceof LivingEntity livingEntity && livingEntity.isDeadOrDying()))) {
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+            PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
             this.discard();
         }
 
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.3f, 0.3f, 0.3f, 1, 0.005f);
+        PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.3f, 0.3f, 0.3f, 1, 0.005f);
 
         // Partículas
         /*if (level.isClientSide) {
@@ -406,7 +404,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
                 }
             } else*/
             if (!this.isParryAble()) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 5, 0.5f);
+                PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 5, 0.5f);
                 this.discard();
             }
         }
@@ -481,7 +479,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
     @Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
         //super.onHitBlock(result);
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
+        PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
         this.discard();
     }
 

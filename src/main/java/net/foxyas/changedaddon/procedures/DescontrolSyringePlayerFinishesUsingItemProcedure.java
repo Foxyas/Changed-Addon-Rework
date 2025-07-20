@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
@@ -38,7 +39,7 @@ public class DescontrolSyringePlayerFinishesUsingItemProcedure {
                         _ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "advancement revoke @s from minecraft:changed/transfur");
                 }
             }
-            PlayerUtilProcedure.UnTransfurPlayer(entity);
+            PlayerUtil.UnTransfurPlayer(entity);
             if (new Object() {
                 public boolean checkGamemode(Entity _ent) {
                     if (_ent instanceof ServerPlayer _serverPlayer) {

@@ -3,14 +3,13 @@ package net.foxyas.changedaddon.abilities;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
 import net.foxyas.changedaddon.entity.defaults.ICoatLikeEntity;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -96,7 +95,7 @@ public class UnfuseAbility extends SimpleAbility {
                     changedEntityUnfused.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(changedEntityUnfused.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
                     serverLevel.addFreshEntity(changedEntityUnfused);
                     serverLevel.playSound(null, host, ChangedSounds.POISON, SoundSource.PLAYERS, 1, 1);
-                    PlayerUtilProcedure.UnTransfurPlayer(host);
+                    PlayerUtil.UnTransfurPlayer(host);
                 }
             }
         }

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.entity.CustomHandle;
 
 import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.DelayedTask;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -143,7 +143,7 @@ public class Exp9AttacksHandle {
             for (int i = 0; i <= maxAmount; i++) {
                 double ratio = (double) i / maxAmount;
                 Vec3 spawnPos = this.boss.getEyePosition().add(posDifference.scale(ratio));
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                PlayerUtil.ParticlesUtil.sendParticles(
                         this.boss.getLevel(),
                         ChangedAddonParticles.thunderSpark(1),
                         spawnPos,
@@ -364,7 +364,7 @@ public class Exp9AttacksHandle {
             for (int i = 0; i <= maxAmount; i++) {
                 double ratio = (double) i / maxAmount;
                 Vec3 spawnPos = this.boss.getEyePosition().add(posDifference.scale(ratio));
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                PlayerUtil.ParticlesUtil.sendParticles(
                         this.boss.getLevel(),
                         ChangedAddonParticles.thunderSpark(1),
                         spawnPos,
@@ -561,7 +561,7 @@ public class Exp9AttacksHandle {
 
                 }
 
-                EntityHitResult hitResult = PlayerUtilProcedure.getEntityHitLookingAt(this.boss, 10);
+                EntityHitResult hitResult = PlayerUtil.getEntityHitLookingAt(this.boss, 10);
 
                 // Verifique o resultado do hit
                 if (hitResult != null && hitResult.getType() != HitResult.Type.MISS) {

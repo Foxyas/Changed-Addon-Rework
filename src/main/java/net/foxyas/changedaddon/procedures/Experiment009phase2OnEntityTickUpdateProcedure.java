@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
@@ -398,7 +399,7 @@ public class Experiment009phase2OnEntityTickUpdateProcedure {
                 }
             }
             if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.5833) {// Summon Particle
-                PlayerUtilProcedure.ParticlesUtil.sendColorTransitionParticles(entity.getLevel(), entity.getX(), entity.getY(), entity.getZ(), 0.0f, 0.57f, 0.82f, // Cores inicial em escala 0-1
+                PlayerUtil.ParticlesUtil.sendColorTransitionParticles(entity.getLevel(), entity.getX(), entity.getY(), entity.getZ(), 0.0f, 0.57f, 0.82f, // Cores inicial em escala 0-1
                         0.0f, 0.69f, 0.78f, // Cores final em escala 0-1
                         1.0f, // Tamanho da partícula
                         0.2f, // Velocidade X

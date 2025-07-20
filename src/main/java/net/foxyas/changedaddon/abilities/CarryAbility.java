@@ -23,7 +23,7 @@ import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 
 import java.util.Optional;
 
@@ -81,7 +81,7 @@ public class CarryAbility extends SimpleAbility {
 	}
 
 	public Entity CarryTarget(Player player) {
-		return PlayerUtilProcedure.getEntityPlayerLookingAt(player, 4);
+		return PlayerUtil.getEntityPlayerLookingAt(player, 4);
 	}
 
 	public boolean isPossibleToCarry(LivingEntity entity) {

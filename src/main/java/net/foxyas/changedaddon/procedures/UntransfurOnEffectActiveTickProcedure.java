@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
@@ -43,7 +44,7 @@ public class UntransfurOnEffectActiveTickProcedure {
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress >= 100) {
             if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
                 SummonDripParticlesProcedure.execute(entity);
-                PlayerUtilProcedure.UnTransfurPlayer(entity);
+                PlayerUtil.UnTransfurPlayer(entity);
                 {
                     double _setval = 0;
                     entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {

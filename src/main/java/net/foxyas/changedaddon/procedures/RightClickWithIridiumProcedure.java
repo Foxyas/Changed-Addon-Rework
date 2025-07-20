@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.item.IridiumItem;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -52,7 +53,7 @@ public class RightClickWithIridiumProcedure {
                 // Substitui o bloco no mundo
                 world.setBlock(pos, convertedBlock.defaultBlockState(), 3);
                 if (world instanceof ServerLevel serverLevel) {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(serverLevel, ParticleTypes.END_ROD, pos, 0.25f, 0.25f, 0.25f, 10, 1);
+                    PlayerUtil.ParticlesUtil.sendParticles(serverLevel, ParticleTypes.END_ROD, pos, 0.25f, 0.25f, 0.25f, 10, 1);
                     serverLevel.playSound(null, pos, SoundEvents.NETHERITE_BLOCK_PLACE, SoundSource.BLOCKS, 1, 1);
                 }
 

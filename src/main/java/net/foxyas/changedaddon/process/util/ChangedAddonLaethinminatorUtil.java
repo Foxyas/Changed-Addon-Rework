@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.process.util;
 
 import com.mojang.math.Vector3f;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -68,7 +67,7 @@ public class ChangedAddonLaethinminatorUtil {
         ).scale(speed); // Aplica velocidade
 
         // Envia a partícula para o nível
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(level, particleType, particlePos, 0.15f, 0.15f, 0.15f, 2, 0f);
+        PlayerUtil.ParticlesUtil.sendParticles(level, particleType, particlePos, 0.15f, 0.15f, 0.15f, 2, 0f);
     }
 
 
@@ -89,7 +88,7 @@ public class ChangedAddonLaethinminatorUtil {
             BlockPos targetPos = new BlockPos(targetVec);
 
             Vec3 particlePos = eyePos.add(lookDir.scale(i * 0.5));
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(world, particleOptions, particlePos, 0.25f, 0.25f, 0.25f, 2, 0f);
+            PlayerUtil.ParticlesUtil.sendParticles(world, particleOptions, particlePos, 0.25f, 0.25f, 0.25f, 2, 0f);
 
             // Verifica se o bloco é ar; se for, ignora essa fileira
             if (world.getBlockState(targetPos).isAir()) {
@@ -156,7 +155,7 @@ public class ChangedAddonLaethinminatorUtil {
                 ParticleOptions particleOptions = getParticleOptions(StartColor, EndColor);
 
                 // Adicionar partículas no bloco afetado
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(world, particleOptions, pos, 0.25f, 0.25f, 0.25f, 1, 0f);
+                PlayerUtil.ParticlesUtil.sendParticles(world, particleOptions, pos, 0.25f, 0.25f, 0.25f, 1, 0f);
             }
         }
     }

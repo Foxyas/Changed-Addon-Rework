@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.abilities;
 
 import net.foxyas.changedaddon.mixins.AbstractArrowAccessor;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -20,13 +19,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 
@@ -76,20 +71,20 @@ public class PsychicGrab extends SimpleAbility {
 
     public @Nullable Entity getTargetByID(Level level, UUID uuid) {
         if (level instanceof ServerLevel serverLevel) {
-            return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(serverLevel, uuid.toString());
+            return PlayerUtil.GlobalEntityUtil.getEntityByUUID(serverLevel, uuid.toString());
         }
         return null;
     }
 
     public @Nullable Entity getTargetByIDInClientSide(Level level, UUID uuid) {
         if (level instanceof ClientLevel clientLevel) {
-            return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(clientLevel, uuid.toString());
+            return PlayerUtil.GlobalEntityUtil.getEntityByUUID(clientLevel, uuid.toString());
         }
         return null;
     }
 
     public @Nullable Entity getTarget(Level level, UUID uuid) {
-        return PlayerUtilProcedure.GlobalEntityUtil.getEntityByUUID(level, uuid.toString());
+        return PlayerUtil.GlobalEntityUtil.getEntityByUUID(level, uuid.toString());
     }
 
     @Override
@@ -150,16 +145,16 @@ public class PsychicGrab extends SimpleAbility {
         }
         Entity target = getTarget(entity.getLevel(), TargetID);
         if (entity.getEntity().isShiftKeyDown() || getTargetByID(entity.getLevel(), TargetID) == null) {
-            if (PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) == null) {
+            if (PlayerUtil.getEntityLookingAt(entity.getEntity(), 6) == null) {
                 return;
             }
-            TargetID = PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6).getUUID();
+            TargetID = PlayerUtil.getEntityLookingAt(entity.getEntity(), 6).getUUID();
         } else {
             if (!target.isAlive()) {
-                if (PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) == null) {
+                if (PlayerUtil.getEntityLookingAt(entity.getEntity(), 6) == null) {
                     return;
                 }
-                TargetID = PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6).getUUID();
+                TargetID = PlayerUtil.getEntityLookingAt(entity.getEntity(), 6).getUUID();
             }
 
             if (target instanceof Projectile projectile) {
@@ -194,9 +189,9 @@ public class PsychicGrab extends SimpleAbility {
         if (target != null) {
             if (entity.getEntity().isShiftKeyDown()) {
                 if (entity.getAbilityInstance(this) != null && entity.getAbilityInstance(this).getController().getHoldTicks() <= 3) {
-                    if (PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) != null
-                            && PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6) != getTargetByID(entity.getLevel(), TargetID)) {
-                        TargetID = PlayerUtilProcedure.getEntityLookingAt(entity.getEntity(), 6).getUUID();
+                    if (PlayerUtil.getEntityLookingAt(entity.getEntity(), 6) != null
+                            && PlayerUtil.getEntityLookingAt(entity.getEntity(), 6) != getTargetByID(entity.getLevel(), TargetID)) {
+                        TargetID = PlayerUtil.getEntityLookingAt(entity.getEntity(), 6).getUUID();
                     }
                     return;
                 }

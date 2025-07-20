@@ -8,7 +8,7 @@ import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.CustomHandle.Exp9AttacksHandle;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
@@ -407,7 +407,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
                     double y = this.getY() + Math.cos(anglePhi) * 4.0;
                     double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
                     Vec3 pos = new Vec3(x, y, z);
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                    PlayerUtil.ParticlesUtil.sendParticles(
                             entityDamageSource.getDirectEntity().getLevel(),
                             ParticleTypes.ELECTRIC_SPARK,
                             pos,
@@ -434,16 +434,16 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             if (this.getRandom().nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
                 if (this.isPhase2()) {
                     if (this.shouldBleed) {
-                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
-                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
+                        PlayerUtil.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
+                        PlayerUtil.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
                     } else {
                         if (this.getRandom().nextFloat() > 0.95) {
-                            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
+                            PlayerUtil.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
                         }
-                        PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
+                        PlayerUtil.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
                     }
                 } else {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
+                    PlayerUtil.ParticlesUtil.sendParticles(this.getLevel(), ChangedAddonParticles.thunderSpark(1), this.getEyePosition().subtract(0, this.getRandom().nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
                 }
             }
 
@@ -554,7 +554,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             lightning.setCause(null);
             lightning.setDamage(6f);
             this.level.addFreshEntity(lightning);
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
+            PlayerUtil.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
         }
     }
 
@@ -564,7 +564,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
             lightning.moveTo(pos.x(), pos.y(), pos.z());
             lightning.setCause(null);
             this.level.addFreshEntity(lightning);
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
+            PlayerUtil.ParticlesUtil.sendParticles(this.getLevel(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
         }
     }
 
@@ -640,7 +640,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp9.pat.type_2"));
         translatableComponentList.add(new TranslatableComponent("changed_addon.entity_dialogues.exp9.pat.type_3"));
 
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(player.getLevel(),
+        PlayerUtil.ParticlesUtil.sendParticles(player.getLevel(),
                 ChangedParticles.emote(this, Emote.ANGRY),
                 this.getX(),
                 this.getY() + (double) this.getDimensions(this.getPose()).height + 0.65,

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.client.renderer.layers.animation;
 
 import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -47,7 +47,7 @@ public class CarryAbilityAnimation {
 
         // Aplica animações normais aos braços com base na rotação da cabeça apenas se isWithCarryAbilitySelected for true
         if (entity.getUnderlyingPlayer() != null && entity.getUnderlyingPlayer().getFirstPassenger() == null){
-            Entity entity1 = PlayerUtilProcedure.getEntityPlayerLookingAt(entity.getUnderlyingPlayer(), 3);
+            Entity entity1 = PlayerUtil.getEntityPlayerLookingAt(entity.getUnderlyingPlayer(), 3);
             if (isWithCarryAbilitySelected && entity1 instanceof LivingEntity livingEntity) {
                 if (livingEntity.getType().is(ChangedTags.EntityTypes.HUMANOIDS)
                         || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))

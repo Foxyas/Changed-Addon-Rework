@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -52,7 +53,7 @@ public class TransfurTotemRightClickedProcedure {
                 if (form.isEmpty()) {
                     showMessage(entity, "Any form linked please link one §e<Shift+Click>");
                 } else {
-                    PlayerUtilProcedure.TransfurPlayer(entity, form);
+                    PlayerUtil.TransfurPlayer(entity, form);
                     activateVisuals(world, x, y, z, entity, itemstack, "changed_addon:transfur_totem_advancement_1", 100);
                 }
             }
@@ -114,7 +115,7 @@ public class TransfurTotemRightClickedProcedure {
 
     private static void untransfurPlayer(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
         SummonDripParticlesProcedure.execute(entity);
-        PlayerUtilProcedure.UnTransfurPlayer(entity);
+        PlayerUtil.UnTransfurPlayer(entity);
         cooldown(entity, itemstack, 100);
         visualActivate(world, x, y, z, itemstack, "changed_addon:untransfursound");
         grantAdvancement(entity, "changed_addon:transfur_totem_advancement_1");

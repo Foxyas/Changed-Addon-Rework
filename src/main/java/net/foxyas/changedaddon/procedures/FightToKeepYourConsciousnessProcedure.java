@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import io.netty.buffer.Unpooled;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.world.inventory.FightToKeepConsciousnessMinigameMenu;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -84,7 +85,7 @@ public class FightToKeepYourConsciousnessProcedure {
                         // Falha no minigame
                         player.displayClientMessage(new TextComponent("You \u00A74Lose \u00A7rYour Conscience"), true);
                         SummonEntityProcedure.execute((Level) world, player);
-                        PlayerUtilProcedure.UnTransfurPlayer(entity);
+                        PlayerUtil.UnTransfurPlayer(entity);
                         if (entity instanceof LivingEntity livingEntity) {
                             livingEntity.hurt(new DamageSource("concience_lose").bypassArmor(), 1200);
                         }

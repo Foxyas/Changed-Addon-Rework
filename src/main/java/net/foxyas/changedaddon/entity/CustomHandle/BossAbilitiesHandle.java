@@ -4,7 +4,7 @@ import net.foxyas.changedaddon.block.LuminarCrystalBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -173,7 +173,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                     double y = this.boss.getY() + Math.cos(anglePhi) * 4.0;
                     double z = this.boss.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
                     Vec3 pos = new Vec3(x, y, z);
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                    PlayerUtil.ParticlesUtil.sendParticles(
                             this.boss.getLevel(),
                             ParticleTypes.SOUL_FIRE_FLAME,
                             pos,
@@ -251,7 +251,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
 
                         // Cria partículas de glow no local da entidade atingida
                         Vec3 pos = new Vec3(entity.position().x, entity.position().y + 0.5, entity.position().z);
-                        PlayerUtilProcedure.ParticlesUtil.sendParticles(entity.level, ParticleTypes.GLOW, pos, 0.3f, 0.2f, 0.3f, 25, 1);
+                        PlayerUtil.ParticlesUtil.sendParticles(entity.level, ParticleTypes.GLOW, pos, 0.3f, 0.2f, 0.3f, 25, 1);
                         entity.playSound(SoundEvents.BEACON_AMBIENT, 4.5f, 0);
                     }
                 }
@@ -272,7 +272,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 double x = boss.getX() + Mth.cos((float) angle) * 3.0;
                 double z = boss.getZ() + Mth.sin((float) angle) * 3.0;
                 Vec3 pos = new Vec3(x, boss.getY(), z);
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SNOWFLAKE, pos, 0.3f, 0.2f, 0.3f, 15, 0);
+                PlayerUtil.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SNOWFLAKE, pos, 0.3f, 0.2f, 0.3f, 15, 0);
                 for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(3.0))) {
                     if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
                         entity.hurt(DamageSource.mobAttack(boss), 4.0f);
@@ -288,7 +288,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     // Frost Nova Ability
     public void frostNova() {
         if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.CLOUD, boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
+            PlayerUtil.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.CLOUD, boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(6.0))) {
                 if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
                     entity.hurt(DamageSource.mobAttack(boss), 4.0f);
@@ -310,7 +310,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 double x = boss.getX() + Mth.cos((float) angle) * 3.0;
                 double z = boss.getZ() + Mth.sin((float) angle) * 3.0;
                 Vec3 pos = new Vec3(x, boss.getY(), z);
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.END_ROD, pos, 0.3f, 0.2f, 0.3f, 15, 0);
+                PlayerUtil.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.END_ROD, pos, 0.3f, 0.2f, 0.3f, 15, 0);
             }
             boss.playSound(SoundEvents.BEACON_AMBIENT, 4.5f, 0);
             boss.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 100, 4)); // Resistência por 5 segundos
@@ -330,7 +330,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 }
             }
             boss.playSound(SoundEvents.GENERIC_EXPLODE, 4.5f, 2);
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SMOKE, this.boss.position(), 0.1f, 0.2f, 0.1f, 15, 0);
+            PlayerUtil.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.SMOKE, this.boss.position(), 0.1f, 0.2f, 0.1f, 15, 0);
             boss.AbilitiesTicksCooldown = 80; // Set cooldown for the next activation
         }
     }
@@ -464,7 +464,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     public void irradiatedPulse() {
         if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
             for (int i = 0; i < 5; i++) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.DRAGON_BREATH, this.boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
+                PlayerUtil.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.DRAGON_BREATH, this.boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
             }
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(6.0))) {
                 if (!entity.isInvulnerable() && !ImmuneEntities().contains(entity.getType()) && entity != boss) {
@@ -507,7 +507,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                     double y = this.boss.getY() + Math.cos(anglePhi) * 4.0;
                     double z = this.boss.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
                     Vec3 pos = new Vec3(x, y, z);
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                    PlayerUtil.ParticlesUtil.sendParticles(
                             this.boss.getLevel(),
                             ParticleTypes.GLOW,
                             pos,
@@ -537,7 +537,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     // Meltdown Ability - Agora com partículas de esfera ao redor da Entity
     public void meltdown() {
         if (boss.isActivatedAbility() && boss.AbilitiesTicksCooldown <= 0) {
-            PlayerUtilProcedure.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.EXPLOSION, this.boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
+            PlayerUtil.ParticlesUtil.sendParticles(this.boss.getLevel(), ParticleTypes.EXPLOSION, this.boss.position(), 0.3f, 0.2f, 0.3f, 15, 0);
 
             // Para cada entidade dentro da área do meltdown
             for (LivingEntity entity : boss.level.getEntitiesOfClass(LivingEntity.class, boss.getBoundingBox().inflate(5.0))) {
@@ -555,7 +555,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                             double y = this.boss.getY() + Math.cos(anglePhi) * 4.0;
                             double z = this.boss.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
                             Vec3 pos = new Vec3(x, y, z);
-                            PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                            PlayerUtil.ParticlesUtil.sendParticles(
                                     this.boss.getLevel(),
                                     ParticleTypes.SMOKE,
                                     pos,
