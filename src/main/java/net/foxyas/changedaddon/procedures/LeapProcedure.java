@@ -29,6 +29,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -244,7 +245,7 @@ public class LeapProcedure {
                                                                 _entity.swing(InteractionHand.MAIN_HAND, true);
                                                             entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
                                                                 @Override
-                                                                public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+                                                                public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
                                                                     Component _attackerName = null;
                                                                     Component _entityName = _livingEntity.getDisplayName();
                                                                     Component _itemName = null;

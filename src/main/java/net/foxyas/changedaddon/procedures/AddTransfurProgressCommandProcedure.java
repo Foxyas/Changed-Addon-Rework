@@ -2,24 +2,22 @@ package net.foxyas.changedaddon.procedures;
 
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 public class AddTransfurProgressCommandProcedure {
     public static void execute(CommandContext<CommandSourceStack> arguments, Entity entity) {
         if (entity == null)
             return;
         double Number = 0;
-        Number = new Object() {
-            public double getValue() {
-                CompoundTag dataIndex0 = new CompoundTag();
-                entity.saveWithoutId(dataIndex0);
-                return dataIndex0.getDouble("TransfurProgress");
-            }
-        }.getValue() + DoubleArgumentType.getDouble(arguments, "Number");
-        if (entity == entity) {
-            AddTransfurProgressProcedure.set(entity, Number);
+        if (entity instanceof Player player) {
+            Number = ProcessTransfur.getPlayerTransfurProgress(player) + DoubleArgumentType.getDouble(arguments, "Number");
+        } else {
+            return;
         }
+        AddTransfurProgressProcedure.set(entity, Number);
     }
 }

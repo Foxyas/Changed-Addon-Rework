@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockstartinfoProcedure {
     public static String execute(LevelAccessor world, double x, double y, double z) {
-        String block = "";
+        String block;
         block = new TranslatableComponent(("block." + (ForgeRegistries.BLOCKS.getKey((world.getBlockState(new BlockPos(x, y, z))).getBlock()).toString()).replace(":", "."))).getString();
         if ((new Object() {
             public boolean getValue(LevelAccessor world, BlockPos pos, String tag) {

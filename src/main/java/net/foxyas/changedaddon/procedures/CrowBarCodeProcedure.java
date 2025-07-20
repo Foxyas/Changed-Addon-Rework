@@ -69,10 +69,10 @@ public class CrowBarCodeProcedure {
     private static void oldexecute(@Nullable Event event, LevelAccessor world, double x, double y, double z, BlockState blockstate, Entity entity) {
         if (entity == null)
             return;
-        double sx = 0;
-        double sy = 0;
-        double sz = 0;
-        ItemStack CrowBar = ItemStack.EMPTY;
+        double sx;
+        double sy;
+        double sz;
+        ItemStack CrowBar;
         CrowBar = new ItemStack(ChangedAddonItems.CROW_BAR.get());
         if (entity instanceof LivingEntity _livEnt  && _livEnt.getMainHandItem().getItem() == CrowBar.getItem()) {
             if (blockstate.is(BlockTags.create(new ResourceLocation("changed_addon:lab_doors")))) {

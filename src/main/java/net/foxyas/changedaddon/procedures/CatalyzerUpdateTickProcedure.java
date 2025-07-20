@@ -20,9 +20,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class CatalyzerUpdateTickProcedure {
     public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate) {
-        ItemStack output = ItemStack.EMPTY;
-        ItemStack Slot0 = ItemStack.EMPTY;
-        BlockState block = Blocks.AIR.defaultBlockState();
+        ItemStack output;
+        ItemStack Slot0;
+        BlockState block;
         if (new Object() {
             public double getValue(LevelAccessor world, BlockPos pos, String tag) {
                 BlockEntity blockEntity = world.getBlockEntity(pos);

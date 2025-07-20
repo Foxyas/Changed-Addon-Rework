@@ -36,7 +36,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
 import net.foxyas.changedaddon.procedures.DarklatexpuddleUpdateTickProcedure;
-import net.foxyas.changedaddon.procedures.DarklatexpuddleFeatureProcedure;
+import net.foxyas.changedaddon.procedures.DarkLatexPuddleFeatureProcedure;
 import net.foxyas.changedaddon.procedures.DarklatexpuddleBlockAddedProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.block.entity.DarklatexpuddleBlockEntity;
@@ -129,13 +129,13 @@ public class DarklatexpuddleBlock extends Block implements EntityBlock, NonLatex
 	@Override
 	public void attack(BlockState blockstate, Level world, BlockPos pos, Player entity) {
 		super.attack(blockstate, world, pos, entity);
-		DarklatexpuddleFeatureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
+		DarkLatexPuddleFeatureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
 	}
 
 	@Override
 	public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
 		super.entityInside(blockstate, world, pos, entity);
-		DarklatexpuddleFeatureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
+		DarkLatexPuddleFeatureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
 	}
 
 	@Override

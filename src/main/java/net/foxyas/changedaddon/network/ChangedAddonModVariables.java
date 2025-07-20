@@ -26,6 +26,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -66,13 +67,7 @@ public class ChangedAddonModVariables {
 			event.getOriginal().revive();
 			PlayerVariables original = event.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
 			PlayerVariables clone = event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
-			clone.transfur = original.transfur;
-			clone.LatexForm = original.LatexForm;
-			clone.showwarns = original.showwarns;
-			clone.Progress_Transfur_Number = original.Progress_Transfur_Number;
 			clone.LatexEntitySummon = original.LatexEntitySummon;
-			clone.organic_transfur = original.organic_transfur;
-			clone.human_Form = original.human_Form;
 			clone.reset_transfur_advancements = original.reset_transfur_advancements;
 			clone.aredarklatex = original.aredarklatex;
 			clone.UntransfurProgress = original.UntransfurProgress;
@@ -104,7 +99,7 @@ public class ChangedAddonModVariables {
 		private final LazyOptional<PlayerVariables> instance = LazyOptional.of(() -> playerVariables);
 
 		@Override
-		public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+		public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction side) {
 			return cap == PLAYER_VARIABLES_CAPABILITY ? instance.cast() : LazyOptional.empty();
 		}
 
@@ -120,15 +115,10 @@ public class ChangedAddonModVariables {
 	}
 
 	public static class PlayerVariables {
-		public boolean transfur = false;
-		public String LatexForm = "any";
 		public boolean showwarns = true;
-		public double Progress_Transfur_Number = 0;
 		public double consciousness_fight_progress = 0;
 		public boolean concience_Fight = false;
 		public String LatexEntitySummon = "any";
-		public boolean organic_transfur = false;
-		public boolean human_Form = true;
 		public boolean reset_transfur_advancements = false;
 		public boolean act_cooldown = false;
 		public boolean aredarklatex = false;
@@ -146,15 +136,10 @@ public class ChangedAddonModVariables {
 
 		public Tag writeNBT() {
 			CompoundTag nbt = new CompoundTag();
-			nbt.putBoolean("transfur", transfur);
-			nbt.putString("LatexForm", LatexForm);
 			nbt.putBoolean("showwarns", showwarns);
-			nbt.putDouble("Progress_Transfur_Number", Progress_Transfur_Number);
 			nbt.putDouble("consciousness_fight_progress", consciousness_fight_progress);
 			nbt.putBoolean("concience_Fight", concience_Fight);
 			nbt.putString("LatexEntitySummon", LatexEntitySummon);
-			nbt.putBoolean("organic_transfur", organic_transfur);
-			nbt.putBoolean("human_Form", human_Form);
 			nbt.putBoolean("reset_transfur_advancements", reset_transfur_advancements);
 			nbt.putBoolean("act_cooldown", act_cooldown);
 			nbt.putBoolean("aredarklatex", aredarklatex);
@@ -169,15 +154,10 @@ public class ChangedAddonModVariables {
 
 		public void readNBT(Tag Tag) {
 			CompoundTag nbt = (CompoundTag) Tag;
-			transfur = nbt.getBoolean("transfur");
-			LatexForm = nbt.getString("LatexForm");
 			showwarns = nbt.getBoolean("showwarns");
-			Progress_Transfur_Number = nbt.getDouble("Progress_Transfur_Number");
 			consciousness_fight_progress = nbt.getDouble("consciousness_fight_progress");
 			concience_Fight = nbt.getBoolean("concience_Fight");
 			LatexEntitySummon = nbt.getString("LatexEntitySummon");
-			organic_transfur = nbt.getBoolean("organic_transfur");
-			human_Form = nbt.getBoolean("human_Form");
 			reset_transfur_advancements = nbt.getBoolean("reset_transfur_advancements");
 			act_cooldown = nbt.getBoolean("act_cooldown");
 			aredarklatex = nbt.getBoolean("aredarklatex");
@@ -210,16 +190,12 @@ public class ChangedAddonModVariables {
 			NetworkEvent.Context context = contextSupplier.get();
 			context.enqueueWork(() -> {
 				if (!context.getDirection().getReceptionSide().isServer()) {
-					PlayerVariables variables = Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
-					variables.transfur = message.data.transfur;
-					variables.LatexForm = message.data.LatexForm;
+                    assert Minecraft.getInstance().player != null;
+                    PlayerVariables variables = Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
 					variables.showwarns = message.data.showwarns;
-					variables.Progress_Transfur_Number = message.data.Progress_Transfur_Number;
 					variables.consciousness_fight_progress = message.data.consciousness_fight_progress;
 					variables.concience_Fight = message.data.concience_Fight;
 					variables.LatexEntitySummon = message.data.LatexEntitySummon;
-					variables.organic_transfur = message.data.organic_transfur;
-					variables.human_Form = message.data.human_Form;
 					variables.reset_transfur_advancements = message.data.reset_transfur_advancements;
 					variables.act_cooldown = message.data.act_cooldown;
 					variables.aredarklatex = message.data.aredarklatex;

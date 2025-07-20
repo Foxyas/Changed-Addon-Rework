@@ -7,7 +7,6 @@ public class CrystalAddagerGreenLivingEntityIsHitWithToolProcedure {
         if (entity == null)
             return;
         Entity target = null;
-        target = entity;
         AddTransfurProgressProcedure.addGreen(entity, 3);
     }
 }

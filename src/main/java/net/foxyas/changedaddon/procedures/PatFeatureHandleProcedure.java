@@ -88,7 +88,7 @@ public class PatFeatureHandleProcedure {
         Vec3 eyePos = entity.getEyePosition(1.0f);
         HitResult hitResult = entity.pick(reach, 1.0f, false);
 
-        if (hitResult != null && hitResult.getType() != HitResult.Type.MISS) {
+        if (hitResult.getType() != HitResult.Type.MISS) {
             distance = hitResult.getLocation().distanceToSqr(eyePos);
         }
 
@@ -117,7 +117,7 @@ public class PatFeatureHandleProcedure {
         if (entity instanceof ServerPlayer serverPlayer) {
             return serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
         } else if (entity.level.isClientSide() && entity instanceof Player player) {
-            return Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
+            return Objects.requireNonNull(Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(player.getGameProfile().getId())).getGameMode() == GameType.SPECTATOR;
         }
         return false;
     }
@@ -144,7 +144,7 @@ public class PatFeatureHandleProcedure {
     }
 
     private static void handleLatexEntity(Entity player, Entity target, LevelAccessor world) {
-        boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+        boolean isPlayerTransfur = (ProcessTransfur.getPlayerTransfurVariant((Player) player) != null);
         boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant((Player) player) != null
                 && ((ProcessTransfur.getPlayerTransfurVariant((Player) player)).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
                 || ProcessTransfur.getPlayerTransfurVariant((Player) player).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
@@ -187,9 +187,8 @@ public class PatFeatureHandleProcedure {
     }
 
     private static void handlePlayerEntity(Entity player, Player target, LevelAccessor world) {
-        boolean isPlayerTransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
-        boolean isTargetTransfur = target.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
-
+        boolean isPlayerTransfur = (ProcessTransfur.getPlayerTransfurVariant((Player) player) != null);
+        boolean isTargetTransfur = (ProcessTransfur.getPlayerTransfurVariant(target) != null);
         boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant((Player) player) != null
                 && ((ProcessTransfur.getPlayerTransfurVariant((Player) player)).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
                 || ProcessTransfur.getPlayerTransfurVariant((Player) player).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
@@ -253,7 +252,7 @@ public class PatFeatureHandleProcedure {
         if (entity instanceof ServerPlayer serverPlayer) {
             return serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
         } else if (entity.level.isClientSide() && entity instanceof Player player) {
-            return Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
+            return Objects.requireNonNull(Objects.requireNonNull(Minecraft.getInstance().getConnection()).getPlayerInfo(player.getGameProfile().getId())).getGameMode() == GameType.CREATIVE;
         }
         return false;
     }

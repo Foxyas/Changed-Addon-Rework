@@ -26,6 +26,7 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -40,12 +41,12 @@ public class FightToKeepYourConsciousnessProcedure {
                 BlockPos _bpos = event.player.getOnPos();
                 NetworkHooks.openGui(_ent, new MenuProvider() {
                     @Override
-                    public Component getDisplayName() {
+                    public @NotNull Component getDisplayName() {
                         return new TextComponent("FightToKeepConsciousnessMinigame");
                     }
 
                     @Override
-                    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+                    public AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory, @NotNull Player player) {
                         return new FightToKeepConsciousnessMinigameMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
                     }
                 }, _bpos);

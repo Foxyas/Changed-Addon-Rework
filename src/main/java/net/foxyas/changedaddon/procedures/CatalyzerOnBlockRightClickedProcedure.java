@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.NotNull;
 
 public class CatalyzerOnBlockRightClickedProcedure {
     public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate, Entity entity) {
@@ -63,12 +64,12 @@ public class CatalyzerOnBlockRightClickedProcedure {
                     BlockPos _bpos = new BlockPos(x, y, z);
                     NetworkHooks.openGui(_ent, new MenuProvider() {
                         @Override
-                        public Component getDisplayName() {
+                        public @NotNull Component getDisplayName() {
                             return new TextComponent("CatalyzerGui");
                         }
 
                         @Override
-                        public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+                        public AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory, @NotNull Player player) {
                             return new CatalyzerGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
                         }
                     }, _bpos);

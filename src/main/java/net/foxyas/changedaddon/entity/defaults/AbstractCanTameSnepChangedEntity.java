@@ -358,7 +358,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                 if (!player.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-                boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+                boolean istransfur = ProcessTransfur.isPlayerTransfurred(player);
 
                 if (!istransfur && this.random.nextInt(2) == 0) { // One in 2 chance
                     this.tame(player);

@@ -53,7 +53,7 @@ public class TransfurTotemRightClickedProcedure {
                 if (form.isEmpty()) {
                     showMessage(entity, "Any form linked please link one §e<Shift+Click>");
                 } else {
-                    PlayerUtil.TransfurPlayer(entity, form);
+                    PlayerUtil.TransfurPlayer(entity, form, 1);
                     activateVisuals(world, x, y, z, entity, itemstack, "changed_addon:transfur_totem_advancement_1", 100);
                 }
             }

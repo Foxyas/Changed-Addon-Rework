@@ -27,9 +27,9 @@ public class Exp10StatsProcedure {
     private static void execute(@Nullable Event event, DamageSource damagesource, Entity entity, double amount) {
         if (entity == null)
             return;
-        double math = 0;
-        double Phase2Math = 0;
-        double Phase3Math = 0;
+        double math;
+        double Phase2Math;
+        double Phase3Math;
         if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_experiment_10")) {
             if ((damagesource).isFire()) {
                 math = amount / 2;

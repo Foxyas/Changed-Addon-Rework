@@ -7,6 +7,8 @@ import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedParticles;
@@ -61,7 +63,21 @@ public class PlayerUtil {
         LivingEntity livingEntity = (LivingEntity) entity;
         if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
             TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-            ProcessTransfur.transfur(livingEntity, entity.getLevel(), latexVariant, true);
+            ProcessTransfur.transfur(livingEntity, entity.getLevel(), latexVariant, true, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
+        }
+    }
+
+    public static void TransfurPlayer(Entity entity, String id, float progress) {
+        ResourceLocation form;
+        try {
+            form = new ResourceLocation(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Player player = (Player) entity;
+        if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
+            TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+            ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
         }
     }
 

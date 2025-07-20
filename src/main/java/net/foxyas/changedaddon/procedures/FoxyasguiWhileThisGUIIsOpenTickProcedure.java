@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -31,12 +32,12 @@ public class FoxyasguiWhileThisGUIIsOpenTickProcedure {
                             BlockPos _bpos = new BlockPos(x, y, z);
                             NetworkHooks.openGui(_ent, new MenuProvider() {
                                 @Override
-                                public Component getDisplayName() {
+                                public @NotNull Component getDisplayName() {
                                     return new TextComponent("FoxyasGui2");
                                 }
 
                                 @Override
-                                public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
+                                public AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory, @NotNull Player player) {
                                     return new FoxyasGui2Menu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(_bpos));
                                 }
                             }, _bpos);

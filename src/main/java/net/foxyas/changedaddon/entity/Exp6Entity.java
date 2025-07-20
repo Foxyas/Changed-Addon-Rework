@@ -4,9 +4,9 @@ package net.foxyas.changedaddon.entity;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.entity.goals.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
@@ -75,7 +75,7 @@ public class Exp6Entity extends AbstractCanTameSnepChangedEntity {
 				if (!player.getAbilities().instabuild) {
 					itemstack.shrink(1);
 				}
-				boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+				boolean istransfur = ProcessTransfur.isPlayerTransfurred(player);
 
 				if (!istransfur && this.random.nextInt(2) == 0) { // One in 2 chance
 					this.tame(player);

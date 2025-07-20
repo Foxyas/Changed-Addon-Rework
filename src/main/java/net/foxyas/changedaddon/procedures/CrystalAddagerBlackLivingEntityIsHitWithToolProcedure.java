@@ -7,7 +7,6 @@ public class CrystalAddagerBlackLivingEntityIsHitWithToolProcedure {
         if (entity == null)
             return;
         Entity target = null;
-        target = entity;
         AddTransfurProgressProcedure.addBlack(entity, 3);
     }
 }

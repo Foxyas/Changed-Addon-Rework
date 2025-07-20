@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
@@ -16,6 +16,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.decoration.GlowItemFrame;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownExperienceBottle;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -30,56 +31,83 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DarklatexpuddleFeatureProcedure {
+public class DarkLatexPuddleFeatureProcedure {
+
+    private static boolean isIgnoredEntity(Entity e) {
+        return e instanceof ItemEntity || e instanceof ArmorStand || e instanceof ItemFrame ||
+                e instanceof GlowItemFrame || e instanceof ThrownExperienceBottle || e instanceof ExperienceOrb;
+    }
+
+    private static boolean isDarkLatexOrPuroKind(Player entity) {
+        var variant = ProcessTransfur.getPlayerTransfurVariant(entity);
+        if (variant == null) return false;
+
+        String id = variant.getFormId().toString();
+        return id.contains("dark_latex") || id.contains("puro_kind");
+    }
+
+    private static boolean isEntityDarkLatex(Entity entity) {
+        ResourceLocation key = ForgeRegistries.ENTITIES.getKey(entity.getType());
+        return key != null && key.toString().contains("dark_latex");
+    }
+
     public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (entity == null)
-            return;
-        if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame || entity instanceof ThrownExperienceBottle || entity instanceof ExperienceOrb)) {
-            if (!(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).contains("dark_latex")) {
-                if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")
-                        && !((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("puro_kind")) {
-                    if (new Object() {
-                        public double getValue(LevelAccessor world, BlockPos pos, String tag) {
-                            BlockEntity blockEntity = world.getBlockEntity(pos);
-                            if (blockEntity != null)
-                                return blockEntity.getTileData().getDouble(tag);
-                            return -1;
-                        }
-                    }.getValue(world, new BlockPos(x, y, z), "cooldown") <= 0) {
-                        if (world instanceof ServerLevel _level)
-                            _level.getServer().getCommands().performCommand(new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, _level, 4, "", new TextComponent(""), _level.getServer(), null).withSuppressedOutput(),
-                                    ("playsound " + "changed_addon:warn " + "block " + "@a[nbt={ForgeCaps:{\"changed_addon:player_variables\":{aredarklatex:1b}}}] " + "~ ~ ~ " + 20 + 0 + 1));
-                        if (!world.isClientSide()) {
-                            BlockPos _bp = new BlockPos(x, y, z);
-                            BlockEntity _blockEntity = world.getBlockEntity(_bp);
-                            BlockState _bs = world.getBlockState(_bp);
-                            if (_blockEntity != null)
-                                _blockEntity.getTileData().putDouble("cooldown", 10);
-                            if (world instanceof Level _level)
-                                _level.sendBlockUpdated(_bp, _bs, _bs, 3);
-                        }
-                    }
+        if (entity == null || isIgnoredEntity(entity)) return;
+        if (!(entity instanceof Player player)) return;
+
+        if (!isEntityDarkLatex(entity) && !isDarkLatexOrPuroKind(player)) {
+            BlockPos pos = new BlockPos(x, y, z);
+
+            if (getTileCooldown(world, pos) <= 0) {
+                // Reproduz som para dark latex próximos
+                if (world instanceof ServerLevel serverLevel) {
+                    String command = "playsound changed_addon:warn block @a[nbt={ForgeCaps:{\"changed_addon:player_variables\":{aredarklatex:1b}}}] ~ ~ ~ 20 0 1";
+                    CommandSourceStack source = new CommandSourceStack(CommandSource.NULL, new Vec3(x, y, z), Vec2.ZERO, serverLevel, 4, "", new TextComponent(""), serverLevel.getServer(), null).withSuppressedOutput();
+                    serverLevel.getServer().getCommands().performCommand(source, command);
+                }
+
+                // Aplica cooldown no bloco
+                setTileCooldown(world, pos, 10);
+            }
+        }
+
+        // Atração de dark latex
+        Vec3 center = new Vec3(x, y, z);
+        AABB area = new AABB(center, center).inflate(10); // raio de 10 blocos
+        List<Entity> nearbyEntities = world.getEntitiesOfClass(Entity.class, area, e -> true)
+                .stream()
+                .filter(e -> e != entity)
+                .sorted(Comparator.comparingDouble(e -> e.distanceToSqr(center)))
+                .collect(Collectors.toList());
+
+        for (Entity nearby : nearbyEntities) {
+            if (!isIgnoredEntity(nearby) && !isEntityDarkLatex(entity) && !isDarkLatexOrPuroKind(player)) {
+                if (isChangedCreature(nearby) && isEntityDarkLatex(nearby)) {
+                    if (nearby instanceof Mob mob)
+                        mob.getNavigation().moveTo(x, y, z, 0.3);
                 }
             }
         }
-        {
-            final Vec3 _center = new Vec3(x, y, z);
-            List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(20 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center))).collect(Collectors.toList());
-            for (Entity entityiterator : _entfound) {
-                if (!(entityiterator == entity)) {
-                    if (!(entity instanceof ItemEntity || entity instanceof ArmorStand || entity instanceof ItemFrame || entity instanceof GlowItemFrame || entity instanceof ThrownExperienceBottle || entity instanceof ExperienceOrb)) {
-                        if (!((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("dark_latex")) {
-                            if (!(ForgeRegistries.ENTITIES.getKey(entity.getType()).toString()).contains("dark_latex")) {
-                                if (entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:changed_creature"))) || entityiterator instanceof net.ltxprogrammer.changed.entity.ChangedEntity) {
-                                    if ((ForgeRegistries.ENTITIES.getKey(entityiterator.getType()).toString()).contains("dark_latex")) {
-                                        if (entityiterator instanceof Mob _entity)
-                                            _entity.getNavigation().moveTo(x, y, z, 0.3);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+    }
+
+    private static boolean isChangedCreature(Entity entity) {
+        return entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:changed_creature"))) ||
+                entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity;
+    }
+
+    private static double getTileCooldown(LevelAccessor world, BlockPos pos) {
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be != null) return be.getTileData().getDouble("cooldown");
+        return -1;
+    }
+
+    private static void setTileCooldown(LevelAccessor world, BlockPos pos, double cooldown) {
+        BlockEntity be = world.getBlockEntity(pos);
+        if (be != null) {
+            be.getTileData().putDouble("cooldown", cooldown);
+            if (world instanceof Level level) {
+                BlockState state = world.getBlockState(pos);
+                level.sendBlockUpdated(pos, state, state, 3);
             }
         }
     }

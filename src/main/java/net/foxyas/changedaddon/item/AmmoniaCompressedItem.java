@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.player.Player;
 
-import net.foxyas.changedaddon.procedures.AmmoniaCompressedItemIsCraftedsmeltedProcedure;
+import net.foxyas.changedaddon.procedures.AmmoniaCompressedItemIsCraftedSmeltedProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class AmmoniaCompressedItem extends Item {
@@ -18,6 +18,6 @@ public class AmmoniaCompressedItem extends Item {
 	@Override
 	public void onCraftedBy(ItemStack itemstack, Level world, Player entity) {
 		super.onCraftedBy(itemstack, world, entity);
-		AmmoniaCompressedItemIsCraftedsmeltedProcedure.execute(entity);
+		AmmoniaCompressedItemIsCraftedSmeltedProcedure.execute(entity);
 	}
 }

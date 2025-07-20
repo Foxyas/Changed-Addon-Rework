@@ -3,24 +3,19 @@ package net.foxyas.changedaddon.procedures;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 public class AddPlayerTransfurProgressProcedure {
     public static void execute(CommandContext<CommandSourceStack> arguments, Entity entity) {
         if (entity == null)
             return;
-        double Number = 0;
-        Entity EntityTarget = null;
-        Number = new Object() {
-            public double getValue() {
-                CompoundTag dataIndex0 = new CompoundTag();
-                entity.saveWithoutId(dataIndex0);
-                return dataIndex0.getDouble("TransfurProgress");
-            }
-        }.getValue() + DoubleArgumentType.getDouble(arguments, "Number");
+        double Number;
+        Entity EntityTarget;
         EntityTarget = new Object() {
             public Entity getEntity() {
                 try {
@@ -31,8 +26,11 @@ public class AddPlayerTransfurProgressProcedure {
                 }
             }
         }.getEntity();
-        if (entity == entity) {
-            AddTransfurProgressProcedure.set(EntityTarget, Number);
+        if (EntityTarget instanceof Player player) {
+            Number = ProcessTransfur.getPlayerTransfurProgress(player) + DoubleArgumentType.getDouble(arguments, "Number");
+        } else {
+            return;
         }
+        AddTransfurProgressProcedure.set(EntityTarget, Number);
     }
 }

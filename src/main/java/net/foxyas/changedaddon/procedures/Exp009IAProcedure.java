@@ -21,6 +21,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.List;
@@ -31,27 +32,27 @@ public class Exp009IAProcedure {
     public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
         if (entity == null)
             return;
-        Entity TpTarget = null;
+        Entity TpTarget;
         double randown = 0;
         double Pz = 0;
         double Px = 0;
         double Py = 0;
         double motionZ = 0;
-        double deltaZ = 0;
-        double distance = 0;
-        double deltaX = 0;
+        double deltaZ;
+        double distance;
+        double deltaX;
         double motionY = 0;
-        double deltaY = 0;
+        double deltaY;
         double motionX = 0;
         double maxSpeed = 0;
         double speed = 0;
-        double IAATTACK = 0;
-        double attackDmg = 0;
-        double attackDmg2 = 0;
-        double weakattackdmg = 0;
-        double strongattackdmg = 0;
-        double attackDmg3 = 0;
-        double attackbuff = 0;
+        double IAATTACK;
+        double attackDmg;
+        double attackDmg2;
+        double weakattackdmg;
+        double strongattackdmg;
+        double attackDmg3;
+        double attackbuff;
         if (!(new Object() {
             public boolean getValue() {
                 CompoundTag dataIndex0 = new CompoundTag();
@@ -108,7 +109,7 @@ public class Exp009IAProcedure {
                                                     _player.displayClientMessage(new TextComponent("\u00A7l\u00A7o\u00A73You CANT ESCAPE FROM ME!!"), true);
                                                 entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
                                                     @Override
-                                                    public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+                                                    public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
                                                         Component _attackerName = null;
                                                         Component _entityName = _livingEntity.getDisplayName();
                                                         Component _itemName = null;
@@ -163,7 +164,7 @@ public class Exp009IAProcedure {
                                                     _player.displayClientMessage(new TextComponent("\u00A7o\u00A73Come Back Here \u00A7lNOW!"), true);
                                                 entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
                                                     @Override
-                                                    public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+                                                    public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
                                                         Component _attackerName = null;
                                                         Component _entityName = _livingEntity.getDisplayName();
                                                         Component _itemName = null;
@@ -218,7 +219,7 @@ public class Exp009IAProcedure {
                                                             if (!(entityiterator == entity)) {
                                                                 entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
                                                                     @Override
-                                                                    public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+                                                                    public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
                                                                         Component _attackerName = null;
                                                                         Component _entityName = _livingEntity.getDisplayName();
                                                                         Component _itemName = null;
@@ -296,7 +297,7 @@ public class Exp009IAProcedure {
                                             if (!(entityiterator == entity)) {
                                                 entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
                                                     @Override
-                                                    public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+                                                    public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
                                                         Component _attackerName = null;
                                                         Component _entityName = _livingEntity.getDisplayName();
                                                         Component _itemName = null;
@@ -355,7 +356,7 @@ public class Exp009IAProcedure {
                                                             if (!(entityiterator == entity)) {
                                                                 entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
                                                                     @Override
-                                                                    public Component getLocalizedDeathMessage(LivingEntity _livingEntity) {
+                                                                    public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
                                                                         Component _attackerName = null;
                                                                         Component _entityName = _livingEntity.getDisplayName();
                                                                         Component _itemName = null;

@@ -71,7 +71,7 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameSnepChangedEn
 				if (!player.getAbilities().instabuild) {
 					itemstack.shrink(1);
 				}
-				boolean istransfur = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables()).transfur;
+				boolean istransfur = ProcessTransfur.isPlayerTransfurred(player);
 
 				if (!istransfur && this.random.nextInt(3) == 0) { // One in 3 chance
 					this.tame(player);
