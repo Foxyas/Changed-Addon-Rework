@@ -16,7 +16,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.procedures.FightTokeepconsciousnessminigameThisGUIIsClosedProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModMenus;
+import net.foxyas.changedaddon.init.ChangedAddonMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class FightToKeepConsciousnessMinigameMenu extends AbstractContainerMenu 
 	private BlockEntity boundBlockEntity = null;
 
 	public FightToKeepConsciousnessMinigameMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonModMenus.FIGHT_TOKEEPCONSCIOUSNESSMINIGAME, id);
+		super(ChangedAddonMenus.FIGHT_TOKEEPCONSCIOUSNESSMINIGAME, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(0);

@@ -5,14 +5,13 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.food.Foods;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class GoldenOrange extends Item {
 	public GoldenOrange() {
 		super(new Item.Properties()
-			.tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)
+			.tab(ChangedAddonTabs.TAB_CHANGED_ADDON)
 			.rarity(Rarity.RARE)
 			.food(new FoodProperties.Builder()
 					.nutrition(4).saturationMod(1.2F)

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.advanced;
 
-import net.foxyas.changedaddon.registers.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.minecraft.world.entity.EntityType;

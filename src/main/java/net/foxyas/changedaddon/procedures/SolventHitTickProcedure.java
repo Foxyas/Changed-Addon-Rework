@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
+import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
@@ -45,7 +45,7 @@ public class SolventHitTickProcedure {
         // Emite partículas
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(
-                    (SimpleParticleType) ChangedAddonModParticleTypes.SOLVENT_PARTICLE.get(),
+                    (SimpleParticleType) ChangedAddonParticleTypes.SOLVENT_PARTICLE.get(),
                     entity.getX(),
                     entity.getY() + 1,
                     entity.getZ(),

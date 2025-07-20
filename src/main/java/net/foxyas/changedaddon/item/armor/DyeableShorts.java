@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.item.armor;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.item.ExtendedItemProperties;
 import net.ltxprogrammer.changed.item.Shorts;
@@ -22,14 +22,10 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import org.jetbrains.annotations.NotNull;
 
 
 public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedItemProperties {
@@ -67,7 +63,7 @@ public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedI
 
 	
     public DyeableShorts() {
-        super(MATERIAL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
+        super(MATERIAL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
     }
 
     @Override
@@ -123,7 +119,7 @@ public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedI
         public static void onItemColorsInit(ColorHandlerEvent.Item event) {
             event.getItemColors().register(
                     (stack, layer) -> ((DyeableLeatherItem)stack.getItem()).getColor(stack),
-                    ChangedAddonRegisters.DYEABLE_SHORTS.get());
+                    ChangedAddonItems.DYEABLE_SHORTS.get());
         }
     }
 

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
 import net.foxyas.changedaddon.entity.Exp2MaleEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
@@ -72,7 +72,7 @@ public class Exp2StatsProcedure {
                         }
                     }.checkGamemode(immediatesourceentity))) {
                         if (immediatesourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                            _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                            _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
                     }
                 }
             }
@@ -103,7 +103,7 @@ public class Exp2StatsProcedure {
                             }
                         }.checkGamemode(entity))) {
                             if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                                _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
                         }
                     }
                 }
@@ -135,7 +135,7 @@ public class Exp2StatsProcedure {
                             }
                         }.checkGamemode(entity))) {
                             if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                                _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
                         }
                     }
                 }
@@ -167,7 +167,7 @@ public class Exp2StatsProcedure {
                             }
                         }.checkGamemode(immediatesourceentity))) {
                             if (immediatesourceentity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                                _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
                         }
                     }
                 }

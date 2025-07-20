@@ -11,11 +11,11 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class OrangejuiceItem extends Item {
 	public OrangejuiceItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(8).saturationMod(1.125f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(8).saturationMod(1.125f).alwaysEat()
 
 				.build()));
 	}

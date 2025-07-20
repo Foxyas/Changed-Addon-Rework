@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.network.chat.TextComponent;
@@ -19,7 +19,7 @@ public class LatexInsulatorEntityCollidesInTheBlockProcedure {
         if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
             if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
                 if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                    _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 300, 0, false, false));
+                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 300, 0, false, false));
                 if (entity instanceof LivingEntity _entity)
                     _entity.hurt(new DamageSource("latex_solvent").bypassArmor(), 1);
             }
@@ -27,7 +27,7 @@ public class LatexInsulatorEntityCollidesInTheBlockProcedure {
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
             if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur) {
                 if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                    _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
+                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
                 if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
                     if (entity instanceof LivingEntity _entity)
                         _entity.hurt(new DamageSource("latex_solvent").bypassArmor(), 1);

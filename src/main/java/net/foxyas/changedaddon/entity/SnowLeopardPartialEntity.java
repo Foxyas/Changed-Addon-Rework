@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.registers.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedAttributes;

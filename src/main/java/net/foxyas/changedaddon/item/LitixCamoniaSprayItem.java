@@ -9,11 +9,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.InteractionResult;
 
 import net.foxyas.changedaddon.procedures.LitixCamoniaSprayRightclickedOnBlockProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class LitixCamoniaSprayItem extends Item {
 	public LitixCamoniaSprayItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).durability(64).rarity(Rarity.COMMON));
 	}
 
 	@Override

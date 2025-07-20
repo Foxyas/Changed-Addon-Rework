@@ -39,9 +39,9 @@ public class WhenEntityIshurtProcedure {
             return;
         if (immediatesourceentity instanceof Experiment10Entity || immediatesourceentity instanceof Experiment10BossEntity) {
             if (entity instanceof LivingEntity _livEnt && _livEnt.isBlocking()) {
-                if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof ShieldItem) {
+                if (_livEnt.getMainHandItem().getItem() instanceof ShieldItem) {
                     if (entity instanceof Player _player)
-                        _player.getCooldowns().addCooldown((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem(), 150);
+                        _player.getCooldowns().addCooldown(_livEnt.getMainHandItem().getItem(), 150);
                     if (world instanceof Level _level) {
                         if (!_level.isClientSide()) {
                             _level.playSound(null, new BlockPos(immediatesourceentity.getX(), immediatesourceentity.getY() + 1, immediatesourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.crit")),
@@ -58,9 +58,9 @@ public class WhenEntityIshurtProcedure {
                             _level.playLocalSound((entity.getX()), (entity.getY() + 1), (entity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.shield.break")), SoundSource.PLAYERS, (float) 1.5, (float) 0.5, false);
                         }
                     }
-                } else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() instanceof ShieldItem) {
+                } else if (_livEnt.getOffhandItem().getItem() instanceof ShieldItem) {
                     if (entity instanceof Player _player)
-                        _player.getCooldowns().addCooldown((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem(), 150);
+                        _player.getCooldowns().addCooldown(_livEnt.getOffhandItem().getItem(), 150);
                     if (world instanceof Level _level) {
                         if (!_level.isClientSide()) {
                             _level.playSound(null, new BlockPos(immediatesourceentity.getX(), immediatesourceentity.getY() + 1, immediatesourceentity.getZ()), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.player.attack.crit")),

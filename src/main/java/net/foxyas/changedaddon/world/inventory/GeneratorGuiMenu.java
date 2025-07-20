@@ -15,7 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMenus;
+import net.foxyas.changedaddon.init.ChangedAddonMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class GeneratorGuiMenu extends AbstractContainerMenu implements Supplier<
 	private BlockEntity boundBlockEntity = null;
 
 	public GeneratorGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonModMenus.GENERATORGUI, id);
+		super(ChangedAddonMenus.GENERATORGUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(0);

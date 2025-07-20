@@ -158,7 +158,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
         });
         this.goalSelector.addGoal(15, new KnockBackBurstGoal(this, 10));
-        this.goalSelector.addGoal(5, new VoidFoxDashAttack(this, net.foxyas.changedaddon.registers.ChangedAddonEntities.PARTICLE_PROJECTILE.get()) {
+        this.goalSelector.addGoal(5, new VoidFoxDashAttack(this, ChangedAddonEntities.PARTICLE_PROJECTILE.get()) {
             @Override
             public boolean canUse() {
                 if (VoidFoxEntity.this.getAttack2Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
@@ -850,7 +850,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                         double py = this.getY() + dy * radius + 1.0; // leve ajuste de altura
                         double pz = this.getZ() + dz * radius;
 
-                        ParticleProjectile projectile = new ParticleProjectile(net.foxyas.changedaddon.registers.ChangedAddonEntities.PARTICLE_PROJECTILE.get(), this.level);
+                        ParticleProjectile projectile = new ParticleProjectile(ChangedAddonEntities.PARTICLE_PROJECTILE.get(), this.level);
                         projectile.setSmoothMotion(true);
                         projectile.setPos(px, py, pz);
                         projectile.shoot(dx, dy, dz, 1.0f, 0.0f); // dispara na direção da esfera

@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.block.advanced;
 
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
+
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.ltxprogrammer.changed.block.KeypadBlock;
 import net.ltxprogrammer.changed.block.entity.KeypadBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -37,7 +37,7 @@ public class KeypadUpgradeEvent {
         if (!(block instanceof KeypadBlock)) return;
 
         // Substituir por TimedKeypad mantendo a orientação
-        BlockState newState = ChangedAddonRegisters.ChangedAddonBlocks.TIMED_KEYPAD.get().defaultBlockState();
+        BlockState newState = ChangedAddonBlocks.TIMED_KEYPAD.get().defaultBlockState();
 
         if (state.hasProperty(KeypadBlock.FACING)) {
             Direction facing = state.getValue(KeypadBlock.FACING);

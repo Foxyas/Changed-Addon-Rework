@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -59,14 +59,14 @@ public class Exp009IAProcedure {
             }
         }.getValue())) {
             if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) <= (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) * 0.666) {
-                entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 2.5 + 0.1 * ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
+                entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 2.5 + 0.1 * ((world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
             } else {
-                entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 2 + 0.1 * ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
+                entity.getPersistentData().putDouble("IA", (entity.getPersistentData().getDouble("IA") + 2 + 0.1 * ((world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100)));
             }
             if (entity.getPersistentData().getDouble("IA") >= 100) {
                 if (entity.isAlive()) {
                     IAATTACK = Math.random();
-                    attackbuff = (world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100;
+                    attackbuff = (world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100;
                     attackDmg = 1.5 + 1.5 * attackbuff;
                     attackDmg2 = 1.5 + 1.5 * attackbuff;
                     attackDmg3 = 2.5 + 2.5 * attackbuff;

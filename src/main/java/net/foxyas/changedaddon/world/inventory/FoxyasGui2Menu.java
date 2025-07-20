@@ -19,7 +19,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.procedures.FoxyasGui2ThisGUIIsOpenedProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModMenus;
+import net.foxyas.changedaddon.init.ChangedAddonMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class FoxyasGui2Menu extends AbstractContainerMenu implements Supplier<Ma
 	private BlockEntity boundBlockEntity = null;
 
 	public FoxyasGui2Menu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonModMenus.FOXYAS_GUI_2, id);
+		super(ChangedAddonMenus.FOXYAS_GUI_2, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(0);

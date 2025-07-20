@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -33,10 +33,10 @@ public class DarkLatexMaskTransfurHandleProcedure {
     private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
         if (entity == null)
             return;
-        if ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.DO_DARK_LATEX_MASK_TRANSFUR)) > 0) {
+        if ((world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.DO_DARK_LATEX_MASK_TRANSFUR)) > 0) {
             if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
                 if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:dark_latex_mask"))) {
-                    if (entity.getPersistentData().getDouble("HoldingDarkLatexMask") < (world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.DO_DARK_LATEX_MASK_TRANSFUR))) {
+                    if (entity.getPersistentData().getDouble("HoldingDarkLatexMask") < (world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.DO_DARK_LATEX_MASK_TRANSFUR))) {
                         entity.getPersistentData().putDouble("HoldingDarkLatexMask", (entity.getPersistentData().getDouble("HoldingDarkLatexMask") + 1));
                     } else {
                         if (entity instanceof LivingEntity _entity) {
@@ -50,7 +50,7 @@ public class DarkLatexMaskTransfurHandleProcedure {
                         entity.getPersistentData().putDouble("HoldingDarkLatexMask", 0);
                     }
                 } else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:dark_latex_mask"))) {
-                    if (entity.getPersistentData().getDouble("HoldingDarkLatexMask") < (world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.DO_DARK_LATEX_MASK_TRANSFUR))) {
+                    if (entity.getPersistentData().getDouble("HoldingDarkLatexMask") < (world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.DO_DARK_LATEX_MASK_TRANSFUR))) {
                         entity.getPersistentData().putDouble("HoldingDarkLatexMask", (entity.getPersistentData().getDouble("HoldingDarkLatexMask") + 1));
                     } else {
                         if (entity instanceof LivingEntity _entity) {

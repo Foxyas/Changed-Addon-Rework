@@ -16,15 +16,15 @@ public class ChangedAddonScreens {
 	@SubscribeEvent
 	public static void clientLoad(FMLClientSetupEvent event) {
 		event.enqueueWork(() -> {
-			MenuScreens.register(ChangedAddonModMenus.FOXYASGUI, FoxyasguiScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.GENERATORGUI, GeneratorguiScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.CATALYZERGUI, CatalyzerguiScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.UNIFUSERGUI, UnifuserguiScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.FIGHT_TOKEEPCONSCIOUSNESSMINIGAME, FightToKeepConsciousnessMinigameScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.FOXYAS_GUI_2, FoxyasGui2Screen::new);
-			MenuScreens.register(ChangedAddonModMenus.TRANSFUR_SOUNDS_GUI, TransfurSoundsGuiScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.TRANSFUR_TOTEM_GUI, TransfurTotemGuiScreen::new);
-			MenuScreens.register(ChangedAddonModMenus.INFORMANT_GUI, InformantGuiScreen::new);
+			MenuScreens.register(ChangedAddonMenus.FOXYASGUI, FoxyasguiScreen::new);
+			MenuScreens.register(ChangedAddonMenus.GENERATORGUI, GeneratorguiScreen::new);
+			MenuScreens.register(ChangedAddonMenus.CATALYZERGUI, CatalyzerguiScreen::new);
+			MenuScreens.register(ChangedAddonMenus.UNIFUSERGUI, UnifuserguiScreen::new);
+			MenuScreens.register(ChangedAddonMenus.FIGHT_TOKEEPCONSCIOUSNESSMINIGAME, FightToKeepConsciousnessMinigameScreen::new);
+			MenuScreens.register(ChangedAddonMenus.FOXYAS_GUI_2, FoxyasGui2Screen::new);
+			MenuScreens.register(ChangedAddonMenus.TRANSFUR_SOUNDS_GUI, TransfurSoundsGuiScreen::new);
+			MenuScreens.register(ChangedAddonMenus.TRANSFUR_TOTEM_GUI, TransfurTotemGuiScreen::new);
+			MenuScreens.register(ChangedAddonMenus.INFORMANT_GUI, InformantGuiScreen::new);
 		});
 	}
 }

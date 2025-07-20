@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
+import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -41,7 +41,7 @@ public class LatexSolventOnActiveTickProcedure {
             }.checkGamemode(entity))) {
                 if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
                     if (world instanceof ServerLevel _level)
-                        _level.sendParticles((SimpleParticleType) (ChangedAddonModParticleTypes.SOLVENT_PARTICLE.get()), x, (y + 1), z, 10, 0.2, 0.3, 0.2, 0.1);
+                        _level.sendParticles((SimpleParticleType) (ChangedAddonParticleTypes.SOLVENT_PARTICLE.get()), x, (y + 1), z, 10, 0.2, 0.3, 0.2, 0.1);
                 }
             }
         }

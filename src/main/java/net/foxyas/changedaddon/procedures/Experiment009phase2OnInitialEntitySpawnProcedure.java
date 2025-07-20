@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -18,7 +18,7 @@ public class Experiment009phase2OnInitialEntitySpawnProcedure {
         if (entity == null)
             return;
         AttributeModifier HardModeBuff = null;
-        HardModeBuff = new AttributeModifier(UUID.fromString("d6aa1721-3594-4b7b-ad84-977d7b14a94d"), "gameruleBuff", ((world.getLevelData().getGameRules().getInt(ChangedAddonModGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100),
+        HardModeBuff = new AttributeModifier(UUID.fromString("d6aa1721-3594-4b7b-ad84-977d7b14a94d"), "gameruleBuff", ((world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.CHANGED_ADDON_HARD_MODE_BOSSES)) / 100),
                 AttributeModifier.Operation.MULTIPLY_BASE);
         if (!(((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).hasModifier(HardModeBuff)))
             ((LivingEntity) entity).getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH).addTransientModifier(HardModeBuff);

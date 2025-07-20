@@ -21,7 +21,7 @@ import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.procedures.UnifuserguiDisableItemstackPlacementslot0Procedure;
 import net.foxyas.changedaddon.procedures.UnifuserguiDisableItemstackPlacementProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModMenus;
+import net.foxyas.changedaddon.init.ChangedAddonMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;
@@ -41,7 +41,7 @@ public class UnifuserGuiMenu extends AbstractContainerMenu implements Supplier<M
 	private BlockEntity boundBlockEntity = null;
 
 	public UnifuserGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonModMenus.UNIFUSERGUI, id);
+		super(ChangedAddonMenus.UNIFUSERGUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(4);

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.villagerTrades;
 
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonModVillagerProfessions;
+import net.foxyas.changedaddon.init.ChangedAddonVillagerProfessions;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +19,7 @@ import java.util.Random;
 public class ChangedAddonTrades {
     @SubscribeEvent
     public static void registerTrades(VillagerTradesEvent event) {
-        if (event.getType() == ChangedAddonModVillagerProfessions.SCIENTIST.get()) {
+        if (event.getType() == ChangedAddonVillagerProfessions.SCIENTIST.get()) {
             CompoundTag darkLatexLaethin = new CompoundTag();
             darkLatexLaethin.putString("type", "dark_latex");
             CompoundTag WhiteLatexLaethin = new CompoundTag();

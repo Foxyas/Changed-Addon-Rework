@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -66,7 +66,7 @@ public class DolatexinfectiontickProcedure {
     public static void execute(Player player) {
         if (player == null) return;
 
-        if (!player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.DO_LATEX_INFECTION)) {
+        if (!player.getLevel().getGameRules().getBoolean(ChangedAddonGameRules.DO_LATEX_INFECTION)) {
             return;
         }
 
@@ -89,7 +89,7 @@ public class DolatexinfectiontickProcedure {
             if (!getInfected(player)) {// transfurProgress.progress() > 0
                 return;
             }
-            if (player.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get())) {
+            if (player.hasEffect(ChangedAddonMobEffects.LATEX_SOLVENT.get())) {
                 if (getInfected(player)) {
                     setInfected(player, false);
                 }
@@ -98,7 +98,7 @@ public class DolatexinfectiontickProcedure {
         } else {
             if (!(transfurProgress > 0) && transfurProgress >= PlayerTolerance) {
                 return;
-            } else if (player.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get())) {
+            } else if (player.hasEffect(ChangedAddonMobEffects.LATEX_SOLVENT.get())) {
                 return;
             }
         }

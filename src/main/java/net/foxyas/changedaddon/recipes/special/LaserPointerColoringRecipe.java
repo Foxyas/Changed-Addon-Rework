@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.recipes.special;
 import com.google.gson.JsonObject;
 import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.recipes.ChangedAddonModRecipeTypes;
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
+
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -14,6 +14,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+
+import static net.foxyas.changedaddon.init.ChangedAddonItems.LASER_POINTER;
 
 public class LaserPointerColoringRecipe extends CustomRecipe {
     public LaserPointerColoringRecipe(ResourceLocation id) {
@@ -21,7 +24,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
     }
 
     @Override
-    public boolean matches(CraftingContainer container, Level level) {
+    public boolean matches(CraftingContainer container, @NotNull Level level) {
         boolean hasPointer = false;
         boolean hasDye = false;
 
@@ -29,7 +32,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {
                 Item item = stack.getItem();
-                if (item == ChangedAddonRegisters.LASER_POINTER.get()) {
+                if (item == LASER_POINTER.get()) {
                     if (hasPointer) return false;
                     hasPointer = true;
                 } else if (item instanceof DyeItem) {
@@ -44,7 +47,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public @NotNull ItemStack assemble(CraftingContainer container) {
         ItemStack pointer = ItemStack.EMPTY;
 
         int totalR = 0;
@@ -56,7 +59,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {
                 Item item = stack.getItem();
-                if (item == ChangedAddonRegisters.LASER_POINTER.get()) {
+                if (item == LASER_POINTER.get()) {
                     pointer = stack;
                 } else if (item instanceof DyeItem dyeItem) {
                     int color = dyeItem.getDyeColor().getTextColor(); // 0xRRGGBB
@@ -89,7 +92,7 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<?> getSerializer() {
         return ChangedAddonModRecipeTypes.LAZER_POINTER_COLORING.get();
     }
 
@@ -98,19 +101,19 @@ public class LaserPointerColoringRecipe extends CustomRecipe {
         public static final ResourceLocation ID = new ResourceLocation("changed_addon", "laser_pointer_coloring");
 
         @Override
-        public LaserPointerColoringRecipe fromJson(ResourceLocation id, JsonObject json) {
+        public @NotNull LaserPointerColoringRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
             // Nenhum dado necessário no JSON
             return new LaserPointerColoringRecipe(id);
         }
 
         @Override
-        public LaserPointerColoringRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
+        public LaserPointerColoringRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buffer) {
             // Nenhum dado transmitido, então só retorna a instância
             return new LaserPointerColoringRecipe(id);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buffer, LaserPointerColoringRecipe recipe) {
+        public void toNetwork(@NotNull FriendlyByteBuf buffer, @NotNull LaserPointerColoringRecipe recipe) {
             // Nada para escrever
         }
 

@@ -2,10 +2,10 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.*;
+import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
-import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -303,8 +303,8 @@ public class PatFeatureHandleProcedure {
     private static boolean shouldBeConfused(Player player, Entity entity) {
         if (entity instanceof AbstractDarkLatexWolf) {
             // Verificando se o jogador usa a armadura correta
-            return player.getItemBySlot(EquipmentSlot.HEAD).is(ChangedAddonRegisters.DARK_LATEX_HEAD_CAP.get())
-                    && player.getItemBySlot(EquipmentSlot.CHEST).is(ChangedAddonRegisters.DARK_LATEX_COAT.get());
+            return player.getItemBySlot(EquipmentSlot.HEAD).is(ChangedAddonItems.DARK_LATEX_HEAD_CAP.get())
+                    && player.getItemBySlot(EquipmentSlot.CHEST).is(ChangedAddonItems.DARK_LATEX_COAT.get());
         }
         return false;
     }

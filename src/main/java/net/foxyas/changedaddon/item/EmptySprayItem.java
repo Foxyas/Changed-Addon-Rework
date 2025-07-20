@@ -11,11 +11,11 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 
 import net.foxyas.changedaddon.procedures.EmptySprayRightclickedOnBlockProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class EmptySprayItem extends Item {
 	public EmptySprayItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(1).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(1).rarity(Rarity.COMMON));
 	}
 
 	@Override

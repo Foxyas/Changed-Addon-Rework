@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
-import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
+import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -118,7 +118,7 @@ public class TickentitySolventEnchantmenthitProcedure {
         // Emite partículas
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(
-                    (SimpleParticleType) ChangedAddonModParticleTypes.SOLVENT_PARTICLE.get(),
+                    (SimpleParticleType) ChangedAddonParticleTypes.SOLVENT_PARTICLE.get(),
                     entity.getX(),
                     entity.getY() + 1,
                     entity.getZ(),

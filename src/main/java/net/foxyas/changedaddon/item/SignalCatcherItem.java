@@ -12,11 +12,11 @@ import net.minecraft.world.InteractionHand;
 
 import net.foxyas.changedaddon.procedures.SignalCatcherOnPlayerStoppedUsingProcedure;
 import net.foxyas.changedaddon.procedures.SignalBlockFeatureProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class SignalCatcherItem extends Item {
 	public SignalCatcherItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
 	}
 
 	@Override

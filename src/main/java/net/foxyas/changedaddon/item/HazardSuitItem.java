@@ -21,7 +21,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.foxyas.changedaddon.client.model.ModelHazardArmorCustomArms;
 
 import java.util.Map;
@@ -74,7 +74,7 @@ public abstract class HazardSuitItem extends ArmorItem {
 
 	public static class Helmet extends HazardSuitItem {
 		public Helmet() {
-			super(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
+			super(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
 		}
 
 		@Override
@@ -85,7 +85,7 @@ public abstract class HazardSuitItem extends ArmorItem {
 
 	public static class Chestplate extends HazardSuitItem {
 		public Chestplate() {
-			super(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
+			super(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
 		}
 
 		public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
@@ -115,7 +115,7 @@ public abstract class HazardSuitItem extends ArmorItem {
 
 	public static class Leggings extends HazardSuitItem {
 		public Leggings() {
-			super(EquipmentSlot.LEGS, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
+			super(EquipmentSlot.LEGS, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
 		}
 
 		@Override
@@ -126,7 +126,7 @@ public abstract class HazardSuitItem extends ArmorItem {
 
 	public static class Boots extends HazardSuitItem {
 		public Boots() {
-			super(EquipmentSlot.FEET, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
+			super(EquipmentSlot.FEET, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
 		}
 
 		@Override

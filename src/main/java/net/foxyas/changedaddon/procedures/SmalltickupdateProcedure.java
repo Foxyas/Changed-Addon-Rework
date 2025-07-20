@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.entity.FoxyasEntity;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -71,9 +71,9 @@ public class SmalltickupdateProcedure {
                 }
             }
         }
-        if ((entity instanceof Player _playerHasItem && _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get())))
-                || (entity instanceof Player _playerHasItem && _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.POTWITHCAMONIA.get())))
-                || (entity instanceof Player _playerHasItem && _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get())))) {
+        if ((entity instanceof Player _playerHasItem && (_playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get()))
+                || _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.POTWITHCAMONIA.get()))
+                || _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get()))))) {
             if (entity instanceof ServerPlayer _player) {
                 Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuritemadvancement"));
                 AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
@@ -145,7 +145,7 @@ public class SmalltickupdateProcedure {
         Exp009Buff_attack = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba751"), "transfur_stats", 4, AttributeModifier.Operation.ADDITION);
         Exp009Buff_defense = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba752"), "transfur_stats", 8, AttributeModifier.Operation.ADDITION);
         Exp009Buff_armor = new AttributeModifier(UUID.fromString("17c5b5cf-bdae-4191-84d1-433db7cba753"), "transfur_stats", 6, AttributeModifier.Operation.ADDITION);
-        if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
+        if (world.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
             if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
                     && ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_ket_experiment009_boss")) {
                 if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).Exp009TransfurAllowed) {

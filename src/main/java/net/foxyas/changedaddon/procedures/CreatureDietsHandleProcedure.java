@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.process.variantsExtraStats.FormDietEvent;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -61,7 +61,7 @@ public class CreatureDietsHandleProcedure {
             return;
         }
 
-        boolean isForWork = world.getGameRules().getBoolean(ChangedAddonModGameRules.CHANGED_ADDON_CREATURE_DIETS);
+        boolean isForWork = world.getGameRules().getBoolean(ChangedAddonGameRules.CHANGED_ADDON_CREATURE_DIETS);
         boolean Debuffs;
         Debuffs = ChangedAddonServerConfiguration.DEBUFFS.get();
 

@@ -11,13 +11,13 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.Component;
 
 import net.foxyas.changedaddon.procedures.LitixCamoniaItemIsCraftedsmeltedProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 import java.util.List;
 
 public class LitixCamoniaItem extends Item {
 	public LitixCamoniaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.UNCOMMON));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override

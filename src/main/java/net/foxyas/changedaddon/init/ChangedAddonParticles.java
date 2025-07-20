@@ -18,6 +18,6 @@ import net.foxyas.changedaddon.client.particle.SolventParticleParticle;
 public class ChangedAddonParticles {
 	@SubscribeEvent
 	public static void registerParticles(ParticleFactoryRegisterEvent event) {
-		Minecraft.getInstance().particleEngine.register((SimpleParticleType) ChangedAddonModParticleTypes.SOLVENT_PARTICLE.get(), SolventParticleParticle::provider);
+		Minecraft.getInstance().particleEngine.register((SimpleParticleType) ChangedAddonParticleTypes.SOLVENT_PARTICLE.get(), SolventParticleParticle::provider);
 	}
 }

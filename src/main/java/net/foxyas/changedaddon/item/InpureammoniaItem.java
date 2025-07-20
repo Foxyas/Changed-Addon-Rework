@@ -8,11 +8,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.player.Player;
 
 import net.foxyas.changedaddon.procedures.InpureammoniaItemIsCraftedsmeltedProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class InpureammoniaItem extends Item {
 	public InpureammoniaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
 	}
 
 	@Override

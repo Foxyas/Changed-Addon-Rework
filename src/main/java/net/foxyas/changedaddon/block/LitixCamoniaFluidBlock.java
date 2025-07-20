@@ -15,13 +15,13 @@ import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.procedures.LitixCamoniaFluidUpdateTickProcedure;
 import net.foxyas.changedaddon.procedures.LitixCamoniaFluidMobplayerCollidesBlockProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModFluids;
+import net.foxyas.changedaddon.init.ChangedAddonFluids;
 
 import java.util.Random;
 
 public class LitixCamoniaFluidBlock extends LiquidBlock {
 	public LitixCamoniaFluidBlock() {
-		super(() -> (FlowingFluid) ChangedAddonModFluids.LITIX_CAMONIA_FLUID.get(), BlockBehaviour.Properties.of(Material.WATER, MaterialColor.SNOW).strength(100f)
+		super(() -> (FlowingFluid) ChangedAddonFluids.LITIX_CAMONIA_FLUID.get(), BlockBehaviour.Properties.of(Material.WATER, MaterialColor.SNOW).strength(100f)
 
 		);
 	}

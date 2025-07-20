@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.block.advanced;
 
 import com.google.common.collect.ImmutableMap;
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
@@ -132,7 +132,7 @@ public class HandScanner extends Block {
     }
 
     @Override
-    public boolean isSignalSource(BlockState state) {
+    public boolean isSignalSource(@NotNull BlockState state) {
         return true;
     }
 
@@ -239,6 +239,6 @@ public class HandScanner extends Block {
 
     @OnlyIn(Dist.CLIENT)
     public static void registerRenderLayer() {
-        ItemBlockRenderTypes.setRenderLayer(ChangedAddonRegisters.ChangedAddonBlocks.HAND_SCANNER.get(), renderType -> renderType == RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.HAND_SCANNER.get(), renderType -> renderType == RenderType.cutout());
     }
 }

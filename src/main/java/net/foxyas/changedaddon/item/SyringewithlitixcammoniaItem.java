@@ -11,11 +11,11 @@ import net.minecraft.world.entity.LivingEntity;
 
 import net.foxyas.changedaddon.procedures.SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure;
 import net.foxyas.changedaddon.procedures.SyringewithlitixcammoniaLivingEntityIsHitWithItemProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class SyringewithlitixcammoniaItem extends Item {
 	public SyringewithlitixcammoniaItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(2).rarity(Rarity.UNCOMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(2f).alwaysEat()
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).durability(2).rarity(Rarity.UNCOMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(2f).alwaysEat()
 
 				.build()));
 	}

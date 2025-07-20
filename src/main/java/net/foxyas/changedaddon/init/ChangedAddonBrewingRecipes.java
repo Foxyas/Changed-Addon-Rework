@@ -32,10 +32,10 @@ public class ChangedAddonBrewingRecipes implements IModPlugin {
 		ItemStack potion = new ItemStack(Items.POTION);
 		ItemStack potion2 = new ItemStack(Items.POTION);
 		PotionUtils.setPotion(potion, Potions.AWKWARD);
-		PotionUtils.setPotion(potion2, ChangedAddonModPotions.LITIXCAMONIAEFFECT.get());
+		PotionUtils.setPotion(potion2, ChangedAddonPotions.LITIXCAMONIAEFFECT.get());
 		brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get())), potion.copy(), potion2.copy()));
 		PotionUtils.setPotion(potion, Potions.AWKWARD);
-		PotionUtils.setPotion(potion2, ChangedAddonModPotions.TRANSFUR_SICKNESS_POTION.get());
+		PotionUtils.setPotion(potion2, ChangedAddonPotions.TRANSFUR_SICKNESS_POTION.get());
 		brewingRecipes.add(factory.createBrewingRecipe(List.of(new ItemStack(ChangedAddonItems.LAETHIN.get())), potion.copy(), potion2.copy()));
 		registration.addRecipes(RecipeTypes.BREWING, brewingRecipes);
 	}

@@ -7,7 +7,7 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class CrowbarItem extends PickaxeItem {
 	public CrowbarItem() {
@@ -35,7 +35,7 @@ public class CrowbarItem extends PickaxeItem {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of();
 			}
-		}, 1, -2.6f, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
+		}, 1, -2.6f, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
 	}
 
 	@Override

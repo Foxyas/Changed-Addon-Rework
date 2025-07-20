@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
-import net.foxyas.changedaddon.registers.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.HairStyle;
 import net.ltxprogrammer.changed.entity.HairStyle.Collection;

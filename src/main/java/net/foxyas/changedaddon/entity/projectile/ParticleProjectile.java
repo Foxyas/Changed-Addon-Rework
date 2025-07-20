@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.projectile;
 
-import net.foxyas.changedaddon.registers.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;

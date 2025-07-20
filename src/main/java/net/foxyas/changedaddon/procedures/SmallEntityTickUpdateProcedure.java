@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.entity.DazedEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
@@ -34,7 +34,7 @@ public class SmallEntityTickUpdateProcedure {
     private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
         if (entity == null)
             return;
-        if (world.getLevelData().getGameRules().getBoolean(ChangedAddonModGameRules.DO_DAZED_LATEX_BURN)) {
+        if (world.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.DO_DAZED_LATEX_BURN)) {
             if (entity instanceof DazedEntity) {
                 if (world.canSeeSkyFromBelowWater(new BlockPos(entity.getX(), entity.getY(), entity.getZ())) && world instanceof Level _lvl6 && _lvl6.isDay() && !entity.isInWaterRainOrBubble()) {
                     if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) / (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) >= 0.4) {

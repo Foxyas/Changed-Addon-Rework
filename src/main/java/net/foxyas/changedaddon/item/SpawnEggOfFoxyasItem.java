@@ -9,11 +9,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.InteractionResult;
 
 import net.foxyas.changedaddon.procedures.SpawneggoffoxyasRightclickedProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class SpawnEggOfFoxyasItem extends Item {
 	public SpawnEggOfFoxyasItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.COMMON));
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 
-import net.foxyas.changedaddon.init.ChangedAddonModPotions;
+import net.foxyas.changedaddon.init.ChangedAddonPotions;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -38,7 +38,7 @@ public class TransfurSicknessRecipeBrewingRecipe implements IBrewingRecipe {
 	@Override
 	public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
 		if (isInput(input) && isIngredient(ingredient)) {
-			return PotionUtils.setPotion(new ItemStack(input.getItem()), ChangedAddonModPotions.TRANSFUR_SICKNESS_POTION.get());
+			return PotionUtils.setPotion(new ItemStack(input.getItem()), ChangedAddonPotions.TRANSFUR_SICKNESS_POTION.get());
 		}
 		return ItemStack.EMPTY;
 	}

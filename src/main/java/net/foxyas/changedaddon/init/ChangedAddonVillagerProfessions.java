@@ -26,7 +26,7 @@ import java.util.HashMap;
 import com.google.common.collect.ImmutableSet;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ChangedAddonModVillagerProfessions {
+public class ChangedAddonVillagerProfessions {
 	private static final Map<String, ProfessionPoiType> POI_TYPES = new HashMap<>();
 	public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.PROFESSIONS, ChangedAddonMod.MODID);
 	public static final RegistryObject<VillagerProfession> SCIENTIST = registerProfession("scientist", () -> ChangedAddonBlocks.UNIFUSER.get(), () -> ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.brewing_stand.brew")));

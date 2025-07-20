@@ -15,7 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMenus;
+import net.foxyas.changedaddon.init.ChangedAddonMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class TransfurTotemGuiMenu extends AbstractContainerMenu implements Suppl
 	private BlockEntity boundBlockEntity = null;
 
 	public TransfurTotemGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonModMenus.TRANSFUR_TOTEM_GUI, id);
+		super(ChangedAddonMenus.TRANSFUR_TOTEM_GUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(0);

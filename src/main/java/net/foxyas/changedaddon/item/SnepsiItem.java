@@ -1,8 +1,8 @@
 
 package net.foxyas.changedaddon.item;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.foxyas.changedaddon.procedures.SnepsiPlayerFinishesUsingItemProcedure;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 public class SnepsiItem extends Item implements SpecializedItemRendering {
     public SnepsiItem() {
         super(new Item.Properties()
-                .tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)
+                .tab(ChangedAddonTabs.TAB_CHANGED_ADDON)
                 .stacksTo(64)
                 .rarity(Rarity.RARE)
                 .food(new FoodProperties.Builder()
@@ -35,7 +35,7 @@ public class SnepsiItem extends Item implements SpecializedItemRendering {
                         .alwaysEat()
                         .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 20 * 15, 2), 0.25F)
                         .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 20 * 15, 1), 0.25F)
-                        .effect(() -> new MobEffectInstance(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get(), 20 * 15, 3), 0.25F)
+                        .effect(() -> new MobEffectInstance(ChangedAddonMobEffects.LATEX_CONTAMINATION.get(), 20 * 15, 3), 0.25F)
                         .build()));
     }
 

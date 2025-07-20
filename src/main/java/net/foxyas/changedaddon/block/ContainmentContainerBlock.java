@@ -4,7 +4,6 @@ package net.foxyas.changedaddon.block;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.block.CustomFallable;
 import net.ltxprogrammer.changed.block.NonLatexCoverableBlock;

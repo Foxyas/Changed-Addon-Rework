@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.entity.goals;
 
 import net.foxyas.changedaddon.entity.VoidFoxEntity;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
-import net.foxyas.changedaddon.registers.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

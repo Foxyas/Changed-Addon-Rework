@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import io.netty.buffer.Unpooled;
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.world.inventory.FightToKeepConsciousnessMinigameMenu;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -33,7 +33,7 @@ public class FightToKeepYourConsciousnessProcedure {
 
     @SubscribeEvent
     public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
-        if (!event.player.getLevel().isClientSide() && !event.keepConscious && event.player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS)) {
+        if (!event.player.getLevel().isClientSide() && !event.keepConscious && event.player.getLevel().getGameRules().getBoolean(ChangedAddonGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS)) {
             event.shouldKeepConscious = true;
             if (event.player instanceof ServerPlayer _ent) {
                 BlockPos _bpos = event.player.getOnPos();

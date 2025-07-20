@@ -2,11 +2,9 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,13 +28,12 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 import java.util.UUID;
 import java.util.List;
@@ -56,7 +53,7 @@ public class TheDecimatorItem extends Item {
     private static final UUID BASE_ATTACK_REACH_UUID = UUID.fromString("fa02d244-9771-415c-8789-fd03b5252c8c");
 
     public TheDecimatorItem() {
-        super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON_COMBAT_OPTIONAL).durability(1025));
+        super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON_COMBAT_OPTIONAL).durability(1025));
     }
 
     @Override

@@ -12,11 +12,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.InteractionResult;
 
 import net.foxyas.changedaddon.procedures.Experiment10SpawnEggRightclickedOnBlockProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class BossExperiment10SpawnEggItem extends Item {
 	public BossExperiment10SpawnEggItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(4).fireResistant().rarity(Rarity.RARE));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(4).fireResistant().rarity(Rarity.RARE));
 	}
 
 	@Override

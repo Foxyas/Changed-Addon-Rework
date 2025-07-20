@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -21,11 +21,11 @@ public class LatexContaminationEffectStartedappliedProcedure {
         AttributeModifier LatexContamination = null;
         if (entity instanceof Player) {
             if (entity instanceof LivingEntity && ((LivingEntity) entity).getAttribute(ChangedAddonAttributes.LATEXINFECTION.get()) != null) {
-                LatexContamination_level = (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get())
-                        ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()).getAmplifier()
+                LatexContamination_level = (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonMobEffects.LATEX_CONTAMINATION.get())
+                        ? _livEnt.getEffect(ChangedAddonMobEffects.LATEX_CONTAMINATION.get()).getAmplifier()
                         : 0) == 0
                         ? 0.1
-                        : (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.LATEX_CONTAMINATION.get()).getAmplifier() : 0) * 0.1
+                        : (entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonMobEffects.LATEX_CONTAMINATION.get()) ? _livEnt.getEffect(ChangedAddonMobEffects.LATEX_CONTAMINATION.get()).getAmplifier() : 0) * 0.1
                         + 0.1;
                 LatexContamination = new AttributeModifier(UUID.fromString("0-0-0-0-1"), "Latex Contamination Effect Attribute Change", LatexContamination_level, AttributeModifier.Operation.ADDITION);
                 if (!(((LivingEntity) entity).getAttribute(ChangedAddonAttributes.LATEXINFECTION.get()).hasModifier(LatexContamination)))

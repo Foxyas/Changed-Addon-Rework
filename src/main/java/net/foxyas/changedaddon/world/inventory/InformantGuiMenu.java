@@ -19,7 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMenus;
+import net.foxyas.changedaddon.init.ChangedAddonMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class InformantGuiMenu extends AbstractContainerMenu implements Supplier<
 	private BlockEntity boundBlockEntity = null;
 
 	public InformantGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonModMenus.INFORMANT_GUI, id);
+		super(ChangedAddonMenus.INFORMANT_GUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(1);

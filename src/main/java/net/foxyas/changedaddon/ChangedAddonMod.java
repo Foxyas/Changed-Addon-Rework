@@ -26,10 +26,10 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
 
-import net.foxyas.changedaddon.init.ChangedAddonModVillagerProfessions;
+import net.foxyas.changedaddon.init.ChangedAddonVillagerProfessions;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
-import net.foxyas.changedaddon.init.ChangedAddonModPotions;
-import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
+import net.foxyas.changedaddon.init.ChangedAddonPotions;
+import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonFluids;
@@ -61,10 +61,10 @@ public class ChangedAddonMod {
 		ChangedAddonFeatures.REGISTRY.register(bus);
 		ChangedAddonEnchantments.REGISTRY.register(bus);
 		ChangedAddonMobEffects.REGISTRY.register(bus);
-		ChangedAddonModPotions.REGISTRY.register(bus);
+		ChangedAddonPotions.REGISTRY.register(bus);
 
-		ChangedAddonModParticleTypes.REGISTRY.register(bus);
-		ChangedAddonModVillagerProfessions.PROFESSIONS.register(bus);
+		ChangedAddonParticleTypes.REGISTRY.register(bus);
+		ChangedAddonVillagerProfessions.PROFESSIONS.register(bus);
 		ChangedAddonFluids.REGISTRY.register(bus);
 	}
 

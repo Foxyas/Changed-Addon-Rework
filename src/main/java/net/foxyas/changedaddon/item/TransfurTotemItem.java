@@ -17,11 +17,11 @@ import net.minecraft.world.InteractionHand;
 import net.foxyas.changedaddon.procedures.TransfurTotemRightclickedProcedure;
 import net.foxyas.changedaddon.procedures.TransfurTotemMakeItemGlowProcedure;
 import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryTickProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class TransfurTotemItem extends Item {
 	public TransfurTotemItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(1).fireResistant().rarity(Rarity.RARE));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(1).fireResistant().rarity(Rarity.RARE));
 	}
 
 	@Override

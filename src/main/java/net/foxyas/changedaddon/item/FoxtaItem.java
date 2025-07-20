@@ -27,7 +27,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 import java.util.function.Consumer;
 import java.util.List;
@@ -37,7 +37,7 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
 
     public FoxtaItem() {
         super(new Item.Properties()
-                .tab(ChangedAddonModTabs.TAB_CHANGED_ADDON)
+                .tab(ChangedAddonTabs.TAB_CHANGED_ADDON)
                 .stacksTo(64)
                 .rarity(Rarity.RARE)
                 .food(new FoodProperties.Builder()

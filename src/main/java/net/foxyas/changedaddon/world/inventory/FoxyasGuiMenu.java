@@ -23,7 +23,7 @@ import net.minecraft.core.BlockPos;
 import net.foxyas.changedaddon.procedures.FoxyasguiThisGUIIsOpenedProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasguiThisGUIIsClosedProcedure;
 import net.foxyas.changedaddon.procedures.FoxyasguiDisableItemstackPlacementProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModMenus;
+import net.foxyas.changedaddon.init.ChangedAddonMenus;
 
 import java.util.function.Supplier;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class FoxyasGuiMenu extends AbstractContainerMenu implements Supplier<Map
 	private BlockEntity boundBlockEntity = null;
 
 	public FoxyasGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonModMenus.FOXYASGUI, id);
+		super(ChangedAddonMenus.FOXYASGUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(3);

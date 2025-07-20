@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
-import net.foxyas.changedaddon.init.ChangedAddonModKeyMappings;
+import net.foxyas.changedaddon.init.ChangedAddonKeyMappings;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -158,13 +158,13 @@ public class PatOverlay {
 
 
     public static boolean isKeySet(){
-        String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
+        String key = ChangedAddonKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
         return !key.isEmpty();
     }
 
 
     private static TranslatableComponent getPatInfo(Entity lookedEntity) {
-        String key = ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
+        String key = ChangedAddonKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
         if (lookedEntity instanceof LivingEntity) {
             TranslatableComponent patMessage = new TranslatableComponent("changed_addon.info.is_patable", key.isEmpty() ? "Not Key Set" : key, lookedEntity.getDisplayName().getString());
             patMessage.withStyle(style ->
@@ -178,7 +178,7 @@ public class PatOverlay {
     }
 
     private static String getSimplePatInfo() {
-        return ChangedAddonModKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
+        return ChangedAddonKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
     }
 
     private static TextComponent PatInfo2(Entity lookedEntity) {
