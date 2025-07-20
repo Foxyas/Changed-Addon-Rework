@@ -1,8 +1,10 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,7 +17,7 @@ public class Exp10StatsProcedure {
     @SubscribeEvent
     public static void onEntityAttacked(LivingHurtEvent event) {
         Entity entity = event.getEntity();
-        if (event != null && entity != null) {
+        if (entity != null) {
             execute(event, event.getSource(), entity, event.getAmount());
         }
     }
@@ -24,13 +26,13 @@ public class Exp10StatsProcedure {
         execute(null, damagesource, entity, amount);
     }
 
-    private static void execute(@Nullable Event event, DamageSource damagesource, Entity entity, double amount) {
+    private static void execute(Event event, DamageSource damagesource, Entity entity, double amount) {
         if (entity == null)
             return;
         double math;
         double Phase2Math;
         double Phase3Math;
-        if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form_experiment_10")) {
+        if (entity instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null && ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString().startsWith("changed_addon:form_experiment_10")) {
             if ((damagesource).isFire()) {
                 math = amount / 2;
                 Phase2Math = math * 0.5;

@@ -87,7 +87,7 @@ public class TransfurSoundsGuiScreen extends AbstractContainerScreen<TransfurSou
 
 	@Override
 	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.transfur_sounds_gui.label_transfursounds"), 49, -24, -1);
+		this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.transfur_sounds_gui.label_transfur_sounds"), 49, -24, -1);
 		this.font.draw(poseStack,
 
 				ReturnTypeTransfurSoundProcedure.execute(entity), 36, -11, -12829636);

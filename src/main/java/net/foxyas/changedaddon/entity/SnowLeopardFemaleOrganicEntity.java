@@ -3,9 +3,9 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
