@@ -9,11 +9,11 @@ public class TurnOffTransfurOnKeyPressedProcedure {
         if (entity == null)
             return;
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-            if (GetDefault.execute((Player) entity)) {
+            if (ReturnTransfurModeProcedure.GetDefault.execute((Player) entity)) {
                 if (ReturnTransfurModeProcedure.execute(entity) != 3) {
-                    setPlayerTransfurMode.execute((Player) entity, 3);
+                    ReturnTransfurModeProcedure.setPlayerTransfurMode.execute((Player) entity, 3);
                 } else {
-                    setPlayerTransfurMode.execute((Player) entity, (int) GetDefault.GetDefaultValue(entity));
+                    ReturnTransfurModeProcedure.setPlayerTransfurMode.execute((Player) entity, (int) ReturnTransfurModeProcedure.GetDefault.GetDefaultValue(entity));
                 }
             }
         }

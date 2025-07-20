@@ -10,8 +10,8 @@ public class TransfurSicknessOnEffectActiveTickProcedure {
             return;
         double levelPotion = 0;
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-            if (GetDefault.execute((Player) entity)) {
-                setPlayerTransfurMode.execute((Player) entity, 3);
+            if (ReturnTransfurModeProcedure.GetDefault.execute((Player) entity)) {
+                ReturnTransfurModeProcedure.setPlayerTransfurMode.execute((Player) entity, 3);
             }
 			/*levelPotion = amplifier;
 			TransfurSicknessHandleProcedure.addAttributeMod(entity, levelPotion);*/

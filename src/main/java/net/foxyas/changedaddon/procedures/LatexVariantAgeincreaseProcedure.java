@@ -36,7 +36,7 @@ public class LatexVariantAgeincreaseProcedure {
         if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:white_latex_goo"))) {
             if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
                     && ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_dark_latex_pup")) {
-                setPlayerLatexAge.execute((Player) entity, 5000, true);
+                ReturnTransfurModeProcedure.setPlayerLatexAge.execute((Player) entity, 5000, true);
                 if (world instanceof ServerLevel _level)
                     _level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 5, 0.3, 0.5, 0.3, 1);
             }
