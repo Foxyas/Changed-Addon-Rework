@@ -23,7 +23,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
-import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
 import javax.annotation.Nullable;
 
@@ -36,7 +36,7 @@ public class InformantblockBlockEntity extends RandomizableContainerBlockEntity 
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public InformantblockBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonModBlockEntities.INFORMANTBLOCK.get(), position, state);
+		super(ChangedAddonBlockEntities.INFORMANTBLOCK.get(), position, state);
 	}
 
 	@Override

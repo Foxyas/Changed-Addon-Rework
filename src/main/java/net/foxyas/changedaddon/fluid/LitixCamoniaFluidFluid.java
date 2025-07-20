@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.resources.ResourceLocation;
 
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonModFluids;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 
 public abstract class LitixCamoniaFluidFluid extends ForgeFlowingFluid {
 	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(ChangedAddonModFluids.LITIX_CAMONIA_FLUID, ChangedAddonModFluids.FLOWING_LITIX_CAMONIA_FLUID,
@@ -22,7 +22,7 @@ public abstract class LitixCamoniaFluidFluid extends ForgeFlowingFluid {
 					.sound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty"))))
 			.explosionResistance(100f)
 
-			.slopeFindDistance(2).bucket(ChangedAddonModItems.LITIX_CAMONIA_FLUID_BUCKET).block(() -> (LiquidBlock) ChangedAddonModBlocks.LITIX_CAMONIA_FLUID.get());
+			.slopeFindDistance(2).bucket(ChangedAddonItems.LITIX_CAMONIA_FLUID_BUCKET).block(() -> (LiquidBlock) ChangedAddonBlocks.LITIX_CAMONIA_FLUID.get());
 
 	private LitixCamoniaFluidFluid() {
 		super(PROPERTIES);

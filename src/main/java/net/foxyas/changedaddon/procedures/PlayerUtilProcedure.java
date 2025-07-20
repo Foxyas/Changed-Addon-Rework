@@ -41,7 +41,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -205,7 +204,7 @@ public class PlayerUtilProcedure {
         return null;
     }
 
-    public static HitResult getEntityBlockHitLookingAt(Entity entity, double reach, float deltaTicks, boolean affectByFluids){
+    public static HitResult getEntityBlockHitLookingAt(Entity entity, double reach, float deltaTicks, boolean affectByFluids) {
         return entity.pick(reach, deltaTicks, affectByFluids);
     }
 
@@ -290,64 +289,64 @@ public class PlayerUtilProcedure {
         return dotProduct > 0;
     }
 
-	public static void shootDynamicLaser(ServerLevel world, Player player, int maxRange, int horizontalRadius, int verticalRadius) {
-		Vec3 eyePosition = player.getEyePosition(1.0F); // Posição dos olhos do jogador
-		Vec3 lookDirection = player.getLookAngle();    // Direção para onde o jogador está olhando
+    public static void shootDynamicLaser(ServerLevel world, Player player, int maxRange, int horizontalRadius, int verticalRadius) {
+        Vec3 eyePosition = player.getEyePosition(1.0F); // Posição dos olhos do jogador
+        Vec3 lookDirection = player.getLookAngle();    // Direção para onde o jogador está olhando
 
-		for (int i = 0; i <= maxRange; i++) {
-			// Calcula a posição do bloco na trajetória do laser
-			Vec3 targetVec = eyePosition.add(lookDirection.scale(i));
-			BlockPos targetPos = new BlockPos(targetVec);
+        for (int i = 0; i <= maxRange; i++) {
+            // Calcula a posição do bloco na trajetória do laser
+            Vec3 targetVec = eyePosition.add(lookDirection.scale(i));
+            BlockPos targetPos = new BlockPos(targetVec);
 
-			// Verifica se o bloco é ar; se for, ignora essa fileira
-			if (world.getBlockState(targetPos).isAir()) {
-				continue;
-			}
+            // Verifica se o bloco é ar; se for, ignora essa fileira
+            if (world.getBlockState(targetPos).isAir()) {
+                continue;
+            }
 
-			// Afeta os blocos ao redor do ponto atual
-			affectSurroundingBlocks(world, targetPos, horizontalRadius, verticalRadius);
-		}
-	}
+            // Afeta os blocos ao redor do ponto atual
+            affectSurroundingBlocks(world, targetPos, horizontalRadius, verticalRadius);
+        }
+    }
 
-	private static void affectSurroundingBlocks(Level world, BlockPos center, int horizontalRadius, int verticalRadius) {
-		int horizontalRadiusSphere = horizontalRadius - 1;
-		int verticalRadiusSphere = verticalRadius - 1;
+    private static void affectSurroundingBlocks(Level world, BlockPos center, int horizontalRadius, int verticalRadius) {
+        int horizontalRadiusSphere = horizontalRadius - 1;
+        int verticalRadiusSphere = verticalRadius - 1;
 
-		for (int y = -verticalRadiusSphere; y <= verticalRadiusSphere; y++) {
-			for (int x = -horizontalRadiusSphere; x <= horizontalRadiusSphere; x++) {
-				for (int z = -horizontalRadiusSphere; z <= horizontalRadiusSphere; z++) {
-					// Calcula a distância ao centro para uma forma esférica
-					double distanceSq = (x * x) / (double) (horizontalRadiusSphere * horizontalRadiusSphere) +
-							(y * y) / (double) (verticalRadiusSphere * verticalRadiusSphere) +
-							(z * z) / (double) (horizontalRadiusSphere * horizontalRadiusSphere);
+        for (int y = -verticalRadiusSphere; y <= verticalRadiusSphere; y++) {
+            for (int x = -horizontalRadiusSphere; x <= horizontalRadiusSphere; x++) {
+                for (int z = -horizontalRadiusSphere; z <= horizontalRadiusSphere; z++) {
+                    // Calcula a distância ao centro para uma forma esférica
+                    double distanceSq = (x * x) / (double) (horizontalRadiusSphere * horizontalRadiusSphere) +
+                            (y * y) / (double) (verticalRadiusSphere * verticalRadiusSphere) +
+                            (z * z) / (double) (horizontalRadiusSphere * horizontalRadiusSphere);
 
-					if (distanceSq <= 1.0) { // Dentro da área de efeito
-						BlockPos affectedPos = center.offset(x, y, z);
-						if (world.getBlockState(affectedPos).isAir()){
-							break;
-						}
-						// Insira a lógica para afetar os blocos
-						affectBlock(world, affectedPos);
-					}
-				}
-			}
-		}
-	}
+                    if (distanceSq <= 1.0) { // Dentro da área de efeito
+                        BlockPos affectedPos = center.offset(x, y, z);
+                        if (world.getBlockState(affectedPos).isAir()) {
+                            break;
+                        }
+                        // Insira a lógica para afetar os blocos
+                        affectBlock(world, affectedPos);
+                    }
+                }
+            }
+        }
+    }
 
-	private static void affectBlock(Level world, BlockPos pos) {
-		// Exemplo de lógica personalizada para afetar blocos
-		if (!world.getBlockState(pos).isAir()) {
-			// Substituir bloco por vidro como exemplo
-			world.setBlock(pos, Blocks.GLASS.defaultBlockState(), 3);
+    private static void affectBlock(Level world, BlockPos pos) {
+        // Exemplo de lógica personalizada para afetar blocos
+        if (!world.getBlockState(pos).isAir()) {
+            // Substituir bloco por vidro como exemplo
+            world.setBlock(pos, Blocks.GLASS.defaultBlockState(), 3);
 
-			// Adicionar partículas no bloco afetado
-			world.addParticle(ParticleTypes.FLAME,
-					pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0.1, 0);
-		}
-	}
+            // Adicionar partículas no bloco afetado
+            world.addParticle(ParticleTypes.FLAME,
+                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0.1, 0);
+        }
+    }
 
 
-	public static class GlobalEntityUtil {
+    public static class GlobalEntityUtil {
         @Nullable
         public static Entity getEntityByUUID(LevelAccessor world, String uuid) {
             try {

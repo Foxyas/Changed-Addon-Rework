@@ -20,7 +20,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 
 import java.util.List;
 
@@ -45,6 +45,6 @@ public class GooCoreBlock extends Block {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.GOO_CORE.get(), renderType -> renderType == RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.GOO_CORE.get(), renderType -> renderType == RenderType.cutout());
 	}
 }

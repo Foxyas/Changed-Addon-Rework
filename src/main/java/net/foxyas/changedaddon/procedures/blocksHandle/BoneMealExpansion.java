@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures.blocksHandle;
 
 import com.ibm.icu.impl.Pair;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -16,7 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -29,6 +28,40 @@ import java.util.Queue;
 import java.util.Set;
 
 public class BoneMealExpansion {
+
+    public static void spreadFromSource(ServerLevel level, BlockPos source, int maxDepth) {
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<Pair<BlockPos, Integer>> queue = new ArrayDeque<>();
+
+        queue.add(Pair.of(source, 0));
+        visited.add(source);
+
+        while (!queue.isEmpty()) {
+            var current = queue.poll();
+            BlockPos pos = current.first;
+            int depth = current.second;
+
+            if (depth > maxDepth) continue;
+
+            BlockState state = level.getBlockState(pos);
+            if (!AbstractLatexBlock.isLatexed(state)) continue;
+
+            // Simula "crescimento"
+            state.randomTick(level, pos, level.getRandom());
+            level.levelEvent(1505, pos, 1); // Partículas
+
+            // Adiciona vizinhos se ainda dentro do limite
+            if (depth < maxDepth) {
+                for (Direction dir : Direction.values()) {
+                    BlockPos neighbor = pos.relative(dir);
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        queue.add(Pair.of(neighbor, depth + 1));
+                    }
+                }
+            }
+        }
+    }
 
     @Mod.EventBusSubscriber
     public static class AttemptToApply {
@@ -66,41 +99,6 @@ public class BoneMealExpansion {
             }
         }
     }
-
-    public static void spreadFromSource(ServerLevel level, BlockPos source, int maxDepth) {
-        Set<BlockPos> visited = new HashSet<>();
-        Queue<Pair<BlockPos, Integer>> queue = new ArrayDeque<>();
-
-        queue.add(Pair.of(source, 0));
-        visited.add(source);
-
-        while (!queue.isEmpty()) {
-            var current = queue.poll();
-            BlockPos pos = current.first;
-            int depth = current.second;
-
-            if (depth > maxDepth) continue;
-
-            BlockState state = level.getBlockState(pos);
-            if (!AbstractLatexBlock.isLatexed(state)) continue;
-
-            // Simula "crescimento"
-            state.randomTick(level, pos, level.getRandom());
-            level.levelEvent(1505, pos, 1); // Partículas
-
-            // Adiciona vizinhos se ainda dentro do limite
-            if (depth < maxDepth) {
-                for (Direction dir : Direction.values()) {
-                    BlockPos neighbor = pos.relative(dir);
-                    if (!visited.contains(neighbor)) {
-                        visited.add(neighbor);
-                        queue.add(Pair.of(neighbor, depth + 1));
-                    }
-                }
-            }
-        }
-    }
-
 
     public static class BoneMealDispenserHandler {
         public static void registerDispenserBehavior() {
@@ -210,7 +208,7 @@ public class BoneMealExpansion {
 
                 return stack;
             });
-            DispenserBlock.registerBehavior(ChangedAddonModItems.ANTI_LATEX_BASE.get(), (source, stack) -> {
+            DispenserBlock.registerBehavior(ChangedAddonItems.ANTI_LATEX_BASE.get(), (source, stack) -> {
                 ServerLevel serverLevel = source.getLevel();
                 Direction facing = source.getBlockState().getValue(DispenserBlock.FACING);
                 BlockPos targetPos = source.getPos().relative(facing);

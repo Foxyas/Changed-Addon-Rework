@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.item.Syringe;
@@ -38,7 +38,7 @@ public class ShowExtraTransfurInfoProcedure {
 
         String form = itemstack.getOrCreateTag().getString("form");
         boolean isCreative = entity.isCreative();
-        boolean hasInformantBlock = entity.getInventory().contains(new ItemStack(ChangedAddonModBlocks.INFORMANTBLOCK.get()));
+        boolean hasInformantBlock = entity.getInventory().contains(new ItemStack(ChangedAddonBlocks.INFORMANTBLOCK.get()));
 
         if (hasInformantBlock || isCreative) {
             if (hasInformantBlock && !Screen.hasShiftDown()) {

@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 
 public class PainiteSwordItem extends SwordItem {
 	public PainiteSwordItem() {
@@ -34,7 +34,7 @@ public class PainiteSwordItem extends SwordItem {
 			}
 
 			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(ChangedAddonModItems.PAINITE.get()));
+				return Ingredient.of(new ItemStack(ChangedAddonItems.PAINITE.get()));
 			}
 		}, 3, -2.4f, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON_COMBAT_OPTIONAL).fireResistant());
 	}

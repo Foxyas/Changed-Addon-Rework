@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "changed_addon:catalyzer"
+    },
+    "title": {
+      "translate": "advancements.catalyzer_advancement.title"
+    },
+    "description": {
+      "translate": "advancements.catalyzer_advancement.descr"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "catalyzer_advancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:catalyzer"
+            ],
+            "count": {
+              "min": 1,
+              "max": 64
+            }
+          }
+        ]
+      }
+    }
+  },
+  "parent": "changed_addon:changedaddon_advancement"
+}

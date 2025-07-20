@@ -22,8 +22,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.world.inventory.CatlyzerGuiMenu;
-import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
+import net.foxyas.changedaddon.world.inventory.CatalyzerGuiMenu;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
 import javax.annotation.Nullable;
 
@@ -36,7 +36,7 @@ public class AdvancedCatalyzerBlockEntity extends RandomizableContainerBlockEnti
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public AdvancedCatalyzerBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonModBlockEntities.ADVANCED_CATALYZER.get(), position, state);
+		super(ChangedAddonBlockEntities.ADVANCED_CATALYZER.get(), position, state);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class AdvancedCatalyzerBlockEntity extends RandomizableContainerBlockEnti
 
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return new CatlyzerGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
+		return new CatalyzerGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
 	}
 
 	@Override

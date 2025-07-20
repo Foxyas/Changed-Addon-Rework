@@ -1,22 +1,23 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.*;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
+import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
-import java.util.Objects;
-import net.minecraft.world.phys.AABB;
 
 @Mod.EventBusSubscriber
 public class Phase2EntitysHandleProcedure {
@@ -72,15 +73,15 @@ public class Phase2EntitysHandleProcedure {
     }
 
     private static void knockbackNearbyEntities(LivingEntity source) {
-     	AABB attackArea = source.getBoundingBox().inflate(6);
+        AABB attackArea = source.getBoundingBox().inflate(6);
         List<LivingEntity> nearby = source.level.getEntitiesOfClass(LivingEntity.class, attackArea);
 
 
         for (LivingEntity target : nearby) {
-        	if (target != source && source.canAttack(target)) {
-            	double xForce = Mth.sin(source.getYRot() * ((float) Math.PI / 180F));
-            	double zForce = -Mth.cos(source.getYRot() * ((float) Math.PI / 180F));
-            	target.knockback(5, xForce, zForce);
+            if (target != source && source.canAttack(target)) {
+                double xForce = Mth.sin(source.getYRot() * ((float) Math.PI / 180F));
+                double zForce = -Mth.cos(source.getYRot() * ((float) Math.PI / 180F));
+                target.knockback(5, xForce, zForce);
             }
         }
     }

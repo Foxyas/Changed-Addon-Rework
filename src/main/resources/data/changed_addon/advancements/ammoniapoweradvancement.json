@@ -19,5 +19,5 @@
       "trigger": "minecraft:impossible"
     }
   },
-  "parent": "changed_addon:catlyzer_advancement"
+  "parent": "changed_addon:catalyzer_advancement"
 }

@@ -38,7 +38,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.foxyas.changedaddon.procedures.DarklatexpuddleUpdateTickProcedure;
 import net.foxyas.changedaddon.procedures.DarklatexpuddleFeatureProcedure;
 import net.foxyas.changedaddon.procedures.DarklatexpuddleBlockAddedProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.block.entity.DarklatexpuddleBlockEntity;
 
 import java.util.Random;
@@ -158,6 +158,6 @@ public class DarklatexpuddleBlock extends Block implements EntityBlock, NonLatex
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.DARKLATEXPUDDLE.get(), renderType -> renderType == RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.DARKLATEXPUDDLE.get(), renderType -> renderType == RenderType.cutout());
 	}
 }

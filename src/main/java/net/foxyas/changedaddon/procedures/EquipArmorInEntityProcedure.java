@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.entity.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.item.HazmatSuitItem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
@@ -85,19 +85,19 @@ public class EquipArmorInEntityProcedure {
         if (player.getItemInHand(hand).isEmpty()) {
             player.swing(hand);
             player.setItemInHand(hand, currentArmor);
-			event.setCanceled(true);
+            event.setCanceled(true);
         } else {
             // Add the removed armor to the player's inventory (or to the ground if necessary)
             if (!player.getInventory().add(currentArmor)) {
                 player.drop(currentArmor, false); // Drop on the ground if inventory is full
             }
-			event.setCanceled(true);
+            event.setCanceled(true);
         }
     }
 
     private static void equipArmor(PlayerInteractEvent.EntityInteract event, ChangedEntity entity, Player player, InteractionHand hand, ItemStack itemStack, EquipmentSlot armorSlot, ArmorItem armorItemStack) {
         // Remove one unit of the new armor and equip it in the entity's slot
-		event.setCanceled(true);
+        event.setCanceled(true);
         entity.setItemSlot(armorSlot, itemStack.split(1)); // Equip one unit of the new armor
         if (armorItemStack.getEquipSound() != null) {
             entity.level.playSound(null, entity.blockPosition(), armorItemStack.getEquipSound(), SoundSource.PLAYERS, 1.0F, 1.0F); // Armor equip sound
@@ -143,13 +143,13 @@ public class EquipArmorInEntityProcedure {
                 // Add the removed armor to the player's inventory or to the hand if empty
                 if (player.getItemInHand(hand).isEmpty()) {
                     player.setItemInHand(hand, currentArmor);
-					event.setCanceled(true);
+                    event.setCanceled(true);
                 } else {
                     // Add the removed armor to the player's inventory (or to the ground if necessary)
                     if (!player.getInventory().add(currentArmor)) {
                         player.drop(currentArmor, false); // Drop on the ground if inventory is full
                     }
-					event.setCanceled(true);
+                    event.setCanceled(true);
                 }
             }
         }

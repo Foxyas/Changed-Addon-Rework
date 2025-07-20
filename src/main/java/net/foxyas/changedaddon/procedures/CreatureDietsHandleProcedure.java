@@ -2,15 +2,15 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.process.variantsExtraStats.FormDietEvent;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -232,7 +232,7 @@ public class CreatureDietsHandleProcedure {
                 Items.COOKIE, Items.SWEET_BERRIES
         ), "changed_addon:sweet_tooth_list"),
         SPECIAL(List.of(
-                ChangedItems.ORANGE.get(), ChangedAddonModItems.FOXTA.get()
+                ChangedItems.ORANGE.get(), ChangedAddonItems.FOXTA.get()
         ), "changed_addon:special_diet_list");
 
         private final List<Item> dietItems;
@@ -243,17 +243,12 @@ public class CreatureDietsHandleProcedure {
             this.dietTag = dietTag;
         }
 
-        public boolean isDietItem(ItemStack item) {
-            return dietItems.contains(item.getItem()) ||
-                    item.is(ItemTags.create(new ResourceLocation(dietTag)));
-        }
-
         public static boolean isNotFoodItem(ItemStack item) {
-            List<Item> NonFoodItemslist = List.of(ChangedAddonModItems.FOXTA.get(),
-                    ChangedAddonModItems.SNEPSI.get(),
-                    ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get(),
-                    ChangedAddonModItems.LAETHIN_SYRINGE.get(),
-                    ChangedAddonModItems.DIFFUSION_SYRINGE.get());
+            List<Item> NonFoodItemslist = List.of(ChangedAddonItems.FOXTA.get(),
+                    ChangedAddonItems.SNEPSI.get(),
+                    ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get(),
+                    ChangedAddonItems.LAETHIN_SYRINGE.get(),
+                    ChangedAddonItems.DIFFUSION_SYRINGE.get());
 
             if (item.is(Items.ENCHANTED_GOLDEN_APPLE)) {
                 return true;
@@ -263,6 +258,11 @@ public class CreatureDietsHandleProcedure {
                     || item.is(ItemTags.create(new ResourceLocation("changed_addon:is_not_food")))) {
                 return true;
             } else return item.is(Items.GOLDEN_APPLE);
+        }
+
+        public boolean isDietItem(ItemStack item) {
+            return dietItems.contains(item.getItem()) ||
+                    item.is(ItemTags.create(new ResourceLocation(dietTag)));
         }
     }
 }

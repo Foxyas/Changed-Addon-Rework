@@ -66,9 +66,9 @@ public class DolatexinfectiontickProcedure {
     public static void execute(Player player) {
         if (player == null) return;
 
-		if (!player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.DO_LATEX_INFECTION)) {
-			return;
-		}
+        if (!player.getLevel().getGameRules().getBoolean(ChangedAddonModGameRules.DO_LATEX_INFECTION)) {
+            return;
+        }
 
         ChangedAddonModVariables.PlayerVariables playerVariables = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY)
                 .orElse(new ChangedAddonModVariables.PlayerVariables());
@@ -85,10 +85,10 @@ public class DolatexinfectiontickProcedure {
                 if (!getInfected(player)) {
                     setInfected(player, true);
                 }
-            } 
+            }
             if (!getInfected(player)) {// transfurProgress.progress() > 0
                 return;
-            } 
+            }
             if (player.hasEffect(ChangedAddonModMobEffects.LATEX_SOLVENT.get())) {
                 if (getInfected(player)) {
                     setInfected(player, false);
@@ -107,7 +107,7 @@ public class DolatexinfectiontickProcedure {
                 && (player.level.getDifficulty() != Difficulty.PEACEFUL)) {
 
             if (tickCounter >= tickDelay) {
-                if (transfurProgress + mathnumber < PlayerTolerance * 0.995f){
+                if (transfurProgress + mathnumber < PlayerTolerance * 0.995f) {
                     ProcessTransfur.setPlayerTransfurProgress(player, transfurProgress + mathnumber);
                     playerVariables.LatexInfectionCooldown = 0;
                 }

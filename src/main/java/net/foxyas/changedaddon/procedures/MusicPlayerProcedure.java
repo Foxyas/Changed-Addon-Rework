@@ -2,8 +2,9 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
-import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
+import net.foxyas.changedaddon.entity.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -116,7 +117,7 @@ public class MusicPlayerProcedure {
 
             if (LumiClose && LumiEntities.stream().anyMatch((e) -> e.getTarget() == player)) {
                 if (!isLumiThemePlaying) {
-                    if (!exp10Close && !ketExp9Close)  {
+                    if (!exp10Close && !ketExp9Close) {
                         musicManager.startPlaying(LumiThemeMusicInstance);
                     }
                 }
@@ -140,7 +141,7 @@ public class MusicPlayerProcedure {
         } else if (player.level.isClientSide()) {
             Minecraft minecraft = Minecraft.getInstance();
             ClientPacketListener connection = minecraft.getConnection();
-            if (connection != null){
+            if (connection != null) {
                 var f = connection
                         .getPlayerInfo(player.getGameProfile().getId());
                 return f != null && f.getGameMode() == GameType.SPECTATOR;
@@ -210,7 +211,7 @@ public class MusicPlayerProcedure {
      * Verifica se alguma música dos temas de boss está tocando.
      *
      * @param musicManager Gerenciador de música.
-     * @param themes Lista de temas.
+     * @param themes       Lista de temas.
      * @return Verdadeiro se alguma música estiver tocando.
      */
     private static boolean isAnyBossMusicPlaying(MusicManager musicManager, BossMusicTheme[] themes) {

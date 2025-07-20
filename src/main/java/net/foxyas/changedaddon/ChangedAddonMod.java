@@ -31,13 +31,13 @@ import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModPotions;
 import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonModFluids;
 import net.foxyas.changedaddon.init.ChangedAddonModFeatures;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
 import java.util.function.Supplier;
 import java.util.function.Function;
@@ -54,10 +54,10 @@ public class ChangedAddonMod {
 	public ChangedAddonMod() {
 		ChangedAddonModTabs.load();
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		ChangedAddonModBlocks.REGISTRY.register(bus);
-		ChangedAddonModItems.REGISTRY.register(bus);
+		ChangedAddonBlocks.REGISTRY.register(bus);
+		ChangedAddonItems.REGISTRY.register(bus);
 		ChangedAddonModEntities.REGISTRY.register(bus);
-		ChangedAddonModBlockEntities.REGISTRY.register(bus);
+		ChangedAddonBlockEntities.REGISTRY.register(bus);
 		ChangedAddonModFeatures.REGISTRY.register(bus);
 		ChangedAddonModEnchantments.REGISTRY.register(bus);
 		ChangedAddonModMobEffects.REGISTRY.register(bus);

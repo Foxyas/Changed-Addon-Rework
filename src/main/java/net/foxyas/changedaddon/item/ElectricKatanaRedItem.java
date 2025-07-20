@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.item;
 
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.procedures.ElectricKatanaEntitySwingsItemProcedure;
 import net.foxyas.changedaddon.procedures.ElectricKatanaLivingEntityIsHitWithToolProcedure;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
@@ -45,7 +45,7 @@ public class ElectricKatanaRedItem extends SwordItem implements SpecializedItemR
 			}
 
 			public Ingredient getRepairIngredient() {
-				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))), Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA_RED.get())));
+				return CompoundIngredient.of(Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))), Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA_RED.get())));
 			}
 		}, 3, -2.2f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
 	}

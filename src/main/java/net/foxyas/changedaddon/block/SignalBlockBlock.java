@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.SignalBlockBlockEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -184,6 +184,6 @@ public class SignalBlockBlock extends Block implements EntityBlock {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.SIGNAL_BLOCK.get(), renderType -> renderType == RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.SIGNAL_BLOCK.get(), renderType -> renderType == RenderType.cutoutMipped());
 	}
 }

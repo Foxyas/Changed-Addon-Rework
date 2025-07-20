@@ -23,7 +23,7 @@
     "experience": 0,
     "recipes": [
       "changed_addon:unifuser_recipe",
-      "changed_addon:catlyzerrecipe",
+      "changed_addon:catalyzerrecipe",
       "changed_addon:unlatexbaserecipe",
       "changed_addon:latexinsulatorrecipe"
     ]

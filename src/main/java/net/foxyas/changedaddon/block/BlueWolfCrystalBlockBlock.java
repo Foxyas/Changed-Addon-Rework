@@ -1,24 +1,16 @@
 
 package net.foxyas.changedaddon.block;
 
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 
-import java.util.List;
-import java.util.Collections;
 import java.util.Random;
 
 public class BlueWolfCrystalBlockBlock extends AbstractWolfCrystalExtender.AbstractWolfCrystalBlock {
@@ -39,7 +31,7 @@ public class BlueWolfCrystalBlockBlock extends AbstractWolfCrystalExtender.Abstr
 		super.tick(state, level, pos, random);
 		BlockPos above = pos.above();
 		if (level.getBlockState(above).is(Blocks.AIR)) {
-			level.setBlock(above, ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_SMALL.get().defaultBlockState(), 3);
+			level.setBlock(above, ChangedAddonBlocks.BLUE_WOLF_CRYSTAL_SMALL.get().defaultBlockState(), 3);
 			level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 1.0f);
 		}
 	}

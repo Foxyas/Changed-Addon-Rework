@@ -39,8 +39,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 
 import java.util.List;
 import java.util.Collections;
@@ -124,7 +124,7 @@ public class FoxtaCanBlock extends Block implements SimpleWaterloggedBlock {
 
 	@Override
 	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
-		return new ItemStack(ChangedAddonModItems.FOXTA.get());
+		return new ItemStack(ChangedAddonItems.FOXTA.get());
 	}
 
 	@Override
@@ -132,11 +132,11 @@ public class FoxtaCanBlock extends Block implements SimpleWaterloggedBlock {
 		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
 		if (!dropsOriginal.isEmpty())
 			return dropsOriginal;
-		return Collections.singletonList(new ItemStack(ChangedAddonModItems.FOXTA.get()));
+		return Collections.singletonList(new ItemStack(ChangedAddonItems.FOXTA.get()));
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.FOXTA_CAN.get(), renderType -> renderType == RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.FOXTA_CAN.get(), renderType -> renderType == RenderType.cutout());
 	}
 }

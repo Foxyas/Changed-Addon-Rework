@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 
-import net.foxyas.changedaddon.procedures.OpenTranfurExtraProcedure;
+import net.foxyas.changedaddon.procedures.OpenTransfurExtraProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 import java.util.function.Supplier;
@@ -52,7 +52,7 @@ public class OpenExtraDetailsMessage {
 			return;
 		if (type == 0) {
 
-			OpenTranfurExtraProcedure.execute(world, x, y, z, entity);
+			OpenTransfurExtraProcedure.execute(world, x, y, z, entity);
 		}
 	}
 

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.entity.CustomHandle;
 
 import net.foxyas.changedaddon.block.LuminarCrystalBlockBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.Changed;
@@ -217,7 +217,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
                 float blastResistance = state.getBlock().getExplosionResistance();
 
                 if (!state.isAir() && blastResistance <= 2.0f) {
-                    BlockState newState = ChangedAddonModBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState()
+                    BlockState newState = ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState()
                             .setValue(LuminarCrystalBlockBlock.AGE, 0).setValue(LuminarCrystalBlockBlock.DEFROST, true);
                     world.setBlockAndUpdate(pos, newState);
                     // Toca o som de gelo sendo colocado

@@ -1,16 +1,5 @@
 package net.foxyas.changedaddon.procedures.blocksHandle;
 
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
-import net.ltxprogrammer.changed.block.AbstractLatexBlock;
-import net.ltxprogrammer.changed.entity.LatexType;
-import net.ltxprogrammer.changed.init.ChangedBlocks;
-import net.ltxprogrammer.changed.process.LatexCoveredBlocks;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-
 //@Mod.EventBusSubscriber
 public class BlockCoveredHandle {
 

@@ -23,7 +23,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.UnifuserGuiMenu;
-import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
 import javax.annotation.Nullable;
 
@@ -36,7 +36,7 @@ public class AdvancedUnifuserBlockEntity extends RandomizableContainerBlockEntit
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public AdvancedUnifuserBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonModBlockEntities.ADVANCED_UNIFUSER.get(), position, state);
+		super(ChangedAddonBlockEntities.ADVANCED_UNIFUSER.get(), position, state);
 	}
 
 	@Override

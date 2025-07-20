@@ -26,7 +26,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.GeneratorGuiMenu;
-import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
 import javax.annotation.Nullable;
 
@@ -39,7 +39,7 @@ public class GeneratorBlockEntity extends RandomizableContainerBlockEntity imple
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public GeneratorBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonModBlockEntities.GENERATOR.get(), position, state);
+		super(ChangedAddonBlockEntities.GENERATOR.get(), position, state);
 	}
 
 	@Override

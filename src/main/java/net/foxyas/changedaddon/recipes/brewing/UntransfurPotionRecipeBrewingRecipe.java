@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 
 import net.foxyas.changedaddon.init.ChangedAddonModPotions;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class UntransfurPotionRecipeBrewingRecipe implements IBrewingRecipe {
@@ -32,7 +32,7 @@ public class UntransfurPotionRecipeBrewingRecipe implements IBrewingRecipe {
 
 	@Override
 	public boolean isIngredient(ItemStack ingredient) {
-		return Ingredient.of(new ItemStack(ChangedAddonModItems.LITIX_CAMONIA.get())).test(ingredient);
+		return Ingredient.of(new ItemStack(ChangedAddonItems.LITIX_CAMONIA.get())).test(ingredient);
 	}
 
 	@Override

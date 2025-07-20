@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.foxyas.changedaddon.procedures.ElectricKatanaLivingEntityIsHitWithToolProcedure;
 import net.foxyas.changedaddon.procedures.ElectricKatanaEntitySwingsItemProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -47,7 +47,7 @@ public class ElectricKatanaItem extends SwordItem implements SpecializedItemRend
 			}
 
 			public Ingredient getRepairIngredient() {
-				return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonModItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))));
+				return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(new ResourceLocation("changed_addon:tsc_katana_repair"))));
 			}
 		}, 3, -2.3f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT));
 	}

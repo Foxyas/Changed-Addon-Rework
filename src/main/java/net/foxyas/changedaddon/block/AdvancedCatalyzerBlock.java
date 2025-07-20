@@ -1,8 +1,6 @@
 
 package net.foxyas.changedaddon.block;
 
-import org.checkerframework.checker.units.qual.s;
-
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.material.Material;
@@ -32,8 +30,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.procedures.UnifuserBlockAddedProcedure;
-import net.foxyas.changedaddon.procedures.CatlyzerUpdateTickProcedure;
-import net.foxyas.changedaddon.procedures.CatlyzerOnBlockRightClickedProcedure;
+import net.foxyas.changedaddon.procedures.CatalyzerUpdateTickProcedure;
+import net.foxyas.changedaddon.procedures.CatalyzerOnBlockRightClickedProcedure;
 import net.foxyas.changedaddon.block.entity.AdvancedCatalyzerBlockEntity;
 
 import java.util.Random;
@@ -92,7 +90,7 @@ public class AdvancedCatalyzerBlock extends Block implements EntityBlock {
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();
-		CatlyzerUpdateTickProcedure.execute(world, x, y, z, blockstate);
+		CatalyzerUpdateTickProcedure.execute(world, x, y, z, blockstate);
 		world.scheduleTick(pos, this, 5);
 	}
 
@@ -106,7 +104,7 @@ public class AdvancedCatalyzerBlock extends Block implements EntityBlock {
 		double hitY = hit.getLocation().y;
 		double hitZ = hit.getLocation().z;
 		Direction direction = hit.getDirection();
-		CatlyzerOnBlockRightClickedProcedure.execute(world, x, y, z, blockstate, entity);
+		CatalyzerOnBlockRightClickedProcedure.execute(world, x, y, z, blockstate, entity);
 		return InteractionResult.SUCCESS;
 	}
 

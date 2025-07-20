@@ -1,22 +1,19 @@
 
 package net.foxyas.changedaddon.potion;
 
-import net.foxyas.changedaddon.init.ChangedAddonModAttributes;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffect;
 
-import net.foxyas.changedaddon.procedures.LatexSolventOnActiveTickProcedure;
-import net.foxyas.changedaddon.procedures.LatexSolventEffectStartedappliedProcedure;
-import net.foxyas.changedaddon.procedures.LatexSolventEffectExpiresProcedure;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public class LatexSolventMobEffect extends MobEffect {
 	public LatexSolventMobEffect() {
 		super(MobEffectCategory.NEUTRAL, Color3.getColor("#ffffff").toInt());
-		addAttributeModifier(ChangedAddonModAttributes.LATEXRESISTANCE.get(),"a0ca1f84-b8cc-43da-baea-0e6a6af71a7a",0.1, AttributeModifier.Operation.ADDITION);
+		addAttributeModifier(ChangedAddonAttributes.LATEXRESISTANCE.get(),"a0ca1f84-b8cc-43da-baea-0e6a6af71a7a",0.1, AttributeModifier.Operation.ADDITION);
 	}
 
 	@Override

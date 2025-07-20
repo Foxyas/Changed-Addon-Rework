@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
@@ -182,7 +182,7 @@ public class AbstractLuminarCrystal {
             } else {
                 BlockPos above = pos.above();
                 if (level.getBlockState(above).is(Blocks.AIR)) {
-                    level.setBlock(above, ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState(), 3);
+                    level.setBlock(above, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState(), 3);
                     level.playSound(null, pos, ChangedSounds.ICE2, SoundSource.BLOCKS, 1.0f, 1.0f);
 
                 }
@@ -253,7 +253,7 @@ public class AbstractLuminarCrystal {
 
                         // Verifica se o bloco pode ser substituído
                         if (relativeState.isAir() || relativeState.getFluidState().isSourceOfType(Fluids.WATER) && (relativeState.getMaterial().isReplaceable() && !(relativeState.getFluidState().getType() instanceof LavaFluid))) {
-                            BlockState smallCrystalStage = ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
+                            BlockState smallCrystalStage = ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get().defaultBlockState();
                             smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.FACING, direction);
                             smallCrystalStage = smallCrystalStage.setValue(AbstractLuminarCrystal.CrystalSmall.WATERLOGGED, relativeState.getFluidState().isSourceOfType(Fluids.WATER));
                             level.setBlock(relative, smallCrystalStage, 3);
@@ -294,7 +294,7 @@ public class AbstractLuminarCrystal {
 
 
         public CrystalSmall() {
-            super(ChangedAddonModItems.LUMINAR_CRYSTAL_SHARD,
+            super(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD,
                     BlockBehaviour.Properties.of(ChangedMaterials.LATEX_CRYSTAL)
                             .sound(SoundType.AMETHYST_CLUSTER)
                             .noOcclusion()
@@ -432,7 +432,7 @@ public class AbstractLuminarCrystal {
 
         @Override
         protected boolean mayPlaceOn(BlockState blockState, BlockGetter level, BlockPos blockPos) {
-            return blockState.getBlock() == ChangedAddonModBlocks.LUMINAR_CRYSTAL_BLOCK.get();
+            return blockState.getBlock() == ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get();
         }
 
         @Nullable
@@ -448,7 +448,7 @@ public class AbstractLuminarCrystal {
             BlockState blockStateOn = level.getBlockState(blockPos.relative(oppositeDirection));
             if (!canSupportRigidBlock(level, blockPos.relative(oppositeDirection)))
                 return false;
-            return blockStateOn.getBlock() == ChangedAddonModBlocks.LUMINAR_CRYSTAL_BLOCK.get();
+            return blockStateOn.getBlock() == ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get();
         }
 
         @Override

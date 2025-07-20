@@ -27,7 +27,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
 import net.foxyas.changedaddon.procedures.LatexInsulatorUpdateTickProcedure;
 import net.foxyas.changedaddon.procedures.LatexInsulatorEntityCollidesInTheBlockProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
@@ -124,6 +124,6 @@ public class LatexInsulatorBlock extends Block {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.LATEX_INSULATOR.get(), renderType -> renderType == RenderType.translucent());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.LATEX_INSULATOR.get(), renderType -> renderType == RenderType.translucent());
 	}
 }

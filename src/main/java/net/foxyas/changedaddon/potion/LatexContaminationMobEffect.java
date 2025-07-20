@@ -1,23 +1,20 @@
 
 package net.foxyas.changedaddon.potion;
 
-import net.foxyas.changedaddon.init.ChangedAddonModAttributes;
-import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffect;
 
-import net.foxyas.changedaddon.procedures.LatexContaminationEffectStartedappliedProcedure;
-import net.foxyas.changedaddon.procedures.LatexContaminationEffectExpiresProcedure;
 import net.foxyas.changedaddon.procedures.AddTransfurProgressProcedure;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public class LatexContaminationMobEffect extends MobEffect {
 	public LatexContaminationMobEffect() {
 		super(MobEffectCategory.HARMFUL, Color3.getColor("#ffffff").toInt());
-		addAttributeModifier(ChangedAddonModAttributes.LATEXINFECTION.get(),"2971dbcb-1aba-4ae4-8726-3025cc7c2dd7",0.1, AttributeModifier.Operation.ADDITION);
+		addAttributeModifier(ChangedAddonAttributes.LATEXINFECTION.get(),"2971dbcb-1aba-4ae4-8726-3025cc7c2dd7",0.1, AttributeModifier.Operation.ADDITION);
 	}
 
 	@Override

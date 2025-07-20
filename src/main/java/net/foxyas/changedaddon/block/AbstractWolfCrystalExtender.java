@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.block;
 
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
 import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.block.WolfCrystal;
@@ -62,10 +62,10 @@ public class AbstractWolfCrystalExtender {
             if (block instanceof WolfCrystalBlock || block instanceof AbstractWolfCrystalBlock) {
                 // Mapeia os corantes para os blocos correspondentes
                 Map<Item, Block> dyeToBlockMap = Map.of(
-                        Items.LIGHT_BLUE_DYE, ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get(),
-                        Items.WHITE_DYE, ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get(),
-                        Items.ORANGE_DYE, ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get(),
-                        Items.YELLOW_DYE, ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.LIGHT_BLUE_DYE, ChangedAddonBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.WHITE_DYE, ChangedAddonBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.ORANGE_DYE, ChangedAddonBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get(),
+                        Items.YELLOW_DYE, ChangedAddonBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get(),
                         Items.RED_DYE, ChangedBlocks.WOLF_CRYSTAL_BLOCK.get() // Apenas AbstractWolfCrystalBlock pode ser alterado para vermelho
                 );
 

@@ -3,26 +3,14 @@ package net.foxyas.changedaddon.registers;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.*;
-import net.foxyas.changedaddon.block.advanced.PawsScanner;
-import net.foxyas.changedaddon.block.advanced.TimedKeypad;
-import net.foxyas.changedaddon.block.advanced.TimedKeypadBlockEntity;
-import net.foxyas.changedaddon.block.advanced.HandScanner;
-import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
-import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
-import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
-import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
-import net.foxyas.changedaddon.client.renderer.blockEntitys.TimedKeypadBlockEntityRenderer;
 import net.foxyas.changedaddon.client.renderer.items.LaserItemDynamicRender;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
 import net.foxyas.changedaddon.item.DarkLatexCoatItem;
 import net.foxyas.changedaddon.item.GoldenOrange;
 import net.foxyas.changedaddon.item.LaserPointer;
 import net.foxyas.changedaddon.item.armor.DyeableShorts;
-import net.foxyas.changedaddon.network.packets.KeyPressPacket;
-import net.foxyas.changedaddon.network.packets.SyncTransfurVisionsPacket;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
@@ -35,9 +23,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -52,7 +38,7 @@ import java.awt.*;
 
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ChangedAddonRegisters extends ChangedAddonModItems {
+public class ChangedAddonRegisters extends ChangedAddonItems {
 
     public static final DeferredRegister<Item> ITEMS_REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
 
@@ -188,62 +174,11 @@ public class ChangedAddonRegisters extends ChangedAddonModItems {
 		}
 	}*/
 
-
-    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ChangedAddonBlocks extends ChangedAddonModBlocks {
-        public static final RegistryObject<Block> TIMED_KEYPAD = REGISTRY.register("timed_keypad", TimedKeypad::new);
-        public static final RegistryObject<Block> HAND_SCANNER = REGISTRY.register("hand_scanner", HandScanner::new);
-        public static final RegistryObject<Block> PAWS_SCANNER = REGISTRY.register("paws_scanner", PawsScanner::new);
-
-
-        @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-        public static class ClientSideHandler {
-            @SubscribeEvent
-            public static void clientSetup(FMLClientSetupEvent event) {
-                HandScanner.registerRenderLayer();
-                //TimedKeypad.registerRenderLayer();
-            }
-        }
-    }
-
-    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ChangedAddonBlockEntities {
-        public static final DeferredRegister<BlockEntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ChangedAddonMod.MODID);
-        public static final RegistryObject<BlockEntityType<SnepPlushBlockEntity>> SNEP_PLUSH = REGISTRY.register("snep_plushe", () -> BlockEntityType.Builder.of(SnepPlushBlockEntity::new, ChangedAddonModBlocks.SNEP_PLUSH.get()).build(null));
-        public static final RegistryObject<BlockEntityType<ContainmentContainerBlockEntity>> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container_block_entity", () -> BlockEntityType.Builder.of(ContainmentContainerBlockEntity::new, ChangedAddonModBlocks.CONTAINMENT_CONTAINER.get()).build(null));
-        public static final RegistryObject<BlockEntityType<TimedKeypadBlockEntity>> TIMED_KEYPAD_BLOCK_ENTITY = REGISTRY.register("timed_keypad_block_entity", () -> BlockEntityType.Builder.of(TimedKeypadBlockEntity::new, ChangedAddonBlocks.TIMED_KEYPAD.get()).build(null));
-
-
-        @SubscribeEvent
-        public static void registerBlockEntitiesRender(FMLConstructModEvent event) {
-            // Registro do renderizador de BlockEntity
-            REGISTRY.register(FMLJavaModLoadingContext.get().getModEventBus());
-        }
-
-        @SubscribeEvent
-        public static void registerBlockEntitiesRender(EntityRenderersEvent.RegisterRenderers event) {
-            // Registro do renderizador de BlockEntity
-            event.registerBlockEntityRenderer(SNEP_PLUSH.get(), SnepPlushBlockEntityRenderer::new);
-            event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
-            event.registerBlockEntityRenderer(TIMED_KEYPAD_BLOCK_ENTITY.get(), TimedKeypadBlockEntityRenderer::new);
-        }
-    }
-
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ChangedAddonFacilityPieces extends FacilityPieces {
         public static final FacilityPieceCollection Exp9FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp009room"), new ResourceLocation("changed_addon:chests/experiment_009_loot_dna")));
         public static final FacilityPieceCollection Exp10FacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:exp10room"), new ResourceLocation("changed_addon:chests/experiment_10_loot_op")));
         public static final FacilityPieceCollection LuminarCrystalsFacilityRoom = FacilityPieces.ROOMS.register(new FacilityRoomPiece(new ResourceLocation("changed_addon:luminar_crystal_room"), new ResourceLocation("changed:chests/high_tier_lab")));
-
-    }
-
-    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class ChangedAddonPacketsRegistry {
-        @SubscribeEvent
-        public static void registerPackets(FMLConstructModEvent event) {
-            ChangedAddonMod.addNetworkMessage(KeyPressPacket.class, KeyPressPacket::encode, KeyPressPacket::decode, KeyPressPacket::handle);
-            ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode, SyncTransfurVisionsPacket::decode, SyncTransfurVisionsPacket::handle);
-        }
     }
 
     private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> REGISTRY, RegistryObject<Block> block, CreativeModeTab tab) {

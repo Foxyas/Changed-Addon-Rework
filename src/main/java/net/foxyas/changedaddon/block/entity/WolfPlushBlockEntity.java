@@ -6,14 +6,14 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 
-import net.foxyas.changedaddon.init.ChangedAddonModBlockEntities;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
 public class WolfPlushBlockEntity extends BlockEntity {
 	private static final String SQUEEZED_TAG = "squeezedTicks";
 	public int squeezedTicks;
 
 	public WolfPlushBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonModBlockEntities.WOLF_PLUSH.get(), position, state);
+		super(ChangedAddonBlockEntities.WOLF_PLUSH.get(), position, state);
 	}
 
 	@Override

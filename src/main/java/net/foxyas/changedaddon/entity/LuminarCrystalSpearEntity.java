@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -42,7 +42,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 
 	private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(LuminarCrystalSpearEntity.class, EntityDataSerializers.BYTE);
 	private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(LuminarCrystalSpearEntity.class, EntityDataSerializers.BOOLEAN);
-	private ItemStack SpearItem = new ItemStack(ChangedAddonModItems.LUMINAR_CRYSTAL_SPEAR.get());
+	private ItemStack SpearItem = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR.get());
 	private boolean dealtDamage;
 	public int clientSideReturnSpearTickCount;
 	public LuminarCrystalSpearEntity(PlayMessages.SpawnEntity packet, Level world) {

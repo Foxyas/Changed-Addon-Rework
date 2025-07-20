@@ -6,9 +6,9 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.recipes.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipes.UnifuserRecipe;
 import net.minecraft.client.Minecraft;
@@ -57,10 +57,10 @@ public class JeiSuport implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.CATLYZER.get().asItem()), JeiCatalyzer_Type);
-        registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.ADVANCED_CATALYZER.get().asItem()), JeiCatalyzer_Type);
-        registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.UNIFUSER.get().asItem()), JeiUnifuser_Type);
-        registration.addRecipeCatalyst(new ItemStack(ChangedAddonModBlocks.ADVANCED_UNIFUSER.get().asItem()), JeiUnifuser_Type);
+        registration.addRecipeCatalyst(new ItemStack(ChangedAddonBlocks.CATALYZER.get().asItem()), JeiCatalyzer_Type);
+        registration.addRecipeCatalyst(new ItemStack(ChangedAddonBlocks.ADVANCED_CATALYZER.get().asItem()), JeiCatalyzer_Type);
+        registration.addRecipeCatalyst(new ItemStack(ChangedAddonBlocks.UNIFUSER.get().asItem()), JeiUnifuser_Type);
+        registration.addRecipeCatalyst(new ItemStack(ChangedAddonBlocks.ADVANCED_UNIFUSER.get().asItem()), JeiUnifuser_Type);
     }
 }
 
@@ -68,22 +68,22 @@ public class JeiSuport implements IModPlugin {
 class JeiDescriptionHandler {
     public static void registerDescriptions(IRecipeRegistration registration) {
         // Item Information
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.TRANSFUR_TOTEM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.latex_totem"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.EXPERIMENT_009DNA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.exp9_dna"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.SYRINGEWITHLITIXCAMMONIA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.litixcammonia_syringe"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.LAETHIN_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.laethin_syringe"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.POTWITHCAMONIA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.potwithcammonia"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.DIFFUSION_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.diffusion_syringe"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.iridium_use"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.INFORMANTBLOCK.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.informantblock"));
-        registration.addIngredientInfo(new ItemStack(ChangedAddonModItems.LUNARROSE_HELMET.get()), VanillaTypes.ITEM_STACK, new TextComponent(new TranslatableComponent("changed_addon.jei_descriptions.lunar_rose").getString().replace("#","\n")));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.TRANSFUR_TOTEM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.latex_totem"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.EXPERIMENT_009_DNA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.exp9_dna"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.litixcammonia_syringe"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.LAETHIN_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.laethin_syringe"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.POTWITHCAMONIA.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.potwithcammonia"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.diffusion_syringe"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.IRIDIUM.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.iridium_use"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.INFORMANT_BLOCK.get()), VanillaTypes.ITEM_STACK, new TranslatableComponent("changed_addon.jei_descriptions.informantblock"));
+        registration.addIngredientInfo(new ItemStack(ChangedAddonItems.LUNAR_ROSE_HELMET.get()), VanillaTypes.ITEM_STACK, new TextComponent(new TranslatableComponent("changed_addon.jei_descriptions.lunar_rose").getString().replace("#","\n")));
 
 
         addSharedDescriptions(registration, List.of(
-                ChangedAddonModItems.BLUE_WOLF_CRYSTAL_FRAGMENT.get(),
-                ChangedAddonModItems.ORANGE_WOLF_CRYSTAL_FRAGMENT.get(),
-                ChangedAddonModItems.YELLOW_WOLF_CRYSTAL_FRAGMENT.get(),
-                ChangedAddonModItems.WHITE_WOLF_CRYSTAL_FRAGMENT.get()
+                ChangedAddonItems.BLUE_WOLF_CRYSTAL_FRAGMENT.get(),
+                ChangedAddonItems.ORANGE_WOLF_CRYSTAL_FRAGMENT.get(),
+                ChangedAddonItems.YELLOW_WOLF_CRYSTAL_FRAGMENT.get(),
+                ChangedAddonItems.WHITE_WOLF_CRYSTAL_FRAGMENT.get()
         ), "item.changed_addon.colorful_wolf_crystal_fragment_desc");
 
         // Enchant Information

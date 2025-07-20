@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=north": {
-      "model": "changed_addon:block/catlyzer"
+      "model": "changed_addon:block/catalyzer"
     },
     "facing=east": {
-      "model": "changed_addon:block/catlyzer",
+      "model": "changed_addon:block/catalyzer",
       "y": 90
     },
     "facing=south": {
-      "model": "changed_addon:block/catlyzer",
+      "model": "changed_addon:block/catalyzer",
       "y": 180
     },
     "facing=west": {
-      "model": "changed_addon:block/catlyzer",
+      "model": "changed_addon:block/catalyzer",
       "y": 270
     }
   }

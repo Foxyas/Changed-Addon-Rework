@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.block.AbstractWolfCrystalExtender;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.ltxprogrammer.changed.block.SmallWolfCrystal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -21,10 +20,10 @@ public class WolfCrystalSmallMixin {
     @Inject(method = "mayPlaceOn",at = @At("HEAD"),cancellable = true)
     private void SurviveMixin(BlockState blockState, BlockGetter p_51043_, BlockPos p_51044_, CallbackInfoReturnable<Boolean> cir){
         List<Block> blockList = List.of(
-                ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get(),
-                ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get(),
-                ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get(),
-                ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get()
+                ChangedAddonBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get(),
+                ChangedAddonBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get(),
+                ChangedAddonBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get(),
+                ChangedAddonBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get()
         );
         if (blockList.contains(blockState.getBlock())){
             cir.setReturnValue(true);
@@ -35,10 +34,10 @@ public class WolfCrystalSmallMixin {
     private void CanSurviveMixin(BlockState blockState, LevelReader level, BlockPos blockPos, CallbackInfoReturnable<Boolean> cir){
         BlockState blockStateOn = level.getBlockState(blockPos.below());
         List<Block> blockList = List.of(
-                ChangedAddonModBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get(),
-                ChangedAddonModBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get(),
-                ChangedAddonModBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get(),
-                ChangedAddonModBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get()
+                ChangedAddonBlocks.WHITE_WOLF_CRYSTAL_BLOCK.get(),
+                ChangedAddonBlocks.BLUE_WOLF_CRYSTAL_BLOCK.get(),
+                ChangedAddonBlocks.ORANGE_WOLF_CRYSTAL_BLOCK.get(),
+                ChangedAddonBlocks.YELLOW_WOLF_CRYSTAL_BLOCK.get()
         );
         if (blockList.contains(blockStateOn.getBlock())){
             cir.setReturnValue(true);

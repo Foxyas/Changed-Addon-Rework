@@ -1,18 +1,10 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.stats.Stats;
-import net.minecraft.stats.StatsCounter;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.advancements.Advancement;
-
-import java.util.Iterator;
+import net.minecraft.stats.StatsCounter;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 
 public class SnepsiPlayerFinishesUsingItemProcedure {
     public static void execute(Entity entity, ItemStack itemstack) {

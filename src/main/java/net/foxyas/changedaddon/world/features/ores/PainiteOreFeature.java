@@ -30,7 +30,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.Holder;
 
 import net.foxyas.changedaddon.procedures.PainiteOreAdditionalGenerationConditionProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 
 import java.util.Set;
 import java.util.Random;
@@ -43,7 +43,7 @@ public class PainiteOreFeature extends OreFeature {
 
 	public static Feature<?> feature() {
 		FEATURE = new PainiteOreFeature();
-		CONFIGURED_FEATURE = FeatureUtils.register("changed_addon:painite_ore", FEATURE, new OreConfiguration(PainiteOreFeatureRuleTest.INSTANCE, ChangedAddonModBlocks.PAINITE_ORE.get().defaultBlockState(), 8));
+		CONFIGURED_FEATURE = FeatureUtils.register("changed_addon:painite_ore", FEATURE, new OreConfiguration(PainiteOreFeatureRuleTest.INSTANCE, ChangedAddonBlocks.PAINITE_ORE.get().defaultBlockState(), 8));
 		PLACED_FEATURE = PlacementUtils.register("changed_addon:painite_ore", CONFIGURED_FEATURE,
 				List.of(CountPlacement.of(2), InSquarePlacement.spread(), HeightRangePlacement.uniform(VerticalAnchor.absolute(-60), VerticalAnchor.absolute(-45)), BiomeFilter.biome()));
 		return FEATURE;

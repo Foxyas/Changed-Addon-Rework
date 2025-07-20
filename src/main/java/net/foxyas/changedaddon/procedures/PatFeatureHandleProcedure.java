@@ -1,13 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.client.gui.PatOverlay;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
-import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
-import net.foxyas.changedaddon.entity.Exp2MaleEntity;
-import net.foxyas.changedaddon.entity.Experiment10Entity;
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
 import net.foxyas.changedaddon.entity.*;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
 import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.registers.ChangedAddonCriteriaTriggers;
@@ -25,7 +19,6 @@ import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -178,7 +171,6 @@ public class PatFeatureHandleProcedure {
                 }
 
 
-
                 // Exibe mensagens
                 p.displayClientMessage(new TranslatableComponent("key.changed_addon.pat_message", target.getDisplayName().getString()), true);
             } else {
@@ -213,12 +205,12 @@ public class PatFeatureHandleProcedure {
             }//Don't Be Able to Pet if at lest one is Transfur :P
 
             if (player instanceof Player player1) {
-                ((Player) player).swing(getSwingHand(player), true);
+                player1.swing(getSwingHand(player), true);
                 if (isPlayerTransfur && isTargetTransfur) { //Add The Effect if is Transfur is Exp2
                     if (isPlayerTransfurInExp2 && !isTargetTransfurInExp2) {
                         target.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
                     } else if (!isPlayerTransfurInExp2 && isTargetTransfurInExp2) {
-                        ((Player) player).addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                        player1.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
                     } /*else if (isPlayerTransfurInExp2 && isTargetTransfurInExp2){
 					 return;//Exp2 Can't give Exp2 Transfur Sickness
 				 	}

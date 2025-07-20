@@ -4,9 +4,9 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
@@ -104,7 +104,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 // Verifica se tem a NBT isBoss = 1b
                 if (leopard.isBoss()) {
                     // Cria o item que será dropado
-                    ItemStack item = new ItemStack(ChangedAddonModItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
+                    ItemStack item = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
 
                     // Cria o drop
                     ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), item);
@@ -137,7 +137,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
         // Verifica se há um Luminar Crystal Small (hearted) por perto
         boolean nearLuminarCrystal = world.getBlockStatesIfLoaded(checkArea)
-                .anyMatch((state) -> state.is(ChangedAddonModBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
+                .anyMatch((state) -> state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get()) &&
                         state.getValue(AbstractLuminarCrystal.CrystalSmall.HEARTED));
 
         if (!nearLuminarCrystal) {

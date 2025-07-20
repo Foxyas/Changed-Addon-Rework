@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.block.CustomFallable;
@@ -312,7 +312,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.CONTAINMENT_CONTAINER.get(), renderType -> renderType == RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.CONTAINMENT_CONTAINER.get(), renderType -> renderType == RenderType.cutout());
 	}
 
 	@Override

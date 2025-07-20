@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.procedures.InteractPlushesProcedure;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -222,6 +222,6 @@ public class SnepPlushBlock extends Block implements SimpleWaterloggedBlock, Ent
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonModBlocks.SNEP_PLUSH.get(), renderType -> renderType == RenderType.cutoutMipped());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.SNEP_PLUSH.get(), renderType -> renderType == RenderType.cutoutMipped());
 	}
 }

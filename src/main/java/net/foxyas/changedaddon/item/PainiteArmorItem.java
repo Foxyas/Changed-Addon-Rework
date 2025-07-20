@@ -15,7 +15,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
 
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 
 public abstract class PainiteArmorItem extends ArmorItem {
 	public PainiteArmorItem(EquipmentSlot slot, Item.Properties properties) {
@@ -42,7 +42,7 @@ public abstract class PainiteArmorItem extends ArmorItem {
 
 			@Override
 			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(ChangedAddonModItems.PAINITE.get()), new ItemStack(Items.NETHERITE_INGOT));
+				return Ingredient.of(new ItemStack(ChangedAddonItems.PAINITE.get()), new ItemStack(Items.NETHERITE_INGOT));
 			}
 
 			@Override

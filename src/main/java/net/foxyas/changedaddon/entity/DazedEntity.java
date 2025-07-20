@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonModEntities;
 import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
 import net.ltxprogrammer.changed.entity.*;
@@ -309,7 +309,7 @@ public class DazedEntity extends ChangedEntity {
 		AABB checkArea = new AABB(pos).inflate(32); // Raio de 32 blocos ao redor
 
 		boolean nearSpawnBlock = world.getBlockStatesIfLoaded(checkArea)
-				.anyMatch(state -> state.is(ChangedAddonModBlocks.GOO_CORE.get()));
+				.anyMatch(state -> state.is(ChangedAddonBlocks.GOO_CORE.get()));
 		//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n" + nearSpawnBlock);
 
 		return nearSpawnBlock;

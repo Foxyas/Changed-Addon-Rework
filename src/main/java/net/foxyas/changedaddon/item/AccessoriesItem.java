@@ -21,7 +21,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-import net.foxyas.changedaddon.init.ChangedAddonModItems;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.client.model.ModelAccessories;
 
 import java.util.Map;
@@ -52,7 +52,7 @@ public abstract class AccessoriesItem extends ArmorItem {
 
 			@Override
 			public Ingredient getRepairIngredient() {
-				return Ingredient.of(new ItemStack(ChangedAddonModItems.PAINITE.get()));
+				return Ingredient.of(new ItemStack(ChangedAddonItems.PAINITE.get()));
 			}
 
 			@Override
