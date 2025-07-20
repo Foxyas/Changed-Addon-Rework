@@ -28,8 +28,8 @@ import java.util.Objects;
 
 @JeiPlugin
 public class JeiSuport implements IModPlugin {
-    public static mezz.jei.api.recipe.RecipeType<CatalyzerRecipe> JeiCatalyzer_Type = new mezz.jei.api.recipe.RecipeType<>(JeiCatalyzerRecipeCategory.UID, CatalyzerRecipe.class);
-    public static mezz.jei.api.recipe.RecipeType<UnifuserRecipe> JeiUnifuser_Type = new mezz.jei.api.recipe.RecipeType<>(JeiUnifuserRecipeCategory.UID, UnifuserRecipe.class);
+    public static mezz.jei.api.recipe.RecipeType<CatalyzerRecipe> JeiCatalyzer_Type = new mezz.jei.api.recipe.RecipeType<>(CatalyzerRecipeCategory.UID, CatalyzerRecipe.class);
+    public static mezz.jei.api.recipe.RecipeType<UnifuserRecipe> JeiUnifuser_Type = new mezz.jei.api.recipe.RecipeType<>(UnifuserRecipeCategory.UID, UnifuserRecipe.class);
 
 
     @Override
@@ -39,8 +39,8 @@ public class JeiSuport implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-        registration.addRecipeCategories(new JeiCatalyzerRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-        registration.addRecipeCategories(new JeiUnifuserRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new CatalyzerRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new UnifuserRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override

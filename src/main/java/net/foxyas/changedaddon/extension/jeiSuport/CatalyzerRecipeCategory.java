@@ -18,13 +18,13 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 @Deprecated
-public class JeiCatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe> {
+public class CatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe> {
     public final static ResourceLocation UID = new ResourceLocation("changed_addon", "jei_catalyzer");
     public final static ResourceLocation TEXTURE = new ResourceLocation("changed_addon", "textures/screens/jei_catalyzer_screen.png");
     private final IDrawable background;
     private final IDrawable icon;
 
-    public JeiCatalyzerRecipeCategory(IGuiHelper helper) {
+    public CatalyzerRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 116, 54);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ChangedAddonBlocks.CATALYZER.get().asItem()));
     }

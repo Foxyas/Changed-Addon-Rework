@@ -17,13 +17,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 @Deprecated
-public class JeiUnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe> {
+public class UnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe> {
     public final static ResourceLocation UID = new ResourceLocation("changed_addon", "jei_unifuser");
     public final static ResourceLocation TEXTURE = new ResourceLocation("changed_addon", "textures/screens/jei_unifuser_screen.png");
     private final IDrawable background;
     private final IDrawable icon;
 
-    public JeiUnifuserRecipeCategory(IGuiHelper helper) {
+    public UnifuserRecipeCategory(IGuiHelper helper) {
         this.background = helper.createDrawable(TEXTURE, 0, 0, 116, 54);
         this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ChangedAddonBlocks.UNIFUSER.get().asItem()));
     }
