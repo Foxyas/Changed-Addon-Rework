@@ -22,65 +22,57 @@ import javax.annotation.Nullable;
 
 @Mod.EventBusSubscriber(value = {Dist.CLIENT})
 public class Experiment009FogComputationProcedure {
+
     @SubscribeEvent
-    public static void renderFog(EntityViewRenderEvent.RenderFogEvent event) {
-        try {
-            if (event.getMode() == FogRenderer.FogMode.FOG_TERRAIN) {
+    public static void onRenderFog(EntityViewRenderEvent.RenderFogEvent event) {
+        if (event.getMode() == FogRenderer.FogMode.FOG_TERRAIN) {
+            try {
                 ClientLevel clientLevel = Minecraft.getInstance().level;
                 Entity entity = event.getCamera().getEntity();
-                execute(null, clientLevel, entity.getX(), entity.getY(), entity.getZ(), entity, event);
-                event.setCanceled(true);
+                if (entity != null && clientLevel != null) {
+                    applyFogEffect(clientLevel, entity.getX(), entity.getY(), entity.getZ(), entity, event);
+                    event.setCanceled(true);
+                }
+            } catch (Exception ignored) {
+                // You can log the error here if needed
             }
-        } catch (Exception e) {
         }
     }
 
-    public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, EntityViewRenderEvent viewport) {
-        execute(null, world, x, y, z, entity, viewport);
+    public static void applyFogEffect(LevelAccessor world, double x, double y, double z, Entity entity, EntityViewRenderEvent viewport) {
+        applyFogEffect(null, world, x, y, z, entity, viewport);
     }
 
-    private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity, EntityViewRenderEvent viewport) {
-        if (entity == null || viewport == null)
-            return;
-        if (!(new Object() {
-            public boolean checkGamemode(Entity _ent) {
-                if (_ent instanceof ServerPlayer _serverPlayer) {
-                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                }
-                return false;
-            }
-        }.checkGamemode(entity) || new Object() {
-            public boolean checkGamemode(Entity _ent) {
-                if (_ent instanceof ServerPlayer _serverPlayer) {
-                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-                }
-                return false;
-            }
-        }.checkGamemode(entity))) {
-            if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get()
-                    || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get()) {
-                if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-                    _renderFogEvent.setFogShape(FogShape.SPHERE);
-                }
-                if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-                    _renderFogEvent.setNearPlaneDistance(1);
-                    _renderFogEvent.setFarPlaneDistance(10);
-                }
-            }
-            if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get()
-                    || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get()) {
-                if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-                    _renderFogEvent.setFogShape(FogShape.SPHERE);
-                }
-                if (viewport instanceof EntityViewRenderEvent.RenderFogEvent _renderFogEvent) {
-                    _renderFogEvent.setNearPlaneDistance(1);
-                    _renderFogEvent.setFarPlaneDistance(10);
-                }
+    private static void applyFogEffect(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity, EntityViewRenderEvent viewport) {
+        if (entity == null || !(viewport instanceof EntityViewRenderEvent.RenderFogEvent fogEvent)) return;
+        if (isCreativeOrSpectator(entity)) return;
+
+        if (isHoldingItem(entity, ChangedAddonItems.EXPERIMENT_009_DNA.get()) ||
+                isHoldingItem(entity, ChangedAddonItems.EXPERIMENT_10_DNA.get())) {
+
+            fogEvent.setFogShape(FogShape.SPHERE);
+            fogEvent.setNearPlaneDistance(1);
+            fogEvent.setFarPlaneDistance(10);
+        }
+    }
+
+    private static boolean isCreativeOrSpectator(Entity entity) {
+        if (entity instanceof ServerPlayer serverPlayer) {
+            GameType mode = serverPlayer.gameMode.getGameModeForPlayer();
+            return mode == GameType.CREATIVE || mode == GameType.SPECTATOR;
+        } else if (entity.level.isClientSide() && entity instanceof Player player) {
+            var info = Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId());
+            if (info != null) {
+                GameType mode = info.getGameMode();
+                return mode == GameType.CREATIVE || mode == GameType.SPECTATOR;
             }
         }
+        return false;
+    }
+
+    private static boolean isHoldingItem(Entity entity, net.minecraft.world.item.Item item) {
+        if (!(entity instanceof LivingEntity livingEntity)) return false;
+        return livingEntity.getMainHandItem().getItem() == item ||
+                livingEntity.getOffhandItem().getItem() == item;
     }
 }

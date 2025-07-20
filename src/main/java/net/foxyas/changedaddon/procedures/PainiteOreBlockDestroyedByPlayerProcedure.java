@@ -17,26 +17,27 @@ import net.minecraft.world.level.LevelAccessor;
 
 public class PainiteOreBlockDestroyedByPlayerProcedure {
     public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (entity == null)
-            return;
-        if (!(new Object() {
-            public boolean checkGamemode(Entity _ent) {
-                if (_ent instanceof ServerPlayer _serverPlayer) {
-                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                }
-                return false;
-            }
-        }.checkGamemode(entity))) {
-            if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof PickaxeItem) {
-                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) == 0) {
-                    if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().getLevel() : 0) >= 4) {
-                        if (world instanceof Level _level && !_level.isClientSide())
-                            _level.addFreshEntity(new ExperienceOrb(_level, x, y, z, 35));
-                    }
-                }
-            }
+        if (entity == null || isCreative(entity)) return;
+        if (!(entity instanceof LivingEntity living)) return;
+
+        ItemStack tool = living.getMainHandItem();
+        if (!(tool.getItem() instanceof PickaxeItem)) return;
+
+        boolean hasSilkTouch = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, tool) > 0;
+        int tierLevel = tool.getItem() instanceof TieredItem tiered ? tiered.getTier().getLevel() : 0;
+
+        if (!hasSilkTouch && tierLevel >= 4 && world instanceof Level level && !level.isClientSide()) {
+            level.addFreshEntity(new ExperienceOrb(level, x, y, z, 35));
         }
+    }
+
+    private static boolean isCreative(Entity entity) {
+        if (entity instanceof ServerPlayer serverPlayer) {
+            return serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
+        } else if (entity.level.isClientSide() && entity instanceof Player player) {
+            var info = Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId());
+            return info != null && info.getGameMode() == GameType.CREATIVE;
+        }
+        return false;
     }
 }

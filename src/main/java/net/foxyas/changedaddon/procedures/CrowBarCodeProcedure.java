@@ -74,7 +74,7 @@ public class CrowBarCodeProcedure {
         double sz = 0;
         ItemStack CrowBar = ItemStack.EMPTY;
         CrowBar = new ItemStack(ChangedAddonItems.CROW_BAR.get());
-        if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == CrowBar.getItem()) {
+        if (entity instanceof LivingEntity _livEnt  && _livEnt.getMainHandItem().getItem() == CrowBar.getItem()) {
             if (blockstate.is(BlockTags.create(new ResourceLocation("changed_addon:lab_doors")))) {
                 if (!(blockstate.getBlock().getStateDefinition().getProperty("open") instanceof BooleanProperty _getbp5 && blockstate.getValue(_getbp5))) {
                     sx = -2;
@@ -98,7 +98,7 @@ public class CrowBarCodeProcedure {
                         }
                         sx = sx + 1;
                     }
-                    if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == CrowBar.getItem()) {
+                    if (_livEnt.getMainHandItem().getItem() == CrowBar.getItem()) {
                         if (!(new Object() {
                             public boolean checkGamemode(Entity _ent) {
                                 if (_ent instanceof ServerPlayer _serverPlayer) {
@@ -121,7 +121,7 @@ public class CrowBarCodeProcedure {
                             }
                         }.checkGamemode(entity))) {
                             {
-                                ItemStack _ist = (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
+                                ItemStack _ist = _livEnt.getMainHandItem();
                                 if (_ist.hurt(10, new Random(), null)) {
                                     _ist.shrink(1);
                                     _ist.setDamageValue(0);
@@ -156,7 +156,7 @@ public class CrowBarCodeProcedure {
                             }
                             sx = sx + 1;
                         }
-                        if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == CrowBar.getItem()) {
+                        if (_livEnt.getMainHandItem().getItem() == CrowBar.getItem()) {
                             if (!(new Object() {
                                 public boolean checkGamemode(Entity _ent) {
                                     if (_ent instanceof ServerPlayer _serverPlayer) {
@@ -179,7 +179,7 @@ public class CrowBarCodeProcedure {
                                 }
                             }.checkGamemode(entity))) {
                                 {
-                                    ItemStack _ist = (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
+                                    ItemStack _ist = _livEnt.getMainHandItem();
                                     if (_ist.hurt(10, new Random(), null)) {
                                         _ist.shrink(1);
                                         _ist.setDamageValue(0);

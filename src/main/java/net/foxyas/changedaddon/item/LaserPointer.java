@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.item;
 import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.goals.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 import net.ltxprogrammer.changed.util.Color3;
@@ -182,7 +182,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
 
         if (!level.isClientSide) {
             HitResult result = player.pick(MAX_LASER_REACH, 0.0F, false);
-            EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(player, LaserPointer.MAX_LASER_REACH);
+            EntityHitResult entityHitResult = PlayerUtil.getEntityHitLookingAt(player, LaserPointer.MAX_LASER_REACH);
             Vec3 hitPos = result.getLocation();
             Direction face = Direction.UP; // fallback para quando mirar no ar
 
@@ -243,7 +243,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
         super.onUsingTick(stack, player, count);
         if (!player.getLevel().isClientSide) {
             HitResult result = player.pick(MAX_LASER_REACH, 0.0F, false);
-            EntityHitResult entityHitResult = PlayerUtilProcedure.getEntityHitLookingAt(player, LaserPointer.MAX_LASER_REACH);
+            EntityHitResult entityHitResult = PlayerUtil.getEntityHitLookingAt(player, LaserPointer.MAX_LASER_REACH);
             Vec3 hitPos = result.getLocation();
             Direction face = Direction.UP; // fallback para quando mirar no ar
 
@@ -294,7 +294,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
 
     // Envia partícula do laser
     private void spawnLaserParticle(Level level, Player player, ItemStack stack, Vec3 pos) {
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(
+        PlayerUtil.ParticlesUtil.sendParticles(
                 level,
                 ChangedAddonParticles.laserPoint(player, LaserPointer.getColorAsColor3(stack), 1f),
                 pos.x, pos.y, pos.z,
@@ -304,7 +304,7 @@ public class LaserPointer extends Item implements SpecializedAnimations {
     }
 
     private void spawnLaserParticle(Level level, Player player, ItemStack stack, BlockPos pos) {
-        PlayerUtilProcedure.ParticlesUtil.sendParticles(
+        PlayerUtil.ParticlesUtil.sendParticles(
                 level,
                 ChangedAddonParticles.laserPoint(player, LaserPointer.getColorAsColor3(stack), 1f),
                 pos.getX(), pos.getY(), pos.getZ(),

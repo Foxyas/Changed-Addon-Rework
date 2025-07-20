@@ -20,18 +20,18 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 
-public class SnepsiRightclickedOnBlockProcedure {
+public class SnepsiRightClickedOnBlockProcedure {
     public static void execute(LevelAccessor world, double x, double y, double z, BlockState blockstate, Direction direction, Entity entity) {
         if (direction == null || entity == null)
             return;
         BlockState block = Blocks.AIR.defaultBlockState();
         ItemStack eventitem = ItemStack.EMPTY;
-        if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.SNEPSI.get()
-                || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.SNEPSI.get()) {
+        if (entity instanceof LivingEntity _livEnt && (_livEnt.getMainHandItem().getItem() == ChangedAddonItems.SNEPSI.get()
+                || _livEnt.getOffhandItem().getItem() == ChangedAddonItems.SNEPSI.get())) {
             eventitem = new ItemStack(ChangedAddonItems.SNEPSI.get());
-        } else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.FOXTA.get()
-                || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.FOXTA.get()) {
-            if (!((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.SNEPSI.get())) {
+        } else if (entity instanceof LivingEntity _livEnt && (_livEnt.getMainHandItem().getItem() == ChangedAddonItems.FOXTA.get()
+                || _livEnt.getOffhandItem().getItem() == ChangedAddonItems.FOXTA.get())) {
+            if (!(_livEnt.getMainHandItem().getItem() == ChangedAddonItems.SNEPSI.get())) {
                 eventitem = new ItemStack(ChangedAddonItems.FOXTA.get());
             }
         }

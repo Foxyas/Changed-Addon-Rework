@@ -29,9 +29,9 @@ public class IridiumoreBlockDestroyedByPlayerProcedure {
                 return false;
             }
         }.checkGamemode(entity))) {
-            if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof PickaxeItem) {
-                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)) == 0) {
-                    if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().getLevel() : 0) >= 4) {
+            if (entity instanceof LivingEntity _livEnt && _livEnt.getMainHandItem().getItem() instanceof PickaxeItem) {
+                if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, _livEnt.getMainHandItem()) == 0) {
+                    if ((_livEnt.getMainHandItem().getItem() instanceof TieredItem _tierItem ? _tierItem.getTier().getLevel() : 0) >= 4) {
                         if (world instanceof Level _level && !_level.isClientSide())
                             _level.addFreshEntity(new ExperienceOrb(_level, x, y, z, 40));
                     }

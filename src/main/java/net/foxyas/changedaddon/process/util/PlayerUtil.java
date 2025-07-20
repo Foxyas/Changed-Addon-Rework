@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.procedures;
+package net.foxyas.changedaddon.process.util;
 
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -44,7 +44,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public class PlayerUtilProcedure {
+public class PlayerUtil {
 
     public static void TransfurPlayer(Entity entity, TransfurVariant<?> latexVariant) {
         LivingEntity livingEntity = (LivingEntity) entity;
@@ -210,7 +210,7 @@ public class PlayerUtilProcedure {
 
     @Nullable
     public static Vec3 getRelativeHitPosition(LivingEntity entity, double distance) {
-        EntityHitResult hitResult = PlayerUtilProcedure.getEntityHitLookingAt(entity, distance);
+        EntityHitResult hitResult = PlayerUtil.getEntityHitLookingAt(entity, distance);
         if (hitResult != null) {
             Vec3 hitLocation = hitResult.getLocation();
             Vec3 entityPosition = hitResult.getEntity().getPosition(1);

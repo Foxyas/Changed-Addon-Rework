@@ -7,7 +7,7 @@ import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.EyeStyle;
@@ -79,7 +79,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             LivingEntity target = event.getEntityLiving();
             Entity source = event.getSource().getEntity();
             if (source instanceof AbstractLuminarcticLeopard lumi && lumi.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
+                PlayerUtil.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                 target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
                 target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
             } else if (source instanceof Player player) {
@@ -87,7 +87,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
                         && instance != null
                         && instance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAUSE_FREEZE_DMG)) {
-                    PlayerUtilProcedure.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
+                    PlayerUtil.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                     target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
                     target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
                 }
@@ -306,7 +306,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                                     double y = this.getY() + Math.cos(anglePhi) * 4.0;
                                     double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
                                     Vec3 pos = new Vec3(x, y, z);
-                                    PlayerUtilProcedure.ParticlesUtil.sendParticles(
+                                    PlayerUtil.ParticlesUtil.sendParticles(
                                             this.getLevel(),
                                             ParticleTypes.GLOW,
                                             pos,

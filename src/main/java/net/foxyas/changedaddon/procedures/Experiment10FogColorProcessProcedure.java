@@ -16,176 +16,81 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import javax.annotation.Nullable;
-import java.util.Comparator;
-
 @Mod.EventBusSubscriber(value = {Dist.CLIENT})
 public class Experiment10FogColorProcessProcedure {
+
+    private static final float[] COLOR_10 = {61 / 255.0f, 0f, 0f};
+    private static final float[] COLOR_009 = {0f, 194 / 255.0f, 219 / 255.0f};
+    private static final float[] COLOR_MIX = {126 / 255.0f, 0f, 217 / 255.0f};
+
     @SubscribeEvent
     public static void computeFogColor(EntityViewRenderEvent.FogColors event) {
         try {
             ClientLevel clientLevel = Minecraft.getInstance().level;
             Entity entity = event.getCamera().getEntity();
-            execute(null, clientLevel, entity.getX(), entity.getY(), entity.getZ(), entity, event);
-        } catch (Exception e) {
+            if (entity != null) {
+                applyFogColor(clientLevel, entity.position(), entity, event);
+            }
+        } catch (Exception ignored) {
         }
     }
 
-    public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, EntityViewRenderEvent viewport) {
-        execute(null, world, x, y, z, entity, viewport);
+    private static void applyFogColor(LevelAccessor world, Vec3 pos, Entity entity, EntityViewRenderEvent.FogColors viewport) {
+        if (!(entity instanceof LivingEntity living)) return;
+        if (isInCreativeOrSpectator(entity)) return;
+
+        boolean has10DNA = hasItem(living, ChangedAddonItems.EXPERIMENT_10_DNA.get());
+        boolean has009DNA = hasItem(living, ChangedAddonItems.EXPERIMENT_009_DNA.get());
+
+        // Fog by item
+        if (has10DNA && !has009DNA) {
+            setFogColor(viewport, COLOR_10);
+        } else if (has009DNA && !has10DNA) {
+            setFogColor(viewport, COLOR_009);
+        } else if (has10DNA && has009DNA) {
+            setFogColor(viewport, COLOR_MIX);
+        }
+
+        // Fog by nearby boss entities
+        if (!entity.getPersistentData().getBoolean("NoAI")) {
+            if (isEntityNearby(world, pos, Experiment10BossEntity.class, 50)) {
+                setFogColor(viewport, COLOR_10);
+            }
+            if (isEntityNearby(world, pos, KetExperiment009BossEntity.class, 50)) {
+                setFogColor(viewport, COLOR_009);
+            }
+        }
     }
 
-    private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity, EntityViewRenderEvent viewport) {
-        if (entity == null || viewport == null)
-            return;
-        double A = 0;
-        double deltaZ = 0;
-        double distance = 0;
-        double deltaX = 0;
-        double deltaY = 0;
-        if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get()
-                || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get())
-                && !((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get()
-                || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get())) {
-            if (!(new Object() {
-                public boolean checkGamemode(Entity _ent) {
-                    if (_ent instanceof ServerPlayer _serverPlayer) {
-                        return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                    } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                        return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                    }
-                    return false;
-                }
-            }.checkGamemode(entity) || new Object() {
-                public boolean checkGamemode(Entity _ent) {
-                    if (_ent instanceof ServerPlayer _serverPlayer) {
-                        return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                    } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                        return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-                    }
-                    return false;
-                }
-            }.checkGamemode(entity))) {
-                if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-                    _fogColors.setRed(61 / 255.0F);
-                    _fogColors.setGreen(0 / 255.0F);
-                    _fogColors.setBlue(0 / 255.0F);
-                }
-            }
-        } else if (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get()
-                || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get())
-                && !((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get()
-                || (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get())) {
-            if (!(new Object() {
-                public boolean checkGamemode(Entity _ent) {
-                    if (_ent instanceof ServerPlayer _serverPlayer) {
-                        return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                    } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                        return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                    }
-                    return false;
-                }
-            }.checkGamemode(entity) || new Object() {
-                public boolean checkGamemode(Entity _ent) {
-                    if (_ent instanceof ServerPlayer _serverPlayer) {
-                        return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                    } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                        return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-                    }
-                    return false;
-                }
-            }.checkGamemode(entity))) {
-                if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-                    _fogColors.setRed(0 / 255.0F);
-                    _fogColors.setGreen(194 / 255.0F);
-                    _fogColors.setBlue(219 / 255.0F);
-                }
-            }
-        } else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get()
-                && (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get()
-                || (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_10_DNA.get()
-                && (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem() == ChangedAddonItems.EXPERIMENT_009_DNA.get()) {
-            if (!(new Object() {
-                public boolean checkGamemode(Entity _ent) {
-                    if (_ent instanceof ServerPlayer _serverPlayer) {
-                        return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                    } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                        return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                    }
-                    return false;
-                }
-            }.checkGamemode(entity) || new Object() {
-                public boolean checkGamemode(Entity _ent) {
-                    if (_ent instanceof ServerPlayer _serverPlayer) {
-                        return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                    } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                        return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-                    }
-                    return false;
-                }
-            }.checkGamemode(entity))) {
-                if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-                    _fogColors.setRed(126 / 255.0F);
-                    _fogColors.setGreen(0 / 255.0F);
-                    _fogColors.setBlue(217 / 255.0F);
-                }
+    private static boolean hasItem(LivingEntity entity, net.minecraft.world.item.Item item) {
+        return entity.getMainHandItem().is(item) || entity.getOffhandItem().is(item);
+    }
+
+    private static boolean isEntityNearby(LevelAccessor world, Vec3 pos, Class<? extends Entity> clazz, double range) {
+        AABB box = AABB.ofSize(pos, range, range, range);
+        return world.getEntitiesOfClass(clazz, box, e -> true).stream().findAny().isPresent();
+    }
+
+    private static void setFogColor(EntityViewRenderEvent.FogColors fog, float[] rgb) {
+        fog.setRed(rgb[0]);
+        fog.setGreen(rgb[1]);
+        fog.setBlue(rgb[2]);
+    }
+
+    private static boolean isInCreativeOrSpectator(Entity entity) {
+        if (entity instanceof ServerPlayer serverPlayer) {
+            GameType type = serverPlayer.gameMode.getGameModeForPlayer();
+            return type == GameType.CREATIVE || type == GameType.SPECTATOR;
+        } else if (entity.level.isClientSide() && entity instanceof Player player) {
+            var info = Minecraft.getInstance().getConnection().getPlayerInfo(player.getGameProfile().getId());
+            if (info != null) {
+                GameType type = info.getGameMode();
+                return type == GameType.CREATIVE || type == GameType.SPECTATOR;
             }
         }
-        if (!(new Object() {
-            public boolean checkGamemode(Entity _ent) {
-                if (_ent instanceof ServerPlayer _serverPlayer) {
-                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                }
-                return false;
-            }
-        }.checkGamemode(entity) || new Object() {
-            public boolean checkGamemode(Entity _ent) {
-                if (_ent instanceof ServerPlayer _serverPlayer) {
-                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-                }
-                return false;
-            }
-        }.checkGamemode(entity))) {
-            if (!(world.getEntitiesOfClass(Experiment10BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-                Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                    return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-                }
-            }.compareDistOf(x, y, z)).findFirst().orElse(null) == (null))) {
-                if (!entity.getPersistentData().getBoolean("NoAI")) {
-                    if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-                        _fogColors.setRed(61 / 255.0F);
-                        _fogColors.setGreen(0 / 255.0F);
-                        _fogColors.setBlue(0 / 255.0F);
-                    }
-                }
-            }
-        }
-        if (!(world.getEntitiesOfClass(KetExperiment009BossEntity.class, AABB.ofSize(new Vec3(x, y, z), 50, 50, 50), e -> true).stream().sorted(new Object() {
-            Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                return Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_x, _y, _z));
-            }
-        }.compareDistOf(x, y, z)).findFirst().orElse(null) == (null))) {
-            if (!entity.getPersistentData().getBoolean("NoAI")) {
-                if (viewport instanceof EntityViewRenderEvent.FogColors _fogColors) {
-                    _fogColors.setRed(0 / 255.0F);
-                    _fogColors.setGreen(194 / 255.0F);
-                    _fogColors.setBlue(219 / 255.0F);
-                }
-            }
-        }
+        return false;
     }
 }

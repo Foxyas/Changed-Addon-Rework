@@ -14,7 +14,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 
-import net.foxyas.changedaddon.procedures.TransfurTotemRightclickedProcedure;
+import net.foxyas.changedaddon.procedures.TransfurTotemRightClickedProcedure;
 import net.foxyas.changedaddon.procedures.TransfurTotemMakeItemGlowProcedure;
 import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryTickProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
@@ -53,7 +53,7 @@ public class TransfurTotemItem extends Item {
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		TransfurTotemRightclickedProcedure.execute(world, x, y, z, entity, itemstack);
+		TransfurTotemRightClickedProcedure.execute(world, x, y, z, entity, itemstack);
 		return ar;
 	}
 

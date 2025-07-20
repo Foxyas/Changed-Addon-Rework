@@ -35,13 +35,13 @@ public class DarkLatexMaskTransfurHandleProcedure {
             return;
         if ((world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.DO_DARK_LATEX_MASK_TRANSFUR)) > 0) {
             if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-                if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:dark_latex_mask"))) {
+                if (entity instanceof LivingEntity _livEnt && _livEnt.getMainHandItem().getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:dark_latex_mask"))) {
                     if (entity.getPersistentData().getDouble("HoldingDarkLatexMask") < (world.getLevelData().getGameRules().getInt(ChangedAddonGameRules.DO_DARK_LATEX_MASK_TRANSFUR))) {
                         entity.getPersistentData().putDouble("HoldingDarkLatexMask", (entity.getPersistentData().getDouble("HoldingDarkLatexMask") + 1));
                     } else {
                         if (entity instanceof LivingEntity _entity) {
-                            ItemStack _setstack = (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
-                            _setstack.setCount(((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)).getCount() - 1);
+                            ItemStack _setstack = _livEnt.getMainHandItem();
+                            _setstack.setCount((_livEnt.getMainHandItem()).getCount() - 1);
                             _entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
                             if (_entity instanceof Player _player)
                                 _player.getInventory().setChanged();
