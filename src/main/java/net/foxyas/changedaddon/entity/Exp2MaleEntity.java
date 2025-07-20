@@ -2,19 +2,13 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
-import net.foxyas.changedaddon.entity.defaults.ICoatLikeEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -45,7 +39,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Exp2MaleEntity extends AbstractExp2SnepChangedEntity implements CustomPatReaction {
 	public Exp2MaleEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.EXP_2_MALE.get(), world);
+		this(ChangedAddonEntities.EXP_2_MALE.get(), world);
 	}
 
 	public Exp2MaleEntity(EntityType<Exp2MaleEntity> type, Level world) {

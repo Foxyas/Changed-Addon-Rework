@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ErikEntity extends Monster {
 	public ErikEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.ERIK.get(), world);
+		this(ChangedAddonEntities.ERIK.get(), world);
 	}
 
 	public ErikEntity(EntityType<ErikEntity> type, Level world) {

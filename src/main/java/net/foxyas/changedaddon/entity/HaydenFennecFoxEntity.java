@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class HaydenFennecFoxEntity extends AbstractBasicOrganicChangedEntity {
     public HaydenFennecFoxEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.HAYDEN_FENNEC_FOX.get(), world);
+        this(ChangedAddonEntities.HAYDEN_FENNEC_FOX.get(), world);
     }
 
     public HaydenFennecFoxEntity(EntityType<HaydenFennecFoxEntity> type, Level world) {

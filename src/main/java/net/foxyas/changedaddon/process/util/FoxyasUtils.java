@@ -6,6 +6,7 @@ import com.mojang.math.Matrix4f;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -37,6 +38,11 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FoxyasUtils {
+
+    public static String SpawnEggIdFromTransfurVariant(TransfurVariant latexVariant) {
+        String Util = latexVariant.getFormId().toString().replace("changed_addon:form_", "");
+        return Util + "_spawn_egg";
+    }
 
     /**
      * Checks if one entity (eyeEntity) can see another (targetToSee), using raycasting and FOV.

@@ -1,11 +1,11 @@
 package net.foxyas.changedaddon.block.entity;
 
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.nbt.CompoundTag;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class SnepPlushBlockEntity extends BlockEntity {
 	private static final String SQUEEZED_TAG = "squeezedTicks";
@@ -16,7 +16,7 @@ public class SnepPlushBlockEntity extends BlockEntity {
 
 
 	public SnepPlushBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonRegisters.ChangedAddonBlockEntities.SNEP_PLUSH.get(), position, state);
+		super(ChangedAddonBlockEntities.SNEP_PLUSH.get(), position, state);
 		this.squeezedTicks = 0;
 		//this.poseX = 0;
 		//this.poseY = 0;

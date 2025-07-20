@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.block.advanced;
 
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters.ChangedAddonBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.ltxprogrammer.changed.block.KeypadBlock;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -208,7 +208,7 @@ public class TimedKeypad extends KeypadBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         return level.isClientSide ? null : createTickerHelper(
                 type,
-                ChangedAddonRegisters.ChangedAddonBlockEntities.TIMED_KEYPAD_BLOCK_ENTITY.get(), // Certifique-se que esse seja o registry correto
+                ChangedAddonBlockEntities.TIMED_KEYPAD_BLOCK_ENTITY.get(), // Certifique-se que esse seja o registry correto
                 (lvl, pos, blockState, be) -> {
                     be.tick(lvl, pos);
                     lvl.sendBlockUpdated(pos, blockState, blockState, 3);

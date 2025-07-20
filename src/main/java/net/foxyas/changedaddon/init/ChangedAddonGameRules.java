@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraft.world.level.GameRules;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ChangedAddonModGameRules {
+public class ChangedAddonGameRules {
 	public static final GameRules.Key<GameRules.BooleanValue> FIGHT_TO_KEEP_CONSCIOUSNESS = GameRules.register("changed_addon:fightToKeepConsciousness", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final GameRules.Key<GameRules.BooleanValue> DO_LATEX_INFECTION = GameRules.register("doLatexInfection", GameRules.Category.PLAYER, GameRules.BooleanValue.create(false));
 	public static final GameRules.Key<GameRules.BooleanValue> PAINITE_GENERATION = GameRules.register("painiteGeneration", GameRules.Category.UPDATES, GameRules.BooleanValue.create(true));

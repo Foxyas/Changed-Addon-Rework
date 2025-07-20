@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CreativeModeTab;
 
-public class ChangedAddonModTabs {
+public class ChangedAddonTabs {
 	public static CreativeModeTab TAB_CHANGED_ADDON;
 	public static CreativeModeTab TAB_CHANGED_ADDON_COMBAT_OPTIONAL;
 

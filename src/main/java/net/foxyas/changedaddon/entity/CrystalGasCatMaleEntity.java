@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AbstractWatermelonCat;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class CrystalGasCatMaleEntity extends AbstractWatermelonCat implements GenderedEntity, PowderSnowWalkable {
 	public CrystalGasCatMaleEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.CRYSTAL_GAS_CAT_MALE.get(), world);
+		this(ChangedAddonEntities.CRYSTAL_GAS_CAT_MALE.get(), world);
 	}
 
 	public CrystalGasCatMaleEntity(EntityType<CrystalGasCatMaleEntity> type, Level world) {

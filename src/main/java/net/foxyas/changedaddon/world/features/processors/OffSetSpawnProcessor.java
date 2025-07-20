@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.world.features.processors;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.foxyas.changedaddon.registers.ChangedAddonProcessors;
+import net.foxyas.changedaddon.init.ChangedAddonProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;

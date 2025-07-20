@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class PrototypeEntity extends Monster {
 	public PrototypeEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.PROTOTYPE.get(), world);
+		this(ChangedAddonEntities.PROTOTYPE.get(), world);
 	}
 
 	public PrototypeEntity(EntityType<PrototypeEntity> type, Level world) {

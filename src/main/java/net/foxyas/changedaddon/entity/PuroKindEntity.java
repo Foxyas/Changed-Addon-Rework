@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class PuroKindEntity extends AbstractDarkLatexWolf {
 	public PuroKindEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.PURO_KIND.get(), world);
+		this(ChangedAddonEntities.PURO_KIND.get(), world);
 	}
 
 	public PuroKindEntity(EntityType<PuroKindEntity> type, Level world) {

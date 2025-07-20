@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -18,7 +18,7 @@ import net.minecraftforge.network.PlayMessages;
 
 public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
 	public SnepsiLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.SNEPSI_LEOPARD.get(), world);
+		this(ChangedAddonEntities.SNEPSI_LEOPARD.get(), world);
 	}
 
 	public SnepsiLeopardEntity(EntityType<SnepsiLeopardEntity> type, Level world) {

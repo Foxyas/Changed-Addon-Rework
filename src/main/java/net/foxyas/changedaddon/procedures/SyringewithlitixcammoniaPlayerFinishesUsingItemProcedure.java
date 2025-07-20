@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -39,7 +39,7 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
             if (entity.getLevel().random.nextFloat() >= 0.35) {
                 if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur) {
                     if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                        _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
+                        _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
                     if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns) {
                         if (entity instanceof Player _player && !_player.level.isClientSide())
                             _player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.untransfur.sloweffect").getString())), true);

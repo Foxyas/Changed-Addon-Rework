@@ -7,12 +7,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.foxyas.changedaddon.procedures.BiomassPlayerFinishesUsingItemProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import org.jetbrains.annotations.NotNull;
 
 public class BiomassItem extends Item {
     public BiomassItem() {
-        super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE));
+        super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE));
     }
 
     @Override

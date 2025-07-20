@@ -7,7 +7,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.recipes.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipes.UnifuserRecipe;
@@ -95,7 +95,7 @@ class JeiDescriptionHandler {
         ItemStack enchantedBookWithSolvent = new ItemStack(Items.ENCHANTED_BOOK);
         for (int i = 1; i < 6; i++) { // Começa em 1 para ignorar o nível 0
             float math = SolventMath(i) * 100;
-            EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.SOLVENT.get(), i), enchantedBookWithSolvent);
+            EnchantmentHelper.setEnchantments(Map.of(ChangedAddonEnchantments.SOLVENT.get(), i), enchantedBookWithSolvent);
             String text = new TranslatableComponent("enchantment.changed_addon.solvent.jei_desc", math).getString().replace(" T ","% ");
             registration.addIngredientInfo(enchantedBookWithSolvent, VanillaTypes.ITEM_STACK, new TextComponent(text));
         }
@@ -104,7 +104,7 @@ class JeiDescriptionHandler {
     private static void registerChangedLureDescriptions(IRecipeRegistration registration) {
         ItemStack enchantedBookWithChangedLure = new ItemStack(Items.ENCHANTED_BOOK);
         for (int i = 1; i < 6; i++) { // Começa em 1 para ignorar o nível 0
-            EnchantmentHelper.setEnchantments(Map.of(ChangedAddonModEnchantments.CHANGED_LURE.get(), i), enchantedBookWithChangedLure);
+            EnchantmentHelper.setEnchantments(Map.of(ChangedAddonEnchantments.CHANGED_LURE.get(), i), enchantedBookWithChangedLure);
             registration.addIngredientInfo(enchantedBookWithChangedLure, VanillaTypes.ITEM_STACK, new TranslatableComponent("enchantment.changed_addon.changed_lure.desc"));
         }
     }

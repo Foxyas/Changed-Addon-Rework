@@ -7,7 +7,7 @@ import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
 import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.CustomHandle.Exp9AttacksHandle;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -77,7 +77,7 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
     }
 
     public KetExperiment009BossEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.KET_EXPERIMENT_009_BOSS.get(), world);
+        this(ChangedAddonEntities.KET_EXPERIMENT_009_BOSS.get(), world);
     }
 
     public KetExperiment009BossEntity(EntityType<KetExperiment009BossEntity> type, Level world) {

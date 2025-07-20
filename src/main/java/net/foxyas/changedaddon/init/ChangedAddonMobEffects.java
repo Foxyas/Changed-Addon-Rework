@@ -18,7 +18,7 @@ import net.foxyas.changedaddon.potion.LatexContaminationMobEffect;
 import net.foxyas.changedaddon.potion.FadigeMobEffect;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
-public class ChangedAddonModMobEffects {
+public class ChangedAddonMobEffects {
 	public static final DeferredRegister<MobEffect> REGISTRY = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ChangedAddonMod.MODID);
 	public static final RegistryObject<MobEffect> FADIGE = REGISTRY.register("fadige", () -> new FadigeMobEffect());
 	public static final RegistryObject<MobEffect> UNTRANSFUR = REGISTRY.register("untransfur", () -> new UntransfurMobEffect());

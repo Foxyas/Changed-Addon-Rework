@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -37,7 +37,7 @@ public class UntransfurOnEffectActiveTickProcedure {
         if (entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity) {
             if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed:latexes")))) {
                 entity.hurt((new DamageSource("latex_solvent")),
-                        (float) ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()) ? _livEnt.getEffect(ChangedAddonModMobEffects.UNTRANSFUR.get()).getAmplifier() : 0) + 1));
+                        (float) ((entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonMobEffects.UNTRANSFUR.get()) ? _livEnt.getEffect(ChangedAddonMobEffects.UNTRANSFUR.get()).getAmplifier() : 0) + 1));
             }
         }
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress >= 100) {
@@ -52,7 +52,7 @@ public class UntransfurOnEffectActiveTickProcedure {
                     });
                 }
                 if (entity instanceof LivingEntity _entity)
-                    _entity.removeEffect(ChangedAddonModMobEffects.UNTRANSFUR.get());
+                    _entity.removeEffect(ChangedAddonMobEffects.UNTRANSFUR.get());
                 if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).reset_transfur_advancements) {
                     new Object() {
                         private int ticks = 0;

@@ -7,8 +7,7 @@ import net.foxyas.changedaddon.entity.CustomHandle.BossWithMusic;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.goals.DashPunchGoal;
 import net.foxyas.changedaddon.entity.goals.LeapSmashGoal;
-import net.foxyas.changedaddon.entity.goals.ThrowBlockAtTargetGoal;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
@@ -62,7 +61,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     private float TpCooldown;
 
     public Experiment10BossEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.EXPERIMENT_10_BOSS.get(), world);
+        this(ChangedAddonEntities.EXPERIMENT_10_BOSS.get(), world);
     }
 
     public Experiment10BossEntity(EntityType<Experiment10BossEntity> type, Level world) {

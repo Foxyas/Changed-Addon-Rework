@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -51,7 +51,7 @@ public class LeapProcedure {
         double Yspeed = 0;
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
             if (CanLeapProcedure.execute(entity)) {
-                if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.FADIGE.get()))) {
+                if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonMobEffects.FADIGE.get()))) {
                     if ((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) > 6) {
                         if (entity.isOnGround() && !entity.isInWater()) {
                             if (!entity.isShiftKeyDown()) {
@@ -77,7 +77,7 @@ public class LeapProcedure {
                                     if (entity instanceof Player _player)
                                         _player.causeFoodExhaustion((float) 0.3);
                                     if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                        _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+                                        _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 40, 0, false, false));
                                 }
                                 {
                                     Entity _ent = entity;
@@ -110,7 +110,7 @@ public class LeapProcedure {
                                     if (entity instanceof Player _player)
                                         _player.causeFoodExhaustion((float) (motionY * 1.25));
                                     if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                        _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 40, 0, false, false));
+                                        _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 40, 0, false, false));
                                 }
                                 if (!(entity instanceof ServerPlayer _plr28 && _plr28.level instanceof ServerLevel
                                         && _plr28.getAdvancements().getOrStartProgress(_plr28.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"))).isDone())) {
@@ -136,7 +136,7 @@ public class LeapProcedure {
                     }
                 }
             } else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_ket_experiment009_boss")) {
-                if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.FADIGE.get()))) {
+                if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonMobEffects.FADIGE.get()))) {
                     if (!(new Object() {
                         public boolean checkGamemode(Entity _ent) {
                             if (_ent instanceof ServerPlayer _serverPlayer) {
@@ -178,7 +178,7 @@ public class LeapProcedure {
                                     if (entity instanceof Player _player)
                                         _player.causeFoodExhaustion((float) 0.1);
                                     if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                        _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0));
+                                        _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 60, 0));
                                 }
                             }
                         }
@@ -214,7 +214,7 @@ public class LeapProcedure {
                                                         if (entity instanceof Player _player)
                                                             _player.causeFoodExhaustion((float) 0.1);
                                                         if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                                            _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 100, 0));
+                                                            _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 100, 0));
                                                     }
                                                     if (!(new Object() {
                                                         public boolean checkGamemode(Entity _ent) {
@@ -289,7 +289,7 @@ public class LeapProcedure {
                     }
                 }
             } else if (CanLeapProcedure.flyentity(entity)) {
-                if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonModMobEffects.FADIGE.get()))) {
+                if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(ChangedAddonMobEffects.FADIGE.get()))) {
                     if ((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) > 8) {
                         if (entity instanceof Player player && player.getAbilities().flying && !(entity instanceof LivingEntity _livEnt && _livEnt.isFallFlying())) {
                             deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
@@ -314,7 +314,7 @@ public class LeapProcedure {
                                 if (entity instanceof Player _player)
                                     _player.causeFoodExhaustion((float) 0.8);
                                 if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                    _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 30, 0, false, false));
+                                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 30, 0, false, false));
                             }
                             {
                                 Entity _ent = entity;
@@ -344,7 +344,7 @@ public class LeapProcedure {
                                 if (entity instanceof Player _player)
                                     _player.causeFoodExhaustion(4);
                                 if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                                    _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.FADIGE.get(), 60, 0, false, false));
+                                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 60, 0, false, false));
                             }
                             {
                                 Entity _ent = entity;

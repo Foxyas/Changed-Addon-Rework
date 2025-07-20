@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.TransfurMode;
@@ -28,7 +28,7 @@ import java.util.Objects;
 public class FemaleLuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
 
     public FemaleLuminarcticLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), world);
+        this(ChangedAddonEntities.FEMALE_LUMINARCTIC_LEOPARD.get(), world);
     }
 
     public FemaleLuminarcticLeopardEntity(EntityType<FemaleLuminarcticLeopardEntity> type, Level world) {

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ChangedAddonModMenus {
+public class ChangedAddonMenus {
 	private static final List<MenuType<?>> REGISTRY = new ArrayList<>();
 	public static final MenuType<FoxyasGuiMenu> FOXYASGUI = register("foxyasgui", FoxyasGuiMenu::new);
 	public static final MenuType<GeneratorGuiMenu> GENERATORGUI = register("generatorgui", GeneratorGuiMenu::new);

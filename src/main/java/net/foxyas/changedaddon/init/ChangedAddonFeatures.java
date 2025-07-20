@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Mod.EventBusSubscriber
-public class ChangedAddonModFeatures {
+public class ChangedAddonFeatures {
 	public static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.FEATURES, ChangedAddonMod.MODID);
 	private static final List<FeatureRegistration> FEATURE_REGISTRATIONS = new ArrayList<>();
 	public static final RegistryObject<Feature<?>> IRIDIUM_ORE = register("iridium_ore", IridiumoreFeature::feature,

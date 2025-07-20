@@ -4,6 +4,14 @@
  */
 package net.foxyas.changedaddon.init;
 
+import net.foxyas.changedaddon.entity.*;
+import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexKitsuneMaleEntity;
+import net.foxyas.changedaddon.entity.advanced.ProtogenEntity;
+import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
+import net.foxyas.changedaddon.entity.simple.LatexCalicoCatEntity;
+import net.ltxprogrammer.changed.init.ChangedMobCategories;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,48 +24,10 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
-import net.foxyas.changedaddon.entity.WolfyEntity;
-import net.foxyas.changedaddon.entity.VoidFoxEntity;
-import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
-import net.foxyas.changedaddon.entity.SnowLeopardFemaleOrganicEntity;
-import net.foxyas.changedaddon.entity.SnepsiLeopardEntity;
-import net.foxyas.changedaddon.entity.ReynEntity;
-import net.foxyas.changedaddon.entity.PuroKindFemaleEntity;
-import net.foxyas.changedaddon.entity.PuroKindEntity;
-import net.foxyas.changedaddon.entity.PrototypeEntity;
-import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
-import net.foxyas.changedaddon.entity.LynxEntity;
-import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
-import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
-import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
-import net.foxyas.changedaddon.entity.LatexSnowFoxFemaleEntity;
-import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
-import net.foxyas.changedaddon.entity.LatexSnepEntity;
-import net.foxyas.changedaddon.entity.LatexDragonSnowLeopardSharkEntity;
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
-import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
-import net.foxyas.changedaddon.entity.HaydenFennecFoxEntity;
-import net.foxyas.changedaddon.entity.FoxyasEntity;
-import net.foxyas.changedaddon.entity.FoxtaFoxyEntity;
-import net.foxyas.changedaddon.entity.FengQIWolfEntity;
-import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
-import net.foxyas.changedaddon.entity.Experiment10Entity;
-import net.foxyas.changedaddon.entity.Experiment10BossEntity;
-import net.foxyas.changedaddon.entity.Exp6Entity;
-import net.foxyas.changedaddon.entity.Exp2MaleEntity;
-import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
-import net.foxyas.changedaddon.entity.Exp1MaleEntity;
-import net.foxyas.changedaddon.entity.Exp1FemaleEntity;
-import net.foxyas.changedaddon.entity.ErikEntity;
-import net.foxyas.changedaddon.entity.DazedEntity;
-import net.foxyas.changedaddon.entity.CrystalGasCatMaleEntity;
-import net.foxyas.changedaddon.entity.CrystalGasCatFemaleEntity;
-import net.foxyas.changedaddon.entity.BunyEntity;
-import net.foxyas.changedaddon.entity.BagelEntity;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ChangedAddonModEntities {
+public class ChangedAddonEntities {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITIES, ChangedAddonMod.MODID);
 	public static final RegistryObject<EntityType<PrototypeEntity>> PROTOTYPE = register("prototype",
 			EntityType.Builder.<PrototypeEntity>of(PrototypeEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PrototypeEntity::new)
@@ -209,6 +179,78 @@ public class ChangedAddonModEntities {
 
 					.sized(0.7f, 1.93f));
 
+	public static final RegistryObject<EntityType<SnowLeopardPartialEntity>> SNOW_LEOPARD_PARTIAL = register("latex_snow_leopard_partial",
+			EntityType.Builder.<SnowLeopardPartialEntity>of(SnowLeopardPartialEntity::new, ChangedMobCategories.CHANGED)
+					.setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(SnowLeopardPartialEntity::new)
+
+					.sized(0.7f, 1.93f));
+
+	public static final RegistryObject<EntityType<BlueLizard>> BLUE_LIZARD = register("blue_lizard",
+			EntityType.Builder.<BlueLizard>of(BlueLizard::new, ChangedMobCategories.CHANGED)
+					.setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(BlueLizard::new)
+					.clientTrackingRange(10)
+
+					.sized(0.7f, 1.93f));
+
+	public static final RegistryObject<EntityType<AvaliEntity>> AVALI = register("avali",
+			EntityType.Builder.<AvaliEntity>of(AvaliEntity::new, ChangedMobCategories.CHANGED)
+					.setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(AvaliEntity::new)
+					.clientTrackingRange(10)
+
+					.sized(0.7f, 1.93f));
+
+	public static final RegistryObject<EntityType<LatexKitsuneMaleEntity>> LATEX_KITSUNE_MALE = register("latex_kitsune_male",
+			EntityType.Builder.<LatexKitsuneMaleEntity>of(LatexKitsuneMaleEntity::new, ChangedMobCategories.CHANGED)
+					.setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(LatexKitsuneMaleEntity::new)
+					.clientTrackingRange(10)
+
+					.sized(0.7f, 1.93f));
+
+	public static final RegistryObject<EntityType<LatexKitsuneFemaleEntity>> LATEX_KITSUNE_FEMALE = register("latex_kitsune_female",
+			EntityType.Builder.<LatexKitsuneFemaleEntity>of(LatexKitsuneFemaleEntity::new, ChangedMobCategories.CHANGED)
+					.setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(LatexKitsuneFemaleEntity::new)
+					.clientTrackingRange(10)
+
+					.sized(0.7f, 1.93f));
+
+
+	public static final RegistryObject<EntityType<LatexCalicoCatEntity>> LATEX_CALICO_CAT = register("latex_calico_cat",
+			EntityType.Builder.<LatexCalicoCatEntity>of(LatexCalicoCatEntity::new, ChangedMobCategories.CHANGED)
+					.setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(LatexCalicoCatEntity::new)
+					.clientTrackingRange(10)
+
+					.sized(0.7f, 1.93f));
+
+	public static final RegistryObject<EntityType<ProtogenEntity>> PROTOGEN = register("protogen",
+			EntityType.Builder.<ProtogenEntity>of(ProtogenEntity::new, ChangedMobCategories.CHANGED)
+					.setShouldReceiveVelocityUpdates(true)
+					.setTrackingRange(64).setUpdateInterval(3)
+					.setCustomClientFactory(ProtogenEntity::new)
+					.clientTrackingRange(10)
+
+					.sized(0.7f, 1.93f));
+
+
+	public static final RegistryObject<EntityType<ParticleProjectile>> PARTICLE_PROJECTILE = register("particle_projectile",
+			EntityType.Builder.<ParticleProjectile>of(ParticleProjectile::new, MobCategory.MISC)
+					.setShouldReceiveVelocityUpdates(true)
+					.clientTrackingRange(64)
+					.updateInterval(1)
+
+					.sized(0.25F, 0.25F));
+
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
 	}
@@ -253,6 +295,14 @@ public class ChangedAddonModEntities {
 			VoidFoxEntity.init();
 			FengQIWolfEntity.init();
 			HaydenFennecFoxEntity.init();
+			SnowLeopardPartialEntity.init();
+			ParticleProjectile.init();
+			BlueLizard.init();
+			AvaliEntity.init();
+			LatexKitsuneMaleEntity.init();
+			LatexKitsuneFemaleEntity.init();
+			LatexCalicoCatEntity.init();
+			ProtogenEntity.init();
 		});
 	}
 
@@ -295,5 +345,12 @@ public class ChangedAddonModEntities {
 		event.put(VOID_FOX.get(), VoidFoxEntity.createAttributes().build());
 		event.put(FENGQI_WOLF.get(), FengQIWolfEntity.createAttributes().build());
 		event.put(HAYDEN_FENNEC_FOX.get(), HaydenFennecFoxEntity.createAttributes().build());
+		event.put(SNOW_LEOPARD_PARTIAL.get(), SnowLeopardPartialEntity.createAttributes().build());
+		event.put(BLUE_LIZARD.get(), BlueLizard.createAttributes().build());
+		event.put(AVALI.get(), AvaliEntity.createAttributes().build());
+		event.put(LATEX_KITSUNE_MALE.get(), LatexKitsuneMaleEntity.createAttributes().build());
+		event.put(LATEX_KITSUNE_FEMALE.get(), LatexKitsuneFemaleEntity.createAttributes().build());
+		event.put(LATEX_CALICO_CAT.get(), LatexCalicoCatEntity.createAttributes().build());
+		event.put(PROTOGEN.get(), ProtogenEntity.createAttributes().build());
 	}
 }

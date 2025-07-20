@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexShark;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -23,7 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class LatexDragonSnowLeopardSharkEntity extends AbstractLatexShark {
 	public LatexDragonSnowLeopardSharkEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), world);
+		this(ChangedAddonEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), world);
 	}
 
 	public LatexDragonSnowLeopardSharkEntity(EntityType<LatexDragonSnowLeopardSharkEntity> type, Level world) {

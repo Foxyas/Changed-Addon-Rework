@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -39,11 +39,11 @@ public class LatexSnowFoxFemaleEntity extends ChangedEntity implements GenderedE
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName()))
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), 20, 1, 4));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE.get(), 20, 1, 4));
 	}
 
 	public LatexSnowFoxFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), world);
+		this(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE.get(), world);
 	}
 
 	public LatexSnowFoxFemaleEntity(EntityType<LatexSnowFoxFemaleEntity> type, Level world) {
@@ -159,7 +159,7 @@ public class LatexSnowFoxFemaleEntity extends ChangedEntity implements GenderedE
 	}
 
 	public static void init() {
-		SpawnPlacements.register(ChangedAddonModEntities.LATEX_SNOW_FOX_FEMALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+		SpawnPlacements.register(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				(entityType, world, reason, pos, random) -> (world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Mob.checkMobSpawnRules(entityType, world, reason, pos, random)));
 	}
 

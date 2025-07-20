@@ -27,15 +27,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
 
 import net.foxyas.changedaddon.init.ChangedAddonModVillagerProfessions;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.foxyas.changedaddon.init.ChangedAddonModPotions;
 import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonModFluids;
-import net.foxyas.changedaddon.init.ChangedAddonModFeatures;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonFluids;
+import net.foxyas.changedaddon.init.ChangedAddonFeatures;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
@@ -52,20 +52,20 @@ public class ChangedAddonMod {
 	private static int messageID = 0;
 
 	public ChangedAddonMod() {
-		ChangedAddonModTabs.load();
+		ChangedAddonTabs.load();
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		ChangedAddonBlocks.REGISTRY.register(bus);
 		ChangedAddonItems.REGISTRY.register(bus);
-		ChangedAddonModEntities.REGISTRY.register(bus);
+		ChangedAddonEntities.REGISTRY.register(bus);
 		ChangedAddonBlockEntities.REGISTRY.register(bus);
-		ChangedAddonModFeatures.REGISTRY.register(bus);
-		ChangedAddonModEnchantments.REGISTRY.register(bus);
-		ChangedAddonModMobEffects.REGISTRY.register(bus);
+		ChangedAddonFeatures.REGISTRY.register(bus);
+		ChangedAddonEnchantments.REGISTRY.register(bus);
+		ChangedAddonMobEffects.REGISTRY.register(bus);
 		ChangedAddonModPotions.REGISTRY.register(bus);
 
 		ChangedAddonModParticleTypes.REGISTRY.register(bus);
 		ChangedAddonModVillagerProfessions.PROFESSIONS.register(bus);
-		ChangedAddonModFluids.REGISTRY.register(bus);
+		ChangedAddonFluids.REGISTRY.register(bus);
 	}
 
 	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {

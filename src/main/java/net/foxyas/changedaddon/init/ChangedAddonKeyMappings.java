@@ -24,7 +24,7 @@ import net.foxyas.changedaddon.network.LeapKeyMessage;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
-public class ChangedAddonModKeyMappings {
+public class ChangedAddonKeyMappings {
 	public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
 		private boolean isDownOld = false;
 

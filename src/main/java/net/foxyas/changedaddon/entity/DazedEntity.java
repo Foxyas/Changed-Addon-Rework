@@ -2,8 +2,8 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.init.ChangedAddonModGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -90,12 +90,12 @@ public class DazedEntity extends ChangedEntity {
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName())){
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.DAZED.get(), 125, 1, 4));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonEntities.DAZED.get(), 125, 1, 4));
 		}
 	}
 
 	public DazedEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.DAZED.get(), world);
+		this(ChangedAddonEntities.DAZED.get(), world);
 	}
 
 	public DazedEntity(EntityType<DazedEntity> type, Level world) {
@@ -227,7 +227,7 @@ public class DazedEntity extends ChangedEntity {
 				double z = DazedEntity.this.getZ();
 				Entity entity = DazedEntity.this;
 				Level world = DazedEntity.this.level;
-				return super.canUse() && world.getGameRules().getBoolean(ChangedAddonModGameRules.DO_DAZED_LATEX_BURN);
+				return super.canUse() && world.getGameRules().getBoolean(ChangedAddonGameRules.DO_DAZED_LATEX_BURN);
 			}
 		});
 
@@ -265,7 +265,7 @@ public class DazedEntity extends ChangedEntity {
 
 	public static void init() {
 		SpawnPlacements.register(
-				ChangedAddonModEntities.DAZED.get(),
+				ChangedAddonEntities.DAZED.get(),
 				SpawnPlacements.Type.ON_GROUND,
 				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				DazedEntity::canSpawnNear

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonModParticleTypes;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -53,12 +53,12 @@ public class TickentitySolventEnchantmenthitProcedure {
     private static int getSolventEnchantmentLevel(Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
             ItemStack mainHandItem = livingEntity.getMainHandItem();
-            return EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), mainHandItem);
+            return EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonEnchantments.SOLVENT.get(), mainHandItem);
         } else if (entity instanceof ThrownTrident trident) {
             CompoundTag tag = new CompoundTag();
             trident.save(tag);
             ItemStack tridentItem = tag.contains("Trident") ? ItemStack.of(tag.getCompound("Trident")) : new ItemStack(Items.TRIDENT);
-            return EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), tridentItem);
+            return EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonEnchantments.SOLVENT.get(), tridentItem);
         }
         return 0;
     }

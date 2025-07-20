@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.process.util;
 
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
@@ -12,7 +12,6 @@ import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;

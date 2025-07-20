@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import io.netty.buffer.Unpooled;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.procedures.*;
 import net.foxyas.changedaddon.world.inventory.FoxyasGuiMenu;
 import net.minecraft.core.Direction;
@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
 
 public class FoxyasEntity extends Monster {
 	public FoxyasEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.FOXYAS.get(), world);
+		this(ChangedAddonEntities.FOXYAS.get(), world);
 	}
 
 	public FoxyasEntity(EntityType<FoxyasEntity> type, Level world) {

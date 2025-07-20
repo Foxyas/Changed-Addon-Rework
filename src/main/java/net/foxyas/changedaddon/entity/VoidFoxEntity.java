@@ -7,11 +7,9 @@ import net.foxyas.changedaddon.entity.CustomHandle.IHasBossMusic;
 import net.foxyas.changedaddon.entity.goals.*;
 import net.foxyas.changedaddon.entity.projectile.AbstractGenericParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.process.util.ChangedAddonSounds;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
-import net.foxyas.changedaddon.registers.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.LatexType;
@@ -71,7 +69,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     private int ticksTakeDmgFromFire = 0;
 
     public VoidFoxEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.VOID_FOX.get(), world);
+        this(ChangedAddonEntities.VOID_FOX.get(), world);
     }
 
     public VoidFoxEntity(EntityType<VoidFoxEntity> type, Level world) {
@@ -160,7 +158,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
             }
         });
         this.goalSelector.addGoal(15, new KnockBackBurstGoal(this, 10));
-        this.goalSelector.addGoal(5, new VoidFoxDashAttack(this, ChangedAddonEntities.PARTICLE_PROJECTILE.get()) {
+        this.goalSelector.addGoal(5, new VoidFoxDashAttack(this, net.foxyas.changedaddon.registers.ChangedAddonEntities.PARTICLE_PROJECTILE.get()) {
             @Override
             public boolean canUse() {
                 if (VoidFoxEntity.this.getAttack2Cooldown() < VoidFoxEntity.MAX_1_COOLDOWN) {
@@ -852,7 +850,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
                         double py = this.getY() + dy * radius + 1.0; // leve ajuste de altura
                         double pz = this.getZ() + dz * radius;
 
-                        ParticleProjectile projectile = new ParticleProjectile(ChangedAddonEntities.PARTICLE_PROJECTILE.get(), this.level);
+                        ParticleProjectile projectile = new ParticleProjectile(net.foxyas.changedaddon.registers.ChangedAddonEntities.PARTICLE_PROJECTILE.get(), this.level);
                         projectile.setSmoothMotion(true);
                         projectile.setPos(px, py, pz);
                         projectile.shoot(dx, dy, dz, 1.0f, 0.0f); // dispara na direção da esfera

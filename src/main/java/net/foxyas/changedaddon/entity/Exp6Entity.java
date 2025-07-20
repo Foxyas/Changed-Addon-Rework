@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.entity.goals.SleepingWithOwnerGoal;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -35,7 +35,7 @@ import java.util.Objects;
 
 public class Exp6Entity extends AbstractCanTameSnepChangedEntity {
 	public Exp6Entity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.EXP_6.get(), world);
+		this(ChangedAddonEntities.EXP_6.get(), world);
 	}
 
 	public Exp6Entity(EntityType<Exp6Entity> type, Level world) {

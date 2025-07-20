@@ -2,6 +2,7 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
 import net.ltxprogrammer.changed.Changed;
@@ -159,7 +160,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random p_60465_) {
 		level.scheduleTick(pos, this, this.getDelayAfterPlace());
 		if (pos.getY() >= level.getMinBuildHeight() && !this.canSurvive(state,level,pos)) {
-			Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonRegisters.ChangedAddonBlockEntities.CONTAINMENT_CONTAINER.get());
+			Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonBlockEntities.CONTAINMENT_CONTAINER.get());
 			CompoundTag blockData = blockEntity.map(BlockEntity::saveWithFullMetadata).orElse(null);
 			level.setBlock(pos, Blocks.AIR.defaultBlockState(), 67);
 			FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level, pos, state);
@@ -276,7 +277,7 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
 	}
 
 	public void onLand(Level level, BlockPos pos, BlockState state, BlockState fellOn, FallingBlockEntity falling) {
-		Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonRegisters.ChangedAddonBlockEntities.CONTAINMENT_CONTAINER.get());
+		Optional<ContainmentContainerBlockEntity> blockEntity = level.getBlockEntity(pos, ChangedAddonBlockEntities.CONTAINMENT_CONTAINER.get());
 		blockEntity.ifPresent((container) -> {
 			if (falling.blockData != null) {
 				container.load(falling.blockData);

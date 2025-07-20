@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.registers;
+package net.foxyas.changedaddon.init;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;

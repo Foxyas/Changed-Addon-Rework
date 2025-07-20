@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.entity.CustomHandle;
 
-import net.foxyas.changedaddon.block.LuminarCrystalBlockBlock;
+import net.foxyas.changedaddon.block.LuminarCrystalBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -65,7 +65,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
     }
 
     private static List<EntityType<?>> ImmuneEntities() {
-        return List.of(ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get(), ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get());
+        return List.of(ChangedAddonEntities.LUMINARCTIC_LEOPARD.get(), ChangedAddonEntities.FEMALE_LUMINARCTIC_LEOPARD.get());
     }
 
     public void tick() {
@@ -218,7 +218,7 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
 
                 if (!state.isAir() && blastResistance <= 2.0f) {
                     BlockState newState = ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState()
-                            .setValue(LuminarCrystalBlockBlock.AGE, 0).setValue(LuminarCrystalBlockBlock.DEFROST, true);
+                            .setValue(LuminarCrystalBlock.AGE, 0).setValue(LuminarCrystalBlock.DEFROST, true);
                     world.setBlockAndUpdate(pos, newState);
                     // Toca o som de gelo sendo colocado
                     world.playSound(null, pos, SoundEvents.GLASS_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);

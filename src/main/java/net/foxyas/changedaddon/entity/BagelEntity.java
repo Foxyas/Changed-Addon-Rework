@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -30,7 +30,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
     public BagelEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.BAGEL.get(), world);
+        this(ChangedAddonEntities.BAGEL.get(), world);
     }
 
     public BagelEntity(EntityType<BagelEntity> type, Level world) {

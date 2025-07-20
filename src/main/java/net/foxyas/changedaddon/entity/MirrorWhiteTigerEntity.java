@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -39,11 +39,11 @@ public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowW
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName()))
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.MIRROR_WHITE_TIGER.get(), 20, 1, 4));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonEntities.MIRROR_WHITE_TIGER.get(), 20, 1, 4));
 	}
 
 	public MirrorWhiteTigerEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.MIRROR_WHITE_TIGER.get(), world);
+		this(ChangedAddonEntities.MIRROR_WHITE_TIGER.get(), world);
 	}
 
 	public MirrorWhiteTigerEntity(EntityType<MirrorWhiteTigerEntity> type, Level world) {
@@ -139,7 +139,7 @@ public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowW
 	}
 
 	public static void init() {
-		SpawnPlacements.register(ChangedAddonModEntities.MIRROR_WHITE_TIGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+		SpawnPlacements.register(ChangedAddonEntities.MIRROR_WHITE_TIGER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				(entityType, world, reason, pos, random) -> (world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Mob.checkMobSpawnRules(entityType, world, reason, pos, random)));
 	}
 

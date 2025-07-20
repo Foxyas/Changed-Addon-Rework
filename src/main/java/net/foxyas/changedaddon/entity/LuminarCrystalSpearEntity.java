@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -46,11 +46,11 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 	private boolean dealtDamage;
 	public int clientSideReturnSpearTickCount;
 	public LuminarCrystalSpearEntity(PlayMessages.SpawnEntity packet, Level world) {
-		super(ChangedAddonModEntities.LUMINAR_CRYSTAL_SPEAR.get(), world);
+		super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), world);
 	}
 
 	public LuminarCrystalSpearEntity(Level p_37569_, LivingEntity p_37570_, ItemStack p_37571_) {
-		super(ChangedAddonModEntities.LUMINAR_CRYSTAL_SPEAR.get(), p_37570_, p_37569_);
+		super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), p_37570_, p_37569_);
 		this.SpearItem = p_37571_.copy();
 		this.entityData.set(ID_LOYALTY, (byte)EnchantmentHelper.getLoyalty(p_37571_));
 		this.entityData.set(ID_FOIL, p_37571_.hasFoil());
@@ -248,7 +248,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 	}
 
 	public static LuminarCrystalSpearEntity shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
-		LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonModEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, world);
+		LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, world);
 		entityarrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);
 		entityarrow.setSilent(true);
 		entityarrow.setCritArrow(false);
@@ -260,7 +260,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 	}
 
 	public static LuminarCrystalSpearEntity shoot(LivingEntity entity, LivingEntity target) {
-		LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonModEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, entity.level);
+		LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, entity.level);
 		double dx = target.getX() - entity.getX();
 		double dy = target.getY() + target.getEyeHeight() - 1.1;
 		double dz = target.getZ() - entity.getZ();

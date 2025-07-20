@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -28,7 +28,7 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 public class FengQIWolfEntity extends ChangedEntity implements GenderedEntity, PowderSnowWalkable {
 
 	public FengQIWolfEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.FENGQI_WOLF.get(), world);
+		this(ChangedAddonEntities.FENGQI_WOLF.get(), world);
 	}
 
 	public FengQIWolfEntity(EntityType<FengQIWolfEntity> type, Level world) {

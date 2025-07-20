@@ -2,10 +2,8 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -40,7 +38,7 @@ import java.util.Objects;
 public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntity implements CustomPatReaction {
 
     public Exp2FemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.EXP_2_FEMALE.get(), world);
+        this(ChangedAddonEntities.EXP_2_FEMALE.get(), world);
     }
 
     public Exp2FemaleEntity(EntityType<Exp2FemaleEntity> type, Level world) {

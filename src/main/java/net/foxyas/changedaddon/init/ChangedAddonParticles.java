@@ -15,7 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.foxyas.changedaddon.client.particle.SolventParticleParticle;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ChangedAddonModParticles {
+public class ChangedAddonParticles {
 	@SubscribeEvent
 	public static void registerParticles(ParticleFactoryRegisterEvent event) {
 		Minecraft.getInstance().particleEngine.register((SimpleParticleType) ChangedAddonModParticleTypes.SOLVENT_PARTICLE.get(), SolventParticleParticle::provider);

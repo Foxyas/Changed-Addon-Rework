@@ -5,10 +5,10 @@ import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
-import net.foxyas.changedaddon.registers.ChangedAddonDamageSources;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
@@ -463,7 +463,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         }
 
         if (attacker instanceof LivingEntity livingEntity && this.isBoss()) {
-            if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 1) {
+            if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonEnchantments.SOLVENT.get(), livingEntity.getMainHandItem()) >= 1) {
                 return super.hurt(source, amount * 1.25f);
             } else if (source.getMsgId().contains("latex_solvent")) {
                 return super.hurt(source, amount * 1.25f);

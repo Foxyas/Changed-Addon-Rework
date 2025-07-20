@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -36,7 +36,7 @@ public class ReynEntity extends ChangedEntity {
 	//public boolean ForceGlowDisplay = false;
 	//public boolean GlowDisplay;
 	public ReynEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.REYN.get(), world);
+		this(ChangedAddonEntities.REYN.get(), world);
 	}
 
 	public ReynEntity(EntityType<ReynEntity> type, Level world) {

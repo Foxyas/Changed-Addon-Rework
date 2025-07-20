@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.LatexType;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -29,7 +29,7 @@ import java.util.Objects;
 
 public class BunyEntity extends ChangedEntity {
 	public BunyEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.BUNY.get(), world);
+		this(ChangedAddonEntities.BUNY.get(), world);
 	}
 
 	public BunyEntity(EntityType<BunyEntity> type, Level world) {

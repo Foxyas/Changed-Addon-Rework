@@ -1,16 +1,14 @@
 package net.foxyas.changedaddon.block.advanced;
 
-import net.foxyas.changedaddon.registers.ChangedAddonRegisters;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.ltxprogrammer.changed.block.KeypadBlock;
 import net.ltxprogrammer.changed.block.entity.KeypadBlockEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +27,7 @@ public class TimedKeypadBlockEntity extends KeypadBlockEntity {
 
     @Override
     public BlockEntityType<?> getType() {
-        return ChangedAddonRegisters.ChangedAddonBlockEntities.TIMED_KEYPAD_BLOCK_ENTITY.get();
+        return ChangedAddonBlockEntities.TIMED_KEYPAD_BLOCK_ENTITY.get();
     }
 
     public void setCanTick(boolean canTick) {

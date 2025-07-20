@@ -2,7 +2,7 @@
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -46,7 +46,7 @@ public class KetExperiment009Entity extends ChangedEntity {
     private double AI;
 
     public KetExperiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.KET_EXPERIMENT_009.get(), world);
+        this(ChangedAddonEntities.KET_EXPERIMENT_009.get(), world);
     }
 
     public KetExperiment009Entity(EntityType<KetExperiment009Entity> type, Level world) {

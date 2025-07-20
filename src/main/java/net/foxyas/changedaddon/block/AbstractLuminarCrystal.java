@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.procedures.PlayerUtilProcedure;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
@@ -513,8 +513,8 @@ public class AbstractLuminarCrystal {
                 } else {
                     // Spawna novo leopardo
                     var leopardType = level.random.nextBoolean()
-                            ? ChangedAddonModEntities.FEMALE_LUMINARCTIC_LEOPARD.get()
-                            : ChangedAddonModEntities.LUMINARCTIC_LEOPARD.get();
+                            ? ChangedAddonEntities.FEMALE_LUMINARCTIC_LEOPARD.get()
+                            : ChangedAddonEntities.LUMINARCTIC_LEOPARD.get();
 
                     AbstractLuminarcticLeopard newLeopard = leopardType.create(serverLevel);
                     if (newLeopard != null) {

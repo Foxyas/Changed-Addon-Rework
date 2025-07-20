@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -36,7 +36,7 @@ public class ShowSolventDmgProcedure {
         double EnchantLevel = 0;
         double math = 0;
         double othermath = 0;
-        EnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), itemstack);
+        EnchantLevel = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonEnchantments.SOLVENT.get(), itemstack);
         if (EnchantLevel == 0) {
             othermath = 0.5;
         } else {
@@ -44,7 +44,7 @@ public class ShowSolventDmgProcedure {
         }
         math = 0 + (EnchantLevel - 0) * 0.2;
         if (!(itemstack.getItem() instanceof BowItem) && !(itemstack.getItem() instanceof CrossbowItem)) {
-            if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.SOLVENT.get(), itemstack) != 0) {
+            if (EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonEnchantments.SOLVENT.get(), itemstack) != 0) {
                 if (Screen.hasShiftDown()) {
                     tooltip.add(new TextComponent(("\u00A7r\u00A7e+" + math * 100 + "%\u00A7r \u00A7nLatex Solvent Damage")));
                 } else {

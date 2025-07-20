@@ -1,11 +1,8 @@
-package net.foxyas.changedaddon.registers;
+package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.advancements.critereon.PatEntityTrigger;
 import net.foxyas.changedaddon.advancements.critereon.LavaSwimmingTrigger;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 
 import static net.minecraft.advancements.CriteriaTriggers.register;
 

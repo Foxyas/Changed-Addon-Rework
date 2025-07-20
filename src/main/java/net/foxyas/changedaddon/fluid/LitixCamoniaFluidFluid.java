@@ -12,11 +12,11 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.resources.ResourceLocation;
 
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonModFluids;
+import net.foxyas.changedaddon.init.ChangedAddonFluids;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 
 public abstract class LitixCamoniaFluidFluid extends ForgeFlowingFluid {
-	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(ChangedAddonModFluids.LITIX_CAMONIA_FLUID, ChangedAddonModFluids.FLOWING_LITIX_CAMONIA_FLUID,
+	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(ChangedAddonFluids.LITIX_CAMONIA_FLUID, ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID,
 			FluidAttributes.builder(new ResourceLocation("changed_addon:blocks/ammoniafluid"), new ResourceLocation("changed_addon:blocks/ammoniafluid"))
 
 					.sound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty"))))

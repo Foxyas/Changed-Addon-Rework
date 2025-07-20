@@ -21,7 +21,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.Minecraft;
 
 import net.foxyas.changedaddon.procedures.HyperFlowerProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.foxyas.changedaddon.client.model.ModelNewHyperFlower;
 
 import java.util.Map;
@@ -74,7 +74,7 @@ public abstract class LunarroseItem extends ArmorItem {
 
 	public static class Helmet extends LunarroseItem {
 		public Helmet() {
-			super(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).fireResistant());
+			super(EquipmentSlot.HEAD, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).fireResistant());
 		}
 
 		public void initializeClient(java.util.function.Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {

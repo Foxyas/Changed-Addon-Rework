@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.foxyas.changedaddon.fluid.LitixCamoniaFluidFluid;
 import net.foxyas.changedaddon.ChangedAddonMod;
 
-public class ChangedAddonModFluids {
+public class ChangedAddonFluids {
 	public static final DeferredRegister<Fluid> REGISTRY = DeferredRegister.create(ForgeRegistries.FLUIDS, ChangedAddonMod.MODID);
 	public static final RegistryObject<Fluid> LITIX_CAMONIA_FLUID = REGISTRY.register("litix_camonia_fluid", () -> new LitixCamoniaFluidFluid.Source());
 	public static final RegistryObject<Fluid> FLOWING_LITIX_CAMONIA_FLUID = REGISTRY.register("flowing_litix_camonia_fluid", () -> new LitixCamoniaFluidFluid.Flowing());

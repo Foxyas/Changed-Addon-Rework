@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.variants.ExtraVariantStats;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -24,7 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class LynxEntity extends ChangedEntity implements PowderSnowWalkable, ExtraVariantStats {
 	public LynxEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.LYNX.get(), world);
+		this(ChangedAddonEntities.LYNX.get(), world);
 	}
 
 	public LynxEntity(EntityType<LynxEntity> type, Level world) {

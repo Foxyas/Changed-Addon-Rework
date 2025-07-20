@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LuminarCrystalBlockBlock extends AbstractLuminarCrystal.Block {
-	public LuminarCrystalBlockBlock() {
+public class LuminarCrystalBlock extends AbstractLuminarCrystal.Block {
+	public LuminarCrystalBlock() {
 		super();
 	}
 

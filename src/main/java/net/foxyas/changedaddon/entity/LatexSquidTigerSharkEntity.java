@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.HairStyle;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.beast.AbstractAquaticEntity;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class LatexSquidTigerSharkEntity extends AbstractAquaticEntity {
 	public LatexSquidTigerSharkEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.LATEX_SQUID_TIGER_SHARK.get(), world);
+		this(ChangedAddonEntities.LATEX_SQUID_TIGER_SHARK.get(), world);
 	}
 
 	public LatexSquidTigerSharkEntity(EntityType<LatexSquidTigerSharkEntity> type, Level world) {

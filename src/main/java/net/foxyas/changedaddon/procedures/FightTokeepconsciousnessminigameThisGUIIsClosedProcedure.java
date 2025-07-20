@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModKeyMappings;
+import net.foxyas.changedaddon.init.ChangedAddonKeyMappings;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -18,7 +18,7 @@ public class FightTokeepconsciousnessminigameThisGUIIsClosedProcedure {
         if (world.isClientSide()) {
             ent_target = entity;
             Msg = (new TranslatableComponent("changedaddon.warn.close_fight_to_keep_consciousness").getString()).replace("(KEY)",
-                    GLFW.glfwGetKeyName(ChangedAddonModKeyMappings.OPEN_STRUGGLE_MENU.getKey().getValue(), GLFW.glfwGetKeyScancode(ChangedAddonModKeyMappings.OPEN_STRUGGLE_MENU.getKey().getValue())));
+                    GLFW.glfwGetKeyName(ChangedAddonKeyMappings.OPEN_STRUGGLE_MENU.getKey().getValue(), GLFW.glfwGetKeyScancode(ChangedAddonKeyMappings.OPEN_STRUGGLE_MENU.getKey().getValue())));
             if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).consciousness_fight_give_up
                     && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).consciousness_fight_progress >= 25) {
                 if (entity instanceof Player _player) {

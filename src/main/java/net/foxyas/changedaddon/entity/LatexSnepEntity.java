@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.entity.goals.SleepingWithOwnerGoal;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.LatexType;
@@ -41,7 +41,7 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity {
 	public boolean WantLoaf = false; //Lol the cat don't WANT LOAF!
 
 	public LatexSnepEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.LATEX_SNEP.get(), world);
+		this(ChangedAddonEntities.LATEX_SNEP.get(), world);
 	}
 
 	public LatexSnepEntity(EntityType<LatexSnepEntity> type, Level world) {

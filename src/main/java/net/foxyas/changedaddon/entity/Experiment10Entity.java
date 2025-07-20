@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -51,7 +51,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
     private boolean Phase2;
 
     public Experiment10Entity(PlayMessages.SpawnEntity packet, Level world) {
-        this(ChangedAddonModEntities.EXPERIMENT_10.get(), world);
+        this(ChangedAddonEntities.EXPERIMENT_10.get(), world);
     }
 
     public Experiment10Entity(EntityType<Experiment10Entity> type, Level world) {

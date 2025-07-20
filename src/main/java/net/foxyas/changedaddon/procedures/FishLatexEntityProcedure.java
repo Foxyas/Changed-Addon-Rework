@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEnchantments;
+import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.ltxprogrammer.changed.entity.beast.*;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.advancements.Advancement;
@@ -90,7 +90,7 @@ public class FishLatexEntityProcedure {
             }
 
             // Obtém o nível do encantamento "Changed Lure" na vara
-            float itemEnchantment = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonModEnchantments.CHANGED_LURE.get(), itemStack);
+            float itemEnchantment = EnchantmentHelper.getItemEnchantmentLevel(ChangedAddonEnchantments.CHANGED_LURE.get(), itemStack);
 
             // Verifica se o item possui o encantamento "Changed Lure"
             if (itemEnchantment > 0) {

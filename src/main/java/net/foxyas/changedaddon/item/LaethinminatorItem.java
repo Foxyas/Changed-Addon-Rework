@@ -24,15 +24,15 @@ import net.minecraft.core.BlockPos;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
 
 import net.foxyas.changedaddon.process.util.ChangedAddonLaethinminatorUtil;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
-import net.foxyas.changedaddon.init.ChangedAddonModFluids;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import net.foxyas.changedaddon.init.ChangedAddonFluids;
 
 import javax.annotation.Nullable;
 import net.minecraft.sounds.SoundEvents;
 
 public class LaethinminatorItem extends Item implements SpecializedAnimations {
 	public LaethinminatorItem() {
-		super(new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON).durability(320).rarity(Rarity.UNCOMMON));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).durability(320).rarity(Rarity.UNCOMMON));
 	}
 
 	public int getUseDuration(ItemStack stack) {
@@ -70,7 +70,7 @@ public class LaethinminatorItem extends Item implements SpecializedAnimations {
 			if (hitResult.getType() == HitResult.Type.BLOCK) {
 				BlockPos pos = hitResult.getBlockPos();
 				BlockState state = level.getBlockState(pos);
-				if (state.getFluidState().is(ChangedAddonModFluids.LITIX_CAMONIA_FLUID.get()) || state.getFluidState().is(ChangedAddonModFluids.FLOWING_LITIX_CAMONIA_FLUID.get())) {
+				if (state.getFluidState().is(ChangedAddonFluids.LITIX_CAMONIA_FLUID.get()) || state.getFluidState().is(ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID.get())) {
 					stack.setDamageValue(0);
 					entity.playSound(SoundEvents.BUCKET_FILL, 1f, 1f);
 				}

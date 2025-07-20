@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.init.ChangedAddonModMobEffects;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
@@ -19,7 +19,7 @@ public class LitixCamoniaFluidMobplayerCollidesBlockProcedure {
         if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
             if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur) {
                 if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                    _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
+                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
             } else {
                 if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns) {
                     if (entity instanceof Player _player && !_player.level.isClientSide())
@@ -28,11 +28,11 @@ public class LitixCamoniaFluidMobplayerCollidesBlockProcedure {
             }
         } else {
             if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
+                _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
         }
         if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
             if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                _entity.addEffect(new MobEffectInstance(ChangedAddonModMobEffects.LATEX_SOLVENT.get(), 200, 0, false, false));
+                _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 200, 0, false, false));
         }
     }
 }

@@ -1,7 +1,7 @@
 
 package net.foxyas.changedaddon.entity;
 
-import net.foxyas.changedaddon.init.ChangedAddonModEntities;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -41,11 +41,11 @@ public class Exp1MaleEntity extends ChangedEntity implements GenderedEntity,Powd
 	@SubscribeEvent
 	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
 		if (SPAWN_BIOMES.contains(event.getName()))
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonModEntities.EXP_1_MALE.get(), 20, 1, 4));
+			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonEntities.EXP_1_MALE.get(), 20, 1, 4));
 	}
 
 	public Exp1MaleEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonModEntities.EXP_1_MALE.get(), world);
+		this(ChangedAddonEntities.EXP_1_MALE.get(), world);
 	}
 
 	public Exp1MaleEntity(EntityType<Exp1MaleEntity> type, Level world) {
@@ -162,7 +162,7 @@ public class Exp1MaleEntity extends ChangedEntity implements GenderedEntity,Powd
 	}
 
 	public static void init() {
-		SpawnPlacements.register(ChangedAddonModEntities.EXP_1_MALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+		SpawnPlacements.register(ChangedAddonEntities.EXP_1_MALE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
 				(entityType, world, reason, pos, random) -> (world.getDifficulty() != Difficulty.PEACEFUL && Monster.isDarkEnoughToSpawn(world, pos, random) && Mob.checkMobSpawnRules(entityType, world, reason, pos, random)));
 	}
 

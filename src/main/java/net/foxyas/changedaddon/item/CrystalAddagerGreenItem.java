@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.LivingEntity;
 
 import net.foxyas.changedaddon.procedures.CrystalAddagerGreenLivingEntityIsHitWithToolProcedure;
-import net.foxyas.changedaddon.init.ChangedAddonModTabs;
+import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class CrystalAddagerGreenItem extends SwordItem {
 	public CrystalAddagerGreenItem() {
@@ -37,7 +37,7 @@ public class CrystalAddagerGreenItem extends SwordItem {
 			public Ingredient getRepairIngredient() {
 				return Ingredient.of();
 			}
-		}, 3, -2.4f, new Item.Properties().tab(ChangedAddonModTabs.TAB_CHANGED_ADDON));
+		}, 3, -2.4f, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
 	}
 
 	@Override
