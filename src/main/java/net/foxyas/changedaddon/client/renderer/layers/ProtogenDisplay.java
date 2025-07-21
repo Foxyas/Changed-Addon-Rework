@@ -29,8 +29,8 @@ public class ProtogenDisplay<M extends AdvancedHumanoidModel<T>, T extends Chang
         super(parent);
         this.model = model;
         // RenderType Glow type
-        this.GlowEyeRender = RenderType.energySwirl(eyePart, 0, 0);
-        this.GlowDisplayRender = RenderType.energySwirl(eyePart, 0, 0);
+        this.GlowEyeRender = RenderType.eyes(eyePart);
+        this.GlowDisplayRender = RenderType.eyes(displayPart);
         // RenderType normal
         this.NormalEyeRender = RenderType.entityCutoutNoCull(eyePart);
         this.NormalDisplayRender = RenderType.entityCutoutNoCull(displayPart);
