@@ -158,7 +158,7 @@ public class PatFeatureHandleProcedure {
             p.swing(getSwingHand(player), true);
             if (target instanceof Exp2MaleEntity || target instanceof Exp2FemaleEntity && isPlayerTransfur) {
                 if (!isPlayerTransfurInExp2 && isPlayerTransfur)
-                    p.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                    p.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
             }
 
             if (world instanceof ServerLevel serverLevel) {
@@ -207,9 +207,9 @@ public class PatFeatureHandleProcedure {
                 player1.swing(getSwingHand(player), true);
                 if (isPlayerTransfur && isTargetTransfur) { //Add The Effect if is Transfur is Exp2
                     if (isPlayerTransfurInExp2 && !isTargetTransfurInExp2) {
-                        target.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                        target.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
                     } else if (!isPlayerTransfurInExp2 && isTargetTransfurInExp2) {
-                        player1.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 0, false, false));
+                        player1.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
                     } /*else if (isPlayerTransfurInExp2 && isTargetTransfurInExp2){
 					 return;//Exp2 Can't give Exp2 Transfur Sickness
 				 	}

@@ -20,10 +20,10 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 
 public class ChangedAddonMobEffects {
 	public static final DeferredRegister<MobEffect> REGISTRY = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ChangedAddonMod.MODID);
-	public static final RegistryObject<MobEffect> FADIGE = REGISTRY.register("fadige", () -> new FadigeMobEffect());
-	public static final RegistryObject<MobEffect> UNTRANSFUR = REGISTRY.register("untransfur", () -> new UntransfurMobEffect());
-	public static final RegistryObject<MobEffect> LATEX_SOLVENT = REGISTRY.register("latex_solvent", () -> new LatexSolventMobEffect());
-	public static final RegistryObject<MobEffect> LATEX_CONTAMINATION = REGISTRY.register("latex_contamination", () -> new LatexContaminationMobEffect());
-	public static final RegistryObject<MobEffect> TRANSFUR_SICKNESS = REGISTRY.register("transfur_sickness", () -> new TransfurSicknessMobEffect());
-	public static final RegistryObject<MobEffect> LATEX_EXPOSURE = REGISTRY.register("latex_exposure", () -> new LatexExposureMobEffect());
+	public static final RegistryObject<MobEffect> FADIGE = REGISTRY.register("fadige", FadigeMobEffect::new);
+	public static final RegistryObject<MobEffect> UNTRANSFUR = REGISTRY.register("untransfur", UntransfurMobEffect::new);
+	public static final RegistryObject<MobEffect> LATEX_SOLVENT = REGISTRY.register("latex_solvent", LatexSolventMobEffect::new);
+	public static final RegistryObject<MobEffect> LATEX_CONTAMINATION = REGISTRY.register("latex_contamination", LatexContaminationMobEffect::new);
+	public static final RegistryObject<MobEffect> TRANSFUR_SICKNESS = REGISTRY.register("transfur_sickness", TransfurSicknessMobEffect::new);
+	public static final RegistryObject<MobEffect> LATEX_EXPOSURE = REGISTRY.register("latex_exposure", LatexExposureMobEffect::new);
 }
