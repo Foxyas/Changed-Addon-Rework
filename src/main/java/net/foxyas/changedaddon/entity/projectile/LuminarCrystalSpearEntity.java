@@ -234,8 +234,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     protected void onHitEntity(EntityHitResult p_37573_) {
         Entity entity = p_37573_.getEntity();
         float f = 12.0F;
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingentity = (LivingEntity) entity;
+        if (entity instanceof LivingEntity livingentity) {
             f += EnchantmentHelper.getDamageBonus(this.SpearItem, livingentity.getMobType());
         }
 
