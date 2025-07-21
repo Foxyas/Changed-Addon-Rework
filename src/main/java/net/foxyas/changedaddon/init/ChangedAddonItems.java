@@ -35,15 +35,15 @@ import java.awt.*;
 public class ChangedAddonItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
 
-	public static final RegistryObject<Item> CHANGEDBOOK = REGISTRY.register("changedbook", ChangedBookItem::new);
+	public static final RegistryObject<Item> CHANGED_BOOK = REGISTRY.register("changedbook", ChangedBookItem::new);
 
 	public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", UnlatexbaseItem::new);
 
 	public static final RegistryObject<Item> LATEX_INSULATOR = block(ChangedAddonBlocks.LATEX_INSULATOR, ChangedAddonTabs.TAB_CHANGED_ADDON);
 
-	public static final RegistryObject<Item> IMPUREAMMONIA = REGISTRY.register("impureammonia", InpureammoniaItem::new);
+	public static final RegistryObject<Item> IMPURE_AMMONIA = REGISTRY.register("impure_ammonia", InpureammoniaItem::new);
 
-	public static final RegistryObject<Item> AMMONIAPARTICLE = REGISTRY.register("ammoniaparticle", AmmoniaParticleItem::new);
+	public static final RegistryObject<Item> AMMONIA_PARTICLE = REGISTRY.register("ammonia_particle", AmmoniaParticleItem::new);
 
 	public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", AmmoniaCompressedItem::new);
 

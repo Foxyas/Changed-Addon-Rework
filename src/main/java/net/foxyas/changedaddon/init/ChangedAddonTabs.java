@@ -18,7 +18,7 @@ public class ChangedAddonTabs {
 		TAB_CHANGED_ADDON = new CreativeModeTab("tabchanged_addon") {
 			@Override
 			public ItemStack makeIcon() {
-				return new ItemStack(ChangedAddonItems.CHANGEDBOOK.get());
+				return new ItemStack(ChangedAddonItems.CHANGED_BOOK.get());
 			}
 
 			@OnlyIn(Dist.CLIENT)

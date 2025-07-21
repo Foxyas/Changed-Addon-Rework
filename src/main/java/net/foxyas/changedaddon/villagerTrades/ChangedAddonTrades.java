@@ -27,13 +27,13 @@ public class ChangedAddonTrades {
             Random PriceRandom = new Random();
 
             // Level 1 Trades
-            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 1), new ItemStack(ChangedAddonItems.IMPUREAMMONIA.get(), 1), new ItemStack(ChangedAddonItems.AMMONIAPARTICLE.get(), 6), 8, 10, 0.02f));
+            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 1), new ItemStack(ChangedAddonItems.IMPURE_AMMONIA.get(), 1), new ItemStack(ChangedAddonItems.AMMONIA_PARTICLE.get(), 6), 8, 10, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 4 ), new ItemStack(ChangedAddonItems.ANTI_LATEX_BASE.get()), 12, 5, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 + PriceRandom.nextInt(3)), new ItemStack(ChangedItems.LATEX_BASE.get(), 1 + PriceRandom.nextInt(4)), 12, 5, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedItems.LATEX_BASE.get(), 2), new ItemStack(Items.EMERALD, 1 + PriceRandom.nextInt(3)), 12, 5, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.IRON_INGOT, 1), new ItemStack(ChangedItems.SYRINGE.get(), 4), 12, 5, 0.02f));
             event.getTrades().get(1).add(new BasicItemListing(new ItemStack(ChangedItems.SYRINGE.get(), 8), new ItemStack(Items.EMERALD, 1), 8, 5, 0.02f));
-            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 4), new ItemStack(ChangedAddonItems.IMPUREAMMONIA.get(), 2), 16, 15, 0.02f));
+            event.getTrades().get(1).add(new BasicItemListing(new ItemStack(Items.EMERALD, 4), new ItemStack(ChangedAddonItems.IMPURE_AMMONIA.get(), 2), 16, 15, 0.02f));
 
             // Level 2 Trades
             event.getTrades().get(2).add(new BasicItemListing(new ItemStack(ChangedItems.DARK_LATEX_MASK.get()), new ItemStack(Items.EMERALD, 3), 12, 10, 0.02f));

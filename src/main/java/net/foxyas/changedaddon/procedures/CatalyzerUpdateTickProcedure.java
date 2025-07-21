@@ -500,7 +500,7 @@ public class CatalyzerUpdateTickProcedure {
                             _ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
                         return _retval.get();
                     }
-                }.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonItems.IMPUREAMMONIA.get()) {
+                }.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonItems.IMPURE_AMMONIA.get()) {
                     if ((new Object() {
                         public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
                             AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
@@ -509,7 +509,7 @@ public class CatalyzerUpdateTickProcedure {
                                 _ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
                             return _retval.get();
                         }
-                    }.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonItems.IMPUREAMMONIA.get()) {
+                    }.getItemStack(world, new BlockPos(x, y, z), 0)).getItem() == ChangedAddonItems.IMPURE_AMMONIA.get()) {
                         if (!world.isClientSide()) {
                             BlockPos _bp = new BlockPos(x, y, z);
                             BlockEntity _blockEntity = world.getBlockEntity(_bp);
@@ -582,7 +582,7 @@ public class CatalyzerUpdateTickProcedure {
                                 _ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
                             return _retval.get();
                         }
-                    }.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonItems.AMMONIAPARTICLE.get() || (new Object() {
+                    }.getItemStack(world, new BlockPos(x, y, z), 1)).getItem() == ChangedAddonItems.AMMONIA_PARTICLE.get() || (new Object() {
                         public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
                             AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
                             BlockEntity _ent = world.getBlockEntity(pos);
@@ -625,7 +625,7 @@ public class CatalyzerUpdateTickProcedure {
                                     BlockEntity _ent = world.getBlockEntity(new BlockPos(x, y, z));
                                     if (_ent != null) {
                                         final int _slotid = 1;
-                                        final ItemStack _setstack = new ItemStack(ChangedAddonItems.AMMONIAPARTICLE.get());
+                                        final ItemStack _setstack = new ItemStack(ChangedAddonItems.AMMONIA_PARTICLE.get());
                                         _setstack.setCount(4 + new Object() {
                                             public int getAmount(LevelAccessor world, BlockPos pos, int slotid) {
                                                 AtomicInteger _retval = new AtomicInteger(0);

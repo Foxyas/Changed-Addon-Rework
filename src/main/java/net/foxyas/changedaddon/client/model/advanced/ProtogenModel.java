@@ -233,7 +233,7 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> impleme
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
-        poseStack.scale(1.25f, 1.25f, 1.25f);
+        poseStack.scale(1.05f, 1.05f, 1.05f);
         Head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         poseStack.popPose();
 
