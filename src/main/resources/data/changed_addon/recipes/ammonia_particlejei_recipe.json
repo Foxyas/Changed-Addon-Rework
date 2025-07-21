@@ -2,11 +2,11 @@
   "type": "changed_addon:catalyzer",
   "ingredients": [
     {
-     "item": "changed_addon:impureammonia"
+     "item": "changed_addon:impure_ammonia"
     }  
   ],
   "output": {
-    "item": "changed_addon:ammoniaparticle",
+    "item": "changed_addon:ammonia_particle",
     "count": 4
   },
   "ProgressSpeed": 2.5

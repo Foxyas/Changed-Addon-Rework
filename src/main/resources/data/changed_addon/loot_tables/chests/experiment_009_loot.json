@@ -163,7 +163,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "changed_addon:ammoniaparticle",
+          "name": "changed_addon:ammonia_particle",
           "weight": 10,
           "functions": [
             {

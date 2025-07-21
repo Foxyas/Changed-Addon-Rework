@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:ammoniaparticle"
+      "item": "changed_addon:ammonia_particle"
     },
     "title": {
       "translate": "advancements.ammoniapoweradvancement.title"

@@ -2,19 +2,19 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "changed_addon:ammoniaparticle"
+      "item": "changed_addon:ammonia_particle"
     },
     {
-      "item": "changed_addon:ammoniaparticle"
+      "item": "changed_addon:ammonia_particle"
     },
     {
       "item": "changed:latex_base"
     },
     {
-      "item": "changed_addon:ammoniaparticle"
+      "item": "changed_addon:ammonia_particle"
     },
     {
-      "item": "changed_addon:ammoniaparticle"
+      "item": "changed_addon:ammonia_particle"
     }
   ],
   "result": {
