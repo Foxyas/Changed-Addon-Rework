@@ -33,7 +33,7 @@ public class WolfyStatsProcedure {
             return;
         if (entity instanceof Player player) {
             TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (instance.getFormId().toString().equals("changed_addon:form_wolfy")) {
+            if (instance != null && instance.getFormId().toString().equals("changed_addon:form_wolfy")) {
                 if ((damagesource) instanceof EntityDamageSource _entityDamageSource && _entityDamageSource.isThorns()) {
                     if (event != null && event.isCancelable()) {
                         event.setCanceled(true);

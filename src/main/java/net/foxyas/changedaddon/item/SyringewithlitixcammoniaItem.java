@@ -1,6 +1,8 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.ltxprogrammer.changed.item.SpecializedAnimations;
+import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Rarity;
@@ -13,8 +15,10 @@ import net.foxyas.changedaddon.procedures.SyringewithlitixcammoniaPlayerFinishes
 import net.foxyas.changedaddon.procedures.SyringeWithLitixCammoniaLivingEntityIsHitWithItemProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
-public class SyringewithlitixcammoniaItem extends Item {
-	public SyringewithlitixcammoniaItem() {
+import javax.annotation.Nullable;
+
+public class SyringeWithLitixCammoniaItem extends Item implements SpecializedAnimations {
+	public SyringeWithLitixCammoniaItem() {
 		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).durability(2).rarity(Rarity.UNCOMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(2f).alwaysEat()
 
 				.build()));
@@ -46,5 +50,10 @@ public class SyringewithlitixcammoniaItem extends Item {
 		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
 		SyringeWithLitixCammoniaLivingEntityIsHitWithItemProcedure.execute(entity, sourceentity, itemstack);
 		return retval;
+	}
+
+	@Nullable
+	public SpecializedAnimations.AnimationHandler getAnimationHandler() {
+		return new Syringe.SyringeAnimation(this);
 	}
 }

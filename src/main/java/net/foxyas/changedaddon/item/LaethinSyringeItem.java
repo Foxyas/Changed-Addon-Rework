@@ -1,6 +1,8 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.ltxprogrammer.changed.item.SpecializedAnimations;
+import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Rarity;
@@ -12,31 +14,38 @@ import net.minecraft.world.entity.LivingEntity;
 import net.foxyas.changedaddon.procedures.LaethinSyringePlayerFinishesUsingItemProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
-public class LaethinSyringeItem extends Item {
-	public LaethinSyringeItem() {
-		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(1).saturationMod(20f).alwaysEat()
+import javax.annotation.Nullable;
 
-				.build()));
-	}
+public class LaethinSyringeItem extends Item implements SpecializedAnimations {
+    public LaethinSyringeItem() {
+        super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(1).saturationMod(20f).alwaysEat()
 
-	@Override
-	public UseAnim getUseAnimation(ItemStack itemstack) {
-		return UseAnim.DRINK;
-	}
+                .build()));
+    }
 
-	@Override
-	public int getUseDuration(ItemStack itemstack) {
-		return 20;
-	}
+    @Override
+    public UseAnim getUseAnimation(ItemStack itemstack) {
+        return UseAnim.DRINK;
+    }
 
-	@Override
-	public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
-		ItemStack retval = super.finishUsingItem(itemstack, world, entity);
-		double x = entity.getX();
-		double y = entity.getY();
-		double z = entity.getZ();
+    @Override
+    public int getUseDuration(ItemStack itemstack) {
+        return 20;
+    }
 
-		LaethinSyringePlayerFinishesUsingItemProcedure.execute(world, x, y, z, entity);
-		return retval;
-	}
+    @Override
+    public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+        ItemStack retval = super.finishUsingItem(itemstack, world, entity);
+        double x = entity.getX();
+        double y = entity.getY();
+        double z = entity.getZ();
+
+        LaethinSyringePlayerFinishesUsingItemProcedure.execute(world, x, y, z, entity);
+        return retval;
+    }
+
+    @Nullable
+    public SpecializedAnimations.AnimationHandler getAnimationHandler() {
+        return new Syringe.SyringeAnimation(this);
+    }
 }

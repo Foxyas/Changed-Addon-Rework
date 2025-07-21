@@ -59,7 +59,7 @@ public class ChangedAddonItems {
 
 	public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", DiffusionSyringeItem::new);
 
-	public static final RegistryObject<Item> SYRINGEWITHLITIXCAMMONIA = REGISTRY.register("syringewithlitixcammonia", SyringewithlitixcammoniaItem::new);
+	public static final RegistryObject<Item> SYRINGEWITHLITIXCAMMONIA = REGISTRY.register("syringewithlitixcammonia", SyringeWithLitixCammoniaItem::new);
 
 	public static final RegistryObject<Item> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", LaethinSyringeItem::new);
 
