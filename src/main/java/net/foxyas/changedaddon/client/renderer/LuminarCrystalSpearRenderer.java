@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.ModelLuminarCrystalSpearModel;
-import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
+import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

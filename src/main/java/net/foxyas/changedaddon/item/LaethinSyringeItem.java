@@ -13,28 +13,29 @@ import net.minecraft.world.entity.LivingEntity;
 
 import net.foxyas.changedaddon.procedures.LaethinSyringePlayerFinishesUsingItemProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
 public class LaethinSyringeItem extends Item implements SpecializedAnimations {
     public LaethinSyringeItem() {
-        super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64).rarity(Rarity.RARE).food((new FoodProperties.Builder()).nutrition(1).saturationMod(20f).alwaysEat()
-
-                .build()));
+        super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(64)
+                .rarity(Rarity.RARE)
+        );
     }
 
     @Override
-    public UseAnim getUseAnimation(ItemStack itemstack) {
-        return UseAnim.DRINK;
+    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack itemstack) {
+        return UseAnim.NONE;
     }
 
     @Override
-    public int getUseDuration(ItemStack itemstack) {
+    public int getUseDuration(@NotNull ItemStack itemstack) {
         return 20;
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity) {
         ItemStack retval = super.finishUsingItem(itemstack, world, entity);
         double x = entity.getX();
         double y = entity.getY();

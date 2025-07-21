@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
+import net.foxyas.changedaddon.entity.interfaces.IDynamicPawColor;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -39,13 +40,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment10Entity extends ChangedEntity implements GenderedEntity {
+public class Experiment10Entity extends ChangedEntity implements GenderedEntity, IDynamicPawColor {
     //private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private float TpCooldown;
     private boolean Phase2;
@@ -484,5 +486,10 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity 
         } else {
             TpCooldown -= 0.5f;
         }
+    }
+
+    @Override
+    public Color getPawColor() {
+        return Color.decode("#070607");
     }
 }

@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.foxyas.changedaddon.entity.LuminarCrystalSpearEntity;
+import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;

@@ -9,6 +9,7 @@ import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
 import net.foxyas.changedaddon.entity.advanced.LatexKitsuneMaleEntity;
 import net.foxyas.changedaddon.entity.advanced.ProtogenEntity;
+import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
 import net.foxyas.changedaddon.entity.simple.LatexCalicoCatEntity;
 import net.ltxprogrammer.changed.init.ChangedMobCategories;

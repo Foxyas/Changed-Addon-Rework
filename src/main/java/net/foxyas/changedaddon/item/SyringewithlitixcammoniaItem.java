@@ -14,28 +14,29 @@ import net.minecraft.world.entity.LivingEntity;
 import net.foxyas.changedaddon.procedures.SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure;
 import net.foxyas.changedaddon.procedures.SyringeWithLitixCammoniaLivingEntityIsHitWithItemProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
 public class SyringeWithLitixCammoniaItem extends Item implements SpecializedAnimations {
 	public SyringeWithLitixCammoniaItem() {
-		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).durability(2).rarity(Rarity.UNCOMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(2f).alwaysEat()
-
-				.build()));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).durability(2)
+				.rarity(Rarity.UNCOMMON)
+		);
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack itemstack) {
-		return UseAnim.DRINK;
+	public @NotNull UseAnim getUseAnimation(@NotNull ItemStack itemstack) {
+		return UseAnim.NONE;
 	}
 
 	@Override
-	public int getUseDuration(ItemStack itemstack) {
+	public int getUseDuration(@NotNull ItemStack itemstack) {
 		return 20;
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+	public @NotNull ItemStack finishUsingItem(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity) {
 		ItemStack retval = super.finishUsingItem(itemstack, world, entity);
 		double x = entity.getX();
 		double y = entity.getY();
@@ -46,7 +47,7 @@ public class SyringeWithLitixCammoniaItem extends Item implements SpecializedAni
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
+	public boolean hurtEnemy(@NotNull ItemStack itemstack, @NotNull LivingEntity entity, @NotNull LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
 		SyringeWithLitixCammoniaLivingEntityIsHitWithItemProcedure.execute(entity, sourceentity, itemstack);
 		return retval;

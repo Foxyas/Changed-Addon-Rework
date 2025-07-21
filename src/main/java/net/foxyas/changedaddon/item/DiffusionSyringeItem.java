@@ -1,6 +1,8 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.ltxprogrammer.changed.item.SpecializedAnimations;
+import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Rarity;
@@ -11,21 +13,28 @@ import net.minecraft.world.entity.LivingEntity;
 
 import net.foxyas.changedaddon.procedures.DescontrolSyringePlayerFinishesUsingItemProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import org.jetbrains.annotations.NotNull;
 
-public class DiffusionSyringeItem extends Item {
+import javax.annotation.Nullable;
+
+public class DiffusionSyringeItem extends Item implements SpecializedAnimations {
 	public DiffusionSyringeItem() {
-		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(16).rarity(Rarity.EPIC).food((new FoodProperties.Builder()).nutrition(2).saturationMod(10f).alwaysEat()
-
-				.build()));
+		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(16)
+				.rarity(Rarity.EPIC)
+		);
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack itemstack) {
-		return UseAnim.DRINK;
+	public @NotNull UseAnim getUseAnimation(@NotNull ItemStack itemstack) {
+		return UseAnim.NONE;
+	}
+
+	public int getUseDuration(@NotNull ItemStack itemstack) {
+		return 20;
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+	public @NotNull ItemStack finishUsingItem(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity) {
 		ItemStack retval = super.finishUsingItem(itemstack, world, entity);
 		double x = entity.getX();
 		double y = entity.getY();
@@ -33,5 +42,10 @@ public class DiffusionSyringeItem extends Item {
 
 		DescontrolSyringePlayerFinishesUsingItemProcedure.execute(world, x, y, z, entity);
 		return retval;
+	}
+
+	@Nullable
+	public SpecializedAnimations.AnimationHandler getAnimationHandler() {
+		return new Syringe.SyringeAnimation(this);
 	}
 }

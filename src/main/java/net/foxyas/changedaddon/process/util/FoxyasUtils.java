@@ -23,10 +23,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayDeque;
@@ -36,6 +33,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class FoxyasUtils {
 
@@ -44,11 +42,26 @@ public class FoxyasUtils {
         return Util + "_spawn_egg";
     }
 
+
+    public static Stream<BlockPos> getBlockPositionsInSphere(BlockPos center, int radius) {
+        return BlockPos.betweenClosedStream(
+                center.offset(-radius, -radius, -radius),
+                center.offset(radius, radius, radius)
+        ).filter(pos -> pos.distSqr(center) <= radius * radius);
+    }
+
+    public static Stream<BlockPos> getBlockPositionsInSphere(AABB box) {
+        return BlockPos.betweenClosedStream(box
+        ).filter(pos -> pos.distSqr(new BlockPos(box.getCenter())) <= box.getSize() * box.getSize());
+    }
+
+
     /**
      * Checks if one entity (eyeEntity) can see another (targetToSee), using raycasting and FOV.
-     * @param eyeEntity The entity doing the looking.
+     *
+     * @param eyeEntity   The entity doing the looking.
      * @param targetToSee The target entity being looked at.
-     * @param fovDegrees Field of view angle in degrees (e.g., 90 means 45 degrees to each side).
+     * @param fovDegrees  Field of view angle in degrees (e.g., 90 means 45 degrees to each side).
      * @return true if visible and within FOV, false otherwise.
      */
     public static boolean canEntitySeeOther(LivingEntity eyeEntity, LivingEntity targetToSee, double fovDegrees) {
@@ -79,7 +92,8 @@ public class FoxyasUtils {
 
     /**
      * Verifica se eyeEntity consegue ver targetToSee com base na linha de visão.
-     * @param eyeEntity A entidade que está observando.
+     *
+     * @param eyeEntity   A entidade que está observando.
      * @param targetToSee A entidade que deve ser visível.
      * @return true se for visível, false se houver obstrução.
      */
@@ -213,7 +227,6 @@ public class FoxyasUtils {
             }
         }
     }
-
 
 
     public static void repairArmor(LivingEntity entity, int amountPerPiece) {
