@@ -1,10 +1,12 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,8 +33,9 @@ public class TransfursExtraSoundDetailsProcedure {
     private static void execute(@Nullable Event event, LevelAccessor world, Entity entity, String text) {
         if (entity == null || text == null)
             return;
-        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-            if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("tiger_shark")) {
+        if (entity instanceof Player player && ProcessTransfur.isPlayerTransfurred(player)) {
+            var formId = ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString();
+            if (formId.contains("tiger_shark")) {
                 if (text.contains("roar")) {
                     if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).act_cooldown) {
                         {
@@ -81,7 +84,7 @@ public class TransfursExtraSoundDetailsProcedure {
                     }
                 }
             }
-            if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).contains("experiment009")) {
+            if (formId.contains("experiment009")) {
                 if (text.contains("roar")) {
                     if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).act_cooldown) {
                         {

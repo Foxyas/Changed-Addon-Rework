@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import io.netty.buffer.Unpooled;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.world.inventory.TransfurSoundsGuiMenu;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -34,7 +35,7 @@ public class OpenTransfurExtraProcedure {
                 return false;
             }
         }.checkGamemode(entity))) {
-            if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
+            if (entity instanceof Player player && ProcessTransfur.isPlayerTransfurred(player)) {
                 {
                     if (entity instanceof ServerPlayer _ent) {
                         BlockPos _bpos = new BlockPos(x, y, z);

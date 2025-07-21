@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.init.ChangedTags;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -16,10 +18,11 @@ public class LitixCamoniaFluidMobplayerCollidesBlockProcedure {
     public static void execute(Entity entity) {
         if (entity == null)
             return;
-        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
-            if (!(entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur) {
-                if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
+
+        if (entity instanceof Player player && ProcessTransfur.isPlayerTransfurred(player)) {
+            if (!ProcessTransfur.isPlayerNotLatex(player)) {
+                if (!player.level.isClientSide())
+                    player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
             } else {
                 if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns) {
                     if (entity instanceof Player _player && !_player.level.isClientSide())
@@ -30,7 +33,7 @@ public class LitixCamoniaFluidMobplayerCollidesBlockProcedure {
             if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
                 _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
         }
-        if (entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:latexentity")))) {
+        if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
             if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
                 _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 200, 0, false, false));
         }

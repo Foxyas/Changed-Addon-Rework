@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
@@ -36,7 +37,12 @@ public class TransfurTotemItemInInventoryTickProcedure {
         }*/
         if (!(entity instanceof Player _player && _player.getCooldowns().isOnCooldown(itemstack.getItem()))) {
             if (itemstack.getItem() == (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY).getItem()) {
-                if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_latex_benign_wolf")) {
+                if (!(entity instanceof Player player)) {
+                    return;
+                }
+                boolean transfur = ProcessTransfur.isPlayerTransfurred(player);
+                String transfurId = ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString();
+                if (transfurId.equals("changed:form_latex_benign_wolf")) {
                     SummonDripParticlesProcedure.execute(entity);
                     PlayerUtil.UnTransfurPlayer(entity);
                     if (entity instanceof Player _player && !_player.level.isClientSide())
@@ -61,7 +67,15 @@ public class TransfurTotemItemInInventoryTickProcedure {
                     }
                 }
             } else if (itemstack.getItem() == (entity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY).getItem()) {
-                if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed:form_latex_benign_wolf")) {
+                if (!(entity instanceof Player player)) {
+                    return;
+                }
+                boolean transfur = ProcessTransfur.isPlayerTransfurred(player);
+                if (!transfur){
+                    return;
+                }
+                String transfurId = ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString();
+                if (transfurId.equals("changed:form_latex_benign_wolf")) {
                     SummonDripParticlesProcedure.execute(entity);
                     PlayerUtil.UnTransfurPlayer(entity);
                     if (entity instanceof Player _player && !_player.level.isClientSide())

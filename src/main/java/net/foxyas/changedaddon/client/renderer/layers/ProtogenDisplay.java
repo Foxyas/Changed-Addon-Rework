@@ -29,8 +29,8 @@ public class ProtogenDisplay<M extends AdvancedHumanoidModel<T>, T extends Chang
         super(parent);
         this.model = model;
         // RenderType Glow type
-        this.GlowEyeRender = RenderType.eyes(eyePart);
-        this.GlowDisplayRender = RenderType.eyes(displayPart);
+        this.GlowEyeRender = RenderType.energySwirl(eyePart, 0, 0);
+        this.GlowDisplayRender = RenderType.energySwirl(eyePart, 0, 0);
         // RenderType normal
         this.NormalEyeRender = RenderType.entityCutoutNoCull(eyePart);
         this.NormalDisplayRender = RenderType.entityCutoutNoCull(displayPart);
@@ -62,7 +62,7 @@ public class ProtogenDisplay<M extends AdvancedHumanoidModel<T>, T extends Chang
             int overlay = LivingEntityRenderer.getOverlayCoords(entity, 0.0F);
 
             // Renderiza apenas a cabeça do modelo
-            if (isOnlyHead){
+            if (isOnlyHead) {
                 this.model.getHead().render(poseStack, bufferSource.getBuffer(renderType), packedLight, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
                 this.model.getHead().render(poseStack, bufferSource.getBuffer(renderType2), packedLight, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
             } else {

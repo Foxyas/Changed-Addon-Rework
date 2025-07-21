@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import io.netty.buffer.Unpooled;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.world.inventory.FightToKeepConsciousnessMinigameMenu;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -21,7 +22,7 @@ public class OpenStruggleMenuOnKeyPressedProcedure {
     public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
         if (entity == null)
             return;
-        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur
+        if (entity instanceof Player player && ProcessTransfur.isPlayerTransfurred(player)
                 && (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).concience_Fight) {
             {
                 if (entity instanceof ServerPlayer _ent) {

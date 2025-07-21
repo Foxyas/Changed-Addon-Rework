@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import net.foxyas.changedaddon.entity.DazedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -27,30 +28,26 @@ public class SmallEntityTickUpdateProcedure {
         execute(event, event.getEntityLiving().level, event.getEntityLiving());
     }
 
-    public static void execute(LevelAccessor world, Entity entity) {
-        execute(null, world, entity);
-    }
-
     private static void execute(@Nullable Event event, LevelAccessor world, Entity entity) {
         if (entity == null)
             return;
         if (world.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.DO_DAZED_LATEX_BURN)) {
-            if (entity instanceof DazedEntity) {
+            if (entity instanceof DazedEntity livEnt) {
                 if (world.canSeeSkyFromBelowWater(new BlockPos(entity.getX(), entity.getY(), entity.getZ())) && world instanceof Level _lvl6 && _lvl6.isDay() && !entity.isInWaterRainOrBubble()) {
-                    if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) / (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) >= 0.4) {
-                        if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
-                            if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(MobEffects.FIRE_RESISTANCE))) {
+                    if (livEnt.getHealth() / livEnt.getMaxHealth() >= 0.4) {
+                        if (livEnt.getItemBySlot(EquipmentSlot.HEAD).getItem() == Blocks.AIR.asItem()) {
+                            if (!livEnt.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                                 entity.setSecondsOnFire(2);
                             }
                         }
                     }
                 }
-            } else if (entity instanceof Player) {
-                if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).equals("changed_addon:form_dazed_latex")) {
+            } else if (entity instanceof Player player) {
+                if (ProcessTransfur.getPlayerTransfurVariant(player) != null && ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString().equals("changed_addon:form_dazed_latex")) {
                     if (world.canSeeSkyFromBelowWater(new BlockPos(entity.getX(), entity.getY(), entity.getZ())) && world instanceof Level _lvl19 && _lvl19.isDay() && !entity.isInWaterRainOrBubble()) {
-                        if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) / (entity instanceof LivingEntity _livEnt ? _livEnt.getMaxHealth() : -1) >= 0.25) {
-                            if ((entity instanceof LivingEntity _entGetArmor ? _entGetArmor.getItemBySlot(EquipmentSlot.HEAD) : ItemStack.EMPTY).getItem() == Blocks.AIR.asItem()) {
-                                if (!(entity instanceof LivingEntity _livEnt && _livEnt.hasEffect(MobEffects.FIRE_RESISTANCE))) {
+                        if (player.getHealth() / player.getMaxHealth() >= 0.25) {
+                            if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == Blocks.AIR.asItem()) {
+                                if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                                     entity.setSecondsOnFire(2);
                                 }
                             }

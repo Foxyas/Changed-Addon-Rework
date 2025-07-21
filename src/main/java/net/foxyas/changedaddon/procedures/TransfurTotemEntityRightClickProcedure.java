@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
@@ -39,24 +40,26 @@ public class TransfurTotemEntityRightClickProcedure {
     private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity, Entity sourceentity) {
         if (entity == null || sourceentity == null)
             return;
-        ItemStack a = ItemStack.EMPTY;
-        ItemStack b = ItemStack.EMPTY;
-        String string = "";
+        ItemStack a;
+        ItemStack b;
+        String string;
         a = (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
         b = (sourceentity instanceof LivingEntity _livEnt ? _livEnt.getOffhandItem() : ItemStack.EMPTY);
         if (!(sourceentity instanceof Player _player && _player.getCooldowns().isOnCooldown(ChangedAddonItems.TRANSFUR_TOTEM.get()))) {
             if (a.getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get() || b.getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get()) {
                 if (sourceentity.isShiftKeyDown()) {
-                    if (entity instanceof Player) {
-                        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
+                    if (entity instanceof Player player) {
+                        boolean transfur = ProcessTransfur.isPlayerTransfurred(player);
+                        if (transfur) {
+                        String transfurId = ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString();
                             if (a.getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get() && (a.getOrCreateTag().getString("form")).isEmpty()) {
                                 if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
-                                    if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
+                                    if (transfurId.startsWith("changed:form")) {
                                         if (sourceentity instanceof Player _player)
                                             _player.getCooldowns().addCooldown(a.getItem(), 20);
                                         if (world.isClientSide())
                                             Minecraft.getInstance().gameRenderer.displayItemActivation(a);
-                                        a.getOrCreateTag().putString("form", ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
+                                        a.getOrCreateTag().putString("form", transfurId);
                                         if (world instanceof Level _level) {
                                             if (!_level.isClientSide()) {
                                                 _level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -64,7 +67,7 @@ public class TransfurTotemEntityRightClickProcedure {
                                                 _level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
                                             }
                                         }
-                                    } else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form")) {
+                                    } else if (transfurId.startsWith("changed_addon:form")) {
                                         if (sourceentity instanceof Player _player)
                                             _player.getCooldowns().addCooldown(a.getItem(), 50);
                                         if (world.isClientSide())
@@ -84,7 +87,7 @@ public class TransfurTotemEntityRightClickProcedure {
                                         _player.getCooldowns().addCooldown(a.getItem(), 20);
                                     if (world.isClientSide())
                                         Minecraft.getInstance().gameRenderer.displayItemActivation(a);
-                                    a.getOrCreateTag().putString("form", ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
+                                    a.getOrCreateTag().putString("form", transfurId);
                                     if (world instanceof Level _level) {
                                         if (!_level.isClientSide()) {
                                             _level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -95,12 +98,12 @@ public class TransfurTotemEntityRightClickProcedure {
                                 }
                             } else if (b.getItem() == ChangedAddonItems.TRANSFUR_TOTEM.get() && (b.getOrCreateTag().getString("form")).isEmpty()) {
                                 if (ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() == false) {
-                                    if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed:form")) {
+                                    if (transfurId.startsWith("changed:form")) {
                                         if (sourceentity instanceof Player _player)
                                             _player.getCooldowns().addCooldown(b.getItem(), 20);
                                         if (world.isClientSide())
                                             Minecraft.getInstance().gameRenderer.displayItemActivation(b);
-                                        b.getOrCreateTag().putString("form", ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
+                                        b.getOrCreateTag().putString("form", transfurId);
                                         if (world instanceof Level _level) {
                                             if (!_level.isClientSide()) {
                                                 _level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);
@@ -108,7 +111,7 @@ public class TransfurTotemEntityRightClickProcedure {
                                                 _level.playLocalSound(x, y, z, ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1, false);
                                             }
                                         }
-                                    } else if (((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm).startsWith("changed_addon:form")) {
+                                    } else if (transfurId.startsWith("changed_addon:form")) {
                                         if (sourceentity instanceof Player _player)
                                             _player.getCooldowns().addCooldown(b.getItem(), 50);
                                         if (world.isClientSide())
@@ -128,7 +131,7 @@ public class TransfurTotemEntityRightClickProcedure {
                                         _player.getCooldowns().addCooldown(b.getItem(), 20);
                                     if (world.isClientSide())
                                         Minecraft.getInstance().gameRenderer.displayItemActivation(b);
-                                    b.getOrCreateTag().putString("form", ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).LatexForm));
+                                    b.getOrCreateTag().putString("form", transfurId);
                                     if (world instanceof Level _level) {
                                         if (!_level.isClientSide()) {
                                             _level.playSound(null, new BlockPos(x, y, z), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("block.beacon.activate")), SoundSource.NEUTRAL, 1, 1);

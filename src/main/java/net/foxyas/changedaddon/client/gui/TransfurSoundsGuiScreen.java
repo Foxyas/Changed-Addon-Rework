@@ -102,7 +102,8 @@ public class TransfurSoundsGuiScreen extends AbstractContainerScreen<TransfurSou
 	@Override
 	public void init() {
 		super.init();
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
+        assert this.minecraft != null;
+        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		button_1 = new Button(this.leftPos + 4, this.topPos + 6, 30, 20, new TranslatableComponent("gui.changed_addon.transfur_sounds_gui.button_1"), e -> {
 			if (IfCatLatexProcedure.execute(entity)) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new TransfurSoundsGuiButtonMessage(0, x, y, z));

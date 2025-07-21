@@ -17,8 +17,7 @@ public class ProtogenRenderer extends AdvancedHumanoidRenderer<ProtogenEntity, P
         super(context, new ProtogenModel(context.bakeLayer(ProtogenModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
         this.addLayer(new ProtogenDisplay<>(this, getModel(),
                 new ResourceLocation("changed_addon:textures/entities/protogen/protogen_eyes_display.png"),
-                new ResourceLocation("changed_addon:textures/entities/protogen/protogen_display.png"),
-                false));
+                new ResourceLocation("changed_addon:textures/entities/protogen/protogen_display.png")));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
     }
 

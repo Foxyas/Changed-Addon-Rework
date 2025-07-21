@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.procedures;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
@@ -36,11 +37,11 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
         if (entity == null)
             return;
         DamageSource UntransfurFail = null;
-        if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).transfur) {
+        if (entity instanceof Player player && ProcessTransfur.isPlayerTransfurred(player)) {
             if (entity.getLevel().random.nextFloat() >= 0.35) {
-                if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).organic_transfur) {
-                    if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                        _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
+                if (ProcessTransfur.isPlayerNotLatex(player)) {
+                    if (!player.level.isClientSide())
+                        player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.UNTRANSFUR.get(), 1000, 0, false, false));
                     if ((entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).showwarns) {
                         if (entity instanceof Player _player && !_player.level.isClientSide())
                             _player.displayClientMessage(new TextComponent((new TranslatableComponent("changedaddon.untransfur.sloweffect").getString())), true);
@@ -100,10 +101,10 @@ public class SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure {
                             return false;
                         }
                     }.checkGamemode(entity)) {
-                        if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                            _entity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
-                        if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                            _entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
+                        if (!player.level.isClientSide())
+                            player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 0, false, false));
+                        if (!player.level.isClientSide())
+                            player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 60, 0, false, false));
                     }
                     if (!(entity instanceof ServerPlayer _plr9 && _plr9.level instanceof ServerLevel
                             && _plr9.getAdvancements().getOrStartProgress(_plr9.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuradvancement_2"))).isDone())) {

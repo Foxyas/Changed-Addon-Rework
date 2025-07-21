@@ -10,7 +10,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.entity.LivingEntity;
 
 import net.foxyas.changedaddon.procedures.SyringewithlitixcammoniaPlayerFinishesUsingItemProcedure;
-import net.foxyas.changedaddon.procedures.SyringewithlitixcammoniaLivingEntityIsHitWithItemProcedure;
+import net.foxyas.changedaddon.procedures.SyringeWithLitixCammoniaLivingEntityIsHitWithItemProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
 
 public class SyringewithlitixcammoniaItem extends Item {
@@ -44,7 +44,7 @@ public class SyringewithlitixcammoniaItem extends Item {
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-		SyringewithlitixcammoniaLivingEntityIsHitWithItemProcedure.execute(entity, sourceentity, itemstack);
+		SyringeWithLitixCammoniaLivingEntityIsHitWithItemProcedure.execute(entity, sourceentity, itemstack);
 		return retval;
 	}
 }
