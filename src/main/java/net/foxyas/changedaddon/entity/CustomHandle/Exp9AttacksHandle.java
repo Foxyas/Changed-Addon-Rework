@@ -476,11 +476,11 @@ public class Exp9AttacksHandle {
             if (this.getTarget() != null) {
                 LivingEntity target = this.getTarget();
                 Vec3 direction = target.position().subtract(this.boss.position()).normalize();
-                this.boss.setDeltaMovement(direction.scale(1.5));
-                new DelayedTask(10, this.boss, (e) -> {
-                    if (this.boss.distanceTo(target) < 2.5) {
-                        this.boss.SpawnThunderBolt(target.position());
-                        target.hurt(this.boss.ThunderDmg, 4);
+                boss.setDeltaMovement(direction.scale(1.5));
+                new DelayedTask(10, () -> {
+                    if (boss.distanceTo(target) < 2.5) {
+                        boss.SpawnThunderBolt(target.position());
+                        target.hurt(boss.ThunderDmg, 4);
                         target.setDeltaMovement(target.getDeltaMovement().add(new Vec3(0, 1f, 0)));
                     }
                 });

@@ -1,66 +1,61 @@
 package net.foxyas.changedaddon.process.util;
 
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-
 public class DelayedTask {
 
-    private static final Map<Integer, DelayedTask> activeTasks = new HashMap<>();
+    private static final Int2ObjectOpenHashMap<DelayedTask> activeTasks = new Int2ObjectOpenHashMap<>();
     private static int nextId = 0;
 
     private final int id;
     private final int delayTicks;
-    private final LivingEntity entity;
-    private final Consumer<LivingEntity> action;
-    private int currentTick;
-    private boolean paused;
-    private boolean cancelled;
+    private final Runnable task;
+    private int currentTick = 0;
+    private boolean paused = false;
+    private boolean cancelled = false;
 
-    public DelayedTask(int delayTicks, LivingEntity entity, Consumer<LivingEntity> action) {
-        this.id = nextId++;
-        this.delayTicks = delayTicks;
-        this.entity = entity;
-        this.action = action;
-        this.currentTick = 0;
-        this.paused = false;
-        this.cancelled = false;
-
-        activeTasks.put(id, this);
-        MinecraftForge.EVENT_BUS.register(this); // Automatic registration of the instance with ForgeEventBus
+    static {
+        MinecraftForge.EVENT_BUS.register(DelayedTask.class);
     }
 
     // Event to update this instance only
     @SubscribeEvent
-    public void onServerTick(TickEvent.ServerTickEvent event) {
+    public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            tick();
+            activeTasks.values().forEach(DelayedTask::tick);
         }
+    }
+
+    public DelayedTask(int delayTicks, Runnable task){
+        this.delayTicks = delayTicks;
+        this.task = task;
+
+        this.id = nextId++;
+        activeTasks.put(id, this);
     }
 
     public void tick() {
         if (paused) return;
+        if(isCancelled()) {// Ensure the instance is removed correctly
+            destroy();
+            return;
+        }
+
+        currentTick++;
+        if (currentTick < delayTicks) return;
 
         try {
-            currentTick++;
-            if (currentTick >= delayTicks) {
-                action.accept(this.entity); // The Void Will return they entity as a dependence
-                cancel(); // Automatically cancel after execution
-            }
+            task.run();
         } catch (Exception e) {
-            System.err.println("Erro in the execution  of the DelayedTask with ID: " + id + "\n " + e.getMessage());
+            System.err.println("Error during the execution of the DelayedTask with ID: " + id + "\n " + e.getMessage());
             //e.printStackTrace();
         } finally {
-            if (isCancelled()) {// <-- in case of exception cancel() might not get called
-                destroy(); // Ensure the instance is removed correctly
-            }
+            cancel();// Automatically cancel after execution
         }
     }
 
@@ -76,7 +71,6 @@ public class DelayedTask {
      */
     private void destroy() {
         activeTasks.remove(id);
-        MinecraftForge.EVENT_BUS.unregister(this);
     }
 
     /**
@@ -84,7 +78,7 @@ public class DelayedTask {
     */
     public void pause() {
         this.paused = true;
-        ChangedAddonMod.LOGGER.info("DelayedTask with ID: " + id + " was paused by an external code");
+        ChangedAddonMod.LOGGER.info("DelayedTask with ID: {} was paused by an external code", id);
     }
 
     /**
@@ -92,7 +86,7 @@ public class DelayedTask {
      */
     public void resume() {
         this.paused = false;
-        ChangedAddonMod.LOGGER.info("DelayedTask with ID: " + id + " was resumed by an external code");
+        ChangedAddonMod.LOGGER.info("DelayedTask with ID: {} was resumed by an external code", id);
     }
 
     public boolean isPaused() {
@@ -137,5 +131,4 @@ public class DelayedTask {
         DelayedTask task = activeTasks.get(id);
         return task != null && task.isPaused();
     }
-
 }

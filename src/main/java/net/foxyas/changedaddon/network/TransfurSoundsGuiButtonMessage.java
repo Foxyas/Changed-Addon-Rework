@@ -110,7 +110,7 @@ public class TransfurSoundsGuiButtonMessage {
                 vars.act_cooldown = true;
                 vars.syncPlayerVariables(player);
 
-                new DelayedTask(60, null, i -> {
+                new DelayedTask(60, () -> {
                     vars.act_cooldown = false;
                     vars.syncPlayerVariables(player);
                 });
@@ -124,7 +124,7 @@ public class TransfurSoundsGuiButtonMessage {
         vars.act_cooldown = true;
         vars.syncPlayerVariables(entity);
 
-        new DelayedTask(cooldown, null, i -> {
+        new DelayedTask(cooldown, () -> {
             vars.act_cooldown = false;
             vars.syncPlayerVariables(entity);
         });
