@@ -3,9 +3,11 @@ package net.foxyas.changedaddon.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
+import net.foxyas.changedaddon.entity.interfaces.IDynamicPawColor;
 import net.foxyas.changedaddon.init.ChangedAddonKeyMappings;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
@@ -28,6 +30,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.awt.*;
+
 import static net.foxyas.changedaddon.procedures.PatFeatureHandleProcedure.isPossibleToPat;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
@@ -36,7 +40,7 @@ public class PatOverlay {
     @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void eventHandler(RenderGameOverlayEvent.Pre event) {
 
-        if (!ChangedAddonClientConfiguration.PAT_OVERLAY.get()){
+        if (!ChangedAddonClientConfiguration.PAT_OVERLAY.get()) {
             return;
         }
 
@@ -57,12 +61,12 @@ public class PatOverlay {
             Player entity = Minecraft.getInstance().player;
 
             if (entity != null && !entity.isSpectator()) {
-                if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()){
+                if (entity.getMainHandItem().isEmpty() || entity.getOffhandItem().isEmpty()) {
                     Entity lookedEntity = PlayerUtil.getEntityLookingAt(entity, 3);
-                    if (lookedEntity != null && isPatableEntity(entity,lookedEntity) && isEntityInPassiveStage(lookedEntity) && isKeySet()) {
-                        if (!getPatInfo(entity).getString().isEmpty()){
-                        	if (!lookedEntity.isInvisible() && isPossibleToPat(entity)){
-                               if (!ChangedAddonClientConfiguration.PAW_STYLE_PAT_OVERLAY.get()) {
+                    if (lookedEntity != null && isPatableEntity(entity, lookedEntity) && isEntityInPassiveStage(lookedEntity) && isKeySet()) {
+                        if (!getPatInfo(entity).getString().isEmpty()) {
+                            if (!lookedEntity.isInvisible() && isPossibleToPat(entity)) {
+                                if (!ChangedAddonClientConfiguration.PAW_STYLE_PAT_OVERLAY.get()) {
                                     float EntityNameLength = PatInfo2(lookedEntity).getString().length();
                                     float MoveOverlayAmount = EntityNameLength * 2f;
                                     //EntityNameLength > 16 ? EntityNameLength * 4 : EntityNameLength * 2;
@@ -70,30 +74,49 @@ public class PatOverlay {
                                             getPatInfo(lookedEntity), DynamicChanges ? floatPosX - MoveOverlayAmount : floatPosX, floatPosY, -1);
                                     /*Minecraft.getInstance().font.draw(event.getMatrixStack(),
                                      *   PatInfo2(lookedEntity), 257 - PatInfo2(lookedEntity).getString().length() , 260, -1);*/
-                               } else {
-                                   ResourceLocation TEXTURE = new ResourceLocation("changed_addon:textures/screens/paw_normal.png");
-                                   Minecraft mc = Minecraft.getInstance();
-                                   PoseStack poseStack = event.getMatrixStack();
-                                   RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                                   RenderSystem.setShaderTexture(0, TEXTURE);
+                                } else {
+                                    TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(entity);
+                                    ResourceLocation TEXTURE = new ResourceLocation("changed_addon:textures/screens/paw_normal.png");
+                                    Minecraft mc = Minecraft.getInstance();
+                                    PoseStack poseStack = event.getMatrixStack();
+                                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                                    RenderSystem.setShaderTexture(0, TEXTURE);
 
-                                   int x = ((int) posX); // Posição X na tela
-                                   int y = ((int) posY); // Posição Y na tela
-                                   int largura = (int) 19; // Largura da imagem
-                                   int altura = (int) 19; // Altura da imagem
-                                   float troubleShotXValue = floatPosX + 9;
-                                   float troubleShotYValue = floatPosY + 20;
-                                   float TextDynamic = 0;
-                                   if (getSimplePatInfo().length() > 1){
+                                    int x = ((int) posX); // Posição X na tela
+                                    int y = ((int) posY); // Posição Y na tela
+                                    int largura = (int) 19; // Largura da imagem
+                                    int altura = (int) 19; // Altura da imagem
+                                    float troubleShotXValue = floatPosX + 9;
+                                    float troubleShotYValue = floatPosY + 20;
+                                    float TextDynamic = 0;
+                                    if (getSimplePatInfo().length() > 1) {
                                         TextDynamic = ((float) getSimplePatInfo().length() / 2) * 4.25f;
-                                   }
+                                    }
 
-                                   // Renderiza a imagem na tela
-                                   GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
-                                   Minecraft.getInstance().font.draw(event.getMatrixStack(),
-                                           getSimplePatInfo(), troubleShotXValue + -TextDynamic, troubleShotYValue, Color3.getColor("#ffabab").toInt());
+                                    if (instance != null) {
+                                        if (instance.getChangedEntity() instanceof IDynamicPawColor iDynamicPawColor) {
+                                            Color pawColor = iDynamicPawColor.getPawColor();
+                                            RenderSystem.setShaderColor(pawColor.getRed() / 255f, pawColor.getGreen() / 255f, pawColor.getBlue() / 255f, pawColor.getAlpha() / 255f);
+                                            // Renderiza a imagem na tela
+                                            GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
+                                            Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                                    getSimplePatInfo(), troubleShotXValue + -TextDynamic, troubleShotYValue, pawColor.getRGB());
+                                        } else {
+                                            // Renderiza a imagem na tela
+                                            GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
+                                            Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                                    getSimplePatInfo(), troubleShotXValue + -TextDynamic, troubleShotYValue, Color3.getColor("#ffabab").toInt());
+                                        }
+                                    } else {
+                                        // Renderiza a imagem na tela
+                                        GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
+                                        Minecraft.getInstance().font.draw(event.getMatrixStack(),
+                                                getSimplePatInfo(), troubleShotXValue + -TextDynamic, troubleShotYValue, Color3.getColor("#ffabab").toInt());
+                                    }
+
+
                                 }
-                        	}
+                            }
                         }
                     }
                 }
@@ -102,7 +125,7 @@ public class PatOverlay {
     }
 
     private static boolean isEntityInPassiveStage(Entity lookedEntity) {
-        if (lookedEntity instanceof ChangedEntity changedEntity){
+        if (lookedEntity instanceof ChangedEntity changedEntity) {
             return changedEntity.getTarget() == null;
         } else if (lookedEntity instanceof Mob mob) {
             return mob.getTarget() == null;
@@ -111,53 +134,50 @@ public class PatOverlay {
 
 
     private static boolean isPatableEntity(Player player, Entity patEntity) {
-    	// Verifica se a entidade está dentro das tags definidas como 'patable entities'
-    	boolean isPatableByTag = patEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
-        	    new ResourceLocation("changed_addon:patable_entitys")));
+        // Verifica se a entidade está dentro das tags definidas como 'patable entities'
+        boolean isPatableByTag = patEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
+                new ResourceLocation("changed_addon:patable_entitys")));
 
-    	// Verifica se a visão do jogador está limpa até a entidade
-    	if (!isLineOfSightClear(player, patEntity)) {
-        	return false;
-    	}	
+        // Verifica se a visão do jogador está limpa até a entidade
+        if (!isLineOfSightClear(player, patEntity)) {
+            return false;
+        }
 
-    	if (patEntity instanceof Player patPlayer) {
-        	boolean isPatPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(patPlayer) != null;
-        	boolean isPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(player) != null;
-        	if (isPatPlayerTransfur) {
-            	return true;
-        	} else if (isPlayerTransfur) {
-            	return true;
-        	}
-    	} else if (patEntity instanceof ChangedEntity) {
-        	return true;
-    	}
-    	return isPatableByTag;
-	}
+        if (patEntity instanceof Player patPlayer) {
+            boolean isPatPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(patPlayer) != null;
+            boolean isPlayerTransfur = ProcessTransfur.getPlayerTransfurVariant(player) != null;
+            if (isPatPlayerTransfur) {
+                return true;
+            } else if (isPlayerTransfur) {
+                return true;
+            }
+        } else if (patEntity instanceof ChangedEntity) {
+            return true;
+        }
+        return isPatableByTag;
+    }
 
 
-	private static boolean isLineOfSightClear(Player player, Entity entity) {
-    	var level = player.getLevel();
-    	var playerEyePos = player.getEyePosition(1.0F); // Posição dos olhos do jogador
-    	var entityEyePos = entity.getBoundingBox().getCenter(); // Centro da entidade
+    private static boolean isLineOfSightClear(Player player, Entity entity) {
+        var level = player.getLevel();
+        var playerEyePos = player.getEyePosition(1.0F); // Posição dos olhos do jogador
+        var entityEyePos = entity.getBoundingBox().getCenter(); // Centro da entidade
 
-    	// Realiza o traçado de linha
-    	var result = level.clip(new ClipContext(
-            	playerEyePos, 
-            	entityEyePos,
+        // Realiza o traçado de linha
+        var result = level.clip(new ClipContext(
+                playerEyePos,
+                entityEyePos,
                 ClipContext.Block.VISUAL, // Apenas blocos visuais são considerados
-            	ClipContext.Fluid.NONE, // Ignorar fluidos
-            	player
-    	));
+                ClipContext.Fluid.NONE, // Ignorar fluidos
+                player
+        ));
 
-    	// Retorna true se o resultado for MISS (nenhum bloco obstruindo)
-    	return result.getType() == HitResult.Type.MISS;
-	}
-
-
+        // Retorna true se o resultado for MISS (nenhum bloco obstruindo)
+        return result.getType() == HitResult.Type.MISS;
+    }
 
 
-
-    public static boolean isKeySet(){
+    public static boolean isKeySet() {
         String key = ChangedAddonKeyMappings.PAT_KEY.getTranslatedKeyMessage().getString();
         return !key.isEmpty();
     }
@@ -185,7 +205,7 @@ public class PatOverlay {
         if (lookedEntity instanceof LivingEntity) {
             TextComponent patMessage;
 
-            if(lookedEntity.hasCustomName()){
+            if (lookedEntity.hasCustomName()) {
                 patMessage = new TextComponent(lookedEntity.getCustomName().getString());
             } else {
                 patMessage = new TextComponent(lookedEntity.getDisplayName().getString());

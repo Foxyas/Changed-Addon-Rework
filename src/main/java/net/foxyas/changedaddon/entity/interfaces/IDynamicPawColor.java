@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity;
+package net.foxyas.changedaddon.entity.interfaces;
 
 import java.awt.*;
 
