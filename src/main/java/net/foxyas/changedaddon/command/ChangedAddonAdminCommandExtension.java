@@ -67,7 +67,7 @@ public class ChangedAddonAdminCommandExtension {
             }
         }
 
-        source.sendSuccess(new TextComponent("Set Infection of " + value + " blocks to neutral"), true);
+        source.sendSuccess(new TextComponent("Set Infection of " + value + " blocks to " + enumValue.toString().toLowerCase().replace("_", " ")), true);
         return 1;
     }
 }
