@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -164,27 +165,66 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     }
 
 
+    /*@Override
+    protected void onHitBlock(@NotNull BlockHitResult result) {
+        super.onHitBlock(result);
+        if (this.getLevel() instanceof ServerLevel serverLevel) {
+            BlockState hitState = serverLevel.getBlockState(result.getBlockPos());
+            if (hitState.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || hitState.isAir()) {
+                return;
+            }
+            Explosion explosion = new Explosion(serverLevel, this, this.position().x(), this.position().y(), this.position().z(), 3f);
+            //AABB BoundBox = new AABB(result.getBlockPos());
+            //BoundBox.inflate(1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem));
+            int radius = 1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem);
+
+            // Todas as direções possíveis
+            Direction[] directions = Direction.values();
+
+            for (Direction dir1 : directions) {
+                for (Direction dir2 : directions) {
+                    if (dir1 != dir2 && dir1.getAxis() != dir2.getAxis()) {
+                        for (BlockPos pos : BlockPos.spiralAround(result.getBlockPos(), radius, dir1, dir2)) {
+                            BlockState state = serverLevel.getBlockState(pos);
+                            if (state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || state.isAir()) continue;
+
+                            if (TierSortingRegistry.isCorrectTierForDrops(Tiers.STONE, state) &&
+                                    state.getExplosionResistance(serverLevel, result.getBlockPos(), explosion) < 1) {
+                                serverLevel.setBlockAndUpdate(pos, ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState());
+                                serverLevel.playSound(null, pos,
+                                        ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState().getSoundType().getPlaceSound(),
+                                        SoundSource.BLOCKS, 1, 1);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }*/
+
     @Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
         super.onHitBlock(result);
         if (this.getLevel() instanceof ServerLevel serverLevel) {
             BlockState hitState = serverLevel.getBlockState(result.getBlockPos());
-            if (hitState.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get())) {
+            if (hitState.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || hitState.isAir()) {
                 return;
             }
             Explosion explosion = new Explosion(serverLevel, this, this.position().x(), this.position().y(), this.position().z(), 3f);
-            AABB BoundBox = new AABB(result.getBlockPos());
-            BoundBox.inflate(EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem));
-            for (BlockPos pos : FoxyasUtils.getBlockPositionsInSphere(BoundBox).toList()) {
+            //AABB BoundBox = new AABB(result.getBlockPos());
+            //BoundBox.inflate(1 + EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem));
+            int radius = 1 + Math.max(0, (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, this.SpearItem) - 1));
+            for (BlockPos pos : FoxyasUtils.betweenClosedStreamSphere(result.getBlockPos(), radius, radius).toList()) {
                 BlockState state = serverLevel.getBlockState(pos);
-                if (state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get())) {
+                if (state.is(ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get()) || state.isAir()) {
                     continue;
                 }
                 if (TierSortingRegistry.isCorrectTierForDrops(Tiers.STONE, state) && state.getExplosionResistance(serverLevel, result.getBlockPos(), explosion) < 1) {
                     serverLevel.setBlockAndUpdate(pos, ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState());
                     serverLevel.playSound(null, pos,
-							ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState().getSoundType().getPlaceSound(),
-							SoundSource.BLOCKS, 1, 1);
+                            ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get().defaultBlockState().getSoundType().getPlaceSound(),
+                            SoundSource.BLOCKS, 1, 1);
                 }
             }
         }

@@ -26,10 +26,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -46,22 +43,35 @@ public class FoxyasUtils {
     public static Stream<BlockPos> getBlockPositionsInSphere(BlockPos center, int radius) {
         return BlockPos.betweenClosedStream(
                 center.offset(-radius, -radius, -radius),
-                center.offset(radius, radius, radius)
+                center.offset( radius,  radius,  radius)
         ).filter(pos -> pos.distSqr(center) <= radius * radius);
     }
 
-    public static Stream<BlockPos> getBlockPositionsInSphere(AABB box) {
-        return BlockPos.betweenClosedStream(box
-        ).filter(pos -> pos.distSqr(new BlockPos(box.getCenter())) <= box.getSize() * box.getSize());
+
+    public static Stream<BlockPos> betweenClosedStreamSphere(BlockPos center, int horizontalRadiusSphere, int verticalRadiusSphere) {
+        List<BlockPos> blockPosList = new ArrayList<>();
+        for (int i = -verticalRadiusSphere; i <= verticalRadiusSphere; i++) {
+            for (int xi = -horizontalRadiusSphere; xi <= horizontalRadiusSphere; xi++) {
+                for (int zi = -horizontalRadiusSphere; zi <= horizontalRadiusSphere; zi++) {
+                    double distanceSq = (xi * xi) / (double) (horizontalRadiusSphere * horizontalRadiusSphere) + (i * i) / (double) (verticalRadiusSphere * verticalRadiusSphere)
+                            + (zi * zi) / (double) (horizontalRadiusSphere * horizontalRadiusSphere);
+                    if (distanceSq <= 1.0) {
+                        BlockPos pos = center.offset(xi, i, zi);
+                        blockPosList.add(pos);
+                    }
+                }
+            }
+        }
+
+        return blockPosList.stream();
     }
 
 
     /**
      * Checks if one entity (eyeEntity) can see another (targetToSee), using raycasting and FOV.
-     *
-     * @param eyeEntity   The entity doing the looking.
+     * @param eyeEntity The entity doing the looking.
      * @param targetToSee The target entity being looked at.
-     * @param fovDegrees  Field of view angle in degrees (e.g., 90 means 45 degrees to each side).
+     * @param fovDegrees Field of view angle in degrees (e.g., 90 means 45 degrees to each side).
      * @return true if visible and within FOV, false otherwise.
      */
     public static boolean canEntitySeeOther(LivingEntity eyeEntity, LivingEntity targetToSee, double fovDegrees) {
@@ -92,8 +102,7 @@ public class FoxyasUtils {
 
     /**
      * Verifica se eyeEntity consegue ver targetToSee com base na linha de visão.
-     *
-     * @param eyeEntity   A entidade que está observando.
+     * @param eyeEntity A entidade que está observando.
      * @param targetToSee A entidade que deve ser visível.
      * @return true se for visível, false se houver obstrução.
      */
@@ -227,6 +236,7 @@ public class FoxyasUtils {
             }
         }
     }
+
 
 
     public static void repairArmor(LivingEntity entity, int amountPerPiece) {
