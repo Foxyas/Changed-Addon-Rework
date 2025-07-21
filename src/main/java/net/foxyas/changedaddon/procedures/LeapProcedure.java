@@ -1,11 +1,12 @@
 package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -19,13 +20,10 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -33,319 +31,217 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LeapProcedure {
-    public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-        if (entity == null) return;
 
+    public static void execute(Level level, double x, double y, double z, Player player) {
         double deltaX, deltaY, deltaZ;
         double motionX, motionY, motionZ;
         double speed, ySpeed;
-        if (entity instanceof Player player) {
-            TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (instance != null) {
-                if (CanLeapProcedure.execute(entity)) {
-                    if (!player.hasEffect(ChangedAddonMobEffects.FADIGE.get())) {
-                        if ((entity instanceof Player _plr ? _plr.getFoodData().getFoodLevel() : 0) > 6) {
-                            if (entity.isOnGround() && !entity.isInWater()) {
-                                if (!entity.isShiftKeyDown()) {
-                                    deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
-                                    deltaY = -Math.sin((entity.getXRot() / 180) * (float) Math.PI);
-                                    deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-                                    speed = 0.4;
-                                    motionX = deltaX * speed;
-                                    motionY = deltaY * speed;
-                                    motionZ = deltaZ * speed;
-                                    entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-                                    if (!(new Object() {
-                                        public boolean checkGamemode(Entity _ent) {
-                                            if (_ent instanceof ServerPlayer _serverPlayer) {
-                                                return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                                            } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                                return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                        && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                                            }
-                                            return false;
-                                        }
-                                    }.checkGamemode(entity))) {
-                                        if (entity instanceof Player _player)
-                                            _player.causeFoodExhaustion((float) 0.3);
-                                        if (!player.level.isClientSide())
-                                            player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 40, 0, false, false));
-                                    }
-                                    {
-                                        Entity _ent = entity;
-                                        if (!_ent.level.isClientSide() && _ent.getServer() != null)
-                                            _ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
-                                    }
-                                } else {
-                                    deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
-                                    deltaY = entity.level.clip(new ClipContext(entity.getEyePosition(1f), entity.getEyePosition(1f).add(entity.getViewVector(1f).scale(1)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, entity)).getBlockPos().getY()
-                                            - entity.getY();
-                                    deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-                                    speed = 0.15;
-                                    ySpeed = 0.5;
-                                    motionX = deltaX * speed;
-                                    motionY = deltaY * ySpeed;
-                                    motionZ = deltaZ * speed;
-                                    entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-                                    if (!(new Object() {
-                                        public boolean checkGamemode(Entity _ent) {
-                                            if (_ent instanceof ServerPlayer _serverPlayer) {
-                                                return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                                            } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                                return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                        && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                                            }
-                                            return false;
-                                        }
-                                    }.checkGamemode(entity))) {
-                                        if (entity instanceof Player _player)
-                                            _player.causeFoodExhaustion((float) (motionY * 1.25));
-                                        if (!player.level.isClientSide())
-                                            player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 40, 0, false, false));
-                                    }
-                                    if (!(entity instanceof ServerPlayer _plr28 && _plr28.level instanceof ServerLevel
-                                            && _plr28.getAdvancements().getOrStartProgress(_plr28.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"))).isDone())) {
-                                        if (motionY >= 0.75) {
-                                            if (entity instanceof ServerPlayer _player) {
-                                                Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"));
-                                                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
-                                                if (!_ap.isDone()) {
-                                                    Iterator _iterator = _ap.getRemainingCriteria().iterator();
-                                                    while (_iterator.hasNext())
-                                                        _player.getAdvancements().award(_adv, (String) _iterator.next());
-                                                }
-                                            }
-                                        }
-                                    }
-                                    {
-                                        Entity _ent = entity;
-                                        if (!_ent.level.isClientSide() && _ent.getServer() != null)
-                                            _ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
-                                    }
+
+        TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(player);
+        if(tf == null) return;
+
+        if (canLeap(tf)) {
+            if (!player.hasEffect(ChangedAddonMobEffects.FADIGE.get()) && player.getFoodData().getFoodLevel() > 6
+                    && player.isOnGround() && !player.isInWater()) {
+                if (!player.isShiftKeyDown()) {
+                    deltaX = -Math.sin((player.getYRot() / 180) * (float) Math.PI);
+                    deltaY = -Math.sin((player.getXRot() / 180) * (float) Math.PI);
+                    deltaZ = Math.cos((player.getYRot() / 180) * (float) Math.PI);
+                    speed = 0.4;
+                    motionX = deltaX * speed;
+                    motionY = deltaY * speed;
+                    motionZ = deltaZ * speed;
+                    player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));
+
+                    if (!player.isCreative()) {
+                        player.causeFoodExhaustion((float) 0.3);
+                        if (!player.level.isClientSide())
+                            player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 40, 0, false, false));
+                    }
+
+                    if (!player.level.isClientSide() && player.getServer() != null)
+                        player.getServer().getCommands().performCommand(player.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+                } else {
+                    deltaX = -Math.sin((player.getYRot() / 180) * (float) Math.PI);
+                    deltaY = player.level.clip(new ClipContext(player.getEyePosition(1f), player.getEyePosition(1f).add(player.getViewVector(1f).scale(1)), ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player)).getBlockPos().getY()
+                            - player.getY();
+                    deltaZ = Math.cos((player.getYRot() / 180) * (float) Math.PI);
+                    speed = 0.15;
+                    ySpeed = 0.5;
+                    motionX = deltaX * speed;
+                    motionY = deltaY * ySpeed;
+                    motionZ = deltaZ * speed;
+                    player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));
+
+                    if (!player.isCreative()) {
+                        player.causeFoodExhaustion((float) (motionY * 1.25));
+                        if (!player.level.isClientSide())
+                            player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 40, 0, false, false));
+                    }
+
+                    if (!(player instanceof ServerPlayer sPlayer && sPlayer.level instanceof ServerLevel
+                            && sPlayer.getAdvancements().getOrStartProgress(sPlayer.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"))).isDone())) {
+                        if (motionY >= 0.75) {
+                            if (player instanceof ServerPlayer _player) {
+                                Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:leaper"));
+                                AdvancementProgress _ap = _player.getAdvancements().getOrStartProgress(_adv);
+                                if (!_ap.isDone()) {
+                                    for (String s : _ap.getRemainingCriteria())
+                                        _player.getAdvancements().award(_adv, s);
                                 }
                             }
                         }
                     }
-                } else if (instance.getFormId().toString().equals("changed_addon:form_ket_experiment009_boss")) {
-                    if (!player.hasEffect(ChangedAddonMobEffects.FADIGE.get())) {
-                        if (!(new Object() {
-                            public boolean checkGamemode(Entity _ent) {
-                                if (_ent instanceof ServerPlayer _serverPlayer) {
-                                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                            && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-                                }
-                                return false;
+
+                    if (!player.level.isClientSide() && player.getServer() != null)
+                        player.getServer().getCommands().performCommand(player.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+                }
+            }
+        } else if (tf.getFormId().toString().equals("changed_addon:form_ket_experiment009_boss")) {
+            if (player.hasEffect(ChangedAddonMobEffects.FADIGE.get()) || player.isSpectator()) return;
+
+            deltaX = -Math.sin((player.getYRot() / 180) * (float) Math.PI);
+            deltaY = -Math.sin((player.getXRot() / 180) * (float) Math.PI);
+            deltaZ = Math.cos((player.getYRot() / 180) * (float) Math.PI);
+            speed = 2;
+            motionX = deltaX * speed;
+            motionY = deltaY * 1;
+            motionZ = deltaZ * speed;
+
+            if (player.isOnGround() && !player.isInWater() && !player.isShiftKeyDown()) {
+                level.levelEvent(2001, new BlockPos(player.getX(), player.getY() - 1, player.getZ()), Block.getId((level.getBlockState(new BlockPos(player.getX(), player.getY() - 1, player.getZ())))));
+                player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));
+
+                if (!player.level.isClientSide() && player.getServer() != null)
+                    player.getServer().getCommands().performCommand(player.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+
+                if (!player.isCreative()) {
+                    player.causeFoodExhaustion((float) 0.1);
+                    if (!player.level.isClientSide())
+                        player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 60, 0));
+                }
+            }
+
+            int horizontalRadiusHemiTop = 4 - 1;
+            int verticalRadiusHemiTop = 1;
+            for (int yi = 0; yi < verticalRadiusHemiTop; yi++) {
+                for (int xi = -horizontalRadiusHemiTop; xi <= horizontalRadiusHemiTop; xi++) {
+                    for (int zi = -horizontalRadiusHemiTop; zi <= horizontalRadiusHemiTop; zi++) {
+                        double distanceSq = (xi * xi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop) + (yi * yi) / (double) (verticalRadiusHemiTop * verticalRadiusHemiTop)
+                                + (zi * zi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop);
+                        if (distanceSq > 1.0) continue;
+
+                        final Vec3 center = new Vec3(x + xi, y + yi, z + zi);
+                        List<Entity> _entfound = level.getEntitiesOfClass(Entity.class, new AABB(center, center).inflate(1, 2, 1), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(center))).toList();
+                        for (Entity entity : _entfound) {
+                            if (entity == player) continue;
+
+                            if (!player.isCreative()) {
+                                player.causeFoodExhaustion((float) 0.1);
+                                if (!player.level.isClientSide())
+                                    player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 100, 0));
                             }
-                        }.checkGamemode(entity))) {
-                            deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
-                            deltaY = -Math.sin((entity.getXRot() / 180) * (float) Math.PI);
-                            deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-                            speed = 2;
-                            motionX = deltaX * speed;
-                            motionY = deltaY * 1;
-                            motionZ = deltaZ * speed;
-                            if (entity.isOnGround() && !entity.isInWater()) {
-                                if (!entity.isShiftKeyDown()) {
-                                    world.levelEvent(2001, new BlockPos(entity.getX(), entity.getY() - 1, entity.getZ()), Block.getId((world.getBlockState(new BlockPos(entity.getX(), entity.getY() - 1, entity.getZ())))));
-                                    entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-                                    {
-                                        Entity _ent = entity;
-                                        if (!_ent.level.isClientSide() && _ent.getServer() != null)
-                                            _ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
+
+                            if(!(entity instanceof Player pl) || pl.isCreative() || pl.isSpectator()) continue;
+
+                            entity.setDeltaMovement(new Vec3(0, 0.7, 0));
+                            level.addParticle(ParticleTypes.FLASH, x + xi, y + yi, z + zi, 0, 0.7, 0);
+                            player.swing(InteractionHand.MAIN_HAND, true);
+                            entity.hurt(((new EntityDamageSource("lightningBolt", player) {
+                                @Override
+                                public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
+                                    Component entityName = _livingEntity.getDisplayName();
+                                    Component itemName = null;
+                                    Entity attacker = this.getEntity();
+                                    ItemStack stack = ItemStack.EMPTY;
+                                    Component attackerName = attacker.getDisplayName();
+                                    if (attacker instanceof LivingEntity livingAttacker) {
+                                        stack = livingAttacker.getMainHandItem();
                                     }
-                                    if (!(new Object() {
-                                        public boolean checkGamemode(Entity _ent) {
-                                            if (_ent instanceof ServerPlayer _serverPlayer) {
-                                                return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                                            } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                                return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                        && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                                            }
-                                            return false;
-                                        }
-                                    }.checkGamemode(entity))) {
-                                        if (entity instanceof Player _player)
-                                            _player.causeFoodExhaustion((float) 0.1);
-                                        if (!player.level.isClientSide())
-                                            player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 60, 0));
+                                    if (!stack.isEmpty() && stack.hasCustomHoverName()) {
+                                        itemName = stack.getDisplayName();
                                     }
+
+                                    return itemName != null
+                                            ? new TranslatableComponent("death.attack." + "lightningBolt.player", entityName, attackerName, itemName)
+                                            : new TranslatableComponent("death.attack." + "lightningBolt.player", entityName, attackerName);
                                 }
-                            }
-                            int horizontalRadiusHemiTop = 4 - 1;
-                            int verticalRadiusHemiTop = 1;
-                            int yIterationsHemiTop = verticalRadiusHemiTop;
-                            for (int i = 0; i < yIterationsHemiTop; i++) {
-                                for (int xi = -horizontalRadiusHemiTop; xi <= horizontalRadiusHemiTop; xi++) {
-                                    for (int zi = -horizontalRadiusHemiTop; zi <= horizontalRadiusHemiTop; zi++) {
-                                        double distanceSq = (xi * xi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop) + (i * i) / (double) (verticalRadiusHemiTop * verticalRadiusHemiTop)
-                                                + (zi * zi) / (double) (horizontalRadiusHemiTop * horizontalRadiusHemiTop);
-                                        if (distanceSq <= 1.0) {
-                                            {
-                                                final Vec3 _center = new Vec3(x + xi, y + i, z + zi);
-                                                List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(1, 2, 1), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-                                                        .collect(Collectors.toList());
-                                                for (Entity entityiterator : _entfound) {
-                                                    if (!(entityiterator == entity)) {
-                                                        if (!(new Object() {
-                                                            public boolean checkGamemode(Entity _ent) {
-                                                                if (_ent instanceof ServerPlayer _serverPlayer) {
-                                                                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                                                                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                                                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                                            && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                                                                }
-                                                                return false;
-                                                            }
-                                                        }.checkGamemode(entity))) {
-                                                            if (entity instanceof Player _player)
-                                                                _player.causeFoodExhaustion((float) 0.1);
-                                                            if (!player.level.isClientSide())
-                                                                player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 100, 0));
-                                                        }
-                                                        if (!(new Object() {
-                                                            public boolean checkGamemode(Entity _ent) {
-                                                                if (_ent instanceof ServerPlayer _serverPlayer) {
-                                                                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                                                                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                                                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                                            && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                                                                }
-                                                                return false;
-                                                            }
-                                                        }.checkGamemode(entityiterator)) && !(new Object() {
-                                                            public boolean checkGamemode(Entity _ent) {
-                                                                if (_ent instanceof ServerPlayer _serverPlayer) {
-                                                                    return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.SPECTATOR;
-                                                                } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                                                    return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                                            && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.SPECTATOR;
-                                                                }
-                                                                return false;
-                                                            }
-                                                        }.checkGamemode(entityiterator))) {
-                                                            entityiterator.setDeltaMovement(new Vec3(0, 0.7, 0));
-                                                            world.addParticle(ParticleTypes.FLASH, x + xi, y + i, z + zi, 0, 0.7, 0);
-                                                            if (!(entityiterator instanceof ItemEntity)) {
-                                                                player.swing(InteractionHand.MAIN_HAND, true);
-                                                                entityiterator.hurt(((new EntityDamageSource("lightningBolt", entity) {
-                                                                    @Override
-                                                                    public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity _livingEntity) {
-                                                                        Component _attackerName = null;
-                                                                        Component _entityName = _livingEntity.getDisplayName();
-                                                                        Component _itemName = null;
-                                                                        Entity _attacker = this.getEntity();
-                                                                        ItemStack _itemStack = ItemStack.EMPTY;
-                                                                        _attackerName = _attacker.getDisplayName();
-                                                                        if (_attacker instanceof LivingEntity _livingAttacker) {
-                                                                            _itemStack = _livingAttacker.getMainHandItem();
-                                                                        }
-                                                                        if (!_itemStack.isEmpty() && _itemStack.hasCustomHoverName()) {
-                                                                            _itemName = _itemStack.getDisplayName();
-                                                                        }
-                                                                        if (_itemName != null) {
-                                                                            return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName, _itemName);
-                                                                        } else {
-                                                                            return new TranslatableComponent("death.attack." + "lightningBolt.player", _entityName, _attackerName);
-                                                                        }
-                                                                    }
-                                                                })), 3);
-                                                                if (world instanceof Level _level) {
-                                                                    if (!_level.isClientSide()) {
-                                                                        _level.playSound(null, new BlockPos(entityiterator.getX(), entityiterator.getY(), entityiterator.getZ()),
-                                                                                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0);
-                                                                    } else {
-                                                                        _level.playLocalSound((entityiterator.getX()), (entityiterator.getY()), (entityiterator.getZ()),
-                                                                                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0, false);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else if (CanLeapProcedure.flyentity(entity)) {
-                    if (!player.hasEffect(ChangedAddonMobEffects.FADIGE.get())) {
-                        if ((player.getFoodData().getFoodLevel() > 8)) {
-                            if (player.getAbilities().flying && !player.isFallFlying()) {
-                                deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
-                                deltaY = -Math.sin((entity.getXRot() / 180) * (float) Math.PI);
-                                deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-                                speed = 2;
-                                motionX = deltaX * speed;
-                                motionY = deltaY * speed;
-                                motionZ = deltaZ * speed;
-                                entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-                                if (!(new Object() {
-                                    public boolean checkGamemode(Entity _ent) {
-                                        if (_ent instanceof ServerPlayer _serverPlayer) {
-                                            return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                                        } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                            return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                    && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                                        }
-                                        return false;
-                                    }
-                                }.checkGamemode(entity))) {
-                                    if (entity instanceof Player _player)
-                                        _player.causeFoodExhaustion((float) 0.8);
-                                    if (!player.level.isClientSide())
-                                        player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 30, 0, false, false));
-                                }
-                                {
-                                    Entity _ent = entity;
-                                    if (!_ent.level.isClientSide() && _ent.getServer() != null)
-                                        _ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
-                                }
+                            })), 3);
+
+                            if (!level.isClientSide()) {
+                                level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()),
+                                        ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0);
                             } else {
-                                if (player.isFallFlying()) {
-                                    deltaX = -Math.sin((entity.getYRot() / 180) * (float) Math.PI);
-                                    deltaY = -Math.sin((entity.getXRot() / 180) * (float) Math.PI);
-                                    deltaZ = Math.cos((entity.getYRot() / 180) * (float) Math.PI);
-                                    speed = 2;
-                                    motionX = deltaX * speed;
-                                    motionY = deltaY * speed;
-                                    motionZ = deltaZ * speed;
-                                    entity.setDeltaMovement(entity.getDeltaMovement().add(motionX, motionY, motionZ));
-                                    if (!(new Object() {
-                                        public boolean checkGamemode(Entity _ent) {
-                                            if (_ent instanceof ServerPlayer _serverPlayer) {
-                                                return _serverPlayer.gameMode.getGameModeForPlayer() == GameType.CREATIVE;
-                                            } else if (_ent.level.isClientSide() && _ent instanceof Player _player) {
-                                                return Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()) != null
-                                                        && Minecraft.getInstance().getConnection().getPlayerInfo(_player.getGameProfile().getId()).getGameMode() == GameType.CREATIVE;
-                                            }
-                                            return false;
-                                        }
-                                    }.checkGamemode(entity))) {
-                                        if (entity instanceof Player _player)
-                                            _player.causeFoodExhaustion(4);
-                                        if (!player.level.isClientSide())
-                                            player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 60, 0, false, false));
-                                    }
-                                    {
-                                        Entity _ent = entity;
-                                        if (!_ent.level.isClientSide() && _ent.getServer() != null)
-                                            _ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
-                                    }
-                                }
+                                level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()),
+                                        ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.lightning_bolt.impact")), SoundSource.NEUTRAL, 1, 0, false);
                             }
                         }
                     }
                 }
             }
+        } else if (canFly(tf)) {
+            if (player.hasEffect(ChangedAddonMobEffects.FADIGE.get()) || player.getFoodData().getFoodLevel() < 8) return;
+
+            if (player.getAbilities().flying && !player.isFallFlying()) {
+                deltaX = -Math.sin((player.getYRot() / 180) * (float) Math.PI);
+                deltaY = -Math.sin((player.getXRot() / 180) * (float) Math.PI);
+                deltaZ = Math.cos((player.getYRot() / 180) * (float) Math.PI);
+                speed = 2;
+                motionX = deltaX * speed;
+                motionY = deltaY * speed;
+                motionZ = deltaZ * speed;
+                player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));
+
+                if (!player.isCreative()) {
+                    player.causeFoodExhaustion((float) 0.8);
+                    if (!player.level.isClientSide())
+                        player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 30, 0, false, false));
+                }
+
+            } else {
+                if (!player.isFallFlying()) return;
+
+                deltaX = -Math.sin((player.getYRot() / 180) * (float) Math.PI);
+                deltaY = -Math.sin((player.getXRot() / 180) * (float) Math.PI);
+                deltaZ = Math.cos((player.getYRot() / 180) * (float) Math.PI);
+                speed = 2;
+                motionX = deltaX * speed;
+                motionY = deltaY * speed;
+                motionZ = deltaZ * speed;
+                player.setDeltaMovement(player.getDeltaMovement().add(motionX, motionY, motionZ));
+
+                if (!player.isCreative()) {
+                    player.causeFoodExhaustion(4);
+                    if (!player.level.isClientSide())
+                        player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.FADIGE.get(), 60, 0, false, false));
+                }
+            }
+
+            if (!player.level.isClientSide() && player.getServer() != null)
+                player.getServer().getCommands().performCommand(player.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:bow2 ambient @a ~ ~ ~ 2.5 1 0");
         }
+    }
+
+    private static boolean canLeap(TransfurVariantInstance<?> tf){
+        TransfurVariant<?> Variant = TransfurVariant.getEntityVariant(tf.getChangedEntity());
+        if (Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)) {
+            return !Variant.is(ChangedAddonTransfurVariants.LATEX_SNEP.get())
+                    && !Variant.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD.get())
+                    && !Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10.get())
+                    && !Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS.get())
+                    && !Variant.is(ChangedAddonTransfurVariants.LYNX.get());
+        }
+        return false;
+    }
+
+    private static boolean canFly(TransfurVariantInstance<?> tf){
+        /*TransfurVariant Variant = TransfurVariant.getEntityVariant(tf.getChangedEntity());
+		if (Variant.canGlide){
+			return true;
+		}*/
+        return false;
     }
 }

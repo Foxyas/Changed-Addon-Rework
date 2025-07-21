@@ -1,17 +1,15 @@
 
 package net.foxyas.changedaddon.network;
 
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.FriendlyByteBuf;
-
-import net.foxyas.changedaddon.procedures.PatKeyOnKeyPressedProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.procedures.PatFeatureHandleProcedure;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -42,17 +40,13 @@ public class PatKeyMessage {
 		context.setPacketHandled(true);
 	}
 
-	public static void pressAction(Player entity, int type, int pressedms) {
-		Level world = entity.level;
-		double x = entity.getX();
-		double y = entity.getY();
-		double z = entity.getZ();
-		// security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(entity.blockPosition()))
-			return;
+	public static void pressAction(Player player, int type, int pressedms) {
+		if(player == null) return;
+		Level level = player.level;
+
 		if (type == 0) {
 
-			PatKeyOnKeyPressedProcedure.execute(world, x, y, z, entity);
+			PatFeatureHandleProcedure.execute(level, player);
 		}
 	}
 

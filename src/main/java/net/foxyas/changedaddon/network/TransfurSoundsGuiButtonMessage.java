@@ -8,7 +8,6 @@ import net.foxyas.changedaddon.process.util.DelayedTask;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -76,61 +75,51 @@ public class TransfurSoundsGuiButtonMessage {
             Triple.of(new ResourceLocation("entity.cat.purreow"), IfCatLatexProcedure::execute, 20)
     );
 
-    public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
-        Level level = entity.level;
-        // security measure to prevent arbitrary chunk generation
-        if (!level.hasChunkAt(new BlockPos(x, y, z))) return;
+    public static void handleButtonAction(Player player, int buttonID, int x, int y, int z) {
+        if(player == null) return;
 
-        if (!ProcessTransfur.isPlayerTransfurred(entity)) return;
+        if (!ProcessTransfur.isPlayerTransfurred(player)) return;
 
-        ChangedAddonModVariables.PlayerVariables vars = entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
+        ChangedAddonModVariables.PlayerVariables vars = player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
         if (vars == null) return;
 
         switch (buttonID) {
             case 0, 1, 2, 3, 4, 5, 6 -> {
                 if (vars.act_cooldown) break;
                 Triple<ResourceLocation, Predicate<Entity>, Integer> triple = sounds.get(buttonID);
-                if (triple.getMiddle().test(entity))
-                    playSound(level, entity, ForgeRegistries.SOUND_EVENTS.getValue(triple.getLeft()), vars, triple.getRight());
+                if (triple.getMiddle().test(player))
+                    playSound(player.level, player, ForgeRegistries.SOUND_EVENTS.getValue(triple.getLeft()), vars, triple.getRight());
             }
             case 7 -> {
                 if (!vars.act_cooldown) break;
 
                 vars.act_cooldown = false;
-                vars.syncPlayerVariables(entity);
+                vars.syncPlayerVariables(player);
             }
             case 8 -> {
-                if (level.isClientSide || vars.act_cooldown) return;
-                TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(entity);
+                if (vars.act_cooldown) return;
+                TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(player);
                 if (tf == null) break;
 
-                Commands commands = entity.getServer().getCommands();
                 if (tf.getFormId().toString().contains("changed_addon:form_ket_experiment009")) {
-                    //commands.performCommand(entity.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:monster2 hostile @a ~ ~ ~ 35 0 0");
-                    entity.getLevel().playSound(null, entity.position().x, entity.position().y, entity.position().z, ChangedSounds.MONSTER2, SoundSource.HOSTILE, 35, 0);
+                    player.getLevel().playSound(null, player.position().x, player.position().y, player.position().z, ChangedSounds.MONSTER2, SoundSource.HOSTILE, 35, 0);
                 } else {
-                    //commands.performCommand(entity.createCommandSourceStack().withSuppressedOutput().withPermission(4), "playsound changed:monster2 hostile @a ~ ~ ~ 5 1");
-                    entity.getLevel().playSound(null, entity.position().x, entity.position().y, entity.position().z, ChangedSounds.MONSTER2, SoundSource.HOSTILE, 5, 1);
+                    player.getLevel().playSound(null, player.position().x, player.position().y, player.position().z, ChangedSounds.MONSTER2, SoundSource.HOSTILE, 5, 1);
                 }
 
-
                 vars.act_cooldown = true;
-                vars.syncPlayerVariables(entity);
+                vars.syncPlayerVariables(player);
 
                 new DelayedTask(60, null, i -> {
                     vars.act_cooldown = false;
-                    vars.syncPlayerVariables(entity);
+                    vars.syncPlayerVariables(player);
                 });
             }
         }
     }
 
     private static void playSound(Level level, Entity entity, SoundEvent sound, ChangedAddonModVariables.PlayerVariables vars, int cooldown) {
-        if (!level.isClientSide()) {
-            level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), sound, SoundSource.PLAYERS, 2, 1);
-        } else {
-            level.playLocalSound((entity.getX()), (entity.getY()), (entity.getZ()), sound, SoundSource.PLAYERS, 2, 1, false);
-        }
+        level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), sound, SoundSource.PLAYERS, 2, 1);
 
         vars.act_cooldown = true;
         vars.syncPlayerVariables(entity);

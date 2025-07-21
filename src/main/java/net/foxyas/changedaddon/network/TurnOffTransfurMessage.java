@@ -1,17 +1,16 @@
 
 package net.foxyas.changedaddon.network;
 
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.FriendlyByteBuf;
-
-import net.foxyas.changedaddon.procedures.TurnOffTransfurOnKeyPressedProcedure;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -42,14 +41,16 @@ public class TurnOffTransfurMessage {
 		context.setPacketHandled(true);
 	}
 
-	public static void pressAction(Player entity, int type, int pressedms) {
-		Level world = entity.level;
-		// security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(entity.blockPosition()))
-			return;
-		if (type == 0) {
+	public static void pressAction(Player player, int type, int pressedms) {
+		if(player == null) return;
 
-			TurnOffTransfurOnKeyPressedProcedure.execute(entity);
+		if (type == 0) {
+			if(!ProcessTransfur.isPlayerTransfurred(player)) return;
+
+			TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(player);
+			TransfurMode mode = tf.transfurMode;
+
+			tf.transfurMode = mode == TransfurMode.NONE ? tf.getParent().transfurMode : TransfurMode.NONE;
 		}
 	}
 

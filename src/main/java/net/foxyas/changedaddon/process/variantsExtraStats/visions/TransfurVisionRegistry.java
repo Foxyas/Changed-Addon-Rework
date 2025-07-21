@@ -15,7 +15,7 @@ public class TransfurVisionRegistry {
     }
 
     public static void register(TransfurVariantVision vision) {
-        VISION_MAP.put(vision.getForm(), vision);
+        VISION_MAP.put(vision.form(), vision);
     }
 
     public static @Nullable TransfurVariantVision get(ResourceLocation formId) {

@@ -31,20 +31,19 @@ public class LatexVariantAgeIncreaseProcedure {
     }
 
     private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
-        if (entity == null)
-            return;
-        double number = 0;
-        if (itemstack.getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:white_latex_goo"))) {
-            if (entity instanceof Player player) {
-                TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-                if (instance != null) {
-                    if (instance.getFormId().toString().equals("changed:form_dark_latex_pup")) {
-                        ReturnTransfurModeProcedure.setPlayerLatexAge.execute(player, 5000, true);
-                        if (world instanceof ServerLevel _level)
-                            _level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 5, 0.3, 0.5, 0.3, 1);
-                    }
-                }
-            }
+        if (entity == null
+                || itemstack.getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:white_latex_goo"))
+                || !(entity instanceof Player player)) return;
+
+        TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(player);
+        if(tf == null) return;
+
+        if (tf.getFormId().toString().equals("changed:form_dark_latex_pup")) {
+
+            tf.ageAsVariant += 5000;
+
+            if (world instanceof ServerLevel level)
+                level.sendParticles(ParticleTypes.HAPPY_VILLAGER, x, y, z, 5, 0.3, 0.5, 0.3, 1);
         }
     }
 }

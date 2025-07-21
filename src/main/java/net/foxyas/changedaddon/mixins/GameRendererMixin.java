@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
 import com.mojang.blaze3d.shaders.Uniform;
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVision;
 import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVisions;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -12,7 +11,6 @@ import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.PostPass;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -145,7 +143,7 @@ public abstract class GameRendererMixin {
                     this.minecraft.getTextureManager(),
                     this.minecraft.getResourceManager(),
                     this.minecraft.getMainRenderTarget(),
-                    new ResourceLocation(changed_Addon_Rework$transfurVariantVision.getVisionEffect().toString())
+                    new ResourceLocation(changed_Addon_Rework$transfurVariantVision.visionEffect().toString())
             );
             this.changed_Addon_Rework$colorblindChain.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
         } catch (IOException e) {
@@ -166,7 +164,8 @@ public abstract class GameRendererMixin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+*/
 
     /*@Unique
     private void changed_Addon_Rework$loadMotionBlurShader() {
@@ -181,5 +180,6 @@ public abstract class GameRendererMixin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+*/
 }

@@ -1,17 +1,26 @@
 
 package net.foxyas.changedaddon.network;
 
+import io.netty.buffer.Unpooled;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.procedures.OpenFoxyasGui2Procedure;
 import net.foxyas.changedaddon.procedures.TradeProcedure;
+import net.foxyas.changedaddon.world.inventory.FoxyasGui2Menu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -53,18 +62,30 @@ public class FoxyasGuiButtonMessage {
 		context.setPacketHandled(true);
 	}
 
-	public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
-		Level world = entity.level;
+	public static void handleButtonAction(Player player, int buttonID, int x, int y, int z) {
+		Level world = player.level;
         // security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(new BlockPos(x, y, z)))
-			return;
+		if (!world.hasChunkAt(new BlockPos(x, y, z))) return;
+
 		if (buttonID == 0) {
 
-			TradeProcedure.execute(entity);
+			TradeProcedure.execute(player);
 		}
-		if (buttonID == 1) {
 
-			OpenFoxyasGui2Procedure.execute(world, x, y, z, entity);
+		if (buttonID == 1) {
+			if(!(player instanceof ServerPlayer sPlayer)) return;
+			BlockPos pos = new BlockPos(x, y, z);
+			NetworkHooks.openGui(sPlayer, new MenuProvider() {
+				@Override
+				public @NotNull Component getDisplayName() {
+					return new TextComponent("FoxyasGui2");
+				}
+
+				@Override
+				public AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory, @NotNull Player player) {
+					return new FoxyasGui2Menu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
+				}
+			}, pos);
 		}
 	}
 

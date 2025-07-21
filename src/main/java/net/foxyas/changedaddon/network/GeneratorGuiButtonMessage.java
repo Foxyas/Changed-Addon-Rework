@@ -2,11 +2,13 @@
 package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.procedures.GeneratorOnBlockRightClickedProcedure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -52,14 +54,31 @@ public class GeneratorGuiButtonMessage {
 		context.setPacketHandled(true);
 	}
 
-	public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
-		Level world = entity.level;
+	public static void handleButtonAction(Player player, int buttonID, int x, int y, int z) {
+		if(player == null) return;
+		Level level = player.level;
         // security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(new BlockPos(x, y, z)))
-			return;
-		if (buttonID == 0) {
+		if (!level.hasChunkAt(new BlockPos(x, y, z))) return;
 
-			GeneratorOnBlockRightClickedProcedure.execute(world, x, y, z, entity);
+		if (buttonID == 0) {
+			if(level.isClientSide) return;
+
+			BlockPos pos = new BlockPos(x, y, z);
+			BlockEntity blockEntity = level.getBlockEntity(pos);
+			if(blockEntity == null) return;
+
+			BlockState state = level.getBlockState(pos);
+			boolean enabled = blockEntity.getTileData().getBoolean("turn_on");
+
+			if (enabled) {
+				blockEntity.getTileData().putBoolean("turn_on", false);
+				player.displayClientMessage(new TextComponent("generator disabled"), true);
+			} else {
+				blockEntity.getTileData().putBoolean("turn_on", true);
+				player.displayClientMessage(new TextComponent("generator enabled"), true);
+			}
+
+			level.sendBlockUpdated(pos, state, state, 3);
 		}
 	}
 

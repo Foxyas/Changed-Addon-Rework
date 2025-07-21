@@ -20,8 +20,8 @@ public class SyncTransfurVisionsPacket {
     public static void encode(SyncTransfurVisionsPacket msg, FriendlyByteBuf buf) {
         buf.writeVarInt(msg.visions.size());
         for (TransfurVariantVision v : msg.visions) {
-            buf.writeResourceLocation(v.getForm());
-            buf.writeResourceLocation(v.getVisionEffect());
+            buf.writeResourceLocation(v.form());
+            buf.writeResourceLocation(v.visionEffect());
         }
     }
 

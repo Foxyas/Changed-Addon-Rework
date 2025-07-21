@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.process.variantsExtraStats.visions;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -15,7 +14,7 @@ public class ClientTransfurVisionRegistry {
     }
 
     public static void register(TransfurVariantVision vision) {
-        VISION_MAP.put(vision.getForm(), vision);
+        VISION_MAP.put(vision.form(), vision);
     }
 
     public static @Nullable TransfurVariantVision get(ResourceLocation formId) {

@@ -33,7 +33,7 @@ public class ChangedAddonKeyMappings {
 			super.setDown(isDown);
 			if (isDownOld != isDown && isDown) {
 				ChangedAddonMod.PACKET_HANDLER.sendToServer(new OpenExtraDetailsMessage(0, 0));
-				OpenExtraDetailsMessage.pressAction(Minecraft.getInstance().player, 0, 0);
+				//OpenExtraDetailsMessage.pressAction(Minecraft.getInstance().player, 0, 0);
 			}
 			isDownOld = isDown;
 		}

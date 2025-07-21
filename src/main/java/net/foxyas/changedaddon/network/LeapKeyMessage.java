@@ -42,17 +42,16 @@ public class LeapKeyMessage {
 		context.setPacketHandled(true);
 	}
 
-	public static void pressAction(Player entity, int type, int pressedms) {
-		Level world = entity.level;
-		double x = entity.getX();
-		double y = entity.getY();
-		double z = entity.getZ();
-		// security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(entity.blockPosition()))
-			return;
+	public static void pressAction(Player player, int type, int pressedms) {
+		if(player == null) return;
+		Level world = player.level;
+		double x = player.getX();
+		double y = player.getY();
+		double z = player.getZ();
+
 		if (type == 0) {
 
-			LeapProcedure.execute(world, x, y, z, entity);
+			LeapProcedure.execute(world, x, y, z, player);
 		}
 	}
 

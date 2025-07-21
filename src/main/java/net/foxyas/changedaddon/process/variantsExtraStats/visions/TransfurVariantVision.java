@@ -1,15 +1,10 @@
 package net.foxyas.changedaddon.process.variantsExtraStats.visions;
 
 import com.google.gson.JsonObject;
-import net.ltxprogrammer.changed.entity.Gender;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 
-public class TransfurVariantVision {
-    private final ResourceLocation visionEffect;
-    private final ResourceLocation form;
+public record TransfurVariantVision(ResourceLocation visionEffect, ResourceLocation form) {
 
     public TransfurVariantVision(ResourceLocation visionEffect, ResourceLocation form) {
         this.visionEffect = fixJsonExtension(visionEffect);
@@ -22,14 +17,6 @@ public class TransfurVariantVision {
             path += ".json";
         }
         return new ResourceLocation(input.getNamespace(), path);
-    }
-
-    public ResourceLocation getVisionEffect() {
-        return visionEffect;
-    }
-
-    public ResourceLocation getForm() {
-        return form;
     }
 
     public static TransfurVariantVision fromJson(ResourceLocation id, JsonObject json) {

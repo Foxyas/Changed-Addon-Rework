@@ -9,12 +9,10 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class KeyPressPacket {
-    private final int keyCode; // Pode ser o código da tecla (ex: GLFW.GLFW_KEY_LEFT)
-
-    public KeyPressPacket(int keyCode) {
-        this.keyCode = keyCode;
-    }
+/**
+ * @param keyCode Pode ser o código da tecla (ex: GLFW.GLFW_KEY_LEFT)
+ */
+public record KeyPressPacket(int keyCode) {
 
     public static void encode(KeyPressPacket msg, FriendlyByteBuf buf) {
         buf.writeInt(msg.keyCode);
@@ -22,10 +20,6 @@ public class KeyPressPacket {
 
     public static KeyPressPacket decode(FriendlyByteBuf buf) {
         return new KeyPressPacket(buf.readInt());
-    }
-
-    public int getKeyCode() {
-        return keyCode;
     }
 
     public static void handle(KeyPressPacket msg, Supplier<NetworkEvent.Context> contextSupplier) {
