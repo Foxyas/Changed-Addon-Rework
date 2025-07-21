@@ -16,7 +16,7 @@ public class LatexKitsuneMaleRenderer extends AdvancedHumanoidRenderer<LatexKits
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight, CustomEyesLayer::noRender, CustomEyesLayer::noRender));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-        this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
+        this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
         this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon:textures/entities/latex_kitsune_male/latex_kitsune_male_stripes.png")) {
             @Override
             public @NotNull RenderType renderType() {

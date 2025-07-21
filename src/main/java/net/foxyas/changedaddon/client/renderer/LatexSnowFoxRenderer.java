@@ -35,7 +35,7 @@ public class LatexSnowFoxRenderer extends AdvancedHumanoidRenderer<LatexSnowFoxE
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-        this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
+        this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
     }
     @Override
     public ResourceLocation getTextureLocation(LatexSnowFoxEntity entity) {

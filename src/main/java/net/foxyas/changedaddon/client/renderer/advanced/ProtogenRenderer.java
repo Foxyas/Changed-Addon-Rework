@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.client.renderer.layers.CustomDisplay;
 import net.foxyas.changedaddon.client.renderer.layers.ProtogenDisplay;
 import net.foxyas.changedaddon.entity.advanced.ProtogenEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
+import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -19,6 +20,7 @@ public class ProtogenRenderer extends AdvancedHumanoidRenderer<ProtogenEntity, P
                 new ResourceLocation("changed_addon:textures/entities/protogen/protogen_eyes_display.png"),
                 new ResourceLocation("changed_addon:textures/entities/protogen/protogen_display.png")));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
+        this.addLayer(GasMaskLayer.forLargeSnouted(this, context.getModelSet()));
     }
 
     @Override
