@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.client.renderer.blockEntitys;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.entity.SnepPlushBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
@@ -32,7 +33,7 @@ public class SnepPlushBlockEntityRenderer implements BlockEntityRenderer<SnepPlu
 
     // Classe estática para o modelo extra
     public static class SnepPlushExtraModel extends Model {
-        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "snep_plushe_extra_model"), "main");
+        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snep_plushe_extra_model"), "main");
         private final ModelPart Head;
 
         public SnepPlushExtraModel(ModelPart root) {

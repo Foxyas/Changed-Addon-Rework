@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.animations.CustomWingedDragonUpperBodyInitAnimator;
 import net.foxyas.changedaddon.entity.LatexDragonSnowLeopardSharkEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
@@ -20,7 +21,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.dragonWinged;
 
 public class LatexDragonSnowLeopardSharkModel extends AdvancedHumanoidModel<LatexDragonSnowLeopardSharkEntity> implements AdvancedHumanoidModelInterface<LatexDragonSnowLeopardSharkEntity, LatexDragonSnowLeopardSharkModel> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "latex_dragon_snep_shark"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ChangedAddonMod.resourceLoc("latex_dragon_snep_shark"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;

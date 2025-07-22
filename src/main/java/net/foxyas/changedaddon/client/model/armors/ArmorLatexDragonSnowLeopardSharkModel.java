@@ -8,7 +8,6 @@ import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModelLayerLocation;
-import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModelSet;
 import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -19,18 +18,15 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
 public class ArmorLatexDragonSnowLeopardSharkModel<T extends ChangedEntity> extends LatexHumanoidArmorModel<T, ArmorLatexDragonSnowLeopardSharkModel<T>> {
-//    public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation(ChangedAddonMod.MODID,"armor_latex_winged_dragon_male_unified")).get();
-//    public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createOuterArmorLocation(new ResourceLocation(ChangedAddonMod.MODID,"armor_latex_winged_dragon_male_unified")).get();
-    public static final ArmorModelSet<ChangedEntity, ArmorLatexDragonSnowLeopardSharkModel<ChangedEntity>> MODEL_SET = ArmorModelSet.of(new ResourceLocation("changed_addon", "armor_latex_winged_dragon_male_unified"), ArmorLatexDragonSnowLeopardSharkModel::createArmorLayer, ArmorLatexDragonSnowLeopardSharkModel::new);
+    public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(ChangedAddonMod.resourceLoc("armor_latex_winged_dragon_male_unified")).get();
+    public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createOuterArmorLocation(ChangedAddonMod.resourceLoc("armor_latex_winged_dragon_male_unified")).get();
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart LeftLeg;
@@ -122,8 +118,7 @@ public class ArmorLatexDragonSnowLeopardSharkModel<T extends ChangedEntity> exte
 
     }
 
-    @Override
-    public void renderForSlot(T entity, RenderLayerParent<? super T, ?> parent, ItemStack stack, EquipmentSlot slot, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderForSlot(T entity, RenderLayerParent<T, ?> parent, ItemStack stack, EquipmentSlot slot, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
         this.scaleForSlot(parent, slot, poseStack);
         switch (slot) {
@@ -148,11 +143,11 @@ public class ArmorLatexDragonSnowLeopardSharkModel<T extends ChangedEntity> exte
         poseStack.popPose();
     }
 
-    public HumanoidAnimator<T, ArmorLatexDragonSnowLeopardSharkModel<T>> getAnimator(T entity) {
+    public HumanoidAnimator<T, ArmorLatexDragonSnowLeopardSharkModel<T>> getAnimator() {
         return this.animator;
     }
 
-    public @NotNull ModelPart getArm(HumanoidArm arm) {
+    public ModelPart getArm(HumanoidArm arm) {
         return arm == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 
@@ -160,7 +155,7 @@ public class ArmorLatexDragonSnowLeopardSharkModel<T extends ChangedEntity> exte
         return leg == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
-    public @NotNull ModelPart getHead() {
+    public ModelPart getHead() {
         return this.Head;
     }
 

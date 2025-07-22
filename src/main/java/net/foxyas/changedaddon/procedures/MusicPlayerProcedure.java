@@ -72,9 +72,9 @@ public class MusicPlayerProcedure {
             }
 
             // Eventos de som
-            SoundEvent exp009Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.exp9"));
-            SoundEvent exp10Music = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme"));
-            SoundEvent LumiMusic = ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.luminarctic_leopard"));
+            SoundEvent exp009Music = ForgeRegistries.SOUND_EVENTS.getValue(ChangedAddonMod.resourceLoc("music.boss.exp9"));
+            SoundEvent exp10Music = ForgeRegistries.SOUND_EVENTS.getValue(ChangedAddonMod.resourceLoc("experiment10_theme"));
+            SoundEvent LumiMusic = ForgeRegistries.SOUND_EVENTS.getValue(ChangedAddonMod.resourceLoc("music.boss.luminarctic_leopard"));
 
             // Instâncias de música
             Music exp10ThemeMusicInstance = new Music(Objects.requireNonNull(exp10Music), 0, 0, true);
@@ -95,10 +95,10 @@ public class MusicPlayerProcedure {
                 }
 
                 if (ketExp9Entities.stream().anyMatch(KetExperiment009BossEntity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
+                    soundManager.stop(ChangedAddonMod.resourceLoc("music.boss.exp9"), SoundSource.MUSIC);
                 }
             } else if (isExp009Phase2ThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "music.boss.exp9"), SoundSource.MUSIC);
+                soundManager.stop(ChangedAddonMod.resourceLoc("music.boss.exp9"), SoundSource.MUSIC);
             }
 
             if (exp10Close) {
@@ -109,10 +109,10 @@ public class MusicPlayerProcedure {
                 }
 
                 if (exp10Entities.stream().anyMatch(LivingEntity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
+                    soundManager.stop(ChangedAddonMod.resourceLoc("experiment10_theme"), SoundSource.MUSIC);
                 }
             } else if (isExp10ThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "experiment10_theme"), SoundSource.MUSIC);
+                soundManager.stop(ChangedAddonMod.resourceLoc("experiment10_theme"), SoundSource.MUSIC);
             }
 
             if (LumiClose && LumiEntities.stream().anyMatch((e) -> e.getTarget() == player)) {
@@ -123,10 +123,10 @@ public class MusicPlayerProcedure {
                 }
 
                 if (LumiEntities.stream().anyMatch(LivingEntity::isDeadOrDying)) {
-                    soundManager.stop(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
+                    soundManager.stop(ChangedAddonMod.resourceLoc("music.boss.luminarctic_leopard"), SoundSource.MUSIC);
                 }
             } else if (isLumiThemePlaying) {
-                soundManager.stop(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard"), SoundSource.MUSIC);
+                soundManager.stop(ChangedAddonMod.resourceLoc("music.boss.luminarctic_leopard"), SoundSource.MUSIC);
             }
         }
     }
@@ -163,7 +163,7 @@ public class MusicPlayerProcedure {
         MusicManager musicManager = minecraft.getMusicManager();
         SoundManager soundManager = minecraft.getSoundManager();
 
-        ResourceLocation musicResource = new ResourceLocation(ChangedAddonMod.MODID, musicKey);
+        ResourceLocation musicResource = ChangedAddonMod.resourceLoc(musicKey);
         SoundEvent soundEvent = ForgeRegistries.SOUND_EVENTS.getValue(musicResource);
 
         if (soundEvent == null) {
@@ -192,7 +192,7 @@ public class MusicPlayerProcedure {
         };
 
         for (String musicKey : bossMusicKeys) {
-            ResourceLocation musicResource = new ResourceLocation(ChangedAddonMod.MODID, musicKey);
+            ResourceLocation musicResource = ChangedAddonMod.resourceLoc(musicKey);
             soundManager.stop(musicResource, SoundSource.MUSIC);
         }
     }

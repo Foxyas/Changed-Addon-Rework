@@ -1,11 +1,7 @@
 package net.foxyas.changedaddon.advancements.critereon;
 
 import com.google.gson.JsonObject;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.Emote;
-import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
-import net.ltxprogrammer.changed.init.ChangedParticles;
-import net.ltxprogrammer.changed.process.ProcessEmote;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class PatEntityTrigger extends SimpleCriterionTrigger<PatEntityTrigger.TriggerInstance> {
 
     // Definindo o ID do trigger
-    private static final ResourceLocation ID = new ResourceLocation("changed_addon", "pat_entity_trigger");
+    private static final ResourceLocation ID = ChangedAddonMod.resourceLoc("pat_entity_trigger");
 
     @Override
     public @NotNull ResourceLocation getId() {

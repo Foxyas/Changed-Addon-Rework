@@ -26,19 +26,11 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber
 public class ChangedAddonCommandRootCommandExtension {
 
-    public static int StringToInt(String s) {
-        try {
-            return Integer.parseInt(s.trim());
-        } catch (Exception ignored) {
-        }
-        return 0;
-    }
-
-
     @SubscribeEvent
     public static void registerCommand(RegisterCommandsEvent event) {
         LiteralCommandNode<CommandSourceStack> TransfurColorsCommandNode = event.getDispatcher().register(
                 Commands.literal("changed-addon")
+                        .requires(stack -> stack.getEntity() instanceof Player)
                         .then(Commands.literal("TransfurColors")
                                 .then(Commands.literal("setColor")
                                         .then(Commands.argument("colorOrHex", StringArgumentType.string())
@@ -51,14 +43,19 @@ public class ChangedAddonCommandRootCommandExtension {
                                                             Color3 color3;
                                                             String StringColor = StringArgumentType.getString(context, "colorOrHex");
                                                             color3 = Color3.parseHex(StringColor);
+
                                                             if (color3 == null) {
-                                                                color3 = Color3.fromInt(StringToInt(StringColor));
+                                                                try {
+                                                                    color3 = Color3.fromInt(Integer.parseInt(StringColor));
+                                                                } catch (NumberFormatException ignored) {}
+
+                                                                if (color3 == null) {
+                                                                    context.getSource().sendFailure(new TextComponent("Failed to parse color. Are you sure you are using the correct code?"));
+                                                                    return 0;
+                                                                }
                                                             }
+
                                                             int layer = IntegerArgumentType.getInteger(context, "layer");
-                                                            if (color3 == null) {
-                                                                context.getSource().sendFailure(new TextComponent("Failed to parse color. Are you sure you are using the correct code?"));
-                                                                return 0;
-                                                            }
 
                                                             if (IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
                                                                 TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
@@ -108,7 +105,6 @@ public class ChangedAddonCommandRootCommandExtension {
                                                 })))
                         ));
 
-
         event.getDispatcher().register(Commands.literal("setTransfurColor").redirect(TransfurColorsCommandNode.getChild("TransfurColors")));
 
         event.getDispatcher().register(Commands.literal("setTimerInKeypad")
@@ -144,6 +140,4 @@ public class ChangedAddonCommandRootCommandExtension {
                 )
         );
     }
-
-
 }
