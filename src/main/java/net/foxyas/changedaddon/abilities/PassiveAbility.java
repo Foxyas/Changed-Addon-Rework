@@ -12,7 +12,6 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.function.Consumer;
 
 public class PassiveAbility extends AbstractAbility<PassiveAbilityInstance> {
-    public boolean isActivated = true;
     public final Consumer<IAbstractChangedEntity> passiveAction;
 
     public PassiveAbility(Consumer<IAbstractChangedEntity> passiveAction){
@@ -31,22 +30,6 @@ public class PassiveAbility extends AbstractAbility<PassiveAbilityInstance> {
     }
 
     @Override
-    public void saveData(CompoundTag tag, IAbstractChangedEntity entity) {
-        super.saveData(tag, entity);
-        tag.putBoolean("isActivated", this.isActivated());
-    }
-
-    @Override
-    public void readData(CompoundTag tag, IAbstractChangedEntity entity) {
-        super.readData(tag, entity);
-        if (tag.contains("isActivated")) this.isActivated = tag.getBoolean("isActivated");
-    }
-
-    public boolean isActivated() {
-        return isActivated;
-    }
-
-    @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
         return UseType.MENU;
     }
@@ -59,6 +42,6 @@ public class PassiveAbility extends AbstractAbility<PassiveAbilityInstance> {
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
-        isActivated = !isActivated;
+
     }
 }

@@ -4,8 +4,10 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
+import net.minecraft.nbt.CompoundTag;
 
 public class PassiveAbilityInstance extends AbstractAbilityInstance {
+    public boolean isActivated = true;
     public PassiveAbilityInstance(AbstractAbility<PassiveAbilityInstance> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
     }
@@ -22,7 +24,7 @@ public class PassiveAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void startUsing() {
-
+        isActivated = !isActivated;
     }
 
     @Override
@@ -35,11 +37,27 @@ public class PassiveAbilityInstance extends AbstractAbilityInstance {
 
     }
 
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    @Override
+    public void saveData(CompoundTag tag) {
+        super.saveData(tag);
+        tag.putBoolean("isActivated", this.isActivated());
+    }
+
+    @Override
+    public void readData(CompoundTag tag) {
+        super.readData(tag);
+        if (tag.contains("isActivated")) this.isActivated = tag.getBoolean("isActivated");
+    }
+
     @Override
     public void tickIdle() {
         super.tickIdle();
         if (this.getAbility() instanceof PassiveAbility passiveAbility) {
-            if (passiveAbility.isActivated()) {
+            if (isActivated()) {
                 passiveAbility.passiveAction.accept(this.entity);
             }
         }
