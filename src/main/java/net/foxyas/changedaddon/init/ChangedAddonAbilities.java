@@ -8,6 +8,8 @@ import net.ltxprogrammer.changed.client.ChangedClient;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedTags;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -45,7 +47,8 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
     public static final RegistryObject<AdvancedHearingAbility> ADVANCED_HEARING = REGISTRY.register("advanced_hearing", AdvancedHearingAbility::new);
     public static final RegistryObject<TeleportAbility> TELEPORT = REGISTRY.register("teleport", TeleportAbility::new);
     public static final RegistryObject<UnfuseAbility> UNFUSE = REGISTRY.register("unfuse", UnfuseAbility::new);
-
+    public static final RegistryObject<ToggleClimbAbility> TOGGLE_CLIMB = REGISTRY.register("toggle_climb", ToggleClimbAbility::new);
+    public static final RegistryObject<PassiveAbility> APPLY_REGENERATION_PASSIVE = REGISTRY.register("passive_regeneration", () -> new PassiveAbility((entity) -> PassiveAbility.ApplyMobEffect(entity, new MobEffectInstance(MobEffects.REGENERATION, 10, 0, false, false, true))));
 
 
     public static List<EntityType<?>> getCanGlideEntites() {

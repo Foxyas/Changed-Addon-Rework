@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.abilities.ClawsAbility;

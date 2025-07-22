@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.entity;
 
 import net.foxyas.changedaddon.entity.goals.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.goals.SleepingWithOwnerGoal;

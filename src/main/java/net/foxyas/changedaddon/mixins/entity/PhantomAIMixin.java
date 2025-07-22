@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.entity;
 
 import net.foxyas.changedaddon.entity.goals.phantom.AvoidCatlikePlayerGoal;
 import net.minecraft.world.entity.monster.Phantom;

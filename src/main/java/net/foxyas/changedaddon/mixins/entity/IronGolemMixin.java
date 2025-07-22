@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.entity;
 
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.effect.MobEffects;
