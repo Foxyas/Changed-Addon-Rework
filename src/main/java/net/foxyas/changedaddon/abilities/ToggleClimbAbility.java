@@ -45,7 +45,7 @@ public class ToggleClimbAbility extends SimpleAbility {
 
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
+        this.isActivated =! this.isActivated;
         super.startUsing(entity);
-        isActivated = !isActivated;
     }
 }
