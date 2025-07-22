@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
 import net.foxyas.changedaddon.procedures.SnepsiPlayerFinishesUsingItemProcedure;
@@ -67,11 +68,11 @@ public class SnepsiItem extends Item implements SpecializedItemRendering {
     }
 
     private static final ModelResourceLocation GUIMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "snepsi_gui"), "inventory");
+            new ModelResourceLocation(ChangedAddonMod.resourceLoc("snepsi_gui"), "inventory");
     private static final ModelResourceLocation HANDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "snepsi_hand"), "inventory");
+            new ModelResourceLocation(ChangedAddonMod.resourceLoc("snepsi_hand"), "inventory");
     private static final ModelResourceLocation GROUNDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "snepsi_ground"), "inventory");
+            new ModelResourceLocation(ChangedAddonMod.resourceLoc("snepsi_ground"), "inventory");
 
 
     @Override

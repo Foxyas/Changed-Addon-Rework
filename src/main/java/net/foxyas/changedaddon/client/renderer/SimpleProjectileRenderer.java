@@ -21,7 +21,7 @@ import java.awt.*;
 
 public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityModel<T>> extends EntityRenderer<T> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(ChangedAddonMod.MODID, "textures/entities/white_ball_projectile.png");
+    private static final ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/entities/white_ball_projectile");
     private final EntityModel<T> model;
 
     public SimpleProjectileRenderer(EntityRendererProvider.Context context) {

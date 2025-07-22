@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
@@ -90,11 +91,11 @@ public class FoxtaItem extends Item implements SpecializedItemRendering {
 
 
     private static final ModelResourceLocation GUIMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "foxta_gui"), "inventory");
+            new ModelResourceLocation(ChangedAddonMod.resourceLoc("foxta_gui"), "inventory");
     private static final ModelResourceLocation HANDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "foxta_hand"), "inventory");
+            new ModelResourceLocation(ChangedAddonMod.resourceLoc("foxta_hand"), "inventory");
     private static final ModelResourceLocation GROUNDMODEL =
-            new ModelResourceLocation(new ResourceLocation("changed_addon", "foxta_ground"), "inventory");
+            new ModelResourceLocation(ChangedAddonMod.resourceLoc("foxta_ground"), "inventory");
 
 
     @Override

@@ -18,7 +18,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
@@ -26,8 +25,8 @@ import net.minecraft.world.item.ItemStack;
 import java.util.List;
 
 public class ArmorLatexDragonSnowLeopardSharkModel<T extends ChangedEntity> extends LatexHumanoidArmorModel<T, ArmorLatexDragonSnowLeopardSharkModel<T>> {
-    public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation(ChangedAddonMod.MODID,"armor_latex_winged_dragon_male_unified")).get();
-    public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createOuterArmorLocation(new ResourceLocation(ChangedAddonMod.MODID,"armor_latex_winged_dragon_male_unified")).get();
+    public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(ChangedAddonMod.resourceLoc("armor_latex_winged_dragon_male_unified")).get();
+    public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createOuterArmorLocation(ChangedAddonMod.resourceLoc("armor_latex_winged_dragon_male_unified")).get();
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart LeftLeg;

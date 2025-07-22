@@ -1,13 +1,13 @@
 package net.foxyas.changedaddon.advancements.critereon;
 
 import com.google.gson.JsonObject;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.common.util.FakePlayer;
 
 public class LavaSwimmingTrigger extends SimpleCriterionTrigger<LavaSwimmingTrigger.Instance> {
-    private static final ResourceLocation ID = new ResourceLocation("changed_addon", "lava_swimming");
+    private static final ResourceLocation ID = ChangedAddonMod.resourceLoc("lava_swimming");
 
     @Override
     public ResourceLocation getId() {

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.client.renderer.simple;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.simple.LatexCalicoCatModel;
 import net.foxyas.changedaddon.entity.simple.LatexCalicoCatEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
@@ -21,7 +22,9 @@ public class LatexCalicoCatRenderer extends AdvancedHumanoidRenderer<LatexCalico
         this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
     }
 
+    private static final ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/entities/latex_calico_cat/latex_calico_cat");
+
     public @NotNull ResourceLocation getTextureLocation(@NotNull LatexCalicoCatEntity p_114482_) {
-        return new ResourceLocation("changed_addon","textures/entities/latex_calico_cat/latex_calico_cat.png");
+        return TEXTURE;
     }
 }

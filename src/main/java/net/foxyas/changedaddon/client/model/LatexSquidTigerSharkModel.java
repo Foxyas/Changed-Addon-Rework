@@ -2,17 +2,14 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
-import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmRideAnimator;
-import net.ltxprogrammer.changed.client.renderer.animate.arm.ArmSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.arm.DoubleArmBobAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.camera.SharkCameraSwimAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.SharkHeadInitAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.SharkHeadSwimAnimator;
-import net.ltxprogrammer.changed.client.renderer.animate.upperbody.SharkUpperBodySwimAnimator;
-import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
@@ -22,7 +19,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 
 import java.util.ArrayList;
@@ -120,7 +116,7 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
 
     }
 
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "squid_tiger_shark"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ChangedAddonMod.resourceLoc("squid_tiger_shark"), "main");
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart LeftArm;

@@ -48,7 +48,7 @@ public class ChangedAddonMod {
 	public static final Logger LOGGER = LogManager.getLogger(ChangedAddonMod.class);
 	public static final String MODID = "changed_addon";
 	private static final String PROTOCOL_VERSION = "1";
-	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(new ResourceLocation(MODID, MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
+	public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(ChangedAddonMod.resourceLoc(MODID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 	private static int messageID = 0;
 
 	public ChangedAddonMod() {
@@ -66,6 +66,14 @@ public class ChangedAddonMod {
 		ChangedAddonParticleTypes.REGISTRY.register(bus);
 		ChangedAddonVillagerProfessions.PROFESSIONS.register(bus);
 		ChangedAddonFluids.REGISTRY.register(bus);
+	}
+
+	public static ResourceLocation resourceLoc(String path){
+		return new ResourceLocation(MODID, path);
+	}
+
+	public static ResourceLocation textureLoc(String path){
+		return new ResourceLocation(MODID, path + ".png");
 	}
 
 	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {

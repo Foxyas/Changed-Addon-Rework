@@ -7,6 +7,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.recipes.UnifuserRecipe;
@@ -18,8 +19,8 @@ import net.minecraft.world.item.ItemStack;
 
 @Deprecated
 public class UnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe> {
-    public final static ResourceLocation UID = new ResourceLocation("changed_addon", "jei_unifuser");
-    public final static ResourceLocation TEXTURE = new ResourceLocation("changed_addon", "textures/screens/jei_unifuser_screen.png");
+    public final static ResourceLocation UID = ChangedAddonMod.resourceLoc("jei_unifuser");
+    public final static ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/screens/jei_unifuser_screen");
     private final IDrawable background;
     private final IDrawable icon;
 

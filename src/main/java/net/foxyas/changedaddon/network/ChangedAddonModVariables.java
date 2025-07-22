@@ -1,31 +1,24 @@
 package net.foxyas.changedaddon.network;
 
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.Capability;
-
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.Direction;
-import net.minecraft.client.Minecraft;
-
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.*;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -64,8 +57,11 @@ public class ChangedAddonModVariables {
 
 		@SubscribeEvent
 		public static void clonePlayer(PlayerEvent.Clone event) {
-			event.getOriginal().revive();
-			PlayerVariables original = event.getOriginal().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
+			Player originalPl = event.getOriginal();
+			originalPl.reviveCaps();
+			PlayerVariables original = originalPl.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
+			originalPl.invalidateCaps();
+
 			PlayerVariables clone = event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
 			clone.LatexEntitySummon = original.LatexEntitySummon;
 			clone.reset_transfur_advancements = original.reset_transfur_advancements;
@@ -84,15 +80,14 @@ public class ChangedAddonModVariables {
 		}
 	}
 
-	public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-    });
+	public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
 	@Mod.EventBusSubscriber
-	private static class PlayerVariablesProvider implements ICapabilitySerializable<Tag> {
+	private static class PlayerVariablesProvider implements ICapabilitySerializable<CompoundTag> {
 		@SubscribeEvent
 		public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
 			if (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer))
-				event.addCapability(new ResourceLocation("changed_addon", "player_variables"), new PlayerVariablesProvider());
+				event.addCapability(ChangedAddonMod.resourceLoc("player_variables"), new PlayerVariablesProvider());
 		}
 
 		private final PlayerVariables playerVariables = new PlayerVariables();
@@ -104,12 +99,12 @@ public class ChangedAddonModVariables {
 		}
 
 		@Override
-		public Tag serializeNBT() {
+		public CompoundTag serializeNBT() {
 			return playerVariables.writeNBT();
 		}
 
 		@Override
-		public void deserializeNBT(Tag nbt) {
+		public void deserializeNBT(CompoundTag nbt) {
 			playerVariables.readNBT(nbt);
 		}
 	}
@@ -129,12 +124,16 @@ public class ChangedAddonModVariables {
 		public boolean consciousness_fight_give_up = false;
 		public boolean Exp10TransfurAllowed = false;
 
+		public static PlayerVariables of(Player player){//Should never return null unless FakePlayer is used or the player is dead
+			return player.getCapability(PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
+		}
+
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
 				ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new PlayerVariablesSyncMessage(this));
 		}
 
-		public Tag writeNBT() {
+		public CompoundTag writeNBT() {
 			CompoundTag nbt = new CompoundTag();
 			nbt.putBoolean("showwarns", showwarns);
 			nbt.putDouble("consciousness_fight_progress", consciousness_fight_progress);
@@ -183,31 +182,31 @@ public class ChangedAddonModVariables {
 		}
 
 		public static void buffer(PlayerVariablesSyncMessage message, FriendlyByteBuf buffer) {
-			buffer.writeNbt((CompoundTag) message.data.writeNBT());
+			buffer.writeNbt(message.data.writeNBT());
 		}
 
 		public static void handler(PlayerVariablesSyncMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
 			NetworkEvent.Context context = contextSupplier.get();
-			context.enqueueWork(() -> {
-				if (!context.getDirection().getReceptionSide().isServer()) {
-                    assert Minecraft.getInstance().player != null;
-                    PlayerVariables variables = Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
-					variables.showwarns = message.data.showwarns;
-					variables.consciousness_fight_progress = message.data.consciousness_fight_progress;
-					variables.concience_Fight = message.data.concience_Fight;
-					variables.LatexEntitySummon = message.data.LatexEntitySummon;
-					variables.reset_transfur_advancements = message.data.reset_transfur_advancements;
-					variables.act_cooldown = message.data.act_cooldown;
-					variables.aredarklatex = message.data.aredarklatex;
-					variables.LatexInfectionCooldown = message.data.LatexInfectionCooldown;
-					variables.UntransfurProgress = message.data.UntransfurProgress;
-					variables.Exp009TransfurAllowed = message.data.Exp009TransfurAllowed;
-					variables.Exp009Buff = message.data.Exp009Buff;
-					variables.consciousness_fight_give_up = message.data.consciousness_fight_give_up;
-					variables.Exp10TransfurAllowed = message.data.Exp10TransfurAllowed;
-				}
-			});
 			context.setPacketHandled(true);
+			if(context.getDirection().getReceptionSide().isServer()) return;
+
+			context.enqueueWork(() -> {
+                assert Minecraft.getInstance().player != null;
+                PlayerVariables variables = Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
+				variables.showwarns = message.data.showwarns;
+				variables.consciousness_fight_progress = message.data.consciousness_fight_progress;
+				variables.concience_Fight = message.data.concience_Fight;
+				variables.LatexEntitySummon = message.data.LatexEntitySummon;
+				variables.reset_transfur_advancements = message.data.reset_transfur_advancements;
+				variables.act_cooldown = message.data.act_cooldown;
+				variables.aredarklatex = message.data.aredarklatex;
+				variables.LatexInfectionCooldown = message.data.LatexInfectionCooldown;
+				variables.UntransfurProgress = message.data.UntransfurProgress;
+				variables.Exp009TransfurAllowed = message.data.Exp009TransfurAllowed;
+				variables.Exp009Buff = message.data.Exp009Buff;
+				variables.consciousness_fight_give_up = message.data.consciousness_fight_give_up;
+				variables.Exp10TransfurAllowed = message.data.Exp10TransfurAllowed;
+			});
 		}
 	}
 }

@@ -23,7 +23,6 @@ public class DelayedTask {
         MinecraftForge.EVENT_BUS.register(DelayedTask.class);
     }
 
-    // Event to update this instance only
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {

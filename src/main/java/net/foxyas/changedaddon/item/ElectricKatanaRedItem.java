@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.procedures.ElectricKatanaEntitySwingsItemProcedure;
 import net.foxyas.changedaddon.procedures.ElectricKatanaLivingEntityIsHitWithToolProcedure;
@@ -63,13 +64,13 @@ public class ElectricKatanaRedItem extends SwordItem implements SpecializedItemR
 	}
 
 	private static final ModelResourceLocation GUI_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_item_full"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_red_item_full"), "inventory");
 	private static final ModelResourceLocation HANDLE_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_3d"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_red_3d"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_laser"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_red_laser"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_GUI_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_glow"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_red_glow"), "inventory");
 
 	@Nullable
 	@Override

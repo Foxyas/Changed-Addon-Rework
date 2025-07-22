@@ -7,6 +7,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.recipes.CatalyzerRecipe;
@@ -19,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 
 @Deprecated
 public class CatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe> {
-    public final static ResourceLocation UID = new ResourceLocation("changed_addon", "jei_catalyzer");
-    public final static ResourceLocation TEXTURE = new ResourceLocation("changed_addon", "textures/screens/jei_catalyzer_screen.png");
+    public final static ResourceLocation UID = ChangedAddonMod.resourceLoc("jei_catalyzer");
+    public final static ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/screens/jei_catalyzer_screen");
     private final IDrawable background;
     private final IDrawable icon;
 

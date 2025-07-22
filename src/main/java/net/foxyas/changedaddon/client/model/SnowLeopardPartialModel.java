@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
 import net.ltxprogrammer.changed.client.CubeListBuilderExtender;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
@@ -13,14 +14,12 @@ import net.ltxprogrammer.changed.client.renderer.animate.upperbody.WolfHeadInitA
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +29,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.*;
-import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.wolfEars;
 
 class PartialModelAnimation{
     public PartialModelAnimation (){
@@ -44,10 +42,10 @@ class PartialModelAnimation{
 
 public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPartialEntity> implements AdvancedHumanoidModelInterface<SnowLeopardPartialEntity, SnowLeopardPartialModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-    public static final ModelLayerLocation LAYER_LOCATION_HUMAN = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "main");
-    public static final ModelLayerLocation LAYER_LOCATION_HUMAN_SLIM = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "main_slim");
-    public static final ModelLayerLocation LAYER_LOCATION_LATEX = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "latex");
-    public static final ModelLayerLocation LAYER_LOCATION_LATEX_SLIM = new ModelLayerLocation(new ResourceLocation("changed_addon", "snow_leopard_partial"), "latex_slim");
+    public static final ModelLayerLocation LAYER_LOCATION_HUMAN = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snow_leopard_partial"), "main");
+    public static final ModelLayerLocation LAYER_LOCATION_HUMAN_SLIM = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snow_leopard_partial"), "main_slim");
+    public static final ModelLayerLocation LAYER_LOCATION_LATEX = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snow_leopard_partial"), "latex");
+    public static final ModelLayerLocation LAYER_LOCATION_LATEX_SLIM = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snow_leopard_partial"), "latex_slim");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;

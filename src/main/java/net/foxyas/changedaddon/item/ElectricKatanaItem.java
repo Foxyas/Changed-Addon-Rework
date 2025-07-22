@@ -1,6 +1,7 @@
 
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -65,13 +66,13 @@ public class ElectricKatanaItem extends SwordItem implements SpecializedItemRend
 	}
 
 	private static final ModelResourceLocation GUI_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_item_full"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_blue_item_full"), "inventory");
 	private static final ModelResourceLocation HANDLE_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_3d"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_3d"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_blue_laser"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_blue_laser"), "inventory");
 	private static final ModelResourceLocation EMISSIVE_GUI_MODEL =
-			new ModelResourceLocation(new ResourceLocation("changed_addon","electric_katana_red_glow"), "inventory");
+			new ModelResourceLocation(ChangedAddonMod.resourceLoc("electric_katana_red_glow"), "inventory");
 
 	@Nullable
 	@Override
