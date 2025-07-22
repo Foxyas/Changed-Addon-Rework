@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.goals;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -9,26 +8,18 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
 public class DashPunchGoal extends Goal {
-    private enum Phase {
-        IDLE,
-        CHARGING,
-        DASHING
-    }
-
     private final Mob mob;
     private Phase phase = Phase.IDLE;
     private int chargeTicks = 0;
     private int dashTicks = 0;
     private int cooldown = 0;
     private LivingEntity target;
-
     public DashPunchGoal(Mob mob) {
         this.mob = mob;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
@@ -178,5 +169,11 @@ public class DashPunchGoal extends Goal {
     @Override
     public boolean requiresUpdateEveryTick() {
         return true;
+    }
+
+    private enum Phase {
+        IDLE,
+        CHARGING,
+        DASHING
     }
 }

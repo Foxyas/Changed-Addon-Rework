@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
@@ -57,6 +56,8 @@ import java.util.UUID;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment10BossEntity extends ChangedEntity implements GenderedEntity, BossWithMusic, CustomPatReaction {
+    private static final EntityDataAccessor<Boolean> PHASE2 =
+            SynchedEntityData.defineId(Experiment10BossEntity.class, EntityDataSerializers.BOOLEAN);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private float TpCooldown;
 
@@ -73,8 +74,21 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         setPersistenceRequired();
     }
 
-    private static final EntityDataAccessor<Boolean> PHASE2 =
-            SynchedEntityData.defineId(Experiment10BossEntity.class, EntityDataSerializers.BOOLEAN);
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 300);
+        builder = builder.add(Attributes.ARMOR, 20);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
+        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
+        return builder;
+    }
 
     @Override
     protected void defineSynchedData() {
@@ -172,7 +186,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         return Color3.DARK;
     }
 
-
     @Override
     public @NotNull Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
@@ -241,7 +254,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         }
     }
 
-
     @Override
     public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
         if (mobEffectInstance.getEffect() == MobEffects.WITHER) {
@@ -261,7 +273,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         this.getBasicPlayerInfo().setScleraColor(Color3.parseHex("#edd725"));
         return retval;
     }
-
 
     @Override
     public boolean canChangeDimensions() {
@@ -286,34 +297,17 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
-    public static void init() {
-    }
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 300);
-        builder = builder.add(Attributes.ARMOR, 20);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
-        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
-        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
-        return builder;
-    }
-
     @Override
     public Gender getGender() {
         return Gender.FEMALE;
     }
 
-    public void setPhase2(boolean set) {
-        this.entityData.set(PHASE2, set);
-    }
-
     public boolean isPhase2() {
         return this.entityData.get(PHASE2);
+    }
+
+    public void setPhase2(boolean set) {
+        this.entityData.set(PHASE2, set);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {

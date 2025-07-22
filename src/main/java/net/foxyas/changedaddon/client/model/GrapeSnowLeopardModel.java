@@ -267,7 +267,7 @@ public class GrapeSnowLeopardModel extends AdvancedHumanoidModel<Exp6Entity> imp
         return corrector;
     } */
     @Override
-    public void setupHand() {
+    public void setupHand(Exp6Entity entity) {
         animator.setupHand();
     }
 
@@ -307,7 +307,7 @@ public class GrapeSnowLeopardModel extends AdvancedHumanoidModel<Exp6Entity> imp
     }
 
     @Override
-    public HumanoidAnimator<Exp6Entity, GrapeSnowLeopardModel> getAnimator() {
+    public HumanoidAnimator<Exp6Entity, GrapeSnowLeopardModel> getAnimator(Exp6Entity entity) {
         return animator;
     }
 }

@@ -170,7 +170,7 @@ public class FemaleExp1Model extends AdvancedHumanoidModel<Exp1FemaleEntity> imp
      }
   */
     @Override
-    public void setupHand() {
+    public void setupHand(Exp1FemaleEntity entity) {
         animator.setupHand();
     }
 
@@ -218,7 +218,7 @@ public class FemaleExp1Model extends AdvancedHumanoidModel<Exp1FemaleEntity> imp
     }
 
     @Override
-    public HumanoidAnimator<Exp1FemaleEntity, FemaleExp1Model> getAnimator() {
+    public HumanoidAnimator<Exp1FemaleEntity, FemaleExp1Model> getAnimator(Exp1FemaleEntity entity) {
         return animator;
     }
 }

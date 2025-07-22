@@ -44,14 +44,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard implements ICoatLikeEntity {
-    public AbstractExp2SnepChangedEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
-        super(type, level);
-    }
-
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final EntityDataAccessor<Boolean> UNFUSED_FROM_HOST = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BOOLEAN);
-
+    public AbstractExp2SnepChangedEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
+        super(type, level);
+    }
 
     protected void registerGoals() {
         super.registerGoals();
@@ -138,15 +136,17 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
 
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        if (livingEntity == this.getOwner())
-            return false;
-        return true;
+        return livingEntity != this.getOwner();
     }
 
     @Nullable
     @Override
     public UUID getOwnerUUID() {
         return this.entityData.get(DATA_OWNERUUID_ID).orElse(null);
+    }
+
+    public void setOwnerUUID(@Nullable UUID uuid) {
+        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
     }
 
     public boolean isPreventingPlayerRest(Player player) {
@@ -192,10 +192,6 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
         }
     }
 
-    public void setOwnerUUID(@Nullable UUID uuid) {
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
-    }
-
     public void tame(Player player) {
         this.setTame(true);
         this.setFollowOwner(true);
@@ -232,7 +228,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
                         player.displayClientMessage(new TranslatableComponent(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
                         this.jumping = false;
                         this.navigation.stop();
-                        this.setTarget((LivingEntity) null);
+                        this.setTarget(null);
                         return InteractionResult.SUCCESS;
                     }
                 }
@@ -328,22 +324,6 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
             }
     }
 
-    //Public enum TameType that just hold a string for the Items tag Logic
-    public enum TameType implements IExtensibleEnum {
-        CAT("changed_addon:cat_tame_items"),
-        DOG("changed_addon:dog_tame_items");
-
-        public final String Tag;
-
-        TameType(String tag) {
-            this.Tag = tag;
-        }
-
-        public static TameType create(String name, String tag) {
-            throw new NotImplementedException("Not extended");
-        }
-    }
-
     //TameType Use Type
     public boolean isTameItem(ItemStack stack, TameType tameType) {
         return stack.is(Items.COD)
@@ -362,5 +342,21 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
                 || stack.is(Items.SALMON)
                 || stack.is(Items.COOKED_SALMON)
                 || stack.is(ItemTags.create(new ResourceLocation("changed_addon:tame_items")));
+    }
+
+    //Public enum TameType that just hold a string for the Items tag Logic
+    public enum TameType implements IExtensibleEnum {
+        CAT("changed_addon:cat_tame_items"),
+        DOG("changed_addon:dog_tame_items");
+
+        public final String Tag;
+
+        TameType(String tag) {
+            this.Tag = tag;
+        }
+
+        public static TameType create(String name, String tag) {
+            throw new NotImplementedException("Not extended");
+        }
     }
 }

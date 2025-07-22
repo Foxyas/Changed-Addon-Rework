@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ProtogenRenderer extends AdvancedHumanoidRenderer<ProtogenEntity, ProtogenModel, ArmorLatexMaleWolfModel<ProtogenEntity>> {
     public ProtogenRenderer(EntityRendererProvider.Context context) {
-        super(context, new ProtogenModel(context.bakeLayer(ProtogenModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
+        super(context, new ProtogenModel(context.bakeLayer(ProtogenModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new ProtogenDisplay<>(this, getModel(),
                 new ResourceLocation("changed_addon:textures/entities/protogen/protogen_eyes_display.png"),
                 new ResourceLocation("changed_addon:textures/entities/protogen/protogen_display.png")));

@@ -8,10 +8,7 @@ import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.DoubleArmedModel;
-import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleSharkModel;
-import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
-import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModelLayerLocation;
-import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
+import net.ltxprogrammer.changed.client.renderer.model.armor.*;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -25,12 +22,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends LatexHumanoidArmorModel<T, ArmorLatexSquidTigerSharkModel<T>> implements DoubleArmedModel {
-    public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
-    public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
+public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends LatexHumanoidArmorModel<T, ArmorLatexSquidTigerSharkModel<T>> implements DoubleArmedModel<T> {
+    //public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
+    //public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
+    public static final ArmorModelSet<ChangedEntity, ArmorLatexSquidTigerSharkModel<ChangedEntity>> MODEL_SET = ArmorModelSet.of(new ResourceLocation("changed_addon", "armor_squid_tiger_shark"), ArmorLatexSquidTigerSharkModel::createArmorLayer, ArmorLatexSquidTigerSharkModel::new);
 
     private final ModelPart Head;
     private final ModelPart Torso;
@@ -60,7 +59,8 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
 
         /*var Tail = this.Torso.getChild("Tail");
         ModelPart tailPrimary = Tail.getChild("TailPrimary");
-        ModelPart tailSecondary = tailPrimary.getChild("TailSecondary");*/
+        ModelPart tailSecondary = tailPrimary.getChild("TailSecondary");
+*/
 
         var upperRightTentacle = List.of(Torso.getChild("RightUpperTentacle"));
         var upperLeftTentacle = List.of(Torso.getChild("LeftUpperTentacle"));
@@ -172,7 +172,7 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
     }
 
     @Override
-    public void renderForSlot(T entity, RenderLayerParent<T, ?> parent, ItemStack stack, EquipmentSlot slot, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderForSlot(T entity, RenderLayerParent<? super T, ?> parent, ItemStack stack, EquipmentSlot slot, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         poseStack.pushPose();
         this.scaleForSlot(parent, slot, poseStack);
 
@@ -204,11 +204,11 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
     }
 
     @Override
-    public HumanoidAnimator<T, ArmorLatexSquidTigerSharkModel<T>> getAnimator() {
+    public HumanoidAnimator<T, ArmorLatexSquidTigerSharkModel<T>> getAnimator(T entity) {
         return animator;
     }
 
-    public ModelPart getArm(HumanoidArm arm) {
+    public @NotNull ModelPart getArm(HumanoidArm arm) {
         return arm == HumanoidArm.LEFT ? this.LeftArm2 : this.RightArm2;
     }
 
@@ -216,7 +216,7 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
         return leg == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
-    public ModelPart getHead() {
+    public @NotNull ModelPart getHead() {
         return this.Head;
     }
 
@@ -225,12 +225,12 @@ public class ArmorLatexSquidTigerSharkModel <T extends ChangedEntity> extends La
     }
 
     @Override
-    public void translateToUpperHand(HumanoidArm arm, PoseStack poseStack) {
+    public void translateToUpperHand(ChangedEntity changedEntity, HumanoidArm arm, PoseStack poseStack) {
 
     }
 
     @Override
-    public void translateToLowerHand(HumanoidArm arm, PoseStack poseStack) {
+    public void translateToLowerHand(ChangedEntity changedEntity,HumanoidArm arm, PoseStack poseStack) {
 
     }
 

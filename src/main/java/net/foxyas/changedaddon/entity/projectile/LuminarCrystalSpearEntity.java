@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity.projectile;
 
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
@@ -6,7 +5,6 @@ import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -27,14 +25,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -54,9 +50,9 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 
     private static final EntityDataAccessor<Byte> ID_LOYALTY = SynchedEntityData.defineId(LuminarCrystalSpearEntity.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> ID_FOIL = SynchedEntityData.defineId(LuminarCrystalSpearEntity.class, EntityDataSerializers.BOOLEAN);
+    public int clientSideReturnSpearTickCount;
     private ItemStack SpearItem = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR.get());
     private boolean dealtDamage;
-    public int clientSideReturnSpearTickCount;
 
     public LuminarCrystalSpearEntity(PlayMessages.SpawnEntity packet, Level world) {
         super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), world);
@@ -80,6 +76,33 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 
     public LuminarCrystalSpearEntity(EntityType<? extends LuminarCrystalSpearEntity> type, LivingEntity entity, Level world) {
         super(type, entity, world);
+    }
+
+    public static LuminarCrystalSpearEntity shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
+        LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, world);
+        entityarrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);
+        entityarrow.setSilent(true);
+        entityarrow.setCritArrow(false);
+        entityarrow.setBaseDamage(damage);
+        entityarrow.setKnockback(knockback);
+        world.addFreshEntity(entityarrow);
+        world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.trident.throw")), SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
+        return entityarrow;
+    }
+
+    public static LuminarCrystalSpearEntity shoot(LivingEntity entity, LivingEntity target) {
+        LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, entity.level);
+        double dx = target.getX() - entity.getX();
+        double dy = target.getY() + target.getEyeHeight() - 1.1;
+        double dz = target.getZ() - entity.getZ();
+        entityarrow.shoot(dx, dy - entityarrow.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1f * 2, 12.0F);
+        entityarrow.setSilent(true);
+        entityarrow.setBaseDamage(5);
+        entityarrow.setKnockback(5);
+        entityarrow.setCritArrow(false);
+        entity.level.addFreshEntity(entityarrow);
+        entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.trident.throw")), SoundSource.PLAYERS, 1, 1f / (new Random().nextFloat() * 0.5f + 1));
+        return entityarrow;
     }
 
     protected void defineSynchedData() {
@@ -155,15 +178,6 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
         }
     }
 
-    public boolean isFoil() {
-        return this.entityData.get(ID_FOIL);
-    }
-
-    @Nullable
-    protected EntityHitResult findHitEntity(@NotNull Vec3 p_37575_, @NotNull Vec3 p_37576_) {
-        return this.dealtDamage ? null : super.findHitEntity(p_37575_, p_37576_);
-    }
-
 
     /*@Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
@@ -203,6 +217,15 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
         }
     }*/
 
+    public boolean isFoil() {
+        return this.entityData.get(ID_FOIL);
+    }
+
+    @Nullable
+    protected EntityHitResult findHitEntity(@NotNull Vec3 p_37575_, @NotNull Vec3 p_37576_) {
+        return this.dealtDamage ? null : super.findHitEntity(p_37575_, p_37576_);
+    }
+
     @Override
     protected void onHitBlock(@NotNull BlockHitResult result) {
         super.onHitBlock(result);
@@ -239,7 +262,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
         }
 
         Entity entity1 = this.getOwner();
-        DamageSource damagesource = DamageSource.trident(this, (Entity) (entity1 == null ? this : entity1));
+        DamageSource damagesource = DamageSource.trident(this, entity1 == null ? this : entity1);
         this.dealtDamage = true;
         SoundEvent soundevent = SoundEvents.TRIDENT_HIT;
         if (entity.hurt(damagesource, f)) {
@@ -247,8 +270,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
                 return;
             }
 
-            if (entity instanceof LivingEntity) {
-                LivingEntity livingentity1 = (LivingEntity) entity;
+            if (entity instanceof LivingEntity livingentity1) {
                 if (entity1 instanceof LivingEntity) {
                     EnchantmentHelper.doPostHurtEffects(livingentity1, entity1);
                     EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity1);
@@ -324,32 +346,5 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 
     public boolean shouldRender(double p_37588_, double p_37589_, double p_37590_) {
         return true;
-    }
-
-    public static LuminarCrystalSpearEntity shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
-        LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, world);
-        entityarrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);
-        entityarrow.setSilent(true);
-        entityarrow.setCritArrow(false);
-        entityarrow.setBaseDamage(damage);
-        entityarrow.setKnockback(knockback);
-        world.addFreshEntity(entityarrow);
-        world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.trident.throw")), SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
-        return entityarrow;
-    }
-
-    public static LuminarCrystalSpearEntity shoot(LivingEntity entity, LivingEntity target) {
-        LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, entity.level);
-        double dx = target.getX() - entity.getX();
-        double dy = target.getY() + target.getEyeHeight() - 1.1;
-        double dz = target.getZ() - entity.getZ();
-        entityarrow.shoot(dx, dy - entityarrow.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1f * 2, 12.0F);
-        entityarrow.setSilent(true);
-        entityarrow.setBaseDamage(5);
-        entityarrow.setKnockback(5);
-        entityarrow.setCritArrow(false);
-        entity.level.addFreshEntity(entityarrow);
-        entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.trident.throw")), SoundSource.PLAYERS, 1, 1f / (new Random().nextFloat() * 0.5f + 1));
-        return entityarrow;
     }
 }

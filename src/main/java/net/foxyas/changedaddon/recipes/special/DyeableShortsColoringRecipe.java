@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.armor.DyeableShorts;
 import net.foxyas.changedaddon.recipes.ChangedAddonModRecipeTypes;
-import net.ltxprogrammer.changed.item.BenignPants;
+import net.ltxprogrammer.changed.item.BenignShorts;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -30,7 +30,7 @@ public class DyeableShortsColoringRecipe extends CustomRecipe {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {
                 Item item = stack.getItem();
-                if (item == ChangedAddonItems.DYEABLE_SHORTS.get() || item instanceof DyeableShorts || item instanceof BenignPants) {
+                if (item == ChangedAddonItems.DYEABLE_SHORTS.get() || item instanceof DyeableShorts || item instanceof BenignShorts) {
                     if (hasShorts) return false;
                     hasShorts = true;
                 } else if (item instanceof DyeItem) {
@@ -57,7 +57,7 @@ public class DyeableShortsColoringRecipe extends CustomRecipe {
             ItemStack stack = container.getItem(i);
             if (!stack.isEmpty()) {
                 Item item = stack.getItem();
-                if (item == ChangedAddonItems.DYEABLE_SHORTS.get() || item instanceof DyeableShorts || item instanceof BenignPants) {
+                if (item == ChangedAddonItems.DYEABLE_SHORTS.get() || item instanceof DyeableShorts || item instanceof BenignShorts) {
                     pants = stack;
                 } else if (item instanceof DyeItem dyeItem) {
                     int color = dyeItem.getDyeColor().getTextColor(); // 0xRRGGBB
@@ -79,7 +79,7 @@ public class DyeableShortsColoringRecipe extends CustomRecipe {
             result.setCount(1);
             if (result.getItem() instanceof DyeableLeatherItem dyeableLeatherItem) {
                 dyeableLeatherItem.setColor(result, finalColor);
-            } else if (result.getItem() instanceof BenignPants) {
+            } else if (result.getItem() instanceof BenignShorts) {
                 ItemStack backUp = result;
                 result = new ItemStack(ChangedAddonItems.DYEABLE_SHORTS.get(), backUp.getCount());
                 result.setTag(backUp.getTag());

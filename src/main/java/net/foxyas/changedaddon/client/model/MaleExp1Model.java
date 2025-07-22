@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MaleExp1Model extends AdvancedHumanoidModel<Exp1MaleEntity> implements AdvancedHumanoidModelInterface<Exp1MaleEntity,MaleExp1Model> {
+public class MaleExp1Model extends AdvancedHumanoidModel<Exp1MaleEntity> implements AdvancedHumanoidModelInterface<Exp1MaleEntity, MaleExp1Model> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "snowfox"), "main");
 
@@ -141,7 +141,7 @@ public class MaleExp1Model extends AdvancedHumanoidModel<Exp1MaleEntity> impleme
     }
 
     @Override
-    public void prepareMobModel (Exp1MaleEntity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public void prepareMobModel(Exp1MaleEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
     }
 
@@ -153,7 +153,7 @@ public class MaleExp1Model extends AdvancedHumanoidModel<Exp1MaleEntity> impleme
      }
   */
     @Override
-    public void setupHand() {
+    public void setupHand(Exp1MaleEntity entity) {
         animator.setupHand();
     }
 
@@ -162,7 +162,7 @@ public class MaleExp1Model extends AdvancedHumanoidModel<Exp1MaleEntity> impleme
     public void setupAnim(@NotNull Exp1MaleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        PsychicGrabAbilityAnimation.playAnimation(entity,this);
+        PsychicGrabAbilityAnimation.playAnimation(entity, this);
     }
 
     public ModelPart getArm(HumanoidArm p_102852) {
@@ -192,7 +192,7 @@ public class MaleExp1Model extends AdvancedHumanoidModel<Exp1MaleEntity> impleme
     }
 
     @Override
-    public HumanoidAnimator<Exp1MaleEntity, MaleExp1Model> getAnimator() {
+    public HumanoidAnimator<Exp1MaleEntity, MaleExp1Model> getAnimator(Exp1MaleEntity entity) {
         return animator;
     }
 }

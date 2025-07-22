@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AvaliRenderer extends AdvancedHumanoidRenderer<AvaliEntity, AvaliModel, ArmorLatexMaleDragonModel<AvaliEntity>> {
     public AvaliRenderer(EntityRendererProvider.Context context) {
-        super(context, new AvaliModel(context.bakeLayer(AvaliModel.LAYER_LOCATION)), ArmorLatexMaleDragonModel::new, ArmorLatexMaleDragonModel.INNER_ARMOR, ArmorLatexMaleDragonModel.OUTER_ARMOR, 0.5f);
+        super(context, new AvaliModel(context.bakeLayer(AvaliModel.LAYER_LOCATION)), ArmorLatexMaleDragonModel.MODEL_SET, 0.5f);
         //this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
         this.addLayer(new AvaliColorsLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/avali_gender/avali_gender_primary.png"), 0));

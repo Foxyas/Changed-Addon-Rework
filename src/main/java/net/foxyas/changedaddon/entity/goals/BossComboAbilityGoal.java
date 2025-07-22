@@ -18,12 +18,7 @@ import java.util.function.Consumer;
 
 public class BossComboAbilityGoal extends Goal {
     private final Mob entity;
-    private LivingEntity target;
-    private int phase = 0;
-    private int ticks = 0;
-    private int delay = 5;
     private final Random random = new Random();
-    
     // Configurable parameters
     private final int maxPhases;
     private final float minDistance;
@@ -32,7 +27,11 @@ public class BossComboAbilityGoal extends Goal {
     private final Consumer<LivingEntity>[] phaseActions;
     private final Runnable onStart;
     private final Runnable onStop;
-    
+    private LivingEntity target;
+    private int phase = 0;
+    private int ticks = 0;
+    private final int delay = 5;
+
     @SafeVarargs
     public BossComboAbilityGoal(Mob entity, int maxPhases, float minDistance, float maxDistance, float activationChance,
                                 Runnable onStart, Runnable onStop, Consumer<LivingEntity>... phaseActions) {
@@ -54,9 +53,9 @@ public class BossComboAbilityGoal extends Goal {
             return false;
         }
 
-        return target != null && target.isOnGround() && 
-               (entity.distanceTo(target) >= minDistance && entity.distanceTo(target) <= maxDistance) && 
-               random.nextFloat() <= activationChance;
+        return target != null && target.isOnGround() &&
+                (entity.distanceTo(target) >= minDistance && entity.distanceTo(target) <= maxDistance) &&
+                random.nextFloat() <= activationChance;
     }
 
     @Override
@@ -78,7 +77,7 @@ public class BossComboAbilityGoal extends Goal {
         if (onStart != null) {
             onStart.run();
         }
-        
+
         // Execute first phase action immediately
         if (phaseActions.length > 0) {
             phaseActions[0].accept(target);
@@ -104,9 +103,9 @@ public class BossComboAbilityGoal extends Goal {
             onStop.run();
         }
     }
-    
+
     public static class DefaultCombos {
-        
+
         private final LivingEntity attacker;
         private final LivingEntity target;
         private final float damage;
@@ -114,14 +113,14 @@ public class BossComboAbilityGoal extends Goal {
         private final SoundEvent[] impactSound;
         private final ParticleOptions[] impactParticle;
 
-        public DefaultCombos(LivingEntity attacker, LivingEntity target, float damage, SoundEvent[] impactSound, ParticleOptions[] impactParticle){
+        public DefaultCombos(LivingEntity attacker, LivingEntity target, float damage, SoundEvent[] impactSound, ParticleOptions[] impactParticle) {
             this.attacker = attacker;
             this.target = target;
             this.damage = damage;
             this.impactSound = impactSound;
             this.impactParticle = impactParticle;
         }
-        
+
         public void teleportToTarget() {
             if (target == null) return;
             attacker.teleportTo(target.getX(), target.getY(), target.getZ());

@@ -444,12 +444,12 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
     }
 
     @Override
-    public void setupHand() {
+    public void setupHand(LatexSquidTigerSharkEntity entity) {
         animator.setupHand();
     }
 
     @Override
-    public HumanoidAnimator<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel> getAnimator() {
+    public HumanoidAnimator<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel> getAnimator(LatexSquidTigerSharkEntity entity) {
         return animator;
     }
 

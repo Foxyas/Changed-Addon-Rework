@@ -25,7 +25,7 @@ public class DazedRenderer extends AdvancedHumanoidRenderer<DazedEntity, DazedLa
 
     public DazedRenderer(EntityRendererProvider.Context context) {
         super(context, new DazedLatexModel(context.bakeLayer(DazedLatexModel.LAYER_LOCATION)),
-                ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
+                ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotPuddle));
         this.addLayer(new ConditionalCustomEyesLayer<>(this,
                 new CustomEyesLayer<>(this, context.getModelSet(),

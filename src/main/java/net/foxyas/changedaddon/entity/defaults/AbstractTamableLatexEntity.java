@@ -41,6 +41,11 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID;
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID;
 
+    static {
+        DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractTamableLatexEntity.class, EntityDataSerializers.BYTE);
+        DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractTamableLatexEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    }
+
     public AbstractTamableLatexEntity(EntityType<? extends ChangedEntity> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
     }
@@ -106,6 +111,10 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
         return (UUID) ((Optional<?>) this.entityData.get(DATA_OWNERUUID_ID)).orElse(null);
     }
 
+    public void setOwnerUUID(@Nullable UUID uuid) {
+        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
+    }
+
     public boolean isPreventingPlayerRest(Player player) {
         return (!this.isTame() || !player.getUUID().equals(this.getOwnerUUID())) && super.isPreventingPlayerRest(player);
     }
@@ -149,10 +158,6 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
         } catch (IllegalArgumentException var2) {
             return null;
         }
-    }
-
-    public void setOwnerUUID(@Nullable UUID uuid) {
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
     }
 
     public void tame(Player player) {
@@ -284,10 +289,5 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
 
     protected boolean isTameItem(ItemStack stack) {
         return false;
-    }
-
-    static {
-        DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractTamableLatexEntity.class, EntityDataSerializers.BYTE);
-        DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractTamableLatexEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     }
 }

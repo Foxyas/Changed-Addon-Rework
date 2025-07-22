@@ -203,7 +203,7 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> impleme
     }
 
     @Override
-    public void setupHand() {
+    public void setupHand(ProtogenEntity entity) {
         animator.setupHand();
     }
 
@@ -245,7 +245,7 @@ public class ProtogenModel extends AdvancedHumanoidModel<ProtogenEntity> impleme
     }
 
     @Override
-    public HumanoidAnimator<ProtogenEntity, ProtogenModel> getAnimator() {
+    public HumanoidAnimator<ProtogenEntity, ProtogenModel> getAnimator(ProtogenEntity entity) {
         return animator;
     }
 }

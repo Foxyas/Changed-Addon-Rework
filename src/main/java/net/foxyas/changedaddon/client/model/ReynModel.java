@@ -205,7 +205,7 @@ public class ReynModel extends AdvancedHumanoidModel<ReynEntity> implements Adva
     }
 
     @Override
-    public void setupHand() {
+    public void setupHand(ReynEntity entity) {
         animator.setupHand();
     }
 
@@ -244,7 +244,7 @@ public class ReynModel extends AdvancedHumanoidModel<ReynEntity> implements Adva
     }
 
     @Override
-    public HumanoidAnimator<ReynEntity, ReynModel> getAnimator() {
+    public HumanoidAnimator<ReynEntity, ReynModel> getAnimator(ReynEntity entity) {
         return animator;
     }
 }

@@ -5,10 +5,10 @@ import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
-import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
@@ -56,64 +56,32 @@ import java.util.Random;
 
 public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard implements CrawlFeature {
 
-    public boolean isBoss() {
-        return isBoss;
-    }
-
-    public void setBoss(boolean boss) {
-        isBoss = boss;
-    }
-
-    public boolean isAggro() {
-        return Aggro;
-    }
-
-    public void setAggro(boolean aggro) {
-        Aggro = aggro;
-    }
-
-    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-    public static class WhenAttackAEntity {
-        @SubscribeEvent
-        public static void WhenAttack(LivingAttackEvent event) {
-            LivingEntity target = event.getEntityLiving();
-            Entity source = event.getSource().getEntity();
-            if (source instanceof AbstractLuminarcticLeopard lumi && lumi.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
-                PlayerUtil.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
-                target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
-                target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
-            } else if (source instanceof Player player) {
-                TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-                if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
-                        && instance != null
-                        && instance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAUSE_FREEZE_DMG)) {
-                    PlayerUtil.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
-                    target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
-                    target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
-                }
-            }
-        }
-
-        @SubscribeEvent
-        public static void onEntityDrop(LivingDropsEvent event) {
-            LivingEntity entity = event.getEntityLiving();
-            Level level = entity.level;
-
-            // Verifica se é um mob específico, por exemplo, um Luminarctic Leopard
-            if (entity instanceof AbstractLuminarcticLeopard leopard) {
-                // Verifica se tem a NBT isBoss = 1b
-                if (leopard.isBoss()) {
-                    // Cria o item que será dropado
-                    ItemStack item = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
-
-                    // Cria o drop
-                    ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), item);
-
-                    // Adiciona à lista de drops
-                    event.getDrops().add(drop);
-                }
-            }
-        }
+    public static final int GLOW_NONE = 0;
+    public static final int GLOW_PULSE = 1;
+    public static final int GLOW_ALWAYS = 2;
+    private static final EntityDataAccessor<Integer> DODGE_ANIM_TICKS =
+            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> DODGE_TYPE =
+            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> GLOW_STAGE =
+            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
+    public final ServerBossEvent bossBar = new ServerBossEvent(
+            this.getDisplayName(), // Nome exibido na boss bar
+            BossEvent.BossBarColor.WHITE, // Cor da barra
+            BossEvent.BossBarOverlay.NOTCHED_6 // Estilo da barra
+    );
+    public final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
+    public final int DodgeAnimMaxTicks = 20;
+    public float AbilitiesTicksCooldown = 20;
+    public int SuperAbilitiesTicksCooldown = 0;
+    public int PassivesTicksCooldown = 0;
+    public int DashingTicks = 0;
+    boolean ActivatedAbility = false;
+    private boolean isBoss = false;
+    private boolean Aggro = false;
+    //public int DEVATTACKTESTTICK = 0;
+    public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
+        super(p_19870_, p_19871_);
     }
 
     public static <T extends AbstractLuminarcticLeopard> boolean canSpawnNear(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
@@ -152,11 +120,21 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         // Condições atendidas, pode spawnar
     }
 
-    public final ServerBossEvent bossBar = new ServerBossEvent(
-            this.getDisplayName(), // Nome exibido na boss bar
-            BossEvent.BossBarColor.WHITE, // Cor da barra
-            BossEvent.BossBarOverlay.NOTCHED_6 // Estilo da barra
-    );
+    public boolean isBoss() {
+        return isBoss;
+    }
+
+    public void setBoss(boolean boss) {
+        isBoss = boss;
+    }
+
+    public boolean isAggro() {
+        return Aggro;
+    }
+
+    public void setAggro(boolean aggro) {
+        Aggro = aggro;
+    }
 
     @Override
     protected int getExperienceReward(@NotNull Player player) {
@@ -167,23 +145,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         return super.getExperienceReward(player);
     }
 
-    boolean ActivatedAbility = false;
-    public float AbilitiesTicksCooldown = 20;
-    public int SuperAbilitiesTicksCooldown = 0;
-    public int PassivesTicksCooldown = 0;
-    public int DashingTicks = 0;
-    public final BossAbilitiesHandle bossAbilitiesHandle = new BossAbilitiesHandle(this);
-    private static final EntityDataAccessor<Integer> DODGE_ANIM_TICKS =
-            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> DODGE_TYPE =
-            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> GLOW_STAGE =
-            SynchedEntityData.defineId(AbstractLuminarcticLeopard.class, EntityDataSerializers.INT);
-    public static final int GLOW_NONE = 0;
-    public static final int GLOW_PULSE = 1;
-    public static final int GLOW_ALWAYS = 2;
-
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -191,7 +152,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         this.entityData.define(DODGE_TYPE, 0);
         this.entityData.define(GLOW_STAGE, 0);
     }
-
 
     public int getDodgeAnimTicks() {
         return this.entityData.get(DODGE_ANIM_TICKS);
@@ -217,18 +177,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         this.entityData.set(GLOW_STAGE, stage);
     }
 
-    public final int DodgeAnimMaxTicks = 20;
-
-    private boolean isBoss = false;
-
-    private boolean Aggro = false;
-
-    //public int DEVATTACKTESTTICK = 0;
-    public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
-        super(p_19870_, p_19871_);
-    }
-
-
     public boolean isActivatedAbility() {
         return ActivatedAbility;
     }
@@ -251,7 +199,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public void baseTick() {
         super.baseTick();
         if (tickCount < 4) {
-            if (this.isBoss()){
+            if (this.isBoss()) {
                 handleBoss();
             }
         }
@@ -490,6 +438,50 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
         // Caso nada acima se aplique, recebe dano normalmente
         return super.hurt(source, amount);
+    }
+
+    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
+    public static class WhenAttackAEntity {
+        @SubscribeEvent
+        public static void WhenAttack(LivingAttackEvent event) {
+            LivingEntity target = event.getEntityLiving();
+            Entity source = event.getSource().getEntity();
+            if (source instanceof AbstractLuminarcticLeopard lumi && lumi.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                PlayerUtil.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
+                target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
+                target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
+            } else if (source instanceof Player player) {
+                TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+                if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
+                        && instance != null
+                        && instance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAUSE_FREEZE_DMG)) {
+                    PlayerUtil.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
+                    target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
+                    target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onEntityDrop(LivingDropsEvent event) {
+            LivingEntity entity = event.getEntityLiving();
+            Level level = entity.level;
+
+            // Verifica se é um mob específico, por exemplo, um Luminarctic Leopard
+            if (entity instanceof AbstractLuminarcticLeopard leopard) {
+                // Verifica se tem a NBT isBoss = 1b
+                if (leopard.isBoss()) {
+                    // Cria o item que será dropado
+                    ItemStack item = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get());
+
+                    // Cria o drop
+                    ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), item);
+
+                    // Adiciona à lista de drops
+                    event.getDrops().add(drop);
+                }
+            }
+        }
     }
 
 

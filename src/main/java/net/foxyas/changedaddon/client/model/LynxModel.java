@@ -166,7 +166,7 @@ public class LynxModel extends AdvancedHumanoidModel<LynxEntity> implements Adva
      }
   */
     @Override
-    public void setupHand() {
+    public void setupHand(LynxEntity entity) {
         animator.setupHand();
     }
 
@@ -204,7 +204,7 @@ public class LynxModel extends AdvancedHumanoidModel<LynxEntity> implements Adva
     }
 
     @Override
-    public HumanoidAnimator<LynxEntity, LynxModel> getAnimator() {
+    public HumanoidAnimator<LynxEntity, LynxModel> getAnimator(LynxEntity entity) {
         return animator;
     }
 }

@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 public class Exp6Renderer extends AdvancedHumanoidRenderer<Exp6Entity, GrapeSnowLeopardModel, ArmorLatexFemaleCatModel<Exp6Entity>> {
 	public Exp6Renderer(EntityRendererProvider.Context context) {
 		super(context, new GrapeSnowLeopardModel(context.bakeLayer(GrapeSnowLeopardModel.LAYER_LOCATION)),
-				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
+				ArmorLatexFemaleCatModel.MODEL_SET, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotArmFur));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		//this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/female_snep_hair"),true));

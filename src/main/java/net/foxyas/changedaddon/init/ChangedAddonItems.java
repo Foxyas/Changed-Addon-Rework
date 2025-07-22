@@ -8,6 +8,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.renderer.items.LaserItemDynamicRender;
 import net.foxyas.changedaddon.item.*;
 import net.foxyas.changedaddon.item.armor.DyeableShorts;
+import net.foxyas.changedaddon.item.armor.TShirtClothing;
 import net.foxyas.changedaddon.procedures.DotValueOfViewProcedure;
 import net.foxyas.changedaddon.procedures.IsSignalCatcherCordsSetProcedure;
 import net.foxyas.changedaddon.procedures.LaethinPropertyValueProviderProcedure;
@@ -31,6 +32,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.awt.*;
 
+@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ChangedAddonItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
@@ -368,6 +370,7 @@ public class ChangedAddonItems {
 
 	public static final RegistryObject<Item> LASER_POINTER = REGISTRY.register("laser_pointer", LaserPointer::new);
 
+	public static final RegistryObject<Item> DYEABLE_SHIRT = REGISTRY.register("dyeable_shirt", TShirtClothing::new);
 	public static final RegistryObject<Item> DYEABLE_SHORTS = REGISTRY.register("dyeable_shorts", DyeableShorts::new);
 
 	public static final RegistryObject<Item> TIMED_KEYPAD = RegisterBlockItem(REGISTRY, ChangedAddonBlocks.TIMED_KEYPAD, ChangedAddonTabs.TAB_CHANGED_ADDON);

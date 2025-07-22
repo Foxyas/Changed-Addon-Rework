@@ -22,6 +22,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -249,24 +250,26 @@ public class LatexDragonSnowLeopardSharkModel extends AdvancedHumanoidModel<Late
 		return LayerDefinition.create(meshdefinition, 96, 96);
 	}
 
-    public void prepareMobModel(LatexDragonSnowLeopardSharkEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
+    public void prepareMobModel(@NotNull LatexDragonSnowLeopardSharkEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
         this.prepareMobModel(this.animator, p_102861_, p_102862_, p_102863_, p_102864_);
     }
 
-    public void setupHand() {
+    @Override
+    public void setupHand(LatexDragonSnowLeopardSharkEntity entity) {
         this.animator.setupHand();
     }
 
-    public HumanoidAnimator<LatexDragonSnowLeopardSharkEntity, LatexDragonSnowLeopardSharkModel> getAnimator() {
+    @Override
+    public HumanoidAnimator<LatexDragonSnowLeopardSharkEntity, LatexDragonSnowLeopardSharkModel> getAnimator(LatexDragonSnowLeopardSharkEntity entity) {
         return this.animator;
     }
 
-    public void setupAnim(LatexDragonSnowLeopardSharkEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull LatexDragonSnowLeopardSharkEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 
-    public ModelPart getArm(HumanoidArm p_102852_) {
+    public @NotNull ModelPart getArm(HumanoidArm p_102852_) {
         return p_102852_ == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 
@@ -274,7 +277,7 @@ public class LatexDragonSnowLeopardSharkModel extends AdvancedHumanoidModel<Late
         return p_102852_ == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
-    public ModelPart getHead() {
+    public @NotNull ModelPart getHead() {
         return this.Head;
     }
 
@@ -282,7 +285,7 @@ public class LatexDragonSnowLeopardSharkModel extends AdvancedHumanoidModel<Late
         return this.Torso;
     }
 
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.RightLeg.render(poseStack, buffer, packedLight, packedOverlay);
         this.LeftLeg.render(poseStack, buffer, packedLight, packedOverlay);
         this.Head.render(poseStack, buffer, packedLight, packedOverlay);

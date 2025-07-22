@@ -424,12 +424,12 @@ public record BossAbilitiesHandle(AbstractLuminarcticLeopard boss) {
         Level level = boss.getLevel();
         level.getNearbyEntities(Mob.class, TargetingConditions.DEFAULT, self, AABB.ofSize(self.position(), 3.0, 3.0, 3.0)).forEach((mob) -> {
             if (mob.getTarget() != null && mob.getTarget().is(self)) {
-                mob.setTarget((LivingEntity) null);
+                mob.setTarget(null);
             }
         });
         level.getNearbyEntities(LivingEntity.class, TargetingConditions.DEFAULT, self, AABB.ofSize(self.position(), 10.0, 10.0, 10.0)).forEach((livingEntity) -> {
             if (!(livingEntity.getLookAngle().dot(self.getEyePosition().subtract(livingEntity.getEyePosition()).normalize()) < 0.8500000238418579)) {
-                if (!(livingEntity instanceof Player) || (Boolean) Changed.config.server.playerControllingAbilities.get()) {
+                if (!(livingEntity instanceof Player) || Changed.config.server.playerControllingAbilities.get()) {
                     CameraUtil.tugEntityLookDirection(livingEntity, self, 0.125);
                     if (!livingEntity.getLevel().isClientSide()) {
                         livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 120, 2, false, false), self);

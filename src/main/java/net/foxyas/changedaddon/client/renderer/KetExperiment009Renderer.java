@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 public class KetExperiment009Renderer extends AdvancedHumanoidRenderer<KetExperiment009Entity, KetModel, ArmorLatexMaleWolfModel<KetExperiment009Entity>> {
     public KetExperiment009Renderer(EntityRendererProvider.Context context) {
         super(context, new KetModel(context.bakeLayer(KetModel.LAYER_LOCATION)),
-                ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
+                ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new CustomEmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/ket_glow_layer.png"), 0.7f));
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));

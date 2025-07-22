@@ -14,6 +14,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -231,20 +232,20 @@ public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxE
         return LayerDefinition.create(meshdefinition, 128, 128);
     }
 
-    public void prepareMobModel(HaydenFennecFoxEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
+    public void prepareMobModel(@NotNull HaydenFennecFoxEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
         this.prepareMobModel(this.animator, p_102861_, p_102862_, p_102863_, p_102864_);
     }
 
-    public void setupHand() {
+    public void setupHand(HaydenFennecFoxEntity entity) {
         this.animator.setupHand();
     }
 
-    public void setupAnim(HaydenFennecFoxEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull HaydenFennecFoxEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 
-    public ModelPart getArm(HumanoidArm p_102852_) {
+    public @NotNull ModelPart getArm(HumanoidArm p_102852_) {
         return p_102852_ == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 
@@ -252,7 +253,7 @@ public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxE
         return p_102852_ == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
 
-    public ModelPart getHead() {
+    public @NotNull ModelPart getHead() {
         return this.Head;
     }
 
@@ -260,7 +261,7 @@ public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxE
         return this.Torso;
     }
 
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         this.RightLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         this.LeftLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         this.Head.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
@@ -269,7 +270,7 @@ public class HaydenFennecFoxModel extends AdvancedHumanoidModel<HaydenFennecFoxE
         this.LeftArm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
-    public HumanoidAnimator<HaydenFennecFoxEntity, HaydenFennecFoxModel> getAnimator() {
+    public HumanoidAnimator<HaydenFennecFoxEntity, HaydenFennecFoxModel> getAnimator(HaydenFennecFoxEntity entity) {
         return this.animator;
     }
 }

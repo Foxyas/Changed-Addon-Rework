@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 public class SnowLeopardMaleOrganicRenderer extends AdvancedHumanoidRenderer<SnowLeopardMaleOrganicEntity, BioSynthSnowLeopardMaleModel, ArmorLatexMaleCatModel<SnowLeopardMaleOrganicEntity>> {
 	public SnowLeopardMaleOrganicRenderer(EntityRendererProvider.Context context) {
 		super(context, new BioSynthSnowLeopardMaleModel(context.bakeLayer(BioSynthSnowLeopardMaleModel.LAYER_LOCATION)),
-				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
+				ArmorLatexMaleCatModel.MODEL_SET, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotArmFur));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomHairColorLayer<>(this, this.getModel(), new ResourceLocation("changed_addon:textures/entities/male_snep_hair")));

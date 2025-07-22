@@ -212,7 +212,7 @@ public class HimalayanCrystalGasCatFemaleModel extends AdvancedHumanoidModel<Cry
 		this.prepareMobModel(this.animator, p_102861_, p_102862_, p_102863_, p_102864_);
 	}
 
-	public void setupHand() {
+	public void setupHand(CrystalGasCatFemaleEntity entity) {
 		this.animator.setupHand();
 	}
 
@@ -246,7 +246,7 @@ public class HimalayanCrystalGasCatFemaleModel extends AdvancedHumanoidModel<Cry
 		this.LeftArm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 
-	public HumanoidAnimator<CrystalGasCatFemaleEntity, HimalayanCrystalGasCatFemaleModel> getAnimator() {
+	public HumanoidAnimator<CrystalGasCatFemaleEntity, HimalayanCrystalGasCatFemaleModel> getAnimator(CrystalGasCatFemaleEntity entity) {
 		return this.animator;
 	}
 }

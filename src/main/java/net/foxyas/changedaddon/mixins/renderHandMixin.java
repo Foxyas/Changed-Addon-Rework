@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.mixins;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import net.foxyas.changedaddon.abilities.CarryAbility;
-import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;

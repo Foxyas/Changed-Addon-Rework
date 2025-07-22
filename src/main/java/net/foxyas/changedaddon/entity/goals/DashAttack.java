@@ -84,7 +84,7 @@ public class DashAttack extends Goal {
         dashDirection = Vec3.ZERO;
     }
 
-    public boolean isChargingDash(){
+    public boolean isChargingDash() {
         return !(tickCount > PREPARE_TIME);
     }
 
@@ -97,7 +97,7 @@ public class DashAttack extends Goal {
         tickCount++;
 
         this.dashDirection.scale(this.dashSpeed);
-        
+
         if (target instanceof Player player) {
             //player.displayClientMessage(new TextComponent("Ticks = " + tickCount), true);
         }

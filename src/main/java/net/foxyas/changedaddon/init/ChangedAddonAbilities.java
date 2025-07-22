@@ -1,14 +1,13 @@
 
-package net.foxyas.changedaddon.abilities;
+package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.client.renderer.items.LaserItemDynamicRender;
+import net.foxyas.changedaddon.abilities.*;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.ltxprogrammer.changed.client.ChangedClient;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedTags;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -67,7 +66,7 @@ public class ChangedAddonAbilities /*extends ChangedAbilities*/ {
 
     @SubscribeEvent
     public static void clientLoad(FMLClientSetupEvent event) {
-        //Todo Ability Dynamic Changer
+        ChangedClient.abilityColors.getOrThrow().register(WingFlapAbility::getColor, WING_FLAP_ABILITY.get());
     }
 
 }

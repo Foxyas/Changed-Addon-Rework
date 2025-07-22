@@ -16,11 +16,12 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.HumanoidModel;
 
 import net.foxyas.changedaddon.entity.CrystalGasCatFemaleEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class CrystalGasCatFemaleRenderer extends AdvancedHumanoidRenderer<CrystalGasCatFemaleEntity, HimalayanCrystalGasCatFemaleModel, ArmorLatexMaleCatModel<CrystalGasCatFemaleEntity>> {
 	public CrystalGasCatFemaleRenderer(EntityRendererProvider.Context context) {
 		super(context, new HimalayanCrystalGasCatFemaleModel(context.bakeLayer(HimalayanCrystalGasCatFemaleModel.LAYER_LOCATION)),
-				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
+				ArmorLatexMaleCatModel.MODEL_SET, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
@@ -29,7 +30,7 @@ public class CrystalGasCatFemaleRenderer extends AdvancedHumanoidRenderer<Crysta
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(CrystalGasCatFemaleEntity entity) {
+	public @NotNull ResourceLocation getTextureLocation(@NotNull CrystalGasCatFemaleEntity entity) {
 		return new ResourceLocation("changed_addon:textures/entities/himalayan_crystal_gas_cat_female.png");
 	}
 }

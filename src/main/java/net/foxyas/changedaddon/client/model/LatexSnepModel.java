@@ -343,7 +343,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
     }
 
     @Override
-    public void setupHand() {
+    public void setupHand(LatexSnepEntity entity) {
         animator.setupHand();
     }
 
@@ -407,7 +407,7 @@ public class LatexSnepModel extends AdvancedHumanoidModel<LatexSnepEntity> imple
 
 
     @Override
-    public HumanoidAnimator<LatexSnepEntity, LatexSnepModel> getAnimator() {
+    public HumanoidAnimator<LatexSnepEntity, LatexSnepModel> getAnimator(LatexSnepEntity entity) {
         return animator;
     }
 

@@ -28,10 +28,15 @@ public class BlueLizard extends AbstractBasicChangedEntity {
         super(p_19870_, p_19871_);
     }
 
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
+        return builder;
+    }
+
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.05f);
-        attributes.getInstance((Attribute)ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1F);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.1F);
     }
 
     public TransfurMode getTransfurMode() {
@@ -48,10 +53,5 @@ public class BlueLizard extends AbstractBasicChangedEntity {
 
     public @Nullable List<HairStyle> getValidHairStyles() {
         return Collection.EMPTY;
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
-        return builder;
     }
 }

@@ -32,9 +32,10 @@ import java.util.function.Consumer;
 import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.*;
 import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.wolfEars;
 
-class PartialModelAnimation{
-    public PartialModelAnimation (){
+class PartialModelAnimation {
+    public PartialModelAnimation() {
     }
+
     public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> Partial(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
         return (animator) -> {
             animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad)).addPreset(wolfUpperBody(head, torso, leftArm, rightArm)).addPreset(catTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar)).addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(leftArm, rightArm)).addAnimator(new ArmBobAnimator(leftArm, rightArm)).addAnimator(new ArmRideAnimator(leftArm, rightArm));
@@ -136,7 +137,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
                 .addPreset(AnimatorPresets.catLike(
                         Head, leftEar, rightEar,
                         Torso, LeftArm, RightArm,
-                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary,tailQuaternary),
+                        Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary),
                         LeftLeg, LeftLowerLeg, leftFoot, leftPad, RightLeg, RightLowerLeg, rightFoot, rightPad));
     }
 
@@ -182,7 +183,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
         PartDefinition RightPants = RightLeg.addOrReplaceChild("RightPants", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        final var rightPantCubes = ((CubeListBuilderExtender)CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
+        final var rightPantCubes = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
         PartDefinition RightThighLayer_r1 = RightPants.addOrReplaceChild("RightThighLayer_r1", rightPantCubes, PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
@@ -202,7 +203,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
         PartDefinition LeftPants = LeftLeg.addOrReplaceChild("LeftPants", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        final var leftPantCubes = ((CubeListBuilderExtender)CubeListBuilder.create().texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
+        final var leftPantCubes = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
         PartDefinition LeftThighLayer_r1 = LeftPants.addOrReplaceChild("LeftThighLayer_r1", leftPantCubes, PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
@@ -258,13 +259,13 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
         PartDefinition RightArm = partdefinition.addOrReplaceChild("RightArm", CubeListBuilder.create().texOffs(40, 16).addBox(-3.0F + rightArmOffset, -2.0F, -2.0F, armWidth, 12.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(-5.0F, 1.5F, 0.0F));
 
-        final var rightSleeveCube = ((CubeListBuilderExtender)CubeListBuilder.create().texOffs(40, 32).addBox(-3.0F + rightArmOffset, -2.0F, -2.0F, armWidth, 9.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
+        final var rightSleeveCube = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(40, 32).addBox(-3.0F + rightArmOffset, -2.0F, -2.0F, armWidth, 9.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
         PartDefinition RightSleeve = RightArm.addOrReplaceChild("RightSleeve", rightSleeveCube, PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(32, 48).addBox(-1.0F, -2.0F, -2.0F, armWidth, 12.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(5.0F, 1.5F, 0.0F));
 
-        final var leftSleeveCube = ((CubeListBuilderExtender)CubeListBuilder.create().texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, armWidth, 9.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
+        final var leftSleeveCube = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, armWidth, 9.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
         PartDefinition LeftSleeve = LeftArm.addOrReplaceChild("LeftSleeve", leftSleeveCube, PartPose.offset(0.0F, 0.0F, 0.0F));
 
@@ -346,7 +347,6 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
     }
 
 
-
     @Override
     public void prepareMobModel(SnowLeopardPartialEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
         this.prepareMobModel(animator, p_102861_, p_102862_, p_102863_, p_102864_);
@@ -360,7 +360,8 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
         }
     }
 
-    public void setupHand() {
+    @Override
+    public void setupHand(SnowLeopardPartialEntity entity) {
         animator.setupHand();
     }
 
@@ -397,7 +398,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
     }
 
     @Override
-    public HumanoidAnimator<SnowLeopardPartialEntity, SnowLeopardPartialModel> getAnimator() {
+    public HumanoidAnimator<SnowLeopardPartialEntity, SnowLeopardPartialModel> getAnimator(SnowLeopardPartialEntity entity) {
         return animator;
     }
 }

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins;
 
-import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.abilities.WingFlapAbility;
 import net.ltxprogrammer.changed.client.renderer.animate.wing.DragonWingInitAnimator;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

@@ -170,7 +170,7 @@ public class ModelMirrorWhiteTiger extends AdvancedHumanoidModel<MirrorWhiteTige
     }
  */
     @Override
-    public void setupHand() {
+    public void setupHand(MirrorWhiteTigerEntity entity) {
         animator.setupHand();
     }
 
@@ -217,7 +217,7 @@ public class ModelMirrorWhiteTiger extends AdvancedHumanoidModel<MirrorWhiteTige
     }
 
     @Override
-    public HumanoidAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> getAnimator() {
+    public HumanoidAnimator<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger> getAnimator(MirrorWhiteTigerEntity entity) {
         return animator;
     }
 }

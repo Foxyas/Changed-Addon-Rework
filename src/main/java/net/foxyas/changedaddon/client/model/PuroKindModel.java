@@ -279,7 +279,7 @@ public class PuroKindModel extends AdvancedHumanoidModel<PuroKindEntity> impleme
     }  
 */
     @Override
-    public void setupHand() {
+    public void setupHand(PuroKindEntity entity) {
         animator.setupHand();
     }
 
@@ -320,7 +320,7 @@ public class PuroKindModel extends AdvancedHumanoidModel<PuroKindEntity> impleme
     }
 
     @Override
-    public HumanoidAnimator<PuroKindEntity, PuroKindModel> getAnimator() {
+    public HumanoidAnimator<PuroKindEntity, PuroKindModel> getAnimator(PuroKindEntity entity) {
         return animator;
     }
 }

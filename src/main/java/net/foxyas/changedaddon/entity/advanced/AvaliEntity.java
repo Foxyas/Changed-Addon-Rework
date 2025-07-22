@@ -28,35 +28,19 @@ import java.util.Set;
 
 public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements ExtraVariantStats {
 
-    public enum SizeScaling implements IExtensibleEnum {
-        NORMAL(0.8f),
-        TALL(0.9f),
-        VERY_TALL(1.0f);
-
-        private final float scale;
-        SizeScaling(float size) {
-            scale = size;
-        }
-
-        public float getScale() {
-            return scale;
-        }
-
-        public static SizeScaling create(String name, float scale) {
-            throw new NotImplementedException("Not extended");
-        }
-    }
-
     private static final EntityDataAccessor<Integer> PRIMARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> SECONDARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> STRIPES_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> SIZE_SCALE = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<String> STYLE_OF_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.STRING);
     public final Set<String> StyleTypes = Set.of("male", "female");
-
-
     public AvaliEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.AVALI.get(), world);
+    }
+
+
+    public AvaliEntity(EntityType<? extends ChangedEntity> type, Level level) {
+        super(type, level);
     }
 
     @Override
@@ -80,10 +64,6 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         this.entityData.define(STRIPES_COLOR, Color3.WHITE.toInt());
         this.entityData.define(SIZE_SCALE, 0.8f);
         this.entityData.define(STYLE_OF_COLOR, "male");
-    }
-
-    public AvaliEntity(EntityType<? extends ChangedEntity> type, Level level) {
-        super(type, level);
     }
 
     @Override
@@ -179,17 +159,16 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         return Color3.fromInt(this.entityData.get(PRIMARY_COLOR));
     }
 
+    public void setPrimaryColor(Color3 color) {
+        this.entityData.set(PRIMARY_COLOR, color.toInt());
+    }
+
     public void setColor(int layer, Color3 color3) {
         switch (layer) {
             case 1 -> setSecondaryColor(color3);
             case 2 -> setStripesColor(color3);
             default -> setPrimaryColor(color3);
         }
-        ;
-    }
-
-    public void setPrimaryColor(Color3 color) {
-        this.entityData.set(PRIMARY_COLOR, color.toInt());
     }
 
     public Color3 getSecondaryColor() {
@@ -214,5 +193,25 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
 
     public void setStyleOfColor(String style) {
         this.entityData.set(STYLE_OF_COLOR, style);
+    }
+
+    public enum SizeScaling implements IExtensibleEnum {
+        NORMAL(0.8f),
+        TALL(0.9f),
+        VERY_TALL(1.0f);
+
+        private final float scale;
+
+        SizeScaling(float size) {
+            scale = size;
+        }
+
+        public static SizeScaling create(String name, float scale) {
+            throw new NotImplementedException("Not extended");
+        }
+
+        public float getScale() {
+            return scale;
+        }
     }
 }

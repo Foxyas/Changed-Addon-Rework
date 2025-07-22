@@ -158,7 +158,7 @@ public class BagelModel extends AdvancedHumanoidModel<BagelEntity> implements Ad
      }
   */
     @Override
-    public void setupHand() {
+    public void setupHand(BagelEntity entity) {
         animator.setupHand();
     }
 
@@ -196,7 +196,7 @@ public class BagelModel extends AdvancedHumanoidModel<BagelEntity> implements Ad
     }
 
     @Override
-    public HumanoidAnimator<BagelEntity, BagelModel> getAnimator() {
+    public HumanoidAnimator<BagelEntity, BagelModel> getAnimator(BagelEntity entity) {
         return animator;
     }
 }

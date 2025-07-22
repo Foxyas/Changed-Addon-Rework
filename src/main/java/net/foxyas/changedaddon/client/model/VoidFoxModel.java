@@ -236,7 +236,8 @@ public class VoidFoxModel extends AdvancedHumanoidModel<VoidFoxEntity> implement
         this.RightLeg.zRot = 0;
     }
 
-    public void setupHand() {
+    @Override
+    public void setupHand(VoidFoxEntity entity) {
         this.animator.setupHand();
     }
 
@@ -314,7 +315,7 @@ public class VoidFoxModel extends AdvancedHumanoidModel<VoidFoxEntity> implement
     }
 
     @Override
-    public HumanoidAnimator<VoidFoxEntity, VoidFoxModel> getAnimator() {
+    public HumanoidAnimator<VoidFoxEntity, VoidFoxModel> getAnimator(VoidFoxEntity entity) {
         return animator;
     }
 }

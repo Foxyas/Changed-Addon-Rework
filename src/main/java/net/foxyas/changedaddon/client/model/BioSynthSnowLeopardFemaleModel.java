@@ -218,7 +218,7 @@ public class BioSynthSnowLeopardFemaleModel extends AdvancedHumanoidModel<SnowLe
         return corrector;
     } */
     @Override
-    public void setupHand() {
+    public void setupHand(SnowLeopardFemaleOrganicEntity entity) {
         animator.setupHand();
     }
 
@@ -267,7 +267,7 @@ public class BioSynthSnowLeopardFemaleModel extends AdvancedHumanoidModel<SnowLe
     }
 
     @Override
-    public HumanoidAnimator<SnowLeopardFemaleOrganicEntity, BioSynthSnowLeopardFemaleModel> getAnimator() {
+    public HumanoidAnimator<SnowLeopardFemaleOrganicEntity, BioSynthSnowLeopardFemaleModel> getAnimator(SnowLeopardFemaleOrganicEntity entity) {
         return animator;
     }
 }

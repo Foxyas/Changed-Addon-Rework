@@ -170,7 +170,7 @@ public class ModelSnowFox extends AdvancedHumanoidModel<LatexSnowFoxEntity> impl
     }
  */
 	@Override
-	public void setupHand() {
+	public void setupHand(LatexSnowFoxEntity entity) {
 		animator.setupHand();
     }
 
@@ -208,7 +208,7 @@ public class ModelSnowFox extends AdvancedHumanoidModel<LatexSnowFoxEntity> impl
     }
     
         @Override
-        public HumanoidAnimator<LatexSnowFoxEntity, ModelSnowFox> getAnimator() {
+        public HumanoidAnimator<LatexSnowFoxEntity, ModelSnowFox> getAnimator(LatexSnowFoxEntity entity) {
        	 return animator;
         }
 }

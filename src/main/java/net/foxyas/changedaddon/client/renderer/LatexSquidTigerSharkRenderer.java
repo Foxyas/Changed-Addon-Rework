@@ -15,7 +15,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 public class LatexSquidTigerSharkRenderer extends AdvancedHumanoidRenderer<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel, ArmorLatexSquidTigerSharkModel<LatexSquidTigerSharkEntity>> {
 	public LatexSquidTigerSharkRenderer(EntityRendererProvider.Context context) {
 		super(context, new LatexSquidTigerSharkModel(context.bakeLayer(LatexSquidTigerSharkModel.LAYER_LOCATION)),
-				ArmorLatexSquidTigerSharkModel::new, ArmorLatexSquidTigerSharkModel.INNER_ARMOR, ArmorLatexSquidTigerSharkModel.OUTER_ARMOR, 0.65f);
+				ArmorLatexSquidTigerSharkModel.MODEL_SET, 0.65f);
 		this.addLayer(new DoubleItemInHandLayer<>(this));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));

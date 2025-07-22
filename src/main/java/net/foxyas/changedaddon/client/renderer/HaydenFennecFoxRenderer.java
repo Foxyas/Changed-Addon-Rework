@@ -12,18 +12,20 @@ import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class HaydenFennecFoxRenderer extends AdvancedHumanoidRenderer<HaydenFennecFoxEntity, HaydenFennecFoxModel, ArmorLatexMaleWolfModel<HaydenFennecFoxEntity>> {
     public HaydenFennecFoxRenderer(EntityRendererProvider.Context context) {
-        super(context, new HaydenFennecFoxModel(context.bakeLayer(HaydenFennecFoxModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5F);
+        super(context, new HaydenFennecFoxModel(context.bakeLayer(HaydenFennecFoxModel.LAYER_LOCATION)), ArmorLatexMaleWolfModel.MODEL_SET, 0.5F);
         //this.addLayer(new LatexParticlesLayer(this, this.getModel()));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-        this.addLayer(new CustomEyesLayer(this, context.getModelSet()));
+        this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
         this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
         this.addLayer(new CustomClothesLayer<>(this, this.getModel(), new ResourceLocation(ChangedAddonMod.MODID, "textures/entities/hayden_fennec_fox_clothes_layer.png")));
     }
 
-    public ResourceLocation getTextureLocation(HaydenFennecFoxEntity entity) {
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(@NotNull HaydenFennecFoxEntity entity) {
         return new ResourceLocation(ChangedAddonMod.MODID, "textures/entities/hayden_fennec_fox.png");
     }
 }

@@ -136,7 +136,7 @@ public class FoxtaFoxyModel extends AdvancedHumanoidModel<FoxtaFoxyEntity> imple
         this.prepareMobModel(this.animator, p_102861_, p_102862_, p_102863_, p_102864_);
     }
 
-    public void setupHand() {
+    public void setupHand(FoxtaFoxyEntity entity) {
         this.animator.setupHand();
     }
 
@@ -170,7 +170,8 @@ public class FoxtaFoxyModel extends AdvancedHumanoidModel<FoxtaFoxyEntity> imple
         this.LeftArm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
-    public HumanoidAnimator<FoxtaFoxyEntity, FoxtaFoxyModel> getAnimator() {
+    @Override
+    public HumanoidAnimator<FoxtaFoxyEntity, FoxtaFoxyModel> getAnimator(FoxtaFoxyEntity entity) {
         return this.animator;
     }
 }

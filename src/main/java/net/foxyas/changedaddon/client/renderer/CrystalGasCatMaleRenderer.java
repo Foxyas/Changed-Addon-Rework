@@ -18,7 +18,7 @@ import net.foxyas.changedaddon.entity.CrystalGasCatMaleEntity;
 public class CrystalGasCatMaleRenderer  extends AdvancedHumanoidRenderer<CrystalGasCatMaleEntity, HimalayanCrystalGasCatModel, ArmorLatexMaleCatModel<CrystalGasCatMaleEntity>> {
 	public CrystalGasCatMaleRenderer(EntityRendererProvider.Context context) {
 		super(context, new HimalayanCrystalGasCatModel(context.bakeLayer(HimalayanCrystalGasCatModel.LAYER_LOCATION)),
-				ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5f);
+				ArmorLatexMaleCatModel.MODEL_SET, 0.5f);
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class LatexCalicoCatRenderer extends AdvancedHumanoidRenderer<LatexCalicoCatEntity, LatexCalicoCatModel, ArmorLatexMaleCatModel<LatexCalicoCatEntity>> {
     public LatexCalicoCatRenderer(EntityRendererProvider.Context context) {
-        super(context, new LatexCalicoCatModel(context.bakeLayer(LatexCalicoCatModel.LAYER_LOCATION)), ArmorLatexMaleCatModel::new, ArmorLatexMaleCatModel.INNER_ARMOR, ArmorLatexMaleCatModel.OUTER_ARMOR, 0.5F);
+        super(context, new LatexCalicoCatModel(context.bakeLayer(LatexCalicoCatModel.LAYER_LOCATION)), ArmorLatexMaleCatModel.MODEL_SET, 0.5F);
         this.addLayer(new LatexParticlesLayer<>(this, this.getModel()));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight, CustomEyesLayer::noRender, CustomEyesLayer::noRender));

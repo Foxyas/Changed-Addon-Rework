@@ -1,12 +1,9 @@
 package net.foxyas.changedaddon.client.renderer.layers.animation;
 
-import net.foxyas.changedaddon.abilities.ChangedAddonAbilities;
-import net.foxyas.changedaddon.abilities.PsychicGrab;
-import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;

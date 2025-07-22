@@ -281,7 +281,7 @@ public class PuroKindFemaleModel extends AdvancedHumanoidModel<PuroKindFemaleEnt
     }
  */
     @Override
-    public void setupHand() {
+    public void setupHand(PuroKindFemaleEntity entity) {
         animator.setupHand();
     }
 
@@ -329,7 +329,7 @@ public class PuroKindFemaleModel extends AdvancedHumanoidModel<PuroKindFemaleEnt
     }
 
     @Override
-    public HumanoidAnimator<PuroKindFemaleEntity, PuroKindFemaleModel> getAnimator() {
+    public HumanoidAnimator<PuroKindFemaleEntity, PuroKindFemaleModel> getAnimator(PuroKindFemaleEntity entity) {
         return animator;
     }
 }

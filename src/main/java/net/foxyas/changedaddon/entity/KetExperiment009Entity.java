@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
@@ -56,6 +55,22 @@ public class KetExperiment009Entity extends ChangedEntity {
         xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 1.15);
+        builder = builder.add(Attributes.MAX_HEALTH, 40);
+        builder = builder.add(Attributes.ARMOR, 4);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
+        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
+        return builder;
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -130,7 +145,6 @@ public class KetExperiment009Entity extends ChangedEntity {
     public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.WHITE;
     }
-
 
     @Override
     public Packet<?> getAddEntityPacket() {
@@ -237,29 +251,12 @@ public class KetExperiment009Entity extends ChangedEntity {
         //this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
-    public static void init() {
-    }
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 1.15);
-        builder = builder.add(Attributes.MAX_HEALTH, 40);
-        builder = builder.add(Attributes.ARMOR, 4);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
-        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
-        return builder;
+    public boolean isPhase2() {
+        return this.Phase2;
     }
 
     public void setPhase2(boolean set) {
         this.Phase2 = set;
-    }
-
-    public boolean isPhase2() {
-        return this.Phase2;
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -287,7 +284,7 @@ public class KetExperiment009Entity extends ChangedEntity {
         super.baseTick();
     }
 
-    public void SpawnThunderBolt(Vec3 pos){
+    public void SpawnThunderBolt(Vec3 pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
         if (lightning != null) {
             lightning.moveTo(pos.x(), pos.y(), pos.z());

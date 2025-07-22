@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
@@ -51,185 +50,249 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 @Mod.EventBusSubscriber
 public class DazedEntity extends ChangedEntity {
 
-	// Definindo a chave de sincronização no seu código
-	private static final EntityDataAccessor<Boolean> DATA_PUDDLE_ID = SynchedEntityData.defineId(DazedEntity.class, EntityDataSerializers.BOOLEAN);
-	public boolean Morphed = false;
-	public static UseItemMode PuddleForm = UseItemMode.create("PuddleForm",false,false,false,true,false);
+    // Definindo a chave de sincronização no seu código
+    private static final EntityDataAccessor<Boolean> DATA_PUDDLE_ID = SynchedEntityData.defineId(DazedEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("plains"));
+    public static UseItemMode PuddleForm = UseItemMode.create("PuddleForm", false, false, false, true, false);
+    public boolean Morphed = false;
 
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(DATA_PUDDLE_ID, false); // Define o valor inicial como 'false'
-	}
+    public DazedEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonEntities.DAZED.get(), world);
+    }
 
-	// Getter para checar se está no estado morphed
-	public boolean isMorphed() {
-		return this.entityData.get(DATA_PUDDLE_ID);
-	}
+    public DazedEntity(EntityType<DazedEntity> type, Level world) {
+        super(type, world);
+        maxUpStep = 0.6f;
+        xpReward = 0;
+        this.setAttributes(this.getAttributes());
+        setNoAi(false);
+        setPersistenceRequired();
+    }
 
-	public boolean isMorphed(boolean nbt) {
-		return !nbt ? this.entityData.get(DATA_PUDDLE_ID) : isMorphed();
-	}
+    @SubscribeEvent
+    public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
+        if (SPAWN_BIOMES.contains(event.getName())) {
+            event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonEntities.DAZED.get(), 125, 1, 4));
+        }
+    }
 
-	// Setter para alterar o estado morphed
-	public void setMorphed(boolean morphed) {
-		this.entityData.set(DATA_PUDDLE_ID, morphed);
-	}
+    public static void init() {
+        SpawnPlacements.register(
+                ChangedAddonEntities.DAZED.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                DazedEntity::canSpawnNear
+        );
+    }
 
-	public void setMorphed(boolean morphed, boolean nbt) {
-		if (!nbt){
-			this.entityData.set(DATA_PUDDLE_ID, morphed);
-		} else {
-			this.Morphed = morphed;
-		}
-	}
+    public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_33009_, BlockPos p_33010_, Random p_33011_) {
+        if (p_33009_.getBrightness(LightLayer.SKY, p_33010_) > p_33011_.nextInt(32)) {
+            return false;
+        } else if (p_33009_.getBrightness(LightLayer.BLOCK, p_33010_) > 5) {
+            return false;
+        } else {
+            int i = p_33009_.getLevel().isThundering() ? p_33009_.getMaxLocalRawBrightness(p_33010_, 10) : p_33009_.getMaxLocalRawBrightness(p_33010_);
+            return i <= p_33011_.nextInt(8);
+        }
+    }
 
-	
-	private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(new ResourceLocation("plains"));
+    private static boolean canSpawnNear(EntityType<DazedEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
+        if (world.getDifficulty() == Difficulty.PEACEFUL) {
+            return false;
+        }
 
-	@SubscribeEvent
-	public static void addLivingEntityToBiomes(BiomeLoadingEvent event) {
-		if (SPAWN_BIOMES.contains(event.getName())){
-			event.getSpawns().getSpawner(MobCategory.MONSTER).add(new MobSpawnSettings.SpawnerData(ChangedAddonEntities.DAZED.get(), 125, 1, 4));
-		}
-	}
+        if (!isDarkEnoughToSpawn(world, pos, random)) {
+            //ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't dark enough");
+            return false;
+        }
 
-	public DazedEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonEntities.DAZED.get(), world);
-	}
+        if (!world.getBiome(pos).is(Tags.Biomes.IS_PLAINS)) {
+            //ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't plains");
+            return false;
+        }
 
-	public DazedEntity(EntityType<DazedEntity> type, Level world) {
-		super(type, world);
-		maxUpStep = 0.6f;
-		xpReward = 0;
-		this.setAttributes(this.getAttributes());
-		setNoAi(false);
-		setPersistenceRequired();
-	}
+        // Certifica-se de que o bloco abaixo não é ar e é sólido
+        BlockState blockBelow = world.getBlockState(pos.below());
+        if (!blockBelow.isSolidRender(world, pos.below()) || !blockBelow.isFaceSturdy(world, pos.below(), Direction.UP)) {
+            //ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't a good block");
+            return false;
+        }
 
-	protected void setAttributes(AttributeMap attributes) {
-		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
-		attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((26));
-		attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
-		attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.075F);
-		attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.025F);
-		attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
-		attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
-		attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
-		attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
-	}
+        // Defina uma AABB (Área de Checagem) ao redor do spawn para verificar se há Oak Log por perto.
+        AABB checkArea = new AABB(pos).inflate(32); // Raio de 32 blocos ao redor
 
-	@Override
-	public void readAdditionalSaveData(CompoundTag tag) {
-		super.readAdditionalSaveData(tag);
-		if (tag.contains("Morphed")){
-			this.Morphed = tag.getBoolean("Morphed");
-		}
-	}
+        boolean nearSpawnBlock = world.getBlockStatesIfLoaded(checkArea)
+                .anyMatch(state -> state.is(ChangedAddonBlocks.GOO_CORE.get()));
+        //ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n" + nearSpawnBlock);
 
-	@Override
-	public void addAdditionalSaveData(CompoundTag tag) {
-		super.addAdditionalSaveData(tag);
-		tag.putBoolean("Morphed",Morphed);
-	}
+        return nearSpawnBlock;
+    }
 
-	@Override
-	public float getEyeHeightMul() {
-		if (this.isMorphed())
-			return 0.4F;
-		else
-			return super.getEyeHeightMul();
-	}
-	
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
 
-	@Override
-	public EntityDimensions getDimensions(Pose pose) {
-		EntityDimensions core = super.getDimensions(pose);
-		if (this.isMorphed())
-			return EntityDimensions.scalable(core.width - 0.05f, core.height - 1.25f);
-		else
-			return core;
-	}
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_PUDDLE_ID, false); // Define o valor inicial como 'false'
+    }
 
-	@Override
-	public UseItemMode getItemUseMode() {
-		if (this.isMorphed()){
-			return PuddleForm;
-		}
-		return super.getItemUseMode();
-	}
+    // Getter para checar se está no estado morphed
+    public boolean isMorphed() {
+        return this.entityData.get(DATA_PUDDLE_ID);
+    }
 
-	@Override
-	public Color3 getHairColor(int i) {
-		return Color3.getColor("#E5E5E5");
-	}
+    // Setter para alterar o estado morphed
+    public void setMorphed(boolean morphed) {
+        this.entityData.set(DATA_PUDDLE_ID, morphed);
+    }
 
-	@Override
-	public int getTicksRequiredToFreeze() { return 700; }
+    public boolean isMorphed(boolean nbt) {
+        return !nbt ? this.entityData.get(DATA_PUDDLE_ID) : isMorphed();
+    }
 
-	@Override
-	public LatexType getLatexType() {
-		return LatexType.NEUTRAL;
-	}
+    public void setMorphed(boolean morphed, boolean nbt) {
+        if (!nbt) {
+            this.entityData.set(DATA_PUDDLE_ID, morphed);
+        } else {
+            this.Morphed = morphed;
+        }
+    }
 
-	@Override
-	public TransfurMode getTransfurMode() {
-		TransfurMode transfurMode = TransfurMode.REPLICATION;
-		if(level.random.nextInt(10) > 5){ transfurMode = TransfurMode.ABSORPTION;
-		} else {
-			transfurMode = TransfurMode.REPLICATION;
-		}
-		return transfurMode;
-	}
+    protected void setAttributes(AttributeMap attributes) {
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((26));
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.075F);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.025F);
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0);
+    }
 
-	@Override
-	public HairStyle getDefaultHairStyle() {
-		HairStyle Hair = BALD.get();
-		if(level.random.nextInt(10) > 5){ Hair = HairStyle.SHORT_MESSY.get();
-		} else {
-			Hair = BALD.get();
-		}
-		return Hair;
-	}
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        if (tag.contains("Morphed")) {
+            this.Morphed = tag.getBoolean("Morphed");
+        }
+    }
 
-	@Override
-	public @Nullable List<HairStyle> getValidHairStyles() {
-		return HairStyle.Collection.MALE.getStyles();
-	}
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("Morphed", Morphed);
+    }
 
-	@Override
-	public Color3 getDripColor() {
-		Color3 color = Color3.getColor("#ffffff");
-		if(level.random.nextInt(10) > 5){ color = Color3.getColor("#ffffff");;
-		} else {
-			color = Color3.getColor("#CFCFCF");
-		}
-		return color;
-	}
+    @Override
+    public float getEyeHeightMul() {
+        if (this.isMorphed())
+            return 0.4F;
+        else
+            return super.getEyeHeightMul();
+    }
 
-	public Color3 getTransfurColor(TransfurCause cause) {
+    @Override
+    public EntityDimensions getDimensions(Pose pose) {
+        EntityDimensions core = super.getDimensions(pose);
+        if (this.isMorphed())
+            return EntityDimensions.scalable(core.width - 0.05f, core.height - 1.25f);
+        else
+            return core;
+    }
+
+    @Override
+    public UseItemMode getItemUseMode() {
+        if (this.isMorphed()) {
+            return PuddleForm;
+        }
+        return super.getItemUseMode();
+    }
+
+    @Override
+    public Color3 getHairColor(int i) {
+        return Color3.getColor("#E5E5E5");
+    }
+
+    @Override
+    public int getTicksRequiredToFreeze() {
+        return 700;
+    }
+
+    @Override
+    public LatexType getLatexType() {
+        return LatexType.NEUTRAL;
+    }
+
+    @Override
+    public TransfurMode getTransfurMode() {
+        TransfurMode transfurMode = TransfurMode.REPLICATION;
+        if (level.random.nextInt(10) > 5) {
+            transfurMode = TransfurMode.ABSORPTION;
+        } else {
+            transfurMode = TransfurMode.REPLICATION;
+        }
+        return transfurMode;
+    }
+
+    @Override
+    public HairStyle getDefaultHairStyle() {
+        HairStyle Hair = BALD.get();
+        if (level.random.nextInt(10) > 5) {
+            Hair = HairStyle.SHORT_MESSY.get();
+        } else {
+            Hair = BALD.get();
+        }
+        return Hair;
+    }
+
+    @Override
+    public @Nullable List<HairStyle> getValidHairStyles() {
+        return HairStyle.Collection.MALE.getStyles();
+    }
+
+    public Color3 getDripColor() {
+        Color3 color = Color3.getColor("#ffffff");
+        if (level.random.nextInt(10) > 5) {
+            color = Color3.getColor("#ffffff");
+        } else {
+            color = Color3.getColor("#CFCFCF");
+        }
+        return color;
+    }
+
+    public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.getColor("#CFCFCF");
     }
 
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    @Override
+    public Packet<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-		this.goalSelector.addGoal(1, new RestrictSunGoal(this) {
-			@Override
-			public boolean canUse() {
-				double x = DazedEntity.this.getX();
-				double y = DazedEntity.this.getY();
-				double z = DazedEntity.this.getZ();
-				Entity entity = DazedEntity.this;
-				Level world = DazedEntity.this.level;
-				return super.canUse() && world.getGameRules().getBoolean(ChangedAddonGameRules.DO_DAZED_LATEX_BURN);
-			}
-		});
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(1, new RestrictSunGoal(this) {
+            @Override
+            public boolean canUse() {
+                double x = DazedEntity.this.getX();
+                double y = DazedEntity.this.getY();
+                double z = DazedEntity.this.getZ();
+                Entity entity = DazedEntity.this;
+                Level world = DazedEntity.this.level;
+                return super.canUse() && world.getGameRules().getBoolean(ChangedAddonGameRules.DO_DAZED_LATEX_BURN);
+            }
+        });
 
 		/*this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, false) {
 			@Override
@@ -241,89 +304,25 @@ public class DazedEntity extends ChangedEntity {
 		this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		this.goalSelector.addGoal(5, new FloatGoal(this));*/
-	}
+    }
 
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
-	}
+    @Override
+    public MobType getMobType() {
+        return MobType.UNDEFINED;
+    }
 
-	@Override
-	public double getMyRidingOffset() {
-		return super.getMyRidingOffset();
-	}
+    @Override
+    public double getMyRidingOffset() {
+        return super.getMyRidingOffset();
+    }
 
-	@Override
-	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
-	}
+    @Override
+    public SoundEvent getHurtSound(DamageSource ds) {
+        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+    }
 
-	@Override
-	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
-	}
-
-	public static void init() {
-		SpawnPlacements.register(
-				ChangedAddonEntities.DAZED.get(),
-				SpawnPlacements.Type.ON_GROUND,
-				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-				DazedEntity::canSpawnNear
-		);
-	}
-
-	public static boolean isDarkEnoughToSpawn(ServerLevelAccessor p_33009_, BlockPos p_33010_, Random p_33011_) {
-		if (p_33009_.getBrightness(LightLayer.SKY, p_33010_) > p_33011_.nextInt(32)) {
-			return false;
-		} else if (p_33009_.getBrightness(LightLayer.BLOCK, p_33010_) > 5) {
-			return false;
-		} else {
-			int i = p_33009_.getLevel().isThundering() ? p_33009_.getMaxLocalRawBrightness(p_33010_, 10) : p_33009_.getMaxLocalRawBrightness(p_33010_);
-			return i <= p_33011_.nextInt(8);
-		}
-	}
-
-	private static boolean canSpawnNear(EntityType<DazedEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
-		if (world.getDifficulty() == Difficulty.PEACEFUL) {
-			return false;
-		}
-
-		if (!isDarkEnoughToSpawn(world, pos, random)) {
-			//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't dark enough");
-			return false;
-		}
-
-		if (!world.getBiome(pos).is(Tags.Biomes.IS_PLAINS)) {
-			//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't plains");
-			return false;
-		}
-
-		// Certifica-se de que o bloco abaixo não é ar e é sólido
-		BlockState blockBelow = world.getBlockState(pos.below());
-		if (!blockBelow.isSolidRender(world, pos.below()) || !blockBelow.isFaceSturdy(world, pos.below(), Direction.UP)) {
-			//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n isn't a good block");
-			return false;
-		}
-
-		// Defina uma AABB (Área de Checagem) ao redor do spawn para verificar se há Oak Log por perto.
-		AABB checkArea = new AABB(pos).inflate(32); // Raio de 32 blocos ao redor
-
-		boolean nearSpawnBlock = world.getBlockStatesIfLoaded(checkArea)
-				.anyMatch(state -> state.is(ChangedAddonBlocks.GOO_CORE.get()));
-		//ChangedAddonMod.LOGGER.info("A Try To Spawn A Dazed Entity in " + pos + "\n" + nearSpawnBlock);
-
-		return nearSpawnBlock;
-	}
-
-
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 24);
-		builder = builder.add(Attributes.ARMOR, 0);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		return builder;
-	}
+    @Override
+    public SoundEvent getDeathSound() {
+        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+    }
 }

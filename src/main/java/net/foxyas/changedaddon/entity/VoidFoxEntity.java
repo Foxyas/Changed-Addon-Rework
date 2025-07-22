@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -57,14 +56,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBossMusic {
-    private static final int MAX_DODGING_TICKS = 20;
-    private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown, Attack4Cooldown/*, Attack5Cooldown*/;
-    private int AttackInUse;
-    public int timesUsedAttack1, timesUsedAttack2, timesUsedAttack3, timesUsedAttack4/*, timesUsedAttack5*/ = 0;
-    private static final int MAX_COOLDOWN = 120;
     public static final int MAX_1_COOLDOWN = 120;
     public static final int MAX_2_COOLDOWN = 120;
+    private static final int MAX_DODGING_TICKS = 20;
+    private static final int MAX_COOLDOWN = 120;
+    private static final EntityDataAccessor<Integer> DODGE_ANIM_TICKS =
+            SynchedEntityData.defineId(VoidFoxEntity.class, EntityDataSerializers.INT);
+    public final ServerBossEvent bossBar = getBossBar();
+    public int timesUsedAttack1, timesUsedAttack2, timesUsedAttack3, timesUsedAttack4/*, timesUsedAttack5*/ = 0;
     public int stunTicks = 0;
+    private int Attack1Cooldown, Attack2Cooldown, Attack3Cooldown, Attack4Cooldown/*, Attack5Cooldown*/;
+    private int AttackInUse;
     private int ticksInUse;
     private int ticksTakeDmgFromFire = 0;
 
@@ -80,11 +82,35 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         setPersistenceRequired();
     }
 
+    public static int getMaxCooldown() {
+        return MAX_COOLDOWN;
+    }
+
+    public static EntityDataAccessor<Integer> getDodgeAnimTicks() {
+        return DODGE_ANIM_TICKS;
+    }
+
+    public static int getMaxDodgingTicks() {
+        return MAX_DODGING_TICKS;
+    }
+
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
+        builder = builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3f);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 2);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
+
     public boolean causeFallDamage(float p_148859_, float p_148860_, DamageSource p_148861_) {
         return false;
     }
-
-    public final ServerBossEvent bossBar = getBossBar();
 
     public ServerBossEvent getBossBar() {
         var bossBar = new ServerBossEvent(
@@ -96,9 +122,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         bossBar.setDarkenScreen(true);
         return bossBar;
     }
-
-    private static final EntityDataAccessor<Integer> DODGE_ANIM_TICKS =
-            SynchedEntityData.defineId(VoidFoxEntity.class, EntityDataSerializers.INT);
 
     @Override
     protected void defineSynchedData() {
@@ -438,26 +461,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
     }
 
-    public static int getMaxCooldown() {
-        return MAX_COOLDOWN;
-    }
-
-    public void setAttack1Cooldown(int attack1Cooldown) {
-        Attack1Cooldown = attack1Cooldown;
-    }
-
-    public void setAttack2Cooldown(int attack2Cooldown) {
-        Attack2Cooldown = attack2Cooldown;
-    }
-
-    public void setAttack3Cooldown(int attack3Cooldown) {
-        Attack3Cooldown = attack3Cooldown;
-    }
-
-    public void setAttack4Cooldown(int attack4Cooldown) {
-        Attack4Cooldown = attack4Cooldown;
-    }
-
     /*public void setAttack5Cooldown(int attack5Cooldown) {
         Attack5Cooldown = attack5Cooldown;
     }*/
@@ -466,24 +469,36 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         return Attack1Cooldown;
     }
 
+    public void setAttack1Cooldown(int attack1Cooldown) {
+        Attack1Cooldown = attack1Cooldown;
+    }
+
     public int getAttack2Cooldown() {
         return Attack2Cooldown;
     }
 
-    public int getAttack3Cooldown() {
-        return Attack3Cooldown;
-    }
-
-    public int getAttack4Cooldown() {
-        return Attack4Cooldown;
+    public void setAttack2Cooldown(int attack2Cooldown) {
+        Attack2Cooldown = attack2Cooldown;
     }
 
     /*public int getAttack5Cooldown() {
         return Attack5Cooldown;
     }*/
 
-    public static EntityDataAccessor<Integer> getDodgeAnimTicks() {
-        return DODGE_ANIM_TICKS;
+    public int getAttack3Cooldown() {
+        return Attack3Cooldown;
+    }
+
+    public void setAttack3Cooldown(int attack3Cooldown) {
+        Attack3Cooldown = attack3Cooldown;
+    }
+
+    public int getAttack4Cooldown() {
+        return Attack4Cooldown;
+    }
+
+    public void setAttack4Cooldown(int attack4Cooldown) {
+        Attack4Cooldown = attack4Cooldown;
     }
 
     @Override
@@ -506,7 +521,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         return super.getMyRidingOffset();
     }
 
-
     public void doClawsAttackEffect() {// Efeito visual
         double d0 = (double) (-Mth.sin(this.getYRot() * 0.017453292F)) * 1;
         double d1 = (double) Mth.cos(this.getYRot() * 0.017453292F) * 1;
@@ -523,7 +537,7 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
         float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
         float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-        return (double) (Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
+        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
     }
 
     public double getTorsoYOffsetForFallFly(ChangedEntity self) {
@@ -659,36 +673,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         return super.hurt(source, amount);
     }
 
-    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
-    public static class WhenAttackAEntity {
-        @SubscribeEvent
-        public static void WhenAttack(LivingAttackEvent event) {
-            LivingEntity target = event.getEntityLiving();
-            Entity source = event.getSource().getEntity();
-            float amount = event.getAmount();
-
-            if (source instanceof VoidFoxEntity voidFoxEntity) {
-                voidFoxEntity.RegisterHit();
-                /*if (voidFoxEntity.getMainHandItem().isEmpty()) {
-                    voidFoxEntity.doClawsAttackEffect();
-                }*/
-            } else if (target instanceof VoidFoxEntity voidFox) {
-                if (source != null && voidFox.computeHealthRatio() > 0.5f) {
-                    if (((voidFox.getHealth() - amount) / voidFox.getMaxHealth()) <= 0.5f) {
-                        if (source instanceof Player player) {
-                            player.displayClientMessage(new TextComponent("I will hasten the arrival of your death").withStyle((style -> {
-                                Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
-                                returnStyle = returnStyle.withItalic(true);
-                                return returnStyle;
-                            })), true);
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-
     private void setDodging(Entity entity, boolean b) {
         if (b) {
             this.setDodgingTicks(getLevel().random.nextBoolean() ? MAX_DODGING_TICKS : -MAX_DODGING_TICKS);
@@ -706,10 +690,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         }
     }
 
-    public void setDodgingTicks(int dodgingTicks) {
-        this.entityData.set(DODGE_ANIM_TICKS, dodgingTicks);
-    }
-
     public boolean isDodging() {
         return getDodgingTicks() > 0;
     }
@@ -718,8 +698,8 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         return this.entityData.get(DODGE_ANIM_TICKS);
     }
 
-    public static int getMaxDodgingTicks() {
-        return MAX_DODGING_TICKS;
+    public void setDodgingTicks(int dodgingTicks) {
+        this.entityData.set(DODGE_ANIM_TICKS, dodgingTicks);
     }
 
     public void tickDodgeTicks() {
@@ -770,11 +750,9 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         }
     }
 
-
     public boolean isMoreOp() {
         return this.computeHealthRatio() <= 0.5f;
     }
-
 
     @Override
     public @NotNull SoundEvent getHurtSound(DamageSource ds) {
@@ -784,9 +762,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     public @NotNull SoundEvent getDeathSound() {
         return SoundEvents.GENERIC_DEATH;
-    }
-
-    public static void init() {
     }
 
     @Override
@@ -932,17 +907,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         this.bossBar.removePlayer(player);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
-        builder = builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3f);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 24);
-        builder = builder.add(Attributes.ARMOR, 2);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
-    }
-
     @Override
     protected void setAttributes(AttributeMap attributes) {
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((7.5));
@@ -1010,5 +974,35 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
 
     public int getAttackInUse() {
         return AttackInUse;
+    }
+
+    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
+    public static class WhenAttackAEntity {
+        @SubscribeEvent
+        public static void WhenAttack(LivingAttackEvent event) {
+            LivingEntity target = event.getEntityLiving();
+            Entity source = event.getSource().getEntity();
+            float amount = event.getAmount();
+
+            if (source instanceof VoidFoxEntity voidFoxEntity) {
+                voidFoxEntity.RegisterHit();
+                /*if (voidFoxEntity.getMainHandItem().isEmpty()) {
+                    voidFoxEntity.doClawsAttackEffect();
+                }*/
+            } else if (target instanceof VoidFoxEntity voidFox) {
+                if (source != null && voidFox.computeHealthRatio() > 0.5f) {
+                    if (((voidFox.getHealth() - amount) / voidFox.getMaxHealth()) <= 0.5f) {
+                        if (source instanceof Player player) {
+                            player.displayClientMessage(new TextComponent("I will hasten the arrival of your death").withStyle((style -> {
+                                Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                                returnStyle = returnStyle.withItalic(true);
+                                return returnStyle;
+                            })), true);
+                        }
+                    }
+                }
+
+            }
+        }
     }
 }

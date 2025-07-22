@@ -143,7 +143,7 @@ public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements Adva
     }
  */
     @Override
-    public void setupHand() {
+    public void setupHand(BunyEntity entity) {
         animator.setupHand();
     }
 
@@ -181,7 +181,7 @@ public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements Adva
     }
 
     @Override
-    public HumanoidAnimator<BunyEntity, BunyModel> getAnimator() {
+    public HumanoidAnimator<BunyEntity, BunyModel> getAnimator(BunyEntity entity) {
         return animator;
     }
 }

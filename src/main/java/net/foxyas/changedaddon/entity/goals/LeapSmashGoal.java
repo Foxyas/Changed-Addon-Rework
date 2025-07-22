@@ -21,10 +21,10 @@ import java.util.List;
 
 public class LeapSmashGoal extends Goal {
     private final Mob mob;
+    public int cooldown;
     private LivingEntity target;
     private int leapTicks;
     private boolean wasInAir;
-    public int cooldown;
 
     public LeapSmashGoal(Mob mob) {
         this.mob = mob;
@@ -100,7 +100,7 @@ public class LeapSmashGoal extends Goal {
 
         for (BlockPos pos : BlockPos.betweenClosedStream(new AABB(center.below()).inflate(radius, 0, radius)).toList()) {
             double dx = (center.getX() - pos.getX()) / (double) radius;
-            double dy = (center.getY() - pos.getY()) / (double) 1;
+            double dy = (center.getY() - pos.getY());
             double dz = (center.getZ() - pos.getZ()) / (double) radius;
             double distanceSq = dx * dx + dy * dy + dz * dz;
 

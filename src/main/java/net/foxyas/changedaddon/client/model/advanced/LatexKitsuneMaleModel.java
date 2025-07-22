@@ -450,7 +450,7 @@ public class LatexKitsuneMaleModel extends AdvancedHumanoidModel<LatexKitsuneMal
      }
   */
 	@Override
-	public void setupHand() {
+	public void setupHand(LatexKitsuneMaleEntity entity) {
 		animator.setupHand();
 	}
 
@@ -507,7 +507,7 @@ public class LatexKitsuneMaleModel extends AdvancedHumanoidModel<LatexKitsuneMal
 	}
 
 	@Override
-	public HumanoidAnimator<LatexKitsuneMaleEntity, LatexKitsuneMaleModel> getAnimator() {
+	public HumanoidAnimator<LatexKitsuneMaleEntity, LatexKitsuneMaleModel> getAnimator(LatexKitsuneMaleEntity entity) {
 		return animator;
 	}
 

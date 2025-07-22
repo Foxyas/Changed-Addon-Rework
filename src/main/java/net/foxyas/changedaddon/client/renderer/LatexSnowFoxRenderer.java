@@ -31,7 +31,7 @@ import net.minecraft.world.entity.HumanoidArm;
 
 public class LatexSnowFoxRenderer extends AdvancedHumanoidRenderer<LatexSnowFoxEntity, ModelSnowFox, ArmorLatexMaleWolfModel<LatexSnowFoxEntity>> {
     public LatexSnowFoxRenderer(EntityRendererProvider.Context context) {
-        super(context, new ModelSnowFox(context.bakeLayer(ModelSnowFox.LAYER_LOCATION)), ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
+        super(context, new ModelSnowFox(context.bakeLayer(ModelSnowFox.LAYER_LOCATION)), ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet()));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));

@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import com.mojang.math.Vector3f;
@@ -63,18 +62,14 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class KetExperiment009BossEntity extends ChangedEntity implements BossWithMusic, CustomPatReaction {
 
+    private static final EntityDataAccessor<Boolean> PHASE2 =
+            SynchedEntityData.defineId(KetExperiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> PHASE3 =
+            SynchedEntityData.defineId(KetExperiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
     public final EntityDamageSource ThunderDmg = new EntityDamageSource(DamageSource.LIGHTNING_BOLT.getMsgId(), this);
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private int AttackCoolDown;
     private boolean shouldBleed;
-
-    public void setAttackCoolDown(int attackCoolDown) {
-        AttackCoolDown = attackCoolDown;
-    }
-
-    public int getAttackCoolDown() {
-        return AttackCoolDown;
-    }
 
     public KetExperiment009BossEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.KET_EXPERIMENT_009_BOSS.get(), world);
@@ -89,11 +84,36 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         setPersistenceRequired();
     }
 
+    public static void init() {
+    }
 
-    private static final EntityDataAccessor<Boolean> PHASE2 =
-            SynchedEntityData.defineId(KetExperiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> PHASE3 =
-            SynchedEntityData.defineId(KetExperiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 425);
+        builder = builder.add(Attributes.ARMOR, 12.5);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
+        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
+        return builder;
+    }
+
+    @NotNull
+    private static ParticleOptions getParticleOptions(Color StartColor, Color EndColor) {
+        Vector3f startColor = new Vector3f((float) StartColor.getRed() / 255, (float) StartColor.getGreen() / 255, (float) StartColor.getBlue() / 255);
+        Vector3f endColor = new Vector3f((float) EndColor.getRed() / 255, (float) EndColor.getGreen() / 255, (float) EndColor.getBlue() / 255);
+        return new DustColorTransitionOptions(startColor, endColor, 1);
+    }
+
+    public int getAttackCoolDown() {
+        return AttackCoolDown;
+    }
+
+    public void setAttackCoolDown(int attackCoolDown) {
+        AttackCoolDown = attackCoolDown;
+    }
 
     @Override
     protected void defineSynchedData() {
@@ -324,37 +344,20 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         }
     }
 
-
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 425);
-        builder = builder.add(Attributes.ARMOR, 12.5);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 15);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
-        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
-        return builder;
-    }
-
-    public void setPhase2(boolean set) {
-        this.entityData.set(PHASE2, set);
+    public boolean isPhase3() {
+        return this.entityData.get(PHASE3);
     }
 
     public void setPhase3(boolean set) {
         this.entityData.set(PHASE3, set);
     }
 
-    public boolean isPhase3() {
-        return this.entityData.get(PHASE3);
-    }
-
     public boolean isPhase2() {
         return this.entityData.get(PHASE2);
+    }
+
+    public void setPhase2(boolean set) {
+        this.entityData.set(PHASE2, set);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -512,7 +515,6 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         }
     }
 
-
     public void applyStatModifier(LivingEntity entity, double multiplier) {
         applyModifierIfAbsent(entity, Attributes.ATTACK_DAMAGE, "a06083b0-291d-4a72-85de-73bd93ffb736", "AttackMultiplier", multiplier - 1);
         applyModifierIfAbsent(entity, Attributes.ARMOR, "a06083b0-291d-4a72-85de-73bd93ffb737", "ArmorMultiplier", multiplier - 1);
@@ -537,14 +539,6 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         if (attributeInstance.getModifier(modifierUUID) == null) { // Verifica se o modificador já existe
             attributeInstance.addTransientModifier(new AttributeModifier(modifierUUID, name, value, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
-    }
-
-
-    @NotNull
-    private static ParticleOptions getParticleOptions(Color StartColor, Color EndColor) {
-        Vector3f startColor = new Vector3f((float) StartColor.getRed() / 255, (float) StartColor.getGreen() / 255, (float) StartColor.getBlue() / 255);
-        Vector3f endColor = new Vector3f((float) EndColor.getRed() / 255, (float) EndColor.getGreen() / 255, (float) EndColor.getBlue() / 255);
-        return new DustColorTransitionOptions(startColor, endColor, 1);
     }
 
     public void SpawnThunderBolt(BlockPos pos) {

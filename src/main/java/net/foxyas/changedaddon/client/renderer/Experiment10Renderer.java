@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class Experiment10Renderer extends AdvancedHumanoidRenderer<Experiment10Entity, Experiment10Model, ArmorLatexFemaleCatModel<Experiment10Entity>> {
 	public Experiment10Renderer(EntityRendererProvider.Context context) {
 		super(context, new Experiment10Model(context.bakeLayer(Experiment10Model.LAYER_LOCATION)),
-				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
+				ArmorLatexFemaleCatModel.MODEL_SET, 0.5f);
 		this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/experiment_10/experiment_10_glow.png")));
 		this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
@@ -47,7 +47,7 @@ public class Experiment10Renderer extends AdvancedHumanoidRenderer<Experiment10E
 		}
 
 		@Override
-		public void render(@NotNull PoseStack poseStack, MultiBufferSource multiBufferSource, int i, @NotNull T t, float v, float v1, float v2, float v3, float v4, float v5) {
+		public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource multiBufferSource, int i, @NotNull T t, float v, float v1, float v2, float v3, float v4, float v5) {
 			if (t instanceof Experiment10Entity experiment10BossEntity && experiment10BossEntity.isPhase2()) {
 				VertexConsumer vertexconsumer = multiBufferSource.getBuffer(this.renderType());
 				this.getParentModel().renderToBuffer(poseStack, vertexconsumer, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

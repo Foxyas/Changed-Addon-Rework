@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
@@ -48,6 +47,20 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
         setPersistenceRequired();
     }
 
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 14);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 2);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
+
     @SuppressWarnings("DataFlowIssue")
     protected void setAttributes(AttributeMap attributes) {
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((1));
@@ -76,6 +89,11 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
         return TransfurMode.NONE;
     }
 
+	/*@Override
+	public LatexType getLatexType() {
+		return LatexType.DARK_LATEX;
+	}*/
+
     @Override
     public HairStyle getDefaultHairStyle() {
         return HairStyle.BALD.get();
@@ -84,11 +102,6 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
     public @Nullable List<HairStyle> getValidHairStyles() {
         return HairStyle.Collection.getAll();
     }
-
-	/*@Override
-	public LatexType getLatexType() {
-		return LatexType.DARK_LATEX;
-	}*/
 
     @Override
     public Color3 getHairColor(int layer) {
@@ -170,21 +183,6 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
         if (source.isFire())
             return false;
         return super.hurt(source, amount);
-    }
-
-
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 14);
-        builder = builder.add(Attributes.ARMOR, 0);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 2);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
     }
 
 }

@@ -362,7 +362,7 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
 
 
     @Override
-    public void setupHand() {
+    public void setupHand(LuminarcticLeopardEntity entity) {
         animator.setupHand();
     }
 
@@ -625,7 +625,7 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
     }
 
     @Override
-    public HumanoidAnimator<LuminarcticLeopardEntity, LuminarcticLeopardModel> getAnimator() {
+    public HumanoidAnimator<LuminarcticLeopardEntity, LuminarcticLeopardModel> getAnimator(LuminarcticLeopardEntity entity) {
         return animator;
     }
 }

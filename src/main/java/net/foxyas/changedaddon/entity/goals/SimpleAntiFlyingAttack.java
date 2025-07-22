@@ -29,13 +29,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class SimpleAntiFlyingAttack extends Goal {
     private final Mob attacker;
-    private LivingEntity target;
-    private int ticks = 0;
     private final int delay;
     private final float minRange;
     private final float maxRange;
     private final float damage;
     private final EntityType<? extends AbstractArrow> projectileType = ChangedAddonEntities.PARTICLE_PROJECTILE.get();
+    private LivingEntity target;
+    private int ticks = 0;
 
     public SimpleAntiFlyingAttack(Mob attacker, float minRange, float maxRange, float damage, int delay) {
         this.attacker = attacker;
@@ -298,7 +298,7 @@ public class SimpleAntiFlyingAttack extends Goal {
     }
 
     private @NotNull ParticleProjectile getParticleProjectile(LivingEntity target, Vec3 spawnPos) {
-        ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), target){
+        ParticleProjectile projectile = new ParticleProjectile(projectileType, attacker, attacker.getLevel(), target) {
             @Override
             protected void onHitEntity(@NotNull EntityHitResult result) {
                 super.onHitEntity(result);

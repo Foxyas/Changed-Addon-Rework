@@ -6,27 +6,27 @@ import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public enum BossMusicTheme{
-        EXP9("exp9_phase2", ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.exp9"))),
-        EXP10("exp10", ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme")));
+public enum BossMusicTheme {
+    EXP9("exp9_phase2", ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "music.boss.exp9"))),
+    EXP10("exp10", ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(ChangedAddonMod.MODID, "experiment10_theme")));
 
-        private final SoundEvent soundEvent;
-        private final String ID;
+    private final SoundEvent soundEvent;
+    private final String ID;
 
-        BossMusicTheme(String name, SoundEvent soundEvent) {
-            this.soundEvent = soundEvent;
-            this.ID = name;
-        }
+    BossMusicTheme(String name, SoundEvent soundEvent) {
+        this.soundEvent = soundEvent;
+        this.ID = name;
+    }
 
-        public String getIDName() {
-            return ID;
-        }
+    public String getIDName() {
+        return ID;
+    }
 
-        public SoundEvent getAsSoundEvent() {
-            return soundEvent;
-        }
+    public SoundEvent getAsSoundEvent() {
+        return soundEvent;
+    }
 
-        public Music getAsMusic() {
-            return new Music(this.soundEvent, 1, 1, true);
-        }
+    public Music getAsMusic() {
+        return new Music(this.soundEvent, 1, 1, true);
+    }
 }

@@ -91,10 +91,8 @@ public class ChangedAddonModels {
 		event.registerLayerDefinition(SimpleProjectileModel.LAYER_LOCATION, SimpleProjectileModel::createBodyLayer);
 
 		//Armors
-		event.registerLayerDefinition(ArmorLatexSquidTigerSharkModel.INNER_ARMOR, () -> ArmorLatexSquidTigerSharkModel.createArmorLayer(ArmorModel.INNER));
-		event.registerLayerDefinition(ArmorLatexSquidTigerSharkModel.OUTER_ARMOR, () -> ArmorLatexSquidTigerSharkModel.createArmorLayer(ArmorModel.OUTER));
-		event.registerLayerDefinition(ArmorLatexDragonSnowLeopardSharkModel.INNER_ARMOR, () -> ArmorLatexDragonSnowLeopardSharkModel.createArmorLayer(ArmorModel.INNER));
-		event.registerLayerDefinition(ArmorLatexDragonSnowLeopardSharkModel.OUTER_ARMOR, () -> ArmorLatexDragonSnowLeopardSharkModel.createArmorLayer(ArmorModel.OUTER));
+		ArmorLatexSquidTigerSharkModel.MODEL_SET.registerDefinitions(event::registerLayerDefinition);
+		ArmorLatexDragonSnowLeopardSharkModel.MODEL_SET.registerDefinitions(event::registerLayerDefinition);
 
 		//Non Anthro Entities Model
 		event.registerLayerDefinition(LatexSnepModel.LAYER_LOCATION, LatexSnepModel::createBodyLayer);

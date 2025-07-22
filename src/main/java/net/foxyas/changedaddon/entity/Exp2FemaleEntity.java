@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
@@ -50,13 +49,27 @@ public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntity implements C
         setPersistenceRequired();
     }
 
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
+
     protected void setAttributes(AttributeMap attributes) {
-		Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((30));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.18F);
-        attributes.getInstance((Attribute) ForgeMod.SWIM_SPEED.get()).setBaseValue(1.065f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue(1.065f);
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(3.0f);
         attributes.getInstance(Attributes.ARMOR).setBaseValue(0);
         attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0);
@@ -173,7 +186,7 @@ public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntity implements C
         float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
         float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
         float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-        return (double) (Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
+        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
     }
 
     public double getTorsoYOffsetForFallFly(ChangedEntity self) {
@@ -199,26 +212,12 @@ public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntity implements C
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
     }
 
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 24);
-        builder = builder.add(Attributes.ARMOR, 0);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
-    }
-
     @Override
     public void WhenPattedReaction() {
         List<SoundEvent> soundEvents = new ArrayList<>();
         soundEvents.add(SoundEvents.CAT_AMBIENT);
         soundEvents.add(SoundEvents.CAT_PURR);
         soundEvents.add(SoundEvents.CAT_PURREOW);
-        this.playSound(soundEvents.get(this.random.nextInt(soundEvents.size())),2.5f,1);
+        this.playSound(soundEvents.get(this.random.nextInt(soundEvents.size())), 2.5f, 1);
     }
 }

@@ -86,7 +86,7 @@ public class BlueLizardModel extends AdvancedHumanoidModel<BlueLizard> implement
         this.prepareMobModel(this.animator, p_102861_, p_102862_, p_102863_, p_102864_);
     }
 
-    public void setupHand() {
+    public void setupHand(BlueLizard entity) {
         this.animator.setupHand();
     }
 
@@ -120,7 +120,7 @@ public class BlueLizardModel extends AdvancedHumanoidModel<BlueLizard> implement
         this.LeftArm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
-    public HumanoidAnimator<BlueLizard, BlueLizardModel> getAnimator() {
+    public HumanoidAnimator<BlueLizard, BlueLizardModel> getAnimator(BlueLizard entity) {
         return this.animator;
     }
 }

@@ -69,7 +69,7 @@ public class UseGrabAbilityGoal extends Goal {
 
         if (grabAbility.grabbedEntity != null) {
             if (grabAbility.attackDown) {
-                ticks ++;
+                ticks++;
                 if (ticks >= 20) {
                     grabAbility.attackDown = false;
                     ticks = 0;

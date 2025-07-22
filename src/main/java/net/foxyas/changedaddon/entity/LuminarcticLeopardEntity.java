@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
@@ -38,6 +37,20 @@ public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
         this.setAttributes(this.getAttributes());
         setNoAi(false);
         setPersistenceRequired();
+    }
+
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 6);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 1.25f);
+        builder = builder.add(Attributes.MAX_HEALTH, 60F);
+        builder = builder.add(Attributes.ARMOR, 8F);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 8);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -103,7 +116,7 @@ public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
         float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
         float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
         float bpiSize = (self.getBasicPlayerInfo().getSize() - 1.0F) * 2.0F;
-        return (double) (Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize);
+        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
     }
 
     public double getTorsoYOffsetForFallFly(ChangedEntity self) {
@@ -127,20 +140,6 @@ public class LuminarcticLeopardEntity extends AbstractLuminarcticLeopard {
     @Override
     public SoundEvent getDeathSound() {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
-    }
-
-    public static void init() {
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 6);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 1.25f);
-        builder = builder.add(Attributes.MAX_HEALTH, 60F);
-        builder = builder.add(Attributes.ARMOR, 8F);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 8);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
     }
 
     @Override

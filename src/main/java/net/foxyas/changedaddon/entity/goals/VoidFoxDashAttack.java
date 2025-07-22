@@ -131,7 +131,7 @@ public class VoidFoxDashAttack extends Goal {
                 if (distance > 0.1) {
                     Vec3 knockback = difference.normalize().scale(distance * KNOCKBACK_MULTIPLIER);
                     dasher.swing(InteractionHand.MAIN_HAND);
-                    if (entity.hurt(DamageSource.mobAttack(dasher), 6.0F)){
+                    if (entity.hurt(DamageSource.mobAttack(dasher), 6.0F)) {
                         dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1, 1);
                         dasher.getLevel().playSound(null, entity, SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 1);
                     } else {
@@ -192,7 +192,7 @@ public class VoidFoxDashAttack extends Goal {
 
     private void shootProjectile(LivingEntity target) {
         Level level = dasher.level;
-        switch (dasher.getRandom().nextInt(3)){
+        switch (dasher.getRandom().nextInt(3)) {
             case 0 -> spawnProjectilesInCircle(dasher, target, new Vec3(0, 0.5, 0), 2, 4, level);
             case 1 -> spawnProjectilesInXCircleTargetInPlayer(dasher, target, new Vec3(0, 0, 0), 2, 8, level);
             case 2 -> spawnProjectilesInXCircleTargetInPlayerPos(dasher, target, new Vec3(0, 0, 0), 2, 8, level);

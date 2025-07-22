@@ -2,8 +2,8 @@ package net.foxyas.changedaddon.entity.CustomHandle;
 
 import net.foxyas.changedaddon.effect.particles.ChangedAddonParticles;
 import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
-import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.DelayedTask;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -31,11 +31,11 @@ public class Exp9AttacksHandle {
 
     public static class TeleportAirComboGoal extends Goal {
         private final KetExperiment009BossEntity boss;
+        private final Random random = new Random();
         private LivingEntity target;
         private int phase = 0;
         private int ticks = 0;
         private int delay = 5;
-        private final Random random = new Random();
 
 
         public TeleportAirComboGoal(KetExperiment009BossEntity boss) {
@@ -203,11 +203,11 @@ public class Exp9AttacksHandle {
 
     public static class TeleportComboGoal extends Goal {
         private final KetExperiment009BossEntity boss;
+        private final Random random = new Random();
         private LivingEntity target;
         private int phase = 0;
         private int ticks = 0;
         private int delay = 5;
-        private final Random random = new Random();
 
 
         public TeleportComboGoal(KetExperiment009BossEntity boss) {
@@ -319,7 +319,7 @@ public class Exp9AttacksHandle {
             // Aplica O Rastro de particulas para simular velocidade
             SummonTeleportParticles();
 
-			
+
             // Aplica o impacto ao alvo
             target.setDeltaMovement(0, 3, 0);
             boss.teleportTo(target.getX(), target.getY(), target.getZ());
@@ -582,7 +582,7 @@ public class Exp9AttacksHandle {
         public final KetExperiment009BossEntity boss;
         private int ticks;
         private int thunderIndex;
-        private int MaxThunderIndex;
+        private final int MaxThunderIndex;
         private boolean running;
         private Vec3 forward; // Recalcula para cada tick
 
@@ -707,6 +707,16 @@ public class Exp9AttacksHandle {
             this.boss = boss;
         }
 
+        public static void Teleport(KetExperiment009BossEntity boss, LivingEntity target) {
+            if (target == null) {
+                return;
+            }
+            Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
+            boss.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+            target.hurt(boss.ThunderDmg, 2);
+            boss.setAttackCoolDown(0);
+        }
+
         @Override
         public boolean canUse() {
             return boss.getTarget() != null && (boss.isOnGround() || boss.getTarget().isOnGround()) && boss.getHealth() / boss.getMaxHealth() <= 0.5 && this.boss.distanceTo(boss.getTarget()) >= 8 && this.boss.getAttackCoolDown() >= 50;
@@ -727,6 +737,14 @@ public class Exp9AttacksHandle {
             target.hurt(boss.ThunderDmg, 2);
             boss.setAttackCoolDown(0);
         }
+    }
+
+    public static class RandomTeleportAttack extends Goal {
+        private final KetExperiment009BossEntity boss;
+
+        public RandomTeleportAttack(KetExperiment009BossEntity boss) {
+            this.boss = boss;
+        }
 
         public static void Teleport(KetExperiment009BossEntity boss, LivingEntity target) {
             if (target == null) {
@@ -735,15 +753,6 @@ public class Exp9AttacksHandle {
             Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
             boss.teleportTo(targetPos.x, targetPos.y, targetPos.z);
             target.hurt(boss.ThunderDmg, 2);
-            boss.setAttackCoolDown(0);
-        }
-    }
-
-    public static class RandomTeleportAttack extends Goal {
-        private final KetExperiment009BossEntity boss;
-
-        public RandomTeleportAttack(KetExperiment009BossEntity boss) {
-            this.boss = boss;
         }
 
         @Override
@@ -758,15 +767,6 @@ public class Exp9AttacksHandle {
 
         public void Teleport() {
             LivingEntity target = boss.getTarget();
-            if (target == null) {
-                return;
-            }
-            Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
-            boss.teleportTo(targetPos.x, targetPos.y, targetPos.z);
-            target.hurt(boss.ThunderDmg, 2);
-        }
-
-        public static void Teleport(KetExperiment009BossEntity boss, LivingEntity target) {
             if (target == null) {
                 return;
             }

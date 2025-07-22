@@ -315,7 +315,7 @@ public class AvaliModel extends AdvancedHumanoidModel<AvaliEntity> implements Ad
      }
   */
     @Override
-    public void setupHand() {
+    public void setupHand(AvaliEntity entity) {
         animator.setupHand();
     }
 
@@ -353,7 +353,7 @@ public class AvaliModel extends AdvancedHumanoidModel<AvaliEntity> implements Ad
     }
 
     @Override
-    public HumanoidAnimator<AvaliEntity, AvaliModel> getAnimator() {
+    public HumanoidAnimator<AvaliEntity, AvaliModel> getAnimator(AvaliEntity entity) {
         return animator;
     }
 }

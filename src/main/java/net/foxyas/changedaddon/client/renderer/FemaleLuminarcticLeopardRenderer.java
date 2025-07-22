@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class FemaleLuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<FemaleLuminarcticLeopardEntity, LuminarcticFemaleLeopardModel, ArmorLatexFemaleCatModel<FemaleLuminarcticLeopardEntity>> {
     public FemaleLuminarcticLeopardRenderer(EntityRendererProvider.Context context) {
         super(context, new LuminarcticFemaleLeopardModel(context.bakeLayer(LuminarcticFemaleLeopardModel.LAYER_LOCATION)),
-                ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
+                ArmorLatexFemaleCatModel.MODEL_SET, 0.5f);
 
         this.addLayer(new LatexParticlesLayer<>(this, getModel(), model::isPartNotArmFur));
 

@@ -211,7 +211,7 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
      }
   */
     @Override
-    public void setupHand() {
+    public void setupHand(DazedEntity entity) {
         animator.setupHand();
     }
 
@@ -253,7 +253,7 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
     }
 
     @Override
-    public HumanoidAnimator<DazedEntity, DazedLatexModel> getAnimator() {
+    public HumanoidAnimator<DazedEntity, DazedLatexModel> getAnimator(DazedEntity entity) {
         return animator;
     }
 }

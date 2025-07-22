@@ -19,12 +19,11 @@ public class KnockBackBurstGoal extends Goal {
     private final Mob mob;
     private final double damageThreshold;
     private final int checkInterval = 20; // ticks (1 segundo)
+    private final float knockbackForce = 2.5f;
+    private final int cooldown = 100; // 5 segundos de cooldown
     private int ticks;
     private float recentDamage;
     private int recentHits;
-
-    private final float knockbackForce = 2.5f;
-    private final int cooldown = 100; // 5 segundos de cooldown
     private int cooldownTimer;
 
     public KnockBackBurstGoal(Mob mob, double damageThreshold) {
@@ -44,7 +43,7 @@ public class KnockBackBurstGoal extends Goal {
         if (ticks >= checkInterval) {
             ticks = 0;
 
-			
+
 // reset
             recentDamage = 0;
             recentHits = 0;

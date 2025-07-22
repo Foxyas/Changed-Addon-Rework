@@ -378,7 +378,7 @@ public class WolfyModel extends AdvancedHumanoidModel<WolfyEntity> implements Ad
 		return corrector;
 	} */
 	@Override
-	public void setupHand() {
+	public void setupHand(WolfyEntity entity) {
 		animator.setupHand();
 	}
 
@@ -418,7 +418,7 @@ public class WolfyModel extends AdvancedHumanoidModel<WolfyEntity> implements Ad
 	}
 
 	@Override
-	public HumanoidAnimator<WolfyEntity, WolfyModel> getAnimator() {
+	public HumanoidAnimator<WolfyEntity, WolfyModel> getAnimator(WolfyEntity entity) {
 		return animator;
 	}
 }

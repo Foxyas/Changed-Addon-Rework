@@ -10,7 +10,7 @@ public interface BossWithMusic {
     @NotNull
     BossMusicTheme BossMusicTheme();
 
-    default Music Music(){
+    default Music Music() {
         return BossMusicTheme().getAsMusic();
     }
 

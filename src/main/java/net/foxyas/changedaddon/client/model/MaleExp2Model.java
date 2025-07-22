@@ -209,7 +209,7 @@ public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> impleme
         return corrector;
     } */
     @Override
-    public void setupHand() {
+    public void setupHand(Exp2MaleEntity entity) {
         animator.setupHand();
     }
 
@@ -248,7 +248,7 @@ public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> impleme
     }
 
     @Override
-    public HumanoidAnimator<Exp2MaleEntity, MaleExp2Model> getAnimator() {
+    public HumanoidAnimator<Exp2MaleEntity, MaleExp2Model> getAnimator(Exp2MaleEntity entity) {
         return animator;
     }
 }

@@ -253,7 +253,7 @@ public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> impl
 		return corrector;
 	} */
 	@Override
-	public void setupHand() {
+	public void setupHand(KetExperiment009Entity entity) {
 		animator.setupHand();
 	}
 
@@ -293,7 +293,7 @@ public class KetModel extends AdvancedHumanoidModel<KetExperiment009Entity> impl
 	}
 
 	@Override
-	public HumanoidAnimator<KetExperiment009Entity, KetModel> getAnimator() {
+	public HumanoidAnimator<KetExperiment009Entity, KetModel> getAnimator(KetExperiment009Entity entity) {
 		return animator;
 	}
 }

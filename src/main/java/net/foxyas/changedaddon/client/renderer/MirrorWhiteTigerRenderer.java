@@ -21,7 +21,7 @@ import net.foxyas.changedaddon.entity.MirrorWhiteTigerEntity;
 public class MirrorWhiteTigerRenderer extends AdvancedHumanoidRenderer<MirrorWhiteTigerEntity, ModelMirrorWhiteTiger, ArmorLatexFemaleCatModel<MirrorWhiteTigerEntity>> {
 	public MirrorWhiteTigerRenderer(EntityRendererProvider.Context context) {
 		super(context, new ModelMirrorWhiteTiger(context.bakeLayer(ModelMirrorWhiteTiger.LAYER_LOCATION)),
-				ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
+				ArmorLatexFemaleCatModel.MODEL_SET, 0.5f);
 		//this.addLayer(new LatexParticlesLayer<>(this, getModel()));
 		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
 		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor,CustomEyesLayer::irisColorLeft,CustomEyesLayer::irisColorRight));

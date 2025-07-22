@@ -66,7 +66,7 @@ public class DazedPuddleAbility extends SimpleAbility {
                 return;
             if (caught.getType().is(ChangedTags.EntityTypes.HUMANOIDS)) {
                 if (caught instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) == null) {
-                    ProcessTransfur.progressPlayerTransfur(player, TransfurDmgAmount, ChangedAddonTransfurVariants.DAZED_LATEX.get(), TransfurContext.hazard(TransfurCause.FLOOR_HAZARD));
+                    ProcessTransfur.progressTransfur(player, TransfurDmgAmount, ChangedAddonTransfurVariants.DAZED_LATEX.get(), TransfurContext.hazard(TransfurCause.FLOOR_HAZARD));
                     caught.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2, false, false, false));
                 }
             }

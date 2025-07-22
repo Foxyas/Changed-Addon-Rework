@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 public class Experiment10BossRenderer extends AdvancedHumanoidRenderer<Experiment10BossEntity, Experiment10BossModel, ArmorLatexFemaleCatModel<Experiment10BossEntity>> {
     public Experiment10BossRenderer(EntityRendererProvider.Context context) {
         super(context, new Experiment10BossModel(context.bakeLayer(Experiment10BossModel.LAYER_LOCATION)),
-                ArmorLatexFemaleCatModel::new, ArmorLatexFemaleCatModel.INNER_ARMOR, ArmorLatexFemaleCatModel.OUTER_ARMOR, 0.5f);
+                ArmorLatexFemaleCatModel.MODEL_SET, 0.5f);
         this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon", "textures/entities/experiment_10/experiment_10_glow.png")));
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));

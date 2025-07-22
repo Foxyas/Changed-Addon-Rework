@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.CustomHandle.AttributesHandle;
@@ -65,6 +64,22 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         setPersistenceRequired();
     }
 
+    public static void init() {
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 300);
+        builder = builder.add(Attributes.ARMOR, 20);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
+        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
+        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
+        return builder;
+    }
+
     protected void setAttributes(AttributeMap attributes) {
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 16));
@@ -118,7 +133,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
 
     @Override
     public boolean canBeAffected(@NotNull MobEffectInstance mobEffectInstance) {
-        if (mobEffectInstance.getEffect() == MobEffects.WITHER){
+        if (mobEffectInstance.getEffect() == MobEffects.WITHER) {
             return false;
         }
 
@@ -153,7 +168,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
     public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.DARK;
     }
-
 
     @Override
     public Packet<?> getAddEntityPacket() {
@@ -240,7 +254,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         return retval;
     }
 
-
     @Override
     public boolean canChangeDimensions() {
         return false;
@@ -264,34 +277,17 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         //this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
-    public static void init() {
-    }
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = Mob.createMobAttributes();
-        builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 300);
-        builder = builder.add(Attributes.ARMOR, 20);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 12);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 32);
-        builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
-        builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
-        return builder;
-    }
-
     @Override
     public Gender getGender() {
         return Gender.FEMALE;
     }
 
-    public void setPhase2(boolean set) {
-        this.Phase2 = set;
-    }
-
     public boolean isPhase2() {
         return this.Phase2;
+    }
+
+    public void setPhase2(boolean set) {
+        this.Phase2 = set;
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {

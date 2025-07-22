@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
@@ -53,9 +52,9 @@ public class HaydenFennecFoxEntity extends AbstractBasicOrganicChangedEntity {
     public boolean hurt(@NotNull DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof LivingEntity living) {
             if (source instanceof EntityDamageSource entityDamageSource) {
-				if (entityDamageSource.msgId.contains("mob")) {
-					return super.hurt(entityDamageSource, amount * 0.9f);
-				}
+                if (entityDamageSource.msgId.contains("mob")) {
+                    return super.hurt(entityDamageSource, amount * 0.9f);
+                }
             }
         }
 

@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
@@ -23,95 +22,94 @@ import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class LynxEntity extends ChangedEntity implements PowderSnowWalkable, ExtraVariantStats {
-	public LynxEntity(PlayMessages.SpawnEntity packet, Level world) {
-		this(ChangedAddonEntities.LYNX.get(), world);
-	}
+    public LynxEntity(PlayMessages.SpawnEntity packet, Level world) {
+        this(ChangedAddonEntities.LYNX.get(), world);
+    }
 
-	public LynxEntity(EntityType<LynxEntity> type, Level world) {
-		super(type, world);
-		maxUpStep = 0.6f;
-		xpReward = 0;
-		setNoAi(false);
-		setPersistenceRequired();
-		setAttributes(this.getAttributes());
-	}
+    public LynxEntity(EntityType<LynxEntity> type, Level world) {
+        super(type, world);
+        maxUpStep = 0.6f;
+        xpReward = 0;
+        setNoAi(false);
+        setPersistenceRequired();
+        setAttributes(this.getAttributes());
+    }
 
-	@Override
-	public LatexType getLatexType() {
-		return LatexType.NEUTRAL;
-	}
+    public static void init() {
+    }
 
-	@Override
-	public TransfurMode getTransfurMode() {
-		return TransfurMode.ABSORPTION;
-	}
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = Mob.createMobAttributes();
+        builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 0);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
 
-	protected void setAttributes(AttributeMap attributes) {
-		super.setAttributes(attributes);
-		AttributePresets.catLike(attributes);
-	}
+    @Override
+    public LatexType getLatexType() {
+        return LatexType.NEUTRAL;
+    }
 
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+    @Override
+    public TransfurMode getTransfurMode() {
+        return TransfurMode.ABSORPTION;
+    }
 
-	@Override
-	protected void registerGoals() {
-		super.registerGoals();
-	}
+    protected void setAttributes(AttributeMap attributes) {
+        super.setAttributes(attributes);
+        AttributePresets.catLike(attributes);
+    }
 
-	@Override
-	public Color3 getDripColor() {
-		return this.random.nextBoolean() ? Color3.getColor("#ebd182") : Color3.getColor("#eace7a");
-	}
+    @Override
+    public Packet<?> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
 
-	@Override
-	public Color3 getTransfurColor(TransfurCause cause) {
-		return this.random.nextBoolean() ? Color3.getColor("#ebd182") : Color3.getColor("#eace7a");
-	}
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+    }
 
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEFINED;
-	}
+    public Color3 getDripColor() {
+        return this.random.nextBoolean() ? Color3.getColor("#ebd182") : Color3.getColor("#eace7a");
+    }
 
-	@Override
-	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return false;
-	}
+    @Override
+    public Color3 getTransfurColor(TransfurCause cause) {
+        return this.random.nextBoolean() ? Color3.getColor("#ebd182") : Color3.getColor("#eace7a");
+    }
 
-	@Override
-	public double getMyRidingOffset() {
-		return super.getMyRidingOffset();
-	}
+    @Override
+    public MobType getMobType() {
+        return MobType.UNDEFINED;
+    }
 
-	@Override
-	public SoundEvent getHurtSound(DamageSource ds) {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
-	}
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
 
-	@Override
-	public SoundEvent getDeathSound() {
-		return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
-	}
+    @Override
+    public double getMyRidingOffset() {
+        return super.getMyRidingOffset();
+    }
 
-	public static void init() {
-	}
+    @Override
+    public SoundEvent getHurtSound(DamageSource ds) {
+        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.hurt"));
+    }
 
-	public static AttributeSupplier.Builder createAttributes() {
-		AttributeSupplier.Builder builder = Mob.createMobAttributes();
-		builder.add((Attribute) ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
-		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-		builder = builder.add(Attributes.MAX_HEALTH, 24);
-		builder = builder.add(Attributes.ARMOR, 0);
-		builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
-		builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-		return builder;
-	}
+    @Override
+    public SoundEvent getDeathSound() {
+        return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("entity.generic.death"));
+    }
 
-	@Override
-	public float extraBlockBreakSpeed() {
-		return 0.35f;
-	}
+    @Override
+    public float extraBlockBreakSpeed() {
+        return 0.35f;
+    }
 }

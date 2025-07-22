@@ -21,7 +21,6 @@ public class PsychicHoldAbility extends SimpleAbility {
 		return new TranslatableComponent("changed_addon.ability.psychic_hold");
 	}
 
-	@Override
 	public ResourceLocation getTexture(IAbstractChangedEntity entity) {
 		return new ResourceLocation("changed_addon:textures/screens/psychic_hold.png"); //Place holder
 	}

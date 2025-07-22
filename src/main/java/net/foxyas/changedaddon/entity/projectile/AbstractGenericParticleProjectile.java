@@ -38,20 +38,19 @@ import java.util.UUID;
 
 public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
-    @Nullable
-    private UUID targetUUID;
-
+    private static final EntityDataAccessor<Boolean> PARRY_ABLE =
+            SynchedEntityData.defineId(AbstractGenericParticleProjectile.class, EntityDataSerializers.BOOLEAN);
+    public boolean teleport = false;
     @Nullable
     protected Entity target = null;
-
     @Nullable
     protected Vec3 targetPos = null;
-
     protected ParticleOptions particle = ParticleTypes.END_ROD;
-    public boolean teleport = false;
     protected int lifeSpamWithoutTarget;
     protected int lifeSpamNearTarget = 0;
-
+    @Nullable
+    private UUID targetUUID;
+    private boolean smoothMotion = false;
 
     protected AbstractGenericParticleProjectile(EntityType<? extends AbstractArrow> type, Level level) {
         super(type, level);
@@ -70,32 +69,18 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         super(type, shooter, level);
     }
 
-    private static final EntityDataAccessor<Boolean> PARRY_ABLE =
-            SynchedEntityData.defineId(AbstractGenericParticleProjectile.class, EntityDataSerializers.BOOLEAN);
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(PARRY_ABLE, false);
     }
 
-    public void setParryAble(boolean set) {
-        this.entityData.set(PARRY_ABLE, set);
-    }
-
     public boolean isParryAble() {
         return this.entityData.get(PARRY_ABLE);
     }
 
-    public void setTarget(@Nullable LivingEntity target) {
-        this.target = target;
-        if (target != null) {
-            this.targetUUID = target.getUUID();
-        }
-    }
-
-    public void setParticle(ParticleOptions particle) {
-        this.particle = particle;
+    public void setParryAble(boolean set) {
+        this.entityData.set(PARRY_ABLE, set);
     }
 
     public @Nullable Entity getTarget() {
@@ -109,12 +94,31 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         }
     }
 
+    public void setTarget(@Nullable LivingEntity target) {
+        this.target = target;
+        if (target != null) {
+            this.targetUUID = target.getUUID();
+        }
+    }
+
+    public void setTarget(@Nullable Entity target) {
+        this.target = target;
+    }
+
     public @Nullable UUID getTargetUUID() {
         return targetUUID;
     }
 
+    public void setTargetUUID(@Nullable UUID targetUUID) {
+        this.targetUUID = targetUUID;
+    }
+
     public ParticleOptions getParticle() {
         return particle;
+    }
+
+    public void setParticle(ParticleOptions particle) {
+        this.particle = particle;
     }
 
     @Override
@@ -164,12 +168,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         }
     }
 
-    public void setTargetPos(@Nullable Vec3 targetPos) {
-        this.targetPos = targetPos;
-    }
-
     public @Nullable Vec3 getTargetPos() {
         return targetPos;
+    }
+
+    public void setTargetPos(@Nullable Vec3 targetPos) {
+        this.targetPos = targetPos;
     }
 
     public int getLifeSpamWithoutTarget() {
@@ -178,14 +182,6 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
     public void setLifeSpamWithoutTarget(int lifeSpamWithoutTarget) {
         this.lifeSpamWithoutTarget = lifeSpamWithoutTarget;
-    }
-
-    public void setTarget(@Nullable Entity target) {
-        this.target = target;
-    }
-
-    public void setTargetUUID(@Nullable UUID targetUUID) {
-        this.targetUUID = targetUUID;
     }
 
     @Override
@@ -241,7 +237,7 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
 
 
         if (!level.isClientSide && livingTarget.isAlive()) {
-            if (getOwner() != null && livingTarget.is(getOwner())){
+            if (getOwner() != null && livingTarget.is(getOwner())) {
                 PlayerUtil.ParticlesUtil.sendParticles(this.level, particle, this.position(), 0.05f, 0.05f, 0.05f, 20, 0.5f);
                 this.discard();
             }
@@ -310,14 +306,12 @@ public abstract class AbstractGenericParticleProjectile extends AbstractArrow {
         }*/
     }
 
-    private boolean smoothMotion = false;
+    public boolean isSmoothMotion() {
+        return smoothMotion;
+    }
 
     public void setSmoothMotion(boolean smoothMotion) {
         this.smoothMotion = smoothMotion;
-    }
-
-    public boolean isSmoothMotion() {
-        return smoothMotion;
     }
 
     public void applyMotion(Vec3 desiredMotion) {

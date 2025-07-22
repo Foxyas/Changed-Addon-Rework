@@ -4,18 +4,24 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import net.ltxprogrammer.changed.data.AccessorySlotType;
+import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.item.ExtendedItemProperties;
-import net.ltxprogrammer.changed.item.Shorts;
+import net.ltxprogrammer.changed.init.ChangedTabs;
+import net.ltxprogrammer.changed.item.ClothingItem;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeableLeatherItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -28,7 +34,7 @@ import javax.annotation.Nullable;
 import java.awt.*;
 
 
-public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedItemProperties {
+public class DyeableShorts extends ClothingItem implements DyeableLeatherItem {
 
 	public static enum DefaultColors {
         RED(new Color(255, 0, 0)),
@@ -63,12 +69,12 @@ public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedI
 
 	
     public DyeableShorts() {
-        super(MATERIAL, EquipmentSlot.LEGS, (new Item.Properties()).tab(ChangedAddonTabs.TAB_CHANGED_ADDON));
+        super();
     }
 
     @Override
-    public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot slot) {
-        return ImmutableMultimap.of();
+    public boolean allowedInSlot(ItemStack itemStack, LivingEntity wearer, AccessorySlotType slot) {
+        return slot == ChangedAccessorySlots.LEGS.get() || slot == ChangedAccessorySlots.LOWER_BODY.get();
     }
 
     public boolean isDamageable(ItemStack stack) {
@@ -86,11 +92,14 @@ public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedI
         return stack;
     }
 
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+        return ImmutableMultimap.of();
+    }
 
     public SoundEvent getBreakSound(ItemStack itemStack) {
         return ChangedSounds.SLASH10;
     }
-
 
     @Override
     public void fillItemCategory(CreativeModeTab tab, NonNullList<ItemStack> items) {
@@ -103,6 +112,15 @@ public class DyeableShorts extends DyeableArmorItem implements Shorts, ExtendedI
         }
     }
 
+    @Override
+    protected boolean allowdedIn(CreativeModeTab tab) {
+        if (tab == ChangedTabs.TAB_CHANGED_ITEMS) {
+            return false;
+        } else if (tab == ChangedAddonTabs.TAB_CHANGED_ADDON) {
+            return true;
+        }
+        return super.allowdedIn(tab);
+    }
 
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {

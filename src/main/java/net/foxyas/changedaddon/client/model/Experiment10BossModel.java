@@ -252,7 +252,7 @@ public class Experiment10BossModel extends AdvancedHumanoidModel<Experiment10Bos
         return corrector;
     } */
     @Override
-    public void setupHand() {
+    public void setupHand(Experiment10BossEntity entity) {
         animator.setupHand();
     }
 
@@ -299,7 +299,7 @@ public class Experiment10BossModel extends AdvancedHumanoidModel<Experiment10Bos
     }
 
     @Override
-    public HumanoidAnimator<Experiment10BossEntity, Experiment10BossModel> getAnimator() {
+    public HumanoidAnimator<Experiment10BossEntity, Experiment10BossModel> getAnimator(Experiment10BossEntity entity) {
         return animator;
     }
 }
