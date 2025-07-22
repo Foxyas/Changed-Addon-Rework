@@ -445,7 +445,7 @@
   "gui.changed_addon.informant_gui.form": "Form ID",
   "gui.changed_addon.informant_gui.label_empty": "?",
   "gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form": "Put A syringe With a Form",
-  "gui.changed_addon.informant_gui.tooltip_type_the_form": "Type The Form",
+  "gui.changed_addon.informant_gui.tooltip_type_the_form": "Type The Form ID",
   "gui.changed_addon.transfur_sounds_gui.button_1": "Purr",
   "gui.changed_addon.transfur_sounds_gui.button_2": "Meow",
   "gui.changed_addon.transfur_sounds_gui.button_3": "growl",

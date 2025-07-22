@@ -23,6 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu> {
     private final static HashMap<String, Object> guistate = InformantGuiMenu.guistate;
@@ -53,21 +56,24 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         if (IfisEmptyProcedure.execute(entity))
             if (mouseX > leftPos + 147 && mouseX < leftPos + 171 && mouseY > topPos + 4 && mouseY < topPos + 28)
                 this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
-		if (!filteredSuggestions.isEmpty()) {
-			int x = form.x;
-			int y = form.y + form.getHeight() + 2;
-			int width = form.getWidth();
-			int height = 12;
+        if (!filteredSuggestions.isEmpty()) {
+            int x = form.x;
+            int y = form.y + form.getHeight() + 2;
+            int width = form.getWidth();
+            int height = 12;
 
-			for (int i = 0; i < filteredSuggestions.size(); i++) {
-				String suggestion = filteredSuggestions.get(i);
-				int bgColor = i == suggestionIndex ? 0xFFAAAAAA : 0xFF000000;
-				fill(ms, x, y + i * height, x + width, y + (i + 1) * height, bgColor);
-				this.font.draw(ms, suggestion, x + 2, y + i * height + 2, 0xFFFFFF);
-			}
-		}
+            for (int i = 0; i < filteredSuggestions.size(); i++) {
+                String suggestion = filteredSuggestions.get(i);
+                int bgColor = i == suggestionIndex ? 0x88AAAAAA : 0x88000000;
+                RenderSystem.enableBlend();
+                RenderSystem.defaultBlendFunc();
+                fill(ms, x, y + i * height, x + width, y + (i + 1) * height, bgColor);
+                this.font.draw(ms, suggestion, x + 2, y + i * height + 2, 0xFFFFFF);
+                RenderSystem.disableBlend();
+            }
+        }
 
-	}
+    }
 
     @Override
     protected void renderBg(@NotNull PoseStack ms, float partialTicks, int gx, int gy) {
@@ -79,35 +85,51 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         RenderSystem.disableBlend();
     }
 
-	@Override
-	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		if (!filteredSuggestions.isEmpty()) {
-			if (keyCode == 265) { // UP
-				suggestionIndex = Math.max(0, suggestionIndex - 1);
-				return true;
-			} else if (keyCode == 264) { // DOWN
-				suggestionIndex = Math.min(filteredSuggestions.size() - 1, suggestionIndex + 1);
-				return true;
-			} else if (keyCode == 257 || keyCode == 335) { // ENTER
-				if (suggestionIndex >= 0 && suggestionIndex < filteredSuggestions.size()) {
-					form.setValue(filteredSuggestions.get(suggestionIndex));
-					filteredSuggestions.clear();
-					suggestionIndex = -1;
-					return true;
-				}
-			}
-		}
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (!filteredSuggestions.isEmpty()) {
+            if (keyCode == 265) { // UP
+                suggestionIndex = Math.max(0, suggestionIndex - 1);
+                return true;
+            } else if (keyCode == 264) { // DOWN
+                suggestionIndex = Math.min(filteredSuggestions.size() - 1, suggestionIndex + 1);
+                return true;
+            } else if (keyCode == 257 || keyCode == 335) { // ENTER
+                if (suggestionIndex >= 0 && suggestionIndex < filteredSuggestions.size()) {
+                    form.setValue(filteredSuggestions.get(suggestionIndex));
+                    filteredSuggestions.clear();
+                    suggestionIndex = -1;
+                    return true;
+                }
+            }
+//            else if (keyCode == 257 || keyCode == 335) { // ENTER
+//                if (suggestionIndex >= 0 && suggestionIndex < filteredSuggestions.size()) {
+//                    String chosenName = filteredSuggestions.get(suggestionIndex);
+//                    List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
+//                    if (variants != null && !variants.isEmpty()) {
+//                        TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
+//                        form.setValue(variant.getFormId().toString()); // substitui pelo formId
+//                    } else {
+//                        form.setValue(chosenName); // fallback
+//                    }
+//
+//                    filteredSuggestions.clear();
+//                    suggestionIndex = -1;
+//                    return true;
+//                }
+//            }
+        }
 
-		if (keyCode == 256) {
-			assert this.minecraft != null;
-			assert this.minecraft.player != null;
-			this.minecraft.player.closeContainer();
-			return true;
-		}
+        if (keyCode == 256) {
+            assert this.minecraft != null;
+            assert this.minecraft.player != null;
+            this.minecraft.player.closeContainer();
+            return true;
+        }
 
-		return form.isFocused() ? form.keyPressed(keyCode, scanCode, modifiers)
-				: super.keyPressed(keyCode, scanCode, modifiers);
-	}
+        return form.isFocused() ? form.keyPressed(keyCode, scanCode, modifiers)
+                : super.keyPressed(keyCode, scanCode, modifiers);
+    }
 
     @Override
     public void containerTick() {
@@ -117,16 +139,34 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 
     @Override
     protected void renderLabels(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
-        double hp = TransfurVariantUtils.GetExtraHp(form.getValue(), entity);
-        double swimSpeed = TransfurVariantUtils.GetSwimSpeed(form.getValue(), entity);
-        double landSpeed = TransfurVariantUtils.GetLandSpeed(form.getValue(), entity);
-        double jumpStrength = TransfurVariantUtils.GetJumpStrength(form.getValue());
-        boolean canFlyOrGlide = TransfurVariantUtils.CanGlideandFly(form.getValue());
-        String miningStrength = TransfurVariantUtils.getMiningStrength(form.getValue());
+        String formId = form.getValue();
+        if (!filteredSuggestions.isEmpty() && suggestionIndex >= 0) {
+            String chosenName = filteredSuggestions.get(suggestionIndex);
+            List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
+            if (variants != null && !variants.isEmpty()) {
+                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
+                formId = variant.getFormId().toString();
+            }
+        } else {
+            String chosenName = formId;
+            List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
+            if (variants != null && !variants.isEmpty()) {
+                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
+                formId = variant.getFormId().toString();
+            }
+        }
+
+
+        double hp = TransfurVariantUtils.GetExtraHp(formId, entity);
+        double swimSpeed = TransfurVariantUtils.GetSwimSpeed(formId, entity);
+        double landSpeed = TransfurVariantUtils.GetLandSpeed(formId, entity);
+        double jumpStrength = TransfurVariantUtils.GetJumpStrength(formId);
+        boolean canFlyOrGlide = TransfurVariantUtils.CanGlideandFly(formId);
+        String miningStrength = TransfurVariantUtils.getMiningStrength(formId);
         double extraHp = (hp) / 2.0;
-        double landSpeedPct = (landSpeed - 1) * 100;
-        double swimSpeedPct = (swimSpeed - 1) * 100;
-        double jumpStrengthPct = (jumpStrength - 1) * 100;
+        double landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
+        double swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
+        double jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
 
         this.font.draw(poseStack,
                 new TranslatableComponent("text.changed_addon.land_speed")
@@ -175,71 +215,85 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         Minecraft.getInstance().keyboardHandler.setSendRepeatsToGui(false);
     }
 
-	private List<String> allSuggestions = new ArrayList<>();
-	private List<String> filteredSuggestions = new ArrayList<>();
-	private int suggestionIndex = -1;
+    private final List<String> allTransfurVariantsSuggestions = TransfurVariant.getPublicTransfurVariants()
+            .map(v -> v.getFormId().toString())
+            .toList();
+
+    private final List<String> allSuggestions = TransfurVariant.getPublicTransfurVariants()
+            .map(v -> v.getEntityType().getDescription().getString())
+            .toList();
+
+    private final Map<String, List<TransfurVariant<?>>> nameToVariants = TransfurVariant.getPublicTransfurVariants()
+            .collect(Collectors.groupingBy(
+                    v -> v.getEntityType().getDescription().getString()
+            ));
+
+    private List<String> filteredSuggestions = new ArrayList<>();
+    private int suggestionIndex = -1;
 
 
-	@Override
-	public void init() {
-		super.init();
-		assert this.minecraft != null;
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
+    @Override
+    public void init() {
+        super.init();
+        assert this.minecraft != null;
+        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 
-		// Carrega os nomes públicos dos TransfurVariants como sugestões
-		allSuggestions = TransfurVariant.getPublicTransfurVariants()
-				.map(variant -> variant.getFormId().toString())
-				.toList();
+        form = new EditBox(this.font, this.leftPos + 27, this.topPos + 5, 120, 20,
+                new TranslatableComponent("gui.changed_addon.informant_gui.form")) {
+            {
+                setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
+            }
 
-		form = new EditBox(this.font, this.leftPos + 27, this.topPos + 5, 120, 20,
-				new TranslatableComponent("gui.changed_addon.informant_gui.form")) {
-			{
-				setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
-			}
+            @Override
+            public void insertText(@NotNull String text) {
+                super.insertText(text);
+                updateSuggestions(getValue());
+            }
 
-			@Override
-			public void insertText(@NotNull String text) {
-				super.insertText(text);
-				updateSuggestions(getValue());
-			}
+            @Override
+            public void moveCursorTo(int pos) {
+                super.moveCursorTo(pos);
+                updateSuggestions(getValue());
+            }
+        };
 
-			@Override
-			public void moveCursorTo(int pos) {
-				super.moveCursorTo(pos);
-				updateSuggestions(getValue());
-			}
-		};
+        form.setMaxLength(32767);
+        guistate.put("text:form", form);
+        this.addWidget(this.form);
 
-		form.setMaxLength(32767);
-		guistate.put("text:form", form);
-		this.addWidget(this.form);
+        form.setResponder(this::updateSuggestions); // sempre que o valor mudar, atualiza sugestões
+    }
 
-		form.setResponder(this::updateSuggestions); // sempre que o valor mudar, atualiza sugestões
-	}
+    public void updateSuggestions(String input) {
+        if (input.isEmpty()) {
+            filteredSuggestions.clear();
+            suggestionIndex = -1;
+        } else {
+            filteredSuggestions = new ArrayList<>(allSuggestions.stream()
+                    .filter(s -> s.toLowerCase().startsWith(input.toLowerCase()))
+                    .distinct()
+                    .limit(6)
+                    .toList());
 
-	private void updateSuggestions(String input) {
-		if (input.isEmpty()) {
-			filteredSuggestions.clear();
-			suggestionIndex = -1;
-		} else {
-			filteredSuggestions = allSuggestions.stream()
-					.filter(s -> s.toLowerCase().startsWith(input.toLowerCase()))
-					.limit(5)
-					.toList();
+            suggestionIndex = filteredSuggestions.isEmpty() ? -1 : 0;
+        }
 
-			suggestionIndex = filteredSuggestions.isEmpty() ? -1 : 0;
-		}
+        if (filteredSuggestions.size() == 1 && !input.equalsIgnoreCase(filteredSuggestions.get(0))) {
+            String suggestion = filteredSuggestions.get(0);
+            if (suggestion.toLowerCase().startsWith(input.toLowerCase())) {
+                String remaining = suggestion.substring(input.length()); // remove o que já foi escrito
+                form.setSuggestion(remaining);
+            } else {
+                form.setSuggestion(null);
+            }
+        } else {
+            form.setSuggestion(null);
+        }
 
-		// Atualiza sugestão visível no campo, se aplicável
-		if (filteredSuggestions.size() == 1 && !input.equalsIgnoreCase(filteredSuggestions.get(0))) {
-			form.setSuggestion(filteredSuggestions.get(0));
-		} else {
-			form.setSuggestion(null);
-		}
-	}
+    }
 
 
-	public Vec3i getPosition() {
+    public Vec3i getPosition() {
         return position;
     }
 
