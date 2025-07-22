@@ -28,8 +28,8 @@ public class ToggleClimbAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void startUsing() {
+        this.isActivated = !this.isActivated;
         if (!entity.getLevel().isClientSide()) {
-            this.isActivated = !this.isActivated;
             entity.displayClientMessage(new TextComponent("Climb = " + this.isActivated), true);
         }
     }
