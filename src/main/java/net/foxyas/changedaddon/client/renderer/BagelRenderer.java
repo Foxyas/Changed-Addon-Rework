@@ -1,35 +1,12 @@
 package net.foxyas.changedaddon.client.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.model.BagelModel;
 import net.foxyas.changedaddon.entity.BagelEntity;
-import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
-import net.ltxprogrammer.changed.Changed;
-import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
-import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.client.Camera;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.layers.EyesLayer;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-
-import net.foxyas.changedaddon.entity.LatexSnowFoxEntity;
-import net.foxyas.changedaddon.client.model.ModelFoxyasModel;
-import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.resources.ResourceLocation;
 
 public class BagelRenderer extends AdvancedHumanoidRenderer<BagelEntity, BagelModel, ArmorLatexMaleWolfModel<BagelEntity>> {
     public BagelRenderer(EntityRendererProvider.Context context) {

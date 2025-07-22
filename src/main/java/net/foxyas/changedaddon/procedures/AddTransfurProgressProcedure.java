@@ -19,7 +19,7 @@ public class AddTransfurProgressProcedure {
             return;
         }
         if (entity instanceof Player player) {
-            ProcessTransfur.progressPlayerTransfur(player, amount, ChangedTransfurVariants.FALLBACK_VARIANT.get(), TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
+            ProcessTransfur.progressTransfur(player, amount, ChangedTransfurVariants.FALLBACK_VARIANT.get(), TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
         }
     }
 

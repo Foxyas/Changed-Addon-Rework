@@ -39,7 +39,7 @@ public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityM
     public void render(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         float f = Mth.rotlerp(entity.yRotO, entity.getYRot(), partialTicks);
         float f1 = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
-        float f2 = (float)entity.tickCount + partialTicks;
+        float f2 = (float) entity.tickCount + partialTicks;
         poseStack.pushPose();
         poseStack.translate(0.0D, 0.15F, 0.0D);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f2 * 0.1F) * 180.0F));
@@ -62,7 +62,6 @@ public class SimpleProjectileRenderer<T extends AbstractArrow, M extends EntityM
         poseStack.popPose();
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
-
 
 
     @Override

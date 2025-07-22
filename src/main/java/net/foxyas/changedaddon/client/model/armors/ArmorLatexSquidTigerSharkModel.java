@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.client.model.armors;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.LatexSquidTigerSharkModel;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
@@ -29,7 +30,7 @@ import java.util.List;
 public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends LatexHumanoidArmorModel<T, ArmorLatexSquidTigerSharkModel<T>> implements DoubleArmedModel<T> {
     //public static final ModelLayerLocation INNER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
     //public static final ModelLayerLocation OUTER_ARMOR = ArmorModelLayerLocation.createInnerArmorLocation(new ResourceLocation("changed_addon", "squid_tiger_shark_armor")).get();
-    public static final ArmorModelSet<ChangedEntity, ArmorLatexSquidTigerSharkModel<ChangedEntity>> MODEL_SET = ArmorModelSet.of(new ResourceLocation("changed_addon", "armor_squid_tiger_shark"), ArmorLatexSquidTigerSharkModel::createArmorLayer, ArmorLatexSquidTigerSharkModel::new);
+    public static final ArmorModelSet<ChangedEntity, ArmorLatexSquidTigerSharkModel<ChangedEntity>> MODEL_SET = ArmorModelSet.of(ChangedAddonMod.resourceLoc("armor_squid_tiger_shark"), ArmorLatexSquidTigerSharkModel::createArmorLayer, ArmorLatexSquidTigerSharkModel::new);
 
     private final ModelPart Head;
     private final ModelPart Torso;

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -14,7 +14,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
 
 @Mod.EventBusSubscriber
 public class SwimRegretTriggerProcedure {
@@ -39,13 +38,13 @@ public class SwimRegretTriggerProcedure {
         if (entity.isSwimming() && entity.isInWaterOrBubble()) {
             if (ProcessTransfur.isPlayerTransfurred(player)) {
                 type_form = ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString();
-                if (VariantUtilProcedure.GetSwimSpeed(type_form, player) <= 0.95) {
+                if (TransfurVariantUtils.GetSwimSpeed(type_form, player) <= 0.95) {
                     entity.getPersistentData().putDouble("TransfurData.SlowSwimInWaterTicks", (entity.getPersistentData().getDouble("TransfurData.SlowSwimInWaterTicks") + 1));
                 }
             }
         }
         if (ProcessTransfur.isPlayerTransfurred(player)) {
-            if (VariantUtilProcedure.GetSwimSpeed(type_form, player) <= 0.95) {
+            if (TransfurVariantUtils.GetSwimSpeed(type_form, player) <= 0.95) {
                 if (entity.getPersistentData().getDouble("TransfurData.SlowSwimInWaterTicks") >= 600) {
                     if (entity instanceof ServerPlayer _player) {
                         Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:swim_regret"));

@@ -177,7 +177,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         return HairStyle.Collection.FEMALE.getStyles();
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.getColor("#181818");
     }
@@ -324,11 +323,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         super.addAdditionalSaveData(tag);
         tag.putFloat("Tp_Cooldown", TpCooldown);
         tag.putBoolean("Phase2", isPhase2());
-    }
-
-    @Override
-    public void visualTick(Level level) {
-        super.visualTick(level);
     }
 
     @Override

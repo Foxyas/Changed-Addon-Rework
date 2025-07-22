@@ -35,7 +35,6 @@ public class ProtogenEntity extends AbstractBasicOrganicChangedEntity {
         return this.getRandom().nextBoolean() ? TransfurMode.ABSORPTION : TransfurMode.REPLICATION;
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.WHITE;
     }

@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.PuroKindFemaleModel;
@@ -15,17 +14,17 @@ import net.minecraft.resources.ResourceLocation;
 
 
 public class PuroKindFemaleRenderer extends AdvancedHumanoidRenderer<PuroKindFemaleEntity, PuroKindFemaleModel, ArmorLatexFemaleWolfModel<PuroKindFemaleEntity>> {
-	public PuroKindFemaleRenderer(EntityRendererProvider.Context context) {
-		super(context, new PuroKindFemaleModel(context.bakeLayer(PuroKindFemaleModel.LAYER_LOCATION)),ArmorLatexFemaleWolfModel::new,ArmorLatexFemaleWolfModel.INNER_ARMOR,ArmorLatexFemaleWolfModel.OUTER_ARMOR, 0.5f);
-		this.addLayer(new LatexParticlesLayer<>(this, getModel(), model::isPartNotMask));
-		this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
-		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.parseHex("#242424")),CustomEyesLayer::glowingIrisColorLeft,CustomEyesLayer::glowingIrisColorRight));
-		this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-	}
+    public PuroKindFemaleRenderer(EntityRendererProvider.Context context) {
+        super(context, new PuroKindFemaleModel(context.bakeLayer(PuroKindFemaleModel.LAYER_LOCATION)), ArmorLatexFemaleWolfModel.MODEL_SET, 0.5f);
+        this.addLayer(new LatexParticlesLayer<>(this, getModel(), model::isPartNotMask));
+        this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
+        this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer.fixedColor(Color3.parseHex("#242424")), CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight));
+        this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
+    }
 
 
-	@Override
-	public ResourceLocation getTextureLocation(PuroKindFemaleEntity entity) {
-		return new ResourceLocation("changed_addon:textures/entities/puro_kind_female_texture.png");
-	}
+    @Override
+    public ResourceLocation getTextureLocation(PuroKindFemaleEntity entity) {
+        return new ResourceLocation("changed_addon:textures/entities/puro_kind_female_texture.png");
+    }
 }

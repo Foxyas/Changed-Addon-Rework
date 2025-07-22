@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.BlueLizardModel;
 import net.foxyas.changedaddon.entity.BlueLizard;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleDragonModel;
@@ -13,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BlueLizardRenderer extends AdvancedHumanoidRenderer<BlueLizard, BlueLizardModel, ArmorLatexMaleDragonModel<BlueLizard>> {
     public BlueLizardRenderer(EntityRendererProvider.Context context) {
-        super(context, new BlueLizardModel(context.bakeLayer(BlueLizardModel.LAYER_LOCATION)), ArmorLatexMaleDragonModel.MODEL_SET 0.5F);
+        super(context, new BlueLizardModel(context.bakeLayer(BlueLizardModel.LAYER_LOCATION)), ArmorLatexMaleDragonModel.MODEL_SET, 0.5F);
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         //this.addLayer(new CustomCoatLayer(this, (BlueLizardModel)this.getModel(), Changed.modResource("textures/green_lizard_hair")));
         //this.addLayer(new CustomEyesLayer(this, context.getModelSet()));
@@ -21,6 +20,6 @@ public class BlueLizardRenderer extends AdvancedHumanoidRenderer<BlueLizard, Blu
     }
 
     public ResourceLocation getTextureLocation(BlueLizard p_114482_) {
-        return new ResourceLocation(ChangedAddonMod.MODID,"textures/entities/blue_lizard.png");
+        return new ResourceLocation(ChangedAddonMod.MODID, "textures/entities/blue_lizard.png");
     }
 }

@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -10,9 +9,7 @@ import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexFemaleCatModel;
-import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -35,10 +32,15 @@ public class Experiment10BossRenderer extends AdvancedHumanoidRenderer<Experimen
         this.addLayer(new BloodLayer<>(this, new ResourceLocation("changed_addon:textures/entities/experiment_10/experiment_10_phase2.png")));
     }
 
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(@NotNull Experiment10BossEntity entity) {
+        return new ResourceLocation("changed_addon:textures/entities/experiment_10/experiment_10.png");
+    }
+
     public static class BloodLayer<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
 
-        private final RenderType renderType;
         public final ResourceLocation bloodTexture;
+        private final RenderType renderType;
 
         public BloodLayer(RenderLayerParent<T, M> p_117346_, ResourceLocation bloodTexture) {
             super(p_117346_);
@@ -71,10 +73,5 @@ public class Experiment10BossRenderer extends AdvancedHumanoidRenderer<Experimen
                 stack.popPose();
             }
         }
-    }
-
-    @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Experiment10BossEntity entity) {
-        return new ResourceLocation("changed_addon:textures/entities/experiment_10/experiment_10.png");
     }
 }

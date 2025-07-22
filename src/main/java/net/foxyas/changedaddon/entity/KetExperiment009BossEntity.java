@@ -196,7 +196,6 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         return HairStyle.Collection.MALE.getStyles();
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.getColor("#E2E2E2");
     }
@@ -379,11 +378,6 @@ public class KetExperiment009BossEntity extends ChangedEntity implements BossWit
         tag.putBoolean("Phase3", isPhase3());
         tag.putInt("AttackCoolDown", AttackCoolDown);
         tag.putBoolean("Bleeding", shouldBleed);
-    }
-
-    @Override
-    public void visualTick(Level level) {
-        super.visualTick(level);
     }
 
     public boolean isBleeding() {

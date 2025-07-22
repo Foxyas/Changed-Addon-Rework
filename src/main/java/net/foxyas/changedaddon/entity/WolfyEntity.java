@@ -134,7 +134,6 @@ public class WolfyEntity extends AbstractDarkLatexWolf {
 
     }
 
-    @Override
     public Color3 getDripColor() {
         Color3 color = Color3.getColor("#000000");
         if (level.random.nextInt(10) > 5) {

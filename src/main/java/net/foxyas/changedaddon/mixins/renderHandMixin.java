@@ -28,6 +28,7 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -58,11 +59,11 @@ public class renderHandMixin {
         }
 
         AdvancedHumanoidModel model = advRenderer.getModel(changedEntity);
-        AdvancedHumanoidModelInterface<?, ? extends AdvancedHumanoidModel<?>> modelInterface = (AdvancedHumanoidModelInterface<?,?>) model;
+        AdvancedHumanoidModelInterface modelInterface = (AdvancedHumanoidModelInterface<?,?>) model;
 
         ModelPart handPart = model.getArm(arm.getOpposite());
         model.setupAnim(changedEntity, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
-        modelInterface.setupHand();
+        modelInterface.setupHand(changedEntity);
 
         PoseStack stackCorrector = modelInterface.getPlacementCorrectors(CorrectorType.fromArm(arm.getOpposite()));
         stack.pushPose();
@@ -79,6 +80,7 @@ public class renderHandMixin {
     /**
      * Determine if both hands should be rendered based on the player's state and abilities.
      */
+    @Unique
     private static boolean shouldRenderBothHands(Player player, TransfurVariantInstance<?> variantInstance) {
         if (variantInstance == null) {
             return false;

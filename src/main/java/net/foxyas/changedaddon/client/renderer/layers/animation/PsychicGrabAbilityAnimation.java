@@ -20,7 +20,7 @@ public class PsychicGrabAbilityAnimation {
             }
 
             // Aplica rotação ao braço com base na cabeça
-            model.getArm(arm).xRot = model.head.xRot - (float)Math.PI / 2F - (entity.isCrouching() ? 0.2617994F : 0.0F);
+            model.getArm(arm).xRot = model.head.xRot - (float) Math.PI / 2F - (entity.isCrouching() ? 0.2617994F : 0.0F);
             model.getArm(arm).yRot = model.head.yRot;
         }
     }

@@ -23,34 +23,6 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
 
     private final ContainmentContainerRenderer.FluidModelPart fluidModel;
 
-    public static class FluidModelPart extends Model {
-        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ChangedAddonMod.resourceLoc("containment_container_fluid"), "main");
-        private final ModelPart LatexLiquidFill;
-
-        public FluidModelPart(ModelPart root) {
-            super(RenderType::eyes);
-            this.LatexLiquidFill = root.getChild("LatexLiquidFill");
-        }
-
-        public static LayerDefinition createBodyLayer() {
-            MeshDefinition meshdefinition = new MeshDefinition();
-			PartDefinition partdefinition = meshdefinition.getRoot();
-
-			PartDefinition LatexLiquidFill = partdefinition.addOrReplaceChild("LatexLiquidFill", CubeListBuilder.create().texOffs(0, 8).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
-
-			return LayerDefinition.create(meshdefinition, 32, 32);
-        }
-
-        @Override
-        public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-            LatexLiquidFill.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-        }
-
-        public ModelPart getLatexLiquidFill() {
-            return LatexLiquidFill;
-        }
-    }
-
     public ContainmentContainerRenderer(BlockEntityRendererProvider.Context context) {
         this.fluidModel = new ContainmentContainerRenderer.FluidModelPart(context.bakeLayer(FluidModelPart.LAYER_LOCATION));
     }
@@ -66,7 +38,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
         TagKey<TransfurVariant<?>> glowVariantsTag = TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
                 new ResourceLocation("changed_addon:glow_variants"));
 
-        if (variantColorGet != null){
+        if (variantColorGet != null) {
             Color3 firstColor = variantColorGet.getColors().getFirst();
             Color3 secondColor = variantColorGet.getColors().getSecond();
             RenderType renderType1 = RenderType.entityTranslucent(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_color1.png"));
@@ -76,7 +48,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
                     poseStack,
                     bufferSource.getBuffer(renderType1),
                     light,
-                    overlay,firstColor.red(),firstColor.green(),firstColor.blue(),1
+                    overlay, firstColor.red(), firstColor.green(), firstColor.blue(), 1
             );
             if (variantColorGet.is(glowVariantsTag)) {
                 /*
@@ -90,7 +62,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
                 * outlineBufferSource.setColor(red, green, blue, 255);
                 */
 
-				this.fluidModel.renderToBuffer(
+                this.fluidModel.renderToBuffer(
                         poseStack,
                         bufferSource.getBuffer(RenderType.entityCutout(new ResourceLocation("changed_addon:textures/blocks/containment_container_fluid_full.png"))), // Apenas linhas do contorno
                         light,
@@ -115,7 +87,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
                         poseStack,
                         bufferSource.getBuffer(renderType2),
                         light,
-                        overlay,secondColor.red(),secondColor.green(),secondColor.blue(),1
+                        overlay, secondColor.red(), secondColor.green(), secondColor.blue(), 1
                 );
             }
         }
@@ -125,5 +97,33 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
     @Override
     public int getViewDistance() {
         return 128;
+    }
+
+    public static class FluidModelPart extends Model {
+        public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ChangedAddonMod.resourceLoc("containment_container_fluid"), "main");
+        private final ModelPart LatexLiquidFill;
+
+        public FluidModelPart(ModelPart root) {
+            super(RenderType::eyes);
+            this.LatexLiquidFill = root.getChild("LatexLiquidFill");
+        }
+
+        public static LayerDefinition createBodyLayer() {
+            MeshDefinition meshdefinition = new MeshDefinition();
+            PartDefinition partdefinition = meshdefinition.getRoot();
+
+            PartDefinition LatexLiquidFill = partdefinition.addOrReplaceChild("LatexLiquidFill", CubeListBuilder.create().texOffs(0, 8).addBox(-2.0F, -4.0F, -2.0F, 4.0F, 8.0F, 4.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 16.0F, 0.0F));
+
+            return LayerDefinition.create(meshdefinition, 32, 32);
+        }
+
+        @Override
+        public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+            LatexLiquidFill.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+        }
+
+        public ModelPart getLatexLiquidFill() {
+            return LatexLiquidFill;
+        }
     }
 }

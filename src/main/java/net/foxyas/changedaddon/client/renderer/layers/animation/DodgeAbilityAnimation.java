@@ -11,7 +11,9 @@ public class DodgeAbilityAnimation {
 
     //DEV TEST ANIMATION IT DON'T WORKS
     public static void PlayDodgeAnimationForExp2(AdvancedHumanoidRenderer<?, ?, ?> renderer) {
-        if (renderer == null){return;}
+        if (renderer == null) {
+            return;
+        }
 
         var model = renderer.getModel();
         var armorModel = renderer.getArmorLayer().getParentModel();

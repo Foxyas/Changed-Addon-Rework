@@ -501,7 +501,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
         Attack4Cooldown = attack4Cooldown;
     }
 
-    @Override
     public Color3 getDripColor() {
         return this.getRandom().nextBoolean() ? Color3.BLACK : Color3.WHITE;
     }
@@ -762,11 +761,6 @@ public class VoidFoxEntity extends ChangedEntity implements CrawlFeature, IHasBo
     @Override
     public @NotNull SoundEvent getDeathSound() {
         return SoundEvents.GENERIC_DEATH;
-    }
-
-    @Override
-    public void visualTick(Level level) {
-        super.visualTick(level);
     }
 
     @Override

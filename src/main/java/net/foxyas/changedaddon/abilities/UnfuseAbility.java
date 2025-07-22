@@ -26,7 +26,6 @@ import java.util.List;
 
 public class UnfuseAbility extends SimpleAbility {
 
-    @Override
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return new ResourceLocation("changed_addon:textures/screens/claw.png");
     }

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.client.renderer.layers;
 
-import net.foxyas.changedaddon.entity.*;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.foxyas.changedaddon.entity.ReynEntity;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.BasicPlayerInfo;
@@ -53,11 +53,11 @@ public class CustomDisplay<M extends AdvancedHumanoidModel<T>, T extends Changed
             RenderType renderType2;
 
             // Seleciona renderização com base na luz ao redor da entidade
-            if (entity instanceof ReynEntity reynEntity){
-                    renderType = GlowEyeRender;
-                    renderType2 = GlowDisplayRender;
+            if (entity instanceof ReynEntity reynEntity) {
+                renderType = GlowEyeRender;
+                renderType2 = GlowDisplayRender;
             } else {
-                if(packedLight > 5){
+                if (packedLight > 5) {
                     renderType = GlowEyeRender;
                     renderType2 = GlowDisplayRender;
                 } else {
@@ -73,7 +73,7 @@ public class CustomDisplay<M extends AdvancedHumanoidModel<T>, T extends Changed
             int overlay = LivingEntityRenderer.getOverlayCoords(entity, 0.0F);
 
             // Renderiza apenas a cabeça do modelo
-            if (isOnlyHead){
+            if (isOnlyHead) {
                 this.model.getHead().render(pose, bufferSource.getBuffer(renderType), packedLight, overlay, eyeColor.red(), eyeColor.green(), eyeColor.blue(), 1.0F);
                 this.model.getHead().render(pose, bufferSource.getBuffer(renderType2), packedLight, overlay, displayColor.red(), displayColor.green(), displayColor.blue(), 1.0F);
             } else {

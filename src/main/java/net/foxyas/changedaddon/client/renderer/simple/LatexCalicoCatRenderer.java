@@ -14,6 +14,8 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class LatexCalicoCatRenderer extends AdvancedHumanoidRenderer<LatexCalicoCatEntity, LatexCalicoCatModel, ArmorLatexMaleCatModel<LatexCalicoCatEntity>> {
+    private static final ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/entities/latex_calico_cat/latex_calico_cat");
+
     public LatexCalicoCatRenderer(EntityRendererProvider.Context context) {
         super(context, new LatexCalicoCatModel(context.bakeLayer(LatexCalicoCatModel.LAYER_LOCATION)), ArmorLatexMaleCatModel.MODEL_SET, 0.5F);
         this.addLayer(new LatexParticlesLayer<>(this, this.getModel()));
@@ -21,8 +23,6 @@ public class LatexCalicoCatRenderer extends AdvancedHumanoidRenderer<LatexCalico
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight, CustomEyesLayer::noRender, CustomEyesLayer::noRender));
         this.addLayer(GasMaskLayer.forSnouted(this, context.getModelSet()));
     }
-
-    private static final ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/entities/latex_calico_cat/latex_calico_cat");
 
     public @NotNull ResourceLocation getTextureLocation(@NotNull LatexCalicoCatEntity p_114482_) {
         return TEXTURE;

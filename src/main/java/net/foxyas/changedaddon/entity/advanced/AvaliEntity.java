@@ -66,7 +66,6 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
         this.entityData.define(STYLE_OF_COLOR, "male");
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.WHITE;
     }
@@ -128,9 +127,8 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Ex
     }
 
     @Override
-    public void visualTick(Level level) {
-        super.visualTick(level);
-
+    public void baseTick() {
+        super.baseTick();
         if (!getStyleOfColor().equals("male") && !getStyleOfColor().equals("female")) {
             this.setStyleOfColor("male");
         }

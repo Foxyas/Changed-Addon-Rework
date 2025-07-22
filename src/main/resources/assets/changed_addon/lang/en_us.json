@@ -638,7 +638,8 @@
   "text.changed_addon.additionalHealth.Hearts": " Hearts",
   "text.changed_addon.canGlide/Fly": "Glide/Fly \u003d %s",
   "text.changed_addon.jumpStrength": "Jump Strength \u003d %s",
-  "text.changed_addon.landspeed": "Land Speed \u003d %s",
+  "text.changed_addon.land_speed": "Land Speed \u003d %s",
   "text.changed_addon.legs": "Amount of Legs \u003d %s",
-  "text.changed_addon.swimspeed": "Swim Speed \u003d %s"
+  "text.changed_addon.swim_speed": "Swim Speed \u003d %s",
+  "text.changed_addon.miningStrength": "Mining Strength: %s"
 }

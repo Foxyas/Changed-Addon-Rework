@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -32,12 +31,12 @@ import org.jetbrains.annotations.NotNull;
 public class KetExperiment009Renderer extends AdvancedHumanoidRenderer<KetExperiment009Entity, KetModel, ArmorLatexMaleWolfModel<KetExperiment009Entity>> {
     public KetExperiment009Renderer(EntityRendererProvider.Context context) {
         super(context, new KetModel(context.bakeLayer(KetModel.LAYER_LOCATION)),
-                ArmorLatexMaleWolfModel::new, ArmorLatexMaleWolfModel.INNER_ARMOR, ArmorLatexMaleWolfModel.OUTER_ARMOR, 0.5f);
+                ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
         this.addLayer(new CustomEmissiveBodyLayer<>(this, ChangedAddonMod.textureLoc("textures/entities/ket_glow_layer"), 0.7f));
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
-		this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer::noRender, CustomEyesLayer::noRender));
-	}
+        this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer::noRender, CustomEyesLayer::noRender));
+    }
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull KetExperiment009Entity entity) {

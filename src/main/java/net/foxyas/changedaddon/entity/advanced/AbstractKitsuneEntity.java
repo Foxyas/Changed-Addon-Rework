@@ -18,7 +18,6 @@ public abstract class AbstractKitsuneEntity extends AbstractBasicChangedEntity i
         return this.getRandom().nextBoolean() ? TransfurMode.ABSORPTION : TransfurMode.REPLICATION;
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.WHITE;
     }

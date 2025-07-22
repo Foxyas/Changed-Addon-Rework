@@ -21,9 +21,11 @@ import java.util.NoSuchElementException;
 @Mixin(value = AdvancedHumanoidRenderer.class, remap = false)
 public abstract class AdvancedHumanoidRendererMixin {
 
-    @Shadow public abstract AdvancedHumanoidModel<ChangedEntity> getModel(ChangedEntity entity);
+    @Shadow
+    public abstract AdvancedHumanoidModel<ChangedEntity> getModel(ChangedEntity entity);
 
-    @Shadow private LatexHumanoidArmorLayer<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>, LatexHumanoidArmorModel<ChangedEntity,?>> armorLayer;
+    @Shadow
+    private LatexHumanoidArmorLayer<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>, LatexHumanoidArmorModel<ChangedEntity, ?>> armorLayer;
 
     @Inject(method = "render(Lnet/ltxprogrammer/changed/entity/ChangedEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At("TAIL"), cancellable = true)
@@ -38,7 +40,7 @@ public abstract class AdvancedHumanoidRendererMixin {
 
         if (this.armorLayer != null) {
             try {
-                var armorTorso = this.armorLayer.getArmorModel(EquipmentSlot.CHEST).getTorso();
+                var armorTorso = this.armorLayer.getArmorModel(entity, EquipmentSlot.CHEST).getTorso();
                 ModelPart armorPlantoidsPart = armorTorso.getChild("Plantoids"); // Aqui estava o problema
                 armorPlantoidsPart.visible = !ChangedAddonClientConfiguration.PLANTOIDS_VARIABLE.get();
             } catch (NoSuchElementException e) {

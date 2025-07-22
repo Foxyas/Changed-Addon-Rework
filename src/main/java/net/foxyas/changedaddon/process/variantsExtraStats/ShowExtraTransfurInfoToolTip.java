@@ -1,6 +1,6 @@
-package net.foxyas.changedaddon.procedures;
+package net.foxyas.changedaddon.process.variantsExtraStats;
 
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.item.Syringe;
@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class ShowExtraTransfurInfoProcedure {
+public class ShowExtraTransfurInfoToolTip {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public static void onItemTooltip(ItemTooltipEvent event) {
@@ -38,21 +38,29 @@ public class ShowExtraTransfurInfoProcedure {
 
         String form = itemstack.getOrCreateTag().getString("form");
         boolean isCreative = entity.isCreative();
-        boolean hasInformantBlock = entity.getInventory().contains(new ItemStack(ChangedAddonBlocks.INFORMANTBLOCK.get()));
+        //boolean hasInformantBlock = entity.getInventory().contains(new ItemStack(ChangedAddonModBlocks.INFORMANTBLOCK.get()));
 
-        if (hasInformantBlock || isCreative) {
-            if (hasInformantBlock && !Screen.hasShiftDown()) {
+//        if (hasInformantBlock || isCreative) {
+//            if (hasInformantBlock && !Screen.hasShiftDown()) {
+//                String variantName = new TranslatableComponent(Syringe.getVariantDescriptionId(itemstack)).getString();
+//                tooltip.add(new TextComponent("Hold ").append(new TextComponent("<Shift>").withStyle(style -> style.withColor(0xFFD700)))
+//                        .append(" to show the stats of the " + variantName + " Transfur"));
+//            }
+
+        if (isCreative) {
+            if (!Screen.hasShiftDown()) {
                 String variantName = new TranslatableComponent(Syringe.getVariantDescriptionId(itemstack)).getString();
                 tooltip.add(new TextComponent("Hold ").append(new TextComponent("<Shift>").withStyle(style -> style.withColor(0xFFD700)))
                         .append(" to show the stats of the " + variantName + " Transfur"));
             }
 
             if (Screen.hasShiftDown()) {
-                double hp = VariantUtilProcedure.GetExtraHp(form, entity);
-                double swimSpeed = VariantUtilProcedure.GetSwimSpeed(form, entity);
-                double landSpeed = VariantUtilProcedure.GetLandSpeed(form, entity);
-                double jumpStrength = VariantUtilProcedure.GetJumpStrength(form);
-                boolean canFlyOrGlide = VariantUtilProcedure.CanGlideandFly(form);
+                double hp = TransfurVariantUtils.GetExtraHp(form, entity);
+                double swimSpeed = TransfurVariantUtils.GetSwimSpeed(form, entity);
+                double landSpeed = TransfurVariantUtils.GetLandSpeed(form, entity);
+                double jumpStrength = TransfurVariantUtils.GetJumpStrength(form);
+                boolean canFlyOrGlide = TransfurVariantUtils.CanGlideandFly(form);
+                String miningStrength = TransfurVariantUtils.getMiningStrength(form);
                 int index = Math.min(tooltip.size(), 3);
 
                 double extraHp = (hp) / 2.0;
@@ -64,8 +72,11 @@ public class ShowExtraTransfurInfoProcedure {
                         .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts")));
 
                 index++;
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.miningStrength", miningStrength));
+
+                index++;
                 double landSpeedPct = (landSpeed - 1) * 100;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.landspeed")
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.land_speed")
                         .append("")
                         .append(landSpeedPct == 0
                                 ? new TextComponent("§7None§r")
@@ -73,7 +84,7 @@ public class ShowExtraTransfurInfoProcedure {
 
                 index++;
                 double swimSpeedPct = (swimSpeed - 1) * 100;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.swimspeed")
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.swim_speed")
                         .append("")
                         .append(swimSpeedPct == 0
                                 ? new TextComponent("§7None§r")
@@ -100,7 +111,10 @@ public class ShowExtraTransfurInfoProcedure {
             }
         }
 
-        if (form.equals("changed_addon:form_ket_experiment009_boss") || form.equals("changed_addon:form_experiment_10_boss")) {
+        if (ChangedAddonTransfurVariants.getBossesVariantsList().stream().anyMatch(variant -> {
+            String variantID = variant.getFormId().toString();
+            return variantID.equals(form) || variantID.startsWith(form);
+        })) {
             tooltip.add(new TextComponent("§8Boss Version"));
         }
     }

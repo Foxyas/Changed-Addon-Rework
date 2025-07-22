@@ -105,7 +105,6 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
         return HairStyle.Collection.MALE.getStyles();
     }
 
-    @Override
     public Color3 getDripColor() {
         Color3 color = Color3.getColor("#ffffff");
         if (level.random.nextInt(10) > 5) {

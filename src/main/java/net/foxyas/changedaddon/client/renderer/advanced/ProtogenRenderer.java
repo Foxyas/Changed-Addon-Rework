@@ -1,8 +1,6 @@
-
 package net.foxyas.changedaddon.client.renderer.advanced;
 
 import net.foxyas.changedaddon.client.model.advanced.ProtogenModel;
-import net.foxyas.changedaddon.client.renderer.layers.CustomDisplay;
 import net.foxyas.changedaddon.client.renderer.layers.ProtogenDisplay;
 import net.foxyas.changedaddon.entity.advanced.ProtogenEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;

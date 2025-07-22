@@ -4,9 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.LuminarcticLeopardModel;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
 import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.ltxprogrammer.changed.ability.HypnosisAbility;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
@@ -55,16 +55,16 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
         this.addLayer(new EmissiveBodyLayer<>(this, new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/crystals_layer.png")));
     }
 
-	@Override
-	public void render(LuminarcticLeopardEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		float dodgeTicks = entity.getDodgeAnimTicks();
-		float dodgeProgress = Math.abs(dodgeTicks) / (float) entity.DodgeAnimMaxTicks;
+    @Override
+    public void render(LuminarcticLeopardEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        float dodgeTicks = entity.getDodgeAnimTicks();
+        float dodgeProgress = Math.abs(dodgeTicks) / (float) entity.DodgeAnimMaxTicks;
 
         this.model.dodgeProgress = dodgeProgress;
         this.model.partialTicks = partialTicks;
         this.model.isReverse = dodgeTicks < 0;
 
-		// Passa o progresso e direção para o modelo
+        // Passa o progresso e direção para o modelo
         if (dodgeProgress > 0) {
             poseStack.pushPose();
             float rotationAngle = (entity.getDodgeType() == 1 ? 65.0F : 45.0f) * dodgeProgress; // Rotaciona até 90° conforme o progresso da animação
@@ -80,11 +80,10 @@ public class LuminarcticLeopardRenderer extends AdvancedHumanoidRenderer<Luminar
         } else {
             super.render(entity, yRot, partialTicks, poseStack, bufferSource, packedLight);
         }
-	}
+    }
 
 
-
-	@Override
+    @Override
     public ResourceLocation getTextureLocation(LuminarcticLeopardEntity entity) {
         if (entity.getUnderlyingPlayer() != null) {
             return new ResourceLocation("changed_addon:textures/entities/luminarctic_leopards/male/luminarctic_leopard_no_eyes.png");

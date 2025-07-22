@@ -137,7 +137,6 @@ public class KetExperiment009Entity extends ChangedEntity {
         return HairStyle.Collection.MALE.getStyles();
     }
 
-    @Override
     public Color3 getDripColor() {
         return Color3.getColor("#E2E2E2");
     }
@@ -274,10 +273,6 @@ public class KetExperiment009Entity extends ChangedEntity {
         tag.putDouble("AI", AI);
     }
 
-    @Override
-    public void visualTick(Level level) {
-        super.visualTick(level);
-    }
 
     @Override
     public void baseTick() {

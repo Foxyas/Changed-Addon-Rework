@@ -20,6 +20,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.HumanoidArm;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,9 @@ import java.util.function.Consumer;
 
 import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.*;
 
-public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidTigerSharkEntity> implements AdvancedHumanoidModelInterface<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel>, DoubleArmedModel {
+public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidTigerSharkEntity> implements AdvancedHumanoidModelInterface<LatexSquidTigerSharkEntity, LatexSquidTigerSharkModel>, DoubleArmedModel<LatexSquidTigerSharkEntity> {
 
-    public static class CustomHybridAnimation{
+    public static class CustomHybridAnimation {
 
         public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> squidTigerSharkLike(
                 ModelPart head,
@@ -64,11 +65,11 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
                         .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
                         .addPreset(sharkTail(tail, tailJoints))
-                        .addAnimator(new SharkHeadInitAnimator(head))
-                        .addAnimator(new SharkHeadSwimAnimator(head))
-                        .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
-                        .addAnimator(new ArmRideAnimator(upperLeftArm, upperLeftArm))
-                        .addCameraAnimator(new SharkCameraSwimAnimator());
+                        .addAnimator(new SharkHeadInitAnimator<>(head))
+                        .addAnimator(new SharkHeadSwimAnimator<>(head))
+                        .addAnimator(new DoubleArmBobAnimator<>(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator(new ArmRideAnimator<>(upperLeftArm, upperLeftArm))
+                        .addCameraAnimator(new SharkCameraSwimAnimator<>());
             };
 
         }
@@ -106,11 +107,11 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
                         .addPreset(doubleArmUpperBody(head, torso, upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
                         .addPreset(squidDogTentacles(upperLeftTentacle, upperRightTentacle, lowerLeftTentacle, lowerRightTentacle))
                         //.addPreset(sharkTail(tail, tailJoints))
-                        .addAnimator(new SharkHeadInitAnimator(head))
-                        .addAnimator(new SharkHeadSwimAnimator(head))
-                        .addAnimator(new DoubleArmBobAnimator(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
-                        .addAnimator(new ArmRideAnimator(upperLeftArm, upperLeftArm))
-                        .addCameraAnimator(new SharkCameraSwimAnimator());
+                        .addAnimator(new SharkHeadInitAnimator<>(head))
+                        .addAnimator(new SharkHeadSwimAnimator<>(head))
+                        .addAnimator(new DoubleArmBobAnimator<>(upperLeftArm, upperRightArm, lowerLeftArm, lowerRightArm))
+                        .addAnimator(new ArmRideAnimator<>(upperLeftArm, upperLeftArm))
+                        .addCameraAnimator(new SharkCameraSwimAnimator<>());
             };
         }
 
@@ -375,7 +376,7 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green,
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green,
                                float blue, float alpha) {
         Head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
         Torso.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
@@ -388,12 +389,12 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
     }
 
     @Override
-    public void prepareMobModel(LatexSquidTigerSharkEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
+    public void prepareMobModel(@NotNull LatexSquidTigerSharkEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
         this.prepareMobModel(animator, p_102861_, p_102862_, p_102863_, p_102864_);
     }
 
     @Override
-    public void setupAnim(LatexSquidTigerSharkEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull LatexSquidTigerSharkEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
@@ -408,7 +409,7 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
     }
 
     @Override
-    public ModelPart getArm(HumanoidArm humanoidArm) {
+    public @NotNull ModelPart getArm(HumanoidArm humanoidArm) {
         return switch (humanoidArm) {
             case LEFT -> LeftArm;
             case RIGHT -> RightArm;
@@ -428,13 +429,13 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
     }
 
     @Override
-    public void translateToUpperHand(HumanoidArm arm, PoseStack poseStack) {
+    public void translateToUpperHand(LatexSquidTigerSharkEntity entity, HumanoidArm arm, PoseStack poseStack) {
         this.getArm(arm).translateAndRotate(poseStack);
         poseStack.translate(0.0, (this.animator.armLength - 12.0f) / 20.0, 0.0);
     }
 
     @Override
-    public void translateToLowerHand(HumanoidArm arm, PoseStack poseStack) {
+    public void translateToLowerHand(LatexSquidTigerSharkEntity entity, HumanoidArm arm, PoseStack poseStack) {
         this.getOtherArm(arm).translateAndRotate(poseStack);
         poseStack.translate(0.0, (this.animator.armLength - 12.0f) / 20.0, 0.0);
     }
@@ -450,7 +451,7 @@ public class LatexSquidTigerSharkModel extends AdvancedHumanoidModel<LatexSquidT
     }
 
     @Override
-    public ModelPart getHead() {
+    public @NotNull ModelPart getHead() {
         return Head;
     }
 

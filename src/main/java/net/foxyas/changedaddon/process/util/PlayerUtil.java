@@ -551,23 +551,6 @@ public class PlayerUtil {
         }
 
         @OnlyIn(Dist.CLIENT)
-        public static AdvancedHumanoidModel<?> getChangedEntityArmorModel(ChangedEntity entity, boolean outerModel) {
-            // Obtém o EntityRendererManager (gerenciador de renderizadores)
-            EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-
-            // Verifica se o renderizador é para uma entidade viva (LivingEntity)
-            if (renderer instanceof AdvancedHumanoidRenderer<?, ?, ?> ChangedEntityModel) {
-                if (outerModel) {
-                    // Retorna o modelo da entidade
-                    return ChangedEntityModel.getArmorLayer().getArmorModel(EquipmentSlot.CHEST);
-                }
-                // Retorna o modelo da entidade
-                return ChangedEntityModel.getArmorLayer().getArmorModel(EquipmentSlot.LEGS);
-            }
-            return null; // Retorna null se não for uma entidade viva com um modelo
-        }
-
-        @OnlyIn(Dist.CLIENT)
         public static AdvancedHumanoidRenderer<?, ?, ?> getChangedEntityRender(ChangedEntity entity) {
             EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
             if (renderer instanceof AdvancedHumanoidRenderer<?, ?, ?> ChangedEntityModel) {

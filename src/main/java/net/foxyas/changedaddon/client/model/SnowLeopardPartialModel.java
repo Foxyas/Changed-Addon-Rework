@@ -35,9 +35,7 @@ class PartialModelAnimation {
     }
 
     public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> Partial(ModelPart head, ModelPart leftEar, ModelPart rightEar, ModelPart torso, ModelPart leftArm, ModelPart rightArm, ModelPart tail, List<ModelPart> tailJoints, ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad, ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
-        return (animator) -> {
-            animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad)).addPreset(wolfUpperBody(head, torso, leftArm, rightArm)).addPreset(catTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar)).addAnimator(new WolfHeadInitAnimator(head)).addAnimator(new ArmSwimAnimator(leftArm, rightArm)).addAnimator(new ArmBobAnimator(leftArm, rightArm)).addAnimator(new ArmRideAnimator(leftArm, rightArm));
-        };
+        return (animator) -> animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad)).addPreset(wolfUpperBody(head, torso, leftArm, rightArm)).addPreset(catTail(tail, tailJoints)).addPreset(wolfEars(leftEar, rightEar)).addAnimator(new WolfHeadInitAnimator<>(head)).addAnimator(new ArmSwimAnimator<>(leftArm, rightArm)).addAnimator(new ArmBobAnimator<>(leftArm, rightArm)).addAnimator(new ArmRideAnimator<>(leftArm, rightArm));
     }
 }
 
@@ -183,7 +181,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
         final var rightPantCubes = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
-        PartDefinition RightThighLayer_r1 = RightPants.addOrReplaceChild("RightThighLayer_r1", rightPantCubes, PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
+        PartDefinition RightThighLayer_r1 = RightPants.addOrReplaceChild("RightThighLayer_r1", rightPantCubes.finish(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
         PartDefinition RightLowerLeg = RightLeg.addOrReplaceChild("RightLowerLeg", CubeListBuilder.create(), PartPose.offset(0.0F, 6.375F, -3.45F));
 
@@ -203,7 +201,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
         final var leftPantCubes = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 7.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
-        PartDefinition LeftThighLayer_r1 = LeftPants.addOrReplaceChild("LeftThighLayer_r1", leftPantCubes, PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
+        PartDefinition LeftThighLayer_r1 = LeftPants.addOrReplaceChild("LeftThighLayer_r1", leftPantCubes.finish(), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, -0.2182F, 0.0F, 0.0F));
 
         PartDefinition LeftLowerLeg = LeftLeg.addOrReplaceChild("LeftLowerLeg", CubeListBuilder.create(), PartPose.offset(0.0F, 6.375F, -3.45F));
 
@@ -259,13 +257,13 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
         final var rightSleeveCube = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(40, 32).addBox(-3.0F + rightArmOffset, -2.0F, -2.0F, armWidth, 9.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
-        PartDefinition RightSleeve = RightArm.addOrReplaceChild("RightSleeve", rightSleeveCube, PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition RightSleeve = RightArm.addOrReplaceChild("RightSleeve", rightSleeveCube.finish(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         PartDefinition LeftArm = partdefinition.addOrReplaceChild("LeftArm", CubeListBuilder.create().texOffs(32, 48).addBox(-1.0F, -2.0F, -2.0F, armWidth, 12.0F, 4.0F, CubeDeformation.NONE), PartPose.offset(5.0F, 1.5F, 0.0F));
 
         final var leftSleeveCube = ((CubeListBuilderExtender) CubeListBuilder.create().texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, armWidth, 9.0F, 4.0F, clothingDeformation)).removeLastFaces(Direction.DOWN);
 
-        PartDefinition LeftSleeve = LeftArm.addOrReplaceChild("LeftSleeve", leftSleeveCube, PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition LeftSleeve = LeftArm.addOrReplaceChild("LeftSleeve", leftSleeveCube.finish(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -346,7 +344,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
 
     @Override
-    public void prepareMobModel(SnowLeopardPartialEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
+    public void prepareMobModel(@NotNull SnowLeopardPartialEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
         this.prepareMobModel(animator, p_102861_, p_102862_, p_102863_, p_102864_);
 
         if (!this.latexLayer) {
@@ -369,11 +367,11 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 
-    public ModelPart getArm(HumanoidArm arm) {
+    public @NotNull ModelPart getArm(HumanoidArm arm) {
         return arm == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 
-    public ModelPart getHead() {
+    public @NotNull ModelPart getHead() {
         return this.Head;
     }
 
@@ -386,7 +384,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
     }
 
     @Override
-    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void renderToBuffer(@NotNull PoseStack poseStack, @NotNull VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         RightLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         LeftLeg.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
         Head.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);

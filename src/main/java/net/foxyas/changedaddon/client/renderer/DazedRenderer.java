@@ -1,4 +1,3 @@
-
 package net.foxyas.changedaddon.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -13,7 +12,6 @@ import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -26,25 +24,25 @@ public class DazedRenderer extends AdvancedHumanoidRenderer<DazedEntity, DazedLa
     public DazedRenderer(EntityRendererProvider.Context context) {
         super(context, new DazedLatexModel(context.bakeLayer(DazedLatexModel.LAYER_LOCATION)),
                 ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
-        this.addLayer(new LatexParticlesLayer<>(this, getModel(),model::isPartNotPuddle));
+        this.addLayer(new LatexParticlesLayer<>(this, getModel(), model::isPartNotPuddle));
         this.addLayer(new ConditionalCustomEyesLayer<>(this,
                 new CustomEyesLayer<>(this, context.getModelSet(),
-                CustomEyesLayer.fixedColor(Color3.DARK),
-                CustomEyesLayer::glowingIrisColorLeft,
-                CustomEyesLayer::glowingIrisColorRight,
-                CustomEyesLayer::noRender,
-                CustomEyesLayer::noRender)));
+                        CustomEyesLayer.fixedColor(Color3.DARK),
+                        CustomEyesLayer::glowingIrisColorLeft,
+                        CustomEyesLayer::glowingIrisColorRight,
+                        CustomEyesLayer::noRender,
+                        CustomEyesLayer::noRender)));
         this.addLayer(new ConditionalCustomLayers<>(this,
                 TransfurCapeLayer.normalCape(this, context.getModelSet()),
                 new GasMaskLayer<>(this, context.getModelSet()),
-                new LatexParticlesLayer<>(this, getModel(),model::isPartNotPuddle))
+                new LatexParticlesLayer<>(this, getModel(), model::isPartNotPuddle))
         );
     }
 
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull DazedEntity entity) {
-        if (entity.isMorphed()){
+        if (entity.isMorphed()) {
             return new ResourceLocation("changed_addon:textures/entities/dazed_creature_puddle.png");
         }
 
@@ -64,23 +62,23 @@ public class DazedRenderer extends AdvancedHumanoidRenderer<DazedEntity, DazedLa
         public void render(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
             if (entity instanceof DazedEntity dazedEntity
                     && !dazedEntity.isMorphed()) {
-                customEyesLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount,partialTicks, ageInTicks, netHeadYaw, headPitch);
+                customEyesLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
             }
         }
     }
 
     public static class ConditionalCustomLayers<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends RenderLayer<T, M> {
 
-        private final TransfurCapeLayer<T,M> transfurCapeLayer;
-        private final GasMaskLayer<T,M> gasMaskLayer;
-        private final LatexParticlesLayer<T,M> latexParticlesLayer;
+        private final TransfurCapeLayer<T, M> transfurCapeLayer;
+        private final GasMaskLayer<T, M> gasMaskLayer;
+        private final LatexParticlesLayer<T, M> latexParticlesLayer;
 
         public ConditionalCustomLayers(
-        	RenderLayerParent<T, M> parent,
-        	TransfurCapeLayer<T,M> transfurCapeLayer,
-        	GasMaskLayer<T,M> gasMaskLayer,
-        	LatexParticlesLayer<T,M> latexParticlesLayer) {
-        	
+                RenderLayerParent<T, M> parent,
+                TransfurCapeLayer<T, M> transfurCapeLayer,
+                GasMaskLayer<T, M> gasMaskLayer,
+                LatexParticlesLayer<T, M> latexParticlesLayer) {
+
             super(parent);
             this.transfurCapeLayer = transfurCapeLayer;
             this.gasMaskLayer = gasMaskLayer;
@@ -91,9 +89,9 @@ public class DazedRenderer extends AdvancedHumanoidRenderer<DazedEntity, DazedLa
         public void render(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
             if (entity instanceof DazedEntity dazedEntity
                     && !dazedEntity.isMorphed()) {
-                transfurCapeLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount,partialTicks, ageInTicks, netHeadYaw, headPitch);
-                gasMaskLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount,partialTicks, ageInTicks, netHeadYaw, headPitch);
-                latexParticlesLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount,partialTicks, ageInTicks, netHeadYaw, headPitch);
+                transfurCapeLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+                gasMaskLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+                latexParticlesLayer.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
             }
         }
     }

@@ -14,35 +14,35 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class LuminarCrystalSpearRenderer extends EntityRenderer<LuminarCrystalSpearEntity> {
-	private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/entities/luminar_crystal_spear.png");
-	private final ModelLuminarCrystalSpearModel<LuminarCrystalSpearEntity> model;
+    private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/entities/luminar_crystal_spear.png");
+    private final ModelLuminarCrystalSpearModel<LuminarCrystalSpearEntity> model;
 
-	public LuminarCrystalSpearRenderer(EntityRendererProvider.Context context) {
-		super(context);
-		model = new ModelLuminarCrystalSpearModel<LuminarCrystalSpearEntity>(context.bakeLayer(ModelLuminarCrystalSpearModel.LAYER_LOCATION));
-	}
+    public LuminarCrystalSpearRenderer(EntityRendererProvider.Context context) {
+        super(context);
+        model = new ModelLuminarCrystalSpearModel<LuminarCrystalSpearEntity>(context.bakeLayer(ModelLuminarCrystalSpearModel.LAYER_LOCATION));
+    }
 
-	@Override
-	public void render(LuminarCrystalSpearEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-		poseStack.pushPose();
+    @Override
+    public void render(LuminarCrystalSpearEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        poseStack.pushPose();
 
-		// Rotaciona igual ao tridente
-		poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
-		poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot()) + 90.0F));
+        // Rotaciona igual ao tridente
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, entity.yRotO, entity.getYRot()) - 90.0F));
+        poseStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.lerp(partialTicks, entity.xRotO, entity.getXRot()) + 90.0F));
 
-		// Obtém o buffer de renderização correto, incluindo efeito de brilho para encantamentos
-		VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(buffer, this.model.renderType(this.getTextureLocation(entity)), false, entity.isFoil());
+        // Obtém o buffer de renderização correto, incluindo efeito de brilho para encantamentos
+        VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(buffer, this.model.renderType(this.getTextureLocation(entity)), false, entity.isFoil());
 
-		// Renderiza o modelo corretamente
-		this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        // Renderiza o modelo corretamente
+        this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
-		poseStack.popPose();
-		super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
-	}
+        poseStack.popPose();
+        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+    }
 
 
-	@Override
-	public ResourceLocation getTextureLocation(LuminarCrystalSpearEntity entity) {
-		return texture;
-	}
+    @Override
+    public ResourceLocation getTextureLocation(LuminarCrystalSpearEntity entity) {
+        return texture;
+    }
 }

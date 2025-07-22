@@ -1,13 +1,6 @@
 package net.foxyas.changedaddon.client.renderer.items;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
-import java.awt.*;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
-
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.accessory.AccessoryRenderer;
@@ -38,6 +31,12 @@ import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import java.awt.*;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
 @SuppressWarnings("ALL")
 public class SimpleColorfulClothingRenderer implements AccessoryRenderer, TransitionalAccessory {
     protected final HumanoidModel clothingModel;
@@ -46,6 +45,14 @@ public class SimpleColorfulClothingRenderer implements AccessoryRenderer, Transi
     public SimpleColorfulClothingRenderer(ArmorModel humanoid, Set<ModelComponent> components) {
         this.components = components;
         this.clothingModel = new HumanoidModel(Minecraft.getInstance().getEntityModels().bakeLayer(ArmorHumanModel.MODEL_SET.getModelName(humanoid)));
+    }
+
+    public static Supplier<AccessoryRenderer> of(ArmorModel armorModel, EquipmentSlot renderAs) {
+        return () -> new SimpleColorfulClothingRenderer(armorModel, Set.of(new ModelComponent(armorModel, renderAs)));
+    }
+
+    public static Supplier<AccessoryRenderer> of(ArmorModel humanoidModel, Set<ModelComponent> components) {
+        return () -> new SimpleColorfulClothingRenderer(humanoidModel, components);
     }
 
     public Optional<HumanoidModel<?>> getBeforeModel(AccessorySlotContext<?> slotContext, RenderLayerParent<?, ?> renderLayerParent) {
@@ -156,14 +163,6 @@ public class SimpleColorfulClothingRenderer implements AccessoryRenderer, Transi
             }
         }
 
-    }
-
-    public static Supplier<AccessoryRenderer> of(ArmorModel armorModel, EquipmentSlot renderAs) {
-        return () -> new SimpleColorfulClothingRenderer(armorModel, Set.of(new ModelComponent(armorModel, renderAs)));
-    }
-
-    public static Supplier<AccessoryRenderer> of(ArmorModel humanoidModel, Set<ModelComponent> components) {
-        return () -> new SimpleColorfulClothingRenderer(humanoidModel, components);
     }
 
     public static record ModelComponent(ArmorModel armorModel, EquipmentSlot renderAs) {

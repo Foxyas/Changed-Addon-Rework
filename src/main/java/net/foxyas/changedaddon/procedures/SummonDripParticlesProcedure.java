@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.procedures;
 
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -19,12 +20,12 @@ public class SummonDripParticlesProcedure {
                     TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
                     if (variant != null) {
                         ChangedEntity fakeEntity = variant.getChangedEntity();
-                        Color3 color3 = fakeEntity.getDripColor();
+                        Color3 color3 = fakeEntity.getTransfurColor(TransfurCause.DEFAULT);
                         if (player.getLevel() instanceof ServerLevel serverLevel) {
                             if (!variant.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
-                                serverLevel.sendParticles(ChangedParticles.gas(color3), entity.getX(), entity.getY() + 1, entity.getZ(), 20, 0.2, 0.5, 0.2, 0);
+                                serverLevel.sendParticles(ChangedParticles.gas(color3), entity.getX(), entity.getY() + 1, entity.getZ(), 40, 0.2, 0.5, 0.2, 0);
                             } else {
-                                serverLevel.sendParticles(ChangedParticles.drippingLatex(color3), entity.getX(), entity.getY() + 1, entity.getZ(), 20, 0.2, 0.5, 0.2, 0);
+                                serverLevel.sendParticles(ChangedParticles.drippingLatex(color3), entity.getX(), entity.getY() + 1, entity.getZ(), 40, 0.2, 0.5, 0.2, 0);
                             }
 
                         }

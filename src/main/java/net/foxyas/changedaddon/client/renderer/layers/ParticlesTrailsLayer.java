@@ -8,6 +8,7 @@ import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -20,20 +21,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-import net.minecraft.world.entity.Entity;
 import java.util.Random;
-import net.minecraft.client.Minecraft;
 
 public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends ChangedEntity> extends RenderLayer<T, M> implements FirstPersonLayer<T> {
 
     private static final Vector3f DEFAULT_OFFSET = new Vector3f(0, -0.10f, 0);
     private static final Vector3f WORLD_OFFSET = new Vector3f(0, 0.85f, 0);
     private static final Vec3 ENTITY_ROTATION = new Vec3(180, 0, 0);
-    private float spawnProbability = 0.025f;
-
     private final ParticleOptions[] particles;
-
+    private float spawnProbability = 0.025f;
     private PoseStack poseStack = new PoseStack();
 
     public ParticlesTrailsLayer(RenderLayerParent<T, M> parent, ParticleOptions... particle) {
@@ -47,12 +43,12 @@ public class ParticlesTrailsLayer<M extends AdvancedHumanoidModel<T>, T extends 
         this.spawnProbability = spawnProbability;
     }
 
-    public void setSpawnProbability(float spawnProbability) {
-        this.spawnProbability = spawnProbability;
-    }
-
     public float getSpawnProbability() {
         return spawnProbability;
+    }
+
+    public void setSpawnProbability(float spawnProbability) {
+        this.spawnProbability = spawnProbability;
     }
 
     @Override
