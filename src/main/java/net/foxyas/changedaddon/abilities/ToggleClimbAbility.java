@@ -42,4 +42,10 @@ public class ToggleClimbAbility extends SimpleAbility {
     public int getCoolDown(IAbstractChangedEntity entity) {
         return 5;
     }
+
+    @Override
+    public void startUsing(IAbstractChangedEntity entity) {
+        super.startUsing(entity);
+        isActivated = !isActivated;
+    }
 }
