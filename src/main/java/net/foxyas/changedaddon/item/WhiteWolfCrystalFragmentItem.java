@@ -1,13 +1,12 @@
 
 package net.foxyas.changedaddon.item;
 
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.entity.LivingEntity;
-
-import net.foxyas.changedaddon.procedures.WhenHitWithAColoredWolfCrystalFragmentProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import net.foxyas.changedaddon.procedures.AddTransfurProgressProcedure;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 
 public class WhiteWolfCrystalFragmentItem extends Item {
 	public WhiteWolfCrystalFragmentItem() {
@@ -17,7 +16,7 @@ public class WhiteWolfCrystalFragmentItem extends Item {
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-		WhenHitWithAColoredWolfCrystalFragmentProcedure.execute(entity, sourceentity);
+		AddTransfurProgressProcedure.addRed(entity, 5);
 		return retval;
 	}
 }

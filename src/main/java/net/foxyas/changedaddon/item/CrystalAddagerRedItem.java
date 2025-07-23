@@ -1,15 +1,14 @@
 
 package net.foxyas.changedaddon.item;
 
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.entity.LivingEntity;
-
-import net.foxyas.changedaddon.procedures.CrystalAddagerRedLivingEntityIsHitWithToolProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import net.foxyas.changedaddon.procedures.AddTransfurProgressProcedure;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class CrystalAddagerRedItem extends SwordItem {
 	public CrystalAddagerRedItem() {
@@ -43,7 +42,7 @@ public class CrystalAddagerRedItem extends SwordItem {
 	@Override
 	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
 		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-		CrystalAddagerRedLivingEntityIsHitWithToolProcedure.execute(entity);
+		AddTransfurProgressProcedure.addRed(entity, 3);
 		return retval;
 	}
 }

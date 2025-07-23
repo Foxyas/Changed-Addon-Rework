@@ -24,7 +24,7 @@ public class SleepWithUntransfurEffectProcedure {
         new DelayedTask(5, () -> {
             player.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(cap -> {
                 if (ProcessTransfur.isPlayerTransfurred(player) && player.isSleepingLongEnough()) {
-                    cap.UntransfurProgress += 50;
+                    cap.untransfurProgress += 50;
                     cap.syncPlayerVariables(player);
                 }
             });

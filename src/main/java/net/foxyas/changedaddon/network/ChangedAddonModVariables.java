@@ -20,6 +20,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
@@ -66,7 +67,7 @@ public class ChangedAddonModVariables {
 			clone.LatexEntitySummon = original.LatexEntitySummon;
 			clone.reset_transfur_advancements = original.reset_transfur_advancements;
 			clone.aredarklatex = original.aredarklatex;
-			clone.UntransfurProgress = original.UntransfurProgress;
+			clone.untransfurProgress = original.untransfurProgress;
 			clone.Exp009TransfurAllowed = original.Exp009TransfurAllowed;
 			clone.Exp009Buff = original.Exp009Buff;
 			clone.Exp10TransfurAllowed = original.Exp10TransfurAllowed;
@@ -118,13 +119,16 @@ public class ChangedAddonModVariables {
 		public boolean act_cooldown = false;
 		public boolean aredarklatex = false;
 		public double LatexInfectionCooldown = 0.0;
-		public double UntransfurProgress = 0.0;
+		public double untransfurProgress = 0.0;
 		public boolean Exp009TransfurAllowed = false;
 		public boolean Exp009Buff = false;
 		public boolean consciousness_fight_give_up = false;
 		public boolean Exp10TransfurAllowed = false;
 
-		public static PlayerVariables of(Player player){//Should never return null unless FakePlayer is used or the player is dead
+		/**
+		 * Should never return null unless FakePlayer is used or the player is dead
+		 */
+		public static @Nullable PlayerVariables of(@NotNull Player player){
 			return player.getCapability(PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
 		}
 
@@ -143,7 +147,7 @@ public class ChangedAddonModVariables {
 			nbt.putBoolean("act_cooldown", act_cooldown);
 			nbt.putBoolean("aredarklatex", aredarklatex);
 			nbt.putDouble("LatexInfectionCooldown", LatexInfectionCooldown);
-			nbt.putDouble("UntransfurProgress", UntransfurProgress);
+			nbt.putDouble("UntransfurProgress", untransfurProgress);
 			nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
 			nbt.putBoolean("Exp009Buff", Exp009Buff);
 			nbt.putBoolean("consciousness_fight_give_up", consciousness_fight_give_up);
@@ -161,7 +165,7 @@ public class ChangedAddonModVariables {
 			act_cooldown = nbt.getBoolean("act_cooldown");
 			aredarklatex = nbt.getBoolean("aredarklatex");
 			LatexInfectionCooldown = nbt.getDouble("LatexInfectionCooldown");
-			UntransfurProgress = nbt.getDouble("UntransfurProgress");
+			untransfurProgress = nbt.getDouble("UntransfurProgress");
 			Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
 			Exp009Buff = nbt.getBoolean("Exp009Buff");
 			consciousness_fight_give_up = nbt.getBoolean("consciousness_fight_give_up");
@@ -201,7 +205,7 @@ public class ChangedAddonModVariables {
 				variables.act_cooldown = message.data.act_cooldown;
 				variables.aredarklatex = message.data.aredarklatex;
 				variables.LatexInfectionCooldown = message.data.LatexInfectionCooldown;
-				variables.UntransfurProgress = message.data.UntransfurProgress;
+				variables.untransfurProgress = message.data.untransfurProgress;
 				variables.Exp009TransfurAllowed = message.data.Exp009TransfurAllowed;
 				variables.Exp009Buff = message.data.Exp009Buff;
 				variables.consciousness_fight_give_up = message.data.consciousness_fight_give_up;

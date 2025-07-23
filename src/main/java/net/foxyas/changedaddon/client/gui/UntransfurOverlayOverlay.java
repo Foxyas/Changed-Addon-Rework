@@ -2,7 +2,6 @@
 package net.foxyas.changedaddon.client.gui;
 
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
-import org.checkerframework.checker.units.qual.h;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,7 +17,6 @@ import net.minecraft.client.Minecraft;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.network.chat.TextComponent;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class UntransfurOverlayOverlay {
@@ -51,8 +49,8 @@ public class UntransfurOverlayOverlay {
 			int intprogress = 0;
 			double aprogress = 0;
 			boolean canshow = false;
-			canshow = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress > 0;
-			progress = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).UntransfurProgress;
+			canshow = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).untransfurProgress > 0;
+			progress = (entity.getCapability(ChangedAddonModVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonModVariables.PlayerVariables())).untransfurProgress;
 			aprogress = progress / 8.33;
 			intprogress = (int) aprogress;
 

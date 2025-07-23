@@ -97,8 +97,8 @@
   "advancements.main.rock_fish.title": "Як риба...у лаві?",
   "advancements.main.rock_fish.description": "Будучи водним латексом, використайте зілля вогнестійкості та поплавайте у лаві",
 
-  "attribute.changed_addon.latexinfection": "Латексне зараження",
-  "attribute.changed_addon.latexresistance": "Спротив латексу",
+  "attribute.changed_addon.latex_infection": "Латексне зараження",
+  "attribute.changed_addon.latex_resistance": "Спротив латексу",
 
   "block.changed_addon.advanced_catalyzer": "Продвинутий каталізатор",
   "block.changed_addon.advanced_unifuser": "Продвинутий уні-змішувач",

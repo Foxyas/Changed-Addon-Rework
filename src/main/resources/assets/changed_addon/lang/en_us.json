@@ -98,8 +98,8 @@
   "advancements.main.rock_fish.title": "Rock Fish",
   "advancements.main.rock_fish.description": "Use a fire resistance potion and swim in lava while transfured into an aquatic form.",
 
-  "attribute.changed_addon.latexinfection": "Latex Infection",
-  "attribute.changed_addon.latexresistance": "Latex Resistance",
+  "attribute.changed_addon.latex_infection": "Latex Infection",
+  "attribute.changed_addon.latex_resistance": "Latex Resistance",
 
   "block.changed_addon.advanced_catalyzer": "Advanced Catalyzer",
   "block.changed_addon.advanced_unifuser": "Advanced Unifuser",
