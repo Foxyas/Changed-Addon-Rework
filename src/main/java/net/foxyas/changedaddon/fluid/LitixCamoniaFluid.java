@@ -15,20 +15,22 @@ import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonFluids;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 
-public abstract class LitixCamoniaFluidFluid extends ForgeFlowingFluid {
-	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(ChangedAddonFluids.LITIX_CAMONIA_FLUID, ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID,
-			FluidAttributes.builder(new ResourceLocation("changed_addon:blocks/ammoniafluid"), new ResourceLocation("changed_addon:blocks/ammoniafluid"))
-
+public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
+	public static final ForgeFlowingFluid.Properties PROPERTIES = new ForgeFlowingFluid.Properties(ChangedAddonFluids.LITIX_CAMONIA_FLUID,
+			ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID,
+			FluidAttributes.builder(new ResourceLocation("changed_addon:blocks/ammoniafluid"),
+							new ResourceLocation("changed_addon:blocks/ammoniafluid"))
 					.sound(ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.bucket.empty"))))
 			.explosionResistance(100f)
+			.slopeFindDistance(2)
+			.bucket(ChangedAddonItems.LITIX_CAMONIA_FLUID_BUCKET)
+			.block(() -> (LiquidBlock) ChangedAddonBlocks.LITIX_CAMONIA_FLUID.get());
 
-			.slopeFindDistance(2).bucket(ChangedAddonItems.LITIX_CAMONIA_FLUID_BUCKET).block(() -> (LiquidBlock) ChangedAddonBlocks.LITIX_CAMONIA_FLUID.get());
-
-	private LitixCamoniaFluidFluid() {
+	private LitixCamoniaFluid() {
 		super(PROPERTIES);
 	}
 
-	public static class Source extends LitixCamoniaFluidFluid {
+	public static class Source extends LitixCamoniaFluid {
 		public Source() {
 			super();
 		}
@@ -42,7 +44,7 @@ public abstract class LitixCamoniaFluidFluid extends ForgeFlowingFluid {
 		}
 	}
 
-	public static class Flowing extends LitixCamoniaFluidFluid {
+	public static class Flowing extends LitixCamoniaFluid {
 		public Flowing() {
 			super();
 		}

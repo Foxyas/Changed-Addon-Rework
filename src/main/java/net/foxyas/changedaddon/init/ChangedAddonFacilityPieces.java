@@ -1,8 +1,6 @@
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
-import net.ltxprogrammer.changed.world.features.structures.facility.FacilityPieceCollection;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityPieceCollectionBuilder;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoomPiece;
 import net.ltxprogrammer.changed.world.features.structures.facility.GatherFacilityPiecesEvent;

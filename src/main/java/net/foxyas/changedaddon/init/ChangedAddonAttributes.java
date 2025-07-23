@@ -1,6 +1,3 @@
-/*
- *    MCreator note: This file will be REGENERATED on each build.
- */
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
@@ -19,18 +16,18 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonAttributes {
 
-	public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, ChangedAddonMod.MODID);
-	public static final RegistryObject<Attribute> LATEX_RESISTANCE = ATTRIBUTES.register("latex_resistance", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latex_resistance", 0, 0, 100)).setSyncable(true));
-	public static final RegistryObject<Attribute> LATEX_INFECTION = ATTRIBUTES.register("latex_infection", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latex_infection", 0, 0, 100)).setSyncable(true));
+    public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, ChangedAddonMod.MODID);
+    public static final RegistryObject<Attribute> LATEX_RESISTANCE = ATTRIBUTES.register("latex_resistance", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latex_resistance", 0, 0, 100)).setSyncable(true));
+    public static final RegistryObject<Attribute> LATEX_INFECTION = ATTRIBUTES.register("latex_infection", () -> (new RangedAttribute("attribute." + ChangedAddonMod.MODID + ".latex_infection", 0, 0, 100)).setSyncable(true));
 
-	@SubscribeEvent
-	public static void register(FMLConstructModEvent event) {
-		event.enqueueWork(() -> ATTRIBUTES.register(FMLJavaModLoadingContext.get().getModEventBus()));
-	}
+    @SubscribeEvent
+    public static void register(FMLConstructModEvent event) {
+        event.enqueueWork(() -> ATTRIBUTES.register(FMLJavaModLoadingContext.get().getModEventBus()));
+    }
 
-	@SubscribeEvent
-	public static void addAttributes(EntityAttributeModificationEvent event) {
-		event.add(EntityType.PLAYER, LATEX_RESISTANCE.get());
-		event.add(EntityType.PLAYER, LATEX_INFECTION.get());
-	}
+    @SubscribeEvent
+    public static void addAttributes(EntityAttributeModificationEvent event) {
+        event.add(EntityType.PLAYER, LATEX_RESISTANCE.get());
+        event.add(EntityType.PLAYER, LATEX_INFECTION.get());
+    }
 }

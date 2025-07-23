@@ -1,7 +1,3 @@
-
-/*
- *    MCreator note: This file will be REGENERATED on each build.
- */
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.world.inventory.*;
@@ -17,26 +13,28 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonMenus {
-	private static final List<MenuType<?>> REGISTRY = new ArrayList<>();
-	public static final MenuType<FoxyasGuiMenu> FOXYASGUI = register("foxyasgui", FoxyasGuiMenu::new);
-	public static final MenuType<GeneratorGuiMenu> GENERATORGUI = register("generatorgui", GeneratorGuiMenu::new);
-	public static final MenuType<CatalyzerGuiMenu> CATALYZERGUI = register("catalyzergui", CatalyzerGuiMenu::new);
-	public static final MenuType<UnifuserGuiMenu> UNIFUSERGUI = register("unifusergui", UnifuserGuiMenu::new);
-	public static final MenuType<FightToKeepConsciousnessMinigameMenu> FIGHT_TOKEEPCONSCIOUSNESSMINIGAME = register("fight_tokeepconsciousnessminigame", FightToKeepConsciousnessMinigameMenu::new);
-	public static final MenuType<FoxyasGui2Menu> FOXYAS_GUI_2 = register("foxyas_gui_2", FoxyasGui2Menu::new);
-	public static final MenuType<TransfurSoundsGuiMenu> TRANSFUR_SOUNDS_GUI = register("transfur_sounds_gui", TransfurSoundsGuiMenu::new);
-	public static final MenuType<TransfurTotemGuiMenu> TRANSFUR_TOTEM_GUI = register("transfur_totem_gui", TransfurTotemGuiMenu::new);
-	public static final MenuType<InformantGuiMenu> INFORMANT_GUI = register("informant_gui", InformantGuiMenu::new);
+    private static final List<MenuType<?>> REGISTRY = new ArrayList<>();
 
-	private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
-		MenuType<T> menuType = new MenuType<T>(containerFactory);
-		menuType.setRegistryName(registryname);
-		REGISTRY.add(menuType);
-		return menuType;
-	}
+    private static <T extends AbstractContainerMenu> MenuType<T> register(String registryname, IContainerFactory<T> containerFactory) {
+        MenuType<T> menuType = new MenuType<T>(containerFactory);
+        menuType.setRegistryName(registryname);
+        REGISTRY.add(menuType);
+        return menuType;
+    }    public static final MenuType<FoxyasGuiMenu> FOXYASGUI = register("foxyasgui", FoxyasGuiMenu::new);
 
-	@SubscribeEvent
-	public static void registerContainers(RegistryEvent.Register<MenuType<?>> event) {
-		event.getRegistry().registerAll(REGISTRY.toArray(new MenuType[0]));
-	}
+    @SubscribeEvent
+    public static void registerContainers(RegistryEvent.Register<MenuType<?>> event) {
+        event.getRegistry().registerAll(REGISTRY.toArray(new MenuType[0]));
+    }    public static final MenuType<GeneratorGuiMenu> GENERATORGUI = register("generatorgui", GeneratorGuiMenu::new);
+    public static final MenuType<CatalyzerGuiMenu> CATALYZERGUI = register("catalyzergui", CatalyzerGuiMenu::new);
+    public static final MenuType<UnifuserGuiMenu> UNIFUSERGUI = register("unifusergui", UnifuserGuiMenu::new);
+    public static final MenuType<FightToKeepConsciousnessMinigameMenu> FIGHT_TOKEEPCONSCIOUSNESSMINIGAME = register("fight_tokeepconsciousnessminigame", FightToKeepConsciousnessMinigameMenu::new);
+    public static final MenuType<FoxyasGui2Menu> FOXYAS_GUI_2 = register("foxyas_gui_2", FoxyasGui2Menu::new);
+    public static final MenuType<TransfurSoundsGuiMenu> TRANSFUR_SOUNDS_GUI = register("transfur_sounds_gui", TransfurSoundsGuiMenu::new);
+    public static final MenuType<TransfurTotemGuiMenu> TRANSFUR_TOTEM_GUI = register("transfur_totem_gui", TransfurTotemGuiMenu::new);
+    public static final MenuType<InformantGuiMenu> INFORMANT_GUI = register("informant_gui", InformantGuiMenu::new);
+
+
+
+
 }
