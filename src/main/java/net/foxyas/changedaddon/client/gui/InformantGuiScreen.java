@@ -4,13 +4,13 @@ package net.foxyas.changedaddon.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
-import net.foxyas.changedaddon.process.util.DEBUG;
 import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -18,16 +18,15 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu> {
@@ -87,6 +86,9 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         int iconYSwimSpeed = topPos + 62;
         int iconYJump = topPos + 84;
 
+        ItemStack stack = new ItemStack(Items.DIAMOND_SWORD);
+
+
         // Verifica se o mouse está sobre cada ícone e exibe a tooltip correspondente
         if (mouseX > iconX && mouseX < iconX + iconSize) {
             if (mouseY > iconYHealth && mouseY < iconYHealth + iconSize) {
@@ -94,7 +96,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
             } else if (mouseY > iconYLandSpeed && mouseY < iconYLandSpeed + iconSize) {
                 renderTooltip(ms, new TranslatableComponent("block.minecraft.rooted_dirt"), mouseX, mouseY);
             } else if (mouseY > iconYSwimSpeed && mouseY < iconYSwimSpeed + iconSize) {
-                renderTooltip(ms, new TranslatableComponent("block.minecraft.dirt_path"), mouseX, mouseY);
+                renderTooltip(ms, List.of(new TranslatableComponent("block.minecraft.dirt_path")), Optional.empty(), mouseX, mouseY);
             } else if (mouseY > iconYJump && mouseY < iconYJump + iconSize) {
                 renderTooltip(ms, new TranslatableComponent("block.minecraft.coarse_dirt"), mouseX, mouseY);
             }
