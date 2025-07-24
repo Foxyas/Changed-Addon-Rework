@@ -1,14 +1,19 @@
 package net.foxyas.changedaddon.event;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +24,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
 public class CommonEvent {
 
     @SubscribeEvent
@@ -29,6 +34,37 @@ public class CommonEvent {
         newP.getAttribute(ChangedAddonAttributes.LATEX_RESISTANCE.get()).setBaseValue(oldP.getAttribute(ChangedAddonAttributes.LATEX_RESISTANCE.get()).getBaseValue());
         newP.getAttribute(ChangedAddonAttributes.LATEX_INFECTION.get()).setBaseValue(oldP.getAttribute(ChangedAddonAttributes.LATEX_INFECTION.get()).getBaseValue());
     }
+
+    //Var sync
+    @SubscribeEvent
+    public static void onPlayerLoggedInSyncPlayerVariables(PlayerEvent.PlayerLoggedInEvent event) {
+        Player player = event.getPlayer();
+        if (!player.level.isClientSide()) ChangedAddonModVariables.PlayerVariables.ofOrDefault(player).syncPlayerVariables(player);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawnedSyncPlayerVariables(PlayerEvent.PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        if (!player.level.isClientSide()) ChangedAddonModVariables.PlayerVariables.ofOrDefault(player).syncPlayerVariables(player);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerChangedDimensionSyncPlayerVariables(PlayerEvent.PlayerChangedDimensionEvent event) {
+        Player player = event.getPlayer();
+        if (!player.level.isClientSide()) ChangedAddonModVariables.PlayerVariables.ofOrDefault(player).syncPlayerVariables(player);
+    }
+
+    @SubscribeEvent
+    public static void clonePlayer(PlayerEvent.Clone event) {
+        Player originalPl = event.getOriginal();
+        originalPl.reviveCaps();
+        ChangedAddonModVariables.PlayerVariables original = ChangedAddonModVariables.PlayerVariables.ofOrDefault(originalPl);
+        originalPl.invalidateCaps();
+
+        ChangedAddonModVariables.PlayerVariables clone = ChangedAddonModVariables.PlayerVariables.ofOrDefault(event.getPlayer());
+        original.copyTo(clone, event.isWasDeath());
+    }
+    //
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -42,6 +78,8 @@ public class CommonEvent {
         tickInfectionAndRes(player);
 
         tickUntransfur(player);
+
+        triggerSwimRegret(player);
     }
 
     private static void maskTransfur(Player player, Level level){
@@ -128,5 +166,35 @@ public class CommonEvent {
             if (player.isSleeping()) vars.untransfurProgress += .5f;
         }
         vars.syncPlayerVariables(player);
+    }
+
+    private static void triggerSwimRegret(Player player) {
+        if(player.level.isClientSide || !ProcessTransfur.isPlayerTransfurred(player)) return;
+
+        int ticks = player.getPersistentData().getInt("TransfurData.SlowSwimInWaterTicks");
+        if (TransfurVariantUtils.GetSwimSpeed(ProcessTransfur.getPlayerTransfurVariant(player).getFormId(), player) > 0.95) {
+            if (ticks != 0) {
+                player.getPersistentData().putInt("TransfurData.SlowSwimInWaterTicks", 0);
+            }
+            return;
+        }
+
+        if(ticks == -1) return;
+
+        if(player.isSwimming() && player.isInWaterOrBubble()) {
+            ticks++;
+        }
+
+        if (ticks >= 600) {
+            ServerPlayer sPlayer = (ServerPlayer) player;
+            Advancement _adv = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("swim_regret"));
+            AdvancementProgress _ap = sPlayer.getAdvancements().getOrStartProgress(_adv);
+            if (!_ap.isDone()) {
+                for (String s : _ap.getRemainingCriteria()) sPlayer.getAdvancements().award(_adv, s);
+            }
+            ticks = -1;
+        }
+
+        player.getPersistentData().putInt("TransfurData.SlowSwimInWaterTicks",  ticks);
     }
 }

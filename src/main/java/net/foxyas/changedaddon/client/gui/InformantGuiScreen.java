@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu> {
@@ -140,33 +139,30 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
     @Override
     protected void renderLabels(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
         String formId = form.getValue();
+
+        ResourceLocation selected = null;
         if (!filteredSuggestions.isEmpty() && suggestionIndex >= 0) {
             String chosenName = filteredSuggestions.get(suggestionIndex);
             List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
             if (variants != null && !variants.isEmpty()) {
-                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
-                formId = variant.getFormId().toString();
+                selected = variants.get(0).getFormId();// você pode escolher outro critério aqui
             }
         } else {
-            String chosenName = formId;
-            List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
+            List<TransfurVariant<?>> variants = nameToVariants.get(formId);
             if (variants != null && !variants.isEmpty()) {
-                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
-                formId = variant.getFormId().toString();
+                selected = variants.get(0).getFormId();// você pode escolher outro critério aqui
             }
         }
 
+        if(selected == null) return;
 
-        double hp = TransfurVariantUtils.GetExtraHp(formId, entity);
-        double swimSpeed = TransfurVariantUtils.GetSwimSpeed(formId, entity);
-        double landSpeed = TransfurVariantUtils.GetLandSpeed(formId, entity);
-        double jumpStrength = TransfurVariantUtils.GetJumpStrength(formId);
-        boolean canFlyOrGlide = TransfurVariantUtils.CanGlideandFly(formId);
-        String miningStrength = TransfurVariantUtils.getMiningStrength(formId);
-        double extraHp = (hp) / 2.0;
-        double landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
-        double swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
-        double jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
+        float swimSpeed = TransfurVariantUtils.GetSwimSpeed(selected, entity);
+        float landSpeed = TransfurVariantUtils.GetLandSpeed(selected, entity);
+        float jumpStrength = TransfurVariantUtils.GetJumpStrength(selected);
+        float extraHp = TransfurVariantUtils.GetExtraHp(selected, entity) / 2;
+        float landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
+        float swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
+        float jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
 
         this.font.draw(poseStack,
                 new TranslatableComponent("text.changed_addon.land_speed")
@@ -190,7 +186,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                                 : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
                         .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts")), 5, 31, -12829636);
 
-        this.font.draw(poseStack, new TranslatableComponent("text.changed_addon.miningStrength", miningStrength), 5, 94, -12829636);
+        this.font.draw(poseStack, new TranslatableComponent("text.changed_addon.miningStrength", TransfurVariantUtils.getMiningStrength(selected)), 5, 94, -12829636);
 
         this.font.draw(poseStack,
                 new TranslatableComponent("text.changed_addon.jumpStrength")
@@ -202,7 +198,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         this.font.draw(poseStack,
                 new TranslatableComponent("text.changed_addon.canGlide/Fly")
                         .append("")
-                        .append(canFlyOrGlide
+                        .append(TransfurVariantUtils.CanGlideandFly(selected)
                                 ? new TextComponent("§aTrue§r")
                                 : new TextComponent("§cFalse§r")), 5, 82, -12829636);
 
@@ -257,7 +253,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
             }
         };
 
-        form.setMaxLength(32767);
+        form.setMaxLength(Byte.MAX_VALUE);
         guistate.put("text:form", form);
         this.addWidget(this.form);
 
@@ -269,6 +265,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
             filteredSuggestions.clear();
             suggestionIndex = -1;
         } else {
+
             filteredSuggestions = new ArrayList<>(allSuggestions.stream()
                     .filter(s -> s.toLowerCase().startsWith(input.toLowerCase()))
                     .distinct()
@@ -291,7 +288,6 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         }
 
     }
-
 
     public Vec3i getPosition() {
         return position;

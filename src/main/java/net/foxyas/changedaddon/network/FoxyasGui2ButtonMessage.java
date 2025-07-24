@@ -1,55 +1,41 @@
 
 package net.foxyas.changedaddon.network;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.process.util.PlayerUtil;
+import net.ltxprogrammer.changed.entity.TransfurCause;
+import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class FoxyasGui2ButtonMessage {
-	private final int buttonID, x, y, z;
+public record FoxyasGui2ButtonMessage(int buttonId, int x, int y, int z) {
 
-	public FoxyasGui2ButtonMessage(FriendlyByteBuf buffer) {
-		this.buttonID = buffer.readInt();
-		this.x = buffer.readInt();
-		this.y = buffer.readInt();
-		this.z = buffer.readInt();
+	public FoxyasGui2ButtonMessage(FriendlyByteBuf buf) {
+		this(buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt());
 	}
 
-	public FoxyasGui2ButtonMessage(int buttonID, int x, int y, int z) {
-		this.buttonID = buttonID;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-
-	public static void buffer(FoxyasGui2ButtonMessage message, FriendlyByteBuf buffer) {
-		buffer.writeInt(message.buttonID);
-		buffer.writeInt(message.x);
-		buffer.writeInt(message.y);
-		buffer.writeInt(message.z);
+	public static void buffer(FoxyasGui2ButtonMessage message, FriendlyByteBuf buf) {
+		buf.writeVarInt(message.buttonId);
+		buf.writeVarInt(message.x);
+		buf.writeVarInt(message.y);
+		buf.writeVarInt(message.z);
 	}
 
 	public static void handler(FoxyasGui2ButtonMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
 		NetworkEvent.Context context = contextSupplier.get();
 		context.enqueueWork(() -> {
 			Player entity = context.getSender();
-			int buttonID = message.buttonID;
-			int x = message.x;
+            int x = message.x;
 			int y = message.y;
 			int z = message.z;
-			handleButtonAction(entity, buttonID, x, y, z);
+			handleButtonAction(entity, message.buttonId, x, y, z);
 		});
 		context.setPacketHandled(true);
 	}
@@ -67,7 +53,7 @@ public class FoxyasGui2ButtonMessage {
 		}
 		if (buttonID == 2) {
 			player.getPersistentData().putBoolean("Deal", false);
-			PlayerUtil.TransfurPlayer(player, "changed:form_white_latex_wolf/male");
+			ProcessTransfur.transfur(player, player.getLevel(), ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get(), true, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
 			player.closeContainer();
 
 			if (!(player instanceof ServerPlayer sPlayer)) return;
@@ -82,10 +68,5 @@ public class FoxyasGui2ButtonMessage {
                 sPlayer.getAdvancements().award(adv, s);
             }
 		}
-	}
-
-	@SubscribeEvent
-	public static void registerMessage(FMLCommonSetupEvent event) {
-		ChangedAddonMod.addNetworkMessage(FoxyasGui2ButtonMessage.class, FoxyasGui2ButtonMessage::buffer, FoxyasGui2ButtonMessage::new, FoxyasGui2ButtonMessage::handler);
 	}
 }

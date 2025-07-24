@@ -5,7 +5,6 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,8 +30,7 @@ public class FormsDialogues {
 	@SubscribeEvent
 	public static void SendDeathTexts(LivingDeathEvent event) {
 		if (event.getEntityLiving() instanceof Player player){
-			Entity attacker = event.getSource().getEntity();
-			TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+            TransfurVariantInstance<?> PlayerVariant = ProcessTransfur.getPlayerTransfurVariant(player);
 			
 			final List<TransfurVariant<?>> TRANSFUR_VARIANT_LIST = List.of(
 			ChangedAddonTransfurVariants.EXP1_FEMALE.get(),

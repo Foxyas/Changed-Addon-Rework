@@ -28,7 +28,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -53,32 +52,24 @@ public class PlayerUtil {
         ProcessTransfur.transfur(livingEntity, entity.getLevel(), latexVariant, true);
     }
 
-    public static void TransfurPlayer(Entity entity, String id) {
-        ResourceLocation form;
-        try {
-            form = new ResourceLocation(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        LivingEntity livingEntity = (LivingEntity) entity;
-        if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
-            TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-            ProcessTransfur.transfur(livingEntity, entity.getLevel(), latexVariant, true, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
-        }
+    public static void TransfurPlayer(Player player, String id) {
+        ResourceLocation form = ResourceLocation.tryParse(id);
+        if(form == null) return;
+
+        TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+        if(latexVariant == null) return;
+
+        ProcessTransfur.transfur(player, player.getLevel(), latexVariant, true, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
     }
 
-    public static void TransfurPlayer(Entity entity, String id, float progress) {
-        ResourceLocation form;
-        try {
-            form = new ResourceLocation(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Player player = (Player) entity;
-        if (TransfurVariant.getPublicTransfurVariants().map(TransfurVariant::getRegistryName).anyMatch(form::equals)) {
-            TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-            ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
-        }
+    public static void TransfurPlayer(Player player, String id, float progress) {
+        ResourceLocation form = ResourceLocation.tryParse(id);
+        if(form == null) return;
+
+        TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+        if(latexVariant == null) return;
+
+        ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
     }
 
     public static void UnTransfurPlayer(Entity entity) {

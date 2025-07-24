@@ -110,15 +110,6 @@ public class ChangedAddonTransfurVariants {
         return false;
     }
 
-    public static boolean isVariantOC(String transfurVariantString, @Nullable Level level) {
-        ResourceLocation transfurVariantID = new ResourceLocation(transfurVariantString);
-        TransfurVariant<?> variantFromID = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(transfurVariantID);
-        if (variantFromID != null) {
-            return isVariantOC(variantFromID, level);
-        }
-        return false;
-    }
-
     public static final RegistryObject<TransfurVariant<PuroKindEntity>> ADDON_PURO_KIND_MALE = register("form_puro_kind/male", TransfurVariant.Builder.of(ChangedAddonEntities.PURO_KIND).transfurMode(TransfurMode.REPLICATION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilities.CARRY).scares(List.of()));
 
     public static final RegistryObject<TransfurVariant<PuroKindFemaleEntity>> ADDON_PURO_KIND_FEMALE = register("form_puro_kind/female", TransfurVariant.Builder.of(ChangedAddonEntities.PURO_KIND_FEMALE).transfurMode(TransfurMode.ABSORPTION).faction(LatexType.DARK_LATEX).addAbility(ChangedAddonAbilities.CARRY).scares(List.of()));

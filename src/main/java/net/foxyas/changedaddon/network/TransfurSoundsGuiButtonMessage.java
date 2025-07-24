@@ -1,14 +1,12 @@
 
 package net.foxyas.changedaddon.network;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.procedures.IfCatLatexProcedure;
 import net.foxyas.changedaddon.procedures.IfDogLatexProcedure;
 import net.foxyas.changedaddon.process.util.DelayedTask;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -16,9 +14,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.tuple.Triple;
@@ -27,41 +22,19 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class TransfurSoundsGuiButtonMessage {
-    private final int buttonID, x, y, z;
+public record TransfurSoundsGuiButtonMessage(int buttonId) {
 
-    public TransfurSoundsGuiButtonMessage(FriendlyByteBuf buffer) {
-        this.buttonID = buffer.readInt();
-        this.x = buffer.readInt();
-        this.y = buffer.readInt();
-        this.z = buffer.readInt();
+    public TransfurSoundsGuiButtonMessage(FriendlyByteBuf buf) {
+        this(buf.readVarInt());
     }
 
-    public TransfurSoundsGuiButtonMessage(int buttonID, int x, int y, int z) {
-        this.buttonID = buttonID;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    public static void buffer(TransfurSoundsGuiButtonMessage message, FriendlyByteBuf buffer) {
-        buffer.writeInt(message.buttonID);
-        buffer.writeInt(message.x);
-        buffer.writeInt(message.y);
-        buffer.writeInt(message.z);
+    public static void buffer(TransfurSoundsGuiButtonMessage message, FriendlyByteBuf buf) {
+        buf.writeVarInt(message.buttonId);
     }
 
     public static void handler(TransfurSoundsGuiButtonMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
-        context.enqueueWork(() -> {
-            Player entity = context.getSender();
-            int buttonID = message.buttonID;
-            int x = message.x;
-            int y = message.y;
-            int z = message.z;
-            handleButtonAction(entity, buttonID, x, y, z);
-        });
+        context.enqueueWork(() -> handleButtonAction(context.getSender(), message.buttonId));
         context.setPacketHandled(true);
     }
 
@@ -75,7 +48,7 @@ public class TransfurSoundsGuiButtonMessage {
             Triple.of(new ResourceLocation("entity.cat.purreow"), IfCatLatexProcedure::execute, 20)
     );
 
-    public static void handleButtonAction(Player player, int buttonID, int x, int y, int z) {
+    public static void handleButtonAction(Player player, int buttonID) {
         if(player == null) return;
 
         if (!ProcessTransfur.isPlayerTransfurred(player)) return;
@@ -119,7 +92,7 @@ public class TransfurSoundsGuiButtonMessage {
     }
 
     private static void playSound(Level level, Entity entity, SoundEvent sound, ChangedAddonModVariables.PlayerVariables vars, int cooldown) {
-        level.playSound(null, new BlockPos(entity.getX(), entity.getY(), entity.getZ()), sound, SoundSource.PLAYERS, 2, 1);
+        level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), sound, SoundSource.PLAYERS, 2, 1);
 
         vars.act_cooldown = true;
         vars.syncPlayerVariables(entity);
@@ -128,10 +101,5 @@ public class TransfurSoundsGuiButtonMessage {
             vars.act_cooldown = false;
             vars.syncPlayerVariables(entity);
         });
-    }
-
-    @SubscribeEvent
-    public static void registerMessage(FMLCommonSetupEvent event) {
-        ChangedAddonMod.addNetworkMessage(TransfurSoundsGuiButtonMessage.class, TransfurSoundsGuiButtonMessage::buffer, TransfurSoundsGuiButtonMessage::new, TransfurSoundsGuiButtonMessage::handler);
     }
 }

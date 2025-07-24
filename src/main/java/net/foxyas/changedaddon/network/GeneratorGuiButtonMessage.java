@@ -1,7 +1,6 @@
 
 package net.foxyas.changedaddon.network;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TextComponent;
@@ -9,47 +8,31 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class GeneratorGuiButtonMessage {
-	private final int buttonID, x, y, z;
+public record GeneratorGuiButtonMessage(int buttonId, int x, int y, int z) {
 
-	public GeneratorGuiButtonMessage(FriendlyByteBuf buffer) {
-		this.buttonID = buffer.readInt();
-		this.x = buffer.readInt();
-		this.y = buffer.readInt();
-		this.z = buffer.readInt();
+	public GeneratorGuiButtonMessage(FriendlyByteBuf buf) {
+		this(buf.readVarInt(), buf.readVarInt(), buf.readVarInt(), buf.readVarInt());
 	}
 
-	public GeneratorGuiButtonMessage(int buttonID, int x, int y, int z) {
-		this.buttonID = buttonID;
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-
-	public static void buffer(GeneratorGuiButtonMessage message, FriendlyByteBuf buffer) {
-		buffer.writeInt(message.buttonID);
-		buffer.writeInt(message.x);
-		buffer.writeInt(message.y);
-		buffer.writeInt(message.z);
+	public static void buffer(GeneratorGuiButtonMessage message, FriendlyByteBuf buf) {
+		buf.writeVarInt(message.buttonId);
+		buf.writeVarInt(message.x);
+		buf.writeVarInt(message.y);
+		buf.writeVarInt(message.z);
 	}
 
 	public static void handler(GeneratorGuiButtonMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
 		NetworkEvent.Context context = contextSupplier.get();
 		context.enqueueWork(() -> {
 			Player entity = context.getSender();
-			int buttonID = message.buttonID;
-			int x = message.x;
+            int x = message.x;
 			int y = message.y;
 			int z = message.z;
-			handleButtonAction(entity, buttonID, x, y, z);
+			handleButtonAction(entity, message.buttonId, x, y, z);
 		});
 		context.setPacketHandled(true);
 	}
@@ -80,10 +63,5 @@ public class GeneratorGuiButtonMessage {
 
 			level.sendBlockUpdated(pos, state, state, 3);
 		}
-	}
-
-	@SubscribeEvent
-	public static void registerMessage(FMLCommonSetupEvent event) {
-		ChangedAddonMod.addNetworkMessage(GeneratorGuiButtonMessage.class, GeneratorGuiButtonMessage::buffer, GeneratorGuiButtonMessage::new, GeneratorGuiButtonMessage::handler);
 	}
 }

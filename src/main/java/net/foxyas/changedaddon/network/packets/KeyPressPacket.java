@@ -26,14 +26,14 @@ public record KeyPressPacket(int keyCode) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            if (player != null) {
-                int key = msg.keyCode;
-                ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
-                    if (variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get()) != null && variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get()).ability instanceof PsychicGrab psychicGrab) {
-                        psychicGrab.addOffset(key, player);
-                    }
-                }));
-            }
+            if(player == null) return;
+
+            int key = msg.keyCode;
+            ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
+                if (variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get()) != null && variantInstance.getAbilityInstance(ChangedAddonAbilities.PSYCHIC_GRAB.get()).ability instanceof PsychicGrab psychicGrab) {
+                    psychicGrab.addOffset(key, player);
+                }
+            }));
         });
         context.setPacketHandled(true);
     }

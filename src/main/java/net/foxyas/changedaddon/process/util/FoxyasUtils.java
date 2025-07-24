@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 
 public class FoxyasUtils {
 
-    public static String SpawnEggIdFromTransfurVariant(TransfurVariant latexVariant) {
+    public static String SpawnEggIdFromTransfurVariant(TransfurVariant<?> latexVariant) {
         String Util = latexVariant.getFormId().toString().replace("changed_addon:form_", "");
         return Util + "_spawn_egg";
     }

@@ -13,10 +13,8 @@ import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
@@ -24,70 +22,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonModVariables {
-	@SubscribeEvent
-	public static void init(FMLCommonSetupEvent event) {
-		ChangedAddonMod.addNetworkMessage(PlayerVariablesSyncMessage.class, PlayerVariablesSyncMessage::buffer, PlayerVariablesSyncMessage::new, PlayerVariablesSyncMessage::handler);
-	}
 
-	@SubscribeEvent
-	public static void init(RegisterCapabilitiesEvent event) {
-		event.register(PlayerVariables.class);
-	}
-
-	@Mod.EventBusSubscriber
-	public static class EventBusVariableHandlers {
-		@SubscribeEvent
-		public static void onPlayerLoggedInSyncPlayerVariables(PlayerEvent.PlayerLoggedInEvent event) {
-			if (!event.getPlayer().level.isClientSide())
-				event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getPlayer());
-		}
-
-		@SubscribeEvent
-		public static void onPlayerRespawnedSyncPlayerVariables(PlayerEvent.PlayerRespawnEvent event) {
-			if (!event.getPlayer().level.isClientSide())
-				event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getPlayer());
-		}
-
-		@SubscribeEvent
-		public static void onPlayerChangedDimensionSyncPlayerVariables(PlayerEvent.PlayerChangedDimensionEvent event) {
-			if (!event.getPlayer().level.isClientSide())
-				event.getPlayer().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables()).syncPlayerVariables(event.getPlayer());
-		}
-
-		@SubscribeEvent
-		public static void clonePlayer(PlayerEvent.Clone event) {
-			Player originalPl = event.getOriginal();
-			originalPl.reviveCaps();
-			PlayerVariables original = originalPl.getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
-			originalPl.invalidateCaps();
-
-			PlayerVariables clone = event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null).orElse(new PlayerVariables());
-			clone.LatexEntitySummon = original.LatexEntitySummon;
-			clone.reset_transfur_advancements = original.reset_transfur_advancements;
-			clone.aredarklatex = original.aredarklatex;
-			clone.untransfurProgress = original.untransfurProgress;
-			clone.Exp009TransfurAllowed = original.Exp009TransfurAllowed;
-			clone.Exp009Buff = original.Exp009Buff;
-			clone.Exp10TransfurAllowed = original.Exp10TransfurAllowed;
-			if (!event.isWasDeath()) {
-				clone.consciousness_fight_progress = original.consciousness_fight_progress;
-				clone.concience_Fight = original.concience_Fight;
-				clone.act_cooldown = original.act_cooldown;
-				clone.LatexInfectionCooldown = original.LatexInfectionCooldown;
-				clone.consciousness_fight_give_up = original.consciousness_fight_give_up;
-			}
-		}
-	}
-
-	public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+	public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
 
 	@Mod.EventBusSubscriber
 	private static class PlayerVariablesProvider implements ICapabilitySerializable<CompoundTag> {
+
 		@SubscribeEvent
-		public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
-			if (event.getObject() instanceof Player && !(event.getObject() instanceof FakePlayer))
+		public static void onAttachCapabilities(AttachCapabilitiesEvent<Player> event) {
+			if (!(event.getObject() instanceof FakePlayer))
 				event.addCapability(ChangedAddonMod.resourceLoc("player_variables"), new PlayerVariablesProvider());
 		}
 
@@ -132,9 +76,34 @@ public class ChangedAddonModVariables {
 			return player.getCapability(PLAYER_VARIABLES_CAPABILITY).resolve().orElse(null);
 		}
 
+		public static @NotNull PlayerVariables ofOrDefault(@NotNull Player player){
+			return player.getCapability(PLAYER_VARIABLES_CAPABILITY).resolve().orElseGet(PlayerVariables::new);
+		}
+
+		public static @NotNull PlayerVariables nonNullOf(@NotNull Player player){
+			return player.getCapability(PLAYER_VARIABLES_CAPABILITY).orElseThrow(() -> new IllegalStateException("Player Variables Capability expected but not found!"));
+		}
+
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
 				ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new PlayerVariablesSyncMessage(this));
+		}
+
+		public void copyTo(PlayerVariables other, boolean wasDeath){
+			other.LatexEntitySummon = LatexEntitySummon;
+			other.reset_transfur_advancements = reset_transfur_advancements;
+			other.aredarklatex = aredarklatex;
+			other.untransfurProgress = untransfurProgress;
+			other.Exp009TransfurAllowed = Exp009TransfurAllowed;
+			other.Exp009Buff = Exp009Buff;
+			other.Exp10TransfurAllowed = Exp10TransfurAllowed;
+			if (!wasDeath) {
+				other.consciousness_fight_progress = consciousness_fight_progress;
+				other.concience_Fight = concience_Fight;
+				other.act_cooldown = act_cooldown;
+				other.LatexInfectionCooldown = LatexInfectionCooldown;
+				other.consciousness_fight_give_up = consciousness_fight_give_up;
+			}
 		}
 
 		public CompoundTag writeNBT() {

@@ -2,7 +2,6 @@
 package net.foxyas.changedaddon.network;
 
 import io.netty.buffer.Unpooled;
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.world.inventory.TransfurSoundsGuiMenu;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,39 +14,26 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.GameType;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-public class OpenExtraDetailsMessage {
-	int type, pressedms;
+public record OpenExtraDetailsMessage(int type, int pressedMs) {
 
-	public OpenExtraDetailsMessage(int type, int pressedms) {
-		this.type = type;
-		this.pressedms = pressedms;
+	public OpenExtraDetailsMessage(FriendlyByteBuf buf) {
+		this(buf.readVarInt(), buf.readVarInt());
 	}
 
-	public OpenExtraDetailsMessage(FriendlyByteBuf buffer) {
-		this.type = buffer.readInt();
-		this.pressedms = buffer.readInt();
-	}
-
-	public static void buffer(OpenExtraDetailsMessage message, FriendlyByteBuf buffer) {
-		buffer.writeInt(message.type);
-		buffer.writeInt(message.pressedms);
+	public static void buffer(OpenExtraDetailsMessage message, FriendlyByteBuf buf) {
+		buf.writeVarInt(message.type);
+		buf.writeVarInt(message.pressedMs);
 	}
 
 	public static void handler(OpenExtraDetailsMessage message, Supplier<NetworkEvent.Context> contextSupplier) {
 		NetworkEvent.Context context = contextSupplier.get();
-		context.enqueueWork(() -> {
-			pressAction(context.getSender(), message.type, message.pressedms);
-		});
+		context.enqueueWork(() -> pressAction(context.getSender(), message.type, message.pressedMs));
 		context.setPacketHandled(true);
 	}
 
@@ -76,10 +62,5 @@ public class OpenExtraDetailsMessage {
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public static void registerMessage(FMLCommonSetupEvent event) {
-		ChangedAddonMod.addNetworkMessage(OpenExtraDetailsMessage.class, OpenExtraDetailsMessage::buffer, OpenExtraDetailsMessage::new, OpenExtraDetailsMessage::handler);
 	}
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class ClientTransfurVisionRegistry {
     private static final Map<ResourceLocation, TransfurVariantVision> VISION_MAP = new HashMap<>();
+
     public static void clear() {
         VISION_MAP.clear();
     }

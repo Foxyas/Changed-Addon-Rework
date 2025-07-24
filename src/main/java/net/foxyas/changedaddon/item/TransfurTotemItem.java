@@ -18,14 +18,16 @@ import net.foxyas.changedaddon.procedures.TransfurTotemRightClickedProcedure;
 import net.foxyas.changedaddon.procedures.TransfurTotemMakeItemGlowProcedure;
 import net.foxyas.changedaddon.procedures.TransfurTotemItemInInventoryTickProcedure;
 import net.foxyas.changedaddon.init.ChangedAddonTabs;
+import org.jetbrains.annotations.NotNull;
 
 public class TransfurTotemItem extends Item {
+
 	public TransfurTotemItem() {
 		super(new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON).stacksTo(1).fireResistant().rarity(Rarity.RARE));
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack itemstack) {
+	public @NotNull UseAnim getUseAnimation(@NotNull ItemStack itemstack) {
 		return UseAnim.BLOCK;
 	}
 
@@ -41,24 +43,24 @@ public class TransfurTotemItem extends Item {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isFoil(ItemStack itemstack) {
+	public boolean isFoil(@NotNull ItemStack itemstack) {
 		return TransfurTotemMakeItemGlowProcedure.execute(itemstack);
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
+	public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player entity, @NotNull InteractionHand hand) {
+		InteractionResultHolder<ItemStack> ar = super.use(level, entity, hand);
 		ItemStack itemstack = ar.getObject();
 		double x = entity.getX();
 		double y = entity.getY();
 		double z = entity.getZ();
 
-		TransfurTotemRightClickedProcedure.execute(world, x, y, z, entity, itemstack);
+		TransfurTotemRightClickedProcedure.execute(level, x, y, z, entity, itemstack);
 		return ar;
 	}
 
 	@Override
-	public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+	public void inventoryTick(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Entity entity, int slot, boolean selected) {
 		super.inventoryTick(itemstack, world, entity, slot, selected);
 		TransfurTotemItemInInventoryTickProcedure.execute(world, entity.getX(), entity.getY(), entity.getZ(), entity, itemstack);
 	}
