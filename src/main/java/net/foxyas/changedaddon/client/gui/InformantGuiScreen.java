@@ -4,6 +4,7 @@ package net.foxyas.changedaddon.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
+import net.foxyas.changedaddon.process.util.DEBUG;
 import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -19,7 +20,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,10 +54,10 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         super.render(ms, mouseX, mouseY, partialTicks);
         form.render(ms, mouseX, mouseY, partialTicks);
         this.renderTooltip(ms, mouseX, mouseY);
-        if (mouseX > leftPos + 4 && mouseX < leftPos + 28 && mouseY > topPos + 4 && mouseY < topPos + 28)
+        if (mouseX > leftPos + (25) && mouseX < leftPos + (34) && mouseY > topPos + (4) && mouseY < topPos + (13))
             this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_type_the_form"), mouseX, mouseY);
         if (IfisEmptyProcedure.execute(entity))
-            if (mouseX > leftPos + 147 && mouseX < leftPos + 171 && mouseY > topPos + 4 && mouseY < topPos + 28)
+            if (mouseX > leftPos + 151 && mouseX < leftPos + 168 && mouseY > topPos + 88 && mouseY < topPos + 105)
                 this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
         if (!filteredSuggestions.isEmpty()) {
             int x = form.x;
@@ -64,7 +67,9 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 
             for (int i = 0; i < filteredSuggestions.size(); i++) {
                 String suggestion = filteredSuggestions.get(i);
-                int bgColor = i == suggestionIndex ? 0x88AAAAAA : 0x88000000;
+                Color color = new Color(0x9988CDFF, true);
+                Color Bgcolor = new Color(0x8863CEFF, true);
+                int bgColor = i == suggestionIndex ? color.getRGB() : Bgcolor.getRGB();
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
                 fill(ms, x, y + i * height, x + width, y + (i + 1) * height, bgColor);
@@ -72,6 +77,29 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                 RenderSystem.disableBlend();
             }
         }
+
+        // Exemplo: posições relativas aos seus ícones no lado esquerdo
+        int iconX = leftPos + 9;
+        int iconSize = 16; // Tamanho de cada ícone (ajuste conforme necessário)
+
+        int iconYHealth = topPos + 18;
+        int iconYLandSpeed = topPos + 40;
+        int iconYSwimSpeed = topPos + 62;
+        int iconYJump = topPos + 84;
+
+        // Verifica se o mouse está sobre cada ícone e exibe a tooltip correspondente
+        if (mouseX > iconX && mouseX < iconX + iconSize) {
+            if (mouseY > iconYHealth && mouseY < iconYHealth + iconSize) {
+                renderTooltip(ms, new TranslatableComponent("block.minecraft.dirt"), mouseX, mouseY);
+            } else if (mouseY > iconYLandSpeed && mouseY < iconYLandSpeed + iconSize) {
+                renderTooltip(ms, new TranslatableComponent("block.minecraft.rooted_dirt"), mouseX, mouseY);
+            } else if (mouseY > iconYSwimSpeed && mouseY < iconYSwimSpeed + iconSize) {
+                renderTooltip(ms, new TranslatableComponent("block.minecraft.dirt_path"), mouseX, mouseY);
+            } else if (mouseY > iconYJump && mouseY < iconYJump + iconSize) {
+                renderTooltip(ms, new TranslatableComponent("block.minecraft.coarse_dirt"), mouseX, mouseY);
+            }
+        }
+
 
     }
 
@@ -83,6 +111,19 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         RenderSystem.setShaderTexture(0, texture);
         blit(ms, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
         RenderSystem.disableBlend();
+    }
+
+    @Override
+    public boolean mouseClicked(double x, double y, int keyCode) {
+        assert this.minecraft != null;
+        if (this.minecraft.player != null) {
+            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position : X =" + x + " and Y =" + y), false);
+            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position2 : X =" + (x - leftPos) + " and Y =" + (y - topPos)), false);
+
+        }
+
+
+        return super.mouseClicked(x, y, keyCode);
     }
 
     @Override
@@ -207,7 +248,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                                 ? new TextComponent("§aTrue§r")
                                 : new TextComponent("§cFalse§r")), 5, 82, -12829636);
 
-        this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.informant_gui.label_empty"), 13, 10, -12829636);
+        this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.informant_gui.label_empty"), 27.5f, 5.5f, -12829636);
     }
 
     @Override
@@ -239,7 +280,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         assert this.minecraft != null;
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 
-        form = new EditBox(this.font, this.leftPos + 47, this.topPos + 5, 92, 11,
+        form = new EditBox(this.font, this.leftPos + 44, this.topPos + 13, 90, 10,
                 new TranslatableComponent("gui.changed_addon.informant_gui.form")) {
             {
                 setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
@@ -256,9 +297,21 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                 super.moveCursorTo(pos);
                 updateSuggestions(getValue());
             }
-        };
 
-        form.setAlpha(0.5f);
+            @Override
+            public void renderButton(PoseStack p_94160_, int p_94161_, int p_94162_, float p_94163_) {
+                super.renderButton(p_94160_, p_94161_, p_94162_, p_94163_);
+            }
+
+            @Override
+            protected void renderBg(PoseStack p_93661_, Minecraft p_93662_, int p_93663_, int p_93664_) {
+                super.renderBg(p_93661_, p_93662_, p_93663_, p_93664_);
+            }
+        };
+        form.setTextColor(new Color(0, 205, 255).getRGB());
+        //form.setBordered(false);
+        //form.setAlpha(0.25f);
+
 
         form.setMaxLength(32767);
         guistate.put("text:form", form);
