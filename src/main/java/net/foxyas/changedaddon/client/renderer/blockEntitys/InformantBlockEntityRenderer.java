@@ -1,15 +1,14 @@
 package net.foxyas.changedaddon.client.renderer.blockEntitys;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
-import net.foxyas.changedaddon.process.util.ModelUtils;
-import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -55,19 +54,39 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
             return;
         }
 
-        ChangedEntity changedEntity = entityCache.computeIfAbsent(res, loc -> tfVariant.getEntityType().create(level));
+        ChangedEntity entity = entityCache.computeIfAbsent(res, loc -> {
+            ChangedEntity e = tfVariant.getEntityType().create(level);
+            if(e == null) return null;
+            e.setNoAi(true);
+            e.canUpdate(false);
+            e.yHeadRot = 0;
+            e.yHeadRotO = 0;
+            return e;
+        });
 
-        if (changedEntity != null) {
-            changedEntity.canUpdate(false);
-            AdvancedHumanoidRenderer renderer = ModelUtils.getChangedEntityRender(changedEntity);
+        if(entity == null) return;
+
+        entity.tickCount = Minecraft.getInstance().player.tickCount;
+
+        poseStack.pushPose();
+        poseStack.translate(.5, 1, .5);
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
+        poseStack.scale(.5f, .5f, .5f);
+
+        Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, partialTick, poseStack, bufferSource, LightTexture.FULL_BRIGHT);
+
+        poseStack.popPose();
+
+            /*entity.canUpdate(false);
+            AdvancedHumanoidRenderer renderer = ModelUtils.getChangedEntityRender(entity);
             if (renderer != null) {
-                AdvancedHumanoidModel model = renderer.getModel(changedEntity);
+                AdvancedHumanoidModel model = renderer.getModel(entity);
                 if (model != null) {
-                    ResourceLocation texture = renderer.getTextureLocation(changedEntity);
+                    ResourceLocation texture = renderer.getTextureLocation(entity);
                     poseStack.pushPose();
                     poseStack.scale(0.5f, 0.5f, 0.5f);
                     poseStack.translate(1, 3.5, 1);
-                    renderer.render(changedEntity, 0, 0, poseStack, bufferSource, light);
+                    renderer.render(entity, 0, 0, poseStack, bufferSource, light);
                     poseStack.popPose();
                     //todo make the entity unable to move
                     //This stuff was used when i try render only the model
@@ -78,15 +97,14 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
                     //blue = 1;
                     //model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, red, green, blue, 1.0f);
                 }
-            }
+            }*/
 
 
-        }
     }
 
     @Override
     public boolean shouldRenderOffScreen(@NotNull InformantBlockEntity p_112306_) {
-        return BlockEntityRenderer.super.shouldRenderOffScreen(p_112306_);
+        return true;
     }
 
     @Override
