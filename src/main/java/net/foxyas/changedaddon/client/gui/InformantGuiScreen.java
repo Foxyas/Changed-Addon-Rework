@@ -3,7 +3,10 @@ package net.foxyas.changedaddon.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
+import net.foxyas.changedaddon.network.GeneratorGuiButtonMessage;
+import net.foxyas.changedaddon.network.InformantBlockGuiKeyMessage;
 import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
 import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
@@ -169,7 +172,12 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         if (keyCode == 256) {
             assert this.minecraft != null;
             assert this.minecraft.player != null;
-            this.minecraft.player.closeContainer();
+            if (!form.isFocused()) {
+                this.minecraft.player.closeContainer();
+            } else {
+                form.setValue("");
+                form.setFocus(false);
+            }
             return true;
         }
 
@@ -181,6 +189,22 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
     public void containerTick() {
         super.containerTick();
         form.tick();
+
+        if (!form.getValue().isEmpty()){
+            List<TransfurVariant<?>> variants = nameToVariants.get(form.getValue());
+            if (variants != null && !variants.isEmpty()) {
+                TransfurVariant<?> variant = variants.get(0);
+                if (variant != null) {
+                    InformantBlockGuiKeyMessage message = new InformantBlockGuiKeyMessage(variant.getFormId().toString(), this.getPos());
+                    ChangedAddonMod.PACKET_HANDLER.sendToServer(message);
+                }
+            }
+        } else {
+            if (form.isFocused()) {
+                InformantBlockGuiKeyMessage message = new InformantBlockGuiKeyMessage("", this.getPos());
+                ChangedAddonMod.PACKET_HANDLER.sendToServer(message);
+            }
+        }
     }
 
     @Override
@@ -365,9 +389,12 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 
     }
 
-
     public Vec3i getPosition() {
         return position;
+    }
+
+    public BlockPos getPos(){
+        return new BlockPos(this.getPosition());
     }
 
     public Level getWorld() {

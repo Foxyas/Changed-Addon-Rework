@@ -44,6 +44,8 @@ import java.util.Collections;
 
 import io.netty.buffer.Unpooled;
 
+import javax.annotation.Nullable;
+
 public class InformantBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
@@ -60,6 +62,14 @@ public class InformantBlock extends Block implements EntityBlock {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
+	}
+
+	@Nullable
+	public InformantBlockEntity getBlockEntity(Level level, BlockPos pos) {
+		if (level.getBlockEntity(pos) instanceof InformantBlockEntity informantBE) {
+			return informantBE;
+		}
+		return null;
 	}
 
 	@Override

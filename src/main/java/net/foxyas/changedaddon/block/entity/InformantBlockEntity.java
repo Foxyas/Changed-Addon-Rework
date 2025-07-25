@@ -33,113 +33,126 @@ import io.netty.buffer.Unpooled;
 import org.jetbrains.annotations.NotNull;
 
 public class InformantBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
+    private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+    public String selectedForm;
 
-	public InformantBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonBlockEntities.INFORMANT_BLOCK.get(), position, state);
-	}
+    public InformantBlockEntity(BlockPos position, BlockState state) {
+        super(ChangedAddonBlockEntities.INFORMANT_BLOCK.get(), position, state);
+    }
 
-	@Override
-	public void load(@NotNull CompoundTag compound) {
-		super.load(compound);
-		if (!this.tryLoadLootTable(compound))
-			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks);
-	}
+    @Override
+    public void load(@NotNull CompoundTag compound) {
+        super.load(compound);
+        if (!this.tryLoadLootTable(compound))
+            this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(compound, this.stacks);
+        if (compound.contains("SelectedForm")) {
+            selectedForm = compound.getString("SelectedForm");
+        }
+    }
 
-	@Override
-	public void saveAdditional(@NotNull CompoundTag compound) {
-		super.saveAdditional(compound);
-		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks);
-		}
-	}
+    @Override
+    public void saveAdditional(@NotNull CompoundTag compound) {
+        super.saveAdditional(compound);
+        if (!this.trySaveLootTable(compound)) {
+            ContainerHelper.saveAllItems(compound, this.stacks);
+        }
+        compound.putString("SelectedForm", selectedForm);
+    }
 
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
 
-	@Override
-	public @NotNull CompoundTag getUpdateTag() {
-		return this.saveWithFullMetadata();
-	}
+    @Override
+    public @NotNull CompoundTag getUpdateTag() {
+        return this.saveWithFullMetadata();
+    }
 
-	@Override
-	public int getContainerSize() {
-		return stacks.size();
-	}
+    public String getSelectedForm() {
+        return selectedForm;
+    }
 
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : this.stacks)
-			if (!itemstack.isEmpty())
-				return false;
-		return true;
-	}
+    public void setSelectedForm(String selectedForm) {
+        this.selectedForm = selectedForm;
+    }
 
-	@Override
-	public @NotNull Component getDefaultName() {
-		return new TextComponent("informantblock");
-	}
+    @Override
+    public int getContainerSize() {
+        return stacks.size();
+    }
 
-	@Override
-	public int getMaxStackSize() {
-		return 64;
-	}
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack itemstack : this.stacks)
+            if (!itemstack.isEmpty())
+                return false;
+        return true;
+    }
 
-	@Override
-	public @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
-		return new InformantGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
-	}
+    @Override
+    public @NotNull Component getDefaultName() {
+        return new TextComponent("informant_block");
+    }
 
-	@Override
-	public @NotNull Component getDisplayName() {
-		return new TextComponent("Informant Block");
-	}
+    @Override
+    public int getMaxStackSize() {
+        return 64;
+    }
 
-	@Override
-	protected @NotNull NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
+    @Override
+    public @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
+        return new InformantGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
+    }
 
-	@Override
-	protected void setItems(@NotNull NonNullList<ItemStack> stacks) {
-		this.stacks = stacks;
-	}
+    @Override
+    public @NotNull Component getDisplayName() {
+        return new TextComponent("Informant Block");
+    }
 
-	@Override
-	public boolean canPlaceItem(int index, @NotNull ItemStack stack) {
-		return true;
-	}
+    @Override
+    protected @NotNull NonNullList<ItemStack> getItems() {
+        return this.stacks;
+    }
 
-	@Override
-	public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
-		return IntStream.range(0, this.getContainerSize()).toArray();
-	}
+    @Override
+    protected void setItems(@NotNull NonNullList<ItemStack> stacks) {
+        this.stacks = stacks;
+    }
 
-	@Override
-	public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, stack);
-	}
+    @Override
+    public boolean canPlaceItem(int index, @NotNull ItemStack stack) {
+        return true;
+    }
 
-	@Override
-	public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-		return true;
-	}
+    @Override
+    public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
+        return IntStream.range(0, this.getContainerSize()).toArray();
+    }
 
-	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return handlers[facing.ordinal()].cast();
-		return super.getCapability(capability, facing);
-	}
+    @Override
+    public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
+        return this.canPlaceItem(index, stack);
+    }
 
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
-			handler.invalidate();
-	}
+    @Override
+    public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
+        return true;
+    }
+
+    @Override
+    public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
+        if (!this.remove && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return handlers[facing.ordinal()].cast();
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        for (LazyOptional<? extends IItemHandler> handler : handlers)
+            handler.invalidate();
+    }
 }

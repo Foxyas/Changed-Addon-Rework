@@ -56,5 +56,10 @@ public class CommonMod {
 
         ChangedAddonMod.addNetworkMessage(TurnOffTransfurMessage.class, TurnOffTransfurMessage::buffer, TurnOffTransfurMessage::new,
                 TurnOffTransfurMessage::handler);
+
+        ChangedAddonMod.addNetworkMessage(InformantBlockGuiKeyMessage.class,
+                InformantBlockGuiKeyMessage::encode,
+                InformantBlockGuiKeyMessage::decode,
+                InformantBlockGuiKeyMessage::handle);
     }
 }
