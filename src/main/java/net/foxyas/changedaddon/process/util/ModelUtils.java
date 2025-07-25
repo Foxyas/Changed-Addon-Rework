@@ -1,12 +1,18 @@
 package net.foxyas.changedaddon.process.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.*;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
+import com.mojang.math.Vector4f;
+import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -300,6 +306,39 @@ public class ModelUtils {
         if (!(dispatcher.getRenderer(living) instanceof LivingEntityRenderer<?, ?> livingRenderer)) return null;
 
         return livingRenderer.getModel();
+    }
+
+    public static EntityModel<?> getModelOfEntity(Entity entity) {
+        // Obtém o EntityRendererManager (gerenciador de renderizadores)
+        EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+
+        // Verifica se o renderizador é para uma entidade viva (LivingEntity)
+        if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
+            // Retorna o modelo da entidade
+            return livingRenderer.getModel();
+        }
+
+        return null; // Retorna null se não for uma entidade viva com um modelo
+    }
+
+    public static AdvancedHumanoidModel<?> getChangedEntityModel(ChangedEntity entity) {
+        // Obtém o EntityRendererManager (gerenciador de renderizadores)
+        EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+
+        // Verifica se o renderizador é para uma entidade viva (LivingEntity)
+        if (renderer instanceof AdvancedHumanoidRenderer<?, ?, ?> advRenderer) {
+            // Retorna o modelo da entidade
+            return advRenderer.getModel();
+        }
+        return null; // Retorna null se não for uma entidade viva com um modelo
+    }
+
+    public static AdvancedHumanoidRenderer<?, ?, ?> getChangedEntityRender(ChangedEntity entity) {
+        EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+        if (renderer instanceof AdvancedHumanoidRenderer<?, ?, ?> advRenderer) {
+            return advRenderer;
+        }
+        return null;
     }
 
     /*

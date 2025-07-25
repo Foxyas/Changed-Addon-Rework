@@ -3,8 +3,6 @@ package net.foxyas.changedaddon.process.util;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
-import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -15,11 +13,7 @@ import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
@@ -36,8 +30,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -54,9 +46,7 @@ public class PlayerUtil {
 
     public static void TransfurPlayer(Player player, String id) {
         ResourceLocation form = ResourceLocation.tryParse(id);
-        if(form == null) return;
-
-        TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+        TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
         if(latexVariant == null) return;
 
         ProcessTransfur.transfur(player, player.getLevel(), latexVariant, true, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE));
@@ -64,9 +54,7 @@ public class PlayerUtil {
 
     public static void TransfurPlayer(Player player, String id, float progress) {
         ResourceLocation form = ResourceLocation.tryParse(id);
-        if(form == null) return;
-
-        TransfurVariant<?> latexVariant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+        TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
         if(latexVariant == null) return;
 
         ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
@@ -291,9 +279,7 @@ public class PlayerUtil {
 
         Vec3 directionToPlayer = player.position().subtract(projectilePosition).normalize();
 
-        double dotProduct = projectileMotion.normalize().dot(directionToPlayer);
-
-        return dotProduct > 0;
+        return projectileMotion.normalize().dot(directionToPlayer) > 0;
     }
 
     public static void shootDynamicLaser(ServerLevel world, Player player, int maxRange, int horizontalRadius, int verticalRadius) {
@@ -507,47 +493,6 @@ public class PlayerUtil {
                             x, y, z, XV, YV, ZV);
                 }
             }
-        }
-
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public static class ModelFetcher {
-
-        @OnlyIn(Dist.CLIENT)
-        public static EntityModel<?> getModelOfEntity(Entity entity) {
-            // Obtém o EntityRendererManager (gerenciador de renderizadores)
-            EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-
-            // Verifica se o renderizador é para uma entidade viva (LivingEntity)
-            if (renderer instanceof LivingEntityRenderer<?, ?> livingRenderer) {
-                // Retorna o modelo da entidade
-                return livingRenderer.getModel();
-            }
-
-            return null; // Retorna null se não for uma entidade viva com um modelo
-        }
-
-        @OnlyIn(Dist.CLIENT)
-        public static AdvancedHumanoidModel<?> getChangedEntityModel(ChangedEntity entity) {
-            // Obtém o EntityRendererManager (gerenciador de renderizadores)
-            EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-
-            // Verifica se o renderizador é para uma entidade viva (LivingEntity)
-            if (renderer instanceof AdvancedHumanoidRenderer<?, ?, ?> ChangedEntityModel) {
-                // Retorna o modelo da entidade
-                return ChangedEntityModel.getModel();
-            }
-            return null; // Retorna null se não for uma entidade viva com um modelo
-        }
-
-        @OnlyIn(Dist.CLIENT)
-        public static AdvancedHumanoidRenderer<?, ?, ?> getChangedEntityRender(ChangedEntity entity) {
-            EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-            if (renderer instanceof AdvancedHumanoidRenderer<?, ?, ?> ChangedEntityModel) {
-                return ChangedEntityModel;
-            }
-            return null;
         }
     }
 }
