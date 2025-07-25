@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:items/catalyzershowrecipeitem"
+    "layer0": "changed_addon:items/catalyzer_show_recipe_item"
   }
 }

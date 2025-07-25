@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
 import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
 import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
@@ -11,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -22,6 +24,7 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -199,6 +202,18 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
             }
         }
 
+        if (this.world != null) {
+            BlockEntity blockEntity = world.getBlockEntity(new BlockPos(this.position));
+            if (blockEntity instanceof InformantBlockEntity informantBlockEntity) {
+                ItemStack stack = informantBlockEntity.getItem(0);
+                if (!(stack.isEmpty())) {
+                    String data = stack.getOrCreateTag().getString("form");
+                    if (!data.isEmpty()) {
+                        formIdString = data;
+                    }
+                }
+            }
+        }
 
         ResourceLocation formId = ResourceLocation.tryParse(formIdString);
         double hp = TransfurVariantUtils.GetExtraHp(formId, entity);

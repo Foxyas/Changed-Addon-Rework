@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.mixins.entity;
 import com.google.common.collect.ImmutableMap;
 import net.foxyas.changedaddon.abilities.ToggleClimbAbility;
 import net.foxyas.changedaddon.abilities.ToggleClimbAbilityInstance;
+import net.foxyas.changedaddon.entity.interfaces.ExtraConditions;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.ability.*;
@@ -76,7 +77,11 @@ public abstract class LivingEntityMixin {
             AbstractAbilityInstance instance = variant.getAbilityInstance(ChangedAddonAbilities.TOGGLE_CLIMB.get());
             if (variant.getParent().canClimb && self.horizontalCollision) {
                 if (instance instanceof ToggleClimbAbilityInstance abilityInstance) {
-                    callback.setReturnValue(abilityInstance.isActivated());
+                    if (variant.getChangedEntity() instanceof ExtraConditions.Climb climb) {
+                        if (climb.canClimb()) {
+                            callback.setReturnValue(abilityInstance.isActivated());
+                        }
+                    }
                 }
             }
         });
