@@ -75,7 +75,7 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         entity.tickCount = Minecraft.getInstance().player.tickCount;
 
         poseStack.pushPose();
-        poseStack.translate(.5, 1.5, .5);
+        poseStack.translate(.5, 1.75, .5);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
         poseStack.scale(.5f, .5f, .5f);
         float speed = 1.25f;
