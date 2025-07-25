@@ -1,8 +1,6 @@
 
 package net.foxyas.changedaddon.block;
 
-import org.checkerframework.checker.units.qual.s;
-
 import net.minecraftforge.network.NetworkHooks;
 
 import net.minecraft.world.phys.BlockHitResult;
@@ -39,17 +37,17 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
-import net.foxyas.changedaddon.block.entity.InformantblockBlockEntity;
+import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
 
 import java.util.List;
 import java.util.Collections;
 
 import io.netty.buffer.Unpooled;
 
-public class InformantblockBlock extends Block implements EntityBlock {
+public class InformantBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-	public InformantblockBlock() {
+	public InformantBlock() {
 		super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).sound(SoundType.METAL).strength(1f, 10f).lightLevel(s -> 1));
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
@@ -112,7 +110,7 @@ public class InformantblockBlock extends Block implements EntityBlock {
 
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new InformantblockBlockEntity(pos, state);
+		return new InformantBlockEntity(pos, state);
 	}
 
 	@Override
@@ -126,7 +124,7 @@ public class InformantblockBlock extends Block implements EntityBlock {
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof InformantblockBlockEntity be) {
+			if (blockEntity instanceof InformantBlockEntity be) {
 				Containers.dropContents(world, pos, be);
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
@@ -142,7 +140,7 @@ public class InformantblockBlock extends Block implements EntityBlock {
 	@Override
 	public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
 		BlockEntity tileentity = world.getBlockEntity(pos);
-		if (tileentity instanceof InformantblockBlockEntity be)
+		if (tileentity instanceof InformantBlockEntity be)
 			return AbstractContainerMenu.getRedstoneSignalFromContainer(be);
 		else
 			return 0;

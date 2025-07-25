@@ -158,6 +158,6 @@ public class DarklatexpuddleBlock extends Block implements EntityBlock, NonLatex
 
 	@OnlyIn(Dist.CLIENT)
 	public static void registerRenderLayer() {
-		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.DARKLATEXPUDDLE.get(), renderType -> renderType == RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ChangedAddonBlocks.DARK_LATEX_PUDDLE.get(), renderType -> renderType == RenderType.cutout());
 	}
 }

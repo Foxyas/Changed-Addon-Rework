@@ -7,6 +7,7 @@ import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
@@ -333,10 +334,20 @@ public class ModelUtils {
         return null; // Retorna null se não for uma entidade viva com um modelo
     }
 
-    public static AdvancedHumanoidRenderer<?, ?, ?> getChangedEntityRender(ChangedEntity entity) {
+
+    @SuppressWarnings("rawtypes")
+    public static @Nullable AdvancedHumanoidRenderer getChangedEntityRender(ChangedEntity entity) {
         EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
-        if (renderer instanceof AdvancedHumanoidRenderer<?, ?, ?> advRenderer) {
+        if (renderer instanceof AdvancedHumanoidRenderer advRenderer) {
             return advRenderer;
+        }
+        return null;
+    }
+
+    public static @Nullable AdvancedHumanoidRenderer<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>, LatexHumanoidArmorModel<ChangedEntity,?>>  getChangedEntityRenderNonRaw(ChangedEntity entity) {
+        EntityRenderer<?> renderer = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity);
+        if (renderer instanceof AdvancedHumanoidRenderer<?,?,?> advRenderer) {
+            return (AdvancedHumanoidRenderer<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>, LatexHumanoidArmorModel<ChangedEntity, ?>>) advRenderer;
         }
         return null;
     }

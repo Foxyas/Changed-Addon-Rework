@@ -27,9 +27,9 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<LiquidBlock> LITIX_CAMONIA_FLUID = REGISTRY.register("litix_camonia_fluid", LitixCamoniaFluidBlock::new);
     public static final RegistryObject<Block> CATALYZER = REGISTRY.register("catalyzer", CatalyzerBlock::new);
     public static final RegistryObject<Block> UNIFUSER = REGISTRY.register("unifuser", UnifuserBlock::new);
-    public static final RegistryObject<Block> DARKLATEXPUDDLE = REGISTRY.register("darklatexpuddle", DarklatexpuddleBlock::new);
+    public static final RegistryObject<Block> DARK_LATEX_PUDDLE = REGISTRY.register("dark_latex_puddle", DarklatexpuddleBlock::new);
     public static final RegistryObject<Block> SIGNAL_BLOCK = REGISTRY.register("signal_block", SignalBlockBlock::new);
-    public static final RegistryObject<Block> INFORMANTBLOCK = REGISTRY.register("informantblock", InformantblockBlock::new);
+    public static final RegistryObject<Block> INFORMANT_BLOCK = REGISTRY.register("informant_block", InformantBlock::new);
     public static final RegistryObject<Block> DORMANT_DARK_LATEX = REGISTRY.register("dormant_dark_latex", DormantDarkLatexBlock::new);
     public static final RegistryObject<Block> DORMANT_WHITE_LATEX = REGISTRY.register("dormant_white_latex", DormantWhiteLatexBlock::new);
     public static final RegistryObject<Block> SNEP_PLUSH = REGISTRY.register("snep_plush", SnepPlushBlock::new);

@@ -99,7 +99,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> HAZARD_SUIT_CHESTPLATE = REGISTRY.register("hazard_suit_chestplate", HazardSuitItem.Chestplate::new);
     public static final RegistryObject<Item> HAZARD_SUIT_LEGGINGS = REGISTRY.register("hazard_suit_leggings", HazardSuitItem.Leggings::new);
     public static final RegistryObject<Item> HAZARD_SUIT_BOOTS = REGISTRY.register("hazard_suit_boots", HazardSuitItem.Boots::new);
-    public static final RegistryObject<Item> DARK_LATEX_PUDDLE = block(ChangedAddonBlocks.DARKLATEXPUDDLE, ChangedAddonTabs.TAB_CHANGED_ADDON);
+    public static final RegistryObject<Item> DARK_LATEX_PUDDLE = block(ChangedAddonBlocks.DARK_LATEX_PUDDLE, ChangedAddonTabs.TAB_CHANGED_ADDON);
     public static final RegistryObject<Item> LUNAR_ROSE_HELMET = REGISTRY.register("lunarrose_helmet", LunarroseItem.Helmet::new);
     public static final RegistryObject<Item> EXPERIMENT_009_DNA = REGISTRY.register("experiment_009dna", Experiment009dnaItem::new);
     public static final RegistryObject<Item> EXP_9_LATEX_BASE = REGISTRY.register("exp_9_latex_base", Exp9LatexBaseItem::new);
@@ -111,7 +111,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> EXP_10_LATEX_BASE = REGISTRY.register("exp_10_latex_base", Exp10LatexBaseItem::new);
     public static final RegistryObject<Item> EXP_10_CONTAINMENT_VIAL = REGISTRY.register("exp_10_containment_vial", BossExperiment10SpawnEggItem::new);
     public static final RegistryObject<Item> RED_LATEX_GOO = REGISTRY.register("red_latex_goo", RedLatexGooItem::new);
-    public static final RegistryObject<Item> INFORMANT_BLOCK = block(ChangedAddonBlocks.INFORMANTBLOCK, ChangedAddonTabs.TAB_CHANGED_ADDON);
+    public static final RegistryObject<Item> INFORMANT_BLOCK = block(ChangedAddonBlocks.INFORMANT_BLOCK, ChangedAddonTabs.TAB_CHANGED_ADDON);
     public static final RegistryObject<Item> CRYSTAL_DAGGER_RED = REGISTRY.register("crystal_dagger_red", CrystalAddagerRedItem::new);
     public static final RegistryObject<Item> CRYSTAL_DAGGER_GREEN = REGISTRY.register("crystal_dagger_green", CrystalAddagerGreenItem::new);
     public static final RegistryObject<Item> CRYSTAL_DAGGER_BLACK = REGISTRY.register("crystal_dagger_black", CrystalAddagerBlackItem::new);

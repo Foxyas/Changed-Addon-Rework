@@ -1,5 +1,5 @@
 {
-  "parent": "changed_addon:block/darklatexpuddle",
+  "parent": "changed_addon:block/dark_latex_puddle",
   "display": {
     "thirdperson": {
       "rotation": [

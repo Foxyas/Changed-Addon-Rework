@@ -1,0 +1,8 @@
+{
+  "parent": "changed_addon:custom/dark_latex_puddle",
+  "textures": {
+    "all": "changed_addon:blocks/dark_latex_puddle_texture",
+    "particle": "changed_addon:blocks/dark_latex_puddle_texture",
+    "1": "changed_addon:blocks/dark_latex_puddle_texture"
+  }
+}

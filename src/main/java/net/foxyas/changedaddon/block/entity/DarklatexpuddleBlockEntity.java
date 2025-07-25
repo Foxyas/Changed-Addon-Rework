@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 
 public class DarklatexpuddleBlockEntity extends BlockEntity implements NonLatexCoverableBlock {
 	public DarklatexpuddleBlockEntity(BlockPos position, BlockState state) {
-		super(ChangedAddonBlockEntities.DARKLATEXPUDDLE.get(), position, state);
+		super(ChangedAddonBlockEntities.DARK_LATEX_PUDDLE.get(), position, state);
 	}
 
 	@Override

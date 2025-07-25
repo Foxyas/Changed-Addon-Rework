@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import org.jetbrains.annotations.NotNull;
 
 public class ContainmentContainerRenderer implements BlockEntityRenderer<ContainmentContainerBlockEntity> {
 
@@ -28,7 +29,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
     }
 
     @Override
-    public void render(ContainmentContainerBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int light, int overlay) {
+    public void render(ContainmentContainerBlockEntity blockEntity, float partialTick, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int light, int overlay) {
         poseStack.pushPose();
 
         // Translade para a posição do bloco
