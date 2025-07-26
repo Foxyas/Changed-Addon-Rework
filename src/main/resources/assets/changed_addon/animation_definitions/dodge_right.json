@@ -96,6 +96,46 @@
           { "time": 0.4583, "position": [0, 0, 0], "interpolation": "catmullrom" }
         ]
       }
+    ],
+    "right_arm": [
+      {
+        "target": "rotation",
+        "keyframes": [
+          { "time": 0.0, "degrees": [0, 0, 0], "interpolation": "catmullrom" },
+          { "time": 0.1667, "degrees": [-29.63781, -32.9421, 11.27267], "interpolation": "catmullrom" },
+          { "time": 0.25, "degrees": [-29.63781, -32.9421, 11.27267], "interpolation": "catmullrom" },
+          { "time": 0.4583, "degrees": [0, 0, 0], "interpolation": "catmullrom" }
+        ]
+      },
+      {
+        "target": "position",
+        "keyframes": [
+          { "time": 0.0, "position": [0, 0, 0], "interpolation": "catmullrom" },
+          { "time": 0.1667, "position": [2.3, -4.2, -9.7], "interpolation": "catmullrom" },
+          { "time": 0.25, "position": [2.3, -4.2, -9.7], "interpolation": "catmullrom" },
+          { "time": 0.4583, "position": [0, 0, 0], "interpolation": "catmullrom" }
+        ]
+      }
+    ],
+    "head": [
+      {
+        "target": "rotation",
+        "keyframes": [
+          { "time": 0.0, "degrees": [0, 0, 0], "interpolation": "catmullrom" },
+          { "time": 0.1667, "degrees": [75.80492, -60.75065, -65.62083], "interpolation": "catmullrom" },
+          { "time": 0.25, "degrees": [75.80492, -60.75065, -65.62083], "interpolation": "catmullrom" },
+          { "time": 0.4583, "degrees": [0, 0, 0], "interpolation": "catmullrom" }
+        ]
+      },
+      {
+        "target": "position",
+        "keyframes": [
+          { "time": 0.0, "position": [0, 0, 0], "interpolation": "catmullrom" },
+          { "time": 0.1667, "position": [-2.1, -1.3, -4.5], "interpolation": "catmullrom" },
+          { "time": 0.25, "position": [-2.1, -1.3, -4.5], "interpolation": "catmullrom" },
+          { "time": 0.4583, "position": [0, 0, 0], "interpolation": "catmullrom" }
+        ]
+      }
     ]
   }
 }
