@@ -9,7 +9,7 @@
     ]
   },
   "changed_addon:dodge_right": {
-    "category": "idle",
+    "category": "prop",
     "animations": [
       {
         "name": "changed_addon:dodge_right",
