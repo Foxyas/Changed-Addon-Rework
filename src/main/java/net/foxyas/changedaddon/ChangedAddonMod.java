@@ -1,18 +1,6 @@
-/*
- *    MCreator note:
- *
- *    If you lock base mod element files, you can edit this file and it won't get overwritten.
- *    If you change your modid or package, you need to apply these changes to this file MANUALLY.
- *
- *    Settings in @Mod annotation WON'T be changed in case of the base mod element
- *    files lock too, so you need to set them manually here in such case.
- *
- *    If you do not lock base mod element files in Workspace settings, this file
- *    will be REGENERATED on each build.
- *
- */
 package net.foxyas.changedaddon;
 
+import net.foxyas.changedaddon.init.*;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -25,19 +13,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
-
-import net.foxyas.changedaddon.init.ChangedAddonVillagerProfessions;
-import net.foxyas.changedaddon.init.ChangedAddonTabs;
-import net.foxyas.changedaddon.init.ChangedAddonPotions;
-import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
-import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonFluids;
-import net.foxyas.changedaddon.init.ChangedAddonFeatures;
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 
 import java.util.function.Supplier;
 import java.util.function.Function;
@@ -62,12 +37,14 @@ public class ChangedAddonMod {
 		ChangedAddonEnchantments.REGISTRY.register(bus);
 		ChangedAddonMobEffects.REGISTRY.register(bus);
 		ChangedAddonPotions.REGISTRY.register(bus);
+		ChangedAddonAnimationEvents.REGISTRY.register(bus);
 
 		ChangedAddonParticleTypes.REGISTRY.register(bus);
 		ChangedAddonVillagerProfessions.PROFESSIONS.register(bus);
 		ChangedAddonFluids.REGISTRY.register(bus);
 	}
 
+	//Thanks :D
 	public static ResourceLocation resourceLoc(String path){
 		return new ResourceLocation(MODID, path);
 	}

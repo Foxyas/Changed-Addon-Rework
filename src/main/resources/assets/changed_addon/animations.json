@@ -1,0 +1,20 @@
+{
+  "changed_addon:dodge_left": {
+    "category": "idle",
+    "animations": [
+      {
+        "name": "changed_addon:dodge_left",
+        "criteria": {}
+      }
+    ]
+  },
+  "changed_addon:dodge_right": {
+    "category": "idle",
+    "animations": [
+      {
+        "name": "changed_addon:dodge_right",
+        "criteria": {}
+      }
+    ]
+  }
+}
