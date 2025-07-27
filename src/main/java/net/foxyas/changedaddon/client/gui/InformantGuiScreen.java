@@ -5,7 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
-import net.foxyas.changedaddon.network.GeneratorGuiButtonMessage;
 import net.foxyas.changedaddon.network.InformantBlockGuiKeyMessage;
 import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
 import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
@@ -14,18 +13,17 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu> {
@@ -72,9 +71,9 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 
             for (int i = 0; i < filteredSuggestions.size(); i++) {
                 String suggestion = filteredSuggestions.get(i);
-                Color color = new Color(0x9988CDFF, true);
+                Color color = new Color(0x8840BEFF, true);
                 Color Bgcolor = new Color(0x881DAAEC, true);
-                int bgColor = i == suggestionIndex ? color.getRGB() : Bgcolor.getRGB();
+                int bgColor = i == suggestionIndex ? Bgcolor.getRGB() : color.getRGB();
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
                 fill(ms, x, y + i * height, x + width, y + (i + 1) * height, bgColor);
@@ -136,41 +135,41 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         double swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
         double jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
 
-        var landSpeedInfo = new TranslatableComponent("text.changed_addon.land_speed")
+        MutableComponent landSpeedInfo = new TranslatableComponent("text.changed_addon.land_speed")
                 .append("")
                 .append(landSpeedPct == 0
                         ? new TextComponent("§7None§r")
                         : new TextComponent((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%"));
 
-        var swimSpeedInfo = new TranslatableComponent("text.changed_addon.swim_speed")
+        MutableComponent swimSpeedInfo = new TranslatableComponent("text.changed_addon.swim_speed")
                 .append("")
                 .append(swimSpeedPct == 0
                         ? new TextComponent("§7None§r")
                         : new TextComponent((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%"));
 
-        var additionalHealthInfo = new TranslatableComponent("text.changed_addon.additionalHealth")
+        MutableComponent additionalHealthInfo = new TranslatableComponent("text.changed_addon.additionalHealth")
                 .append("")
                 .append(extraHp == 0
                         ? new TextComponent("§7None§r")
                         : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
                 .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts"));
 
-        var miningStrengthInfo = new TranslatableComponent("text.changed_addon.miningStrength", miningStrength);
+        TranslatableComponent miningStrengthInfo = new TranslatableComponent("text.changed_addon.miningStrength", miningStrength);
 
-        var jumpStrengthInfo = new TranslatableComponent("text.changed_addon.jumpStrength")
+        MutableComponent jumpStrengthInfo = new TranslatableComponent("text.changed_addon.jumpStrength")
                 .append("")
                 .append(jumpStrengthPct == 0
                         ? new TextComponent("§7None§r")
                         : new TextComponent((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%"));
 
-        var canGlideInfo = new TranslatableComponent("text.changed_addon.canGlide/Fly")
+        MutableComponent canGlideInfo = new TranslatableComponent("text.changed_addon.canGlide/Fly")
                 .append("")
                 .append(canFlyOrGlide
                         ? new TextComponent("§aTrue§r")
                         : new TextComponent("§cFalse§r"));
 
 
-                // Verifica se o mouse está sobre cada ícone e exibe a tooltip correspondente
+        // Verifica se o mouse está sobre cada ícone e exibe a tooltip correspondente
         if (mouseX > iconX && mouseX < iconX + iconSize) {
             if (mouseY > iconYHealth && mouseY < iconYHealth + iconSize) {
                 renderTooltip(ms, additionalHealthInfo, mouseX, mouseY);
@@ -197,16 +196,37 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
     }
 
     @Override
-    public boolean mouseClicked(double x, double y, int keyCode) {
+    public boolean mouseClicked(double mouseX, double mouseY, int keyCode) {
         assert this.minecraft != null;
         if (this.minecraft.player != null) {
-            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position : X =" + x + " and Y =" + y), false);
-            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position2 : X =" + (x - leftPos) + " and Y =" + (y - topPos)), false);
+
+            int iconX = leftPos + 9;
+            int iconSize = 16; // The Icon Size
+
+            int iconYHealth = topPos + 18;
+            int iconYLandSpeed = topPos + 40;
+            int iconYSwimSpeed = topPos + 62;
+            int iconYJump = topPos + 84;
+            //Check if the mouse is inside the "hitbox"
+            if (mouseX > iconX && mouseX < iconX + iconSize) {
+                if (mouseY > iconYHealth && mouseY < iconYHealth + iconSize) {
+                    this.minecraft.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
+                } else if (mouseY > iconYLandSpeed && mouseY < iconYLandSpeed + iconSize) {
+                    this.minecraft.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
+                } else if (mouseY > iconYSwimSpeed && mouseY < iconYSwimSpeed + iconSize) {
+                    this.minecraft.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
+                } else if (mouseY > iconYJump && mouseY < iconYJump + iconSize) {
+                    this.minecraft.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
+                }
+            }
+
+            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position : X =" + mouseX + " and Y =" + mouseY), false);
+            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position2 : X =" + (mouseX - leftPos) + " and Y =" + (mouseY - topPos)), false);
 
         }
 
 
-        return super.mouseClicked(x, y, keyCode);
+        return super.mouseClicked(mouseX, mouseY, keyCode);
     }
 
     @Override
@@ -397,6 +417,15 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                     v -> v.getEntityType().getDescription().getString()
             ));
 
+    private final Map<ResourceLocation, String> variantToName =
+            TransfurVariant.getPublicTransfurVariants()
+                    .collect(Collectors.toMap(
+                            TransfurVariant::getFormId, // chave: a própria variante
+                            v -> v.getEntityType().getDescription().getString(), // valor: nome legível
+                            (a, b) -> a
+                    ));
+
+
     private List<String> filteredSuggestions = new ArrayList<>();
     private int suggestionIndex = -1;
 
@@ -438,6 +467,20 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         form.setTextColor(new Color(0, 205, 255).getRGB());
         //form.setBordered(false);
         //form.setAlpha(0.25f);
+
+        if (this.world != null) {
+            BlockEntity blockEntity = world.getBlockEntity(new BlockPos(this.position));
+            if (blockEntity instanceof InformantBlockEntity informantBlockEntity) {
+                String selectedForm = informantBlockEntity.getSelectedForm();
+                if (!selectedForm.isEmpty()) {
+                    ResourceLocation res = ResourceLocation.tryParse(selectedForm);
+                    if (res != null) {
+                        String data = variantToName.get(res);
+                        form.setValue(data);
+                    }
+                }
+            }
+        }
 
 
         form.setMaxLength(32767);
