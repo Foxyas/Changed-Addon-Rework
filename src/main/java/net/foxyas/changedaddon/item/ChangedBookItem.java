@@ -31,21 +31,6 @@ public class ChangedBookItem extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand interactionHand) {
-        if (!player.isShiftKeyDown()) {
-            if (interactionHand.equals(InteractionHand.MAIN_HAND)) {
-                if (!level.isClientSide()) {
-                }
-            } else {
-                if (!level.isClientSide()) {
-                    ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
-                }
-            }
-
-
-            return InteractionResultHolder.success(player.getItemInHand(interactionHand));
-        }
-
-
         return super.use(level, player, interactionHand);
     }
 }
