@@ -58,11 +58,14 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         super.render(ms, mouseX, mouseY, partialTicks);
         form.render(ms, mouseX, mouseY, partialTicks);
         this.renderTooltip(ms, mouseX, mouseY);
-        if (mouseX > leftPos + (25) && mouseX < leftPos + (34) && mouseY > topPos + (4) && mouseY < topPos + (13))
+        if (mouseX > leftPos + (25) && mouseX < leftPos + (34) && mouseY > topPos + (4) && mouseY < topPos + (13)) {
             this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_type_the_form"), mouseX, mouseY);
-        if (IfisEmptyProcedure.execute(entity))
-            if (mouseX > leftPos + 151 && mouseX < leftPos + 168 && mouseY > topPos + 88 && mouseY < topPos + 105)
+        }
+        if (IfisEmptyProcedure.execute(entity)) {
+            if (mouseX > leftPos + 151 && mouseX < leftPos + 168 && mouseY > topPos + 88 && mouseY < topPos + 105) {
                 this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
+            }
+        }
         if (!filteredSuggestions.isEmpty()) {
             int x = form.x;
             int y = form.y + form.getHeight() + 2;
@@ -218,6 +221,8 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                 } else if (mouseY > iconYJump && mouseY < iconYJump + iconSize) {
                     this.minecraft.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
                 }
+            } else if (mouseX > leftPos + (25) && mouseX < leftPos + (34) && mouseY > topPos + (4) && mouseY < topPos + (13)) {
+                this.minecraft.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
             }
 
             this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position : X =" + mouseX + " and Y =" + mouseY), false);
