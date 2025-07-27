@@ -92,19 +92,94 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         int iconYSwimSpeed = topPos + 62;
         int iconYJump = topPos + 84;
 
-        ItemStack stack = new ItemStack(Items.DIAMOND_SWORD);
+        // TODO Rewrite this to look more clean & render the entity in the middle of the GUI (spinning or looking at the mouse)
+
+        String formIdString = form.getValue();
+        if (!filteredSuggestions.isEmpty() && suggestionIndex >= 0) {
+            String chosenName = filteredSuggestions.get(suggestionIndex);
+            List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
+            if (variants != null && !variants.isEmpty()) {
+                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
+                formIdString = variant.getFormId().toString();
+            }
+        } else {
+            String chosenName = formIdString;
+            List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
+            if (variants != null && !variants.isEmpty()) {
+                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
+                formIdString = variant.getFormId().toString();
+            }
+        }
+
+        if (this.world != null) {
+            BlockEntity blockEntity = world.getBlockEntity(new BlockPos(this.position));
+            if (blockEntity instanceof InformantBlockEntity informantBlockEntity) {
+                ItemStack stack = informantBlockEntity.getItem(0);
+                if (!(stack.isEmpty())) {
+                    String data = stack.getOrCreateTag().getString("form");
+                    if (!data.isEmpty()) {
+                        formIdString = data;
+                    }
+                }
+            }
+        }
+
+        ResourceLocation formId = ResourceLocation.tryParse(formIdString);
+        double hp = TransfurVariantUtils.GetExtraHp(formId, entity);
+        double swimSpeed = TransfurVariantUtils.GetSwimSpeed(formId, entity);
+        double landSpeed = TransfurVariantUtils.GetLandSpeed(formId, entity);
+        double jumpStrength = TransfurVariantUtils.GetJumpStrength(formId);
+        boolean canFlyOrGlide = TransfurVariantUtils.CanGlideandFly(formId);
+        String miningStrength = TransfurVariantUtils.getMiningStrength(formId);
+        double extraHp = (hp) / 2.0;
+        double landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
+        double swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
+        double jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
+
+        var landSpeedInfo = new TranslatableComponent("text.changed_addon.land_speed")
+                .append("")
+                .append(landSpeedPct == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%"));
+
+        var swimSpeedInfo = new TranslatableComponent("text.changed_addon.swim_speed")
+                .append("")
+                .append(swimSpeedPct == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%"));
+
+        var additionalHealthInfo = new TranslatableComponent("text.changed_addon.additionalHealth")
+                .append("")
+                .append(extraHp == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
+                .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts"));
+
+        var miningStrengthInfo = new TranslatableComponent("text.changed_addon.miningStrength", miningStrength);
+
+        var jumpStrengthInfo = new TranslatableComponent("text.changed_addon.jumpStrength")
+                .append("")
+                .append(jumpStrengthPct == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%"));
+
+        var canGlideInfo = new TranslatableComponent("text.changed_addon.canGlide/Fly")
+                .append("")
+                .append(canFlyOrGlide
+                        ? new TextComponent("§aTrue§r")
+                        : new TextComponent("§cFalse§r"));
 
 
-        // Verifica se o mouse está sobre cada ícone e exibe a tooltip correspondente
+                // Verifica se o mouse está sobre cada ícone e exibe a tooltip correspondente
         if (mouseX > iconX && mouseX < iconX + iconSize) {
             if (mouseY > iconYHealth && mouseY < iconYHealth + iconSize) {
-                renderTooltip(ms, new TranslatableComponent("block.minecraft.dirt"), mouseX, mouseY);
+                renderTooltip(ms, additionalHealthInfo, mouseX, mouseY);
             } else if (mouseY > iconYLandSpeed && mouseY < iconYLandSpeed + iconSize) {
-                renderTooltip(ms, new TranslatableComponent("block.minecraft.rooted_dirt"), mouseX, mouseY);
+                renderTooltip(ms, landSpeedInfo, mouseX, mouseY);
             } else if (mouseY > iconYSwimSpeed && mouseY < iconYSwimSpeed + iconSize) {
-                renderTooltip(ms, List.of(new TranslatableComponent("block.minecraft.dirt_path")), Optional.empty(), mouseX, mouseY);
+                renderTooltip(ms, List.of(swimSpeedInfo), Optional.empty(), mouseX, mouseY);
             } else if (mouseY > iconYJump && mouseY < iconYJump + iconSize) {
-                renderTooltip(ms, new TranslatableComponent("block.minecraft.coarse_dirt"), mouseX, mouseY);
+                renderTooltip(ms, jumpStrengthInfo, mouseX, mouseY);
             }
         }
 
@@ -190,7 +265,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         super.containerTick();
         form.tick();
 
-        if (!form.getValue().isEmpty()){
+        if (!form.getValue().isEmpty()) {
             List<TransfurVariant<?>> variants = nameToVariants.get(form.getValue());
             if (variants != null && !variants.isEmpty()) {
                 TransfurVariant<?> variant = variants.get(0);
@@ -209,19 +284,20 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 
     @Override
     protected void renderLabels(@NotNull PoseStack poseStack, int mouseX, int mouseY) {
-        String formIdString = form.getValue();
+        // TODO Rewrite this to look more clean AND only display the EXTRA info like (Can Glide,Mining Speed, etc)
+        /*String formIdString = form.getValue();
         if (!filteredSuggestions.isEmpty() && suggestionIndex >= 0) {
             String chosenName = filteredSuggestions.get(suggestionIndex);
             List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
             if (variants != null && !variants.isEmpty()) {
-                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
+                TransfurVariant<?> variant = variants.get(0);
                 formIdString = variant.getFormId().toString();
             }
         } else {
             String chosenName = formIdString;
             List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
             if (variants != null && !variants.isEmpty()) {
-                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
+                TransfurVariant<?> variant = variants.get(0);
                 formIdString = variant.getFormId().toString();
             }
         }
@@ -251,43 +327,50 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         double swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
         double jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
 
-        this.font.draw(poseStack,
-                new TranslatableComponent("text.changed_addon.land_speed")
-                        .append("")
-                        .append(landSpeedPct == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%")), 5, 44, -12829636);
+        var a = new TranslatableComponent("text.changed_addon.land_speed")
+                .append("")
+                .append(landSpeedPct == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%"));
 
-        this.font.draw(poseStack,
-                new TranslatableComponent("text.changed_addon.swim_speed")
-                        .append("")
-                        .append(swimSpeedPct == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%")), 5, 57, -12829636);
+        var b = new TranslatableComponent("text.changed_addon.swim_speed")
+                .append("")
+                .append(swimSpeedPct == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%"));
 
-        this.font.draw(poseStack,
-                new TranslatableComponent("text.changed_addon.additionalHealth")
-                        .append("")
-                        .append(extraHp == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
-                        .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts")), 5, 31, -12829636);
+        var c = new TranslatableComponent("text.changed_addon.additionalHealth")
+                .append("")
+                .append(extraHp == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((extraHp > 0 ? "§a+" : "§c") + extraHp + "§r"))
+                .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts"));
 
-        this.font.draw(poseStack, new TranslatableComponent("text.changed_addon.miningStrength", miningStrength), 5, 94, -12829636);
+        var d = new TranslatableComponent("text.changed_addon.miningStrength", miningStrength);
 
-        this.font.draw(poseStack,
-                new TranslatableComponent("text.changed_addon.jumpStrength")
-                        .append("")
-                        .append(jumpStrengthPct == 0
-                                ? new TextComponent("§7None§r")
-                                : new TextComponent((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%")), 5, 69, -12829636);
+        var e = new TranslatableComponent("text.changed_addon.jumpStrength")
+                .append("")
+                .append(jumpStrengthPct == 0
+                        ? new TextComponent("§7None§r")
+                        : new TextComponent((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%"));
 
-        this.font.draw(poseStack,
-                new TranslatableComponent("text.changed_addon.canGlide/Fly")
-                        .append("")
-                        .append(canFlyOrGlide
-                                ? new TextComponent("§aTrue§r")
-                                : new TextComponent("§cFalse§r")), 5, 82, -12829636);
+        var f = new TranslatableComponent("text.changed_addon.canGlide/Fly")
+                .append("")
+                .append(canFlyOrGlide
+                        ? new TextComponent("§aTrue§r")
+                        : new TextComponent("§cFalse§r"));
+
+        this.font.draw(poseStack, a, 5, 44, -12829636);
+
+        this.font.draw(poseStack, b, 5, 57, -12829636);
+
+        this.font.draw(poseStack, c, 5, 31, -12829636);
+
+        this.font.draw(poseStack, d, 5, 94, -12829636);
+
+        this.font.draw(poseStack, e, 5, 69, -12829636);
+
+        this.font.draw(poseStack, f, 5, 82, -12829636);*/
 
         this.font.draw(poseStack, new TranslatableComponent("gui.changed_addon.informant_gui.label_empty"), 27.5f, 5.5f, -12829636);
     }
@@ -393,7 +476,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         return position;
     }
 
-    public BlockPos getPos(){
+    public BlockPos getPos() {
         return new BlockPos(this.getPosition());
     }
 
