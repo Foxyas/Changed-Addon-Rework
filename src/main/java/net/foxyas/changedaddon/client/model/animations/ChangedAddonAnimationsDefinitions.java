@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
 public class ChangedAddonAnimationsDefinitions {
-    public static final AnimationDefinition DODGE_WEAVE = AnimationDefinition.Builder.withLength(0.5F)
+    public static final AnimationDefinition DODGE_WEAVE = AnimationDefinition.Builder.withLength(0.5F).withTransition(0f)
             .addAnimation(Limb.HEAD, new AnimationChannel(AnimationChannel.Target.ROTATION,
                     new Keyframe(0.0F, KeyframeAnimations.degreeVec(0.0F, 0.0F, 0.0F), AnimationChannel.Interpolation.LINEAR),
                     new Keyframe(0.25F, KeyframeAnimations.degreeVec(16.0F, 14.0F, -3.0F), AnimationChannel.Interpolation.LINEAR),
