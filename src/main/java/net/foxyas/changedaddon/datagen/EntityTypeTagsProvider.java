@@ -27,7 +27,6 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
 
         tag(ChangedAddonTags.EntityTypes.CAN_CARRY).add(EntityType.WANDERING_TRADER, ChangedEntities.DARK_LATEX_WOLF_PUP.get(), EntityType.WOLF);
         tag(ChangedAddonTags.EntityTypes.PATABLE).add(EntityType.OCELOT, EntityType.PARROT, EntityType.CAT, EntityType.RABBIT, EntityType.WOLF, EntityType.FOX, FOXYAS.get(), PROTOTYPE.get(), ERIK.get());
-        //TODO ChangedAddonTags.EntityTypes.CHANGED_CREATURE
 
         tag(EntityTypeTags.IMPACT_PROJECTILES).add(PARTICLE_PROJECTILE.get());
     }

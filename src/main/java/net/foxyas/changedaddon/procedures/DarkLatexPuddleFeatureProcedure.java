@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
@@ -90,7 +90,7 @@ public class DarkLatexPuddleFeatureProcedure {
     }
 
     private static boolean isChangedCreature(Entity entity) {
-        return entity.getType().is(ChangedAddonTags.EntityTypes.CHANGED_CREATURE) ||
+        return entity.getType().is(ChangedTags.EntityTypes.LATEX) ||
                 entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity;
     }
 

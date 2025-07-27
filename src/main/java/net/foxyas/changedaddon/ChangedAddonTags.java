@@ -50,7 +50,6 @@ public final class ChangedAddonTags {
     public static final class EntityTypes {
 
         public static final TagKey<EntityType<?>> CAN_CARRY = key("can_carry");
-        public static final TagKey<EntityType<?>> CHANGED_CREATURE = key("changed_creature");
         public static final TagKey<EntityType<?>> PATABLE = key("patable");
 
         private static TagKey<EntityType<?>> key(String path){
