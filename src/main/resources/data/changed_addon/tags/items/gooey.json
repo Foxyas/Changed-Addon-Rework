@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:slime_ball",
+    "changed:white_latex_goo",
+    "changed:dark_latex_goo"
+  ]
+}

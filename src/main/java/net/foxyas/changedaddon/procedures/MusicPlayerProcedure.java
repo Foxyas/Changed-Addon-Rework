@@ -59,7 +59,7 @@ public class MusicPlayerProcedure {
         boolean LumiClose = !LumiEntities.isEmpty();
         boolean ketExp9Close = !ketExp9Entities.isEmpty();
 
-        if (world.isClientSide() && ChangedAddonClientConfiguration.MUSICPLAYER.get()) {
+        if (world.isClientSide() && ChangedAddonClientConfiguration.MUSIC_PLAYER.get()) {
             Minecraft minecraft = Minecraft.getInstance();
             MusicManager musicManager = minecraft.getMusicManager();
             SoundManager soundManager = minecraft.getSoundManager();

@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.procedures;
+package net.foxyas.changedaddon.process;
 
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.abilities.DodgeAbilityInstance;
@@ -19,7 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class DodgeAbilityHandleProcedure {
+public class DodgeAbilityHandle {
 
     @SubscribeEvent
     public static void onEntityAttacked(LivingAttackEvent event) {
@@ -74,21 +74,11 @@ public class DodgeAbilityHandleProcedure {
         }
     }
 
+    //Keep this method for mixins
     private static void applyDodgeEffects(Player player, DodgeAbilityInstance dodge, ServerLevel serverLevel, LivingAttackEvent event) {
-        dodge.subDodgeAmount();
-        player.displayClientMessage(new TranslatableComponent("changed_addon.ability.dodge.dodge_amount_left", dodge.getDodgeStaminaRatio()), false);
-        player.invulnerableTime = 20;
-        player.hurtDuration = 20;
-        player.hurtTime = player.hurtDuration;
-        player.causeFoodExhaustion(8f);
-        event.setCanceled(true);
-        spawnDodgeParticles(serverLevel, player, 0.5f, 0.3f, 0.3f, 0.3f, 10, 0.25f);
+        dodge.executeDodge(serverLevel, player, event);
     }
 
-    private static void spawnDodgeParticles(ServerLevel level, Entity entity, float middle, float xV, float yV, float zV, int count, float speed) {
-        level.sendParticles(ParticleTypes.POOF,
-                entity.getX(), entity.getY() + middle, entity.getZ(), count, xV, yV, zV, speed);
-    }
 
     public static void dashBackwards(Player target, boolean includeY) {
         Vec3 look = target.getLookAngle().normalize();

@@ -34,7 +34,6 @@ public class ChangedBookItem extends Item {
         if (!player.isShiftKeyDown()) {
             if (interactionHand.equals(InteractionHand.MAIN_HAND)) {
                 if (!level.isClientSide()) {
-                    ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), null);
                 }
             } else {
                 if (!level.isClientSide()) {

@@ -50,7 +50,6 @@ public final class ChangedAddonTags {
     public static final class EntityTypes {
 
         public static final TagKey<EntityType<?>> CAN_CARRY = key("can_carry");
-        public static final TagKey<EntityType<?>> CHANGED_CREATURE = key("changed_creature");
         public static final TagKey<EntityType<?>> PATABLE = key("patable");
 
         private static TagKey<EntityType<?>> key(String path){
@@ -60,11 +59,13 @@ public final class ChangedAddonTags {
 
     public static final class TransfurTypes {
 
+        // Transfur Details
         public static final TagKey<TransfurVariant<?>> ABLE_TO_CARRY = key("able_to_carry");
         public static final TagKey<TransfurVariant<?>> CAUSE_FREEZING = key("cause_freeze_dmg");
         public static final TagKey<TransfurVariant<?>> GLOWING = key("glow_variants");
         public static final TagKey<TransfurVariant<?>> HAS_CLAWS = key("has_claws");
 
+        // Transfur "Kind"
         public static final TagKey<TransfurVariant<?>> AQUATIC_LIKE = key("aquatic_like");
         public static final TagKey<TransfurVariant<?>> CAT_LIKE = key("cat_like");
         public static final TagKey<TransfurVariant<?>> DRAGON_LIKE = key("dragon_like");
@@ -73,6 +74,7 @@ public final class ChangedAddonTags {
         public static final TagKey<TransfurVariant<?>> SHARK_LIKE = key("shark_like");
         public static final TagKey<TransfurVariant<?>> WOLF_LIKE = key("wolf_like");
 
+        // Transfur Diets
         public static final TagKey<TransfurVariant<?>> AQUATIC_DIET = key("aquatic_diet");
         public static final TagKey<TransfurVariant<?>> SHARK_DIET = key("shark_diet");
         public static final TagKey<TransfurVariant<?>> CAT_DIET = key("cat_diet");

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/dyeable_shirt"
+    "layer0": "changed_addon:items/dyeable_shirt"
   }
 }

@@ -261,7 +261,7 @@ public class LaserPointParticle extends TextureSheetParticle {
             );
         }
 
-        if (ChangedAddonClientConfiguration.SMOOTH_LASER_MOVIMENT.get()) {
+        if (ChangedAddonClientConfiguration.SMOOTH_LASER_MOVEMENT.get()) {
             moveToward(hitPos);
         } else {
             SetToward(hitPos);

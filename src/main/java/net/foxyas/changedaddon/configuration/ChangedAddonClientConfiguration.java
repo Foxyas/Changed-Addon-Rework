@@ -5,8 +5,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class ChangedAddonClientConfiguration {
 	public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 	public static final ForgeConfigSpec SPEC;
-	public static final ForgeConfigSpec.ConfigValue<Boolean> MUSICPLAYER;
-	public static final ForgeConfigSpec.ConfigValue<Boolean> SLIMMODEL;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> MUSIC_PLAYER;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> FEMALE_SNEPS_HAIR;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> MALE_SNEPS_HAIR;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PAT_OVERLAY;
@@ -16,15 +15,11 @@ public class ChangedAddonClientConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> WING_FLAP_INFO;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PAW_STYLE_PAT_OVERLAY;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> SHOW_EXTRA_HAND;
-	public static final ForgeConfigSpec.ConfigValue<Boolean> SMOOTH_LASER_MOVIMENT;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> SMOOTH_LASER_MOVEMENT;
 	public static final ForgeConfigSpec.ConfigValue<Boolean> PLANTOIDS_VARIABLE;
-	public static final ForgeConfigSpec.ConfigValue<Boolean> DIETS_DISPLAY_INFO;
 	static {
 		BUILDER.push("MusicPlayer");
-		MUSICPLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
-		BUILDER.pop();
-		BUILDER.push("Slim Models");
-		SLIMMODEL = BUILDER.comment("Turn On the SlimModel Of The Partial Snow Leopard Transfur (NEED RESTART FOR APPLY AND IS DEPRECATED)").define("Slim Models", false);
+		MUSIC_PLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
 		BUILDER.pop();
 		BUILDER.push("Custom Hair Color");
 		FEMALE_SNEPS_HAIR = BUILDER.comment("Set The Custom Hair Color For the Female Sneps [BioSynth and Exp2]").define("Females Sneps Custom Hair Color", false);
@@ -40,13 +35,12 @@ public class ChangedAddonClientConfiguration {
 		BUILDER.pop();
 		BUILDER.push("Extra Animations");
 		SHOW_EXTRA_HAND = BUILDER.comment("allow the show of the extra hand in some contexts like fall fly").define("Show Extra Hand", false);
-		SMOOTH_LASER_MOVIMENT = BUILDER.comment("Make the Laser Moviment be smooth, it may cause the particule to be slower").define("Laser Smooth Moviment", false);
+		SMOOTH_LASER_MOVEMENT = BUILDER.comment("Make the Laser Moviment be smooth, it may cause the particule to be slower").define("Laser Smooth Moviment", false);
 		BUILDER.pop();
 		BUILDER.push("ModelsHandle");
 		PLANTOIDS_VARIABLE = BUILDER.comment("Turn off the Plantoids [Female Chest Features]").define("Turn Off the Plantoids", false);
 		BUILDER.pop();
 		BUILDER.push("Textual Info ");
-		DIETS_DISPLAY_INFO = BUILDER.comment("Displays a text when the player consumes food favorable to their transformation species").define("Diets Display Info", true);
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

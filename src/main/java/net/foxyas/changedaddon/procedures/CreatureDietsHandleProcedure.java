@@ -61,16 +61,14 @@ public class CreatureDietsHandleProcedure {
         ChangedEntity ChangedEntity = latexInstance.getChangedEntity();
         TransfurVariant<?> variant = ChangedEntity.getSelfVariant();
 
-        List<DietType> dietType = determineDietType(ChangedEntity, variant);
+        List<DietType> dietType = determineDietsType(ChangedEntity, variant);
         if (dietType.isEmpty()) return;
 
         if (dietType.stream().anyMatch((diet -> diet.isDietItem(item)))) {
             applyFoodEffects(variant, player, item, true);
             if (!world.isClientSide()) {
                 world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 1.5f);
-            } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
-                player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
-            }//FIXME isClientSide check will always fail, send message regardless of config?
+            }
             return;
         }
 
@@ -82,9 +80,7 @@ public class CreatureDietsHandleProcedure {
         applyDebuffs(player);
         if (!world.isClientSide()) {
             world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 0f);
-        } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
-            player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
-        }//FIXME isClientSide check will always fail
+        }
     }
 
     private static void applyFoodEffects(Player player, ItemStack item) {
@@ -123,7 +119,7 @@ public class CreatureDietsHandleProcedure {
         }
     }
 
-    private static List<DietType> determineDietType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
+    private static List<DietType> determineDietsType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
         if(variant.is(ChangedAddonTags.TransfurTypes.NO_DIET)) return List.of();
 
         List<DietType> dietTypeList = new ArrayList<>();

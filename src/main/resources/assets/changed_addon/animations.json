@@ -9,10 +9,28 @@
     ]
   },
   "changed_addon:dodge_right": {
-    "category": "prop",
+    "category": "idle",
     "animations": [
       {
         "name": "changed_addon:dodge_right",
+        "criteria": {}
+      }
+    ]
+  },
+  "changed_addon:dodge_weave": {
+    "category": "idle",
+    "animations": [
+      {
+        "name": "changed_addon:dodge_weave",
+        "criteria": {}
+      }
+    ]
+  },
+  "changed_addon:dodge_down": {
+    "category": "idle",
+    "animations": [
+      {
+        "name": "changed_addon:dodge_down",
         "criteria": {}
       }
     ]

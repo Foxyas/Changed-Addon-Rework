@@ -175,8 +175,9 @@
   "changed_addon.ability.unfuse": "Unfuse",
   "changed_addon.ability.unfuse.description.line1": "Allows the player to unfuse from the slime creature and summon it for battle",
   "changed_addon.ability.unfuse.description.line2": "The creature can be fused back by interacting while holding shift",
-  "changed_addon.ability.toggle_climb": "Toggle Climb",
-  "changed_addon.ability.passive_regeneration": "Passive Regeneration",
+
+  "ability.changed_addon.ability.toggle_climb": "Toggle Climb",
+  "ability.changed_addon.ability.passive_regeneration": "Passive Regeneration",
 
 
 
@@ -495,6 +496,7 @@
   "item.changed_addon.dark_latex_coat_cap": "Dark Latex Head Cap",
   "item.changed_addon.dark_latex_spray": "Dark Latex Spray",
   "item.changed_addon.diffusion_syringe": "Latex-Diffusion Syringe",
+  "item.changed_addon.dyeable_shirt" : "Dyeable Shirts",
   "item.changed_addon.dyeable_shorts": "Dyeable Pants",
   "item.changed_addon.electric_katana": "§bElectric Katana",
   "item.changed_addon.electric_katana_red": "§4Electric Katana§r",

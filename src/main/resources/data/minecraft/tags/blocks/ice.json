@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "changed_addon:white_wolf_crystal_block",
+    "changed_addon:orange_wolf_crystal_block",
+    "changed_addon:yellow_wolf_crystal_block",
+    "changed_addon:blue_wolf_crystal_block",
+    "changed_addon:luminar_crystal_block"
+  ]
+}
