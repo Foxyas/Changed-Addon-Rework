@@ -1,17 +1,15 @@
 package net.foxyas.changedaddon.abilities;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.nbt.CompoundTag;
-
-import net.ltxprogrammer.changed.ability.SimpleAbility;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.ability.SimpleAbility;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
-
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ClawsAbility extends SimpleAbility {
 	public boolean isActive = false;
@@ -65,7 +63,7 @@ public class ClawsAbility extends SimpleAbility {
 		if (entity.getTransfurVariantInstance() == null) {
 			return false;
 		}
-		return entity.getTransfurVariantInstance().getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
+		return entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
 	}
 
 	@Override
@@ -73,7 +71,7 @@ public class ClawsAbility extends SimpleAbility {
 		if (entity.getTransfurVariantInstance() == null) {
 			return false;
 		}
-		return entity.getTransfurVariantInstance().getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
+		return entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.abilities;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
@@ -31,8 +32,8 @@ public class LeapAbility extends SimpleAbility {
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
         TransfurVariant<?> variant = entity.getChangedEntity().getSelfVariant();
-        return variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
+        return variant.is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
     }
 
     @Override

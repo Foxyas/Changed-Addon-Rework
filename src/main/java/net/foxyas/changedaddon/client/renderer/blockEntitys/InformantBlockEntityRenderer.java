@@ -9,6 +9,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -101,9 +102,9 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
             green = 1;
             blue = 1;
             alpha = 0.5f;
-            model.prepareMobModel(entity, 1, 1, partialTick);
-            model.setupAnim(entity, 1, 1, entity.tickCount, 0, 0);
-            model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, red, green, blue, alpha);
+            model.prepareMobModel(entity, 0, 0, partialTick);
+            model.setupAnim(entity, 0, 0, entity.tickCount + partialTick, 0, 0);
+            model.renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, red, green, blue, alpha);
             poseStack.popPose();
         }
         //Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, partialTick, poseStack, bufferSource, LightTexture.FULL_BRIGHT);
@@ -147,9 +148,9 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
 
     @Override
     public boolean shouldRender(@NotNull InformantBlockEntity informantBlockEntity, @NotNull Vec3 vec3) {
-        if (informantBlockEntity.getItem(0).isEmpty()) {
-            return !informantBlockEntity.getSelectedForm().isEmpty() && BlockEntityRenderer.super.shouldRender(informantBlockEntity, vec3);
-        }
+        //if (informantBlockEntity.getItem(0).isEmpty()) {
+        //    return !informantBlockEntity.getSelectedForm().isEmpty() && BlockEntityRenderer.super.shouldRender(informantBlockEntity, vec3);
+        //}
 
         return !informantBlockEntity.getItem(0).isEmpty() && BlockEntityRenderer.super.shouldRender(informantBlockEntity, vec3);
     }

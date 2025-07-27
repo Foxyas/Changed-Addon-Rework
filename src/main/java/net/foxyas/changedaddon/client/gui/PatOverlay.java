@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.interfaces.IDynamicPawColor;
 import net.foxyas.changedaddon.init.ChangedAddonKeyMappings;
@@ -13,11 +14,9 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -135,8 +134,7 @@ public class PatOverlay {
 
     private static boolean isPatableEntity(Player player, Entity patEntity) {
         // Verifica se a entidade está dentro das tags definidas como 'patable entities'
-        boolean isPatableByTag = patEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY,
-                new ResourceLocation("changed_addon:patable_entitys")));
+        boolean isPatableByTag = patEntity.getType().is(ChangedAddonTags.EntityTypes.PATABLE);
 
         // Verifica se a visão do jogador está limpa até a entidade
         if (!isLineOfSightClear(player, patEntity)) {

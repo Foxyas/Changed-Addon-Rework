@@ -2,9 +2,10 @@ package net.foxyas.changedaddon.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.abilities.CarryAbility;
-import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
+import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -20,9 +21,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,7 +33,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static net.ltxprogrammer.changed.client.FormRenderHandler.renderModelPartWithTexture;
-import static net.ltxprogrammer.changed.client.FormRenderHandler.renderHand;
 
 @Mixin(value = FormRenderHandler.class, remap = false)
 public class renderHandMixin {
@@ -106,7 +104,7 @@ public class renderHandMixin {
 
             if (carryTarget instanceof LivingEntity) {
                 boolean isHumanoidOrTagValid = carryTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS) ||
-                        carryTarget.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")));
+                        carryTarget.getType().is(ChangedAddonTags.EntityTypes.CAN_CARRY);
 
                 return isHumanoidOrTagValid && (player.getFirstPassenger() == null || player.getFirstPassenger() != carryTarget);
             }

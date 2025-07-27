@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.defaults;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
@@ -326,7 +327,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                 || stack.is(Items.COOKED_COD)
                 || stack.is(Items.SALMON)
                 || stack.is(Items.COOKED_SALMON)
-                || stack.is(ItemTags.create(new ResourceLocation("changed_addon:tame_items")));
+                || stack.is(ChangedAddonTags.Items.TAME_ITEM);
     }
 
     //Preset Styles For Tame

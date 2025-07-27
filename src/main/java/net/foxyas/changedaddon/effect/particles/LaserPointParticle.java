@@ -1,15 +1,15 @@
 package net.foxyas.changedaddon.effect.particles;
 
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.item.LaserPointer;
-import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
@@ -211,7 +211,7 @@ public class LaserPointParticle extends TextureSheetParticle {
         }
 
         if (level.isClientSide() && Minecraft.getInstance().player != null && ProcessTransfur.getPlayerTransfurVariantSafe(Minecraft.getInstance().player).map(
-                transfurVariantInstance -> transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || transfurVariantInstance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)
+                transfurVariantInstance -> transfurVariantInstance.getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || transfurVariantInstance.getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE)
         ).orElse(false)) {
             this.setSize(0.35f, 0.35f);
             this.quadSize = 0.35f;

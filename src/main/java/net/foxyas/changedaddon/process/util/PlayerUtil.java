@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.process.util;
 
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -71,8 +71,8 @@ public class PlayerUtil {
 
     public static boolean IsCatTransfur(Player player) {
         TransfurVariant<?> variant = ProcessTransfur.getPlayerTransfurVariant(player).getParent();
-        return variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
+        return variant.is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
     }
 
     public static boolean IsWolfTransfur(Player player) {
@@ -81,7 +81,7 @@ public class PlayerUtil {
         return Objects.requireNonNull(entity.getType().getRegistryName()).toString().contains("dog") ||
                 entity.getType().getRegistryName().toString().contains("wolf") ||
                 entity instanceof AbstractLatexWolf ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.WOLF_LIKE);
+                variant.is(ChangedAddonTags.TransfurTypes.WOLF_LIKE);
     }
 
     @Nullable

@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
-import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.process.variantsExtraStats.FormDietEvent;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
@@ -11,22 +11,18 @@ import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedItems;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -35,7 +31,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Mod.EventBusSubscriber
 public class CreatureDietsHandleProcedure {
@@ -46,6 +41,7 @@ public class CreatureDietsHandleProcedure {
 
         LivingEntity livingEntity = event.getEntityLiving();
         ItemStack item = event.getItem();
+        if(!item.isEdible()) return;
 
         if (!(livingEntity instanceof Player player)) {
             return;
@@ -54,47 +50,41 @@ public class CreatureDietsHandleProcedure {
         TransfurVariantInstance<?> latexInstance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (latexInstance == null) return;
 
-
         Level world = player.getLevel();
 
         if (world.isClientSide) {
             return;
         }
 
-        boolean isForWork = world.getGameRules().getBoolean(ChangedAddonGameRules.CHANGED_ADDON_CREATURE_DIETS);
-        boolean Debuffs;
-        Debuffs = ChangedAddonServerConfiguration.DEBUFFS.get();
+        if(!world.getGameRules().getBoolean(ChangedAddonGameRules.CHANGED_ADDON_CREATURE_DIETS)) return;
 
         ChangedEntity ChangedEntity = latexInstance.getChangedEntity();
         TransfurVariant<?> variant = ChangedEntity.getSelfVariant();
 
-        if (!item.isEdible()) return;
-
         List<DietType> dietType = determineDietType(ChangedEntity, variant);
         if (dietType.isEmpty()) return;
 
-        boolean ShouldGiveDebuffs = (latexInstance.ageAsVariant < ChangedAddonServerConfiguration.AGE_NEED.get());
-
-        if (isForWork) {
-            if (dietType.stream().anyMatch((diet -> diet.isDietItem(item)))) {
-                applyFoodEffects(variant, player, item, true);
-                if (!world.isClientSide()) {
-                    world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 1.5f);
-                } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
-                    player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
-                }
-            } else if (Debuffs) {
-                if (dietType.stream().noneMatch((diet -> diet.isDietItem(item))) && !DietType.isNotFoodItem(item) && ShouldGiveDebuffs) {
-                    applyFoodEffects(variant, player, item, false);
-                    applyMobEffects(player);
-                    if (!world.isClientSide()) {
-                        world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 0f);
-                    } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
-                        player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
-                    }
-                }
-            }
+        if (dietType.stream().anyMatch((diet -> diet.isDietItem(item)))) {
+            applyFoodEffects(variant, player, item, true);
+            if (!world.isClientSide()) {
+                world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 1.5f);
+            } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
+                player.displayClientMessage(new TranslatableComponent("changedaddon.diets.good_food"), true);
+            }//FIXME isClientSide check will always fail, send message regardless of config?
+            return;
         }
+
+        if(!ChangedAddonServerConfiguration.DEBUFFS.get()
+                || item.is(ChangedAddonTags.Items.NOT_FOOD)
+                || latexInstance.ageAsVariant >= ChangedAddonServerConfiguration.AGE_NEED.get()) return;
+
+        applyFoodEffects(variant, player, item, false);
+        applyDebuffs(player);
+        if (!world.isClientSide()) {
+            world.playSound(null, player, SoundEvents.GENERIC_EAT, SoundSource.MASTER, 1, 0f);
+        } else if (player.getLevel().isClientSide() && ChangedAddonClientConfiguration.DIETS_DISPLAY_INFO.get()) {
+            player.displayClientMessage(new TranslatableComponent("changedaddon.diets.bad_food"), true);
+        }//FIXME isClientSide check will always fail
     }
 
     private static void applyFoodEffects(Player player, ItemStack item) {
@@ -105,7 +95,7 @@ public class CreatureDietsHandleProcedure {
         player.getFoodData().setSaturation(player.getFoodData().getSaturationLevel() + additionalSaturation);
     }
 
-    private static void applyMobEffects(Player player) {
+    private static void applyDebuffs(Player player) {
         player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 60, 3, false, true, true));
         player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 160, 0, false, true, true,
                 new MobEffectInstance(MobEffects.WEAKNESS, 5 * 20, 2)));
@@ -114,13 +104,17 @@ public class CreatureDietsHandleProcedure {
     private static void applyFoodEffects(TransfurVariant<?> variant, Player player, ItemStack item, boolean isGoodFood) {
         int additionalFood;
         float additionalSaturation;
+        FoodProperties properties = item.getFoodProperties(player);
+        assert properties != null;//already checked isEdible so should be fine
+
         if (isGoodFood) {
-            additionalFood = Objects.requireNonNull(item.getFoodProperties(player)).getNutrition() / 2;
-            additionalSaturation = Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier() / 2;
+            additionalFood = properties.getNutrition() / 2;
+            additionalSaturation = properties.getSaturationModifier() / 2;
         } else {
-            additionalFood = -Objects.requireNonNull(item.getFoodProperties(player)).getNutrition() / 4;
-            additionalSaturation = -Objects.requireNonNull(item.getFoodProperties(player)).getSaturationModifier() / 4;
+            additionalFood = -properties.getNutrition() / 4;
+            additionalSaturation = -properties.getSaturationModifier() / 4;
         }
+
         FormDietEvent formDietEvent = new FormDietEvent(variant, player, isGoodFood, item, additionalFood, additionalSaturation);
         if (!MinecraftForge.EVENT_BUS.post(formDietEvent)) {
             additionalFood = formDietEvent.additionalFood;
@@ -130,16 +124,15 @@ public class CreatureDietsHandleProcedure {
     }
 
     private static List<DietType> determineDietType(ChangedEntity ChangedEntity, TransfurVariant<?> variant) {
-        List<TransfurVariant<?>> NoDietList = List.of(ChangedAddonTransfurVariants.REYN.get());
+        if(variant.is(ChangedAddonTags.TransfurTypes.NO_DIET)) return List.of();
+
         List<DietType> dietTypeList = new ArrayList<>();
-        if (NoDietList.contains(variant)) {
-            return List.of();
-        }
         if (isCatDiet(ChangedEntity, variant)) dietTypeList.add(DietType.CAT);
         if (isWolfDiet(ChangedEntity, variant)) dietTypeList.add(DietType.WOLF);
         if (isSpecialDiet(variant)) dietTypeList.add(DietType.SPECIAL);
         if (isFoxDiet(ChangedEntity, variant)) dietTypeList.add(DietType.FOX);
         if (isAquaticDiet(ChangedEntity, variant)) dietTypeList.add(DietType.AQUATIC);
+        if (isSharkDiet(ChangedEntity, variant)) dietTypeList.add(DietType.SHARK);
         if (isDragonDiet(ChangedEntity, variant)) dietTypeList.add(DietType.DRAGON);
         if (isSweetTooth(ChangedEntity, variant)) dietTypeList.add(DietType.SWEET_TOOTH);
 
@@ -148,121 +141,74 @@ public class CreatureDietsHandleProcedure {
 
     private static boolean isCatDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("cat") ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE) ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:cat_diet")));
+                variant.is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.CAT_DIET);
     }
 
     private static boolean isWolfDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("dog") ||
                 entity.getType().getRegistryName().toString().contains("wolf") ||
                 entity instanceof AbstractLatexWolf ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.WOLF_LIKE) ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:wolf_diet")));
+                variant.is(ChangedAddonTags.TransfurTypes.WOLF_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.WOLF_DIET);
     }
 
     private static boolean isSpecialDiet(TransfurVariant<?> variant) {
         return variant == ChangedAddonTransfurVariants.WOLFY.get() ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getMaleVariant()) ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.ADDON_PURO_KIND.getFemaleVariant()) ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:special_diet")));
+                variant.is(ChangedAddonTags.TransfurTypes.SPECIAL_DIET);
     }
 
     private static boolean isFoxDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("fox") ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getMaleVariant()) ||
                 variant.is(ChangedAddonTransfurVariants.Gendered.EXP1.getFemaleVariant()) ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.FOX_LIKE) ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:fox_diet")));
+                variant.is(ChangedAddonTags.TransfurTypes.FOX_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.FOX_DIET);
     }
 
     private static boolean isAquaticDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity instanceof AquaticEntity ||
-                variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.SHARK_LIKE) ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed:aquatic_like"))) ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:aquatic_diet")));
+                variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_DIET);
+    }
+
+    private static boolean isSharkDiet(ChangedEntity entity, TransfurVariant<?> variant) {
+        return variant.is(ChangedAddonTags.TransfurTypes.SHARK_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.SHARK_DIET);
     }
 
     private static boolean isDragonDiet(ChangedEntity entity, TransfurVariant<?> variant) {
         return entity.getType().getRegistryName().toString().contains("dragon") ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed:dragon_like"))) ||
-                variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                        new ResourceLocation("changed_addon:dragon_diet")));
+                variant.is(ChangedAddonTags.TransfurTypes.DRAGON_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.DRAGON_DIET);
     }
 
     private static boolean isSweetTooth(ChangedEntity entity, TransfurVariant<?> variant) {
-        return variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                new ResourceLocation("changed_addon:sweet_tooth")));
+        return variant.is(ChangedAddonTags.TransfurTypes.SWEET_DIET);
     }
 
     private enum DietType {
-        CAT(List.of(
-                Items.COD, Items.COOKED_COD, Items.SALMON, Items.COOKED_SALMON,
-                Items.PUFFERFISH, Items.TROPICAL_FISH, Items.RABBIT, Items.COOKED_RABBIT, Items.BEEF, Items.COOKED_BEEF,
-                Items.CHICKEN, Items.COOKED_CHICKEN, Items.PORKCHOP, Items.COOKED_PORKCHOP
-        ), "changed_addon:cat_diet_list"),
-        DRAGON(List.of(
-                Items.COD, Items.COOKED_COD, Items.SALMON, Items.COOKED_SALMON,
-                Items.PUFFERFISH, Items.TROPICAL_FISH, Items.RABBIT, Items.COOKED_RABBIT,
-                Items.BEEF, Items.COOKED_BEEF, Items.CHICKEN, Items.COOKED_CHICKEN,
-                Items.PORKCHOP, Items.COOKED_PORKCHOP, Items.MUTTON, Items.COOKED_MUTTON
-        ), "changed_addon:dragon_diet_list"),
-        WOLF(List.of(
-                Items.RABBIT, Items.COOKED_RABBIT, Items.BEEF, Items.COOKED_BEEF,
-                Items.CHICKEN, Items.COOKED_CHICKEN, Items.PORKCHOP, Items.COOKED_PORKCHOP,
-                Items.MUTTON, Items.COOKED_MUTTON
-        ), "changed_addon:wolf_diet_list"),
-        FOX(List.of(
-                Items.SWEET_BERRIES, Items.GLOW_BERRIES, Items.RABBIT, Items.COOKED_RABBIT,
-                Items.BEEF, Items.COOKED_BEEF, Items.CHICKEN, Items.COOKED_CHICKEN,
-                Items.PORKCHOP, Items.COOKED_PORKCHOP, Items.MUTTON, Items.COOKED_MUTTON
-        ), "changed_addon:fox_diet_list"),
-        AQUATIC(List.of(
-                Items.DRIED_KELP, Items.COD, Items.COOKED_COD, Items.SALMON,
-                Items.COOKED_SALMON, Items.PUFFERFISH, Items.TROPICAL_FISH
-        ), "changed_addon:aquatic_diet_list"),
-        SWEET_TOOTH(List.of(
-                Items.COOKIE, Items.SWEET_BERRIES
-        ), "changed_addon:sweet_tooth_list"),
-        SPECIAL(List.of(
-                ChangedItems.ORANGE.get(), ChangedAddonItems.FOXTA.get()
-        ), "changed_addon:special_diet_list");
+        AQUATIC(ChangedAddonTags.Items.AQUATIC_DIET),
+        SHARK(ChangedAddonTags.Items.SHARK_DIET),
+        CAT(ChangedAddonTags.Items.CAT_DIET),
+        DRAGON(ChangedAddonTags.Items.DRAGON_DIET),
+        FOX(ChangedAddonTags.Items.FOX_DIET),
+        SWEET_TOOTH(ChangedAddonTags.Items.SWEET_DIET),
+        WOLF(ChangedAddonTags.Items.WOLF_DIET),
+        SPECIAL(ChangedAddonTags.Items.SPECIAL_DIET);
 
-        private final List<Item> dietItems;
-        private final String dietTag;
+        private final TagKey<Item> dietTag;
 
-        DietType(List<Item> dietItems, String dietTag) {
-            this.dietItems = dietItems;
+        DietType(TagKey<Item> dietTag) {
             this.dietTag = dietTag;
         }
 
-        public static boolean isNotFoodItem(ItemStack item) {
-            List<Item> NonFoodItemslist = List.of(ChangedAddonItems.FOXTA.get(),
-                    ChangedAddonItems.SNEPSI.get(),
-                    ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get(),
-                    ChangedAddonItems.LAETHIN_SYRINGE.get(),
-                    ChangedAddonItems.DIFFUSION_SYRINGE.get());
-
-            if (item.is(Items.ENCHANTED_GOLDEN_APPLE)) {
-                return true;
-            } else if (item.is(Items.POTION)) {
-                return true;
-            } else if (NonFoodItemslist.contains(item.getItem())
-                    || item.is(ItemTags.create(new ResourceLocation("changed_addon:is_not_food")))) {
-                return true;
-            } else return item.is(Items.GOLDEN_APPLE);
-        }
-
         public boolean isDietItem(ItemStack item) {
-            return dietItems.contains(item.getItem()) ||
-                    item.is(ItemTags.create(new ResourceLocation(dietTag)));
+            //Registry.ITEM.getTag(dietTag).get().stream().count(); //TODO check empty?
+            return item.is(dietTag);
         }
     }
 }

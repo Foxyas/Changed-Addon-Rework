@@ -116,7 +116,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> CRYSTAL_DAGGER_GREEN = REGISTRY.register("crystal_dagger_green", CrystalAddagerGreenItem::new);
     public static final RegistryObject<Item> CRYSTAL_DAGGER_BLACK = REGISTRY.register("crystal_dagger_black", CrystalAddagerBlackItem::new);
     public static final RegistryObject<Item> LAETHINMINATOR = REGISTRY.register("laethinminator", LaethinminatorItem::new);
-    public static final RegistryObject<Item> CROW_BAR = REGISTRY.register("crow_bar", CrowbarItem::new);
+    public static final RegistryObject<Item> CROWBAR = REGISTRY.register("crow_bar", CrowbarItem::new);
     public static final RegistryObject<Item> SNEPSI = REGISTRY.register("snepsi", SnepsiItem::new);
     public static final RegistryObject<Item> FOXTA = REGISTRY.register("foxta", FoxtaItem::new);
     public static final RegistryObject<Item> DORMANT_DARK_LATEX = block(ChangedAddonBlocks.DORMANT_DARK_LATEX, ChangedAddonTabs.TAB_CHANGED_ADDON);

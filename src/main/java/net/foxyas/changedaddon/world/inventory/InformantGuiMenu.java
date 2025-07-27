@@ -104,8 +104,8 @@ public class InformantGuiMenu extends AbstractContainerMenu implements Supplier<
 	@Override
 	public @NotNull ItemStack quickMoveStack(@NotNull Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = (Slot) this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
+		Slot slot = this.slots.get(index);
+		if (slot.hasItem()) {
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < 1) {

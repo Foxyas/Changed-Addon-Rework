@@ -3,9 +3,9 @@ package net.foxyas.changedaddon.client.renderer.blockEntitys;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.block.entity.ContainmentContainerBlockEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import org.jetbrains.annotations.NotNull;
 
 public class ContainmentContainerRenderer implements BlockEntityRenderer<ContainmentContainerBlockEntity> {
@@ -36,8 +35,6 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
         poseStack.translate(0.5, -0.505, 0.5);
 
         TransfurVariant<?> variantColorGet = blockEntity.getTransfurVariant();
-        TagKey<TransfurVariant<?>> glowVariantsTag = TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                new ResourceLocation("changed_addon:glow_variants"));
 
         if (variantColorGet != null) {
             Color3 firstColor = variantColorGet.getColors().getFirst();
@@ -51,7 +48,7 @@ public class ContainmentContainerRenderer implements BlockEntityRenderer<Contain
                     light,
                     overlay, firstColor.red(), firstColor.green(), firstColor.blue(), 1
             );
-            if (variantColorGet.is(glowVariantsTag)) {
+            if (variantColorGet.is(ChangedAddonTags.TransfurTypes.GLOWING)) {
                 /*
                 * Minecraft minecraft = Minecraft.getInstance();
                 * OutlineBufferSource outlineBufferSource = minecraft.renderBuffers().outlineBufferSource();

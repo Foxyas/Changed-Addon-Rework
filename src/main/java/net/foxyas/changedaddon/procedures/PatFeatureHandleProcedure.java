@@ -1,11 +1,11 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -17,13 +17,11 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -77,7 +75,7 @@ public class PatFeatureHandleProcedure {
                 handleLatexEntity(entity, targetEntity, world);
             } else if (targetEntity instanceof Player) {
                 handlePlayerEntity(entity, (Player) targetEntity, world);
-            } else if (targetEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:patable_entitys")))) {
+            } else if (targetEntity.getType().is(ChangedAddonTags.EntityTypes.PATABLE)) {
                 handlePatableEntity(entity, targetEntity, world);
             }
         }

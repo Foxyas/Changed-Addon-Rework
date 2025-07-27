@@ -1,14 +1,13 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.Mob;
@@ -91,7 +90,7 @@ public class DarkLatexPuddleFeatureProcedure {
     }
 
     private static boolean isChangedCreature(Entity entity) {
-        return entity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:changed_creature"))) ||
+        return entity.getType().is(ChangedAddonTags.EntityTypes.CHANGED_CREATURE) ||
                 entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity;
     }
 

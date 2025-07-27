@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.defaults;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.entity.interfaces.ICoatLikeEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
@@ -341,7 +342,7 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
                 || stack.is(Items.COOKED_COD)
                 || stack.is(Items.SALMON)
                 || stack.is(Items.COOKED_SALMON)
-                || stack.is(ItemTags.create(new ResourceLocation("changed_addon:tame_items")));
+                || stack.is(ChangedAddonTags.Items.TAME_ITEM);
     }
 
     //Public enum TameType that just hold a string for the Items tag Logic

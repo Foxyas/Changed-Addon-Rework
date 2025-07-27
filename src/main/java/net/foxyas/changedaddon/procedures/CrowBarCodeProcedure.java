@@ -46,7 +46,7 @@ public class CrowBarCodeProcedure {
             return;
         }
         if (DoorState.getBlock() instanceof AbstractLabDoor abstractLabDoor) {
-            if ((player.getCooldowns().isOnCooldown(ChangedAddonItems.CROW_BAR.get()))) {
+            if ((player.getCooldowns().isOnCooldown(ChangedAddonItems.CROWBAR.get()))) {
                 return;
             }
             if (abstractLabDoor.openDoor(DoorState, world, pos)) {
@@ -55,10 +55,10 @@ public class CrowBarCodeProcedure {
         } else if (DoorState.getBlock() instanceof AbstractLargeLabDoor abstractLargeLabDoor) {
             if (DoorState.getValue(AbstractLargeLabDoor.SECTION) != NineSection.CENTER) {
             } else {
-                if ((player.getCooldowns().isOnCooldown(ChangedAddonItems.CROW_BAR.get()))) {
+                if ((player.getCooldowns().isOnCooldown(ChangedAddonItems.CROWBAR.get()))) {
                     return;
                 }
-                if (abstractLargeLabDoor.openDoor(DoorState, world, pos) && !(player.getCooldowns().isOnCooldown(ChangedAddonItems.CROW_BAR.get()))) {
+                if (abstractLargeLabDoor.openDoor(DoorState, world, pos) && !(player.getCooldowns().isOnCooldown(ChangedAddonItems.CROWBAR.get()))) {
                     player.getCooldowns().addCooldown(itemStack.getItem(), 60);
                 }
             }
@@ -73,7 +73,7 @@ public class CrowBarCodeProcedure {
         double sy;
         double sz;
         ItemStack CrowBar;
-        CrowBar = new ItemStack(ChangedAddonItems.CROW_BAR.get());
+        CrowBar = new ItemStack(ChangedAddonItems.CROWBAR.get());
         if (entity instanceof LivingEntity _livEnt  && _livEnt.getMainHandItem().getItem() == CrowBar.getItem()) {
             if (blockstate.is(BlockTags.create(new ResourceLocation("changed_addon:lab_doors")))) {
                 if (!(blockstate.getBlock().getStateDefinition().getProperty("open") instanceof BooleanProperty _getbp5 && blockstate.getValue(_getbp5))) {

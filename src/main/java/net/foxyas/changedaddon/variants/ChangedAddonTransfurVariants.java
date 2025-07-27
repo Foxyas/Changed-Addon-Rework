@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.variants;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
@@ -16,7 +17,6 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.*;
@@ -40,38 +40,18 @@ import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonTransfurVariants {
+
+    public static boolean isAquatic(TransfurVariantInstance<?> variantInstance) {
+        ChangedEntity entity = variantInstance.getChangedEntity();
+        TransfurVariant<?> variant = variantInstance.getParent();
+        return entity instanceof AquaticEntity ||
+                variant.is(ChangedAddonTags.TransfurTypes.SHARK_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE) ||
+                variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_DIET);
+    }
     //public static UseItemMode ABO = UseItemMode.create("ABO",false,true,true,true,true);
     //this is For Not Show The Hot Bar
     //.itemUseMode(ABO)
-
-    public static class TransfurVariantTags {
-        public static final TagKey<TransfurVariant<?>> WOLF_LIKE = create("wolf_like");
-        public static final TagKey<TransfurVariant<?>> FOX_LIKE = create("fox_like");
-        public static final TagKey<TransfurVariant<?>> SHARK_LIKE = create("shark_like");
-        public static final TagKey<TransfurVariant<?>> CAT_LIKE = create("cat_like");
-        public static final TagKey<TransfurVariant<?>> LEOPARD_LIKE = create("leopard_like");
-        public static final TagKey<TransfurVariant<?>> CAUSE_FREEZE_DMG = create("cause_freeze_dmg");
-        public static final TagKey<TransfurVariant<?>> HAS_CLAWS = create("has_claws");
-
-
-        public TransfurVariantTags() {
-        }
-
-        private static TagKey<TransfurVariant<?>> create(String name) {
-            return TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), new ResourceLocation("changed_addon", name));
-        }
-
-        public static boolean isAquaticDiet(TransfurVariantInstance<?> variantInstance) {
-            ChangedEntity entity = variantInstance.getChangedEntity();
-            TransfurVariant<?> variant = variantInstance.getParent();
-            return entity instanceof AquaticEntity ||
-                    variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.SHARK_LIKE) ||
-                    variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                            new ResourceLocation("changed:aquatic_like"))) ||
-                    variant.is(TagKey.create(ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(),
-                            new ResourceLocation("changed_addon:aquatic_diet")));
-        }
-    }
 
     public static final DeferredRegister<TransfurVariant<?>> REGISTRY = ChangedRegistry.TRANSFUR_VARIANT.createDeferred(ChangedAddonMod.MODID);
 

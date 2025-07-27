@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -227,7 +228,7 @@ public class LeapProcedure {
 
     private static boolean canLeap(TransfurVariantInstance<?> tf){
         TransfurVariant<?> Variant = TransfurVariant.getEntityVariant(tf.getChangedEntity());
-        if (Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || Variant.is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)) {
+        if (Variant.is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || Variant.is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE)) {
             return !Variant.is(ChangedAddonTransfurVariants.LATEX_SNEP.get())
                     && !Variant.is(ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD.get())
                     && !Variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10.get())

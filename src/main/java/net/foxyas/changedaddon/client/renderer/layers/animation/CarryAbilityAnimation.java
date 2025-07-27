@@ -1,14 +1,12 @@
 package net.foxyas.changedaddon.client.renderer.layers.animation;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -50,7 +48,7 @@ public class CarryAbilityAnimation {
             Entity entity1 = PlayerUtil.getEntityPlayerLookingAt(entity.getUnderlyingPlayer(), 3);
             if (isWithCarryAbilitySelected && entity1 instanceof LivingEntity livingEntity) {
                 if (livingEntity.getType().is(ChangedTags.EntityTypes.HUMANOIDS)
-                        || livingEntity.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("changed_addon:can_carry")))
+                        || livingEntity.getType().is(ChangedAddonTags.EntityTypes.CAN_CARRY)
                         && entity.getFirstPassenger() == null) {
 
                     if (entity.getMainHandItem().isEmpty()) {

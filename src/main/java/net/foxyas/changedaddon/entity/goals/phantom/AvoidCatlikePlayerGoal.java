@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.goals.phantom;
 
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.sounds.SoundEvents;
@@ -46,11 +46,11 @@ public class AvoidCatlikePlayerGoal extends Goal {
                 e -> {
                     if (e instanceof Player player) {
                         return ProcessTransfur.getPlayerTransfurVariantSafe(player).map(v ->
-                                v.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE) || v.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE)
+                                v.getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || v.getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE)
                         ).orElse(false);
                     } else if (e instanceof ChangedEntity changed && changed.getSelfVariant() != null) {
-                        return changed.getSelfVariant().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE)
-                                || changed.getSelfVariant().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE);
+                        return changed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.CAT_LIKE)
+                                || changed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
                     }
                     return false;
                 });

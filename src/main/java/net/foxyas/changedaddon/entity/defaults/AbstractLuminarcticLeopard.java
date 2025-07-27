@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.defaults;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;
@@ -9,7 +10,6 @@ import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonEnchantments;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -454,7 +454,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
                 TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
                 if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()
                         && instance != null
-                        && instance.getParent().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAUSE_FREEZE_DMG)) {
+                        && instance.getParent().is(ChangedAddonTags.TransfurTypes.CAUSE_FREEZING)) {
                     PlayerUtil.ParticlesUtil.sendParticles(target.level, ParticleTypes.SNOWFLAKE, target.position(), 0.3f, 0.5f, 0.3f, 4, 0.25f);
                     target.setTicksFrozen(target.getTicksFrozen() + (int) (target.getTicksRequiredToFreeze() * 0.25f));
                     target.playSound(SoundEvents.PLAYER_HURT_FREEZE, 2f, 1f);

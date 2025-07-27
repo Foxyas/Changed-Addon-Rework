@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.mixins.entity;
 
+import net.foxyas.changedaddon.ChangedAddonTags;
 import net.foxyas.changedaddon.entity.goals.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.goals.SleepingWithOwnerGoal;
-import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
@@ -23,8 +23,8 @@ public class ChangedEntityGoalsMixin {
             thisFixed.goalSelector.addGoal(5, new SleepingWithOwnerGoal(thisFixed, true));
         }
         if (thisFixed.getSelfVariant() != null
-                && (thisFixed.getSelfVariant().is(ChangedAddonTransfurVariants.TransfurVariantTags.CAT_LIKE)
-                || thisFixed.getSelfVariant().is(ChangedAddonTransfurVariants.TransfurVariantTags.LEOPARD_LIKE))) {
+                && (thisFixed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.CAT_LIKE)
+                || thisFixed.getSelfVariant().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE))) {
             thisFixed.goalSelector.addGoal(5, new FollowAndLookAtLaser(thisFixed, 0.4));
         }
     }

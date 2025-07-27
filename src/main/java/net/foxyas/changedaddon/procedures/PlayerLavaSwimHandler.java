@@ -25,7 +25,7 @@ public class PlayerLavaSwimHandler {
             boolean isInLava = player.isEyeInFluid(FluidTags.LAVA);
             boolean hasFireResist = player.hasEffect(MobEffects.FIRE_RESISTANCE);
             TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (transfurVariantInstance != null && ChangedAddonTransfurVariants.TransfurVariantTags.isAquaticDiet(transfurVariantInstance)) {
+            if (transfurVariantInstance != null && ChangedAddonTransfurVariants.isAquatic(transfurVariantInstance)) {
                 if (isInLava && hasFireResist) {
                     ChangedAddonCriteriaTriggers.LAVA_SWIMMING_TRIGGER.trigger(serverPlayer);
                 }
