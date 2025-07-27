@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.item.armor;
 
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
@@ -10,6 +11,7 @@ import net.minecraft.world.item.DyeableLeatherItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -100,6 +102,17 @@ public class TShirtClothing extends DyeableClothingItem {
     @Override
     public @Nullable String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
         return super.getArmorTexture(stack, entity, slot, type);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientInitializer {
+        @SubscribeEvent
+        public static void onItemColorsInit(ColorHandlerEvent.Item event) {
+            event.getItemColors().register(
+                    (stack, layer) -> ((DyeableLeatherItem)stack.getItem()).getColor(stack),
+                    ChangedAddonItems.DYEABLE_SHIRT.get());
+        }
     }
 
     /*public static ShirtType getShirtType(ItemStack stack) {
