@@ -73,7 +73,7 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
             for (int i = 0; i < filteredSuggestions.size(); i++) {
                 String suggestion = filteredSuggestions.get(i);
                 Color color = new Color(0x9988CDFF, true);
-                Color Bgcolor = new Color(0x8863CEFF, true);
+                Color Bgcolor = new Color(0x881DAAEC, true);
                 int bgColor = i == suggestionIndex ? color.getRGB() : Bgcolor.getRGB();
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
@@ -223,6 +223,9 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                     form.setValue(filteredSuggestions.get(suggestionIndex));
                     filteredSuggestions.clear();
                     suggestionIndex = -1;
+                    if (form.isFocused()) {
+                        form.setFocus(false);
+                    }
                     return true;
                 }
             }
