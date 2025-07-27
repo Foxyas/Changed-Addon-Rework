@@ -176,8 +176,8 @@
   "changed_addon.ability.unfuse.description.line1": "Allows the player to unfuse from the slime creature and summon it for battle",
   "changed_addon.ability.unfuse.description.line2": "The creature can be fused back by interacting while holding shift",
 
-  "ability.changed_addon.ability.toggle_climb": "Toggle Climb",
-  "ability.changed_addon.ability.passive_regeneration": "Passive Regeneration",
+  "ability.changed_addon.toggle_climb": "Toggle Climb",
+  "ability.changed_addon.passive_regeneration": "Passive Regeneration",
 
 
 
