@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.commands.CommandSource;
@@ -77,7 +78,7 @@ public class DarkLatexPuddleFeatureProcedure {
                 .stream()
                 .filter(e -> e != entity)
                 .sorted(Comparator.comparingDouble(e -> e.distanceToSqr(center)))
-                .collect(Collectors.toList());
+                .toList();
 
         for (Entity nearby : nearbyEntities) {
             if (!isIgnoredEntity(nearby) && !isEntityDarkLatex(entity) && !isDarkLatexOrPuroKind(player)) {
@@ -91,7 +92,7 @@ public class DarkLatexPuddleFeatureProcedure {
 
     private static boolean isChangedCreature(Entity entity) {
         return entity.getType().is(ChangedTags.EntityTypes.LATEX) ||
-                entity instanceof net.ltxprogrammer.changed.entity.ChangedEntity;
+                entity instanceof ChangedEntity;
     }
 
     private static double getTileCooldown(LevelAccessor world, BlockPos pos) {
