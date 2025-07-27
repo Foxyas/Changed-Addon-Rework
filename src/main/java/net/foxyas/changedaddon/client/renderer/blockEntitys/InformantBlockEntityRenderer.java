@@ -148,9 +148,9 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
 
     @Override
     public boolean shouldRender(@NotNull InformantBlockEntity informantBlockEntity, @NotNull Vec3 vec3) {
-        //if (informantBlockEntity.getItem(0).isEmpty()) {
-        //    return !informantBlockEntity.getSelectedForm().isEmpty() && BlockEntityRenderer.super.shouldRender(informantBlockEntity, vec3);
-        //}
+        if (informantBlockEntity.getItem(0).isEmpty()) {
+            return !informantBlockEntity.getSelectedForm().isEmpty() && BlockEntityRenderer.super.shouldRender(informantBlockEntity, vec3);
+        }
 
         return !informantBlockEntity.getItem(0).isEmpty() && BlockEntityRenderer.super.shouldRender(informantBlockEntity, vec3);
     }
