@@ -69,7 +69,7 @@ public class AccessoryEntityProvider implements DataProvider {
     }
 
     private Path createPath(Path base, String fileName){
-        return base.resolve("data/" + modId + "/changed/accessories/entities/" + fileName + ".json");
+        return base.resolve("data/" + modId + "/accessories/entities/" + fileName + ".json");
     }
 
     @Override
