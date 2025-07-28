@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import static net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants.*;
@@ -178,23 +179,59 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
         tag(ChangedAddonTags.TransfurTypes.GLOWING).add(KET_EXPERIMENT_009.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10.get(), EXPERIMENT_10_BOSS.get());
         tag(ChangedAddonTags.TransfurTypes.HAS_CLAWS).add(LATEX_KITSUNE_FEMALE.get(), LATEX_KITSUNE_MALE.get(), FENGQI_WOLF.get());
 
-        tag(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE);
-        tag(ChangedAddonTags.TransfurTypes.CAT_LIKE).add(ChangedTransfurVariants.LATEX_HYPNO_CAT.get(), ChangedTransfurVariants.LATEX_WATERMELON_CAT.get(), ChangedTransfurVariants.LATEX_MING_CAT.get(), EXPERIMENT_10.get(), MIRROR_WHITE_TIGER.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get(), LYNX.get(), SNEPSI_LEOPARD.get(), HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE.get(), HIMALAYAN_CRYSTAL_GAS_CAT_MALE.get(), LATEX_CALICO_CAT.get());
-        tag(ChangedAddonTags.TransfurTypes.DRAGON_LIKE);
-        tag(ChangedAddonTags.TransfurTypes.FOX_LIKE).add(EXP1_MALE.get(), EXP1_FEMALE.get(), ADDON_LATEX_SNOW_FOX_MALE.get(), ADDON_LATEX_SNOW_FOX_FEMALE.get(), KET_EXPERIMENT_009.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), FOXTA_FOXY.get(), VOID_FOX.get(), HAYDEN_FENNEC_FOX.get(), LATEX_KITSUNE_MALE.get(), LATEX_KITSUNE_FEMALE.get(), ChangedTransfurVariants.LATEX_FENNEC_FOX.get());
-        tag(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE).add(ChangedTransfurVariants.LATEX_SNOW_LEOPARD_FEMALE.get(), ChangedTransfurVariants.LATEX_SNOW_LEOPARD_MALE.get(), ChangedTransfurVariants.LATEX_RED_PANDA.get(), ChangedTransfurVariants.LATEX_RACCOON.get(), EXP2_FEMALE.get(), EXP2_MALE.get(), SNOW_LEOPARD_PARTIAL.get(), EXP6.get(), LATEX_SNEP.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get(), LYNX.get(), SNEPSI_LEOPARD.get(), ORGANIC_SNOW_LEOPARD_FEMALE.get(), ORGANIC_SNOW_LEOPARD_MALE.get());
-        tag(ChangedAddonTags.TransfurTypes.SHARK_LIKE).add(ChangedTransfurVariants.LATEX_SHARK.get(), ChangedTransfurVariants.LATEX_SHARK_FUSION_FEMALE.get(), ChangedTransfurVariants.LATEX_SHARK_FUSION_MALE.get(), ChangedTransfurVariants.LATEX_TIGER_SHARK.get(), ChangedTransfurVariants.LATEX_ORCA.get(), ChangedTransfurVariants.LATEX_MANTA_RAY_FEMALE.get(), ChangedTransfurVariants.LATEX_MANTA_RAY_MALE.get(), LATEX_SQUID_TIGER_SHARK.get());
-        tag(ChangedAddonTags.TransfurTypes.WOLF_LIKE).add(ChangedTransfurVariants.LATEX_KEON_WOLF.get(), ChangedTransfurVariants.DARK_LATEX_WOLF_FEMALE.get(), ChangedTransfurVariants.DARK_LATEX_WOLF_MALE.get(), ChangedTransfurVariants.WHITE_LATEX_WOLF_MALE.get(), ChangedTransfurVariants.WHITE_LATEX_WOLF_FEMALE.get(), ChangedTransfurVariants.LATEX_BLUE_WOLF.get(), ChangedTransfurVariants.GAS_WOLF.get(), ChangedTransfurVariants.LATEX_PURPLE_FOX.get(), ChangedTransfurVariants.CRYSTAL_WOLF.get(), ChangedTransfurVariants.CRYSTAL_WOLF_HORNED.get(), ChangedTransfurVariants.SNIPER_DOG.get(), ChangedTransfurVariants.LATEX_SQUID_DOG_MALE.get(), ChangedTransfurVariants.LATEX_SQUID_DOG_FEMALE.get(), ChangedTransfurVariants.LATEX_BENIGN_WOLF.get(), ChangedTransfurVariants.WHITE_WOLF_MALE.get(), ChangedTransfurVariants.WHITE_WOLF_FEMALE.get(), FENGQI_WOLF.get(), LATEX_SQUID_TIGER_SHARK.get());
 
-        tag(ChangedAddonTags.TransfurTypes.AQUATIC_DIET);
-        tag(ChangedAddonTags.TransfurTypes.SHARK_DIET);
-        tag(ChangedAddonTags.TransfurTypes.CAT_DIET).add(EXP6.get(), LYNX.get(), SNEPSI_LEOPARD.get());
-        tag(ChangedAddonTags.TransfurTypes.DRAGON_DIET);
-        tag(ChangedAddonTags.TransfurTypes.FOX_DIET).add(EXP1_MALE.get(), EXP1_FEMALE.get(), ADDON_LATEX_SNOW_FOX_FEMALE.get(), ADDON_LATEX_SNOW_FOX_MALE.get(), KET_EXPERIMENT_009.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), FOXTA_FOXY.get(), VOID_FOX.get());
-        tag(ChangedAddonTags.TransfurTypes.SPECIAL_DIET).add(EXP6.get());
-        tag(ChangedAddonTags.TransfurTypes.SWEET_DIET).add(HAYDEN_FENNEC_FOX.get(), KET_EXPERIMENT_009.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get());
-        tag(ChangedAddonTags.TransfurTypes.WOLF_DIET);
+        tag(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE).add(LATEX_DRAGON_SNEP_SHARK.get());
+
+        addAllMatching(tag(ChangedAddonTags.TransfurTypes.SHARK_LIKE), var -> var.getRegistryName().getPath().contains("shark")).add(ChangedTransfurVariants.LATEX_ORCA.get(), ChangedTransfurVariants.LATEX_MANTA_RAY_FEMALE.get(), ChangedTransfurVariants.LATEX_MANTA_RAY_MALE.get());
+
+        addAllMatching(tag(ChangedAddonTags.TransfurTypes.CAT_LIKE), var -> var.getRegistryName().getPath().contains("cat")).add(EXPERIMENT_10.get(), MIRROR_WHITE_TIGER.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get(), LYNX.get(), SNEPSI_LEOPARD.get());
+
+        addAllMatching(tag(ChangedAddonTags.TransfurTypes.DRAGON_LIKE), var -> var.getRegistryName().getPath().contains("dragon"));
+
+        addAllMatching(tag(ChangedAddonTags.TransfurTypes.FOX_LIKE), var -> var.getRegistryName().getPath().contains("fox")).add(EXP1_MALE.get(), EXP1_FEMALE.get(), KET_EXPERIMENT_009.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), LATEX_KITSUNE_MALE.get(), LATEX_KITSUNE_FEMALE.get());
+
+        addAllMatching(tag(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE), var -> var.getRegistryName().getPath().contains("leopard")).add(ChangedTransfurVariants.LATEX_RED_PANDA.get(), ChangedTransfurVariants.LATEX_RACCOON.get(), EXP2_FEMALE.get(), EXP2_MALE.get(), EXP6.get(), LATEX_SNEP.get(), LATEX_SNEP_FERAL_FORM.get(), LYNX.get(), LATEX_DRAGON_SNEP_SHARK.get());
+
+        addAllMatching(tag(ChangedAddonTags.TransfurTypes.WOLF_LIKE), var -> {
+            String path = var.getRegistryName().getPath();
+            return path.contains("dog") || path.contains("wolf");
+        }).add(ChangedTransfurVariants.LATEX_PURPLE_FOX.get(), LATEX_SQUID_TIGER_SHARK.get());
+
+
+
+        tag(ChangedAddonTags.TransfurTypes.AQUATIC_DIET)
+                .addTag(ChangedAddonTags.TransfurTypes.AQUATIC_LIKE);
+
+        tag(ChangedAddonTags.TransfurTypes.SHARK_DIET)
+                .addTag(ChangedAddonTags.TransfurTypes.SHARK_LIKE);
+
+        tag(ChangedAddonTags.TransfurTypes.CAT_DIET)
+                .addTags(ChangedAddonTags.TransfurTypes.CAT_LIKE, ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
+
+        tag(ChangedAddonTags.TransfurTypes.DRAGON_DIET)
+                .addTag(ChangedAddonTags.TransfurTypes.DRAGON_LIKE);
+
+        tag(ChangedAddonTags.TransfurTypes.FOX_DIET)
+                .addTag(ChangedAddonTags.TransfurTypes.FOX_LIKE);
+
+        tag(ChangedAddonTags.TransfurTypes.SPECIAL_DIET)
+                .add(EXP6.get(), WOLFY.get(), ADDON_PURO_KIND_FEMALE.get(), ADDON_PURO_KIND_MALE.get());
+
+        tag(ChangedAddonTags.TransfurTypes.SWEET_DIET)
+                .add(HAYDEN_FENNEC_FOX.get(), KET_EXPERIMENT_009.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get());
+
+        tag(ChangedAddonTags.TransfurTypes.WOLF_DIET)
+                .addTag(ChangedAddonTags.TransfurTypes.WOLF_LIKE).add(BLUE_LIZARD.get());
+
         tag(ChangedAddonTags.TransfurTypes.NO_DIET).add(REYN.get());
+    }
+
+    protected TagAppender<TransfurVariant<?>> addAllMatching(TagAppender<TransfurVariant<?>> tag, Predicate<TransfurVariant<?>> predicate){
+        for(TransfurVariant<?> var : ChangedRegistry.TRANSFUR_VARIANT.get().getValues()){
+            if(predicate.test(var)) tag.add(var);
+        }
+
+        return tag;
     }
 
     @Override
