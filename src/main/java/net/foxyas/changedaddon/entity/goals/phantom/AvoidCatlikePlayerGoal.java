@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.goals.phantom;
 
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.sounds.SoundEvents;

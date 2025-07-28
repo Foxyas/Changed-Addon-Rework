@@ -43,7 +43,7 @@ public class FoxyasGuiMenu extends AbstractContainerMenu implements Supplier<Map
 	private BlockEntity boundBlockEntity = null;
 
 	public FoxyasGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonMenus.FOXYASGUI, id);
+		super(ChangedAddonMenus.FOXYAS_GUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(3);

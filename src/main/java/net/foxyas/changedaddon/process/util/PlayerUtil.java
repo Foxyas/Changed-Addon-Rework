@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.process.util;
 
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.effect.particle.ColoredParticleOption;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;

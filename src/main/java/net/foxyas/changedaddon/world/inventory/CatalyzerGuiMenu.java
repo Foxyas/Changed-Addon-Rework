@@ -39,7 +39,7 @@ public class CatalyzerGuiMenu extends AbstractContainerMenu implements Supplier<
 	private BlockEntity boundBlockEntity = null;
 
 	public CatalyzerGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonMenus.CATALYZERGUI, id);
+		super(ChangedAddonMenus.CATALYZER_GUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(2);
