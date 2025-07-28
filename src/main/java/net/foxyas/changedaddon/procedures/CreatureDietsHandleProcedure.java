@@ -1,9 +1,10 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.process.variantsExtraStats.FormDietEvent;
+import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
 import net.foxyas.changedaddon.entity.*;
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;

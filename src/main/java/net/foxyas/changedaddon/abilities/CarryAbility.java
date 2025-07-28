@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.abilities;
 
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;

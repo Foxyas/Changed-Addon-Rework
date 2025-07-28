@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.world.inventory.UnifuserGuiMenu;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.TranslatableComponent;

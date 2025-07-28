@@ -41,7 +41,7 @@ public class UnifuserGuiMenu extends AbstractContainerMenu implements Supplier<M
 	private BlockEntity boundBlockEntity = null;
 
 	public UnifuserGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonMenus.UNIFUSERGUI, id);
+		super(ChangedAddonMenus.UNIFUSER_GUI, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(4);

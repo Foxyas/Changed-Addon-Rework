@@ -36,7 +36,7 @@ public class FightToKeepConsciousnessMinigameMenu extends AbstractContainerMenu 
 	private BlockEntity boundBlockEntity = null;
 
 	public FightToKeepConsciousnessMinigameMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ChangedAddonMenus.FIGHT_TOKEEPCONSCIOUSNESSMINIGAME, id);
+		super(ChangedAddonMenus.FIGHT_TO_KEEP_CONSCIOUSNESS_MINIGAME, id);
 		this.entity = inv.player;
 		this.world = inv.player.level;
 		this.internal = new ItemStackHandler(0);

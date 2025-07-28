@@ -1,0 +1,13 @@
+{
+  "entities": [
+    "changed_addon:fengqi_wolf",
+    "changed_addon:latex_snow_fox_female",
+    "changed_addon:latex_snow_fox_male"
+  ],
+  "slots": [
+    "changed:body",
+    "changed:hands",
+    "changed:full_body",
+    "changed:legs"
+  ]
+}

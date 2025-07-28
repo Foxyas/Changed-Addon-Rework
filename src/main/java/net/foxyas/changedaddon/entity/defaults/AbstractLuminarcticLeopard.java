@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.defaults;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.block.AbstractLuminarCrystal;
 import net.foxyas.changedaddon.entity.CustomHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.CustomHandle.CrawlFeature;

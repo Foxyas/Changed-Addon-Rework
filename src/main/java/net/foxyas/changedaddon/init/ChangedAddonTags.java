@@ -1,5 +1,6 @@
-package net.foxyas.changedaddon;
+package net.foxyas.changedaddon.init;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.minecraft.core.Registry;
@@ -30,7 +31,7 @@ public final class ChangedAddonTags {
         public static final TagKey<Item> NOT_FOOD = key("is_not_food");
         public static final TagKey<Item> LATEX_SOLVENT_APPLICABLE = key("latex_solvent_applicable");
         public static final TagKey<Item> MEAT = key("meat");
-        public static final TagKey<Item> BLOOD_TYPE_SYRINGE = key("bloodtype_syringe");//TODO fix names after recipe datagen
+        public static final TagKey<Item> BLOOD_TYPE_SYRINGE = key("blood_type_syringe");//TODO fix names after recipe datagen
         public static final TagKey<Item> TAME_ITEM = key("tame_items");
 
         public static final TagKey<Item> AQUATIC_DIET = key("aquatic_diet_list");

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins.entity;
 
-import net.foxyas.changedaddon.ChangedAddonTags;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.entity.goals.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.goals.SleepingWithOwnerGoal;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
