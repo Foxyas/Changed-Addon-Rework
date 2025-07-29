@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "changed_addon:snepsi",
+    "changed_addon:diffusion_syringe",
+    "changed_addon:foxta",
+    "changed_addon:potwithcamonia",
+    "changed_addon:laethin_syringe",
+    "changed_addon:syringewithlitixcammonia",
+    "changed_addon:orangejuice",
+    "changed:white_latex_goo",
+    "changed:dark_latex_goo",
+    "minecraft:golden_apple",
+    "minecraft:enchanted_golden_apple",
+    "minecraft:potion"
+  ]
+}

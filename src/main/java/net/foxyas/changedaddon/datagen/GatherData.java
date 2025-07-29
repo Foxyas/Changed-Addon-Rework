@@ -21,6 +21,7 @@ public class GatherData {
 
         generator.addProvider(new EntityTypeTagsProvider(generator, helper));
         generator.addProvider(new TFTagsProvider(generator, helper));
+        generator.addProvider(new AccessoryEntityProvider(generator));
 
         //generator.addProvider(new RecipeProvider(generator));
 

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "changed_addon:form_latex_dragon_snow_leopard_shark",
+    "changed:form_dark_dragon",
+    "changed:form_latex_blue_dragon",
+    "changed:form_latex_golden_dragon",
+    "changed:form_latex_pink_yuin_dragon",
+    "changed:form_latex_red_dragon",
+    "changed:form_latex_traffic_cone_dragon"
+  ]
+}

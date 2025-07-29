@@ -1,0 +1,23 @@
+{
+  "replace": false,
+  "values": [
+    "changed_addon:form_biosynth_snow_leopard/male",
+    "changed_addon:form_biosynth_snow_leopard/female",
+    "changed_addon:form_snepsi_leopard",
+    "changed_addon:form_latex_dragon_snow_leopard_shark",
+    "changed_addon:form_latex_snow_leopard_partial",
+    "changed_addon:form_luminarctic_leopard/male",
+    "changed_addon:form_luminarctic_leopard/female",
+    "changed:form_latex_snow_leopard/female",
+    "changed:form_latex_snow_leopard/male",
+    "changed:form_latex_red_panda",
+    "changed:form_latex_raccoon",
+    "changed_addon:form_exp2/female",
+    "changed_addon:form_exp2/male",
+    "changed_addon:form_exp6",
+    "changed_addon:form_latex_snep",
+    "changed_addon:form_latex_snep_feral",
+    "changed_addon:form_lynx",
+    "changed_addon:form_latex_dragon_snow_leopard_shark"
+  ]
+}

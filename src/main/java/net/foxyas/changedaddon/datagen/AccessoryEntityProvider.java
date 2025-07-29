@@ -6,11 +6,15 @@ import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedTagsExtension;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
+import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.world.entity.EntityType;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -18,6 +22,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
+
+import static net.foxyas.changedaddon.init.ChangedAddonEntities.*;
+import static net.ltxprogrammer.changed.init.ChangedAccessorySlots.*;
 
 
 public class AccessoryEntityProvider implements DataProvider {
@@ -43,10 +50,10 @@ public class AccessoryEntityProvider implements DataProvider {
 
         Path basePath = this.generator.getOutputFolder();
         Appender appender;
-        for(Map.Entry<String, Appender> entry : appenders.entrySet()){
+        for (Map.Entry<String, Appender> entry : appenders.entrySet()) {
             appender = entry.getValue();
 
-            if(appender.isInvalid()){
+            if (appender.isInvalid()) {
                 LOGGER.error("{} Provider: Appender for file {} is missing entities or slots!", getName(), entry.getKey());
                 continue;
             }
@@ -60,15 +67,22 @@ public class AccessoryEntityProvider implements DataProvider {
         }
     }
 
-    public Appender add(@NotNull String fileName){
+    public Appender add(@NotNull String fileName) {
         return appenders.computeIfAbsent(fileName, f -> new Appender());
     }
 
-    protected void registerEntityAccessories(){
-
+    protected void registerEntityAccessories() {
+        this.add(ChangedTagsExtension.AccessoryEntityTags.HUMANOIDS)
+                .entities(ChangedAddonEntities.getAddonChangedEntities().toArray(new EntityType[0]))
+                .slots(getSlots().toArray(new AccessorySlotType[0]));
     }
 
-    private Path createPath(Path base, String fileName){
+    // The Changed Mod Objects are registered too late soo is need to make static lists a method
+    public static List<AccessorySlotType> getSlots() {
+        return List.of(BODY.get(), FULL_BODY.get(), LEGS.get(), LOWER_BODY.get(), LOWER_BODY_SIDE.get());
+    }
+
+    private Path createPath(Path base, String fileName) {
         return base.resolve("data/" + modId + "/accessories/entities/" + fileName + ".json");
     }
 
@@ -83,44 +97,45 @@ public class AccessoryEntityProvider implements DataProvider {
         private final Set<EntityType<?>> entities = new HashSet<>();
         private final Set<AccessorySlotType> slots = new ObjectArraySet<>();
 
-        private Appender(){}
+        private Appender() {
+        }
 
-        public Appender entity(EntityType<?> entity){
+        public Appender entity(EntityType<?> entity) {
             entities.add(entity);
             return this;
         }
 
-        public Appender entities(EntityType<?> ... entities){
+        public Appender entities(EntityType<?>... entities) {
             Collections.addAll(this.entities, entities);
             return this;
         }
 
-        public Appender slot(AccessorySlotType slot){
+        public Appender slot(AccessorySlotType slot) {
             slots.add(slot);
             return this;
         }
 
-        public Appender slots(AccessorySlotType... slots){
+        public Appender slots(AccessorySlotType... slots) {
             Collections.addAll(this.slots, slots);
             return this;
         }
 
-        private boolean isInvalid(){
+        private boolean isInvalid() {
             return entities.isEmpty() || slots.isEmpty();
         }
 
-        private JsonObject toJson(){
+        private JsonObject toJson() {
             JsonObject root = new JsonObject();
             JsonArray entityAr = new JsonArray();
             JsonArray slotAr = new JsonArray();
             root.add("entities", entityAr);
             root.add("slots", slotAr);
 
-            for(EntityType<?> type : entities){
+            for (EntityType<?> type : entities) {
                 entityAr.add(type.getRegistryName().toString());
             }
 
-            for(AccessorySlotType slot : slots){
+            for (AccessorySlotType slot : slots) {
                 slotAr.add(slot.getRegistryName().toString());
             }
 

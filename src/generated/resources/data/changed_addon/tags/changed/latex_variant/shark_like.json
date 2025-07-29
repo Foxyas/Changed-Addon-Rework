@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "changed_addon:form_latex_dragon_snow_leopard_shark",
+    "changed_addon:form_latex_squid_tiger_shark",
+    "changed:form_latex_shark",
+    "changed:form_latex_tiger_shark",
+    "changed:form_latex_mermaid_shark/female",
+    "changed:form_latex_mermaid_shark/male",
+    "changed:form_latex_shark/female",
+    "changed:form_latex_shark/male",
+    "changed:form_latex_orca",
+    "changed:form_latex_manta_ray/female",
+    "changed:form_latex_manta_ray/male"
+  ]
+}

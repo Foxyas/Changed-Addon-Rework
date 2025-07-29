@@ -13,6 +13,7 @@ import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -170,31 +171,45 @@ public class CommonEvent {
 
     private static void triggerSwimRegret(Player player) {
         if(player.level.isClientSide || !ProcessTransfur.isPlayerTransfurred(player)) return;
-
-        int ticks = player.getPersistentData().getInt("TransfurData.SlowSwimInWaterTicks");
-        if (TransfurVariantUtils.GetSwimSpeed(ProcessTransfur.getPlayerTransfurVariant(player).getFormId(), player) > 0.95) {
-            if (ticks != 0) {
-                player.getPersistentData().putInt("TransfurData.SlowSwimInWaterTicks", 0);
+        CompoundTag playerData = player.getPersistentData();
+        if (playerData.contains("TransfurData")) {
+            int ticks = playerData.getCompound("TransfurData").getInt("SlowSwimInWaterTicks");
+            if (TransfurVariantUtils.GetSwimSpeed(ProcessTransfur.getPlayerTransfurVariant(player).getFormId(), player) > 0.95) {
+                if (ticks != 0) {
+                    playerData.getCompound("TransfurData").putInt("SlowSwimInWaterTicks", 0);
+                }
+                return;
             }
-            return;
-        }
 
-        if(ticks == -1) return;
+            if(ticks == -1) return;
 
-        if(player.isSwimming() && player.isInWaterOrBubble()) {
-            ticks++;
-        }
-
-        if (ticks >= 600) {
-            ServerPlayer sPlayer = (ServerPlayer) player;
-            Advancement _adv = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("swim_regret"));
-            AdvancementProgress _ap = sPlayer.getAdvancements().getOrStartProgress(_adv);
-            if (!_ap.isDone()) {
-                for (String s : _ap.getRemainingCriteria()) sPlayer.getAdvancements().award(_adv, s);
+            if(player.isSwimming() && player.isInWaterOrBubble()) {
+                ticks++;
             }
-            ticks = -1;
-        }
 
-        player.getPersistentData().putInt("TransfurData.SlowSwimInWaterTicks",  ticks);
+            if (ticks >= 600) {
+                ServerPlayer sPlayer = (ServerPlayer) player;
+                Advancement _adv = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("swim_regret"));
+                AdvancementProgress _ap = sPlayer.getAdvancements().getOrStartProgress(_adv);
+                if (!_ap.isDone()) {
+                    for (String s : _ap.getRemainingCriteria()) sPlayer.getAdvancements().award(_adv, s);
+                }
+                ticks = -1;
+            }
+
+            playerData.getCompound("TransfurData").putInt("SlowSwimInWaterTicks", ticks);
+        } else {
+            if (TransfurVariantUtils.GetSwimSpeed(ProcessTransfur.getPlayerTransfurVariant(player).getFormId(), player) > 0.95) {
+                if (playerData.contains("TransfurData")) {
+                    playerData.remove("TransfurData");
+                }
+            } else {
+                if (!playerData.contains("TransfurData")) {
+                    CompoundTag tag = new CompoundTag();
+                    tag.putInt("SlowSwimInWaterTicks", 0);
+                    playerData.put("TransfurData", tag);
+                }
+            }
+        }
     }
 }
