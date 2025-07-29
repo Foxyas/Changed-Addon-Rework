@@ -35,10 +35,8 @@ public class ChangedAddonEntities {
      */
 
     //PlaceHolder
-    public static List<EntityType<?>> getAddonChangedEntities() {
+    public static List<EntityType<?>> getAddonHumanoidChangedEntities() {
         final List<EntityType<?>> ADDON_CHANGED_ENTITIES = new ArrayList<>();
-        ADDON_CHANGED_ENTITIES.add(PROTOTYPE.get());
-        ADDON_CHANGED_ENTITIES.add(FOXYAS.get());
         ADDON_CHANGED_ENTITIES.add(LATEX_SNOW_FOX.get());
         ADDON_CHANGED_ENTITIES.add(LATEX_SNOW_FOX_FEMALE.get());
         ADDON_CHANGED_ENTITIES.add(DAZED.get());
@@ -53,14 +51,12 @@ public class ChangedAddonEntities {
         ADDON_CHANGED_ENTITIES.add(EXP_2_MALE.get());
         ADDON_CHANGED_ENTITIES.add(EXP_2_FEMALE.get());
         ADDON_CHANGED_ENTITIES.add(WOLFY.get());
-        ADDON_CHANGED_ENTITIES.add(ERIK.get());
         ADDON_CHANGED_ENTITIES.add(EXP_6.get());
         ADDON_CHANGED_ENTITIES.add(REYN.get());
         ADDON_CHANGED_ENTITIES.add(KET_EXPERIMENT_009_BOSS.get());
         ADDON_CHANGED_ENTITIES.add(EXPERIMENT_10_BOSS.get());
         ADDON_CHANGED_ENTITIES.add(EXP_1_MALE.get());
         ADDON_CHANGED_ENTITIES.add(EXP_1_FEMALE.get());
-        ADDON_CHANGED_ENTITIES.add(LATEX_SNEP.get());
         ADDON_CHANGED_ENTITIES.add(LUMINARCTIC_LEOPARD.get());
         ADDON_CHANGED_ENTITIES.add(FEMALE_LUMINARCTIC_LEOPARD.get());
         ADDON_CHANGED_ENTITIES.add(LATEX_SQUID_TIGER_SHARK.get());

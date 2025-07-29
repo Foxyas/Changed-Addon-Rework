@@ -9,12 +9,10 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedTagsExtension;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
-import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -23,7 +21,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
 
-import static net.foxyas.changedaddon.init.ChangedAddonEntities.*;
 import static net.ltxprogrammer.changed.init.ChangedAccessorySlots.*;
 
 
@@ -73,14 +70,18 @@ public class AccessoryEntityProvider implements DataProvider {
 
     protected void registerEntityAccessories() {
         this.add(ChangedTagsExtension.AccessoryEntityTags.HUMANOIDS)
-                .entities(ChangedAddonEntities.getAddonChangedEntities().toArray(new EntityType[0]))
-                .slots(getSlots().toArray(new AccessorySlotType[0]));
+                .entities(ChangedAddonEntities.getAddonHumanoidChangedEntities().toArray(new EntityType[0]))
+                .slots(getHumanoidSlots().toArray(new AccessorySlotType[0]));
     }
 
     // The Changed Mod Objects are registered too late soo is need to make static lists a method
     public static List<AccessorySlotType> getSlots() {
         return List.of(BODY.get(), FULL_BODY.get(), LEGS.get(), LOWER_BODY.get(), LOWER_BODY_SIDE.get());
     }
+    public static List<AccessorySlotType> getHumanoidSlots() {
+        return List.of(BODY.get(), FULL_BODY.get(), LEGS.get());
+    }
+
 
     private Path createPath(Path base, String fileName) {
         return base.resolve("data/" + modId + "/accessories/entities/" + fileName + ".json");
