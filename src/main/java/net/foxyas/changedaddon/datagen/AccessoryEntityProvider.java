@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
@@ -27,7 +28,7 @@ import static net.ltxprogrammer.changed.init.ChangedAccessorySlots.*;
 public class AccessoryEntityProvider implements DataProvider {
 
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final DataGenerator generator;
     protected final String modId;
     private final Map<String, Appender> appenders = new HashMap<>();
@@ -71,15 +72,14 @@ public class AccessoryEntityProvider implements DataProvider {
     protected void registerEntityAccessories() {
         this.add(ChangedTagsExtension.AccessoryEntityTags.HUMANOIDS)
                 .entities(ChangedAddonEntities.getAddonHumanoidChangedEntities().toArray(new EntityType[0]))
-                .slots(getHumanoidSlots().toArray(new AccessorySlotType[0]));
+                .slots(getHumanoidSlots());
     }
 
     // The Changed Mod Objects are registered too late soo is need to make static lists a method
-    public static List<AccessorySlotType> getSlots() {
-        return List.of(BODY.get(), FULL_BODY.get(), LEGS.get(), LOWER_BODY.get(), LOWER_BODY_SIDE.get());
-    }
-    public static List<AccessorySlotType> getHumanoidSlots() {
-        return List.of(BODY.get(), FULL_BODY.get(), LEGS.get());
+    private static AccessorySlotType[] humanoidSlots;
+    public static AccessorySlotType[] getHumanoidSlots() {
+        if(humanoidSlots == null) humanoidSlots = new AccessorySlotType[]{BODY.get(), FULL_BODY.get(), LEGS.get()};
+        return humanoidSlots;
     }
 
 
