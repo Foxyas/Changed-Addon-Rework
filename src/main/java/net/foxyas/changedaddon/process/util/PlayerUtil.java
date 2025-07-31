@@ -19,6 +19,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -58,6 +59,17 @@ public class PlayerUtil {
         if(latexVariant == null) return;
 
         ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
+    }
+
+    public static void TransfurPlayerAndLoadData(Player player, String id, CompoundTag data, float progress) {
+        ResourceLocation form = ResourceLocation.tryParse(id);
+        TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
+        if(latexVariant == null) return;
+
+        var tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
+        if (tf != null) {
+            tf.load(data);
+        }
     }
 
     public static void UnTransfurPlayer(Entity entity) {

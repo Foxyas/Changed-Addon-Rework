@@ -1,3 +1,11 @@
 {
-  "parent": "changed_addon:block/hand_scanner_human_unlocked"
+  "parent": "changed_addon:block/hand_scanner_human_unlocked",
+  "overrides": [
+    {
+      "predicate": {
+        "changed_addon:transfur_lock": 1
+      },
+      "model": "changed_addon:block/hand_scanner_transfurred_unlocked"
+    }
+  ]
 }

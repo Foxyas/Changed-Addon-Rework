@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 public class InformantBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
     private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
     private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
-    public String selectedForm;
+    public String selectedForm = "";
 
     public InformantBlockEntity(BlockPos position, BlockState state) {
         super(ChangedAddonBlockEntities.INFORMANT_BLOCK.get(), position, state);
