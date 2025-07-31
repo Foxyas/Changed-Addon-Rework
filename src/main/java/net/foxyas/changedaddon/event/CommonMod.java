@@ -2,7 +2,9 @@ package net.foxyas.changedaddon.event;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.network.*;
+import net.foxyas.changedaddon.network.packets.ConfirmMovementPacket;
 import net.foxyas.changedaddon.network.packets.KeyPressPacket;
+import net.foxyas.changedaddon.network.packets.RequestMovementCheckPacket;
 import net.foxyas.changedaddon.network.packets.SyncTransfurVisionsPacket;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,6 +22,11 @@ public class CommonMod {
 
         ChangedAddonMod.addNetworkMessage(FightToKeepConsciousnessMinigameButtonMessage.class, FightToKeepConsciousnessMinigameButtonMessage::buffer, FightToKeepConsciousnessMinigameButtonMessage::new,
                 FightToKeepConsciousnessMinigameButtonMessage::handler);
+
+        ChangedAddonMod.addNetworkMessage(RequestMovementCheckPacket.class, RequestMovementCheckPacket::encode, RequestMovementCheckPacket::decode, RequestMovementCheckPacket::handle);
+        ChangedAddonMod.addNetworkMessage(ConfirmMovementPacket.class, ConfirmMovementPacket::encode, ConfirmMovementPacket::decode, ConfirmMovementPacket::handle);
+
+
     }
 
     @SubscribeEvent

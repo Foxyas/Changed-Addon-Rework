@@ -104,5 +104,14 @@
         "stream": true
       }
     ]
+  },
+  "gecko_sound": {
+    "subtitle": "subtitles.gecko_sound",
+    "sounds": [
+      {
+        "name": "changed_addon:gecko_sound",
+        "stream": false
+      }
+    ]
   }
 }

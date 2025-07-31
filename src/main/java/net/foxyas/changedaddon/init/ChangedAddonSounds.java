@@ -24,6 +24,7 @@ public class ChangedAddonSounds {
         REGISTRY.put(new ResourceLocation("changed_addon", "hammer_gun_shot"), new SoundEvent(new ResourceLocation("changed_addon", "hammer_gun_shot")));
         REGISTRY.put(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard"), new SoundEvent(new ResourceLocation("changed_addon", "music.boss.luminarctic_leopard")));
         REGISTRY.put(new ResourceLocation("changed_addon", "music.boss.exp9"), new SoundEvent(new ResourceLocation("changed_addon", "music.boss.exp9")));
+        REGISTRY.put(new ResourceLocation("changed_addon", "gecko_sound"), new SoundEvent(new ResourceLocation("changed_addon", "gecko_sound")));
     }
 
     @SubscribeEvent
