@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.network.packets;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.CustomHandle.SyncTrackMotion;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -13,7 +14,7 @@ import java.util.function.Supplier;
 public class ConfirmMovementPacket {
     public static final ResourceLocation ID = ChangedAddonMod.resourceLoc("confirm_movement");
     private final boolean isMoving;
-    private Vec3 motion = Vec3.ZERO;
+    private Vec3 motion = null;
 
     public ConfirmMovementPacket(boolean isMoving) {
         this.isMoving = isMoving;
@@ -24,9 +25,14 @@ public class ConfirmMovementPacket {
         this.motion = motion;
     }
 
+    public ConfirmMovementPacket withMotion(Vec3 motion) {
+        this.motion = motion;
+        return this;
+    }
+
     public static void encode(ConfirmMovementPacket msg, FriendlyByteBuf buf) {
         buf.writeBoolean(msg.isMoving);
-        if (msg.motion != Vec3.ZERO) {
+        if (msg.motion != Vec3.ZERO && msg.motion != null) {
             Vec3 motion = msg.motion;
             buf.writeDouble(motion.x());
             buf.writeDouble(motion.y());
@@ -43,8 +49,19 @@ public class ConfirmMovementPacket {
             ServerPlayer sender = ctx.get().getSender();
             if (sender != null) {
                 boolean isMoving = msg.isMoving;
-                // Agora você pode agir com base nisso no servidor:
-                sender.sendMessage(new TextComponent("Client is moving: " + isMoving), sender.getUUID());
+                if (sender instanceof SyncTrackMotion syncTrackMotion) {
+                    syncTrackMotion.setIsMoving(isMoving);
+
+                    if (msg.motion != Vec3.ZERO && msg.motion != null) {
+                        syncTrackMotion.setLastKnownMotion(msg.motion);
+                    }
+
+                    // Agora você pode agir com base nisso no servidor:
+                    if (syncTrackMotion.getLastKnownMotion() != null) {
+                        sender.sendMessage(new TextComponent("Client motion is: " + syncTrackMotion.getLastKnownMotion()), sender.getUUID());
+                    }
+                    sender.sendMessage(new TextComponent("Client is moving: " + syncTrackMotion.getIsMoving()), sender.getUUID());
+                }
             }
         });
         ctx.get().setPacketHandled(true);

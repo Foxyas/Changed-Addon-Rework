@@ -113,7 +113,7 @@ public class DEBUG {
 
                     ChangedAddonMod.LOGGER.info("Player Fake Speed is:{}", fakeSpeed);
                     ChangedAddonMod.LOGGER.info("Player Fake Vec Speed is:{}", posRelative);*/
-                    ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new RequestMovementCheckPacket());
+                    ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new RequestMovementCheckPacket(true));
                 }
             }
         }
