@@ -50,7 +50,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 SNEPSI.get(),
                 DIFFUSION_SYRINGE.get(),
                 FOXTA.get(),
-                POTWITHCAMONIA.get(),
+                POT_WITH_CAMONIA.get(),
                 LAETHIN_SYRINGE.get(),
                 SYRINGE_WITH_LITIX_CAMMONIA.get(),
                 ORANGEJUICE.get(),
@@ -64,7 +64,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 ChangedItems.SYRINGE.get(),
                 SYRINGE.get());
         tag(ChangedAddonTags.Items.UNTRANSFURS).add(
-                POTWITHCAMONIA.get(),
+                POT_WITH_CAMONIA.get(),
                 SYRINGE_WITH_LITIX_CAMMONIA.get());
         tag(ChangedAddonTags.Items.LATEX_SOLVENT_APPLICABLE).add(
                 CRYSTAL_DAGGER_BLACK.get(),

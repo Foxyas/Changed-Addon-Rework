@@ -66,7 +66,7 @@ public class SmallTickUpdateProcedure {
 
         if (entity instanceof Player _playerHasItem && (
                 _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get())) ||
-                        _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.POTWITHCAMONIA.get())) ||
+                        _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.POT_WITH_CAMONIA.get())) ||
                         _playerHasItem.getInventory().contains(new ItemStack(ChangedAddonItems.DIFFUSION_SYRINGE.get())))) {
             if (entity instanceof ServerPlayer _player) {
                 Advancement _adv = _player.server.getAdvancements().getAdvancement(new ResourceLocation("changed_addon:untransfuritemadvancement"));
