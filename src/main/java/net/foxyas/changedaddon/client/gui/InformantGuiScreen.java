@@ -1,72 +1,96 @@
 
 package net.foxyas.changedaddon.client.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
 import net.foxyas.changedaddon.network.InformantBlockGuiKeyMessage;
-import net.foxyas.changedaddon.procedures.IfisEmptyProcedure;
 import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.world.inventory.InformantGuiMenu;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu> {
-    private final static HashMap<String, Object> guistate = InformantGuiMenu.guistate;
-    private final Level world;
-    private final Vec3i position;
+
+    private static final ResourceLocation texture = ChangedAddonMod.textureLoc("textures/screens/informant_gui");
+
     private final Player entity;
     public EditBox form;
 
-    public InformantGuiScreen(InformantGuiMenu container, Inventory inventory, Component text) {
-        super(container, inventory, text);
-        this.world = container.world;
-        this.position = new Vec3i(container.x, container.y, container.z);
-        this.entity = container.entity;
+    public InformantGuiScreen(InformantGuiMenu container, Inventory inventory, Component title) {
+        super(container, inventory, title);
+        this.entity = container.player;
         this.imageWidth = 176;
         this.imageHeight = 195;
+
+        form = new EditBox(Minecraft.getInstance().font, this.leftPos + 44, this.topPos + 13, 90, 10,
+                new TranslatableComponent("gui.changed_addon.informant_gui.form"));
+        form.setTextColor(new Color(0, 205, 255).getRGB());
+        //form.setBordered(false);
+        //form.setAlpha(0.25f);
+        form.setMaxLength(128);
+
+        form.setResponder(text -> {
+            InformantBlockEntity blockEntity = menu.blockEntity;
+
+            if(blockEntity.getText().equals(form.getValue())) return;
+
+            updateSuggestions(text);
+
+            List<TransfurVariant<?>> variants = nameToVariants.get(text);
+            TransfurVariant<?> variant = null;
+            if (variants != null && !variants.isEmpty()) {
+                variant = variants.get(0);
+            }
+
+            ChangedAddonMod.PACKET_HANDLER.sendToServer(new InformantBlockGuiKeyMessage(text, variant, menu.blockEntity.getBlockPos()));
+            blockEntity.updateInternal(text, variant);
+        }); // sempre que o valor mudar, atualiza sugestões
+
+        form.setValue(menu.blockEntity.getText());
+        updateSuggestions(form.getValue());
     }
 
-    private static final ResourceLocation texture = new ResourceLocation("changed_addon:textures/screens/informant_gui.png");
-
     @Override
-    public void render(@NotNull PoseStack ms, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(ms);
-        super.render(ms, mouseX, mouseY, partialTicks);
-        form.render(ms, mouseX, mouseY, partialTicks);
-        this.renderTooltip(ms, mouseX, mouseY);
-        if (mouseX > leftPos + (25) && mouseX < leftPos + (34) && mouseY > topPos + (4) && mouseY < topPos + (13)) {
-            this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_type_the_form"), mouseX, mouseY);
+    public void render(@NotNull PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(stack);
+        super.render(stack, mouseX, mouseY, partialTicks);
+        form.render(stack, mouseX, mouseY, partialTicks);
+        this.renderTooltip(stack, mouseX, mouseY);
+
+        if (mouseX > leftPos + 25 && mouseX < leftPos + 34 && mouseY > topPos + 4 && mouseY < topPos + 13) {
+            this.renderTooltip(stack, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_type_the_form"), mouseX, mouseY);
         }
-        if (IfisEmptyProcedure.execute(entity)) {
+
+        if (menu.getStackInSlot().isEmpty()) {
             if (mouseX > leftPos + 151 && mouseX < leftPos + 168 && mouseY > topPos + 88 && mouseY < topPos + 105) {
-                this.renderTooltip(ms, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
+                this.renderTooltip(stack, new TranslatableComponent("gui.changed_addon.informant_gui.tooltip_put_a_syringe_with_a_form"), mouseX, mouseY);
             }
         }
-        if (!filteredSuggestions.isEmpty()) {
+
+        if (!filteredSuggestions.isEmpty() && form.isFocused()) {
             int x = form.x;
             int y = form.y + form.getHeight() + 2;
             int width = form.getWidth();
@@ -79,8 +103,8 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                 int bgColor = i == suggestionIndex ? Bgcolor.getRGB() : color.getRGB();
                 RenderSystem.enableBlend();
                 RenderSystem.defaultBlendFunc();
-                fill(ms, x, y + i * height, x + width, y + (i + 1) * height, bgColor);
-                this.font.draw(ms, suggestion, x + 2, y + i * height + 2, 0xFFFFFF);
+                fill(stack, x, y + i * height, x + width, y + (i + 1) * height, bgColor);
+                this.font.draw(stack, suggestion, x + 2, y + i * height + 2, 0xFFFFFF);
                 RenderSystem.disableBlend();
             }
         }
@@ -96,47 +120,19 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 
         // TODO Rewrite this to look more clean & render the entity in the middle of the GUI (spinning or looking at the mouse)
 
-        String formIdString = form.getValue();
-        if (!filteredSuggestions.isEmpty() && suggestionIndex >= 0) {
-            String chosenName = filteredSuggestions.get(suggestionIndex);
-            List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
-            if (variants != null && !variants.isEmpty()) {
-                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
-                formIdString = variant.getFormId().toString();
-            }
-        } else {
-            String chosenName = formIdString;
-            List<TransfurVariant<?>> variants = nameToVariants.get(chosenName);
-            if (variants != null && !variants.isEmpty()) {
-                TransfurVariant<?> variant = variants.get(0); // você pode escolher outro critério aqui
-                formIdString = variant.getFormId().toString();
-            }
-        }
+        InformantBlockEntity blockEntity = menu.blockEntity;
+        TransfurVariant<?> tf = blockEntity.getDisplayTf();
 
-        if (this.world != null) {
-            BlockEntity blockEntity = world.getBlockEntity(new BlockPos(this.position));
-            if (blockEntity instanceof InformantBlockEntity informantBlockEntity) {
-                ItemStack stack = informantBlockEntity.getItem(0);
-                if (!(stack.isEmpty())) {
-                    String data = stack.getOrCreateTag().getString("form");
-                    if (!data.isEmpty()) {
-                        formIdString = data;
-                    }
-                }
-            }
-        }
-
-        ResourceLocation formId = ResourceLocation.tryParse(formIdString);
-        double hp = TransfurVariantUtils.GetExtraHp(formId, entity);
-        double swimSpeed = TransfurVariantUtils.GetSwimSpeed(formId, entity);
-        double landSpeed = TransfurVariantUtils.GetLandSpeed(formId, entity);
-        double jumpStrength = TransfurVariantUtils.GetJumpStrength(formId);
-        boolean canFlyOrGlide = TransfurVariantUtils.CanGlideandFly(formId);
-        String miningStrength = TransfurVariantUtils.getMiningStrength(formId);
-        double extraHp = (hp) / 2.0;
-        double landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
-        double swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
-        double jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
+        float hp = TransfurVariantUtils.GetExtraHp(tf, entity);
+        float swimSpeed = TransfurVariantUtils.GetSwimSpeed(tf, entity);
+        float landSpeed = TransfurVariantUtils.GetLandSpeed(tf, entity);
+        float jumpStrength = TransfurVariantUtils.GetJumpStrength(tf);
+        boolean canFlyOrGlide = TransfurVariantUtils.CanGlideandFly(tf);
+        String miningStrength = TransfurVariantUtils.getMiningStrength(tf);
+        float extraHp = hp / 2f;
+        float landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
+        float swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
+        float jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
 
         MutableComponent landSpeedInfo = new TranslatableComponent("text.changed_addon.land_speed")
                 .append("")
@@ -175,17 +171,15 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         // Verifica se o mouse está sobre cada ícone e exibe a tooltip correspondente
         if (mouseX > iconX && mouseX < iconX + iconSize) {
             if (mouseY > iconYHealth && mouseY < iconYHealth + iconSize) {
-                renderTooltip(ms, additionalHealthInfo, mouseX, mouseY);
+                renderTooltip(stack, additionalHealthInfo, mouseX, mouseY);
             } else if (mouseY > iconYLandSpeed && mouseY < iconYLandSpeed + iconSize) {
-                renderTooltip(ms, landSpeedInfo, mouseX, mouseY);
+                renderTooltip(stack, landSpeedInfo, mouseX, mouseY);
             } else if (mouseY > iconYSwimSpeed && mouseY < iconYSwimSpeed + iconSize) {
-                renderTooltip(ms, List.of(swimSpeedInfo), Optional.empty(), mouseX, mouseY);
+                renderTooltip(stack, List.of(swimSpeedInfo), Optional.empty(), mouseX, mouseY);
             } else if (mouseY > iconYJump && mouseY < iconYJump + iconSize) {
-                renderTooltip(ms, jumpStrengthInfo, mouseX, mouseY);
+                renderTooltip(stack, jumpStrengthInfo, mouseX, mouseY);
             }
         }
-
-
     }
 
     @Override
@@ -225,11 +219,9 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                 this.minecraft.player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
             }
 
-            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position : X =" + mouseX + " and Y =" + mouseY), false);
-            this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position2 : X =" + (mouseX - leftPos) + " and Y =" + (mouseY - topPos)), false);
-
+            //this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position : X =" + mouseX + " and Y =" + mouseY), false);
+            //this.minecraft.player.displayClientMessage(new TextComponent("Mouse Position2 : X =" + (mouseX - leftPos) + " and Y =" + (mouseY - topPos)), false);
         }
-
 
         return super.mouseClicked(mouseX, mouseY, keyCode);
     }
@@ -237,17 +229,15 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (!filteredSuggestions.isEmpty()) {
-            if (keyCode == 265) { // UP
+            if (keyCode == InputConstants.KEY_UP) {
                 suggestionIndex = Math.max(0, suggestionIndex - 1);
                 return true;
-            } else if (keyCode == 264) { // DOWN
+            } else if (keyCode == InputConstants.KEY_DOWN) {
                 suggestionIndex = Math.min(filteredSuggestions.size() - 1, suggestionIndex + 1);
                 return true;
-            } else if (keyCode == 257 || keyCode == 335) { // ENTER
+            } else if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == InputConstants.KEY_NUMPADENTER) {
                 if (suggestionIndex >= 0 && suggestionIndex < filteredSuggestions.size()) {
                     form.setValue(filteredSuggestions.get(suggestionIndex));
-                    filteredSuggestions.clear();
-                    suggestionIndex = -1;
                     if (form.isFocused()) {
                         form.setFocus(false);
                     }
@@ -272,13 +262,12 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 //            }
         }
 
-        if (keyCode == 256) {
+        if (keyCode == InputConstants.KEY_ESCAPE) {
             assert this.minecraft != null;
             assert this.minecraft.player != null;
             if (!form.isFocused()) {
                 this.minecraft.player.closeContainer();
             } else {
-                form.setValue("");
                 form.setFocus(false);
             }
             return true;
@@ -293,21 +282,8 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         super.containerTick();
         form.tick();
 
-        if (!form.getValue().isEmpty()) {
-            List<TransfurVariant<?>> variants = nameToVariants.get(form.getValue());
-            if (variants != null && !variants.isEmpty()) {
-                TransfurVariant<?> variant = variants.get(0);
-                if (variant != null) {
-                    InformantBlockGuiKeyMessage message = new InformantBlockGuiKeyMessage(variant.getFormId().toString(), this.getPos());
-                    ChangedAddonMod.PACKET_HANDLER.sendToServer(message);
-                }
-            }
-        } else {
-            if (form.isFocused()) {
-                InformantBlockGuiKeyMessage message = new InformantBlockGuiKeyMessage("", this.getPos());
-                ChangedAddonMod.PACKET_HANDLER.sendToServer(message);
-            }
-        }
+        InformantBlockEntity blockEntity = menu.blockEntity;
+        if(!blockEntity.getText().equals(form.getValue())) form.setValue(blockEntity.getText());
     }
 
     @Override
@@ -409,10 +385,6 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
         Minecraft.getInstance().keyboardHandler.setSendRepeatsToGui(false);
     }
 
-    private final List<String> allTransfurVariantsSuggestions = TransfurVariant.getPublicTransfurVariants()
-            .map(v -> v.getFormId().toString())
-            .toList();
-
     private final List<String> allSuggestions = TransfurVariant.getPublicTransfurVariants()
             .map(v -> v.getEntityType().getDescription().getString())
             .toList();
@@ -422,116 +394,38 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                     v -> v.getEntityType().getDescription().getString()
             ));
 
-    private final Map<ResourceLocation, String> variantToName =
-            TransfurVariant.getPublicTransfurVariants()
-                    .collect(Collectors.toMap(
-                            TransfurVariant::getFormId, // chave: a própria variante
-                            v -> v.getEntityType().getDescription().getString(), // valor: nome legível
-                            (a, b) -> a
-                    ));
-
-
-    private List<String> filteredSuggestions = new ArrayList<>();
+    private final List<String> filteredSuggestions = new ArrayList<>();
     private int suggestionIndex = -1;
-
 
     @Override
     public void init() {
         super.init();
+        form.x = this.leftPos + 44;
+        form.y = this.topPos + 13;
+
         assert this.minecraft != null;
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-
-        form = new EditBox(this.font, this.leftPos + 44, this.topPos + 13, 90, 10,
-                new TranslatableComponent("gui.changed_addon.informant_gui.form")) {
-            {
-                setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
-            }
-
-            @Override
-            public void insertText(@NotNull String text) {
-                super.insertText(text);
-                updateSuggestions(getValue());
-            }
-
-            @Override
-            public void moveCursorTo(int pos) {
-                super.moveCursorTo(pos);
-                updateSuggestions(getValue());
-            }
-
-            @Override
-            public void renderButton(PoseStack p_94160_, int p_94161_, int p_94162_, float p_94163_) {
-                super.renderButton(p_94160_, p_94161_, p_94162_, p_94163_);
-            }
-
-            @Override
-            protected void renderBg(PoseStack p_93661_, Minecraft p_93662_, int p_93663_, int p_93664_) {
-                super.renderBg(p_93661_, p_93662_, p_93663_, p_93664_);
-            }
-        };
-        form.setTextColor(new Color(0, 205, 255).getRGB());
-        //form.setBordered(false);
-        //form.setAlpha(0.25f);
-
-        if (this.world != null) {
-            BlockEntity blockEntity = world.getBlockEntity(new BlockPos(this.position));
-            if (blockEntity instanceof InformantBlockEntity informantBlockEntity) {
-                String selectedForm = informantBlockEntity.getSelectedForm();
-                if (!selectedForm.isEmpty()) {
-                    ResourceLocation res = ResourceLocation.tryParse(selectedForm);
-                    if (res != null) {
-                        String data = variantToName.get(res);
-                        form.setValue(data);
-                    }
-                }
-            }
-        }
-
-
-        form.setMaxLength(32767);
-        guistate.put("text:form", form);
-        this.addWidget(this.form);
-
-        form.setResponder(this::updateSuggestions); // sempre que o valor mudar, atualiza sugestões
+        addWidget(form);
     }
 
     public void updateSuggestions(String input) {
-        if (input.isEmpty()) {
-            filteredSuggestions.clear();
-            suggestionIndex = -1;
-        } else {
-            filteredSuggestions = new ArrayList<>(allSuggestions.stream()
+        filteredSuggestions.clear();
+        if (!input.isEmpty()) {
+            allSuggestions.stream()
                     .filter(s -> s.toLowerCase().startsWith(input.toLowerCase()))
                     .distinct()
-                    .limit(6)
-                    .toList());
+                    .limit(6).forEach(filteredSuggestions::add);
+        } else form.setSuggestion(new TranslatableComponent("gui.changed_addon.informant_gui.form").getString());
 
-            suggestionIndex = filteredSuggestions.isEmpty() ? -1 : 0;
-        }
-
-        if (filteredSuggestions.size() == 1 && !input.equalsIgnoreCase(filteredSuggestions.get(0))) {
-            String suggestion = filteredSuggestions.get(0);
-            if (suggestion.toLowerCase().startsWith(input.toLowerCase())) {
-                String remaining = suggestion.substring(input.length()); // remove o que já foi escrito
-                form.setSuggestion(remaining);
-            } else {
-                form.setSuggestion(null);
-            }
-        } else {
+        if(filteredSuggestions.isEmpty()){
+            suggestionIndex = -1;
             form.setSuggestion(null);
+            return;
         }
 
-    }
+        suggestionIndex = Mth.clamp(suggestionIndex, 0, filteredSuggestions.size() - 1);
 
-    public Vec3i getPosition() {
-        return position;
-    }
-
-    public BlockPos getPos() {
-        return new BlockPos(this.getPosition());
-    }
-
-    public Level getWorld() {
-        return world;
+        String suggestion = filteredSuggestions.get(suggestionIndex);
+        form.setSuggestion(input.equalsIgnoreCase(suggestion) ? null : suggestion.substring(input.length()));
     }
 }

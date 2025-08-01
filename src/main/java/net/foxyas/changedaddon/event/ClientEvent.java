@@ -3,7 +3,9 @@ package net.foxyas.changedaddon.event;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.process.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variants.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -37,6 +39,9 @@ public class ClientEvent {
         ResourceLocation loc = ResourceLocation.tryParse(itemstack.getOrCreateTag().getString("form"));
         if(loc == null) return;
 
+        TransfurVariant<?> tf = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(loc);
+        if(tf == null) return;
+
         //boolean hasInformantBlock = entity.getInventory().contains(new ItemStack(ChangedAddonModBlocks.INFORMANTBLOCK.get()));
 
 //        if (hasInformantBlock || isCreative) {
@@ -54,7 +59,7 @@ public class ClientEvent {
             } else {
                 int index = Math.min(tooltip.size(), 3);
 
-                float extraHp = TransfurVariantUtils.GetExtraHp(loc, entity) / 2f;
+                float extraHp = TransfurVariantUtils.GetExtraHp(tf, entity) / 2f;
                 tooltip.add(index, new TranslatableComponent("text.changed_addon.additionalHealth")
                         .append("")
                         .append(extraHp == 0
@@ -63,10 +68,10 @@ public class ClientEvent {
                         .append(new TranslatableComponent("text.changed_addon.additionalHealth.Hearts")));
 
                 index++;
-                tooltip.add(index, new TranslatableComponent("text.changed_addon.miningStrength", TransfurVariantUtils.getMiningStrength(loc)));
+                tooltip.add(index, new TranslatableComponent("text.changed_addon.miningStrength", TransfurVariantUtils.getMiningStrength(tf)));
 
                 index++;
-                float landSpeed = TransfurVariantUtils.GetLandSpeed(loc, entity);
+                float landSpeed = TransfurVariantUtils.GetLandSpeed(tf, entity);
                 float landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
                 tooltip.add(index, new TranslatableComponent("text.changed_addon.land_speed")
                         .append("")
@@ -75,7 +80,7 @@ public class ClientEvent {
                                 : new TextComponent((landSpeedPct > 0 ? "§a+" : "§c") + (int) landSpeedPct + "%")));
 
                 index++;
-                float swimSpeed = TransfurVariantUtils.GetSwimSpeed(loc, entity);
+                float swimSpeed = TransfurVariantUtils.GetSwimSpeed(tf, entity);
                 float swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;
                 tooltip.add(index, new TranslatableComponent("text.changed_addon.swim_speed")
                         .append("")
@@ -84,7 +89,7 @@ public class ClientEvent {
                                 : new TextComponent((swimSpeedPct > 0 ? "§a+" : "§c") + (int) swimSpeedPct + "%")));
 
                 index++;
-                float jumpStrength = TransfurVariantUtils.GetJumpStrength(loc);
+                float jumpStrength = TransfurVariantUtils.GetJumpStrength(tf);
                 float jumpStrengthPct = jumpStrength == 0 ? 0 : (jumpStrength - 1) * 100;
                 tooltip.add(index, new TranslatableComponent("text.changed_addon.jumpStrength")
                         .append("")
@@ -95,7 +100,7 @@ public class ClientEvent {
                 index++;
                 tooltip.add(index, new TranslatableComponent("text.changed_addon.canGlide/Fly")
                         .append("")
-                        .append(TransfurVariantUtils.CanGlideandFly(loc)
+                        .append(TransfurVariantUtils.CanGlideandFly(tf)
                                 ? new TextComponent("§aTrue§r")
                                 : new TextComponent("§cFalse§r")));
             }
