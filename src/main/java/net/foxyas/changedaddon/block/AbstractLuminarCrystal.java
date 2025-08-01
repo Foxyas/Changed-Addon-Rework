@@ -26,6 +26,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,6 +45,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.*;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -449,6 +451,14 @@ public class AbstractLuminarCrystal {
             if (!canSupportRigidBlock(level, blockPos.relative(oppositeDirection)))
                 return false;
             return blockStateOn.getBlock() == ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get();
+        }
+
+        @Override
+        public @Nullable BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob entity) {
+            if (entity instanceof AbstractLuminarcticLeopard abstractLuminarcticLeopard) {
+                return BlockPathTypes.WALKABLE;
+            }
+            return BlockPathTypes.DANGER_OTHER;
         }
 
         @Override
