@@ -38,7 +38,7 @@ public class UntransfurPotionRecipeBrewingRecipe implements IBrewingRecipe {
 	@Override
 	public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
 		if (isInput(input) && isIngredient(ingredient)) {
-			return PotionUtils.setPotion(new ItemStack(input.getItem()), ChangedAddonPotions.LITIXCAMONIAEFFECT.get());
+			return PotionUtils.setPotion(new ItemStack(input.getItem()), ChangedAddonPotions.LITIX_CAMMONIA_EFFECT.get());
 		}
 		return ItemStack.EMPTY;
 	}

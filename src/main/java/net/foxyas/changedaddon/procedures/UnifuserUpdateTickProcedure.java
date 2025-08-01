@@ -1104,7 +1104,7 @@ public class UnifuserUpdateTickProcedure {
                                         _ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
                                     return _retval.get();
                                 }
-                            }.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get() || (new Object() {
+                            }.getItemStack(world, new BlockPos(x, y, z), 3)).getItem() == ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get() || (new Object() {
                                 public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
                                     AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
                                     BlockEntity _ent = world.getBlockEntity(pos);
@@ -1145,7 +1145,7 @@ public class UnifuserUpdateTickProcedure {
                                     BlockEntity _ent = world.getBlockEntity(new BlockPos(x, y, z));
                                     if (_ent != null) {
                                         final int _slotid = 3;
-                                        final ItemStack _setstack = new ItemStack(ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get());
+                                        final ItemStack _setstack = new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get());
                                         _setstack.setCount(1 + new Object() {
                                             public int getAmount(LevelAccessor world, BlockPos pos, int slotid) {
                                                 AtomicInteger _retval = new AtomicInteger(0);

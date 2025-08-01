@@ -65,7 +65,7 @@ public class ChangedAddonTrades {
 
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 12 + PriceRandom.nextInt(11)), Laethin, 8, 18, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 12 + PriceRandom.nextInt(11)), DarkLaethin, 8, 18, 0.02f));
-            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 7 + PriceRandom.nextInt(11)), new ItemStack(ChangedAddonItems.SYRINGEWITHLITIXCAMMONIA.get(), 1), 12, 25, 0.02f));
+            event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 7 + PriceRandom.nextInt(11)), new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(), 1), 12, 25, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 10 + PriceRandom.nextInt(11)), LaethinSyringe, 8, 25, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 10 + PriceRandom.nextInt(11)), DarkLaethinSyringe, 8, 25, 0.02f));
             event.getTrades().get(4).add(new BasicItemListing(new ItemStack(Items.EMERALD, 8 + PriceRandom.nextInt(11)), new ItemStack(Items.REDSTONE, 16 + PriceRandom.nextInt(6)), new ItemStack(ChangedAddonItems.UNIFUSER.get()), 8, 20, 0.02f));

@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedTagsExtension;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -53,7 +52,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 FOXTA.get(),
                 POTWITHCAMONIA.get(),
                 LAETHIN_SYRINGE.get(),
-                SYRINGEWITHLITIXCAMMONIA.get(),
+                SYRINGE_WITH_LITIX_CAMMONIA.get(),
                 ORANGEJUICE.get(),
                 ChangedItems.WHITE_LATEX_GOO.get(),
                 ChangedItems.DARK_LATEX_GOO.get(),
@@ -66,7 +65,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 SYRINGE.get());
         tag(ChangedAddonTags.Items.UNTRANSFURS).add(
                 POTWITHCAMONIA.get(),
-                SYRINGEWITHLITIXCAMMONIA.get());
+                SYRINGE_WITH_LITIX_CAMMONIA.get());
         tag(ChangedAddonTags.Items.LATEX_SOLVENT_APPLICABLE).add(
                 CRYSTAL_DAGGER_BLACK.get(),
                 CRYSTAL_DAGGER_GREEN.get(),

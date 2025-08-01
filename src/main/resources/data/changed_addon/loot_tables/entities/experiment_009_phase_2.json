@@ -83,7 +83,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "changed_addon:potwithcamonia",
+          "name": "changed_addon:pot_with_camonia",
           "weight": 1,
           "functions": [
             {
@@ -125,7 +125,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "changed_addon:syringewithlitixcammonia",
+          "name": "changed_addon:syringe_with_litix_cammonia",
           "weight": 1,
           "functions": [
             {

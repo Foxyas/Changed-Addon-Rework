@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:syringewithlitixcammonia"
+      "item": "changed_addon:syringe_with_litix_cammonia"
     },
     "title": {
       "translate": "advancements.timesthesyringewasused_advancement.title"
@@ -20,7 +20,7 @@
       "conditions": {
         "item": {
           "items": [
-            "changed_addon:syringewithlitixcammonia"
+            "changed_addon:syringe_with_litix_cammonia"
           ]
         },
         "player": {
@@ -28,7 +28,7 @@
             "stats": [
               {
                 "type": "minecraft:used",
-                "stat": "changed_addon:syringewithlitixcammonia",
+                "stat": "changed_addon:syringe_with_litix_cammonia",
                 "value": {
                   "min": 32,
                   "max": 999999

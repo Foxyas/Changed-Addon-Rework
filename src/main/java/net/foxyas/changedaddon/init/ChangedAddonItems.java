@@ -37,45 +37,25 @@ public class ChangedAddonItems {
     public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ChangedAddonMod.MODID);
 
     public static final RegistryObject<Item> CHANGED_BOOK = REGISTRY.register("changedbook", ChangedBookItem::new);
-
     public static final RegistryObject<Item> ANTI_LATEX_BASE = REGISTRY.register("anti_latex_base", UnlatexbaseItem::new);
-
     public static final RegistryObject<Item> LATEX_INSULATOR = block(ChangedAddonBlocks.LATEX_INSULATOR, ChangedAddonTabs.TAB_CHANGED_ADDON);
-
     public static final RegistryObject<Item> IMPURE_AMMONIA = REGISTRY.register("impure_ammonia", InpureammoniaItem::new);
-
     public static final RegistryObject<Item> AMMONIA_PARTICLE = REGISTRY.register("ammonia_particle", AmmoniaParticleItem::new);
-
     public static final RegistryObject<Item> AMMONIA_COMPRESSED = REGISTRY.register("ammonia_compressed", AmmoniaCompressedItem::new);
-
     public static final RegistryObject<Item> AMMONIA = REGISTRY.register("ammonia", AmmoniaItem::new);
-
     public static final RegistryObject<Item> LITIX_CAMONIA = REGISTRY.register("litix_camonia", LitixCamoniaItem::new);
-
     public static final RegistryObject<Item> LAETHIN = REGISTRY.register("laethin", LaethinItem::new);
-
     public static final RegistryObject<Item> SYRINGE = REGISTRY.register("syringe", SyringeItem::new);
-
     public static final RegistryObject<Item> CATALYZEDDNA = REGISTRY.register("catalyzeddna", CatalyzedDNAItem::new);
-
     public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", DiffusionSyringeItem::new);
-
-    public static final RegistryObject<Item> SYRINGEWITHLITIXCAMMONIA = REGISTRY.register("syringewithlitixcammonia", SyringeWithLitixCammoniaItem::new);
-
+    public static final RegistryObject<Item> SYRINGE_WITH_LITIX_CAMMONIA = REGISTRY.register("syringe_with_litix_cammonia", SyringeWithLitixCammoniaItem::new);
     public static final RegistryObject<Item> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", LaethinSyringeItem::new);
-
-    public static final RegistryObject<Item> POTWITHCAMONIA = REGISTRY.register("potwithcamonia", PotWithCamoniaItem::new);
-
+    public static final RegistryObject<Item> POT_WITH_CAMONIA = REGISTRY.register("pot_with_camonia", PotWithCamoniaItem::new);
     public static final RegistryObject<Item> ORANGEJUICE = REGISTRY.register("orangejuice", OrangejuiceItem::new);
-
     public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", RawIridiumItem::new);
-
     public static final RegistryObject<Item> IRIDIUM = REGISTRY.register("iridium", IridiumItem::new);
-
     public static final RegistryObject<Item> IRIDIUM_ORE = block(ChangedAddonBlocks.IRIDIUM_ORE, ChangedAddonTabs.TAB_CHANGED_ADDON);
-
     public static final RegistryObject<Item> IRIDIUM_BLOCK = block(ChangedAddonBlocks.IRIDIUM_BLOCK, ChangedAddonTabs.TAB_CHANGED_ADDON);
-
     public static final RegistryObject<Item> PAINITE = REGISTRY.register("painite", PainiteItem::new);
     public static final RegistryObject<Item> ACCESSORIES_CHESTPLATE = REGISTRY.register("accessories_chestplate", AccessoriesItem.Chestplate::new);
     public static final RegistryObject<Item> PAINITE_SWORD = REGISTRY.register("painite_sword", PainiteSwordItem::new);
@@ -89,10 +69,6 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> PAINITE_ARMOR_BOOTS = REGISTRY.register("painite_armor_boots", PainiteArmorItem.Boots::new);
     public static final RegistryObject<Item> PAINITE_ORE = block(ChangedAddonBlocks.PAINITE_ORE, ChangedAddonTabs.TAB_CHANGED_ADDON);
     public static final RegistryObject<Item> PAINITE_BLOCK = block(ChangedAddonBlocks.PAINITE_BLOCK, ChangedAddonTabs.TAB_CHANGED_ADDON);
-    public static final RegistryObject<Item> PROTOTYPE_SPAWN_EGG = REGISTRY.register("prototype_spawn_egg",
-            () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOTYPE, -5325833, -9306113, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
-    public static final RegistryObject<Item> FOXYAS_SPAWN_EGG = REGISTRY.register("foxyas_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.FOXYAS, -1, -26215, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
-    public static final RegistryObject<Item> SPAWNEGGOFFOXYAS = REGISTRY.register("spawneggoffoxyas", SpawnEggOfFoxyasItem::new);
     public static final RegistryObject<Item> LITIX_CAMONIA_SPRAY = REGISTRY.register("litix_camonia_spray", LitixCamoniaSprayItem::new);
     public static final RegistryObject<Item> EMPTY_SPRAY = REGISTRY.register("empty_spray", EmptySprayItem::new);
     public static final RegistryObject<Item> LITIX_CAMONIA_FLUID_BUCKET = REGISTRY.register("litix_camonia_fluid_bucket", LitixCamoniaFluidItem::new);
@@ -171,13 +147,21 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> CATALYZER_BLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("catalyzer_block_illustrative_item", CatalyzerBlockIllustrativeItemItem::new);
     public static final RegistryObject<Item> UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("unifuser_block_illustrative_item", UnifuserblockIllustrativeItemItem::new);
     public static final RegistryObject<Item> AMMONIA_PARTICLES_JEI_ILLUSTRATIVE = REGISTRY.register("ammonia_particles_jei_illustrative", AmmoniaParticlesJeiIllustrativeItem::new);
-    public static final RegistryObject<Item> ERIK_SPAWN_EGG = REGISTRY.register("erik_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.ERIK, -1, -1, new Item.Properties().tab(null)));
     public static final RegistryObject<Item> FOXTA_CAN = block(ChangedAddonBlocks.FOXTA_CAN, null);
     public static final RegistryObject<Item> SNEPSI_CAN = block(ChangedAddonBlocks.SNEPSI_CAN, null);
     public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", SnepIconItem::new);
     public static final RegistryObject<Item> FRIENDLY_GOEY_ICON = REGISTRY.register("friendly_goey_icon", FriendlyGoeyIconItem::new);
     public static final RegistryObject<Item> PAT_ICON = REGISTRY.register("pat_icon", PatIconItem::new);
     public static final RegistryObject<Item> GOLDEN_ORANGE = REGISTRY.register("golden_orange", GoldenOrange::new);
+
+    // --- MOBS SPAWN EGGS ---
+    public static final RegistryObject<Item> ERIK_SPAWN_EGG = REGISTRY.register("erik_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.ERIK, -1, -1, new Item.Properties().tab(null)));
+    public static final RegistryObject<Item> PROTOTYPE_SPAWN_EGG = REGISTRY.register("prototype_spawn_egg",
+            () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOTYPE, -5325833, -9306113, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
+    public static final RegistryObject<Item> FOXYAS_SPAWN_EGG = REGISTRY.register("foxyas_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.FOXYAS, -1, -26215, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
+    public static final RegistryObject<Item> SPAWNEGGOFFOXYAS = REGISTRY.register("spawneggoffoxyas", SpawnEggOfFoxyasItem::new);
+
+    // --- CHANGED ENTITIES SPAWN EGGS ---
     public static final RegistryObject<Item> LATEX_SNOW_FOX_SPAWN_EGG = REGISTRY.register("latex_snow_fox_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
     public static final RegistryObject<Item> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = REGISTRY.register("latex_snow_fox_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
     public static final RegistryObject<Item> DAZED_LATEX_SPAWN_EGG = REGISTRY.register("latex_dazed_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.DAZED, 0xFFFFFFF, 0xffCFCFCF, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
@@ -219,6 +203,10 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> LATEX_KITSUNE_FEMALE_SPAWN_EGG = REGISTRY.register("latex_kitsune_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_FEMALE, 0xfff6f6, 0xffeeee, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
     public static final RegistryObject<Item> LATEX_CALICO_CAT_MALE_SPAWN_EGG = REGISTRY.register("latex_calico_cat_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CALICO_CAT, 0xffece4, 0xd56f53, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
     public static final RegistryObject<Item> PROTOGEN_SPAWN_EGG = REGISTRY.register("protogen_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOGEN, new Color(255, 255, 255).getRGB(), new Color(0, 196, 255).getRGB(), new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
+    public static final RegistryObject<Item> LATEX_MONGOOSE_SPAWN_EGG = REGISTRY.register("latex_mongoose_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOGEN, new Color(213, 152, 113).getRGB(), new Color(91, 91, 91).getRGB(), new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
+
+
+
     public static final RegistryObject<Item> DARK_LATEX_COAT = REGISTRY.register("dark_latex_coat",
             () -> new DarkLatexCoatItem(EquipmentSlot.CHEST, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
     public static final RegistryObject<Item> DARK_LATEX_HEAD_CAP = REGISTRY.register("dark_latex_coat_cap",

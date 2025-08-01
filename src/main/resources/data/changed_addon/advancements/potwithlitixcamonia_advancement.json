@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:potwithcamonia"
+      "item": "changed_addon:pot_with_camonia"
     },
     "title": {
       "translate": "advancements.potwithlitixcamonia_advancement.title"
@@ -20,7 +20,7 @@
       "conditions": {
         "item": {
           "items": [
-            "changed_addon:potwithcamonia"
+            "changed_addon:pot_with_camonia"
           ]
         }
       }
