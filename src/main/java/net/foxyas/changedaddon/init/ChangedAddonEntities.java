@@ -77,7 +77,7 @@ public class ChangedAddonEntities {
         ADDON_CHANGED_ENTITIES.add(LATEX_KITSUNE_FEMALE.get());
         ADDON_CHANGED_ENTITIES.add(LATEX_CALICO_CAT.get());
         ADDON_CHANGED_ENTITIES.add(PROTOGEN.get());
-        ADDON_CHANGED_ENTITIES.add(LATEX_MONGOOSE.get());
+        ADDON_CHANGED_ENTITIES.add(MONGOOSE.get());
         return ADDON_CHANGED_ENTITIES;
     }
 
@@ -297,11 +297,11 @@ public class ChangedAddonEntities {
 
                     .sized(0.7f, 1.93f));
 
-    public static final RegistryObject<EntityType<LatexMongooseEntity>> LATEX_MONGOOSE = registerChangedEntity("latex_mongoose",
-            EntityType.Builder.<LatexMongooseEntity>of(LatexMongooseEntity::new, ChangedMobCategories.CHANGED)
+    public static final RegistryObject<EntityType<MongooseEntity>> MONGOOSE = registerChangedEntity("mongoose",
+            EntityType.Builder.<MongooseEntity>of(MongooseEntity::new, ChangedMobCategories.CHANGED)
                     .setShouldReceiveVelocityUpdates(true)
                     .setTrackingRange(64).setUpdateInterval(3)
-                    .setCustomClientFactory(LatexMongooseEntity::new)
+                    .setCustomClientFactory(MongooseEntity::new)
                     .clientTrackingRange(10)
 
                     .sized(0.7f, 1.93f));
@@ -382,7 +382,7 @@ public class ChangedAddonEntities {
         event.put(LATEX_KITSUNE_FEMALE.get(), LatexKitsuneFemaleEntity.createAttributes().build());
         event.put(LATEX_CALICO_CAT.get(), LatexCalicoCatEntity.createAttributes().build());
         event.put(PROTOGEN.get(), ProtogenEntity.createAttributes().build());
-        event.put(LATEX_MONGOOSE.get(), LatexMongooseEntity.createAttributes().build());
+        event.put(MONGOOSE.get(), MongooseEntity.createAttributes().build());
     }
 
 
@@ -434,7 +434,7 @@ public class ChangedAddonEntities {
             LatexKitsuneFemaleEntity.init();
             LatexCalicoCatEntity.init();
             ProtogenEntity.init();
-            LatexMongooseEntity.init();
+            MongooseEntity.init();
         });
     }
 }

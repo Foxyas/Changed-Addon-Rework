@@ -203,7 +203,7 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> LATEX_KITSUNE_FEMALE_SPAWN_EGG = REGISTRY.register("latex_kitsune_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_KITSUNE_FEMALE, 0xfff6f6, 0xffeeee, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
     public static final RegistryObject<Item> LATEX_CALICO_CAT_MALE_SPAWN_EGG = REGISTRY.register("latex_calico_cat_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_CALICO_CAT, 0xffece4, 0xd56f53, new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
     public static final RegistryObject<Item> PROTOGEN_SPAWN_EGG = REGISTRY.register("protogen_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOGEN, new Color(255, 255, 255).getRGB(), new Color(0, 196, 255).getRGB(), new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
-    public static final RegistryObject<Item> LATEX_MONGOOSE_SPAWN_EGG = REGISTRY.register("latex_mongoose_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOGEN, new Color(213, 152, 113).getRGB(), new Color(91, 91, 91).getRGB(), new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
+    public static final RegistryObject<Item> MONGOOSE_SPAWN_EGG = REGISTRY.register("mongoose_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.MONGOOSE, new Color(213, 152, 113).getRGB(), new Color(91, 91, 91).getRGB(), new Item.Properties().tab(ChangedAddonTabs.TAB_CHANGED_ADDON)));
 
 
 

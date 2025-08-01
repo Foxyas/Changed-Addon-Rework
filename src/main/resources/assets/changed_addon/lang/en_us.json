@@ -337,6 +337,7 @@
   "entity.changed_addon.snow_leopard_male_organic": "Male BioSynth Snow Leopard",
   "entity.changed_addon.void_fox": "Void Fox",
   "entity.changed_addon.wolfy": "Wolfy",
+  "entity.changed_addon.mongoose": "Mongoose",
 
   "entity.changed_addon.projectile_luminar_crystal_spear": "Luminar Crystal Spear",
   "entity.changed_addon.particle_projectile": "Light Particle",
@@ -563,6 +564,7 @@
   "item.changed_addon.meaningless_strafe_music_disc": "Meaningless Strafe Music Disc",
   "item.changed_addon.meaningless_strafe_music_disc.desc": "Meaningless Strafe - Haise_h1",
   "item.changed_addon.mirror_white_tiger_spawn_egg": "Mirror White Tiger Spawn Egg",
+  "item.changed_addon.mongoose_spawn_egg": "Mongoose Spawn Egg",
   "item.changed_addon.orange_wolf_crystal_fragment": "§6Orange§r Wolf Crystal Fragment",
   "item.changed_addon.orangejuice": "Orange Juice",
   "item.changed_addon.painite": "Painite",

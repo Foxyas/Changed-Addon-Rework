@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.client.model.simple;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.foxyas.changedaddon.entity.simple.LatexMongooseEntity;
+import net.foxyas.changedaddon.entity.simple.MongooseEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -17,8 +17,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class LatexMongooseModel extends AdvancedHumanoidModel<LatexMongooseEntity> implements AdvancedHumanoidModelInterface<LatexMongooseEntity, LatexMongooseModel> {
-    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "latex_mongoose"), "main");
+public class MongooseModel extends AdvancedHumanoidModel<MongooseEntity> implements AdvancedHumanoidModelInterface<MongooseEntity, MongooseModel> {
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "mongoose"), "main");
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;
@@ -26,9 +26,9 @@ public class LatexMongooseModel extends AdvancedHumanoidModel<LatexMongooseEntit
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-    private final HumanoidAnimator<LatexMongooseEntity, LatexMongooseModel> animator;
+    private final HumanoidAnimator<MongooseEntity, MongooseModel> animator;
 
-    public LatexMongooseModel(ModelPart root) {
+    public MongooseModel(ModelPart root) {
         super(root);
         this.RightLeg = root.getChild("RightLeg");
         this.LeftLeg = root.getChild("LeftLeg");
@@ -131,15 +131,15 @@ public class LatexMongooseModel extends AdvancedHumanoidModel<LatexMongooseEntit
         return LayerDefinition.create(meshdefinition, 96, 96);
     }
 
-    public void prepareMobModel(LatexMongooseEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
+    public void prepareMobModel(MongooseEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {
         this.prepareMobModel(this.animator, p_102861_, p_102862_, p_102863_, p_102864_);
     }
 
-    public void setupHand(LatexMongooseEntity entity) {
+    public void setupHand(MongooseEntity entity) {
         this.animator.setupHand();
     }
 
-    public void setupAnim(@NotNull LatexMongooseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(@NotNull MongooseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
@@ -169,7 +169,7 @@ public class LatexMongooseModel extends AdvancedHumanoidModel<LatexMongooseEntit
         this.LeftArm.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 
-    public HumanoidAnimator<LatexMongooseEntity, LatexMongooseModel> getAnimator(LatexMongooseEntity entity) {
+    public HumanoidAnimator<MongooseEntity, MongooseModel> getAnimator(MongooseEntity entity) {
         return this.animator;
     }
 }

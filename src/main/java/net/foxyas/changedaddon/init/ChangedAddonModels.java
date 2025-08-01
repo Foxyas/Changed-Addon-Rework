@@ -10,7 +10,7 @@ import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkMode
 import net.foxyas.changedaddon.client.model.armors.DarkLatexCoatModel;
 import net.foxyas.changedaddon.client.model.projectile.SimpleProjectileModel;
 import net.foxyas.changedaddon.client.model.simple.LatexCalicoCatModel;
-import net.foxyas.changedaddon.client.model.simple.LatexMongooseModel;
+import net.foxyas.changedaddon.client.model.simple.MongooseModel;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.ContainmentContainerRenderer;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.SnepPlushBlockEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -81,7 +81,7 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(LatexKitsuneFemaleModel.LAYER_LOCATION, LatexKitsuneFemaleModel::createBodyLayer);
         event.registerLayerDefinition(LatexCalicoCatModel.LAYER_LOCATION, LatexCalicoCatModel::createBodyLayer);
         event.registerLayerDefinition(ProtogenModel.LAYER_LOCATION, ProtogenModel::createBodyLayer);
-        event.registerLayerDefinition(LatexMongooseModel.LAYER_LOCATION, LatexMongooseModel::createBodyLayer);
+        event.registerLayerDefinition(MongooseModel.LAYER_LOCATION, MongooseModel::createBodyLayer);
 
         // --- PROJECTILES ENTITIES MODELS ---
         event.registerLayerDefinition(SimpleProjectileModel.LAYER_LOCATION, SimpleProjectileModel::createBodyLayer);

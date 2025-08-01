@@ -58,7 +58,7 @@ public class ChangedAddonEntityRenderers {
         event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_MALE.get(), LatexKitsuneMaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.LATEX_CALICO_CAT.get(), LatexCalicoCatRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.PROTOGEN.get(), ProtogenRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.LATEX_MONGOOSE.get(), LatexMongooseRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.MONGOOSE.get(), MongooseRenderer::new);
 
         // --- MONSTER/MOB ENTITIES ---
         event.registerEntityRenderer(ChangedAddonEntities.PROTOTYPE.get(), PrototypeRenderer::new);

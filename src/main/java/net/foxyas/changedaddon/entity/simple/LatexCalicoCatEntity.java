@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.AttributePresets;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.world.entity.EntityType;
@@ -18,6 +19,11 @@ public class LatexCalicoCatEntity extends AbstractBasicChangedEntity {
 
     public LatexCalicoCatEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.LATEX_CALICO_CAT.get(), world);
+    }
+
+    @Override
+    public Color3 getTransfurColor(TransfurCause cause) {
+        return this.random.nextBoolean() ? Color3.parseHex("#d67053") : Color3.parseHex("#67423f");
     }
 
     @Override
