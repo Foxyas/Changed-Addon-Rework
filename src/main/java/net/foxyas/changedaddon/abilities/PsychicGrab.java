@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.abilities;
 
-import net.foxyas.changedaddon.mixins.AbstractArrowAccessor;
+import net.foxyas.changedaddon.mixins.entity.AbstractArrowAccessor;
 import net.foxyas.changedaddon.process.util.PlayerUtil;
 import net.foxyas.changedaddon.process.util.FoxyasUtils;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;

@@ -20,7 +20,7 @@ public class ServerPlayerMixin implements SyncTrackMotion {
     public Vec3 lastKnownMotion = null;
 
     @Override
-    public boolean getIsMoving() {
+    public boolean isMoving() {
         return isMoving;
     }
 
@@ -48,6 +48,9 @@ public class ServerPlayerMixin implements SyncTrackMotion {
         if (getSelf().tickCount % 40 == 0) {
             if (getLastKnownMotion() != null) {
                 setLastKnownMotion(null);
+            }
+            if (isMoving) {
+                this.isMoving = false;
             }
         }
     }

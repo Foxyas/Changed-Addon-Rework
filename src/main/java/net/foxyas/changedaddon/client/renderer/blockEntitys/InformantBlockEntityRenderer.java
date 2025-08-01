@@ -3,24 +3,29 @@ package net.foxyas.changedaddon.client.renderer.blockEntitys;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
+import net.foxyas.changedaddon.mixins.renderer.LivingEntityRendererAccessor;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InformantBlockEntityRenderer implements BlockEntityRenderer<InformantBlockEntity> {
@@ -76,6 +81,14 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         model.prepareMobModel(entity, 0, 0, partialTick);
         model.setupAnim(entity, 0, 0, entity.tickCount + partialTick, 0, 0);
         model.renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 1, 1, 1, alpha);
+        if (renderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
+            List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
+            if (layers != null && !layers.isEmpty()) {
+                layers.forEach((renderlayer) -> {
+                    renderlayer.render(poseStack, bufferSource, LightTexture.FULL_BRIGHT, entity, 0, 0, partialTick, entity.tickCount + partialTick, 0 ,0);
+                });
+            }
+        }
 
         poseStack.popPose();
     }

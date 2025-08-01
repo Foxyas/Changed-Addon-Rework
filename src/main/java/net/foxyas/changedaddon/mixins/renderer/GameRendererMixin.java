@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.renderer;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import net.foxyas.changedaddon.process.variantsExtraStats.visions.TransfurVariantVision;

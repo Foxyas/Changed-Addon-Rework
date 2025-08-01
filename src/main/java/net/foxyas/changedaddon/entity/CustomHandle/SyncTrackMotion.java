@@ -8,7 +8,7 @@ public interface SyncTrackMotion {
 
     void setIsMoving(boolean isMoving);
 
-    boolean getIsMoving();
+    boolean isMoving();
 
     @Nullable
     Vec3 getLastKnownMotion();

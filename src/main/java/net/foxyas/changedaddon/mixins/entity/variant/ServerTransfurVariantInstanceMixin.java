@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.entity.variant;
 
 import net.ltxprogrammer.changed.server.ServerTransfurVariantInstance;
 import net.minecraft.world.effect.MobEffects;

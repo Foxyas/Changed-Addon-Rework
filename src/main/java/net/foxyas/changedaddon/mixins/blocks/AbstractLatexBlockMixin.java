@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.mixins;
+package net.foxyas.changedaddon.mixins.blocks;
 
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.ltxprogrammer.changed.block.AbstractLatexBlock;

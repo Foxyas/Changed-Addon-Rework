@@ -20,14 +20,9 @@ public class ConfirmMovementPacket {
         this.isMoving = isMoving;
     }
 
-    public ConfirmMovementPacket(Vec3 motion) {
-        this.isMoving = motion.length() > 0;
+    public ConfirmMovementPacket(boolean isMoving, Vec3 motion) {
+        this.isMoving = isMoving;
         this.motion = motion;
-    }
-
-    public ConfirmMovementPacket withMotion(Vec3 motion) {
-        this.motion = motion;
-        return this;
     }
 
     public static void encode(ConfirmMovementPacket msg, FriendlyByteBuf buf) {
@@ -41,7 +36,17 @@ public class ConfirmMovementPacket {
     }
 
     public static ConfirmMovementPacket decode(FriendlyByteBuf buf) {
-        return new ConfirmMovementPacket(buf.readBoolean());
+        try {
+            boolean isMoving = buf.readBoolean();
+            double x = buf.readDouble();
+            double y = buf.readDouble();
+            double z = buf.readDouble();
+            Vec3 vec = new Vec3(x, y, z);
+            return new ConfirmMovementPacket(isMoving, vec);
+        } catch (Exception ignored) {
+            return new ConfirmMovementPacket(buf.readBoolean());
+        }
+
     }
 
     public static void handle(ConfirmMovementPacket msg, Supplier<NetworkEvent.Context> ctx) {
@@ -60,7 +65,7 @@ public class ConfirmMovementPacket {
                     if (syncTrackMotion.getLastKnownMotion() != null) {
                         sender.sendMessage(new TextComponent("Client motion is: " + syncTrackMotion.getLastKnownMotion()), sender.getUUID());
                     }
-                    sender.sendMessage(new TextComponent("Client is moving: " + syncTrackMotion.getIsMoving()), sender.getUUID());
+                    sender.sendMessage(new TextComponent("Client is moving: " + syncTrackMotion.isMoving()), sender.getUUID());
                 }
             }
         });

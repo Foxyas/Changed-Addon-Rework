@@ -6,20 +6,13 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class RequestMovementCheckPacket {
+public record RequestMovementCheckPacket(boolean syncMotion) {
     public static final ResourceLocation ID = ChangedAddonMod.resourceLoc("request_movement");
-
-    public final boolean syncMotion;
-
-    public RequestMovementCheckPacket(boolean syncMotion) {
-        this.syncMotion = syncMotion;
-    }
 
     public static void handle(RequestMovementCheckPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
@@ -35,7 +28,7 @@ public class RequestMovementCheckPacket {
 
             // Enviar resposta de volta para o servidor
             if (msg.syncMotion) {
-                ChangedAddonMod.PACKET_HANDLER.reply(new ConfirmMovementPacket(isMoving).withMotion(player.getDeltaMovement()), ctx.get());
+                ChangedAddonMod.PACKET_HANDLER.reply(new ConfirmMovementPacket(isMoving, player.getDeltaMovement()), ctx.get());
             } else {
                 ChangedAddonMod.PACKET_HANDLER.reply(new ConfirmMovementPacket(isMoving), ctx.get());
             }

@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.process.util;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.CustomHandle.SyncTrackMotion;
 import net.foxyas.changedaddon.network.packets.RequestMovementCheckPacket;
 import net.foxyas.changedaddon.process.StructureHandle;
 import net.minecraft.core.particles.ParticleTypes;
@@ -36,6 +37,12 @@ public class DEBUG {
                 MOTIONTEST = 2;
             } else {
                 MOTIONTEST = 0;
+            }
+        }
+        if (event.getMessage().startsWith("test2Motion")) {
+            if (event.getPlayer() instanceof SyncTrackMotion syncTrackMotion) {
+                event.getPlayer().displayClientMessage(new TextComponent("The Motion is " + syncTrackMotion.getLastKnownMotion()), false);
+                event.getPlayer().displayClientMessage(new TextComponent("The player is Moving?: " + syncTrackMotion.isMoving()), false);
             }
         }
 
