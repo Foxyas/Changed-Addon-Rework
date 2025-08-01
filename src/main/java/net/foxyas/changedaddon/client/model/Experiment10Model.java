@@ -4,7 +4,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.Experiment10Entity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
 import net.ltxprogrammer.changed.client.animations.Limb;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity> implements AdvancedHumanoidModelInterface<Experiment10Entity,Experiment10Model> {
+public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity> implements AdvancedHumanoidModelInterface<Experiment10Entity, Experiment10Model> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ChangedAddonMod.resourceLoc("exp_10"), "main");
 
@@ -60,14 +60,6 @@ public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity>
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
     }
-
-    @Override
-    public HelperModel getTransfurHelperModel(Limb limb) {
-        if (limb == Limb.TORSO)
-            return TransfurHelper.getFeminineTorsoAlt();
-        return super.getTransfurHelperModel(limb);
-    }
-
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
@@ -240,7 +232,14 @@ public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity>
     }
 
     @Override
-    public void prepareMobModel (Experiment10Entity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public HelperModel getTransfurHelperModel(Limb limb) {
+        if (limb == Limb.TORSO)
+            return TransfurHelper.getFeminineTorsoAlt();
+        return super.getTransfurHelperModel(limb);
+    }
+
+    @Override
+    public void prepareMobModel(Experiment10Entity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
     }
 
@@ -271,7 +270,7 @@ public class Experiment10Model extends AdvancedHumanoidModel<Experiment10Entity>
 		return corrector;
 	}*/
 
-    public ModelPart getArm (HumanoidArm p_102852) {
+    public ModelPart getArm(HumanoidArm p_102852) {
         return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 

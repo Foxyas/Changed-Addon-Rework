@@ -5,13 +5,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.LatexSquidTigerSharkModel;
-import net.ltxprogrammer.changed.Changed;
-import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.DoubleArmedModel;
-import net.ltxprogrammer.changed.client.renderer.model.armor.*;
+import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModel;
+import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorModelSet;
+import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -19,7 +18,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemStack;
@@ -110,7 +108,6 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
         PartDefinition LeftArch_r1 = LeftFoot.addOrReplaceChild("LeftArch_r1", CubeListBuilder.create().texOffs(2, 20).mirror().addBox(-2.0F, -8.45F, -0.725F, 4.0F, 6.0F, 3.0F, layer.altDeformation.extend(0.5F)).mirror(false), PartPose.offsetAndRotation(0.0F, 7.075F, -4.975F, -0.3491F, 0.0F, 0.0F));
 
         PartDefinition LeftPad = LeftFoot.addOrReplaceChild("LeftPad", CubeListBuilder.create().texOffs(21, 21).addBox(-2.0F, 0.0F, -2.5F, 4.0F, 2.0F, 5.0F, layer.altDeformation.extend(0.5F)), PartPose.offset(0.0F, 4.325F, -4.425F));
-
 
 
         PartDefinition Head = partdefinition.addOrReplaceChild("Head", CubeListBuilder.create().texOffs(0, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, layer.deformation.extend(0.25F)), PartPose.offset(0.0F, -2.2F, 0.0F));
@@ -231,7 +228,7 @@ public class ArmorLatexSquidTigerSharkModel<T extends ChangedEntity> extends Lat
     }
 
     @Override
-    public void translateToLowerHand(ChangedEntity changedEntity,HumanoidArm arm, PoseStack poseStack) {
+    public void translateToLowerHand(ChangedEntity changedEntity, HumanoidArm arm, PoseStack poseStack) {
 
     }
 

@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.process.util;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.CustomHandle.SyncTrackMotion;
+import net.foxyas.changedaddon.entity.customHandle.SyncTrackMotion;
 import net.foxyas.changedaddon.network.packets.RequestMovementCheckPacket;
 import net.foxyas.changedaddon.process.StructureHandle;
 import net.minecraft.core.particles.ParticleTypes;

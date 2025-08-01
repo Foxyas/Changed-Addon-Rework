@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins.entity;
 
-import net.foxyas.changedaddon.entity.CustomHandle.SyncTrackMotion;
+import net.foxyas.changedaddon.entity.customHandle.SyncTrackMotion;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;

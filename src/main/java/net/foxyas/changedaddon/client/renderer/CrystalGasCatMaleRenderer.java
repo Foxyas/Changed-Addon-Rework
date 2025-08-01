@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.HimalayanCrystalGasCatModel;
-import net.foxyas.changedaddon.entity.CrystalGasCatMaleEntity;
+import net.foxyas.changedaddon.entity.simple.CrystalGasCatMaleEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleCatModel;

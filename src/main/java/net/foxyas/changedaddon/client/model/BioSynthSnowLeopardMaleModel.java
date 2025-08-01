@@ -3,10 +3,9 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
-import net.foxyas.changedaddon.entity.SnowLeopardMaleOrganicEntity;
+import net.foxyas.changedaddon.entity.simple.SnowLeopardMaleOrganicEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -61,10 +60,6 @@ public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<SnowLeop
                         Torso, LeftArm, RightArm,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
-    }
-
-    public boolean isPartNotArmFur(ModelPart part) {
-        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -187,6 +182,10 @@ public class BioSynthSnowLeopardMaleModel extends AdvancedHumanoidModel<SnowLeop
                 .texOffs(8, 85).addBox(-0.775F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)), PartPose.offset(0.0F, -0.5F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 96, 96);
+    }
+
+    public boolean isPartNotArmFur(ModelPart part) {
+        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
     }
 
     @Override

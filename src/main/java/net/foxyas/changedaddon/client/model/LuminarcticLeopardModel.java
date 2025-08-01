@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.LuminarcticLeopardEntity;
+import net.foxyas.changedaddon.entity.bosses.LuminarcticLeopardEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -12,7 +12,6 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,10 +58,6 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
         var rightFoot = rightLowerLeg.getChild("RightFoot");
 
         animator = HumanoidAnimator.of(this).hipOffset(-1.5f).addPreset(AnimatorPresets.catLike(Head, Head.getChild("LeftEar"), Head.getChild("RightEar"), Torso, LeftArm, RightArm, Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")), LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
-    }
-
-    public boolean isPartNotArmFur(ModelPart part) {
-        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -300,6 +295,9 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
         return LayerDefinition.create(meshdefinition, 96, 96);
     }
 
+    public boolean isPartNotArmFur(ModelPart part) {
+        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
+    }
 
     @Override
     public void prepareMobModel(LuminarcticLeopardEntity p_162861, float p_102862, float p_102863, float p_102864_) {
@@ -443,7 +441,7 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
             // LeftLeg
             this.LeftLeg.xRot += (float) Math.toRadians(0.0F) * progress;
             this.LeftLeg.yRot += (float) Math.toRadians(-32.5F) * progress;
-            this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress ;
+            this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress;
 
             // Torso
             this.Torso.xRot += (float) Math.toRadians(0.0F) * progress;
@@ -473,7 +471,7 @@ public class LuminarcticLeopardModel extends AdvancedHumanoidModel<LuminarcticLe
             this.RightArm.zRot += (float) Math.toRadians(-5.0F) * progress;
             this.RightArm.x += 0.0F * progress;
             this.RightArm.y += 0.0F * progress;
-            this.RightArm.z += 1.0F * progress;
+            this.RightArm.z += progress;
 
             // LeftArm
             this.LeftArm.xRot += (float) Math.toRadians(-16.0F) * progress;

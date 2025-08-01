@@ -3,14 +3,13 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.foxyas.changedaddon.entity.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
+import net.ltxprogrammer.changed.client.animations.Limb;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModelInterface;
-import net.ltxprogrammer.changed.client.renderer.model.CorrectorType;
 import net.ltxprogrammer.changed.client.tfanimations.HelperModel;
-import net.ltxprogrammer.changed.client.animations.Limb;
 import net.ltxprogrammer.changed.client.tfanimations.TransfurHelper;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -22,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class Experiment10BossModel extends AdvancedHumanoidModel<Experiment10BossEntity> implements AdvancedHumanoidModelInterface<Experiment10BossEntity,Experiment10BossModel> {
+public class Experiment10BossModel extends AdvancedHumanoidModel<Experiment10BossEntity> implements AdvancedHumanoidModelInterface<Experiment10BossEntity, Experiment10BossModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("changed_addon", "exp_10_boss"), "main");
 
@@ -61,14 +60,6 @@ public class Experiment10BossModel extends AdvancedHumanoidModel<Experiment10Bos
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
     }
-
-    @Override
-    public HelperModel getTransfurHelperModel(Limb limb) {
-        if (limb == Limb.TORSO)
-            return TransfurHelper.getFeminineTorsoAlt();
-        return super.getTransfurHelperModel(limb);
-    }
-
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
@@ -241,7 +232,14 @@ public class Experiment10BossModel extends AdvancedHumanoidModel<Experiment10Bos
     }
 
     @Override
-    public void prepareMobModel (Experiment10BossEntity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public HelperModel getTransfurHelperModel(Limb limb) {
+        if (limb == Limb.TORSO)
+            return TransfurHelper.getFeminineTorsoAlt();
+        return super.getTransfurHelperModel(limb);
+    }
+
+    @Override
+    public void prepareMobModel(Experiment10BossEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
     }
 
@@ -272,7 +270,7 @@ public class Experiment10BossModel extends AdvancedHumanoidModel<Experiment10Bos
 		return corrector;
 	}*/
 
-    public ModelPart getArm (HumanoidArm p_102852) {
+    public ModelPart getArm(HumanoidArm p_102852) {
         return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 

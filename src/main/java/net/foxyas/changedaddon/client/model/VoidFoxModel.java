@@ -6,7 +6,7 @@ package net.foxyas.changedaddon.client.model;// Made with Blockbench 4.12.4
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.VoidFoxEntity;
+import net.foxyas.changedaddon.entity.bosses.VoidFoxEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -280,7 +280,7 @@ public class VoidFoxModel extends AdvancedHumanoidModel<VoidFoxEntity> implement
         // LeftLeg
         this.LeftLeg.xRot += (float) Math.toRadians(0.0F) * progress;
         this.LeftLeg.yRot += (float) Math.toRadians(-32.5F) * progress;
-        this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress ;
+        this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress;
 
         // Torso
         this.Torso.xRot += (float) Math.toRadians(0.0F) * progress;

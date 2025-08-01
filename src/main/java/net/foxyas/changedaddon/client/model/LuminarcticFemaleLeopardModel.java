@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.foxyas.changedaddon.entity.FemaleLuminarcticLeopardEntity;
+import net.foxyas.changedaddon.entity.bosses.FemaleLuminarcticLeopardEntity;
 import net.ltxprogrammer.changed.client.animations.Limb;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
@@ -67,18 +67,6 @@ public class LuminarcticFemaleLeopardModel extends AdvancedHumanoidModel<FemaleL
                         Torso, LeftArm, RightArm,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
-    }
-
-    public boolean isPartNotArmFur(ModelPart part) {
-        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
-    }
-
-    @Nullable
-    @Override
-    public HelperModel getTransfurHelperModel(Limb limb) {
-        if (limb == Limb.TORSO)
-            return TransfurHelper.getFeminineTorsoAlt();
-        return super.getTransfurHelperModel(limb);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -287,58 +275,70 @@ public class LuminarcticFemaleLeopardModel extends AdvancedHumanoidModel<FemaleL
         return LayerDefinition.create(meshdefinition, 96, 96);
     }
 
+    public boolean isPartNotArmFur(ModelPart part) {
+        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
+    }
+
+    @Nullable
+    @Override
+    public HelperModel getTransfurHelperModel(Limb limb) {
+        if (limb == Limb.TORSO)
+            return TransfurHelper.getFeminineTorsoAlt();
+        return super.getTransfurHelperModel(limb);
+    }
+
     @Override
     public void prepareMobModel(FemaleLuminarcticLeopardEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
 
-		// Cabeça
-		this.Head.x = 0;
-		this.Head.y = 0;
-		this.Head.z = 0;
-		this.Head.xRot = 0;
-		this.Head.yRot = 0;
-		this.Head.zRot = 0;
+        // Cabeça
+        this.Head.x = 0;
+        this.Head.y = 0;
+        this.Head.z = 0;
+        this.Head.xRot = 0;
+        this.Head.yRot = 0;
+        this.Head.zRot = 0;
 
-		// Tronco
-		this.Torso.x = 0;
-		this.Torso.y = 0;
-		this.Torso.z = 0;
-		this.Torso.xRot = 0;
-		this.Torso.yRot = 0;
-		this.Torso.zRot = 0;
+        // Tronco
+        this.Torso.x = 0;
+        this.Torso.y = 0;
+        this.Torso.z = 0;
+        this.Torso.xRot = 0;
+        this.Torso.yRot = 0;
+        this.Torso.zRot = 0;
 
-		// Braço esquerdo
-		this.LeftArm.x = 0;
-		this.LeftArm.y = 0;
-		this.LeftArm.z = 0;
-		this.LeftArm.xRot = 0;
-		this.LeftArm.yRot = 0;
-		this.LeftArm.zRot = 0;
+        // Braço esquerdo
+        this.LeftArm.x = 0;
+        this.LeftArm.y = 0;
+        this.LeftArm.z = 0;
+        this.LeftArm.xRot = 0;
+        this.LeftArm.yRot = 0;
+        this.LeftArm.zRot = 0;
 
-		// Braço direito
-		this.RightArm.x = 0;
-		this.RightArm.y = 0;
-		this.RightArm.z = 0;
-		this.RightArm.xRot = 0;
-		this.RightArm.yRot = 0;
-		this.RightArm.zRot = 0;
+        // Braço direito
+        this.RightArm.x = 0;
+        this.RightArm.y = 0;
+        this.RightArm.z = 0;
+        this.RightArm.xRot = 0;
+        this.RightArm.yRot = 0;
+        this.RightArm.zRot = 0;
 
-		// Perna esquerda
-		this.LeftLeg.x = 0;
-		this.LeftLeg.y = 0;
-		this.LeftLeg.z = 0;
-		this.LeftLeg.xRot = 0;
-		this.LeftLeg.yRot = 0;
-		this.LeftLeg.zRot = 0;
+        // Perna esquerda
+        this.LeftLeg.x = 0;
+        this.LeftLeg.y = 0;
+        this.LeftLeg.z = 0;
+        this.LeftLeg.xRot = 0;
+        this.LeftLeg.yRot = 0;
+        this.LeftLeg.zRot = 0;
 
-		// Perna direita
-		this.RightLeg.x = 0;
-		this.RightLeg.y = 0;
-		this.RightLeg.z = 0;
-		this.RightLeg.xRot = 0;
-		this.RightLeg.yRot = 0;
-		this.RightLeg.zRot = 0;
-	}
+        // Perna direita
+        this.RightLeg.x = 0;
+        this.RightLeg.y = 0;
+        this.RightLeg.z = 0;
+        this.RightLeg.xRot = 0;
+        this.RightLeg.yRot = 0;
+        this.RightLeg.zRot = 0;
+    }
 
     //public PoseStack getPlacementCorrectors(CorrectorType type) {
     //     PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
@@ -359,137 +359,137 @@ public class LuminarcticFemaleLeopardModel extends AdvancedHumanoidModel<FemaleL
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-		if (dodgeProgress > 0) {
-			playDodgeAnim(entity.getDodgeType(), dodgeProgress);
-		}
+        if (dodgeProgress > 0) {
+            playDodgeAnim(entity.getDodgeType(), dodgeProgress);
+        }
 
         //CarryAbilityAnimation.playAnimation(entity, this);
     }
 
-	public void playDodgeAnim(int dodgeType, float progress) {
-		if (dodgeType == 1) {
-			// Head
-			this.Head.xRot = (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
-			this.Head.yRot = (float) (Math.toRadians(-35.0F) * progress) * (isReverse ? -1 : 1);
-			this.Head.zRot = (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
+    public void playDodgeAnim(int dodgeType, float progress) {
+        if (dodgeType == 1) {
+            // Head
+            this.Head.xRot = (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
+            this.Head.yRot = (float) (Math.toRadians(-35.0F) * progress) * (isReverse ? -1 : 1);
+            this.Head.zRot = (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
 
-			// RightArm
-			this.RightArm.xRot = (float) (Math.toRadians(-58.2981F) * progress);
-			this.RightArm.yRot = (float) (Math.toRadians(72.5894F) * progress);
-			this.RightArm.zRot = (float) (Math.toRadians(13.897F) * progress);
-			this.RightArm.x += -0.3F * progress;
-			this.RightArm.y += -1.0F * progress;
-			this.RightArm.z += -1.4F * progress;
+            // RightArm
+            this.RightArm.xRot = (float) (Math.toRadians(-58.2981F) * progress);
+            this.RightArm.yRot = (float) (Math.toRadians(72.5894F) * progress);
+            this.RightArm.zRot = (float) (Math.toRadians(13.897F) * progress);
+            this.RightArm.x += -0.3F * progress;
+            this.RightArm.y += -1.0F * progress;
+            this.RightArm.z += -1.4F * progress;
 
-			// LeftArm
-			this.LeftArm.xRot = (float) Math.toRadians(-58.2981F) * progress;
-			this.LeftArm.yRot = (float) Math.toRadians(-72.5894F) * progress;
-			this.LeftArm.zRot = (float) Math.toRadians(-13.897F) * progress;
-			this.LeftArm.x += -0.3F * progress;
-			this.LeftArm.y += -1.0F * progress;
-			this.LeftArm.z += -1.4F * progress;
+            // LeftArm
+            this.LeftArm.xRot = (float) Math.toRadians(-58.2981F) * progress;
+            this.LeftArm.yRot = (float) Math.toRadians(-72.5894F) * progress;
+            this.LeftArm.zRot = (float) Math.toRadians(-13.897F) * progress;
+            this.LeftArm.x += -0.3F * progress;
+            this.LeftArm.y += -1.0F * progress;
+            this.LeftArm.z += -1.4F * progress;
 
-			// RightLeg
-			this.RightLeg.xRot += (float) Math.toRadians(0.0F) * progress;
-			this.RightLeg.yRot += (float) Math.toRadians(5.0F) * progress;
-			this.RightLeg.zRot += (float) Math.toRadians(0.0F) * progress;
+            // RightLeg
+            this.RightLeg.xRot += (float) Math.toRadians(0.0F) * progress;
+            this.RightLeg.yRot += (float) Math.toRadians(5.0F) * progress;
+            this.RightLeg.zRot += (float) Math.toRadians(0.0F) * progress;
 
-			// LeftLeg
-			this.LeftLeg.xRot += (float) Math.toRadians(0.0F) * progress;
-			this.LeftLeg.yRot += (float) Math.toRadians(-32.5F) * progress;
-			this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress ;
+            // LeftLeg
+            this.LeftLeg.xRot += (float) Math.toRadians(0.0F) * progress;
+            this.LeftLeg.yRot += (float) Math.toRadians(-32.5F) * progress;
+            this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress;
 
-			// Torso
-			this.Torso.xRot += (float) Math.toRadians(0.0F) * progress;
-			this.Torso.yRot += (float) Math.toRadians(0.0F) * progress;
-			this.Torso.zRot += (float) Math.toRadians(0.0F) * progress;
+            // Torso
+            this.Torso.xRot += (float) Math.toRadians(0.0F) * progress;
+            this.Torso.yRot += (float) Math.toRadians(0.0F) * progress;
+            this.Torso.zRot += (float) Math.toRadians(0.0F) * progress;
 
-		} else if (dodgeType == 2) {
-			// Head
-			this.Head.xRot += (float) Math.toRadians(16.0F) * progress;
-			this.Head.yRot += (float) Math.toRadians(14.0F) * progress * (isReverse ? -1 : 1);
-			this.Head.zRot += (float) Math.toRadians(-3.0F) * progress * (isReverse ? -1 : 1);
-			this.Head.x += 0.0F * progress;
-			this.Head.y += 0.0F * progress;
-			this.Head.z += 0.25F * progress;
+        } else if (dodgeType == 2) {
+            // Head
+            this.Head.xRot += (float) Math.toRadians(16.0F) * progress;
+            this.Head.yRot += (float) Math.toRadians(14.0F) * progress * (isReverse ? -1 : 1);
+            this.Head.zRot += (float) Math.toRadians(-3.0F) * progress * (isReverse ? -1 : 1);
+            this.Head.x += 0.0F * progress;
+            this.Head.y += 0.0F * progress;
+            this.Head.z += 0.25F * progress;
 
-			// Torso
-			this.Torso.xRot += (float) Math.toRadians(-7.0F) * progress;
-			this.Torso.yRot += (float) Math.toRadians(10.0F) * progress;
-			this.Torso.zRot += (float) Math.toRadians(0.0F) * progress;
-			this.Torso.x += 0.0F * progress;
-			this.Torso.y += 0.0F * progress;
-			this.Torso.z += 0.2F * progress;
+            // Torso
+            this.Torso.xRot += (float) Math.toRadians(-7.0F) * progress;
+            this.Torso.yRot += (float) Math.toRadians(10.0F) * progress;
+            this.Torso.zRot += (float) Math.toRadians(0.0F) * progress;
+            this.Torso.x += 0.0F * progress;
+            this.Torso.y += 0.0F * progress;
+            this.Torso.z += 0.2F * progress;
 
-			// RightArm
-			this.RightArm.xRot += (float) Math.toRadians(10.0F) * progress;
-			this.RightArm.yRot += (float) Math.toRadians(10.0F) * progress;
-			this.RightArm.zRot += (float) Math.toRadians(-5.0F) * progress;
-			this.RightArm.x += 0.0F * progress;
-			this.RightArm.y += 0.0F * progress;
-			this.RightArm.z += 1.0F * progress;
+            // RightArm
+            this.RightArm.xRot += (float) Math.toRadians(10.0F) * progress;
+            this.RightArm.yRot += (float) Math.toRadians(10.0F) * progress;
+            this.RightArm.zRot += (float) Math.toRadians(-5.0F) * progress;
+            this.RightArm.x += 0.0F * progress;
+            this.RightArm.y += 0.0F * progress;
+            this.RightArm.z += progress;
 
-			// LeftArm
-			this.LeftArm.xRot += (float) Math.toRadians(-16.0F) * progress;
-			this.LeftArm.yRot += (float) Math.toRadians(-7.0F) * progress;
-			this.LeftArm.zRot += (float) Math.toRadians(0.0F) * progress;
-			this.LeftArm.x += 0.0F * progress;
-			this.LeftArm.y += 0.0F * progress;
-			this.LeftArm.z += -2.0F * progress;
+            // LeftArm
+            this.LeftArm.xRot += (float) Math.toRadians(-16.0F) * progress;
+            this.LeftArm.yRot += (float) Math.toRadians(-7.0F) * progress;
+            this.LeftArm.zRot += (float) Math.toRadians(0.0F) * progress;
+            this.LeftArm.x += 0.0F * progress;
+            this.LeftArm.y += 0.0F * progress;
+            this.LeftArm.z += -2.0F * progress;
 
-			// RightLeg
-			this.RightLeg.xRot += (float) Math.toRadians(15.0F) * progress;
-			this.RightLeg.yRot += (float) Math.toRadians(0.0F) * progress;
-			this.RightLeg.zRot += (float) Math.toRadians(0.0F) * progress;
-			this.RightLeg.x += 0.0F * progress;
-			this.RightLeg.y += 0.0F * progress;
-			this.RightLeg.z += -0.9F * progress;
+            // RightLeg
+            this.RightLeg.xRot += (float) Math.toRadians(15.0F) * progress;
+            this.RightLeg.yRot += (float) Math.toRadians(0.0F) * progress;
+            this.RightLeg.zRot += (float) Math.toRadians(0.0F) * progress;
+            this.RightLeg.x += 0.0F * progress;
+            this.RightLeg.y += 0.0F * progress;
+            this.RightLeg.z += -0.9F * progress;
 
-			// LeftLeg
-			this.LeftLeg.xRot += (float) Math.toRadians(4.0F) * progress;
-			this.LeftLeg.yRot += (float) Math.toRadians(0.0F) * progress;
-			this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress;
-			this.LeftLeg.x += 0.0F * progress;
-			this.LeftLeg.y += 0.0F * progress;
-			this.LeftLeg.z += -1.9F * progress;
-		} else {
-			// Head
-			this.Head.xRot += (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
-			this.Head.yRot += (float) (Math.toRadians(-35.0F) * progress) * (isReverse ? -1 : 1);
-			this.Head.zRot += (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
+            // LeftLeg
+            this.LeftLeg.xRot += (float) Math.toRadians(4.0F) * progress;
+            this.LeftLeg.yRot += (float) Math.toRadians(0.0F) * progress;
+            this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress;
+            this.LeftLeg.x += 0.0F * progress;
+            this.LeftLeg.y += 0.0F * progress;
+            this.LeftLeg.z += -1.9F * progress;
+        } else {
+            // Head
+            this.Head.xRot += (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
+            this.Head.yRot += (float) (Math.toRadians(-35.0F) * progress) * (isReverse ? -1 : 1);
+            this.Head.zRot += (float) (Math.toRadians(0.0F) * progress) * (isReverse ? -1 : 1);
 
-			// RightArm
-			this.RightArm.xRot += (float) (Math.toRadians(-58.2981F) * progress);
-			this.RightArm.yRot += (float) (Math.toRadians(72.5894F) * progress);
-			this.RightArm.zRot += (float) (Math.toRadians(13.897F) * progress);
-			this.RightArm.x += -0.3F * progress;
-			this.RightArm.y += -1.0F * progress;
-			this.RightArm.z += -1.4F * progress;
+            // RightArm
+            this.RightArm.xRot += (float) (Math.toRadians(-58.2981F) * progress);
+            this.RightArm.yRot += (float) (Math.toRadians(72.5894F) * progress);
+            this.RightArm.zRot += (float) (Math.toRadians(13.897F) * progress);
+            this.RightArm.x += -0.3F * progress;
+            this.RightArm.y += -1.0F * progress;
+            this.RightArm.z += -1.4F * progress;
 
-			// LeftArm
-			this.LeftArm.xRot += (float) Math.toRadians(-58.2981F) * progress;
-			this.LeftArm.yRot += (float) Math.toRadians(-72.5894F) * progress;
-			this.LeftArm.zRot += (float) Math.toRadians(-13.897F) * progress;
-			this.LeftArm.x += -0.3F * progress;
-			this.LeftArm.y += -1.0F * progress;
-			this.LeftArm.z += -1.4F * progress;
+            // LeftArm
+            this.LeftArm.xRot += (float) Math.toRadians(-58.2981F) * progress;
+            this.LeftArm.yRot += (float) Math.toRadians(-72.5894F) * progress;
+            this.LeftArm.zRot += (float) Math.toRadians(-13.897F) * progress;
+            this.LeftArm.x += -0.3F * progress;
+            this.LeftArm.y += -1.0F * progress;
+            this.LeftArm.z += -1.4F * progress;
 
-			// RightLeg
-			this.RightLeg.xRot += (float) Math.toRadians(0.0F) * progress;
-			this.RightLeg.yRot += (float) Math.toRadians(5.0F) * progress;
-			this.RightLeg.zRot += (float) Math.toRadians(0.0F) * progress;
+            // RightLeg
+            this.RightLeg.xRot += (float) Math.toRadians(0.0F) * progress;
+            this.RightLeg.yRot += (float) Math.toRadians(5.0F) * progress;
+            this.RightLeg.zRot += (float) Math.toRadians(0.0F) * progress;
 
-			// LeftLeg
-			this.LeftLeg.xRot += (float) Math.toRadians(0.0F) * progress;
-			this.LeftLeg.yRot += (float) Math.toRadians(-32.5F) * progress;
-			this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress;
+            // LeftLeg
+            this.LeftLeg.xRot += (float) Math.toRadians(0.0F) * progress;
+            this.LeftLeg.yRot += (float) Math.toRadians(-32.5F) * progress;
+            this.LeftLeg.zRot += (float) Math.toRadians(0.0F) * progress;
 
-			// Torso
-			this.Torso.xRot += (float) Math.toRadians(0.0F) * progress;
-			this.Torso.yRot += (float) Math.toRadians(0.0F) * progress;
-			this.Torso.zRot += (float) Math.toRadians(0.0F) * progress;
-		}
-	}
+            // Torso
+            this.Torso.xRot += (float) Math.toRadians(0.0F) * progress;
+            this.Torso.yRot += (float) Math.toRadians(0.0F) * progress;
+            this.Torso.zRot += (float) Math.toRadians(0.0F) * progress;
+        }
+    }
 
     public ModelPart getArm(HumanoidArm p_102852) {
         return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;

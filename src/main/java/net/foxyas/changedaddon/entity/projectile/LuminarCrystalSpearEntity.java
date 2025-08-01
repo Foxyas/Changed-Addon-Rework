@@ -10,7 +10,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -39,11 +38,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 @OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupplier {
@@ -54,7 +51,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
     private ItemStack SpearItem = new ItemStack(ChangedAddonItems.LUMINAR_CRYSTAL_SPEAR.get());
     private boolean dealtDamage;
 
-    public LuminarCrystalSpearEntity(PlayMessages.SpawnEntity packet, Level world) {
+    public LuminarCrystalSpearEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), world);
     }
 
@@ -76,33 +73,6 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
 
     public LuminarCrystalSpearEntity(EntityType<? extends LuminarCrystalSpearEntity> type, LivingEntity entity, Level world) {
         super(type, entity, world);
-    }
-
-    public static LuminarCrystalSpearEntity shoot(Level world, LivingEntity entity, Random random, float power, double damage, int knockback) {
-        LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, world);
-        entityarrow.shoot(entity.getViewVector(1).x, entity.getViewVector(1).y, entity.getViewVector(1).z, power * 2, 0);
-        entityarrow.setSilent(true);
-        entityarrow.setCritArrow(false);
-        entityarrow.setBaseDamage(damage);
-        entityarrow.setKnockback(knockback);
-        world.addFreshEntity(entityarrow);
-        world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.trident.throw")), SoundSource.PLAYERS, 1, 1f / (random.nextFloat() * 0.5f + 1) + (power / 2));
-        return entityarrow;
-    }
-
-    public static LuminarCrystalSpearEntity shoot(LivingEntity entity, LivingEntity target) {
-        LuminarCrystalSpearEntity entityarrow = new LuminarCrystalSpearEntity(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), entity, entity.level);
-        double dx = target.getX() - entity.getX();
-        double dy = target.getY() + target.getEyeHeight() - 1.1;
-        double dz = target.getZ() - entity.getZ();
-        entityarrow.shoot(dx, dy - entityarrow.getY() + Math.hypot(dx, dz) * 0.2F, dz, 1f * 2, 12.0F);
-        entityarrow.setSilent(true);
-        entityarrow.setBaseDamage(5);
-        entityarrow.setKnockback(5);
-        entityarrow.setCritArrow(false);
-        entity.level.addFreshEntity(entityarrow);
-        entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("item.trident.throw")), SoundSource.PLAYERS, 1, 1f / (new Random().nextFloat() * 0.5f + 1));
-        return entityarrow;
     }
 
     protected void defineSynchedData() {
@@ -286,6 +256,7 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
             BlockPos blockpos = entity.blockPosition();
             if (this.level.canSeeSky(blockpos)) {
                 LightningBolt lightningbolt = EntityType.LIGHTNING_BOLT.create(this.level);
+                assert lightningbolt != null;
                 lightningbolt.moveTo(Vec3.atBottomCenterOf(blockpos));
                 lightningbolt.setCause(entity1 instanceof ServerPlayer ? (ServerPlayer) entity1 : null);
                 this.level.addFreshEntity(lightningbolt);

@@ -4,8 +4,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.renderer.layers.animation.CarryAbilityAnimation;
-import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
-import net.foxyas.changedaddon.entity.Exp2MaleEntity;
+import net.foxyas.changedaddon.entity.simple.Exp2MaleEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -64,10 +63,6 @@ public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> impleme
                         Torso, LeftArm, RightArm,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary, tailQuinternary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
-    }
-
-    public boolean isPartNotArmFur(ModelPart part) {
-        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -195,6 +190,10 @@ public class MaleExp2Model extends AdvancedHumanoidModel<Exp2MaleEntity> impleme
                 .texOffs(8, 85).addBox(-0.775F, 9.475F, -1.625F, 1.0F, 1.0F, 1.0F, new CubeDeformation(0.075F)), PartPose.offset(0.0F, -0.5F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 96, 96);
+    }
+
+    public boolean isPartNotArmFur(ModelPart part) {
+        return LeftArmFur.getAllParts().noneMatch(part::equals) && RightArmFur.getAllParts().noneMatch(part::equals);
     }
 
     @Override

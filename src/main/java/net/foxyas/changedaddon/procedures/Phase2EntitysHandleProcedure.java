@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.Experiment10BossEntity;
-import net.foxyas.changedaddon.entity.Experiment10Entity;
-import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
-import net.foxyas.changedaddon.entity.KetExperiment009Entity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
+import net.foxyas.changedaddon.entity.bosses.KetExperiment009BossEntity;
+import net.foxyas.changedaddon.entity.bosses.KetExperiment009Entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;

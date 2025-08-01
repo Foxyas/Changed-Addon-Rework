@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.SnepsiLeopardModel;
-import net.foxyas.changedaddon.entity.SnepsiLeopardEntity;
+import net.foxyas.changedaddon.entity.simple.SnepsiLeopardEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;

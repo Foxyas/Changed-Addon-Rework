@@ -7,7 +7,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.DazedEntity;
+import net.foxyas.changedaddon.entity.advanced.DazedEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -69,10 +69,6 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
                         Torso, LeftArm, RightArm,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailTertiary.getChild("TailQuaternary")),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")));
-    }
-
-    public boolean isPartNotPuddle(ModelPart part){
-        return Puddle.getAllParts().noneMatch(part::equals);
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -165,6 +161,9 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
         return LayerDefinition.create(meshdefinition, 96, 96);
     }
 
+    public boolean isPartNotPuddle(ModelPart part) {
+        return Puddle.getAllParts().noneMatch(part::equals);
+    }
 
     @Override
     public void prepareMobModel(DazedEntity entity, float p_102862, float p_102863, float p_102864_) {
@@ -218,7 +217,7 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
     @Override
     public void setupAnim(@NotNull DazedEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         animator.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        if (entity.isMorphed()){
+        if (entity.isMorphed()) {
             Middle.y = Mth.cos(limbSwing * 0.6662F) * limbSwingAmount;
             Top.y = Middle.y;
         }
@@ -241,6 +240,7 @@ public class DazedLatexModel extends AdvancedHumanoidModel<DazedEntity> implemen
     public ModelPart getLeg(HumanoidArm humanoidArm) {
         return humanoidArm == HumanoidArm.LEFT ? this.LeftLeg : this.RightLeg;
     }
+
     @Override
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         Head.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

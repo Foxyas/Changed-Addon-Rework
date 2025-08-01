@@ -1,14 +1,11 @@
 package net.foxyas.changedaddon.variants;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.advanced.*;
+import net.foxyas.changedaddon.entity.bosses.*;
+import net.foxyas.changedaddon.entity.simple.*;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
-import net.foxyas.changedaddon.entity.*;
-import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexKitsuneMaleEntity;
-import net.foxyas.changedaddon.entity.advanced.ProtogenEntity;
-import net.foxyas.changedaddon.entity.simple.LatexCalicoCatEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
@@ -56,7 +53,7 @@ public class ChangedAddonTransfurVariants {
     public static final DeferredRegister<TransfurVariant<?>> REGISTRY = ChangedRegistry.TRANSFUR_VARIANT.createDeferred(ChangedAddonMod.MODID);
 
     public static List<TransfurVariant<?>> getRemovedVariantsList() {
-        return List.of(VOID_FOX.get(), REYN.get(), FENGQI_WOLF.get(),KET_EXPERIMENT_009.get(), EXPERIMENT_10.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
+        return List.of(VOID_FOX.get(), REYN.get(), FENGQI_WOLF.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD.get(), FEMALE_LUMINARCTIC_LEOPARD.get());
     }
 
     public static Collection<TransfurVariant<?>> getVariantsRemovedFromSyringes() {
@@ -73,7 +70,7 @@ public class ChangedAddonTransfurVariants {
     }
 
     protected static List<TransfurVariant<?>> getOcVariantList() {
-        return List.of(BLUE_LIZARD.get(), HAYDEN_FENNEC_FOX.get(), HIMALAYAN_CRYSTAL_GAS_CAT_MALE.get(), HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE.get(), REYN.get(), LYNX.get(), FENGQI_WOLF.get(), FOXTA_FOXY.get(), SNEPSI_LEOPARD.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get());
+        return List.of(MONGOOSE.get(), BLUE_LIZARD.get(), HAYDEN_FENNEC_FOX.get(), HIMALAYAN_CRYSTAL_GAS_CAT_MALE.get(), HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE.get(), REYN.get(), LYNX.get(), FENGQI_WOLF.get(), FOXTA_FOXY.get(), SNEPSI_LEOPARD.get(), KET_EXPERIMENT_009_BOSS_LATEX_VARIANT.get(), EXPERIMENT_10_BOSS.get(), KET_EXPERIMENT_009.get(), EXPERIMENT_10.get());
     }
 
     public static boolean isVariantOC(TransfurVariant<?> transfurVariant, @Nullable Level level) {
@@ -139,6 +136,7 @@ public class ChangedAddonTransfurVariants {
     public static final RegistryObject<TransfurVariant<CrystalGasCatMaleEntity>> HIMALAYAN_CRYSTAL_GAS_CAT_MALE = register("form_himalayan_crystal_gas_cat/male", () -> TransfurVariant.Builder.of(ChangedAddonEntities.CRYSTAL_GAS_CAT_MALE).addAbility(ChangedAddonAbilities.CLAWS).jumpStrength(1.1f).nightVision().scares(List.of(Creeper.class, Rabbit.class)));
     public static final RegistryObject<TransfurVariant<CrystalGasCatFemaleEntity>> HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE = register("form_himalayan_crystal_gas_cat/female", () -> TransfurVariant.Builder.of(ChangedAddonEntities.CRYSTAL_GAS_CAT_FEMALE).addAbility(ChangedAddonAbilities.CLAWS).jumpStrength(1.1f).nightVision().scares(List.of(Creeper.class, Rabbit.class)));
     public static final RegistryObject<TransfurVariant<BlueLizard>> BLUE_LIZARD = register("form_blue_lizard", TransfurVariant.Builder.of(ChangedAddonEntities.BLUE_LIZARD).canClimb().addAbility(ChangedAddonAbilities.TOGGLE_CLIMB).addAbility(ChangedAddonAbilities.APPLY_REGENERATION_PASSIVE).addAbility(ChangedAddonAbilities.DODGE).stepSize(0.7F).sound(ChangedSounds.SOUND3.getLocation()).nightVision());
+    public static final RegistryObject<TransfurVariant<LatexMongooseEntity>> MONGOOSE = register("form_latex_mongoose", TransfurVariant.Builder.of(ChangedAddonEntities.LATEX_MONGOOSE).stepSize(0.7F).sound(ChangedSounds.SOUND3.getLocation()));
 
     //Experiments
     public static final RegistryObject<TransfurVariant<Exp1MaleEntity>> EXP1_MALE = register("form_exp1/male", () -> TransfurVariant.Builder.of(ChangedAddonEntities.EXP_1_MALE).nightVision().extraJumps(2).addAbility(ChangedAddonAbilities.PSYCHIC_PULSE).addAbility(ChangedAddonAbilities.PSYCHIC_HOLD).addAbility(ChangedAddonAbilities.PSYCHIC_GRAB).addAbility(ChangedAbilities.SWITCH_GENDER).transfurMode(TransfurMode.NONE));

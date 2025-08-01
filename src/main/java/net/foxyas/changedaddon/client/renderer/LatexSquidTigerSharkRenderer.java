@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.model.LatexSquidTigerSharkModel;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexSquidTigerSharkModel;
-import net.foxyas.changedaddon.entity.LatexSquidTigerSharkEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSquidTigerSharkEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.*;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

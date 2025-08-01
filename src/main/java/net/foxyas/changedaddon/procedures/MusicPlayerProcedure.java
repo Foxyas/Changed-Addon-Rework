@@ -2,9 +2,9 @@ package net.foxyas.changedaddon.procedures;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
-import net.foxyas.changedaddon.entity.CustomHandle.BossMusicTheme;
-import net.foxyas.changedaddon.entity.Experiment10BossEntity;
-import net.foxyas.changedaddon.entity.KetExperiment009BossEntity;
+import net.foxyas.changedaddon.entity.customHandle.BossMusicTheme;
+import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.bosses.KetExperiment009BossEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;

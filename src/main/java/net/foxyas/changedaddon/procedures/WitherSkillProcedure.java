@@ -1,8 +1,7 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.Experiment10BossEntity;
-import net.foxyas.changedaddon.entity.Experiment10Entity;
-import net.foxyas.changedaddon.network.ChangedAddonModVariables;
+import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -10,7 +9,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.Event;

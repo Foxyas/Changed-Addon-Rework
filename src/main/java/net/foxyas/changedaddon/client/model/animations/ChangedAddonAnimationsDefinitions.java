@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.client.model.animations;
 import net.ltxprogrammer.changed.client.animations.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
 public class ChangedAddonAnimationsDefinitions {

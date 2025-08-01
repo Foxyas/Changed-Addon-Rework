@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.ReynModel;
 import net.foxyas.changedaddon.client.renderer.layers.CustomDisplay;
-import net.foxyas.changedaddon.entity.ReynEntity;
+import net.foxyas.changedaddon.entity.simple.ReynEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;

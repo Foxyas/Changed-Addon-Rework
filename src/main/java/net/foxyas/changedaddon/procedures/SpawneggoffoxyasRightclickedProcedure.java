@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.FoxyasEntity;
+import net.foxyas.changedaddon.entity.mobs.FoxyasEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Direction;

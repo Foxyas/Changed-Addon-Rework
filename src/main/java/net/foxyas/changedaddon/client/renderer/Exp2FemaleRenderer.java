@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.FemaleExp2Model;
 import net.foxyas.changedaddon.client.renderer.layers.CustomHairColorLayer;
-import net.foxyas.changedaddon.entity.Exp2FemaleEntity;
+import net.foxyas.changedaddon.entity.simple.Exp2FemaleEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;

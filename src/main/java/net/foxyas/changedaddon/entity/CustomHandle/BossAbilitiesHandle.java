@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.CustomHandle;
+package net.foxyas.changedaddon.entity.customHandle;
 
 import net.foxyas.changedaddon.block.LuminarCrystalBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;

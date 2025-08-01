@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.SnowLeopardPartialEntity;
+import net.foxyas.changedaddon.entity.advanced.SnowLeopardPartialEntity;
 import net.ltxprogrammer.changed.client.CubeListBuilderExtender;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
@@ -45,6 +45,7 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
     public static final ModelLayerLocation LAYER_LOCATION_HUMAN_SLIM = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snow_leopard_partial"), "main_slim");
     public static final ModelLayerLocation LAYER_LOCATION_LATEX = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snow_leopard_partial"), "latex");
     public static final ModelLayerLocation LAYER_LOCATION_LATEX_SLIM = new ModelLayerLocation(ChangedAddonMod.resourceLoc("snow_leopard_partial"), "latex_slim");
+    private static final ModelPart NULL_PART = new ModelPart(List.of(), Map.of());
     private final ModelPart RightLeg;
     private final ModelPart LeftLeg;
     private final ModelPart RightArm;
@@ -52,24 +53,18 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
     private final ModelPart Head;
     private final ModelPart Torso;
     private final ModelPart Tail;
-
     private final ModelPart RightPants;
     private final ModelPart LeftPants;
     private final ModelPart RightSleeve;
     private final ModelPart LeftSleeve;
     private final ModelPart Hat;
     private final ModelPart Jacket;
-
     private final ModelPart RightLowerLeg;
     private final ModelPart LeftLowerLeg;
     private final ModelPart RightEar;
     private final ModelPart LeftEar;
-
     private final boolean latexLayer;
-
     private final HumanoidAnimator<SnowLeopardPartialEntity, SnowLeopardPartialModel> animator;
-
-    private static final ModelPart NULL_PART = new ModelPart(List.of(), Map.of());
 
     public SnowLeopardPartialModel(ModelPart root, boolean latexLayer) {
         super(root);
@@ -143,24 +138,6 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
 
     public static SnowLeopardPartialModel latex(ModelPart root) {
         return new SnowLeopardPartialModel(root, true);
-    }
-
-    public void defaultModelProperties() {
-        Hat.visible = true;
-        Jacket.visible = true;
-        LeftPants.visible = true;
-        RightPants.visible = true;
-        LeftSleeve.visible = true;
-        RightSleeve.visible = true;
-    }
-
-    public void setModelProperties(AbstractClientPlayer player) {
-        Hat.visible = player.isModelPartShown(PlayerModelPart.HAT);
-        Jacket.visible = player.isModelPartShown(PlayerModelPart.JACKET);
-        LeftPants.visible = player.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG);
-        RightPants.visible = player.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG);
-        LeftSleeve.visible = player.isModelPartShown(PlayerModelPart.LEFT_SLEEVE);
-        RightSleeve.visible = player.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE);
     }
 
     public static LayerDefinition createHumanLayer(boolean slim) {
@@ -342,6 +319,23 @@ public class SnowLeopardPartialModel extends AdvancedHumanoidModel<SnowLeopardPa
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
+    public void defaultModelProperties() {
+        Hat.visible = true;
+        Jacket.visible = true;
+        LeftPants.visible = true;
+        RightPants.visible = true;
+        LeftSleeve.visible = true;
+        RightSleeve.visible = true;
+    }
+
+    public void setModelProperties(AbstractClientPlayer player) {
+        Hat.visible = player.isModelPartShown(PlayerModelPart.HAT);
+        Jacket.visible = player.isModelPartShown(PlayerModelPart.JACKET);
+        LeftPants.visible = player.isModelPartShown(PlayerModelPart.LEFT_PANTS_LEG);
+        RightPants.visible = player.isModelPartShown(PlayerModelPart.RIGHT_PANTS_LEG);
+        LeftSleeve.visible = player.isModelPartShown(PlayerModelPart.LEFT_SLEEVE);
+        RightSleeve.visible = player.isModelPartShown(PlayerModelPart.RIGHT_SLEEVE);
+    }
 
     @Override
     public void prepareMobModel(@NotNull SnowLeopardPartialEntity p_102861_, float p_102862_, float p_102863_, float p_102864_) {

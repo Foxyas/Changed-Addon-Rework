@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.CustomHandle;
+package net.foxyas.changedaddon.entity.customHandle;
 
 import net.ltxprogrammer.changed.util.Cacheable;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;

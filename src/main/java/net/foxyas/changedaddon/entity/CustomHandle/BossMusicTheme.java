@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.CustomHandle;
+package net.foxyas.changedaddon.entity.customHandle;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraft.resources.ResourceLocation;

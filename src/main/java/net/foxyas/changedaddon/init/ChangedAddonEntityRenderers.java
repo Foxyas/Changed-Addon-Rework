@@ -1,11 +1,11 @@
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.client.renderer.*;
-import net.foxyas.changedaddon.client.renderer.advanced.AvaliRenderer;
-import net.foxyas.changedaddon.client.renderer.advanced.LatexKitsuneFemaleRenderer;
-import net.foxyas.changedaddon.client.renderer.advanced.LatexKitsuneMaleRenderer;
-import net.foxyas.changedaddon.client.renderer.advanced.ProtogenRenderer;
-import net.foxyas.changedaddon.client.renderer.simple.LatexCalicoCatRenderer;
+import net.foxyas.changedaddon.client.renderer.advanced.*;
+import net.foxyas.changedaddon.client.renderer.generic.*;
+import net.foxyas.changedaddon.client.renderer.mobs.ErikRenderer;
+import net.foxyas.changedaddon.client.renderer.mobs.FoxyasRenderer;
+import net.foxyas.changedaddon.client.renderer.mobs.PrototypeRenderer;
 import net.ltxprogrammer.changed.client.RegisterComplexRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -16,8 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ChangedAddonEntityRenderers {
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(ChangedAddonEntities.PROTOTYPE.get(), PrototypeRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.FOXYAS.get(), FoxyasRenderer::new);
+
         event.registerEntityRenderer(ChangedAddonEntities.LATEX_SNOW_FOX.get(), LatexSnowFoxRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE.get(), LatexSnowFoxFemaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), LuminarCrystalSpearRenderer::new);
@@ -33,7 +32,6 @@ public class ChangedAddonEntityRenderers {
         event.registerEntityRenderer(ChangedAddonEntities.EXP_2_MALE.get(), Exp2MaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXP_2_FEMALE.get(), Exp2FemaleRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.WOLFY.get(), WolfyRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.ERIK.get(), ErikRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.EXP_6.get(), Exp6Renderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.REYN.get(), ReynRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.KET_EXPERIMENT_009_BOSS.get(), KetExperiment009BossRenderer::new);
@@ -54,20 +52,20 @@ public class ChangedAddonEntityRenderers {
         event.registerEntityRenderer(ChangedAddonEntities.VOID_FOX.get(), VoidFoxRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.FENGQI_WOLF.get(), FengQIWolfRenderer::new);
         event.registerEntityRenderer(ChangedAddonEntities.HAYDEN_FENNEC_FOX.get(), HaydenFennecFoxRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.BLUE_LIZARD.get(), BlueLizardRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.AVALI.get(), AvaliRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_FEMALE.get(), LatexKitsuneFemaleRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_MALE.get(), LatexKitsuneMaleRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.LATEX_CALICO_CAT.get(), LatexCalicoCatRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.PROTOGEN.get(), ProtogenRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.LATEX_MONGOOSE.get(), LatexMongooseRenderer::new);
 
-        event.registerEntityRenderer(ChangedAddonEntities.BLUE_LIZARD.get(),
-                BlueLizardRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.AVALI.get(),
-                AvaliRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_FEMALE.get(),
-                LatexKitsuneFemaleRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.LATEX_KITSUNE_MALE.get(),
-                LatexKitsuneMaleRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.LATEX_CALICO_CAT.get(),
-                LatexCalicoCatRenderer::new);
-        event.registerEntityRenderer(ChangedAddonEntities.PROTOGEN.get(),
-                ProtogenRenderer::new);
+        // --- MONSTER/MOB ENTITIES ---
+        event.registerEntityRenderer(ChangedAddonEntities.PROTOTYPE.get(), PrototypeRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.FOXYAS.get(), FoxyasRenderer::new);
+        event.registerEntityRenderer(ChangedAddonEntities.ERIK.get(), ErikRenderer::new);
 
+        // --- PROJECTILE ENTITIES ---
         event.registerEntityRenderer(ChangedAddonEntities.PARTICLE_PROJECTILE.get(),
                 SimpleProjectileRenderer::new);
     }

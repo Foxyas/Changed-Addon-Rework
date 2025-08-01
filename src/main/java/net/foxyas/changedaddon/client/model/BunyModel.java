@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.BunyEntity;
+import net.foxyas.changedaddon.entity.simple.BunyEntity;
 import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -16,7 +16,8 @@ import net.minecraft.world.entity.HumanoidArm;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements AdvancedHumanoidModelInterface<BunyEntity,BunyModel> {
+
+public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements AdvancedHumanoidModelInterface<BunyEntity, BunyModel> {
     // This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ChangedAddonMod.resourceLoc("bunymodel"), "main");
     private final ModelPart RightLeg;
@@ -121,17 +122,17 @@ public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements Adva
     }
 
     @Override
-    public void prepareMobModel (BunyEntity p_162861, float p_102862, float p_102863, float p_102864_) {
+    public void prepareMobModel(BunyEntity p_162861, float p_102862, float p_102863, float p_102864_) {
         this.prepareMobModel(animator, p_162861, p_102862, p_102863, p_102864_);
     }
 
-   /* public PoseStack getPlacementCorrectors(CorrectorType type) {
-        PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
-        if (type.isArm())
-            corrector.translate(-0.02f, 0.12f, 0.12f);
-        return corrector;
-    }
- */
+    /* public PoseStack getPlacementCorrectors(CorrectorType type) {
+         PoseStack corrector = AdvancedHumanoidModelInterface.super.getPlacementCorrectors(type);
+         if (type.isArm())
+             corrector.translate(-0.02f, 0.12f, 0.12f);
+         return corrector;
+     }
+  */
     @Override
     public void setupHand(BunyEntity entity) {
         animator.setupHand();
@@ -144,7 +145,7 @@ public class BunyModel extends AdvancedHumanoidModel<BunyEntity> implements Adva
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
     }
 
-    public ModelPart getArm (HumanoidArm p_102852) {
+    public ModelPart getArm(HumanoidArm p_102852) {
         return p_102852 == HumanoidArm.LEFT ? this.LeftArm : this.RightArm;
     }
 

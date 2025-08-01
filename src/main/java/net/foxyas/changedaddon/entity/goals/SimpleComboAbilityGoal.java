@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.goals;
 
-import net.foxyas.changedaddon.entity.VoidFoxEntity;
+import net.foxyas.changedaddon.entity.bosses.VoidFoxEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;

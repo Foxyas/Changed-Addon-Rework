@@ -1,14 +1,14 @@
 package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.*;
-import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexKitsuneFemaleEntity;
-import net.foxyas.changedaddon.entity.advanced.LatexKitsuneMaleEntity;
-import net.foxyas.changedaddon.entity.advanced.ProtogenEntity;
+import net.foxyas.changedaddon.entity.advanced.*;
+import net.foxyas.changedaddon.entity.bosses.*;
+import net.foxyas.changedaddon.entity.mobs.ErikEntity;
+import net.foxyas.changedaddon.entity.mobs.FoxyasEntity;
+import net.foxyas.changedaddon.entity.mobs.PrototypeEntity;
 import net.foxyas.changedaddon.entity.projectile.LuminarCrystalSpearEntity;
 import net.foxyas.changedaddon.entity.projectile.ParticleProjectile;
-import net.foxyas.changedaddon.entity.simple.LatexCalicoCatEntity;
+import net.foxyas.changedaddon.entity.simple.*;
 import net.ltxprogrammer.changed.init.ChangedMobCategories;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -77,6 +77,7 @@ public class ChangedAddonEntities {
         ADDON_CHANGED_ENTITIES.add(LATEX_KITSUNE_FEMALE.get());
         ADDON_CHANGED_ENTITIES.add(LATEX_CALICO_CAT.get());
         ADDON_CHANGED_ENTITIES.add(PROTOGEN.get());
+        ADDON_CHANGED_ENTITIES.add(LATEX_MONGOOSE.get());
         return ADDON_CHANGED_ENTITIES;
     }
 
@@ -91,17 +92,6 @@ public class ChangedAddonEntities {
 
     public static final RegistryObject<EntityType<LuminarCrystalSpearEntity>> LUMINAR_CRYSTAL_SPEAR = register("projectile_luminar_crystal_spear", EntityType.Builder.<LuminarCrystalSpearEntity>of(LuminarCrystalSpearEntity::new, MobCategory.MISC)
             .setCustomClientFactory(LuminarCrystalSpearEntity::new).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5f, 0.5f));
-
-    // --- MONSTER ENTITIES ---
-    public static final RegistryObject<EntityType<PrototypeEntity>> PROTOTYPE = registerMob("prototype",
-            EntityType.Builder.<PrototypeEntity>of(PrototypeEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PrototypeEntity::new)
-
-                    .sized(0.7f, 1.93f));
-
-    public static final RegistryObject<EntityType<FoxyasEntity>> FOXYAS = registerMob("foxyas",
-            EntityType.Builder.<FoxyasEntity>of(FoxyasEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FoxyasEntity::new)
-
-                    .sized(0.7f, 1.9f));
 
     // --- CHANGED ENTITIES ---
     public static final RegistryObject<EntityType<LatexSnowFoxEntity>> LATEX_SNOW_FOX = registerChangedEntity("latex_snow_fox",
@@ -160,10 +150,7 @@ public class ChangedAddonEntities {
                     .sized(0.7f, 1.93f));
     public static final RegistryObject<EntityType<WolfyEntity>> WOLFY = registerChangedEntity("wolfy",
             EntityType.Builder.<WolfyEntity>of(WolfyEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(WolfyEntity::new).fireImmune().sized(0.7f, 1.93f));
-    public static final RegistryObject<EntityType<ErikEntity>> ERIK = registerChangedEntity("erik",
-            EntityType.Builder.<ErikEntity>of(ErikEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ErikEntity::new)
 
-                    .sized(0.6f, 1.8f));
     public static final RegistryObject<EntityType<Exp6Entity>> EXP_6 = registerChangedEntity("exp_6",
             EntityType.Builder.<Exp6Entity>of(Exp6Entity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(Exp6Entity::new)
 
@@ -310,6 +297,31 @@ public class ChangedAddonEntities {
 
                     .sized(0.7f, 1.93f));
 
+    public static final RegistryObject<EntityType<LatexMongooseEntity>> LATEX_MONGOOSE = registerChangedEntity("latex_mongoose",
+            EntityType.Builder.<LatexMongooseEntity>of(LatexMongooseEntity::new, ChangedMobCategories.CHANGED)
+                    .setShouldReceiveVelocityUpdates(true)
+                    .setTrackingRange(64).setUpdateInterval(3)
+                    .setCustomClientFactory(LatexMongooseEntity::new)
+                    .clientTrackingRange(10)
+
+                    .sized(0.7f, 1.93f));
+
+    // --- MONSTER/MOB ENTITIES ---
+    public static final RegistryObject<EntityType<PrototypeEntity>> PROTOTYPE = registerMob("prototype",
+            EntityType.Builder.<PrototypeEntity>of(PrototypeEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(PrototypeEntity::new)
+
+                    .sized(0.7f, 1.93f));
+
+    public static final RegistryObject<EntityType<FoxyasEntity>> FOXYAS = registerMob("foxyas",
+            EntityType.Builder.<FoxyasEntity>of(FoxyasEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(FoxyasEntity::new)
+
+                    .sized(0.7f, 1.9f));
+
+    public static final RegistryObject<EntityType<ErikEntity>> ERIK = registerChangedEntity("erik",
+            EntityType.Builder.<ErikEntity>of(ErikEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(ErikEntity::new)
+
+                    .sized(0.6f, 1.8f));
+
 
     private static <T extends Entity> RegistryObject<EntityType<T>> registerChangedEntity(String registryName, EntityType.Builder<T> entityTypeBuilder) {
         return REGISTRY.register(registryName, () -> entityTypeBuilder.build(registryName));
@@ -370,6 +382,7 @@ public class ChangedAddonEntities {
         event.put(LATEX_KITSUNE_FEMALE.get(), LatexKitsuneFemaleEntity.createAttributes().build());
         event.put(LATEX_CALICO_CAT.get(), LatexCalicoCatEntity.createAttributes().build());
         event.put(PROTOGEN.get(), ProtogenEntity.createAttributes().build());
+        event.put(LATEX_MONGOOSE.get(), LatexMongooseEntity.createAttributes().build());
     }
 
 
@@ -421,6 +434,7 @@ public class ChangedAddonEntities {
             LatexKitsuneFemaleEntity.init();
             LatexCalicoCatEntity.init();
             ProtogenEntity.init();
+            LatexMongooseEntity.init();
         });
     }
 }

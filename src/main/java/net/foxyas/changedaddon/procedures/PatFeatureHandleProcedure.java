@@ -1,8 +1,13 @@
 package net.foxyas.changedaddon.procedures;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
+import net.foxyas.changedaddon.entity.bosses.KetExperiment009BossEntity;
+import net.foxyas.changedaddon.entity.bosses.KetExperiment009Entity;
+import net.foxyas.changedaddon.entity.simple.Exp2FemaleEntity;
+import net.foxyas.changedaddon.entity.simple.Exp2MaleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
-import net.foxyas.changedaddon.entity.CustomHandle.CustomPatReaction;
-import net.foxyas.changedaddon.entity.*;
+import net.foxyas.changedaddon.entity.customHandle.CustomPatReaction;
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;

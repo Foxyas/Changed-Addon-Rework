@@ -5,7 +5,7 @@ import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.client.model.VoidFoxModel;
 import net.foxyas.changedaddon.client.renderer.layers.ModelFlickerLayer;
 import net.foxyas.changedaddon.client.renderer.layers.ParticlesTrailsLayer;
-import net.foxyas.changedaddon.entity.VoidFoxEntity;
+import net.foxyas.changedaddon.entity.bosses.VoidFoxEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorLatexMaleWolfModel;

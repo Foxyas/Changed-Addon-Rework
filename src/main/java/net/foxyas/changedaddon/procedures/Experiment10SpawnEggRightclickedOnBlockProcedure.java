@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.procedures;
 
-import net.foxyas.changedaddon.entity.Experiment10BossEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;

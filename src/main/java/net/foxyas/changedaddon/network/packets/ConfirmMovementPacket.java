@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.network.packets;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.CustomHandle.SyncTrackMotion;
+import net.foxyas.changedaddon.entity.customHandle.SyncTrackMotion;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;

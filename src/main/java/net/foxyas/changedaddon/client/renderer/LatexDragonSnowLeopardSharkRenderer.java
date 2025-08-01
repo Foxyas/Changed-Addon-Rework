@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.client.renderer;
 
 import net.foxyas.changedaddon.client.model.LatexDragonSnowLeopardSharkModel;
 import net.foxyas.changedaddon.client.model.armors.ArmorLatexDragonSnowLeopardSharkModel;
-import net.foxyas.changedaddon.entity.LatexDragonSnowLeopardSharkEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexDragonSnowLeopardSharkEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;

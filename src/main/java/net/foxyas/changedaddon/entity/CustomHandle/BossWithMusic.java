@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.CustomHandle;
+package net.foxyas.changedaddon.entity.customHandle;
 
 import net.minecraft.sounds.Music;
 import org.jetbrains.annotations.NotNull;

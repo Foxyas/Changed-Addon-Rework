@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.renderer;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.HaydenFennecFoxModel;
 import net.foxyas.changedaddon.client.renderer.layers.CustomClothesLayer;
-import net.foxyas.changedaddon.entity.HaydenFennecFoxEntity;
+import net.foxyas.changedaddon.entity.simple.HaydenFennecFoxEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;

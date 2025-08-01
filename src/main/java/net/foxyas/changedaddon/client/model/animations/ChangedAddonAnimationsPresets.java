@@ -17,8 +17,6 @@ import static net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets.
 
 public class ChangedAddonAnimationsPresets {
 
-    public record TailSet(ModelPart root, List<ModelPart> joints) {}
-
     public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> catLikeMultiTail(
             ModelPart head,
             ModelPart leftEar, ModelPart rightEar,
@@ -48,14 +46,13 @@ public class ChangedAddonAnimationsPresets {
         return (animator) -> animator.addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad)).addPreset(wolfUpperBody(head, torso, leftArm, rightArm)).addPreset(wolfTail(tail, tailJoints)).addAnimator(new WolfHeadInitAnimator<>(head)).addAnimator(new ArmSwimAnimator<>(leftArm, rightArm)).addAnimator(new ArmBobAnimator<>(leftArm, rightArm)).addAnimator(new ArmRideAnimator<>(leftArm, rightArm));
     }
 
-
     public static <T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> Consumer<HumanoidAnimator<T, M>> wolfLikeMultiTail(ModelPart head,
-                                                                                                                          ModelPart leftEar, ModelPart rightEar,
-                                                                                                                          ModelPart torso,
-                                                                                                                          ModelPart leftArm, ModelPart rightArm,
-                                                                                                                          List<TailSet> tails,
-                                                                                                                          ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad,
-                                                                                                                          ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
+                                                                                                                                   ModelPart leftEar, ModelPart rightEar,
+                                                                                                                                   ModelPart torso,
+                                                                                                                                   ModelPart leftArm, ModelPart rightArm,
+                                                                                                                                   List<TailSet> tails,
+                                                                                                                                   ModelPart leftLeg, ModelPart leftLegLower, ModelPart leftFoot, ModelPart leftPad,
+                                                                                                                                   ModelPart rightLeg, ModelPart rightLegLower, ModelPart rightFoot, ModelPart rightPad) {
         return (animator) -> {
             animator
                     .addPreset(wolfBipedal(leftLeg, leftLegLower, leftFoot, leftPad, rightLeg, rightLegLower, rightFoot, rightPad))
@@ -71,6 +68,9 @@ public class ChangedAddonAnimationsPresets {
             }
         };
 
+    }
+
+    public record TailSet(ModelPart root, List<ModelPart> joints) {
     }
 
 }

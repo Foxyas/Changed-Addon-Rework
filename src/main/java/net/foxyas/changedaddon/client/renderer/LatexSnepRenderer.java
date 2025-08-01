@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.renderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.client.model.LatexSnepModel;
-import net.foxyas.changedaddon.entity.LatexSnepEntity;
+import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.armor.ArmorNoneModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
