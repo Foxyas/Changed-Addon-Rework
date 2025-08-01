@@ -27,7 +27,8 @@
     "entity.IronGolemMixin",
     "entity.LivingEntityMixin",
     "entity.PhantomAIMixin",
-    "entity.PlayerMixin"
+    "entity.PlayerMixin",
+    "entity.ServerPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

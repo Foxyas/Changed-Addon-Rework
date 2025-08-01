@@ -1,24 +1,44 @@
 package net.foxyas.changedaddon.process.util;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.network.packets.RequestMovementCheckPacket;
 import net.foxyas.changedaddon.process.StructureHandle;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.PacketDistributor;
+
 
 @Mod.EventBusSubscriber
+@Deprecated(forRemoval = true)
 public class DEBUG {
     public static float HeadPosT, HeadPosV, HeadPosB, HeadPosK, HeadPosL, HeadPosJ = 10;
     public static float HeadPosX, HeadPosY, HeadPosZ = 1;
 
     public static boolean PARTICLETEST = false;
+    public static int MOTIONTEST = 0;
+
     public static float DeltaX, DeltaY, DeltaZ = 0;
     public static String COLORSTRING = "#ffffff";
 
     @SubscribeEvent
     public static void debug(ServerChatEvent event) {
+        if (event.getMessage().startsWith("testMotion")) {
+            if (MOTIONTEST == 0) {
+                MOTIONTEST = 1;
+            } else if (MOTIONTEST == 1) {
+                MOTIONTEST = 2;
+            } else {
+                MOTIONTEST = 0;
+            }
+        }
+
         if (event.getMessage().startsWith("testDeltas")) {
             PARTICLETEST = !PARTICLETEST;
         } else if (event.getMessage().startsWith("setDeltaPos")) {
@@ -74,7 +94,28 @@ public class DEBUG {
     public static void PARTICLETEST(TickEvent.PlayerTickEvent event) {
         if (PARTICLETEST && event.player.isShiftKeyDown()) {
             PlayerUtil.ParticlesUtil.sendParticles(event.player.getLevel(), ParticleTypes.GLOW, event.player.getEyePosition().add(FoxyasUtils.getRelativePosition(event.player, DeltaX, DeltaY, DeltaZ, true)), 0f, 0f, 0f, 4, 0);
+        }
 
+        if (MOTIONTEST != 0) {
+            Player player = event.player;
+            if (MOTIONTEST == 1) {
+                if (player.getLevel().isClientSide()) {
+                    Vec3 motion = player.getDeltaMovement();
+                    double speed = motion.length();
+                    ChangedAddonMod.LOGGER.info("Client Player Speed is:{}", speed);
+                }
+            } else if (MOTIONTEST == 2) {
+                if (!player.getLevel().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                    /*Vec3 oldPos = new Vec3(player.xOld, player.yOld, player.zOld);
+                    Vec3 playerPosition = player.position();
+                    Vec3 posRelative = playerPosition.subtract(oldPos);
+                    double fakeSpeed = posRelative.length();
+
+                    ChangedAddonMod.LOGGER.info("Player Fake Speed is:{}", fakeSpeed);
+                    ChangedAddonMod.LOGGER.info("Player Fake Vec Speed is:{}", posRelative);*/
+                    ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new RequestMovementCheckPacket(true));
+                }
+            }
         }
         //Player player = event.player;
         //player.displayClientMessage(new TextComponent("Dot = " + DotValueOfViewProcedure.execute(player,player.getMainHandItem())), false);
@@ -84,7 +125,7 @@ public class DEBUG {
     private static double convert(String s) {
         try {
             return Double.parseDouble(s.trim());
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return 0;
     }

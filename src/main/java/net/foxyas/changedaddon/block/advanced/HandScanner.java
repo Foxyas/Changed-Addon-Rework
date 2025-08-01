@@ -49,7 +49,6 @@ public class HandScanner extends Block {
     public static final BooleanProperty POWERED = LeverBlock.POWERED;
     public static final EnumProperty<LockType> LOCK_TYPE = EnumProperty.create("lock_type", LockType.class);
 
-
     public enum LockType implements StringRepresentable {
         HUMAN(),
         TRANSFURRED();
@@ -57,6 +56,10 @@ public class HandScanner extends Block {
         @Override
         public @NotNull String getSerializedName() {
             return this.name().toLowerCase();
+        }
+
+        public static LockType getValueByPlayer(@NotNull Player player) {
+            return ProcessTransfur.isPlayerTransfurred(player) ? TRANSFURRED : HUMAN;
         }
     }
 
@@ -164,7 +167,7 @@ public class HandScanner extends Block {
                 if (!level.getBlockState(pos.relative(direction)).is(BlockTags.BUTTONS) && !level.getBlockState(pos.relative(direction)).is(Blocks.LEVER)) {
                     continue;
                 }
-                if (level.getSignal(pos, direction) > 0 && (level.getBlockState(pos.relative(direction)).getValue(POWERED) || level.getBlockState(pos.relative(direction)).getValue(BlockStateProperties.POWERED) )) {
+                if (level.getSignal(pos, direction) > 0 && (level.getBlockState(pos.relative(direction)).getValue(POWERED) || level.getBlockState(pos.relative(direction)).getValue(BlockStateProperties.POWERED))) {
                     canChange = true;
                     break;
                 }
@@ -233,6 +236,11 @@ public class HandScanner extends Block {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        if (context.getPlayer() != null) {
+            return this.defaultBlockState()
+                    .setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(LOCK_TYPE, LockType.getValueByPlayer(context.getPlayer()));
+        }
+
         return this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
