@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.client.renderer.generic;
+package net.foxyas.changedaddon.client.renderer.basic;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.BlueLizardModel;

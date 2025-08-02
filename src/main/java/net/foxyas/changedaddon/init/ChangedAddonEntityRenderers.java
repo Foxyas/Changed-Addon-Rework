@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.client.renderer.*;
 import net.foxyas.changedaddon.client.renderer.advanced.*;
-import net.foxyas.changedaddon.client.renderer.generic.*;
+import net.foxyas.changedaddon.client.renderer.basic.*;
 import net.foxyas.changedaddon.client.renderer.mobs.ErikRenderer;
 import net.foxyas.changedaddon.client.renderer.mobs.FoxyasRenderer;
 import net.foxyas.changedaddon.client.renderer.mobs.PrototypeRenderer;

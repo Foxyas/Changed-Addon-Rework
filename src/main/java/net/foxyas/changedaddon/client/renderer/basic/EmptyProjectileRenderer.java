@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.client.renderer.generic;
+package net.foxyas.changedaddon.client.renderer.basic;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.ChangedAddonMod;
