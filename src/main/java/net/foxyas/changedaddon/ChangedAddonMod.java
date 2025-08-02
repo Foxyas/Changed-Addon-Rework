@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon;
 
 import net.foxyas.changedaddon.init.*;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.Event;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
@@ -51,6 +53,10 @@ public class ChangedAddonMod {
 
 	public static ResourceLocation textureLoc(String path){
 		return new ResourceLocation(MODID, path + ".png");
+	}
+
+	public static <T extends Event> boolean postEvent(T event) {
+		return MinecraftForge.EVENT_BUS.post(event);
 	}
 
 	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {

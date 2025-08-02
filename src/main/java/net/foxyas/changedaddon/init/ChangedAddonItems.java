@@ -46,12 +46,12 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> LITIX_CAMONIA = REGISTRY.register("litix_camonia", LitixCamoniaItem::new);
     public static final RegistryObject<Item> LAETHIN = REGISTRY.register("laethin", LaethinItem::new);
     public static final RegistryObject<Item> SYRINGE = REGISTRY.register("syringe", SyringeItem::new);
-    public static final RegistryObject<Item> CATALYZEDDNA = REGISTRY.register("catalyzeddna", CatalyzedDNAItem::new);
+    public static final RegistryObject<Item> CATALYZED_DNA = REGISTRY.register("catalyzed_dna", CatalyzedDNAItem::new);
     public static final RegistryObject<Item> DIFFUSION_SYRINGE = REGISTRY.register("diffusion_syringe", DiffusionSyringeItem::new);
     public static final RegistryObject<Item> SYRINGE_WITH_LITIX_CAMMONIA = REGISTRY.register("syringe_with_litix_cammonia", SyringeWithLitixCammoniaItem::new);
     public static final RegistryObject<Item> LAETHIN_SYRINGE = REGISTRY.register("laethin_syringe", LaethinSyringeItem::new);
     public static final RegistryObject<Item> POT_WITH_CAMONIA = REGISTRY.register("pot_with_camonia", PotWithCamoniaItem::new);
-    public static final RegistryObject<Item> ORANGEJUICE = REGISTRY.register("orangejuice", OrangejuiceItem::new);
+    public static final RegistryObject<Item> ORANGE_JUICE = REGISTRY.register("orange_juice", OrangeJuiceItem::new);
     public static final RegistryObject<Item> RAW_IRIDIUM = REGISTRY.register("raw_iridium", RawIridiumItem::new);
     public static final RegistryObject<Item> IRIDIUM = REGISTRY.register("iridium", IridiumItem::new);
     public static final RegistryObject<Item> IRIDIUM_ORE = block(ChangedAddonBlocks.IRIDIUM_ORE, ChangedAddonTabs.TAB_CHANGED_ADDON);

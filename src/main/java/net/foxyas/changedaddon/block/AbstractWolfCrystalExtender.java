@@ -90,7 +90,7 @@ public class AbstractWolfCrystalExtender {
             }
         }
 
-        // Método auxiliar para tocar o som de aplicação do corante
+        // Method auxiliar para tocar o som de aplicação do corante
         private static void playDyeUseSound(Level level, BlockPos pos) {
             level.playLocalSound(
                     pos.getX(), pos.getY(), pos.getZ(),
@@ -99,7 +99,7 @@ public class AbstractWolfCrystalExtender {
             );
         }
 
-        // Método para conceder um avanço ao jogador
+        // Method para conceder um avanço ao jogador
         private static void grantAdvancement(Player player, String advancementId) {
             if (player instanceof ServerPlayer serverPlayer) {
                 Advancement advancement = serverPlayer.server.getAdvancements()

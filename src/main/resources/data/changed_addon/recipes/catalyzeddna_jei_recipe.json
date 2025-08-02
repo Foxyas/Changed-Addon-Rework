@@ -2,11 +2,11 @@
   "type": "changed_addon:catalyzer",
   "ingredients": [
     {
-      "tag": "changed_addon:bloodtype_syringe"
+      "tag": "changed_addon:blood_type_syringe"
     }  
   ],
   "output": {
-    "item": "changed_addon:catalyzeddna",
+    "item": "changed_addon:catalyzed_dna",
     "count": 1
   },
   "ProgressSpeed": 2.5,

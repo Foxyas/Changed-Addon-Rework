@@ -86,7 +86,7 @@ public class FishLatexEntityProcedure {
 
             // Verifica se o item é uma vara de pesca
             if (!(itemStack.getItem() instanceof FishingRodItem)) {
-                return; // Nenhuma vara de pesca encontrada, encerra o método
+                return; // Nenhuma vara de pesca encontrada, encerra o Method
             }
 
             // Obtém o nível do encantamento "Changed Lure" na vara

@@ -97,14 +97,14 @@ public class KnockBackBurstGoal extends Goal {
     }
 
     /**
-     * Chame este método na entidade para registrar o dano recebido.
+     * Chame este Method na entidade para registrar o dano recebido.
      */
     public void registerDamage(float amount) {
         this.recentDamage += amount;
     }
 
     /**
-     * Chame este método na entidade quando ela acertar um ataque.
+     * Chame este Method na entidade quando ela acertar um ataque.
      */
     public void registerHit() {
         this.recentHits++;

@@ -52,7 +52,7 @@ public class WingFallFlyAnimationMixin {
 	}
 
 
-	// Método para limitar o valor entre min e max
+	// Method para limitar o valor entre min e max
 	private static float capLevel(float value, float min, float max) {
 		if (value < min) {
 			return min;

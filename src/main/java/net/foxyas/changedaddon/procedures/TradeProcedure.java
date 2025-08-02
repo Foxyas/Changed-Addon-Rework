@@ -42,7 +42,7 @@ public class TradeProcedure {
                     _player.containerMenu.broadcastChanges();
                 }
                 if (entity instanceof Player _player && _player.containerMenu instanceof Supplier _current && _current.get() instanceof Map _slots) {
-                    ItemStack _setstack = new ItemStack(ChangedAddonItems.ORANGEJUICE.get());
+                    ItemStack _setstack = new ItemStack(ChangedAddonItems.ORANGE_JUICE.get());
                     _setstack.setCount(1 + new Object() {
                         public int getAmount(int sltid) {
                             if (entity instanceof Player _player && _player.containerMenu instanceof Supplier _current && _current.get() instanceof Map _slots) {

@@ -99,7 +99,7 @@ public class VoidFoxRenderer extends AdvancedHumanoidRenderer<VoidFoxEntity, Voi
                     0xFFFFFF,                   // Cor base (pode ser qualquer, será sobrescrita por .withStyle)
                     false,                      // Sem sombra
                     poseStack.last().pose(),    // Matrix do PoseStack
-                    bufferSource,               // Buffer vindo do método render
+                    bufferSource,               // Buffer vindo do Method render
                     false,                      // seeThrough (normalmente false)
                     0,                          // background color (0 = transparente)
                     packedLight                 // luz do ambiente

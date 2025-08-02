@@ -38,6 +38,6 @@ public class BiomassItem extends Item {
         }
 
         BiomassPlayerFinishesUsingItemProcedure.execute(entity); // Executa a função desejada
-        return itemstack.isEmpty() ? ItemStack.EMPTY : itemstack; // Retorna vazio se todo o item foi consumido
+        return itemstack.isEmpty() ? ItemStack.EMPTY : itemstack; // Retorna vazio se all o item foi consumido
     }
 }

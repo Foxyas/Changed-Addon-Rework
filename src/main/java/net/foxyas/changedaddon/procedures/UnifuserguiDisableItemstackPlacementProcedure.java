@@ -7,7 +7,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class UnifuserguiDisableItemstackPlacementProcedure {
     public static boolean execute(ItemStack itemstack) {
-        return itemstack.getItem() != ChangedAddonItems.CATALYZEDDNA.get() && itemstack.getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:blood_syringe"))
+        return itemstack.getItem() != ChangedAddonItems.CATALYZED_DNA.get() && itemstack.getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:blood_syringe"))
                 && itemstack.getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation("changed:latex_syringe"));
     }
 }

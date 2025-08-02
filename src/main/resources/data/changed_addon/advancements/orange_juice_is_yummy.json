@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "changed_addon:orangejuice"
+      "item": "changed_addon:orange_juice"
     },
     "title": {
       "translate": "advancements.orange_juice_is_yummy.title"
@@ -20,7 +20,7 @@
       "conditions": {
         "item": {
           "items": [
-            "changed_addon:orangejuice"
+            "changed_addon:orange_juice"
           ]
         }
       }

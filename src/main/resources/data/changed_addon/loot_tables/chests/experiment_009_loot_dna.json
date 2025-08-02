@@ -97,7 +97,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "changed_addon:orangejuice",
+          "name": "changed_addon:orange_juice",
           "weight": 12
         },
         {

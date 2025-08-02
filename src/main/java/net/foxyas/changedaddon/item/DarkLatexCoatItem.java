@@ -98,7 +98,7 @@ public class DarkLatexCoatItem extends ArmorItem {
         return ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation("changed_addon:armor_equip"));
     }
 
-    // Método para definir o modelo da armadura no lado do cliente
+    // Method para definir o modelo da armadura no lado do cliente
     public void initializeClient(java.util.function.@NotNull Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
         consumer.accept(new net.minecraftforge.client.IItemRenderProperties() {
             @Override
@@ -140,7 +140,7 @@ public class DarkLatexCoatItem extends ArmorItem {
             return super.getDefaultAttributeModifiers(p_40390_);
         }
 
-        // Método para definir o modelo da armadura no lado do cliente
+        // Method para definir o modelo da armadura no lado do cliente
         public void initializeClient(java.util.function.@NotNull Consumer<net.minecraftforge.client.IItemRenderProperties> consumer) {
             consumer.accept(new net.minecraftforge.client.IItemRenderProperties() {
                 @Override

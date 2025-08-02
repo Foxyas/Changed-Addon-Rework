@@ -72,7 +72,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 POT_WITH_CAMONIA.get(),
                 LAETHIN_SYRINGE.get(),
                 SYRINGE_WITH_LITIX_CAMMONIA.get(),
-                ORANGEJUICE.get(),
+                ORANGE_JUICE.get(),
                 ChangedItems.WHITE_LATEX_GOO.get(),
                 ChangedItems.DARK_LATEX_GOO.get(),
                 Items.GOLDEN_APPLE,

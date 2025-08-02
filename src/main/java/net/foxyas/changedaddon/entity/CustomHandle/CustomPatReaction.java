@@ -6,6 +6,6 @@ public interface CustomPatReaction {
     default void WhenPattedReaction() {
     }
 
-    default void WhenPattedReaction(Player target) {
+    default void WhenPattedReaction(Player patter) {
     }
 }
