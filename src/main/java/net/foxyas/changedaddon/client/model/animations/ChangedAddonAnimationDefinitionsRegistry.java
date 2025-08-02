@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 public class ChangedAddonAnimationDefinitionsRegistry {
     @SubscribeEvent
     public static void registerAnimations(AnimationDefinitions.GatherAnimationsEvent event) {
+        event.addAnimationDefinition(ChangedAddonMod.resourceLoc("dodge_left"), ChangedAddonAnimationsDefinitions.DODGE_LEFT, AnimationDefinitions.GatherAnimationsEvent.OverridePolicy.OVERRIDE_JSON);
         event.addAnimationDefinition(ChangedAddonMod.resourceLoc("dodge_right"), ChangedAddonAnimationsDefinitions.DODGE_RIGHT, AnimationDefinitions.GatherAnimationsEvent.OverridePolicy.OVERRIDE_JSON);
         event.addAnimationDefinition(ChangedAddonMod.resourceLoc("dodge_down"), ChangedAddonAnimationsDefinitions.DODGE_RIGHT, AnimationDefinitions.GatherAnimationsEvent.OverridePolicy.OVERRIDE_JSON);
         event.addAnimationDefinition(ChangedAddonMod.resourceLoc("dodge_weave"), ChangedAddonAnimationsDefinitions.DODGE_WEAVE, AnimationDefinitions.GatherAnimationsEvent.OverridePolicy.OVERRIDE_JSON);
