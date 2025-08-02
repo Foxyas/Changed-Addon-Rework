@@ -17,7 +17,6 @@ public class ChangedAddonAnimationEvents {
     public static DeferredRegister<AnimationEvent<?>> REGISTRY = ChangedRegistry.ANIMATION_EVENTS.createDeferred(ChangedAddonMod.MODID);
 
     public static RegistryObject<AnimationEvent<DodgeAnimationParameters>> DODGE_LEFT = register("dodge_left", DodgeAnimationParameters.CODEC);
-
     public static RegistryObject<AnimationEvent<DodgeAnimationParameters>> DODGE_RIGHT = register("dodge_right", DodgeAnimationParameters.CODEC);
     public static RegistryObject<AnimationEvent<DodgeAnimationParameters>> DODGE_WEAVE = register("dodge_weave", DodgeAnimationParameters.CODEC);
     public static RegistryObject<AnimationEvent<DodgeAnimationParameters>> DODGE_DOWN = register("dodge_down", DodgeAnimationParameters.CODEC);
