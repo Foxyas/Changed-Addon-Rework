@@ -23,7 +23,7 @@ public class GatherData {
         generator.addProvider(new TFTagsProvider(generator, helper));
         generator.addProvider(new AccessoryEntityProvider(generator));
 
-        //generator.addProvider(new RecipeProvider(generator));
+        generator.addProvider(new RecipeProvider(generator));
 
         //generator.addProvider(new LootTableProvider(generator));
 

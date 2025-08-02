@@ -1,18 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "01"
+    "IW"
   ],
   "key": {
-    "0": {
-      "item": "changed_addon:iridium"
+    "I": {
+      "tag": "forge:ingots/iridium"
     },
-    "1": {
+    "W": {
       "item": "changed:wall_blue_striped"
     }
   },
   "result": {
-    "item": "changed_addon:reinforced_wall_silver_striped",
-    "count": 1
+    "item": "changed_addon:reinforced_wall_silver_striped"
   }
 }

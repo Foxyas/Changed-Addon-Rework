@@ -5,7 +5,10 @@ import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -15,12 +18,21 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.*;
 
 public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider {
 
+    private static final TagKey<Block> forgeOresIridium = BlockTags.create(new ResourceLocation("forge", "ores/iridium"));
+    private static final TagKey<Block> forgeStorageBlocksIridium = BlockTags.create(new ResourceLocation("forge", "storage_blocks/iridium"));
+
     public BlockTagsProvider(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
         super(generator, ChangedAddonMod.MODID, existingFileHelper);
     }
 
     @Override
     protected void addTags() {
+        tag(Tags.Blocks.ORES).add(IRIDIUM_ORE.get());
+        tag(forgeOresIridium).add(IRIDIUM_ORE.get());
+        tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(IRIDIUM_ORE.get());
+
+        tag(forgeStorageBlocksIridium).add(IRIDIUM_BLOCK.get());
+
         tag(ChangedTags.Blocks.GROWS_LATEX_CRYSTALS).add(WHITE_WOLF_CRYSTAL_BLOCK.get(), ORANGE_WOLF_CRYSTAL_BLOCK.get(), YELLOW_WOLF_CRYSTAL_BLOCK.get(), BLUE_WOLF_CRYSTAL_BLOCK.get());
 
         tag(ChangedAddonTags.Blocks.DYEABLE_CRYSTAL).add(ChangedBlocks.WOLF_CRYSTAL_BLOCK.get(), BLUE_WOLF_CRYSTAL_BLOCK.get(), WHITE_WOLF_CRYSTAL_BLOCK.get(), ORANGE_WOLF_CRYSTAL_BLOCK.get(), YELLOW_WOLF_CRYSTAL_BLOCK.get());

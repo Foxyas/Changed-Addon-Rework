@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "changed_addon:luminar_crystal_spear"
+    ]
+  },
+  "criteria": {
+    "has_luminar_crystal_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:luminar_crystal_shard"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "changed_addon:luminar_crystal_spear"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_luminar_crystal_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

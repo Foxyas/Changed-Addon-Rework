@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ID",
+    "RPI",
+    "BR "
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iridium"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
+    "P": {
+      "item": "changed_addon:painite"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "B": {
+      "item": "changed:tsc_baton"
+    }
+  },
+  "result": {
+    "item": "changed_addon:electric_katana"
+  }
+}

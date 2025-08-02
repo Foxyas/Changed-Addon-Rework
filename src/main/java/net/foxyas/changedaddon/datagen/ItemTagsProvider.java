@@ -6,8 +6,12 @@ import net.foxyas.changedaddon.init.ChangedTagsExtension;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,12 +19,17 @@ import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
 
 public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
+    static final TagKey<Item> forgeIngotsIridium = ItemTags.create(new ResourceLocation("forge", "ingots/iridium"));
+
     public ItemTagsProvider(DataGenerator generator, BlockTagsProvider blocks, @Nullable ExistingFileHelper existingFileHelper) {
         super(generator, blocks, ChangedAddonMod.MODID, existingFileHelper);
     }
 
     @Override
     protected void addTags() {
+        tag(Tags.Items.INGOTS).add(IRIDIUM.get());
+        tag(forgeIngotsIridium).add(IRIDIUM.get());
+
         tag(ChangedTagsExtension.AccessoryItemsTags.BODY).add(
                 DYEABLE_SHIRT.get());
         tag(ChangedTagsExtension.AccessoryItemsTags.LEGS).add(

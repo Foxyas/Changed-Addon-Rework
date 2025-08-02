@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "changed_addon:advanced_catalyzer"
+    ]
+  },
+  "criteria": {
+    "has_iridium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:iridium"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "changed_addon:advanced_catalyzer"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_iridium",
+      "has_the_recipe"
+    ]
+  ]
+}
