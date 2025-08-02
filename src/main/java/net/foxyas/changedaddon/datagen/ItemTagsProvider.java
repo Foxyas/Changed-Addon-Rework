@@ -19,7 +19,9 @@ import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
 
 public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
+    static final TagKey<Item> forgeRawIridium = ItemTags.create(new ResourceLocation("forge", "raw_materials/iridium"));
     static final TagKey<Item> forgeIngotsIridium = ItemTags.create(new ResourceLocation("forge", "ingots/iridium"));
+    static final TagKey<Item> forgeStorageBlocksIridium = ItemTags.create(new ResourceLocation("forge", "storage_blocks/iridium"));
 
     public ItemTagsProvider(DataGenerator generator, BlockTagsProvider blocks, @Nullable ExistingFileHelper existingFileHelper) {
         super(generator, blocks, ChangedAddonMod.MODID, existingFileHelper);
@@ -27,8 +29,16 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
     @Override
     protected void addTags() {
+        tag(Tags.Items.RAW_MATERIALS).add(RAW_IRIDIUM.get());
+        tag(forgeRawIridium).add(RAW_IRIDIUM.get());
+
         tag(Tags.Items.INGOTS).add(IRIDIUM.get());
         tag(forgeIngotsIridium).add(IRIDIUM.get());
+
+        tag(Tags.Items.STORAGE_BLOCKS).add(IRIDIUM_BLOCK.get());
+        tag(forgeStorageBlocksIridium).add(IRIDIUM_BLOCK.get());
+
+
 
         tag(ChangedTagsExtension.AccessoryItemsTags.BODY).add(
                 DYEABLE_SHIRT.get());

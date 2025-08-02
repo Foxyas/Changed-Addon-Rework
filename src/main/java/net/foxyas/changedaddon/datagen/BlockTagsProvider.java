@@ -31,7 +31,10 @@ public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider
         tag(forgeOresIridium).add(IRIDIUM_ORE.get());
         tag(Tags.Blocks.ORES_IN_GROUND_DEEPSLATE).add(IRIDIUM_ORE.get());
 
+        tag(Tags.Blocks.STORAGE_BLOCKS).add(IRIDIUM_BLOCK.get());
         tag(forgeStorageBlocksIridium).add(IRIDIUM_BLOCK.get());
+
+
 
         tag(ChangedTags.Blocks.GROWS_LATEX_CRYSTALS).add(WHITE_WOLF_CRYSTAL_BLOCK.get(), ORANGE_WOLF_CRYSTAL_BLOCK.get(), YELLOW_WOLF_CRYSTAL_BLOCK.get(), BLUE_WOLF_CRYSTAL_BLOCK.get());
 
