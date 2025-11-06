@@ -439,7 +439,7 @@
   "gamerule.changed_addon:bossesDifficultScale": "Changed Addon Nehéz módi fő ellenségek",
   "gamerule.changed_addon:bossesDifficultScale.description": "Nehézségi szorzó hozzáadása Changed Addon mód fő ellenségeire",
   "gamerule.changed_addon:doDarkLatexMaskTransfur": "Tud-e transzfurálni a sötét latex maszk",
-  "gamerule.changed_addon:doDarkLatexMaskTransfur.description": "Bekapcsolt állapotban a játékos transzfurálhat a sötét latex maszk tartásával.",
+  "gamerule.doDarkLatexMaskTransfur.description": "Bekapcsolt állapotban a játékos transzfurálhat a sötét latex maszk tartásával.",
   "gamerule.changed_addon:doDazedLatexBurn": "Dazed latexek égésének engedélyezése",
   "gamerule.changed_addon:doDazedLatexBurn.description": "Bekapcsolt állapotban a Dazed latexek égnek napfényben mint a Dazed játékban",
   "gamerule.changed_addon:doLatexInfection": "Latex fertőzés engedélyezése",
