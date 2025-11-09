@@ -103,8 +103,8 @@
   "advancements.wolfy_transfur.descr": "Gratulálok, most már hivatalosan is Wolfy vagy. Remélem, megérte.",
   "advancements.main.rock_fish.title": "Kőhal",
   "advancements.main.rock_fish.description": "Használj egy tűzállóság bájitalát, és ússz a lávában vízi formaként.",
-  "advancements.cuddles_of_eternal_night.title": "Örök éjszaka ölelései",
-  "advancements.cuddles_of_eternal_night.descr": "Jobban kellett volna tudnod, mint összebújni a plüsssel. Aludj jól... örökké.",
+  "advancements.cuddles_of_eternal_night.title": "Álmodom?",
+  "advancements.cuddles_of_eternal_night.descr": "Örök éjszaka ölelései... Jobban kellett volna tudnod, mint összebújni a plüsssel. Aludj jól... örökké.",
 
   "advancement.grab.hug.title": "Meleg ölelés",
   "advancement.grab.hug.description": "Adtál valakinek egy meleg ölelést ♥",
@@ -114,6 +114,7 @@
 
   "attribute.changed_addon.latex_infection": "Latexfertőzés",
   "attribute.changed_addon.latex_resistance": "Latexellenállás",
+  "attribute.changed_addon.latex_solvent_damage_multiplier": "Latexoldás sebzésének szorzója",
 
   "block.changed_addon.advanced_catalyzer": "Fejlett katalizátor",
   "block.changed_addon.advanced_unifuser": "Fejlett unifúzor",
