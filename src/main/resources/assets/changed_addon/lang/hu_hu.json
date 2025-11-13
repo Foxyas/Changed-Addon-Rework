@@ -532,6 +532,11 @@
   "item.changed_addon.hazard_body_suit": "Védőruha",
   "item.changed_addon.impure_ammonia": "Szennyezett ammónia",
   "item.changed_addon.iridium": "Irídium",
+  "item.changed_addon.keycard": "Kulcskártya",
+  "item.changed_addon.keycard.desc.nocode": "Nincs tárolt kód",
+  "item.changed_addon.keycard.desc.code": "Kód: %s",
+  "item.changed_addon.keycard.message.used.success": "A kód automatikusan beillesztve!",
+  
   "item.changed_addon.laethin": "Laethin",
   "item.changed_addon.laethin_syringe": "Laethin fecskendő",
   "item.changed_addon.laethinminator": "Laethinminátor",
