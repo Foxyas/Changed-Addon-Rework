@@ -291,6 +291,8 @@
   "changed_addon.jei_descriptions.pot_with_cammonia": "Elég visszatranszfurálási hatást biztosít ahhoz, hogy elfogyasztásakor teljesen visszafordítsa az átalakulást.",
   "changed_addon.jei_descriptions.luminara.riddle": "Ahol a világ véget ér és az űr mindent elnyel, \na lénynek a mélységbe kell vetnie magát. \nA csendben, ahol semmilyen láng nem mer égni, lelke szétszakad és újjáalakul. \nDe óvakodjatok a sárkány leheletétől— \nmert akiket megérint a mérge, nemcsak fejlődnek, \nhanem hiper-sugárzásban ébrednek fel, fényesebben égve, mint maga a mélység.",
 
+  "jei.changed_addon.keycard_color": "Kulcskártya színezet",
+  
   "changed_addon.latex_syringe.not_valid": "Habozol. Valami benned figyelmeztet, hogy ne engedd el, ami benne van.",
 
   "changed_addon.latex_totem.not_valid": "Totem §cnegatívan§r reagált a §bDNS§r-edre",
@@ -535,6 +537,10 @@
   "item.changed_addon.keycard": "Kulcskártya",
   "item.changed_addon.keycard.desc.nocode": "Nincs tárolt kód",
   "item.changed_addon.keycard.desc.code": "Kód: %s",
+  "item.changed_addon.keycard.desc.color_top": "Színes felső",
+  "item.changed_addon.keycard.desc.color_top.data": "Szín: %s",
+  "item.changed_addon.keycard.desc.color_bottom": "Színes alsó",
+  "item.changed_addon.keycard.desc.color_bottom.data": "Szín: %s",
   "item.changed_addon.keycard.message.used.success": "A kód automatikusan beillesztve!",
   
   "item.changed_addon.laethin": "Laethin",
