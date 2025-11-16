@@ -541,7 +541,8 @@
   "item.changed_addon.keycard.desc.color_top.data": "Szín: %s",
   "item.changed_addon.keycard.desc.color_bottom": "Színes alsó",
   "item.changed_addon.keycard.desc.color_bottom.data": "Szín: %s",
-  "item.changed_addon.keycard.message.used.success": "A kód automatikusan beillesztve!",
+  "item.changed_addon.keycard.message.used.success": "KÓD>> BEFECSKENDEZVE // ÁLLAPOT: OK",
+  "item.changed_addon.keycard.message.used.fail": "!! SYNTAX-ERR :: KÓDELTÉRÉS !!",
   
   "item.changed_addon.laethin": "Laethin",
   "item.changed_addon.laethin_syringe": "Laethin fecskendő",
