@@ -4,6 +4,10 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.*;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.decoration.PaintingVariant;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.Optional;
 
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.*;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.ADVANCED_CATALYZER;
@@ -623,6 +627,11 @@ public class HULanguageProvider extends LanguageProvider {
         addSoundO(WARN, "Figyelmeztető hang");
         addSoundO(GECKO_BEEP, "Gekkó csipog");
         addSoundO(PROTOTYPE_IDEA, "Prototípus cseng");
+        
+        for (RegistryObject<PaintingVariant> paintingVariantRegistryObject : ChangedAddonPaintingVariants.PAINTING_TYPES.getEntries()) {
+            Optional<ChangedAddonPaintingVariants.PaintingVariantInfo> optionalPaintingVariantInfo = ChangedAddonPaintingVariants.getPaintingVariantInfo(paintingVariantRegistryObject);
+            optionalPaintingVariantInfo.ifPresent(paintingVariantInfo -> addPaintingVariant(paintingVariantRegistryObject, paintingVariantInfo.title(), paintingVariantInfo.author()));
+        }
 
         addText("additionalHealth", "További életerősség = %s");
         addText("additionalHealth.Hearts", " szív");
