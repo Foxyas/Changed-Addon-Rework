@@ -432,6 +432,13 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("unifuser_gui.tooltip_place_the_powders", "Helyezz ide a porokat vagy más hozzávalókat");
         addGui("unifuser_gui.tooltip_put_the_second_ingredient", "Tedd ide a második hozzávalót");
         addGuiO("abilities_radial_screen.mouse.right_click", "Nyomd meg a jobb egérgombot a második képesség kiválasztásához");
+        
+        add("deathScreen.select_tf", "Újraéledés transzfurként?");
+        add("deathScreen.select_tf.hardcore", "Folytatás transzfurként?");
+        add("deathScreen.select_tf.confirm", "Biztos vagy benne, hogy újra akarsz éledni transzfurként?");
+        add("deathScreen.select_tf.confirm.info", "A továbbiakban semmilyen visszatranszfur tárgy nem lesz rád hatással\nEz azt jelenti, hogy bármilyen formában is éledsz újra, abban a formában maradsz §börökre§r.");
+        add("deathScreen.select_tf.spawn_as_infected", "Újraéledés transzfuráltként");
+        add("deathScreen.select_tf.cancel_spawn_as_infected", "Jobban meggondolva, mégsem");
 
         add("itemGroup.changed_addon_main_tab", "Changed Addon Plus");
         add("itemGroup.changed_addon_optional_combat_tab", "Changed Addon Plus Opcionális harc");
