@@ -398,14 +398,14 @@ public class HULanguageProvider extends LanguageProvider {
 
         addGamerule(CHANGED_ADDON_CREATURE_DIETS, "Lények étrendje?", "Lehetővé teszi a transzfuráltak számára, hogy több éhség helyreállítást és telítettséget kapjanak, ha jó ételt esznek számukra");
         addGamerule(CHANGED_ADDON_HARD_MODE_BOSSES, "Changed Addon Nehéz módi fő ellenségek", "Nehézségi szorzó hozzáadása Changed Addon mód fő ellenségeire");
-        addGamerule(TICKS_TO_DARK_LATEX_MASK_TRANSFUR, "Tud-e transzfurálni a sötét latex maszk", "Bekapcsolt állapotban a játékos transzfurálhat a sötét latex maszk tartásával.");
         addGamerule(DO_DAZED_LATEX_BURN, "Dazed latexek égésének engedélyezése", "Bekapcsolt állapotban a Dazed latexek égnek napfényben mint a Dazed játékban");
         addGamerule(DO_LATEX_INFECTION, "Latex fertőzés engedélyezése", "Ha megfertőződött, a fertőzés addig növekszik, amíg teljesen meg nem fertőződött. A hatás erőssége növeli a fertőzés sebességét.");
         addGamerule(FIGHT_TO_KEEP_CONSCIOUSNESS, "Harc az eszmélet megtartásáért", "Hagyja, hogy a harc az eszmélet megtartásáért quick time event megtörténjen (Ez csak akkor történik, ha a játékos elveszíti az eszméletét, egyébként nem)");
         addGamerule(NEED_PERMISSION_FOR_BOSS_TRANSFUR, "Engedély szükséges-e a fő ellenség formájához való transzfurálásához", "Bekapcsolt állapotban a játékosnak engedély szükséges a fő ellenség formájához való transzfurálásához");
         addGamerule(PAINITE_GENERATION, "Painit generálása", "Aktiválja a pianitérc generálását");
-        //addGamerule(NEED_FULL_SOURCE_TO_SPREAD, "Latexblokkoknak teljes forrásra van szükség a terjesztéshez", "Bekapcsolt állapotban a latexblokkoknak szükség lesz egy teljes forrásra, amely hozzájuk kapcsolódik, hogy elterjedhessenek");
-
+        addGamerule(TICKS_TO_DARK_LATEX_MASK_TRANSFUR, "Sötét latex maszk transzfurhoz szükséges tikkek", "Beállíthatod, hogy a játékosnak mennyi ideig kell a sötét latex maszkot a kezében tartania ahhoz, hogy az transzfur sebzést okozzon. Ha az érték kisebb vagy egyenlő 0-val, akkor a maszk deaktiváltnak tekintendő.");
+        addGamerule(CHANGED_ENTITIES_SPAWN_DRESSED, "Changed Entitások öltözve teremnek", "Ha lehetséges, bármilyen ruhadarabot viselve teremnek Changed entitások");
+        
         addGuiO("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGuiO("recipe_progress", "A haladási sebesség %s tikkenként");
         addGui("catalyzer_gui.label_full", "Tele");
