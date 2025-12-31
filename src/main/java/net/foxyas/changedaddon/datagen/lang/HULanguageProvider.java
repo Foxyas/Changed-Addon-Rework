@@ -330,6 +330,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEnchantment(TRANSFUR_ASPECT, "Transzfur kilátása", "Transzfur okozta sebzést okoz humanoid entitásoknak, a fertőzés típusát a támadó variánsa határozza meg.", "%1$s transzfur okozta sebzést okoz humanoid entitásoknak, a fertőzés típusát a támadó variánsa határozza meg.");
 
         addEntityFromId(AVALI);
+        addEntityFromId(AVALI_ZERGODMASTER);
         addEntityFromId(BAGEL);
         addEntityType(BLUE_LIZARD, "Kék gyík");
         addEntityType(BOREALIS_FEMALE, "Hím Borealis");
@@ -557,6 +558,7 @@ public class HULanguageProvider extends LanguageProvider {
         add("item.minecraft.tipped_arrow.effect.transfur_sickness_potion", "Transzfur betegség nyila");
 
         addItem(AVALI_SPAWN_EGG, "Avaliidéző tojás");
+        addItem(AVALI_ZERGODMASTER_SPAWN_EGG, "Avali Zergodmastert idéző tojás");
         addItem(BAGEL_SPAWN_EGG, "Bagelidéző tojás");
         addItem(BLUE_LIZARD_SPAWN_EGG, "Kék gyíkot idéző tojás");
         addItem(BOREALIS_FEMALE_SPAWN_EGG, "Nőstény Borealist idéző tojás");
