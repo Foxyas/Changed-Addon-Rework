@@ -556,6 +556,7 @@ public class ENLanguageProvider extends LanguageProvider {
         add("item.minecraft.tipped_arrow.effect.transfur_sickness_potion", "Arrow of Transfur Sickness");
 
         addItemFromId(AVALI_SPAWN_EGG);
+        addItemFromId(AVALI_ZERGODMASTER_SPAWN_EGG);
         addItemFromId(BAGEL_SPAWN_EGG);
         addItemFromId(BLUE_LIZARD_SPAWN_EGG);
         addItemFromId(BOREALIS_FEMALE_SPAWN_EGG);
