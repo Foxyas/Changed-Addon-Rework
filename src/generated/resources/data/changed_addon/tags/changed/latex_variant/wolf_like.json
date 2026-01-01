@@ -1,6 +1,8 @@
 {
   "values": [
-    "changed:form_gas_wolf",
+    "changed:form_gas_wolf/female",
+    "changed:form_gas_wolf/male",
+    "changed:form_gas_wolf_pup",
     "changed:form_pooltoy_wolf",
     "changed:form_white_latex_wolf/female",
     "changed:form_white_latex_wolf/male",
