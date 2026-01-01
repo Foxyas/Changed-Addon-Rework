@@ -526,6 +526,9 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(RED_LATEX_GOO, "§4Vörös latex ragacs");
         add(RED_LATEX_GOO.get().getDescriptionId() + ".description", "§4Egy furcsa ragacs");
         addItem(SIGNAL_CATCHER, "Jelfogó");
+        addItem(TRANSLATOR, "Fordító");
+        add("item.changedaddon.translator.on", "Fordító: BE");
+        add("item.changedaddon.translator.off", "Fordító: KI");
 
         addItem(PAT_ICON, "\"Rejtett simogatás\" előrelépés ikonja");
         addItem(SNEP_ICON, "\"Szökkenő\" előrelépés ikonja");
@@ -665,5 +668,7 @@ public class HULanguageProvider extends LanguageProvider {
         add("commands.accessory.set.slot_locked", "%s nem tudja felszerelni a(z) %s kelléket a(z) %s rekeszben, mert a rekesz típusa nem elérhető.");
         add("commands.accessory.get.success", "%s tartalmaz %s-t a(z) %s rekeszben.");
         add("commands.accessory.too_many", "Túl sok adatot kért a rendszer, csak az első %s találatot mutatja.");
+
+        
     }
 }
