@@ -524,6 +524,9 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(RED_LATEX_GOO, "§4Vörös latex ragacs");
         add(RED_LATEX_GOO.get().getDescriptionId() + ".description", "§4Egy furcsa ragacs");
         addItem(SIGNAL_CATCHER, "Jelfogó");
+        addItem(TRANSLATOR, "Fordító");
+        add("item.changedaddon.translator.on", "Fordító: BE");
+        add("item.changedaddon.translator.off", "Fordító: KI");
 
         addItem(PAT_ICON, "\"Rejtett simogatás\" előrelépés ikonja");
         addItem(SNEP_ICON, "\"Szökkenő\" előrelépés ikonja");
