@@ -652,5 +652,9 @@ public class HULanguageProvider extends LanguageProvider {
         add("commands.accessory.set.slot_locked", "%s nem tudja felszerelni a(z) %s kelléket a(z) %s rekeszben, mert a rekesz típusa nem elérhető.");
         add("commands.accessory.get.success", "%s tartalmaz %s-t a(z) %s rekeszben.");
         add("commands.accessory.too_many", "Túl sok adatot kért a rendszer, csak az első %s találatot mutatja.");
+        add("commands.changed_addon.alpha.set.success", "Alfa gén %sra állítva %s entitáshoz");
+        add("commands.changed_addon.alpha.set.fail", "Nem található érvényes alfa-kompatibilis entitás");
+        add("commands.changed_addon.alpha.get.success", "Alfa gén: %s");
+        add("commands.changed_addon.alpha.get.fail", "A célpont nem támogatja az alfa gént");
     }
 }
