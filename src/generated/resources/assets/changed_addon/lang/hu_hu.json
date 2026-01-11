@@ -299,6 +299,8 @@
   "commands.changed_addon.alpha.get.success": "Alfa gén: %s",
   "commands.changed_addon.alpha.set.fail": "Nem található érvényes alfa-kompatibilis entitás",
   "commands.changed_addon.alpha.set.success": "Alfa gén %sra állítva %s entitásokhoz",
+  "commands.changed_addon.alpha_scale.get.success": "Alfa skála: %s",
+  "commands.changed_addon.alpha_scale.set.success": "Alfa skála %sra állítva %s entitáshoz",
   "death.attack.OverDose": "%1$s §4túladagolást§r kapott",
   "death.attack.OverDose.player": "%1$s §4túladagolást§r kapott, miközben vele harcolt: %2$s",
   "death.attack.assimilation": "%1$s be lett olvasztva",
