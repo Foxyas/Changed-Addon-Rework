@@ -299,6 +299,8 @@
   "commands.changed_addon.alpha.get.success": "Alfa g\u00E9n: %s",
   "commands.changed_addon.alpha.set.fail": "Nem tal\u00E1lhat\u00F3 \u00E9rv\u00E9nyes alfa-kompatibilis entit\u00E1s",
   "commands.changed_addon.alpha.set.success": "Alfa g\u00E9n %sra \u00E1ll\u00EDtva %s entit\u00E1shoz",
+  "commands.changed_addon.alpha_scale.get.success": "Alfa sk\u00E1la: %s",
+  "commands.changed_addon.alpha_scale.set.success": "Alfa sk\u00E1la %sra \u00E1ll\u00EDtva %s entit\u00E1shoz",
   "death.attack.OverDose": "%1$s \u00A74t\u00FAladagol\u00E1st\u00A7r kapott",
   "death.attack.OverDose.player": "%1$s \u00A74t\u00FAladagol\u00E1st\u00A7r kapott, mik\u00F6zben vele harcolt: %2$s",
   "death.attack.assimilation": "%1$s be lett olvasztva",
