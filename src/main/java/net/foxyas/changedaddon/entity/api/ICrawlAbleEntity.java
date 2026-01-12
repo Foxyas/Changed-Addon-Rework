@@ -25,7 +25,9 @@ public interface ICrawlAbleEntity {
             Pose safePose = currentPose;
 
             if (!canEnterPose(livingEntity, currentPose)) {
-                if (canEnterPose(livingEntity, Pose.CROUCHING)) {
+                if (canEnterPose(livingEntity, Pose.STANDING)) {
+                    safePose = Pose.STANDING;
+                } else if (canEnterPose(livingEntity, Pose.CROUCHING)) {
                     safePose = Pose.CROUCHING;
                 } else if (canEnterPose(livingEntity, Pose.SWIMMING)) {
                     safePose = Pose.SWIMMING;

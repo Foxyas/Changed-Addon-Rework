@@ -50,6 +50,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
@@ -353,20 +354,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
 
-    @Nullable
-    @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor p_21434_, @NotNull DifficultyInstance p_21435_, @NotNull MobSpawnType p_21436_, @Nullable SpawnGroupData p_21437_, @Nullable CompoundTag p_21438_) {
-        if (p_21438_ != null && p_21438_.contains("isBoss") && p_21438_.getBoolean("isBoss")) {
-            if (!attributesApplied) {
-                handleBoss();
-            }
-        } else if (this.isBoss()) {
-            if (!attributesApplied) {
-                handleBoss();
-            }
-        }
-        return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, p_21438_);
-    }
+
 
     public void handleBoss() {
         attributesApplied = true;
@@ -475,6 +463,25 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
+
+        @SubscribeEvent
+        public static void OnLuminarcticSpawn(MobSpawnEvent.FinalizeSpawn spawnEvent) {
+            CompoundTag spawnTag = spawnEvent.getSpawnTag();
+            Mob entity = spawnEvent.getEntity();
+            if (!(entity instanceof AbstractLuminarcticLeopard abstractLuminarcticLeopard)) return;
+            boolean attributesApplied = abstractLuminarcticLeopard.attributesApplied;
+
+            if (spawnTag != null && spawnTag.contains("isBoss") && spawnTag.getBoolean("isBoss")) {
+                if (!attributesApplied) {
+                    abstractLuminarcticLeopard.handleBoss();
+                }
+            } else if (abstractLuminarcticLeopard.isBoss()) {
+                if (!attributesApplied) {
+                    abstractLuminarcticLeopard.handleBoss();
+                }
+            }
+        }
+
         @SubscribeEvent
         public static void WhenAttack(LivingHurtEvent event) {
             LivingEntity target = event.getEntity();

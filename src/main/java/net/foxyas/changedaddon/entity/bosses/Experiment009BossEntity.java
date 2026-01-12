@@ -374,14 +374,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-        SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        return retval;
-    }
-
-    @Override
     public boolean canChangeDimensions() {
         return false;
     }
@@ -505,9 +497,15 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     public void baseTick() {
         super.baseTick();
         if (this.getUnderlyingPlayer() == null) {
+            if (firstTick) {
+                this.getBasicPlayerInfo().setSize(1f);
+                this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+            }
+
             if (shouldBleed && (this.computeHealthRatio() / 0.4f) > 0.25f && this.tickCount % 4 == 0) {
                 this.setHealth(this.getHealth() - 0.25f);
             }
+
             Random randomSource = new Random();
             if (randomSource.nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
                 if (this.isPhase2()) {

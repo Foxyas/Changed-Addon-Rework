@@ -116,6 +116,11 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             }
             this.mayTickGrabAbility();
         }
+
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        if (self.getDimensions(self.getPose()).makeBoundingBox(self.position()) != self.getBoundingBox()) {
+            this.refreshDimensions();
+        }
     }
 
     @Inject(method = "tick", at = @At("HEAD"), remap = true, cancellable = true)

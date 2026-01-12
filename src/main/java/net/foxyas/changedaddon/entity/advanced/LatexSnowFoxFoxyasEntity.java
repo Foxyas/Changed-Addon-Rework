@@ -37,7 +37,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.network.NetworkHooks;
@@ -60,13 +59,13 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
     );
     private static final List<Function<LatexSnowFoxFoxyasEntity, CustomMerchantOffer>> sellOffers = List.of(
             (entity) ->
-                    new CustomMerchantOffer(Ingredient.of(emeralds(4)), defStack(ChangedAddonItems.OPENED_CANNED_SOUP), 16),
+                    new CustomMerchantOffer(emeralds(4), defStack(ChangedAddonItems.OPENED_CANNED_SOUP), 16),
             (entity) ->
-                    new CustomMerchantOffer(Ingredient.of(emeralds(6)), defStack(ChangedAddonItems.FOXTA), 6),
+                    new CustomMerchantOffer(emeralds(6), defStack(ChangedAddonItems.FOXTA), 6),
             (entity) ->
-                    new CustomMerchantOffer(Ingredient.of(emeralds(8)), defStack(ChangedAddonItems.SNEPSI), 4),
+                    new CustomMerchantOffer(emeralds(8), defStack(ChangedAddonItems.SNEPSI), 4),
             (entity) ->
-                    new CustomMerchantOffer(Ingredient.of(emeralds(12)), defStack(ChangedAddonItems.GOLDEN_ORANGE), 8)
+                    new CustomMerchantOffer(emeralds(12), defStack(ChangedAddonItems.GOLDEN_ORANGE), 8)
     );
 
     public LatexSnowFoxFoxyasEntity(PlayMessages.SpawnEntity packet, Level world) {

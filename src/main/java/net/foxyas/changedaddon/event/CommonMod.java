@@ -3,10 +3,7 @@ package net.foxyas.changedaddon.event;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.menu.CustomMerchantMenu;
-import net.foxyas.changedaddon.network.ChangedAddonPackets;
-import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.network.ClientPacketHandler;
-import net.foxyas.changedaddon.network.ServerPacketHandler;
+import net.foxyas.changedaddon.network.*;
 import net.foxyas.changedaddon.network.packet.*;
 import net.foxyas.changedaddon.procedure.blocksHandle.LatexBonemealAndDispenserHandler;
 import net.foxyas.changedaddon.recipe.brewing.TransfurSicknessRecipeBrewingRecipe;
@@ -58,6 +55,10 @@ public class CommonMod {
 
     private static void addPackets() {
         CHANGED_ADDON_PACKETS.registerPackets();
+
+        ChangedAddonMod.addNetworkMessage(SafeGrabSyncPacket.class, SafeGrabSyncPacket::write,
+                SafeGrabSyncPacket::new, ClientPacketHandler::handleSafeGrabSync,
+                NetworkDirection.PLAY_TO_CLIENT);
 
         ChangedAddonMod.addNetworkMessage(KeyPressPacket.class, KeyPressPacket::encode,
                 KeyPressPacket::new, KeyPressPacket::handle);

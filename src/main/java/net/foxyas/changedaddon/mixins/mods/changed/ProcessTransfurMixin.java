@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.mixins.mods.changed;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
 import net.foxyas.changedaddon.event.ProgressTransfurEvents;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -23,6 +24,14 @@ public class ProcessTransfurMixin {
     @Inject(method = "tickPlayerTransfurProgress", at = @At("HEAD"), cancellable = true)
     private static void InjectTick(Player player, CallbackInfo ci) {
         ProgressTransfurEvents.TickPlayerTransfurProgressEvent event = new ProgressTransfurEvents.TickPlayerTransfurProgressEvent(player);
+        if (ChangedAddonMod.postEvent(event)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "onNewlyTransfurred", at = @At("HEAD"), cancellable = true)
+    private static void onNewlyTransfuredHook(IAbstractChangedEntity entity, CallbackInfo ci) {
+        ProgressTransfurEvents.NewlyTransfurred event = new ProgressTransfurEvents.NewlyTransfurred(entity);
         if (ChangedAddonMod.postEvent(event)) {
             ci.cancel();
         }

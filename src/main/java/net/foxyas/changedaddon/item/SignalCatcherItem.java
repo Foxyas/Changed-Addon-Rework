@@ -257,7 +257,7 @@ public class SignalCatcherItem extends Item {
             shadowMob.setPos(player.getX(), player.getY(), player.getZ());
 
             PathNavigation navigation = getNavigation(player, shadowMob, level);
-            Path path = navigation.createPath(target, 1);
+            Path path = navigation.createPath(target, 0);
 
             if (path == null || path.getNodeCount() <= 1)
                 return;
@@ -279,12 +279,14 @@ public class SignalCatcherItem extends Item {
                 flyingPathNavigation.setCanOpenDoors(true);
                 flyingPathNavigation.setCanPassDoors(true);
                 return flyingPathNavigation;
+            } else if (shadowMob instanceof ChangedEntity changedEntity) {
+                return changedEntity.getNavigation();
             }
 
-            GroundPathNavigation groundPathNavigation = new GroundPathNavigation(shadowMob, level);
-            groundPathNavigation.setCanOpenDoors(true);
-            groundPathNavigation.setCanPassDoors(true);
-            return groundPathNavigation;
+            FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(shadowMob, level);
+            flyingPathNavigation.setCanOpenDoors(true);
+            flyingPathNavigation.setCanPassDoors(true);
+            return flyingPathNavigation;
         }
 
         /* --------------------------------------------------------- */

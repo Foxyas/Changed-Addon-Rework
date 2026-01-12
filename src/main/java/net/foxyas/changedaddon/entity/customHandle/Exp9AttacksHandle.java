@@ -681,7 +681,7 @@ public class Exp9AttacksHandle {
                 }
                 return distance <= 6;
             }
-            return false;
+            return boss.level().random.nextFloat() >= 0.6f;
         }
 
 
