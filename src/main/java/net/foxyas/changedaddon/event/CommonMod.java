@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.event;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.menu.CustomMerchantMenu;
+import net.foxyas.changedaddon.network.ChangedAddonPackets;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.ClientPacketHandler;
 import net.foxyas.changedaddon.network.ServerPacketHandler;
@@ -22,6 +23,8 @@ import net.minecraftforge.network.NetworkEvent;
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonMod {
 
+    public static final ChangedAddonPackets CHANGED_ADDON_PACKETS = new ChangedAddonPackets(ChangedAddonMod.PACKET_HANDLER);
+
     @SubscribeEvent
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(ChangedAddonVariables.PlayerVariables.class);
@@ -41,6 +44,12 @@ public class CommonMod {
     }
 
     private static void addPackets(){
+        CHANGED_ADDON_PACKETS.registerPackets();
+
+        ChangedAddonMod.addNetworkMessage(SafeGrabSyncPacket.class, SafeGrabSyncPacket::write,
+                SafeGrabSyncPacket::new, ClientPacketHandler::handleSafeGrabSync,
+                NetworkDirection.PLAY_TO_CLIENT);
+
         ChangedAddonMod.addNetworkMessage(KeyPressPacket.class, KeyPressPacket::encode,
                 KeyPressPacket::new, KeyPressPacket::handle);
         ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode,

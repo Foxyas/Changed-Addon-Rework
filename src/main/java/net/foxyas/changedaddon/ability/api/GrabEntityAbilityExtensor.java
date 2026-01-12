@@ -14,6 +14,7 @@ public interface GrabEntityAbilityExtensor {
     int SNUGGLED_COOLDOWN = 20;
 
     void setSafeMode(boolean safeMode);
+    void setSafeModeAuthoritative(boolean safeMode);
 
     boolean isSafeMode();
 

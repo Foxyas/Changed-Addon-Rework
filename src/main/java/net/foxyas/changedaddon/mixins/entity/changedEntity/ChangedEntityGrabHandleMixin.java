@@ -119,6 +119,11 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             }
             this.mayTickGrabAbility();
         }
+
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        if (self.getDimensions(self.getPose()).makeBoundingBox(self.position()) != self.getBoundingBox()) {
+            this.refreshDimensions();
+        }
     }
 
     @Inject(method = "tick", at = @At("HEAD"), remap = true, cancellable = true)
@@ -133,6 +138,14 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
                     alphaAbleEntity.setAlpha(iAlphaAbleEntity.isAlpha());
                 }
             }
+        }
+    }
+
+    @Inject(method = "variantTick", at = @At("HEAD"), remap = true, cancellable = true)
+    private void variantTickHook(CallbackInfo ci) {
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        if (self instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+            //Todo sync Alpha variant Attributes for the transfured player
         }
     }
 

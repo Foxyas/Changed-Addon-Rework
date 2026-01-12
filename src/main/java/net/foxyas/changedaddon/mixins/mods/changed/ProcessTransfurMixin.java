@@ -4,11 +4,13 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
 import net.foxyas.changedaddon.event.ProgressTransfurEvents;
 import net.foxyas.changedaddon.event.UntransfurEvent;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -24,6 +26,14 @@ public class ProcessTransfurMixin {
     @Inject(method = "tickPlayerTransfurProgress", at = @At("HEAD"), cancellable = true)
     private static void InjectTick(Player player, CallbackInfo ci) {
         ProgressTransfurEvents.TickPlayerTransfurProgressEvent event = new ProgressTransfurEvents.TickPlayerTransfurProgressEvent(player);
+        if (ChangedAddonMod.postEvent(event)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "onNewlyTransfurred", at = @At("HEAD"), cancellable = true)
+    private static void onNewlyTransfuredHook(IAbstractChangedEntity entity, CallbackInfo ci) {
+        ProgressTransfurEvents.NewlyTransfurred event = new ProgressTransfurEvents.NewlyTransfurred(entity);
         if (ChangedAddonMod.postEvent(event)) {
             ci.cancel();
         }

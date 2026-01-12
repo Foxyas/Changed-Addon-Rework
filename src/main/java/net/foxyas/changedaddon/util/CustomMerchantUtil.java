@@ -47,11 +47,7 @@ public final class CustomMerchantUtil {
         return item.get().asItem().getDefaultInstance();
     }
 
-    public static ItemStack emeralds(int count){
-        return new ItemStack(Items.EMERALD, count);
-    }
-
-    public static Ingredient emeraldsIngredient(int count){
+    public static Ingredient emeralds(int count){
         return NBTIngredient.of(new ItemStack(Items.EMERALD, count));
     }
 

@@ -430,7 +430,7 @@ public class Exp9AttacksHandle {
 
         public void run() {
             thunderWave();
-             // Reseta a AI
+            // Reseta a AI
         }
 
         public LivingEntity getTarget() {
@@ -483,7 +483,7 @@ public class Exp9AttacksHandle {
 
         public void run() {
             thunderSpeed();
-             // Reseta a AI
+            // Reseta a AI
         }
 
         private void thunderSpeed() {
@@ -531,7 +531,7 @@ public class Exp9AttacksHandle {
 
         public void run() {
             thunderShock();
-             // Reseta a AI
+            // Reseta a AI
         }
 
         private void thunderShock() {
@@ -681,7 +681,7 @@ public class Exp9AttacksHandle {
                 }
                 return distance <= 6;
             }
-            return false;
+            return boss.getLevel().random.nextFloat() >= 0.6f;
         }
 
 

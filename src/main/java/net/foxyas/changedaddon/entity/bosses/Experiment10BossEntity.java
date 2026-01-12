@@ -384,6 +384,15 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     @Override
     public void baseTick() {
         super.baseTick();
+
+        if (firstTick) {
+            this.getBasicPlayerInfo().setSize(1f);
+            this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+            this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
+            this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
+            this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
+        }
+
         SetDefense(this);
         SetAttack(this);
         SetSpeed(this);

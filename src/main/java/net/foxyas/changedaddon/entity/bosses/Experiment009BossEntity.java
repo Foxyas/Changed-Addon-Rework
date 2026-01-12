@@ -538,9 +538,15 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     public void baseTick() {
         super.baseTick();
         if (this.getUnderlyingPlayer() == null) {
+            if (firstTick) {
+                this.getBasicPlayerInfo().setSize(1f);
+                this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+            }
+
             if (shouldBleed && (this.computeHealthRatio() / 0.4f) > 0.25f && this.tickCount % 4 == 0) {
                 this.setHealth(this.getHealth() - 0.25f);
             }
+
             if (this.getRandom().nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
                 if (this.isPhase2()) {
                     if (this.shouldBleed) {

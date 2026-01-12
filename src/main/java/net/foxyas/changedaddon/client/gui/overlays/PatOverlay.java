@@ -136,22 +136,26 @@ public class PatOverlay {
         float troubleShotXValue = floatPosX + 9;
         float troubleShotYValue = floatPosY + 20;
 
-        if (instance != null) {
-            if (instance.getChangedEntity() instanceof IDynamicPawColor iDynamicPawColor) {
-                Color pawColor = iDynamicPawColor.getPawBeansColor();
-                RenderSystem.setShaderColor(pawColor.getRed() / 255f, pawColor.getGreen() / 255f, pawColor.getBlue() / 255f, pawColor.getAlpha() / 255f);
-                // Renderiza a imagem na tela
-                GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
-                drawCenteredString(poseStack, mc.font,
-                        getSimplePatInfo(), (int) troubleShotXValue, (int) troubleShotYValue, pawColor.getRGB());
-            } else {
-                // Renderiza a imagem na tela
-                GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
-                drawCenteredString(poseStack, mc.font,
-                        getSimplePatInfo(), (int) troubleShotXValue, (int) troubleShotYValue, Color3.getColor("#ffabab").toInt());
-            }
+        if (instance == null) {
+            // Renderiza a imagem na tela
+            RenderSystem.setShaderTexture(0, TEXTURE);
+            GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
+            drawCenteredString(poseStack, mc.font,
+                    getSimplePatInfo(), (int) troubleShotXValue, (int) troubleShotYValue, Color3.getColor("#ffabab").toInt());
+            return;
+        }
+
+        if (instance.getChangedEntity() instanceof IDynamicPawColor iDynamicPawColor) {
+            Color pawColor = iDynamicPawColor.getPawBeansColor();
+            RenderSystem.setShaderColor(pawColor.getRed() / 255f, pawColor.getGreen() / 255f, pawColor.getBlue() / 255f, pawColor.getAlpha() / 255f);
+            // Renderiza a imagem na tela
+            RenderSystem.setShaderTexture(0, TEXTURE);
+            GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
+            drawCenteredString(poseStack, mc.font,
+                    getSimplePatInfo(), (int) troubleShotXValue, (int) troubleShotYValue, pawColor.getRGB());
         } else {
             // Renderiza a imagem na tela
+            RenderSystem.setShaderTexture(0, TEXTURE);
             GuiComponent.blit(poseStack, x, y, 0, 0, largura, altura, largura, altura);
             drawCenteredString(poseStack, mc.font,
                     getSimplePatInfo(), (int) troubleShotXValue, (int) troubleShotYValue, Color3.getColor("#ffabab").toInt());

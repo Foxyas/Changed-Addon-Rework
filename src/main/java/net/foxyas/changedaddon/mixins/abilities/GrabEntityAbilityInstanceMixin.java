@@ -7,7 +7,8 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.network.packet.DynamicGrabEntityPacket;
-import net.ltxprogrammer.changed.Changed;
+import net.foxyas.changedaddon.network.packet.SafeGrabSyncPacket;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -16,7 +17,6 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
-import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Mixin(value = GrabEntityAbilityInstance.class, remap = false)
-public class GrabEntityAbilityInstanceMixin implements GrabEntityAbilityExtensor {
+public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInstance implements GrabEntityAbilityExtensor {
 
     @Shadow
     public boolean attackDown;
@@ -73,10 +73,13 @@ public class GrabEntityAbilityInstanceMixin implements GrabEntityAbilityExtensor
     @Unique
     private boolean alreadySnuggledTight = false;
 
-
     // Right now it works but has a renderer bug. I don't recommend turning this to true
     @Unique
     private boolean allowGrabTransfured = false;
+
+    public GrabEntityAbilityInstanceMixin(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
+        super(ability, entity);
+    }
 
     @Override
     @Unique
@@ -91,17 +94,27 @@ public class GrabEntityAbilityInstanceMixin implements GrabEntityAbilityExtensor
     }
 
     @Inject(method = "saveData", at = @At("TAIL"), cancellable = true)
-    public void injectCustomData(CompoundTag tag, CallbackInfo ci) {
+    private void injectCustomData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("safeMode", safeMode);
         tag.putBoolean("alreadySnuggledTight", alreadySnuggledTight);
         tag.putBoolean("allowGrabTransfured", allowGrabTransfured);
     }
 
     @Inject(method = "readData", at = @At("TAIL"), cancellable = true)
-    public void readCustomData(CompoundTag tag, CallbackInfo ci) {
+    private void readCustomData(CompoundTag tag, CallbackInfo ci) {
         if (tag.contains("safeMode")) safeMode = tag.getBoolean("safeMode");
         if (tag.contains("alreadySnuggledTight")) alreadySnuggledTight = tag.getBoolean("alreadySnuggledTight");
         if (tag.contains("allowGrabTransfured")) allowGrabTransfured = tag.getBoolean("allowGrabTransfured");
+    }
+
+    @Unique
+    private GrabEntityAbilityInstance getSelf() {
+        return (GrabEntityAbilityInstance) (Object) this;
+    }
+
+    @Override
+    public LivingEntity grabber() {
+        return getSelf().entity.getEntity();
     }
 
     @Override
@@ -114,14 +127,46 @@ public class GrabEntityAbilityInstanceMixin implements GrabEntityAbilityExtensor
         this.safeMode = safeMode;
     }
 
-    @Unique
-    public GrabEntityAbilityInstance getSelf() {
-        return (GrabEntityAbilityInstance) (Object) this;
+    @Override
+    public void setSafeModeAuthoritative(boolean safeMode) {
+        if (this.safeMode == safeMode)
+            return;
+
+        this.safeMode = safeMode;
+        if (!entity.getLevel().isClientSide) ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new SafeGrabSyncPacket(entity.getEntity().getId(), safeMode));
     }
 
-    @Override
-    public LivingEntity grabber() {
-        return getSelf().entity.getEntity();
+    @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
+    private void tickSnuggleCooldown(CallbackInfo ci) {
+        if (!isSafeMode()) return;
+        if (snuggleCooldown > 0) snuggleCooldown--;
+    }
+
+    @Inject(method = "tickIdle", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = true, shift = At.Shift.AFTER), cancellable = true)
+    private void cancelSuit(CallbackInfo ci) {
+        if (!this.isSafeMode()) return;
+        ci.cancel();
+
+        if (getSelf().getController().getHoldTicks() >= 1) {
+            this.suitTransition -= 0.25f;
+        }
+
+        if (this.suitTransition >= 3.0f) {
+            this.suitTransition = 3.0F;
+
+            if (getSelf().entity.getChangedEntity() instanceof ChangedEntityExtension changedEntityExtension && changedEntityExtension.shouldAlwaysHoldGrab(grabbedEntity)) {
+                this.grabStrength = 1;
+            }
+
+            if (grabbedEntity != null) {
+                if (!isAlreadySnuggledTight()) {
+                    this.runTightHug(this.grabbedEntity);
+                }
+            }
+
+        } else {
+            this.alreadySnuggledTight = false;
+        }
     }
 
     @WrapOperation(
@@ -149,38 +194,9 @@ public class GrabEntityAbilityInstanceMixin implements GrabEntityAbilityExtensor
         return original.call(instance, target, loserPlayer, finalAmount, possibleMobFusions);
     }
 
-    @Inject(method = "tickIdle", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", remap = true, shift = At.Shift.AFTER), cancellable = true)
-    public void cancelSuit(CallbackInfo ci) {
-        if (this.isSafeMode()) {
-            ci.cancel();
-
-            if (snuggleCooldown > 0) snuggleCooldown--;
-
-            if (this.suitTransition >= 3.0f) {
-                this.suitTransition = 3.0F;
-
-                if (getSelf().entity.getChangedEntity() instanceof ChangedEntityExtension changedEntityExtension && changedEntityExtension.shouldAlwaysHoldGrab(grabbedEntity)) {
-                    this.grabStrength = 1;
-                    if (getSelf().getController().getHoldTicks() >= 1) {
-                        this.suitTransition -= 0.25f;
-                    }
-                }
-
-                if (grabbedEntity != null) {
-                    if (!isAlreadySnuggledTight()) {
-                        this.runTightHug(this.grabbedEntity);
-                    }
-                }
-
-            } else {
-                this.alreadySnuggledTight = false;
-            }
-        }
-    }
-
     @ModifyExpressionValue(method = "tickIdle", at = @At(value = "INVOKE",
             target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;isTemporaryFromSuit()Z"))
-    public boolean allowGrabTransfuredPlayers(boolean original) {
+    private boolean allowGrabTransfuredPlayers(boolean original) {
         if (this.allowGrabTransfured()) {
             return true;
         }
@@ -258,7 +274,7 @@ public class GrabEntityAbilityInstanceMixin implements GrabEntityAbilityExtensor
     }
 
     @Inject(method = "handleInstructions", at = @At("HEAD"), cancellable = true)
-    public void handleSafeModeInstructions(Level level, CallbackInfo ci) {
+    private void handleSafeModeInstructions(Level level, CallbackInfo ci) {
         if (level.isClientSide() && this.isSafeMode()) {
             ci.cancel();
             if (this.instructionTicks == 180) {
