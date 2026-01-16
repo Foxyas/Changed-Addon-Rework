@@ -10,9 +10,11 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.util.ComponentUtil;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.data.AccessorySlots;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -241,6 +243,11 @@ public class ChangedAddonAdminCommand {
                                         )
                                 )
                         )
+                ).then(Commands.literal("latexLanguage")
+                        .executes(ChangedAddonAdminCommand::getLatexLanguage)
+                        .then(Commands.argument("set", BoolArgumentType.bool())
+                                .executes(ChangedAddonAdminCommand::setLatexLanguage)
+                        )
                 )
         );
 
@@ -255,6 +262,23 @@ public class ChangedAddonAdminCommand {
         ProcessTransfur.setPlayerTransfurProgress(player, amount);
 
         return Command.SINGLE_SUCCESS;
+    }
+
+    private static int getLatexLanguage(CommandContext<CommandSourceStack> context) {
+        CommandSourceStack source = context.getSource();
+        Boolean value = ChangedAddonServerConfiguration.TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.get();
+        source.sendSuccess(() -> Component.literal(String.format("The latex Language is set to %b", value)), true);
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int setLatexLanguage(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        CommandSourceStack source = context.getSource();
+        boolean value = BoolArgumentType.getBool(context, "set");
+
+        ChangedAddonServerConfiguration.TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.set(value);
+        //ChangedAddonServerConfiguration.TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.save();
+        return Command.SINGLE_SUCCESS;
+
     }
 
     private static int setTFTolerance(Player player, float amount) {
