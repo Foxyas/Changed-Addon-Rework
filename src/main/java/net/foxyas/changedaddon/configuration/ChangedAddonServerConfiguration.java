@@ -52,13 +52,13 @@ public class ChangedAddonServerConfiguration {
                 .defineInRange("Alpha Spawn Chance Peaceful", 0.0D, 0.0D, 1.0D);
         ALPHA_SPAWN_EASY = BUILDER
                 .comment("Chance for an Alpha to spawn on Easy difficulty (0.0 - 1.0)")
-                .defineInRange("Alpha Spawn Chance Easy", 0.0000025f, 0.0D, 1.0D);
+                .defineInRange("Alpha Spawn Chance Easy", 0.000025f, 0.0D, 1.0D);
         ALPHA_SPAWN_NORMAL = BUILDER
                 .comment("Chance for an Alpha to spawn on Normal difficulty (0.0 - 1.0)")
-                .defineInRange("Alpha Spawn Chance Normal", 0.000025f, 0.0D, 1.0D);
+                .defineInRange("Alpha Spawn Chance Normal", 0.00025f, 0.0D, 1.0D);
         ALPHA_SPAWN_HARD = BUILDER
                 .comment("Chance for an Alpha to spawn on Hard difficulty (0.0 - 1.0)")
-                .defineInRange("Alpha Spawn Chance Hard", 0.00025f, 0.0D, 1.0D);
+                .defineInRange("Alpha Spawn Chance Hard", 0.0025f, 0.0D, 1.0D);
         ALPHA_SPAWN_HARDCORE = BUILDER
                 .comment("Chance for an Alpha to spawn on HardCore difficulty (0.0 - 1.0)")
                 .defineInRange("Alpha Spawn Chance HardCore", 0.025f, 0.0D, 1.0D);
