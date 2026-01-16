@@ -3,20 +3,31 @@ package net.foxyas.changedaddon.event;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.menu.CustomMerchantMenu;
-import net.foxyas.changedaddon.network.*;
+import net.foxyas.changedaddon.network.ChangedAddonPackets;
+import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.network.ClientPacketHandler;
+import net.foxyas.changedaddon.network.ServerPacketHandler;
 import net.foxyas.changedaddon.network.packet.*;
 import net.foxyas.changedaddon.procedure.blocksHandle.LatexBonemealAndDispenserHandler;
 import net.foxyas.changedaddon.recipe.brewing.TransfurSicknessRecipeBrewingRecipe;
 import net.foxyas.changedaddon.recipe.brewing.UntransfurPotionRecipeBrewingRecipe;
+import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.init.ChangedTabs;
 import net.ltxprogrammer.changed.item.AbstractLatexItem;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonMod {
@@ -27,6 +38,22 @@ public class CommonMod {
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(ChangedAddonVariables.PlayerVariables.class);
     }
+
+//    private static final Predicate<TransfurVariant<?>> CHANGED_ADDON_ONLY_TRANSFURS = variant -> variant.getFormId().getNamespace().equals(ChangedAddonMod.MODID);
+//
+//    @SubscribeEvent
+//    public static void applyItemsInOtherModsTabs(BuildCreativeModeTabContentsEvent event) {
+//        CreativeModeTab tab = event.getTab();
+//        ResourceKey<CreativeModeTab> tabKey = event.getTabKey();
+//        CreativeModeTab.ItemDisplayParameters params = event.getParameters();
+//        if (tab.equals(ChangedTabs.TAB_CHANGED_ITEMS.get()) || tabKey == ChangedTabs.TAB_CHANGED_ITEMS.getKey()) {
+//            ChangedItems.DARK_LATEX_MASK.get().fillItemList(CHANGED_ADDON_ONLY_TRANSFURS, params, event);
+//            ChangedItems.LATEX_SYRINGE.get().fillItemList(CHANGED_ADDON_ONLY_TRANSFURS, params, event);
+//            ChangedItems.LATEX_FLASK.get().fillItemList(CHANGED_ADDON_ONLY_TRANSFURS, params, event);
+//            ChangedItems.LATEX_TIPPED_ARROW.get().fillItemList(CHANGED_ADDON_ONLY_TRANSFURS, params, event);
+//        }
+//    }
+
 
     @SubscribeEvent
     public static void onCommonSetup(FMLCommonSetupEvent event) {

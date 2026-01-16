@@ -49,6 +49,7 @@
     "entity.variant.TransfurVariantInstanceMixin",
     "fluids.TransfurGasMixin",
     "items.ItemStackMixin",
+    "items.LatexFlaskMixin",
     "items.LatexSyringeMixin",
     "level.storage.loot.LootTableAccessor",
     "mods.changed.ChangedMixin",

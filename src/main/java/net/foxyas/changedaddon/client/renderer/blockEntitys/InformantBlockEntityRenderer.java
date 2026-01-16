@@ -67,7 +67,7 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         boolean dummy = entity == null;
         if (dummy) entity = getDisplayEntity(ChangedTransfurVariants.CRYSTAL_WOLF_HORNED.get());
 
-        if (!(Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity) instanceof AdvancedHumanoidRenderer<?, ?> renderer))
+        if (!(Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity) instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> renderer))
             return;
 
         assert Minecraft.getInstance().player != null;
@@ -82,8 +82,8 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
         poseStack.mulPose(Axis.XP.rotationDegrees(180));
 
-        AdvancedHumanoidModel model = renderer.getModel();
-        ResourceLocation texture = ((LivingEntityRenderer) renderer).getTextureLocation(entity);
+        AdvancedHumanoidModel<? super ChangedEntity> model = renderer.getModel();
+        ResourceLocation texture = renderer.getTextureLocation(entity);
         var vertexConsumer = bufferSource.getBuffer(dummy ? RenderType.entitySolid(TEX) : ChangedAddonRenderTypes.hologramCull(texture, true));
 
         float ageInTicks = entity.tickCount + partialTick;
@@ -93,7 +93,7 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         if (renderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
-                for (RenderLayer layer : layers) {
+                for (RenderLayer<LivingEntity, EntityModel<LivingEntity>> layer : layers) {
                     layer.render(poseStack, bufferSource, LightTexture.FULL_BRIGHT, entity, 0, 0, partialTick, ageInTicks, 0, 0);
                 }
             }
