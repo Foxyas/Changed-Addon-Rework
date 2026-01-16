@@ -463,7 +463,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(DARK_LATEX_HEAD_CAP, "Sötét latex álcasapka");
         addItem(DARK_LATEX_SPRAY, "Sötét latexes szpré");
         addItem(DIFFUSION_SYRINGE, "Latex-diffúziós fecskendő");
-        addItem(DYEABLE_TSHIRT, "Festhető poló");
+        addItem(DYEABLE_TSHIRT, "Festhető póló");
         addItem(DYEABLE_SHORTS, "Festhető rövidnadrág");
         addItem(ELECTRIC_KATANA, "§bElektromos katana");
         addItem(ELECTRIC_KATANA_RED, "§4Elektromos katana§r");
