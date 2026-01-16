@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.client.renderer.blockEntitys;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
 import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
 import net.foxyas.changedaddon.mixins.client.renderer.LivingEntityRendererAccessor;
@@ -9,10 +10,12 @@ import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -31,6 +34,7 @@ import java.util.Map;
 
 public class InformantBlockEntityRenderer implements BlockEntityRenderer<InformantBlockEntity> {
 
+    private static final ResourceLocation TEX = ChangedAddonMod.textureLoc("textures/entities/dummy");
     private static final Map<TransfurVariant<?>, ChangedEntity> entityCache = new HashMap<>();
 
     public InformantBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -61,8 +65,11 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         TransfurVariant<?> tfVariant = informantBlockEntity.getDisplayTf();
         ChangedEntity entity = getDisplayEntity(tfVariant);
 
+        boolean dummy = entity == null;
+        if (dummy) entity = getDisplayEntity(ChangedTransfurVariants.CRYSTAL_WOLF_HORNED.get());
+
         if (entity == null) return;
-        if (!(Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity) instanceof AdvancedHumanoidRenderer<?, ?, ?> renderer))
+        if (!(Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(entity) instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?, ?> renderer))
             return;
 
         assert Minecraft.getInstance().player != null;
@@ -77,9 +84,9 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         poseStack.mulPose(Vector3f.YP.rotationDegrees(rotation));
         poseStack.mulPose(Vector3f.XP.rotationDegrees(180));
 
-        AdvancedHumanoidModel model = renderer.getModel();
-        ResourceLocation texture = ((LivingEntityRenderer) renderer).getTextureLocation(entity);
-        var vertexConsumer = bufferSource.getBuffer(ChangedAddonRenderTypes.hologramCull(texture, true));
+        AdvancedHumanoidModel<? super ChangedEntity> model = renderer.getModel();
+        ResourceLocation texture = renderer.getTextureLocation(entity);
+        var vertexConsumer = bufferSource.getBuffer(dummy ? RenderType.entitySolid(TEX) : ChangedAddonRenderTypes.hologramCull(texture, true));
 
         float ageInTicks = entity.tickCount + partialTick;
         model.prepareMobModel(entity, 0, 0, partialTick);
@@ -88,9 +95,9 @@ public class InformantBlockEntityRenderer implements BlockEntityRenderer<Informa
         if (renderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
-                layers.forEach((renderlayer) -> {
-                    renderlayer.render(poseStack, bufferSource, LightTexture.FULL_BRIGHT, entity, 0, 0, partialTick, ageInTicks, 0, 0);
-                });
+                for (RenderLayer<LivingEntity, EntityModel<LivingEntity>> layer : layers) {
+                    layer.render(poseStack, bufferSource, LightTexture.FULL_BRIGHT, entity, 0, 0, partialTick, ageInTicks, 0, 0);
+                }
             }
         }
 
