@@ -281,6 +281,7 @@
   "changedaddon.untransfur.Immune": "Engem nem \u00E9rint",
   "changedaddon.untransfur.Immune.fluid": "Ez a folyad\u00E9k nem hat r\u00E1m",
   "changedaddon.untransfur.diffusion": "Elv\u00E1lsz a hozz\u00E1d kapcsol\u00F3d\u00F3 latex l\u00E9nyt\u0151l. Lehet, hogy vissza akar kapcsol\u00F3dni, \u00FAgyhogy jobb, ha FUTSZ.",
+  "changedaddon.untransfur.fail": "A visszatranszfur valamilyen okn\u00E1l fogva nem siker\u00FClt",
   "changedaddon.untransfur.no_effect": "A fecskend\u0151 nem m\u0171k\u00F6d\u00F6tt",
   "changedaddon.untransfur.slow_effect": "Valamilyen okn\u00E1l fogva ez lass\u00EDtott hat\u00E1st v\u00E1ltott ki",
   "changedaddon.warn.cant_carry": "Megpr\u00F3b\u00E1lja felemelni %1$s-t, de t\u00FAl neh\u00E9z.",
