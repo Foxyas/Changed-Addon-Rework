@@ -298,6 +298,7 @@ public class HULanguageProvider extends LanguageProvider {
         add("changedaddon.fight_conscience.success", "§2Megtartotta §reszméletét!!! Szép munka!");
         add("changedaddon.fight_conscience.fail", "§4Elvesztette §reszméletét");
 
+        add("changedaddon.untransfur.fail", "A visszatranszfur valamilyen oknál fogva nem sikerült");
         add("changedaddon.untransfur.Immune", "Engem nem érint");
         add("changedaddon.untransfur.Immune.fluid", "Ez a folyadék nem hat rám");
         add("changedaddon.untransfur.diffusion", "Elválsz a hozzád kapcsolódó latex lénytől. Lehet, hogy vissza akar kapcsolódni, úgyhogy jobb, ha FUTSZ.");
