@@ -281,6 +281,7 @@
   "changedaddon.untransfur.Immune": "Engem nem érint",
   "changedaddon.untransfur.Immune.fluid": "Ez a folyadék nem hat rám",
   "changedaddon.untransfur.diffusion": "Elválsz a hozzád kapcsolódó latex lénytől. Lehet, hogy vissza akar kapcsolódni, úgyhogy jobb, ha FUTSZ.",
+  "changedaddon.untransfur.fail": "A visszatranszfur valamilyen oknál fogva nem sikerült",
   "changedaddon.untransfur.no_effect": "A fecskendő nem működött",
   "changedaddon.untransfur.slow_effect": "Valamilyen oknál fogva ez lassított hatást váltott ki",
   "changedaddon.warn.cant_carry": "Megpróbálja felemelni %1$s-t, de túl nehéz.",
