@@ -659,5 +659,8 @@ public class HULanguageProvider extends LanguageProvider {
         add("commands.changed_addon.alpha.get.fail", "A célpont nem támogatja az alfa gént");
         add("commands.changed_addon.alpha_scale.set.success", "Alfa skála %sra állítva %s entitáshoz");
         add("commands.changed_addon.alpha_scale.get.success", "Alfa skála: %s");
+
+        addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");
+        addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
     }
 }
