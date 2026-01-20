@@ -620,6 +620,8 @@
   "key.changed_addon.turn_off_transfur.grab_safe_mode": "Bar\u00E1ts\u00E1gos megragad\u00E1s be\u00E1ll\u00EDtva: %s",
   "key.changed_addon.turn_off_transfur.safe_mode": "Transzfur t\u00E1mad\u00E1s be\u00E1ll\u00EDtva: %s",
   "key.changed_addon.use_second_ability": "V\u00E1ltozat m\u00E1sodik k\u00E9pess\u00E9g\u00E9nek haszn\u00E1lata",
+  "stat.changed_addon.pats_given": "Simogat\u00E1sok adva",
+  "stat.changed_addon.pats_received": "Simogat\u00E1sok fogadva",
   "subtitles.armor_equip": "P\u00E1nc\u00E9l felv\u00E9tele",
   "subtitles.block.plushes.sfx": "Pl\u00FCss \u00F6sszenyom\u00E1sa",
   "subtitles.entity.prototype.idea_sfx": "Protot\u00EDpus cseng",
