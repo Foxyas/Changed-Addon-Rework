@@ -28,6 +28,7 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_IRIDIUM_
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LATEX_INSULATOR;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINARA_BLOOM;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK;
+import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINAR_CRYSTAL_LARGE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.ORANGE_WOLF_CRYSTAL_BLOCK;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.ORANGE_WOLF_CRYSTAL_SMALL;
@@ -153,6 +154,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addBlock(POTTED_LUMINARA_BLOOM, "Flower Pot with Luminara Bloom");
         addBlockFromId(LUMINAR_CRYSTAL_BLOCK);
         addBlock(LUMINAR_CRYSTAL_SMALL, "Small Luminar Crystal");
+        addBlock(LUMINAR_CRYSTAL_LARGE, "Large Luminar Crystal");
         addBlockFromId(ORANGE_WOLF_CRYSTAL_BLOCK);
         addBlock(ORANGE_WOLF_CRYSTAL_SMALL, "Small Orange Wolf Crystal");
         addBlockFromId(PAINITE_BLOCK);

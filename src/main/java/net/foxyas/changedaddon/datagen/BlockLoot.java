@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
-import net.foxyas.changedaddon.block.LuminarCrystalSmallBlock;
+import net.foxyas.changedaddon.block.LuminarCrystalLarge;
+import net.foxyas.changedaddon.block.LuminarCrystalSmall;
 import net.foxyas.changedaddon.block.MultifaceBlock;
 import net.foxyas.changedaddon.block.StackableCanBlock;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -89,7 +91,7 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
                                 LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_SMALL.get()).when(HAS_SILK_TOUCH),
                                 LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get())
                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(LUMINAR_CRYSTAL_SMALL.get())
-                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LuminarCrystalSmallBlock.HEARTED, true)))
+                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LuminarCrystalSmall.HEARTED, true)))
                                         .when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, EntityPredicate.Builder.entity().entityType(EntityTypePredicate.of(EntityType.PLAYER))))
                                         .apply(ApplyExplosionDecay.explosionDecay())
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
@@ -99,6 +101,20 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
                                         .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
                         ))
+                )
+        );
+
+        add(LUMINAR_CRYSTAL_LARGE.get(), LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .add(AlternativesEntry.alternatives(
+                                LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_LARGE.get()).when(HAS_SILK_TOUCH),
+                                LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get())
+                                        .apply(ApplyExplosionDecay.explosionDecay())
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6)))
+                                        .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
+                                ).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(LUMINAR_CRYSTAL_LARGE.get())
+                                        .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LuminarCrystalLarge.HALF, Half.BOTTOM)))
+                        )
                 )
         );
 
