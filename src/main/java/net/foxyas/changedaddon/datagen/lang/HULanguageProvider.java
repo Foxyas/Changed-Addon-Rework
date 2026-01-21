@@ -24,6 +24,7 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.IRIDIUM_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LATEX_INSULATOR;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINARA_BLOOM;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK;
+import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINAR_CRYSTAL_LARGE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.ORANGE_WOLF_CRYSTAL_BLOCK;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.ORANGE_WOLF_CRYSTAL_SMALL;
@@ -150,6 +151,7 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(POTTED_LUMINARA_BLOOM, "Virágcserép luminara virággal");
         addBlock(LUMINAR_CRYSTAL_BLOCK, "Fénykristály-blokk");
         addBlock(LUMINAR_CRYSTAL_SMALL, "Kicsi fénykristály");
+        addBlock(LUMINAR_CRYSTAL_LARGE, "Nagy fénykristály");
         addBlock(ORANGE_WOLF_CRYSTAL_BLOCK, "Narancssárga farkas kristályblokk");
         addBlock(ORANGE_WOLF_CRYSTAL_SMALL, "Kicsi narancssárga farkas kristály");
         addBlock(PAINITE_BLOCK, "Painitblokk");
