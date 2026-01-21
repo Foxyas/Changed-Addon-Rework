@@ -153,6 +153,7 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(POTTED_LUMINARA_BLOOM, "Virágcserép luminara virággal");
         addBlock(LUMINAR_CRYSTAL_BLOCK, "Fénykristály-blokk");
         addBlock(LUMINAR_CRYSTAL_SMALL, "Kicsi fénykristály");
+        addBlock(LUMINAR_CRYSTAL_LARGE, "Nagy fénykristály");
         addBlock(ORANGE_WOLF_CRYSTAL_BLOCK, "Narancssárga farkas kristályblokk");
         addBlock(ORANGE_WOLF_CRYSTAL_SMALL, "Kicsi narancssárga farkas kristály");
         addBlock(PAINITE_BLOCK, "Painitblokk");
