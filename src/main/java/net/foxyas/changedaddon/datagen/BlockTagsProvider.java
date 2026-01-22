@@ -15,6 +15,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.*;
+import static net.ltxprogrammer.changed.init.ChangedBlocks.WOLF_CRYSTAL_BLOCK;
 
 public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider {
 
@@ -34,6 +35,19 @@ public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider
         tag(Tags.Blocks.STORAGE_BLOCKS).add(IRIDIUM_BLOCK.get());
         tag(forgeStorageBlocksIridium).add(IRIDIUM_BLOCK.get());
 
+        tag(ChangedTags.Blocks.CRYSTALLINE).add(
+                LUMINAR_CRYSTAL_LARGE.get(),
+                LUMINAR_CRYSTAL_SMALL.get(),
+                WOLF_CRYSTAL_BLOCK.get(),
+                BLUE_WOLF_CRYSTAL_BLOCK.get(),
+                WHITE_WOLF_CRYSTAL_BLOCK.get(),
+                ORANGE_WOLF_CRYSTAL_BLOCK.get(),
+                YELLOW_WOLF_CRYSTAL_BLOCK.get(),
+                YELLOW_WOLF_CRYSTAL_SMALL.get(),
+                ORANGE_WOLF_CRYSTAL_SMALL.get(),
+                BLUE_WOLF_CRYSTAL_SMALL.get(),
+                WHITE_WOLF_CRYSTAL_SMALL.get()
+        );
 
         tag(ChangedTags.Blocks.GROWS_LATEX_CRYSTALS).add(WHITE_WOLF_CRYSTAL_BLOCK.get(), ORANGE_WOLF_CRYSTAL_BLOCK.get(), YELLOW_WOLF_CRYSTAL_BLOCK.get(), BLUE_WOLF_CRYSTAL_BLOCK.get());
 
