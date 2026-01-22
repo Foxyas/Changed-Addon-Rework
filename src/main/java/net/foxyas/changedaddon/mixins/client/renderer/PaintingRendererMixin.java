@@ -41,7 +41,7 @@ public abstract class PaintingRendererMixin extends EntityRenderer<Painting> {
     private RenderType glowRenderType(RenderType renderType){
         if (painting != null) {
             if (shouldGlow) {
-                return ChangedAddonRenderTypes.glowWithNoTranslucedCull(this.getTextureLocation(painting));
+                return ChangedAddonRenderTypes.glowCutoutCull(this.getTextureLocation(painting));
             } else {
                 return RenderType.entitySolid(this.getTextureLocation(painting));
             }
