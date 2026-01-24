@@ -247,6 +247,8 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("grab_entity.extender.hugged", "%s adott neked egy meleg ölelést");
         addAbility("grab_entity.extender.hugger.tight", "Szorosan magadhoz ölelted %s entitást");
         addAbility("grab_entity.extender.hugged.tight", "%s szorosan magához ölel téged");
+        addAbility("summon_dl_pup", "Idézz Farkaskölyköt");
+        addAbility("summon_dl_pup.desc", "Idézz meg egy sötét latex farkaskölyköt a közelben, hogy segítsen téged");
 
         add(modid + ".compact_disc.title.experiment_009", "§n§4Demolekularizált §r§n§b kísérlet");
         add(modid + ".compact_disc.content.experiment_009", "A 009-es kísérletet demolekularizálni kellett!! Nagyon erős, sose hagyja, hogy rossz kezekbe kerüljön. Látszólag nem tud megfertőzni, de megmutatja, hogy nem akarja. §n§4 Mindenkit meg akar ölni, aki az útjába kerül.§r");
@@ -394,6 +396,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(VOID_FOX, "Űrróka");
         addEntityFromId(WOLFY);
         addEntityType(MONGOOSE, "Mongúz");
+        addEntityType(DARK_LATEX_YUFENG_QUEEN, "Sötét latex jüfeng királynő");
 
         addEntityType(LUMINAR_CRYSTAL_SPEAR, "Fénykristály-lándzsa");
         addEntityType(PARTICLE_PROJECTILE, "Fényrészecske");
@@ -503,6 +506,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItemFromId(LAETHIN);
         addItem(LAETHIN_SYRINGE, "Laethin fecskendő");
         addItem(LAETHINMINATOR, "Laethinminátor");
+        addItem(FLAMETHROWER, "Lángszóró");
         addItem(LASER_POINTER, "Lézermutató");
         add(LASER_POINTER.get().getDescriptionId() + ".tooltip", "Szín: %s");
         addItem(LITIX_CAMONIA, "Litix-kamónia");
@@ -615,6 +619,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(ORGANIC_SNOW_LEOPARD_MALE_SPAWN_EGG, "Hím bioszintetikus hópárducot idéző tojás");
         addItem(VOID_FOX_SPAWN_EGG, "Űrrókaidéző tojás");
         addItem(WOLFY_SPAWN_EGG, "Wolfyidéző tojás");
+        addItem(DARK_LATEX_YUFENG_QUEEN_SPAWN_EGG, "Sötét latex jüfeng királynőt idéző tojás");
 
         add("key.categories." + modid, "Changed Addon key bindek");
         addKey(ChangedAddonKeyMappings.OPEN_EXTRA_DETAILS, "Transzfuráltak többleteinek nyitása");
