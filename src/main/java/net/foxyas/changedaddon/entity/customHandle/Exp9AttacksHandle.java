@@ -20,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.*;
@@ -706,19 +707,22 @@ public class Exp9AttacksHandle {
         }
 
         private void thunderStorm() {
-            if (this.boss.level instanceof ServerLevel) {
+            Level level = this.boss.level;
+            if (level instanceof ServerLevel) {
                 if (this.boss.getTarget() == null) {
                     for (int i = 0; i < 7; i++) {
-                        double offsetX = (boss.getRandom().nextDouble() - 0.5) * 10;
-                        double offsetZ = (boss.getRandom().nextDouble() - 0.5) * 10;
-                        BlockPos pos = new BlockPos(this.boss.getX() + offsetX, this.boss.getY(), this.boss.getZ() + offsetZ);
+                        double offsetX = boss.getRandom().nextGaussian() * 20;
+                        double offsetZ = boss.getRandom().nextGaussian() * 20;
+                        BlockPos pos = new BlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
+                        if (level.getBlockState(pos.below()).isAir()) return;
                         this.boss.SpawnThunderBolt(pos);
                     }
                 } else {
                     for (int i = 0; i < 12; i++) {
-                        double offsetX = (boss.getRandom().nextDouble() - 0.5) * 20;
-                        double offsetZ = (boss.getRandom().nextDouble() - 0.5) * 20;
-                        BlockPos pos = new BlockPos(this.boss.getX() + offsetX, this.boss.getY(), this.boss.getZ() + offsetZ);
+                        double offsetX = boss.getRandom().nextGaussian() * 10;
+                        double offsetZ = boss.getRandom().nextGaussian() * 10;
+                        BlockPos pos = new BlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
+                        if (level.getBlockState(pos.below()).isAir()) return;
                         this.boss.SpawnThunderBolt(pos);
                     }
                 }

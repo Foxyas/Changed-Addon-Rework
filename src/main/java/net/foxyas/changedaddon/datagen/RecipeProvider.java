@@ -133,6 +133,21 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .unlockedBy("has_redstone", has(Items.REDSTONE))
                 .save(recipeConsumer);
 
+        ShapedRecipeBuilder.shaped(FLAMETHROWER.get())
+                .pattern(" IB")
+                .pattern("RFI")
+                .pattern(" IT")
+                .define('I', ItemTagsProvider.forgeIngotsIridium)
+                .define('R', Tags.Items.DUSTS_REDSTONE)
+                .define('B', Items.BLAZE_ROD)
+                .define('F', Items.FLINT_AND_STEEL)
+                .define('T', Items.IRON_INGOT)
+                .unlockedBy(
+                        getHasName(Items.BLAZE_ROD),
+                        has(Items.BLAZE_ROD)
+                )
+                .save(recipeConsumer);
+
     }
 
     private ShapedRecipeBuilder reinforce(ItemLike result, ItemLike input, String criterionName, CriterionTriggerInstance criterion) {

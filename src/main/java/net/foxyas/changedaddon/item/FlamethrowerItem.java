@@ -15,6 +15,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +43,7 @@ public class FlamethrowerItem extends FlamethrowerLike {
             if (hitResult.getType() == HitResult.Type.BLOCK) {
                 BlockPos pos = hitResult.getBlockPos();
                 BlockState state = level.getBlockState(pos);
-                if (state.getFluidState().is(ChangedAddonFluids.LITIX_CAMONIA_FLUID.get()) || state.getFluidState().is(ChangedAddonFluids.FLOWING_LITIX_CAMONIA_FLUID.get())) {
+                if (state.getFluidState().is(Fluids.LAVA) || state.getFluidState().is(Fluids.FLOWING_LAVA)) {
                     stack.setDamageValue(0);
                     entity.playSound(SoundEvents.BUCKET_FILL, 1f, 1f);
                 }

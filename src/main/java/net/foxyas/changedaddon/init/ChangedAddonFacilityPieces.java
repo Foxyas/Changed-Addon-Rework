@@ -43,6 +43,9 @@ public class ChangedAddonFacilityPieces {
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/luminar_crystal_room"),
                                 ResourceLocation.parse("changed:chests/high_tier_lab")))
                 .register(FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
+                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/luminarctic_leopards_cave"),
+                                ResourceLocation.parse("changed:chests/high_tier_lab")))
+                .register(FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/alpha_cave_snow_leopard"),
                                 ResourceLocation.parse("changed:chests/high_tier_lab")))
                 .register(FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,

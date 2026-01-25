@@ -92,6 +92,8 @@ public class ClientTransfurTotemTooltipComponent implements ClientTooltipCompone
                 ? Minecraft.getInstance().player.tickCount % 360
                 : 0);
 
+        entity.baseTick();
+        entity.tick();
         renderEntityInInventory(offsetX, offsetY, scale, spin, 0, poseStack, entity);
     }
 
@@ -110,7 +112,7 @@ public class ClientTransfurTotemTooltipComponent implements ClientTooltipCompone
         RenderSystem.applyModelViewMatrix();
 
         poseStack.pushPose();
-        poseStack.translate(0.0D, 0.0D, 3000.0D); // força ainda mais na frente
+        poseStack.translate(0.0D, 0.0D, 2050); // força ainda mais na frente
         poseStack.scale((float) scale, (float) scale, (float) scale);
 
         Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0F);

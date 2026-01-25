@@ -79,6 +79,21 @@ public abstract class StackableCanBlock extends HorizontalDirectionalBlock imple
     }
 
     @Override
+    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+        BlockPos belowPos = pos.below();
+        BlockState below = level.getBlockState(belowPos);
+        return below.isFaceSturdy(level, belowPos, Direction.UP);
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean moving) {
+        if (!canSurvive(state, level, pos)) {
+            level.destroyBlock(pos, true);
+        }
+        super.neighborChanged(state, level, pos, block, fromPos, moving);
+    }
+
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Level level = context.getLevel();
         BlockPos clickedPos = context.getClickedPos();
