@@ -273,7 +273,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityDialogues("exp9.pat.type_2", "§l§3Vedd le rólam a mocskos kezeidet!");
         addEntityDialogues("exp9.pat.type_3", "§l§3Simogass meg még egyszer, és addig zúzlak össze, amíg semmi sem marad belőled!");
         addEntityDialogues("exp9.reaction.range_attacks", "§l§o§3GYÁVA VAGY! Csak a távolságra tudsz támaszkodni? Milyen SZÁNALMAS!!!");
-        addEntityDialogues("exp9.reaction.fire_damage", "Gyufával küzdesz a viharral.... Nem rosszul számoltál – félreértettél.");
+        addEntityDialogues("exp9.reaction.fire_damage", "§l§o§3Gyufával küzdesz a viharral.... Nem rosszul számoltál – félreértettél.");
         addEntityDialogues("exp10.pat.type_0", "§l§4Igen, VÉGET VETEK A KIBASZOTT ÉLETEDNEK");
         addEntityDialogues("exp10.pat.type_1", "§l§4Nem fogod sokáig megbánni – meghalsz érte.");
         addEntityDialogues("exp10.pat.type_2", "§l§4Érj meg újra, és gyorsan csinálom... neked.");
