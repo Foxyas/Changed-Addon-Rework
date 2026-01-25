@@ -396,7 +396,7 @@
   "entity_dialogues.changed_addon.exp9.pat.type_1": "§l§3...Így merészelsz gúnyolódni velem?! Széttéplek!",
   "entity_dialogues.changed_addon.exp9.pat.type_2": "§l§3Vedd le rólam a mocskos kezeidet!",
   "entity_dialogues.changed_addon.exp9.pat.type_3": "§l§3Simogass meg még egyszer, és addig zúzlak össze, amíg semmi sem marad belőled!",
-  "entity_dialogues.changed_addon.exp9.reaction.fire_damage": "Gyufával küzdesz a viharral.... Nem rosszul számoltál – félreértettél.",
+  "entity_dialogues.changed_addon.exp9.reaction.fire_damage": "§l§o§3Gyufával küzdesz a viharral.... Nem rosszul számoltál – félreértettél.",
   "entity_dialogues.changed_addon.exp9.reaction.range_attacks": "§l§o§3GYÁVA VAGY! Csak a távolságra tudsz támaszkodni? Milyen SZÁNALMAS!!!",
   "entity_dialogues.changed_addon.exp9.transfur.text.secret": "§b§l§oHé, ismerősnek tűnsz, talán ismerlek §cvalahonnan?§r",
   "fluid.changed_addon.litix_camonia_fluid": "Folyékony litix-kamónia",
