@@ -1,13 +1,11 @@
 package net.foxyas.changedaddon.item;
 
-import net.foxyas.changedaddon.init.ChangedAddonFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,9 +15,15 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FlamethrowerItem extends FlamethrowerLike {
 
@@ -64,6 +68,25 @@ public class FlamethrowerItem extends FlamethrowerLike {
     @Override
     protected ParticleOptions particle() {
         return ParticleTypes.FLAME;
+    }
+
+    protected void applyEffectToEntities(ServerLevel level, Player player, List<Vec3> gasVolume) {
+        Set<LivingEntity> affected = new HashSet<>();
+
+        for (Vec3 pos : gasVolume) {
+            AABB area = new AABB(pos, pos).inflate(1);
+
+            List<LivingEntity> entities = level.getEntitiesOfClass(LivingEntity.class, area);
+
+            for (LivingEntity entity : entities) {
+                if (!player.canAttack(entity)) continue;
+                if (player.isAlliedTo(entity)) continue;
+
+                // evita dano duplicado exagerado
+                if (!affected.add(entity)) continue;
+                affectEntity(player, entity);
+            }
+        }
     }
 
     @Override

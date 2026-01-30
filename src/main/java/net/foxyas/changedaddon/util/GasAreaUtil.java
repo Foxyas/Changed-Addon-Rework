@@ -33,10 +33,10 @@ public class GasAreaUtil {
     ) {
         List<Vec3> points = new ArrayList<>();
 
-        Vec3 origin = player.getEyePosition(1.0F);
-        Vec3 forward = player.getLookAngle().normalize();
-        Vec3 right = forward.cross(new Vec3(0, 1, 0)).normalize();
-        Vec3 up = right.cross(forward).normalize();
+        Vec3 from = player.getEyePosition(1.0F);
+        Vec3 look = player.getLookAngle().normalize();
+        Vec3 right = look.cross(new Vec3(0, 1, 0)).normalize();
+        Vec3 up = right.cross(look).normalize();
 
         for (double d = 0; d <= range; d += step) {
             double radius = d * spread;
@@ -48,7 +48,7 @@ public class GasAreaUtil {
                         right.scale(Math.cos(angle) * radius)
                                 .add(up.scale(Math.sin(angle) * radius));
 
-                points.add(origin.add(forward.scale(d)).add(offset));
+                points.add(from.add(look.scale(d)).add(offset));
             }
         }
 
