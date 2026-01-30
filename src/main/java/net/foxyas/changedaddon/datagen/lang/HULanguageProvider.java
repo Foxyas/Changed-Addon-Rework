@@ -435,7 +435,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("transfur_sounds_gui.flop", "Csapkodik");
         addGui("transfur_sounds_gui.fox_scream", "Sikít");
         addGui("transfur_sounds_gui.growl", "Morog");
-        addGui("transfur_sounds_gui.hiss", "Sziszeg");
+        addGui("transfur_sounds_gui.hiss", "Fújtat");
         addGui("transfur_sounds_gui.howl", "Vonyít");
         addGui("transfur_sounds_gui.meow", "Nyávog");
         addGui("transfur_sounds_gui.purr", "Dorombol");
