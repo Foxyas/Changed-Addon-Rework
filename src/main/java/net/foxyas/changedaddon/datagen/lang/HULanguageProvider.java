@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.datagen.lang;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.variant.TransfurSoundsDetails;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.entity.EntityType;
 
@@ -424,15 +425,26 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("informant_gui.label_empty", "?");
         addGui("informant_gui.tooltip_put_a_syringe_with_a_form", "Tegyen egy fecskendőt egy formával");
         addGui("informant_gui.tooltip_type_the_form", "Írjd be a forma azonosítóját");
-        addGui("transfur_sounds_gui.button_1", "Dorombol");
-        addGui("transfur_sounds_gui.button_2", "Nyávog");
-        addGui("transfur_sounds_gui.button_3", "Morog");
-        addGui("transfur_sounds_gui.button_4", "Ugat");
-        addGui("transfur_sounds_gui.button_5", "Vonyít");
-        addGui("transfur_sounds_gui.button_6", "Sziszeg");
-        addGui("transfur_sounds_gui.button_61", "Ordít");
-        addGui("transfur_sounds_gui.button_7", "Dorombolva nyávog");
-        addGui("transfur_sounds_gui.button_cooldown", "Visszatöltési idő visszaállítása");
+        
+        addGui("transfur_sounds_gui.bark", "Ugat");
+        addGui("transfur_sounds_gui.chatter", "Nyeffeg");
+        addGui("transfur_sounds_gui.dragon_growl", "Morog");
+        addGui("transfur_sounds_gui.dragon_roar", "Ordít");
+        addGui("transfur_sounds_gui.flop", "Csapkodik");
+        addGui("transfur_sounds_gui.fox_scream", "Sikít");
+        addGui("transfur_sounds_gui.growl", "Morog");
+        addGui("transfur_sounds_gui.hiss", "Fúj");
+        addGui("transfur_sounds_gui.howl", "Vonyít");
+        addGui("transfur_sounds_gui.meow", "Nyávog");
+        addGui("transfur_sounds_gui.purr", "Dorombol");
+        addGui("transfur_sounds_gui.purreow", "Dorombolva nyávog");
+        addGui("transfur_sounds_gui.roar", "Ordít");
+        addGui("transfur_sounds_gui.spider_ambient", "Sziszeg");
+        addGui("transfur_sounds_gui.spider_crawl", "Mászik");
+        addGui("transfur_sounds_gui.swim", "Úszik");
+        addGui("transfur_sounds_gui.whine", "Vinnyog");
+        addGui("transfur_sounds_gui.yip", "Csahol");
+        
         addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
         addGui("unifuser_gui.label_full", "Tele");
         addGui("unifuser_gui.tooltip_place_a_syringe_with_dna", "Helyezz ide egy DNS-sel töltött fecskendőt");
