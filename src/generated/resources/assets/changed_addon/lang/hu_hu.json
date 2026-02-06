@@ -637,6 +637,7 @@
   "key.changed_addon.turn_off_transfur.grab_safe_mode": "Barátságos megragadás beállítva: %s",
   "key.changed_addon.turn_off_transfur.safe_mode": "Transzfur támadás beállítva: %s",
   "key.changed_addon.use_second_ability": "Változat második képességének használata",
+  "message.changed_addon.induction_coil_melt": "§c A fémpáncélod és a gyorstárad fémtárgyai olvadnak a hőtől §r",
   "painting.changed_addon.fighting_exp9_pov.author": "@Smoopa",
   "painting.changed_addon.fighting_exp9_pov.title": "Fighting Experiment 009",
   "painting.changed_addon.luminarctic_leopard_female_selfie.author": "@Smoopa",
