@@ -639,6 +639,7 @@
   "key.changed_addon.turn_off_transfur.grab_safe_mode": "You set the Friendly Grab to %s",
   "key.changed_addon.turn_off_transfur.safe_mode": "You set the Transfur Attack to %s",
   "key.changed_addon.use_second_ability": "Use Second Variant Ability",
+  "message.changed_addon.induction_coil_melt": "\u00A7c Your metal armor and hotbar items are melting from the heat \u00A7r",
   "stat.changed_addon.pats_given": "Pats given",
   "stat.changed_addon.pats_received": "Pats received",
   "subtitles.armor_equip": "Armor Equip",

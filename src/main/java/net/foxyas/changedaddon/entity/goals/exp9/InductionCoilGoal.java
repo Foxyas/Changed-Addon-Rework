@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.goals.exp9;
 
 import com.google.common.collect.Iterables;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.foxyas.changedaddon.util.ComponentUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -79,7 +80,7 @@ public class InductionCoilGoal extends Goal {
         duration = durationProvider.sample(holder.getRandom());
 
         if (target instanceof Player player) {
-            items = Iterables.concat(target.getHandSlots(), target.getArmorSlots(), Iterables.limit(player.getInventory().items, 9));
+            items = Iterables.concat(player.getInventory().offhand, target.getArmorSlots(), Iterables.limit(player.getInventory().items, 9));
         } else items = Iterables.concat(target.getHandSlots(), target.getArmorSlots());
 
         holder.level.playSound(null, holder, SoundEvents.TRIDENT_THUNDER, SoundSource.MASTER, 10000, 0.8f + holder.getRandom().nextFloat(0.2f));
@@ -102,15 +103,18 @@ public class InductionCoilGoal extends Goal {
             if (stack.is(ChangedAddonTags.Items.METAL)) {
                 hurtAndBreak(stack, (int) Math.max(2, stack.getMaxDamage() * 0.02f), random);
                 metal++;
-            }
-            if (stack.is(ChangedAddonTags.Items.PARTIAL_METAL)) {
+            } else if (stack.is(ChangedAddonTags.Items.PARTIAL_METAL)) {
                 hurtAndBreak(stack, (int) Math.max(1, stack.getMaxDamage() * 0.01f), random);
                 metal++;
             }
         }
 
+        if (metal == 0) return;
+
+        if (target instanceof Player player) player.displayClientMessage(ComponentUtil.translatable("message.changed_addon.induction_coil_melt"), true);
+
         float metalPercentage = (float) metal / slots;
-        if (metalPercentage <= 0.01f) return;
+        if (metalPercentage <= 0.1f) return;
 
         if (target.hurt(DamageSource.IN_FIRE, damageProvider.sample(random) * metalPercentage)) {
             target.setSecondsOnFire(5);

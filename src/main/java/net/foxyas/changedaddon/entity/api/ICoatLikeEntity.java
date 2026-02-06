@@ -7,6 +7,8 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +30,9 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
 
         ProcessTransfur.setPlayerTransfurVariant(player, changedEntity.getSelfVariant(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1f);
         ChangedSounds.broadcastSound(player, changedEntity.getSelfVariant().sound, 1, 1);
+        if (changedEntity.level instanceof ServerLevel entityServerLevel && player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.teleportTo(entityServerLevel, changedEntity.getX(), changedEntity.getY(), changedEntity.getZ(), changedEntity.getViewYRot(0), changedEntity.getViewXRot(0));
+        }
 
         ItemStack stack, copy, playerStack;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
