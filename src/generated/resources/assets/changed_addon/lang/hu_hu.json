@@ -639,6 +639,7 @@
   "key.changed_addon.turn_off_transfur.grab_safe_mode": "Bar\u00E1ts\u00E1gos megragad\u00E1s be\u00E1ll\u00EDtva: %s",
   "key.changed_addon.turn_off_transfur.safe_mode": "Transzfur t\u00E1mad\u00E1s be\u00E1ll\u00EDtva: %s",
   "key.changed_addon.use_second_ability": "V\u00E1ltozat m\u00E1sodik k\u00E9pess\u00E9g\u00E9nek haszn\u00E1lata",
+  "message.changed_addon.induction_coil_melt": "\u00A7c A f\u00E9mp\u00E1nc\u00E9lod \u00E9s a gyorst\u00E1rad f\u00E9mt\u00E1rgyai olvadnak a h\u0151t\u0151l \u00A7r",
   "stat.changed_addon.pats_given": "Simogat\u00E1sok adva",
   "stat.changed_addon.pats_received": "Simogat\u00E1sok fogadva",
   "subtitles.armor_equip": "P\u00E1nc\u00E9l felv\u00E9tele",
