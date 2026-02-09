@@ -309,7 +309,7 @@ public class HULanguageProvider extends LanguageProvider {
         add("changed_addon.untransfur.Immune", "Engem nem érint");
         add("changed_addon.untransfur.Immune.fluid", "Ez a folyadék nem hat rám");
         add("changed_addon.untransfur.diffusion", "Elválsz a hozzád kapcsolódó latex lénytől. Lehet, hogy vissza akar kapcsolódni, úgyhogy jobb, ha FUTSZ.");
-        add("changed_addon.untransfur.no_effect", "A fecskendő nem működött");
+        add("changed_addon.untransfur.no_effect", "A  nem működött");
         add("changed_addon.untransfur.slow_effect", "Valamilyen oknál fogva ez lassított hatást váltott ki");
 
         add("changed_addon.warn.cant_carry", "Megpróbálja felemelni %1$s-t, de túl nehéz.");
@@ -418,13 +418,13 @@ public class HULanguageProvider extends LanguageProvider {
         addGuiO("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGuiO("recipe_progress", "A haladási sebesség %s tikkenként");
         addGui("catalyzer_gui.label_full", "Tele");
-        addGui("catalyzer_gui.tooltip_put_the_powders_or_syringe", "Tedd ide a porokat vagy a fecskendőt");
+        addGui("catalyzer_gui.tooltip_put_the_powders_or_syringe", "Tedd ide a porokat vagy a t");
         addGui("fight_to_keep_consciousness_minigame.button_fight", "           Küzdj            ");
         addGui("fight_to_keep_consciousness_minigame.button_give_up", "     felad      ");
         addGui("fight_to_keep_consciousness_minigame.label_text", "Már csak %s tikk maradt hátra, SIESS!");
         addGui("informant_gui.form", "Forma azonosítója");
         addGui("informant_gui.label_empty", "?");
-        addGui("informant_gui.tooltip_put_a_syringe_with_a_form", "Tegyen egy fecskendőt egy formával");
+        addGui("informant_gui.tooltip_put_a_syringe_with_a_form", "Tegyen egy t egy formával");
         addGui("informant_gui.tooltip_type_the_form", "Írjd be a forma azonosítóját");
         
         addGui("transfur_sounds_gui.bark", "Ugat");
@@ -448,7 +448,7 @@ public class HULanguageProvider extends LanguageProvider {
         
         addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
         addGui("unifuser_gui.label_full", "Tele");
-        addGui("unifuser_gui.tooltip_place_a_syringe_with_dna", "Helyezz ide egy DNS-sel töltött fecskendőt");
+        addGui("unifuser_gui.tooltip_place_a_syringe_with_dna", "Helyezz ide egy DNS-sel töltött t");
         addGui("unifuser_gui.tooltip_place_the_powders", "Helyezz ide a porokat vagy más hozzávalókat");
         addGui("unifuser_gui.tooltip_put_the_second_ingredient", "Tedd ide a második hozzávalót");
         addGuiO("abilities_radial_screen.mouse.right_click", "Nyomd meg a jobb egérgombot a második képesség kiválasztásához");
@@ -516,6 +516,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         addItemFromId(LAETHIN);
         addItem(LAETHIN_SYRINGE, "Laethin fecskendő");
+        addItem(ALPHA_SERUM_SYRINGE, "Alfa szérummal teli fecskendő");
         addItem(LAETHINMINATOR, "Laethinminátor");
         addItem(FLAMETHROWER, "Lángszóró");
         addItem(LASER_POINTER, "Lézermutató");
