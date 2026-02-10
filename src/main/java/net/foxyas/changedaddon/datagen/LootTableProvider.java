@@ -11,7 +11,8 @@ public class LootTableProvider extends net.minecraft.data.loot.LootTableProvider
     public LootTableProvider(PackOutput output) {
         super(output, Set.of(), List.of(
                 new SubProviderEntry(BlockLoot::new, LootContextParamSets.BLOCK),
-                new SubProviderEntry(EntityLoot::new, LootContextParamSets.ENTITY)
+                new SubProviderEntry(EntityLoot::new, LootContextParamSets.ENTITY),
+                new SubProviderEntry(ChestLoot::new, LootContextParamSets.CHEST)
         ));
     }
 }
