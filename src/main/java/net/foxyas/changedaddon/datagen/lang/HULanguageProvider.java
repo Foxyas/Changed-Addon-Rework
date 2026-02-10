@@ -518,6 +518,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         addItemFromId(LAETHIN);
         addItem(LAETHIN_SYRINGE, "Laethin fecskendő");
+        addItem(ALPHA_SERUM_SYRINGE, "Alfa szérummal teli fecskendő");
         addItem(LAETHINMINATOR, "Laethinminátor");
         addItem(FLAMETHROWER, "Lángszóró");
         addItem(LASER_POINTER, "Lézermutató");
