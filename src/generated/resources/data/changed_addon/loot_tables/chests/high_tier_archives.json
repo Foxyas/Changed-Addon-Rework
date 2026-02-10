@@ -1,0 +1,64 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:paper"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:book",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 30.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:enchanted_book",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "name": "changed_addon:alpha_serum_syringe",
+          "weight": 3
+        }
+      ],
+      "rolls": 4.0
+    }
+  ],
+  "random_sequence": "changed_addon:chests/high_tier_archives"
+}

@@ -67,7 +67,11 @@ public class ChangedAddonFacilityPieces {
 
                 .register(ChangedAddonMod.resourceLoc("alpha_cave_tiger_shark"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/alpha_cave_tiger_shark"),
-                                Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))));
+                                Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
+
+                .register(ChangedAddonMod.resourceLoc("archives_room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
+                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/archives_room"),
+                                Optional.empty()));
 
 //                .register(FacilityPieceCollectionBuilder.WEIGHT_COMMON,
 //                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/closed_meteor"),

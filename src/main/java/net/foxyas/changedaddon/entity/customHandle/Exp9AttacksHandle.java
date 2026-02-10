@@ -748,7 +748,7 @@ public class Exp9AttacksHandle {
             }
             Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
             boss.teleportTo(targetPos.x, targetPos.y, targetPos.z);
-            boss.getLookControl().setLookAt(target, 30, 30);
+            boss.getLookControl().setLookAt(target, 180, 180);
             target.hurt(boss.getThunderDmg(), 2);
 
         }

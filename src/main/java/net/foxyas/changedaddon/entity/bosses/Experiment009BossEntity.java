@@ -47,12 +47,14 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -71,6 +73,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
@@ -271,11 +274,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                         ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_009.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
                     }
                 }
-                DodgeAbilityInstance dodgeAbilityInstance = transfurVariantInstance.getAbilityInstance(ChangedAddonAbilities.DODGE.get());
-                if (dodgeAbilityInstance != null && dodgeAbilityInstance.getMaxDodgeAmount() < 10) {
-                    dodgeAbilityInstance.setMaxDodgeAmount(10);
-                    dodgeAbilityInstance.setDodgeAmount(10);
-                }
             }
         }
     }
@@ -346,11 +344,21 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         if (source.getMsgId().equals("witherSkull"))
             return false;
         if (source.is(DamageTypes.IN_WALL)) {
+            Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> (Float) target.distanceTo(this))));
             Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
-                    ? this.level().getNearestPlayer(this.getX(), this.getY(), this.getZ(), 32d, false)
+                    ? entitiesOfClass.toList().get(0)
                     : this.getTarget());
             return false;
         }
+
+        if (source.getEntity() == null || source.getDirectEntity() == null) {
+            Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> (Float) target.distanceTo(this))));
+            Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
+                    ? entitiesOfClass.toList().get(0)
+                    : this.getTarget());
+            return false;
+        }
+
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
             maybeSendReactionToPlayer(source);
             return super.hurt(source, amount * 0.5f);
@@ -704,7 +712,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             LivingEntity target = event.getEntity();
             Entity source = event.getSource().getEntity();
             if (source instanceof Experiment009BossEntity experiment009BossEntity) {
-                if (experiment009BossEntity.isPhase3()) {
+                if (experiment009BossEntity.isPhase3() && !target.isDamageSourceBlocked(event.getSource())) {
                     experiment009BossEntity.heal(0.5f);
                 }
             }

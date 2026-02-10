@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:paper",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:book",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 10.0,
+                "min": 5.0
+              },
+              "treasure": true
+            }
+          ],
+          "name": "minecraft:enchanted_book",
+          "weight": 2
+        }
+      ],
+      "rolls": 3.0
+    }
+  ],
+  "random_sequence": "changed_addon:chests/low_tier_archives"
+}
