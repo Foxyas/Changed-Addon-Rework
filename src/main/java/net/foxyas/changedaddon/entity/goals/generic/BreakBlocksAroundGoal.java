@@ -17,10 +17,10 @@ import net.minecraft.world.level.pathfinder.Path;
 import java.util.EnumSet;
 
 public class BreakBlocksAroundGoal extends Goal {
-    private static final int FRUSTRATION_THRESHOLD = 40;
+    private static final int FRUSTRATION_THRESHOLD = 100;
     private final Mob holder;
     private int breakCooldown = 0;
-    protected int frustrationTicks;
+    protected int frustrationTicks = 0;
 
     public BreakBlocksAroundGoal(Mob holder) {
         this.holder = holder;
