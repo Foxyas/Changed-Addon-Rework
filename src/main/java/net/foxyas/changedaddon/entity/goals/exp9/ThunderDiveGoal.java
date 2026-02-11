@@ -26,6 +26,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 
 public class ThunderDiveGoal extends Goal {
+
+    private static final int FAILSAFE_DIVING = 120;
+
     protected final IntProvider cooldownProvider;
     private final PathfinderMob mob;
     private final double ascendBoost;     // impulso Y inicial
@@ -36,6 +39,7 @@ public class ThunderDiveGoal extends Goal {
     public int cooldown = 0;
     private Phase phase;
     private int ticks;
+    private int divingTicks;
     private BlockPos startGroundPos;
     private Vec3 lateral = Vec3.ZERO;
     public ThunderDiveGoal(PathfinderMob mob,
@@ -136,6 +140,10 @@ public class ThunderDiveGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (phase == Phase.DIVE && divingTicks >= FAILSAFE_DIVING) {
+            return false;
+        }
+
         return phase != null && !mob.onGround();
     }
 
@@ -187,6 +195,7 @@ public class ThunderDiveGoal extends Goal {
                     mob.getLookControl().setLookAt(position.x, position.y, position.z, 30f, 30f);
                     affectNearbyEntities(new Vec3(0, -Math.abs(diveSpeedY), 0));
                 }
+                divingTicks++;
             }
         }
     }

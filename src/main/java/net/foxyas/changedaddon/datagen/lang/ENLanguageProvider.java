@@ -478,8 +478,10 @@ public class ENLanguageProvider extends LanguageProvider {
         addItem(ELECTRIC_KATANA_RED, "§4Electric Katana§r");
         addItemFromId(EMPTY_SPRAY);
         addItem(EXP_10_CONTAINMENT_VIAL, "Exp10 Containment Vial");
+        add(EXP_10_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Rotting energy churns and pulses within the glass.");
         addItem(EXP_10_LATEX_BASE, "§4Exp10 Latex Base§r");
         addItem(EXP_9_CONTAINMENT_VIAL, "Exp009 Containment Vial");
+        add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "High voltage energy hums and throbs within the glass.");
         addItem(EXP_9_LATEX_BASE, "Exp9 Latex Base");
         addItem(EXPERIMENT_009_DNA, "Experiment 009 DNA");
         add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3A Strange Orb...");

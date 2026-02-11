@@ -29,6 +29,7 @@ import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -91,6 +92,15 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
+        applyDefaultBasicPlayerInfo();
+    }
+
+    protected void applyDefaultBasicPlayerInfo() {
+        this.getBasicPlayerInfo().setSize(1f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
+        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
+        this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -383,11 +393,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         super.baseTick();
 
         if (firstTick) {
-            this.getBasicPlayerInfo().setSize(1f);
-            this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-            this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
-            this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
-            this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
+            applyDefaultBasicPlayerInfo();
         }
 
         SetDefense(this);
@@ -500,6 +506,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         translatableComponentList.add(Component.translatable("entity_dialogues.changed_addon.exp10.pat.type_1"));
         translatableComponentList.add(Component.translatable("entity_dialogues.changed_addon.exp10.pat.type_2"));
         translatableComponentList.add(Component.translatable("entity_dialogues.changed_addon.exp10.pat.type_3"));
+
         player.level().addParticle(
                 ChangedParticles.emote(this, Emote.ANGRY),
                 this.getX(),
@@ -509,7 +516,11 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
                 0.0f,
                 0.0f
         );
-        player.displayClientMessage(translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size())), false);
+
+        Component translatableComponent = translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size()));
+        MutableComponent entityChat = Component.translatable("chat.type.text", this.getDisplayName(), translatableComponent);
+
+        player.displayClientMessage(entityChat, false);
         applyRampage();
     }
 

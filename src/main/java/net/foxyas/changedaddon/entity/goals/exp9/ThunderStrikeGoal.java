@@ -84,6 +84,7 @@ public class ThunderStrikeGoal extends Goal {
             if (tickCounter % 10 == 0) { // a cada 1/2s lança um raio
                 LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
                 if (lightning != null) {
+                    lightning.setVisualOnly(true);
                     lightning.moveTo(target.position());
                     if (pathfinderMob instanceof ChangedEntity changedEntity) {
                         lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());
@@ -115,7 +116,10 @@ public class ThunderStrikeGoal extends Goal {
                 );
 
         for (LivingEntity livingEntity : list) {
-            livingEntity.push(0,0.5f,0);
+            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f);
+            if (!livingEntity.isBlocking()) {
+                livingEntity.push(pushForce.x(), pushForce.y(), pushForce.z());
+            }
         }
     }
 

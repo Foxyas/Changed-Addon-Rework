@@ -13,7 +13,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.OutgoingChatMessage;
-import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -25,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
@@ -499,6 +499,151 @@ public class FoxyasUtils {
                 }
             }
         }
+    }
+
+    public static boolean isFluidConnectedTo(Level level, BlockPos start, BlockPos target, int maxSearch) {
+        FluidState startFluid = level.getFluidState(start);
+        FluidState targetFluid = level.getFluidState(target);
+
+        if (startFluid.isEmpty() || targetFluid.isEmpty()) return false;
+        if (!startFluid.getType().isSame(targetFluid.getType())) return false;
+
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> queue = new ArrayDeque<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        int searched = 0;
+
+        while (!queue.isEmpty() && searched < maxSearch) {
+            BlockPos current = queue.poll();
+            searched++;
+
+            if (current.equals(target)) {
+                return true;
+            }
+
+            for (Direction dir : Direction.values()) {
+                BlockPos next = current.relative(dir);
+
+                if (!visited.contains(next)) {
+                    FluidState fluid = level.getFluidState(next);
+
+                    if (!fluid.isEmpty() && fluid.getType().isSame(startFluid.getType())) {
+                        visited.add(next);
+                        queue.add(next);
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static Set<BlockPos> getConnectedFluids(Level level, BlockPos start, int maxSearch) {
+        FluidState startFluid = level.getFluidState(start);
+
+        if (startFluid.isEmpty()) return Collections.emptySet();
+
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> queue = new ArrayDeque<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        int searched = 0;
+
+        while (!queue.isEmpty() && searched < maxSearch) {
+            BlockPos current = queue.poll();
+            searched++;
+
+            for (Direction dir : Direction.values()) {
+                BlockPos next = current.relative(dir);
+
+                if (!visited.contains(next)) {
+                    FluidState fluid = level.getFluidState(next);
+
+                    if (!fluid.isEmpty() && fluid.getType().isSame(startFluid.getType())) {
+                        visited.add(next);
+                        queue.add(next);
+                    }
+                }
+            }
+        }
+
+        return visited;
+    }
+
+    public static boolean isBlockConnectedTo(Level level, BlockPos start, BlockPos target, int maxSearch) {
+        BlockState startState = level.getBlockState(start);
+        BlockState targetState = level.getBlockState(target);
+
+        if (!startState.is(targetState.getBlock())) return false;
+
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> queue = new ArrayDeque<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        int searched = 0;
+
+        while (!queue.isEmpty() && searched < maxSearch) {
+            BlockPos current = queue.poll();
+            searched++;
+
+            if (current.equals(target)) {
+                return true;
+            }
+
+            for (Direction dir : Direction.values()) {
+                BlockPos next = current.relative(dir);
+
+                if (!visited.contains(next)) {
+                    BlockState state = level.getBlockState(next);
+
+                    if (state.is(startState.getBlock())) {
+                        visited.add(next);
+                        queue.add(next);
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static Set<BlockPos> getConnectedBlocks(Level level, BlockPos start, int maxSearch) {
+        BlockState startState = level.getBlockState(start);
+
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> queue = new ArrayDeque<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        int searched = 0;
+
+        while (!queue.isEmpty() && searched < maxSearch) {
+            BlockPos current = queue.poll();
+            searched++;
+
+            for (Direction dir : Direction.values()) {
+                BlockPos next = current.relative(dir);
+
+                if (!visited.contains(next)) {
+                    BlockState state = level.getBlockState(next);
+
+                    if (state.is(startState.getBlock())) {
+                        visited.add(next);
+                        queue.add(next);
+                    }
+                }
+            }
+        }
+
+        return visited;
     }
 
 

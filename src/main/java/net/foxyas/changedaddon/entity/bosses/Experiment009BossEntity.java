@@ -28,6 +28,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -97,6 +98,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         xpReward = 3000;
         setNoAi(false);
         setPersistenceRequired();
+        applyDefaultBasicPlayerInfo();
+    }
+
+    protected void applyDefaultBasicPlayerInfo() {
+        this.getBasicPlayerInfo().setSize(1f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -522,8 +529,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         super.baseTick();
         if (this.getUnderlyingPlayer() == null) {
             if (firstTick) {
-                this.getBasicPlayerInfo().setSize(1f);
-                this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+                applyDefaultBasicPlayerInfo();
             }
 
             if (shouldBleed && (this.computeHealthRatio() / 0.4f) > 0.25f && this.tickCount % 4 == 0) {
@@ -687,7 +693,11 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 0.0f,
                 0.0f, 1, 0f
         );
-        player.displayClientMessage(translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size())), false);
+
+        Component translatableComponent = translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size()));
+        MutableComponent entityChat = Component.translatable("chat.type.text", this.getDisplayName(), translatableComponent);
+
+        player.displayClientMessage(entityChat, false);
         applyRampage();
     }
 
