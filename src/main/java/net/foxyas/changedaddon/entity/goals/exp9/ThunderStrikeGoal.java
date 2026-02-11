@@ -92,9 +92,6 @@ public class ThunderStrikeGoal extends Goal {
                     ParticlesUtil.sendParticles(pathfinderMob.level(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
                     DelayedTask.schedule(10, () -> {
                         pathfinderMob.level().addFreshEntity(lightning);
-                        if (!lightning.isRemoved()) {
-                            pathfinderMob.getLookControl().setLookAt(lightning, 30.0F, 30.0F);
-                        }
                         applyKnockBack(lightning);
                         pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
                         // recoil de knockback para trás

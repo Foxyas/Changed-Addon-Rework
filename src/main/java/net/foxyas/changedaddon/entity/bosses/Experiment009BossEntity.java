@@ -213,7 +213,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 32,
                 8f,
                 10));
-        this.goalSelector.addGoal(6, new Exp9AttacksHandle.BurstAttack(this));
         this.goalSelector.addGoal(10, new Exp9AttacksHandle.ThunderStorm(this, UniformInt.of(60, 100)));
 
         //New AI

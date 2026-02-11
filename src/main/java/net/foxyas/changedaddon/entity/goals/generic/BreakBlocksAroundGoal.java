@@ -47,6 +47,10 @@ public class BreakBlocksAroundGoal extends Goal {
         }
 
         if (holder.getTarget() == null) {
+            BlockPos eyePos = holder.blockPosition().above(Mth.floor(holder.getEyeHeight()));
+            if (!holder.level.getBlockState(eyePos).isAir()) {
+                this.frustrationTicks++;
+            }
             return false;
         }
 
@@ -54,7 +58,7 @@ public class BreakBlocksAroundGoal extends Goal {
 
         Path holderPath = pathNavigation.getPath();
         if (holderPath != null && holderPath.getEndNode() != null && holderPath.getEndNode().asVec3().distanceTo(holder.getTarget().position()) <= 1.5 && !holderPath.canReach()) {
-            return true;
+            this.frustrationTicks++;
         }
 
         if (!holder.isAlive() || breakCooldown > 0) {
@@ -65,31 +69,10 @@ public class BreakBlocksAroundGoal extends Goal {
             return false;
         }
 
-        if (holder instanceof Experiment009BossEntity experiment009BossEntity) {
-            if (experiment009BossEntity.isPhase2()) {
-                if (holder.getDeltaMovement().length() < 0.05) {
-                    if (holder.horizontalCollision || holder.verticalCollision) {
-                        return true;
-                    }
-                }
-            } else return false;
-        } else if (holder instanceof Experiment10BossEntity experiment10BossEntity) {
-            if (experiment10BossEntity.isPhase2()) {
-                if (holder.getDeltaMovement().length() < 0.05) {
-                    if (holder.horizontalCollision || holder.verticalCollision) {
-                        return true;
-                    }
-                }
-            } else return false;
-        }
-
         if (holder.getDeltaMovement().length() < 0.05) {
-            if (holder.horizontalCollision || holder.verticalCollision) return true;
-        }
-
-        if (holder.getTarget() != null) {
-            BlockPos eyePos = holder.blockPosition().above(Mth.floor(holder.getEyeHeight()));
-            return !holder.level.getBlockState(eyePos).isAir();
+            if (holder.horizontalCollision || holder.verticalCollision) {
+                frustrationTicks++;
+            }
         }
 
         return false;
