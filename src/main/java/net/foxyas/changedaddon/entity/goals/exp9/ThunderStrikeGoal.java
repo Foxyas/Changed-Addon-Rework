@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
@@ -14,6 +15,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
@@ -107,20 +109,32 @@ public class ThunderStrikeGoal extends Goal {
         }
     }
 
-    public void applyKnockBack(Entity lightning) {
-        var list = lightning.level()
+    public void applyKnockBack(LightningBolt lightning) {
+        var list = lightning.level
                 .getEntitiesOfClass(
                         LivingEntity.class,
-                        lightning.getBoundingBox().inflate(8),
+                        getBoundingBoxFromLightningBolt(lightning).inflate(8),
                         (target) -> !target.is(lightning) && !target.is(pathfinderMob)
                 );
 
         for (LivingEntity livingEntity : list) {
-            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f);
+            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, 1.75f, 1f);
             if (!livingEntity.isBlocking()) {
-                livingEntity.push(pushForce.x(), pushForce.y(), pushForce.z());
+                if (livingEntity instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.push(pushForce.x(), pushForce.y(), pushForce.z());
+                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                            serverPlayer.getId(),
+                            serverPlayer.getDeltaMovement())
+                    );
+                } else {
+                    livingEntity.push(pushForce.x(), pushForce.y(), pushForce.z());
+                }
             }
         }
+    }
+
+    public AABB getBoundingBoxFromLightningBolt(LightningBolt bolt) {
+        return new AABB(bolt.getX() - 15.0D, bolt.getY() - 15.0D, bolt.getZ() - 15.0D, bolt.getX() + 15.0D, bolt.getY() + 6.0D + 15.0D, bolt.getZ() + 15.0D);
     }
 
     @Override
