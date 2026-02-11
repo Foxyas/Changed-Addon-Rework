@@ -48,11 +48,22 @@
               "treasure": true
             }
           ],
-          "name": "minecraft:enchanted_book",
+          "name": "minecraft:book",
           "weight": 7
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
           "name": "changed_addon:alpha_serum_syringe",
           "weight": 3
         }
