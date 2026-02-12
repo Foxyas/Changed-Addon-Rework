@@ -18,5 +18,28 @@ All rights to the source code, assets (models, textures, and sounds), and origin
 ### 4. Attribution
 Even in modified versions (forks), clear credit to the original author (**Foxyas**) must be maintained in the documentation, mod metadata (e.g., `mods.toml`), and project descriptions.
 
+# License and Terms of Use
+
+This software and all associated assets are the exclusive property of the creator known by the pseudonym **Foxyas**.
+
+---
+
+### 1. Ownership and Authorship
+All rights to the source code, assets (models, textures, and sounds), and original game logic contained within this project belong solely to **Foxyas**. Original credits must remain intact in all files.
+
+### 2. Personal Use and Modifications (Forks)
+* **Personal Use:** You are granted permission to fork, modify, and adapt this software for strictly personal use, educational purposes, or private testing.
+* **Small Scale:** Use in private servers for small groups or minor community projects is permitted without prior explicit consent.
+
+### 3. Long-Term Projects and Public Distribution
+* **Mandatory Permission:** For any integration into **long-term projects**, large-scale public servers, high-visibility modpacks, or any usage involving monetization/commercialization, you **must** obtain formal written permission from **Foxyas**.
+* **Redistribution:** Re-uploading this software to other platforms or websites claiming it as your own work is strictly prohibited.
+
+### 4. Attribution
+Even in modified versions (forks), clear credit to the original author (**Foxyas**) must be maintained in the documentation, mod metadata (e.g., `mods.toml`), and project descriptions.
+
+### 5. Disclaimer of Liability (No Warranty)
+The original creator, **Foxyas**, shall not be held liable for any legal, technical, or general issues arising from the use of modified versions (forks) of this software. Any damages, crashes, or legal disputes caused by third-party modifications are the sole responsibility of the individual(s) who modified and redistributed the software. Use this software and its derivatives at your own risk.
+
 ---
 *Copyright © 2024-2026 - Created by Foxyas.*
