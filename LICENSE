@@ -1,21 +1,22 @@
-MIT License
+# License and Terms of Use
 
-Copyright (c) 2026 Foxyas
+This software and all associated assets are the exclusive property of the creator known by the pseudonym **Foxyas**.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+---
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+### 1. Ownership and Authorship
+All rights to the source code, assets (models, textures, and sounds), and original game logic contained within this project belong solely to **Foxyas**. Original credits must remain intact in all files.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+### 2. Personal Use and Modifications (Forks)
+* **Personal Use:** You are granted permission to fork, modify, and adapt this software for strictly personal use, educational purposes, or private testing.
+* **Small Scale:** Use in private servers for small groups or minor community projects is permitted without prior explicit consent.
+
+### 3. Long-Term Projects and Public Distribution
+* **Mandatory Permission:** For any integration into **long-term projects**, large-scale public servers, high-visibility modpacks, or any usage involving monetization/commercialization, you **must** obtain formal written permission from **Foxyas**.
+* **Redistribution:** Re-uploading this software to other platforms or websites claiming it as your own work is strictly prohibited.
+
+### 4. Attribution
+Even in modified versions (forks), clear credit to the original author (**Foxyas**) must be maintained in the documentation, mod metadata (e.g., `mods.toml`), and project descriptions.
+
+---
+*Copyright © 2024-2026 - Created by Foxyas.*
