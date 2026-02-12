@@ -490,8 +490,10 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(ELECTRIC_KATANA_RED, "§4Elektromos katana§r");
         addItem(EMPTY_SPRAY, "Üres szpré");
         addItem(EXP_10_CONTAINMENT_VIAL, "10-es kísérlet behatároló fiolája");
+        add(EXP_10_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Rothadó energia kavarog és lüktet az üvegben.");
         addItem(EXP_10_LATEX_BASE, "§410-es kísérlet latex alapja§r");
         addItem(EXP_9_CONTAINMENT_VIAL, "009-es kísérlet behatároló fiolája");
+        add(EXP_9_CONTAINMENT_VIAL.get().getDescriptionId() + ".desc", "Nagyfeszültségű energia zümmög és lüktet az üvegben.");
         addItem(EXP_9_LATEX_BASE, "009-es kísérlet latex alapja");
         addItem(EXPERIMENT_009_DNA, "009-es kísérlet DNS-e");
         add(EXPERIMENT_009_DNA.get().getDescriptionId() + ".description", "§3Egy furcsa golyó...");
