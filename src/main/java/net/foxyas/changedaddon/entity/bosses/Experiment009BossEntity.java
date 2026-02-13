@@ -799,7 +799,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
         double score = armor + (toughness * 2);
 
-        if (score >= 30) return GearTier.HIGH;
+        if (score >= 40) return GearTier.HIGH;
         if (score >= 15) return GearTier.MID;
         return GearTier.LOW;
     }
