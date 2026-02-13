@@ -27,7 +27,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -64,6 +63,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
@@ -366,7 +366,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         if (source.getMsgId().equals("witherSkull"))
             return false;
         if (source == DamageSource.IN_WALL) {
-            Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> (Float) target.distanceTo(this))));
+            Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this))));
             Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
                     ? entitiesOfClass.toList().get(0)
                     : this.getTarget());
@@ -374,11 +374,10 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         }
 
         if (source.getEntity() == null || source.getDirectEntity() == null) {
-            Stream<LivingEntity> nearbyEntities = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> (Float) target.distanceTo(this))));
-            LivingEntity mostNearbyEntity = nearbyEntities.toList().get(0);
-            if (!this.getSensing().hasLineOfSight(mostNearbyEntity)) {
+            if (this.getTarget() == null) {
+                Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this))));
                 Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
-                        ? mostNearbyEntity
+                        ? entitiesOfClass.toList().get(0)
                         : this.getTarget());
                 return false;
             }
@@ -387,6 +386,11 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         if (source.isProjectile()) {
             maybeSendReactionToPlayer(source);
             return super.hurt(source, amount * 0.5f);
+        }
+
+        if (source.getMsgId().contains("bullet") || source.getMsgId().contains("gun")) {
+            maybeSendReactionToPlayer(source);
+            return super.hurt(source, amount * 0.15f);
         }
 
         if (source.isFire()) {
@@ -746,8 +750,9 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
+
         @SubscribeEvent
-        public static void WhenAttack(LivingAttackEvent event) {
+        public static void whenAttackAnEntity(LivingAttackEvent event) {
             LivingEntity target = event.getEntityLiving();
             Entity source = event.getSource().getEntity();
             if (source instanceof Experiment009BossEntity experiment009BossEntity) {
@@ -756,6 +761,53 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 }
             }
         }
+
+        @SubscribeEvent
+        public static void onBossDamagePlayer(LivingHurtEvent event) {
+
+            if (!(event.getSource().getEntity() instanceof Experiment009BossEntity source)) return;
+            if (!(event.getEntityLiving() instanceof Player target)) return;
+
+            GearTier tier = getGearTier(target);
+
+            switch (tier) {
+                case LOW -> event.setAmount(event.getAmount() * 0.6F);
+                case MID -> event.setAmount(event.getAmount());
+                case HIGH -> event.setAmount(event.getAmount() * 1.3F);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerDamageBoss(LivingHurtEvent event) {
+            if (!(event.getSource().getEntity() instanceof Player source)) return;
+            if (!(event.getEntityLiving() instanceof Experiment009BossEntity target)) return;
+
+            GearTier tier = getGearTier(source);
+
+            switch (tier) {
+                case LOW -> event.setAmount(event.getAmount() * 3.5F);
+                case MID -> event.setAmount(event.getAmount());
+                case HIGH -> event.setAmount(event.getAmount() * 0.7F);
+            }
+        }
+    }
+
+    private static GearTier getGearTier(LivingEntity entity) {
+
+        double armor = entity.getAttributeValue(Attributes.ARMOR);
+        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+
+        double score = armor + (toughness * 2);
+
+        if (score >= 30) return GearTier.HIGH;
+        if (score >= 15) return GearTier.MID;
+        return GearTier.LOW;
+    }
+
+    private enum GearTier {
+        LOW,
+        MID,
+        HIGH
     }
 
 }

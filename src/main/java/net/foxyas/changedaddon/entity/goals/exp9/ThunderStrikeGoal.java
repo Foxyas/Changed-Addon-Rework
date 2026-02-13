@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,10 +18,16 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
 public class ThunderStrikeGoal extends Goal {
     private final PathfinderMob pathfinderMob;
@@ -93,6 +100,13 @@ public class ThunderStrikeGoal extends Goal {
                     if (pathfinderMob instanceof ChangedEntity changedEntity) {
                         lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());
                     }
+
+                    List<BlockPos> conductiveBlocks = findConductiveBlocks(pathfinderMob.getLevel(), lightning.getOnPos(), 16);
+                    if (!conductiveBlocks.isEmpty()) {
+                        BlockPos random = Util.getRandom(conductiveBlocks, pathfinderMob.getRandom());
+                        lightning.moveTo(random, 0, 0);
+                    }
+
                     lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
                     ParticlesUtil.sendParticles(pathfinderMob.getLevel(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
                     DelayedTask.schedule(10, () -> {
@@ -109,6 +123,40 @@ public class ThunderStrikeGoal extends Goal {
                 }
             }
         }
+    }
+
+    protected boolean isConductive(BlockState state) {
+        Block block = state.getBlock();
+
+        return block == Blocks.COPPER_BLOCK
+                || block == Blocks.EXPOSED_COPPER
+                || block == Blocks.WEATHERED_COPPER
+                || block == Blocks.OXIDIZED_COPPER
+                || block == Blocks.CUT_COPPER
+                || block == Blocks.IRON_BLOCK
+                || block == Blocks.GOLD_BLOCK
+                || block == Blocks.LIGHTNING_ROD;
+    }
+
+    protected List<BlockPos> findConductiveBlocks(Level level, BlockPos center, int radius) {
+
+        List<BlockPos> result = new ArrayList<>();
+
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -2; y <= 2; y++) {
+                for (int z = -radius; z <= radius; z++) {
+
+                    BlockPos pos = center.offset(x, y, z);
+                    BlockState state = level.getBlockState(pos);
+
+                    if (isConductive(state)) {
+                        result.add(pos.immutable());
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     public void applyKnockBack(LightningBolt lightning) {
