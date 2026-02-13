@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
@@ -62,6 +63,9 @@ import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
@@ -535,5 +539,56 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
             mobEffectInstance = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20, 0, true, true, true);
         }
         this.addEffect(mobEffectInstance);
+    }
+
+    @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
+    public static class WhenAttackAEntity {
+
+        @SubscribeEvent
+        public static void onBossDamagePlayer(LivingHurtEvent event) {
+
+            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity source)) return;
+            if (!(event.getEntity() instanceof Player target)) return;
+
+            GearTier tier = getGearTier(target);
+
+            switch (tier) {
+                case LOW -> event.setAmount(event.getAmount() * 0.6F);
+                case MID -> event.setAmount(event.getAmount());
+                case HIGH -> event.setAmount(event.getAmount() * 1.3F);
+            }
+        }
+
+        @SubscribeEvent
+        public static void onPlayerDamageBoss(LivingHurtEvent event) {
+            if (!(event.getSource().getEntity() instanceof Player source)) return;
+            if (!(event.getEntity() instanceof Experiment10BossEntity target)) return;
+
+            GearTier tier = getGearTier(source);
+
+            switch (tier) {
+                case LOW -> event.setAmount(event.getAmount() * 3.5F);
+                case MID -> event.setAmount(event.getAmount());
+                case HIGH -> event.setAmount(event.getAmount() * 0.7F);
+            }
+        }
+    }
+
+    private static GearTier getGearTier(LivingEntity entity) {
+
+        double armor = entity.getAttributeValue(Attributes.ARMOR);
+        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+
+        double score = armor + (toughness * 2);
+
+        if (score >= 30) return GearTier.HIGH;
+        if (score >= 15) return GearTier.MID;
+        return GearTier.LOW;
+    }
+
+    private enum GearTier {
+        LOW,
+        MID,
+        HIGH
     }
 }
