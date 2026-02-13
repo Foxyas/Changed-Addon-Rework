@@ -35,3 +35,8 @@ I'm currently looking for:
 If you enjoy cleaning up spaghetti code, optimizing structure, and turning chaos into maintainable systems — you're more than welcome to join the effort!
 
 Feel free to fork the repo, open PRs, or reach out with suggestions and improvements.
+
+### Small Notice
+
+Despite the license stating that I (Foxyas) own everything, I do not. Every artist who contributed to the project will have their merit and copyright reserved for them.
+The use of such assets, where the owners are not directly mine (Foxyas), requires permission from both the artist and the owner (Foxyas) of Changed addon plus.
