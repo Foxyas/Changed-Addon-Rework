@@ -519,16 +519,15 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
         @SubscribeEvent
         public static void onBossDamagePlayer(LivingHurtEvent event) {
-
             if (!(event.getSource().getEntity() instanceof Experiment10BossEntity source)) return;
-            if (!(event.getEntityLiving() instanceof Player target)) return;
+            if (!(event.getEntity() instanceof Player target)) return;
 
             GearTier tier = getGearTier(target);
 
             switch (tier) {
                 case LOW -> event.setAmount(event.getAmount() * 0.6F);
                 case MID -> event.setAmount(event.getAmount());
-                case HIGH -> event.setAmount(event.getAmount() * 1.3F);
+                case HIGH -> event.setAmount(event.getAmount() * 1.25F);
             }
         }
 
@@ -541,8 +540,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
             switch (tier) {
                 case LOW -> event.setAmount(event.getAmount() * 3.5F);
-                case MID -> event.setAmount(event.getAmount());
-                case HIGH -> event.setAmount(event.getAmount() * 0.7F);
+                case MID, HIGH -> event.setAmount(event.getAmount());
             }
         }
     }
@@ -554,7 +552,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
 
         double score = armor + (toughness * 2);
 
-        if (score >= 30) return GearTier.HIGH;
+        if (score >= 40) return GearTier.HIGH;
         if (score >= 15) return GearTier.MID;
         return GearTier.LOW;
     }
