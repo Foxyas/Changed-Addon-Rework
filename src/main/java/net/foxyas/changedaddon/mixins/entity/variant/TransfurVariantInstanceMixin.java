@@ -191,20 +191,19 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         }
     }
 
-    @Inject(method = "tickFlying", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/food/FoodData;getFoodLevel()I", remap = true, ordinal = 0),
-            cancellable = true)
-    private void negateFly(CallbackInfo cir) {
+    @Inject(method = "meetsCriteriaForFlying", at = @At(value = "RETURN"), cancellable = true)
+    private void negateFly(CallbackInfoReturnable<Boolean> cir) {
         if (!this.host.isCreative() && !this.host.isSpectator()) {
             if (getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
                 if (!variantExtraStats.getFlyType().canFly()) {
-                    if (host.getAbilities().flying || host.getAbilities().mayfly) {
-                        host.getAbilities().mayfly = false;
-                        host.getAbilities().flying = false;
-                        host.onUpdateAbilities();
-                    }
-
-                    ticksFlying = 0;
-                    cir.cancel();
+//                    if (host.getAbilities().flying || host.getAbilities().mayfly) {
+//                        host.getAbilities().mayfly = false;
+//                        host.getAbilities().flying = false;
+//                        host.onUpdateAbilities();
+//                    }
+//
+//                    ticksFlying = 0;
+                    cir.setReturnValue(false);
                 }
             }
         }

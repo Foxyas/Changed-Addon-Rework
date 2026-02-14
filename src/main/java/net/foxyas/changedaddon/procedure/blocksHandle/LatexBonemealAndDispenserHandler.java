@@ -11,7 +11,6 @@ import net.ltxprogrammer.changed.world.LatexCoverState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -77,6 +76,8 @@ public class LatexBonemealAndDispenserHandler {
                 level,
                 supportPos,
                 supportState,
+                pos.relative(face),
+                level.getBlockState(pos.relative(face)),
                 face
         )) {
             return false;
@@ -173,7 +174,7 @@ public class LatexBonemealAndDispenserHandler {
     }
 
     public static boolean trySpread(LatexCoverState state, RandomSource random, BlockPos blockPos, Level level) {
-        return trySpread(state, false ,random, blockPos, level);
+        return trySpread(state, false, random, blockPos, level);
     }
 
     public static boolean trySpread(LatexCoverState state, boolean replace, RandomSource random, BlockPos blockPos, Level level) {
@@ -198,7 +199,7 @@ public class LatexBonemealAndDispenserHandler {
                 if (checkPos.subtract(blockPos).getY() > 0 && random.nextInt(3) > 0)
                     continue;
 
-                if (Arrays.stream(Direction.values()).noneMatch(direction -> SpreadingLatexType.canExistOnSurface(level, checkPos, level.getBlockState(checkPos.relative(direction)), direction.getOpposite())))
+                if (Arrays.stream(Direction.values()).noneMatch(direction -> SpreadingLatexType.canExistOnSurface(level, checkPos, level.getBlockState(checkPos.relative(direction)), checkPos.relative(direction.getOpposite()), level.getBlockState(checkPos.relative(direction.getOpposite())), direction.getOpposite())))
                     continue;
 
                 var event = new SpreadingLatexType.CoveringBlockEvent(latexType,
@@ -280,7 +281,8 @@ public class LatexBonemealAndDispenserHandler {
         return spread;
     }
 
-    public record LatexNode(BlockPos pos, LatexCoverState state) {}
+    public record LatexNode(BlockPos pos, LatexCoverState state) {
+    }
 
     public static Set<LatexNode> collectConnectedLatex(
             ServerLevel level,
@@ -347,7 +349,8 @@ public class LatexBonemealAndDispenserHandler {
             LatexCoverState newState = state.trySetValue(SpreadingLatexType.SATURATION, Math.min(sat + 1, 15));
             LatexCoverState.setAtAndUpdate(level, node.pos(), newState);
             LatexCoverState at = LatexCoverState.getAt(level, node.pos);
-            if (at.getValue(SpreadingLatexType.SATURATION) >= 15) at.randomTick(level, node.pos, level.getRandom()); // natural degradation
+            if (at.getValue(SpreadingLatexType.SATURATION) >= 15)
+                at.randomTick(level, node.pos, level.getRandom()); // natural degradation
 
             cleaned = at.isAir() || at.getValue(SpreadingLatexType.SATURATION) >= 15;
         }
@@ -419,7 +422,6 @@ public class LatexBonemealAndDispenserHandler {
 
         return cleaned;
     }
-
 
 
     public static boolean spreadFromSourceWaves(
