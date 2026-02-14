@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.goals.exp9;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -155,6 +156,10 @@ public class SummonLightningGoal extends Goal {
                         25, 1, 0.1, 1, 0.5);
             }
 
+            if (holder instanceof Experiment009BossEntity exp9) {
+                exp9.setCastingAttack(castDuration > 0);
+            }
+
             return;
         }
 
@@ -226,5 +231,8 @@ public class SummonLightningGoal extends Goal {
         lightnings = 0;
         strikePos = null;
         aboveWaterPos = null;
+        if (holder instanceof Experiment009BossEntity exp9) {
+            exp9.setCastingAttack(false);
+        }
     }
 }

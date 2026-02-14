@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -45,6 +46,11 @@ public class ThunderStrikeGoal extends Goal {
         this.duration = duration;
         this.cooldownProvider = cooldownProvider;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+    }
+
+    @Override
+    public boolean isInterruptable() {
+        return false;
     }
 
     @Override
@@ -85,54 +91,54 @@ public class ThunderStrikeGoal extends Goal {
     public void tick() {
         tickCounter++;
 
-        if (target != null) {
-            // olha para o alvo
-            pathfinderMob.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            pathfinderMob.getNavigation().stop();
+        if (target == null) return;
 
-            if (tickCounter % 10 == 0) { // a cada 1/2s lança um raio
-                LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
-                if (lightning != null) {
-                    lightning.setVisualOnly(true);
-                    lightning.moveTo(target.position());
-                    if (pathfinderMob instanceof ChangedEntity changedEntity) {
-                        lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());
-                    }
+        // olha para o alvo
+        pathfinderMob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        pathfinderMob.getNavigation().stop();
 
-                    List<BlockPos> conductiveBlocks = findConductiveBlocks(pathfinderMob.level(), lightning.getOnPos(), 4);
-                    if (!conductiveBlocks.isEmpty()) {
-                        BlockPos random = Util.getRandom(conductiveBlocks, pathfinderMob.getRandom());
-                        lightning.moveTo(random, 0, 0);
-                    }
+        if (tickCounter % 10 != 0) return;// a cada 1/2s lança um raio
 
-                    lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
-                    ParticlesUtil.sendParticles(pathfinderMob.level(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
-                    DelayedTask.schedule(10, () -> {
-                        pathfinderMob.level().addFreshEntity(lightning);
-                        applyKnockBack(lightning);
-                        pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-                        // recoil de knockback para trás
-                        if (target != null) {
-                            Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
-                            pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
-                        }
-                    });
-                    pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
-                }
-            }
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
+        if (lightning == null) return;
+
+        lightning.setVisualOnly(true);
+        lightning.moveTo(target.position());
+        if (pathfinderMob instanceof ChangedEntity changedEntity) {
+            lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());
         }
+
+        List<BlockPos> conductiveBlocks = findConductiveBlocks(pathfinderMob.level(), lightning.getOnPos(), 16);
+        if (!conductiveBlocks.isEmpty()) {
+            BlockPos random = Util.getRandom(conductiveBlocks, pathfinderMob.getRandom());
+            lightning.moveTo(random, 0, 0);
+        }
+
+        lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
+        ParticlesUtil.sendParticles(pathfinderMob.level(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
+        DelayedTask.schedule(10, () -> {
+            pathfinderMob.level().addFreshEntity(lightning);
+            applyKnockBack(lightning);
+            pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+            // recoil de knockback para trás
+            if (target != null) {
+                Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
+                pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
+            }
+        });
+        pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
     }
 
     protected boolean isConductive(BlockState state) {
         Block block = state.getBlock();
 
-        return block == Blocks.COPPER_BLOCK
+        return state.is(Tags.Blocks.STORAGE_BLOCKS_COPPER)
                 || block == Blocks.EXPOSED_COPPER
                 || block == Blocks.WEATHERED_COPPER
                 || block == Blocks.OXIDIZED_COPPER
                 || block == Blocks.CUT_COPPER
-                || block == Blocks.IRON_BLOCK
-                || block == Blocks.GOLD_BLOCK
+                || state.is(Tags.Blocks.STORAGE_BLOCKS_IRON)
+                || state.is(Tags.Blocks.STORAGE_BLOCKS_GOLD)
                 || block == Blocks.LIGHTNING_ROD;
     }
 
@@ -166,7 +172,7 @@ public class ThunderStrikeGoal extends Goal {
                 );
 
         for (LivingEntity livingEntity : list) {
-            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, 1.75f, 1f);
+            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, 1.45f, 1f);
             if (!livingEntity.isBlocking()) {
                 if (livingEntity instanceof ServerPlayer serverPlayer) {
                     serverPlayer.push(pushForce.x(), pushForce.y(), pushForce.z());

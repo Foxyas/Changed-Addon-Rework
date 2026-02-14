@@ -106,14 +106,21 @@ public interface ICrawlAndSwimAbleEntity {
 
         Vec3 movementDir = null;
 
-        if (livingEntity.getTarget() != null) {
-            movementDir = livingEntity.getTarget()
+        LivingEntity target = livingEntity.getTarget();
+        if (target != null) {
+            movementDir = target
                     .position()
                     .subtract(livingEntity.position())
                     .normalize();
         }/* else if (livingEntity.getDeltaMovement().lengthSqr() > 0.0001) {
             movementDir = livingEntity.getDeltaMovement().normalize();
         }*/
+
+        if (target != null) {
+            if (!target.isInWater() && target.onGround()) {
+                movementDir = null;
+            }
+        }
 
         if (movementDir != null) {
             float appliedSpeed = livingEntity.isEyeInFluid(FluidTags.WATER)
