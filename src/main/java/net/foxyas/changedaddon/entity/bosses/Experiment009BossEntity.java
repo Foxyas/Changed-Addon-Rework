@@ -40,7 +40,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
-import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.BossEvent;
@@ -83,6 +82,9 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> PHASE3 =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> CASTING_ATTACK =
+            SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
+
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean shouldBleed;
 
@@ -129,18 +131,29 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         super.defineSynchedData();
         this.entityData.define(PHASE2, false);
         this.entityData.define(PHASE3, false);
+        this.entityData.define(CASTING_ATTACK, false);
+    }
+
+    public void setCastingAttack(boolean value) {
+        this.entityData.set(CASTING_ATTACK, value);
+    }
+
+    public boolean getCastingAttack() {
+        return this.entityData.get(CASTING_ATTACK);
     }
 
     protected void setAttributes(AttributeMap attributes) {
+        super.setAttributes(attributes);
+
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((425));
-        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(128.0f);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15);
         attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1));
         attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(8);
-        attributes.getInstance(Attributes.ARMOR).setBaseValue(12.5);
-        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(6);
-        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.25);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(11f);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(6.5f);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.05);
         attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.85);
     }
 
@@ -238,18 +251,18 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
         //Basically perfect, damn... well done 0senia0
         this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
-                UniformInt.of(90, 150), //IntProvider -> cooldown,
+                UniformInt.of(120, 240), //IntProvider -> cooldown,
                 UniformInt.of(2, 4), //IntProvider -> lightningCount,
                 UniformInt.of(60, 100), //IntProvider -> castDuration,
                 UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-                ConstantFloat.of(10))); //FloatProvider -> damage
+                UniformFloat.of(2, 8))); //FloatProvider -> damage
 
         this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
                 UniformInt.of(75, 125), //IntProvider -> cooldown,
                 4,
                 UniformInt.of(30, 50), //IntProvider -> castDuration,
                 8,
-                UniformFloat.of(8, 12))); //FloatProvider -> damage
+                UniformFloat.of(4, 8))); //FloatProvider -> damage
 
         this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
                 UniformInt.of(100, 150), //IntProvider -> cooldown
@@ -764,30 +777,28 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
         @SubscribeEvent
         public static void onBossDamagePlayer(LivingHurtEvent event) {
-
             if (!(event.getSource().getEntity() instanceof Experiment009BossEntity source)) return;
-            if (!(event.getEntityLiving() instanceof Player target)) return;
+            if (!(event.getEntity() instanceof Player target)) return;
 
             GearTier tier = getGearTier(target);
 
             switch (tier) {
                 case LOW -> event.setAmount(event.getAmount() * 0.6F);
                 case MID -> event.setAmount(event.getAmount());
-                case HIGH -> event.setAmount(event.getAmount() * 1.3F);
+                case HIGH -> event.setAmount(event.getAmount() * 1.25F);
             }
         }
 
         @SubscribeEvent
         public static void onPlayerDamageBoss(LivingHurtEvent event) {
             if (!(event.getSource().getEntity() instanceof Player source)) return;
-            if (!(event.getEntityLiving() instanceof Experiment009BossEntity target)) return;
+            if (!(event.getEntity() instanceof Experiment009BossEntity target)) return;
 
             GearTier tier = getGearTier(source);
 
             switch (tier) {
                 case LOW -> event.setAmount(event.getAmount() * 3.5F);
-                case MID -> event.setAmount(event.getAmount());
-                case HIGH -> event.setAmount(event.getAmount() * 0.7F);
+                case MID, HIGH -> event.setAmount(event.getAmount());
             }
         }
     }

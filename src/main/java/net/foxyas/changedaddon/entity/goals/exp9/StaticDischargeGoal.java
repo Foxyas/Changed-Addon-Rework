@@ -1,7 +1,11 @@
 package net.foxyas.changedaddon.entity.goals.exp9;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -11,11 +15,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
+
+import static net.minecraft.tags.BlockTags.FIRE;
 
 @ParametersAreNonnullByDefault
 public class StaticDischargeGoal extends Goal {
@@ -81,8 +88,14 @@ public class StaticDischargeGoal extends Goal {
 
     @Override
     public void tick() {
-        if (castDuration <= 0) return;
-        castDuration--;
+        if (castDuration > 0) {
+            castDuration--;
+            if (holder instanceof Experiment009BossEntity exp9) {
+                exp9.setCastingAttack(castDuration > 0);
+            }
+            holder.setDeltaMovement(Vec3.ZERO);
+            return;
+        }
 
         float delta = 1 - Mth.inverseLerp(castDuration, 0, castDurationProvider.getMaxValue());
         float size = Mth.lerp(delta, 0.1f, 1);
@@ -97,6 +110,11 @@ public class StaticDischargeGoal extends Goal {
             AABB aabb = AABB.ofSize(holder.position(), aoe * 2, aoe * 2, aoe * 2);
             ServerLevel level = (ServerLevel) holder.level;
             Random random = holder.getRandom();
+            BlockPos bossPos = holder.blockPosition();
+            for (BlockPos blockPos : BlockPos.betweenClosedStream(bossPos.offset(-16, -16, -16), bossPos.offset(16, 16, 16)).map(BlockPos::immutable).filter(pos -> level.getBlockState(pos).is(FIRE)).toList()) {
+                level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+            }
+
             level.getEntities(holder, aabb, entity -> entity.distanceToSqr(holder) <= aoeSqr).forEach(entity -> {
                         entity.hurt(DamageSource.LIGHTNING_BOLT, damageProvider.sample(random));
                         Vec3 direction = entity.position().subtract(holder.position());
@@ -110,6 +128,12 @@ public class StaticDischargeGoal extends Goal {
                                 direction.y * 0.3f,
                                 direction.z * strength
                         );
+                        if (entity instanceof ServerPlayer serverPlayer) {
+                            serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                                    serverPlayer.getId(),
+                                    serverPlayer.getDeltaMovement())
+                            );
+                        }
                     }
             );
             level.playSound(null, holder.getX(), holder.getY(), holder.getZ(), SoundEvents.BEACON_DEACTIVATE, SoundSource.MASTER, 1000.0F, 0.8F + random.nextFloat() * 0.2F);
@@ -123,5 +147,8 @@ public class StaticDischargeGoal extends Goal {
         target = null;
         cooldown = cooldownProvider.sample(holder.getRandom());
         castDuration = 0;
+        if (holder instanceof Experiment009BossEntity exp9) {
+            exp9.setCastingAttack(false);
+        }
     }
 }

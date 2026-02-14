@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.goals.exp9;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -105,6 +105,10 @@ public class SummonLightningGoal extends Goal {
                         25, 1, 0.1, 1, 0.5);
             }
 
+            if (holder instanceof Experiment009BossEntity exp9) {
+                exp9.setCastingAttack(castDuration > 0);
+            }
+
             return;
         }
 
@@ -157,7 +161,7 @@ public class SummonLightningGoal extends Goal {
             BlockPos random = Util.getRandom(conductiveBlocks, level.getRandom());
             lightning.moveTo(random, 0, 0);
         }
-        if(damage > 0) {
+        if (damage > 0) {
             lightning.setDamage(damage);
         } else lightning.setVisualOnly(true);
         level.addFreshEntity(lightning);
@@ -226,5 +230,8 @@ public class SummonLightningGoal extends Goal {
         lightnings = 0;
         strikePos = null;
         aboveWaterPos = null;
+        if (holder instanceof Experiment009BossEntity exp9) {
+            exp9.setCastingAttack(false);
+        }
     }
 }

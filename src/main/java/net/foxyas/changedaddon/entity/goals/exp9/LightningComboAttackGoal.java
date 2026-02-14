@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.goals.exp9;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -131,6 +132,10 @@ public class LightningComboAttackGoal extends Goal {
         if (castDuration > 0) {
             castDuration--;
 
+            if (holder instanceof Experiment009BossEntity exp9) {
+                exp9.setCastingAttack(castDuration > 0);
+            }
+
             if (holder.tickCount % 2 == 0) {
                 if (aboveWaterY != Integer.MAX_VALUE)
                     ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK, attackPos.x - 1, aboveWaterY, attackPos.z - 1,
@@ -222,5 +227,8 @@ public class LightningComboAttackGoal extends Goal {
         attackPos = null;
         castDuration = 0;
         wasBlocked = 0;
+        if (holder instanceof Experiment009BossEntity exp9) {
+            exp9.setCastingAttack(false);
+        }
     }
 }

@@ -176,7 +176,7 @@ public class ThunderStrikeGoal extends Goal {
                 );
 
         for (LivingEntity livingEntity : list) {
-            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, 1.75f, 1f);
+            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, 1.45f, 1f);
             if (livingEntity.isBlocking()) continue;
 
             if (livingEntity instanceof ServerPlayer serverPlayer) {
