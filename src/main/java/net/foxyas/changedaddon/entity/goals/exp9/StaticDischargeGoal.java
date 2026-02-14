@@ -113,7 +113,8 @@ public class StaticDischargeGoal extends Goal {
             RandomSource random = holder.getRandom();
             BlockPos bossPos = holder.blockPosition();
             for (BlockPos blockPos : BlockPos.betweenClosedStream(bossPos.offset(-16, -16, -16), bossPos.offset(16, 16, 16)).map(BlockPos::immutable).filter(pos -> level.getBlockState(pos).is(FIRE)).toList()) {
-                level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+                level.removeBlock(blockPos, false);
+                level.levelEvent(1009, blockPos, 0);
             }
 
             level.getEntities(holder, aabb, entity -> entity.distanceToSqr(holder) <= aoeSqr).forEach(entity -> {
