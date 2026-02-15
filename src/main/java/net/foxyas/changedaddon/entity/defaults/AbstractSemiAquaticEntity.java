@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.entity.defaults;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;
-import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Plane;
@@ -33,7 +32,7 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
 
     protected AbstractSemiAquaticEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
-        this.moveControl = new SemiAquaticMoveControl(this);
+        this.moveControl = new SwimableEntityMoveControl(this);
         this.waterNavigation = new WaterBoundPathNavigation(this, level);
         this.groundNavigation = new GroundPathNavigation(this, level);
         this.groundNavigation.setCanOpenDoors(true);
@@ -100,10 +99,10 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
 
         // Quase se afogando → subir / nadar
         if (this.getAirSupply() < this.getMaxAirSupply() * 0.25f && this.isUnderWater())
-            return true;
+            return false;
 
         // Target está na água → perseguir
-        return target != null && (target.isInWater() || this.isInWater());
+        return (target != null && target.isInWater()) || this.isInWater();
     }
 
     public boolean wantsToSurface() {
@@ -151,6 +150,11 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
                 );
     }
 
+    @Override
+    public void updateSwimming() {
+        updateSwimmingState();
+    }
+
     protected void updateSwimmingState() {
         if (this.level.isClientSide) return;
 
@@ -195,20 +199,17 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
        === MOVE CONTROL ========
        ========================= */
 
-    protected static class SemiAquaticMoveControl extends MoveControl {
+    public static class SwimableEntityMoveControl extends MoveControl {
 
         private final AbstractSemiAquaticEntity mob;
 
-        public SemiAquaticMoveControl(AbstractSemiAquaticEntity mob) {
+        public SwimableEntityMoveControl(AbstractSemiAquaticEntity mob) {
             super(mob);
             this.mob = mob;
         }
 
         @Override
         public void tick() {
-            mob.updateSwimmingState();
-            mob.getNavigation().setCanFloat(true);
-
             LivingEntity target = mob.getTarget();
 
             if (mob.isInWater() && mob.wantsToSurface() && !mob.isSwimming()) {

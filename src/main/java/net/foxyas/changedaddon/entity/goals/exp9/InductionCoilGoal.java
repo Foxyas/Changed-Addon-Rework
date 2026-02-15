@@ -72,7 +72,31 @@ public class InductionCoilGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return target.isAlive() && duration > 0;
+        if (target instanceof Player player) {
+            if (player.isCreative() || player.isSpectator()) {
+                return false;
+            }
+        }
+
+        { // Stop Using Metal -> insta stop
+            int metal = 0, slots = 0;
+            for (ItemStack stack : items) {
+                slots++;
+                if (stack.is(ChangedAddonTags.Items.METAL)) {
+                    metal++;
+                } else if (stack.is(ChangedAddonTags.Items.PARTIAL_METAL)) {
+                    metal++;
+                }
+            }
+
+            if (metal == 0) return false;
+
+            float metalPercentage = (float) metal / slots;
+            if (metalPercentage <= 0.1f) return false;
+        }
+
+
+        return target != null && target.isAlive() && duration > 0;
     }
 
     @Override

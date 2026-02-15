@@ -18,6 +18,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -88,6 +89,13 @@ public class ThunderStrikeGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (target instanceof Player player) {
+            if (player.isCreative() || player.isSpectator()) {
+                return false;
+            }
+        }
+
+
         return target != null && target.isAlive() && tickCounter < duration;
     }
 

@@ -160,13 +160,13 @@ public class LeapDiveGoal extends Goal {
                 if (t != null) {
                     mob.setDeltaMovement(lateral.x, -diveSpeedMultiplier.y, lateral.z);
                     Vec3 position = mob.position().add(lateral.x, -diveSpeedMultiplier.y, lateral.z);
-                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 30f, 30f);
+                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 90f, 90f);
                     affectNearbyEntities(lateral);
                 } else {
                     // sem alvo, só cai
                     mob.setDeltaMovement(0, -diveSpeedMultiplier.y, 0);
                     Vec3 position = mob.position().add(0, -diveSpeedMultiplier.y, 0);
-                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 30f, 30f);
+                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 90f, 90f);
                     affectNearbyEntities(new Vec3(0, -diveSpeedMultiplier.y, 0));
                 }
             }

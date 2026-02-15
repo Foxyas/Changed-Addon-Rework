@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -77,8 +78,16 @@ public class SummonLightningGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (target instanceof Player player) {
+            if (player.isCreative() || player.isSpectator()) {
+                return false;
+            }
+        }
+
+
         return lightnings > 0 && target.isAlive();
     }
+
 
     @Override
     public void start() {
@@ -97,7 +106,8 @@ public class SummonLightningGoal extends Goal {
             castDuration--;
 
             holder.setDeltaMovement(Vec3.ZERO);
-            holder.getLookControl().setLookAt(target);
+            if (target == null) return;
+            holder.getLookControl().setLookAt(target, 90f, 90f);
 
             if (holder.tickCount % 2 == 0) {
                 ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK,

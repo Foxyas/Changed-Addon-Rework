@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
+import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
 import net.foxyas.changedaddon.entity.goals.exp9.*;
 import net.foxyas.changedaddon.entity.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.goals.generic.LatexPullEntityGoal;
@@ -387,6 +388,10 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         }
 
         if (source.getEntity() == null || source.getDirectEntity() == null) {
+            if (source == DamageSource.OUT_OF_WORLD) {
+                return super.hurt(source, amount);
+            }
+
             if (this.getTarget() == null) {
                 Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this))));
                 Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null

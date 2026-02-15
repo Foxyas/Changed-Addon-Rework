@@ -170,6 +170,9 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
             var FloatGoal = new FloatGoal(self) {
                 @Override
                 public boolean canUse() {
+                    if (self.getTarget() == null) {
+                        return super.canUse();
+                    }
                     if (self.isInWater() || self.getTarget() != null) return false;
                     return super.canUse();
                 }
