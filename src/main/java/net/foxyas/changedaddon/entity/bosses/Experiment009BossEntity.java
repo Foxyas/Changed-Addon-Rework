@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
@@ -42,20 +41,17 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
-import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -141,7 +137,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         this.entityData.set(CASTING_ATTACK, value);
     }
 
-    public boolean getCastingAttack() {
+    public boolean isCastingAttack() {
         return this.entityData.get(CASTING_ATTACK);
     }
 
@@ -485,6 +481,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             setPhase3(tag.getBoolean("Phase3"));
         if (tag.contains("Bleeding"))
             shouldBleed = tag.getBoolean("Bleeding");
+        if (tag.contains("casting"))
+            this.setCastingAttack(tag.getBoolean("casting"));
     }
 
     @Override
@@ -493,6 +491,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         tag.putBoolean("Phase2", isPhase2());
         tag.putBoolean("Phase3", isPhase3());
         tag.putBoolean("Bleeding", shouldBleed);
+        tag.putBoolean("casting", this.isCastingAttack());
     }
 
     public boolean isBleeding() {
