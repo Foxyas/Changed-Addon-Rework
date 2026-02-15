@@ -44,14 +44,28 @@ public class MagicAttackCastingAnimator<T extends ChangedEntity, M extends Advan
     public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         if (!this.predicate.test(entity)) return;
 
+//        this.rightArm.z = 0.0F;
+//        this.rightArm.x = -5.0F;
+//        this.leftArm.z = 0.0F;
+//        this.leftArm.x = 5.0F;
+//        this.rightArm.xRot = Mth.cos(ageInTicks * 0.6662F) * 0.25F;
+//        this.leftArm.xRot = Mth.cos(ageInTicks * 0.6662F) * 0.25F;
+//        this.rightArm.zRot = 2.3561945F;
+//        this.leftArm.zRot = -2.3561945F;
+//        this.rightArm.yRot = 0.0F;
+//        this.leftArm.yRot = 0.0F;
+
+
         this.rightArm.z = 0.0F;
         this.rightArm.x = -5.0F;
+        this.rightArm.y = -1;
         this.leftArm.z = 0.0F;
         this.leftArm.x = 5.0F;
-        this.rightArm.xRot = Mth.cos(ageInTicks * 0.6662F) * 0.25F;
-        this.leftArm.xRot = Mth.cos(ageInTicks * 0.6662F) * 0.25F;
-        this.rightArm.zRot = 2.3561945F;
-        this.leftArm.zRot = -2.3561945F;
+        this.leftArm.y = -1;
+        this.rightArm.xRot = (float) Math.toRadians(-180) + Mth.cos(ageInTicks * 0.6662F) * 0.25F;
+        this.leftArm.xRot = (float) Math.toRadians(-180) + Mth.cos(ageInTicks * 0.6662F) * 0.25F;
+        this.rightArm.zRot = (float) Math.toRadians(-45);
+        this.leftArm.zRot = (float) Math.toRadians(45);
         this.rightArm.yRot = 0.0F;
         this.leftArm.yRot = 0.0F;
     }
