@@ -138,7 +138,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         this.entityData.set(CASTING_ATTACK, value);
     }
 
-    public boolean getCastingAttack() {
+    public boolean isCastingAttack() {
         return this.entityData.get(CASTING_ATTACK);
     }
 
@@ -509,6 +509,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             setPhase3(tag.getBoolean("Phase3"));
         if (tag.contains("Bleeding"))
             shouldBleed = tag.getBoolean("Bleeding");
+        if (tag.contains("casting"))
+            this.setCastingAttack(tag.getBoolean("casting"));
     }
 
     @Override
@@ -517,6 +519,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         tag.putBoolean("Phase2", isPhase2());
         tag.putBoolean("Phase3", isPhase3());
         tag.putBoolean("Bleeding", shouldBleed);
+        tag.putBoolean("casting", this.isCastingAttack());
     }
 
     public boolean isBleeding() {
