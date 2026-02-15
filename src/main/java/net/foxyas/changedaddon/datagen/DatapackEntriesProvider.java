@@ -5,7 +5,6 @@ import net.foxyas.changedaddon.datagen.worldgen.*;
 import net.foxyas.changedaddon.datagen.worldgen.template_pool.DazedMeteorPools;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.world.features.processors.DayTimeStructureProcessor;
-import net.foxyas.changedaddon.world.features.processors.MultiBlockTagSwapProcessor;
 import net.foxyas.changedaddon.world.features.processors.OffSetSpawnProcessor;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -13,11 +12,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageScaling;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.GravityProcessor;
@@ -44,6 +41,8 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.TEMPLATE_POOL, DatapackEntriesProvider::templatePools)
             .add(Registries.STRUCTURE, StructureProvider::bootstrap)
             .add(Registries.STRUCTURE_SET, StructureProvider::structureSet);
+            //.add(Registries.TRIM_PATTERN, TrimPatterns::bootstrap)//ArmorTrims::bootstrapPatterns)
+            //.add(Registries.TRIM_MATERIAL, TrimMaterials::bootstrap);//ArmorTrims::bootstrapMaterials);
 
     public DatapackEntriesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(ChangedAddonMod.MODID));

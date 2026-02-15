@@ -655,8 +655,6 @@ public class ChangedAddonTransfurVariants {
     public static List<TransfurVariant<?>> getVariantsRemovedFromSyringes() {
         if (REMOVED_FROM_SYRINGES == null) {
             List<TransfurVariant<?>> tmp = new ArrayList<>(getRemovedVariantsList());
-            tmp.add(LUMINARCTIC_LEOPARD_MALE.get());
-            tmp.add(LUMINARCTIC_LEOPARD_FEMALE.get());
             REMOVED_FROM_SYRINGES = List.copyOf(tmp);
         }
         return REMOVED_FROM_SYRINGES;
