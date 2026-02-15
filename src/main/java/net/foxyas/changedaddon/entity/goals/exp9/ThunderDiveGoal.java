@@ -153,7 +153,7 @@ public class ThunderDiveGoal extends Goal {
 
         LivingEntity t = mob.getTarget();
         if (t != null) {
-            mob.getLookControl().setLookAt(t, 30.0F, 30.0F);
+            mob.getLookControl().setLookAt(t, 90f, 90f);
         }
 
         switch (phase) {
@@ -186,15 +186,17 @@ public class ThunderDiveGoal extends Goal {
                 if (t != null) {
                     mob.setDeltaMovement(lateral.x, -Math.abs(diveSpeedY), lateral.z);
                     Vec3 position = mob.position().add(lateral.x, -Math.abs(diveSpeedY), lateral.z);
-                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 30f, 30f);
+                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 90f, 90f);
                     affectNearbyEntities(lateral);
                 } else {
                     // sem alvo, só cai
                     mob.setDeltaMovement(0, -Math.abs(diveSpeedY), 0);
                     Vec3 position = mob.position().add(0, -Math.abs(diveSpeedY), 0);
-                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 30f, 30f);
+                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 90f, 90f);
                     affectNearbyEntities(new Vec3(0, -Math.abs(diveSpeedY), 0));
                 }
+
+                mob.yBodyRot = mob.getYRot();
                 divingTicks++;
             }
         }

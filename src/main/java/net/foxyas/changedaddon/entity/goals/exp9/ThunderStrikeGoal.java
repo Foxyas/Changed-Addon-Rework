@@ -16,6 +16,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -84,6 +85,13 @@ public class ThunderStrikeGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
+        if (target instanceof Player player) {
+            if (player.isCreative() || player.isSpectator()) {
+                return false;
+            }
+        }
+
+
         return target != null && target.isAlive() && tickCounter < duration;
     }
 
@@ -94,7 +102,7 @@ public class ThunderStrikeGoal extends Goal {
         if (target == null) return;
 
         // olha para o alvo
-        pathfinderMob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        pathfinderMob.getLookControl().setLookAt(target, 90f, 90f);
         pathfinderMob.getNavigation().stop();
 
         if (tickCounter % 10 != 0) return;// a cada 1/2s lança um raio

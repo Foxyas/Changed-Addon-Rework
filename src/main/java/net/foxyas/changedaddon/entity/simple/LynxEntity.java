@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
+import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
@@ -23,7 +24,7 @@ import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-public class LynxEntity extends ChangedEntity implements PowderSnowWalkable, VariantExtraStats {
+public class LynxEntity extends AbstractSemiAquaticEntity implements PowderSnowWalkable, VariantExtraStats {
     public LynxEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.LYNX.get(), world);
     }
@@ -34,6 +35,11 @@ public class LynxEntity extends ChangedEntity implements PowderSnowWalkable, Var
         setNoAi(false);
         setPersistenceRequired();
         setAttributes(this.getAttributes());
+    }
+
+    @Override
+    protected boolean wantsToSwim() {
+        return super.wantsToSwim();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

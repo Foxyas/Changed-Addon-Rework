@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 
 public interface ICrawlAndSwimAbleEntity {
 
@@ -127,6 +128,8 @@ public interface ICrawlAndSwimAbleEntity {
                     ? speed
                     : speed * 0.25F;
 
+            float swimSpeed = (float) (livingEntity.getMoveControl().getSpeedModifier() * livingEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
+            livingEntity.setSpeed(swimSpeed);
             livingEntity.setDeltaMovement(movementDir.scale(appliedSpeed));
 
             float yaw = (float)(Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
