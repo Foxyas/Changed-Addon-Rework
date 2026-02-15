@@ -173,16 +173,19 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
 
         this.setMaxUpStep(shouldSwim ? 1.0F : 0.7F);
 
+        if (wantsToSwim()) {
+            this.setPathfindingMalus(BlockPathTypes.WATER, 0);
+
+        } else this.setPathfindingMalus(BlockPathTypes.WATER, 8.0F);
+
         if (isEffectiveAi() && shouldSwim) {
             this.navigation = this.waterNavigation;
             this.setSwimming(true);
             this.setPose(Pose.SWIMMING);
-            this.setPathfindingMalus(BlockPathTypes.WATER, 0);
         } else {
             this.navigation = this.groundNavigation;
             this.setSwimming(false);
             switchToSafePose();
-            this.setPathfindingMalus(BlockPathTypes.WATER, 8.0F);
         }
     }
 
