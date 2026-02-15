@@ -37,8 +37,6 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
         this.groundNavigation = new GroundPathNavigation(this, level);
         this.groundNavigation.setCanOpenDoors(true);
         this.groundNavigation.setCanFloat(true);
-
-        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
     }
 
     /* =========================
@@ -169,10 +167,30 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
             this.navigation = this.waterNavigation;
             this.setSwimming(true);
             this.setPose(Pose.SWIMMING);
+            this.setPathfindingMalus(BlockPathTypes.WATER, 0);
         } else {
             this.navigation = this.groundNavigation;
             this.setSwimming(false);
-            this.setPose(Pose.STANDING);
+            switchToSafePose();
+            this.setPathfindingMalus(BlockPathTypes.WATER, 8.0F);
+        }
+    }
+
+    protected void switchToSafePose() {
+        Pose currentPose = this.getPose();
+        Pose safePose = currentPose;
+
+        if (canEnterPose(Pose.STANDING)) {
+            safePose = Pose.STANDING;
+        } else if (canEnterPose(Pose.CROUCHING)) {
+            safePose = Pose.CROUCHING;
+        } else if (canEnterPose(Pose.SWIMMING)) {
+            safePose = Pose.SWIMMING;
+        }
+
+        if (safePose != currentPose) {
+            this.setPose(safePose);
+            //this.refreshDimensions();
         }
     }
 
