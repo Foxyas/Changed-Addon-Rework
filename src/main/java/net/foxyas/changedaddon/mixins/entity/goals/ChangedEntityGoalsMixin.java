@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractSwimmableEntity;
 import net.foxyas.changedaddon.entity.goals.simple.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.entity.goals.simple.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
@@ -52,6 +53,17 @@ public class ChangedEntityGoalsMixin {
             original.call(instance, pPriority, FloatGoal);
             return;
         } else if (self instanceof AbstractSemiAquaticEntity) {
+//            var FloatGoal = new FloatGoal(self) {
+//                @Override
+//                public boolean canUse() {
+//                    if (self.getTarget() != null) return false;
+//                    return super.canUse();
+//                }
+//            };
+
+            //original.call(instance, pPriority, FloatGoal);
+            return;
+        } else if (self instanceof AbstractSwimmableEntity) {
 //            var FloatGoal = new FloatGoal(self) {
 //                @Override
 //                public boolean canUse() {
