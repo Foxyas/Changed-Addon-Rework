@@ -187,6 +187,10 @@ public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedE
     @Override
     protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
+        InteractionResult result = itemstack.interactLivingEntity(player, this, hand);
+        if (result.consumesAction()) {
+            return super.mobInteract(player, hand);
+        }
         if (this.level.isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
