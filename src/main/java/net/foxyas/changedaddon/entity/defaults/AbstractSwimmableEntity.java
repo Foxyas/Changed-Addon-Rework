@@ -7,7 +7,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
@@ -39,7 +42,7 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
 
     @Override
     public int getDepthStriderLevel() {
-        return 2;
+        return 1;
     }
 
     @Override
@@ -126,7 +129,7 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
                 this.setSwimming(false);
             }
 
-            if (animateSwim&& !(this.wantsToSurface() && this.isAirAtEyesWhenStanding(this.position()))) {
+            if (animateSwim && !(this.wantsToSurface() && this.isAirAtEyesWhenStanding(this.position()))) {
                 this.setPose(Pose.SWIMMING);
             } else {
                 this.setPose(Pose.STANDING);
@@ -135,12 +138,12 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
     }
 
     public boolean wantsToSwim() {
-        LivingEntity livingentity = this.getTarget();
-        if (livingentity == null)
+        LivingEntity target = this.getTarget();
+        if (target == null)
             return true;
-        if (livingentity.isInWater())
+        if (target.isInWater())
             return true;
-        if (livingentity.isPassenger() && livingentity.getVehicle().isInWater())
+        if (target.isPassenger() && target.getVehicle().isInWater())
             return true;
         return false;
     }
@@ -179,13 +182,13 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
                 double d2 = this.wantedZ - this.aquaticEntity.getZ();
                 double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
                 d1 /= d3;
-                float f = (float)(Mth.atan2(d2, d0) * (double)(180F / (float)Math.PI)) - 90.0F;
+                float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
                 this.aquaticEntity.setYRot(this.rotlerp(this.aquaticEntity.getYRot(), f, 90.0F));
                 this.aquaticEntity.yBodyRot = this.aquaticEntity.getYRot();
-                float f1 = (float)(this.speedModifier * this.aquaticEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
+                float f1 = (float) (this.speedModifier * this.aquaticEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
                 float f2 = Mth.lerp(0.125F, this.aquaticEntity.getSpeed(), f1);
                 this.aquaticEntity.setSpeed(f2 * 1.05f);
-                this.aquaticEntity.setDeltaMovement(this.aquaticEntity.getDeltaMovement().add((double)f2 * d0 * 0.005D, (double)f2 * d1 * 0.1D, (double)f2 * d2 * 0.005D));
+                this.aquaticEntity.setDeltaMovement(this.aquaticEntity.getDeltaMovement().add((double) f2 * d0 * 0.005D, (double) f2 * d1 * 0.1D, (double) f2 * d2 * 0.005D));
             } else {
                 super.tick();
             }
@@ -243,7 +246,7 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
             RandomSource random = this.mob.getRandom();
             BlockPos blockpos = this.mob.blockPosition();
 
-            for(int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 10; ++i) {
                 BlockPos blockpos1 = blockpos.offset(random.nextInt(20) - 10, 2 - random.nextInt(8), random.nextInt(20) - 10);
                 if (this.level.getBlockState(blockpos1).is(Blocks.WATER)) {
                     return Vec3.atBottomCenterOf(blockpos1);
@@ -305,7 +308,7 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
             RandomSource random = this.mob.getRandom();
             BlockPos blockpos = this.mob.blockPosition();
 
-            for(int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 10; ++i) {
                 BlockPos blockpos1 = blockpos.offset(random.nextInt(20) - 10, 2 - random.nextInt(8), random.nextInt(20) - 10);
                 if (this.level.getBlockState(blockpos1).is(Blocks.WATER)) {
                     return Vec3.atBottomCenterOf(blockpos1);
@@ -365,7 +368,7 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
             RandomSource random = this.mob.getRandom();
             BlockPos blockpos = this.mob.blockPosition();
 
-            for(int i = 0; i < 10; ++i) {
+            for (int i = 0; i < 10; ++i) {
                 BlockPos blockpos1 = blockpos.offset(random.nextInt(20) - 10, 2 - random.nextInt(8), random.nextInt(20) - 10);
                 if (this.level.getBlockState(blockpos1).is(Blocks.WATER)) {
                     return Vec3.atBottomCenterOf(blockpos1);
