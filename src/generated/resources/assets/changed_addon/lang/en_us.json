@@ -420,6 +420,8 @@
   "gamerule.changed_addon:bossesDifficultScale.description": "Add a difficulty multiplier to Mod Changed Addon bosses",
   "gamerule.changed_addon:changedEntitiesSpawnDressed": "Changed Entities Spawn Dressed",
   "gamerule.changed_addon:changedEntitiesSpawnDressed.description": "Make Changed Entities spawn with any piece of clothes if possible",
+  "gamerule.changed_addon:doAlphasSpawn": "Do Alphas Spawn?",
+  "gamerule.changed_addon:doAlphasSpawn.description": "Make Changed Entities has a chance to spawn as a alpha.",
   "gamerule.changed_addon:doCreatureDiets": "Creatures Diets?",
   "gamerule.changed_addon:doCreatureDiets.description": "Allow Transfur Get More Food points and saturation when eat a Good food for them",
   "gamerule.changed_addon:doDazedLatexBurn": "Do Dazed Latex Burn",

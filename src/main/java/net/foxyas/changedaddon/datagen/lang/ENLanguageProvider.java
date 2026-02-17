@@ -414,6 +414,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addGamerule(PAINITE_GENERATION, "Painite Generation", "Activate the generation of painite ore");
         addGamerule(NEED_FULL_SOURCE_TO_SPREAD, "Latex blocks need an full source to spread", "When On the Latex Blocks gonna need a full source connected to them to be able to spread");
         addGamerule(CHANGED_ENTITIES_SPAWN_DRESSED, "Changed Entities Spawn Dressed", "Make Changed Entities spawn with any piece of clothes if possible");
+        addGamerule(DO_ALPHAS_SPAWN, "Do Alphas Spawn?", "Make Changed Entities has a chance to spawn as a alpha.");
 
         addGuiO("catalyzer.nitrogen_usage", "ProgressSpeed is %1$s per tick and use %2$s of Nitrogen Power");
         addGuiO("recipe_progress", "ProgressSpeed is %s per tick");
