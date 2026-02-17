@@ -98,17 +98,15 @@ public interface ChangedEntityExtension {
                                 DyeableClothingItem.DefaultColors color = Util.getRandom(DyeableClothingItem.DefaultColors.values(), changedEntity.getRandom());
                                 dyeableClothes.setColor(stack, color.getColorToInt());
                             }
-                            boolean flag = accessoryItem.allowedInSlot(stack, changedEntity, accessorySlotType);
+                            boolean flag = accessorySlotType.canHoldItem(stack, changedEntity);
                             do stack = getRandomItemFromList(changedEntity, itemStream); while (stack.isEmpty());
                             if (flag) slots.setItem(accessorySlotType, stack);
 
                             if (accessorySlotType == ChangedAccessorySlots.BODY.get() || stack.is(ChangedItems.SPORTS_BRA.get())) {
                                 ItemStack randomItemFromList = getRandomItemFromList(changedEntity, acceptedSpawnClothes.stream().filter((item1) -> item1 instanceof AccessoryItem accessory && accessory.allowedInSlot(new ItemStack(item1), changedEntity, ChangedAccessorySlots.LEGS.get())).toList());
-                                if (randomItemFromList.getItem() instanceof AccessoryItem accessory2) {
-                                    boolean flag2 = accessory2.allowedInSlot(randomItemFromList, changedEntity, ChangedAccessorySlots.LEGS.get());
-                                    if (flag2) {
-                                        slots.setItem(ChangedAccessorySlots.LEGS.get(), randomItemFromList);
-                                    }
+                                boolean flag2 = ChangedAccessorySlots.LEGS.get().canHoldItem(randomItemFromList, changedEntity);
+                                if (flag2) {
+                                    slots.setItem(ChangedAccessorySlots.LEGS.get(), randomItemFromList);
                                 }
                             } // To Stop the Half Naked Entities To Spawn... if it spawns with only a shorts is less odd than only with a bra...
                         }
