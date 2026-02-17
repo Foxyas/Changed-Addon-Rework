@@ -5,7 +5,9 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -16,7 +18,6 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -66,7 +67,7 @@ public class SummonLightningGoal extends Goal {
             BlockPos random = Util.getRandom(conductiveBlocks, level.getRandom());
             lightning.moveTo(random, 0, 0);
         }
-        if(damage > 0) {
+        if (damage > 0) {
             lightning.setDamage(damage);
         } else lightning.setVisualOnly(true);
         level.addFreshEntity(lightning);
@@ -227,9 +228,16 @@ public class SummonLightningGoal extends Goal {
 
             livingEntity.push(
                     direction.x * strength,
-                    Math.max(direction.y, 0.1) * strength * 2,
+                    Math.min(Math.max(direction.y, 0.1) * strength * 2, 4f),
                     direction.z * strength
             );
+
+            if (livingEntity instanceof ServerPlayer serverPlayer) {
+                serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                        serverPlayer.getId(),
+                        serverPlayer.getDeltaMovement())
+                );
+            }
         }
     }
 

@@ -237,8 +237,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                 UniformInt.of(4, 8), //IntProvider -> damageProvider
                 1.5f,
-                120));
-
+                200));
         this.goalSelector.addGoal(10, new ThunderDiveGoal(this,
                 UniformInt.of(60, 100), //IntProvider -> cooldownProvider
                 1.5f,
@@ -251,14 +250,14 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(120, 240), //IntProvider -> cooldown,
                 UniformInt.of(2, 4), //IntProvider -> lightningCount,
-                UniformInt.of(60, 100), //IntProvider -> castDuration,
+                UniformInt.of(80, 160), //IntProvider -> castDuration,
                 UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-                UniformFloat.of(2, 8))); //FloatProvider -> damage
+                UniformFloat.of(5, 12))); //FloatProvider -> damage
 
         this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
                 UniformInt.of(75, 125), //IntProvider -> cooldown,
                 4,
-                UniformInt.of(30, 50), //IntProvider -> castDuration,
+                UniformInt.of(40, 80), //IntProvider -> castDuration,
                 8,
                 UniformFloat.of(4, 8))); //FloatProvider -> damage
 
@@ -271,7 +270,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(150, 200), //IntProvider -> cooldown,
                 UniformInt.of(3, 6), //IntProvider -> attackCount,
-                UniformInt.of(20, 40), //IntProvider -> castDuration,
+                UniformInt.of(20, 60), //IntProvider -> castDuration,
                 UniformFloat.of(6, 8))); //FloatProvider -> damage)
 
         this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));

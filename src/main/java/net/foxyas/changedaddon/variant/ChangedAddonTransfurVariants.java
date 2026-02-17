@@ -38,6 +38,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import static net.foxyas.changedaddon.variant.TransfurVariantsInfo.OCS;
+import static net.ltxprogrammer.changed.init.ChangedTransfurVariants.Gendered.registerPair;
 
 public class ChangedAddonTransfurVariants {
 
@@ -605,17 +606,17 @@ public class ChangedAddonTransfurVariants {
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
 
     public static class Gendered {
-        public static final GenderedPair<PuroKindMaleEntity, PuroKindFemaleEntity> PURO_KIND = new GenderedPair<>(PURO_KIND_MALE, PURO_KIND_FEMALE);
-        public static final GenderedPair<SnowLeopardMaleOrganicEntity, SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD = new GenderedPair<>(ORGANIC_SNOW_LEOPARD_MALE, ORGANIC_SNOW_LEOPARD_FEMALE);
-        public static final GenderedPair<LatexSnowFoxMaleEntity, LatexSnowFoxFemaleEntity> LATEX_SNOW_FOX = new GenderedPair<>(LATEX_SNOW_FOX_MALE, LATEX_SNOW_FOX_FEMALE);
-        public static final GenderedPair<Exp1MaleEntity, Exp1FemaleEntity> EXP1 = new GenderedPair<>(EXP1_MALE, EXP1_FEMALE);
-        public static final GenderedPair<Exp2MaleEntity, Exp2FemaleEntity> EXP2 = new GenderedPair<>(EXP2_MALE, EXP2_FEMALE);
-        public static final GenderedPair<LuminarcticLeopardMaleEntity, LuminarcticLeopardFemaleEntity> LUMINARCTIC_LEOPARDS = new GenderedPair<>(LUMINARCTIC_LEOPARD_MALE, LUMINARCTIC_LEOPARD_FEMALE);
-        public static final GenderedPair<LatexWhiteSnowLeopardMale, LatexWhiteSnowLeopardFemale> WHITE_SNOW_LEOPARDS = new GenderedPair<>(LATEX_WHITE_SNOW_LEOPARD_MALE, LATEX_WHITE_SNOW_LEOPARD_FEMALE);
-        public static final GenderedPair<LatexWindCatMaleEntity, LatexWindCatFemaleEntity> WIND_CATS = new GenderedPair<>(LATEX_WIND_CAT_MALE, LATEX_WIND_CAT_FEMALE);
-        public static final GenderedPair<CrystalGasCatMaleEntity, CrystalGasCatFemaleEntity> HIMALAYAN_CRYSTAL_GAS_CAT = new GenderedPair<>(HIMALAYAN_CRYSTAL_GAS_CAT_MALE, HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE);
-        public static final GenderedPair<LatexKitsuneMaleEntity, LatexKitsuneFemaleEntity> KITSUNES = new GenderedPair<>(LATEX_KITSUNE_MALE, LATEX_KITSUNE_FEMALE);
-        public static final GenderedPair<BorealisMaleEntity, BorealisFemaleEntity> BOREALIS = new GenderedPair<>(BOREALIS_MALE, BOREALIS_FEMALE);
+        public static final GenderedPair<PuroKindMaleEntity, PuroKindFemaleEntity> PURO_KIND = registerPair(PURO_KIND_MALE, PURO_KIND_FEMALE);
+        public static final GenderedPair<SnowLeopardMaleOrganicEntity, SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD = registerPair(ORGANIC_SNOW_LEOPARD_MALE, ORGANIC_SNOW_LEOPARD_FEMALE);
+        public static final GenderedPair<LatexSnowFoxMaleEntity, LatexSnowFoxFemaleEntity> LATEX_SNOW_FOX = registerPair(LATEX_SNOW_FOX_MALE, LATEX_SNOW_FOX_FEMALE);
+        public static final GenderedPair<Exp1MaleEntity, Exp1FemaleEntity> EXP1 = registerPair(EXP1_MALE, EXP1_FEMALE);
+        public static final GenderedPair<Exp2MaleEntity, Exp2FemaleEntity> EXP2 = registerPair(EXP2_MALE, EXP2_FEMALE);
+        public static final GenderedPair<LuminarcticLeopardMaleEntity, LuminarcticLeopardFemaleEntity> LUMINARCTIC_LEOPARDS = registerPair(LUMINARCTIC_LEOPARD_MALE, LUMINARCTIC_LEOPARD_FEMALE);
+        public static final GenderedPair<LatexWhiteSnowLeopardMale, LatexWhiteSnowLeopardFemale> WHITE_SNOW_LEOPARDS = registerPair(LATEX_WHITE_SNOW_LEOPARD_MALE, LATEX_WHITE_SNOW_LEOPARD_FEMALE);
+        public static final GenderedPair<LatexWindCatMaleEntity, LatexWindCatFemaleEntity> WIND_CATS = registerPair(LATEX_WIND_CAT_MALE, LATEX_WIND_CAT_FEMALE);
+        public static final GenderedPair<CrystalGasCatMaleEntity, CrystalGasCatFemaleEntity> HIMALAYAN_CRYSTAL_GAS_CAT = registerPair(HIMALAYAN_CRYSTAL_GAS_CAT_MALE, HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE);
+        public static final GenderedPair<LatexKitsuneMaleEntity, LatexKitsuneFemaleEntity> KITSUNES = registerPair(LATEX_KITSUNE_MALE, LATEX_KITSUNE_FEMALE);
+        public static final GenderedPair<BorealisMaleEntity, BorealisFemaleEntity> BOREALIS = registerPair(BOREALIS_MALE, BOREALIS_FEMALE);
     }
 
     //@Annotation: Dazed Maybe is of .faction(LatexType.WHITE_LATEX)
