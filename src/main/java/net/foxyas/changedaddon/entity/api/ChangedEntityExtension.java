@@ -3,14 +3,12 @@ package net.foxyas.changedaddon.entity.api;
 import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.clothes.DyeableClothingItem;
-import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
 import net.ltxprogrammer.changed.data.AccessorySlots;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.GenderedEntity;
-import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
@@ -19,14 +17,11 @@ import net.ltxprogrammer.changed.item.AccessoryItem;
 import net.minecraft.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -103,17 +98,15 @@ public interface ChangedEntityExtension {
                                 DyeableClothingItem.DefaultColors color = Util.getRandom(DyeableClothingItem.DefaultColors.values(), changedEntity.getRandom());
                                 dyeableClothes.setColor(stack, color.getColorToInt());
                             }
-                            boolean flag = accessoryItem.allowedInSlot(stack, changedEntity, accessorySlotType);
+                            boolean flag = accessorySlotType.canHoldItem(stack, changedEntity);
                             do stack = getRandomItemFromList(changedEntity, itemStream); while (stack.isEmpty());
                             if (flag) slots.setItem(accessorySlotType, stack);
 
                             if (accessorySlotType == ChangedAccessorySlots.BODY.get() || stack.is(ChangedItems.SPORTS_BRA.get())) {
                                 ItemStack randomItemFromList = getRandomItemFromList(changedEntity, acceptedSpawnClothes.stream().filter((item1) -> item1 instanceof AccessoryItem accessory && accessory.allowedInSlot(new ItemStack(item1), changedEntity, ChangedAccessorySlots.LEGS.get())).toList());
-                                if (randomItemFromList.getItem() instanceof AccessoryItem accessory2) {
-                                    boolean flag2 = accessory2.allowedInSlot(randomItemFromList, changedEntity, ChangedAccessorySlots.LEGS.get());
-                                    if (flag2) {
-                                        slots.setItem(ChangedAccessorySlots.LEGS.get(), randomItemFromList);
-                                    }
+                                boolean flag2 = ChangedAccessorySlots.LEGS.get().canHoldItem(randomItemFromList, changedEntity);
+                                if (flag2) {
+                                    slots.setItem(ChangedAccessorySlots.LEGS.get(), randomItemFromList);
                                 }
                             } // To Stop the Half Naked Entities To Spawn... if it spawns with only a shorts is less odd than only with a bra...
                         }
