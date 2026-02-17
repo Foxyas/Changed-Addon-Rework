@@ -417,6 +417,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addGamerule(PAINITE_GENERATION, "Painite Generation", "Activate the generation of painite ore");
         addGamerule(TICKS_TO_DARK_LATEX_MASK_TRANSFUR, "Ticks Need to dark latex mask transfur", "Set how much time in ticks the player need to hold the dark latex mask in hands to trigger it transfur damage, if is less or equal to 0 it will be considered as deactivated");
         addGamerule(CHANGED_ENTITIES_SPAWN_DRESSED, "Changed Entities Spawn Dressed", "Make Changed Entities spawn with any piece of clothes if possible");
+        addGamerule(DO_ALPHAS_SPAWN, "Do Alphas Spawn?", "Make Changed Entities has a chance to spawn as a alpha.");
 
         addGui("catalyzer.nitrogen_usage", "ProgressSpeed is %1$s per tick and use %2$s of Nitrogen Power");
         addGui("recipe_progress", "ProgressSpeed is %s per tick");

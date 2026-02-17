@@ -87,7 +87,10 @@ public interface ChangedEntityExtension {
                         List<Item> acceptedSpawnClothes = this.getAcceptedSpawnClothes(changedEntity);
                         if (acceptedSpawnClothes.isEmpty()) return;
 
-                        List<Item> itemStream = acceptedSpawnClothes.stream().filter((itemType) -> itemType instanceof AccessoryItem accessoryItem).toList();
+                        List<Item> itemStream = acceptedSpawnClothes.stream()
+                                .filter(thisItem -> thisItem instanceof AccessoryItem accessory &&
+                                        accessory.allowedInSlot(new ItemStack(thisItem), changedEntity, accessorySlotType))
+                                .toList();
 
                         ItemStack stack = getRandomItemFromList(changedEntity, itemStream);
                         if (stack.getItem() instanceof AccessoryItem accessoryItem) {
@@ -101,8 +104,12 @@ public interface ChangedEntityExtension {
 
                             if (accessorySlotType == ChangedAccessorySlots.BODY.get() || stack.is(ChangedItems.SPORTS_BRA.get())) {
                                 ItemStack randomItemFromList = getRandomItemFromList(changedEntity, acceptedSpawnClothes.stream().filter((item1) -> item1 instanceof AccessoryItem accessory && accessory.allowedInSlot(new ItemStack(item1), changedEntity, ChangedAccessorySlots.LEGS.get())).toList());
-                                boolean flag2 = accessoryItem.allowedInSlot(randomItemFromList, changedEntity, ChangedAccessorySlots.LEGS.get());
-                                if (flag2) slots.setItem(ChangedAccessorySlots.LEGS.get(), randomItemFromList);
+                                if (randomItemFromList.getItem() instanceof AccessoryItem accessory2) {
+                                    boolean flag2 = accessory2.allowedInSlot(randomItemFromList, changedEntity, ChangedAccessorySlots.LEGS.get());
+                                    if (flag2) {
+                                        slots.setItem(ChangedAccessorySlots.LEGS.get(), randomItemFromList);
+                                    }
+                                }
                             } // To Stop the Half Naked Entities To Spawn... if it spawns with only a shorts is less odd than only with a bra...
                         }
                     }
