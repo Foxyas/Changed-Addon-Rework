@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.mixins.mods.changed;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.event.TransfurVariantEvents;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -34,6 +36,15 @@ public abstract class TransfurVariantMixin {
             return event.getNewReplacement();
         }
         return original;
+    }
+
+    @WrapMethod(method = "replaceEntity(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;")
+    private IAbstractChangedEntity injectReplaceEntity(LivingEntity entity, LivingEntity cause, Operation<IAbstractChangedEntity> original) {
+        TransfurVariantEvents.KillAfterTransfurredFinalEvent event = new TransfurVariantEvents.KillAfterTransfurredFinalEvent(entity, cause);
+        if (ChangedAddonMod.postEvent(event)) {
+            return original.call(entity, event.getSource());
+        }
+        return original.call(entity, cause);
     }
 
     @ModifyReturnValue(method = "spawnAtEntity", at = @At("RETURN"))

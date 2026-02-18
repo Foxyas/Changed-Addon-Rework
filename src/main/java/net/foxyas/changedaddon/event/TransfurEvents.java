@@ -16,6 +16,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -137,6 +138,125 @@ public class TransfurEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void syncFusionFromAlphaState(TransfurVariantEvents.KillAfterTransfurredFinalEvent event) {
+        LivingEntity source = event.getSource();
+        LivingEntity targetEntity = event.getTargetEntity();
+        if (!(source instanceof IAlphaAbleEntity sourceAlpha)) {
+            return;
+        }
+
+        if (targetEntity instanceof Player player) {
+            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+                iAlphaAbleEntity.setAlpha(sourceAlpha.isAlpha());
+                iAlphaAbleEntity.setAlphaScale(sourceAlpha.alphaAdditionalScale());
+            }
+            return;
+        }
+
+        if (targetEntity instanceof IAlphaAbleEntity targetAlpha) {
+            targetAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
+            targetAlpha.setAlpha(sourceAlpha.isAlpha());
+        }
+
+    }
+
+    @SubscribeEvent
+    public static void syncFusionFromAlphaState(TransfurVariantEvents.OnPlayerFuseWithOther event) {
+        LivingEntity source = event.getSource();
+        ChangedEntity sourceChanged = event.getSourceChangedEntity();
+        LivingEntity target = event.getTarget();
+
+        if (!(sourceChanged instanceof IAlphaAbleEntity sourceAlpha)) {
+            return;
+        }
+
+        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(source));
+        if (transfurVariant == null) {
+            return;
+        }
+
+        if (!(transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity finalAlpha)) {
+            return;
+        }
+
+        // -------------------------
+        // CASO TARGET SEJA PLAYER
+        // -------------------------
+        if (target instanceof Player player) {
+            TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
+
+            if (variant != null && variant.getChangedEntity() instanceof IAlphaAbleEntity targetAlpha) {
+
+                // Se o perdedor for alpha, passa pro outro
+                if (targetAlpha.isAlpha()) {
+                    finalAlpha.setAlpha(true);
+                    finalAlpha.setAlphaScale(targetAlpha.alphaAdditionalScale());
+                }
+
+                // Se o source for alpha, passa pro target
+                if (sourceAlpha.isAlpha()) {
+                    finalAlpha.setAlpha(true);
+                    finalAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
+                }
+            }
+
+            return;
+        }
+
+        // -------------------------
+        // CASO TARGET SEJA ENTITY NORMAL
+        // -------------------------
+        if (target instanceof IAlphaAbleEntity targetAlpha) {
+
+            if (targetAlpha.isAlpha()) {
+                finalAlpha.setAlpha(true);
+                finalAlpha.setAlphaScale(targetAlpha.alphaAdditionalScale());
+            }
+
+            if (sourceAlpha.isAlpha()) {
+                finalAlpha.setAlpha(true);
+                finalAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void syncFusionFromAlphaState(TransfurVariantEvents.OnEntityFuseWithOther event) {
+        ChangedEntity sourceChanged = event.getSource();
+        LivingEntity target = event.getTarget();
+
+        if (!(sourceChanged instanceof IAlphaAbleEntity sourceAlpha)) {
+            return;
+        }
+
+        TransfurVariantInstance<?> transfurVariant = event.getOldVariantInstance();
+        if (transfurVariant == null) {
+            return;
+        }
+
+        if (!(transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity oldAlphaState)) {
+            return;
+        }
+
+        if (target instanceof Player player) {
+            TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
+
+            if (variant != null && variant.getChangedEntity() instanceof IAlphaAbleEntity targetAlpha) {
+
+                if (oldAlphaState.isAlpha()) {
+                    targetAlpha.setAlpha(true);
+                    targetAlpha.setAlphaScale(targetAlpha.alphaAdditionalScale());
+                }
+
+                if (sourceAlpha.isAlpha()) {
+                    targetAlpha.setAlpha(true);
+                    targetAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
+                }
+            }
+        }
+    }
     public static ChangedAddonVariables.PlayerVariables getPlayerVars(LivingEntity entity) {
         return entity.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonVariables.PlayerVariables());
     }

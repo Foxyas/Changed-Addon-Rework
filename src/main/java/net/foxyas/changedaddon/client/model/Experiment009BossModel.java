@@ -57,7 +57,7 @@ public class Experiment009BossModel extends AdvancedHumanoidModel<Experiment009B
                         Torso, LeftArm, RightArm,
                         Tail, List.of(tailPrimary, tailSecondary, tailTertiary, tailQuaternary),
                         LeftLeg, leftLowerLeg, leftFoot, leftFoot.getChild("LeftPad"), RightLeg, rightLowerLeg, rightFoot, rightFoot.getChild("RightPad")))
-                .addAnimator(new MagicAttackCastingAnimator<>(Head, RightArm, LeftArm, Experiment009BossEntity::isCastingAttack));
+                .addAnimator(new MagicAttackCastingAnimator<>(Head, RightArm, LeftArm, RightLeg, LeftLeg, Experiment009BossEntity::isCastingAttack));
     }
 
     public static LayerDefinition createBodyLayer() {

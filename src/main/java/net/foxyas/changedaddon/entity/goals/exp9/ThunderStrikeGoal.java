@@ -113,6 +113,7 @@ public class ThunderStrikeGoal extends Goal {
         // olha para o alvo
         pathfinderMob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         pathfinderMob.getNavigation().stop();
+        pathfinderMob.setDeltaMovement(Vec3.ZERO);
 
         if (tickCounter % 10 != 0) return;// a cada 1/2s lança um raio
 
@@ -138,10 +139,10 @@ public class ThunderStrikeGoal extends Goal {
             applyKnockBack(lightning);
             pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
             // recoil de knockback para trás
-            if (target != null) {
-                Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
-                pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
-            }
+//            if (target != null) {
+//                Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
+//                pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
+//            }
         });
         pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
     }
