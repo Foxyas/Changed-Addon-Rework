@@ -414,6 +414,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGamerule(PAINITE_GENERATION, "Painit generálása", "Aktiválja a pianitérc generálását");
         addGamerule(NEED_FULL_SOURCE_TO_SPREAD, "Latexblokkoknak teljes forrásra van szükség a terjesztéshez", "Bekapcsolt állapotban a latexblokkoknak szükség lesz egy teljes forrásra, amely hozzájuk kapcsolódik, hogy elterjedhessenek");
         addGamerule(CHANGED_ENTITIES_SPAWN_DRESSED, "Changed Entitások öltözve teremnek", "Ha lehetséges, bármilyen ruhadarabot viselve teremnek Changed entitások");
+        addGamerule(DO_ALPHAS_SPAWN, "Teremnek-e Alfák?", "Legyen lehetőség a Changed entitásoknak alfaként teremni.");
 
         addGuiO("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGuiO("recipe_progress", "A haladási sebesség %s tikkenként");
