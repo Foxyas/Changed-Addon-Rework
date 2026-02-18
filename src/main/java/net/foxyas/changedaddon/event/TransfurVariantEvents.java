@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.event;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.eventbus.api.Event;
 import org.jetbrains.annotations.Nullable;
@@ -96,6 +97,86 @@ public class TransfurVariantEvents {
         @Override
         public boolean isCancelable() {
             return true;
+        }
+    }
+
+    public static class OnPlayerFuseWithOther extends Event {
+
+        private final LivingEntity target;
+        private final LivingEntity source;
+        private final TransfurVariant<?> originalFusionVariant;
+        private final ChangedEntity sourceChangedEntity;
+
+        public OnPlayerFuseWithOther(LivingEntity target,
+                                     LivingEntity source,
+                                     ChangedEntity sourceChangedEntity,
+                                     TransfurVariant<?> originalFusionVariant
+        ) {
+            this.target = target;
+            this.source = source;
+            this.originalFusionVariant = originalFusionVariant;
+            this.sourceChangedEntity = sourceChangedEntity;
+        }
+
+        @Override
+        public boolean isCancelable() {
+            return false;
+        }
+
+        public TransfurVariant<?> getOriginalFusionVariant() {
+            return originalFusionVariant;
+        }
+
+        public LivingEntity getSource() {
+            return source;
+        }
+
+        public LivingEntity getTarget() {
+            return target;
+        }
+
+        public ChangedEntity getSourceChangedEntity() {
+            return sourceChangedEntity;
+        }
+    }
+
+    public static class OnEntityFuseWithOther extends Event {
+
+        private final LivingEntity target;
+        private final ChangedEntity source;
+        private final TransfurVariant<?> originalFusionVariant;
+        @Nullable private final TransfurVariantInstance<?> oldVariantInstance;
+
+        public OnEntityFuseWithOther(LivingEntity target,
+                                     @Nullable TransfurVariantInstance<?> oldVariantInstance,
+                                     ChangedEntity source,
+                                     TransfurVariant<?> originalFusionVariant
+        ) {
+            this.target = target;
+            this.oldVariantInstance = oldVariantInstance;
+            this.source = source;
+            this.originalFusionVariant = originalFusionVariant;
+        }
+
+        @Override
+        public boolean isCancelable() {
+            return false;
+        }
+
+        public TransfurVariant<?> getOriginalFusionVariant() {
+            return originalFusionVariant;
+        }
+
+        public ChangedEntity getSource() {
+            return source;
+        }
+
+        public LivingEntity getTarget() {
+            return target;
+        }
+
+        public @Nullable TransfurVariantInstance<?> getOldVariantInstance() {
+            return oldVariantInstance;
         }
     }
 

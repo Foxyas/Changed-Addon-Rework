@@ -25,22 +25,22 @@ import java.util.EnumSet;
 
 public class LeapDiveGoal extends Goal {
 
-    private enum Phase {ASCEND, DIVE}
+    protected enum Phase {ASCEND, DIVE}
 
-    private final PathfinderMob mob;
-    private final Vec3 followAscendMultiplier;
-    private final double ascendSpeed;     // impulso Y inicial
-    private final double ascendInitialBoost;
-    private final double ascendHoldY;     // altura alvo acima do chão antes do mergulho
-    private final Vec3 diveSpeedMultiplier; // velocidade lateral e vertical para baixo do mergulho
-    private final float ringRadius;       // raio base dos círculos de raio
-    private final int failSafeTicks;
+    protected final PathfinderMob mob;
+    protected final Vec3 followAscendMultiplier;
+    protected final double ascendSpeed;     // impulso Y inicial
+    protected final double ascendInitialBoost;
+    protected final double ascendHoldY;     // altura alvo acima do chão antes do mergulho
+    protected final Vec3 diveSpeedMultiplier; // velocidade lateral e vertical para baixo do mergulho
+    protected final float ringRadius;       // raio base dos círculos de raio
+    protected final int failSafeTicks;
     protected final IntProvider cooldownProvider;
-    private Phase phase;
-    private int ticks;
-    private BlockPos startGroundPos;
+    protected Phase phase;
+    protected int ticks;
+    protected BlockPos startGroundPos;
     public int cooldown = 0;
-    private Vec3 lateral = Vec3.ZERO;
+    protected Vec3 lateral = Vec3.ZERO;
 
     public LeapDiveGoal(PathfinderMob mob,
                         IntProvider cooldownProvider,
@@ -173,7 +173,7 @@ public class LeapDiveGoal extends Goal {
         }
     }
 
-    private boolean isHighEnough(LivingEntity t) {
+    protected boolean isHighEnough(LivingEntity t) {
         boolean highEnough = mob.getY() >= (startGroundPos.getY() + (ascendHoldY * 1.25f));
         if (t != null) {
             if (t.isFallFlying() || !t.onGround()) {
@@ -187,7 +187,7 @@ public class LeapDiveGoal extends Goal {
         return highEnough;
     }
 
-    private void affectNearbyEntities(Vec3 lateral) {
+    protected void affectNearbyEntities(Vec3 lateral) {
         for (LivingEntity livingEntity : mob.level().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(4))) {
             if (livingEntity.isFallFlying()) {
                 if (livingEntity instanceof Player player) player.stopFallFlying();

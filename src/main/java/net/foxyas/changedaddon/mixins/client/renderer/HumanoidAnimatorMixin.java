@@ -3,7 +3,9 @@ package net.foxyas.changedaddon.mixins.client.renderer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.client.model.animations.CarryAbilityAnimation;
+import net.foxyas.changedaddon.client.model.animations.MagicAttackCastingAnimator;
 import net.foxyas.changedaddon.client.model.animations.PsychicGrabAbilityAnimation;
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
@@ -32,5 +34,9 @@ public abstract class HumanoidAnimatorMixin<T extends ChangedEntity, M extends A
     private void addCustomAnimations(M constructorEntityModel, CallbackInfo ci) {
         this.addAnimator(new CarryAbilityAnimation<>(constructorEntityModel.getHead(), constructorEntityModel.getArm(HumanoidArm.LEFT), constructorEntityModel.getArm(HumanoidArm.RIGHT)));
         this.addAnimator(new PsychicGrabAbilityAnimation<>(constructorEntityModel.getHead(), constructorEntityModel.getArm(HumanoidArm.LEFT), constructorEntityModel.getArm(HumanoidArm.RIGHT)));
+        this.addAnimator(new MagicAttackCastingAnimator<>(constructorEntityModel.getHead(), constructorEntityModel.getArm(HumanoidArm.RIGHT), constructorEntityModel.getArm(HumanoidArm.LEFT), constructorEntityModel.getLeg(HumanoidArm.RIGHT), constructorEntityModel.getLeg(HumanoidArm.LEFT), (entity) -> {
+            if (!(entity instanceof Experiment009BossEntity experiment009BossEntity)) return false;
+            return experiment009BossEntity.isCastingAttack();
+        }));
     }
 }
