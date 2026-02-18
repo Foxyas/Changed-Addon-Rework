@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.goals.exp9;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
@@ -90,6 +91,9 @@ public class ThunderStrikeGoal extends Goal {
 
         // Evita que tente andar
         pathfinderMob.getNavigation().stop();
+        if (pathfinderMob instanceof Experiment009BossEntity experiment009BossEntity) {
+            experiment009BossEntity.setCastingAttack(true);
+        }
     }
 
     @Override
@@ -229,5 +233,8 @@ public class ThunderStrikeGoal extends Goal {
         this.target = null;
         this.groundPos = null;
         this.cooldown = cooldownProvider.sample(this.pathfinderMob.getRandom());
+        if (pathfinderMob instanceof Experiment009BossEntity experiment009BossEntity) {
+            experiment009BossEntity.setCastingAttack(false);
+        }
     }
 }
