@@ -285,6 +285,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         add("jei.changed_addon.keycard_color", "Kulcskártya színezet");
 
+        addJeiDescriptionsO("alpha_serum_syringe", "Befecskendezve egy transzfurált játékost alfává változtat, ha alkalmazható.");
         addJeiDescriptionsO("diffusion_syringe", "Visszatranszfurál emberi formába, miközben megidézi korábbi transzfurált formáját.");
         addJeiDescriptionsO("exp9_dna", "Egy §llétesítmény§r egy meghatározott helyiségében található, dobozokban tárolt vegyi anyagok.");
         addJeiDescriptionsO("informant_block", "Mutassa meg bármely transzfurtartó tárgy (vagy csak bármely, \"form\" nbt-vel rendelkező tárgy) transzfuráltjának statisztikáit, és lehetővé teszi a statisztikák megtekintését a felszerelésben is");
