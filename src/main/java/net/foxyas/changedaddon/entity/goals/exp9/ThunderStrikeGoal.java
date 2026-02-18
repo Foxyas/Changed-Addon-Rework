@@ -117,7 +117,9 @@ public class ThunderStrikeGoal extends Goal {
         // olha para o alvo
         pathfinderMob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         pathfinderMob.getNavigation().stop();
-        pathfinderMob.setDeltaMovement(Vec3.ZERO);
+        if (tickCounter >= 60) {
+            pathfinderMob.setDeltaMovement(Vec3.ZERO);
+        }
 
         if (tickCounter % 10 != 0) return;// a cada 1/2s lança um raio
 
