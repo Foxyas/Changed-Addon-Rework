@@ -285,6 +285,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         add("jei.changed_addon.keycard_color", "Kulcskártya színezet");
 
+        addJeiDescriptionsO("alpha_serum_syringe", "Befecskendezve egy transzfurált játékost alfává változtat, ha alkalmazható.");
         addJeiDescriptionsO("diffusion_syringe", "Visszatranszfurál emberi formába, miközben megidézi korábbi transzfurált formáját.");
         addJeiDescriptionsO("exp9_dna", "Egy §llétesítmény§r egy meghatározott helyiségében található, dobozokban tárolt vegyi anyagok.");
         addJeiDescriptionsO("informant_block", "Mutassa meg bármely transzfurtartó tárgy (vagy csak bármely, \"form\" nbt-vel rendelkező tárgy) transzfuráltjának statisztikáit, és lehetővé teszi a statisztikák megtekintését a felszerelésben is");
@@ -414,6 +415,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGamerule(PAINITE_GENERATION, "Painit generálása", "Aktiválja a pianitérc generálását");
         addGamerule(NEED_FULL_SOURCE_TO_SPREAD, "Latexblokkoknak teljes forrásra van szükség a terjesztéshez", "Bekapcsolt állapotban a latexblokkoknak szükség lesz egy teljes forrásra, amely hozzájuk kapcsolódik, hogy elterjedhessenek");
         addGamerule(CHANGED_ENTITIES_SPAWN_DRESSED, "Changed Entitások öltözve teremnek", "Ha lehetséges, bármilyen ruhadarabot viselve teremnek Changed entitások");
+        addGamerule(DO_ALPHAS_SPAWN, "Teremnek-e Alfák?", "Legyen lehetőség a Changed entitásoknak alfaként teremni.");
 
         addGuiO("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGuiO("recipe_progress", "A haladási sebesség %s tikkenként");
