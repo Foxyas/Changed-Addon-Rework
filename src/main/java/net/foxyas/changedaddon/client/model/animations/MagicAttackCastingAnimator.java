@@ -14,12 +14,16 @@ public class MagicAttackCastingAnimator<T extends ChangedEntity, M extends Advan
     protected final ModelPart head;
     protected final ModelPart rightArm;
     protected final ModelPart leftArm;
+    protected final ModelPart leftLeg;
+    protected final ModelPart rightLeg;
     private final Predicate<T> predicate;
 
-    public MagicAttackCastingAnimator(ModelPart head, ModelPart rightArm, ModelPart leftArm, Predicate<T> whenStartUsing) {
+    public MagicAttackCastingAnimator(ModelPart head, ModelPart rightArm, ModelPart leftArm, ModelPart rightLeg, ModelPart leftLeg, Predicate<T> whenStartUsing) {
         this.head = head;
         this.rightArm = rightArm;
         this.leftArm = leftArm;
+        this.rightLeg = rightLeg;
+        this.leftLeg = leftLeg;
         this.predicate = whenStartUsing;
     }
 
@@ -68,5 +72,10 @@ public class MagicAttackCastingAnimator<T extends ChangedEntity, M extends Advan
         this.leftArm.zRot = (float) Math.toRadians(45);
         this.rightArm.yRot = 0.0F;
         this.leftArm.yRot = 0.0F;
+
+        if (entity.onGround()) {
+            this.rightLeg.zRot = (float) Math.toRadians(10);
+            this.leftLeg.zRot = (float) Math.toRadians(-10);
+        }
     }
 }

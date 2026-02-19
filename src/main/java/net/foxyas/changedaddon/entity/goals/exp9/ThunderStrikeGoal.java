@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.goals.exp9;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
@@ -86,6 +87,9 @@ public class ThunderStrikeGoal extends Goal {
 
         // Evita que tente andar
         pathfinderMob.getNavigation().stop();
+        if (pathfinderMob instanceof Experiment009BossEntity experiment009BossEntity) {
+            experiment009BossEntity.setCastingAttack(true);
+        }
     }
 
     @Override
@@ -109,6 +113,9 @@ public class ThunderStrikeGoal extends Goal {
         // olha para o alvo
         pathfinderMob.getLookControl().setLookAt(target, 90f, 90f);
         pathfinderMob.getNavigation().stop();
+        if (tickCounter >= 60) {
+            pathfinderMob.setDeltaMovement(Vec3.ZERO);
+        }
 
         if (tickCounter % 10 != 0) return;// a cada 1/2s lança um raio
 
@@ -134,10 +141,10 @@ public class ThunderStrikeGoal extends Goal {
             applyKnockBack(lightning);
             pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
             // recoil de knockback para trás
-            if (target != null) {
-                Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
-                pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
-            }
+//            if (target != null) {
+//                Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
+//                pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
+//            }
         });
         pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
     }
@@ -224,5 +231,8 @@ public class ThunderStrikeGoal extends Goal {
         this.target = null;
         this.groundPos = null;
         this.cooldown = cooldownProvider.sample(this.pathfinderMob.getRandom());
+        if (pathfinderMob instanceof Experiment009BossEntity experiment009BossEntity) {
+            experiment009BossEntity.setCastingAttack(false);
+        }
     }
 }
