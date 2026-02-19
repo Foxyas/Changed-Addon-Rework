@@ -37,7 +37,7 @@ public class PsychicPulseAbility extends SimpleAbility {
                 for (Entity entityiterator : _entfound) {
                     if (entityiterator != entity) {
                         if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, ResourceLocation.parse("minecraft:impact_projectiles")))) {
-                            if (PlayerUtil.isProjectileMovingTowardsPlayer(entity, entityiterator)) {
+                            if (PlayerUtil.isProjectileMovingTowardsEntity(entity, entityiterator)) {
                                 //if(!world.isClientSide()){}
                                 Vec3 NegativeMotion = new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z())));
                                 Vec3 Motion = NegativeMotion.multiply(1.5, 1.5, 1.5);

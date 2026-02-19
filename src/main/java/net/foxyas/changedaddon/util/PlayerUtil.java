@@ -285,13 +285,19 @@ public class PlayerUtil {
         return result.getType() == HitResult.Type.MISS;
     }
 
-    public static boolean isProjectileMovingTowardsPlayer(Player player, Entity projectile) {
+    public static boolean isProjectileMovingTowardsEntity(Entity player, Entity projectile) {
         Vec3 projectilePosition = projectile.position();
         Vec3 projectileMotion = projectile.getDeltaMovement();
 
         Vec3 directionToPlayer = player.position().subtract(projectilePosition).normalize();
 
         return projectileMotion.normalize().dot(directionToPlayer) > 0;
+    }
+
+    public static boolean isMovingTowardsEntity(Vec3 objectPos, Vec3 motion, Entity player) {
+        Vec3 toPlayer = player.position().subtract(objectPos);
+
+        return motion.dot(toPlayer) > 0;
     }
 
     public static void shootDynamicLaser(ServerLevel world, Player player, int maxRange, int horizontalRadius, int verticalRadius) {

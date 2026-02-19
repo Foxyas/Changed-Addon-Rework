@@ -66,7 +66,7 @@ public class PsychicHoldAbility extends SimpleAbility {
             double distance = projectilePos.distanceTo(playerPos);
 
             if (projectile.isOnGround()) {
-                return;
+                continue;
             }
 
 
