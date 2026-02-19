@@ -2,6 +2,10 @@ package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.goals.AlphaSleepGoal;
+import net.foxyas.changedaddon.entity.goals.generic.attacks.AlphaLeapDiveGoal;
+import net.foxyas.changedaddon.entity.goals.generic.attacks.AlphaLeapDiveGoalBuilder;
+import net.foxyas.changedaddon.entity.goals.generic.attacks.LeapDiveGoal;
+import net.foxyas.changedaddon.entity.goals.generic.attacks.LeapDiveGoalBuilder;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -22,6 +26,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
 import java.util.Set;
@@ -53,8 +58,20 @@ public interface IAlphaAbleEntity {
             boolean flag = availableGoals.stream().map(WrappedGoal::getGoal).anyMatch(goal -> goal instanceof AlphaSleepGoal);
             if (flag && !isAlpha) {
                 mob.goalSelector.getAvailableGoals().stream().map(WrappedGoal::getGoal).filter(goal -> goal instanceof AlphaSleepGoal).forEach(mob.goalSelector::removeGoal);
+                mob.goalSelector.getAvailableGoals().stream().map(WrappedGoal::getGoal).filter(goal -> goal instanceof AlphaLeapDiveGoal).forEach(mob.goalSelector::removeGoal);
             } else if (!flag && isAlpha) {
                 mob.goalSelector.addGoal(10, new AlphaSleepGoal(mob, 6, (inter) -> inter >= 6, 1.5f, UniformInt.of(400, 800)));
+                mob.goalSelector.addGoal(10, new AlphaLeapDiveGoalBuilder(mob)
+                        .withCooldown(UniformInt.of(40, 80)) //IntProvider -> cooldownProvider
+                        .withFollowAscendMultiplier(new Vec3(0.25f, 0.25f, 0.25f))
+                        .withAscendInitialBoost(0.6)
+                        .withAscendSpeed(0.8f)
+                        .withAscendHoldY(2f)
+                        .withDiveSpeedMultiplier(new Vec3(1f, 1f, 1f))
+                        .withFailSafeTicks(60)
+                        .withRingRadius(4)
+                        .build()
+                );
             }
         }
 
@@ -158,7 +175,8 @@ public interface IAlphaAbleEntity {
 
             Level level = changedEntity.level;
             Difficulty difficulty = level.getDifficulty();
-            if (level.getLevelData().isHardcore()) return ChangedAddonServerConfiguration.ALPHA_SPAWN_HARDCORE.get().floatValue();
+            if (level.getLevelData().isHardcore())
+                return ChangedAddonServerConfiguration.ALPHA_SPAWN_HARDCORE.get().floatValue();
 
             return switch (difficulty) {
                 case PEACEFUL -> ChangedAddonServerConfiguration.ALPHA_SPAWN_PEACEFUL.get().floatValue();

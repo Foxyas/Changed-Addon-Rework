@@ -181,9 +181,12 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     @Override
-    public double getMeleeAttackRangeSqr(LivingEntity target) {
+    public double getMeleeAttackRangeSqr(@NotNull LivingEntity target) {
         if (target.getEyeY() > this.getEyeY() + 1) {
             return super.getMeleeAttackRangeSqr(target) * 1.5D;
+        }
+        if (target instanceof Player player && player.getAttackRange() > 3) {
+            return super.getMeleeAttackRangeSqr(target) * 2D;
         }
         return super.getMeleeAttackRangeSqr(target);
     }
