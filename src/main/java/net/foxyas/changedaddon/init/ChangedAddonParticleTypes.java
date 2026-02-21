@@ -36,6 +36,8 @@ public class ChangedAddonParticleTypes {
     public static final RegistryObject<ParticleType<SignalParticleOption>> SIGNAL_PARTICLE = register("signal_particle", SignalParticleOption.DESERIALIZER, SignalParticleOption::codec);
     public static final RegistryObject<ParticleType<LaserPointParticle.Option>> LASER_POINT = register("laser_point", LaserPointParticle.Option.DESERIALIZER, LaserPointParticle.Option::codec);
 
+    public static final RegistryObject<ParticleType<EntityModelFadeParticleOptions>> ENTITY_MODEL_FADE = register("entity_model_fade", EntityModelFadeParticleOptions.DESERIALIZER, EntityModelFadeParticleOptions::codec);
+
     public static final RegistryObject<ParticleType<RibbonParticleOptions>> RIBBON = register("ribbon", RibbonParticleOptions.DESERIALIZER, RibbonParticleOptions::codec);
     public static final RegistryObject<ParticleType<AgeableRibbonParticleOptions>> AGEABLE_RIBBON = register("ageable_ribbon", AgeableRibbonParticleOptions.DESERIALIZER, AgeableRibbonParticleOptions::codec);
     public static final RegistryObject<ParticleType<MultiColorRibbonParticleOptions>> MULTICOLOR_RIBBON = register("multicolor_ribbon", MultiColorRibbonParticleOptions.DESERIALIZER, MultiColorRibbonParticleOptions::codec);
@@ -60,7 +62,8 @@ public class ChangedAddonParticleTypes {
         });
     }
 
-    @SubscribeEvent @OnlyIn(Dist.CLIENT)
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public static void registerParticles(ParticleFactoryRegisterEvent event) {
         ParticleEngine engine = Minecraft.getInstance().particleEngine;
 
@@ -69,6 +72,7 @@ public class ChangedAddonParticleTypes {
         engine.register(SIGNAL_PARTICLE.get(), SignalParticle.Provider::new);
         engine.register(SOLVENT_PARTICLE.get(), SolventParticleParticle::provider);
 
+        engine.register(ENTITY_MODEL_FADE.get(), new EntityModelFadeParticle.Provider());
         engine.register(RIBBON.get(), new RibbonParticle.Provider());
         engine.register(AGEABLE_RIBBON.get(), new AgeableRibbonParticle.Provider());
         engine.register(MULTICOLOR_RIBBON.get(), new MultiColorRibbonParticle.Provider());

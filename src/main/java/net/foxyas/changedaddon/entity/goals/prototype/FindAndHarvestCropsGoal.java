@@ -177,7 +177,7 @@ public class FindAndHarvestCropsGoal extends Goal {
             Block.popResource(level, targetCropPos, stack);
         }
 
-        // Replant at age 0
+        // Replant at fadeSpeed 0
         level.setBlock(targetCropPos, ((CropBlock)state.getBlock()).getStateForAge(0), 3);
         level.levelEvent(null, 2001, targetCropPos, Block.getId(state));//Particles
         level.playSound(null, targetCropPos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1, 1);
