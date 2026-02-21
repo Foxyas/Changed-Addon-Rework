@@ -149,14 +149,14 @@ public class EntityModelFadeParticle extends Particle {
         //model.prepareMobModel(livingEntity, limbSwing, limbSwingAmount, partialTick);
         //model.setupAnim(livingEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-        for (ModelPart modelPart : modelParts) {
-            modelPart.loadPose(poses.get(modelPart));
-        }
 
         int blockLight = livingEntity.level.getBrightness(LightLayer.BLOCK, livingEntity.blockPosition());
         int skyLight = livingEntity.level.getBrightness(LightLayer.SKY, livingEntity.blockPosition());
         int Light = LightTexture.pack(blockLight, skyLight);
 
+        for (ModelPart modelPart : modelParts) {
+            modelPart.loadPose(poses.get(modelPart));
+        }
         model.renderToBuffer(poseStack, buffer, Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
         if (livingEntityRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
@@ -166,6 +166,7 @@ public class EntityModelFadeParticle extends Particle {
                 }
             }
         }
+        modelParts.forEach(ModelPart::resetPose);
 
         poseStack.popPose();
         bufferSource.endBatch();
