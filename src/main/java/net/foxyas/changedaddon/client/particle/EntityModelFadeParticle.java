@@ -6,12 +6,9 @@ import com.mojang.math.Axis;
 import net.foxyas.changedaddon.client.model.api.IPublicRootModel;
 import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
 import net.foxyas.changedaddon.mixins.client.renderer.LivingEntityRendererAccessor;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -28,17 +25,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 public class EntityModelFadeParticle extends Particle {
 
@@ -81,7 +75,7 @@ public class EntityModelFadeParticle extends Particle {
 
     @Override
     public void render(@NotNull VertexConsumer consumer, @NotNull Camera camera, float partialTick) {
-        Color fadeColor = new Color(color, false);
+        Color fadeColor = new Color(color);
 
         Minecraft mc = Minecraft.getInstance();
         MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
@@ -138,7 +132,6 @@ public class EntityModelFadeParticle extends Particle {
         }
 
 
-
         // Rotação do corpo (igual renderer normal)
         poseStack.mulPose(Axis.YP.rotationDegrees(-frozenModelRot));
 
@@ -159,12 +152,17 @@ public class EntityModelFadeParticle extends Particle {
         for (ModelPart modelPart : modelParts) {
             modelPart.loadPose(poses.get(modelPart));
         }
-        model.renderToBuffer(poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, fadeColor.getRed(), fadeColor.getGreen(), fadeColor.getBlue(), this.alpha);
+
+        int blockLight = livingEntity.level.getBrightness(LightLayer.BLOCK, livingEntity.blockPosition());
+        int skyLight = livingEntity.level.getBrightness(LightLayer.SKY, livingEntity.blockPosition());
+        int Light = LightTexture.pack(blockLight, skyLight);
+
+        model.renderToBuffer(poseStack, buffer, Light, OverlayTexture.NO_OVERLAY, fadeColor.getRed() / 255f, fadeColor.getGreen() / 255f, fadeColor.getBlue() / 255f, this.alpha);
         if (livingEntityRenderer instanceof LivingEntityRendererAccessor livingEntityRendererAccessor) {
             List<RenderLayer<LivingEntity, EntityModel<LivingEntity>>> layers = livingEntityRendererAccessor.getLayers();
             if (layers != null && !layers.isEmpty()) {
                 for (RenderLayer<LivingEntity, EntityModel<LivingEntity>> layer : layers) {
-                    layer.render(poseStack, bufferSource, LightTexture.FULL_BRIGHT, livingEntity, limbSwing, limbSwingAmount, partialTick, ageInTicks, netHeadYaw, headPitch);
+                    layer.render(poseStack, bufferSource, Light, livingEntity, limbSwing, limbSwingAmount, partialTick, ageInTicks, netHeadYaw, headPitch);
                 }
             }
         }
