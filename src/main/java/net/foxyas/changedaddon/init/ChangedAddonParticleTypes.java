@@ -35,6 +35,8 @@ public class ChangedAddonParticleTypes {
     public static final RegistryObject<ParticleType<SignalParticleOption>> SIGNAL_PARTICLE = register("signal_particle", SignalParticleOption.DESERIALIZER, SignalParticleOption::codec);
     public static final RegistryObject<ParticleType<LaserPointParticle.Option>> LASER_POINT = register("laser_point", LaserPointParticle.Option.DESERIALIZER, LaserPointParticle.Option::codec);
 
+    public static final RegistryObject<ParticleType<EntityModelFadeParticleOptions>> ENTITY_MODEL_FADE = register("entity_model_fade", EntityModelFadeParticleOptions.DESERIALIZER, EntityModelFadeParticleOptions::codec);
+
     public static final RegistryObject<ParticleType<RibbonParticleOption>> RIBBON = register("ribbon", RibbonParticleOption.DESERIALIZER, RibbonParticleOption::codec);
     public static final RegistryObject<ParticleType<AgeableRibbonParticleOption>> AGEABLE_RIBBON = register("ageable_ribbon", AgeableRibbonParticleOption.DESERIALIZER, AgeableRibbonParticleOption::codec);
     public static final RegistryObject<ParticleType<MultiColorRibbonParticleOption>> MULTI_COLOR_RIBBON = register("multi_color_ribbon", MultiColorRibbonParticleOption.DESERIALIZER, MultiColorRibbonParticleOption::codec);
@@ -83,6 +85,8 @@ public class ChangedAddonParticleTypes {
         event.registerSpriteSet(LASER_POINT.get(), LaserPointParticle.Provider::new);
         event.registerSpriteSet(SOLVENT_PARTICLE.get(), SolventParticleParticle::provider);
         event.registerSpriteSet(SIGNAL_PARTICLE.get(), SignalParticle.Provider::new);
+
+        event.registerSpecial(ENTITY_MODEL_FADE.get(), new EntityModelFadeParticle.Provider());
 
         event.registerSpecial(RIBBON.get(), new RibbonParticle.Provider());
         event.registerSpecial(AGEABLE_RIBBON.get(), new AgeableRibbonParticle.Provider());

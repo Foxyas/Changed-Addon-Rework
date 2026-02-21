@@ -78,6 +78,7 @@
   "client": [
     "MinecraftMixin",
     "client.DeathScreenMixin",
+    "client.HumanoidModelMixin",
     "client.MouseHandlerAccessor",
     "client.PlayerModelMixin",
     "client.PlayerRendererMixin",
