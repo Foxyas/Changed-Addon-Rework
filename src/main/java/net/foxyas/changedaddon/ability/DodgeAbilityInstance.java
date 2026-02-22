@@ -252,7 +252,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
                         ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
                 //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
             }
-            this.trailTicks = 20;
+            this.trailTicks = 1;
         }
     }
 
