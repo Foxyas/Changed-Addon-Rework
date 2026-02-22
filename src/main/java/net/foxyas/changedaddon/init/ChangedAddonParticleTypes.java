@@ -70,6 +70,10 @@ public class ChangedAddonParticleTypes {
         return new MultiColorRibbonParticleOption(target, array, segments, length, sizeY, rotationRad);
     }
 
+    public static EntityModelFadeParticleOptions entityModelFade(Entity target, int color, float duration) {
+        return new EntityModelFadeParticleOptions(target.getId(), color, duration);
+    }
+
     private static <T extends ParticleOptions> RegistryObject<ParticleType<T>> register(String name, ParticleOptions.Deserializer<T> dec, final Function<ParticleType<T>, Codec<T>> fn) {
         return REGISTRY.register(name, () -> new ParticleType<>(false, dec) {
             public @NotNull Codec<T> codec() {

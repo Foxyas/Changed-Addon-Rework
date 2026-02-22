@@ -155,6 +155,22 @@ public class ParticlesUtil {
         }
     }
 
+    public static void sendParticles(Level level, ParticleOptions particleOptions, Vec3 entity, Vec3 motionOrDelta, int count, float speed) {
+        float XV = (float) motionOrDelta.x(), YV = (float) motionOrDelta.y(), ZV = (float) motionOrDelta.z();
+        // Enviar as partículas
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(particleOptions,
+                    entity.x(),
+                    entity.y(),
+                    entity.z(),
+                    count,
+                    XV,
+                    YV,
+                    ZV,
+                    speed);
+        }
+    }
+
     public static void sendParticles(Level level, ParticleOptions particleOptions, Entity entity, float XV, float YV, float ZV, int count, float speed) {
         // Enviar as partículas
         if (level instanceof ServerLevel serverLevel) {

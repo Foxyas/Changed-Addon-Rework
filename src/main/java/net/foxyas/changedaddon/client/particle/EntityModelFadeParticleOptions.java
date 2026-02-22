@@ -5,38 +5,36 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
-import net.ltxprogrammer.changed.util.UniversalDist;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
-public record EntityModelFadeParticleOptions(Entity target, int color, float fadeSpeed) implements ParticleOptions {
+public record EntityModelFadeParticleOptions(int targetId, int color, float duration) implements ParticleOptions {
 
     public static final Deserializer<EntityModelFadeParticleOptions> DESERIALIZER = new Deserializer() {
         @Override
         public ParticleOptions fromCommand(@NotNull ParticleType pParticleType, @NotNull StringReader reader) throws CommandSyntaxException {
             reader.expect(' ');
-            Entity entity = UniversalDist.getLevel().getEntity(reader.readInt());
+            int targetInt = reader.readInt();
             reader.expect(' ');
             int color = reader.readInt();
             reader.expect(' ');
             float fadeSpeed = reader.readFloat();
-            return new EntityModelFadeParticleOptions(entity, color, fadeSpeed);
+            return new EntityModelFadeParticleOptions(targetInt, color, fadeSpeed);
         }
 
         @Override
         public ParticleOptions fromNetwork(@NotNull ParticleType pParticleType, @NotNull FriendlyByteBuf buf) {
-            return new EntityModelFadeParticleOptions(UniversalDist.getLevel().getEntity(buf.readVarInt()), buf.readInt(), buf.readInt());
+            return new EntityModelFadeParticleOptions(buf.readInt(), buf.readInt(), buf.readInt());
         }
     };
 
     public static final Codec<EntityModelFadeParticleOptions> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
-                    Codec.INT.fieldOf("target").xmap(i -> UniversalDist.getLevel().getEntity(i), Entity::getId).forGetter(EntityModelFadeParticleOptions::target),
+                    Codec.INT.fieldOf("target").forGetter(EntityModelFadeParticleOptions::targetId),
                     Codec.INT.fieldOf("color").forGetter(EntityModelFadeParticleOptions::color),
-                    Codec.FLOAT.fieldOf("fadeSpeed").forGetter(EntityModelFadeParticleOptions::fadeSpeed)
+                    Codec.FLOAT.fieldOf("duration").forGetter(EntityModelFadeParticleOptions::duration)
             ).apply(instance, EntityModelFadeParticleOptions::new));
 
     public static Codec<EntityModelFadeParticleOptions> codec(ParticleType<EntityModelFadeParticleOptions> type) {
@@ -50,9 +48,9 @@ public record EntityModelFadeParticleOptions(Entity target, int color, float fad
 
     @Override
     public void writeToNetwork(@NotNull FriendlyByteBuf buf) {
-        buf.writeVarInt(target.getId());
+        buf.writeInt(targetId);
         buf.writeInt(color);
-        buf.writeFloat(fadeSpeed);
+        buf.writeFloat(duration);
     }
 
     @Override

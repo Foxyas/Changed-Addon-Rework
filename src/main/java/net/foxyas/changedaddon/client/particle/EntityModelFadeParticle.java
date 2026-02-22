@@ -61,12 +61,12 @@ public class EntityModelFadeParticle extends Particle {
             double x, double y, double z,
             Entity entity,
             int color,
-            float fadeSpeed) {
+            float duration) {
         super(level, x, y, z);
         this.entity = entity;
         this.color = color;
 
-        this.lifetime = (int) (20 * fadeSpeed);
+        this.lifetime = (int) (20 * duration);
         this.gravity = 0f;
     }
 
@@ -299,7 +299,7 @@ public class EntityModelFadeParticle extends Particle {
                 double x, double y, double z,
                 double xs, double ys, double zs
         ) {
-            EntityModelFadeParticle entityModelFadeParticle = new EntityModelFadeParticle(level, x, y, z, options.target(), options.color(), options.fadeSpeed());
+            EntityModelFadeParticle entityModelFadeParticle = new EntityModelFadeParticle(level, x, y, z, level.getEntity(options.targetId()), options.color(), options.duration());
             entityModelFadeParticle.setParticleSpeed(xs, ys, zs);
             return entityModelFadeParticle;
         }
