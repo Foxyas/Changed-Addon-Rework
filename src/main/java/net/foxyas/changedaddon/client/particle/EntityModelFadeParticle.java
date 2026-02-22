@@ -14,14 +14,12 @@ import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -41,7 +39,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class EntityModelFadeParticle extends Particle {
 
@@ -64,12 +61,12 @@ public class EntityModelFadeParticle extends Particle {
             double x, double y, double z,
             Entity entity,
             int color,
-            float fadeSpeed) {
+            float duration) {
         super(level, x, y, z);
         this.entity = entity;
         this.color = color;
 
-        this.lifetime = (int) (20 * fadeSpeed);
+        this.lifetime = (int) (20 * duration);
         this.gravity = 0f;
     }
 
@@ -307,7 +304,7 @@ public class EntityModelFadeParticle extends Particle {
                 double x, double y, double z,
                 double xs, double ys, double zs
         ) {
-            EntityModelFadeParticle entityModelFadeParticle = new EntityModelFadeParticle(level, x, y, z, options.target(), options.color(), options.fadeSpeed());
+            EntityModelFadeParticle entityModelFadeParticle = new EntityModelFadeParticle(level, x, y, z, level.getEntity(options.targetId()), options.color(), options.duration());
             entityModelFadeParticle.setParticleSpeed(xs, ys, zs);
             return entityModelFadeParticle;
         }

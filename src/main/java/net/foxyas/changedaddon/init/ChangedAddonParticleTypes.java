@@ -11,6 +11,7 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -22,6 +23,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.function.Function;
 
 
@@ -52,6 +54,27 @@ public class ChangedAddonParticleTypes {
 
     public static SignalParticleOption signal(int strength, ItemStack blockingAgeItem) {
         return new SignalParticleOption(SIGNAL_PARTICLE.get(), strength, blockingAgeItem);
+    }
+
+    public static RibbonParticleOptions ribbon(Entity target, int color, int segments, float length, float sizeY, float rotationRad) {
+        return new RibbonParticleOptions(target, color, segments, length, sizeY, rotationRad);
+    }
+
+    public static RibbonParticleOptions ribbonWithOffset(Entity target, Vec3 positionOffset, int color, int segments, float length, float sizeY, float rotationRad) {
+        return new RibbonParticleOptions(target, color, segments, length, sizeY, rotationRad);
+    }
+
+    public static AgeableRibbonParticleOptions ageableRibbon(Entity target, int color, int segments, float length, float sizeY, float rotationRad, int maxAge) {
+        return new AgeableRibbonParticleOptions(target, color, segments, length, sizeY, rotationRad, maxAge);
+    }
+
+    public static MultiColorRibbonParticleOptions multiColorRibbon(Entity target, Color[] colors, int segments, float length, float sizeY, float rotationRad) {
+        int[] array = Arrays.stream(colors).mapToInt(Color::getRGB).toArray();
+        return new MultiColorRibbonParticleOptions(target, array, segments, length, sizeY, rotationRad);
+    }
+
+    public static EntityModelFadeParticleOptions entityModelFade(Entity target, int color, float duration) {
+        return new EntityModelFadeParticleOptions(target.getId(), color, duration);
     }
 
     private static <T extends ParticleOptions> RegistryObject<ParticleType<T>> register(String name, ParticleOptions.Deserializer<T> dec, final Function<ParticleType<T>, Codec<T>> fn) {

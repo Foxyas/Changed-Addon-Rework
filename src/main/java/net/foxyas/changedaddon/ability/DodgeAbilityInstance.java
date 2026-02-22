@@ -3,7 +3,10 @@ package net.foxyas.changedaddon.ability;
 import com.mojang.math.Vector3f;
 import net.foxyas.changedaddon.ability.handle.CounterDodgeType;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
+import net.foxyas.changedaddon.client.particle.EntityModelFadeParticleOptions;
 import net.foxyas.changedaddon.init.ChangedAddonAnimationEvents;
+import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
+import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -25,14 +28,18 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
+
 public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     public static final int INF_DODGE_TICKS = -5;
+    public static final Color FADE_COLOR = new Color(96, 96, 96);
     private final int defaultRegenCooldown = 20;
     public boolean ultraInstinct = false; //FUNNY VARIABLE :3
     public DodgeType dodgeType = DodgeType.WEAVE;
@@ -42,6 +49,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     private int dodgeRegenCooldown = defaultRegenCooldown;
     public int projectilesImmuneTicks = 0;
     public int canDodgeTicks = 0;
+    public int trailTicks;
 
     public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
@@ -236,6 +244,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
                         ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
                 //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
             }
+            this.trailTicks = 20;
         }
     }
 
@@ -446,6 +455,24 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void tickIdle() {
         super.tickIdle();
+
+        if (entity.getLevel() instanceof ServerLevel level) {
+            if (trailTicks > 0) {
+                Vec3 particlePos = entity.getEntity().position().add(0, 1.425f, 0);
+                EntityModelFadeParticleOptions particleOption = ChangedAddonParticleTypes.entityModelFade(entity.getEntity(), FADE_COLOR.getRGB(), 0.25f);
+                Vec3 motionOrDelta = new Vec3(0, 1, 0);
+                ParticlesUtil.sendParticles(level, particleOption, particlePos, motionOrDelta, 0, 0.02f);
+
+
+                /*for (ServerPlayer serverPlayer : level.players()) {
+                    if (level.sendParticles(serverPlayer, particleOption, true, particlePos.x, particlePos.y, particlePos.z, 0, 0f, 1, 0, 0.02f)) {
+                    }
+                }
+                ParticlesUtil.sendParticles(level, ChangedAddonParticleTypes.entityModelFade(dodger, color.getRGB(), 2.5f), dodger.position().add(0, 1.425f, 0), 0, 1f, 0, 0, 0.02f);*/
+                trailTicks--;
+            }
+        }
+
         if (ultraInstinct) {
             this.setDodgeActivate(true);
         }
