@@ -35,7 +35,6 @@ public abstract class AbstractBasicOrganicChangedLeopardEntity extends AbstractS
     }
 
 
-
     public static LootTable.@NotNull Builder getLoot() {
         return LootTable.lootTable();
     }

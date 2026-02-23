@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.entity.defaults;
 
-import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LookAndFollowTradingPlayerSink;
 import net.foxyas.changedaddon.entity.ai.goals.generic.TradeWithPlayerGoal;
+import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

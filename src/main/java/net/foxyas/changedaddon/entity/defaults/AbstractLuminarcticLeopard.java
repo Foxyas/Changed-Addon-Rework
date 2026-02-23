@@ -82,7 +82,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public int SuperAbilitiesTicksCooldown = 0;
     public int PassivesTicksCooldown = 0;
     public int DashingTicks = 0;
-    public DodgeAbilityInstance dodgeAbilityInstance = null;;
+    public DodgeAbilityInstance dodgeAbilityInstance = null;
     private boolean Aggro = false;
     private boolean attributesApplied = false;
 
@@ -91,14 +91,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         super(p_19870_, p_19871_);
         this.setAttributes(this.getAttributes());
         this.dodgeAbilityInstance = this.registerAbility((this::canDodge), new DodgeAbilityInstance(ChangedAddonAbilities.DODGE.get(), IAbstractChangedEntity.forEntity(this)));
-    }
-
-    @Override
-    protected void setAttributes(AttributeMap attributes) {
-        super.setAttributes(attributes);
-        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(15);
-        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.35F);
-        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5);
     }
 
     public static <T extends AbstractLuminarcticLeopard> boolean canSpawnNear(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
@@ -139,6 +131,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
 
     public static LootTable.@NotNull Builder getLoot() {
         return LootTable.lootTable();
+    }
+
+    @Override
+    protected void setAttributes(AttributeMap attributes) {
+        super.setAttributes(attributes);
+        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(15);
+        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.35F);
+        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5);
     }
 
     public boolean canDodge(DodgeAbilityInstance abilityInstance) {
@@ -362,7 +362,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         tag.putBoolean("isBoss", this.isBoss());
         //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
-
 
 
     public void handleBoss() {

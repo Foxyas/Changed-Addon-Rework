@@ -1,10 +1,13 @@
 package net.foxyas.changedaddon.client.gui;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.util.Pair;
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.menu.TamedLatexMenu;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.util.SingleRunnable;
 import net.minecraft.client.Minecraft;
@@ -36,8 +39,17 @@ public class TamedLatexScreen extends AbstractRadialScreen<TamedLatexMenu> {
 
     protected final ImmutableList<Interaction> availableInteractions;
 
+    public static ColorScheme getColors(@Nullable TransfurVariant<?> variant) {
+        if (variant == null) {
+            return new ColorScheme(Color3.WHITE, Color3.GRAY);
+        } else {
+            Pair<Color3, Color3> colors = variant.getColors();
+            return new ColorScheme(colors.getFirst(), colors.getSecond());
+        }
+    }
+
     public TamedLatexScreen(TamedLatexMenu menu, Inventory inventory, Component text) {
-        super(menu, inventory, text, Color3.DARK, Color3.WHITE, menu.tamedLatex);
+        super(menu, inventory, text, getColors(menu.tamedLatex.getSelfVariant()).setForegroundToBright().background(), getColors(menu.tamedLatex.getSelfVariant()).setForegroundToBright().foreground(), menu.tamedLatex);
         var interactionsBuilder = ImmutableList.<Interaction>builder();
         interactionsBuilder.add(new Interaction("view_inventory",
                 () -> List.of(Component.translatable("changed.tamed_dark_latex.title.view_inventory")),

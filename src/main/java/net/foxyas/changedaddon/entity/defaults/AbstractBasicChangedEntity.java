@@ -29,7 +29,6 @@ public abstract class AbstractBasicChangedEntity extends ChangedEntity {
     }
 
 
-
     public static LootTable.@NotNull Builder getLoot() {
         return LootTable.lootTable();
     }

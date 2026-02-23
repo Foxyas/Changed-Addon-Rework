@@ -33,7 +33,6 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
     }
 
 
-
     public static LootTable.@NotNull Builder getLoot() {
         return LootTable.lootTable();
     }

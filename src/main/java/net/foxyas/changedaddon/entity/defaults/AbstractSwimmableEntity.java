@@ -143,9 +143,7 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
             return true;
         if (target.isInWater())
             return true;
-        if (target.isPassenger() && target.getVehicle().isInWater())
-            return true;
-        return false;
+        return target.isPassenger() && target.getVehicle().isInWater();
     }
 
     public boolean wantsToSurface() {
@@ -197,11 +195,11 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
 
     static class GoToWaterGoal extends Goal {
         private final AbstractSwimmableEntity mob;
+        private final double speedModifier;
+        private final Level level;
         private double wantedX;
         private double wantedY;
         private double wantedZ;
-        private final double speedModifier;
-        private final Level level;
 
         public GoToWaterGoal(AbstractSwimmableEntity entity, double speed) {
             this.mob = entity;
@@ -259,11 +257,11 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
 
     static class SinkFromSurfaceGoal extends Goal {
         private final AbstractSwimmableEntity mob;
+        private final double speedModifier;
+        private final Level level;
         private double wantedX;
         private double wantedY;
         private double wantedZ;
-        private final double speedModifier;
-        private final Level level;
 
         public SinkFromSurfaceGoal(AbstractSwimmableEntity entity, double speed) {
             this.mob = entity;
@@ -321,11 +319,11 @@ public abstract class AbstractSwimmableEntity extends ChangedEntity {
 
     static class RiseToSurfaceGoal extends Goal {
         private final AbstractSwimmableEntity mob;
+        private final double speedModifier;
+        private final Level level;
         private double wantedX;
         private double wantedY;
         private double wantedZ;
-        private final double speedModifier;
-        private final Level level;
 
         public RiseToSurfaceGoal(AbstractSwimmableEntity entity, double speed) {
             this.mob = entity;

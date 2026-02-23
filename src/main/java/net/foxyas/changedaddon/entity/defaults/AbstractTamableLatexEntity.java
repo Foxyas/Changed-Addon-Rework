@@ -172,9 +172,18 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
         }
     }
 
+    public boolean hasFavorSystem() {
+        return false;
+    }
+
     protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
+
+        if (hasFavorSystem()) {
+            return super.mobInteract(player, hand);
+        }
+
         if (this.level.isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;

@@ -18,16 +18,16 @@ import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
-import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -53,24 +53,23 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
 public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamableLatexEntity implements TamableLatexEntity {
-    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.BYTE);
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.OPTIONAL_UUID);
+    public static final int OWNER_HOSTILE_DURATION_TICKS = 600;
+    //protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.BYTE);
+    //protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final EntityDataAccessor<LatexTargetType> DATA_TARGET_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_TARGET_TYPE);
     protected static final EntityDataAccessor<LatexAttackType> DATA_ATTACK_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_TYPE);
     protected static final EntityDataAccessor<LatexAttackCondition> DATA_ATTACK_CONDITION_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_CONDITION);
     protected static final EntityDataAccessor<LatexFavor> DATA_FAVOR_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_FAVOR);
     protected @Nullable LatexInventory inventory; // Inventory doesn't exist until DL is tamed
     protected @Nullable GrabEntityAbilityInstance grabEntityAbilityInstance; // Grab doesn't exist until DL is tamed
-
-    public static final int OWNER_HOSTILE_DURATION_TICKS = 600;
 
     public AbstractCanTameChangedEntityFavors(EntityType<? extends ChangedEntity> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
@@ -102,7 +101,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     @Override
-    public ItemStack getItemInHand(InteractionHand hand) {
+    public @NotNull ItemStack getItemInHand(@NotNull InteractionHand hand) {
         if (inventory == null)
             return super.getItemInHand(hand);
         if (hand == InteractionHand.OFF_HAND)
@@ -113,7 +112,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     @Override
-    public ItemStack getItemBySlot(EquipmentSlot slot) {
+    public @NotNull ItemStack getItemBySlot(@NotNull EquipmentSlot slot) {
         if (inventory == null)
             return super.getItemBySlot(slot);
         switch (slot.getType()) {
@@ -157,13 +156,13 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
                 }
 
                 if (list != null && !list.isEmpty())
-                    ((ServerLevel)this.level()).getChunkSource().broadcast(this, new ClientboundSetEquipmentPacket(this.getId(), list));
+                    ((ServerLevel) this.level()).getChunkSource().broadcast(this, new ClientboundSetEquipmentPacket(this.getId(), list));
             }
         }
     }
 
     @Override
-    public SlotAccess getSlot(int slotIndex) {
+    public @NotNull SlotAccess getSlot(int slotIndex) {
         if (this.inventory == null)
             return super.getSlot(slotIndex);
         else {
@@ -190,8 +189,8 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_FLAGS_ID, (byte)0);
-        this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
+        //this.entityData.define(DATA_FLAGS_ID, (byte)0);
+        //this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
         this.entityData.define(DATA_TARGET_TYPE_ID, LatexTargetType.TRANSFURABLE_ENTITIES);
         this.entityData.define(DATA_ATTACK_TYPE_ID, LatexAttackType.TRY_TRANSFUR);
         this.entityData.define(DATA_ATTACK_CONDITION_ID, LatexAttackCondition.ALWAYS);
@@ -199,7 +198,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     @Override
-    public void onSyncedDataUpdated(EntityDataAccessor<?> accessor) {
+    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> accessor) {
         super.onSyncedDataUpdated(accessor);
         if (DATA_OWNERUUID_ID.equals(accessor)) {
             if (this.inventory == null)
@@ -289,7 +288,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
                         .and(target -> owner.tickCount - owner.getLastHurtMobTimestamp() < OWNER_HOSTILE_DURATION_TICKS);
             };
         }
-        
+
         if (!this.isMaskless()) {// Check if masked DL can see entity
             if (livingEntity.distanceToSqr(this) <= 1.0)
                 return superPredicate.test(livingEntity);
@@ -311,16 +310,32 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         return this.entityData.get(DATA_OWNERUUID_ID).orElse(null);
     }
 
+    public void setOwnerUUID(@Nullable UUID uuid) {
+        super.setOwnerUUID(uuid);
+    }
+
     public LatexTargetType getTargetType() {
         return this.entityData.get(DATA_TARGET_TYPE_ID);
+    }
+
+    public void setTargetType(LatexTargetType value) {
+        this.entityData.set(DATA_TARGET_TYPE_ID, value);
     }
 
     public LatexAttackType getAttackType() {
         return this.entityData.get(DATA_ATTACK_TYPE_ID);
     }
 
+    public void setAttackType(LatexAttackType value) {
+        this.entityData.set(DATA_ATTACK_TYPE_ID, value);
+    }
+
     public LatexAttackCondition getAttackCondition() {
         return this.entityData.get(DATA_ATTACK_CONDITION_ID);
+    }
+
+    public void setAttackCondition(LatexAttackCondition value) {
+        this.entityData.set(DATA_ATTACK_CONDITION_ID, value);
     }
 
     public LatexFavor getCurrentFavor() {
@@ -328,18 +343,6 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         if (!canDoFavor(favor))
             favor = LatexFavor.NONE;
         return favor;
-    }
-
-    public void setTargetType(LatexTargetType value) {
-        this.entityData.set(DATA_TARGET_TYPE_ID, value);
-    }
-
-    public void setAttackType(LatexAttackType value) {
-        this.entityData.set(DATA_ATTACK_TYPE_ID, value);
-    }
-
-    public void setAttackCondition(LatexAttackCondition value) {
-        this.entityData.set(DATA_ATTACK_CONDITION_ID, value);
     }
 
     public void setFavor(LatexFavor value) {
@@ -372,7 +375,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
             particleoptions = ParticleTypes.SMOKE;
         }
 
-        for(int i = 0; i < 7; ++i) {
+        for (int i = 0; i < 7; ++i) {
             double d0 = this.random.nextGaussian() * 0.02D;
             double d1 = this.random.nextGaussian() * 0.02D;
             double d2 = this.random.nextGaussian() * 0.02D;
@@ -406,10 +409,6 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         } catch (IllegalArgumentException illegalargumentexception) {
             return null;
         }
-    }
-
-    public void setOwnerUUID(@Nullable UUID uuid) {
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
     }
 
     // Prevents the DL from switching items while the player is interacting with them
@@ -450,7 +449,12 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     @Override
-    protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public boolean hasFavorSystem() {
+        return true;
+    }
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
         if (this.level().isClientSide) {
@@ -461,7 +465,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
                 if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
                     itemstack.shrink(1);
                     this.heal(2.0F);
-                    this.level().broadcastEntityEvent(this, (byte)7); // Spawn hearts
+                    this.level().broadcastEntityEvent(this, (byte) 7); // Spawn hearts
                     return InteractionResult.SUCCESS;
                 } else {
                     InteractionResult interactionresult = super.mobInteract(player, hand);
@@ -474,7 +478,41 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
             }
         }
 
-        return super.mobInteract(player, hand);
+        return tryTame(player, hand, this.getUnderlyingPlayer());
+    }
+
+    public InteractionResult tryTame(Player player, InteractionHand hand, Player Host) {
+        ItemStack itemstack = player.getItemInHand(hand);
+
+        if (this.level.isClientSide) {
+            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        } else {
+            if (!this.isTame() && this.isTameItem(itemstack)) {
+                if (!player.getAbilities().instabuild) {
+                    itemstack.shrink(1);
+                }
+                boolean isTransfured = ProcessTransfur.isPlayerTransfurred(player);
+
+                if (!isTransfured && this.random.nextInt(2) == 0) { // One in 2 chance
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
+                } else if (isTransfured && this.random.nextInt(12) == 0) { //One in 12
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
+                } else {
+                    this.level.broadcastEntityEvent(this, (byte) 6);
+                }
+
+                return InteractionResult.SUCCESS;
+            }
+
+            return super.mobInteract(player, hand);
+        }
     }
 
     @Override
@@ -486,9 +524,9 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     public void setFollowOwner(boolean value) {
         byte b0 = this.entityData.get(DATA_FLAGS_ID);
         if (value) {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 | 1));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 | 1));
         } else {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 & -2));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 & -2));
         }
 
     }
@@ -514,15 +552,15 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     public boolean isTame() {
-        return (this.entityData.get(DATA_FLAGS_ID) & 4) != 0;
+        return super.isTame();
     }
 
     public void setTame(boolean tame) {
         byte b0 = this.entityData.get(DATA_FLAGS_ID);
         if (tame) {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 | 4));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 | 4));
         } else {
-            this.entityData.set(DATA_FLAGS_ID, (byte)(b0 & -5));
+            this.entityData.set(DATA_FLAGS_ID, (byte) (b0 & -5));
         }
 
         this.reassessTameGoals();
@@ -533,13 +571,14 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     protected void reassessTameGoals() {
+        super.reassessTameGoals();
     }
 
     public boolean isOwnedBy(LivingEntity entity) {
         return entity == this.getOwner();
     }
 
-    public boolean canAttack(LivingEntity entity) {
+    public boolean canAttack(@NotNull LivingEntity entity) {
         return !this.isOwnedBy(entity) && super.canAttack(entity);
     }
 
@@ -554,7 +593,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         return super.getTeam();
     }
 
-    public boolean isAlliedTo(Entity entity) {
+    public boolean isAlliedTo(@NotNull Entity entity) {
         if (this.isTame()) {
             LivingEntity livingentity = this.getOwner();
             if (entity == livingentity) {
@@ -569,9 +608,9 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         return super.isAlliedTo(entity);
     }
 
-    public void die(DamageSource source) {
+    public void die(@NotNull DamageSource source) {
         // FORGE: Super moved to top so that death message would be cancelled properly
-        net.minecraft.network.chat.Component deathMessage = this.getCombatTracker().getDeathMessage();
+        Component deathMessage = this.getCombatTracker().getDeathMessage();
         super.die(source);
 
         if (this.dead)
@@ -592,7 +631,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     @Override
-    public void setItemSlot(EquipmentSlot equipmentSlot, ItemStack itemStack) {
+    public void setItemSlot(@NotNull EquipmentSlot equipmentSlot, @NotNull ItemStack itemStack) {
         if (inventory == null || equipmentSlot.isArmor())
             super.setItemSlot(equipmentSlot, itemStack);
         else {
@@ -604,7 +643,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     @Override
-    protected void pickUpItem(ItemEntity itemEntity) {
+    protected void pickUpItem(@NotNull ItemEntity itemEntity) {
         if (inventory == null)
             super.pickUpItem(itemEntity);
         else {
@@ -646,7 +685,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
     }
 
     protected boolean isTameItem(ItemStack stack) {
-        return stack.is(ChangedItems.WHITE_LATEX_GOO.get()) || stack.is(ChangedItems.ORANGE.get());
+        return super.isTameItem(stack);
     }
 
     @Override

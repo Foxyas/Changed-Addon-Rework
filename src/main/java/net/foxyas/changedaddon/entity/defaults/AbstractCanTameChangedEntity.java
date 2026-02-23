@@ -2,10 +2,11 @@ package net.foxyas.changedaddon.entity.defaults;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
-import net.ltxprogrammer.changed.entity.ai.*;
+import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
+import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
+import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
-import net.ltxprogrammer.changed.network.syncher.ChangedEntityDataSerializers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;

@@ -320,11 +320,11 @@ public abstract class AbstractSemiAquaticEntity extends ChangedEntity {
 
     public static class RiseToSurfaceGoal extends Goal {
         private final AbstractSemiAquaticEntity mob;
+        private final double speedModifier;
+        private final Level level;
         private double wantedX;
         private double wantedY;
         private double wantedZ;
-        private final double speedModifier;
-        private final Level level;
 
         public RiseToSurfaceGoal(AbstractSemiAquaticEntity entity, double speed) {
             this.mob = entity;
