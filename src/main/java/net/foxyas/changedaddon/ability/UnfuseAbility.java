@@ -38,19 +38,17 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
         super(Instance::new);
     }
 
-    public static Optional<Integer> getColor(AbstractAbilityInstance abilityInstance, int layer) {
+    public static Optional<Integer> getColor(Instance abilityInstance, int layer) {
         AbstractRadialScreen.ColorScheme scheme = AbilityColors.getAbilityColors(abilityInstance);
-        if (abilityInstance instanceof SimpleAbilityInstance Instance) {
-            float chargePercent = Instance.getController().chargePercent();
-            if (chargePercent < 0.25f && layer == 0) {
-                return Optional.of(scheme.foreground().toInt());
-            } else if (chargePercent >= 0.25f && chargePercent < 0.50F && layer == 1) {
-                return Optional.of(scheme.foreground().toInt());
-            } else if (chargePercent >= 0.50F && chargePercent < 0.85f && layer == 2) {
-                return Optional.of(scheme.foreground().toInt());
-            } else if (chargePercent >= 0.85F && layer == 3) {
-                return Optional.of(scheme.foreground().toInt());
-            }
+        float chargePercent = abilityInstance.getController().chargePercent();
+        if (chargePercent < 0.25f && layer == 0) {
+            return Optional.of(scheme.foreground().toInt());
+        } else if (chargePercent >= 0.25f && chargePercent < 0.50F && layer == 1) {
+            return Optional.of(scheme.foreground().toInt());
+        } else if (chargePercent >= 0.50F && chargePercent < 0.85f && layer == 2) {
+            return Optional.of(scheme.foreground().toInt());
+        } else if (chargePercent >= 0.85F && layer == 3) {
+            return Optional.of(scheme.foreground().toInt());
         }
         return Optional.empty();
     }
