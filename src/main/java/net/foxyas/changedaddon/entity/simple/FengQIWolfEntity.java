@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -15,6 +16,8 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
@@ -28,7 +31,7 @@ import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class FengQIWolfEntity extends ChangedEntity implements GenderedEntity, PowderSnowWalkable {
+public class FengQIWolfEntity extends AbstractCanTameChangedEntityFavors implements GenderedEntity, PowderSnowWalkable {
 
     public FengQIWolfEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.FENGQI_WOLF.get(), world);
@@ -139,5 +142,10 @@ public class FengQIWolfEntity extends ChangedEntity implements GenderedEntity, P
         this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#e24340"));
         return retval;
 
+    }
+
+    @Override
+    protected boolean isTameItem(ItemStack stack) {
+        return stack.is(Items.GLOW_BERRIES) || stack.is(Items.SWEET_BERRIES);
     }
 }

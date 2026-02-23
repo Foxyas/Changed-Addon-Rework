@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.menu.*;
+import net.ltxprogrammer.changed.world.inventory.TamedDarkLatexInventoryMenu;
+import net.ltxprogrammer.changed.world.inventory.TamedDarkLatexMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -24,6 +26,8 @@ public class ChangedAddonMenus {
     public static final RegistryObject<MenuType<PrototypeMenu>> PROTOTYPE_MENU = register("prototype_menu", PrototypeMenu::new);
     public static final RegistryObject<MenuType<CustomMerchantMenu>> MERCHANT_MENU = register("merchant_menu", CustomMerchantMenu::new);
     public static final RegistryObject<MenuType<TimedKeypadTimerMenu>> TIMED_KEYPAD_TIMER = register("timed_keypad_timer", TimedKeypadTimerMenu::new);
+    public static final RegistryObject<MenuType<TamedLatexMenu>> TAMED_LATEX = register("tamed_dark_latex", TamedLatexMenu::new);
+    public static final RegistryObject<MenuType<TamedLatexInventoryMenu>> TAMED_LATEX_INVENTORY = register("tamed_dark_latex_inventory", TamedLatexInventoryMenu::new);
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String path, IContainerFactory<T> containerFactory) {
