@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins.entity;
 
-import net.foxyas.changedaddon.entity.goals.simple.FollowAndLookAtLaser;
+import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Cat;

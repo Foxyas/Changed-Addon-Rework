@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
-import net.foxyas.changedaddon.entity.goals.AlphaSleepGoal;
-import net.foxyas.changedaddon.entity.goals.generic.attacks.AlphaLeapDiveGoal;
-import net.foxyas.changedaddon.entity.goals.generic.attacks.AlphaLeapDiveGoalBuilder;
+import net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.AlphaLeapDiveGoalBuilder;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

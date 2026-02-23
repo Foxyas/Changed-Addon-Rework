@@ -1,10 +1,9 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
-import net.foxyas.changedaddon.entity.goals.abilities.MayCauseGrabDamageGoal;
-import net.foxyas.changedaddon.entity.goals.abilities.MayDropGrabbedEntityGoal;
-import net.foxyas.changedaddon.entity.goals.abilities.MayGrabTargetGoal;
+import net.foxyas.changedaddon.entity.ai.goals.abilities.MayCauseGrabDamageGoal;
+import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoal;
+import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;

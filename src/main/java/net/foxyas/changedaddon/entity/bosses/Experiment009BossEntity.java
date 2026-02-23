@@ -1,14 +1,14 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
-import net.foxyas.changedaddon.entity.goals.exp9.*;
-import net.foxyas.changedaddon.entity.goals.generic.BreakBlocksAroundGoal;
-import net.foxyas.changedaddon.entity.goals.generic.LatexPullEntityGoal;
-import net.foxyas.changedaddon.entity.goals.generic.attacks.SimpleAntiFlyingAttack;
+import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.util.FoxyasUtils;

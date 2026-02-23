@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
-import net.foxyas.changedaddon.entity.goals.exp9.*;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.*;

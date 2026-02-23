@@ -5,7 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
 import net.foxyas.changedaddon.command.*;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.goals.AlphaSleepGoal;
+import net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal;
 import net.foxyas.changedaddon.init.ChangedAddonAttributes;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
@@ -59,7 +59,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-import static net.foxyas.changedaddon.entity.goals.AlphaSleepGoal.hasValidAlphaSleepGoal;
+import static net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal.hasValidAlphaSleepGoal;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
 public class CommonEvent {
