@@ -60,7 +60,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamableLatexEntity implements TamableLatexEntity {
+public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamableLatexEntity {
     public static final int OWNER_HOSTILE_DURATION_TICKS = 600;
     //protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.BYTE);
     //protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.OPTIONAL_UUID);
