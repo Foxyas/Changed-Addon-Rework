@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
+import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -91,19 +92,23 @@ public class TransfurEvents {
         ChangedEntity changedEntity = event.getChangedEntity();
         IAbstractChangedEntity source = event.getSource();
 
-        if (!source.wantAbsorption()) return;
-
         if (source.getChangedEntity() instanceof DarkLatexYufengQueenEntity latexYufengQueenEntity) {
-            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getSelfVariant();
+            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getTransfurVariantFor(event.getTransfurType());
             if (original != selfVariant) {
                 event.setVariant(selfVariant);
             }
         } else if (changedEntity instanceof DarkLatexYufengQueenEntity latexYufengQueenEntity) {
-            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getSelfVariant();
+            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getTransfurVariantFor(event.getTransfurType());
             if (original != selfVariant) {
                 event.setVariant(selfVariant);
             }
         }
+//        else if (changedEntity instanceof VariantExtraStats variantExtraStats) {
+//            TransfurVariant<?> selfVariant = variantExtraStats.getTransfurVariantFor(event.getTransfurType());
+//            if (original != selfVariant) {
+//                event.setVariant(selfVariant);
+//            }
+//        }
     }
 
     @SubscribeEvent

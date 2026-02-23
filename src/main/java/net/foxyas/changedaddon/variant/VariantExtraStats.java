@@ -1,8 +1,10 @@
 package net.foxyas.changedaddon.variant;
 
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
+import net.foxyas.changedaddon.event.TransfurVariantEvents;
 import net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure.DietType;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.nbt.CompoundTag;
 
 import java.util.List;
@@ -23,6 +25,14 @@ public interface VariantExtraStats {
 
     default float getFlySpeed() {
         return 0;
+    }
+
+    default TransfurVariant<?> getTransfurVariantFor(TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType transfurType) {
+        if (this instanceof ChangedEntity changedEntity) {
+            return changedEntity.getTransfurVariant();
+        }
+
+        return null;
     }
 
     default FlyType getFlyType() {
