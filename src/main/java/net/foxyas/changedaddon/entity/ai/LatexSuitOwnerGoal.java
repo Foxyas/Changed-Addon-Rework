@@ -1,7 +1,9 @@
 package net.foxyas.changedaddon.entity.ai;
 
+import net.foxyas.changedaddon.entity.ai.LatexFavor;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.ltxprogrammer.changed.Changed;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -11,24 +13,26 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraftforge.network.PacketDistributor;
 
 public class LatexSuitOwnerGoal extends MeleeAttackGoal {
-    protected final AbstractCanTameChangedEntityFavors entity;
+    protected final ChangedEntity entity;
+    private final TamableLatexEntityFavors iEntity;
 
-    public LatexSuitOwnerGoal(AbstractCanTameChangedEntityFavors entity, double speedModifier, boolean visualPersistence) {
-        super(entity, speedModifier, visualPersistence);
+    public LatexSuitOwnerGoal(TamableLatexEntityFavors latexEntityFavors, double speedModifier, boolean visualPersistence) {
+        super(latexEntityFavors.getSelf(), speedModifier, visualPersistence);
 
-        this.entity = entity;
+        this.entity = latexEntityFavors.getSelf();
+        this.iEntity = latexEntityFavors;
     }
 
     @Override
     protected void checkAndPerformAttack(LivingEntity target, double distanceSquared) {
-        var ability = entity.getGrabAbility();
+        var ability = iEntity.getGrabAbility();
         if (ability == null) {
             entity.setTarget(null);
-            entity.setFavor(LatexFavor.NONE);
+            iEntity.setFavor(LatexFavor.NONE);
             return;
         }
 
-        if (target == entity.getOwner()) {
+        if (target == iEntity.getOwner()) {
             double reachSqr = this.getAttackReachSqr(target) * 0.9;
 
             if (distanceSquared <= reachSqr && this.getTicksUntilNextAttack() <= 0) {
@@ -49,13 +53,13 @@ public class LatexSuitOwnerGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canUse() {
-        if (this.entity.getCurrentFavor() != LatexFavor.SUIT_OWNER)
+        if (this.iEntity.getCurrentFavor() != LatexFavor.SUIT_OWNER)
             return false;
-        var owner = this.entity.getOwner();
+        var owner = this.iEntity.getOwner();
         if (owner == null)
             return false;
 
-        var ability = entity.getGrabAbility();
+        var ability = iEntity.getGrabAbility();
         if (ability == null || ability.grabbedEntity == owner)
             return false;
 
@@ -68,13 +72,13 @@ public class LatexSuitOwnerGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canContinueToUse() {
-        if (this.entity.getCurrentFavor() != LatexFavor.SUIT_OWNER)
+        if (this.iEntity.getCurrentFavor() != LatexFavor.SUIT_OWNER)
             return false;
-        var owner = this.entity.getOwner();
+        var owner = this.iEntity.getOwner();
         if (owner == null)
             return false;
 
-        var ability = entity.getGrabAbility();
+        var ability = iEntity.getGrabAbility();
         if (ability == null || ability.grabbedEntity == owner)
             return false;
 

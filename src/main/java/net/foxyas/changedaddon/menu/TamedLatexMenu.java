@@ -1,11 +1,9 @@
 package net.foxyas.changedaddon.menu;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonMenus;
-import net.ltxprogrammer.changed.init.ChangedMenus;
-import net.ltxprogrammer.changed.world.inventory.TamedDarkLatexInventoryMenu;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.world.inventory.UpdateableMenu;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -20,12 +18,14 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class TamedLatexMenu extends AbstractContainerMenu implements UpdateableMenu {
-    public AbstractCanTameChangedEntityFavors tamedLatex;
+    public TamableLatexEntityFavors iTamedLatex;
+    public ChangedEntity tamedLatex;
     public final Player player;
 
-    public TamedLatexMenu(int id, Inventory inventory, AbstractCanTameChangedEntityFavors tamedLatex) {
+    public TamedLatexMenu(int id, Inventory inventory, TamableLatexEntityFavors tamedLatex) {
         super(ChangedAddonMenus.TAMED_LATEX.get(), id);
-        this.tamedLatex = tamedLatex;
+        this.tamedLatex = tamedLatex.getSelf();
+        this.iTamedLatex = tamedLatex;
         this.player = inventory.player;
     }
 
@@ -36,7 +36,8 @@ public class TamedLatexMenu extends AbstractContainerMenu implements UpdateableM
         if (extraData == null)
             return;
 
-        this.tamedLatex = (AbstractCanTameChangedEntityFavors) inv.player.level().getEntity(extraData.readInt());
+        this.tamedLatex = (ChangedEntity) inv.player.level().getEntity(extraData.readInt());
+        this.iTamedLatex = tamedLatex instanceof TamableLatexEntityFavors tamableLatexEntityFavors ? tamableLatexEntityFavors : null;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class TamedLatexMenu extends AbstractContainerMenu implements UpdateableM
     public boolean stillValid(Player viewer) {
         if (this.tamedLatex.isRemoved()) {
             return false;
-        } else if (this.tamedLatex.getOwner() != viewer) {
+        } else if (this.iTamedLatex.getOwner() != viewer) {
             return false;
         } else {
             return !(viewer.distanceToSqr(this.tamedLatex) > 64.0D);
@@ -67,43 +68,43 @@ public class TamedLatexMenu extends AbstractContainerMenu implements UpdateableM
 
     @Override
     public void update(CompoundTag payload, LogicalSide receiver, @Nullable ServerPlayer origin) {
-        if (receiver == LogicalSide.SERVER && origin == this.tamedLatex.getOwner()) {
+        if (receiver == LogicalSide.SERVER && origin == this.iTamedLatex.getOwner()) {
             switch (payload.getString("command")) {
                 case "view_inventory" -> {
                     NetworkHooks.openScreen((ServerPlayer) this.player, new SimpleMenuProvider(
-                            (id, inv, viewer) -> new TamedLatexInventoryMenu(id, this.player, this.tamedLatex),
+                            (id, inv, viewer) -> new TamedLatexInventoryMenu(id, this.player, this.iTamedLatex),
                             this.tamedLatex.getDisplayName()
                     ), extraData -> {
                         extraData.writeInt(this.tamedLatex.getId());
                     });
                 }
                 case "cycle_follow" -> {
-                    this.tamedLatex.setFollowOwner(!this.tamedLatex.isFollowingOwner());
+                    this.iTamedLatex.setFollowOwner(!this.iTamedLatex.isFollowingOwner());
                     this.tamedLatex.setJumping(false);
                     this.tamedLatex.getNavigation().stop();
                 }
                 case "cycle_target_type" -> {
-                    this.tamedLatex.setTargetType(this.tamedLatex.getTargetType().cycle());
+                    this.iTamedLatex.setTargetType(this.iTamedLatex.getTargetType().cycle());
                     this.tamedLatex.setTarget(null);
                 }
                 case "cycle_attack_type" -> {
-                    this.tamedLatex.setAttackType(this.tamedLatex.getAttackType().cycle());
-                    this.tamedLatex.updateHeldItemChoice();
+                    this.iTamedLatex.setAttackType(this.iTamedLatex.getAttackType().cycle());
+                    this.iTamedLatex.updateHeldItemChoice();
                 }
                 case "cycle_attack_condition" -> {
-                    this.tamedLatex.setAttackCondition(this.tamedLatex.getAttackCondition().cycle());
+                    this.iTamedLatex.setAttackCondition(this.iTamedLatex.getAttackCondition().cycle());
                     this.tamedLatex.setTarget(null);
                 }
                 case "favor_fishing" -> {
-                    this.tamedLatex.setFavor(this.tamedLatex.getCurrentFavor() != LatexFavor.FISHING ?
+                    this.iTamedLatex.setFavor(this.iTamedLatex.getCurrentFavor() != LatexFavor.FISHING ?
                             LatexFavor.FISHING : LatexFavor.NONE);
                 }
                 case "favor_caving" -> {
-                    this.tamedLatex.setFavor(this.tamedLatex.getCurrentFavor() != LatexFavor.CAVING ?
+                    this.iTamedLatex.setFavor(this.iTamedLatex.getCurrentFavor() != LatexFavor.CAVING ?
                             LatexFavor.CAVING : LatexFavor.NONE);
                 }
                 case "favor_suit_owner" -> {
-                    this.tamedLatex.setFavor(this.tamedLatex.getCurrentFavor() != LatexFavor.SUIT_OWNER ?
+                    this.iTamedLatex.setFavor(this.iTamedLatex.getCurrentFavor() != LatexFavor.SUIT_OWNER ?
                             LatexFavor.SUIT_OWNER : LatexFavor.NONE);
                 }
             }

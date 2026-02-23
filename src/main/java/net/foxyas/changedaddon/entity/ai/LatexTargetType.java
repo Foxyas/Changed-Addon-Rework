@@ -6,7 +6,7 @@
 package net.foxyas.changedaddon.entity.ai;
 
 import com.mojang.serialization.DataResult;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.init.ChangedTags.EntityTypes;
@@ -20,11 +20,11 @@ import java.util.Arrays;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
-public enum LatexTargetType implements BiPredicate<AbstractCanTameChangedEntityFavors, LivingEntity>, StringRepresentable {
+public enum LatexTargetType implements BiPredicate<TamableLatexEntityFavors, LivingEntity>, StringRepresentable {
     TRANSFURABLE_ENTITIES("transfurable_entities", (self, target) -> {
         if (target != self.getOwner() && self.getOwner() != null) {
             LatexType targetLatexType = LatexType.getEntityLatexType(target);
-            if (targetLatexType != null && self.getLatexType().isHostileTo(targetLatexType)) {
+            if (targetLatexType != null && self.getSelf().getLatexType().isHostileTo(targetLatexType)) {
                 return true;
             } else {
                 return target.getType().is(EntityTypes.HUMANOIDS) || target instanceof ChangedEntity;
@@ -36,7 +36,7 @@ public enum LatexTargetType implements BiPredicate<AbstractCanTameChangedEntityF
     MONSTERS("monsters", (self, target) -> {
         if (target != self.getOwner() && self.getOwner() != null) {
             LatexType targetLatexType = LatexType.getEntityLatexType(target);
-            if (targetLatexType != null && self.getLatexType().isHostileTo(LatexType.getEntityLatexType(target))) {
+            if (targetLatexType != null && self.getSelf().getLatexType().isHostileTo(LatexType.getEntityLatexType(target))) {
                 return true;
             } else {
                 return target.getType().getCategory() == MobCategory.MONSTER;
@@ -59,18 +59,18 @@ public enum LatexTargetType implements BiPredicate<AbstractCanTameChangedEntityF
     });
 
     private final String serializedName;
-    private final BiPredicate<AbstractCanTameChangedEntityFavors, LivingEntity> predicate;
+    private final BiPredicate<TamableLatexEntityFavors, LivingEntity> predicate;
 
-    private LatexTargetType(String serializedName, BiPredicate<AbstractCanTameChangedEntityFavors, LivingEntity> predicate) {
+    private LatexTargetType(String serializedName, BiPredicate<TamableLatexEntityFavors, LivingEntity> predicate) {
         this.serializedName = serializedName;
         this.predicate = predicate;
     }
 
-    public boolean test(AbstractCanTameChangedEntityFavors self, LivingEntity possibleTarget) {
+    public boolean test(TamableLatexEntityFavors self, LivingEntity possibleTarget) {
         return this.predicate.test(self, possibleTarget);
     }
 
-    public Predicate<LivingEntity> forEntity(AbstractCanTameChangedEntityFavors self) {
+    public Predicate<LivingEntity> forEntity(TamableLatexEntityFavors self) {
         return (target) -> this.test(self, target);
     }
 

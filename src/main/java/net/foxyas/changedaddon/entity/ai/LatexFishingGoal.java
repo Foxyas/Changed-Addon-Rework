@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.entity.ai;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.foxyas.changedaddon.entity.ai.LatexFavor;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.LevelUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,7 +12,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -32,13 +33,15 @@ public class LatexFishingGoal extends MoveToBlockGoal {
     private static final int WATER_CHECK_SEARCH_VERTICAL = 4;
     private static final int TIME_LIMIT_TO_PATHFIND = 5 * 20;
 
-    public final AbstractCanTameChangedEntityFavors entity;
+    public final TamableLatexEntityFavors iEntity;
+    public final ChangedEntity entity;
     public final Level level;
     private BlockPos targetWaterSurface = BlockPos.ZERO;
 
-    public LatexFishingGoal(AbstractCanTameChangedEntityFavors entity, double speedModifier, int searchRange, int verticalSearchRange) {
-        super(entity, speedModifier, searchRange, verticalSearchRange);
-        this.entity = entity;
+    public LatexFishingGoal(TamableLatexEntityFavors latexEntityFavors, double speedModifier, int searchRange, int verticalSearchRange) {
+        super(latexEntityFavors.getSelf(), speedModifier, searchRange, verticalSearchRange);
+        this.iEntity = latexEntityFavors;
+        this.entity = latexEntityFavors.getSelf();
         this.level = entity.level();
     }
 
@@ -55,10 +58,10 @@ public class LatexFishingGoal extends MoveToBlockGoal {
     public boolean canUse() {
         if (entity.getTarget() != null)
             return false;
-        var inventory = entity.getInventory();
+        var inventory = iEntity.getInventory();
         if (inventory == null)
             return false;
-        if (entity.getCurrentFavor() != LatexFavor.FISHING)
+        if (iEntity.getCurrentFavor() != LatexFavor.FISHING)
             return false;
         if (!entity.getMainHandItem().is(Tags.Items.TOOLS_FISHING_RODS))
             return false;
@@ -70,7 +73,7 @@ public class LatexFishingGoal extends MoveToBlockGoal {
     public boolean canContinueToUse() {
         if (entity.getTarget() != null)
             return false;
-        if (entity.getCurrentFavor() != LatexFavor.FISHING)
+        if (iEntity.getCurrentFavor() != LatexFavor.FISHING)
             return false;
         if (!entity.getMainHandItem().is(Tags.Items.TOOLS_FISHING_RODS))
             return false;
@@ -88,10 +91,10 @@ public class LatexFishingGoal extends MoveToBlockGoal {
         BlockPos blockpos = this.blockPos;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-        for(int y = 0; y <= WATER_CHECK_SEARCH_VERTICAL; y = y > 0 ? -y : 1 - y) {
-            for(int r = 0; r < WATER_CHECK_SEARCH_HORIZONTAL; ++r) {
-                for(int x = 0; x <= r; x = x > 0 ? -x : 1 - x) {
-                    for(int z = x < r && x > -r ? r : 0; z <= r; z = z > 0 ? -z : 1 - z) {
+        for (int y = 0; y <= WATER_CHECK_SEARCH_VERTICAL; y = y > 0 ? -y : 1 - y) {
+            for (int r = 0; r < WATER_CHECK_SEARCH_HORIZONTAL; ++r) {
+                for (int x = 0; x <= r; x = x > 0 ? -x : 1 - x) {
+                    for (int z = x < r && x > -r ? r : 0; z <= r; z = z > 0 ? -z : 1 - z) {
                         blockpos$mutableblockpos.setWithOffset(blockpos, x, y - 1, z);
                         if (this.mob.isWithinRestriction(blockpos$mutableblockpos) && this.isValidWaterSurface(this.mob.level(), blockpos$mutableblockpos)) {
                             this.targetWaterSurface = blockpos$mutableblockpos;
@@ -181,7 +184,7 @@ public class LatexFishingGoal extends MoveToBlockGoal {
 
     protected void startFishing() {
         entity.swing(InteractionHand.MAIN_HAND);
-        level.playSound((Player)null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+        level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         this.idleDuration = 0;
         this.hookOutDuration = 1;
     }
@@ -189,19 +192,19 @@ public class LatexFishingGoal extends MoveToBlockGoal {
     protected void retrieveCast() {
         entity.swing(InteractionHand.MAIN_HAND);
         ItemStack itemstack = entity.getItemInHand(InteractionHand.MAIN_HAND);
-        level.playSound((Player)null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+        level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         this.idleDuration = 3 * 20;
         this.hookOutDuration = 0;
 
         int luck = EnchantmentHelper.getFishingLuckBonus(itemstack);
-        LootParams lootparams = (new LootParams.Builder((ServerLevel)this.level))
+        LootParams lootparams = (new LootParams.Builder((ServerLevel) this.level))
                 .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(targetWaterSurface))
                 .withParameter(LootContextParams.TOOL, itemstack)
                 .withParameter(LootContextParams.KILLER_ENTITY, entity)
                 .withLuck(luck).create(LootContextParamSets.FISHING);
         LootTable loottable = this.level.getServer().getLootData().getLootTable(BuiltInLootTables.FISHING);
         loottable.getRandomItems(lootparams).forEach(caughtItem -> {
-            entity.getInventory().placeItemBackInInventory(caughtItem);
+            iEntity.getInventory().placeItemBackInInventory(caughtItem);
         });
         itemstack.hurtAndBreak(1, entity, (handlerEntity) -> {
             handlerEntity.broadcastBreakEvent(InteractionHand.MAIN_HAND);
@@ -211,7 +214,7 @@ public class LatexFishingGoal extends MoveToBlockGoal {
     protected void cancelCast() {
         entity.swing(InteractionHand.MAIN_HAND);
         ItemStack itemstack = entity.getItemInHand(InteractionHand.MAIN_HAND);
-        level.playSound((Player)null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+        level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         itemstack.hurtAndBreak(1, entity, (handlerEntity) -> {
             handlerEntity.broadcastBreakEvent(InteractionHand.MAIN_HAND);
         });

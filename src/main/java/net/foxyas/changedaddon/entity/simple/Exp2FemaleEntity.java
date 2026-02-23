@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -32,7 +33,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntity {
+public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntityFavors {
 
     private static final List<SoundEvent> sounds = List.of(SoundEvents.CAT_AMBIENT, SoundEvents.CAT_PURR, SoundEvents.CAT_PURREOW);
 

@@ -1,8 +1,9 @@
 package net.foxyas.changedaddon.entity.ai;
 
 import com.google.common.collect.ImmutableList;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
@@ -40,12 +41,12 @@ public class LatexInventory implements Container, Nameable {
     public final NonNullList<ItemStack> offhand = NonNullList.withSize(1, ItemStack.EMPTY);
     private final List<NonNullList<ItemStack>> compartments;
     public int selected;
-    public final AbstractCanTameChangedEntityFavors entity;
+    public final ChangedEntity entity;
     public final IAbstractChangedEntity entityWrapper;
     private int timesChanged;
 
-    public LatexInventory(AbstractCanTameChangedEntityFavors entity) {
-        this.entity = entity;
+    public LatexInventory(TamableLatexEntityFavors latexEntityFavors) {
+        this.entity = latexEntityFavors.getSelf();
         this.entityWrapper = IAbstractChangedEntity.forEntity(entity);
         if (entity.getArmorSlots() instanceof NonNullList<ItemStack> armorSlots)
             this.armor = armorSlots;

@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.entity.ai;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.foxyas.changedaddon.entity.ai.LatexFavor;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -18,12 +20,14 @@ import net.minecraftforge.common.Tags;
 public class LatexCaveTorchingGoal extends MoveToBlockGoal {
     private static final int TIME_LIMIT_TO_PATHFIND = 5 * 20;
 
-    public final AbstractCanTameChangedEntityFavors entity;
+    public final ChangedEntity entity;
     public final Level level;
+    private final TamableLatexEntityFavors iEntity;
 
-    public LatexCaveTorchingGoal(AbstractCanTameChangedEntityFavors entity, double speedModifier, int searchRange, int verticalSearchRange) {
-        super(entity, speedModifier, searchRange, verticalSearchRange);
-        this.entity = entity;
+    public LatexCaveTorchingGoal(TamableLatexEntityFavors tamableLatexEntityFavors, double speedModifier, int searchRange, int verticalSearchRange) {
+        super(tamableLatexEntityFavors.getSelf(), speedModifier, searchRange, verticalSearchRange);
+        this.iEntity = tamableLatexEntityFavors;
+        this.entity = tamableLatexEntityFavors.getSelf();
         this.level = entity.level();
     }
 
@@ -40,10 +44,10 @@ public class LatexCaveTorchingGoal extends MoveToBlockGoal {
     public boolean canUse() {
         if (entity.getTarget() != null)
             return false;
-        var inventory = entity.getInventory();
+        var inventory = iEntity.getInventory();
         if (inventory == null)
             return false;
-        if (entity.getCurrentFavor() != LatexFavor.CAVING)
+        if (iEntity.getCurrentFavor() != LatexFavor.CAVING)
             return false;
         if (!entity.getOffhandItem().is(Items.TORCH))
             return false;
@@ -55,7 +59,7 @@ public class LatexCaveTorchingGoal extends MoveToBlockGoal {
     public boolean canContinueToUse() {
         if (entity.getTarget() != null)
             return false;
-        if (entity.getCurrentFavor() != LatexFavor.CAVING)
+        if (iEntity.getCurrentFavor() != LatexFavor.CAVING)
             return false;
         if (!entity.getOffhandItem().is(Items.TORCH))
             return false;

@@ -57,41 +57,41 @@ public class TamedLatexScreen extends AbstractRadialScreen<TamedLatexMenu> {
         ));
         interactionsBuilder.add(new Interaction("cycle_follow",
                 () -> List.of(Component.translatable("changed.tamed_dark_latex.title.cycle_follow"),
-                        Component.translatable(menu.tamedLatex.isFollowingOwner() ? "changed.tamed_dark_latex.follow" : "changed.tamed_dark_latex.wander")),
+                        Component.translatable(menu.iTamedLatex.isFollowingOwner() ? "changed.tamed_dark_latex.follow" : "changed.tamed_dark_latex.wander")),
                 () -> false
         ));
         interactionsBuilder.add(new Interaction("cycle_target_type",
                 () -> List.of(Component.translatable("changed.tamed_dark_latex.title.cycle_target_type"),
-                        menu.tamedLatex.getTargetType().getDisplayText()),
+                        menu.iTamedLatex.getTargetType().getDisplayText()),
                 () -> false
         ));
         interactionsBuilder.add(new Interaction("cycle_attack_type",
                 () -> List.of(Component.translatable("changed.tamed_dark_latex.title.cycle_attack_type"),
-                        menu.tamedLatex.getAttackType().getDisplayText()),
+                        menu.iTamedLatex.getAttackType().getDisplayText()),
                 () -> false
         ));
         interactionsBuilder.add(new Interaction("cycle_attack_condition",
                 () -> List.of(Component.translatable("changed.tamed_dark_latex.title.cycle_attack_condition"),
-                        menu.tamedLatex.getAttackCondition().getDisplayText()),
+                        menu.iTamedLatex.getAttackCondition().getDisplayText()),
                 () -> false
         ));
-        if (menu.tamedLatex.canDoFavor(LatexFavor.FISHING))
+        if (menu.iTamedLatex.canDoFavor(LatexFavor.FISHING))
             interactionsBuilder.add(new Interaction("favor_fishing",
                     () -> List.of(Component.translatable("changed.tamed_dark_latex.title.favor_fishing"),
-                            menu.tamedLatex.getCurrentFavor() == LatexFavor.FISHING ? ACTIVE : INACTIVE),
-                    () -> menu.tamedLatex.getCurrentFavor() == LatexFavor.FISHING
+                            menu.iTamedLatex.getCurrentFavor() == LatexFavor.FISHING ? ACTIVE : INACTIVE),
+                    () -> menu.iTamedLatex.getCurrentFavor() == LatexFavor.FISHING
             ));
-        if (menu.tamedLatex.canDoFavor(LatexFavor.CAVING))
+        if (menu.iTamedLatex.canDoFavor(LatexFavor.CAVING))
             interactionsBuilder.add(new Interaction("favor_caving",
                     () -> List.of(Component.translatable("changed.tamed_dark_latex.title.favor_caving"),
-                            menu.tamedLatex.getCurrentFavor() == LatexFavor.CAVING ? ACTIVE : INACTIVE),
-                    () -> menu.tamedLatex.getCurrentFavor() == LatexFavor.CAVING
+                            menu.iTamedLatex.getCurrentFavor() == LatexFavor.CAVING ? ACTIVE : INACTIVE),
+                    () -> menu.iTamedLatex.getCurrentFavor() == LatexFavor.CAVING
             ));
-        if (menu.tamedLatex.canDoFavor(LatexFavor.SUIT_OWNER))
+        if (menu.iTamedLatex.canDoFavor(LatexFavor.SUIT_OWNER))
             interactionsBuilder.add(new Interaction("favor_suit_owner",
                     () -> List.of(Component.translatable("changed.tamed_dark_latex.title.favor_suit_owner"),
-                            menu.tamedLatex.getCurrentFavor() == LatexFavor.SUIT_OWNER ? ACTIVE : INACTIVE),
-                    () -> menu.tamedLatex.getCurrentFavor() == LatexFavor.SUIT_OWNER
+                            menu.iTamedLatex.getCurrentFavor() == LatexFavor.SUIT_OWNER ? ACTIVE : INACTIVE),
+                    () -> menu.iTamedLatex.getCurrentFavor() == LatexFavor.SUIT_OWNER
             ));
         availableInteractions = interactionsBuilder.build();
     }

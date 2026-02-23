@@ -212,10 +212,19 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
 
     }
 
+    public boolean hasFavorSystem() {
+        return false;
+    }
+
     @Override
     protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
+
+        if (hasFavorSystem()) {
+            return super.mobInteract(player, hand);
+        }
+
         if (this.level.isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;

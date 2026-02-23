@@ -2,11 +2,11 @@ package net.foxyas.changedaddon.menu;
 
 import com.mojang.datafixers.util.Pair;
 import net.foxyas.changedaddon.entity.ai.LatexInventory;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonMenus;
 import net.ltxprogrammer.changed.data.AccessorySlots;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.ClothingShape;
-import net.ltxprogrammer.changed.init.ChangedMenus;
 import net.ltxprogrammer.changed.item.ExtendedItemProperties;
 import net.ltxprogrammer.changed.world.enchantments.FormFittingEnchantment;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,17 +33,19 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     public final Player owner;
-    public final AbstractCanTameChangedEntityFavors tamedLatex;
+    private final TamableLatexEntityFavors iTamedLatex;
+    public final ChangedEntity tamedLatex;
     public final Inventory inventory;
     public final LatexInventory dlInventory;
     public final AccessorySlots accessorySlots;
 
     private final Map<Integer, Slot> customSlots = new HashMap<>();
 
-    public TamedLatexInventoryMenu(int id, Player owner, AbstractCanTameChangedEntityFavors tamedLatex) {
+    public TamedLatexInventoryMenu(int id, Player owner, TamableLatexEntityFavors tamedLatex) {
         super(ChangedAddonMenus.TAMED_LATEX_INVENTORY.get(), id);
         this.owner = owner;
-        this.tamedLatex = tamedLatex;
+        this.tamedLatex = tamedLatex.getSelf();
+        this.iTamedLatex = tamedLatex;
         this.inventory = owner.getInventory();
         this.dlInventory = tamedLatex.getInventory();
         this.accessorySlots = AccessorySlots.getForEntity(owner).orElseGet(AccessorySlots::new);
@@ -51,7 +53,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
     }
 
     public TamedLatexInventoryMenu(int id, Inventory inventory, FriendlyByteBuf extra) {
-        this(id, inventory.player, (AbstractCanTameChangedEntityFavors) inventory.player.level().getEntity(extra.readInt()));
+        this(id, inventory.player, inventory.player.level().getEntity(extra.readInt()) instanceof TamableLatexEntityFavors tamableLatexEntityFavors ? tamableLatexEntityFavors : null);
     }
 
     public boolean canWear(ItemStack itemStack, EquipmentSlot slot) {
@@ -63,9 +65,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
         if (itemStack.getItem() instanceof ExtendedItemProperties wearableItem) {
             if (!wearableItem.allowedInSlot(itemStack, tamedLatex, slot))
                 return false;
-        }
-
-        else { // Default expected entity shapes
+        } else { // Default expected entity shapes
             var entityShape = tamedLatex.getEntityShape();
 
             boolean shapeFits = switch (slot) {
@@ -125,7 +125,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return !tamedLatex.isDeadOrDying() && !tamedLatex.isRemoved() && tamedLatex.getOwner() == player;
+        return !tamedLatex.isDeadOrDying() && !tamedLatex.isRemoved() && iTamedLatex.getOwner() == player;
     }
 
     protected boolean canTamedDLWear(ItemStack itemStack, EquipmentSlot slot) {
@@ -135,9 +135,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
         if (itemStack.getItem() instanceof ExtendedItemProperties wearableItem) {
             if (!wearableItem.allowedInSlot(itemStack, tamedLatex, slot))
                 return false;
-        }
-
-        else { // Default expected entity shapes
+        } else { // Default expected entity shapes
             boolean shapeFits = switch (slot) {
                 case HEAD -> tamedLatex.getEntityShape().getHeadShape() == ClothingShape.Head.ANTHRO;
                 case CHEST -> tamedLatex.getEntityShape().getTorsoShape() == ClothingShape.Torso.ANTHRO;
@@ -166,10 +164,11 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
 
     /**
      * Moves the given stack into the first available slots in the range
-     * @param stack item stack
+     *
+     * @param stack          item stack
      * @param slotRangeStart range start (inclusive)
-     * @param slotRangeEnd range end (exclusive)
-     * @param reversed iterate in reverse, end to start
+     * @param slotRangeEnd   range end (exclusive)
+     * @param reversed       iterate in reverse, end to start
      * @return true if the stack was moved partially, or completely. false if no items were moved
      */
     @Override
