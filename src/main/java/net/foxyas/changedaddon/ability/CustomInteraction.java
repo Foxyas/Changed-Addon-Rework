@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.ability;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractLuminarcticLeopard;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;

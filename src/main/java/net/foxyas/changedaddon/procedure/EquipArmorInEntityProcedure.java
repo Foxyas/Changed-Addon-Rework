@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.procedure;
 
 import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractCanTameSnepChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;

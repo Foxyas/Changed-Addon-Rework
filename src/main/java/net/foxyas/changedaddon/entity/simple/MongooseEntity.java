@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.client.model.animations.parameters.PatReactionAnimationParameters;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
-import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractBasicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAnimationEvents;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;

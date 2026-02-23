@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.ai.defaults;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;

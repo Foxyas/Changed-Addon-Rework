@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.ai.defaults;
 
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;

@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.entity.advanced;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntity;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractCanTameChangedEntity;
 import net.foxyas.changedaddon.entity.goals.prototype.*;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;

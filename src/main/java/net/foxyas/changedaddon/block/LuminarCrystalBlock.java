@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.block;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;

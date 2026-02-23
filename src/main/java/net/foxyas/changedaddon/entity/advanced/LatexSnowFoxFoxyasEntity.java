@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.advanced;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractTraderChangedEntityWithInventory;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractTraderChangedEntityWithInventory;
 import net.foxyas.changedaddon.entity.goals.generic.LookAndFollowTradingPlayerSink;
 import net.foxyas.changedaddon.entity.goals.generic.TradeWithPlayerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;

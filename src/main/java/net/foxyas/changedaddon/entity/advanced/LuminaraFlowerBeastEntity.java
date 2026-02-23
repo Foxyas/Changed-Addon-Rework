@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
-import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractBasicOrganicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;

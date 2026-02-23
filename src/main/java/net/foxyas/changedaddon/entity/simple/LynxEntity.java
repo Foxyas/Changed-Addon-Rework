@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractSwimmableEntity;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractSwimmableEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
@@ -14,7 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;

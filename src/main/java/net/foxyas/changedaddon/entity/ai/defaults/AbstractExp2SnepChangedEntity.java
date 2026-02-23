@@ -1,15 +1,20 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.ai.defaults;
 
+import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
-import net.ltxprogrammer.changed.entity.TamableLatexEntity;
+import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
-import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -25,10 +30,10 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +42,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.IExtensibleEnum;
 import org.apache.commons.lang3.NotImplementedException;
@@ -46,11 +52,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopard implements TamableLatexEntity {
-    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.BYTE);
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard implements ICoatLikeEntity, CustomPatReaction {
+    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BYTE);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNER_UUID_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Boolean> UNFUSED_FROM_HOST = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BOOLEAN);
 
-    public AbstractCanTameSnepChangedEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
+    public AbstractExp2SnepChangedEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
         super(type, level);
     }
 
@@ -66,18 +73,32 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     }
 
     @Override
-    protected void setAttributes(AttributeMap attributes) {
-        super.setAttributes(attributes);
-        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(7.5);
-        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.25);
-        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5);
+    public boolean isUnfusedFromHost() {
+        return this.entityData.get(UNFUSED_FROM_HOST);
+    }
+
+    @Override
+    public void setIsUnfusedFromHost(boolean value) {
+        this.entityData.set(UNFUSED_FROM_HOST, value);
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_FLAGS_ID, (byte) 0);
-        this.entityData.define(DATA_OWNERUUID_ID, Optional.empty());
+        this.entityData.define(DATA_OWNER_UUID_ID, Optional.empty());
+        this.entityData.define(UNFUSED_FROM_HOST, false);
+
+    }
+
+    @Override
+    public void stopSleeping() {
+        super.stopSleeping();
+    }
+
+    @Override
+    public void startSleeping(@NotNull BlockPos blockPos) {
+        super.startSleeping(blockPos);
     }
 
     public boolean isBiped() {
@@ -99,6 +120,9 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         if (tag.contains("FollowOwner"))
             this.setFollowOwner(tag.getBoolean("FollowOwner"));
 
+        if (tag.contains("UnfusedFromHost"))
+            this.setIsUnfusedFromHost(tag.getBoolean("UnfusedFromHost"));
+
         if (uuid != null) {
             try {
                 this.setOwnerUUID(uuid);
@@ -116,7 +140,7 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         if (this.getOwnerUUID() != null) {
             tag.putUUID("Owner", this.getOwnerUUID());
         }
-
+        tag.putBoolean("UnfusedFromHost", this.isUnfusedFromHost());
         tag.putBoolean("FollowOwner", this.isFollowingOwner());
     }
 
@@ -128,11 +152,11 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
     @Nullable
     @Override
     public UUID getOwnerUUID() {
-        return this.entityData.get(DATA_OWNERUUID_ID).orElse(null);
+        return this.entityData.get(DATA_OWNER_UUID_ID).orElse(null);
     }
 
     public void setOwnerUUID(@Nullable UUID uuid) {
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
+        this.entityData.set(DATA_OWNER_UUID_ID, Optional.ofNullable(uuid));
     }
 
     public boolean isPreventingPlayerRest(Player player) {
@@ -247,6 +271,61 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
         super.checkDespawn();
     }
 
+    @Override
+    public void WhenPattedReactionSpecific(Player patter, InteractionHand hand, Vec3 pattedLocation) {
+
+        boolean isPlayerTransfur = (ProcessTransfur.getPlayerTransfurVariant(patter) != null);
+        boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(patter) != null
+                && ((ProcessTransfur.getPlayerTransfurVariant(patter)).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+                || ProcessTransfur.getPlayerTransfurVariant(patter).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
+
+        boolean isTargetTransfurInExp2 = (getSelfVariant() != null
+                && (getSelfVariant().is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+                || getSelfVariant().is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
+
+        if (isPlayerTransfur) {
+            if (!isPlayerTransfurInExp2 && isTargetTransfurInExp2) {
+                patter.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
+            }
+        }
+    }
+
+    @Override
+    public void WhenPatEvent(LivingEntity self, InteractionHand hand, LivingEntity patTarget) {
+        if (self instanceof Player patter) {
+            boolean isPlayerTransfur = ProcessTransfur.isPlayerTransfurred(patter);
+            boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(patter) != null
+                    && ((ProcessTransfur.getPlayerTransfurVariant(patter)).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+                    || ProcessTransfur.getPlayerTransfurVariant(patter).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
+            if (patTarget instanceof Player patPlayerTarget) {
+                boolean isTargetTransfur = ProcessTransfur.isPlayerLatex(patPlayerTarget);
+
+                boolean isTargetTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(patPlayerTarget) != null
+                        && (ProcessTransfur.getPlayerTransfurVariant(patPlayerTarget).is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+                        || ProcessTransfur.getPlayerTransfurVariant(patPlayerTarget).is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
+
+                if (isPlayerTransfur && isTargetTransfur) { //Add The Effect if is Transfur is Exp2
+                    if (isPlayerTransfurInExp2 && !isTargetTransfurInExp2) {
+                        patTarget.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
+                    }
+                }
+            } else if (patTarget instanceof ChangedEntity patChangedEntityTarget) {
+                boolean isTargetLatexTransfur = patChangedEntityTarget.getType().is(ChangedTags.EntityTypes.LATEX);
+
+                boolean isTargetTransfurInExp2 = (patChangedEntityTarget.getSelfVariant() != null
+                        && (patChangedEntityTarget.getSelfVariant().is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant())
+                        || patChangedEntityTarget.getSelfVariant().is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant())));
+                if (isPlayerTransfur && isTargetLatexTransfur) { //Add The Effect if is Transfur is Exp2
+                    if (isPlayerTransfurInExp2 && !isTargetTransfurInExp2) {
+                        patTarget.addEffect(new MobEffectInstance(ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(), 2400, 100, false, false));
+                    }
+                }
+            }
+        }
+
+
+    }
+
     public boolean isTame() {
         return (this.entityData.get(DATA_FLAGS_ID) & 4) != 0;
     }
@@ -328,73 +407,6 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
                 || stack.is(Items.SALMON)
                 || stack.is(Items.COOKED_SALMON)
                 || stack.is(ChangedAddonTags.Items.TAME_ITEM);
-    }
-
-    //Preset Styles For Tame
-    public InteractionResult Exp2Sytle(Player player, InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        if (this.level.isClientSide) {
-            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
-            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (!this.isTame() && this.isTameItem(itemstack)) {
-                if (!player.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
-                boolean istransfur = ProcessTransfur.isPlayerTransfurred(player);
-
-                if (!istransfur && this.random.nextInt(2) == 0) { // One in 2 chance
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else if (istransfur && this.random.nextInt(12) == 0) { //One in 12
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
-                }
-
-                return InteractionResult.SUCCESS;
-            }
-
-            return super.mobInteract(player, hand);
-        }
-    }
-
-    public InteractionResult BioSynthSnepStyle(Player player, InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        if (this.level.isClientSide) {
-            boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
-            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (!this.isTame() && this.isTameItem(itemstack)) {
-                if (!player.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
-                boolean isTransfur = ProcessTransfur.isPlayerTransfurred(player);
-
-                if (!isTransfur && this.random.nextInt(3) == 0) { // One in 3 chance
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else if (isTransfur && this.random.nextInt(6) == 0) {
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
-                }
-
-                return InteractionResult.SUCCESS;
-            }
-
-            return super.mobInteract(player, hand);
-        }
     }
 
     //Public enum TameType that just hold a string for the Items tag Logic

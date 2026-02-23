@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
@@ -11,7 +11,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;

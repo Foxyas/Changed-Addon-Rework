@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.ai.defaults;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractBasicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.AttributePresets;

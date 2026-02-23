@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.advanced;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractBasicChangedEntity;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractBasicChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.GenderedEntity;
 import net.ltxprogrammer.changed.entity.TransfurMode;

@@ -1,11 +1,15 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.ai.defaults;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.HairStyle;
+import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
@@ -16,15 +20,17 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractBasicChangedEntity extends ChangedEntity {
+public abstract class AbstractBasicOrganicChangedLeopardEntity extends AbstractSnowLeopard {
 
-    public AbstractBasicChangedEntity(EntityType<? extends ChangedEntity> type, Level level) {
+    public AbstractBasicOrganicChangedLeopardEntity(EntityType<? extends AbstractSnowLeopard> type, Level level) {
         super(type, level);
     }
 
@@ -45,15 +51,15 @@ public abstract class AbstractBasicChangedEntity extends ChangedEntity {
         return builder;
     }
 
-    protected void safeSetBaseValue(@Nullable AttributeInstance instance, double value) {
+    protected void safeSetBaseValue(@org.jetbrains.annotations.Nullable AttributeInstance instance, double value) {
         if (instance != null) {
             instance.setBaseValue(value);
         }
     }
 
-    @Override
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
+
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((24));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(40.0f);
@@ -70,8 +76,23 @@ public abstract class AbstractBasicChangedEntity extends ChangedEntity {
     }
 
     @Override
+    public TransfurMode getTransfurMode() {
+        return TransfurMode.NONE;
+    }
+
+    @Override
     public @Nullable List<HairStyle> getValidHairStyles() {
         return HairStyle.Collection.MALE.getStyles();
+    }
+
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
     }
 
     @Override
@@ -81,11 +102,11 @@ public abstract class AbstractBasicChangedEntity extends ChangedEntity {
 
     @Override
     public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
-        return SoundEvents.GENERIC_HURT;
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
     }
 
     @Override
     public @NotNull SoundEvent getDeathSound() {
-        return SoundEvents.GENERIC_DEATH;
+        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
     }
 }

@@ -2,7 +2,7 @@ package net.foxyas.changedaddon.entity.customHandle;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractLuminarcticLeopard;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

@@ -1,12 +1,11 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.ai.defaults;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
-import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
-import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
-import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
+import net.ltxprogrammer.changed.entity.ai.*;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
+import net.ltxprogrammer.changed.network.syncher.ChangedEntityDataSerializers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -44,6 +43,10 @@ import java.util.UUID;
 public abstract class AbstractCanTameChangedEntity extends AbstractBasicChangedEntity implements TamableLatexEntity {
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<DarkLatexTargetType> DATA_TARGET_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, ChangedEntityDataSerializers.DARK_LATEX_TARGET_TYPE);
+    protected static final EntityDataAccessor<DarkLatexAttackType> DATA_ATTACK_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, ChangedEntityDataSerializers.DARK_LATEX_ATTACK_TYPE);
+    protected static final EntityDataAccessor<DarkLatexAttackCondition> DATA_ATTACK_CONDITION_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, ChangedEntityDataSerializers.DARK_LATEX_ATTACK_CONDITION);
+    protected static final EntityDataAccessor<DarkLatexFavor> DATA_FAVOR_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntity.class, ChangedEntityDataSerializers.DARK_LATEX_FAVOR);
 
     public AbstractCanTameChangedEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);

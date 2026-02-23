@@ -3,7 +3,7 @@ package net.foxyas.changedaddon.client.renderer.layers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.foxyas.changedaddon.entity.bosses.LuminarcticLeopardMaleEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.entity.ai.defaults.AbstractLuminarcticLeopard;
 import net.ltxprogrammer.changed.ability.HypnosisAbility;
 import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.EmissiveBodyLayer;

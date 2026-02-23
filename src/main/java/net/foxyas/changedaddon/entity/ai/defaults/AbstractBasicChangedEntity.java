@@ -1,12 +1,9 @@
-package net.foxyas.changedaddon.entity.defaults;
+package net.foxyas.changedaddon.entity.ai.defaults;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.HairStyle;
-import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,16 +16,15 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
+public abstract class AbstractBasicChangedEntity extends ChangedEntity {
 
-    public AbstractBasicOrganicChangedEntity(EntityType<? extends ChangedEntity> type, Level level) {
+    public AbstractBasicChangedEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
     }
 
@@ -55,7 +51,6 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
         }
     }
 
-
     @Override
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
@@ -75,23 +70,8 @@ public abstract class AbstractBasicOrganicChangedEntity extends ChangedEntity {
     }
 
     @Override
-    public TransfurMode getTransfurMode() {
-        return TransfurMode.NONE;
-    }
-
-    @Override
     public @Nullable List<HairStyle> getValidHairStyles() {
         return HairStyle.Collection.MALE.getStyles();
-    }
-
-    @Override
-    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
     }
 
     @Override
