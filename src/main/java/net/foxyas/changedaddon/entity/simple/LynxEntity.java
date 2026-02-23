@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.ai.defaults.AbstractSwimmableEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractSwimmableEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.variant.VariantExtraStats;

@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.item;
 
-import net.foxyas.changedaddon.entity.goals.simple.FollowAndLookAtLaser;
+import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.item.api.ColorHolder;
 import net.foxyas.changedaddon.item.api.DynamicCreativeTab;

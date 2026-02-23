@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
-import net.foxyas.changedaddon.entity.ai.defaults.AbstractCanTameSnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;

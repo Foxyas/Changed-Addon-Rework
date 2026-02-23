@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
-import net.foxyas.changedaddon.entity.ai.defaults.AbstractCanTameSnepChangedEntity;
-import net.foxyas.changedaddon.entity.goals.simple.SleepingWithOwnerGoal;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
+import net.foxyas.changedaddon.entity.ai.goals.simple.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;

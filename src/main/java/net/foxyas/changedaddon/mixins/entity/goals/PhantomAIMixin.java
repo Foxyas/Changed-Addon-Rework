@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.mixins.entity.goals;
 
-import net.foxyas.changedaddon.entity.goals.phantom.AvoidCatlikeOrCatGoal;
+import net.foxyas.changedaddon.entity.ai.goals.phantom.AvoidCatlikeOrCatGoal;
 import net.minecraft.world.entity.monster.Phantom;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
