@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.api.IConditionalFuseEntity;
+import net.foxyas.changedaddon.event.TransfurVariantEvents;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
@@ -33,6 +34,15 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
 
     public static AttributeSupplier.Builder createLatexAttributes() {
         return ChangedEntity.createLatexAttributes().add(ForgeMod.ATTACK_RANGE.get()).add(ForgeMod.REACH_DISTANCE.get());
+    }
+
+    @Override
+    public TransfurVariant<?> getTransfurVariantFor(TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType transfurType) {
+        if (transfurType == TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType.ABSORPTION) {
+            return super.getSelfVariant();
+        }
+
+        return ChangedTransfurVariants.DARK_LATEX_YUFENG.get();
     }
 
     @Override

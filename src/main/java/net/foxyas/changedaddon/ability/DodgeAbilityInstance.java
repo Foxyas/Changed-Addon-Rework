@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimation
 import net.foxyas.changedaddon.client.particle.EntityModelFadeParticleOptions;
 import net.foxyas.changedaddon.init.ChangedAddonAnimationEvents;
 import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
+import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -244,7 +245,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
                         ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
                 //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
             }
-            this.trailTicks = 1;
+            DelayedTask.schedule(5, () -> this.trailTicks = 1);
         }
     }
 

@@ -123,19 +123,23 @@ public class TransfurEvents {
         ChangedEntity changedEntity = event.getChangedEntity();
         IAbstractChangedEntity source = event.getSource();
 
-        if (!source.wantAbsorption()) return;
-
         if (source.getChangedEntity() instanceof DarkLatexYufengQueenEntity latexYufengQueenEntity) {
-            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getSelfVariant();
+            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getTransfurVariantFor(event.getTransfurType());
             if (original != selfVariant) {
                 event.setVariant(selfVariant);
             }
         } else if (changedEntity instanceof DarkLatexYufengQueenEntity latexYufengQueenEntity) {
-            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getSelfVariant();
+            TransfurVariant<?> selfVariant = latexYufengQueenEntity.getTransfurVariantFor(event.getTransfurType());
             if (original != selfVariant) {
                 event.setVariant(selfVariant);
             }
         }
+//        else if (changedEntity instanceof VariantExtraStats variantExtraStats) {
+//            TransfurVariant<?> selfVariant = variantExtraStats.getTransfurVariantFor(event.getTransfurType());
+//            if (original != selfVariant) {
+//                event.setVariant(selfVariant);
+//            }
+//        }
     }
 
     @SubscribeEvent
