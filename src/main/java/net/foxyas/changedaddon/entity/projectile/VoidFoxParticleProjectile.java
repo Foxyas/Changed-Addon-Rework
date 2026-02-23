@@ -50,7 +50,6 @@ public class VoidFoxParticleProjectile extends AbstractVoidFoxParticleProjectile
     }
 
 
-
     @Override
     public boolean discardOnNoDmgImpact() {
         return true;

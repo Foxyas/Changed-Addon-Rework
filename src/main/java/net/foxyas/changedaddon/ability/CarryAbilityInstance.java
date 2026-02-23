@@ -36,6 +36,41 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
         super(carryAbilityInstanceAbstractAbility, entity);
     }
 
+    public static @Nullable Entity carryTarget(Player player) {
+        EntityHitResult hitResult = PlayerUtil.getEntityHitLookingAt(player, ((float) player.getEntityReach()), ClipContext.Block.OUTLINE);
+        if (hitResult == null) {
+            return null;
+        }
+        return hitResult.getEntity();
+    }
+
+    // === Helpers de rede (broadcast correto) ===
+    private static void broadcastPassengers(Entity vehicle) {
+        if (!vehicle.level.isClientSide) {
+            ServerLevel sl = (ServerLevel) vehicle.level;
+            sl.getChunkSource().broadcastAndSend(vehicle, new ClientboundSetPassengersPacket(vehicle));
+        }
+    }
+
+    private static void broadcastMotion(Entity entity) {
+        if (!entity.level.isClientSide) {
+            ServerLevel sl = (ServerLevel) entity.level;
+            sl.getChunkSource().broadcastAndSend(entity, new ClientboundSetEntityMotionPacket(entity));
+        }
+    }
+
+    // Lança uma entidade na direção do "launcher" e sincroniza
+    private static void launchForward(Entity launcher, Entity target, double speed) {
+        target.setDeltaMovement(launcher.getLookAngle().normalize().scale(speed));
+        target.hasImpulse = true;
+        broadcastMotion(target);
+    }
+
+    // Toca o som (opcional)
+    private static void soundPlay(Player player) {
+        player.level.playSound(null, player.blockPosition(), ChangedSounds.CARDBOARD_BOX_OPEN.get(), SoundSource.PLAYERS, 2.5f, 1.0f);
+    }
+
     @Override
     public boolean canUse() {
         return ability.canUse(entity);
@@ -108,17 +143,7 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
         broadcastPassengers(e);
     }
 
-
     private void onPassengerLost(LivingEntity carrier, Entity passenger) {
-    }
-
-
-    public static @Nullable Entity carryTarget(Player player) {
-        EntityHitResult hitResult = PlayerUtil.getEntityHitLookingAt(player, ((float) player.getEntityReach()), ClipContext.Block.OUTLINE);
-        if (hitResult == null) {
-            return null;
-        }
-        return hitResult.getEntity();
     }
 
     public boolean isPossibleToCarry(LivingEntity entity) {
@@ -135,34 +160,6 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
         }
         return GrabEntityAbility.getGrabber(entity) == null;
     }
-
-    // === Helpers de rede (broadcast correto) ===
-    private static void broadcastPassengers(Entity vehicle) {
-        if (!vehicle.level.isClientSide) {
-            ServerLevel sl = (ServerLevel) vehicle.level;
-            sl.getChunkSource().broadcastAndSend(vehicle, new ClientboundSetPassengersPacket(vehicle));
-        }
-    }
-
-    private static void broadcastMotion(Entity entity) {
-        if (!entity.level.isClientSide) {
-            ServerLevel sl = (ServerLevel) entity.level;
-            sl.getChunkSource().broadcastAndSend(entity, new ClientboundSetEntityMotionPacket(entity));
-        }
-    }
-
-    // Lança uma entidade na direção do "launcher" e sincroniza
-    private static void launchForward(Entity launcher, Entity target, double speed) {
-        target.setDeltaMovement(launcher.getLookAngle().normalize().scale(speed));
-        target.hasImpulse = true;
-        broadcastMotion(target);
-    }
-
-    // Toca o som (opcional)
-    private static void soundPlay(Player player) {
-        player.level.playSound(null, player.blockPosition(), ChangedSounds.CARDBOARD_BOX_OPEN.get(), SoundSource.PLAYERS, 2.5f, 1.0f);
-    }
-
 
     private void Run(Entity mainEntity) {
         if (!(mainEntity instanceof Player player) || player.level.isClientSide)
@@ -223,12 +220,12 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
         }
     }
 
-    protected void setCarriedEntity(@Nullable Entity carriedEntity) {
-        this.carriedEntity = carriedEntity;
-    }
-
     public @Nullable Entity getCarriedEntity() {
         return carriedEntity;
+    }
+
+    protected void setCarriedEntity(@Nullable Entity carriedEntity) {
+        this.carriedEntity = carriedEntity;
     }
 
 }

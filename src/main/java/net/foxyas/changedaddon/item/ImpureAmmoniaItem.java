@@ -13,12 +13,12 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class ImpureAmmoniaItem extends Item {
+    private static final ResourceLocation advLocation = ChangedAddonMod.resourceLoc("impure_ammonia_craft");
+
     public ImpureAmmoniaItem() {
         super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
                 .stacksTo(64).rarity(Rarity.COMMON));
     }
-
-    private static final ResourceLocation advLocation = ChangedAddonMod.resourceLoc("impure_ammonia_craft");
 
     @Override
     public void onCraftedBy(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Player entity) {

@@ -23,7 +23,7 @@ public class ChangedAddonVillagerProfessions {
     public static final RegistryObject<VillagerProfession> SCIENTIST = registerProfession("scientist", ChangedAddonBlocks.UNIFUSER, () -> SoundEvents.BREWING_STAND_BREW);
 
     private static RegistryObject<VillagerProfession> registerProfession(String name, Supplier<? extends Block> block, Supplier<SoundEvent> soundEvent) {
-        RegistryObject<PoiType> jobPoi = POI_TYPES.register(name, ()-> new PoiType(ImmutableSet.copyOf(block.get().getStateDefinition().getPossibleStates()), 1, 1));
+        RegistryObject<PoiType> jobPoi = POI_TYPES.register(name, () -> new PoiType(ImmutableSet.copyOf(block.get().getStateDefinition().getPossibleStates()), 1, 1));
         Predicate<Holder<PoiType>> predicate = holder -> holder.is(jobPoi.getKey());
         return PROFESSIONS.register(name, () -> new VillagerProfession(ChangedAddonMod.MODID + ":" + name, predicate, predicate, ImmutableSet.of(), ImmutableSet.of(), soundEvent.get()));
     }

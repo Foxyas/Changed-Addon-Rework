@@ -233,8 +233,8 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
                 if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
                     itemstack.shrink(1);
                     this.heal(2.0F);
-                    if (this.level instanceof ServerLevel _level) {
-                        _level.sendParticles(ParticleTypes.HEART, (this.getX()), (this.getY() + 1), (this.getZ()), 7, 0.3, 0.3, 0.3, 1); //Spawn Heal Particles
+                    if (this.level instanceof ServerLevel serverLevel) {
+                        serverLevel.sendParticles(ParticleTypes.HEART, (this.getX()), (this.getY() + 1), (this.getZ()), 7, 0.3, 0.3, 0.3, 1); //Spawn Heal Particles
                     }
                     this.level().gameEvent(this, GameEvent.ENTITY_INTERACT, this.getEyePosition());
                     return InteractionResult.SUCCESS;

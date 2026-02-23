@@ -15,12 +15,8 @@ public record RequestMovementCheckPacket(boolean syncMotion) {
 
     public static final ResourceLocation ID = ChangedAddonMod.resourceLoc("request_movement");
 
-    public RequestMovementCheckPacket(FriendlyByteBuf buf){
+    public RequestMovementCheckPacket(FriendlyByteBuf buf) {
         this(buf.readBoolean());
-    }
-
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeBoolean(syncMotion);
     }
 
     public static void handle(RequestMovementCheckPacket msg, Supplier<NetworkEvent.Context> ctx) {
@@ -43,5 +39,9 @@ public record RequestMovementCheckPacket(boolean syncMotion) {
             }
         });
         ctx.get().setPacketHandled(true);
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeBoolean(syncMotion);
     }
 }

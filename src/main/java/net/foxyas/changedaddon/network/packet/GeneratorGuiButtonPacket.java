@@ -17,13 +17,6 @@ public record GeneratorGuiButtonPacket(int buttonId, BlockPos pos) {
         this(buf.readVarInt(), new BlockPos(buf.readVarInt(), buf.readVarInt(), buf.readVarInt()));
     }
 
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeVarInt(buttonId);
-        buf.writeVarInt(pos.getX());
-        buf.writeVarInt(pos.getY());
-        buf.writeVarInt(pos.getZ());
-    }
-
     public static void handler(GeneratorGuiButtonPacket message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() ->
@@ -56,5 +49,12 @@ public record GeneratorGuiButtonPacket(int buttonId, BlockPos pos) {
 
             level.sendBlockUpdated(pos, state, state, 3);
         }
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeVarInt(buttonId);
+        buf.writeVarInt(pos.getX());
+        buf.writeVarInt(pos.getY());
+        buf.writeVarInt(pos.getZ());
     }
 }

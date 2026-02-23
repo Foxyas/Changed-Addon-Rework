@@ -38,7 +38,6 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(LatexHumanHazardBodySuitModel.LATEX_PLAYER_SLIM, () -> LatexHumanHazardBodySuitModel.createBodyLayer(new CubeDeformation(0.05f), true));
 
 
-
         event.registerLayerDefinition(ModelLuminarCrystalSpearModel.LAYER_LOCATION, ModelLuminarCrystalSpearModel::createBodyLayer);
 
         // --- MONSTER/MOB ENTITIES MODELS---
@@ -106,7 +105,6 @@ public class ChangedAddonModels {
         event.registerLayerDefinition(LatexSnowFoxFoxyasModel.LAYER_LOCATION, LatexSnowFoxFoxyasModel::createBodyLayer);
         event.registerLayerDefinition(LatexBorderCollieModel.LAYER_LOCATION, LatexBorderCollieModel::createBodyLayer);
         event.registerLayerDefinition(DarkLatexYufengQueenModel.LAYER_LOCATION, DarkLatexYufengQueenModel::createBodyLayer);
-
 
 
         // --- PROJECTILES ENTITIES MODELS ---

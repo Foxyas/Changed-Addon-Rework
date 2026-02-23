@@ -150,6 +150,16 @@ public class CreatureDietsHandleProcedure {
             this.dietItems = List.of();
         }
 
+        @SuppressWarnings("unused")
+        public static DietType create(String name, TagKey<TransfurVariant<?>> tfTag, TagKey<Item> dietTag, List<Item> items) {
+            throw new NotImplementedException("Not extended");
+        }
+
+        @SuppressWarnings("unused")
+        public static DietType create(String name, TagKey<TransfurVariant<?>> tfTag, TagKey<Item> dietTag) {
+            throw new NotImplementedException("Not extended");
+        }
+
         public boolean hasDiet(ChangedEntity entity, TransfurVariant<?> tf) {
             if (this == AQUATIC && entity instanceof AquaticEntity && !SHARK.hasDiet(entity, tf)) return true;
             if (this == WOLF && entity instanceof AbstractLatexWolf) return true;
@@ -159,16 +169,6 @@ public class CreatureDietsHandleProcedure {
 
         public boolean isDietItem(ItemStack item) {
             return item.is(dietTag) || dietItems.contains(item.getItem());
-        }
-
-        @SuppressWarnings("unused")
-        public static DietType create(String name, TagKey<TransfurVariant<?>> tfTag, TagKey<Item> dietTag, List<Item> items) {
-            throw new NotImplementedException("Not extended");
-        }
-
-        @SuppressWarnings("unused")
-        public static DietType create(String name, TagKey<TransfurVariant<?>> tfTag, TagKey<Item> dietTag) {
-            throw new NotImplementedException("Not extended");
         }
     }
 }

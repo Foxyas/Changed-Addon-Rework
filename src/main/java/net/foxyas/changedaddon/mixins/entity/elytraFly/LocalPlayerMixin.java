@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.mixins.entity.elytraFly;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.variant.VariantExtraStats;

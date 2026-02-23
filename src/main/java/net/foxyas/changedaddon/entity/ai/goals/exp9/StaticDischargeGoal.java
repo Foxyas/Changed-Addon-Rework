@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -16,10 +15,8 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

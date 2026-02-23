@@ -14,7 +14,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -44,13 +43,8 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf {
         setPersistenceRequired();
     }
 
-    @Override
-    public LatexType getLatexType() {
-        return ChangedLatexTypes.DARK_LATEX.get();
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 24);
@@ -58,6 +52,11 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf {
         builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
         builder = builder.add(Attributes.FOLLOW_RANGE, 16);
         return builder;
+    }
+
+    @Override
+    public LatexType getLatexType() {
+        return ChangedLatexTypes.DARK_LATEX.get();
     }
 
     protected void setAttributes(AttributeMap attributes) {

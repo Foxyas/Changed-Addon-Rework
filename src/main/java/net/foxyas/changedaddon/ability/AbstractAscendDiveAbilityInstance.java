@@ -13,26 +13,17 @@ import net.minecraft.world.phys.Vec3;
 public abstract class AbstractAscendDiveAbilityInstance extends AbstractAbilityInstance {
 
 
-    protected enum Phase {
-        NONE,
-        ASCEND,
-        DIVE;
-    }
-
     protected boolean started;
     protected Phase phase = Phase.NONE;
     protected int divingTicks;
     protected int ascendTicks;
     protected Vec3 diveDirection = Vec3.ZERO;
-
     protected AbstractAscendDiveAbilityInstance(
             AbstractAbility<?> ability,
             IAbstractChangedEntity entity
     ) {
         super(ability, entity);
     }
-
-    /* ---------------- Lifecycle ---------------- */
 
     @Override
     public void startUsing() {
@@ -43,6 +34,8 @@ public abstract class AbstractAscendDiveAbilityInstance extends AbstractAbilityI
         entity.getEntity().setDeltaMovement(entity.getEntity().getDeltaMovement().multiply(0.5, 0, 0.5));
         this.started = true;
     }
+
+    /* ---------------- Lifecycle ---------------- */
 
     @Override
     public void tickIdle() {
@@ -146,8 +139,6 @@ public abstract class AbstractAscendDiveAbilityInstance extends AbstractAbilityI
         tag.putBoolean("started", this.started);
     }
 
-    /* ---------------- Phases ---------------- */
-
     protected void tickAscend() {
         this.ascendTicks++;
         if (ascendTicks < getAscendNeededTicks()) {
@@ -177,6 +168,8 @@ public abstract class AbstractAscendDiveAbilityInstance extends AbstractAbilityI
         entity.getEntity().setNoGravity(false);
     }
 
+    /* ---------------- Phases ---------------- */
+
     protected void tickDive() {
         this.divingTicks++;
         Vec3 dive = this.getDiveDirection().scale(getDiveSpeed());
@@ -184,8 +177,6 @@ public abstract class AbstractAscendDiveAbilityInstance extends AbstractAbilityI
 
         syncPlayerMotion();
     }
-
-    /* ---------------- Utils ---------------- */
 
     protected void syncPlayerMotion() {
         if (!(entity.getEntity() instanceof ServerPlayer sp)) return;
@@ -198,9 +189,11 @@ public abstract class AbstractAscendDiveAbilityInstance extends AbstractAbilityI
         );
     }
 
-    /* ---------------- Hooks ---------------- */
+    /* ---------------- Utils ---------------- */
 
     public abstract int getAscendNeededTicks();
+
+    /* ---------------- Hooks ---------------- */
 
     public abstract double getAscendSpeed();
 
@@ -220,4 +213,10 @@ public abstract class AbstractAscendDiveAbilityInstance extends AbstractAbilityI
      * chamado quando colide com o chão
      */
     protected abstract void onImpact();
+
+    protected enum Phase {
+        NONE,
+        ASCEND,
+        DIVE
+    }
 }

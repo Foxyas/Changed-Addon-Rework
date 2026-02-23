@@ -83,7 +83,6 @@ public class DodgeAbilityHandle {
                                 }
                             }
                         }
-                        return;
                     }
                 }
             }
@@ -149,7 +148,6 @@ public class DodgeAbilityHandle {
                                 }
                             }
                         }
-                        return;
                     }
                 }
             }

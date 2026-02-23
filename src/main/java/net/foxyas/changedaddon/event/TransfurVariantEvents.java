@@ -68,8 +68,8 @@ public class TransfurVariantEvents {
 
     public static class KillAfterTransfurredSpecificEvent extends Event {
 
-        private final LivingEntity targetEntity;
         protected final IAbstractChangedEntity originalCause;
+        private final LivingEntity targetEntity;
         protected IAbstractChangedEntity newReplacement;
 
         public KillAfterTransfurredSpecificEvent(LivingEntity targetEntity, @Nullable IAbstractChangedEntity iAbstractChangedEntity) {
@@ -145,7 +145,8 @@ public class TransfurVariantEvents {
         private final LivingEntity target;
         private final ChangedEntity source;
         private final TransfurVariant<?> originalFusionVariant;
-        @Nullable private final TransfurVariantInstance<?> oldVariantInstance;
+        @Nullable
+        private final TransfurVariantInstance<?> oldVariantInstance;
 
         public OnEntityFuseWithOther(LivingEntity target,
                                      @Nullable TransfurVariantInstance<?> oldVariantInstance,
@@ -239,21 +240,14 @@ public class TransfurVariantEvents {
      */
     public static class OverrideSourceTransfurVariantEvent extends Event {
 
-        public enum TransfurType {
-            ABSORPTION,
-            REPLICATION
-        }
-
         private final TransfurType transfurType;
         private final TransfurVariant<?> original;
         private final ChangedEntity changedEntity;
         private final LivingEntity target;
         private final IAbstractChangedEntity source;
         private final float amount;
-
         @Nullable
         private final List<TransfurVariant<?>> possibleMobFusions;
-
         private TransfurVariant<?> variant;
 
         public OverrideSourceTransfurVariantEvent(
@@ -301,20 +295,20 @@ public class TransfurVariantEvents {
         }
 
         /**
+         * @return The {@link TransfurVariant} that will be used as the source variant.
+         * If the event was cancelled, this will effectively be the original variant.
+         */
+        public TransfurVariant<?> getVariant() {
+            return variant;
+        }
+
+        /**
          * Sets a new {@link TransfurVariant} to be used as the source variant.
          *
          * <p>This value will only take effect if the event is <b>not cancelled</b>.</p>
          */
         public void setVariant(TransfurVariant<?> variant) {
             this.variant = variant;
-        }
-
-        /**
-         * @return The {@link TransfurVariant} that will be used as the source variant.
-         * If the event was cancelled, this will effectively be the original variant.
-         */
-        public TransfurVariant<?> getVariant() {
-            return variant;
         }
 
         /**
@@ -366,6 +360,11 @@ public class TransfurVariantEvents {
          */
         public TransfurVariant<?> getOriginal() {
             return original;
+        }
+
+        public enum TransfurType {
+            ABSORPTION,
+            REPLICATION
         }
     }
 }

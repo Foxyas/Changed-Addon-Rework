@@ -10,7 +10,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -48,7 +47,7 @@ public class Exp1MaleEntity extends ChangedEntity implements GenderedEntity, Pow
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 24);

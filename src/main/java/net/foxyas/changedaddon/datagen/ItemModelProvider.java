@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import static net.foxyas.changedaddon.init.ChangedAddonItems.*;
-import static net.foxyas.changedaddon.init.ChangedAddonItems.AVALI_ZERGODMASTER_SPAWN_EGG;
 
 public class ItemModelProvider extends net.minecraftforge.client.model.generators.ItemModelProvider {
 

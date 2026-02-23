@@ -1,9 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.api.IConditionalFuseEntity;
-import net.foxyas.changedaddon.event.TransfurVariantEvents;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
@@ -29,7 +27,7 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
 
-import static net.foxyas.changedaddon.event.TransfurVariantEvents.OverrideSourceTransfurVariantEvent.*;
+import static net.foxyas.changedaddon.event.TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType;
 
 public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IConditionalFuseEntity, VariantExtraStats {
     protected final SimpleAbilityInstance summonPups;

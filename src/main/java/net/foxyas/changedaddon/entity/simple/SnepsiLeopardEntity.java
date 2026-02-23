@@ -32,12 +32,6 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
         setNoAi(false);
     }
 
-    @Override
-    protected void setAttributes(AttributeMap attributes) {
-        super.setAttributes(attributes);
-        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(15.0);
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
@@ -46,6 +40,12 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
         builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
         builder = builder.add(Attributes.FOLLOW_RANGE, 16);
         return builder;
+    }
+
+    @Override
+    protected void setAttributes(AttributeMap attributes) {
+        super.setAttributes(attributes);
+        attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(15.0);
     }
 
     public Color3 getDripColor() {

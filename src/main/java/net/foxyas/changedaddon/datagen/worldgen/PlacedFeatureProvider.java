@@ -20,8 +20,8 @@ import static net.foxyas.changedaddon.init.ChangedAddonFeatures.Placements.*;
 @ParametersAreNonnullByDefault
 public class PlacedFeatureProvider {
 
-    public static void bootstrap(BootstapContext<PlacedFeature> context){
-        HolderGetter<ConfiguredFeature<?,?>> lookup = context.lookup(Registries.CONFIGURED_FEATURE);
+    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+        HolderGetter<ConfiguredFeature<?, ?>> lookup = context.lookup(Registries.CONFIGURED_FEATURE);
 //        // IRIDIUM placement
 //        context.register(
 //                ChangedAddonFeatures.IRIDIUM_ORE_PLACED,
@@ -100,8 +100,8 @@ public class PlacedFeatureProvider {
 
     }
 
-    private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?,?>> feature, List<PlacementModifier> modifiers){
-        context.register(key, new PlacedFeature(feature,modifiers));
+    private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> modifiers) {
+        context.register(key, new PlacedFeature(feature, modifiers));
     }
 
     private static ResourceKey<PlacedFeature> create(String id) {

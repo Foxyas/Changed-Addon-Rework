@@ -17,13 +17,14 @@ public class VariantEvents {
 
     @SubscribeEvent
     public static void entityJumpWithVariant(LivingEvent.LivingJumpEvent event) {
-        if(!(event.getEntity() instanceof Player player) || player.onGround()
+        if (!(event.getEntity() instanceof Player player) || player.onGround()
                 || !player.level.isClientSide || !(player.level instanceof ClientLevel clientLevel)) return;
 
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-        if(instance == null) return;
+        if (instance == null) return;
 
-        if(!instance.hasAbility(ChangedAddonAbilities.WIND_CONTROL.get()) && !instance.hasAbility(ChangedAddonAbilities.WIND_PASSIVE.get())) return;
+        if (!instance.hasAbility(ChangedAddonAbilities.WIND_CONTROL.get()) && !instance.hasAbility(ChangedAddonAbilities.WIND_PASSIVE.get()))
+            return;
 
         RandomSource random = player.getRandom();
         Vec3 motion = player.getDeltaMovement();

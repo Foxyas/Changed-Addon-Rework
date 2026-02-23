@@ -18,9 +18,9 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class TamedLatexMenu extends AbstractContainerMenu implements UpdateableMenu {
+    public final Player player;
     public TamableLatexEntityFavors iTamedLatex;
     public ChangedEntity tamedLatex;
-    public final Player player;
 
     public TamedLatexMenu(int id, Inventory inventory, TamableLatexEntityFavors tamedLatex) {
         super(ChangedAddonMenus.TAMED_LATEX.get(), id);

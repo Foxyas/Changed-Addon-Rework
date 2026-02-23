@@ -46,6 +46,9 @@ import java.util.stream.StreamSupport;
 
 public class PlayerUtil {
 
+    public static final ClipContext.ShapeGetter BLOCK_COLLISION = ClipContext.Block.COLLIDER;
+    public static final Predicate<Entity> NON_SPECTATOR = entity -> !entity.isSpectator();
+
     public static void TransfurPlayer(Player player, String id, float progress) {
         ResourceLocation form = ResourceLocation.tryParse(id);
         TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
@@ -193,6 +196,8 @@ public class PlayerUtil {
         return entity instanceof AbstractAquaticEntity;
     }
 
+    //=================================================== LookingAt ==================================================//
+
     public static boolean isSpiderTransfur(Player player) {
         TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
         return variant.is(ChangedAddonTags.TransfurTypes.SPIDER_LIKE);
@@ -202,12 +207,6 @@ public class PlayerUtil {
         ChangedEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getChangedEntity();
         return entity.getType().is(ChangedAddonTags.EntityTypes.CAN_ROAR);
     }
-
-    //=================================================== LookingAt ==================================================//
-
-    public static final ClipContext.ShapeGetter BLOCK_COLLISION = ClipContext.Block.COLLIDER;
-
-    public static final Predicate<Entity> NON_SPECTATOR = entity -> !entity.isSpectator();
 
     @Nullable
     public static Entity getEntityLookingAt(Entity entity, float reach, @Nullable ClipContext.ShapeGetter testLineOfSight) {

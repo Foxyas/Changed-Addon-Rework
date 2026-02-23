@@ -70,9 +70,7 @@ public class UsedItemAmountTrigger
                     .getValue(Stats.ITEM_USED.get(item));
 
             if (used < min) return false;
-            if (max != null && used > max) return false;
-
-            return true;
+            return max == null || used <= max;
         }
 
         public boolean matches(ServerPlayer player, ItemStack itemStack) {
@@ -84,9 +82,7 @@ public class UsedItemAmountTrigger
                     .getValue(Stats.ITEM_USED.get(itemStack.getItem()));
 
             if (used < min) return false;
-            if (max != null && used > max) return false;
-
-            return true;
+            return max == null || used <= max;
         }
 
         @Override

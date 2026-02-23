@@ -64,9 +64,8 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     }
 
 
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 1.15);
         builder = builder.add(Attributes.MAX_HEALTH, 40);

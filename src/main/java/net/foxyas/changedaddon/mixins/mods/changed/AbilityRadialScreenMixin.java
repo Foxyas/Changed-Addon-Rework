@@ -7,7 +7,6 @@ import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.world.inventory.AbilityRadialMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -41,7 +40,7 @@ public abstract class AbilityRadialScreenMixin {
                             list.add(Component.translatable("gui.changed_addon.abilities_radial_screen.mouse.right_click").withStyle((s) -> s.withItalic(true).withColor(ChatFormatting.BLUE)));
                             break;
                         }
-                        
+
                         boolean contains = component.toString().contains(registryName.toString());
                         if (contains) {
                             // BEFORE ID
@@ -52,7 +51,8 @@ public abstract class AbilityRadialScreenMixin {
                     }
                 }
 
-                if (!itAdded) list.add(Component.translatable("gui.changed_addon.abilities_radial_screen.mouse.right_click").withStyle((s) -> s.withItalic(true).withColor(ChatFormatting.BLUE)));
+                if (!itAdded)
+                    list.add(Component.translatable("gui.changed_addon.abilities_radial_screen.mouse.right_click").withStyle((s) -> s.withItalic(true).withColor(ChatFormatting.BLUE)));
 
                 cir.setReturnValue(list);
             }

@@ -17,25 +17,6 @@ import java.util.function.BiConsumer;
 
 public class ChestLoot implements LootTableSubProvider {
 
-    @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
-
-        pOutput.accept(
-                ChangedAddonMod.resourceLoc("chests/low_tier_archives"),
-                lowBooksLoot()
-        );
-
-        pOutput.accept(
-                ChangedAddonMod.resourceLoc("chests/mid_tier_archives"),
-                midBooksLoot()
-        );
-
-        pOutput.accept(
-                ChangedAddonMod.resourceLoc("chests/high_tier_archives"),
-                highBooksLoot()
-        );
-    }
-
     private static LootTable.Builder lowBooksLoot() {
         return LootTable.lootTable()
                 .withPool(LootPool.lootPool()
@@ -118,5 +99,24 @@ public class ChestLoot implements LootTableSubProvider {
                                 )
                         )
                 );
+    }
+
+    @Override
+    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
+
+        pOutput.accept(
+                ChangedAddonMod.resourceLoc("chests/low_tier_archives"),
+                lowBooksLoot()
+        );
+
+        pOutput.accept(
+                ChangedAddonMod.resourceLoc("chests/mid_tier_archives"),
+                midBooksLoot()
+        );
+
+        pOutput.accept(
+                ChangedAddonMod.resourceLoc("chests/high_tier_archives"),
+                highBooksLoot()
+        );
     }
 }

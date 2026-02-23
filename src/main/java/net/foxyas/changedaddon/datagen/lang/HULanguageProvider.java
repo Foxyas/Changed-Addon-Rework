@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.datagen.lang;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.variant.TransfurSoundsDetails;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.PaintingVariant;
@@ -418,7 +417,7 @@ public class HULanguageProvider extends LanguageProvider {
         addGamerule(TICKS_TO_DARK_LATEX_MASK_TRANSFUR, "Sötét latex maszk transzfurhoz szükséges tikkek", "Beállíthatod, hogy a játékosnak mennyi ideig kell a sötét latex maszkot a kezében tartania ahhoz, hogy az transzfur sebzést okozzon. Ha az érték kisebb vagy egyenlő 0-val, akkor a maszk deaktiváltnak tekintendő.");
         addGamerule(CHANGED_ENTITIES_SPAWN_DRESSED, "Changed Entitások öltözve teremnek", "Ha lehetséges, bármilyen ruhadarabot viselve teremnek Changed entitások");
         addGamerule(DO_ALPHAS_SPAWN, "Teremnek-e Alfák?", "Legyen lehetőség a Changed entitásoknak alfaként teremni.");
-        
+
         addGui("catalyzer.nitrogen_usage", "A haladási sebesség tikkenként %1$s, és %2$s nitrogénerőt használ");
         addGui("recipe_progress", "A haladási sebesség %s tikkenként");
         addGui("catalyzer_gui.label_full", "Tele");
@@ -449,14 +448,14 @@ public class HULanguageProvider extends LanguageProvider {
         addGui("transfur_sounds_gui.swim", "Úszik");
         addGui("transfur_sounds_gui.whine", "Vinnyog");
         addGui("transfur_sounds_gui.yip", "Csahol");
-        
+
         addGui("transfur_sounds_gui.label_transfur_sounds", "Transzfur hangjai");
         addGui("unifuser_gui.label_full", "Tele");
         addGui("unifuser_gui.tooltip_place_a_syringe_with_dna", "Helyezz ide egy DNS-sel töltött fecskendőt");
         addGui("unifuser_gui.tooltip_place_the_powders", "Helyezz ide a porokat vagy más hozzávalókat");
         addGui("unifuser_gui.tooltip_put_the_second_ingredient", "Tedd ide a második hozzávalót");
         addGui("abilities_radial_screen.mouse.right_click", "Nyomd meg a jobb egérgombot a második képesség kiválasztásához");
-        
+
         add("deathScreen.select_tf", "Újraéledés transzfurként?");
         add("deathScreen.select_tf.hardcore", "Folytatás transzfurként?");
         add("deathScreen.select_tf.confirm", "Biztos vagy benne, hogy újra akarsz éledni transzfurként?");
@@ -551,7 +550,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(PAT_ICON, "\"Rejtett simogatás\" előrelépés ikonja");
         addItem(SNEP_ICON, "\"Szökkenő\" előrelépés ikonja");
         addItem(FRIENDLY_GOEY_ICON, "\"Lények simogatása\" előrelépés ikonja");
-        
+
         add(SNEPSI.get().getDescriptionId() + ".desc", "Figyel-macska? Nem azt írják, hogy figyelem? Azt mondja, NE idd meg. Ragacsot tartalmaz?");
         addItem(SPAWNEGGOFFOXYAS, "Foxyasidéző tojás");
         addItem(SYRINGE, "Orvosi fecskendő");
@@ -662,7 +661,7 @@ public class HULanguageProvider extends LanguageProvider {
         addSound(WARN, "Figyelmeztető hang");
         addSound(GECKO_BEEP, "Gekkó csipog");
         addSound(PROTOTYPE_IDEA, "Prototípus cseng");
-        
+
         for (RegistryObject<PaintingVariant> paintingVariantRegistryObject : ChangedAddonPaintingVariants.PAINTING_TYPES.getEntries()) {
             Optional<ChangedAddonPaintingVariants.PaintingVariantInfo> optionalPaintingVariantInfo = ChangedAddonPaintingVariants.getPaintingVariantInfo(paintingVariantRegistryObject);
             optionalPaintingVariantInfo.ifPresent(paintingVariantInfo -> addPaintingVariant(paintingVariantRegistryObject, paintingVariantInfo.title(), paintingVariantInfo.author()));

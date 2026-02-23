@@ -4,7 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 
 public record SafeGrabSyncPacket(int targetId, boolean safeMode) {
 
-    public SafeGrabSyncPacket(FriendlyByteBuf buf){
+    public SafeGrabSyncPacket(FriendlyByteBuf buf) {
         this(buf.readVarInt(), buf.readBoolean());
     }
 

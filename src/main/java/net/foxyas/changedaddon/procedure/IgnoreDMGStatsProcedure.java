@@ -15,10 +15,10 @@ public class IgnoreDMGStatsProcedure {
     @SubscribeEvent
     public static void onEntityAttacked(LivingAttackEvent event) {
         Entity entity = event.getEntity();
-        if(!(entity instanceof Player player)) return;
+        if (!(entity instanceof Player player)) return;
 
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-        if(instance == null) return;
+        if (instance == null) return;
 
         DamageSource damagesource = event.getSource();
         String id = instance.getFormId().toString();

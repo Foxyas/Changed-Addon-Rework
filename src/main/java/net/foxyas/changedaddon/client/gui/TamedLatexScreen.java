@@ -7,7 +7,6 @@ import net.foxyas.changedaddon.menu.TamedLatexMenu;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.util.Color3;
 import net.ltxprogrammer.changed.util.SingleRunnable;
 import net.minecraft.client.Minecraft;
@@ -30,23 +29,7 @@ public class TamedLatexScreen extends AbstractRadialScreen<TamedLatexMenu> {
 
     private static final Component ACTIVE = Component.translatable("changed.tamed_dark_latex.active");
     private static final Component INACTIVE = Component.translatable("changed.tamed_dark_latex.inactive");
-
-    public record Interaction(String command, ResourceLocation texture, Supplier<List<Component>> tooltips, Supplier<Boolean> shouldHighlight) {
-        public Interaction(String command, Supplier<List<Component>> tooltips, Supplier<Boolean> shouldHighlight) {
-            this(command, Changed.modResource("textures/gui/tamed_dl_interactions/" + command + ".png"), tooltips, shouldHighlight);
-        }
-    }
-
     protected final ImmutableList<Interaction> availableInteractions;
-
-    public static ColorScheme getColors(@Nullable TransfurVariant<?> variant) {
-        if (variant == null) {
-            return new ColorScheme(Color3.WHITE, Color3.GRAY);
-        } else {
-            Pair<Color3, Color3> colors = variant.getColors();
-            return new ColorScheme(colors.getFirst(), colors.getSecond());
-        }
-    }
 
     public TamedLatexScreen(TamedLatexMenu menu, Inventory inventory, Component text) {
         super(menu, inventory, text, getColors(menu.tamedLatex.getSelfVariant()).setForegroundToBright().background(), getColors(menu.tamedLatex.getSelfVariant()).setForegroundToBright().foreground(), menu.tamedLatex);
@@ -96,6 +79,15 @@ public class TamedLatexScreen extends AbstractRadialScreen<TamedLatexMenu> {
         availableInteractions = interactionsBuilder.build();
     }
 
+    public static ColorScheme getColors(@Nullable TransfurVariant<?> variant) {
+        if (variant == null) {
+            return new ColorScheme(Color3.WHITE, Color3.GRAY);
+        } else {
+            Pair<Color3, Color3> colors = variant.getColors();
+            return new ColorScheme(colors.getFirst(), colors.getSecond());
+        }
+    }
+
     protected ResourceLocation getTextureForSection(int section, boolean thisHovered, boolean anyHovered, boolean active) {
         return Changed.modResource(((thisHovered || (!anyHovered && active)) ? PATH_GOO_SELECTED : PATH_GOO) + section + ".png");
     }
@@ -123,17 +115,17 @@ public class TamedLatexScreen extends AbstractRadialScreen<TamedLatexMenu> {
         boolean thisHovered = anyHovered && hovered.get() == section;
         graphics.setColor(red, green, blue, 1);
         graphics.blit(getTextureForSection(section, thisHovered, anyHovered, getInteractionSafe(section).map(Interaction::shouldHighlight).map(Supplier::get).orElse(false)),
-                (int)x - 32 + this.leftPos, (int)y - 32 + this.topPos, 0, 0, 64, 64, 64, 64);
+                (int) x - 32 + this.leftPos, (int) y - 32 + this.topPos, 0, 0, 64, 64, 64, 64);
     }
 
     @Override
     public void renderSectionForeground(GuiGraphics graphics, int section, double x, double y, float partialTicks, int mouseX, int mouseY, float red, float green, float blue, float alpha) {
         graphics.setColor(0, 0, 0, 0.5f);
         graphics.blit(availableInteractions.get(section).texture,
-                (int)x - 24 + this.leftPos + 3, (int)y - 24 + this.topPos + 3, 0, 0, 48, 48, 48, 48);
+                (int) x - 24 + this.leftPos + 3, (int) y - 24 + this.topPos + 3, 0, 0, 48, 48, 48, 48);
         graphics.setColor(red, green, blue, 1);
         graphics.blit(availableInteractions.get(section).texture,
-                (int)x - 24 + this.leftPos, (int)y - 24 + this.topPos, 0, 0, 48, 48, 48, 48);
+                (int) x - 24 + this.leftPos, (int) y - 24 + this.topPos, 0, 0, 48, 48, 48, 48);
     }
 
     @Override
@@ -147,5 +139,12 @@ public class TamedLatexScreen extends AbstractRadialScreen<TamedLatexMenu> {
         });
 
         return false;
+    }
+
+    public record Interaction(String command, ResourceLocation texture, Supplier<List<Component>> tooltips,
+                              Supplier<Boolean> shouldHighlight) {
+        public Interaction(String command, Supplier<List<Component>> tooltips, Supplier<Boolean> shouldHighlight) {
+            this(command, Changed.modResource("textures/gui/tamed_dl_interactions/" + command + ".png"), tooltips, shouldHighlight);
+        }
     }
 }

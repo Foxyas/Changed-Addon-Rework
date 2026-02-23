@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.ai;
 
-import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.LevelUtil;
@@ -36,6 +35,8 @@ public class LatexFishingGoal extends MoveToBlockGoal {
     public final TamableLatexEntityFavors iEntity;
     public final ChangedEntity entity;
     public final Level level;
+    protected int hookOutDuration = 0;
+    protected int idleDuration = 0;
     private BlockPos targetWaterSurface = BlockPos.ZERO;
 
     public LatexFishingGoal(TamableLatexEntityFavors latexEntityFavors, double speedModifier, int searchRange, int verticalSearchRange) {
@@ -145,9 +146,6 @@ public class LatexFishingGoal extends MoveToBlockGoal {
             return neighbor.isAir() || neighbor.is(Blocks.WATER);
         });
     }
-
-    protected int hookOutDuration = 0;
-    protected int idleDuration = 0;
 
     @Override
     public void start() {

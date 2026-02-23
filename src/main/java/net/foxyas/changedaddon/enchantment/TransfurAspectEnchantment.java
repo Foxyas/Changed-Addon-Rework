@@ -12,7 +12,6 @@ import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -36,6 +35,19 @@ public class TransfurAspectEnchantment extends Enchantment {
 
     public TransfurAspectEnchantment() {
         super(Rarity.RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+    }
+
+    public static float getTransfurDamage(@NotNull LivingEntity attacker, @Nullable Entity target, int enchantLevel) {
+        AttributeInstance instance = attacker.getAttribute(ChangedAttributes.TRANSFUR_DAMAGE.get());
+        if (instance == null) return 0f;
+
+        double baseValue = instance.getValue();
+
+        // Formula notes:
+        //   - Divide by 4.0 to keep numbers small
+        //   - Multiply by enchant level
+        //   - Extra multiplier (0.75) to soften scaling
+        return (float) (baseValue * 0.75f * enchantLevel / 4.0);
     }
 
     @Override
@@ -129,7 +141,7 @@ public class TransfurAspectEnchantment extends Enchantment {
         @SubscribeEvent
         public static void onItemTooltip(ItemTooltipEvent event) {
             Player player = event.getEntity();
-            if(player == null) return;
+            if (player == null) return;
 
             // Get the Transfur Aspect enchantment level from the item
             int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(
@@ -138,7 +150,7 @@ public class TransfurAspectEnchantment extends Enchantment {
             if (enchantLevel <= 0) return; // Exit if the item doesn't have the enchantment
 
             List<Component> tooltip = event.getToolTip();
-            if(!Screen.hasShiftDown()) {
+            if (!Screen.hasShiftDown()) {
                 // If Shift not held, show hint
                 tooltip.add(Component.literal("Press §e<Shift>§r for show tooltip"));
                 return;
@@ -153,19 +165,5 @@ public class TransfurAspectEnchantment extends Enchantment {
             // Add tooltip showing the damage
             tooltip.add(Component.literal("§r§e+" + String.format("%.2f", damage) + "§r Transfur Damage to Humanoids"));
         }
-    }
-
-
-    public static float getTransfurDamage(@NotNull LivingEntity attacker, @Nullable Entity target, int enchantLevel) {
-        AttributeInstance instance = attacker.getAttribute(ChangedAttributes.TRANSFUR_DAMAGE.get());
-        if (instance == null) return 0f;
-
-        double baseValue = instance.getValue();
-
-        // Formula notes:
-        //   - Divide by 4.0 to keep numbers small
-        //   - Multiply by enchant level
-        //   - Extra multiplier (0.75) to soften scaling
-        return (float) (baseValue * 0.75f * enchantLevel / 4.0);
     }
 }

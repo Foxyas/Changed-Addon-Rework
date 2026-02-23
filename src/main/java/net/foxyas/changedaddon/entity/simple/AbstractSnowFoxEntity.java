@@ -1,12 +1,10 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.GenderedEntity;
 import net.ltxprogrammer.changed.entity.PowderSnowWalkable;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -15,12 +13,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.network.PlayMessages;
 
 import java.util.Objects;
 import java.util.Set;
 
 public abstract class AbstractSnowFoxEntity extends ChangedEntity implements GenderedEntity, PowderSnowWalkable {
+
+    public AbstractSnowFoxEntity(EntityType<? extends ChangedEntity> type, Level level) {
+        super(type, level);
+    }
 
     public static Set<ResourceKey<Biome>> getSpawnBiomes() {
         return Set.of(
@@ -31,12 +32,8 @@ public abstract class AbstractSnowFoxEntity extends ChangedEntity implements Gen
         );
     }
 
-    public AbstractSnowFoxEntity(EntityType<? extends ChangedEntity> type, Level level) {
-        super(type, level);
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 24);

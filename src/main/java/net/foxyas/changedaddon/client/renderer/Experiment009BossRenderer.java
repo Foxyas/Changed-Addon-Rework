@@ -99,7 +99,7 @@ public class Experiment009BossRenderer extends AdvancedHumanoidRenderer<Experime
                 stack.scale(1.0002F, 1.0002F, 1.0002F);
                 EntityModel<T> var8 = this.getParentModel();
                 if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm),  stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
                 }
                 stack.popPose();
             }
@@ -109,7 +109,7 @@ public class Experiment009BossRenderer extends AdvancedHumanoidRenderer<Experime
                 stack.scale(1.0002F, 1.0002F, 1.0002F);
                 EntityModel<T> var8 = this.getParentModel();
                 if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm),  stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
                 }
                 stack.popPose();
             }
@@ -119,7 +119,7 @@ public class Experiment009BossRenderer extends AdvancedHumanoidRenderer<Experime
                 stack.scale(1.0002F, 1.0002F, 1.0002F);
                 EntityModel<T> var8 = this.getParentModel();
                 if (var8 instanceof AdvancedHumanoidModel<?> armedModel) {
-                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm),  stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
                 }
                 stack.popPose();
             }

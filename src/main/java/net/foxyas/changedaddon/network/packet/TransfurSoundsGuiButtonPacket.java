@@ -15,20 +15,12 @@ public record TransfurSoundsGuiButtonPacket(int actionId) {
         this(buf.readVarInt());
     }
 
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeVarInt(actionId);
-    }
-
     public static void handler(TransfurSoundsGuiButtonPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() ->
                 handleButtonAction(ctx.get().getSender(), msg.actionId)
         );
         ctx.get().setPacketHandled(true);
     }
-
-    // ===============================
-    // Core logic
-    // ===============================
 
     public static void handleButtonAction(Player player, int actionId) {
         if (player == null) return;
@@ -47,8 +39,16 @@ public record TransfurSoundsGuiButtonPacket(int actionId) {
         action.playAndApplyCooldown(player);
     }
 
+    // ===============================
+    // Core logic
+    // ===============================
+
     private static TransfurSoundAction getAction(int id) {
         TransfurSoundAction[] values = TransfurSoundAction.values();
         return id >= 0 && id < values.length ? values[id] : null;
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeVarInt(actionId);
     }
 }

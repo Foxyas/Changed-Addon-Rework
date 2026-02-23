@@ -18,7 +18,7 @@ import static net.foxyas.changedaddon.init.ChangedAddonFeatures.Configurations.*
 
 public class ConfiguredFeatureProvider {
 
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?,?>> context){
+    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
         // IRIDIUM
         // context.register(ChangedAddonFeatures.IRIDIUM_ORE_CONFIG, IridiumoreFeature.CONFIGURED_FEATURE.get());
         // PAINITE
@@ -94,7 +94,7 @@ public class ConfiguredFeatureProvider {
         );
     }
 
-    private static <FC extends FeatureConfiguration,F extends Feature<FC>> void register(@NotNull BootstapContext<ConfiguredFeature<?,?>> context, ResourceKey<ConfiguredFeature<?,?>> key, F feature, FC configuration){
-        context.register(key,new ConfiguredFeature<>(feature,configuration));
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(@NotNull BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
+        context.register(key, new ConfiguredFeature<>(feature, configuration));
     }
 }

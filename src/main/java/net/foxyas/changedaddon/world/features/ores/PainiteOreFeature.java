@@ -63,6 +63,14 @@ public class PainiteOreFeature extends OreFeature {
         return PLACED_FEATURE;
     }
 
+    private static boolean execute(LevelAccessor world, int x, int y, int z) {
+        if (world.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.PAINITE_GENERATION)) {
+            return !(world.isEmptyBlock(new BlockPos(x + 1, y, z)) && world.isEmptyBlock(new BlockPos(x - 1, y, z)) && world.isEmptyBlock(new BlockPos(x, y + 1, z)) && world.isEmptyBlock(new BlockPos(x, y - 1, z))
+                    && world.isEmptyBlock(new BlockPos(x, y, z + 1)) && world.isEmptyBlock(new BlockPos(x, y, z - 1)));
+        }
+        return false;
+    }
+
     public boolean place(FeaturePlaceContext<OreConfiguration> context) {
         WorldGenLevel world = context.level();
         if (!generate_dimensions.contains(world.getLevel().dimension()))
@@ -73,14 +81,6 @@ public class PainiteOreFeature extends OreFeature {
         if (!execute(world, x, y, z))
             return false;
         return super.place(context);
-    }
-
-    private static boolean execute(LevelAccessor world, int x, int y, int z) {
-        if (world.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.PAINITE_GENERATION)) {
-            return !(world.isEmptyBlock(new BlockPos(x + 1, y, z)) && world.isEmptyBlock(new BlockPos(x - 1, y, z)) && world.isEmptyBlock(new BlockPos(x, y + 1, z)) && world.isEmptyBlock(new BlockPos(x, y - 1, z))
-                    && world.isEmptyBlock(new BlockPos(x, y, z + 1)) && world.isEmptyBlock(new BlockPos(x, y, z - 1)));
-        }
-        return false;
     }
 
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

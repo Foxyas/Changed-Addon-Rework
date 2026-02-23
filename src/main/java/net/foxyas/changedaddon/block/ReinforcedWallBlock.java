@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.block;
 
-import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -8,8 +7,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
 import org.jetbrains.annotations.NotNull;
+
+import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.NonLatexCoverableBlock;
 
 public class ReinforcedWallBlock extends Block implements NonLatexCoverableBlock {
 

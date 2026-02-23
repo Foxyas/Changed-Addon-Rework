@@ -14,7 +14,7 @@ public class BioSynthStatsProcedure {
     @SubscribeEvent
     public static void onEntityAttacked(LivingHurtEvent event) {
         DamageSource source = event.getSource();
-        if(!source.is(DamageTypeTags.IS_FIRE)) return;
+        if (!source.is(DamageTypeTags.IS_FIRE)) return;
 
         if (event.getEntity() instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) != null && ProcessTransfur.getPlayerTransfurVariant(player).getFormId().toString().startsWith("changed_addon:form_biosynth")) {
             float math = event.getAmount() / 2;

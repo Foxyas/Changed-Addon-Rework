@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -10,10 +9,8 @@ import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
-import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -25,29 +22,6 @@ public class ClawsAbility extends SimpleAbility {
 
     public ClawsAbility() {
         super();
-    }
-
-    @Override
-    public void saveData(CompoundTag tag, IAbstractChangedEntity entity) {
-        super.saveData(tag, entity);
-        tag.putBoolean("isActive", isActive);
-    }
-
-    @Override
-    public void readData(CompoundTag tag, IAbstractChangedEntity entity) {
-        super.readData(tag, entity);
-        if (tag.contains("isActive")) {
-            this.isActive = tag.getBoolean("isActive");
-        }
-    }
-
-    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
-        return ResourceLocation.parse("changed_addon:textures/screens/paw_with_claws.png");
-    }
-
-    @Override
-    public Component getAbilityName(IAbstractChangedEntity entity) {
-        return Component.translatable("ability.changed_addon.claws");
     }
 
     public static Optional<Integer> getColor(AbstractAbilityInstance abilityInstance, int layer) {
@@ -91,6 +65,29 @@ public class ClawsAbility extends SimpleAbility {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void saveData(CompoundTag tag, IAbstractChangedEntity entity) {
+        super.saveData(tag, entity);
+        tag.putBoolean("isActive", isActive);
+    }
+
+    @Override
+    public void readData(CompoundTag tag, IAbstractChangedEntity entity) {
+        super.readData(tag, entity);
+        if (tag.contains("isActive")) {
+            this.isActive = tag.getBoolean("isActive");
+        }
+    }
+
+    public ResourceLocation getTexture(IAbstractChangedEntity entity) {
+        return ResourceLocation.parse("changed_addon:textures/screens/paw_with_claws.png");
+    }
+
+    @Override
+    public Component getAbilityName(IAbstractChangedEntity entity) {
+        return Component.translatable("ability.changed_addon.claws");
     }
 
     @Override

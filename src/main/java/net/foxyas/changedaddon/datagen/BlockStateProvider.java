@@ -33,8 +33,31 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.*;
 
 public class BlockStateProvider extends net.minecraftforge.client.model.generators.BlockStateProvider {
 
+    private static final ResourceLocation CAN = blockLoc(ChangedAddonMod.resourceLoc("stackable_can"));
+
     public BlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, ChangedAddonMod.MODID, exFileHelper);
+    }
+
+    private static ResourceLocation blockLoc(ResourceLocation loc) {
+        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + loc.getPath());
+    }
+
+    private static int getXRotation(Direction dir) {
+        return switch (dir) {
+            case DOWN -> -90;
+            case UP -> 90;
+            default -> 0;
+        };
+    }
+
+    private static int getYRotation(Direction dir) {
+        return switch (dir) {
+            case NORTH -> 180;
+            case EAST -> 270;
+            case WEST -> 90;
+            default -> 0;
+        };
     }
 
     @Override
@@ -87,46 +110,40 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         largeLuminarCrystalWithItem();
     }
 
-    private void timedKeypad(){
+    private void timedKeypad() {
         ResourceLocation loc = blockLoc(TIMED_KEYPAD.getId());
         ModelFile file = models().getExistingFile(loc);
         ModelFile locked = models().getExistingFile(withSuffix(loc, "_locked"));
 
         getVariantBuilder(TIMED_KEYPAD.get()).forAllStatesExcept(state ->
-            new ConfiguredModel[]{new ConfiguredModel(state.getValue(TimedKeypadBlock.POWERED) ? file : locked, 0,
-                    (int) ((state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 270) % 360), false)}
+                new ConfiguredModel[]{new ConfiguredModel(state.getValue(TimedKeypadBlock.POWERED) ? file : locked, 0,
+                        (int) ((state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 270) % 360), false)}
         );
     }
 
-    private static ResourceLocation blockLoc(ResourceLocation loc){
-        return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + loc.getPath());
-    }
-
-    private ResourceLocation withSuffix(ResourceLocation loc, String suffix){
+    private ResourceLocation withSuffix(ResourceLocation loc, String suffix) {
         return ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), loc.getPath() + suffix);
     }
 
-    private void simpleBlock(RegistryObject<? extends Block> block, Property<?>... ignore){
+    private void simpleBlock(RegistryObject<? extends Block> block, Property<?>... ignore) {
         ConfiguredModel[] model = new ConfiguredModel[]{new ConfiguredModel(models().getExistingFile(blockLoc(block.getId())))};
 
         getVariantBuilder(block.get()).forAllStatesExcept(state -> model, ignore);
     }
 
-    private void horizontalBlock(RegistryObject<? extends HorizontalDirectionalBlock> block, Property<?>... ignore){
+    private void horizontalBlock(RegistryObject<? extends HorizontalDirectionalBlock> block, Property<?>... ignore) {
         ResourceLocation loc = blockLoc(block.getId());
         Block bl = block.get();
         ModelFile file = models().getExistingFile(loc);
 
         getVariantBuilder(bl).forAllStatesExcept(state ->
                         ConfiguredModel.builder().modelFile(file)
-                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
-                        .build(),
-        ignore);
+                                .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                                .build(),
+                ignore);
     }
 
-    private static final ResourceLocation CAN = blockLoc(ChangedAddonMod.resourceLoc("stackable_can"));
-
-    private void stackableCan(RegistryObject<? extends StackableCanBlock> can){
+    private void stackableCan(RegistryObject<? extends StackableCanBlock> can) {
         ResourceLocation loc = blockLoc(can.getId());
 
         ModelFile[] models = new ModelFile[4];
@@ -136,17 +153,17 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         }
 
         getVariantBuilder(can.get()).forAllStatesExcept(state ->
-                horizontalRotatedModelAr(models[state.getValue(StackableCanBlock.CANS) - 1], state.getValue(StackableCanBlock.FACING)),
+                        horizontalRotatedModelAr(models[state.getValue(StackableCanBlock.CANS) - 1], state.getValue(StackableCanBlock.FACING)),
                 StackableCanBlock.WATERLOGGED);
     }
 
     @Contract("_, _ -> new")
-    private ConfiguredModel @NotNull [] horizontalRotatedModelAr(ModelFile file, Direction direction){
+    private ConfiguredModel @NotNull [] horizontalRotatedModelAr(ModelFile file, Direction direction) {
         return new ConfiguredModel[]{horizontalRotatedModel(file, direction)};
     }
 
-    private ConfiguredModel horizontalRotatedModel(ModelFile file, Direction direction){
-        return switch (direction){
+    private ConfiguredModel horizontalRotatedModel(ModelFile file, Direction direction) {
+        return switch (direction) {
             case EAST -> new ConfiguredModel(file, 0, 90, false);
             case SOUTH -> new ConfiguredModel(file, 0, 180, false);
             case WEST -> new ConfiguredModel(file, 0, 270, false);
@@ -154,12 +171,12 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         };
     }
 
-    private void simpleWithVariants(RegistryObject<? extends Block> block, int variants, int itemModelIndex){
+    private void simpleWithVariants(RegistryObject<? extends Block> block, int variants, int itemModelIndex) {
         Block b = block.get();
         ResourceLocation loc = withSuffix(blockLoc(block.getId()), "/variant");
 
         ModelFile[] models = new ModelFile[variants];
-        for(int i = 0; i < variants; i++){
+        for (int i = 0; i < variants; i++) {
             models[i] = models().getExistingFile(withSuffix(loc, "_" + i));
         }
 
@@ -169,29 +186,29 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         simpleBlockItem(b, models[itemModelIndex]);
     }
 
-    private void pillarBlockWithVariants(RegistryObject<? extends RotatedPillarBlock> pillar, int variants, int itemModelIndex){
+    private void pillarBlockWithVariants(RegistryObject<? extends RotatedPillarBlock> pillar, int variants, int itemModelIndex) {
         RotatedPillarBlock block = pillar.get();
         ResourceLocation loc = withSuffix(blockLoc(pillar.getId()), "/variant");
 
         ModelFile[] models = new ModelFile[variants];
-        for(int i = 0; i < variants; i++){
+        for (int i = 0; i < variants; i++) {
             models[i] = models().getExistingFile(withSuffix(loc, "_" + i));
         }
 
         getVariantBuilder(block).forAllStatesExcept(state ->
-            switch (state.getValue(BlockStateProperties.AXIS)){
-                case Y -> configure(models, ConfiguredModel::new);
-                case Z -> configure(models, model -> new ConfiguredModel(model, 90, 0, false));
-                case X -> configure(models, model -> new ConfiguredModel(model, 90, 90, false));
-            }
+                switch (state.getValue(BlockStateProperties.AXIS)) {
+                    case Y -> configure(models, ConfiguredModel::new);
+                    case Z -> configure(models, model -> new ConfiguredModel(model, 90, 0, false));
+                    case X -> configure(models, model -> new ConfiguredModel(model, 90, 90, false));
+                }
         );
 
         simpleBlockItem(block, models[itemModelIndex]);
     }
 
-    private ConfiguredModel[] configure(ModelFile[] models, Function<ModelFile, ConfiguredModel> config){
+    private ConfiguredModel[] configure(ModelFile[] models, Function<ModelFile, ConfiguredModel> config) {
         ConfiguredModel[] out = new ConfiguredModel[models.length];
-        for(int i = 0; i < models.length; i++){
+        for (int i = 0; i < models.length; i++) {
             out[i] = config.apply(models[i]);
         }
         return out;
@@ -225,8 +242,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         ModelFile bottom = models().cross(loc + "_bottom", withSuffix(loc, "_bottom")).renderType("cutout");
         ModelFile bottomHearted = models().cross(loc + "_bottom_hearted", withSuffix(loc, "_bottom_hearted")).renderType("cutout");
         getVariantBuilder(LUMINAR_CRYSTAL_LARGE.get()).forAllStatesExcept(state ->
-                new ConfiguredModel[]{rotatedModel(state.getValue(LuminarCrystalLarge.HALF) == Half.TOP ? top :
-                        state.getValue(LuminarCrystalLarge.HEARTED) ? bottomHearted : bottom, state.getValue(LuminarCrystalLarge.FACING))}
+                        new ConfiguredModel[]{rotatedModel(state.getValue(LuminarCrystalLarge.HALF) == Half.TOP ? top :
+                                state.getValue(LuminarCrystalLarge.HEARTED) ? bottomHearted : bottom, state.getValue(LuminarCrystalLarge.FACING))}
                 , LuminarCrystalLarge.WATERLOGGED);
 
         itemModels().getBuilder(ChangedAddonItems.LUMINAR_CRYSTAL_LARGE.getId().toString())
@@ -234,8 +251,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                 .texture("layer0", withSuffix(loc, "_top"));
     }
 
-    private ConfiguredModel rotatedModel(ModelFile file, Direction direction){
-        return switch (direction){
+    private ConfiguredModel rotatedModel(ModelFile file, Direction direction) {
+        return switch (direction) {
             case UP -> new ConfiguredModel(file, 0, 0, false);
             case DOWN -> new ConfiguredModel(file, 180, 0, false);
             case NORTH -> new ConfiguredModel(file, 90, 0, false);
@@ -263,23 +280,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                     .condition(prop, true);
         }
 
-        if (generatedItem) itemModels().getBuilder(BuiltInRegistries.ITEM.getKey(block.get().asItem()).getPath()).parent(model);
-    }
-
-    private static int getXRotation(Direction dir) {
-        return switch (dir) {
-            case DOWN -> -90;
-            case UP -> 90;
-            default -> 0;
-        };
-    }
-
-    private static int getYRotation(Direction dir) {
-        return switch (dir) {
-            case NORTH -> 180;
-            case EAST -> 270;
-            case WEST -> 90;
-            default -> 0;
-        };
+        if (generatedItem)
+            itemModels().getBuilder(BuiltInRegistries.ITEM.getKey(block.get().asItem()).getPath()).parent(model);
     }
 }

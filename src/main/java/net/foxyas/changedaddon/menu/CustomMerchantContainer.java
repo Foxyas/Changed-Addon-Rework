@@ -30,7 +30,7 @@ public class CustomMerchantContainer implements Container {
     }
 
     public boolean isEmpty() {
-        for(ItemStack itemstack : itemStacks) {
+        for (ItemStack itemstack : itemStacks) {
             if (!itemstack.isEmpty()) return false;
         }
 

@@ -22,7 +22,7 @@ public class MayCauseGrabDamageGoal extends Goal {
     @Override
     public boolean canUse() {
         if (cooldown > 0) {
-            cooldown --;
+            cooldown--;
             return false;
         }
 

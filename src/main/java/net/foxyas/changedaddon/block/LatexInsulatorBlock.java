@@ -46,6 +46,56 @@ public class LatexInsulatorBlock extends Block implements NonLatexCoverableBlock
         super(BlockBehaviour.Properties.copy(Blocks.CLAY).sound(SoundType.SLIME_BLOCK).strength(0.05f, 10f).speedFactor(0.5f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
     }
 
+    private static void execute(Entity entity) {
+        entity.fallDistance = 0;
+        if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+            if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
+                if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
+                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 300, 0, false, false));
+                if (entity instanceof LivingEntity _entity) {
+                    Holder<DamageType> pType = ChangedAddonDamageSources.LATEX_SOLVENT.source(_entity.level()).typeHolder();
+                    DamageSource pSource = new DamageSource(pType) {
+                        @Override
+                        public boolean is(@NotNull TagKey<DamageType> pDamageTypeKey) {
+                            if (pDamageTypeKey == DamageTypeTags.BYPASSES_ARMOR) {
+                                return true;
+                            }
+                            return super.is(pDamageTypeKey);
+                        }
+                    };
+                    _entity.hurt(pSource, 1);
+                }
+            }
+        }
+        if (entity instanceof Player player) {
+            TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (instance != null) {
+                if (ProcessTransfur.isPlayerLatex(player)) {
+                    if (!player.level.isClientSide())
+                        player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
+                    if (player.getHealth() > 1) {
+                        Holder<DamageType> pType = ChangedAddonDamageSources.LATEX_SOLVENT.source(player.level()).typeHolder();
+                        DamageSource pSource = new DamageSource(pType) {
+                            @Override
+                            public boolean is(@NotNull TagKey<DamageType> pDamageTypeKey) {
+                                if (pDamageTypeKey == DamageTypeTags.BYPASSES_ARMOR) {
+                                    return true;
+                                }
+                                return super.is(pDamageTypeKey);
+                            }
+                        };
+                        player.hurt(pSource, 1);
+                    }
+                } else {
+                    if ((entity.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonVariables.PlayerVariables())).showWarns) {
+                        if (entity instanceof Player _player && !_player.level.isClientSide())
+                            _player.displayClientMessage(Component.literal((Component.translatable("changed_addon.untransfur.Immune").getString())), true);
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public float[] getBeaconColorMultiplier(BlockState state, LevelReader world, BlockPos pos, BlockPos beaconPos) {
         return new float[]{0.6f, 0.6f, 0.6f};
@@ -125,55 +175,5 @@ public class LatexInsulatorBlock extends Block implements NonLatexCoverableBlock
     public void stepOn(Level world, BlockPos pos, BlockState blockstate, Entity entity) {
         super.stepOn(world, pos, blockstate, entity);
         execute(entity);
-    }
-
-    private static void execute(Entity entity) {
-        entity.fallDistance = 0;
-        if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
-            if ((entity instanceof LivingEntity _livEnt ? _livEnt.getHealth() : -1) > 1) {
-                if (entity instanceof LivingEntity _entity && !_entity.level.isClientSide())
-                    _entity.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 300, 0, false, false));
-                if (entity instanceof LivingEntity _entity) {
-                    Holder<DamageType> pType = ChangedAddonDamageSources.LATEX_SOLVENT.source(_entity.level()).typeHolder();
-                    DamageSource pSource = new DamageSource(pType) {
-                        @Override
-                        public boolean is(@NotNull TagKey<DamageType> pDamageTypeKey) {
-                            if (pDamageTypeKey == DamageTypeTags.BYPASSES_ARMOR) {
-                                return true;
-                            }
-                            return super.is(pDamageTypeKey);
-                        }
-                    };
-                    _entity.hurt(pSource, 1);
-                }
-            }
-        }
-        if (entity instanceof Player player) {
-            TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (instance != null) {
-                if (ProcessTransfur.isPlayerLatex(player)) {
-                    if (!player.level.isClientSide())
-                        player.addEffect(new MobEffectInstance(ChangedAddonMobEffects.LATEX_SOLVENT.get(), 120, 0, false, false));
-                    if (player.getHealth() > 1) {
-                        Holder<DamageType> pType = ChangedAddonDamageSources.LATEX_SOLVENT.source(player.level()).typeHolder();
-                        DamageSource pSource = new DamageSource(pType) {
-                            @Override
-                            public boolean is(@NotNull TagKey<DamageType> pDamageTypeKey) {
-                                if (pDamageTypeKey == DamageTypeTags.BYPASSES_ARMOR) {
-                                    return true;
-                                }
-                                return super.is(pDamageTypeKey);
-                            }
-                        };
-                        player.hurt(pSource, 1);
-                    }
-                } else {
-                    if ((entity.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonVariables.PlayerVariables())).showWarns) {
-                        if (entity instanceof Player _player && !_player.level.isClientSide())
-                            _player.displayClientMessage(Component.literal((Component.translatable("changed_addon.untransfur.Immune").getString())), true);
-                    }
-                }
-            }
-        }
     }
 }

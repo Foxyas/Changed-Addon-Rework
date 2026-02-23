@@ -11,14 +11,11 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.foxyas.changedaddon.recipe.special.KeycardColorRecipe;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
@@ -82,7 +79,7 @@ public class KeycardColorRecipeCategory implements IRecipeCategory<KeycardColorR
         List<ItemStack> dyes = new ArrayList<>(List.of(Ingredient.of(Tags.Items.DYES).getItems()));
         for (int y = 0; y < 3; ++y) {
             for (int x = 0; x < 3; ++x) {
-                if(y == 1 && x == 1) {
+                if (y == 1 && x == 1) {
                     builder.addSlot(RecipeIngredientRole.INPUT, x * 18 + 1, y * 18 + 1).addItemStack(keyCard);
                 } else {
                     Collections.shuffle(dyes);

@@ -23,7 +23,7 @@ public class UntransfurPotionJeiRecipeBrewing implements IJeiBrewingRecipe {
     }
 
     public static UntransfurPotionJeiRecipeBrewing[] getAllRecipes() {
-        return new UntransfurPotionJeiRecipeBrewing[] {
+        return new UntransfurPotionJeiRecipeBrewing[]{
                 new UntransfurPotionJeiRecipeBrewing(Items.POTION),
                 new UntransfurPotionJeiRecipeBrewing(Items.SPLASH_POTION),
                 new UntransfurPotionJeiRecipeBrewing(Items.LINGERING_POTION)

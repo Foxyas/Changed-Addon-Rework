@@ -23,32 +23,34 @@ public class ChangedAddonDataFixer {
 
     public static final int DATAFIX_ID = 1; // used to internal version
     private static final Map<DataFixTypes, Consumer<CompoundTag>> DATA_FIXERS = new HashMap<>();
-
+    private static final Consumer<CompoundTag> NULL_OP = (tag) -> {
+    };
     // Data Fixers
     private final Map<ResourceLocation, ResourceLocation> ENCHANTMENT_REMAP = new HashMap<>();
-
-
     // Future Data fixers
-    private final Map<ResourceLocation, ResourceLocation> ENTITY_ID_REMAP = Util.make(new HashMap<>(), map -> {});
-    private final Map<ResourceLocation, ResourceLocation> ITEM_ID_REMAP   = Util.make(new HashMap<>(), map -> {
+    private final Map<ResourceLocation, ResourceLocation> ENTITY_ID_REMAP = Util.make(new HashMap<>(), map -> {
+    });
+    private final Map<ResourceLocation, ResourceLocation> ITEM_ID_REMAP = Util.make(new HashMap<>(), map -> {
         map.put(ChangedAddonMod.resourceLoc("lunarrose_helmet"), ChangedAddonItems.LUNAR_ROSE.getId());
     });
-    private final Map<ResourceLocation, ResourceLocation> BLOCK_ID_REMAP  = Util.make(new HashMap<>(), map -> {});
-    private final Map<ResourceLocation, ResourceLocation> BLOCK_ITEM_ID_REMAP = Util.make(new HashMap<>(), map -> {});
+    private final Map<ResourceLocation, ResourceLocation> BLOCK_ID_REMAP = Util.make(new HashMap<>(), map -> {
+    });
+    private final Map<ResourceLocation, ResourceLocation> BLOCK_ITEM_ID_REMAP = Util.make(new HashMap<>(), map -> {
+    });
     private final Map<ResourceLocation, ResourceLocation> VARIANT_ID_REMAP = Util.make(new HashMap<>(), map -> {
         map.put(ChangedAddonMod.resourceLoc("form_ket_experiment009"), ChangedAddonTransfurVariants.EXPERIMENT_009.getId());
         map.put(ChangedAddonMod.resourceLoc("form_ket_experiment009_boss"), ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.getId());
     });
-    private final Map<String, String> ENUM_REMAP = Util.make(new HashMap<>(), map -> {});
-    private final Map<String, String> TAG_REMAP  = Util.make(new HashMap<>(), map -> {});
+    private final Map<String, String> ENUM_REMAP = Util.make(new HashMap<>(), map -> {
+    });
+    private final Map<String, String> TAG_REMAP = Util.make(new HashMap<>(), map -> {
+    });
     private final Map<String, String> GAMERULES_REMAP = Util.make(new HashMap<>(), map -> {
         map.put("doLatexInfection", ChangedAddonGameRules.DO_LATEX_INFECTION.getId());
         map.put("painiteGeneration", ChangedAddonGameRules.PAINITE_GENERATION.getId());
         map.put("doDazedLatexBurn", ChangedAddonGameRules.DO_DAZED_LATEX_BURN.getId());
         map.put("doDarkLatexMaskTransfur", ChangedAddonGameRules.TICKS_TO_DARK_LATEX_MASK_TRANSFUR.getId());
     });
-
-    private static final Consumer<CompoundTag> NULL_OP = (tag) -> {};
 
     public ChangedAddonDataFixer() {
         // define remapeamentos de IDs antigos para novos
@@ -120,7 +122,6 @@ public class ChangedAddonDataFixer {
             }
         }
     }
-
 
 
     private void fixEnchantments(CompoundTag tag) {

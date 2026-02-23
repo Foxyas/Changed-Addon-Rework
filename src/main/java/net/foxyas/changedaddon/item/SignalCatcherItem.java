@@ -56,65 +56,6 @@ public class SignalCatcherItem extends Item {
         super(new Properties().stacksTo(64).rarity(Rarity.COMMON));
     }
 
-    @Override
-    public int getUseDuration(@NotNull ItemStack itemstack) {
-        return 15;
-    }
-
-    @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player entity, @NotNull InteractionHand hand) {
-        InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-        entity.startUsingItem(hand);
-        return ar;
-    }
-
-    @Override
-    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
-        if (!isSignalCatcherInHand(entity)) return stack;
-
-        Player player = (Player) entity;
-        if (!player.getCooldowns().isOnCooldown(ChangedAddonItems.SIGNAL_CATCHER.get())) {
-            int radius = player.isShiftKeyDown() ? LARGE_SEARCH_RADIUS : SMALL_SEARCH_RADIUS;
-            int cooldown = player.isShiftKeyDown() ? 225 : 75;
-            searchSignalBlockUsingChunks(level, player, stack, radius, cooldown);
-        }
-
-        return stack;
-    }
-
-    @Override
-    public void releaseUsing(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity, int time) {
-        if (!itemstack.getOrCreateTag().getBoolean("set")) {
-            if (entity instanceof Player player && !player.level.isClientSide())
-                player.displayClientMessage(Component.literal("§o§bNo Location Found §l[Not Close Enough]"), false);
-        }
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
-        @Nullable Player player = Util.make(() -> Minecraft.getInstance().player);
-        if (player == null) return;
-
-        CompoundTag tag = stack.getOrCreateTag();
-        double x = tag.getDouble("x");
-        double y = tag.getDouble("y");
-        double z = tag.getDouble("z");
-        double deltaX = x - player.getX();
-        double deltaY = y - player.getY();
-        double deltaZ = z - player.getZ();
-        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
-        if (!Screen.hasShiftDown()) {
-            tooltip.add(Component.literal("Hold §6<Shift>§r for Info"));
-        } else {
-            tooltip.add(Component.literal("Hold §b<Right Click>§r to scan a 32 block area"));
-            tooltip.add(Component.literal("Hold §c<Shift + Right Click>§r to perform a Super scan and scan 120 block area"));
-        }
-        tooltip.add(Component.literal(("§oCoords §l" + x + " " + y + " " + z)));
-        if (stack.getOrCreateTag().getBoolean("set")) {
-            tooltip.add(Component.literal(("§oDistance §l" + Math.round(distance))));
-        }
-    }
-
     private static boolean isSignalCatcherInHand(LivingEntity entity) {
         return entity.getMainHandItem().is(ChangedAddonItems.SIGNAL_CATCHER.get()) || entity.getOffhandItem().is(ChangedAddonItems.SIGNAL_CATCHER.get());
     }
@@ -218,6 +159,65 @@ public class SignalCatcherItem extends Item {
         return BlockPos.containing(new Vec3(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z")));
     }
 
+    @Override
+    public int getUseDuration(@NotNull ItemStack itemstack) {
+        return 15;
+    }
+
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player entity, @NotNull InteractionHand hand) {
+        InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
+        entity.startUsingItem(hand);
+        return ar;
+    }
+
+    @Override
+    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
+        if (!isSignalCatcherInHand(entity)) return stack;
+
+        Player player = (Player) entity;
+        if (!player.getCooldowns().isOnCooldown(ChangedAddonItems.SIGNAL_CATCHER.get())) {
+            int radius = player.isShiftKeyDown() ? LARGE_SEARCH_RADIUS : SMALL_SEARCH_RADIUS;
+            int cooldown = player.isShiftKeyDown() ? 225 : 75;
+            searchSignalBlockUsingChunks(level, player, stack, radius, cooldown);
+        }
+
+        return stack;
+    }
+
+    @Override
+    public void releaseUsing(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity, int time) {
+        if (!itemstack.getOrCreateTag().getBoolean("set")) {
+            if (entity instanceof Player player && !player.level.isClientSide())
+                player.displayClientMessage(Component.literal("§o§bNo Location Found §l[Not Close Enough]"), false);
+        }
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
+        @Nullable Player player = Util.make(() -> Minecraft.getInstance().player);
+        if (player == null) return;
+
+        CompoundTag tag = stack.getOrCreateTag();
+        double x = tag.getDouble("x");
+        double y = tag.getDouble("y");
+        double z = tag.getDouble("z");
+        double deltaX = x - player.getX();
+        double deltaY = y - player.getY();
+        double deltaZ = z - player.getZ();
+        double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+        if (!Screen.hasShiftDown()) {
+            tooltip.add(Component.literal("Hold §6<Shift>§r for Info"));
+        } else {
+            tooltip.add(Component.literal("Hold §b<Right Click>§r to scan a 32 block area"));
+            tooltip.add(Component.literal("Hold §c<Shift + Right Click>§r to perform a Super scan and scan 120 block area"));
+        }
+        tooltip.add(Component.literal(("§oCoords §l" + x + " " + y + " " + z)));
+        if (stack.getOrCreateTag().getBoolean("set")) {
+            tooltip.add(Component.literal(("§oDistance §l" + Math.round(distance))));
+        }
+    }
+
     /* ========================================================= */
     /* ===================== CLIENT EVENTS ===================== */
     /* ========================================================= */
@@ -225,6 +225,9 @@ public class SignalCatcherItem extends Item {
     @OnlyIn(Dist.CLIENT)
     @Mod.EventBusSubscriber(Dist.CLIENT)
     public static class ClientEvents {
+
+        private static CompletableFuture<Pair<Path, BlockPos>> pathFuture;
+        private static Pair<Path, BlockPos> cachedPair;
 
         @SubscribeEvent
         public static void onRenderLevel(RenderLevelStageEvent event) {
@@ -288,9 +291,6 @@ public class SignalCatcherItem extends Item {
             if (pathFuture != null) pathFuture.cancel(true);
             pathFuture = null;
         }
-
-        private static CompletableFuture<Pair<Path, BlockPos>> pathFuture;
-        private static Pair<Path, BlockPos> cachedPair;
 
         private static @NotNull PathNavigation getNavigation(LocalPlayer player, PathfinderMob shadowMob, ClientLevel level) {
             if (player.getAbilities().flying || player.isFallFlying() || !player.onGround()) {

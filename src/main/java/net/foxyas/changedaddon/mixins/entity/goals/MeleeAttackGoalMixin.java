@@ -19,7 +19,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(MeleeAttackGoal.class)
 public class MeleeAttackGoalMixin {
 
-    @Shadow @Final protected PathfinderMob mob;
+    @Shadow
+    @Final
+    protected PathfinderMob mob;
 
     @Inject(at = @At("HEAD"), method = "canUse", cancellable = true)
     public void canUseHook(CallbackInfoReturnable<Boolean> cir) {

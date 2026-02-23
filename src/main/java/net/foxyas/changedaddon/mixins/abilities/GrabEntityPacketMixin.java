@@ -10,8 +10,6 @@ import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkEvent;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,7 +20,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = GrabEntityPacket.class, remap = false)
 public class GrabEntityPacketMixin {
 
-    @Shadow @Final public GrabEntityPacket.GrabType type;
+    @Shadow
+    @Final
+    public GrabEntityPacket.GrabType type;
 
     @ModifyExpressionValue(
             method = "lambda$handle$4",

@@ -6,9 +6,9 @@ import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
 import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
@@ -16,7 +16,6 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -31,7 +30,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class UnfuseAbility extends SimpleAbility {
+import static net.foxyas.changedaddon.ability.UnfuseAbility.Instance;
+
+public class UnfuseAbility extends AbstractAbility<Instance> {
+
+    public UnfuseAbility() {
+        super(Instance::new);
+    }
 
     public static Optional<Integer> getColor(AbstractAbilityInstance abilityInstance, int layer) {
         AbstractRadialScreen.ColorScheme scheme = AbilityColors.getAbilityColors(abilityInstance);
@@ -87,59 +92,87 @@ public class UnfuseAbility extends SimpleAbility {
         return 360;
     }
 
-    @Override
-    public void startUsing(IAbstractChangedEntity entity) {
-        super.startUsing(entity);
-        Entity entityUnfused;
-        TransfurVariantInstance<?> transfurVariantInstance = entity.getTransfurVariantInstance();
-        if (transfurVariantInstance == null) {
-            return;
+    public static class Instance extends AbstractAbilityInstance {
+
+        protected boolean entitySpawned = false;
+
+        public Instance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
+            super(ability, entity);
         }
 
+        @Override
+        public boolean canUse() {
+            return ability.canUse(entity);
+        }
 
-        ChangedEntity changedEntity = transfurVariantInstance.getChangedEntity();
-        if (changedEntity  instanceof ICoatLikeEntity iCoatLikeEntity) {
-            Player host = transfurVariantInstance.getHost();
-            entityUnfused = changedEntity.getType().create(host.level());
+        @Override
+        public boolean canKeepUsing() {
+            return ability.canKeepUsing(entity);
+        }
 
-            if (!(entityUnfused instanceof ChangedEntity changedEntityUnfused)) {
+        @Override
+        public void startUsing() {
+            Entity entityUnfused;
+            TransfurVariantInstance<?> transfurVariantInstance = entity.getTransfurVariantInstance();
+            if (transfurVariantInstance == null) {
                 return;
             }
 
-            if (changedEntityUnfused instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
-                abstractTamableLatexEntity.tame(host);
+
+            ChangedEntity changedEntity = transfurVariantInstance.getChangedEntity();
+            if (changedEntity instanceof ICoatLikeEntity iCoatLikeEntity) {
+                Player host = transfurVariantInstance.getHost();
+                entityUnfused = changedEntity.getType().create(host.level());
+
+                if (!(entityUnfused instanceof ChangedEntity changedEntityUnfused)) {
+                    return;
+                }
+
+                if (changedEntityUnfused instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
+                    abstractTamableLatexEntity.tame(host);
+                    iCoatLikeEntity.setIsUnfusedFromHost(true);
+                } else if (changedEntityUnfused instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
+                    abstractExp2SnepChangedEntity.tame(host);
+                    abstractExp2SnepChangedEntity.setIsUnfusedFromHost(true);
+                }
+
                 iCoatLikeEntity.setIsUnfusedFromHost(true);
-            } else if (changedEntityUnfused instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
-                abstractExp2SnepChangedEntity.tame(host);
-                abstractExp2SnepChangedEntity.setIsUnfusedFromHost(true);
-            }
 
-            iCoatLikeEntity.setIsUnfusedFromHost(true);
+                changedEntityUnfused.setPos(host.position());
+                LivingEntity target = host.getLastHurtByMob();
 
-            changedEntityUnfused.setPos(host.position());
-            LivingEntity target = host.getLastHurtByMob();
-
-            if (target != null && target.distanceTo(host) < 5 && FoxyasUtils.canEntitySeeOther(changedEntityUnfused, target)) {
-                if (changedEntityUnfused.canAttack(target)) {
-                    changedEntityUnfused.setTarget(target);
-                }
-            }
-
-            changedEntityUnfused.setXRot(host.getViewXRot(0));
-            changedEntityUnfused.setYRot(host.getViewXRot(0));
-            changedEntityUnfused.setYBodyRot(host.yBodyRotO);
-            changedEntityUnfused.setYHeadRot(host.getYHeadRot());
-
-            if (host.level() instanceof ServerLevel serverLevel) {
-                ForgeEventFactory.onFinalizeSpawn(changedEntityUnfused, serverLevel, serverLevel.getCurrentDifficultyAt(changedEntityUnfused.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
-
-                if (changedEntity instanceof IAlphaAbleEntity original && entityUnfused instanceof IAlphaAbleEntity alphaAble) {
-                    alphaAble.setAlpha(original.isAlpha());
+                if (target != null && target.distanceTo(host) < 5 && FoxyasUtils.canEntitySeeOther(changedEntityUnfused, target)) {
+                    if (changedEntityUnfused.canAttack(target)) {
+                        changedEntityUnfused.setTarget(target);
+                    }
                 }
 
-                serverLevel.addFreshEntity(changedEntityUnfused);
-                serverLevel.playSound(null, host, ChangedSounds.TRANSFUR_BY_LATEX.get(), SoundSource.PLAYERS, 1, 1);
-                PlayerUtil.UnTransfurPlayer(host);
+                changedEntityUnfused.setXRot(host.getViewXRot(0));
+                changedEntityUnfused.setYRot(host.getViewXRot(0));
+                changedEntityUnfused.setYBodyRot(host.yBodyRotO);
+                changedEntityUnfused.setYHeadRot(host.getYHeadRot());
+
+                if (host.level() instanceof ServerLevel serverLevel) {
+                    ForgeEventFactory.onFinalizeSpawn(changedEntityUnfused, serverLevel, serverLevel.getCurrentDifficultyAt(changedEntityUnfused.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+
+                    if (changedEntity instanceof IAlphaAbleEntity original && entityUnfused instanceof IAlphaAbleEntity alphaAble) {
+                        alphaAble.setAlpha(original.isAlpha());
+                    }
+
+                    entitySpawned = serverLevel.addFreshEntity(changedEntityUnfused);
+                }
+            }
+        }
+
+        @Override
+        public void tick() {
+
+        }
+
+        @Override
+        public void stopUsing() {
+            if (entity.getEntity() instanceof Player player && entitySpawned) {
+                PlayerUtil.UnTransfurPlayerAndPlaySound(player, true);
             }
         }
     }

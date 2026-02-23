@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.mixins.client.renderer;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.WingFlapAbility;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.ltxprogrammer.changed.client.renderer.animate.wing.AbstractWingAnimatorV2;

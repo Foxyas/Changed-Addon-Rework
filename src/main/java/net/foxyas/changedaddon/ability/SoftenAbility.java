@@ -4,7 +4,6 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;

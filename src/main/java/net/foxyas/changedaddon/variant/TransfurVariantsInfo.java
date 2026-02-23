@@ -43,10 +43,6 @@ public class TransfurVariantsInfo {
         return variants;
     });
 
-    // Just For organization.
-    public static class VariantWithOwnerMap extends MultiMap<TransfurVariant<?>, Component> {
-    }
-
     public static void addNoOwnerName(VariantWithOwnerMap map, TransfurVariant<?> variant) {
         map.put(variant, List.of(Component.literal("Free For Use, No Owner")));
     }
@@ -104,5 +100,9 @@ public class TransfurVariantsInfo {
         if (componentList != null) {
             map.put(to, componentList);
         }
+    }
+
+    // Just For organization.
+    public static class VariantWithOwnerMap extends MultiMap<TransfurVariant<?>, Component> {
     }
 }

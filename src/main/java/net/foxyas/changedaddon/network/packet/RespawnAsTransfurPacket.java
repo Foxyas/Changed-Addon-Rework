@@ -29,40 +29,36 @@ public record RespawnAsTransfurPacket(ResourceLocation selected) {
 
     private static final ResourceLocation RANDOM = Changed.modResource("random");
 
-    public RespawnAsTransfurPacket(FriendlyByteBuf buf){
+    public RespawnAsTransfurPacket(FriendlyByteBuf buf) {
         this(PacketUtil.readNullable(buf, FriendlyByteBuf::readResourceLocation));
-    }
-
-    public void encode(FriendlyByteBuf buf) {
-        PacketUtil.writeNullable(buf, FriendlyByteBuf::writeResourceLocation, selected);
     }
 
     public static void handler(RespawnAsTransfurPacket message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {// Server Side Packet
             ServerPlayer player = context.getSender();
-            if(player == null || !player.isDeadOrDying()) return;
+            if (player == null || !player.isDeadOrDying()) return;
 
             player.connection.handleClientCommand(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN));
             player = player.connection.player;//Get new player
 
-            if(!ChangedAddonServerConfiguration.ALLOW_RESPAWN_AS_TRANSFUR.get()) return;
+            if (!ChangedAddonServerConfiguration.ALLOW_RESPAWN_AS_TRANSFUR.get()) return;
 
             ResourceLocation selected = message.selected;
             TransfurVariant<?> tf;
-            if(!player.hasPermissions(Commands.LEVEL_GAMEMASTERS)
-                    && !ChangedAddonServerConfiguration.ALLOW_PLAYERS_TO_SELECT_RESPAWN_TRANSFUR.get()){
+            if (!player.hasPermissions(Commands.LEVEL_GAMEMASTERS)
+                    && !ChangedAddonServerConfiguration.ALLOW_PLAYERS_TO_SELECT_RESPAWN_TRANSFUR.get()) {
                 tf = pickRandomAllowed(player);
             } else {
-                if(selected == null || selected.equals(RANDOM)) {
+                if (selected == null || selected.equals(RANDOM)) {
                     tf = pickRandom(player.getRandom());
                 } else {
                     tf = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(selected);
-                    if(isForRemoval(tf)) tf = pickRandom(player.getRandom());
+                    if (isForRemoval(tf)) tf = pickRandom(player.getRandom());
                 }
             }
 
-            if(tf == null) return;
+            if (tf == null) return;
 
             TransfurVariantInstance<?> instance = ProcessTransfur.setPlayerTransfurVariant(player,
                     tf,
@@ -76,7 +72,7 @@ public record RespawnAsTransfurPacket(ResourceLocation selected) {
         context.setPacketHandled(true);
     }
 
-    private static TransfurVariant<?> pickRandomAllowed(ServerPlayer player){
+    private static TransfurVariant<?> pickRandomAllowed(ServerPlayer player) {
         List<? extends TransfurVariant<?>> list = TransfurVariantUtils.getTransfurVariantsFormIdFromStringList(
                 ChangedAddonServerConfiguration.ALLOWED_RESPAWN_TRANSFURS.get(),
                 player.level,
@@ -87,11 +83,15 @@ public record RespawnAsTransfurPacket(ResourceLocation selected) {
         return Util.getRandom(list, player.getRandom());
     }
 
-    private static TransfurVariant<?> pickRandom(RandomSource random){
+    private static TransfurVariant<?> pickRandom(RandomSource random) {
         return Util.getRandom(TransfurVariant.getPublicTransfurVariants().filter(tf -> !isForRemoval(tf)).toList(), random);
     }
 
     private static boolean isForRemoval(TransfurVariant<?> variant) {
         return ChangedAddonTransfurVariants.getRemovedVariantsList().contains(variant);
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        PacketUtil.writeNullable(buf, FriendlyByteBuf::writeResourceLocation, selected);
     }
 }

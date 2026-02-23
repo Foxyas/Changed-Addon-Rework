@@ -6,7 +6,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -16,12 +15,6 @@ public record S2CCheckGrabberEntity(int grabberId, int grabbedId) {
     // Decode
     public S2CCheckGrabberEntity(FriendlyByteBuf buf) {
         this(buf.readVarInt(), buf.readVarInt());
-    }
-
-    // Encode
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeVarInt(grabberId);
-        buf.writeVarInt(grabbedId);
     }
 
     // Handler
@@ -42,5 +35,11 @@ public record S2CCheckGrabberEntity(int grabberId, int grabbedId) {
         });
 
         ctx.setPacketHandled(true);
+    }
+
+    // Encode
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeVarInt(grabberId);
+        buf.writeVarInt(grabbedId);
     }
 }

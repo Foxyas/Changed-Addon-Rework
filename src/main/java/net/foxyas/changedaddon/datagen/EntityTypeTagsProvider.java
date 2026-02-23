@@ -33,6 +33,24 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
         super(output, lookupProvider, ChangedAddonMod.MODID, existingFileHelper);
     }
 
+    private static EntityType<?>[] getCanGlideEntitiesArray() {
+        List<EntityType<?>> canGlideEntities = new ArrayList<>();
+        Collection<TransfurVariant<?>> transfurVariants = ChangedRegistry.TRANSFUR_VARIANT.get().getValues();
+        transfurVariants.forEach((transfurVariant) -> {
+            if (transfurVariant.canGlide) {
+                canGlideEntities.add(transfurVariant.getEntityType());
+            }
+        });
+
+        return canGlideEntities.toArray(new EntityType[0]);
+    }
+
+    private static EntityType<?>[] getBeeEntities() {
+        Stream<EntityType<?>> beeEntities = ForgeRegistries.ENTITY_TYPES.getValues().stream().filter((entityType) -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString().contains("latex_bee"));
+        List<EntityType<?>> canGlideEntities = new ArrayList<>(beeEntities.toList());
+        return canGlideEntities.toArray(new EntityType[0]);
+    }
+
     @Override
     public void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(ChangedTags.EntityTypes.HUMANOIDS).add(
@@ -104,23 +122,5 @@ public class EntityTypeTagsProvider extends net.minecraft.data.tags.EntityTypeTa
         );
 
         tag(ChangedTags.EntityTypes.CAN_WEAR_EXOSKELETON).add(canUseExoskeleton().toArray(new EntityType[0]));
-    }
-
-    private static EntityType<?>[] getCanGlideEntitiesArray() {
-        List<EntityType<?>> canGlideEntities = new ArrayList<>();
-        Collection<TransfurVariant<?>> transfurVariants = ChangedRegistry.TRANSFUR_VARIANT.get().getValues();
-        transfurVariants.forEach((transfurVariant) -> {
-            if (transfurVariant.canGlide) {
-                canGlideEntities.add(transfurVariant.getEntityType());
-            }
-        });
-
-        return canGlideEntities.toArray(new EntityType[0]);
-    }
-
-    private static EntityType<?>[] getBeeEntities() {
-        Stream<EntityType<?>> beeEntities = ForgeRegistries.ENTITY_TYPES.getValues().stream().filter((entityType) -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString().contains("latex_bee"));
-        List<EntityType<?>> canGlideEntities = new ArrayList<>(beeEntities.toList());
-        return canGlideEntities.toArray(new EntityType[0]);
     }
 }

@@ -42,6 +42,7 @@ public class ThunderDiveGoal extends Goal {
     private int divingTicks;
     private BlockPos startGroundPos;
     private Vec3 lateral = Vec3.ZERO;
+
     public ThunderDiveGoal(PathfinderMob mob,
                            IntProvider cooldownProvider,
                            double ascendBoost,

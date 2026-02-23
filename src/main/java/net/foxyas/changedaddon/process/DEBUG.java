@@ -376,6 +376,52 @@ public class DEBUG {
 
     }
 
+    @SubscribeEvent
+    public static void PARTICLETEST(TickEvent.PlayerTickEvent event) {
+        if (!DEBUG) {
+            return;
+        }
+
+        if (PARTICLETEST) {
+            Player player = event.player;
+            BlockPos pos1 = player.blockPosition();
+            for (BlockPos pos : BlockPos.betweenClosed(pos1.offset(-16, -16, -16), pos1.offset(16, 16, 16))) {
+                Level level = player.level();
+                BlockState blockState = level.getBlockState(pos);
+                if (blockState.is(ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE.get())) {
+                    ParticlesUtil.sendParticles(level, new BlockParticleOption(ParticleTypes.BLOCK_MARKER, blockState), pos.getCenter(), 0, 0, 0, 0, 1);
+                }
+            }
+        }
+
+        if (PARTICLETEST && event.player.isShiftKeyDown()) {
+            ParticlesUtil.sendParticles(event.player.level(), ParticleTypes.GLOW, event.player.getEyePosition().add(FoxyasUtils.getRelativePosition(event.player, DeltaX, DeltaY, DeltaZ, true)), 0f, 0f, 0f, 4, 0);
+        }
+
+        if (MOTIONTEST != 0) {
+            Player player = event.player;
+            if (MOTIONTEST == 1) {
+                if (player.level().isClientSide()) {
+                    Vec3 motion = player.getDeltaMovement();
+                    double speed = motion.length();
+                    ChangedAddonMod.LOGGER.info("Client Player Speed is:{}", speed);
+                }
+            } else if (MOTIONTEST == 2) {
+                if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+                    ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new RequestMovementCheckPacket(true));
+                }
+            }
+        }
+    }
+
+    private static double convert(String s) {
+        try {
+            return Double.parseDouble(s.trim());
+        } catch (Exception ignored) {
+        }
+        return 0;
+    }
+
     /**
      * OLD TEST STUFF
      * private static void test() {
@@ -436,61 +482,61 @@ public class DEBUG {
     @Mod.EventBusSubscriber(value = Dist.CLIENT)
     public static class client {
 
-    //@SubscribeEvent
-    public static void onRenderLevel(RenderLevelStageEvent event) {
-        if (!RENDERTEST || event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
+        //@SubscribeEvent
+        public static void onRenderLevel(RenderLevelStageEvent event) {
+            if (!RENDERTEST || event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
 
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.level == null) return;
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.level == null) return;
 
-        PoseStack poseStack = event.getPoseStack();
-        Vec3 camPos = mc.gameRenderer.getMainCamera().getPosition();
+            PoseStack poseStack = event.getPoseStack();
+            Vec3 camPos = mc.gameRenderer.getMainCamera().getPosition();
 
 
-        // Strategy: In a real GPS mod, you would store the 'Path' received from a packet
-        // in a client-side capability or a static manager.
-        // For now, we'll iterate entities to demonstrate the rendering.
-        for (Entity entity : mc.level.entitiesForRendering()) {
-            if (!(entity instanceof PathfinderMob mob)) continue;
+            // Strategy: In a real GPS mod, you would store the 'Path' received from a packet
+            // in a client-side capability or a static manager.
+            // For now, we'll iterate entities to demonstrate the rendering.
+            for (Entity entity : mc.level.entitiesForRendering()) {
+                if (!(entity instanceof PathfinderMob mob)) continue;
 
-            // CUIDADO: createPath no render é apenas para teste!
-            Path path = mob.getNavigation().createPath(BlockPos.ZERO, 1); // we can change that using a packet to change the client "GPS PATH"
-            if (path == null || path.getNodeCount() == 0) continue;
+                // CUIDADO: createPath no render é apenas para teste!
+                Path path = mob.getNavigation().createPath(BlockPos.ZERO, 1); // we can change that using a packet to change the client "GPS PATH"
+                if (path == null || path.getNodeCount() == 0) continue;
 
-            renderPathAsLine(poseStack, camPos, path);
-        }
-    }
-
-    @SubscribeEvent
-    @OnlyIn(Dist.CLIENT)
-    public static void onKeyInput(InputEvent.Key event) {
-        if (!DEBUG) return;
-
-        if (event.getAction() != GLFW.GLFW_PRESS && event.getAction() != GLFW.GLFW_REPEAT)
-            return;
-
-        // Incremento normal
-        float baseIncrement = 1.0f;
-
-        // Se estiver segurando SHIFT → usa 0.1
-        if (Screen.hasShiftDown()) {
-            baseIncrement = 0.1f;
+                renderPathAsLine(poseStack, camPos, path);
+            }
         }
 
-        // Y (UP / DOWN)
-        if (event.getKey() == GLFW.GLFW_KEY_UP) {
-            HeadPosY = Math.max(0, HeadPosY + baseIncrement);
-        } else if (event.getKey() == GLFW.GLFW_KEY_DOWN) {
-            HeadPosY = Math.max(0, HeadPosY - baseIncrement);
-        }
+        @SubscribeEvent
+        @OnlyIn(Dist.CLIENT)
+        public static void onKeyInput(InputEvent.Key event) {
+            if (!DEBUG) return;
 
-        // X (LEFT / RIGHT)
-        else if (event.getKey() == GLFW.GLFW_KEY_LEFT) {
-            HeadPosX = Math.max(0, HeadPosX - baseIncrement);
-        } else if (event.getKey() == GLFW.GLFW_KEY_RIGHT) {
-            HeadPosX = Math.max(0, HeadPosX + baseIncrement);
+            if (event.getAction() != GLFW.GLFW_PRESS && event.getAction() != GLFW.GLFW_REPEAT)
+                return;
+
+            // Incremento normal
+            float baseIncrement = 1.0f;
+
+            // Se estiver segurando SHIFT → usa 0.1
+            if (Screen.hasShiftDown()) {
+                baseIncrement = 0.1f;
+            }
+
+            // Y (UP / DOWN)
+            if (event.getKey() == GLFW.GLFW_KEY_UP) {
+                HeadPosY = Math.max(0, HeadPosY + baseIncrement);
+            } else if (event.getKey() == GLFW.GLFW_KEY_DOWN) {
+                HeadPosY = Math.max(0, HeadPosY - baseIncrement);
+            }
+
+            // X (LEFT / RIGHT)
+            else if (event.getKey() == GLFW.GLFW_KEY_LEFT) {
+                HeadPosX = Math.max(0, HeadPosX - baseIncrement);
+            } else if (event.getKey() == GLFW.GLFW_KEY_RIGHT) {
+                HeadPosX = Math.max(0, HeadPosX + baseIncrement);
+            }
         }
-    }
 
 
         private static void debugRenderArmorStandArms(Level level, Player player) {
@@ -534,55 +580,5 @@ public class DEBUG {
                     0.0, 0.0, 0.0
             );
         }
-    }
-
-
-
-
-    @SubscribeEvent
-    public static void PARTICLETEST(TickEvent.PlayerTickEvent event) {
-        if (!DEBUG) {
-            return;
-        }
-
-        if (PARTICLETEST) {
-            Player player = event.player;
-            BlockPos pos1 = player.blockPosition();
-            for (BlockPos pos : BlockPos.betweenClosed(pos1.offset(-16, -16, -16), pos1.offset(16, 16, 16))) {
-                Level level = player.level();
-                BlockState blockState = level.getBlockState(pos);
-                if (blockState.is(ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE.get())) {
-                    ParticlesUtil.sendParticles(level, new BlockParticleOption(ParticleTypes.BLOCK_MARKER, blockState), pos.getCenter(), 0, 0, 0, 0, 1);
-                }
-            }
-        }
-
-        if (PARTICLETEST && event.player.isShiftKeyDown()) {
-            ParticlesUtil.sendParticles(event.player.level(), ParticleTypes.GLOW, event.player.getEyePosition().add(FoxyasUtils.getRelativePosition(event.player, DeltaX, DeltaY, DeltaZ, true)), 0f, 0f, 0f, 4, 0);
-        }
-
-        if (MOTIONTEST != 0) {
-            Player player = event.player;
-            if (MOTIONTEST == 1) {
-                if (player.level().isClientSide()) {
-                    Vec3 motion = player.getDeltaMovement();
-                    double speed = motion.length();
-                    ChangedAddonMod.LOGGER.info("Client Player Speed is:{}", speed);
-                }
-            } else if (MOTIONTEST == 2) {
-                if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
-                    ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new RequestMovementCheckPacket(true));
-                }
-            }
-        }
-    }
-
-
-    private static double convert(String s) {
-        try {
-            return Double.parseDouble(s.trim());
-        } catch (Exception ignored) {
-        }
-        return 0;
     }
 }

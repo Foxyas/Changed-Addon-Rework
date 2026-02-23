@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 
 @Mixin(value = AbstractDarkLatexEntity.class, remap = false)
 public class AbstractDarkLatexEntityMixin {

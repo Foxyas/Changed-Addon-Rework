@@ -6,14 +6,14 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public interface ConditionalLatexCoverableBlock {
 
-    interface NonLatexCoverableBlock extends ConditionalLatexCoverableBlock{
+    default boolean canBeSpread(LevelAccessor level, BlockState state, BlockPos pos) {
+        return true;
+    }
+
+    interface NonLatexCoverableBlock extends ConditionalLatexCoverableBlock {
         @Override
         default boolean canBeSpread(LevelAccessor level, BlockState state, BlockPos pos) {
             return false;
         }
-    }
-
-    default boolean canBeSpread(LevelAccessor level, BlockState state, BlockPos pos) {
-        return true;
     }
 }

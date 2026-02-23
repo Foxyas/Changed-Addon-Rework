@@ -47,30 +47,6 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
                         .noCollission().dynamicShape().instabreak().sound(SoundType.GRASS));
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public int getLightBlock(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
-        return 3;
-    }
-
-    @Override
-    public void onPlace(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pOldState, boolean pIsMoving) {
-        super.onPlace(pState, pLevel, pPos, pOldState, pIsMoving);
-        pLevel.scheduleTick(pPos, this, 10);
-    }
-
-    @Override
-    public void tick(@NotNull BlockState pState, @NotNull ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
-        super.tick(pState, pLevel, pPos, pRandom);
-        tryToPacifyNearbyEntities(pLevel, pPos, 64);
-        LatexCoverState at = LatexCoverState.getAt(pLevel, pPos);
-        if (!at.isAir()) {
-            performBonemeal(pLevel, pRandom, pPos, pState);
-            LatexCoverState.setAtAndUpdate(pLevel, pPos, ChangedLatexTypes.NONE.get().defaultCoverState());
-        }
-        pLevel.scheduleTick(pPos, this, 10);
-    }
-
     public static void tryToPacifyNearbyEntities(@NotNull ServerLevel pLevel, BlockPos pPos, double range) {
         List<LivingEntity> nearChangedBeasts = pLevel.getEntitiesOfClass(LivingEntity.class,
                 new AABB(pPos, pPos).inflate(range),
@@ -110,6 +86,30 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
                 }
             }
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public int getLightBlock(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
+        return 3;
+    }
+
+    @Override
+    public void onPlace(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull BlockState pOldState, boolean pIsMoving) {
+        super.onPlace(pState, pLevel, pPos, pOldState, pIsMoving);
+        pLevel.scheduleTick(pPos, this, 10);
+    }
+
+    @Override
+    public void tick(@NotNull BlockState pState, @NotNull ServerLevel pLevel, @NotNull BlockPos pPos, @NotNull RandomSource pRandom) {
+        super.tick(pState, pLevel, pPos, pRandom);
+        tryToPacifyNearbyEntities(pLevel, pPos, 64);
+        LatexCoverState at = LatexCoverState.getAt(pLevel, pPos);
+        if (!at.isAir()) {
+            performBonemeal(pLevel, pRandom, pPos, pState);
+            LatexCoverState.setAtAndUpdate(pLevel, pPos, ChangedLatexTypes.NONE.get().defaultCoverState());
+        }
+        pLevel.scheduleTick(pPos, this, 10);
     }
 
     @Override

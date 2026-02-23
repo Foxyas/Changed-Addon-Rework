@@ -165,7 +165,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @WrapOperation(method = "suitEntity", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;setPlayerTransfurVariant(Lnet/minecraft/world/entity/player/Player;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;FZLjava/util/function/Consumer;)Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;"))
     private TransfurVariantInstance<?> syncAlphaGene(Player player, TransfurVariant<?> ogVariant, TransfurContext context, float progress, boolean temporaryFromSuit, Consumer<TransfurVariantInstance<?>> consumer, Operation<TransfurVariantInstance<?>> original) {
         if (this.entity.getChangedEntity() instanceof IAlphaAbleEntity alphaSource) {
-            return ProcessTransfur.setPlayerTransfurVariant(player, ogVariant, context, progress, temporaryFromSuit,(transfurVariantInstance) -> {
+            return ProcessTransfur.setPlayerTransfurVariant(player, ogVariant, context, progress, temporaryFromSuit, (transfurVariantInstance) -> {
                 if (transfurVariantInstance.getChangedEntity() instanceof IAlphaAbleEntity alphaTarget) {
                     alphaTarget.setAlpha(alphaSource.isAlpha());
                     alphaTarget.setAlphaScale(alphaSource.alphaAdditionalScale());

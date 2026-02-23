@@ -5,7 +5,6 @@ import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.network.chat.Component;
 
-
 import java.util.Collection;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class PollenCarryAbility extends AbstractAbility<PollenCarryAbilityInstan
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        if(entity.getEntity().isSpectator() || entity.getTransfurVariant() == null) return false;
+        if (entity.getEntity().isSpectator() || entity.getTransfurVariant() == null) return false;
 
         return entity.getTransfurVariant().is(ChangedTransfurVariants.LATEX_BEE);
     }

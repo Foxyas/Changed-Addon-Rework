@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
@@ -93,6 +92,26 @@ public class KeycardItem extends Item implements ColorHolder {
 
     public static void setBottomColor(ItemStack stack, int color) {
         stack.getOrCreateTag().putInt(BOTTOM_COLOR, color);
+    }
+
+    private static void playLock(Level level, BlockPos pos) {
+        playSound(level, pos, ChangedSounds.KEYPAD_LOCK, 1.0F, 1.0F);
+    }
+
+    private static void playWrite(Level level, BlockPos pos) {
+        playSound(level, pos, ChangedSounds.KEYPAD_UNLOCK_SUCCESS, 1.0F, 1.0F);
+    }
+
+    private static void playUnlock(Level level, BlockPos pos) {
+        playSound(level, pos, ChangedSounds.RETINAL_SCAN, 1.0F, 1.0F);
+    }
+
+    private static void playSound(Level level, BlockPos worldPosition, RegistryObject<SoundEvent> event, float volume, float pitch) {
+        if (level.getServer() != null) {
+            if (level instanceof ServerLevel serverLevel) {
+                ChangedSounds.broadcastSound(serverLevel, event, worldPosition, volume, pitch);
+            }
+        }
     }
 
     @Override
@@ -238,27 +257,6 @@ public class KeycardItem extends Item implements ColorHolder {
         }
 
         return InteractionResult.PASS;
-    }
-
-    private static void playLock(Level level, BlockPos pos) {
-        playSound(level, pos, ChangedSounds.KEYPAD_LOCK, 1.0F, 1.0F);
-    }
-
-    private static void playWrite(Level level, BlockPos pos) {
-        playSound(level, pos, ChangedSounds.KEYPAD_UNLOCK_SUCCESS, 1.0F, 1.0F);
-    }
-
-    private static void playUnlock(Level level, BlockPos pos) {
-        playSound(level, pos, ChangedSounds.RETINAL_SCAN, 1.0F, 1.0F);
-    }
-
-
-    private static void playSound(Level level, BlockPos worldPosition, RegistryObject<SoundEvent> event, float volume, float pitch) {
-        if (level.getServer() != null) {
-            if (level instanceof ServerLevel serverLevel) {
-                ChangedSounds.broadcastSound(serverLevel, event, worldPosition, volume, pitch);
-            }
-        }
     }
 
     @Override

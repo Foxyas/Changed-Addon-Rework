@@ -41,7 +41,7 @@ public class FindAndHarvestCropsGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if(lock) return false;
+        if (lock) return false;
 
         // Can only harvest if inventory not full and there's a mature crop nearby
         return entity.hasSpaceInInvOrHands() && entity.getHarvestsTimes() < PrototypeEntity.MAX_HARVEST_TIMES;
@@ -49,9 +49,9 @@ public class FindAndHarvestCropsGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if(targetCropPos == null){
+        if (targetCropPos == null) {
             lock = true;
-            new DelayedTask(200, ()-> lock = false);
+            new DelayedTask(200, () -> lock = false);
             return false;
         }
 
@@ -85,9 +85,9 @@ public class FindAndHarvestCropsGoal extends Goal {
     @Override
     public void tick() {
         Level level = entity.level();
-        if(targetCropPos == null || isBlockInvalid(level.getBlockState(targetCropPos))){// Try to find crop
+        if (targetCropPos == null || isBlockInvalid(level.getBlockState(targetCropPos))) {// Try to find crop
             findNearbyCrop(level, entity.blockPosition());
-            if(targetCropPos == null) return;//cancel goal - no crops
+            if (targetCropPos == null) return;//cancel goal - no crops
             navigation.moveTo(targetCropPos.getX() + 0.5, targetCropPos.getY(), targetCropPos.getZ() + 0.5, 0.25f);
         }
 
@@ -97,7 +97,7 @@ public class FindAndHarvestCropsGoal extends Goal {
                 30.0F  // pitch change speed
         );
 
-        if(harvestCooldown > 0){
+        if (harvestCooldown > 0) {
             harvestCooldown--;
             return;
         }
@@ -105,7 +105,8 @@ public class FindAndHarvestCropsGoal extends Goal {
         if (entity.blockPosition().closerThan(targetCropPos, 2.5)) {
             harvestCrop((ServerLevel) level);
             findNearbyCrop(level, entity.blockPosition()); // Look for new crop
-            if(targetCropPos != null) navigation.moveTo(targetCropPos.getX() + 0.5, targetCropPos.getY(), targetCropPos.getZ() + 0.5, 0.25f);
+            if (targetCropPos != null)
+                navigation.moveTo(targetCropPos.getX() + 0.5, targetCropPos.getY(), targetCropPos.getZ() + 0.5, 0.25f);
             harvestCooldown = 5;
         }
 
@@ -124,7 +125,7 @@ public class FindAndHarvestCropsGoal extends Goal {
 
             level.playSound(null, entity.blockPosition(), ChangedAddonSoundEvents.PROTOTYPE_IDEA.get(), SoundSource.MASTER, 1, 1);
 
-            ((ServerLevel)level).sendParticles(ChangedParticles.emote(entity, Emote.IDEA),
+            ((ServerLevel) level).sendParticles(ChangedParticles.emote(entity, Emote.IDEA),
                     entity.getX(), entity.getY() + entity.getDimensions(entity.getPose()).height + 0.65, entity.getZ(),
                     1, 0, 0, 0, 0);
         }
@@ -139,7 +140,7 @@ public class FindAndHarvestCropsGoal extends Goal {
         noPathTimeout = 100;
     }
 
-    private boolean isBlockInvalid(BlockState state){
+    private boolean isBlockInvalid(BlockState state) {
         return !(state.getBlock() instanceof CropBlock crop) || !crop.isMaxAge(state);
     }
 
@@ -178,7 +179,7 @@ public class FindAndHarvestCropsGoal extends Goal {
         }
 
         // Replant at age 0
-        level.setBlock(targetCropPos, ((CropBlock)state.getBlock()).getStateForAge(0), 3);
+        level.setBlock(targetCropPos, ((CropBlock) state.getBlock()).getStateForAge(0), 3);
         level.levelEvent(null, 2001, targetCropPos, Block.getId(state));//Particles
         level.playSound(null, targetCropPos, state.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1, 1);
         entity.addHarvestsTime();

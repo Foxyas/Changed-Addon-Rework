@@ -1,15 +1,7 @@
 package net.foxyas.changedaddon.mixins.entity.goals;
 
-import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
-import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.init.ChangedTags.EntityTypes;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.sensing.VillagerHostilesSensor;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(VillagerHostilesSensor.class)
 public abstract class VillagerHostilesSensorMixin {

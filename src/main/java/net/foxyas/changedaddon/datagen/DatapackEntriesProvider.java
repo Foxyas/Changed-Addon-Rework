@@ -1,7 +1,10 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.datagen.worldgen.*;
+import net.foxyas.changedaddon.datagen.worldgen.BiomeModifierProvider;
+import net.foxyas.changedaddon.datagen.worldgen.ConfiguredFeatureProvider;
+import net.foxyas.changedaddon.datagen.worldgen.PlacedFeatureProvider;
+import net.foxyas.changedaddon.datagen.worldgen.StructureProvider;
 import net.foxyas.changedaddon.datagen.worldgen.template_pool.DazedMeteorPools;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.world.features.processors.DayTimeStructureProcessor;
@@ -31,6 +34,10 @@ import java.util.concurrent.CompletableFuture;
 @ParametersAreNonnullByDefault
 public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
 
+    public static final ResourceKey<StructureProcessorList> GRAVITY = ResourceKey.create(Registries.PROCESSOR_LIST, ChangedAddonMod.resourceLoc("gravity_rot"));
+    //.add(Registries.TRIM_PATTERN, TrimPatterns::bootstrap)//ArmorTrims::bootstrapPatterns)
+    //.add(Registries.TRIM_MATERIAL, TrimMaterials::bootstrap);//ArmorTrims::bootstrapMaterials);
+    public static final ResourceKey<StructureProcessorList> DAZED_METEOR_POLL = ResourceKey.create(Registries.PROCESSOR_LIST, ChangedAddonMod.resourceLoc("dazed_meteor_rot"));
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.BIOME, DatapackEntriesProvider::biome)
             .add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureProvider::bootstrap)
@@ -41,8 +48,6 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.TEMPLATE_POOL, DatapackEntriesProvider::templatePools)
             .add(Registries.STRUCTURE, StructureProvider::bootstrap)
             .add(Registries.STRUCTURE_SET, StructureProvider::structureSet);
-            //.add(Registries.TRIM_PATTERN, TrimPatterns::bootstrap)//ArmorTrims::bootstrapPatterns)
-            //.add(Registries.TRIM_MATERIAL, TrimMaterials::bootstrap);//ArmorTrims::bootstrapMaterials);
 
     public DatapackEntriesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(ChangedAddonMod.MODID));
@@ -56,9 +61,6 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
 
     private static void biome(BootstapContext<Biome> context) {
     }
-
-    public static final ResourceKey<StructureProcessorList> GRAVITY = ResourceKey.create(Registries.PROCESSOR_LIST, ChangedAddonMod.resourceLoc("gravity_rot"));
-    public static final ResourceKey<StructureProcessorList> DAZED_METEOR_POLL = ResourceKey.create(Registries.PROCESSOR_LIST, ChangedAddonMod.resourceLoc("dazed_meteor_rot"));
 
     private static void processorList(BootstapContext<StructureProcessorList> context) {
         context.register(GRAVITY, new StructureProcessorList(List.of(new GravityProcessor(Heightmap.Types.WORLD_SURFACE_WG, -11))));

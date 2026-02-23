@@ -12,14 +12,15 @@ import org.jetbrains.annotations.NotNull;
 
 public interface GrabEntityAbilityExtensor {
 
-    void setSafeMode(boolean safeMode);
+    int SNUGGLED_COOLDOWN = 20;
+
     void setSafeModeAuthoritative(boolean safeMode);
 
     boolean isSafeMode();
 
-    LivingEntity grabber();
+    void setSafeMode(boolean safeMode);
 
-    int SNUGGLED_COOLDOWN = 20;
+    LivingEntity grabber();
 
     default void runHug(@NotNull LivingEntity livingEntity) {
         if (grabber() instanceof Player player) {
@@ -37,6 +38,7 @@ public interface GrabEntityAbilityExtensor {
             }
         }
     }
+
     boolean isAlreadySnuggled();
 
     void setSnuggled(boolean value);

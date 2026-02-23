@@ -80,7 +80,7 @@ public class SummonDLPupAbility extends SimpleAbility {
         }
 
         if (entity.getEntity() instanceof Player player) {
-            player.causeFoodExhaustion((float)30.0);
+            player.causeFoodExhaustion((float) 30.0);
         }
 
         ChangedSounds.broadcastSound(entity.getEntity(), ChangedSounds.DARK_LATEX_PUP_FORM_PUDDLE, 1.0f, 1.0f);

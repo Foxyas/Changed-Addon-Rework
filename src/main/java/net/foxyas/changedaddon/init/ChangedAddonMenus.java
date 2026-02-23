@@ -2,8 +2,6 @@ package net.foxyas.changedaddon.init;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.menu.*;
-import net.ltxprogrammer.changed.world.inventory.TamedDarkLatexInventoryMenu;
-import net.ltxprogrammer.changed.world.inventory.TamedDarkLatexMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -18,7 +16,9 @@ public class ChangedAddonMenus {
 
     public static final DeferredRegister<MenuType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.MENU.key(), ChangedAddonMod.MODID);
 
-    public static final RegistryObject<MenuType<FoxyasInventoryMenu>> FOXYAS_INVENTORY_MENU = register("foxyas_inventory_menu", FoxyasInventoryMenu::new);
+    private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String path, IContainerFactory<T> containerFactory) {
+        return REGISTRY.register(path, () -> IForgeMenuType.create(containerFactory));
+    }    public static final RegistryObject<MenuType<FoxyasInventoryMenu>> FOXYAS_INVENTORY_MENU = register("foxyas_inventory_menu", FoxyasInventoryMenu::new);
     public static final RegistryObject<MenuType<GeneratorGuiMenu>> GENERATORGUI = register("generator_gui", GeneratorGuiMenu::new);
     public static final RegistryObject<MenuType<CatalyzerGuiMenu>> CATALYZER_GUI = register("catalyzer_gui", CatalyzerGuiMenu::new);
     public static final RegistryObject<MenuType<UnifuserGuiMenu>> UNIFUSER_GUI = register("unifuser_gui", UnifuserGuiMenu::new);
@@ -30,7 +30,5 @@ public class ChangedAddonMenus {
     public static final RegistryObject<MenuType<TamedLatexInventoryMenu>> TAMED_LATEX_INVENTORY = register("tamed_dark_latex_inventory", TamedLatexInventoryMenu::new);
 
 
-    private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String path, IContainerFactory<T> containerFactory) {
-        return REGISTRY.register(path, () -> IForgeMenuType.create(containerFactory));
-    }
+
 }

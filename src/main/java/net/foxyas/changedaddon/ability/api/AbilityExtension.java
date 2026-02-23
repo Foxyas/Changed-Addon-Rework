@@ -4,7 +4,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 
 public interface AbilityExtension {
 
-    static AbilityExtension of(AbstractAbilityInstance abilityInstance){
+    static AbilityExtension of(AbstractAbilityInstance abilityInstance) {
         return (AbilityExtension) abilityInstance;
     }
 

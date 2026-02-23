@@ -32,12 +32,6 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
         this(containerId, inv, offersFromBuf(inv.player, buf));
     }
 
-    private static CustomMerchant offersFromBuf(Player player, FriendlyByteBuf buf){
-        CustomMerchant merchant = new CustomMerchant.Client(player);
-        merchant.overrideOffers(CustomMerchantOffers.createFromStream(buf));
-        return merchant;
-    }
-
     public CustomMerchantMenu(int containerId, Inventory inv, CustomMerchant merchant) {
         super(ChangedAddonMenus.MERCHANT_MENU.get(), containerId);
         this.merchant = merchant;
@@ -46,15 +40,21 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
         addSlot(new Slot(tradeContainer, PAYMENT2_SLOT, 162, 37));
         addSlot(new MerchantResultSlot(inv.player, merchant, tradeContainer, RESULT_SLOT, 220, 37));
 
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 9; ++j) {
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 9; ++j) {
                 addSlot(new Slot(inv, j + i * 9 + 9, 108 + j * 18, 84 + i * 18));
             }
         }
 
-        for(int k = 0; k < 9; ++k) {
+        for (int k = 0; k < 9; ++k) {
             addSlot(new Slot(inv, k, 108 + k * 18, 142));
         }
+    }
+
+    private static CustomMerchant offersFromBuf(Player player, FriendlyByteBuf buf) {
+        CustomMerchant merchant = new CustomMerchant.Client(player);
+        merchant.overrideOffers(CustomMerchantOffers.createFromStream(buf));
+        return merchant;
     }
 
     /**
@@ -134,7 +134,7 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
     }
 
     private void playTradeSound() {
-        if(merchant.isClientSide()) return;
+        if (merchant.isClientSide()) return;
 
         Entity entity = (Entity) merchant;
         entity.level().playLocalSound(entity.getX(), entity.getY(), entity.getZ(), merchant.getNotifyTradeSound(), SoundSource.NEUTRAL, 1.0F, 1.0F, false);
@@ -146,9 +146,9 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
     public void removed(@NotNull Player player) {
         super.removed(player);
         merchant.setTradingPlayer(null);
-        if(merchant.isClientSide()) return;
+        if (merchant.isClientSide()) return;
 
-        if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer)player).hasDisconnected()) {
+        if (!player.isAlive() || player instanceof ServerPlayer && ((ServerPlayer) player).hasDisconnected()) {
             ItemStack itemstack = tradeContainer.removeItemNoUpdate(PAYMENT1_SLOT);
             if (!itemstack.isEmpty()) {
                 player.drop(itemstack, false);
@@ -166,7 +166,7 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
 
     public void tryMoveItems(int selectedMerchantRecipe) {
         CustomMerchantOffers offers = getOffers();
-        if(offers.size() <= selectedMerchantRecipe) return;
+        if (offers.size() <= selectedMerchantRecipe) return;
 
         ItemStack itemstack = tradeContainer.getItem(PAYMENT1_SLOT);
         if (!itemstack.isEmpty()) {
@@ -194,14 +194,14 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
     }
 
     private void moveFromInventoryToPaymentSlot(int paymentSlotIndex, Ingredient paymentSlot) {
-        if(paymentSlot.isEmpty()) return;
+        if (paymentSlot.isEmpty()) return;
 
         ItemStack matchingIngredient = null, stackO, stack;
-        for(int i = INV_SLOT_START; i < USE_ROW_SLOT_END; ++i) {
+        for (int i = INV_SLOT_START; i < USE_ROW_SLOT_END; ++i) {
             ItemStack itemstack = slots.get(i).getItem();
-            if(itemstack.isEmpty()) continue;
+            if (itemstack.isEmpty()) continue;
 
-            if(matchingIngredient == null){
+            if (matchingIngredient == null) {
                 for (ItemStack requiredItem : paymentSlot.getItems()) {
                     if (!ItemStack.isSameItemSameTags(requiredItem, itemstack)) continue;
 
@@ -210,7 +210,7 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
                 }
             }
 
-            if(matchingIngredient == null || !ItemStack.isSameItemSameTags(matchingIngredient, itemstack)) continue;
+            if (matchingIngredient == null || !ItemStack.isSameItemSameTags(matchingIngredient, itemstack)) continue;
 
             stackO = tradeContainer.getItem(paymentSlotIndex);
             int j = stackO.isEmpty() ? 0 : stackO.getCount();
@@ -236,8 +236,8 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
 
         private final CustomMerchantContainer slots;
         private final Player player;
-        private int removeCount;
         private final CustomMerchant merchant;
+        private int removeCount;
 
         public MerchantResultSlot(Player player, CustomMerchant merchant, CustomMerchantContainer container, int slot, int x, int y) {
             super(container, slot, x, y);
@@ -284,7 +284,7 @@ public class CustomMerchantMenu extends AbstractContainerMenu {
         public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
             checkTakeAchievements(stack);
             CustomMerchantOffer offer = slots.getActiveOffer();
-            if(offer == null) return;
+            if (offer == null) return;
 
             ItemStack itemstack = slots.getItem(0);
             ItemStack itemstack1 = slots.getItem(1);

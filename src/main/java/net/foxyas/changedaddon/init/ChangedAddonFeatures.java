@@ -23,6 +23,16 @@ public class ChangedAddonFeatures {
         return REGISTRY.register(registryname, feature);
     }
 
+    private static ResourceKey<ConfiguredFeature<?, ?>> createConfigured(String id) {
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE,
+                ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, id));
+    }
+
+    private static ResourceKey<PlacedFeature> createPlaced(String id) {
+        return ResourceKey.create(Registries.PLACED_FEATURE,
+                ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, id));
+    }
+
     public static class Configurations {
         public static final ResourceKey<ConfiguredFeature<?, ?>> IRIDIUM_ORE_BURIED =
                 createConfigured("iridium_ore_buried");
@@ -37,7 +47,6 @@ public class ChangedAddonFeatures {
                 createConfigured("painite_ore");
     }
 
-
     public static class Placements {
 
         public static final ResourceKey<PlacedFeature> IRIDIUM_ORE_BURIED =
@@ -51,16 +60,5 @@ public class ChangedAddonFeatures {
 
         public static final ResourceKey<PlacedFeature> PAINITE_ORE_PLACED =
                 createPlaced("painite_ore");
-    }
-
-
-    private static ResourceKey<ConfiguredFeature<?, ?>> createConfigured(String id) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE,
-                ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, id));
-    }
-
-    private static ResourceKey<PlacedFeature> createPlaced(String id) {
-        return ResourceKey.create(Registries.PLACED_FEATURE,
-                ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, id));
     }
 }

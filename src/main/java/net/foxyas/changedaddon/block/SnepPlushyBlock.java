@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.SnepPlushyBlockEntity;
-import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -29,11 +29,12 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
         super(pContext);
     }
 
-    @Shadow public abstract boolean addLayer(RenderLayer<T, M> pLayer);
+    @Shadow
+    public abstract boolean addLayer(RenderLayer<T, M> pLayer);
 
-    @Inject(method = "<init>" , at = @At("TAIL"))
-    private void addExtraLayers(EntityRendererProvider.Context pContext, M pModel, float pShadowRadius, CallbackInfo ci){
-        LivingEntityRenderer<T, M> self = (LivingEntityRenderer<T,M>) (Object) this;
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void addExtraLayers(EntityRendererProvider.Context pContext, M pModel, float pShadowRadius, CallbackInfo ci) {
+        LivingEntityRenderer<T, M> self = (LivingEntityRenderer<T, M>) (Object) this;
         this.addLayer(new SonarOutlineLayer<>(self));
         this.defaultValue = pShadowRadius;
     }

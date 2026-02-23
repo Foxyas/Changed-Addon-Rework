@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +17,10 @@ public class CarryAbility extends AbstractAbility<CarryAbilityInstance> {
 
     public CarryAbility() {
         super(CarryAbilityInstance::new);
+    }
+
+    public static boolean Spectator(Entity entity) {
+        return entity instanceof Player player && player.isSpectator();
     }
 
     @Override
@@ -49,11 +52,6 @@ public class CarryAbility extends AbstractAbility<CarryAbilityInstance> {
                                 || v.is(ChangedAddonTransfurVariants.Gendered.ORGANIC_SNOW_LEOPARD.getMaleVariant()) || v.is(ChangedAddonTransfurVariants.Gendered.PURO_KIND.getFemaleVariant())
                                 || v.is(ChangedAddonTransfurVariants.Gendered.PURO_KIND.getMaleVariant()) || v.is(ChangedAddonTags.TransfurTypes.ABLE_TO_CARRY))
                 .isPresent();
-    }
-
-
-    public static boolean Spectator(Entity entity) {
-        return entity instanceof Player player && player.isSpectator();
     }
 
 }

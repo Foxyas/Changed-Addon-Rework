@@ -17,17 +17,7 @@ public class VoxelShapeCache {
 
     private final HashMap<Pair<Direction, Integer>, VoxelShape> shapes = new HashMap<>();
 
-    public VoxelShape getShape(Direction direction, int id, VoxelShape baseShape){
-        return shapes.computeIfAbsent(Pair.of(direction, id), pair ->
-                direction != Direction.NORTH ? rotateShape(direction, baseShape) : baseShape);
-    }
-
-    public VoxelShape getShape(Direction direction, int id, Supplier<VoxelShape> supplier){
-        return shapes.computeIfAbsent(Pair.of(direction, id), pair ->
-                direction != Direction.NORTH ? rotateShape(direction, supplier.get()) : supplier.get());
-    }
-
-    public static VoxelShape orUnoptimized(VoxelShape shape1, VoxelShape shape2){
+    public static VoxelShape orUnoptimized(VoxelShape shape1, VoxelShape shape2) {
         return Shapes.joinUnoptimized(shape1, shape2, BooleanOp.OR);
     }
 
@@ -47,5 +37,15 @@ public class VoxelShapeCache {
             newShape.set(orUnoptimized(newShape.get(), s));
         });
         return newShape.get();
+    }
+
+    public VoxelShape getShape(Direction direction, int id, VoxelShape baseShape) {
+        return shapes.computeIfAbsent(Pair.of(direction, id), pair ->
+                direction != Direction.NORTH ? rotateShape(direction, baseShape) : baseShape);
+    }
+
+    public VoxelShape getShape(Direction direction, int id, Supplier<VoxelShape> supplier) {
+        return shapes.computeIfAbsent(Pair.of(direction, id), pair ->
+                direction != Direction.NORTH ? rotateShape(direction, supplier.get()) : supplier.get());
     }
 }

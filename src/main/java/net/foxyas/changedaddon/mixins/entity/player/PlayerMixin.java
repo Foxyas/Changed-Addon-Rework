@@ -45,15 +45,15 @@ import java.util.Optional;
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity implements LivingEntityDataExtensor {
 
+    @Shadow
+    protected boolean wasUnderwater;
+
     protected PlayerMixin(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     @Shadow
     public abstract @NotNull ItemStack getItemBySlot(@NotNull EquipmentSlot equipmentSlot);
-
-    @Shadow
-    protected boolean wasUnderwater;
 
     @Override
     public boolean isInWater() {

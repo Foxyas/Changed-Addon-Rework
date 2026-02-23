@@ -12,7 +12,6 @@ import net.ltxprogrammer.changed.world.features.structures.FacilityPieces;
 import net.ltxprogrammer.changed.world.features.structures.facility.ConfiguredFacilityPiece;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityPieceCollection;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilitySinglePiece;
-import net.ltxprogrammer.changed.world.features.structures.facility.types.PieceType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -25,32 +24,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 public class ChangedAddonDebugCommands {
-
-    public static final class FacilityPieceSuggestions {
-
-        public static final List<String> ALL_IDS = build();
-
-        private static List<String> build() {
-            return ChangedRegistry.FACILITY_PIECE_TYPES.get().getValues().stream()
-                    .map(FacilityPieces::getPiecesOfType)
-                    .filter(Objects::nonNull)
-                    .flatMap(FacilityPieceCollection::stream)
-                    .map(ConfiguredFacilityPiece::getFacilityPiece)
-                    .filter(piece -> piece instanceof FacilitySinglePieceAccessor)
-                    .map(piece -> ((FacilitySinglePieceAccessor) piece).getTemplateName())
-                    .filter(Objects::nonNull)
-                    .map(ResourceLocation::toString)
-                    .distinct()
-                    .sorted()
-                    .toList();
-        }
-    }
 
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_FACILITY_PIECES_IDS =
             (context, builder) -> SharedSuggestionProvider.suggest(
@@ -152,5 +129,25 @@ public class ChangedAddonDebugCommands {
                 Component.literal("Facility does NOT contain piece: " + resourceId)
         );
         return 0;
+    }
+
+    public static final class FacilityPieceSuggestions {
+
+        public static final List<String> ALL_IDS = build();
+
+        private static List<String> build() {
+            return ChangedRegistry.FACILITY_PIECE_TYPES.get().getValues().stream()
+                    .map(FacilityPieces::getPiecesOfType)
+                    .filter(Objects::nonNull)
+                    .flatMap(FacilityPieceCollection::stream)
+                    .map(ConfiguredFacilityPiece::getFacilityPiece)
+                    .filter(piece -> piece instanceof FacilitySinglePieceAccessor)
+                    .map(piece -> ((FacilitySinglePieceAccessor) piece).getTemplateName())
+                    .filter(Objects::nonNull)
+                    .map(ResourceLocation::toString)
+                    .distinct()
+                    .sorted()
+                    .toList();
+        }
     }
 }

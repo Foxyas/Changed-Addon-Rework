@@ -57,8 +57,8 @@ import java.util.stream.Stream;
 @SuppressWarnings("ALL")
 public class HazardBodySuitClothingRenderer implements AccessoryRenderer, TransitionalAccessory, PlayerModelVisibilityModifier {
     protected final HumanoidModel clothingModel;
-    protected HumanoidModel playerClothingModel;
     protected final Set<ModelComponent> components;
+    protected HumanoidModel playerClothingModel;
 
     public HazardBodySuitClothingRenderer(ArmorModel humanoid, Set<ModelComponent> components) {
         this.components = components;
@@ -71,6 +71,28 @@ public class HazardBodySuitClothingRenderer implements AccessoryRenderer, Transi
 
     public static Supplier<AccessoryRenderer> of(ArmorModel humanoidModel, Set<ModelComponent> components) {
         return () -> new HazardBodySuitClothingRenderer(humanoidModel, components);
+    }
+
+    public static boolean shouldHideHat(LivingEntity entity) {
+        if (entity instanceof Player player) {
+            if (ProcessTransfur.isPlayerTransfurred(player)
+                    && !ChangedAddonTransfurVariants.getHumanForms().contains(ProcessTransfur.getPlayerTransfurVariant(player).getParent()))
+                return false;
+
+            if (AccessorySlots.getForEntity(player).isPresent()) {
+                AccessorySlots accessorySlots = AccessorySlots.getForEntity(player).get();
+                Optional<ItemStack> item = accessorySlots.getItem(ChangedAccessorySlots.FULL_BODY.get());
+                if (item.isPresent()) {
+                    ItemStack stack = item.get();
+                    if (stack.getItem() instanceof HazardBodySuit hazardBodySuit) {
+                        return hazardBodySuit.getClothingState(stack).getValue(HazardBodySuit.HELMET);
+                    }
+                }
+            }
+        }
+
+
+        return false;
     }
 
     public Optional<HumanoidModel<?>> getBeforeModel(AccessorySlotContext<?> slotContext, RenderLayerParent<?, ?> renderLayerParent) {
@@ -134,7 +156,6 @@ public class HazardBodySuitClothingRenderer implements AccessoryRenderer, Transi
         return new PlayerModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(layer), slim);
     }
 
-
     /// For First Person is Recommended to only use the Default player models.
     private <T extends LivingEntity> HumanoidModel<?> getPlayerModelForFirstPerson(T entity) {
         ModelLayerLocation layer = HazardBodySuitLayers.PLAYER;
@@ -186,29 +207,6 @@ public class HazardBodySuitClothingRenderer implements AccessoryRenderer, Transi
         if (clothingModel instanceof LatexHumanHazardBodySuitModel latexHumanHazardBodySuitModel) {
             latexHumanHazardBodySuitModel.getHat().visible = !ChangedCompatibility.isFirstPersonRendering();
         }
-    }
-
-
-    public static boolean shouldHideHat(LivingEntity entity) {
-        if (entity instanceof Player player) {
-            if (ProcessTransfur.isPlayerTransfurred(player)
-                    && !ChangedAddonTransfurVariants.getHumanForms().contains(ProcessTransfur.getPlayerTransfurVariant(player).getParent()))
-                return false;
-
-            if (AccessorySlots.getForEntity(player).isPresent()) {
-                AccessorySlots accessorySlots = AccessorySlots.getForEntity(player).get();
-                Optional<ItemStack> item = accessorySlots.getItem(ChangedAccessorySlots.FULL_BODY.get());
-                if (item.isPresent()) {
-                    ItemStack stack = item.get();
-                    if (stack.getItem() instanceof HazardBodySuit hazardBodySuit) {
-                        return hazardBodySuit.getClothingState(stack).getValue(HazardBodySuit.HELMET);
-                    }
-                }
-            }
-        }
-
-
-        return false;
     }
 
     @SuppressWarnings({"unchecked"})

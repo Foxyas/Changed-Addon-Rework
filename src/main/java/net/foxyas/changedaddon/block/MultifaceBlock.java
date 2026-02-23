@@ -52,12 +52,12 @@ public class MultifaceBlock extends Block {
         return SHAPE_CACHE.computeIfAbsent(state, s -> {
             VoxelShape res = Shapes.empty();
 
-            if(state.getValue(UP)) res = Shapes.joinUnoptimized(res, UP_AABB, BooleanOp.OR);
-            if(state.getValue(WEST)) res = Shapes.joinUnoptimized(res, WEST_AABB, BooleanOp.OR);
-            if(state.getValue(EAST)) res = Shapes.joinUnoptimized(res, EAST_AABB, BooleanOp.OR);
-            if(state.getValue(NORTH)) res = Shapes.joinUnoptimized(res, NORTH_AABB, BooleanOp.OR);
-            if(state.getValue(SOUTH)) res = Shapes.joinUnoptimized(res, SOUTH_AABB, BooleanOp.OR);
-            if(state.getValue(DOWN)) res = Shapes.joinUnoptimized(res, DOWN_AABB, BooleanOp.OR);
+            if (state.getValue(UP)) res = Shapes.joinUnoptimized(res, UP_AABB, BooleanOp.OR);
+            if (state.getValue(WEST)) res = Shapes.joinUnoptimized(res, WEST_AABB, BooleanOp.OR);
+            if (state.getValue(EAST)) res = Shapes.joinUnoptimized(res, EAST_AABB, BooleanOp.OR);
+            if (state.getValue(NORTH)) res = Shapes.joinUnoptimized(res, NORTH_AABB, BooleanOp.OR);
+            if (state.getValue(SOUTH)) res = Shapes.joinUnoptimized(res, SOUTH_AABB, BooleanOp.OR);
+            if (state.getValue(DOWN)) res = Shapes.joinUnoptimized(res, DOWN_AABB, BooleanOp.OR);
 
             return res;
         });
@@ -67,24 +67,24 @@ public class MultifaceBlock extends Block {
     public @NotNull BlockState updateShape(@NotNull BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos neighborPos) {
         BooleanProperty prop;
         boolean empty = true;
-        for (Direction dir : Direction.values()){
+        for (Direction dir : Direction.values()) {
             prop = PipeBlock.PROPERTY_BY_DIRECTION.get(dir);
-            if(!state.getValue(prop)) continue;
+            if (!state.getValue(prop)) continue;
 
             BlockPos rel = currentPos.relative(dir);
-            if(!canAttachTo(level, rel, level.getBlockState(rel), dir.getOpposite())){
+            if (!canAttachTo(level, rel, level.getBlockState(rel), dir.getOpposite())) {
                 state = state.setValue(prop, false);
-                if(level instanceof Level l) Block.popResource(l, currentPos, new ItemStack(this));
+                if (level instanceof Level l) Block.popResource(l, currentPos, new ItemStack(this));
                 continue;
             }
 
             empty = false;
         }
 
-        return empty ? Blocks.AIR.defaultBlockState() :  state;
+        return empty ? Blocks.AIR.defaultBlockState() : state;
     }
 
-    protected boolean canAttachTo(LevelAccessor level, BlockPos attachToPos, BlockState attachTo, Direction attachToFace){
+    protected boolean canAttachTo(LevelAccessor level, BlockPos attachToPos, BlockState attachTo, Direction attachToFace) {
         return Block.isFaceFull(attachTo.getShape(level, attachToPos), attachToFace);
     }
 
@@ -95,31 +95,31 @@ public class MultifaceBlock extends Block {
         Direction dir = context.getClickedFace();
         BooleanProperty prop = PipeBlock.PROPERTY_BY_DIRECTION.get(dir.getOpposite());
 
-        if(state.is(this)){
-            if(state.getValue(prop)) return null;
+        if (state.is(this)) {
+            if (state.getValue(prop)) return null;
 
             BlockPos rel = context.getClickedPos().relative(dir.getOpposite());
-            if(canAttachTo(level, rel, level.getBlockState(rel), dir)) state = state.setValue(prop, true);
+            if (canAttachTo(level, rel, level.getBlockState(rel), dir)) state = state.setValue(prop, true);
             return state;
         }
 
         BlockPos rel = context.getClickedPos().relative(dir.getOpposite());
-        if(!canAttachTo(level, rel, level.getBlockState(rel), dir)) return null;
+        if (!canAttachTo(level, rel, level.getBlockState(rel), dir)) return null;
 
         return super.getStateForPlacement(context).setValue(prop, true);
     }
 
     public boolean canBeReplaced(@NotNull BlockState state, @NotNull BlockPlaceContext context) {
-        if(super.canBeReplaced(state, context)) return true;
-        if(!context.getItemInHand().is(asItem())) return false;
+        if (super.canBeReplaced(state, context)) return true;
+        if (!context.getItemInHand().is(asItem())) return false;
 
         return !state.getValue(PipeBlock.PROPERTY_BY_DIRECTION.get(context.getClickedFace().getOpposite()));
     }
 
     @Override
     public boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level, @NotNull BlockPos pos) {
-        for(BooleanProperty prop : PipeBlock.PROPERTY_BY_DIRECTION.values()){
-            if(state.getValue(prop)) return true;
+        for (BooleanProperty prop : PipeBlock.PROPERTY_BY_DIRECTION.values()) {
+            if (state.getValue(prop)) return true;
         }
 
         return false;

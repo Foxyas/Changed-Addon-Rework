@@ -24,7 +24,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class ChangedAddonVariables {
 
-    public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+    public static final Capability<PlayerVariables> PLAYER_VARIABLES_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+    });
 
     /**
      * Should never return null unless FakePlayer is used or the player is dead
@@ -49,7 +50,7 @@ public class ChangedAddonVariables {
 
         @SubscribeEvent
         public static void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {//For some reason only works with Entity
-            if(!(event.getObject() instanceof Player player) || player instanceof FakePlayer) return;
+            if (!(event.getObject() instanceof Player player) || player instanceof FakePlayer) return;
             event.addCapability(ChangedAddonMod.resourceLoc("player_variables"), new Provider());
         }
 
@@ -126,8 +127,8 @@ public class ChangedAddonVariables {
             CompoundTag nbt = (CompoundTag) Tag;
             showWarns = nbt.getBoolean("showWarns");
             consciousnessFightProgress = nbt.getFloat("consciousnessFightProgress");
-            
-            if(nbt.contains("FTKCminigameType")) {
+
+            if (nbt.contains("FTKCminigameType")) {
                 FTKCminigameType = nbt.getByte("FTKCminigameType") != (byte) -1
                         ? FightToKeepConsciousness.MinigameType.values()[nbt.getByte("FTKCminigameType")]
                         : null;

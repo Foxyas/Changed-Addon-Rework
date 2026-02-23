@@ -33,7 +33,7 @@ public class DelayedTask {
     }
 
     @CanIgnoreReturnValue
-    public static DelayedTask schedule(int delayTicks, Runnable task){
+    public static DelayedTask schedule(int delayTicks, Runnable task) {
         return new DelayedTask(delayTicks, task);
     }
 

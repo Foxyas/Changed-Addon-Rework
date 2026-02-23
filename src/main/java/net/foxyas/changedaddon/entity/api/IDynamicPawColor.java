@@ -33,9 +33,9 @@ public interface IDynamicPawColor {
         return IDynamicPawColor.PawStyle.DEFAULT;
     }
 
-    static enum PawStyle {
+    enum PawStyle {
         DEFAULT,
         ANTHRO,
-        FERAL;
+        FERAL
     }
 }

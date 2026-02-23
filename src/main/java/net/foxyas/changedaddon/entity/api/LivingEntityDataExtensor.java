@@ -15,13 +15,13 @@ import org.jetbrains.annotations.Nullable;
 
 public interface LivingEntityDataExtensor {
 
-    default AnimationState getCustomAnimationState(int id) {
-        return null;
-    }
-
     @Nullable
     static LivingEntityDataExtensor ofEntity(LivingEntity entity) {
         return (entity instanceof LivingEntityDataExtensor livingEntityDataExtensor) ? livingEntityDataExtensor : null;
+    }
+
+    default AnimationState getCustomAnimationState(int id) {
+        return null;
     }
 
     ///  It tries to override the {@link Player#updateIsUnderwater() updateIsUnderwater} which make the override value need to be other than false

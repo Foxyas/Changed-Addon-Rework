@@ -8,8 +8,6 @@ import net.foxyas.changedaddon.client.renderer.layers.DynamicEmissiveBodyLayer;
 import net.foxyas.changedaddon.entity.advanced.PrototypeEntity;
 import net.ltxprogrammer.changed.client.FormRenderHandler;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
-import net.ltxprogrammer.changed.client.renderer.layers.CustomEyesLayer;
-import net.ltxprogrammer.changed.client.renderer.layers.EmissiveBodyLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.GasMaskLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.TransfurCapeLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
@@ -55,7 +53,7 @@ public class PrototypeRenderer extends AdvancedHumanoidRenderer<PrototypeEntity,
                 Color3 hairColor = basicPlayerInfo.getHairColor();
                 ModelPart armPart = parentModel.getArm(arm);
                 armPart.loadPose(armPose);
-                FormRenderHandler.renderModelPartWithTexture(parentModel.getArm(arm),  stack, bufferSource.getBuffer(this.renderType()), 15728880, hairColor.red(), hairColor.green(), hairColor.blue(), 0.5F);
+                FormRenderHandler.renderModelPartWithTexture(parentModel.getArm(arm), stack, bufferSource.getBuffer(this.renderType()), 15728880, hairColor.red(), hairColor.green(), hairColor.blue(), 0.5F);
                 stack.popPose();
             }
         };

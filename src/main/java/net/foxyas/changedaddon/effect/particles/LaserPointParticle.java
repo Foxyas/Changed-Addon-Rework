@@ -66,7 +66,7 @@ public class LaserPointParticle extends TextureSheetParticle {
         ).orElse(false) && bbWidth != .35) {
             this.setSize(0.35f, 0.35f);
             this.quadSize = 0.35f;
-        } else if(bbWidth == .35) {
+        } else if (bbWidth == .35) {
             this.setSize(0.1f, 0.1f);
             this.quadSize = 0.1f;
         }
@@ -218,6 +218,7 @@ public class LaserPointParticle extends TextureSheetParticle {
         private final int entityId, color;
         private final Entity entity;
         private float alpha;
+
         public Option(int entityId, int color, float alpha) {
             this.entityId = entityId;
             this.entity = null;

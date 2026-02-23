@@ -2,11 +2,11 @@ package net.foxyas.changedaddon.mixins.entity.goals;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
+import net.foxyas.changedaddon.entity.ai.goals.simple.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractSwimmableEntity;
-import net.foxyas.changedaddon.entity.ai.goals.simple.FollowAndLookAtLaser;
-import net.foxyas.changedaddon.entity.ai.goals.simple.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;

@@ -1,12 +1,14 @@
 package net.foxyas.changedaddon.init;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.decoration.PaintingVariant;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static net.foxyas.changedaddon.ChangedAddonMod.MODID;
 
@@ -53,13 +55,11 @@ public class ChangedAddonPaintingVariants {
 
     // ----- Record info -----
 
-    public record PaintingVariantInfo(String title, String author) { }
-
-    // ----- Registry with extra info -----
-
     private static RegistryObject<PaintingVariant> register(String name, int width, int height) {
         return PAINTING_TYPES.register(name, () -> new PaintingVariant(width, height));
     }
+
+    // ----- Registry with extra info -----
 
     private static RegistryObject<PaintingVariant> register(
             String name,
@@ -70,5 +70,8 @@ public class ChangedAddonPaintingVariants {
         RegistryObject<PaintingVariant> registry = register(name, width, height);
         PAINTING_DATA.put(registry, info);
         return registry;
+    }
+
+    public record PaintingVariantInfo(String title, String author) {
     }
 }

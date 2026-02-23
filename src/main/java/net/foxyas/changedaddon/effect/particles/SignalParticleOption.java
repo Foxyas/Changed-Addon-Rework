@@ -56,12 +56,8 @@ public class SignalParticleOption implements ParticleOptions {
     public static Codec<SignalParticleOption> codec(ParticleType<SignalParticleOption> type) {
         return RecordCodecBuilder.create(builder -> builder.group(
                 Codec.INT.fieldOf("signalStrength").forGetter(option -> option.signalStrength),
-                ItemStack.CODEC.optionalFieldOf("signalCatcherItem",ItemStack.EMPTY).forGetter(option -> option.signalCatcherItem)
+                ItemStack.CODEC.optionalFieldOf("signalCatcherItem", ItemStack.EMPTY).forGetter(option -> option.signalCatcherItem)
         ).apply(builder, (signalStrength, itemStack) -> new SignalParticleOption(type, signalStrength)));
-    }
-
-    public void setSignalCatcherItem(@Nullable ItemStack signalCatcherItem) {
-        this.signalCatcherItem = signalCatcherItem;
     }
 
     public int getSignalStrength() {
@@ -86,5 +82,9 @@ public class SignalParticleOption implements ParticleOptions {
     @Nullable
     public ItemStack getSignalCatcherItem() {
         return signalCatcherItem;
+    }
+
+    public void setSignalCatcherItem(@Nullable ItemStack signalCatcherItem) {
+        this.signalCatcherItem = signalCatcherItem;
     }
 }

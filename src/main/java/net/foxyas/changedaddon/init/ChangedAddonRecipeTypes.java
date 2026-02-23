@@ -19,7 +19,7 @@ public class ChangedAddonRecipeTypes {
     public static final RegistryObject<RecipeSerializer<?>> LAZER_POINTER_COLORING =
             SERIALIZERS.register("laser_pointer_coloring", LaserPointerColoringRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<?>> KEYCARD_COLOR =
-            SERIALIZERS.register("keycard_coloring",  KeycardColorRecipe.Serializer::new);
+            SERIALIZERS.register("keycard_coloring", KeycardColorRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<?>> HAYDEN_SYRINGE_RECIPE =
             SERIALIZERS.register("hayden_syringe_recipe", HaydenTransfurRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<CatalyzerRecipe>> CATALYZER_RECIPE =

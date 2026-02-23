@@ -35,12 +35,14 @@ public class LatexKaylaSharkRenderer extends AdvancedHumanoidRenderer<LatexKayla
         this.addLayer(new EmissiveBodyLayer<>(this, EMISSIVE_TEXTURE) {
             @Override
             public void renderFirstPersonOnArms(PoseStack stack, MultiBufferSource bufferSource, int packedLight, LatexKaylaSharkEntity entity, HumanoidArm arm, PartPose armPose, float partialTick) {
-                if (entity.getGlowingState()) super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose, partialTick);
+                if (entity.getGlowingState())
+                    super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose, partialTick);
             }
 
             @Override
             public void render(@NotNull PoseStack pMatrixStack, @NotNull MultiBufferSource pBuffer, int pPackedLight, @NotNull LatexKaylaSharkEntity pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-                if (pLivingEntity.getGlowingState()) super.render(pMatrixStack, pBuffer, pPackedLight, pLivingEntity, pLimbSwing, pLimbSwingAmount, pPartialTicks, pAgeInTicks, pNetHeadYaw, pHeadPitch);
+                if (pLivingEntity.getGlowingState())
+                    super.render(pMatrixStack, pBuffer, pPackedLight, pLivingEntity, pLimbSwing, pLimbSwingAmount, pPartialTicks, pAgeInTicks, pNetHeadYaw, pHeadPitch);
             }
         });
     }

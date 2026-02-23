@@ -12,7 +12,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public final class DirectionalVoxelShapes {
 
-    private DirectionalVoxelShapes() {}
+    private DirectionalVoxelShapes() {
+    }
 
     /**
      * Cria VoxelShapes rotacionados a partir de um shape base (assumido como UP).

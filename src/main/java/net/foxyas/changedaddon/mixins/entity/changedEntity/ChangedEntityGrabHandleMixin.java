@@ -6,11 +6,11 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
-import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayCauseGrabDamageGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.event.TransfurVariantEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
@@ -54,6 +54,15 @@ import java.util.List;
 @Mixin(value = ChangedEntity.class, remap = false)
 public abstract class ChangedEntityGrabHandleMixin extends Monster implements IGrabberEntity, IAlphaAbleEntity {
 
+    @Unique
+    protected GrabEntityAbilityInstance grabEntityAbilityInstance = null;
+    private boolean appliedAlphaAttributes = false;
+    private boolean appliedAlphaAttributesForHost = false;
+
+    protected ChangedEntityGrabHandleMixin(EntityType<? extends Monster> type, Level pLevel) {
+        super(type, pLevel);
+    }
+
     @Shadow
     public abstract TransfurVariant<?> getSelfVariant();
 
@@ -62,13 +71,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
     @Shadow
     public abstract LivingEntity maybeGetUnderlying();
-
-    @Unique
-    protected GrabEntityAbilityInstance grabEntityAbilityInstance = null;
-
-    protected ChangedEntityGrabHandleMixin(EntityType<? extends Monster> type, Level pLevel) {
-        super(type, pLevel);
-    }
 
     @Inject(at = @At("TAIL"), method = "<init>", cancellable = true)
     private void initHook(EntityType<? extends Monster> type, Level level, CallbackInfo ci) {
@@ -127,9 +129,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
         return type.is(ChangedAddonTags.EntityTypes.CAN_GRAB) || isAbleToGrab();
     }
-
-    private boolean appliedAlphaAttributes = false;
-    private boolean appliedAlphaAttributesForHost = false;
 
     @Override
     public void baseTick() {
@@ -288,6 +287,12 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     }
 
     @Override
+    public boolean isAlpha() {
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        return self.getEntityData().get(IS_ALPHA);
+    }
+
+    @Override
     public void setAlpha(boolean alpha) {
         ChangedEntity self = (ChangedEntity) (Object) this;
         if (this.isAlpha() != alpha) {
@@ -297,12 +302,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             refreshAttributesForHost(self);
             this.setPersistenceRequired();
         }
-    }
-
-    @Override
-    public boolean isAlpha() {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        return self.getEntityData().get(IS_ALPHA);
     }
 
     @Override
@@ -413,10 +412,10 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             )
     )
     private LivingEntity entityFuseWithOther(LivingEntity target,
-                                              TransfurVariant<?> fusionVariant,
-                                              Operation<LivingEntity> original,
-                                              @Local(argsOnly = true) IAbstractChangedEntity source,
-                                              @Local(argsOnly = true) float amount) {
+                                             TransfurVariant<?> fusionVariant,
+                                             Operation<LivingEntity> original,
+                                             @Local(argsOnly = true) IAbstractChangedEntity source,
+                                             @Local(argsOnly = true) float amount) {
         ChangedEntity self = (ChangedEntity) (Object) this;
         TransfurVariantInstance<?> oldVariantInstance = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(target));
         LivingEntity call = original.call(target, fusionVariant);

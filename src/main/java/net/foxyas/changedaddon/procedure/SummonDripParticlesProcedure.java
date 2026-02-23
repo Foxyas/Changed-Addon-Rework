@@ -15,14 +15,14 @@ import net.minecraft.world.entity.player.Player;
 public class SummonDripParticlesProcedure {
 
     public static void execute(Entity entity) {
-        if(entity.level.isClientSide || entity.getServer() == null || !(entity instanceof Player player)) return;
+        if (entity.level.isClientSide || entity.getServer() == null || !(entity instanceof Player player)) return;
 
         TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
-        if(variant == null) return;
+        if (variant == null) return;
 
         ChangedEntity fakeEntity = variant.getChangedEntity();
         Color3 color3 = fakeEntity.getTransfurColor(TransfurCause.DEFAULT);
-        if(!(player.level instanceof ServerLevel serverLevel)) return;
+        if (!(player.level instanceof ServerLevel serverLevel)) return;
 
         if (!variant.getParent().getEntityType().is(ChangedTags.EntityTypes.LATEX)) {
             serverLevel.sendParticles(ChangedParticles.gas(color3), entity.getX(), entity.getY() + 1, entity.getZ(), 40, 0.2, 0.5, 0.2, 0);

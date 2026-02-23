@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.overlays.HazardSuitHelmetOverlay;
 import net.foxyas.changedaddon.client.gui.overlays.PatOverlay;
 import net.foxyas.changedaddon.client.gui.overlays.UntransfurOverlayOverlay;
-import net.ltxprogrammer.changed.client.ChangedOverlays;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

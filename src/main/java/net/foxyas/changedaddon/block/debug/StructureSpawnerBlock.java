@@ -35,6 +35,19 @@ public class StructureSpawnerBlock extends Block implements EntityBlock {
         this.drops = BuiltInLootTables.EMPTY;
     }
 
+    public static void serverTick(Level level, BlockPos blockPos, BlockState state, StructureSpawnerBlockEntity structureSpawnerBlockEntity) {
+        structureSpawnerBlockEntity.tick(level, blockPos, state);
+    }
+
+    public static void clientTick(Level level, BlockPos blockPos, BlockState state, StructureSpawnerBlockEntity structureSpawnerBlockEntity) {
+        structureSpawnerBlockEntity.tick(level, blockPos, state);
+    }
+
+    @Nullable
+    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> pServerType, BlockEntityType<E> pClientType, BlockEntityTicker<? super E> pTicker) {
+        return pClientType == pServerType ? (BlockEntityTicker<A>) pTicker : null;
+    }
+
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
         return new StructureSpawnerBlockEntity(pos, state);
@@ -58,7 +71,6 @@ public class StructureSpawnerBlock extends Block implements EntityBlock {
         return Shapes.empty();
     }
 
-
     @Override
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter world, @NotNull BlockPos pos, @NotNull CollisionContext ctx) {
         if (ctx instanceof EntityCollisionContext entityCollisionContext &&
@@ -76,19 +88,6 @@ public class StructureSpawnerBlock extends Block implements EntityBlock {
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
         return createTickerHelper(pBlockEntityType, ChangedAddonBlockEntities.STRUCTURE_SPAWNER.get(), pLevel.isClientSide ? StructureSpawnerBlock::clientTick : StructureSpawnerBlock::serverTick);
-    }
-
-    public static void serverTick(Level level, BlockPos blockPos, BlockState state, StructureSpawnerBlockEntity structureSpawnerBlockEntity) {
-        structureSpawnerBlockEntity.tick(level, blockPos, state);
-    }
-
-    public static void clientTick(Level level, BlockPos blockPos, BlockState state, StructureSpawnerBlockEntity structureSpawnerBlockEntity) {
-        structureSpawnerBlockEntity.tick(level, blockPos, state);
-    }
-
-    @Nullable
-    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> pServerType, BlockEntityType<E> pClientType, BlockEntityTicker<? super E> pTicker) {
-        return pClientType == pServerType ? (BlockEntityTicker<A>) pTicker : null;
     }
 
     @Override

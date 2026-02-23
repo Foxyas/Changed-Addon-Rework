@@ -107,11 +107,11 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         add(LUMINAR_CRYSTAL_LARGE.get(), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .add(AlternativesEntry.alternatives(
-                                LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_LARGE.get()).when(HAS_SILK_TOUCH),
-                                LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get())
-                                        .apply(ApplyExplosionDecay.explosionDecay())
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6)))
-                                        .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
+                                        LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_LARGE.get()).when(HAS_SILK_TOUCH),
+                                        LootItem.lootTableItem(ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get())
+                                                .apply(ApplyExplosionDecay.explosionDecay())
+                                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 6)))
+                                                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
                                 ).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(LUMINAR_CRYSTAL_LARGE.get())
                                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LuminarCrystalLarge.HALF, Half.BOTTOM)))
                         )
@@ -142,9 +142,9 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         coverBlockDropSelfOrOther(WHITE_LATEX_COVER_BLOCK.get(), ChangedItems.WHITE_LATEX_GOO.get());
     }
 
-    private void coverBlockDrop(MultifaceBlock cover){
+    private void coverBlockDrop(MultifaceBlock cover) {
         LootTable.Builder table = LootTable.lootTable();
-        for(Direction direction : Direction.values()){
+        for (Direction direction : Direction.values()) {
             table.withPool(LootPool.lootPool().add(LootItem.lootTableItem(cover))
                     .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(cover)
                             .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PipeBlock.PROPERTY_BY_DIRECTION.get(direction), true))));
@@ -153,9 +153,9 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
         add(cover, table);
     }
 
-    private void coverBlockDropOther(MultifaceBlock cover, ItemLike other){
+    private void coverBlockDropOther(MultifaceBlock cover, ItemLike other) {
         LootTable.Builder table = LootTable.lootTable();
-        for(Direction direction : Direction.values()){
+        for (Direction direction : Direction.values()) {
             table.withPool(LootPool.lootPool().add(LootItem.lootTableItem(other))
                     .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(cover)
                             .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PipeBlock.PROPERTY_BY_DIRECTION.get(direction), true))));

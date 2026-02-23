@@ -26,15 +26,6 @@ public class ConfirmMovementPacket {
         this.motion = motion;
     }
 
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeBoolean(isMoving);
-        if (motion != Vec3.ZERO && motion != null) {
-            buf.writeDouble(motion.x());
-            buf.writeDouble(motion.y());
-            buf.writeDouble(motion.z());
-        }
-    }
-
     public static ConfirmMovementPacket decode(FriendlyByteBuf buf) {
         try {
             boolean isMoving = buf.readBoolean();
@@ -70,5 +61,14 @@ public class ConfirmMovementPacket {
             }
         });
         ctx.get().setPacketHandled(true);
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeBoolean(isMoving);
+        if (motion != Vec3.ZERO && motion != null) {
+            buf.writeDouble(motion.x());
+            buf.writeDouble(motion.y());
+            buf.writeDouble(motion.z());
+        }
     }
 }

@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.ability.api.AbilityExtension;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;

@@ -1,11 +1,9 @@
 package net.foxyas.changedaddon.entity.api;
 
-import net.foxyas.changedaddon.variant.TransfurVariantsInfo;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
-import org.lwjgl.system.StructBuffer;
 
 import java.util.List;
 

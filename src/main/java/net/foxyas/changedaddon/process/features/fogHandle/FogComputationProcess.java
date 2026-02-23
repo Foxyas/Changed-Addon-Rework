@@ -25,7 +25,7 @@ public class FogComputationProcess {
         try {
             ClientLevel clientLevel = Minecraft.getInstance().level;
             Entity entity = event.getCamera().getEntity();
-            if(!(entity instanceof LivingEntity living)) return;
+            if (!(entity instanceof LivingEntity living)) return;
             if (clientLevel != null) {
                 applyFogEffect(living, event);
             }
@@ -46,11 +46,11 @@ public class FogComputationProcess {
         float farPlaneDistance = fogEvent.getFarPlaneDistance();
         float nearPlaneDistance = fogEvent.getNearPlaneDistance();
 
-        float farPlane = lerp(farPlaneDistance,   10, partialTicks);
+        float farPlane = lerp(farPlaneDistance, 10, partialTicks);
         float nearPlane = lerp(nearPlaneDistance, -1, partialTicks);
 
         if (!isHolding) {
-            farPlane = lerp(farPlaneDistance,   20, partialTicks);
+            farPlane = lerp(farPlaneDistance, 20, partialTicks);
             nearPlane = lerp(nearPlaneDistance, 10, partialTicks);
         }
 

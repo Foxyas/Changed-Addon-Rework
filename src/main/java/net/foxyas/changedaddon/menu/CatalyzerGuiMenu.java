@@ -53,11 +53,11 @@ public class CatalyzerGuiMenu extends AbstractMenu {
         });
     }
 
-    public CatalyzerBlockEntity getCatalyzer(){
+    public CatalyzerBlockEntity getCatalyzer() {
         return catalyzer;
     }
 
-    public boolean isSlotEmpty(int slot){
+    public boolean isSlotEmpty(int slot) {
         return getSlot(slot).getItem().isEmpty();
     }
 

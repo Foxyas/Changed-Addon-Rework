@@ -8,7 +8,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -31,6 +30,31 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         this.pos = menu.getBlockPos();
         this.imageWidth = 200;
         this.imageHeight = 187;
+    }
+
+    public static String getMachineState(Level level, BlockPos pos) {
+        String block = Component.translatable("block." + ForgeRegistries.BLOCKS.getKey((level.getBlockState(pos)).getBlock()).toString().replace(":", ".")).getString();
+
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof UnifuserBlockEntity unifuserBlockEntity) {
+            return !unifuserBlockEntity.startRecipe ? block + " is deactivated" : block + " is activated";
+        } else if (blockEntity instanceof CatalyzerBlockEntity catalyzerBlockEntity) {
+            return !catalyzerBlockEntity.startRecipe ? block + " is deactivated" : block + " is activated";
+        }
+        return "Something ODD Happen..";
+    }
+
+    public static String getRecipeState(LevelAccessor level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity == null) return "THIS SHOULD NEVER HAPPEN";
+        double number = 0;
+        if (blockEntity instanceof UnifuserBlockEntity unifuserBlockEntity) {
+            number = unifuserBlockEntity.recipeProgress;
+        } else if (blockEntity instanceof CatalyzerBlockEntity catalyzerBlockEntity) {
+            number = catalyzerBlockEntity.recipeProgress;
+        }
+
+        return Math.round(number) + "%";
     }
 
     @Override
@@ -77,31 +101,6 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         if (menu.getUnifuser().isSlotFull(3))
             pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.unifuser_gui.label_full"), 153, 78, -12829636, false);
         pGuiGraphics.drawString(font, getRecipeState(level, pos), 89, 47, -12829636, false);
-    }
-
-    public static String getMachineState(Level level, BlockPos pos) {
-        String block = Component.translatable("block." + ForgeRegistries.BLOCKS.getKey((level.getBlockState(pos)).getBlock()).toString().replace(":", ".")).getString();
-
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof UnifuserBlockEntity unifuserBlockEntity) {
-            return !unifuserBlockEntity.startRecipe ? block + " is deactivated" : block + " is activated";
-        } else if (blockEntity instanceof CatalyzerBlockEntity catalyzerBlockEntity) {
-            return !catalyzerBlockEntity.startRecipe ? block + " is deactivated" : block + " is activated";
-        }
-        return "Something ODD Happen..";
-    }
-
-    public static String getRecipeState(LevelAccessor level, BlockPos pos) {
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity == null) return "THIS SHOULD NEVER HAPPEN";
-        double number = 0;
-        if (blockEntity instanceof UnifuserBlockEntity unifuserBlockEntity) {
-            number = unifuserBlockEntity.recipeProgress;
-        } else if (blockEntity instanceof CatalyzerBlockEntity catalyzerBlockEntity) {
-            number = catalyzerBlockEntity.recipeProgress;
-        }
-
-        return Math.round(number) + "%";
     }
 
     private ItemStack getBlockItem(int index) {

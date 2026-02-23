@@ -71,7 +71,7 @@ public class PruningOrangeLeavesGoal extends Goal {
     @Override
     public void start() {
         findNearbyOrangeLeaves(holder.blockPosition(), holder.getEyePosition());
-        if(targetLeave == null) return;
+        if (targetLeave == null) return;
 
         holder.getNavigation().moveTo(targetLeave.getX(), targetLeave.getY(), targetLeave.getZ(), 0.25f);
     }
@@ -98,7 +98,8 @@ public class PruningOrangeLeavesGoal extends Goal {
         if (targetLeave.distSqr(holder.blockPosition()) <= (3.5f * 3.5f)) {
             pruneOrangeLeaves();
             findNearbyOrangeLeaves(holder.blockPosition(), holder.getEyePosition());
-            if(targetLeave != null) navigation.moveTo(targetLeave.getX(), targetLeave.getY(), targetLeave.getZ(), 0.25f);
+            if (targetLeave != null)
+                navigation.moveTo(targetLeave.getX(), targetLeave.getY(), targetLeave.getZ(), 0.25f);
             pruneCooldown = 5;
         }
 
@@ -199,7 +200,8 @@ public class PruningOrangeLeavesGoal extends Goal {
         orangeStack = holder.addToInventory(orangeStack, false);
         if (!orangeStack.isEmpty()) Block.popResource(level, targetLeave, orangeStack);
 
-        shears.hurtAndBreak(1, holder, (prototype) -> {});
+        shears.hurtAndBreak(1, holder, (prototype) -> {
+        });
 
         holder.getLookControl().setLookAt(Vec3.atCenterOf(targetLeave));
         holder.swing(hand);

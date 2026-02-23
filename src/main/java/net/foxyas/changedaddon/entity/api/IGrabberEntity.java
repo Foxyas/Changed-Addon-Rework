@@ -113,9 +113,9 @@ public interface IGrabberEntity {
         }
     }
 
-    void setGrabCooldown(int i);
-
     int getGrabCooldown();
+
+    void setGrabCooldown(int i);
 
     default void applyGrabCooldown(int extraTime) {
         this.setGrabCooldown(getGrabMaxCooldown() + extraTime);

@@ -9,8 +9,6 @@ import net.foxyas.changedaddon.network.packet.PatKeyPacket;
 import net.foxyas.changedaddon.network.packet.TurnOffTransfurPacket;
 import net.foxyas.changedaddon.network.packet.VariantSecondAbilityActivate;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
-import net.ltxprogrammer.changed.Changed;
-import net.ltxprogrammer.changed.network.VariantAbilityActivate;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.tutorial.ChangedTutorial;
 import net.minecraft.client.KeyMapping;

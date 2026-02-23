@@ -69,12 +69,12 @@ public abstract class StackableCanBlock extends HorizontalDirectionalBlock imple
     public @NotNull VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
         int cans = pState.getValue(CANS);
         return CACHE.getShape(pState.getValue(FACING), cans,
-            switch (cans) {
-                case 2 -> SHAPE_2;
-                case 3 -> SHAPE_3;
-                case 4 -> SHAPE_4;
-                default -> SHAPE_1;
-            }
+                switch (cans) {
+                    case 2 -> SHAPE_2;
+                    case 3 -> SHAPE_3;
+                    case 4 -> SHAPE_4;
+                    default -> SHAPE_1;
+                }
         );
     }
 

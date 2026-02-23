@@ -22,6 +22,27 @@ public abstract class DyeableClothingItem extends ClothingItem implements Dyeabl
         CauldronInteraction.WATER.put(this, CauldronInteraction.DYED_ITEM);
     }
 
+    public void fillItemCategory(@NotNull CreativeModeTab.Output tab) {
+        for (DefaultColors color : DefaultColors.values()) {
+            ItemStack stack = new ItemStack(this);
+            this.setColor(stack, color.getColorToInt());
+            tab.accept(stack);
+        }
+    }
+
+    @Override
+    public int getColor(ItemStack pStack) {
+        CompoundTag tag = pStack.getTagElement("display");
+        return tag != null && tag.contains("color", 99) ? tag.getInt("color") : 0xffffff;
+    }
+
+    @Override
+    public void registerCustomColors(RegisterColorHandlersEvent.Item event, RegistryObject<Item> item) {
+        if (item.get() instanceof DyeableClothingItem) {
+            event.register((stack, layer) -> getColor(stack), item.get());
+        }
+    }
+
     public enum DefaultColors {
         RED(new Color(255, 0, 0)),
         GREEN(new Color(0, 255, 0)),
@@ -50,28 +71,6 @@ public abstract class DyeableClothingItem extends ClothingItem implements Dyeabl
 
         public int getColorToInt() {
             return color.getRGB();
-        }
-    }
-
-
-    public void fillItemCategory(@NotNull CreativeModeTab.Output tab) {
-        for (DefaultColors color : DefaultColors.values()) {
-            ItemStack stack = new ItemStack(this);
-            this.setColor(stack, color.getColorToInt());
-            tab.accept(stack);
-        }
-    }
-
-    @Override
-    public int getColor(ItemStack pStack) {
-        CompoundTag tag = pStack.getTagElement("display");
-        return tag != null && tag.contains("color", 99) ? tag.getInt("color") : 0xffffff;
-    }
-
-    @Override
-    public void registerCustomColors(RegisterColorHandlersEvent.Item event, RegistryObject<Item> item) {
-        if (item.get() instanceof DyeableClothingItem) {
-            event.register((stack, layer) -> getColor(stack), item.get());
         }
     }
 }

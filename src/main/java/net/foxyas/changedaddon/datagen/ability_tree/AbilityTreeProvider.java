@@ -31,7 +31,7 @@ public abstract class AbilityTreeProvider implements DataProvider {
 
     protected abstract void addTrees();
 
-    protected AbilityTreeBuilder addTree(ResourceLocation loc, List<RegistryElementPredicate<TransfurVariant<?>>> variants){
+    protected AbilityTreeBuilder addTree(ResourceLocation loc, List<RegistryElementPredicate<TransfurVariant<?>>> variants) {
         return treeBuilders.computeIfAbsent(loc, l -> new AbilityTreeBuilder(variants));
     }
 
@@ -70,16 +70,16 @@ public abstract class AbilityTreeProvider implements DataProvider {
         private final List<RegistryElementPredicate<TransfurVariant<?>>> variants;
         private final Map<ResourceLocation, AbilityTree.Node> nodes = new HashMap<>();
 
-        private AbilityTreeBuilder(List<RegistryElementPredicate<TransfurVariant<?>>> variants){
+        private AbilityTreeBuilder(List<RegistryElementPredicate<TransfurVariant<?>>> variants) {
             this.variants = variants;
         }
 
-        public AbilityTreeBuilder withNode(ResourceLocation loc, AbilityTree.Node node){
+        public AbilityTreeBuilder withNode(ResourceLocation loc, AbilityTree.Node node) {
             nodes.put(loc, node);
             return this;
         }
 
-        private AbilityTree build(ResourceLocation loc){
+        private AbilityTree build(ResourceLocation loc) {
             AbilityTree tree = new AbilityTree(variants, nodes);
             tree.setTreeLocation(loc);
             return tree;

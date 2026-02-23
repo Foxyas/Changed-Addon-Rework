@@ -35,8 +35,8 @@ public class ChangedAddonMod {
     public static final String MODID = "changed_addon";
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(ChangedAddonMod.resourceLoc("network"), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
-    private static int messageID = 0;
     public static ChangedAddonDataFixer dataFixer;
+    private static int messageID = 0;
 
     public ChangedAddonMod(FMLJavaModLoadingContext context) {
         IEventBus bus = context.getModEventBus();
@@ -98,7 +98,7 @@ public class ChangedAddonMod {
         return new ModelLayerLocation(resourceLoc(path), layer);
     }
 
-    public static <T> @NotNull ResourceKey<T> resourceKey(ResourceKey<? extends Registry<T>> registry, String str){
+    public static <T> @NotNull ResourceKey<T> resourceKey(ResourceKey<? extends Registry<T>> registry, String str) {
         return ResourceKey.create(registry, ResourceLocation.fromNamespaceAndPath(net.foxyas.changedaddon.ChangedAddonMod.MODID, str));
     }
 

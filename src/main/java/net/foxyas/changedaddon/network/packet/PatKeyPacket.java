@@ -14,11 +14,6 @@ public record PatKeyPacket(int type, int pressedMs) {
         this(buf.readVarInt(), buf.readVarInt());
     }
 
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeVarInt(type);
-        buf.writeVarInt(pressedMs);
-    }
-
     public static void handler(PatKeyPacket message, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> pressAction(context.getSender(), message.type));
@@ -33,5 +28,10 @@ public record PatKeyPacket(int type, int pressedMs) {
 
             PatFeatureHandle.run(level, player);
         }
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeVarInt(type);
+        buf.writeVarInt(pressedMs);
     }
 }

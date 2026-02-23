@@ -25,8 +25,6 @@ import java.util.EnumSet;
 
 public class LeapDiveGoal extends Goal {
 
-    protected enum Phase {ASCEND, DIVE}
-
     protected final PathfinderMob mob;
     protected final Vec3 followAscendMultiplier;
     protected final double ascendSpeed;     // impulso Y inicial
@@ -36,12 +34,11 @@ public class LeapDiveGoal extends Goal {
     protected final float ringRadius;       // raio base dos círculos de raio
     protected final int failSafeTicks;
     protected final IntProvider cooldownProvider;
+    public int cooldown = 0;
     protected Phase phase;
     protected int ticks;
     protected BlockPos startGroundPos;
-    public int cooldown = 0;
     protected Vec3 lateral = Vec3.ZERO;
-
     public LeapDiveGoal(PathfinderMob mob,
                         IntProvider cooldownProvider,
                         Vec3 followAscendMultiplier,
@@ -236,8 +233,6 @@ public class LeapDiveGoal extends Goal {
         cooldown = cooldownProvider.sample(this.mob.getRandom());
     }
 
-    /* ---------- Utils ---------- */
-
     public void applyKnockBack(BlockPos pos) {
         var list = mob.level()
                 .getEntitiesOfClass(
@@ -259,6 +254,7 @@ public class LeapDiveGoal extends Goal {
         }
     }
 
+    /* ---------- Utils ---------- */
 
     public void spawnBlockBreakParticleCircle(
             ServerLevel level,
@@ -324,5 +320,8 @@ public class LeapDiveGoal extends Goal {
             }
         }
     }
+
+
+    protected enum Phase {ASCEND, DIVE}
 
 }

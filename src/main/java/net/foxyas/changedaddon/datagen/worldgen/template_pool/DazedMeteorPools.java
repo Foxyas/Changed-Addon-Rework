@@ -16,12 +16,13 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+
 //copy from a_changed
 public class DazedMeteorPools {
 
     public static final ResourceKey<StructureTemplatePool> START = key("meteor");
 
-    public static void bootstrap(@NotNull BootstapContext<StructureTemplatePool> context){
+    public static void bootstrap(@NotNull BootstapContext<StructureTemplatePool> context) {
         HolderGetter<StructureTemplatePool> poolGetter = context.lookup(Registries.TEMPLATE_POOL);
         HolderGetter<StructureProcessorList> processorListGetter = context.lookup(Registries.PROCESSOR_LIST);
         Holder<StructureTemplatePool> empty = poolGetter.getOrThrow(Pools.EMPTY);
@@ -30,20 +31,20 @@ public class DazedMeteorPools {
 
         context.register(START, new StructureTemplatePool(
                 empty, List.of(
-                    Pair.of(StructurePoolElement.single(loc("dazed_latex_meteor"), dazedLatexMeteorProcessors), 1),
-                    Pair.of(StructurePoolElement.single(loc("dazed_latex_meteor_closed"), dazedLatexMeteorProcessors), 1),
-                    Pair.of(StructurePoolElement.single(loc("dazed_latex_meteor_side_opened"), dazedLatexMeteorProcessors), 1)
-                ),
+                Pair.of(StructurePoolElement.single(loc("dazed_latex_meteor"), dazedLatexMeteorProcessors), 1),
+                Pair.of(StructurePoolElement.single(loc("dazed_latex_meteor_closed"), dazedLatexMeteorProcessors), 1),
+                Pair.of(StructurePoolElement.single(loc("dazed_latex_meteor_side_opened"), dazedLatexMeteorProcessors), 1)
+        ),
                 StructureTemplatePool.Projection.RIGID
         ));
     }
 
-    private static @NotNull ResourceKey<StructureTemplatePool> key(String str){
+    private static @NotNull ResourceKey<StructureTemplatePool> key(String str) {
         return ResourceKey.create(Registries.TEMPLATE_POOL, ChangedAddonMod.resourceLoc(str));
     }
 
     @Contract(pure = true)
-    private static @NotNull String loc(String str){
+    private static @NotNull String loc(String str) {
         return ChangedAddonMod.MODID + ":" + str;
     }
 }

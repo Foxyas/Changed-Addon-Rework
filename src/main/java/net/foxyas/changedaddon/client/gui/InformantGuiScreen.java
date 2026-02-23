@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu> {
 
     private static final ResourceLocation texture = ChangedAddonMod.textureLoc("textures/screens/informant_gui");
-
+    public final EditBox form;
     private final Player player;
     private final List<String> allSuggestions = TransfurVariant.getPublicTransfurVariants()
             .map(v -> v.getEntityType().getDescription().getString())
@@ -45,7 +45,6 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
                     v -> v.getEntityType().getDescription().getString()
             ));
     private final List<String> filteredSuggestions = new ArrayList<>();
-    public final EditBox form;
     private int suggestionIndex = -1;
 
     public InformantGuiScreen(InformantGuiMenu container, Inventory inventory, Component title) {
@@ -174,8 +173,8 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
 
         MutableComponent jumpStrengthInfo = Component.translatable("text.changed_addon.jumpStrength",
                 jumpStrengthPct == 0
-                ? Component.literal("§7None§r")
-                : Component.literal((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%"));
+                        ? Component.literal("§7None§r")
+                        : Component.literal((jumpStrengthPct > 0 ? "§a+" : "§c") + (int) jumpStrengthPct + "%"));
 
         MutableComponent canGlideInfo = Component.translatable("text.changed_addon.canGlide/Fly")
                 .append("")

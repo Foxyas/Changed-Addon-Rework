@@ -36,35 +36,6 @@ public class LatexPullEntityGoal extends Goal {
         this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
-    @Override
-    public boolean canUse() {
-        entities = holder.level.getEntitiesOfClass(
-                LivingEntity.class,
-                holder.getBoundingBox().inflate(range),
-                e -> e != holder && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(e) && e.isAlive() && (WhiteLatexTransportInterface.isEntityInWhiteLatex(e) || WhiteLatexTransportInterface.isBoundingBoxInWhiteLatex(e).isPresent())
-        );
-        return !entities.isEmpty();
-    }
-
-    @Override
-    public void tick() {
-        if (blockBreakCooldown > 0)
-            blockBreakCooldown--;
-
-        for (LivingEntity target : entities) {
-            pullEntity(target);
-
-            if (target.distanceTo(holder) <= 2.0F || (canHolderSeeOther(target, holder, 360) && target.distanceTo(holder) <= 8)) {
-                onSuccessfulPull(target);
-            }
-        }
-    }
-
-    @Override
-    public void stop() {
-        entities = null;
-    }
-
     /**
      * Checks if one entity (eyeEntity) can see another (targetToSee), using raycasting and FOV.
      *
@@ -97,6 +68,35 @@ public class LatexPullEntityGoal extends Goal {
         // If result is MISS or hit point is very close to target, it's considered visible
         return result.getType() == HitResult.Type.MISS ||
                 result.getLocation().distanceToSqr(to) < 1.0;
+    }
+
+    @Override
+    public boolean canUse() {
+        entities = holder.level.getEntitiesOfClass(
+                LivingEntity.class,
+                holder.getBoundingBox().inflate(range),
+                e -> e != holder && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(e) && e.isAlive() && (WhiteLatexTransportInterface.isEntityInWhiteLatex(e) || WhiteLatexTransportInterface.isBoundingBoxInWhiteLatex(e).isPresent())
+        );
+        return !entities.isEmpty();
+    }
+
+    @Override
+    public void tick() {
+        if (blockBreakCooldown > 0)
+            blockBreakCooldown--;
+
+        for (LivingEntity target : entities) {
+            pullEntity(target);
+
+            if (target.distanceTo(holder) <= 2.0F || (canHolderSeeOther(target, holder, 360) && target.distanceTo(holder) <= 8)) {
+                onSuccessfulPull(target);
+            }
+        }
+    }
+
+    @Override
+    public void stop() {
+        entities = null;
     }
 
     private void onSuccessfulPull(LivingEntity target) {

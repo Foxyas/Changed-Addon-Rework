@@ -7,18 +7,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class UntransfurEvent extends Event {
 
+    public final UntransfurType untransfurType;
     private final Player player;
     @Nullable
     private final TransfurVariant<?> oldVariant;
     @Nullable
     public TransfurVariant<?> newVariant = null;
-
-    public enum UntransfurType {
-        COMMAND,
-        SURVIVAL;
-    }
-
-    public final UntransfurType untransfurType;
 
     public UntransfurEvent(Player player, @Nullable TransfurVariant<?> oldVariant, UntransfurType untransfurType) {
         this.player = player;
@@ -38,5 +32,10 @@ public class UntransfurEvent extends Event {
     @Override
     public boolean isCancelable() {
         return true;
+    }
+
+    public enum UntransfurType {
+        COMMAND,
+        SURVIVAL
     }
 }

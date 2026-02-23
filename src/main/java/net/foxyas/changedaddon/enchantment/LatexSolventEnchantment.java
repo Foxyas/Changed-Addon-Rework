@@ -25,7 +25,6 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
@@ -40,8 +39,57 @@ import java.util.function.Supplier;
 
 public class LatexSolventEnchantment extends Enchantment {
 
+    private static final Supplier<AttributeInstance> ATTRIB = Suppliers.memoize(() ->
+            new AttributeInstance(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get(), a -> {
+            })
+    );
+
     public LatexSolventEnchantment() {
         super(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+    }
+
+    private static double getAttributeValueSafe(LivingEntity livingEntity, Attribute attribute) {
+        AttributeInstance attributeInstance = livingEntity.getAttribute(attribute);
+        if (attributeInstance != null) {
+            return attributeInstance.getValue();
+        }
+        return 0;
+    }
+
+    public static double getLatexSolventLevelOfEntity(Entity entity) {
+        if (entity instanceof LivingEntity livingEntity) {
+            return getAttributeValueSafe(livingEntity, ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get());
+        }
+
+        if (entity instanceof ThrownTrident trident) {
+            AttributeInstance attribute = ATTRIB.get();
+
+            // Copia o item do tridente
+            CompoundTag tag = new CompoundTag();
+            trident.save(tag);
+            ItemStack tridentItem = tag.contains("Trident")
+                    ? ItemStack.of(tag.getCompound("Trident"))
+                    : new ItemStack(Items.TRIDENT);
+
+            tridentItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get()).stream().filter((mod) -> !attribute.hasModifier(mod)).forEach(attribute::addTransientModifier);
+
+            if (trident.getOwner() instanceof LivingEntity owner) {
+                AttributeInstance entityAttrib = owner.getAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get());
+                if (entityAttrib != null) {
+                    attribute.setBaseValue(entityAttrib.getBaseValue());
+                    entityAttrib.getModifiers().stream().filter((mod) -> !attribute.hasModifier(mod)).forEach(attribute::addTransientModifier);
+                }
+            }
+
+            double val = attribute.getValue();
+
+            //reset attribute
+            attribute.removeModifiers();
+            attribute.setBaseValue(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get().getDefaultValue());
+            return val;
+        }
+
+        return 0;
     }
 
     @Override
@@ -194,54 +242,5 @@ public class LatexSolventEnchantment extends Enchantment {
                 );
             }
         }
-    }
-
-
-    private static final Supplier<AttributeInstance> ATTRIB = Suppliers.memoize(() ->
-            new AttributeInstance(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get(), a -> {})
-    );
-
-    private static double getAttributeValueSafe(LivingEntity livingEntity, Attribute attribute) {
-        AttributeInstance attributeInstance = livingEntity.getAttribute(attribute);
-        if (attributeInstance != null) {
-            return attributeInstance.getValue();
-        }
-        return 0;
-    }
-
-    public static double getLatexSolventLevelOfEntity(Entity entity) {
-        if (entity instanceof LivingEntity livingEntity) {
-            return getAttributeValueSafe(livingEntity, ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get());
-        }
-
-        if (entity instanceof ThrownTrident trident) {
-            AttributeInstance attribute = ATTRIB.get();
-
-            // Copia o item do tridente
-            CompoundTag tag = new CompoundTag();
-            trident.save(tag);
-            ItemStack tridentItem = tag.contains("Trident")
-                    ? ItemStack.of(tag.getCompound("Trident"))
-                    : new ItemStack(Items.TRIDENT);
-
-            tridentItem.getAttributeModifiers(EquipmentSlot.MAINHAND).get(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get()).stream().filter((mod) -> !attribute.hasModifier(mod)).forEach(attribute::addTransientModifier);
-
-            if (trident.getOwner() instanceof LivingEntity owner) {
-                AttributeInstance entityAttrib = owner.getAttribute(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get());
-                if(entityAttrib != null){
-                    attribute.setBaseValue(entityAttrib.getBaseValue());
-                    entityAttrib.getModifiers().stream().filter((mod) -> !attribute.hasModifier(mod)).forEach(attribute::addTransientModifier);
-                }
-            }
-
-            double val = attribute.getValue();
-
-            //reset attribute
-            attribute.removeModifiers();
-            attribute.setBaseValue(ChangedAddonAttributes.LATEX_SOLVENT_DAMAGE_MULTIPLIER.get().getDefaultValue());
-            return val;
-        }
-
-        return 0;
     }
 }

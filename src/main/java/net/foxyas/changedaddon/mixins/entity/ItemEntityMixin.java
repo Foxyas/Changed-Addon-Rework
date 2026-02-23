@@ -24,7 +24,8 @@ public abstract class ItemEntityMixin extends Entity {
         super(pEntityType, pLevel);
     }
 
-    @Shadow public abstract ItemStack getItem();
+    @Shadow
+    public abstract ItemStack getItem();
 
     @Unique
     public ItemEntity self() {

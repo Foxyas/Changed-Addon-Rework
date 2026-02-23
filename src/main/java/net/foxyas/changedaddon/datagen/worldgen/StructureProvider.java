@@ -23,10 +23,11 @@ import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 //copy from a_changed
 public class StructureProvider {
 
-    public static void bootstrap(BootstapContext<Structure> context){
+    public static void bootstrap(BootstapContext<Structure> context) {
         HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
         HolderGetter<StructureTemplatePool> poolGetter = context.lookup(Registries.TEMPLATE_POOL);
 
@@ -49,7 +50,7 @@ public class StructureProvider {
         ));
     }
 
-    public static void structureSet(BootstapContext<StructureSet> context){
+    public static void structureSet(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> structureGetter = context.lookup(Registries.STRUCTURE);
 
         context.register(ChangedAddonStructures.DAZED_METEOR_SET, new StructureSet(

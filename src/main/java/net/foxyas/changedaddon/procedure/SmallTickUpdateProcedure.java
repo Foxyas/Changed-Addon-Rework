@@ -25,32 +25,32 @@ public class SmallTickUpdateProcedure {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if(event.phase != TickEvent.Phase.END) return;
+        if (event.phase != TickEvent.Phase.END) return;
 
         Player player = event.player;
         Level level = player.level;
-        if(player instanceof ServerPlayer sPlayer){
+        if (player instanceof ServerPlayer sPlayer) {
             Advancement adv = sPlayer.server.getAdvancements().getAdvancement(ChangedAddonMod.resourceLoc("gooey_friend"));
             AdvancementProgress ap = sPlayer.getAdvancements().getOrStartProgress(Objects.requireNonNull(adv));
 
-            if(!ap.isDone()){
+            if (!ap.isDone()) {
                 final Vec3 center = new Vec3(player.getX(), player.getY(), player.getZ());
                 List<LatexSnowFoxFoxyasEntity> entityList = level.getEntitiesOfClass(LatexSnowFoxFoxyasEntity.class, new AABB(center, center).inflate(2), e -> true)
                         .stream().sorted(Comparator.comparingDouble(e -> e.distanceToSqr(center))).toList();
 
-                if(!entityList.isEmpty()){
+                if (!entityList.isEmpty()) {
                     for (String s : ap.getRemainingCriteria()) sPlayer.getAdvancements().award(adv, s);
                 }
             }
         }
 
         TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(player);
-        if(variant == null) return;
+        if (variant == null) return;
 
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
         String id = variant.getFormId().toString();
         boolean darkLatex = id.contains("dark_latex") || id.contains("puro_kind");
-        if(vars.areDarkLatex == darkLatex) return;
+        if (vars.areDarkLatex == darkLatex) return;
 
         vars.areDarkLatex = darkLatex;
         vars.syncPlayerVariables(player);

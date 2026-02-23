@@ -29,7 +29,7 @@ public class TryGrabItemsGoal extends Goal {
                 prototype.getBoundingBox().inflate(16.0),
                 item -> {
                     ItemStack stack = item.getItem();
-                    return  prototype.canTakeItem(stack) && prototype.wantsToPickUp(stack);
+                    return prototype.canTakeItem(stack) && prototype.wantsToPickUp(stack);
                 }
         );
         this.nearbyItems = nearbyItems;

@@ -28,11 +28,11 @@ import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverable
 
 public class LatexCoverBlock extends MultifaceBlock implements NonLatexCoverableBlock {
 
-    private final Supplier<LatexType> latexType;
     public static final IntegerProperty DECAY_PROGRESS = IntegerProperty.create("decay_progress", 0, 15);
     public static final Integer MAX_DECAY = Collections.max(DECAY_PROGRESS.getPossibleValues());
     public static final BooleanProperty CAN_DECAY = BooleanProperty.create("can_decay");
-
+    private static final Direction[] DIRECTIONS = Direction.values();
+    private final Supplier<LatexType> latexType;
 
     public LatexCoverBlock(Properties pProperties, Supplier<LatexType> latexType) {
         super(pProperties);
@@ -87,9 +87,6 @@ public class LatexCoverBlock extends MultifaceBlock implements NonLatexCoverable
             level.destroyBlock(pos, false);
         }
     }
-
-
-    private static final Direction[] DIRECTIONS = Direction.values();
 
     @Override
     public void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, @NotNull RandomSource random) {
@@ -175,9 +172,9 @@ public class LatexCoverBlock extends MultifaceBlock implements NonLatexCoverable
     }
 
     public boolean canSpreadTo(LevelAccessor level,
-                                  @NotNull BlockState currentState, @NotNull BlockPos currentPos, BlockPos attachToPos,
-                                  BlockState attachTo,
-                                  Direction attachToFace) {
+                               @NotNull BlockState currentState, @NotNull BlockPos currentPos, BlockPos attachToPos,
+                               BlockState attachTo,
+                               Direction attachToFace) {
         if (!(level instanceof ServerLevel serverLevel))
             return false;
 

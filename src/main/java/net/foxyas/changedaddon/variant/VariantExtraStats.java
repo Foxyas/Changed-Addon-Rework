@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface VariantExtraStats {
 
+    float defaultPlayerFlySpeed = AttributesHandle.DefaultPlayerFlySpeed;
+
     // Variable Set By Entity
     default float extraBlockBreakSpeed() {
         return 0;
@@ -20,8 +22,6 @@ public interface VariantExtraStats {
     default float getBlockBreakSpeedMultiplier() {
         return this.extraBlockBreakSpeed() + 1;
     }
-
-    float defaultPlayerFlySpeed = AttributesHandle.DefaultPlayerFlySpeed;
 
     default float getFlySpeed() {
         return 0;
@@ -56,6 +56,18 @@ public interface VariantExtraStats {
         return List.of();
     }
 
+    default boolean variantOverrideSwim() {
+        return false;
+    }
+
+    default boolean variantOverrideSwimUpdate() {
+        return false;
+    }
+
+    default boolean variantOverrideIsInWater() {
+        return false;
+    }
+
     enum FlyType {
         NONE,
         ONLY_FALL,
@@ -72,17 +84,5 @@ public interface VariantExtraStats {
         public boolean canFly() {
             return this == ONLY_FLY || this == BOTH;
         }
-    }
-
-    default boolean variantOverrideSwim() {
-        return false;
-    }
-
-    default boolean variantOverrideSwimUpdate() {
-        return false;
-    }
-
-    default boolean variantOverrideIsInWater() {
-        return false;
     }
 }

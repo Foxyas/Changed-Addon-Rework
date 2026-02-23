@@ -42,7 +42,7 @@ public class KeycardColorRecipe extends CustomRecipe {
                 ItemStack stack = container.getItem(row * w + col);
 
                 if (stack.getItem() instanceof KeycardItem) {
-                    if(foundKeycard) return false;//Cannot have multiple keycards!
+                    if (foundKeycard) return false;//Cannot have multiple keycards!
                     foundKeycard = true;
                 }
 
@@ -75,8 +75,8 @@ public class KeycardColorRecipe extends CustomRecipe {
 
                 if (item.getItem() instanceof KeycardItem) {
                     keycard = item.copy();
-                    if(KeycardItem.hasTopColor(keycard)) topColors.add(KeycardItem.getTopColor(keycard));
-                    if(KeycardItem.hasBottomColor(keycard)) bottomColors.add(KeycardItem.getBottomColor(keycard));
+                    if (KeycardItem.hasTopColor(keycard)) topColors.add(KeycardItem.getTopColor(keycard));
+                    if (KeycardItem.hasBottomColor(keycard)) bottomColors.add(KeycardItem.getBottomColor(keycard));
                     continue;
                 }
 
@@ -86,11 +86,9 @@ public class KeycardColorRecipe extends CustomRecipe {
 
                     if (row == 0) {
                         topColors.add(rgb);
-                    }
-                    else if (row == h - 1) {
+                    } else if (row == h - 1) {
                         bottomColors.add(rgb);
-                    }
-                    else { // linha do meio → aplica nos dois
+                    } else { // linha do meio → aplica nos dois
                         topColors.add(rgb);
                         bottomColors.add(rgb);
                     }
@@ -100,14 +98,16 @@ public class KeycardColorRecipe extends CustomRecipe {
 
         if (keycard.isEmpty()) return ItemStack.EMPTY;
 
-        if(!topColors.isEmpty()) KeycardItem.setTopColor(keycard, ColorUtil.mixColors(topColors));
-        if(!bottomColors.isEmpty()) KeycardItem.setBottomColor(keycard, ColorUtil.mixColors(bottomColors));
+        if (!topColors.isEmpty()) KeycardItem.setTopColor(keycard, ColorUtil.mixColors(topColors));
+        if (!bottomColors.isEmpty()) KeycardItem.setBottomColor(keycard, ColorUtil.mixColors(bottomColors));
 
         return keycard;
     }
 
     @Override
-    public boolean canCraftInDimensions(int w, int h) { return w * h >= 2; }
+    public boolean canCraftInDimensions(int w, int h) {
+        return w * h >= 2;
+    }
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {

@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.mixins.items;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.item.LatexFlask;
-import net.ltxprogrammer.changed.item.LatexSyringe;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.ltxprogrammer.changed.util.UniversalDist;
 import net.minecraft.world.item.CreativeModeTab;

@@ -34,12 +34,13 @@ public class BiomassItem extends Item {
     @Override
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack itemstack, @NotNull Level level, @NotNull LivingEntity entity) {
         if (entity instanceof Player player) {
-            if(!player.isCreative()){
+            if (!player.isCreative()) {
                 itemstack.shrink(1); // Consome uma unidade do item
                 player.causeFoodExhaustion((float) (4 * 4));
             }
 
-            if(!level.isClientSide) player.displayClientMessage(Component.literal((Component.translatable("item.changed_addon.biomass.eat").getString())), true);
+            if (!level.isClientSide)
+                player.displayClientMessage(Component.literal((Component.translatable("item.changed_addon.biomass.eat").getString())), true);
         }
 
         return itemstack.isEmpty() ? ItemStack.EMPTY : itemstack; // Retorna vazio se all o item foi consumido

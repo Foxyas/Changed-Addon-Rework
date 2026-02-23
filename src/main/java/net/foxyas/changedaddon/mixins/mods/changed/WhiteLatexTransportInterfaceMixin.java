@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.mixins.mods.changed;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.block.WhiteLatexCoverBlock;
-import net.ltxprogrammer.changed.block.WhiteLatexBlock;
 import net.ltxprogrammer.changed.block.WhiteLatexTransportInterface;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;

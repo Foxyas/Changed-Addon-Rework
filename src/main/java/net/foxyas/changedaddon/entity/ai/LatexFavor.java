@@ -17,15 +17,15 @@ public enum LatexFavor implements StringRepresentable {
         this.serializedName = serializedName;
     }
 
-    @Override
-    public String getSerializedName() {
-        return serializedName;
-    }
-
     public static DataResult<LatexFavor> fromSerial(String serializedName) {
         return Arrays.stream(values()).filter(value -> value.serializedName.equals(serializedName))
                 .findAny().map(DataResult::success).orElse(DataResult.error(
                         () -> "Invalid favor " + serializedName
                 ));
+    }
+
+    @Override
+    public String getSerializedName() {
+        return serializedName;
     }
 }

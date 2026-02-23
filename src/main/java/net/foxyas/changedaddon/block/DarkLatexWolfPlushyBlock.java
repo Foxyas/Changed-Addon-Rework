@@ -56,8 +56,23 @@ public class DarkLatexWolfPlushyBlock extends AbstractPlushyBlock {
                 .setValue(WATERLOGGED, false));
     }
 
+    @Override
+    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
+        return new DarkLatexWolfPlushyBlockEntity(pPos, pState);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
+        return super.getTicker(pLevel, pState, pBlockEntityType);
+    }
+
     @Mod.EventBusSubscriber
     public static class EventHandle {
+
+        public static final ClipContext.ShapeGetter IGNORE_BED = (state, b, pos, context) -> {
+            if (state.getBlock() instanceof BedBlock) return Shapes.empty();
+            return ClipContext.Block.COLLIDER.get(state, b, pos, context);
+        };
 
         public static TransfurVariant<?> getTransfurVariant(Level world) {
             List<TransfurVariant<?>> list = new ArrayList<>();
@@ -82,7 +97,7 @@ public class DarkLatexWolfPlushyBlock extends AbstractPlushyBlock {
             float intensity = 1 + (player.getInventory().items.stream().filter((itemStack -> itemStack.is(ChangedAddonItems.DARK_LATEX_WOLF_PLUSH.get()))).count() / 100f);
             for (BlockPos plushyPos : posStream.filter((pos) -> world.getBlockState(pos).is(ChangedAddonBlocks.DARK_LATEX_WOLF_PLUSHY.get())).toList()) {
                 boolean canSeePlayer = canPlushySeePlayer(player, Vec3.atCenterOf(plushyPos), 360);
-                if(!canSeePlayer || event.updateLevel() || ProcessTransfur.isPlayerTransfurred(player)) continue;
+                if (!canSeePlayer || event.updateLevel() || ProcessTransfur.isPlayerTransfurred(player)) continue;
 
                 float randomValue = random.nextFloat();
                 float luck = player.getLuck() / 100f;
@@ -103,9 +118,9 @@ public class DarkLatexWolfPlushyBlock extends AbstractPlushyBlock {
         /**
          * Checks if one entity (targetEntity) can be seen by (plushyPos), using rayCasting and FOV.
          *
-         * @param targetEntity   The entity doing the looking.
-         * @param plushyPos  The target pos to be looked at.
-         * @param fovDegrees  Field of view angle in degrees (e.g., 90 means 45 degrees to each side).
+         * @param targetEntity The entity doing the looking.
+         * @param plushyPos    The target pos to be looked at.
+         * @param fovDegrees   Field of view angle in degrees (e.g., 90 means 45 degrees to each side).
          * @return true if visible and within FOV, false otherwise.
          */
         public static boolean canPlushySeePlayer(LivingEntity targetEntity, Vec3 plushyPos, double fovDegrees) {
@@ -129,20 +144,5 @@ public class DarkLatexWolfPlushyBlock extends AbstractPlushyBlock {
             return result.getType() == HitResult.Type.MISS ||
                     result.getLocation().distanceToSqr(plushyPos) < 1.0;
         }
-
-        public static final ClipContext.ShapeGetter IGNORE_BED = (state, b, pos, context) -> {
-            if(state.getBlock() instanceof BedBlock) return Shapes.empty();
-            return ClipContext.Block.COLLIDER.get(state, b, pos, context);
-        };
-    }
-
-    @Override
-    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
-        return new DarkLatexWolfPlushyBlockEntity(pPos, pState);
-    }
-
-    @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
-        return super.getTicker(pLevel, pState, pBlockEntityType);
     }
 }

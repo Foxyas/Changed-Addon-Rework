@@ -37,7 +37,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
         this.blockPos = pos;
         access = ContainerLevelAccess.create(level, pos);
 
-        if(!(level.getBlockEntity(pos) instanceof UnifuserBlockEntity be)) throw new IllegalStateException();
+        if (!(level.getBlockEntity(pos) instanceof UnifuserBlockEntity be)) throw new IllegalStateException();
         unifuser = be;
         IItemHandler internal = unifuser.getCapability(ForgeCapabilities.ITEM_HANDLER, null).resolve().orElseThrow();
 
@@ -69,7 +69,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
         addSlot(new SlotItemHandler(internal, 1, 15, 70));
     }
 
-    public UnifuserBlockEntity getUnifuser(){
+    public UnifuserBlockEntity getUnifuser() {
         return unifuser;
     }
 

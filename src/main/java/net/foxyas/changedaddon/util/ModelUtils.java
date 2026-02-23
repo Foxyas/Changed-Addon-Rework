@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.ltxprogrammer.changed.client.renderer.AdvancedHumanoidRenderer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
@@ -111,17 +110,17 @@ public class ModelUtils {
     /**
      * Calculates the world position from a model part using a custom transform approach with rotation mirroring support.
      *
-     * @param part                 The model part to use.
-     * @param partOffset               offset relative to the model part.
-     * @param worldOffset                 variable used on the Matrix4f
-     * @param entity               The entity used for base position and orientation.
-     * @param stackRotation             Rotation vector (in degrees).
-     * @param originalPoseStack       Last PoseStack From Model [Can Be Null if None]
+     * @param part              The model part to use.
+     * @param partOffset        offset relative to the model part.
+     * @param worldOffset       variable used on the Matrix4f
+     * @param entity            The entity used for base position and orientation.
+     * @param stackRotation     Rotation vector (in degrees).
+     * @param originalPoseStack Last PoseStack From Model [Can Be Null if None]
      * @return The resulting world-space position as a {@link Vec3}.
      */
 
     public static Vec3 getWorldSpaceFromModelPartNew(ModelPart part, Vector3f partOffset, Vector3f worldOffset,
-                                                  @NotNull Entity entity, Vec3 stackRotation, @Nullable PoseStack originalPoseStack) {
+                                                     @NotNull Entity entity, Vec3 stackRotation, @Nullable PoseStack originalPoseStack) {
         PoseStack stack = originalPoseStack == null ? new PoseStack() : originalPoseStack;
 
         // Aplica transformações da entidade
@@ -155,7 +154,7 @@ public class ModelUtils {
      *
      * @param part                 The model part to use.
      * @param Offset               offset relative to the model part.
-     * @param worldOffset                 variable used on the Matrix4f
+     * @param worldOffset          variable used on the Matrix4f
      * @param entity               The entity used for base position and orientation.
      * @param entityPosOffset      offset relative to the entity position part.
      * @param Rotation             Rotation vector (in degrees).

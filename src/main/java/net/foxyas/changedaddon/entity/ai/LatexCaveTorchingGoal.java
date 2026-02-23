@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.ai;
 
-import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.core.BlockPos;
@@ -23,6 +22,7 @@ public class LatexCaveTorchingGoal extends MoveToBlockGoal {
     public final ChangedEntity entity;
     public final Level level;
     private final TamableLatexEntityFavors iEntity;
+    protected boolean placed = false;
 
     public LatexCaveTorchingGoal(TamableLatexEntityFavors tamableLatexEntityFavors, double speedModifier, int searchRange, int verticalSearchRange) {
         super(tamableLatexEntityFavors.getSelf(), speedModifier, searchRange, verticalSearchRange);
@@ -76,8 +76,6 @@ public class LatexCaveTorchingGoal extends MoveToBlockGoal {
 
         return level.getRawBrightness(blockPos.above(), level.getSkyDarken() + 2) < 3;
     }
-
-    protected boolean placed = false;
 
     @Override
     public void start() {

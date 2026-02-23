@@ -42,7 +42,7 @@ public class PatFeatureHandle {
         if (vars != null && vars.patCooldown) return;
 
         InteractionHand emptyHand = getEmptyHand(player);
-        if(emptyHand == null) return;
+        if (emptyHand == null) return;
 
         EntityHitResult targetEntityResult = PlayerUtil.getEntityHitLookingAt(player, (float) player.getEntityReach(), PlayerUtil.BLOCK_COLLISION, e -> {
             if (e.isSpectator()) return false;
@@ -80,7 +80,7 @@ public class PatFeatureHandle {
 
     private static void handleSpecialEntities(Player player, InteractionHand emptyHand, LivingEntity target, EntityHitResult entityHitResult) {
         player.swing(emptyHand);
-        if(!(target instanceof CustomPatReaction pat)) return;
+        if (!(target instanceof CustomPatReaction pat)) return;
 
         pat.WhenPattedReactionSpecific(player, emptyHand, entityHitResult.getLocation());
         pat.WhenPattedReaction(player, emptyHand);
@@ -125,7 +125,7 @@ public class PatFeatureHandle {
 
         player.swing(emptyHand);
 
-        if(selfTF != null && selfTF.getChangedEntity() instanceof CustomPatReaction playerPat){
+        if (selfTF != null && selfTF.getChangedEntity() instanceof CustomPatReaction playerPat) {
             playerPat.WhenPatEvent(player, emptyHand, target);
         }
 
@@ -143,12 +143,12 @@ public class PatFeatureHandle {
         if (player instanceof ServerPlayer sPlayer) onPat(sPlayer);
         if (target instanceof ServerPlayer sPlayer) sPlayer.awardStat(ChangedAddonStatRegistry.PATS_RECEIVED.get());
 
-        if(targetTF == null || !(level instanceof ServerLevel)) return;
+        if (targetTF == null || !(level instanceof ServerLevel)) return;
 
-        if(player.getRandom().nextFloat() > 0.1f + player.getLuck() * 0.05f) return;
+        if (player.getRandom().nextFloat() > 0.1f + player.getLuck() * 0.05f) return;
 
         target.heal(6f);
-        if(player instanceof ServerPlayer sPlayer) GivePatAdvancement(sPlayer, target);
+        if (player instanceof ServerPlayer sPlayer) GivePatAdvancement(sPlayer, target);
     }
 
     private static void handlePatableEntity(Player player, InteractionHand emptyHand, EntityHitResult entityHitResult, Level level) {
@@ -161,8 +161,8 @@ public class PatFeatureHandle {
         }
     }
 
-    private static InteractionHand getEmptyHand(Player player){
-        if(player.getMainHandItem().isEmpty()) return InteractionHand.MAIN_HAND;
+    private static InteractionHand getEmptyHand(Player player) {
+        if (player.getMainHandItem().isEmpty()) return InteractionHand.MAIN_HAND;
 
         return player.getOffhandItem().isEmpty() ? InteractionHand.OFF_HAND : null;
     }

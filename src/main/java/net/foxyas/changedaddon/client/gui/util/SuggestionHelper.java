@@ -20,7 +20,7 @@ public class SuggestionHelper {
     private int selectedIndex = -1;
 
     private boolean renderUpwards = true;
-    private Consumer<String> onSelect;
+    private final Consumer<String> onSelect;
 
     public SuggestionHelper(EditBox editBox, List<String> list, Consumer<String> onSelect) {
         this.editBox = editBox;
@@ -37,7 +37,9 @@ public class SuggestionHelper {
         this.maxSuggestions = max;
     }
 
-    /** Atualiza quando o texto muda */
+    /**
+     * Atualiza quando o texto muda
+     */
     public void update() {
         String input = editBox.getValue().toLowerCase(Locale.ROOT);
 
@@ -53,7 +55,9 @@ public class SuggestionHelper {
                 .forEach(filtered::add);
     }
 
-    /** Navegação ↑ ↓ */
+    /**
+     * Navegação ↑ ↓
+     */
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (filtered.isEmpty()) return false;
 
@@ -65,7 +69,8 @@ public class SuggestionHelper {
             case 264 -> { // DOWN
                 selectedIndex = Math.min(filtered.size() - 1, selectedIndex + 1);
                 return true;
-            } case 258 -> { // TAB → CIRCLE and Auto fill
+            }
+            case 258 -> { // TAB → CIRCLE and Auto fill
                 // Autofill the "type bar"
                 autoFillFromSuggestion();
                 return true;
@@ -89,7 +94,9 @@ public class SuggestionHelper {
         update();
     }
 
-    /** Aceita o item escolhido */
+    /**
+     * Aceita o item escolhido
+     */
     private void accept(String value) {
         editBox.setValue(value);
         filtered.clear();
@@ -97,7 +104,9 @@ public class SuggestionHelper {
         onSelect.accept(value);
     }
 
-    /** Clique do mouse */
+    /**
+     * Clique do mouse
+     */
     public boolean mouseClicked(double mouseX, double mouseY) {
         if (filtered.isEmpty()) return false;
 
@@ -122,7 +131,9 @@ public class SuggestionHelper {
         return false;
     }
 
-    /** Renderiza a lista */
+    /**
+     * Renderiza a lista
+     */
     public void render(GuiGraphics guiGraphics) {
         if (filtered.isEmpty() || !editBox.isFocused()) return;
 
@@ -139,7 +150,7 @@ public class SuggestionHelper {
             int bg = (i == selectedIndex ? 0xAA2976FF : 0xAA000000);
 
             guiGraphics.fill(x, startY + i * h, x + w, startY + (i + 1) * h, bg);
-            guiGraphics.drawString(font, s, x + 2, startY + i*h + 2, 0xFFFFFF);
+            guiGraphics.drawString(font, s, x + 2, startY + i * h + 2, 0xFFFFFF);
         }
     }
 }

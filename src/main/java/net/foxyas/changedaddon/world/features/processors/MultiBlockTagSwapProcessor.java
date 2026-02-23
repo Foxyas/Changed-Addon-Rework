@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxyas.changedaddon.init.ChangedAddonProcessors;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.LevelReader;
@@ -24,38 +23,13 @@ import java.util.Optional;
 public class MultiBlockTagSwapProcessor extends StructureProcessor {
 
     /**
-     * Um único item de troca
-     */
-    public static class Swap {
-        public final Optional<BlockState> fromBlock;
-        public final Optional<TagKey<Block>> fromTag;
-        public final BlockState to;
-
-        public Swap(Optional<BlockState> fromBlock, Optional<ResourceLocation> fromTag, BlockState to) {
-            this.fromBlock = fromBlock;
-            this.to = to;
-
-            this.fromTag = fromTag.map(resourceLocation -> TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), resourceLocation));
-        }
-
-        public Swap(Optional<BlockState> fromBlock, TagKey<Block> fromTag, BlockState to) {
-            this.fromBlock = fromBlock;
-            this.to = to;
-
-            this.fromTag = Optional.of(fromTag);
-        }
-    }
-
-    /**
      * Codec da entrada individual
      */
     public static final Codec<Swap> SWAP_CODEC = RecordCodecBuilder.create(instance -> instance.group(BlockState.CODEC.optionalFieldOf("from_block").forGetter(s -> s.fromBlock), ResourceLocation.CODEC.optionalFieldOf("from_tag").forGetter(s -> s.fromTag.map(TagKey::location)), BlockState.CODEC.fieldOf("to").forGetter(s -> s.to)).apply(instance, Swap::new));
-
     /**
      * Codec da lista de swaps
      */
     public static final Codec<MultiBlockTagSwapProcessor> CODEC = RecordCodecBuilder.create(instance -> instance.group(SWAP_CODEC.listOf().fieldOf("swaps").forGetter(p -> p.swaps)).apply(instance, MultiBlockTagSwapProcessor::new));
-
     private final List<Swap> swaps;
 
     public MultiBlockTagSwapProcessor(List<Swap> swaps) {
@@ -85,5 +59,28 @@ public class MultiBlockTagSwapProcessor extends StructureProcessor {
     @Override
     protected @NotNull StructureProcessorType<?> getType() {
         return ChangedAddonProcessors.MULTI_BLOCK_SWAP.get();
+    }
+
+    /**
+     * Um único item de troca
+     */
+    public static class Swap {
+        public final Optional<BlockState> fromBlock;
+        public final Optional<TagKey<Block>> fromTag;
+        public final BlockState to;
+
+        public Swap(Optional<BlockState> fromBlock, Optional<ResourceLocation> fromTag, BlockState to) {
+            this.fromBlock = fromBlock;
+            this.to = to;
+
+            this.fromTag = fromTag.map(resourceLocation -> TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), resourceLocation));
+        }
+
+        public Swap(Optional<BlockState> fromBlock, TagKey<Block> fromTag, BlockState to) {
+            this.fromBlock = fromBlock;
+            this.to = to;
+
+            this.fromTag = Optional.of(fromTag);
+        }
     }
 }

@@ -20,7 +20,7 @@ public class RandomVariantFunctionMixin {
 
     @Inject(method = "withAllVariants", at = @At(value = "RETURN"))
     private void RemoveVariant(CallbackInfoReturnable<Boolean> cir) {
-       // Obtém a lista de variantes a serem removidas
+        // Obtém a lista de variantes a serem removidas
         List<ResourceLocation> list = ChangedAddonTransfurVariants.getRemovedVariantsList()
                 .stream()
                 .map(TransfurVariant::getFormId)

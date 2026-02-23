@@ -71,7 +71,7 @@ public class Experiment10Renderer extends AdvancedHumanoidRenderer<Experiment10E
                 stack.scale(1.0002F, 1.0002F, 1.0002F);
                 EntityModel<T> var9 = this.getParentModel();
                 if (var9 instanceof AdvancedHumanoidModel<?> armedModel) {
-                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm),  stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
+                    FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stack, bufferSource.getBuffer(this.renderType()), 15728880, 1.0F);
                 }
 
                 stack.popPose();

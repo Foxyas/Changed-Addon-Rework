@@ -143,9 +143,9 @@ public interface IAlphaAbleEntity {
         return entity instanceof IAlphaAbleEntity iAlphaAbleEntity ? iAlphaAbleEntity.alphaAdditionalScale() : 0;
     }
 
-    void setAlpha(boolean alphaGene);
-
     boolean isAlpha();
+
+    void setAlpha(boolean alphaGene);
 
     void setAlphaScale(float scale);
 

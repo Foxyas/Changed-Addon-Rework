@@ -18,10 +18,6 @@ public record KeyPressPacket(int keyCode) {
         this(buf.readInt());
     }
 
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(keyCode);
-    }
-
     public static void handle(KeyPressPacket msg, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
@@ -36,6 +32,10 @@ public record KeyPressPacket(int keyCode) {
             }));
         });
         context.setPacketHandled(true);
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeInt(keyCode);
     }
 }
 

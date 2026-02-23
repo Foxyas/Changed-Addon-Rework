@@ -59,7 +59,7 @@ public class PollenCarryAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public void tickIdle() {
-        if(withPollenTicks <= 0) return;
+        if (withPollenTicks <= 0) return;
 
         LivingEntity livingEntity = entity.getEntity();
         Level level = livingEntity.level();

@@ -6,6 +6,7 @@ public class AnimationUtils {
 
     /**
      * Retorna true se a animação foi parada porque tempo excedeu.
+     *
      * @param state   AnimationState da entidade
      * @param seconds Tempo máximo permitido
      */

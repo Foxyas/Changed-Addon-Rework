@@ -14,7 +14,7 @@ public class DarkLatexWolfPlushyItem extends BlockItem {
 
     public DarkLatexWolfPlushyItem() {
         this(ChangedAddonBlocks.DARK_LATEX_WOLF_PLUSHY.get(), new Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
-                );
+        );
     }
 
     @Override

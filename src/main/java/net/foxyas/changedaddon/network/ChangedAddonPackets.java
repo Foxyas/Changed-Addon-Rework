@@ -62,7 +62,7 @@ public class ChangedAddonPackets {
     }
 
     private <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder,
-                                              BiConsumer<T, Supplier<NetworkEvent.Context>> handler) {
+                                       BiConsumer<T, Supplier<NetworkEvent.Context>> handler) {
         packetHandler.registerMessage(messageID++, messageType,
                 wrapEncoder(messageType, encoder),
                 wrapDecoder(messageType, decoder),

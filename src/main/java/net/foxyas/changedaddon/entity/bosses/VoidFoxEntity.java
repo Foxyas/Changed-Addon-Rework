@@ -5,18 +5,21 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
 import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
-import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
-import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
-import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.ComboAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.ComboBurstGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.KnockBackBurstGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleComboAbilityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.void_fox.VoidFoxAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.ai.goals.void_fox.VoidFoxDashAttack;
+import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
+import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.projectile.AbstractVoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
-import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
+import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -111,6 +114,21 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
         setPersistenceRequired();
     }
 
+    public static int getMaxCooldown() {
+        return MAX_COOLDOWN;
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
+        builder = builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3f);
+        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
+        builder = builder.add(Attributes.MAX_HEALTH, 24);
+        builder = builder.add(Attributes.ARMOR, 2);
+        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
+        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
+        return builder;
+    }
+
     public boolean isBoss() {
         return this.entityData.get(IS_BOSS);
     }
@@ -150,22 +168,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     @Override
     public Color getPawColor() {
         return Color.BLACK;
-    }
-
-    public static int getMaxCooldown() {
-        return MAX_COOLDOWN;
-    }
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
-        builder = builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3f);
-        builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
-        builder = builder.add(Attributes.MAX_HEALTH, 24);
-        builder = builder.add(Attributes.ARMOR, 2);
-        builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
-        builder = builder.add(Attributes.FOLLOW_RANGE, 16);
-        return builder;
     }
 
     public boolean causeFallDamage(float p_148859_, float p_148860_, @NotNull DamageSource p_148861_) {

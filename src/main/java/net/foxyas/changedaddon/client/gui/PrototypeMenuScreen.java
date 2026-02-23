@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.minecraft.client.gui.GuiGraphics;

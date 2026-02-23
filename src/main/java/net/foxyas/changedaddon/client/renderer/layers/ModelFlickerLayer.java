@@ -23,7 +23,7 @@ public class ModelFlickerLayer<M extends AdvancedHumanoidModel<T>, T extends Cha
     public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, @NotNull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         float healthRatio = entity.computeHealthRatio();
         if (entity instanceof VoidFoxEntity voidFoxEntity) {
-            if  (!voidFoxEntity.isMoreOp()) return;
+            if (!voidFoxEntity.isMoreOp()) return;
         }
 
         float intensity = 1.0f - healthRatio;

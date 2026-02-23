@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.variant;
 
-import net.foxyas.changedaddon.client.model.advanced.AvaliModel;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;

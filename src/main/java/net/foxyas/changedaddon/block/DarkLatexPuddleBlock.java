@@ -50,7 +50,8 @@ public class DarkLatexPuddleBlock extends HorizontalDirectionalBlock implements 
     private static void alertNearbyDL(Level level, double x, double y, double z, Entity entity) {
         // I Want to allow the players to be able to use the armor stand as a "bait" in farms
         if (!(level instanceof ServerLevel sLevel)/* || entity instanceof ArmorStand */) return;
-        if (entity instanceof ChangedEntity chEntity && chEntity.getLatexType() == ChangedLatexTypes.DARK_LATEX.get()) return;
+        if (entity instanceof ChangedEntity chEntity && chEntity.getLatexType() == ChangedLatexTypes.DARK_LATEX.get())
+            return;
         if (entity instanceof Player player) {
             if (isPlayerDLOrPuro(player)) return;
             if (player.isSteppingCarefully()) return;

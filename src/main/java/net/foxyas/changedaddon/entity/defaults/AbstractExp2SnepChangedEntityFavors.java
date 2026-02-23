@@ -59,8 +59,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-import static net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity.DATA_OWNER_UUID_ID;
-
 public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2SnepChangedEntity implements TamableLatexEntityFavors {
     public static final int OWNER_HOSTILE_DURATION_TICKS = 600;
     //protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.BYTE);

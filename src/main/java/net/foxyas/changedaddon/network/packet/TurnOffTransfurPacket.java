@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.network.FriendlyByteBuf;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
@@ -17,11 +16,6 @@ public record TurnOffTransfurPacket(int type, int pressedMs) {
 
     public TurnOffTransfurPacket(FriendlyByteBuf buf) {
         this(buf.readVarInt(), buf.readVarInt());
-    }
-
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeVarInt(type);
-        buf.writeVarInt(pressedMs);
     }
 
     public static void handler(TurnOffTransfurPacket message, Supplier<NetworkEvent.Context> contextSupplier) {
@@ -56,5 +50,10 @@ public record TurnOffTransfurPacket(int type, int pressedMs) {
                 }
             }
         }
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeVarInt(type);
+        buf.writeVarInt(pressedMs);
     }
 }

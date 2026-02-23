@@ -33,7 +33,7 @@ public class TransfurMe {
     private static final SimpleCommandExceptionType NO_SPECIAL_FORM = new SimpleCommandExceptionType(Component.translatable("command.changed.error.no_special_form"));
     private static final ResourceLocation RANDOM_VARIANT = Changed.modResource("random");
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher){
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralCommandNode<CommandSourceStack> transfurNode = dispatcher.register(Commands.literal("transfurme")
                 .requires(stack -> stack.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(Commands.argument("form", ResourceLocationArgument.id())
@@ -84,9 +84,10 @@ public class TransfurMe {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static void doTransfur(ServerPlayer player, CommandSourceStack stack, ResourceLocation tf, TransfurCause cause){
-        if(ProcessTransfur.isPlayerTransfurred(player)) {
+    private static void doTransfur(ServerPlayer player, CommandSourceStack stack, ResourceLocation tf, TransfurCause cause) {
+        if (ProcessTransfur.isPlayerTransfurred(player)) {
             ProcessTransfur.setPlayerTransfurVariant(player, ChangedRegistry.TRANSFUR_VARIANT.get().getValue(tf), cause);
-        } else ProcessTransfur.transfur(player, stack.getLevel(), ChangedRegistry.TRANSFUR_VARIANT.get().getValue(tf), true, TransfurContext.hazard(cause));
+        } else
+            ProcessTransfur.transfur(player, stack.getLevel(), ChangedRegistry.TRANSFUR_VARIANT.get().getValue(tf), true, TransfurContext.hazard(cause));
     }
 }

@@ -23,7 +23,6 @@ public class PinkCyanSkunkEntity extends ChangedEntity {
     }
 
 
-
     public TransfurMode getTransfurMode() {
         return TransfurMode.NONE;
     }

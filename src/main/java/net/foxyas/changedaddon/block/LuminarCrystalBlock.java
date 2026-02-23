@@ -144,7 +144,8 @@ public class LuminarCrystalBlock extends AbstractLatexIceBlock {
         if (!(player.isCreative() || player.isSpectator())) {
             List<AbstractLuminarcticLeopard> lumiList = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
             for (AbstractLuminarcticLeopard boss : lumiList) {
-                if (!boss.canAttack(player) || !boss.hasLineOfSight(player)) continue;// Verifica se pode atacar e ver o jogador
+                if (!boss.canAttack(player) || !boss.hasLineOfSight(player))
+                    continue;// Verifica se pode atacar e ver o jogador
 
                 if (player.level() instanceof ServerLevel) {
                     player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, false, false));

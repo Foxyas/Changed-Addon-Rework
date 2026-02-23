@@ -2,11 +2,9 @@ package net.foxyas.changedaddon.mixins.client.renderer.layer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexHeldEntityLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.minecraft.SharedConstants;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;

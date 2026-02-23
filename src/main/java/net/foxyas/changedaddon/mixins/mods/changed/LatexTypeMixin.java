@@ -79,7 +79,7 @@ public class LatexTypeMixin {
     )
     private void hookUpdateInPlace(LatexCoverState state, BlockState oldState, BlockState newState, LevelAccessor level, BlockPos pos, CallbackInfoReturnable<LatexCoverState> cir) {
         LatexType self = (LatexType) (Object) this;
-        var event = new LatexCoverStateEvent.UpdateInPlace(state,self, oldState, newState, level, pos, cir.getReturnValue());
+        var event = new LatexCoverStateEvent.UpdateInPlace(state, self, oldState, newState, level, pos, cir.getReturnValue());
         if (ChangedAddonMod.postEvent(event)) {
             cir.setReturnValue(event.modReturnValue);
         }

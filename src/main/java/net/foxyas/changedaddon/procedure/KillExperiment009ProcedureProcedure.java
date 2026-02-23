@@ -17,7 +17,7 @@ public class KillExperiment009ProcedureProcedure {
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event) {
         LivingEntity entity = event.getEntity();
-        if(!(entity instanceof Experiment009BossEntity)) return;
+        if (!(entity instanceof Experiment009BossEntity)) return;
 
         Entity sourceentity = event.getSource().getEntity();
         if (!(sourceentity instanceof ServerPlayer player)) return;

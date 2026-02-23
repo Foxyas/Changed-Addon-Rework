@@ -126,11 +126,6 @@ public class BuffDazedLatexEntity extends AbstractDazedEntity {
                 );
     }
 
-    @Override
-    public float getScale() {
-        return super.getScale() * 1.08f;
-    }
-
     private static boolean canSpawnNear(EntityType<BuffDazedLatexEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
         if (world.getDifficulty() == Difficulty.PEACEFUL) {
             return false;
@@ -171,6 +166,11 @@ public class BuffDazedLatexEntity extends AbstractDazedEntity {
         builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
         builder = builder.add(Attributes.FOLLOW_RANGE, 16);
         return builder;
+    }
+
+    @Override
+    public float getScale() {
+        return super.getScale() * 1.08f;
     }
 
     protected void setAttributes(AttributeMap attributes) {

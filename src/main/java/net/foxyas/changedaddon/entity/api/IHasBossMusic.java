@@ -11,8 +11,13 @@ public interface IHasBossMusic {
         return 64; // distância padrão
     }
 
-    default float getMusicVolume() {return 1;}
-    default float getMusicPitch() {return 1;}
+    default float getMusicVolume() {
+        return 1;
+    }
+
+    default float getMusicPitch() {
+        return 1;
+    }
 
     LivingEntity getSelf();
 }

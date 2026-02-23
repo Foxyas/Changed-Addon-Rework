@@ -24,6 +24,8 @@ import java.util.Optional;
 
 public class TransfurVariantUtils {
 
+    private static final Cacheable<AttributeMap> BASE_ATTRIBUTES = Cacheable.of(() -> new AttributeMap(Player.createAttributes().build()));
+
     public static List<ResourceLocation> getTransfurVariantsFormIdFromStringList(List<? extends String> stringList, @Nullable Level level, boolean detectTags, boolean detectMods) {
         return getTransfurVariantsFromStringList(stringList, level, detectTags, detectMods).stream().map(TransfurVariant::getFormId).toList();
     }
@@ -112,8 +114,6 @@ public class TransfurVariantUtils {
 
         return list;
     }
-
-    private static final Cacheable<AttributeMap> BASE_ATTRIBUTES = Cacheable.of(() -> new AttributeMap(Player.createAttributes().build()));
 
     private static ChangedEntity entity(TransfurVariant<?> variant, Level level) {
         return variant == null ? null : variant.getEntityType().create(level);

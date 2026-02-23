@@ -33,6 +33,7 @@ public class ThunderSparkOption implements ParticleOptions {
     };
     private final int EnergyCharge;
     private final ParticleType<ThunderSparkOption> Type;
+
     public ThunderSparkOption(ParticleType<ThunderSparkOption> type, int energyCharge) {
         super();
         this.Type = type;

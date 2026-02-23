@@ -38,9 +38,8 @@ public class LuminarcticLeopardFemaleEntity extends AbstractLuminarcticLeopard {
     }
 
 
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 6);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 1.25f);
         builder = builder.add(Attributes.MAX_HEALTH, 60F);

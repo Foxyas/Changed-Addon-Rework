@@ -34,10 +34,10 @@ public class HurtByExp10Event {
                 amplifier = e10Boss.isPhase2() ? 2 : 0;
             }
         } else {
-            if(!(target instanceof Player player)) return;
+            if (!(target instanceof Player player)) return;
 
             TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-            if(instance == null || !instance.is(ChangedAddonTransfurVariants.EXPERIMENT_10)) return;
+            if (instance == null || !instance.is(ChangedAddonTransfurVariants.EXPERIMENT_10)) return;
 
             if (attacker instanceof LivingEntity living && living.getMainHandItem().isEmpty()) {
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, 90, 0, false, true));

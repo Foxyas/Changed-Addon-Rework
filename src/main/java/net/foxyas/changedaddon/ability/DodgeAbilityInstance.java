@@ -43,13 +43,13 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     private final int defaultRegenCooldown = 20;
     public boolean ultraInstinct = false; //FUNNY VARIABLE :3
     public DodgeType dodgeType = DodgeType.WEAVE;
+    public int projectilesImmuneTicks = 0;
+    public int canDodgeTicks = 0;
+    public int trailTicks = 0;
     private int dodgeAmount = 0;
     private int maxDodgeAmount = 4;
     private boolean dodgeActive = false;
     private int dodgeRegenCooldown = defaultRegenCooldown;
-    public int projectilesImmuneTicks = 0;
-    public int canDodgeTicks = 0;
-    public int trailTicks = 0;
 
     public DodgeAbilityInstance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
@@ -59,6 +59,35 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         this(ability, entity);
         this.maxDodgeAmount = maxDodge;
         this.dodgeAmount = maxDodge;
+    }
+
+    private static Vec3 divideVec(Vec3 vec3, double value) {
+        double vecX = vec3.x, vecY = vec3.y, vecZ = vec3.z;
+        return new Vec3(vecX / value, vecY / value, vecZ / value);
+    }
+
+    public static boolean isSpectator(Entity entity) {
+        return entity instanceof Player player && player.isSpectator();
+    }
+
+    public static void executeRandomDodgeAnimation(LevelAccessor levelAccessor, LivingEntity dodger) {
+        ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
+        int randomValue = levelAccessor.getRandom().nextInt(6);
+        switch (randomValue) {
+            case 0 ->
+                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_LEFT.get(), DodgeAnimationParameters.INSTANCE);
+            case 1 ->
+                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
+            case 2 ->
+                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), DodgeAnimationParameters.INSTANCE);
+            case 3 ->
+                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
+            case 4 ->
+                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), DodgeAnimationParameters.INSTANCE);
+            case 5 ->
+                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
+            //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
+        }
     }
 
     private void dodgeAwayFromAttacker(Entity dodger, Entity attacker) {
@@ -89,12 +118,6 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             dodger.setDeltaMovement(motion.x, motion.y, motion.z);
         }
     }
-
-    private static Vec3 divideVec(Vec3 vec3, double value) {
-        double vecX = vec3.x, vecY = vec3.y, vecZ = vec3.z;
-        return new Vec3(vecX / value, vecY / value, vecZ / value);
-    }
-
 
     private void applyDodgeAwayParticlesTrails(LivingEntity dodger, LivingEntity attacker) {
         Vec3 motion = attacker.getEyePosition().subtract(dodger.getEyePosition()).scale(-0.25);
@@ -130,10 +153,6 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
                 }
             }
         }
-    }
-
-    public static boolean isSpectator(Entity entity) {
-        return entity instanceof Player player && player.isSpectator();
     }
 
     public DodgeAbilityInstance withDodgeType(DodgeType dodgeType) {
@@ -254,26 +273,6 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
                 //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
             }
             DelayedTask.schedule(5, () -> this.trailTicks = 1);
-        }
-    }
-
-    public static void executeRandomDodgeAnimation(LevelAccessor levelAccessor, LivingEntity dodger) {
-        ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
-        int randomValue = levelAccessor.getRandom().nextInt(6);
-        switch (randomValue) {
-            case 0 ->
-                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_LEFT.get(), DodgeAnimationParameters.INSTANCE);
-            case 1 ->
-                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
-            case 2 ->
-                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), DodgeAnimationParameters.INSTANCE);
-            case 3 ->
-                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
-            case 4 ->
-                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), DodgeAnimationParameters.INSTANCE);
-            case 5 ->
-                    ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), DodgeAnimationParameters.INSTANCE);
-            //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
         }
     }
 

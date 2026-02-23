@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
 
 public class GasAreaUtil {
 
-    public record GasHit(BlockPos pos, Direction face, LatexCoverState state) {}
-    public record GasHitBlock(BlockPos pos, Direction face, BlockState state) {}
-
     public static List<Vec3> sampleGasCone(
             Player player,
             double range,
@@ -227,5 +224,11 @@ public class GasAreaUtil {
                 .values()
                 .stream()
                 .toList();
+    }
+
+    public record GasHit(BlockPos pos, Direction face, LatexCoverState state) {
+    }
+
+    public record GasHitBlock(BlockPos pos, Direction face, BlockState state) {
     }
 }

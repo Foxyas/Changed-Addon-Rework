@@ -2,23 +2,27 @@ package net.foxyas.changedaddon.process.features.fogHandle;
 
 public class FogLerpState {
 
+    public float[] targetColorRgb0 = null; // cor base (ex: fog do bioma)
+    public float[] targetColorRgb = new float[]{0, 0, 0}; // cor alvo
     private float value = 0f;
     private float color = 0f;
-
     private float target = 0f;
     private float colorTarget = 0f;
 
-    public float[] targetColorRgb0 = null; // cor base (ex: fog do bioma)
-    public float[] targetColorRgb = new float[]{0, 0, 0}; // cor alvo
-
     /* ===================== TARGETS ===================== */
+
+    public static float lerp(float a, float b, float t) {
+        return a + (b - a) * t;
+    }
+
+    /* ===================== TICK ===================== */
 
     public void setTarget(boolean active) {
         this.target = active ? 1f : 0f;
         this.colorTarget = this.target;
     }
 
-    /* ===================== TICK ===================== */
+    /* ===================== GETTERS ===================== */
 
     public void tick(float inSpeed, float outSpeed) {
         float sValue = target > value ? inSpeed : outSpeed;
@@ -31,8 +35,6 @@ public class FogLerpState {
         if (Math.abs(colorTarget - color) < 0.001f) color = colorTarget;
     }
 
-    /* ===================== GETTERS ===================== */
-
     public float get() {
         return value;
     }
@@ -41,14 +43,10 @@ public class FogLerpState {
         return color;
     }
 
-    public boolean isActive() {
-        return value > 0.001f || color > 0.001f;
-    }
-
     /* ===================== UTIL ===================== */
 
-    public static float lerp(float a, float b, float t) {
-        return a + (b - a) * t;
+    public boolean isActive() {
+        return value > 0.001f || color > 0.001f;
     }
 
     /* ===================== COLOR ===================== */

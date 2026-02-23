@@ -9,7 +9,6 @@ import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.entity.VisionType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

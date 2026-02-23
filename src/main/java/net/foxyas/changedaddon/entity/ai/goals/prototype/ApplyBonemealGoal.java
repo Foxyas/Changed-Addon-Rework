@@ -105,7 +105,8 @@ public class ApplyBonemealGoal extends Goal {
             applyBoneMeal(targetPos);
             boneMealCooldown = 10;
             findGrowableCrop(entity.level, entity.blockPosition());
-            if(targetPos != null) navigation.moveTo(targetPos.getX() + 0.5, targetPos.getY(), targetPos.getZ() + 0.5, 0.25f);
+            if (targetPos != null)
+                navigation.moveTo(targetPos.getX() + 0.5, targetPos.getY(), targetPos.getZ() + 0.5, 0.25f);
         }
 
         if (navigation.isStuck() || (navigation.getPath() != null && !navigation.getPath().canReach())) {
@@ -123,7 +124,7 @@ public class ApplyBonemealGoal extends Goal {
 
             level.playSound(null, entity.blockPosition(), ChangedAddonSoundEvents.PROTOTYPE_IDEA.get(), SoundSource.MASTER, 1, 1);
 
-            ((ServerLevel)level).sendParticles(ChangedParticles.emote(entity, Emote.IDEA),
+            ((ServerLevel) level).sendParticles(ChangedParticles.emote(entity, Emote.IDEA),
                     entity.getX(), entity.getY() + entity.getDimensions(entity.getPose()).height + 0.65, entity.getZ(),
                     1, 0, 0, 0, 0);
         }
@@ -164,7 +165,7 @@ public class ApplyBonemealGoal extends Goal {
                 center.offset(-searchRange, -1, -searchRange),
                 center.offset(searchRange, 1, searchRange))) {
             dist = (float) pos.distSqr(center);
-            if(dist >= closestDist || isBlockInvalid(level, level.getBlockState(pos), pos)) continue;
+            if (dist >= closestDist || isBlockInvalid(level, level.getBlockState(pos), pos)) continue;
 
             closestDist = dist;
             closestGrowableCrop = pos.immutable();

@@ -21,25 +21,6 @@ public class LatexLanguageTranslator {
         }
     }
 
-    public enum TranslationType {
-        TO_LATEX_LANGUAGE(mapping),
-        FROM_LATEX_LANGUAGE(reverseMapping);
-
-        private final Map<Character, Character> translationMap;
-
-        TranslationType(Map<Character, Character> translationMap) {
-            this.translationMap = translationMap;
-        }
-
-        public String getTranslated(String text) {
-            StringBuilder result = new StringBuilder();
-            for (char c : text.toCharArray()) {
-                result.append(this.translationMap.getOrDefault(c, c));
-            }
-            return result.toString();
-        }
-    }
-
     public static String translateText(String text, TranslationType translationType) {
         return translationType.getTranslated(text.toLowerCase());
     }
@@ -73,8 +54,27 @@ public class LatexLanguageTranslator {
                 }
             }
 
-            System.out.println("Result: " + result.toString());
+            System.out.println("Result: " + result);
         }
         scanner.close();
+    }
+
+    public enum TranslationType {
+        TO_LATEX_LANGUAGE(mapping),
+        FROM_LATEX_LANGUAGE(reverseMapping);
+
+        private final Map<Character, Character> translationMap;
+
+        TranslationType(Map<Character, Character> translationMap) {
+            this.translationMap = translationMap;
+        }
+
+        public String getTranslated(String text) {
+            StringBuilder result = new StringBuilder();
+            for (char c : text.toCharArray()) {
+                result.append(this.translationMap.getOrDefault(c, c));
+            }
+            return result.toString();
+        }
     }
 }

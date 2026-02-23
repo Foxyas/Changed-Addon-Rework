@@ -1,7 +1,5 @@
 package net.foxyas.changedaddon.entity.ai;
 
-import net.foxyas.changedaddon.entity.ai.LatexFavor;
-import net.foxyas.changedaddon.entity.ai.LatexInventory;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.LevelUtil;
@@ -33,10 +31,12 @@ public class LatexCaveHarvestGoal extends MoveToBlockGoal {
     private static final int TIME_LIMIT_TO_PATHFIND = 5 * 20;
     private static final int ORE_CHECK_SEARCH_HORIZONTAL = 6;
     private static final int ORE_CHECK_SEARCH_VERTICAL = 4;
-
-    private final TamableLatexEntityFavors iEntity;
     public final ChangedEntity entity;
     public final Level level;
+    private final TamableLatexEntityFavors iEntity;
+    protected boolean isDestroying = false;
+    protected float destroyProgress = 0;
+    protected float destroyTicks = 0;
     private LatexInventory inventory = null;
     private BlockPos targetOrePosition = BlockPos.ZERO;
 
@@ -104,10 +104,10 @@ public class LatexCaveHarvestGoal extends MoveToBlockGoal {
         BlockPos blockpos = this.blockPos;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-        for(int y = 0; y <= ORE_CHECK_SEARCH_VERTICAL; y = y > 0 ? -y : 1 - y) {
-            for(int r = 0; r < ORE_CHECK_SEARCH_HORIZONTAL; ++r) {
-                for(int x = 0; x <= r; x = x > 0 ? -x : 1 - x) {
-                    for(int z = x < r && x > -r ? r : 0; z <= r; z = z > 0 ? -z : 1 - z) {
+        for (int y = 0; y <= ORE_CHECK_SEARCH_VERTICAL; y = y > 0 ? -y : 1 - y) {
+            for (int r = 0; r < ORE_CHECK_SEARCH_HORIZONTAL; ++r) {
+                for (int x = 0; x <= r; x = x > 0 ? -x : 1 - x) {
+                    for (int z = x < r && x > -r ? r : 0; z <= r; z = z > 0 ? -z : 1 - z) {
                         blockpos$mutableblockpos.setWithOffset(blockpos, x, y - 1, z);
                         if (this.mob.isWithinRestriction(blockpos$mutableblockpos) && this.isValidOre(this.mob.level(), blockpos$mutableblockpos)) {
                             this.targetOrePosition = blockpos$mutableblockpos;
@@ -149,10 +149,6 @@ public class LatexCaveHarvestGoal extends MoveToBlockGoal {
         return level.getBlockState(blockPos).isFaceSturdy(level, blockPos, Direction.UP);
     }
 
-    protected boolean isDestroying = false;
-    protected float destroyProgress = 0;
-    protected float destroyTicks = 0;
-
     @Override
     public void start() {
         super.start();
@@ -184,7 +180,7 @@ public class LatexCaveHarvestGoal extends MoveToBlockGoal {
     }
 
     public int getDestroyStage() {
-        return this.destroyProgress > 0.0F ? (int)(this.destroyProgress * 10.0F) : -1;
+        return this.destroyProgress > 0.0F ? (int) (this.destroyProgress * 10.0F) : -1;
     }
 
     public float getDigSpeed(BlockState blockState, @Nullable BlockPos pos) {
@@ -193,12 +189,12 @@ public class LatexCaveHarvestGoal extends MoveToBlockGoal {
             int i = EnchantmentHelper.getBlockEfficiency(entity);
             ItemStack itemstack = entity.getMainHandItem();
             if (i > 0 && !itemstack.isEmpty()) {
-                f += (float)(i * i + 1);
+                f += (float) (i * i + 1);
             }
         }
 
         if (MobEffectUtil.hasDigSpeed(entity)) {
-            f *= 1.0F + (float)(MobEffectUtil.getDigSpeedAmplification(entity) + 1) * 0.2F;
+            f *= 1.0F + (float) (MobEffectUtil.getDigSpeedAmplification(entity) + 1) * 0.2F;
         }
 
         if (entity.hasEffect(MobEffects.DIG_SLOWDOWN)) {

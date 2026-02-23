@@ -16,13 +16,7 @@ import java.util.*;
 @OnlyIn(Dist.CLIENT)
 public class BossMusicHandler {
 
-    public enum FollowType {
-        BOSS,
-        PLAYER_CAMERA
-    }
-
     private static final Minecraft mc = Minecraft.getInstance();
-
     // Agora suportando vários bosses
     private static final Map<IHasBossMusic, FadingBossMusicSound> activeBosses = new HashMap<>();
 
@@ -92,5 +86,10 @@ public class BossMusicHandler {
         if (sound != null) {
             sound.startFadeOut();
         }
+    }
+
+    public enum FollowType {
+        BOSS,
+        PLAYER_CAMERA
     }
 }

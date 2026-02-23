@@ -8,7 +8,6 @@ import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,6 +26,32 @@ public class LuminaraFireballAbility extends SimpleAbility {
 
     public LuminaraFireballAbility() {
         super();
+    }
+
+    /**
+     * Returns the ability color depending on which fireball would be spawned.
+     */
+    public static Optional<Integer> getColor(AbstractAbilityInstance abilityInstance, int layer) {
+        AbstractRadialScreen.ColorScheme scheme = AbilityColors.getAbilityColors(abilityInstance);
+        IAbstractChangedEntity entity = abilityInstance.entity;
+
+        if (!(entity.getChangedEntity() instanceof LuminaraFlowerBeastEntity holder))
+            return Optional.of(scheme.foreground().toInt());
+
+        // Same decision tree as createFireball()
+        if (holder.isAwakened()) {
+            if (holder.isShiftKeyDown() && layer == 0) {
+                return Optional.of(scheme.foreground().toInt());
+            } else if (layer == 1 && !holder.isShiftKeyDown()) {
+                return Optional.of(scheme.foreground().toInt());
+            }
+        } else {
+            if (layer == 0) {
+                return Optional.of(scheme.foreground().toInt());
+            }
+        }
+
+        return Optional.empty();
     }
 
     @Override
@@ -75,31 +100,5 @@ public class LuminaraFireballAbility extends SimpleAbility {
 
         fireball.moveTo(holder.getMouthPosition().add(view.scale(0.25f))); //Mouth position
         level.addFreshEntity(fireball);
-    }
-
-    /**
-     * Returns the ability color depending on which fireball would be spawned.
-     */
-    public static Optional<Integer> getColor(AbstractAbilityInstance abilityInstance, int layer) {
-        AbstractRadialScreen.ColorScheme scheme = AbilityColors.getAbilityColors(abilityInstance);
-        IAbstractChangedEntity entity = abilityInstance.entity;
-
-        if (!(entity.getChangedEntity() instanceof LuminaraFlowerBeastEntity holder))
-            return Optional.of(scheme.foreground().toInt());
-
-        // Same decision tree as createFireball()
-        if (holder.isAwakened()) {
-            if (holder.isShiftKeyDown() && layer == 0) {
-                return Optional.of(scheme.foreground().toInt());
-            } else if (layer == 1 && !holder.isShiftKeyDown()) {
-                return Optional.of(scheme.foreground().toInt());
-            }
-        } else {
-            if (layer == 0) {
-                return Optional.of(scheme.foreground().toInt());
-            }
-        }
-
-        return Optional.empty();
     }
 }

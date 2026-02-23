@@ -5,7 +5,6 @@ import net.foxyas.changedaddon.block.advanced.TimedKeypadBlockEntity;
 import net.foxyas.changedaddon.block.debug.entity.StructureSpawnerBlockEntity;
 import net.foxyas.changedaddon.block.entity.*;
 import net.foxyas.changedaddon.client.renderer.blockEntitys.*;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,9 +23,24 @@ public class ChangedAddonBlockEntities {
 
     //Non generic Ones
     public static final RegistryObject<BlockEntityType<TimedKeypadBlockEntity>> TIMED_KEYPAD_BLOCK_ENTITY = REGISTRY.register("timed_keypad_block_entity", () -> BlockEntityType.Builder.of(TimedKeypadBlockEntity::new, ChangedAddonBlocks.TIMED_KEYPAD.get()).build(null));
-    public static final RegistryObject<BlockEntityType<?>> CATALYZER = registerGeneric("catalyzer_block_entity", ChangedAddonBlocks.CATALYZER, CatalyzerBlockEntity::new);
-    public static final RegistryObject<BlockEntityType<?>> UNIFUSER = registerGeneric("unifuser_block_entity", ChangedAddonBlocks.UNIFUSER, UnifuserBlockEntity::new);
-    public static final RegistryObject<BlockEntityType<?>> DARK_LATEX_PUDDLE = registerGeneric("dark_latex_puddle_block_entity", ChangedAddonBlocks.DARK_LATEX_PUDDLE, DarkLatexPuddleBlockEntity::new);
+
+    private static RegistryObject<BlockEntityType<?>> registerGeneric(String registryName, RegistryObject<? extends Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
+        return REGISTRY.register(registryName, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));
+    }    public static final RegistryObject<BlockEntityType<?>> CATALYZER = registerGeneric("catalyzer_block_entity", ChangedAddonBlocks.CATALYZER, CatalyzerBlockEntity::new);
+
+    private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(String registryName, RegistryObject<? extends Block> block, BlockEntityType.BlockEntitySupplier<T> supplier) {
+        return REGISTRY.register(registryName, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));
+    }    public static final RegistryObject<BlockEntityType<?>> UNIFUSER = registerGeneric("unifuser_block_entity", ChangedAddonBlocks.UNIFUSER, UnifuserBlockEntity::new);
+
+    @SubscribeEvent
+    public static void registerBlockEntitiesRender(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
+        event.registerBlockEntityRenderer(SNEP_PLUSHY.get(), SnepPlushyBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
+        event.registerBlockEntityRenderer(TIMED_KEYPAD_BLOCK_ENTITY.get(), TimedKeypadBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(INFORMANT_BLOCK.get(), InformantBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(SIGNAL_BLOCK.get(), SignalBlockEntityRenderer::new);
+    }    public static final RegistryObject<BlockEntityType<?>> DARK_LATEX_PUDDLE = registerGeneric("dark_latex_puddle_block_entity", ChangedAddonBlocks.DARK_LATEX_PUDDLE, DarkLatexPuddleBlockEntity::new);
     public static final RegistryObject<BlockEntityType<SignalBlockEntity>> SIGNAL_BLOCK = register("signal_block_block_entity", ChangedAddonBlocks.SIGNAL_BLOCK, SignalBlockEntity::new);
     public static final RegistryObject<BlockEntityType<?>> ADVANCED_UNIFUSER = registerGeneric("advanced_unifuser_block_entity", ChangedAddonBlocks.ADVANCED_UNIFUSER, AdvancedUnifuserBlockEntity::new);
     public static final RegistryObject<BlockEntityType<?>> ADVANCED_CATALYZER = registerGeneric("advanced_catalyzer_block_entity", ChangedAddonBlocks.ADVANCED_CATALYZER, AdvancedCatalyzerBlockEntity::new);
@@ -43,22 +57,10 @@ public class ChangedAddonBlockEntities {
 
     //Stop breaking the lines on this code
 
-    private static RegistryObject<BlockEntityType<?>> registerGeneric(String registryName, RegistryObject<? extends Block> block, BlockEntityType.BlockEntitySupplier<?> supplier) {
-        return REGISTRY.register(registryName, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));
-    }
-
-    private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(String registryName, RegistryObject<? extends Block> block, BlockEntityType.BlockEntitySupplier<T> supplier) {
-        return REGISTRY.register(registryName, () -> BlockEntityType.Builder.of(supplier, block.get()).build(null));
-    }
 
 
-    @SubscribeEvent
-    public static void registerBlockEntitiesRender(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
-        event.registerBlockEntityRenderer(SNEP_PLUSHY.get(), SnepPlushyBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(CONTAINMENT_CONTAINER.get(), ContainmentContainerRenderer::new);
-        event.registerBlockEntityRenderer(TIMED_KEYPAD_BLOCK_ENTITY.get(), TimedKeypadBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(INFORMANT_BLOCK.get(), InformantBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(SIGNAL_BLOCK.get(), SignalBlockEntityRenderer::new);
-    }
+
+
+
+
 }

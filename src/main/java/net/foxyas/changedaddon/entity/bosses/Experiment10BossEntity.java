@@ -1,10 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
-import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
-import net.foxyas.changedaddon.entity.api.IHasBossMusic;
-import net.foxyas.changedaddon.entity.customHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ClawsComboAttackGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.ThrowWitherProjectileGoal;
 import net.foxyas.changedaddon.entity.ai.goals.exp10.WitherWave;
@@ -14,6 +10,10 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LeapSmashGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
+import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
+import net.foxyas.changedaddon.entity.api.IHasBossMusic;
+import net.foxyas.changedaddon.entity.customHandle.BossAbilitiesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
@@ -99,16 +99,8 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         applyDefaultBasicPlayerInfo();
     }
 
-    protected void applyDefaultBasicPlayerInfo() {
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
-        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
-        this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 300);
@@ -118,6 +110,26 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.25);
         builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
         return builder;
+    }
+
+    private static GearTier getGearTier(LivingEntity entity) {
+
+        double armor = entity.getAttributeValue(Attributes.ARMOR);
+        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+
+        double score = armor + (toughness * 2);
+
+        if (score >= 40) return GearTier.HIGH;
+        if (score >= 15) return GearTier.MID;
+        return GearTier.LOW;
+    }
+
+    protected void applyDefaultBasicPlayerInfo() {
+        this.getBasicPlayerInfo().setSize(1f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
+        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
+        this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
     }
 
     @Override
@@ -415,7 +427,6 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         }
     }
 
-
     public void SetDefense(Experiment10BossEntity entity) {
         AttributeModifier AttibuteChange = new AttributeModifier(UUID.fromString("10-0-0-0-0"), "ArmorChange", 20, AttributeModifier.Operation.ADDITION);
         AttributeModifier AttibuteDefenseChange = new AttributeModifier(UUID.fromString("10-10-0-0-0"), "ArmorChange", 0.7, AttributeModifier.Operation.MULTIPLY_BASE);
@@ -541,6 +552,12 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         this.addEffect(mobEffectInstance);
     }
 
+    private enum GearTier {
+        LOW,
+        MID,
+        HIGH
+    }
+
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
 
@@ -570,23 +587,5 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
                 case MID, HIGH -> event.setAmount(event.getAmount());
             }
         }
-    }
-
-    private static GearTier getGearTier(LivingEntity entity) {
-
-        double armor = entity.getAttributeValue(Attributes.ARMOR);
-        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-
-        double score = armor + (toughness * 2);
-
-        if (score >= 40) return GearTier.HIGH;
-        if (score >= 15) return GearTier.MID;
-        return GearTier.LOW;
-    }
-
-    private enum GearTier {
-        LOW,
-        MID,
-        HIGH
     }
 }

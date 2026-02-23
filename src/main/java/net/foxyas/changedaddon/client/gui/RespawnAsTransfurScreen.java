@@ -28,16 +28,12 @@ public class RespawnAsTransfurScreen extends Screen {
             ChangedAddonMod.resourceLoc("textures/gui/infected_spawn.png");
 
     private final DeathScreen previousDeathScreen;
-
+    public List<ResourceLocation> possibleTransfurVariants;
     private EditBox typeBox;
     private boolean canChooseVariant = false;
-
     private List<String> allSuggestions = new ArrayList<>();
     private Map<String, List<TransfurVariant<?>>> nameToVariants = new HashMap<>();
-
     private SuggestionHelper suggestionHelper;
-
-    public List<ResourceLocation> possibleTransfurVariants;
 
     public RespawnAsTransfurScreen(DeathScreen previousDeathScreen) {
         super(Component.literal("Spawn as Transfured"));
@@ -191,8 +187,7 @@ public class RespawnAsTransfurScreen extends Screen {
             // Player typed a formId manually
             try {
                 possibleTransfurVariants = List.of(ResourceLocation.parse(chosen));
-            }
-            catch (Exception ignored) {
+            } catch (Exception ignored) {
                 return;
             }
         } else {
@@ -202,7 +197,7 @@ public class RespawnAsTransfurScreen extends Screen {
                     .toList();
         }
 
-        if(possibleTransfurVariants.isEmpty()) return;
+        if (possibleTransfurVariants.isEmpty()) return;
 
         minecraft.setScreen(null);
         ChangedAddonMod.PACKET_HANDLER.sendToServer(new RespawnAsTransfurPacket(possibleTransfurVariants.get(0)));

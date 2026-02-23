@@ -28,7 +28,6 @@ import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -82,8 +81,8 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
         List<CraftingRecipe> recipes = recipeManager.getAllRecipesFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING);
         List<KeycardColorRecipe> colorRecipes = new ArrayList<>();
 
-        for(CraftingRecipe recipe : recipes){
-            if(recipe instanceof KeycardColorRecipe keycardColorRecipe) colorRecipes.add(keycardColorRecipe);
+        for (CraftingRecipe recipe : recipes) {
+            if (recipe instanceof KeycardColorRecipe keycardColorRecipe) colorRecipes.add(keycardColorRecipe);
         }
 
         registration.addRecipes(KEYCARD_COLOR_RECIPE_TYPE, colorRecipes);
@@ -107,7 +106,7 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
     }
 
 
-    private void registerBrewingRecipes(IRecipeRegistration registration){
+    private void registerBrewingRecipes(IRecipeRegistration registration) {
         IVanillaRecipeFactory factory = registration.getVanillaRecipeFactory();
         List<IJeiBrewingRecipe> brewingRecipes = new ArrayList<>();
         ItemStack potion = new ItemStack(Items.POTION);

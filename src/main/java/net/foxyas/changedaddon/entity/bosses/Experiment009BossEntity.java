@@ -2,13 +2,13 @@ package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
+import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
-import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
-import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
-import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.util.FoxyasUtils;
@@ -101,13 +101,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         applyDefaultBasicPlayerInfo();
     }
 
-    protected void applyDefaultBasicPlayerInfo() {
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 425);
@@ -117,6 +112,23 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.3);
         builder = builder.add(Attributes.ATTACK_KNOCKBACK, 1);
         return builder;
+    }
+
+    private static GearTier getGearTier(LivingEntity entity) {
+
+        double armor = entity.getAttributeValue(Attributes.ARMOR);
+        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
+
+        double score = armor + (toughness * 2);
+
+        if (score >= 40) return GearTier.HIGH;
+        if (score >= 15) return GearTier.MID;
+        return GearTier.LOW;
+    }
+
+    protected void applyDefaultBasicPlayerInfo() {
+        this.getBasicPlayerInfo().setSize(1f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
     }
 
     public DamageSource getThunderDmg() {
@@ -133,12 +145,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         this.entityData.define(CASTING_ATTACK, false);
     }
 
-    public void setCastingAttack(boolean value) {
-        this.entityData.set(CASTING_ATTACK, value);
-    }
-
     public boolean isCastingAttack() {
         return this.entityData.get(CASTING_ATTACK);
+    }
+
+    public void setCastingAttack(boolean value) {
+        this.entityData.set(CASTING_ATTACK, value);
     }
 
     protected void setAttributes(AttributeMap attributes) {
@@ -187,7 +199,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
         return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(ChangedTags.EntityTypes.HUMANOIDS);
     }
-
 
     @Override
     public TransfurMode getTransfurMode() {
@@ -292,7 +303,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             }
         }
     }
-
 
     @Override
     public @Nullable ResourceLocation getBossMusic() {
@@ -738,6 +748,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         this.addEffect(mobEffectInstance);
     }
 
+    private enum GearTier {
+        LOW,
+        MID,
+        HIGH
+    }
+
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
         @SubscribeEvent
@@ -774,26 +790,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
             switch (tier) {
                 case LOW -> event.setAmount(event.getAmount() * 3.5F);
-                case MID,HIGH -> event.setAmount(event.getAmount());
+                case MID, HIGH -> event.setAmount(event.getAmount());
             }
         }
-    }
-
-    private static GearTier getGearTier(LivingEntity entity) {
-
-        double armor = entity.getAttributeValue(Attributes.ARMOR);
-        double toughness = entity.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-
-        double score = armor + (toughness * 2);
-
-        if (score >= 40) return GearTier.HIGH;
-        if (score >= 15) return GearTier.MID;
-        return GearTier.LOW;
-    }
-
-    private enum GearTier {
-        LOW,
-        MID,
-        HIGH
     }
 }

@@ -10,7 +10,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,8 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.util.Arrays;
 import java.util.function.Supplier;
 
 public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchantMenu> {
@@ -30,11 +27,12 @@ public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchant
     private static final ResourceLocation VILLAGER_LOCATION = ResourceLocation.parse("textures/gui/container/villager2.png");
     private static final Component TRADES_LABEL = Component.translatable("merchant.trades");
     private static final Component DEPRECATED_TOOLTIP = Component.translatable("merchant.deprecated");
+    private static final int MS_PER_ITEM = 1000;
+    private final TradeOfferButton[] tradeOfferButtons = new TradeOfferButton[7];
     /**
      * The integer value corresponding to the currently selected merchant recipe.
      */
     private int shopItem;
-    private final TradeOfferButton[] tradeOfferButtons = new TradeOfferButton[7];
     private int scrollOff;
     private boolean isDragging;
 
@@ -42,6 +40,15 @@ public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchant
         super(menu, inv, title);
         imageWidth = 276;
         inventoryLabelX = 107;
+    }
+
+    private static ItemStack currentStack(Ingredient ingredient) {
+        ItemStack[] stacks = ingredient.getItems();
+        if (stacks.length == 0) {
+            return ItemStack.EMPTY;
+        }
+        int time = Math.toIntExact(System.currentTimeMillis() % ((long) stacks.length * MS_PER_ITEM));
+        return stacks[time / MS_PER_ITEM];
     }
 
     protected void init() {
@@ -64,7 +71,7 @@ public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchant
     }
 
     protected void renderLabels(@NotNull GuiGraphics guiGraphics, int x, int y) {
-        guiGraphics.drawString(font, title, 49 + imageWidth / 2 - font.width(title) / 2, 6, 4210752,false);
+        guiGraphics.drawString(font, title, 49 + imageWidth / 2 - font.width(title) / 2, 6, 4210752, false);
         guiGraphics.drawString(font, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 4210752, false);
         int l = font.width(TRADES_LABEL);
         guiGraphics.drawString(font, TRADES_LABEL, (5 - l / 2 + 48), 6, 4210752, false);
@@ -149,7 +156,7 @@ public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchant
                 renderButtonArrows(pGuiGraphics, offer, i, j1);
 
                 String str = String.valueOf(offer.getUsesLeft());
-                pGuiGraphics.drawString(font, str, i + 5 + (46 + 5) + 19 - 2 - font.width(str), (float)(j1 + 6 + 3), 16777215, false);
+                pGuiGraphics.drawString(font, str, i + 5 + (46 + 5) + 19 - 2 - font.width(str), (float) (j1 + 6 + 3), 16777215, false);
 
                 pGuiGraphics.renderFakeItem(result, i + 5 + 68, j1);
                 pGuiGraphics.renderItemDecorations(this.font, result, i + 5 + 68, j1);
@@ -179,17 +186,6 @@ public class CustomMerchantScreen extends AbstractContainerScreen<CustomMerchant
         RenderSystem.enableDepthTest();
 
         renderTooltip(pGuiGraphics, mouseX, mouseY);
-    }
-
-    private static final int MS_PER_ITEM = 1000;
-
-    private static ItemStack currentStack(Ingredient ingredient) {
-        ItemStack[] stacks = ingredient.getItems();
-        if (stacks.length == 0) {
-            return ItemStack.EMPTY;
-        }
-        int time = Math.toIntExact(System.currentTimeMillis() % ((long) stacks.length * MS_PER_ITEM));
-        return stacks[time / MS_PER_ITEM];
     }
 
     private void renderButtonArrows(GuiGraphics pGuiGraphics, CustomMerchantOffer pMerchantOffers, int pPosX, int pPosY) {

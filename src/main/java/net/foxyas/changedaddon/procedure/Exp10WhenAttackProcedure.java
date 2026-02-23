@@ -26,7 +26,7 @@ public class Exp10WhenAttackProcedure {
     @SubscribeEvent
     public static void onEntityAttacked(LivingAttackEvent event) {
         Entity entity = event.getEntity();
-        if(!(entity instanceof LivingEntity living)) return;
+        if (!(entity instanceof LivingEntity living)) return;
 
         Level level = living.level;
         Entity attacker = event.getSource().getDirectEntity();
@@ -34,7 +34,7 @@ public class Exp10WhenAttackProcedure {
         if (attacker instanceof Player player) {
             TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
             if (instance != null && (instance.is(ChangedAddonTransfurVariants.EXPERIMENT_10) || instance.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS))) {
-                living.addEffect(new MobEffectInstance(MobEffects.WITHER, 200, 0 , true, true, true));
+                living.addEffect(new MobEffectInstance(MobEffects.WITHER, 200, 0, true, true, true));
                 return;
             }
         }

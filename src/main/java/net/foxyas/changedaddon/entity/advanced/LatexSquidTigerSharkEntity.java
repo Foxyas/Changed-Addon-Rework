@@ -34,9 +34,8 @@ public class LatexSquidTigerSharkEntity extends AbstractAquaticEntity {
     }
 
 
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3);
         builder.add(ForgeMod.SWIM_SPEED.get(), 1.0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.975);

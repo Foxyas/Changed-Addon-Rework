@@ -35,6 +35,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class TransfurVariantInstanceMixin implements TransfurVariantInstanceExtensor {
 
     @Shadow
+    public int ticksFlying;
+    @Shadow
+    @Final
+    public ImmutableMap<AbstractAbility<?>, AbstractAbilityInstance> abilityInstances;
+    @Unique
+    public int ticksSinceSecondAbilityActivity;
+    public KeyStateTracker secondAbilityKey = new KeyStateTracker();
+    @Unique
+    public boolean untransfurImmunity = false;
+    @Unique
+    public boolean untransfurImmunityCommand = false;
+    @Unique
+    public AbstractAbility<?> secondSelectedAbility;
+    @Shadow
     @Final
     protected TransfurVariant<ChangedEntity> parent;
     @Shadow
@@ -53,25 +67,7 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     public abstract ChangedEntity getChangedEntity();
 
     @Shadow
-    public int ticksFlying;
-
-    @Shadow
     public abstract boolean isTemporaryFromSuit();
-
-    @Shadow
-    @Final
-    public ImmutableMap<AbstractAbility<?>, AbstractAbilityInstance> abilityInstances;
-
-    @Unique
-    public int ticksSinceSecondAbilityActivity;
-
-    public KeyStateTracker secondAbilityKey = new KeyStateTracker();
-
-    @Unique
-    public boolean untransfurImmunity = false;
-
-    @Unique
-    public boolean untransfurImmunityCommand = false;
 
     @Override
     public boolean getUntransfurImmunity(UntransfurEvent.UntransfurType type) {
@@ -85,17 +81,14 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     }
 
     @Override
-    public void setSecondAbilityKey(KeyStateTracker secondAbilityKey) {
-        this.secondAbilityKey = secondAbilityKey;
-    }
-
-    @Override
     public KeyStateTracker getSecondAbilityKey() {
         return secondAbilityKey;
     }
 
-    @Unique
-    public AbstractAbility<?> secondSelectedAbility;
+    @Override
+    public void setSecondAbilityKey(KeyStateTracker secondAbilityKey) {
+        this.secondAbilityKey = secondAbilityKey;
+    }
 
     @Override
     public AbstractAbility<?> getSecondSelectedAbility() {

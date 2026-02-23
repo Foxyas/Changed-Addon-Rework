@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.crafting.CompoundIngredient;
 import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
@@ -34,30 +33,30 @@ public class ElectricKatanaItem extends AbstractKatanaItem {
 
     public ElectricKatanaItem() {
         super(new Tier() {
-            public int getUses() {
-                return 1324;
-            }
+                  public int getUses() {
+                      return 1324;
+                  }
 
-            public float getSpeed() {
-                return 4f;
-            }
+                  public float getSpeed() {
+                      return 4f;
+                  }
 
-            public float getAttackDamageBonus() {
-                return 4f;
-            }
+                  public float getAttackDamageBonus() {
+                      return 4f;
+                  }
 
-            public int getLevel() {
-                return 1;
-            }
+                  public int getLevel() {
+                      return 1;
+                  }
 
-            public int getEnchantmentValue() {
-                return 30;
-            }
+                  public int getEnchantmentValue() {
+                      return 30;
+                  }
 
-            public @NotNull Ingredient getRepairIngredient() {
-                return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(ResourceLocation.parse("changed_addon:tsc_katana_repair"))));
-            }
-        }, 3, -2.3f, new Item.Properties()
+                  public @NotNull Ingredient getRepairIngredient() {
+                      return CompoundIngredient.of(Ingredient.of(new ItemStack(ChangedAddonItems.ELECTRIC_KATANA.get())), Ingredient.of(ItemTags.create(ResourceLocation.parse("changed_addon:tsc_katana_repair"))));
+                  }
+              }, 3, -2.3f, new Item.Properties()
         );
     }
 

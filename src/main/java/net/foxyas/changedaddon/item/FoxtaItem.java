@@ -19,7 +19,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,7 +53,6 @@ public class FoxtaItem extends BlockItem implements SpecializedItemRendering {
                             "inventory"
                     )
             ));
-
 
 
     public FoxtaItem() {

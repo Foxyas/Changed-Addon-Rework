@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 

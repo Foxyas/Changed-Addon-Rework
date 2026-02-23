@@ -36,14 +36,6 @@ public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEn
         super(p_19870_, p_19871_);
     }
 
-    @Override
-    protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        if (ChangedEntityExtension.of(this).isPacified()) {
-            return false;
-        }
-        return super.targetSelectorTest(livingEntity);
-    }
-
     public static Set<ResourceKey<Biome>> getSpawnBiomes() {
         return Set.of(
                 Biomes.JUNGLE,
@@ -52,6 +44,14 @@ public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEn
                 Biomes.SAVANNA_PLATEAU,
                 Biomes.WINDSWEPT_SAVANNA
         );
+    }
+
+    @Override
+    protected boolean targetSelectorTest(LivingEntity livingEntity) {
+        if (ChangedEntityExtension.of(this).isPacified()) {
+            return false;
+        }
+        return super.targetSelectorTest(livingEntity);
     }
 
     @Override

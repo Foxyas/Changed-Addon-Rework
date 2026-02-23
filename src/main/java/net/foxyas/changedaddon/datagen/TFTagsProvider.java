@@ -27,6 +27,10 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
         super(output, ChangedRegistry.TRANSFUR_VARIANT.get().getRegistryKey(), pLookupProvider, ChangedAddonMod.MODID, existingFileHelper);
     }
 
+    private static <T extends ChangedEntity> ResourceKey<TransfurVariant<?>> cast(RegistryObject<TransfurVariant<T>> key) {
+        return (ResourceKey<TransfurVariant<?>>) (Object) key.getKey();
+    }
+
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(ChangedAddonTags.TransfurTypes.ABLE_TO_CARRY).add(cast(EXP6), cast(LUMINARA_FLOWER_BEAST));
@@ -115,10 +119,6 @@ public class TFTagsProvider extends TagsProvider<TransfurVariant<?>> {
                 .addTag(ChangedAddonTags.TransfurTypes.WOLF_LIKE).add(cast(BLUE_LIZARD));
 
         tag(ChangedAddonTags.TransfurTypes.NO_DIET).add(cast(REYN));
-    }
-
-    private static <T extends ChangedEntity> ResourceKey<TransfurVariant<?>> cast(RegistryObject<TransfurVariant<T>> key){
-        return (ResourceKey<TransfurVariant<?>>) (Object) key.getKey();
     }
 
     protected TagAppender<TransfurVariant<?>> addAllMatching(TagAppender<TransfurVariant<?>> tag, Predicate<TransfurVariant<?>> predicate) {

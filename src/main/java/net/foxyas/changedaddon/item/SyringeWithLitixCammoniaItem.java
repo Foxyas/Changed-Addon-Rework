@@ -36,58 +36,6 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
                 .durability(2).rarity(Rarity.UNCOMMON));
     }
 
-    @Override
-    public void applyEffectsAfterUse(@NotNull ItemStack pStack, Level level, LivingEntity entity) {
-        super.applyEffectsAfterUse(pStack, level, entity);
-
-        if (!(entity instanceof ServerPlayer player)) return;
-
-        if (ProcessTransfur.isPlayerTransfurred(player)) {
-            if (player.getRandom().nextFloat() >= 0.35) {
-                handleUntransfurSuccess(level, player);
-            } else {
-                player.hurt(ChangedAddonDamageSources.UNTRANSFUR_FAIL.source(level), 15);
-                sendMessage(player, "changed_addon.untransfur.fail");
-            }
-            return;
-        }
-
-        if (getVars(player).showWarns) sendMessage(player, "changed_addon.untransfur.no_effect");
-    }
-
-    @Override
-    public boolean hurtEnemy(@NotNull ItemStack itemStack, @NotNull LivingEntity entity, @NotNull LivingEntity sourceEntity) {
-        if (!(entity instanceof Player player)) return false;
-
-        // Aplicar efeito de Untransfur se aplicável
-        if (ProcessTransfur.isPlayerTransfurred(player)) {
-            boolean isOrganic = ProcessTransfur.isPlayerNotLatex(player);
-
-            int duration = isOrganic ? 640 : 400;
-            applyUntransfurEffect(player, duration);
-
-            if (isOrganic && ChangedAddonVariables.ofOrDefault(player).showWarns) {
-                player.displayClientMessage(Component.literal("For some reason, this seems to have a slowed effect"), true);
-            }
-        } else if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
-            applyUntransfurEffect(player, 400);
-        }
-
-        // Lógica de dano e som
-        sourceEntity.level.playSound(null, sourceEntity, ChangedSounds.SYRINGE_PRICK.get(), SoundSource.PLAYERS, 1, 1);
-
-        if (!(sourceEntity instanceof Player player1) || !player1.isCreative()) {
-            if (itemStack.getDamageValue() == itemStack.getMaxDamage() - 1) {
-                giveSyringeBack(sourceEntity);
-                itemStack.shrink(1);
-            } else {
-                damageItem(itemStack);
-            }
-        }
-
-        return false;
-    }
-
     private static void handleUntransfurSuccess(Level level, Player player) {
         if (ProcessTransfur.isPlayerNotLatex(player)) {
             if (!player.level.isClientSide()) {
@@ -169,5 +117,57 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
             itemStack.shrink(1);
             itemStack.setDamageValue(0);
         }
+    }
+
+    @Override
+    public void applyEffectsAfterUse(@NotNull ItemStack pStack, Level level, LivingEntity entity) {
+        super.applyEffectsAfterUse(pStack, level, entity);
+
+        if (!(entity instanceof ServerPlayer player)) return;
+
+        if (ProcessTransfur.isPlayerTransfurred(player)) {
+            if (player.getRandom().nextFloat() >= 0.35) {
+                handleUntransfurSuccess(level, player);
+            } else {
+                player.hurt(ChangedAddonDamageSources.UNTRANSFUR_FAIL.source(level), 15);
+                sendMessage(player, "changed_addon.untransfur.fail");
+            }
+            return;
+        }
+
+        if (getVars(player).showWarns) sendMessage(player, "changed_addon.untransfur.no_effect");
+    }
+
+    @Override
+    public boolean hurtEnemy(@NotNull ItemStack itemStack, @NotNull LivingEntity entity, @NotNull LivingEntity sourceEntity) {
+        if (!(entity instanceof Player player)) return false;
+
+        // Aplicar efeito de Untransfur se aplicável
+        if (ProcessTransfur.isPlayerTransfurred(player)) {
+            boolean isOrganic = ProcessTransfur.isPlayerNotLatex(player);
+
+            int duration = isOrganic ? 640 : 400;
+            applyUntransfurEffect(player, duration);
+
+            if (isOrganic && ChangedAddonVariables.ofOrDefault(player).showWarns) {
+                player.displayClientMessage(Component.literal("For some reason, this seems to have a slowed effect"), true);
+            }
+        } else if (entity.getType().is(ChangedTags.EntityTypes.LATEX)) {
+            applyUntransfurEffect(player, 400);
+        }
+
+        // Lógica de dano e som
+        sourceEntity.level.playSound(null, sourceEntity, ChangedSounds.SYRINGE_PRICK.get(), SoundSource.PLAYERS, 1, 1);
+
+        if (!(sourceEntity instanceof Player player1) || !player1.isCreative()) {
+            if (itemStack.getDamageValue() == itemStack.getMaxDamage() - 1) {
+                giveSyringeBack(sourceEntity);
+                itemStack.shrink(1);
+            } else {
+                damageItem(itemStack);
+            }
+        }
+
+        return false;
     }
 }

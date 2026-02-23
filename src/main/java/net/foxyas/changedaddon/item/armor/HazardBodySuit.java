@@ -14,7 +14,6 @@ import net.ltxprogrammer.changed.entity.beast.LatexHuman;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
-import net.ltxprogrammer.changed.item.AccessoryItem;
 import net.ltxprogrammer.changed.item.ClothingItem;
 import net.ltxprogrammer.changed.item.ClothingState;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
@@ -135,7 +134,7 @@ public class HazardBodySuit extends ClothingItem implements AccessoryItemExtensi
     //For future api
     @Override
     public float accessoryHurt(AccessorySlotContext<?> slotContext, DamageSource source, float amount) {
-        damageSuit(slotContext,source, amount);
+        damageSuit(slotContext, source, amount);
         return super.accessoryHurt(slotContext, source, amount);
     }
 
@@ -304,7 +303,7 @@ public class HazardBodySuit extends ClothingItem implements AccessoryItemExtensi
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-        if(slot != EquipmentSlot.CHEST) return super.getAttributeModifiers(slot, stack);
+        if (slot != EquipmentSlot.CHEST) return super.getAttributeModifiers(slot, stack);
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 

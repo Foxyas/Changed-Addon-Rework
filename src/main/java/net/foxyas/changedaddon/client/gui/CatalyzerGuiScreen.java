@@ -1,13 +1,11 @@
 package net.foxyas.changedaddon.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.foxyas.changedaddon.block.entity.CatalyzerBlockEntity;
 import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.Level;

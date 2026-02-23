@@ -45,13 +45,6 @@ public record MultiColorRibbonParticleOption(
                     Codec.FLOAT.fieldOf("sizeY").forGetter(MultiColorRibbonParticleOption::sizeY),
                     Codec.FLOAT.fieldOf("rotationRad").forGetter(MultiColorRibbonParticleOption::rotationRad)
             ).apply(instance, MultiColorRibbonParticleOption::new));
-
-    public static Codec<MultiColorRibbonParticleOption> codec(ParticleType<MultiColorRibbonParticleOption> type) {
-        return CODEC;
-    }
-
-    /* ---------- Deserializer ---------- */
-
     public static final ParticleOptions.Deserializer<MultiColorRibbonParticleOption> DESERIALIZER =
             new ParticleOptions.Deserializer<>() {
 
@@ -112,6 +105,12 @@ public record MultiColorRibbonParticleOption(
                     );
                 }
             };
+
+    /* ---------- Deserializer ---------- */
+
+    public static Codec<MultiColorRibbonParticleOption> codec(ParticleType<MultiColorRibbonParticleOption> type) {
+        return CODEC;
+    }
 
     @Override
     public ParticleType<?> getType() {

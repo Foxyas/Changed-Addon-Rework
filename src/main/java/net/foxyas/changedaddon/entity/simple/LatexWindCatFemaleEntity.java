@@ -17,7 +17,6 @@ public class LatexWindCatFemaleEntity extends ChangedEntity implements GenderedE
     }
 
 
-
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue(22.0F);
@@ -32,7 +31,6 @@ public class LatexWindCatFemaleEntity extends ChangedEntity implements GenderedE
     public Gender getGender() {
         return Gender.FEMALE;
     }
-
 
 
     public TransfurMode getTransfurMode() {

@@ -37,7 +37,7 @@ public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements Pow
 
 
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder.add(Attributes.MAX_HEALTH, 24);
@@ -82,7 +82,6 @@ public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements Pow
     public Color3 getHairColor(int layer) {
         return Color3.WHITE;
     }
-
 
 
     @Override

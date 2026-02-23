@@ -20,6 +20,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientMod {
 
+    public static boolean changedAdditionsLoaded = false;
+    public static boolean changedAdditionsWarningScreenShowed = false;
+
     @SubscribeEvent
     public static void clientLoad(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
@@ -35,9 +38,6 @@ public class ClientMod {
             MenuScreens.register(ChangedAddonMenus.TAMED_LATEX_INVENTORY.get(), TamedLatexInventoryScreen::new);
         });
     }
-
-    public static boolean changedAdditionsLoaded = false;
-    public static boolean changedAdditionsWarningScreenShowed = false;
 
     @SubscribeEvent
     public static void showWarningScreen(FMLClientSetupEvent event) {

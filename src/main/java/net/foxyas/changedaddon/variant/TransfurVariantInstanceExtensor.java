@@ -15,9 +15,9 @@ public interface TransfurVariantInstanceExtensor {
 
     void resetTicksSinceSecondAbilityActivity();
 
-    void setSecondAbilityKey(KeyStateTracker secondAbilityKey);
-
     KeyStateTracker getSecondAbilityKey();
+
+    void setSecondAbilityKey(KeyStateTracker secondAbilityKey);
 
     AbstractAbilityInstance getSecondSelectedAbilityInstance();
 

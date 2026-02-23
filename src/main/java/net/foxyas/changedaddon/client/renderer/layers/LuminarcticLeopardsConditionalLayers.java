@@ -98,15 +98,15 @@ public class LuminarcticLeopardsConditionalLayers {
                 Player player = entity.getUnderlyingPlayer();
                 var instance = ProcessTransfur.getPlayerTransfurVariant(player).getSelectedAbility();
                 if (entity instanceof AbstractLuminarcticLeopard LUMI && LUMI.isActivatedAbility()) {
-                    super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose,  partialTick);
+                    super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose, partialTick);
                 } else if (instance != null && instance.ability instanceof HypnosisAbility) {
                     if (instance.getController().getHoldTicks() > 0) {
-                        super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose,  partialTick);
+                        super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose, partialTick);
                     }
                 }
             } else {
                 if (entity instanceof AbstractLuminarcticLeopard WILD_LUMI && WILD_LUMI.getTarget() != null) {
-                    super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose,  partialTick);
+                    super.renderFirstPersonOnArms(stack, bufferSource, packedLight, entity, arm, armPose, partialTick);
                 }
             }
 

@@ -53,6 +53,20 @@ import java.util.Optional;
 @Mixin(value = ChangedEntity.class, remap = false)
 public abstract class ChangedEntityMixin extends Monster implements ChangedEntityExtension {
 
+    @Unique
+    protected boolean pacified = false;
+
+    protected ChangedEntityMixin(EntityType<? extends Monster> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel);
+    }
+
+    @Unique
+    private static boolean isDarkLatexCoat(ItemStack itemStack) {
+        return itemStack != null
+                && !itemStack.isEmpty()
+                && itemStack.getItem() instanceof DarkLatexCoatItem;
+    }
+
     @Shadow
     public abstract LivingEntity maybeGetUnderlying();
 
@@ -67,13 +81,6 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
     @Shadow
     public abstract TransfurContext getReplicateContext();
-
-    @Unique
-    protected boolean pacified = false;
-
-    protected ChangedEntityMixin(EntityType<? extends Monster> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
-    }
 
     @Override
     protected boolean shouldDespawnInPeaceful() {
@@ -172,13 +179,6 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
     @Inject(at = @At("HEAD"), method = "readAdditionalSaveData", remap = true)
     private void readExtraData(CompoundTag tag, CallbackInfo ci) {
         if (tag.contains("isPacified")) setPacified(tag.getBoolean("isPacified"));
-    }
-
-    @Unique
-    private static boolean isDarkLatexCoat(ItemStack itemStack) {
-        return itemStack != null
-                && !itemStack.isEmpty()
-                && itemStack.getItem() instanceof DarkLatexCoatItem;
     }
 
     @Inject(method = "targetSelectorTest", at = @At("HEAD"), cancellable = true)

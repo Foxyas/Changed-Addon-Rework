@@ -2,22 +2,16 @@ package net.foxyas.changedaddon.mixins.mods.changed;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.entity.advanced.AbstractDazedEntity;
-import net.ltxprogrammer.changed.client.renderer.accessory.AccessoryRenderer;
 import net.ltxprogrammer.changed.client.renderer.layers.AccessoryLayer;
 import net.ltxprogrammer.changed.client.renderer.layers.FirstPersonLayer;
-import net.ltxprogrammer.changed.data.AccessorySlotContext;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(value = AccessoryLayer.class)
 public abstract class AccessoryLayerMixin<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> implements FirstPersonLayer<T> {

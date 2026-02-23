@@ -33,12 +33,11 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
     private static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
 
     public final Player owner;
-    private final TamableLatexEntityFavors iTamedLatex;
     public final ChangedEntity tamedLatex;
     public final Inventory inventory;
     public final LatexInventory dlInventory;
     public final AccessorySlots accessorySlots;
-
+    private final TamableLatexEntityFavors iTamedLatex;
     private final Map<Integer, Slot> customSlots = new HashMap<>();
 
     public TamedLatexInventoryMenu(int id, Player owner, TamableLatexEntityFavors tamedLatex) {
@@ -80,10 +79,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
                 return false;
         }
 
-        if (!tamedLatex.isItemAllowedInSlot(itemStack, slot))
-            return false;
-
-        return true;
+        return tamedLatex.isItemAllowedInSlot(itemStack, slot);
     }
 
     // 0-3 -> DL armor, 4-30 -> hotbar, 31->39 -> inventory, 40 -> DL offhand, 41+ -> DL inventory
@@ -148,10 +144,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
                 return false;
         }
 
-        if (!tamedLatex.isItemAllowedInSlot(itemStack, slot))
-            return false;
-
-        return true;
+        return tamedLatex.isItemAllowedInSlot(itemStack, slot);
     }
 
     public EquipmentSlot denyInvalidArmorSlot(ItemStack itemStack) {

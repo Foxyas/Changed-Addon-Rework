@@ -22,7 +22,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -62,41 +61,6 @@ public class TransfurTotemItem extends Item {
     public TransfurTotemItem() {
         super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
                 .stacksTo(1).fireResistant().rarity(Rarity.RARE));
-    }
-
-    @Override
-    public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack pStack) {
-        if (Syringe.getVariant(pStack) == null
-                || !pStack.getOrCreateTag().contains("form")
-                || pStack.getOrCreateTag().getString("form").isBlank()) {
-            return super.getTooltipImage(pStack);
-        }
-        return Optional.of(new TransfurTotemTooltipComponent(pStack));
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag isAdvanced) {
-        CompoundTag itemTag = stack.getOrCreateTag();
-        String form = itemTag.getString("form");
-        if (form.isEmpty()) {
-            tooltip.add(1, (Component.translatable("item.changed_addon.transfur_totem.no_form_linked")));
-            return;
-        }
-
-        TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(ResourceLocation.parse(form));
-        if (variant == null) {
-            tooltip.add(1, (Component.translatable("item.changed_addon.transfur_totem.no_form_linked")));
-            return;
-        }
-
-        if (Screen.hasShiftDown() && !Screen.hasAltDown() && !Screen.hasControlDown())
-            tooltip.add(1, Component.literal(("§6Form=" + itemTag.getString("form"))));
-        else if (Screen.hasAltDown() && Screen.hasControlDown())
-            tooltip.add(1, (Component.translatable("item.changed_addon.transfur_totem.desc_1")));
-        else {
-            String ID = Syringe.getVariantDescriptionId(stack);
-            tooltip.add(1, Component.literal(("§6(" + Component.translatable(ID).getString() + ")")));
-        }
     }
 
     private static void tryLinkForm(Level level, Player player, ItemStack itemstack) {
@@ -155,6 +119,64 @@ public class TransfurTotemItem extends Item {
         AdvancementProgress progress = player.getAdvancements().getOrStartProgress(adv);
         if (!progress.isDone())
             for (String criterion : progress.getRemainingCriteria()) player.getAdvancements().award(adv, criterion);
+    }
+
+    private static void addModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+        if (!Objects.requireNonNull(entity.getAttribute(attribute)).hasModifier(modifier))
+            Objects.requireNonNull(entity.getAttribute(attribute)).addTransientModifier(modifier);
+    }
+
+    private static void removeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+        if (Objects.requireNonNull(entity.getAttribute(attribute)).hasModifier(modifier))
+            Objects.requireNonNull(entity.getAttribute(attribute)).removeModifier(modifier);
+    }
+
+    public static float itemPropertyFunc(Entity entity) {
+        if (!(entity instanceof Player player)) return 0;
+
+        var instance = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (instance == null || isNotBenign(instance)) return 0;
+
+        return 0.5f;
+    }
+
+    private static boolean isNotBenign(TransfurVariantInstance<?> instance) {
+        return !instance.getParent().getEntityType().is(ChangedTags.EntityTypes.BENIGN_LATEXES) || !instance.is(ChangedTransfurVariants.LATEX_BENIGN_WOLF) && !instance.is(ChangedTransfurVariants.LATEX_BENIGN_ORCA);
+    }
+
+    @Override
+    public @NotNull Optional<TooltipComponent> getTooltipImage(@NotNull ItemStack pStack) {
+        if (Syringe.getVariant(pStack) == null
+                || !pStack.getOrCreateTag().contains("form")
+                || pStack.getOrCreateTag().getString("form").isBlank()) {
+            return super.getTooltipImage(pStack);
+        }
+        return Optional.of(new TransfurTotemTooltipComponent(pStack));
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag isAdvanced) {
+        CompoundTag itemTag = stack.getOrCreateTag();
+        String form = itemTag.getString("form");
+        if (form.isEmpty()) {
+            tooltip.add(1, (Component.translatable("item.changed_addon.transfur_totem.no_form_linked")));
+            return;
+        }
+
+        TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(ResourceLocation.parse(form));
+        if (variant == null) {
+            tooltip.add(1, (Component.translatable("item.changed_addon.transfur_totem.no_form_linked")));
+            return;
+        }
+
+        if (Screen.hasShiftDown() && !Screen.hasAltDown() && !Screen.hasControlDown())
+            tooltip.add(1, Component.literal(("§6Form=" + itemTag.getString("form"))));
+        else if (Screen.hasAltDown() && Screen.hasControlDown())
+            tooltip.add(1, (Component.translatable("item.changed_addon.transfur_totem.desc_1")));
+        else {
+            String ID = Syringe.getVariantDescriptionId(stack);
+            tooltip.add(1, Component.literal(("§6(" + Component.translatable(ID).getString() + ")")));
+        }
     }
 
     @Override
@@ -309,16 +331,6 @@ public class TransfurTotemItem extends Item {
         return InteractionResult.CONSUME;
     }
 
-    private static void addModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
-        if (!Objects.requireNonNull(entity.getAttribute(attribute)).hasModifier(modifier))
-            Objects.requireNonNull(entity.getAttribute(attribute)).addTransientModifier(modifier);
-    }
-
-    private static void removeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
-        if (Objects.requireNonNull(entity.getAttribute(attribute)).hasModifier(modifier))
-            Objects.requireNonNull(entity.getAttribute(attribute)).removeModifier(modifier);
-    }
-
     @Override
     public void inventoryTick(@NotNull ItemStack itemstack, @NotNull Level level, @NotNull Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, level, entity, slot, selected);
@@ -368,19 +380,6 @@ public class TransfurTotemItem extends Item {
         }
     }
 
-    public static float itemPropertyFunc(Entity entity) {
-        if (!(entity instanceof Player player)) return 0;
-
-        var instance = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (instance == null || isNotBenign(instance)) return 0;
-
-        return 0.5f;
-    }
-
-    private static boolean isNotBenign(TransfurVariantInstance<?> instance) {
-        return !instance.getParent().getEntityType().is(ChangedTags.EntityTypes.BENIGN_LATEXES) || !instance.is(ChangedTransfurVariants.LATEX_BENIGN_WOLF) && !instance.is(ChangedTransfurVariants.LATEX_BENIGN_ORCA);
-    }
-
     @Mod.EventBusSubscriber
     public static class EventHandler {
 
@@ -403,10 +402,11 @@ public class TransfurTotemItem extends Item {
                 totemFound = true;
                 break;
             }
-            
+
             if (!totemFound) return;
 
-            if (ProcessTransfur.getPlayerTransfurVariant(player) != null && StackUtil.callStackContainsClass(WhiteLatexTransportInterface.class, 15)) return;
+            if (ProcessTransfur.getPlayerTransfurVariant(player) != null && StackUtil.callStackContainsClass(WhiteLatexTransportInterface.class, 15))
+                return;
 
             event.shouldKeepConscious = true;
             if (player instanceof ServerPlayer serverPlayer) {

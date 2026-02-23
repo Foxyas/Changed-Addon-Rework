@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.entity.advanced;
 
-import net.foxyas.changedaddon.entity.defaults.AbstractTraderChangedEntityWithInventory;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LookAndFollowTradingPlayerSink;
 import net.foxyas.changedaddon.entity.ai.goals.generic.TradeWithPlayerGoal;
+import net.foxyas.changedaddon.entity.defaults.AbstractTraderChangedEntityWithInventory;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.clothes.DyeableClothingItem;
@@ -82,22 +82,22 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
         setPersistenceRequired();
     }
 
-    @Override
-    protected void setAttributes(AttributeMap attributes) {
-        super.setAttributes(attributes);
-
-        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.25);
-        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5F);
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 24);
         builder = builder.add(Attributes.ARMOR, 0);
         builder = builder.add(Attributes.ATTACK_DAMAGE, 5);
         builder = builder.add(Attributes.FOLLOW_RANGE, 16);
         return builder;
+    }
+
+    @Override
+    protected void setAttributes(AttributeMap attributes) {
+        super.setAttributes(attributes);
+
+        attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.25);
+        attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5F);
     }
 
     protected CustomMerchantOffers makeOffers() {

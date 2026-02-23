@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 //!!! This menu assumes, that getItemHandler() returns CombinedInvWrapper(EntityArmorInvWrapper, EntityHandsInvWrapper, ...) or equivalent
-public class AbstractEntityMenu <E extends LivingEntity & ItemHandlerHolder> extends AbstractMenu {
+public class AbstractEntityMenu<E extends LivingEntity & ItemHandlerHolder> extends AbstractMenu {
 
     public static final ResourceLocation[] TEXTURE_EMPTY_SLOTS = new ResourceLocation[]{InventoryMenu.EMPTY_ARMOR_SLOT_BOOTS, InventoryMenu.EMPTY_ARMOR_SLOT_LEGGINGS, InventoryMenu.EMPTY_ARMOR_SLOT_CHESTPLATE, InventoryMenu.EMPTY_ARMOR_SLOT_HELMET};
     public static final EquipmentSlot[] SLOT_IDS = new EquipmentSlot[]{EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD};
@@ -38,7 +38,7 @@ public class AbstractEntityMenu <E extends LivingEntity & ItemHandlerHolder> ext
         createPlayerInventory(playerInv, xOffset, yOffset);
 
         //Armor
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             final EquipmentSlot equipmentslot = SLOT_IDS[i];
             addSlot(new SlotItemHandler(combinedInv, i, 8 + xOffset, 8 + (3 - i) * 18 + yOffset) {
 
@@ -71,7 +71,7 @@ public class AbstractEntityMenu <E extends LivingEntity & ItemHandlerHolder> ext
         });//Off
     }
 
-    public E getEntity(){
+    public E getEntity() {
         return entity;
     }
 

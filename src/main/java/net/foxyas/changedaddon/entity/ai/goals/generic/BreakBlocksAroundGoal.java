@@ -1,7 +1,5 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic;
 
-import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
-import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
@@ -19,8 +17,8 @@ import java.util.EnumSet;
 public class BreakBlocksAroundGoal extends Goal {
     private static final int FRUSTRATION_THRESHOLD = 100;
     private final Mob holder;
-    private int breakCooldown = 0;
     protected int frustrationTicks = 0;
+    private int breakCooldown = 0;
 
     public BreakBlocksAroundGoal(Mob holder) {
         this.holder = holder;

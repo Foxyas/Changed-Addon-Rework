@@ -1,14 +1,13 @@
 package net.foxyas.changedaddon.block.entity;
 
 import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
-import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
+import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -43,12 +42,11 @@ import java.util.stream.IntStream;
 public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
 
     protected final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
-    protected NonNullList<ItemStack> stacks = NonNullList.withSize(4, ItemStack.EMPTY);
-
     public boolean startRecipe = true;
     public double recipeProgress = 0;
-    protected boolean recipeProgressOn = true;
     public int tickCount;
+    protected NonNullList<ItemStack> stacks = NonNullList.withSize(4, ItemStack.EMPTY);
+    protected boolean recipeProgressOn = true;
 
     public UnifuserBlockEntity(BlockPos position, BlockState state) {
         super(ChangedAddonBlockEntities.UNIFUSER.get(), position, state);
@@ -56,123 +54,6 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
     public UnifuserBlockEntity(BlockEntityType<?> blockEntityType, BlockPos position, BlockState state) {
         super(blockEntityType, position, state);
-    }
-
-    public float getSpeedMultiplier() {
-        return 1f;
-    }
-
-    @Override
-    public void load(@NotNull CompoundTag tag) {
-        super.load(tag);
-        if (!this.tryLoadLootTable(tag))
-            this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(tag, this.stacks);
-
-        recipeProgress = tag.getDouble("recipe_progress");
-        recipeProgressOn = tag.getBoolean("recipe_on");
-        startRecipe = tag.getBoolean("start_recipe");
-    }
-
-    @Override
-    public void saveAdditional(@NotNull CompoundTag tag) {
-        super.saveAdditional(tag);
-        if (!this.trySaveLootTable(tag)) {
-            ContainerHelper.saveAllItems(tag, this.stacks);
-        }
-
-        tag.putDouble("recipe_progress", recipeProgress);
-        tag.putBoolean("recipe_on", recipeProgressOn);
-        tag.putBoolean("start_recipe", startRecipe);
-    }
-
-    @Override
-    public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public @NotNull CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
-    }
-
-    @Override
-    public int getContainerSize() {
-        return stacks.size();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        for (ItemStack itemstack : this.stacks)
-            if (!itemstack.isEmpty())
-                return false;
-        return true;
-    }
-
-    public boolean isSlotFull(int index) {
-        return getItem(index).getCount() >= getItem(index).getMaxStackSize();
-    }
-
-    @Override
-    public @NotNull Component getDefaultName() {
-        return Component.literal("unifuser");
-    }
-
-    @Override
-    public @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
-        return new UnifuserGuiMenu(id, inventory, worldPosition);
-    }
-
-    @Override
-    public @NotNull Component getDisplayName() {
-        return Component.literal("Unifuser");
-    }
-
-    @Override
-    protected @NotNull NonNullList<ItemStack> getItems() {
-        return this.stacks;
-    }
-
-    @Override
-    protected void setItems(@NotNull NonNullList<ItemStack> stacks) {
-        this.stacks = stacks;
-    }
-
-    @Override
-    public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
-        return IntStream.range(0, this.getContainerSize()).toArray();
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
-        return this.canPlaceItem(index, stack);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-        if (index == 0)
-            return false;
-        if (index == 1)
-            return false;
-        return index != 2;
-    }
-
-    @Override
-    public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
-        if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-            return handlers[facing.ordinal()].cast();
-        return super.getCapability(capability, facing);
-    }
-
-    @Override
-    public void setRemoved() {
-        super.setRemoved();
-        for (LazyOptional<? extends IItemHandler> handler : handlers)
-            handler.invalidate();
-    }
-
-    public SimpleContainer getContainer() {
-        return new SimpleContainer(this.stacks.toArray(new ItemStack[0]));
     }
 
     public static void clientTick(Level level, BlockPos blockPos, BlockState blockState, BlockEntity blockEntity) {
@@ -327,11 +208,128 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
                 continue;
             if (ingredients.size() >= 2 && !ingredients.get(1).test(input2))
                 continue;
-            if (ingredients.size() == 3 &&  !ingredients.get(2).test(input3))
+            if (ingredients.size() == 3 && !ingredients.get(2).test(input3))
                 continue;
             return recipe;
         }
 
         return null;
+    }
+
+    public float getSpeedMultiplier() {
+        return 1f;
+    }
+
+    @Override
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
+        if (!this.tryLoadLootTable(tag))
+            this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(tag, this.stacks);
+
+        recipeProgress = tag.getDouble("recipe_progress");
+        recipeProgressOn = tag.getBoolean("recipe_on");
+        startRecipe = tag.getBoolean("start_recipe");
+    }
+
+    @Override
+    public void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
+        if (!this.trySaveLootTable(tag)) {
+            ContainerHelper.saveAllItems(tag, this.stacks);
+        }
+
+        tag.putDouble("recipe_progress", recipeProgress);
+        tag.putBoolean("recipe_on", recipeProgressOn);
+        tag.putBoolean("start_recipe", startRecipe);
+    }
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag() {
+        return this.saveWithoutMetadata();
+    }
+
+    @Override
+    public int getContainerSize() {
+        return stacks.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack itemstack : this.stacks)
+            if (!itemstack.isEmpty())
+                return false;
+        return true;
+    }
+
+    public boolean isSlotFull(int index) {
+        return getItem(index).getCount() >= getItem(index).getMaxStackSize();
+    }
+
+    @Override
+    public @NotNull Component getDefaultName() {
+        return Component.literal("unifuser");
+    }
+
+    @Override
+    public @NotNull AbstractContainerMenu createMenu(int id, @NotNull Inventory inventory) {
+        return new UnifuserGuiMenu(id, inventory, worldPosition);
+    }
+
+    @Override
+    public @NotNull Component getDisplayName() {
+        return Component.literal("Unifuser");
+    }
+
+    @Override
+    protected @NotNull NonNullList<ItemStack> getItems() {
+        return this.stacks;
+    }
+
+    @Override
+    protected void setItems(@NotNull NonNullList<ItemStack> stacks) {
+        this.stacks = stacks;
+    }
+
+    @Override
+    public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
+        return IntStream.range(0, this.getContainerSize()).toArray();
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
+        return this.canPlaceItem(index, stack);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
+        if (index == 0)
+            return false;
+        if (index == 1)
+            return false;
+        return index != 2;
+    }
+
+    @Override
+    public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
+        if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
+            return handlers[facing.ordinal()].cast();
+        return super.getCapability(capability, facing);
+    }
+
+    @Override
+    public void setRemoved() {
+        super.setRemoved();
+        for (LazyOptional<? extends IItemHandler> handler : handlers)
+            handler.invalidate();
+    }
+
+    public SimpleContainer getContainer() {
+        return new SimpleContainer(this.stacks.toArray(new ItemStack[0]));
     }
 }

@@ -1,10 +1,6 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.entity.ai.*;
-import net.foxyas.changedaddon.entity.ai.LatexAttackType;
-import net.foxyas.changedaddon.entity.ai.LatexAttackType;
-import net.foxyas.changedaddon.entity.ai.LatexInventory;
-import net.foxyas.changedaddon.entity.ai.LatexTargetType;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
@@ -34,15 +30,15 @@ public interface TamableLatexEntityFavors extends TamableLatexEntity {
 
     LatexAttackCondition getAttackCondition();
 
+    void setAttackCondition(LatexAttackCondition cycle);
+
     LatexAttackType getAttackType();
+
+    void setAttackType(LatexAttackType cycle);
 
     LatexTargetType getTargetType();
 
     void setTargetType(LatexTargetType cycle);
 
-    void setAttackType(LatexAttackType cycle);
-
     void updateHeldItemChoice();
-
-    void setAttackCondition(LatexAttackCondition cycle);
 }

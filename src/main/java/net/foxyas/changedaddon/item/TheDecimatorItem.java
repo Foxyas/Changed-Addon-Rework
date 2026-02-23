@@ -192,7 +192,7 @@ public class TheDecimatorItem extends Item {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack) {
-        if(equipmentSlot != EquipmentSlot.MAINHAND) return super.getAttributeModifiers(equipmentSlot, stack);
+        if (equipmentSlot != EquipmentSlot.MAINHAND) return super.getAttributeModifiers(equipmentSlot, stack);
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.putAll(super.getAttributeModifiers(equipmentSlot, stack));

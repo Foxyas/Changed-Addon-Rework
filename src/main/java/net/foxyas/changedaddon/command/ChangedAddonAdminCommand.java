@@ -53,6 +53,8 @@ import java.util.stream.Collectors;
 
 public class ChangedAddonAdminCommand {
 
+    private static final int MAX_OUTPUT = 20; // max lines to show
+
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         ArgumentBuilder<CommandSourceStack, ?> untfImmunity = Commands.argument("target", EntityArgument.players())
                 .then(Commands.argument("value", BoolArgumentType.bool())
@@ -280,7 +282,8 @@ public class ChangedAddonAdminCommand {
                 ext.setUntransfurImmunity(type, value);
             }
         }
-        if (!targets.isEmpty()) stack.sendSuccess(() -> Component.literal(String.format("Untransfur immunity of selected players is set to %s, type %s", value, type)), true);
+        if (!targets.isEmpty())
+            stack.sendSuccess(() -> Component.literal(String.format("Untransfur immunity of selected players is set to %s, type %s", value, type)), true);
         return 1;
     }
 
@@ -455,7 +458,6 @@ public class ChangedAddonAdminCommand {
         return 0;
     }
 
-
     private static int getEntityAlphaGene(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         Entity entity = EntityArgument.getEntity(context, "target");
         entity = resolveChangedEntity(entity);
@@ -513,7 +515,6 @@ public class ChangedAddonAdminCommand {
         return 0;
     }
 
-
     private static int getEntityAlphaGeneScale(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         Entity entity = EntityArgument.getEntity(context, "target");
         entity = resolveChangedEntity(entity);
@@ -538,7 +539,6 @@ public class ChangedAddonAdminCommand {
         return 0;
     }
 
-
     private static Entity resolveChangedEntity(Entity entity) {
         if (entity instanceof Player player) {
             TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
@@ -548,7 +548,6 @@ public class ChangedAddonAdminCommand {
         }
         return entity;
     }
-
 
     private static int setUltraInstinctDodge(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         CommandSourceStack source = context.getSource();
@@ -587,8 +586,6 @@ public class ChangedAddonAdminCommand {
 
         return 1;
     }
-
-    private static final int MAX_OUTPUT = 20; // max lines to show
 
     private static int showTransfursSlots(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();

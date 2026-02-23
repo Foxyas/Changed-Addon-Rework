@@ -116,45 +116,6 @@ public class LatexBonemealAndDispenserHandler {
         return true;
     }
 
-
-    /* -------------------------------------------------------------------------
-     *  Player – Bonemeal interaction
-     * ------------------------------------------------------------------------- */
-    @Mod.EventBusSubscriber
-    public static class PlayerBonemealHandler {
-
-        @SubscribeEvent
-        public static void onRightClickBlock(LatexTypePlayerEvent.RightClick event) {
-            Level level = event.getLevel();
-            Player player = event.getPlayer();
-            InteractionHand hand = event.getHand();
-            ItemStack stack = player.getItemInHand(hand);
-
-            if (level.isClientSide)
-                return;
-
-            if (!stack.is(Items.BONE_MEAL))
-                return;
-
-            BlockHitResult hitResult = event.getHitResult();
-
-            BlockPos pos = hitResult.getBlockPos();
-
-            // Determine latex type present on the clicked surface
-            LatexCoverState latexState = event.getLatexState();
-            boolean spread = trySpread(latexState, true, event.getRandom(), pos, level);
-            if (spread) {
-                if (!player.getAbilities().instabuild)
-                    stack.shrink(1);
-
-                // Cancel vanilla bonemeal behavior
-                event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
-                event.setCanceled(true);
-                player.swing(hand, true);
-            }
-        }
-    }
-
     /* -------------------------------------------------------------------------
      *  Dispenser – Bonemeal behavior
      * ------------------------------------------------------------------------- */
@@ -281,9 +242,6 @@ public class LatexBonemealAndDispenserHandler {
         return spread;
     }
 
-    public record LatexNode(BlockPos pos, LatexCoverState state) {
-    }
-
     public static Set<LatexNode> collectConnectedLatex(
             ServerLevel level,
             BlockPos source,
@@ -358,7 +316,6 @@ public class LatexBonemealAndDispenserHandler {
         return cleaned;
     }
 
-
     public static boolean cleanFromSourceCorners(
             ServerLevel level,
             BlockPos source,
@@ -423,7 +380,6 @@ public class LatexBonemealAndDispenserHandler {
         return cleaned;
     }
 
-
     public static boolean spreadFromSourceWaves(
             ServerLevel level,
             BlockPos source,
@@ -487,7 +443,6 @@ public class LatexBonemealAndDispenserHandler {
         return spread;
     }
 
-
     /* -------------------------------------------------------------------------
      *  Dispenser – Latex goo application
      * ------------------------------------------------------------------------- */
@@ -543,5 +498,46 @@ public class LatexBonemealAndDispenserHandler {
 
             return stack;
         });
+    }
+
+    /* -------------------------------------------------------------------------
+     *  Player – Bonemeal interaction
+     * ------------------------------------------------------------------------- */
+    @Mod.EventBusSubscriber
+    public static class PlayerBonemealHandler {
+
+        @SubscribeEvent
+        public static void onRightClickBlock(LatexTypePlayerEvent.RightClick event) {
+            Level level = event.getLevel();
+            Player player = event.getPlayer();
+            InteractionHand hand = event.getHand();
+            ItemStack stack = player.getItemInHand(hand);
+
+            if (level.isClientSide)
+                return;
+
+            if (!stack.is(Items.BONE_MEAL))
+                return;
+
+            BlockHitResult hitResult = event.getHitResult();
+
+            BlockPos pos = hitResult.getBlockPos();
+
+            // Determine latex type present on the clicked surface
+            LatexCoverState latexState = event.getLatexState();
+            boolean spread = trySpread(latexState, true, event.getRandom(), pos, level);
+            if (spread) {
+                if (!player.getAbilities().instabuild)
+                    stack.shrink(1);
+
+                // Cancel vanilla bonemeal behavior
+                event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide()));
+                event.setCanceled(true);
+                player.swing(hand, true);
+            }
+        }
+    }
+
+    public record LatexNode(BlockPos pos, LatexCoverState state) {
     }
 }

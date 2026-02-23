@@ -48,14 +48,14 @@ public class ComboBurstGoal extends Goal {
         if (ticks < checkInterval) return false;
         ticks = 0; // reset do timer
 
-        List<CombatEntry> entries = ((CombatTrackerAccessor)mob.getCombatTracker()).getEntries();
+        List<CombatEntry> entries = ((CombatTrackerAccessor) mob.getCombatTracker()).getEntries();
         CombatEntry mobEntry = !entries.isEmpty() ? entries.get(entries.size() - 1) : null;
         if (mobEntry == null) return false;
 
         LivingEntity target = mob.getTarget();
         if (target == null || !target.isAlive()) return false;
 
-        entries = ((CombatTrackerAccessor)target.getCombatTracker()).getEntries();
+        entries = ((CombatTrackerAccessor) target.getCombatTracker()).getEntries();
         CombatEntry targetEntry = !entries.isEmpty() ? entries.get(entries.size() - 1) : null;
         if (targetEntry == null) return false;
 

@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -41,8 +40,6 @@ import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
 public class TimedKeypadBlock extends KeypadBlock {
 
     public static final VoxelShape BUTTON_LEFT = Block.box(
@@ -72,6 +69,34 @@ public class TimedKeypadBlock extends KeypadBlock {
         drops = BuiltInLootTables.EMPTY;
     }
 
+    public static boolean isNearBounds(AABB bound, Vec3 pos, double tolerance) {
+        boolean nearX =
+                Math.abs(pos.x - bound.minX) <= tolerance ||
+                        Math.abs(pos.x - bound.maxX) <= tolerance;
+
+        boolean nearY =
+                Math.abs(pos.y - bound.minY) <= tolerance ||
+                        Math.abs(pos.y - bound.maxY) <= tolerance;
+
+        boolean nearZ =
+                Math.abs(pos.z - bound.minZ) <= tolerance ||
+                        Math.abs(pos.z - bound.maxZ) <= tolerance;
+
+        // TODOS os eixos devem estar perto
+        return nearX && nearY && nearZ;
+    }
+
+    public static boolean isDistanceAround3D(double x1, double y1, double z1,
+                                             double x2, double y2, double z2,
+                                             double target, double tolerance) {
+        double dx = x1 - x2;
+        double dy = y1 - y2;
+        double dz = z1 - z2;
+
+        double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        return Math.abs(dist - target) <= tolerance;
+    }
+
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new TimedKeypadBlockEntity(blockPos, blockState);
@@ -96,12 +121,6 @@ public class TimedKeypadBlock extends KeypadBlock {
         return this.getInteractionShape(blockState, level, blockPos);
     }
 
-    public enum KeypadButton {
-        LEFT,
-        CENTER,
-        RIGHT;
-    }
-
     public VoxelShape getButtonsInteractionShape(KeypadButton button, BlockState blockState) {
         return calculateShapes(
                 blockState.getValue(FACING).getClockWise(),
@@ -111,61 +130,6 @@ public class TimedKeypadBlock extends KeypadBlock {
                     case RIGHT -> BUTTON_RIGHT;
                 }
         );
-    }
-
-    @Mod.EventBusSubscriber(value = Dist.CLIENT)
-    public static class ClientEvent {
-
-        @SubscribeEvent
-        public static void RenderOutlineButton(RenderLevelStageEvent event) {
-            if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_CUTOUT_BLOCKS) return;
-
-            Minecraft mc = Minecraft.getInstance();
-            LocalPlayer player = mc.player;
-            if (mc.level == null || player == null) return;
-
-            Level level = mc.level;
-
-
-            // Cam pos — important
-            Vec3 cam = mc.gameRenderer.getMainCamera().getPosition();
-
-            BlockHitResult blockHitResult = level.clip(new ClipContext(player.getEyePosition(), player.getEyePosition().add(player.getViewVector(0).scale(player.getBlockReach())), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-            if (blockHitResult.getType() != HitResult.Type.MISS) {
-                BlockPos pos = blockHitResult.getBlockPos();
-                BlockState state = level.getBlockState(pos);
-                if (state.getBlock() instanceof TimedKeypadBlock keypad) {
-                    Vec3 location = blockHitResult.getLocation();
-                    Vec3 localLocation = location.subtract(pos.getX(), pos.getY(), pos.getZ());
-
-                    for (TimedKeypadBlock.KeypadButton btn : TimedKeypadBlock.KeypadButton.values()) {
-                        VoxelShape shape = keypad.getButtonsInteractionShape(btn, state);
-                        // Convert each AABB from the shape
-                        boolean renderAnButton = false;
-                        for (AABB aabb : shape.toAabbs()) {
-                            // Move it to the world
-                            AABB worldAABB = aabb.move(pos);
-
-                            // world-space → camera-space
-                            AABB renderAABB = worldAABB.move(-cam.x, -cam.y, -cam.z).inflate(0.00125);
-
-                            if (aabb.inflate(0.01, 0.01, 0.0005).contains(localLocation.scale(1))) {
-                                // Render Box (Lines)
-                                LevelRenderer.renderLineBox(
-                                        event.getPoseStack(),
-                                        mc.renderBuffers().bufferSource().getBuffer(RenderType.lines()),
-                                        renderAABB,
-                                        1f, 1f, 1f, 1f     // R, G, B, Alpha
-                                );
-                                renderAnButton = true;
-                            }
-                        }
-                        if (renderAnButton) break;
-                    }
-                }
-            }
-        }
-
     }
 
     @Override
@@ -246,36 +210,6 @@ public class TimedKeypadBlock extends KeypadBlock {
         );
     }
 
-    public static boolean isNearBounds(AABB bound, Vec3 pos, double tolerance) {
-        boolean nearX =
-                Math.abs(pos.x - bound.minX) <= tolerance ||
-                        Math.abs(pos.x - bound.maxX) <= tolerance;
-
-        boolean nearY =
-                Math.abs(pos.y - bound.minY) <= tolerance ||
-                        Math.abs(pos.y - bound.maxY) <= tolerance;
-
-        boolean nearZ =
-                Math.abs(pos.z - bound.minZ) <= tolerance ||
-                        Math.abs(pos.z - bound.maxZ) <= tolerance;
-
-        // TODOS os eixos devem estar perto
-        return nearX && nearY && nearZ;
-    }
-
-
-    public static boolean isDistanceAround3D(double x1, double y1, double z1,
-                                             double x2, double y2, double z2,
-                                             double target, double tolerance) {
-        double dx = x1 - x2;
-        double dy = y1 - y2;
-        double dz = z1 - z2;
-
-        double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-        return Math.abs(dist - target) <= tolerance;
-    }
-
-
     // pixelX, pixelY, pixelZ vão de 0 a 15 (inclusive)
     private boolean isInsidePixel(Vec3 relative, int px, int py, int pz) {
         final float pixelSize = 1.0f / 16.0f;
@@ -293,7 +227,6 @@ public class TimedKeypadBlock extends KeypadBlock {
                 relative.z >= minZ && relative.z < maxZ;
     }
 
-
     private boolean isInside(Vec3 rel, double minX, double maxX, double minY, double maxY, double minZ, double maxZ) {
         return rel.x >= minX && rel.x < maxX &&
                 rel.y >= minY && rel.y < maxY &&
@@ -308,5 +241,67 @@ public class TimedKeypadBlock extends KeypadBlock {
         }
 
         return isInside(rel, minX, maxX, minY, maxY, minZ, maxZ);
+    }
+
+
+    public enum KeypadButton {
+        LEFT,
+        CENTER,
+        RIGHT
+    }
+
+    @Mod.EventBusSubscriber(value = Dist.CLIENT)
+    public static class ClientEvent {
+
+        @SubscribeEvent
+        public static void RenderOutlineButton(RenderLevelStageEvent event) {
+            if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_CUTOUT_BLOCKS) return;
+
+            Minecraft mc = Minecraft.getInstance();
+            LocalPlayer player = mc.player;
+            if (mc.level == null || player == null) return;
+
+            Level level = mc.level;
+
+
+            // Cam pos — important
+            Vec3 cam = mc.gameRenderer.getMainCamera().getPosition();
+
+            BlockHitResult blockHitResult = level.clip(new ClipContext(player.getEyePosition(), player.getEyePosition().add(player.getViewVector(0).scale(player.getBlockReach())), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+            if (blockHitResult.getType() != HitResult.Type.MISS) {
+                BlockPos pos = blockHitResult.getBlockPos();
+                BlockState state = level.getBlockState(pos);
+                if (state.getBlock() instanceof TimedKeypadBlock keypad) {
+                    Vec3 location = blockHitResult.getLocation();
+                    Vec3 localLocation = location.subtract(pos.getX(), pos.getY(), pos.getZ());
+
+                    for (TimedKeypadBlock.KeypadButton btn : TimedKeypadBlock.KeypadButton.values()) {
+                        VoxelShape shape = keypad.getButtonsInteractionShape(btn, state);
+                        // Convert each AABB from the shape
+                        boolean renderAnButton = false;
+                        for (AABB aabb : shape.toAabbs()) {
+                            // Move it to the world
+                            AABB worldAABB = aabb.move(pos);
+
+                            // world-space → camera-space
+                            AABB renderAABB = worldAABB.move(-cam.x, -cam.y, -cam.z).inflate(0.00125);
+
+                            if (aabb.inflate(0.01, 0.01, 0.0005).contains(localLocation.scale(1))) {
+                                // Render Box (Lines)
+                                LevelRenderer.renderLineBox(
+                                        event.getPoseStack(),
+                                        mc.renderBuffers().bufferSource().getBuffer(RenderType.lines()),
+                                        renderAABB,
+                                        1f, 1f, 1f, 1f     // R, G, B, Alpha
+                                );
+                                renderAnButton = true;
+                            }
+                        }
+                        if (renderAnButton) break;
+                    }
+                }
+            }
+        }
+
     }
 }

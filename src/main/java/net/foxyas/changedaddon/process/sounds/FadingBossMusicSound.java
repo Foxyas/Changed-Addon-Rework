@@ -16,10 +16,10 @@ import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
 public class FadingBossMusicSound extends AbstractTickableSoundInstance {
-    private final LivingEntity trackedEntity;
     public final SoundEvent currentSound;
-    private boolean stopped = false;
+    private final LivingEntity trackedEntity;
     protected boolean fadingOutSound = false;
+    private boolean stopped = false;
 
     public FadingBossMusicSound(SoundEvent soundEvent, LivingEntity entity) {
         super(soundEvent, SoundSource.MASTER, entity.getRandom());

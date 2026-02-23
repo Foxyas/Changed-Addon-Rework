@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.block;
 
-import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.TierSortingRegistry;
 import org.jetbrains.annotations.NotNull;
+
+import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.NonLatexCoverableBlock;
 
 public class IridiumBlock extends Block implements NonLatexCoverableBlock {
 

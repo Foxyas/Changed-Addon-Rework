@@ -17,7 +17,7 @@ public class LatexVariantAgeIncreaseProcedure {
     @SubscribeEvent
     public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
         Entity entity = event.getEntity();
-        if(entity == null) return;
+        if (entity == null) return;
 
         if (!event.getItem().is(ChangedItems.WHITE_LATEX_GOO.get()) || !(entity instanceof Player player)) return;
 

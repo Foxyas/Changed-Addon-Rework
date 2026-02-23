@@ -36,7 +36,6 @@ public class CrystalGasCatMaleEntity extends LatexWatermelonCat implements Gende
     }
 
 
-
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder = builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3f);

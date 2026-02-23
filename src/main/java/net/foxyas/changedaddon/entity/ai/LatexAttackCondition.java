@@ -17,16 +17,16 @@ public enum LatexAttackCondition implements StringRepresentable {
         this.serializedName = serializedName;
     }
 
-    @Override
-    public String getSerializedName() {
-        return serializedName;
-    }
-
     public static DataResult<LatexAttackCondition> fromSerial(String serializedName) {
         return Arrays.stream(values()).filter(value -> value.serializedName.equals(serializedName))
                 .findAny().map(DataResult::success).orElse(DataResult.error(
                         () -> "Invalid attack condition " + serializedName
                 ));
+    }
+
+    @Override
+    public String getSerializedName() {
+        return serializedName;
     }
 
     public LatexAttackCondition cycle() {

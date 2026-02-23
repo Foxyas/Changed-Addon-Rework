@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.renderer.renderTypes.ChangedAddonRenderTypes;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.util.FoxyasUtils;
-import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
@@ -37,25 +36,6 @@ public class SonarOutlineLayer<T extends LivingEntity, M extends EntityModel<T>>
     public SonarOutlineLayer(RenderLayerParent<T, M> parent) {
         super(parent);
         this.parent = parent;
-    }
-
-    public interface CustomSonarRenderable {
-        /**
-         * Called when rendering with sonar outline.
-         * Implementors can override rendering (pose, color, etc.).
-         * Return true if you fully handled rendering yourself (skips default).
-         */
-        boolean handleSonarRender(@NotNull SonarOutlineLayer<?, ?> sonarOutlineLayer, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight,
-                                  float limbSwing, float limbSwingAmount, float partialTicks,
-                                  float ageInTicks, float netHeadYaw, float headPitch, float alpha);
-
-        /**
-         * Same as handleSonarRender but specifically for the camera entity.
-         * Return true if you fully handled rendering yourself (skips default).
-         */
-        boolean handleSonarRenderForCamera(@NotNull SonarOutlineLayer<?, ?> sonarOutlineLayer, @NotNull LivingEntity livingEntity, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight,
-                                           float limbSwing, float limbSwingAmount, float partialTicks,
-                                           float ageInTicks, float netHeadYaw, float headPitch, float alpha);
     }
 
     @Override
@@ -122,6 +102,25 @@ public class SonarOutlineLayer<T extends LivingEntity, M extends EntityModel<T>>
                 OverlayTexture.NO_OVERLAY,
                 r, g, b, alpha
         );
+    }
+
+    public interface CustomSonarRenderable {
+        /**
+         * Called when rendering with sonar outline.
+         * Implementors can override rendering (pose, color, etc.).
+         * Return true if you fully handled rendering yourself (skips default).
+         */
+        boolean handleSonarRender(@NotNull SonarOutlineLayer<?, ?> sonarOutlineLayer, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight,
+                                  float limbSwing, float limbSwingAmount, float partialTicks,
+                                  float ageInTicks, float netHeadYaw, float headPitch, float alpha);
+
+        /**
+         * Same as handleSonarRender but specifically for the camera entity.
+         * Return true if you fully handled rendering yourself (skips default).
+         */
+        boolean handleSonarRenderForCamera(@NotNull SonarOutlineLayer<?, ?> sonarOutlineLayer, @NotNull LivingEntity livingEntity, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight,
+                                           float limbSwing, float limbSwingAmount, float partialTicks,
+                                           float ageInTicks, float netHeadYaw, float headPitch, float alpha);
     }
 
     @Mod.EventBusSubscriber(value = Dist.CLIENT)

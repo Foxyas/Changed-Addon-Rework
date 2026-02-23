@@ -3,9 +3,6 @@ package net.foxyas.changedaddon.mixins.client.renderer;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.ltxprogrammer.changed.ability.GrabEntityAbility;
-import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -36,6 +33,17 @@ public abstract class CameraMixin {
     private Entity entity;
 
     @Unique
+    private static Entity resolveChangedEntity(Entity entity) {
+        if (entity instanceof Player player) {
+            TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (transfur != null) {
+                return transfur.getChangedEntity();
+            }
+        }
+        return entity;
+    }
+
+    @Unique
     private float getEntityMaxZoomOffset(Entity entity) {
         Optional<Float> playerVariantOffset = ProcessTransfur.getPlayerTransfurVariantSafe(EntityUtil.playerOrNull(entity)).map(variant -> {
             if (variant.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity) {
@@ -50,17 +58,6 @@ public abstract class CameraMixin {
 
         return playerVariantOffset.orElse(0f);
 
-    }
-
-    @Unique
-    private static Entity resolveChangedEntity(Entity entity) {
-        if (entity instanceof Player player) {
-            TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (transfur != null) {
-                return transfur.getChangedEntity();
-            }
-        }
-        return entity;
     }
 
     @WrapOperation(

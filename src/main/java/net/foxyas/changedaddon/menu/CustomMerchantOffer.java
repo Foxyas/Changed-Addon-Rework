@@ -10,18 +10,22 @@ import net.minecraftforge.common.crafting.StrictNBTIngredient;
 
 public class CustomMerchantOffer {
 
-    /** The first input for this offer. */
+    /**
+     * The first input for this offer.
+     */
     private final Ingredient costA;
-    /** The second input for this offer. */
+    /**
+     * The second input for this offer.
+     */
     private final Ingredient costB;
     private final ItemStack result;
-    private int uses;
     private final int maxUses;
+    private int uses;
     private boolean shouldRewardExp = true;
 
     public CustomMerchantOffer(CompoundTag tag) {
         costA = Ingredient.fromJson(NbtOps.INSTANCE.convertTo(JsonOps.COMPRESSED, tag.get("costA")));
-        if(tag.contains("costB")){
+        if (tag.contains("costB")) {
             costB = Ingredient.fromJson(NbtOps.INSTANCE.convertTo(JsonOps.COMPRESSED, tag.get("costB")));
         } else costB = Ingredient.EMPTY;
 
@@ -33,7 +37,7 @@ public class CustomMerchantOffer {
             maxUses = 4;
         }
 
-        if(tag.contains("shouldRewardExp")) shouldRewardExp = tag.getBoolean("shouldRewardExp");
+        if (tag.contains("shouldRewardExp")) shouldRewardExp = tag.getBoolean("shouldRewardExp");
     }
 
     public CustomMerchantOffer(Ingredient costA, ItemStack result, int maxUses) {
@@ -72,7 +76,7 @@ public class CustomMerchantOffer {
         return uses;
     }
 
-    public int getUsesLeft(){
+    public int getUsesLeft() {
         return Math.max(maxUses - uses, 0);
     }
 
@@ -108,7 +112,7 @@ public class CustomMerchantOffer {
         CompoundTag tag = new CompoundTag();
 
         tag.put("costA", JsonOps.COMPRESSED.convertTo(NbtOps.INSTANCE, costA.toJson()));
-        if(!costB.isEmpty()) tag.put("costB", JsonOps.COMPRESSED.convertTo(NbtOps.INSTANCE, costB.toJson()));
+        if (!costB.isEmpty()) tag.put("costB", JsonOps.COMPRESSED.convertTo(NbtOps.INSTANCE, costB.toJson()));
 
         tag.put("sell", result.save(new CompoundTag()));
         tag.putInt("uses", uses);
@@ -118,7 +122,7 @@ public class CustomMerchantOffer {
     }
 
     public boolean satisfiedBy(ItemStack playerOfferA, ItemStack playerOfferB) {
-        if(!testWithCount(costA, playerOfferA)) return false;
+        if (!testWithCount(costA, playerOfferA)) return false;
 
         return costB.isEmpty() || testWithCount(costB, playerOfferB);
     }
@@ -145,13 +149,13 @@ public class CustomMerchantOffer {
     public boolean take(ItemStack playerOfferA, ItemStack playerOfferB) {
         if (!satisfiedBy(playerOfferA, playerOfferB)) return false;
 
-        for(ItemStack stack : costA.getItems()){
-            if(isRequiredItem(playerOfferA, stack)) playerOfferA.shrink(stack.getCount());
+        for (ItemStack stack : costA.getItems()) {
+            if (isRequiredItem(playerOfferA, stack)) playerOfferA.shrink(stack.getCount());
         }
 
-        if(!costB.isEmpty()){
-            for(ItemStack stack : costB.getItems()){
-                if(isRequiredItem(playerOfferB, stack)) playerOfferB.shrink(stack.getCount());
+        if (!costB.isEmpty()) {
+            for (ItemStack stack : costB.getItems()) {
+                if (isRequiredItem(playerOfferB, stack)) playerOfferB.shrink(stack.getCount());
             }
         }
 

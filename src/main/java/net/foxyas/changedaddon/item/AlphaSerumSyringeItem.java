@@ -40,16 +40,16 @@ public class AlphaSerumSyringeItem extends AbstractSyringeItem {
             failMessage(player);
             return;
         }
-        
+
         ChangedEntity changedEntity = transfurVariant.getChangedEntity();
         if (!(changedEntity instanceof IAlphaAbleEntity iAlphaAbleEntity)) {
             failMessage(player);
             return;
         }
-        
+
         if (iAlphaAbleEntity.isAlpha()) {
             failMessage(player);
-            return; 
+            return;
         }
 
         iAlphaAbleEntity.setAlpha(true);

@@ -6,7 +6,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
@@ -132,7 +131,7 @@ public interface ICrawlAndSwimAbleEntity {
             livingEntity.setSpeed(swimSpeed);
             livingEntity.setDeltaMovement(movementDir.scale(appliedSpeed));
 
-            float yaw = (float)(Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
+            float yaw = (float) (Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
             livingEntity.setYRot(Mth.rotLerp(0.2F, livingEntity.getYRot(), yaw));
             livingEntity.yBodyRot = livingEntity.getYRot();
         }

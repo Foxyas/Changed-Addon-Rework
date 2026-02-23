@@ -43,13 +43,13 @@ public class LaserPointerItem extends Item implements SpecializedAnimations, Col
     public static final int FOLLOW_LASER_RADIUS = 16;
     public static final int FOLLOW_BB_SIZE = FOLLOW_LASER_RADIUS * 2;
     public static final ClipContext.ShapeGetter IGNORE_TRANSLUCENT = (state, b, pos, context) -> {
-        if(state.is(ChangedTags.Blocks.LASER_TRANSLUCENT)) return Shapes.empty();
+        if (state.is(ChangedTags.Blocks.LASER_TRANSLUCENT)) return Shapes.empty();
         return ClipContext.Block.COLLIDER.get(state, b, pos, context);
     };
 
     public LaserPointerItem() {
         super(new Properties().stacksTo(1)//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
-                );
+        );
     }
 
     public static int getColor(ItemStack stack) {
@@ -77,7 +77,7 @@ public class LaserPointerItem extends Item implements SpecializedAnimations, Col
     }
 
     public static void setLaserColor(ItemStack stack, int color) {
-        if(!(stack.getItem() instanceof LaserPointerItem)) return;
+        if (!(stack.getItem() instanceof LaserPointerItem)) return;
 
         stack.getOrCreateTag().putInt("Color", color);
     }
@@ -112,22 +112,22 @@ public class LaserPointerItem extends Item implements SpecializedAnimations, Col
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        if(!flag.isAdvanced()) return;
+        if (!flag.isAdvanced()) return;
 
         // Suponha que você tenha salvo os valores RGB no NBT
         CompoundTag tag = stack.getOrCreateTag();
-        if(!tag.contains("Color")) return;
+        if (!tag.contains("Color")) return;
 
         Color color = new Color(tag.getInt("Color"));
         String hex = getHex(color);
-        tooltip.add(Component.translatable("item.changed_addon.laser_pointer.tooltip",hex).withStyle((e) -> e.withColor(TextColor.parseColor(hex))));
+        tooltip.add(Component.translatable("item.changed_addon.laser_pointer.tooltip", hex).withStyle((e) -> e.withColor(TextColor.parseColor(hex))));
     }
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         player.startUsingItem(hand);
-        if(level.isClientSide) return InteractionResultHolder.pass(stack);
+        if (level.isClientSide) return InteractionResultHolder.pass(stack);
 
         Vec3 eyePos = player.getEyePosition();
         HitResult result = level.clip(new DynamicClipContext(eyePos, eyePos.add(player.getViewVector(1).scale(MAX_LASER_REACH)),
@@ -144,7 +144,7 @@ public class LaserPointerItem extends Item implements SpecializedAnimations, Col
             hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05f);
             spawnLaserParticle(level, player, stack, hitPos);
         } else if (result instanceof BlockHitResult blockResult) {
-            if(level.getBlockState(blockResult.getBlockPos()).isAir()) {
+            if (level.getBlockState(blockResult.getBlockPos()).isAir()) {
                 spawnLaserParticle(level, player, stack, blockResult.getLocation());
                 return InteractionResultHolder.pass(stack);
             }
@@ -163,7 +163,7 @@ public class LaserPointerItem extends Item implements SpecializedAnimations, Col
 
 
         Level level = player.level;
-        if(player.level.isClientSide || count % 20 != 0) return;
+        if (player.level.isClientSide || count % 20 != 0) return;
 
         Vec3 eyePos = player.getEyePosition();
         HitResult result = level.clip(new DynamicClipContext(eyePos, eyePos.add(player.getViewVector(1).scale(MAX_LASER_REACH)),
@@ -180,7 +180,7 @@ public class LaserPointerItem extends Item implements SpecializedAnimations, Col
             Direction face = Direction.getNearest(entityHitResult.getLocation().x, entityHitResult.getLocation().y, entityHitResult.getLocation().z);
             hitPos = applyOffset(entityHitResult.getLocation(), face, -0.05f);
         } else if (result instanceof BlockHitResult blockResult) {
-            if(level.getBlockState(blockResult.getBlockPos()).isAir()) return;
+            if (level.getBlockState(blockResult.getBlockPos()).isAir()) return;
 
             hitPos = applyOffset(result.getLocation(), blockResult.getDirection(), -0.05f);
         }

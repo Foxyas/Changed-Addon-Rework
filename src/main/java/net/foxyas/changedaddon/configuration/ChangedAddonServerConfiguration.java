@@ -83,17 +83,21 @@ public class ChangedAddonServerConfiguration {
         BUILDER.push("Player Handle");
         ALLOW_SECOND_ABILITY_USE = BUILDER.comment("Allow the Player to use the second selected ability (similar to offhand and main hand)").define("Allow Second Ability use", false);
 
-        BUILDER.push("Chat"); {
+        BUILDER.push("Chat");
+        {
             TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE = BUILDER.comment("The Chat of Transfured Players Should be affect by Latex Language?").define("Transfured Players Chat in Latex Language", false);
-        } BUILDER.pop();
+        }
+        BUILDER.pop();
 
-        BUILDER.push("Respawn As Transfur");{
+        BUILDER.push("Respawn As Transfur");
+        {
             ALLOW_RESPAWN_AS_TRANSFUR = BUILDER.comment("Allow the Player to respawn as a transfured entity").define("Allow Respawn as Transfur", false);
             ALLOWED_RESPAWN_TRANSFURS = BUILDER.comment("List of form ids, transfur variant tags or mod ids.\n(@modid, #tag:id, formId)").defineList("allowed Respawn Transfur Variants", List.of("changed:random"), RegistryElementPredicate::isValidSyntax);
             ALLOW_PLAYERS_TO_SELECT_RESPAWN_TRANSFUR = BUILDER.comment("Allow the non admins Players to select a transfur to be transfured when spawning").define("Allow Players to Select Respawn Transfur", false);
             APPLY_UNTRANSFUR_IMMUNITY_AFTER_RESPAWN_AS_TRANSFUR = BUILDER.comment("Apply Untransfur Immunity to the player after they respawn as a transfured player").define("Apply Untransfur Immunity After Respawn as a Transfur", false);
             ALLOW_TRANSFURED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR = BUILDER.comment("Allow a already transfured player to respawn as another transfur").define("Allow transfured players to respawn as another transfur", false);
-        }BUILDER.pop();
+        }
+        BUILDER.pop();
 
 
         BUILDER.pop();

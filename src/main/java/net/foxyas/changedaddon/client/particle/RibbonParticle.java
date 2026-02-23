@@ -21,18 +21,42 @@ import org.joml.Vector3fc;
 
 public class RibbonParticle extends Particle {
 
-    protected Entity target;
-    protected int color;
+    public static final ParticleRenderType POS_COLOR_TRANSLUCENT = new ParticleRenderType() {
+
+        @Override
+        public void begin(@NotNull BufferBuilder pBuilder, @NotNull TextureManager pTextureManager) {
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
+
+            RenderSystem.disableCull();
+            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+            pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+
+            //GL30.glPolygonMode(GL30.GL_FRONT_AND_BACK, GL30.GL_LINE);//Wireframe
+        }
+
+        @Override
+        public void end(@NotNull Tesselator pTesselator) {
+            pTesselator.end();
+            RenderSystem.enableCull();
+
+            //GL30.glPolygonMode(GL30.GL_FRONT_AND_BACK, GL30.GL_FILL);
+        }
+    };
+    protected static final Vector3fc UP = new Vector3f(0, 1, 0);
+    protected static final Vector3f segmentUp = new Vector3f();
+    protected static final Vector3f tmp = new Vector3f(), tmp1 = new Vector3f();
+    protected static final Vector3f lerpSegment = new Vector3f(), lerpPrev = new Vector3f();
+    protected static final Matrix4f mat = new Matrix4f();
     protected final Pair<Vector3f, Vector3f>[] segments;//first prev tick, second current for lerping
     public Vec3 offset = Vec3.ZERO;
-
+    protected Entity target;
+    protected int color;
     protected float length;
     protected float segmentLength;
     protected float segmentLengthSqr;
-
     protected float scaleY;
     protected float rotationRad;
-
     protected RibbonParticle(ClientLevel pLevel, Entity target, int color, int segments, float length, float scaleY, float rotationRad) {
         super(pLevel, target.getX(), target.getY(), target.getZ());
         this.target = target;
@@ -104,12 +128,6 @@ public class RibbonParticle extends Particle {
         }
     }
 
-    protected static final Vector3fc UP = new Vector3f(0, 1, 0);
-    protected static final Vector3f segmentUp = new Vector3f();
-    protected static final Vector3f tmp = new Vector3f(), tmp1 = new Vector3f();
-    protected static final Vector3f lerpSegment = new Vector3f(), lerpPrev = new Vector3f();
-    protected static final Matrix4f mat = new Matrix4f();
-
     @Override
     public void render(@NotNull VertexConsumer pBuffer, @NotNull Camera pRenderInfo, float pPartialTicks) {
         Pair<Vector3f, Vector3f> segment, prevSegment;
@@ -172,29 +190,6 @@ public class RibbonParticle extends Particle {
     public @NotNull ParticleRenderType getRenderType() {
         return POS_COLOR_TRANSLUCENT;
     }
-
-    public static final ParticleRenderType POS_COLOR_TRANSLUCENT = new ParticleRenderType() {
-
-        @Override
-        public void begin(@NotNull BufferBuilder pBuilder, @NotNull TextureManager pTextureManager) {
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-
-            RenderSystem.disableCull();
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            pBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-
-            //GL30.glPolygonMode(GL30.GL_FRONT_AND_BACK, GL30.GL_LINE);//Wireframe
-        }
-
-        @Override
-        public void end(@NotNull Tesselator pTesselator) {
-            pTesselator.end();
-            RenderSystem.enableCull();
-
-            //GL30.glPolygonMode(GL30.GL_FRONT_AND_BACK, GL30.GL_FILL);
-        }
-    };
 
     public static class Provider implements ParticleProvider<RibbonParticleOption> {
 

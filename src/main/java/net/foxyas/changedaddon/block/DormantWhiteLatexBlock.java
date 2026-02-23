@@ -18,8 +18,8 @@ public class DormantWhiteLatexBlock extends AbstractLatexBlock implements WhiteL
 
     public DormantWhiteLatexBlock() {
         super(BlockBehaviour.Properties.copy(Blocks.CLAY).mapColor(MapColor.QUARTZ).sound(SoundType.SLIME_BLOCK)
-                        .strength(1.0F, 4.0F).noOcclusion()
-                        .isViewBlocking(ChangedBlocks::never).isSuffocating(ChangedBlocks::never).noLootTable(), ChangedLatexTypes.WHITE_LATEX, ChangedItems.WHITE_LATEX_GOO);
+                .strength(1.0F, 4.0F).noOcclusion()
+                .isViewBlocking(ChangedBlocks::never).isSuffocating(ChangedBlocks::never).noLootTable(), ChangedLatexTypes.WHITE_LATEX, ChangedItems.WHITE_LATEX_GOO);
     }
 
     public @NotNull LatexCoverState getLatexCoverState(BlockState blockState, BlockPos blockPos) {

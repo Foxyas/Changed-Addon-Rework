@@ -1,21 +1,7 @@
 package net.foxyas.changedaddon.mixins.mods.changed;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.ltxprogrammer.changed.client.LatexCoveredBlocksRenderer;
-import net.ltxprogrammer.changed.world.LatexCoverGetter;
-import net.ltxprogrammer.changed.world.LatexCoverState;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.state.BlockState;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Optional;
 
 @Mixin(value = LatexCoveredBlocksRenderer.class, remap = false)
 public abstract class LatexCoveredBlocksRendererMixin {

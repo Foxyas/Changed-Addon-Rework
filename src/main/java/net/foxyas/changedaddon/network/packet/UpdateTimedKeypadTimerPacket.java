@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.network.packet;
 
 import net.foxyas.changedaddon.block.advanced.TimedKeypadBlockEntity;
-import net.foxyas.changedaddon.block.entity.InformantBlockEntity;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,7 +16,7 @@ public record UpdateTimedKeypadTimerPacket(BlockPos pos, int timer) {
     // -----------------------
     //     DECODE
     // -----------------------
-    public UpdateTimedKeypadTimerPacket(FriendlyByteBuf buf){
+    public UpdateTimedKeypadTimerPacket(FriendlyByteBuf buf) {
         this(
                 buf.readBlockPos(),
                 buf.readInt()

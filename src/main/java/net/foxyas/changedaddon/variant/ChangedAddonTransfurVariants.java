@@ -9,7 +9,10 @@ import net.foxyas.changedaddon.entity.simple.*;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
-import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.PatronOC;
+import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.UseItemMode;
 import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
 import net.ltxprogrammer.changed.entity.variant.GenderedPair;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -604,22 +607,15 @@ public class ChangedAddonTransfurVariants {
                     )
                     .nightVision()
                     .addAbility(ChangedAbilities.TOGGLE_NIGHT_VISION));
-
-    public static class Gendered {
-        public static final GenderedPair<PuroKindMaleEntity, PuroKindFemaleEntity> PURO_KIND = registerPair(PURO_KIND_MALE, PURO_KIND_FEMALE);
-        public static final GenderedPair<SnowLeopardMaleOrganicEntity, SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD = registerPair(ORGANIC_SNOW_LEOPARD_MALE, ORGANIC_SNOW_LEOPARD_FEMALE);
-        public static final GenderedPair<LatexSnowFoxMaleEntity, LatexSnowFoxFemaleEntity> LATEX_SNOW_FOX = registerPair(LATEX_SNOW_FOX_MALE, LATEX_SNOW_FOX_FEMALE);
-        public static final GenderedPair<Exp1MaleEntity, Exp1FemaleEntity> EXP1 = registerPair(EXP1_MALE, EXP1_FEMALE);
-        public static final GenderedPair<Exp2MaleEntity, Exp2FemaleEntity> EXP2 = registerPair(EXP2_MALE, EXP2_FEMALE);
-        public static final GenderedPair<LuminarcticLeopardMaleEntity, LuminarcticLeopardFemaleEntity> LUMINARCTIC_LEOPARDS = registerPair(LUMINARCTIC_LEOPARD_MALE, LUMINARCTIC_LEOPARD_FEMALE);
-        public static final GenderedPair<LatexWhiteSnowLeopardMale, LatexWhiteSnowLeopardFemale> WHITE_SNOW_LEOPARDS = registerPair(LATEX_WHITE_SNOW_LEOPARD_MALE, LATEX_WHITE_SNOW_LEOPARD_FEMALE);
-        public static final GenderedPair<LatexWindCatMaleEntity, LatexWindCatFemaleEntity> WIND_CATS = registerPair(LATEX_WIND_CAT_MALE, LATEX_WIND_CAT_FEMALE);
-        public static final GenderedPair<CrystalGasCatMaleEntity, CrystalGasCatFemaleEntity> HIMALAYAN_CRYSTAL_GAS_CAT = registerPair(HIMALAYAN_CRYSTAL_GAS_CAT_MALE, HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE);
-        public static final GenderedPair<LatexKitsuneMaleEntity, LatexKitsuneFemaleEntity> KITSUNES = registerPair(LATEX_KITSUNE_MALE, LATEX_KITSUNE_FEMALE);
-        public static final GenderedPair<BorealisMaleEntity, BorealisFemaleEntity> BOREALIS = registerPair(BOREALIS_MALE, BOREALIS_FEMALE);
-    }
+    public static final List<Supplier<TransfurVariant<?>>> humanForms = List.of(ChangedTransfurVariants.LATEX_HUMAN::get);
 
     //@Annotation: Dazed Maybe is of .faction(LatexType.WHITE_LATEX)
+    private static List<TransfurVariant<?>> REMOVED_VARS;
+    private static List<TransfurVariant<?>> REMOVED_FROM_SYRINGES;
+
+    // Utils
+    private static List<TransfurVariant<?>> BOSS_VARS1;
+    private static Map<TransfurVariant<?>, TransfurVariant<?>> BOSS_VARS;
 
     private static <T extends ChangedEntity> RegistryObject<TransfurVariant<T>> register(String name, TransfurVariant.Builder<T> builder) {
         Objects.requireNonNull(builder);
@@ -631,8 +627,6 @@ public class ChangedAddonTransfurVariants {
                 .build());
     }
 
-    // Utils
-
     public static boolean isAquatic(TransfurVariantInstance<?> variantInstance) {
         ChangedEntity entity = variantInstance.getChangedEntity();
         TransfurVariant<?> variant = variantInstance.getParent();
@@ -642,16 +636,12 @@ public class ChangedAddonTransfurVariants {
                 variant.is(ChangedAddonTags.TransfurTypes.AQUATIC_DIET);
     }
 
-    private static List<TransfurVariant<?>> REMOVED_VARS;
-
     public static List<TransfurVariant<?>> getRemovedVariantsList() {
         if (REMOVED_VARS == null) {
             REMOVED_VARS = List.of(VOID_FOX.get(), REYN.get(), FENGQI_WOLF.get(), EXPERIMENT_009.get(), EXPERIMENT_10.get(), EXPERIMENT_009_BOSS.get(), EXPERIMENT_10_BOSS.get(), LATEX_SNEP_FERAL_FORM.get(), LUMINARCTIC_LEOPARD_MALE.get(), LUMINARCTIC_LEOPARD_FEMALE.get());
         }
         return REMOVED_VARS;
     }
-
-    private static List<TransfurVariant<?>> REMOVED_FROM_SYRINGES;
 
     public static List<TransfurVariant<?>> getVariantsRemovedFromSyringes() {
         if (REMOVED_FROM_SYRINGES == null) {
@@ -661,16 +651,12 @@ public class ChangedAddonTransfurVariants {
         return REMOVED_FROM_SYRINGES;
     }
 
-    private static List<TransfurVariant<?>> BOSS_VARS1;
-
     public static List<TransfurVariant<?>> getBossVariants() {
         if (BOSS_VARS1 == null) {
             BOSS_VARS1 = List.of(EXPERIMENT_009_BOSS.get(), EXPERIMENT_10_BOSS.get(), EXPERIMENT_009.get(), EXPERIMENT_10.get(), VOID_FOX.get());
         }
         return BOSS_VARS1;
     }
-
-    private static Map<TransfurVariant<?>, TransfurVariant<?>> BOSS_VARS;
 
     public static Map<TransfurVariant<?>, TransfurVariant<?>> bossVariants() {
         if (BOSS_VARS == null) {
@@ -728,9 +714,21 @@ public class ChangedAddonTransfurVariants {
         return false;
     }
 
-    public static final List<Supplier<TransfurVariant<?>>> humanForms = List.of(ChangedTransfurVariants.LATEX_HUMAN::get);
-
     public static List<TransfurVariant<?>> getHumanForms() {
         return new ArrayList<>(humanForms.stream().map(Supplier::get).toList());
+    }
+
+    public static class Gendered {
+        public static final GenderedPair<PuroKindMaleEntity, PuroKindFemaleEntity> PURO_KIND = registerPair(PURO_KIND_MALE, PURO_KIND_FEMALE);
+        public static final GenderedPair<SnowLeopardMaleOrganicEntity, SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD = registerPair(ORGANIC_SNOW_LEOPARD_MALE, ORGANIC_SNOW_LEOPARD_FEMALE);
+        public static final GenderedPair<LatexSnowFoxMaleEntity, LatexSnowFoxFemaleEntity> LATEX_SNOW_FOX = registerPair(LATEX_SNOW_FOX_MALE, LATEX_SNOW_FOX_FEMALE);
+        public static final GenderedPair<Exp1MaleEntity, Exp1FemaleEntity> EXP1 = registerPair(EXP1_MALE, EXP1_FEMALE);
+        public static final GenderedPair<Exp2MaleEntity, Exp2FemaleEntity> EXP2 = registerPair(EXP2_MALE, EXP2_FEMALE);
+        public static final GenderedPair<LuminarcticLeopardMaleEntity, LuminarcticLeopardFemaleEntity> LUMINARCTIC_LEOPARDS = registerPair(LUMINARCTIC_LEOPARD_MALE, LUMINARCTIC_LEOPARD_FEMALE);
+        public static final GenderedPair<LatexWhiteSnowLeopardMale, LatexWhiteSnowLeopardFemale> WHITE_SNOW_LEOPARDS = registerPair(LATEX_WHITE_SNOW_LEOPARD_MALE, LATEX_WHITE_SNOW_LEOPARD_FEMALE);
+        public static final GenderedPair<LatexWindCatMaleEntity, LatexWindCatFemaleEntity> WIND_CATS = registerPair(LATEX_WIND_CAT_MALE, LATEX_WIND_CAT_FEMALE);
+        public static final GenderedPair<CrystalGasCatMaleEntity, CrystalGasCatFemaleEntity> HIMALAYAN_CRYSTAL_GAS_CAT = registerPair(HIMALAYAN_CRYSTAL_GAS_CAT_MALE, HIMALAYAN_CRYSTAL_GAS_CAT_FEMALE);
+        public static final GenderedPair<LatexKitsuneMaleEntity, LatexKitsuneFemaleEntity> KITSUNES = registerPair(LATEX_KITSUNE_MALE, LATEX_KITSUNE_FEMALE);
+        public static final GenderedPair<BorealisMaleEntity, BorealisFemaleEntity> BOREALIS = registerPair(BOREALIS_MALE, BOREALIS_FEMALE);
     }
 }

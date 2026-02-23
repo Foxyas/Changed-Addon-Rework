@@ -18,6 +18,7 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.BLUE_WOLF_CRYSTAL_
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.CATALYZER;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.CONTAINMENT_CONTAINER;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DARK_LATEX_PUDDLE;
+import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_IRIDIUM_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_DARK_LATEX;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_WHITE_LATEX;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.GENERATOR;
@@ -25,7 +26,6 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.GOO_CORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.HAND_SCANNER;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.INFORMANT_BLOCK;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.IRIDIUM_BLOCK;
-import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_IRIDIUM_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LATEX_INSULATOR;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINARA_BLOOM;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK;
@@ -431,7 +431,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addGui("informant_gui.tooltip_put_a_syringe_with_a_form", "Put A syringe With a Form");
         addGui("informant_gui.tooltip_type_the_form", "Type The Form ID");
 
-        for (TransfurSoundsDetails.TransfurSoundAction transfurSoundAction :TransfurSoundsDetails.TransfurSoundAction.values()) {
+        for (TransfurSoundsDetails.TransfurSoundAction transfurSoundAction : TransfurSoundsDetails.TransfurSoundAction.values()) {
             addGui("transfur_sounds_gui." + transfurSoundAction.name().toLowerCase(), transfurSoundAction.getFormatedName());
         }
 

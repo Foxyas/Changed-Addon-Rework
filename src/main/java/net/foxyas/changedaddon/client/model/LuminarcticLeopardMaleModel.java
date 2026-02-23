@@ -361,8 +361,6 @@ public class LuminarcticLeopardMaleModel extends AdvancedHumanoidModel<Luminarct
     //}
 
 
-
-
     @Override
     public void setupHand(LuminarcticLeopardMaleEntity entity) {
         animator.setupHand();

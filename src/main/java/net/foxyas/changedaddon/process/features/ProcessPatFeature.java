@@ -27,7 +27,7 @@ public class ProcessPatFeature {
     public static void SpawnEmote(Player player, LivingEntity target, ServerLevel level) {
         if (target instanceof Player targetPl && !ProcessTransfur.isPlayerTransfurred(targetPl)) return;
 
-        if (target instanceof ChangedEntity changedEntity){
+        if (target instanceof ChangedEntity changedEntity) {
             if (changedEntity.getTarget() == player) return;
 
             if (PatFeatureHandle.shouldBeConfused(player, changedEntity)) {

@@ -14,12 +14,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class LitixCamoniaItem extends Item {
 
+    private static final ResourceLocation advLocation = ChangedAddonMod.resourceLoc("craft_litix_camonia");
+
     public LitixCamoniaItem() {
         super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
                 .stacksTo(64).rarity(Rarity.UNCOMMON));
     }
-
-    private static final ResourceLocation advLocation = ChangedAddonMod.resourceLoc("craft_litix_camonia");
 
     @Override
     public void onCraftedBy(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Player entity) {

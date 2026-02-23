@@ -23,7 +23,7 @@ public class ChangedAddonTrades {
 
     @SubscribeEvent
     public static void registerTrades(VillagerTradesEvent event) {
-        if(event.getType() != ChangedAddonVillagerProfessions.SCIENTIST.get()) return;
+        if (event.getType() != ChangedAddonVillagerProfessions.SCIENTIST.get()) return;
 
         Random PriceRandom = new Random();
         Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();

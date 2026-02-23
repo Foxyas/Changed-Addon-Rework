@@ -15,5 +15,6 @@ public class LevelStorageAccessMixin {
     // For Future Stuff
 
     @Inject(method = "saveDataTag(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/level/storage/WorldData;Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"))
-    private void saveHook(RegistryAccess pRegistries, WorldData pServerConfiguration, CompoundTag pHostPlayerNBT, CallbackInfo ci) {}
+    private void saveHook(RegistryAccess pRegistries, WorldData pServerConfiguration, CompoundTag pHostPlayerNBT, CallbackInfo ci) {
+    }
 }

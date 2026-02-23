@@ -16,13 +16,8 @@ public class SyncTransfurVisionsPacket {
         this.visions = visions;
     }
 
-    public SyncTransfurVisionsPacket(FriendlyByteBuf buf){
+    public SyncTransfurVisionsPacket(FriendlyByteBuf buf) {
         this(buf.readList(buf1 -> new TransfurVariantVision(buf1.readResourceLocation(), buf1.readResourceLocation())));
-    }
-
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeCollection(visions, (buf1, vision) ->
-                buf1.writeResourceLocation(vision.visionEffect()).writeResourceLocation(vision.form()));
     }
 
     public static void handle(SyncTransfurVisionsPacket msg, Supplier<NetworkEvent.Context> ctx) {
@@ -33,5 +28,10 @@ public class SyncTransfurVisionsPacket {
             }
         });
         ctx.get().setPacketHandled(true);
+    }
+
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeCollection(visions, (buf1, vision) ->
+                buf1.writeResourceLocation(vision.visionEffect()).writeResourceLocation(vision.form()));
     }
 }

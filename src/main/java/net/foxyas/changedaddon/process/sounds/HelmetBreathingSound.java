@@ -19,15 +19,15 @@ public class HelmetBreathingSound extends AbstractTickableSoundInstance {
         this.pitch = 0.25f;
     }
 
-    public void forceStop() {
-        this.stop();
-    }
-
     protected static Vec3 getMouthPosition(Player player) {
         Vec3 view = player.getLookAngle();
         Vec3 eyePosition = player.getEyePosition();
         return eyePosition.subtract(0, 0.25, 0).add(view.scale(0.05f));
         // Just for details.
+    }
+
+    public void forceStop() {
+        this.stop();
     }
 
     @Override

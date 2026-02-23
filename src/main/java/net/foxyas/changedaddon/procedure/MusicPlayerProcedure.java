@@ -28,7 +28,7 @@ public class MusicPlayerProcedure {
 
     //@SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if(event.phase != TickEvent.Phase.END) return;
+        if (event.phase != TickEvent.Phase.END) return;
 
         Player player = event.player;
         if (player.isSpectator()) return;
@@ -40,7 +40,7 @@ public class MusicPlayerProcedure {
         List<AbstractLuminarcticLeopard> LumiEntities = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, AABB.ofSize(player.position(), 64, 64, 64), e -> true);
         List<Experiment009BossEntity> ketExp9Entities = level.getEntitiesOfClass(Experiment009BossEntity.class, AABB.ofSize(player.position(), 64, 64, 64), e -> true);
 
-        if(!level.isClientSide || !ChangedAddonClientConfiguration.MUSIC_PLAYER.get()) return;
+        if (!level.isClientSide || !ChangedAddonClientConfiguration.MUSIC_PLAYER.get()) return;
 
         Minecraft minecraft = Minecraft.getInstance();
         MusicManager musicManager = minecraft.getMusicManager();

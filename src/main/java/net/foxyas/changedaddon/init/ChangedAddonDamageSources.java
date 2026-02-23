@@ -18,6 +18,10 @@ public class ChangedAddonDamageSources {
     public static final DamageHolder CONSCIENCE_LOSE = holder("conscience_lose");
     public static final DamageHolder UNTRANSFUR_FAIL = holder("untransfur_fail");//TODO bypassArmor()
 
+    private static DamageHolder holder(String name) {
+        return new DamageHolder(ResourceKey.create(Registries.DAMAGE_TYPE, ChangedAddonMod.resourceLoc(name)));
+    }
+
     public record DamageHolder(ResourceKey<DamageType> key) {
 
         public DamageSource source(Level level) {
@@ -34,10 +38,6 @@ public class ChangedAddonDamageSources {
             final Holder<DamageType> type = projectile.level().registryAccess().lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(key);
             return new DamageSource(type, shooter, projectile);
         }
-    }
-
-    private static DamageHolder holder(String name) {
-        return new DamageHolder(ResourceKey.create(Registries.DAMAGE_TYPE, ChangedAddonMod.resourceLoc(name)));
     }
 
 }

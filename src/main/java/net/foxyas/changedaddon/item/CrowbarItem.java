@@ -19,31 +19,31 @@ public class CrowbarItem extends PickaxeItem {
 
     public CrowbarItem() {
         super(new Tier() {
-            public int getUses() {
-                return 150;
-            }
+                  public int getUses() {
+                      return 150;
+                  }
 
-            public float getSpeed() {
-                return 3.5f;
-            }
+                  public float getSpeed() {
+                      return 3.5f;
+                  }
 
-            public float getAttackDamageBonus() {
-                return 5.7f;
-            }
+                  public float getAttackDamageBonus() {
+                      return 5.7f;
+                  }
 
-            public int getLevel() {
-                return 2;
-            }
+                  public int getLevel() {
+                      return 2;
+                  }
 
-            public int getEnchantmentValue() {
-                return 40;
-            }
+                  public int getEnchantmentValue() {
+                      return 40;
+                  }
 
-            public @NotNull Ingredient getRepairIngredient() {
-                return Ingredient.of();
-            }
-        }, 1, -2.6f, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
-                );
+                  public @NotNull Ingredient getRepairIngredient() {
+                      return Ingredient.of();
+                  }
+              }, 1, -2.6f, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        );
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CrowbarItem extends PickaxeItem {
     @Override
     public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
         Player player = context.getPlayer();
-        if(player == null) return InteractionResult.PASS;
+        if (player == null) return InteractionResult.PASS;
 
         Level level = player.level;
         BlockPos pos = context.getClickedPos();

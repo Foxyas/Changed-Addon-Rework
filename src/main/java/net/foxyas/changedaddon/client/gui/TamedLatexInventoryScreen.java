@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class TamedLatexInventoryScreen extends AbstractContainerScreen<TamedLatexInventoryMenu> {
+    private static final ResourceLocation texture = Changed.modResource("textures/gui/tamed_dl_inventory.png");
     private final TamedLatexInventoryMenu menu;
     private float xMouse;
     private float yMouse;
@@ -22,15 +23,13 @@ public class TamedLatexInventoryScreen extends AbstractContainerScreen<TamedLate
         this.imageHeight = 166;
     }
 
-    private static final ResourceLocation texture = Changed.modResource("textures/gui/tamed_dl_inventory.png");
-
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTicks);
 
-        this.xMouse = (float)mouseX;
-        this.yMouse = (float)mouseY;
+        this.xMouse = (float) mouseX;
+        this.yMouse = (float) mouseY;
 
         this.renderTooltip(graphics, mouseX, mouseY);
     }
@@ -53,7 +52,7 @@ public class TamedLatexInventoryScreen extends AbstractContainerScreen<TamedLate
         int i = this.leftPos;
         int j = this.topPos;
         InventoryScreen.renderEntityInInventoryFollowsMouse(graphics, i + 51, j + 75, 30,
-                (float)(i + 51) - this.xMouse, (float)(j + 75 - 50) - this.yMouse, this.menu.tamedLatex);
+                (float) (i + 51) - this.xMouse, (float) (j + 75 - 50) - this.yMouse, this.menu.tamedLatex);
     }
 
     @Override

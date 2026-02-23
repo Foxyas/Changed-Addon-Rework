@@ -38,7 +38,8 @@ public class HazardSuitHelmetOverlay {
         if (!minecraft.options.getCameraType().isFirstPerson()) return false;
         LocalPlayer player = minecraft.player;
         assert player != null;
-        if (ProcessTransfur.isPlayerTransfurred(player) && !ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedTransfurVariants.LATEX_HUMAN.get())) return false;
+        if (ProcessTransfur.isPlayerTransfurred(player) && !ProcessTransfur.getPlayerTransfurVariant(player).is(ChangedTransfurVariants.LATEX_HUMAN.get()))
+            return false;
 
         if (AccessorySlots.getForEntity(player).isPresent()) {
             AccessorySlots accessorySlots = AccessorySlots.getForEntity(player).get();

@@ -135,7 +135,8 @@ public class InductionCoilGoal extends Goal {
 
         if (metal == 0) return;
 
-        if (target instanceof Player player) player.displayClientMessage(ComponentUtil.translatable("message.changed_addon.induction_coil_melt"), true);
+        if (target instanceof Player player)
+            player.displayClientMessage(ComponentUtil.translatable("message.changed_addon.induction_coil_melt"), true);
 
         float metalPercentage = (float) metal / slots;
         if (metalPercentage <= 0.1f) return;

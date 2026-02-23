@@ -54,22 +54,22 @@ public abstract class AbstractSyringeItem extends Item implements SpecializedAni
     @Override
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack pStack, @NotNull Level pLevel, @NotNull LivingEntity pLivingEntity) {
         applyEffectsAfterUse(pStack, pLevel, pLivingEntity);
-        if(pLivingEntity instanceof ServerPlayer player) player.awardStat(Stats.ITEM_USED.get(this));
+        if (pLivingEntity instanceof ServerPlayer player) player.awardStat(Stats.ITEM_USED.get(this));
         return onUse(pStack, ChangedItems.SYRINGE.get().getDefaultInstance(), pLivingEntity);
     }
 
     //copy from a_changed
-    protected ItemStack onUse(@NotNull ItemStack inUse, @NotNull ItemStack result, @NotNull LivingEntity entity){
-        if(!(entity instanceof Player player) || !player.isCreative()) {
+    protected ItemStack onUse(@NotNull ItemStack inUse, @NotNull ItemStack result, @NotNull LivingEntity entity) {
+        if (!(entity instanceof Player player) || !player.isCreative()) {
             if (inUse.getCount() == 1) {
                 return result;
             }
             inUse.shrink(1);
-            if(result.isEmpty()) return inUse;
+            if (result.isEmpty()) return inUse;
         }
 
-        if(entity instanceof Player player) {
-            if(!player.isCreative()) ItemHandlerHelper.giveItemToPlayer(player, result);
+        if (entity instanceof Player player) {
+            if (!player.isCreative()) ItemHandlerHelper.giveItemToPlayer(player, result);
         } else Block.popResource(entity.level, entity.blockPosition(), result);
         return inUse;
     }

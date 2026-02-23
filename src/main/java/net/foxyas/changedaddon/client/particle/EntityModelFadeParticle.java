@@ -52,9 +52,9 @@ public class EntityModelFadeParticle extends Particle {
     protected float frozenHeadPitch;
     protected float frozenBodyYaw;
     protected float frozenXRot;
-    private float frozenModelRot;
     protected LivingEntity frozenEntity;
     protected HashMap<ModelPart, PartPose> poses = new HashMap<>();
+    private float frozenModelRot;
 
     public EntityModelFadeParticle(
             ClientLevel level,
@@ -68,6 +68,10 @@ public class EntityModelFadeParticle extends Particle {
 
         this.lifetime = (int) (20 * duration);
         this.gravity = 0f;
+    }
+
+    public static Provider provider() {
+        return new Provider();
     }
 
     @Override
@@ -111,7 +115,8 @@ public class EntityModelFadeParticle extends Particle {
 
     protected void renderTransfur(float partialTick, ChangedEntity changedEntity, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, Color fadeColor) {
         EntityRenderer<? super ChangedEntity> rendererNormal = Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(changedEntity);
-        if (!(rendererNormal instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> advancedHumanoidRenderer)) return;
+        if (!(rendererNormal instanceof AdvancedHumanoidRenderer<? super ChangedEntity, ?> advancedHumanoidRenderer))
+            return;
         AdvancedHumanoidModel<? super ChangedEntity> model = advancedHumanoidRenderer.getModel();
         ResourceLocation texture = advancedHumanoidRenderer.getTextureLocation(changedEntity);
         VertexConsumer buffer = bufferSource.getBuffer(ChangedAddonRenderTypes.entityTranslucent(texture));
@@ -279,10 +284,6 @@ public class EntityModelFadeParticle extends Particle {
     @Override
     public @NotNull ParticleRenderType getRenderType() {
         return ParticleRenderType.CUSTOM;
-    }
-
-    public static Provider provider() {
-        return new Provider();
     }
 
 

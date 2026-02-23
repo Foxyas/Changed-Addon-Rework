@@ -22,14 +22,30 @@ import java.util.Map;
 
 public class IridiumItem extends Item {
 
+    private static Map<Block, Block> CONVERSION;
+
     public IridiumItem() {
         super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
                 .stacksTo(64).fireResistant().rarity(Rarity.UNCOMMON));
     }
 
+    // Mapeamento de blocos para substituição
+    public static Map<Block, Block> conversion() {
+        if (CONVERSION != null) return CONVERSION;
+
+        CONVERSION = Map.of(
+                ChangedBlocks.WALL_WHITE.get(), ChangedAddonBlocks.REINFORCED_WALL.get(),
+                ChangedBlocks.WALL_CAUTION.get(), ChangedAddonBlocks.REINFORCED_WALL_CAUTION.get(),
+                ChangedBlocks.WALL_BLUE_TILED.get(), ChangedAddonBlocks.REINFORCED_WALL_SILVER_TILED.get(),
+                ChangedBlocks.WALL_BLUE_STRIPED.get(), ChangedAddonBlocks.REINFORCED_WALL_SILVER_STRIPED.get()
+        );
+
+        return CONVERSION;
+    }
+
     @Override
     public @NotNull InteractionResult useOn(@NotNull UseOnContext context) {
-        if(context.getHand() != InteractionHand.MAIN_HAND) return super.useOn(context);
+        if (context.getHand() != InteractionHand.MAIN_HAND) return super.useOn(context);
 
         Level world = context.getLevel();
         BlockPos pos = context.getClickedPos();
@@ -48,8 +64,8 @@ public class IridiumItem extends Item {
 
             // Consome o item na mão, exceto no modo criativo
             Player player = context.getPlayer();
-            if (player != null){
-                if(!player.isCreative()) context.getItemInHand().shrink(1);
+            if (player != null) {
+                if (!player.isCreative()) context.getItemInHand().shrink(1);
                 player.swing(InteractionHand.MAIN_HAND);
             }
 
@@ -57,21 +73,5 @@ public class IridiumItem extends Item {
         }
 
         return super.useOn(context);
-    }
-
-    private static Map<Block, Block> CONVERSION;
-
-    // Mapeamento de blocos para substituição
-    public static Map<Block, Block> conversion() {
-        if(CONVERSION != null) return CONVERSION;
-
-        CONVERSION = Map.of(
-                ChangedBlocks.WALL_WHITE.get(), ChangedAddonBlocks.REINFORCED_WALL.get(),
-                ChangedBlocks.WALL_CAUTION.get(), ChangedAddonBlocks.REINFORCED_WALL_CAUTION.get(),
-                ChangedBlocks.WALL_BLUE_TILED.get(), ChangedAddonBlocks.REINFORCED_WALL_SILVER_TILED.get(),
-                ChangedBlocks.WALL_BLUE_STRIPED.get(), ChangedAddonBlocks.REINFORCED_WALL_SILVER_STRIPED.get()
-        );
-
-        return CONVERSION;
     }
 }

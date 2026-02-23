@@ -42,9 +42,7 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
 
         // Verifica se a lista de ingredientes não está vazia
         if (!recipeItems.isEmpty()) {
-            if (StrictNBTIngredient.of(this.output).test(pContainer.getItem(1))) {
-                return true;
-            }
+            return StrictNBTIngredient.of(this.output).test(pContainer.getItem(1));
         }
 
         return false; // Retorna false se a lista de ingredientes estiver vazia ou nenhum item atender às condições
@@ -101,6 +99,7 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
     public static class Type implements RecipeType<CatalyzerRecipe> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "catalyzer";
+
         private Type() {
         }
     }

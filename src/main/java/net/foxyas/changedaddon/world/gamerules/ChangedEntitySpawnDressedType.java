@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 
 public enum ChangedEntitySpawnDressedType {
     NON_LATEX(entitytype -> !entitytype.is(ChangedTags.EntityTypes.LATEX)),
-    LATEX (entitytype -> entitytype.is(ChangedTags.EntityTypes.LATEX)),
+    LATEX(entitytype -> entitytype.is(ChangedTags.EntityTypes.LATEX)),
     ANY(entityType -> true),
     NONE(entityType -> false);
 
@@ -18,20 +18,20 @@ public enum ChangedEntitySpawnDressedType {
         this.predicate = predicate;
     }
 
-    public Predicate<EntityType<?>> getPredicate() {
-        return predicate;
-    }
-
-    public boolean isMatch(LivingEntity livingEntity) {
-        return this.predicate.test(livingEntity.getType());
-    }
-
     public static ChangedEntitySpawnDressedType fromString(String value) {
         try {
             return ChangedEntitySpawnDressedType.valueOf(value.toUpperCase());
         } catch (IllegalArgumentException e) {
             return NONE;
         }
+    }
+
+    public Predicate<EntityType<?>> getPredicate() {
+        return predicate;
+    }
+
+    public boolean isMatch(LivingEntity livingEntity) {
+        return this.predicate.test(livingEntity.getType());
     }
 
     @Override

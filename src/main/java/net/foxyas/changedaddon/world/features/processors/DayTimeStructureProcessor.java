@@ -6,7 +6,6 @@ import net.foxyas.changedaddon.init.ChangedAddonProcessors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Optional;
 
 public class DayTimeStructureProcessor extends StructureProcessor {
@@ -28,23 +26,6 @@ public class DayTimeStructureProcessor extends StructureProcessor {
 
     private final Optional<Long> time;
     private final DayPeriod dayPeriod;
-
-    public enum DayPeriod implements StringRepresentable {
-        NOTSET(),
-        DAY(),
-        NIGHT();
-
-        public static final Codec<DayPeriod> CODEC =
-                StringRepresentable.fromEnum(DayPeriod::values);
-
-        DayPeriod() {
-        }
-
-        @Override
-        public @NotNull String getSerializedName() {
-            return this.name().toLowerCase();
-        }
-    }
 
     public DayTimeStructureProcessor(Optional<Long> time, DayPeriod dayPeriod) {
         this.time = time;
@@ -80,5 +61,22 @@ public class DayTimeStructureProcessor extends StructureProcessor {
         }
 
         return null;
+    }
+
+    public enum DayPeriod implements StringRepresentable {
+        NOTSET(),
+        DAY(),
+        NIGHT();
+
+        public static final Codec<DayPeriod> CODEC =
+                StringRepresentable.fromEnum(DayPeriod::values);
+
+        DayPeriod() {
+        }
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return this.name().toLowerCase();
+        }
     }
 }

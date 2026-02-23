@@ -3,11 +3,11 @@ package net.foxyas.changedaddon.event;
 import net.foxyas.changedaddon.entity.advanced.DazedLatexEntity;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.simple.DarkLatexYufengQueenEntity;
+import net.foxyas.changedaddon.event.TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
-import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -22,8 +22,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import net.foxyas.changedaddon.event.TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType;
 
 @Mod.EventBusSubscriber
 public class TransfurEvents {
@@ -236,7 +234,7 @@ public class TransfurEvents {
         LivingEntity target = event.getTarget();
         IAbstractChangedEntity source = event.getSource();
         if (!(source.getChangedEntity() instanceof DazedLatexEntity)) return;
-        
+
         if (event.getTransfurType() == TransfurType.ABSORPTION) {
             source.getAbilityInstanceSafe(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).ifPresent((grabEntityAbilityInstance) -> {
                 if (grabEntityAbilityInstance.grabbedEntity == target) {

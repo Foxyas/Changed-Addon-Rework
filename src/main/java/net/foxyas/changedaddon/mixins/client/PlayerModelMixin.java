@@ -1,12 +1,10 @@
 package net.foxyas.changedaddon.mixins.client;
 
 import net.foxyas.changedaddon.client.model.api.IHierModel;
-import net.foxyas.changedaddon.client.model.test.CustomPlayerAnimations;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -25,12 +23,6 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel<T> i
 
     @Shadow
     @Final
-    private ModelPart ear;
-    @Shadow
-    @Final
-    private ModelPart cloak;
-    @Shadow
-    @Final
     public ModelPart leftSleeve;
     @Shadow
     @Final
@@ -47,7 +39,13 @@ public class PlayerModelMixin<T extends LivingEntity> extends HumanoidModel<T> i
     @Unique
     @Nullable
     protected ModelPart root;
-    private HashMap<String, ModelPart> partMap = new HashMap<>();
+    @Shadow
+    @Final
+    private ModelPart ear;
+    @Shadow
+    @Final
+    private ModelPart cloak;
+    private final HashMap<String, ModelPart> partMap = new HashMap<>();
 
     public PlayerModelMixin(ModelPart pRoot) {
         super(pRoot);

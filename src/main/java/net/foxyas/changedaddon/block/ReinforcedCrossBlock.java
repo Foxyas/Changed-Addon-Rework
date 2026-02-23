@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.block;
 
-import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.PickaxeItem;
@@ -11,9 +10,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.minecraftforge.common.TierSortingRegistry;
 import org.jetbrains.annotations.NotNull;
+
+import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.NonLatexCoverableBlock;
 
 public class ReinforcedCrossBlock extends Block implements NonLatexCoverableBlock {
 

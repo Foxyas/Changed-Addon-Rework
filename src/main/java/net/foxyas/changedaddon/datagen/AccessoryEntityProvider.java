@@ -35,7 +35,7 @@ public class AccessoryEntityProvider implements DataProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     // The Changed Mod Objects are registered too late soo is need to make static supplier a method
-    private static Supplier<AccessorySlotType[]> humanoidSlots = () -> new AccessorySlotType[]{BODY.get(), FULL_BODY.get(), LEGS.get(), HANDS.get(), HEAD.get(), FACE.get(), NECK.get()};
+    private static final Supplier<AccessorySlotType[]> humanoidSlots = () -> new AccessorySlotType[]{BODY.get(), FULL_BODY.get(), LEGS.get(), HANDS.get(), HEAD.get(), FACE.get(), NECK.get()};
 
     protected final String modId;
     private final DataGenerator generator;

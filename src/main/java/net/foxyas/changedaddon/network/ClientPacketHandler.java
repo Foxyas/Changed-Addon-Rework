@@ -31,7 +31,7 @@ public class ClientPacketHandler {
         context.setPacketHandled(true);
     }
 
-    public static void handleSafeGrabSync(SafeGrabSyncPacket packet, Supplier<NetworkEvent.Context> contextSupplier){
+    public static void handleSafeGrabSync(SafeGrabSyncPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             Level level = Minecraft.getInstance().level;
@@ -42,7 +42,7 @@ public class ClientPacketHandler {
             Optional<GrabEntityAbilityInstance> ability = IAbstractChangedEntity.forEitherSafe(e).map(entity -> entity.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()));
             if (ability.isEmpty()) return;
 
-            ((GrabEntityAbilityExtensor)ability.get()).setSafeMode(packet.safeMode());
+            ((GrabEntityAbilityExtensor) ability.get()).setSafeMode(packet.safeMode());
         });
         context.setPacketHandled(true);
     }

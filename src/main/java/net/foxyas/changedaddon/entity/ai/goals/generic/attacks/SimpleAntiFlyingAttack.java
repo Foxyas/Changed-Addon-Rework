@@ -44,6 +44,13 @@ public class SimpleAntiFlyingAttack extends Goal {
         //setFlags(EnumSet.of(Flag.TARGET, Flag.MOVE));
     }
 
+    private static void broadcastMotion(Entity entity) {
+        if (!entity.level.isClientSide) {
+            ServerLevel sl = (ServerLevel) entity.level;
+            sl.getChunkSource().broadcastAndSend(entity, new ClientboundSetEntityMotionPacket(entity));
+        }
+    }
+
     public Mob getAttacker() {
         return attacker;
     }
@@ -214,13 +221,6 @@ public class SimpleAntiFlyingAttack extends Goal {
         spawnImpactSoundEffect();
         spawnImpactParticleEffect(target.position());
         removeSlowFalling();
-    }
-
-    private static void broadcastMotion(Entity entity) {
-        if (!entity.level.isClientSide) {
-            ServerLevel sl = (ServerLevel) entity.level;
-            sl.getChunkSource().broadcastAndSend(entity, new ClientboundSetEntityMotionPacket(entity));
-        }
     }
 
     private void removeSlowFalling() {

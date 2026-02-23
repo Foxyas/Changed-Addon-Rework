@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.*;
+import static net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock.NonLatexCoverableBlock;
 
 public class ReinforcedWallCautionBlock extends Block implements NonLatexCoverableBlock {
 

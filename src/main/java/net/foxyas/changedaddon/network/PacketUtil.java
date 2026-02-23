@@ -24,14 +24,14 @@ import java.util.function.Predicate;
 @ParametersAreNonnullByDefault
 public class PacketUtil {
 
-    public static <R> R readNullable(FriendlyByteBuf buf, Function<FriendlyByteBuf, R> reader){
-        if(buf.readBoolean()) return reader.apply(buf);
+    public static <R> R readNullable(FriendlyByteBuf buf, Function<FriendlyByteBuf, R> reader) {
+        if (buf.readBoolean()) return reader.apply(buf);
         return null;
     }
 
-    public static <T> void writeNullable(FriendlyByteBuf buf, BiConsumer<FriendlyByteBuf, T> writer, @Nullable T obj){
+    public static <T> void writeNullable(FriendlyByteBuf buf, BiConsumer<FriendlyByteBuf, T> writer, @Nullable T obj) {
         buf.writeBoolean(obj != null);
-        if(obj != null) writer.accept(buf, obj);
+        if (obj != null) writer.accept(buf, obj);
     }
 
     public static void playSound(ServerLevel level, Predicate<ServerPlayer> send, double x, double y, double z, SoundEvent sound, SoundSource soundSource, float volume, float pitch) {

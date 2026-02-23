@@ -21,11 +21,6 @@ public record C2SReleaseGrabbedEntity(int grabbedId) {
         this(buf.readVarInt());
     }
 
-    // Encode
-    public void encode(FriendlyByteBuf buf) {
-        buf.writeVarInt(grabbedId);
-    }
-
     // Handler — SERVER SIDE
     public static void handle(C2SReleaseGrabbedEntity message, Supplier<NetworkEvent.Context> ctxSupplier) {
         NetworkEvent.Context ctx = ctxSupplier.get();
@@ -57,5 +52,10 @@ public record C2SReleaseGrabbedEntity(int grabbedId) {
         });
 
         ctx.setPacketHandled(true);
+    }
+
+    // Encode
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeVarInt(grabbedId);
     }
 }

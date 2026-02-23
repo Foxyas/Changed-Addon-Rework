@@ -31,18 +31,18 @@ import java.util.function.Predicate;
 public class LatexInventory implements Container, Nameable {
     public static final int POP_TIME_DURATION = 5;
     public static final int INVENTORY_SIZE = 24;
-    private static final int SELECTION_SIZE = INVENTORY_SIZE;
     public static final int SLOT_OFFHAND = INVENTORY_SIZE + 4;
     public static final int NOT_FOUND_INDEX = -1;
     public static final int[] ALL_ARMOR_SLOTS = new int[]{0, 1, 2, 3};
     public static final int[] HELMET_SLOT_ONLY = new int[]{3};
+    private static final int SELECTION_SIZE = INVENTORY_SIZE;
     public final NonNullList<ItemStack> items = NonNullList.withSize(INVENTORY_SIZE, ItemStack.EMPTY);
     public final NonNullList<ItemStack> armor;
     public final NonNullList<ItemStack> offhand = NonNullList.withSize(1, ItemStack.EMPTY);
-    private final List<NonNullList<ItemStack>> compartments;
-    public int selected;
     public final ChangedEntity entity;
     public final IAbstractChangedEntity entityWrapper;
+    private final List<NonNullList<ItemStack>> compartments;
+    public int selected;
     private int timesChanged;
 
     public LatexInventory(TamableLatexEntityFavors latexEntityFavors) {
@@ -56,12 +56,16 @@ public class LatexInventory implements Container, Nameable {
         this.compartments = ImmutableList.of(this.items, this.armor, this.offhand);
     }
 
-    public ItemStack getSelected() {
-        return isHotbarSlot(this.selected) ? this.items.get(this.selected) : ItemStack.EMPTY;
-    }
-
     public static int getSelectionSize() {
         return 9;
+    }
+
+    public static boolean isHotbarSlot(int slotIndex) {
+        return slotIndex >= 0 && slotIndex < SELECTION_SIZE;
+    }
+
+    public ItemStack getSelected() {
+        return isHotbarSlot(this.selected) ? this.items.get(this.selected) : ItemStack.EMPTY;
     }
 
     private boolean hasRemainingSpaceForItem(ItemStack p_36015_, ItemStack p_36016_) {
@@ -69,7 +73,7 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public int getFreeSlot() {
-        for(int i = 0; i < this.items.size(); ++i) {
+        for (int i = 0; i < this.items.size(); ++i) {
             if (this.items.get(i).isEmpty()) {
                 return i;
             }
@@ -107,12 +111,8 @@ public class LatexInventory implements Container, Nameable {
         this.items.set(p_36039_, itemstack);
     }
 
-    public static boolean isHotbarSlot(int slotIndex) {
-        return slotIndex >= 0 && slotIndex < SELECTION_SIZE;
-    }
-
     public int findSlotMatchingItem(ItemStack p_36031_) {
-        for(int i = 0; i < this.items.size(); ++i) {
+        for (int i = 0; i < this.items.size(); ++i) {
             if (!this.items.get(i).isEmpty() && ItemStack.isSameItemSameTags(p_36031_, this.items.get(i))) {
                 return i;
             }
@@ -122,7 +122,7 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public int findSlotMatchingUnusedItem(ItemStack p_36044_) {
-        for(int i = 0; i < this.items.size(); ++i) {
+        for (int i = 0; i < this.items.size(); ++i) {
             ItemStack itemstack = this.items.get(i);
             if (!this.items.get(i).isEmpty() && ItemStack.isSameItemSameTags(p_36044_, this.items.get(i)) && !this.items.get(i).isDamaged() && !itemstack.isEnchanted() && !itemstack.hasCustomHoverName()) {
                 return i;
@@ -133,14 +133,14 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public int getSuitableHotbarSlot() {
-        for(int i = 0; i < 9; ++i) {
+        for (int i = 0; i < 9; ++i) {
             int j = (this.selected + i) % 9;
             if (this.items.get(j).isEmpty()) {
                 return j;
             }
         }
 
-        for(int k = 0; k < 9; ++k) {
+        for (int k = 0; k < 9; ++k) {
             int l = (this.selected + k) % 9;
             return l;
         }
@@ -149,12 +149,12 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public void swapPaint(double p_35989_) {
-        int i = (int)Math.signum(p_35989_);
+        int i = (int) Math.signum(p_35989_);
 
-        for(this.selected -= i; this.selected < 0; this.selected += 9) {
+        for (this.selected -= i; this.selected < 0; this.selected += 9) {
         }
 
-        while(this.selected >= 9) {
+        while (this.selected >= 9) {
             this.selected -= 9;
         }
 
@@ -222,7 +222,7 @@ public class LatexInventory implements Container, Nameable {
         } else if (this.hasRemainingSpaceForItem(this.getItem(40), p_36051_)) {
             return 40;
         } else {
-            for(int i = 0; i < this.items.size(); ++i) {
+            for (int i = 0; i < this.items.size(); ++i) {
                 if (this.hasRemainingSpaceForItem(this.items.get(i), p_36051_)) {
                     return i;
                 }
@@ -262,7 +262,7 @@ public class LatexInventory implements Container, Nameable {
                         } else {
                             itemStack.setCount(this.addResource(slotIndex, itemStack));
                         }
-                    } while(!itemStack.isEmpty() && itemStack.getCount() < i);
+                    } while (!itemStack.isEmpty() && itemStack.getCount() < i);
 
                     return itemStack.getCount() < i;
                 }
@@ -286,7 +286,7 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public void placeItemBackInInventory(ItemStack itemStack, boolean updateClient) {
-        while(true) {
+        while (true) {
             if (!itemStack.isEmpty()) {
                 int slotIndex = this.getSlotWithRemainingSpace(itemStack);
                 if (slotIndex == NOT_FOUND_INDEX) {
@@ -309,7 +309,7 @@ public class LatexInventory implements Container, Nameable {
     public ItemStack removeItem(int p_35993_, int p_35994_) {
         List<ItemStack> list = null;
 
-        for(NonNullList<ItemStack> nonnulllist : this.compartments) {
+        for (NonNullList<ItemStack> nonnulllist : this.compartments) {
             if (p_35993_ < nonnulllist.size()) {
                 list = nonnulllist;
                 break;
@@ -322,8 +322,8 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public void removeItem(ItemStack p_36058_) {
-        for(NonNullList<ItemStack> nonnulllist : this.compartments) {
-            for(int i = 0; i < nonnulllist.size(); ++i) {
+        for (NonNullList<ItemStack> nonnulllist : this.compartments) {
+            for (int i = 0; i < nonnulllist.size(); ++i) {
                 if (nonnulllist.get(i) == p_36058_) {
                     nonnulllist.set(i, ItemStack.EMPTY);
                     break;
@@ -336,7 +336,7 @@ public class LatexInventory implements Container, Nameable {
     public ItemStack removeItemNoUpdate(int p_36029_) {
         NonNullList<ItemStack> nonnulllist = null;
 
-        for(NonNullList<ItemStack> nonnulllist1 : this.compartments) {
+        for (NonNullList<ItemStack> nonnulllist1 : this.compartments) {
             if (p_36029_ < nonnulllist1.size()) {
                 nonnulllist = nonnulllist1;
                 break;
@@ -357,7 +357,7 @@ public class LatexInventory implements Container, Nameable {
     public void setItem(int p_35999_, ItemStack p_36000_) {
         NonNullList<ItemStack> nonnulllist = null;
 
-        for(NonNullList<ItemStack> nonnulllist1 : this.compartments) {
+        for (NonNullList<ItemStack> nonnulllist1 : this.compartments) {
             if (p_35999_ < nonnulllist1.size()) {
                 nonnulllist = nonnulllist1;
                 break;
@@ -377,28 +377,28 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public ListTag save(ListTag p_36027_) {
-        for(int i = 0; i < this.items.size(); ++i) {
+        for (int i = 0; i < this.items.size(); ++i) {
             if (!this.items.get(i).isEmpty()) {
                 CompoundTag compoundtag = new CompoundTag();
-                compoundtag.putByte("Slot", (byte)i);
+                compoundtag.putByte("Slot", (byte) i);
                 this.items.get(i).save(compoundtag);
                 p_36027_.add(compoundtag);
             }
         }
 
-        for(int j = 0; j < this.armor.size(); ++j) {
+        for (int j = 0; j < this.armor.size(); ++j) {
             if (!this.armor.get(j).isEmpty()) {
                 CompoundTag compoundtag1 = new CompoundTag();
-                compoundtag1.putByte("Slot", (byte)(j + 100));
+                compoundtag1.putByte("Slot", (byte) (j + 100));
                 this.armor.get(j).save(compoundtag1);
                 p_36027_.add(compoundtag1);
             }
         }
 
-        for(int k = 0; k < this.offhand.size(); ++k) {
+        for (int k = 0; k < this.offhand.size(); ++k) {
             if (!this.offhand.get(k).isEmpty()) {
                 CompoundTag compoundtag2 = new CompoundTag();
-                compoundtag2.putByte("Slot", (byte)(k + 150));
+                compoundtag2.putByte("Slot", (byte) (k + 150));
                 this.offhand.get(k).save(compoundtag2);
                 p_36027_.add(compoundtag2);
             }
@@ -412,7 +412,7 @@ public class LatexInventory implements Container, Nameable {
         this.armor.clear();
         this.offhand.clear();
 
-        for(int i = 0; i < p_36036_.size(); ++i) {
+        for (int i = 0; i < p_36036_.size(); ++i) {
             CompoundTag compoundtag = p_36036_.getCompound(i);
             int j = compoundtag.getByte("Slot") & 255;
             ItemStack itemstack = ItemStack.of(compoundtag);
@@ -434,19 +434,19 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public boolean isEmpty() {
-        for(ItemStack itemstack : this.items) {
+        for (ItemStack itemstack : this.items) {
             if (!itemstack.isEmpty()) {
                 return false;
             }
         }
 
-        for(ItemStack itemstack1 : this.armor) {
+        for (ItemStack itemstack1 : this.armor) {
             if (!itemstack1.isEmpty()) {
                 return false;
             }
         }
 
-        for(ItemStack itemstack2 : this.offhand) {
+        for (ItemStack itemstack2 : this.offhand) {
             if (!itemstack2.isEmpty()) {
                 return false;
             }
@@ -458,7 +458,7 @@ public class LatexInventory implements Container, Nameable {
     public ItemStack getItem(int p_35991_) {
         List<ItemStack> list = null;
 
-        for(NonNullList<ItemStack> nonnulllist : this.compartments) {
+        for (NonNullList<ItemStack> nonnulllist : this.compartments) {
             if (p_35991_ < nonnulllist.size()) {
                 list = nonnulllist;
                 break;
@@ -485,10 +485,10 @@ public class LatexInventory implements Container, Nameable {
                 p_150074_ = 1.0F;
             }
 
-            for(int i : p_150075_) {
+            for (int i : p_150075_) {
                 ItemStack itemstack = this.armor.get(i);
                 if ((!p_150073_.is(DamageTypeTags.IS_FIRE) || !itemstack.getItem().isFireResistant()) && itemstack.getItem() instanceof ArmorItem) {
-                    itemstack.hurtAndBreak((int)p_150074_, this.entity, (p_35997_) -> {
+                    itemstack.hurtAndBreak((int) p_150074_, this.entity, (p_35997_) -> {
                         p_35997_.broadcastBreakEvent(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, i));
                     });
                 }
@@ -498,8 +498,8 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public void dropAll() {
-        for(List<ItemStack> list : this.compartments) {
-            for(int i = 0; i < list.size(); ++i) {
+        for (List<ItemStack> list : this.compartments) {
+            for (int i = 0; i < list.size(); ++i) {
                 ItemStack itemstack = list.get(i);
                 if (!itemstack.isEmpty()) {
                     this.entityWrapper.drop(itemstack, true);
@@ -527,8 +527,8 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public boolean contains(ItemStack p_36064_) {
-        for(List<ItemStack> list : this.compartments) {
-            for(ItemStack itemstack : list) {
+        for (List<ItemStack> list : this.compartments) {
+            for (ItemStack itemstack : list) {
                 if (!itemstack.isEmpty() && ItemStack.isSameItemSameTags(itemstack, p_36064_)) {
                     return true;
                 }
@@ -539,8 +539,8 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public boolean contains(TagKey<Item> p_204076_) {
-        for(List<ItemStack> list : this.compartments) {
-            for(ItemStack itemstack : list) {
+        for (List<ItemStack> list : this.compartments) {
+            for (ItemStack itemstack : list) {
                 if (!itemstack.isEmpty() && itemstack.is(p_204076_)) {
                     return true;
                 }
@@ -551,7 +551,7 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public void replaceWith(LatexInventory otherInventory) {
-        for(int i = 0; i < this.getContainerSize(); ++i) {
+        for (int i = 0; i < this.getContainerSize(); ++i) {
             this.setItem(i, otherInventory.getItem(i));
         }
 
@@ -559,14 +559,14 @@ public class LatexInventory implements Container, Nameable {
     }
 
     public void clearContent() {
-        for(List<ItemStack> list : this.compartments) {
+        for (List<ItemStack> list : this.compartments) {
             list.clear();
         }
 
     }
 
     public void fillStackedContents(StackedContents contents) {
-        for(ItemStack itemstack : this.items) {
+        for (ItemStack itemstack : this.items) {
             contents.accountSimpleStack(itemstack);
         }
 

@@ -111,7 +111,8 @@ public class PatOverlay {
         if (!player.getMainHandItem().isEmpty() && !player.getOffhandItem().isEmpty()) return;
 
         LivingEntity lookedEntity = PlayerUtil.getEntityLookingAt(player, (float) player.getEntityReach(), PlayerUtil.BLOCK_COLLISION, LivingEntity.class);
-        if (lookedEntity == null || !isPatableEntity(player, lookedEntity) || !isEntityInPassiveStage(lookedEntity) || !isKeySet()) return;
+        if (lookedEntity == null || !isPatableEntity(player, lookedEntity) || !isEntityInPassiveStage(lookedEntity) || !isKeySet())
+            return;
 
         if (lookedEntity.isInvisible() || !canPlayerPat(player)) return;
 

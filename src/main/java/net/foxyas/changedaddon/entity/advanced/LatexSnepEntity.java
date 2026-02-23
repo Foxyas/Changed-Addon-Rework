@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.entity.advanced;
 
+import net.foxyas.changedaddon.entity.ai.goals.simple.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
-import net.foxyas.changedaddon.entity.ai.goals.simple.SleepingWithOwnerGoal;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -55,13 +55,8 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity implements
         setNoAi(false);
     }
 
-    @Override
-    public @NotNull EntityShape getEntityShape() {
-        return EntityShape.FERAL;
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 3);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 10);
@@ -69,6 +64,11 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity implements
         builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
         builder = builder.add(Attributes.FOLLOW_RANGE, 16);
         return builder;
+    }
+
+    @Override
+    public @NotNull EntityShape getEntityShape() {
+        return EntityShape.FERAL;
     }
 
     protected void setAttributes(AttributeMap attributes) {

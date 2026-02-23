@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayCauseGrabDamageGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
+import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
@@ -75,7 +75,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        AttributeSupplier.Builder builder =  ChangedEntity.createLatexAttributes();
+        AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
         builder = builder.add(Attributes.MOVEMENT_SPEED, 0.3);
         builder = builder.add(Attributes.MAX_HEALTH, 14);
@@ -240,7 +240,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
 
     @Override
     public <A extends AbstractAbilityInstance> A getAbilityInstance(AbstractAbility<A> ability) {
-        return (A)(this.grabEntityAbilityInstance != null && ability == this.grabEntityAbilityInstance.ability ? this.grabEntityAbilityInstance : super.getAbilityInstance(ability));
+        return (A) (this.grabEntityAbilityInstance != null && ability == this.grabEntityAbilityInstance.ability ? this.grabEntityAbilityInstance : super.getAbilityInstance(ability));
     }
 
     @Override

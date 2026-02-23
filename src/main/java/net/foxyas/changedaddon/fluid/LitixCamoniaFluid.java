@@ -5,9 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonFluids;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.ltxprogrammer.changed.block.AbstractLatexBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.fluid.AbstractLatexFluid;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.world.LatexCoverState;
@@ -18,12 +16,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -138,7 +134,8 @@ public abstract class LitixCamoniaFluid extends ForgeFlowingFluid {
             @OnlyIn(Dist.CLIENT)
             @SubscribeEvent
             public void onRenderFog(ViewportEvent.RenderFog event) {
-                if (!(event.getCamera().getBlockAtCamera().getFluidState().getType() instanceof LitixCamoniaFluid)) return;
+                if (!(event.getCamera().getBlockAtCamera().getFluidState().getType() instanceof LitixCamoniaFluid))
+                    return;
 
                 event.setNearPlaneDistance(0.25F);
                 event.setFarPlaneDistance(1.0F);

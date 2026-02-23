@@ -23,7 +23,7 @@ public class ClientFogData {
 
         boolean holding =
                 isHolding(mc.player, ChangedAddonItems.EXPERIMENT_009_DNA.get()) ||
-                isHolding(mc.player, ChangedAddonItems.EXPERIMENT_10_DNA.get());
+                        isHolding(mc.player, ChangedAddonItems.EXPERIMENT_10_DNA.get());
 
         FOG.setTarget(holding);
         FOG.tick(0.15f, 0.005f);

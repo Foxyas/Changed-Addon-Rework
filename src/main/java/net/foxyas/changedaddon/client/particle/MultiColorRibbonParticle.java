@@ -24,7 +24,7 @@ public class MultiColorRibbonParticle extends RibbonParticle {
 
     // Interpola color baseado na posição "t" de 0 até 1
     private float[] getColorForSegment(float t) {
-        if (colors.length == 0) return new float[]{1,1,1,1};
+        if (colors.length == 0) return new float[]{1, 1, 1, 1};
         if (colors.length == 1) return colors[0].getRGBComponents(new float[4]);
 
         // qual par de cores usar?
@@ -35,10 +35,10 @@ public class MultiColorRibbonParticle extends RibbonParticle {
         float[] c0 = colors[idx].getRGBComponents(new float[4]);
         float[] c1 = colors[idx + 1].getRGBComponents(new float[4]);
         return new float[]{
-            c0[0] + (c1[0] - c0[0]) * frac,
-            c0[1] + (c1[1] - c0[1]) * frac,
-            c0[2] + (c1[2] - c0[2]) * frac,
-            c0[3] + (c1[3] - c0[3]) * frac
+                c0[0] + (c1[0] - c0[0]) * frac,
+                c0[1] + (c1[1] - c0[1]) * frac,
+                c0[2] + (c1[2] - c0[2]) * frac,
+                c0[3] + (c1[3] - c0[3]) * frac
         };
     }
 
@@ -49,7 +49,7 @@ public class MultiColorRibbonParticle extends RibbonParticle {
         int length = segments.length;
 
         for (int i = 0; i < length; i++) {
-            float t = (float)i / (length - 1);
+            float t = (float) i / (length - 1);
             float[] col = getColorForSegment(t);
             segment = segments[i];
             segment.first().lerp(segment.second(), pPartialTicks, lerpSegment);

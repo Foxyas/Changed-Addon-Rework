@@ -225,7 +225,7 @@ public class ChangedAddonRecipeBuilder implements RecipeBuilder {
             pJson.add("ingredients", jsonarray);
 
             // Serializa o resultado com NBT se existir
-            if(result.getDamageValue() == 0) result.getOrCreateTag().remove("Damage");
+            if (result.getDamageValue() == 0) result.getOrCreateTag().remove("Damage");
             JsonObject jsonobject = StrictNBTIngredient.of(result).toJson().getAsJsonObject();
             pJson.add("output", jsonobject);
 

@@ -24,7 +24,7 @@ public class TransfurSicknessJeiRecipeBrewing implements IJeiBrewingRecipe {
     }
 
     public static TransfurSicknessJeiRecipeBrewing[] getAllRecipes() {
-        return new TransfurSicknessJeiRecipeBrewing[] {
+        return new TransfurSicknessJeiRecipeBrewing[]{
                 new TransfurSicknessJeiRecipeBrewing(Items.POTION),
                 new TransfurSicknessJeiRecipeBrewing(Items.SPLASH_POTION),
                 new TransfurSicknessJeiRecipeBrewing(Items.LINGERING_POTION)

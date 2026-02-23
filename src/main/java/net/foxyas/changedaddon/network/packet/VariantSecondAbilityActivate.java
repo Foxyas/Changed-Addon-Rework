@@ -25,10 +25,6 @@ public class VariantSecondAbilityActivate {
     final boolean keyDown;
     final AbstractAbility<?> ability;
 
-    public static VariantSecondAbilityActivate openRadial(Player player) {
-        return new VariantSecondAbilityActivate(player, false);
-    }
-
     public VariantSecondAbilityActivate(Player player, boolean keyDown, AbstractAbility<?> ability) {
         this.uuid = player.getUUID();
         this.keyDown = keyDown;
@@ -45,6 +41,10 @@ public class VariantSecondAbilityActivate {
         this.uuid = buffer.readUUID();
         this.keyDown = buffer.readBoolean();
         this.ability = ChangedRegistry.ABILITY.readRegistryObject(buffer);
+    }
+
+    public static VariantSecondAbilityActivate openRadial(Player player) {
+        return new VariantSecondAbilityActivate(player, false);
     }
 
     public void write(FriendlyByteBuf buffer) {

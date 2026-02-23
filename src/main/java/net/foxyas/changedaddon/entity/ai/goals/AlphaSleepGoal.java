@@ -24,21 +24,18 @@ import java.util.stream.Stream;
 
 public class AlphaSleepGoal extends Goal {
 
+    protected static final int MAX_SLEEP_COOLDOWN = 20 * 60;
     private static final EnumSet<Goal.Flag> FLAGS = EnumSet.allOf(Goal.Flag.class);
-
     protected final PathfinderMob holder;
     protected final float scanRange;
     protected final IntPredicate fluffyBlocksRequired;
     protected final float noWalkingRange;
     protected final float noWalkingRangeSqr;
     protected final IntProvider sleepDurationProvider;
-
+    public int sleepDuration;
     protected int sleepCooldown;
-    protected static final int MAX_SLEEP_COOLDOWN = 20 * 60;
-
     protected int lastScan;
     protected boolean enoughFluffyBlocks;
-    public int sleepDuration;
 
     public AlphaSleepGoal(PathfinderMob holder, float scanRange, IntPredicate fluffyBlocksRequired, float noWalkingRange, IntProvider sleepDurationProvider) {
         this.holder = holder;
@@ -49,6 +46,18 @@ public class AlphaSleepGoal extends Goal {
         this.sleepDurationProvider = sleepDurationProvider;
 
         setFlags(FLAGS);
+    }
+
+    public static boolean hasValidAlphaSleepGoal(PathfinderMob mob) {
+        return mob.goalSelector.getAvailableGoals().stream()
+                .map(WrappedGoal::getGoal)
+                .map(goal -> goal instanceof AlphaSleepGoal sleepGoal ? sleepGoal : null)
+                .anyMatch(sleepGoal -> sleepGoal != null && sleepGoal.enoughFluffyBlocks && sleepGoal.sleepCooldown <= 0);
+    }
+
+    public static List<AlphaSleepGoal> getAllSleepGoalsFromEntity(PathfinderMob living) {
+        Stream<AlphaSleepGoal> goalStream = living.goalSelector.getAvailableGoals().stream().map(WrappedGoal::getGoal).filter(goal -> goal instanceof AlphaSleepGoal).map(goal -> goal instanceof AlphaSleepGoal alphaSleepGoal ? alphaSleepGoal : null);
+        return goalStream.toList();
     }
 
     @Override
@@ -114,13 +123,6 @@ public class AlphaSleepGoal extends Goal {
         }
     }
 
-    public static boolean hasValidAlphaSleepGoal(PathfinderMob mob) {
-        return mob.goalSelector.getAvailableGoals().stream()
-                .map(WrappedGoal::getGoal)
-                .map(goal -> goal instanceof AlphaSleepGoal sleepGoal ? sleepGoal : null)
-                .anyMatch(sleepGoal -> sleepGoal != null && sleepGoal.enoughFluffyBlocks && sleepGoal.sleepCooldown <= 0);
-    }
-
     @Override
     public boolean canContinueToUse() {
         if (sleepDuration <= 0) {
@@ -171,10 +173,5 @@ public class AlphaSleepGoal extends Goal {
     public void stop() {
         holder.stopSleeping();
         sleepCooldown = MAX_SLEEP_COOLDOWN;
-    }
-
-    public static List<AlphaSleepGoal> getAllSleepGoalsFromEntity(PathfinderMob living) {
-        Stream<AlphaSleepGoal> goalStream = living.goalSelector.getAvailableGoals().stream().map(WrappedGoal::getGoal).filter(goal -> goal instanceof AlphaSleepGoal).map(goal -> goal instanceof AlphaSleepGoal alphaSleepGoal ? alphaSleepGoal : null);
-        return goalStream.toList();
     }
 }

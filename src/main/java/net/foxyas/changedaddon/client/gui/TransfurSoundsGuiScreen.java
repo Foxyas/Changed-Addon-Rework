@@ -25,11 +25,6 @@ import java.util.List;
 public class TransfurSoundsGuiScreen extends Screen {
 
     /* ------------------------------------------------------------
-     * Player
-     * ------------------------------------------------------------ */
-    private final Player player;
-
-    /* ------------------------------------------------------------
      * Layout constants
      * ------------------------------------------------------------ */
     private static final int BUTTON_W = 30;
@@ -39,7 +34,10 @@ public class TransfurSoundsGuiScreen extends Screen {
     private static final int GAP_Y = 22;
     private static final int imageWidth = 176;
     private static final int imageHeight = 150;
-
+    /* ------------------------------------------------------------
+     * Player
+     * ------------------------------------------------------------ */
+    private final Player player;
     protected int topPos;
     protected int leftPos;
 
@@ -51,6 +49,18 @@ public class TransfurSoundsGuiScreen extends Screen {
     public TransfurSoundsGuiScreen() {
         super(Component.literal("TransfurSoundsGui"));
         this.player = Minecraft.getInstance().player;
+    }
+
+    private static MutableComponent joinWithSeparator(List<MutableComponent> components, String separator) {
+        MutableComponent result = components.get(0);
+
+        for (int i = 1; i < components.size(); i++) {
+            result = result
+                    .append(Component.literal(separator))
+                    .append(components.get(i));
+        }
+
+        return result;
     }
 
     /* ------------------------------------------------------------
@@ -242,18 +252,6 @@ public class TransfurSoundsGuiScreen extends Screen {
         }
 
         return subtitles;
-    }
-
-    private static MutableComponent joinWithSeparator(List<MutableComponent> components, String separator) {
-        MutableComponent result = components.get(0);
-
-        for (int i = 1; i < components.size(); i++) {
-            result = result
-                    .append(Component.literal(separator))
-                    .append(components.get(i));
-        }
-
-        return result;
     }
 
     protected boolean isNotOnCooldown() {

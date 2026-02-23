@@ -38,11 +38,11 @@ public abstract class AbstractRadialScreenMixin<T extends AbstractContainerMenu>
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), remap = true, cancellable = true)
     private void mouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {
-        if(!ChangedAddonServerConfiguration.ALLOW_SECOND_ABILITY_USE.get()
+        if (!ChangedAddonServerConfiguration.ALLOW_SECOND_ABILITY_USE.get()
                 || button != GLFW.GLFW_MOUSE_BUTTON_RIGHT) return;
 
         Optional<Integer> section = this.getSectionAt((int) mouseX, (int) mouseY);
-        if(section.isEmpty()) return;
+        if (section.isEmpty()) return;
 
         assert this.minecraft != null;
         LocalPlayer localPlayer = this.minecraft.player;

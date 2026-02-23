@@ -22,6 +22,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class FirstPersonRenderUtil {
 
+    private static boolean lock;
+
     /**
      * Renders a player's arm in first-person view with reversed swing if needed.
      *
@@ -113,9 +115,6 @@ public class FirstPersonRenderUtil {
         }
 
     }
-
-
-    private static boolean lock;
 
     public static void renderOffHandWithMainHandStackIfTransfured(Player pPlayer, InteractionHand hand, PoseStack stack, MultiBufferSource buffer, int light, float partialTicks) {
         if (lock) return;

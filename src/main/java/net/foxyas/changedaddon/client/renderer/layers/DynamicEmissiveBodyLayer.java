@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Function;
 
 public class DynamicEmissiveBodyLayer<M extends EntityModel<T>, T extends ChangedEntity> extends EyesLayer<T, M> implements FirstPersonLayer<T> {
+    public static final Function<ResourceLocation, RenderType> GLOW_BASE = RenderType::entityTranslucentCull;
     private final RenderType renderType;
     private final ResourceLocation emissiveTexture;
 
@@ -37,8 +38,6 @@ public class DynamicEmissiveBodyLayer<M extends EntityModel<T>, T extends Change
         this.renderType = renderTypeFunction.apply(emissiveTexture);
         this.emissiveTexture = emissiveTexture;
     }
-
-    public static final Function<ResourceLocation, RenderType> GLOW_BASE = RenderType::entityTranslucentCull;
 
     public ResourceLocation getEmissiveTexture() {
         return this.emissiveTexture;
@@ -66,7 +65,7 @@ public class DynamicEmissiveBodyLayer<M extends EntityModel<T>, T extends Change
         if (var10 instanceof AdvancedHumanoidModel<?> armedModel) {
             ModelPart armPart = armedModel.getArm(arm);
             armPart.loadPose(armPose);
-            FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm),  stack, bufferSource.getBuffer(this.renderType()), 15728880, hairColor.red(), hairColor.green(), hairColor.blue(), 1.0F);
+            FormRenderHandler.renderModelPartWithTexture(armedModel.getArm(arm), stack, bufferSource.getBuffer(this.renderType()), 15728880, hairColor.red(), hairColor.green(), hairColor.blue(), 1.0F);
         }
 
         stack.popPose();

@@ -26,6 +26,13 @@ public enum LatexAttackType implements BiPredicate<TamableLatexEntityFavors, Liv
         this.predicate = predicate;
     }
 
+    public static DataResult<LatexAttackType> fromSerial(String serializedName) {
+        return Arrays.stream(values()).filter(value -> value.serializedName.equals(serializedName))
+                .findAny().map(DataResult::success).orElse(DataResult.error(
+                        () -> "Invalid attack type " + serializedName
+                ));
+    }
+
     @Override
     public boolean test(TamableLatexEntityFavors self, LivingEntity possibleTarget) {
         return predicate.test(self, possibleTarget);
@@ -39,14 +46,6 @@ public enum LatexAttackType implements BiPredicate<TamableLatexEntityFavors, Liv
     public String getSerializedName() {
         return serializedName;
     }
-
-    public static DataResult<LatexAttackType> fromSerial(String serializedName) {
-        return Arrays.stream(values()).filter(value -> value.serializedName.equals(serializedName))
-                .findAny().map(DataResult::success).orElse(DataResult.error(
-                        () -> "Invalid attack type " + serializedName
-                ));
-    }
-
 
     public LatexAttackType cycle() {
         if (this.ordinal() + 1 == values().length)

@@ -18,11 +18,17 @@ import javax.annotation.Nullable;
 
 @Mixin(PrimaryLevelData.class)
 public abstract class PrimaryLevelDataMixin {
-    @Shadow @Final private int playerDataVersion;
+    @Shadow
+    @Final
+    private int playerDataVersion;
 
-    @Shadow @Nullable private CompoundTag loadedPlayerTag;
+    @Shadow
+    @Nullable
+    private CompoundTag loadedPlayerTag;
 
-    @Shadow @Final private int version;
+    @Shadow
+    @Final
+    private int version;
 
     @Inject(method = "updatePlayerTag", at = @At("RETURN"))
     private void updateChangedAddonPLayerTag(CallbackInfo callback) {

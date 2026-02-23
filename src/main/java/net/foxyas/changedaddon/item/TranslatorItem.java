@@ -21,6 +21,20 @@ public class TranslatorItem extends Item {
                 .rarity(Rarity.COMMON));
     }
 
+    public static boolean isEnabled(ItemStack stack) {
+        return !stack.hasTag() || stack.getOrCreateTag().getBoolean(TAG_ENABLED);
+    }
+
+    /* ===== STATE ===== */
+
+    public static void setEnabled(ItemStack stack, boolean value) {
+        stack.getOrCreateTag().putBoolean(TAG_ENABLED, value);
+    }
+
+    public static void toggle(ItemStack stack) {
+        setEnabled(stack, !isEnabled(stack));
+    }
+
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(
             Level level,
@@ -43,20 +57,6 @@ public class TranslatorItem extends Item {
         }
 
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
-    }
-
-    /* ===== STATE ===== */
-
-    public static boolean isEnabled(ItemStack stack) {
-        return !stack.hasTag() || stack.getOrCreateTag().getBoolean(TAG_ENABLED);
-    }
-
-    public static void setEnabled(ItemStack stack, boolean value) {
-        stack.getOrCreateTag().putBoolean(TAG_ENABLED, value);
-    }
-
-    public static void toggle(ItemStack stack) {
-        setEnabled(stack, !isEnabled(stack));
     }
 }
 

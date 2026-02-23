@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.mixins.entity.changedEntity;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -10,7 +9,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,6 +26,25 @@ public abstract class LivingEntityChangedEntityMixin extends Entity {
         super(pEntityType, pLevel);
     }
 
+    private static Entity resolveChangedEntity(Entity entity) {
+        if (entity instanceof Player player) {
+            TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (transfur != null) {
+                return transfur.getChangedEntity();
+            }
+        }
+        return entity;
+    }
+
+//    @ModifyReturnValue(method = "getJumpPower", at = @At("RETURN"))
+//    private float changedJumpPower(float original) {
+//        var self = ChangedAddon$selfMixin();
+//        Entity entity = resolveChangedEntity(self);
+//        if (IAlphaAbleEntity.isEntityAlpha(entity)) {
+//            return original * (1 + (0.25f * (IAlphaAbleEntity.getEntityAlphaScale(entity) / 0.75f)));
+//        }
+//        return original;
+//    }
 
     @Inject(method = "onSyncedDataUpdated", at = @At("TAIL"), cancellable = false)
     private void changedEntityOnSyncedDataUpdatedHook(EntityDataAccessor<?> pKey, CallbackInfo ci) {
@@ -41,27 +58,6 @@ public abstract class LivingEntityChangedEntityMixin extends Entity {
             }
         }
     }
-
-//    @ModifyReturnValue(method = "getJumpPower", at = @At("RETURN"))
-//    private float changedJumpPower(float original) {
-//        var self = ChangedAddon$selfMixin();
-//        Entity entity = resolveChangedEntity(self);
-//        if (IAlphaAbleEntity.isEntityAlpha(entity)) {
-//            return original * (1 + (0.25f * (IAlphaAbleEntity.getEntityAlphaScale(entity) / 0.75f)));
-//        }
-//        return original;
-//    }
-
-    private static Entity resolveChangedEntity(Entity entity) {
-        if (entity instanceof Player player) {
-            TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (transfur != null) {
-                return transfur.getChangedEntity();
-            }
-        }
-        return entity;
-    }
-
 
     @Unique
     private LivingEntity ChangedAddon$selfMixin() {

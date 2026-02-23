@@ -47,8 +47,7 @@ public enum LatexTargetType implements BiPredicate<TamableLatexEntityFavors, Liv
     }),
     HOSTILE_TO_OWNER("hostile_to_owner", (self, target) -> {
         if (target != self.getOwner() && self.getOwner() != null) {
-            if (target instanceof Mob) {
-                Mob mob = (Mob)target;
+            if (target instanceof Mob mob) {
                 return mob.getTarget() == self.getOwner();
             } else {
                 return self.getOwner().getLastAttacker() == target;
@@ -61,9 +60,13 @@ public enum LatexTargetType implements BiPredicate<TamableLatexEntityFavors, Liv
     private final String serializedName;
     private final BiPredicate<TamableLatexEntityFavors, LivingEntity> predicate;
 
-    private LatexTargetType(String serializedName, BiPredicate<TamableLatexEntityFavors, LivingEntity> predicate) {
+    LatexTargetType(String serializedName, BiPredicate<TamableLatexEntityFavors, LivingEntity> predicate) {
         this.serializedName = serializedName;
         this.predicate = predicate;
+    }
+
+    public static DataResult<LatexTargetType> fromSerial(String serializedName) {
+        return Arrays.stream(values()).filter((value) -> value.serializedName.equals(serializedName)).findAny().map(DataResult::success).orElse(DataResult.error(() -> "Invalid target type " + serializedName));
     }
 
     public boolean test(TamableLatexEntityFavors self, LivingEntity possibleTarget) {
@@ -76,10 +79,6 @@ public enum LatexTargetType implements BiPredicate<TamableLatexEntityFavors, Liv
 
     public String getSerializedName() {
         return this.serializedName;
-    }
-
-    public static DataResult<LatexTargetType> fromSerial(String serializedName) {
-        return (DataResult)Arrays.stream(values()).filter((value) -> value.serializedName.equals(serializedName)).findAny().map(DataResult::success).orElse(DataResult.error(() -> "Invalid target type " + serializedName));
     }
 
     public Component getDisplayText() {

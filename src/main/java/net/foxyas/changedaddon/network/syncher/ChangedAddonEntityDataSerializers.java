@@ -8,7 +8,7 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 
 public class ChangedAddonEntityDataSerializers {
-    
+
     public static final EntityDataSerializer<LatexTargetType> LATEX_TARGET_TYPE = EntityDataSerializer.simpleEnum(LatexTargetType.class);
     public static final EntityDataSerializer<LatexAttackType> LATEX_ATTACK_TYPE = EntityDataSerializer.simpleEnum(LatexAttackType.class);
     public static final EntityDataSerializer<LatexAttackCondition> LATEX_ATTACK_CONDITION = EntityDataSerializer.simpleEnum(LatexAttackCondition.class);

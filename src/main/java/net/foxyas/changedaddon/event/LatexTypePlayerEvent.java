@@ -103,12 +103,12 @@ public abstract class LatexTypePlayerEvent extends Event {
             this.result = result;
         }
 
-        public void setCancellationResult(InteractionResult interactionResult) {
-            this.cancellationResult = interactionResult;
-        }
-
         public InteractionResult getCancellationResult() {
             return cancellationResult;
+        }
+
+        public void setCancellationResult(InteractionResult interactionResult) {
+            this.cancellationResult = interactionResult;
         }
     }
 }

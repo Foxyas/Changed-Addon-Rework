@@ -19,11 +19,11 @@ public record InformantBlockGuiKeyPacket(String text, TransfurVariant<?> selecte
 
     public static final ResourceLocation NULL_LOC = ResourceLocation.fromNamespaceAndPath("null", "null");
 
-    public InformantBlockGuiKeyPacket(FriendlyByteBuf buf){
+    public InformantBlockGuiKeyPacket(FriendlyByteBuf buf) {
         this(buf.readUtf(), tf(buf), buf.readBlockPos());
     }
 
-    private static TransfurVariant<?> tf(FriendlyByteBuf buf){
+    private static TransfurVariant<?> tf(FriendlyByteBuf buf) {
         ResourceLocation loc = buf.readResourceLocation();
         return loc.equals(NULL_LOC) ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(loc);
     }

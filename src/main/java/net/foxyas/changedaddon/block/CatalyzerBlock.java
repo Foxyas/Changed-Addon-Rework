@@ -5,7 +5,6 @@ import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -43,6 +42,11 @@ public class CatalyzerBlock extends HorizontalDirectionalBlock implements Entity
         super(properties);
     }
 
+    @Nullable
+    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> pServerType, BlockEntityType<E> pClientType, BlockEntityTicker<? super E> pTicker) {
+        return pClientType == pServerType ? (BlockEntityTicker<A>) pTicker : null;
+    }
+
     @Override
     public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
         return 15;
@@ -67,11 +71,6 @@ public class CatalyzerBlock extends HorizontalDirectionalBlock implements Entity
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         return createTickerHelper(pBlockEntityType, ChangedAddonBlockEntities.CATALYZER.get(), pLevel.isClientSide ? CatalyzerBlockEntity::clientTick : CatalyzerBlockEntity::serverTick);
-    }
-
-    @Nullable
-    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> pServerType, BlockEntityType<E> pClientType, BlockEntityTicker<? super E> pTicker) {
-        return pClientType == pServerType ? (BlockEntityTicker<A>) pTicker : null;
     }
 
     @Override

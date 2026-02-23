@@ -34,8 +34,6 @@ import static net.ltxprogrammer.changed.data.AccessorySlots.getForEntity;
 
 public class AccessoryItemCommands {
 
-    private static final int MAX_FEEDBACK = 20;
-
     public static final SuggestionProvider<CommandSourceStack> SUGGEST_ACCESSORY_SLOTS =
             (context, builder) -> {
 
@@ -93,6 +91,7 @@ public class AccessoryItemCommands {
 
                 return SharedSuggestionProvider.suggest(entitySlots, builder);
             };
+    private static final int MAX_FEEDBACK = 20;
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
         dispatcher.register(
@@ -474,9 +473,7 @@ public class AccessoryItemCommands {
                             return false;
                         }
 
-                        if (accessoryItem.shouldDisableSlot(new AccessorySlotContext<>(livingEntity, otherSlot, otherStack), slot)) {
-                            return false;
-                        }
+                        return !accessoryItem.shouldDisableSlot(new AccessorySlotContext<>(livingEntity, otherSlot, otherStack), slot);
                     }
 
                     return true;
