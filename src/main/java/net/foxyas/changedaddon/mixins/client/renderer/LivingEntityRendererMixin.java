@@ -1,9 +1,12 @@
 package net.foxyas.changedaddon.mixins.client.renderer;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -11,6 +14,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -61,5 +66,50 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
             } else this.shadowRadius = defaultValue;
         }
 
+    }
+
+    /* this eats fps... it is a cool feature but for performance’s sake I'm going to keep it disabled
+    @WrapOperation(method = "getRenderType", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getTextureLocation(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/resources/ResourceLocation;"))
+    private ResourceLocation injectDynamicTextures(LivingEntityRenderer<T, M> instance, Entity entity, Operation<ResourceLocation> original) {
+        ResourceLocation location = original.call(instance, entity);
+
+        if (entity instanceof IAlphaAbleEntity alphaEntity && alphaEntity.isAlpha()) {
+            // Multiplicamos por 100 para trabalhar com inteiros no nome do arquivo
+            int scale = (int) (alphaEntity.alphaAdditionalScale() * 100);
+            String baseNamespace = location.getNamespace();
+            String basePath = location.getPath().replace(".png", "");
+
+            // 1. Tenta a versão com Escala (Descendo do atual até 1)
+            for (int s = scale; s > 0; s--) {
+            }
+            s = scale
+            ResourceLocation scaleLoc = ResourceLocation.fromNamespaceAndPath(
+                    baseNamespace,
+                    basePath + "_alpha_" + s + ".png"
+            );
+
+            if (changed_Addon_Rework$resourceExists(scaleLoc)) {
+                return scaleLoc;
+            }
+
+            // 2. Se não achou nenhuma escala, tenta a versão Alpha genérica
+            ResourceLocation alphaLoc = ResourceLocation.fromNamespaceAndPath(
+                    baseNamespace,
+                    basePath + "_alpha.png"
+            );
+
+            if (changed_Addon_Rework$resourceExists(alphaLoc)) {
+                return alphaLoc;
+            }
+        }
+
+        // Se não for Alpha ou não achar arquivos extras, retorna o original (normal)
+        return location;
+    }*/
+
+    @Unique
+    private boolean changed_Addon_Rework$resourceExists(ResourceLocation loc) {
+        // Note: in 1.20.1+, ResourceManager is Client side only
+        return Minecraft.getInstance().getResourceManager().getResource(loc).isPresent();
     }
 }
