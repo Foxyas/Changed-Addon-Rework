@@ -1,11 +1,13 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.item.api.IBestiaryItemData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -18,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class Experiment009SpawnerItem extends SpecialSpawnEggItem {
+public class Experiment009SpawnerItem extends SpecialSpawnEggItem implements IBestiaryItemData {
 
     public Experiment009SpawnerItem() {
         super(ChangedAddonEntities.EXPERIMENT_009_BOSS, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
@@ -40,5 +42,10 @@ public class Experiment009SpawnerItem extends SpecialSpawnEggItem {
     protected void postSpawn(ServerLevel level, Player player, Entity spawnedEntity) {
         level.playSound(null, player, SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 1, 1);
         if (spawnedEntity instanceof Mob mob && mob.canAttack(player)) mob.setTarget(player);
+    }
+
+    @Override
+    public EntityType<?> getEntityTypeReference() {
+        return ChangedAddonEntities.EXPERIMENT_009_BOSS.get();
     }
 }
