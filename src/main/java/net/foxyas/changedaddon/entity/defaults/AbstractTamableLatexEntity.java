@@ -299,7 +299,7 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
 
     }
 
-    protected boolean isTameItem(ItemStack stack) {
+    public boolean isTameItem(ItemStack stack) {
         return false;
     }
 }

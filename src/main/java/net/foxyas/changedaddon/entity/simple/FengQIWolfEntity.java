@@ -145,7 +145,7 @@ public class FengQIWolfEntity extends AbstractCanTameChangedEntityFavors impleme
     }
 
     @Override
-    protected boolean isTameItem(ItemStack stack) {
+    public boolean isTameItem(ItemStack stack) {
         return stack.is(Items.GLOW_BERRIES) || stack.is(Items.SWEET_BERRIES);
     }
 }

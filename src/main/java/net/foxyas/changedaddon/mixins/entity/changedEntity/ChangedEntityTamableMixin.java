@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.mixins.entity.changedEntity;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import net.foxyas.changedaddon.entity.ai.*;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.foxyas.changedaddon.menu.TamedLatexInventoryMenu;
@@ -15,11 +16,18 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.PickaxeItem;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -124,9 +132,142 @@ public abstract class ChangedEntityTamableMixin extends Monster implements Tamab
         this.entityData.set(DATA_TARGET_TYPE, type);
     }
 
+    public int findSlotForTransfur() {
+        return this.inventory == null ? -1 : this.inventory.getFreeSlot();
+    }
+
+    public int findSlotForCombat() {
+        // Maybe add bow AI?
+        if (this.inventory == null)
+            return -1;
+
+        double bestScore = 0;
+        int bestSlot = this.inventory.selected;
+
+        for (int i = 0; i < this.inventory.getContainerSize(); ++i) {
+            var itemStack = this.inventory.getItem(i);
+            if (itemStack.isEmpty())
+                continue;
+            double score = 0;
+            var modifiers = this.inventory.getItem(i).getAttributeModifiers(EquipmentSlot.MAINHAND);
+            if (modifiers.containsKey(Attributes.ATTACK_DAMAGE))
+                score += modifiers.get(Attributes.ATTACK_DAMAGE).stream().mapToDouble(AttributeModifier::getAmount).sum();
+            if (modifiers.containsKey(Attributes.ATTACK_SPEED))
+                score += modifiers.get(Attributes.ATTACK_SPEED).stream().mapToDouble(AttributeModifier::getAmount).sum();
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestSlot = i;
+            }
+        }
+
+        return bestSlot;
+    }
+
+    public int findSlotForFishingRod() {
+        if (inventory == null)
+            return -1;
+
+        for (int i = 0; i < inventory.getContainerSize(); ++i) {
+            var slot = inventory.getItem(i);
+            if (slot.isEmpty())
+                continue;
+
+            if (slot.is(Tags.Items.TOOLS_FISHING_RODS))
+                return i;
+        }
+
+        return inventory.selected;
+    }
+
+    public int findSlotForPickaxe() {
+        if (inventory == null)
+            return -1;
+
+        Tier bestTier = null;
+        int bestSlot = this.inventory.selected;
+
+        for (int i = 0; i < inventory.getContainerSize(); ++i) {
+            var slot = inventory.getItem(i);
+            if (slot.isEmpty())
+                continue;
+
+            if (slot.getItem() instanceof PickaxeItem pickaxeItem) {
+                if (bestTier == null || TierSortingRegistry.getTiersLowerThan(pickaxeItem.getTier()).contains(bestTier)) {
+                    bestTier = pickaxeItem.getTier();
+                    bestSlot = i;
+                }
+            }
+        }
+
+        return bestSlot;
+    }
+
+    public int findSlotForNonCombat() {
+        // TODO find a book, food, fishing rod, etc.
+        if (inventory == null)
+            return -1;
+
+        if (getCurrentFavor() == LatexFavor.FISHING)
+            return this.findSlotForFishingRod();
+
+        if (getCurrentFavor() == LatexFavor.CAVING)
+            return this.findSlotForPickaxe();
+
+        for (int i = 0; i < inventory.getContainerSize(); ++i) {
+            var slot = inventory.getItem(i);
+            if (slot.isEmpty()) {
+                if (getCurrentFavor() == LatexFavor.SUIT_OWNER)
+                    return i;
+            }
+        }
+
+        return inventory.selected;
+    }
+
+    @Override
+    public void updateHeldItemChoice() {
+        if (this.inventory == null || this.isInteractingWith(this.getOwner()))
+            return;
+
+        LivingEntity target = this.getTarget();
+        boolean inCombat = target != null && target != this.getOwner();
+        boolean wantTransfur = inCombat && getAttackType().test(this, target); // Find empty slot, or else a strong weapon
+
+        if (inCombat) {
+            if (wantTransfur) {
+                this.inventory.selected = this.findSlotForTransfur();
+            }
+
+            if (!wantTransfur || this.inventory.selected == -1) { // No Free slot,
+                this.inventory.selected = this.findSlotForCombat();
+            }
+        } else {
+            if (getAttackCondition() == LatexAttackCondition.ALWAYS && getCurrentFavor() == LatexFavor.NONE) {
+                this.inventory.selected = this.findSlotForCombat();
+            }
+
+            if (getAttackCondition() != LatexAttackCondition.ALWAYS || this.inventory.selected == -1 || getCurrentFavor() != LatexFavor.NONE) {
+                this.inventory.selected = this.findSlotForNonCombat();
+            }
+        }
+
+        if (this.inventory.selected == -1) {
+            this.inventory.selected = this.findSlotForNonCombat();
+        }
+
+        if (this.inventory.selected == -1) {
+            this.inventory.selected = 0; // Fail :(
+        }
+    }
+
     @Override
     public boolean canDoFavor(LatexFavor favor) {
         return true;
+    }
+
+    public @Nullable UUID getOwnerUUID() {
+        return (UUID) ((Optional<?>) this.entityData.get(DATA_OWNER_UUID)).orElse(null);
     }
 
     public void setOwnerUUID(@Nullable UUID uuid) {

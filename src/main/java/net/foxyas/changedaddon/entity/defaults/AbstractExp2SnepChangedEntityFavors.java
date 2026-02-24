@@ -738,11 +738,11 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
         }
     }
 
-    protected int findSlotForTransfur() {
+    public int findSlotForTransfur() {
         return this.inventory == null ? -1 : this.inventory.getFreeSlot();
     }
 
-    protected int findSlotForCombat() {
+    public int findSlotForCombat() {
         // Maybe add bow AI?
         if (this.inventory == null)
             return -1;
@@ -770,7 +770,7 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
         return bestSlot;
     }
 
-    protected int findSlotForFishingRod() {
+    public int findSlotForFishingRod() {
         if (inventory == null)
             return -1;
 
@@ -786,7 +786,7 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
         return inventory.selected;
     }
 
-    protected int findSlotForPickaxe() {
+    public int findSlotForPickaxe() {
         if (inventory == null)
             return -1;
 
@@ -809,7 +809,7 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
         return bestSlot;
     }
 
-    protected int findSlotForNonCombat() {
+    public int findSlotForNonCombat() {
         // TODO find a book, food, fishing rod, etc.
         if (inventory == null)
             return -1;

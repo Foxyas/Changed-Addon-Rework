@@ -9,16 +9,14 @@ import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
+import net.ltxprogrammer.changed.client.AbilityColor;
 import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -38,7 +36,10 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
         super(Instance::new);
     }
 
-    public static Optional<Integer> getColor(Instance abilityInstance, int layer) {
+    public static Optional<Integer> getColor(AbstractAbilityInstance instance, int layer) {
+        if (!(instance instanceof Instance abilityInstance)) {
+            return Optional.empty();
+        }
         AbstractRadialScreen.ColorScheme scheme = AbilityColors.getAbilityColors(abilityInstance);
         float chargePercent = abilityInstance.getController().chargePercent();
         if (chargePercent < 0.25f && layer == 0) {
