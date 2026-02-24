@@ -570,7 +570,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
             this.grabEntityAbilityInstance = createGrabAbility();
     }
 
-    protected void reassessTameGoals() {
+    public void reassessTameGoals() {
         super.reassessTameGoals();
     }
 
@@ -865,7 +865,7 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         }
     }
 
-    protected void swapSlotWithOffhand(int swapWith) {
+    public void swapSlotWithOffhand(int swapWith) {
         if (this.inventory == null)
             return;
 

@@ -571,7 +571,7 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
             this.grabEntityAbilityInstance = createGrabAbility();
     }
 
-    protected void reassessTameGoals() {
+    public void reassessTameGoals() {
         super.reassessTameGoals();
     }
 
@@ -866,7 +866,7 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
         }
     }
 
-    protected void swapSlotWithOffhand(int swapWith) {
+    public void swapSlotWithOffhand(int swapWith) {
         if (this.inventory == null)
             return;
 

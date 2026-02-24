@@ -253,7 +253,7 @@ public abstract class AbstractTamableLatexEntity extends ChangedEntity implement
         this.reassessTameGoals();
     }
 
-    protected void reassessTameGoals() {
+    public void reassessTameGoals() {
     }
 
     public boolean isOwnedBy(LivingEntity entity) {
