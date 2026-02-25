@@ -55,10 +55,10 @@ public class Test {
                 if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
                     ChangedEntity changedEntity = changedEntityModelWidget.getChangedEntity();
                     if (changedEntity == null) return false;
-                    
+
                     changedEntity.setPose(switch (changedEntity.getPose()) {
                         case STANDING -> Pose.CROUCHING;
-                        case CROAKING -> Pose.STANDING;
+                        case CROUCHING -> Pose.STANDING;
                         default -> Pose.STANDING;
                     });
                     return true;
