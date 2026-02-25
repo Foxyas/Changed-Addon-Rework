@@ -12,6 +12,8 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
 
     protected ChangedEntity changedEntity;
 
+    protected boolean scrollAble = false;
+
     @Override
     public ChangedEntityModelWidget setOrigin(float x, float y, float z) {
         super.setOrigin(x, y, z);
@@ -51,9 +53,22 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
         return changedEntity;
     }
 
+    public void setScrollAble(boolean scrollAble) {
+        this.scrollAble = scrollAble;
+    }
+
+    public boolean isScrollAble() {
+        return scrollAble;
+    }
+
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollY) {
+        return isScrollAble() && super.mouseScrolled(mouseX, mouseY, scrollY);
     }
 
     protected void renderModel(PoseStack stack){

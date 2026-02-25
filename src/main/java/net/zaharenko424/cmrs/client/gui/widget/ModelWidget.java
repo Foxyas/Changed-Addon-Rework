@@ -21,6 +21,7 @@ public abstract class ModelWidget extends Widget {
     protected Vector3f translation = new Vector3f();
     protected float zoom = 50;
 
+
     public ModelWidget(){
         setInteractable(false);
     }
