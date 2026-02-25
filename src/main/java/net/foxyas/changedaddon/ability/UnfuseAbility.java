@@ -35,7 +35,10 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
         super(Instance::new);
     }
 
-    public static Optional<Integer> getColor(Instance abilityInstance, int layer) {
+    public static Optional<Integer> getColor(AbstractAbilityInstance instance, int layer) {
+        if (!(instance instanceof Instance abilityInstance)) {
+            return Optional.empty();
+        }
         AbstractRadialScreen.ColorScheme scheme = AbilityColors.getAbilityColors(abilityInstance);
         float chargePercent = abilityInstance.getController().chargePercent();
         if (chargePercent < 0.25f && layer == 0) {
