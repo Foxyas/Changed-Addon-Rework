@@ -1,6 +1,7 @@
 package net.zaharenko424.cmrs;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -48,10 +49,14 @@ public class Test {
         protected TestScreen() {
             super(Component.literal("A"));
 
+            modelWidget.setInteractable(true);
             modelWidget.setOrigin(40 + (width / 2f), height / 2f, 50);
             modelWidget.setOnClick((modelRectWidget, integer) -> {
                 if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
-                    changedEntityModelWidget.getChangedEntity().setPose(switch (changedEntityModelWidget.getChangedEntity().getPose()) {
+                    ChangedEntity changedEntity = changedEntityModelWidget.getChangedEntity();
+                    if (changedEntity == null) return false;
+                    
+                    changedEntity.setPose(switch (changedEntity.getPose()) {
                         case STANDING -> Pose.CROUCHING;
                         case CROAKING -> Pose.STANDING;
                         default -> Pose.STANDING;
