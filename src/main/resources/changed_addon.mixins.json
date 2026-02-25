@@ -94,6 +94,7 @@
     "client.renderer.PaintingRendererMixin",
     "client.renderer.PostChainMixin",
     "client.renderer.layer.LatexHeldEntityLayerMixin",
+    "cmrs.MixinPoseStack",
     "entity.elytraFly.LocalPlayerMixin",
     "entity.player.LocalPlayerMixin",
     "entity.projectiles.GasParticleMixin",
