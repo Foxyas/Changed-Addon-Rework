@@ -1,12 +1,16 @@
 package net.zaharenko424.cmrs.client.gui.widget;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.util.Mth;
+import net.zaharenko424.cmrs.client.geom.Reusable;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class ChangedEntityModelWidget extends ModelRectWidget {
@@ -14,6 +18,8 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
     protected ChangedEntity changedEntity;
 
     protected boolean scrollAble = false;
+
+    protected boolean holdingClick = false;
 
     @Override
     public ChangedEntityModelWidget setOrigin(float x, float y, float z) {
@@ -70,6 +76,31 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollY) {
         return isScrollAble() && super.mouseScrolled(mouseX, mouseY, scrollY);
+    }
+
+    @Override
+    public boolean isFocused() {
+        return holdingClick;
+    }
+
+    @Override
+    public void setFocused(boolean focused) {
+        this.holdingClick = focused;
+    }
+
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        if(!isInteractable()) {
+            this.holdingClick = false;
+            return false;
+        }
+
+        if(button == InputConstants.MOUSE_BUTTON_LEFT){
+            accumulatedRotation.add((float) -dragY * Mth.DEG_TO_RAD, (float) dragX * Mth.DEG_TO_RAD);
+            this.holdingClick = true;
+        }
+
+        return true;
     }
 
     protected void renderModel(GuiGraphics guiGraphics){

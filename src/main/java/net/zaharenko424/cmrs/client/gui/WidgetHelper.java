@@ -143,6 +143,10 @@ public class WidgetHelper {
         return hoverAnim(maxScaleIncrease, growth, shrink, Widget::isHovering);
     }
 
+    public static <W extends Widget> BiConsumer<W, PoseStack> hoverOrSelectedAnim(float maxScaleIncrease, float growth, float shrink){
+        return hoverAnim(maxScaleIncrease, growth, shrink, (widget) -> widget.isHovering() || widget.isFocused());
+    }
+
     public static <W extends Widget> BiConsumer<W, PoseStack> hoverAnim(float maxScaleIncrease, float growth, float shrink, Predicate<W> isHovering){
         float[] finalFloat = new float[]{0};
         return (widget, stack) -> {

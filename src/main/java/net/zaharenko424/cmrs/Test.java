@@ -40,7 +40,7 @@ public class Test {
         final RoundedRectWidget background = new RoundedRectWidget().setSize(200, 100).setInsideColorFunc(a -> Color.GREEN.getRGB());
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 10).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
-        final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
+        final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
         final ImageWidget image = new ImageWidget().setOrigin(0, 0, 1)
                 .setTex(ResourceLocation.parse("changed_addon:textures/screens/generatorgui.png"),
                 0, 0, 16, 16, 16, 16);
