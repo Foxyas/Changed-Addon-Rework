@@ -397,7 +397,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
         if (source.getMsgId().contains("bullet") || source.getMsgId().contains("gun")) {
             maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0.15f);
+            return super.hurt(source, amount * 0.45f);
         }
 
         if (source.is(DamageTypeTags.IS_FIRE)) {
