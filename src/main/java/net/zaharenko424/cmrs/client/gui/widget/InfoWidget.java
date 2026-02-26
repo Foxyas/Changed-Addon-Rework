@@ -4,58 +4,81 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
-public class InfoWidget {
+import java.awt.*;
 
-    private final Component title;
-    private final Component description;
+public class InfoWidget extends Widget {
 
-    private int x;
-    private int y;
-    private int width;
+    private Component title;
+    private Component description;
 
-    private int lineColor = 0xFFFFFFFF; // Branco padrão
+    private float width;
+    private float height;
 
-    public InfoWidget(Component title, Component description, int x, int y, int width) {
-        this.title = title;
-        this.description = description;
-        this.x = x;
-        this.y = y;
-        this.width = width;
+    private Color lineColor = Color.WHITE; // Branco padrão
+
+    public InfoWidget() {
     }
 
-    public InfoWidget setLineColor(int argb) {
+    /**
+     * No need to rebuild mesh after this call. <p> Origin is in the middle of the button.
+     */
+    public InfoWidget setOrigin(float x, float y, float z) {
+        super.setOrigin(x, y, z);
+        return this;
+    }
+
+    /**
+     * No need to rebuild mesh after this call.
+     */
+    public InfoWidget setScale(float x, float y, float z) {
+        super.setScale(x, y, z);
+        return this;
+    }
+
+    /**
+     * Mesh has to be rebuilt for this to take effect.
+     */
+    public InfoWidget setSize(float width, float height) {
+        this.width = width;
+        this.height = height;
+        return this;
+    }
+
+    public InfoWidget setLineColor(Color argb) {
         this.lineColor = argb;
         return this;
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public InfoWidget setTextInfo(Component title, Component description) {
+        this.title = title;
+        this.description = description;
+        return this;
     }
 
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         var font = Minecraft.getInstance().font;
 
-        int currentY = y;
+        float currentY = this.origin.y;
 
         // 🔹 Render Title
-        guiGraphics.drawString(font, title, x, currentY, 0xFFFFFF, false);
+        float x = this.origin.x;
+        guiGraphics.drawString(font, title.getVisualOrderText(), x, currentY, 0xFFFFFF, false);
         currentY += font.lineHeight + 4;
 
         // 🔹 Render Diagonal Line
-        drawLine(guiGraphics, x, currentY, width, 6, lineColor);
+        drawLine(guiGraphics, x, currentY, width, 6, lineColor.getRGB());
         currentY += 10;
 
         // 🔹 Render Description (quebra automática)
-        guiGraphics.drawWordWrap(font, description, x, currentY, width, 0xCCCCCC);
+        guiGraphics.drawWordWrap(font, description, (int) x, (int) currentY, (int) width, 0xCCCCCC);
     }
 
-    private void drawLine(GuiGraphics guiGraphics, int x, int y, int width, int height, int color) {
+    private void drawLine(GuiGraphics guiGraphics, float x, float y, float width, int height, int color) {
         guiGraphics.fill(
-                x,
-                y,
-                x + width,
-                y + height,
+                (int) x,
+                (int) y,
+                (int) (x + width),
+                (int) (y + height),
                 color
         );
     }

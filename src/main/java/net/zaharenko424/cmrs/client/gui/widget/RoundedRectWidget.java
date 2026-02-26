@@ -96,6 +96,12 @@ public class RoundedRectWidget extends Widget implements SizedWidget {
         return this;
     }
 
+    public void setSizeAndUpdate(float width, float height){
+        this.width = Math.max(1, width);
+        this.height = Math.max(1, height);
+        this.rebuildMesh();
+    }
+
     public void rebuildMesh(){
         ImmutableList.Builder<VertexData> builder = new ImmutableList.Builder<>();
         List<Quad> quads = new ArrayList<>();

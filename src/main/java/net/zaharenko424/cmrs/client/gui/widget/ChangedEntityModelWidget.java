@@ -8,9 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.util.Mth;
-import net.zaharenko424.cmrs.client.geom.Reusable;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class ChangedEntityModelWidget extends ModelRectWidget {
@@ -51,7 +49,7 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
         return this;
     }
 
-    public ChangedEntityModelWidget setChangedEntity(ChangedEntity changedEntity){
+    public ChangedEntityModelWidget setChangedEntity(ChangedEntity changedEntity) {
         this.changedEntity = changedEntity;
         return this;
     }
@@ -89,23 +87,28 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
     }
 
     @Override
+    public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
+        this.holdingClick = this.isMouseOver(pMouseX, pMouseY) && pButton == InputConstants.MOUSE_BUTTON_LEFT;;
+        return super.mouseReleased(pMouseX, pMouseY, pButton);
+    }
+
+    @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-        if(!isInteractable()) {
-            this.holdingClick = false;
+        if (!isInteractable()) {
             return false;
         }
+        this.holdingClick = button == InputConstants.MOUSE_BUTTON_LEFT;
 
-        if(button == InputConstants.MOUSE_BUTTON_LEFT){
+        if (button == InputConstants.MOUSE_BUTTON_LEFT) {
             accumulatedRotation.add((float) -dragY * Mth.DEG_TO_RAD, (float) dragX * Mth.DEG_TO_RAD);
-            this.holdingClick = true;
         }
 
         return true;
     }
 
-    protected void renderModel(GuiGraphics guiGraphics){
+    protected void renderModel(GuiGraphics guiGraphics) {
         super.renderModel(guiGraphics);
-        if(changedEntity == null) return;
+        if (changedEntity == null) return;
         EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
 
         RenderSystem.setShaderLights(

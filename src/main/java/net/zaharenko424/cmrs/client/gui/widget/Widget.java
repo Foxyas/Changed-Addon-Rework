@@ -27,6 +27,14 @@ public abstract class Widget implements Renderable, GuiEventListener, Narratable
         return this;
     }
 
+    public Vector3f getOrigin() {
+        return origin;
+    }
+
+    public Vector3f getScale() {
+        return scale;
+    }
+
     public Widget setScale(float x, float y, float z){
         scale.set(x, y, z);
         return this;
