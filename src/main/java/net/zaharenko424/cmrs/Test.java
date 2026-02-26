@@ -39,7 +39,7 @@ public class Test {
         final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(300, 100);
         final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
-                .setOrigin(0, 0, 10).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
+                .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
         final InfoWidget infoWidget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
         final InfoWidget info2Widget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
@@ -74,7 +74,7 @@ public class Test {
 
             displayBackGround.rebuildMesh();
 
-            button.setOrigin(modelWidget.getOrigin().x, modelWidget.getOrigin().y + 200, modelWidget.getOrigin().z + 100);
+            button.setOrigin(modelWidget.getOrigin().x, modelWidget.getOrigin().y + 70, modelWidget.getOrigin().z + 5);
             List<String> list = List.of("Hi", "Hello", "Hai", "hi");
             button.setOnClick((b, key) -> {
                 Player player = Minecraft.getInstance().player;
