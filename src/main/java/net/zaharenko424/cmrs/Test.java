@@ -35,10 +35,11 @@ public class Test {
 
     static class TestScreen extends Screen implements MouseMoveListener {
 
+        final RoundedButton TEXT = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA)).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final WidgetContainer window = new WidgetContainer().setSize(200, 100);
         final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(300, 100);
         final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
-        final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
+        final RoundedButton button = TEXT
                 .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
         final InfoWidget infoWidget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
@@ -106,8 +107,8 @@ public class Test {
             window.addWidget(info);
 
 
-            window.addWidget(new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
-                    .setOrigin((width / 2f), height / 2f, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f)));
+            TEXT.setOrigin(-100 + (width / 2f), height / 2f, 100);
+            window.addWidget(TEXT);
             window.init();
         }
 
