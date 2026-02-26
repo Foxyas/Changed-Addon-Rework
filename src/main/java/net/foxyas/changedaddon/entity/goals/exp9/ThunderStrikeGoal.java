@@ -191,12 +191,12 @@ public class ThunderStrikeGoal extends Goal {
         var list = lightning.getLevel()
                 .getEntitiesOfClass(
                         LivingEntity.class,
-                        getBoundingBoxFromLightningBolt(lightning).inflate(8),
+                        getBoundingBoxFromLightningBolt(lightning).inflate(4),
                         (target) -> !target.is(lightning) && !target.is(pathfinderMob)
                 );
 
         for (LivingEntity livingEntity : list) {
-            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, 1.45f, 1f);
+            Vec3 pushForce = livingEntity.position().subtract(lightning.position()).normalize().scale(0.75f).multiply(1f, livingEntity.isOnGround() ? 1.45f : 0.05f, 1f);
             if (livingEntity.isBlocking()) continue;
 
             if (livingEntity instanceof ServerPlayer serverPlayer) {

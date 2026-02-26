@@ -6,7 +6,6 @@ import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
-import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
 import net.foxyas.changedaddon.entity.goals.exp9.*;
 import net.foxyas.changedaddon.entity.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.goals.generic.LatexPullEntityGoal;
@@ -411,7 +410,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
         if (source.getMsgId().contains("bullet") || source.getMsgId().contains("gun")) {
             maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0.15f);
+            return super.hurt(source, amount * 0.45f);
         }
 
         if (source.isFire()) {
