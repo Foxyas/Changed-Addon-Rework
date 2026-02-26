@@ -65,15 +65,15 @@ public class InfoWidget extends Widget {
         guiGraphics.drawString(font, title.getVisualOrderText(), x, currentY, 0xFFFFFF, false);
         currentY += font.lineHeight + 4;
 
-        // 🔹 Render Diagonal Line
-        drawLine(guiGraphics, x, currentY, width, 6, lineColor.getRGB());
+        // 🔹 Render Line
+        drawLine(guiGraphics, x, currentY, width, height, lineColor.getRGB());
         currentY += 10;
 
         // 🔹 Render Description (quebra automática)
         guiGraphics.drawWordWrap(font, description, (int) x, (int) currentY, (int) width, 0xCCCCCC);
     }
 
-    private void drawLine(GuiGraphics guiGraphics, float x, float y, float width, int height, int color) {
+    private void drawLine(GuiGraphics guiGraphics, float x, float y, float width, float height, int color) {
         guiGraphics.fill(
                 (int) x,
                 (int) y,

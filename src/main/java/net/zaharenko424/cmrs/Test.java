@@ -41,7 +41,7 @@ public class Test {
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 10).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
-        final InfoWidget infoWidget = new InfoWidget();
+        final InfoWidget infoWidget = new InfoWidget().setSize(200, 50);
 //        final ImageWidget screenBackGroundWidget = new ImageWidget().setOrigin(0, 0, 0)
 //                .setTex(ResourceLocation.parse("changed_addon:textures/screens/generatorgui.png"),
 //                0, 0, 200, 99, 200, 99).setSize(425, 256);
@@ -84,7 +84,7 @@ public class Test {
 
             infoWidget.setTextInfo(Component.literal("Some Cool Title"), Component.literal("Some Cool Description"));
             infoWidget.setLineColor(Color.GREEN);
-            infoWidget.setOrigin(modelWidget.getOrigin().x + 150, modelWidget.getOrigin().y, modelWidget.getOrigin().z + 1);
+            infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y, modelWidget.getOrigin().z + 1);
 
             window.addWidget(displayBackGround);
             window.addWidget(button);
