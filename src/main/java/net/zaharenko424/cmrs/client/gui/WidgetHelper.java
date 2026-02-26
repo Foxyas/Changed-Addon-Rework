@@ -48,10 +48,10 @@ public class WidgetHelper {
         float minV = vOffset / texHeight;
         float maxV = (vOffset + vHeight) / texHeight;
 
-        bufferbuilder.vertex(matrix4f, x, y, z).uv(minU, minV);
-        bufferbuilder.vertex(matrix4f, x, y + height, z).uv(minU, maxV);
-        bufferbuilder.vertex(matrix4f, x + width, y + height, z).uv(maxU, maxV);
-        bufferbuilder.vertex(matrix4f, x + width, y, z).uv(maxU, minV);
+        bufferbuilder.vertex(matrix4f, x, y, z).uv(minU, minV).endVertex();
+        bufferbuilder.vertex(matrix4f, x, y + height, z).uv(minU, maxV).endVertex();
+        bufferbuilder.vertex(matrix4f, x + width, y + height, z).uv(maxU, maxV).endVertex();
+        bufferbuilder.vertex(matrix4f, x + width, y, z).uv(maxU, minV).endVertex();
         BufferUploader.drawWithShader(bufferbuilder.end());
     }
 

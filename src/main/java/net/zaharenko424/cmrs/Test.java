@@ -5,9 +5,9 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,11 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
-import net.zaharenko424.cmrs.client.gui.widget.ChangedEntityModelWidget;
-import net.zaharenko424.cmrs.client.gui.widget.RoundedButton;
-import net.zaharenko424.cmrs.client.gui.widget.RoundedRectWidget;
-import net.zaharenko424.cmrs.client.gui.widget.WidgetContainer;
-import org.jetbrains.annotations.NotNull;
+import net.zaharenko424.cmrs.client.gui.widget.*;
 
 import java.awt.*;
 import java.util.List;
@@ -45,6 +41,9 @@ public class Test {
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 10).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
+        final ImageWidget image = new ImageWidget().setOrigin(0, 0, 1)
+                .setTex(ResourceLocation.parse("changed_addon:textures/screens/generatorgui.png"),
+                0, 0, 16, 16, 16, 16);
 
         protected TestScreen() {
             super(Component.literal("A"));
@@ -82,6 +81,7 @@ public class Test {
             window.addWidget(background);
             window.addWidget(button);
             window.addWidget(modelWidget);
+            window.addWidget(image);
             window.init();
         }
 
