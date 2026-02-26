@@ -1,6 +1,7 @@
 package net.zaharenko424.cmrs.client.gui.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import org.apache.commons.lang3.function.ToBooleanBiFunction;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,7 +37,7 @@ public abstract class ModelRectWidget extends ModelWidget {
     }
 
     @Override
-    protected void renderModel(PoseStack stack) {
-        if(renderTransform != null) renderTransform.accept(this, stack);
+    protected void renderModel(GuiGraphics guiGraphics) {
+        if(renderTransform != null) renderTransform.accept(this, guiGraphics.pose());
     }
 }

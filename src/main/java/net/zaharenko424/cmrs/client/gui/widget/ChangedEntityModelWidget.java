@@ -1,13 +1,13 @@
 package net.zaharenko424.cmrs.client.gui.widget;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 public class ChangedEntityModelWidget extends ModelRectWidget {
 
@@ -72,13 +72,19 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
         return isScrollAble() && super.mouseScrolled(mouseX, mouseY, scrollY);
     }
 
-    protected void renderModel(PoseStack stack){
-        super.renderModel(stack);
+    protected void renderModel(GuiGraphics guiGraphics){
+        super.renderModel(guiGraphics);
         if(changedEntity == null) return;
         EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        entityRenderDispatcher.setRenderShadow(false);
-        entityRenderDispatcher.render(changedEntity, 0, 0, 0, 0, 1, stack, Minecraft.getInstance().renderBuffers().bufferSource(), LightTexture.FULL_BRIGHT);
+
+        RenderSystem.setShaderLights(
+                new Vector3f(0F, 0F, -1F),
+                new Vector3f(0F, 0F, 1F)
+        );
+
         entityRenderDispatcher.setRenderShadow(true);
+        entityRenderDispatcher.render(changedEntity, 0, 0, 0, 0, 1, guiGraphics.pose(), guiGraphics.bufferSource(), LightTexture.FULL_BRIGHT);
+        entityRenderDispatcher.setRenderShadow(false);
 
     }
 }

@@ -91,7 +91,7 @@ public abstract class ModelWidget extends Widget {
         stack.scale(zoom, -zoom, zoom);
 
         Lighting.setupForEntityInInventory();
-        renderModel(guiGraphics.pose());
+        renderModel(guiGraphics);
         Lighting.setupFor3DItems();
 
         //first transform mouse to local than apply inverse of viewport matrix & mul by 16 as model unit is 16 times smaller
@@ -105,7 +105,7 @@ public abstract class ModelWidget extends Widget {
         MatrixStack.pop(stack);
     }
 
-    protected abstract void renderModel(PoseStack stack);
+    protected abstract void renderModel(GuiGraphics graphics);
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {

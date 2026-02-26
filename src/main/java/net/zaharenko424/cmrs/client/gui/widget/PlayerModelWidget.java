@@ -2,6 +2,7 @@ package net.zaharenko424.cmrs.client.gui.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.LightTexture;
 
@@ -48,8 +49,8 @@ public class PlayerModelWidget extends ModelWidget {
         return player;
     }
 
-    protected void renderModel(PoseStack stack){
+    protected void renderModel(GuiGraphics guiGraphics){
         if(player == null) return;
-        Minecraft.getInstance().getEntityRenderDispatcher().render(player, 0, 0, 0, 0, 1, stack, Minecraft.getInstance().renderBuffers().bufferSource(), LightTexture.FULL_BRIGHT);
+        Minecraft.getInstance().getEntityRenderDispatcher().render(player, 0, 0, 0, 0, 1, guiGraphics.pose(), guiGraphics.bufferSource(), LightTexture.FULL_BRIGHT);
     }
 }
