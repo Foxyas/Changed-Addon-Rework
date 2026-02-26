@@ -13,6 +13,8 @@ public class InfoWidget extends Widget {
 
     private float width;
     private float height;
+    private float lineHeight;
+    private float lineWidth;
 
     private Color lineColor = Color.WHITE; // Branco padrão
 
@@ -44,6 +46,15 @@ public class InfoWidget extends Widget {
         return this;
     }
 
+    /**
+     * Mesh has to be rebuilt for this to take effect.
+     */
+    public InfoWidget setLineSize(float width, float height) {
+        this.lineWidth = width;
+        this.lineHeight = height;
+        return this;
+    }
+
     public InfoWidget setLineColor(Color argb) {
         this.lineColor = argb;
         return this;
@@ -66,8 +77,8 @@ public class InfoWidget extends Widget {
         currentY += font.lineHeight + 4;
 
         // 🔹 Render Line
-        drawLine(guiGraphics, x, currentY, width, height, lineColor.getRGB());
-        currentY += 10;
+        drawLine(guiGraphics, x, currentY, lineWidth, lineHeight, lineColor.getRGB());
+        currentY += lineHeight + 5;
 
         // 🔹 Render Description (quebra automática)
         guiGraphics.drawWordWrap(font, description, (int) x, (int) currentY, (int) width, 0xCCCCCC);

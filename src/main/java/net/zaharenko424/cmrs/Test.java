@@ -7,7 +7,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -37,11 +36,13 @@ public class Test {
     static class TestScreen extends Screen implements MouseMoveListener {
 
         final WidgetContainer window = new WidgetContainer().setSize(200, 100);
+        final ScrollableContainer info = new ScrollableContainer();
         final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 10).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
-        final InfoWidget infoWidget = new InfoWidget().setSize(200, 50);
+        final InfoWidget infoWidget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
+        final InfoWidget info2Widget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
 //        final ImageWidget screenBackGroundWidget = new ImageWidget().setOrigin(0, 0, 0)
 //                .setTex(ResourceLocation.parse("changed_addon:textures/screens/generatorgui.png"),
 //                0, 0, 200, 99, 200, 99).setSize(425, 256);
@@ -51,9 +52,10 @@ public class Test {
 
             //screenBackGroundWidget.setInteractable(false);
 
+            info.setActualHeight(100);
 
             modelWidget.setInteractable(true);
-            modelWidget.setOrigin(40 + (width / 2f), height / 2f, 50);
+            modelWidget.setOrigin(-70 + (width / 2f), height / 2f, 50);
             modelWidget.setOnClick((modelRectWidget, integer) -> {
                 if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
                     ChangedEntity changedEntity = changedEntityModelWidget.getChangedEntity();
@@ -72,6 +74,7 @@ public class Test {
 
             displayBackGround.rebuildMesh();
 
+            button.setOrigin(modelWidget.getOrigin().x, modelWidget.getOrigin().y + 60, modelWidget.getOrigin().z + 1);
             List<String> list = List.of("Hi", "Hello", "Hai", "hi");
             button.setOnClick((b, key) -> {
                 Player player = Minecraft.getInstance().player;
@@ -86,10 +89,16 @@ public class Test {
             infoWidget.setLineColor(Color.GREEN);
             infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y, modelWidget.getOrigin().z + 1);
 
+            info2Widget.setTextInfo(Component.literal("Some Cool Title2"), Component.literal("Some Cool Description2"));
+            info2Widget.setLineColor(Color.GREEN);
+            info2Widget.setOrigin(infoWidget.getOrigin().x, infoWidget.getOrigin().y + 10, infoWidget.getOrigin().z);
+
             window.addWidget(displayBackGround);
             window.addWidget(button);
             window.addWidget(modelWidget);
-            window.addWidget(infoWidget);
+            info.addWidget(infoWidget);
+            info.addWidget(info2Widget);
+            window.addWidget(info);
             //window.addWidget(screenBackGroundWidget);
             window.init();
         }
