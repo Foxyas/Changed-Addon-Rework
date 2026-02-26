@@ -36,7 +36,7 @@ public class Test {
     static class TestScreen extends Screen implements MouseMoveListener {
 
         final WidgetContainer window = new WidgetContainer().setSize(200, 100);
-        final ScrollableContainer info = new ScrollableContainer();
+        final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(300, 100);
         final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 10).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
@@ -52,10 +52,10 @@ public class Test {
 
             //screenBackGroundWidget.setInteractable(false);
 
-            info.setActualHeight(100);
+            info.setActualHeight(150);
 
             modelWidget.setInteractable(true);
-            modelWidget.setOrigin(-70 + (width / 2f), height / 2f, 50);
+            modelWidget.setOrigin(-70 + (width / 2f), height / 2f, 20);
             modelWidget.setOnClick((modelRectWidget, integer) -> {
                 if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
                     ChangedEntity changedEntity = changedEntityModelWidget.getChangedEntity();
@@ -74,7 +74,7 @@ public class Test {
 
             displayBackGround.rebuildMesh();
 
-            button.setOrigin(modelWidget.getOrigin().x, modelWidget.getOrigin().y + 60, modelWidget.getOrigin().z + 1);
+            button.setOrigin(modelWidget.getOrigin().x, modelWidget.getOrigin().y + 200, modelWidget.getOrigin().z + 100);
             List<String> list = List.of("Hi", "Hello", "Hai", "hi");
             button.setOnClick((b, key) -> {
                 Player player = Minecraft.getInstance().player;
@@ -87,19 +87,23 @@ public class Test {
 
             infoWidget.setTextInfo(Component.literal("Some Cool Title"), Component.literal("Some Cool Description"));
             infoWidget.setLineColor(Color.GREEN);
-            infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y, modelWidget.getOrigin().z + 1);
+            infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y, modelWidget.getOrigin().z + 10);
 
             info2Widget.setTextInfo(Component.literal("Some Cool Title2"), Component.literal("Some Cool Description2"));
             info2Widget.setLineColor(Color.GREEN);
-            info2Widget.setOrigin(infoWidget.getOrigin().x, infoWidget.getOrigin().y + 10, infoWidget.getOrigin().z);
+            info2Widget.setOrigin(infoWidget.getOrigin().x, infoWidget.getOrigin().y + 40, infoWidget.getOrigin().z);
 
             window.addWidget(displayBackGround);
             window.addWidget(button);
             window.addWidget(modelWidget);
             info.addWidget(infoWidget);
             info.addWidget(info2Widget);
-            window.addWidget(info);
+            info.setOrigin(width / 2f, height / 2f, 20);
+            info.setInteractable(false);
+            info.setClickThrough(true);
+            info.init();
             //window.addWidget(screenBackGroundWidget);
+            window.addWidget(info);
             window.init();
         }
 
@@ -123,6 +127,7 @@ public class Test {
         @Override
         protected void init() {
             window.setOrigin(width / 2f, height / 2f, 0);
+
             if (this.minecraft != null) {
                 modelWidget.setChangedEntity(ChangedEntities.getCachedEntity(this.minecraft.level, ChangedEntities.GAS_WOLF_MALE.get()));
             }

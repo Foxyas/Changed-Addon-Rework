@@ -88,8 +88,13 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
 
     @Override
     public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
-        this.holdingClick = this.isMouseOver(pMouseX, pMouseY) && pButton == InputConstants.MOUSE_BUTTON_LEFT;;
+        this.holdingClick = !(pButton == InputConstants.MOUSE_BUTTON_LEFT);
         return super.mouseReleased(pMouseX, pMouseY, pButton);
+    }
+
+    @Override
+    public void mouseMoved(double mouseX, double mouseY) {
+        super.mouseMoved(mouseX, mouseY);
     }
 
     @Override
