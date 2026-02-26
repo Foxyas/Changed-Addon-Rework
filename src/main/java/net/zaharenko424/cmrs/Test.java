@@ -54,10 +54,8 @@ public class Test {
 
             //screenBackGroundWidget.setInteractable(false);
 
-            info.setActualHeight(150);
-
             modelWidget.setInteractable(true);
-            modelWidget.setOrigin(-70 + (width / 2f), height / 2f, 40);
+            modelWidget.setOrigin(-100 + (width / 2f), height / 2f, 40);
             modelWidget.setOnClick((modelRectWidget, integer) -> {
                 if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
                     ChangedEntity changedEntity = changedEntityModelWidget.getChangedEntity();
@@ -122,6 +120,16 @@ public class Test {
                 float dynamicHeight = Math.min(backGroundHeight + 50, MaxBackGroundHeight);
                 this.displayBackGround.setSizeAndUpdate(backGroundWidth, dynamicHeight);
             }
+
+            for (Widget child : this.window.children()) {
+                if (child == displayBackGround) {
+                    continue;
+                }
+
+                child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+            }
+
+            info.setActualHeight(100 * info.children().size());
         }
 
         @Override
