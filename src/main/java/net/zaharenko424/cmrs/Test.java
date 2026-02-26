@@ -55,7 +55,7 @@ public class Test {
             info.setActualHeight(150);
 
             modelWidget.setInteractable(true);
-            modelWidget.setOrigin(-70 + (width / 2f), height / 2f, 20);
+            modelWidget.setOrigin(-70 + (width / 2f), height / 2f, 40);
             modelWidget.setOnClick((modelRectWidget, integer) -> {
                 if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
                     ChangedEntity changedEntity = changedEntityModelWidget.getChangedEntity();
@@ -98,12 +98,16 @@ public class Test {
             window.addWidget(modelWidget);
             info.addWidget(infoWidget);
             info.addWidget(info2Widget);
-            info.setOrigin(width / 2f, height / 2f, 20);
+            info.setOrigin(width / 2f, height / 2f, 10);
             info.setInteractable(false);
             info.setClickThrough(true);
             info.init();
             //window.addWidget(screenBackGroundWidget);
             window.addWidget(info);
+
+
+            window.addWidget(new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
+                    .setOrigin((width / 2f), height / 2f, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f)));
             window.init();
         }
 
