@@ -35,12 +35,12 @@ public class Test {
 
     static class TestScreen extends Screen implements MouseMoveListener {
 
-        final WidgetContainer window = new WidgetContainer().setSize(200, 100);
+        static final float MaxBackGroundWidth = 425f;
+        static final float MaxBackGroundHeight = 256f;
+        final WidgetContainer window = new WidgetContainer().setSize(MaxBackGroundWidth, MaxBackGroundHeight);
         final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(300, 100);
         final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
-                .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
-        final RoundedButton button2 = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
         final InfoWidget infoWidget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
@@ -87,17 +87,6 @@ public class Test {
             });
             button.rebuildMesh();
 
-
-            button2.setOrigin(70 + (width / 2f), height / 2f, 25);
-            button2.setOnClick((b, key) -> {
-                Player player = Minecraft.getInstance().player;
-                if (player == null) return false;
-
-                player.displayClientMessage(Component.literal(list.get(player.getRandom().nextInt(4))), true);
-                return true;
-            });
-            button2.rebuildMesh();
-
             infoWidget.setTextInfo(Component.literal("Some Cool Title"), Component.literal("Some Cool Description"));
             infoWidget.setLineColor(Color.GREEN);
             infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y, modelWidget.getOrigin().z + 10);
@@ -107,9 +96,8 @@ public class Test {
             info2Widget.setOrigin(infoWidget.getOrigin().x, infoWidget.getOrigin().y + 40, infoWidget.getOrigin().z);
 
             window.addWidget(displayBackGround);
-            window.addWidget(modelWidget);
             window.addWidget(button);
-            window.addWidget(button2);
+            window.addWidget(modelWidget);
             info.addWidget(infoWidget);
             info.addWidget(info2Widget);
             info.setOrigin(width / 2f, height / 2f, 10);
@@ -121,8 +109,6 @@ public class Test {
             window.init();
         }
 
-        static final float MaxBackGroundWidth = 425f;
-        static final float MaxBackGroundHeight = 256f;
 
         @Override
         public void tick() {
