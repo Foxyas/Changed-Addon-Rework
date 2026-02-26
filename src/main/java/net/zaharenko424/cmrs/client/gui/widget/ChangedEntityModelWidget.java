@@ -5,6 +5,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
@@ -74,6 +75,10 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
     protected void renderModel(PoseStack stack){
         super.renderModel(stack);
         if(changedEntity == null) return;
-        Minecraft.getInstance().getEntityRenderDispatcher().render(changedEntity, 0, 0, 0, 0, 1, stack, Minecraft.getInstance().renderBuffers().bufferSource(), LightTexture.FULL_BRIGHT);
+        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        entityRenderDispatcher.setRenderShadow(false);
+        entityRenderDispatcher.render(changedEntity, 0, 0, 0, 0, 1, stack, Minecraft.getInstance().renderBuffers().bufferSource(), LightTexture.FULL_BRIGHT);
+        entityRenderDispatcher.setRenderShadow(true);
+
     }
 }
