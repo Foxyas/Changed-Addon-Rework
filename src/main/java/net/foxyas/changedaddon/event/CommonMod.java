@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.event;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.data.ChangedAddonBuiltinRepositorySource;
 import net.foxyas.changedaddon.menu.CustomMerchantMenu;
 import net.foxyas.changedaddon.network.ChangedAddonPackets;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -12,8 +13,10 @@ import net.foxyas.changedaddon.network.packet.simple.UpdateTimedKeypadTimerPacke
 import net.foxyas.changedaddon.procedure.blocksHandle.BoneMealExpansion;
 import net.foxyas.changedaddon.recipe.brewing.TransfurSicknessRecipeBrewingRecipe;
 import net.foxyas.changedaddon.recipe.brewing.UntransfurPotionRecipeBrewingRecipe;
+import net.minecraft.server.packs.PackType;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -41,6 +44,20 @@ public class CommonMod {
             BrewingRecipeRegistry.addRecipe(new UntransfurPotionRecipeBrewingRecipe());
             BrewingRecipeRegistry.addRecipe(new TransfurSicknessRecipeBrewingRecipe());
         });
+    }
+
+    @SubscribeEvent
+    public static void addAddonPackFinders(AddPackFindersEvent packFindersEvent) {
+        PackType packType = packFindersEvent.getPackType();
+        try {
+            switch (packType) {
+                case CLIENT_RESOURCES:
+                case SERVER_DATA:
+                    packFindersEvent.addRepositorySource(new ChangedAddonBuiltinRepositorySource(packType, "changed"));
+            }
+        } catch (Exception ex) {
+            ChangedAddonMod.LOGGER.error(ex);
+        }
     }
 
     private static void addPackets() {
