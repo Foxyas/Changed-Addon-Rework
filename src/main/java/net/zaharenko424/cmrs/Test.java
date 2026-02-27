@@ -102,6 +102,7 @@ public class Test {
             info.setInteractable(false);
             info.setClickThrough(true);
             info.init();
+            info.getScrollBar().setRoundingRadius(3);
             //window.addWidget(screenBackGroundWidget);
             window.addWidget(info);
             window.init();
