@@ -11,8 +11,11 @@ import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.init.ChangedAnimationEvents;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,7 +32,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -228,7 +230,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     public void executeDodgeAnimations(LevelAccessor levelAccessor, LivingEntity dodger) {
         ChangedSounds.broadcastSound(dodger, ChangedSounds.BOW2, 2.5f, 1);
-        if (this.getDodgeType().shouldPlayDodgeAnimation()) {
+        if (this.getDodgeType().shouldPlayDodgeAnimation(dodger)) {
             int randomValue = levelAccessor.getRandom().nextInt(6);
             switch (randomValue) {
                 case 0 ->
@@ -548,7 +550,12 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         public static final DodgeType TELEPORT = new DodgeType();
         public static final DodgeType WEAVE = new DodgeType() {
             @Override
-            public boolean shouldPlayDodgeAnimation() {
+            public boolean shouldPlayDodgeAnimation(LivingEntity dodger) {
+                if (EntityUtil.maybeGetOverlaying(dodger) instanceof ChangedEntity changedEntity) {
+                    return changedEntity.getEntityShape() != EntityShape.FERAL;
+                } else if (dodger instanceof ChangedEntity changedEntity) {
+                    return changedEntity.getEntityShape() != EntityShape.FERAL;
+                }
                 return true;
             }
 
@@ -578,7 +585,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             return false;
         }
 
-        public boolean shouldPlayDodgeAnimation() {
+        public boolean shouldPlayDodgeAnimation(LivingEntity dodger) {
             return false;
         }
     }

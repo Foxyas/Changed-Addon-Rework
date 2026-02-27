@@ -195,7 +195,7 @@ public class EntityModelFadeParticle extends Particle {
                 }
             }
         }
-        modelParts.forEach(this::resetPose);
+        //modelParts.forEach(this::resetPose);
     }
 
     protected void renderHumanoid(float partialTick, LivingEntity livingEntity, MultiBufferSource.BufferSource bufferSource, PoseStack poseStack, Color fadeColor) {
