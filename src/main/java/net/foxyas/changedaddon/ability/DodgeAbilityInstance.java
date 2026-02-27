@@ -10,8 +10,11 @@ import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.init.ChangedAnimationEvents;
 import net.ltxprogrammer.changed.init.ChangedSounds;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -255,7 +258,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
 
     public void executeDodgeAnimations(LevelAccessor levelAccessor, LivingEntity dodger) {
         ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
-        if (this.getDodgeType().shouldPlayDodgeAnimation()) {
+        if (this.getDodgeType().shouldPlayDodgeAnimation(dodger)) {
             int randomValue = levelAccessor.getRandom().nextInt(6);
             switch (randomValue) {
                 case 0 ->
@@ -549,7 +552,12 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         public static final DodgeType TELEPORT = new DodgeType();
         public static final DodgeType WEAVE = new DodgeType() {
             @Override
-            public boolean shouldPlayDodgeAnimation() {
+            public boolean shouldPlayDodgeAnimation(LivingEntity dodger) {
+                if (EntityUtil.maybeGetOverlaying(dodger) instanceof ChangedEntity changedEntity) {
+                    return changedEntity.getEntityShape() != EntityShape.FERAL;
+                } else if (dodger instanceof ChangedEntity changedEntity) {
+                    return changedEntity.getEntityShape() != EntityShape.FERAL;
+                }
                 return true;
             }
 
@@ -579,7 +587,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
             return false;
         }
 
-        public boolean shouldPlayDodgeAnimation() {
+        public boolean shouldPlayDodgeAnimation(LivingEntity dodger) {
             return false;
         }
     }

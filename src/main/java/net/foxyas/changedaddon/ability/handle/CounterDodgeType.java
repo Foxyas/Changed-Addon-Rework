@@ -49,7 +49,7 @@ public class CounterDodgeType extends DodgeType {
     }
 
     @Override
-    public boolean shouldPlayDodgeAnimation() {
+    public boolean shouldPlayDodgeAnimation(LivingEntity dodger) {
         return true;
     }
 
