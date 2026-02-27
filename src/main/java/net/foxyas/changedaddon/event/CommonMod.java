@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.event;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.data.ChangedAddonBuiltinRepositorySource;
+import net.foxyas.changedaddon.data.BuiltinRepositorySource;
 import net.foxyas.changedaddon.menu.CustomMerchantMenu;
 import net.foxyas.changedaddon.network.ChangedAddonPackets;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -53,7 +53,7 @@ public class CommonMod {
             switch (packType) {
                 case CLIENT_RESOURCES:
                 case SERVER_DATA:
-                    packFindersEvent.addRepositorySource(new ChangedAddonBuiltinRepositorySource(packType, "changed"));
+                    packFindersEvent.addRepositorySource(new BuiltinRepositorySource(packType, ChangedAddonMod.MODID));
             }
         } catch (Exception ex) {
             ChangedAddonMod.LOGGER.error(ex);

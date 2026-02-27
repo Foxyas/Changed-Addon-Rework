@@ -156,6 +156,10 @@ public interface IGrabberEntity {
         if (grabAbilityInstance == null) return false;
         if (living instanceof IAlphaAbleEntity iAlphaAbleEntity && iAlphaAbleEntity.isAlpha()) return true;
 
+        if (living.getType().is(ChangedAddonTags.EntityTypes.ALWAYS_CAUSE_GRAB_DAMAGE)) {
+            return true;
+        }
+
         return living.level.getNearbyEntities(
                 LivingEntity.class,
                 TargetingConditions.forNonCombat()

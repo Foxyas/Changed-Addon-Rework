@@ -73,6 +73,7 @@ public final class ChangedAddonTags {
         public static final TagKey<EntityType<?>> HAS_CLAWS = key("has_claws");
         public static final TagKey<EntityType<?>> CAN_GRAB = key("can_grab");
         public static final TagKey<EntityType<?>> IGNORE_GRABBED_TARGETS = key("ignore_grabber_targets");
+        public static final TagKey<EntityType<?>> ALWAYS_CAUSE_GRAB_DAMAGE = key("always_cause_grab_damage");
         public static final TagKey<EntityType<?>> CANT_SPAWN_AS_ALPHA_ENTITY = key("cant_spawn_as_alpha_entity");
         public static final TagKey<EntityType<?>> CANT_USE_GRAB = key("cant_use_grab");
         public static final TagKey<EntityType<?>> CAN_ROAR = key("can_roar");

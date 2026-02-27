@@ -13,7 +13,6 @@ import java.util.function.Supplier;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import net.ltxprogrammer.changed.data.BuiltinPackResources;
 import net.ltxprogrammer.changed.data.PackExtender;
 import net.minecraft.Util;
 import net.minecraft.server.packs.FolderPackResources;
@@ -26,11 +25,11 @@ import net.minecraft.server.packs.repository.Pack.Position;
 import net.minecraftforge.fml.loading.FMLLoader;
 import org.jetbrains.annotations.NotNull;
 
-public class ChangedAddonBuiltinRepositorySource implements RepositorySource {
+public class BuiltinRepositorySource implements RepositorySource {
     private final String modId;
     private final Path modFile;
     private final boolean isJar;
-    private final Set<String> packIds = new HashSet();
+    private final Set<String> packIds = new HashSet<>();
     private final String packsFolder;
     private static final EnumMap<PackType, String> NAMED_FOLDERS = Util.make(new EnumMap<>(PackType.class), (map) -> {
         map.put(PackType.CLIENT_RESOURCES, "resourcepacks");
@@ -38,7 +37,7 @@ public class ChangedAddonBuiltinRepositorySource implements RepositorySource {
     });
     private static final String MCMETA = "pack.mcmeta";
 
-    public ChangedAddonBuiltinRepositorySource(PackType type, String modId) throws IOException, NullPointerException {
+    public BuiltinRepositorySource(PackType type, String modId) throws IOException, NullPointerException {
         this.modId = modId;
         this.modFile = FMLLoader.getLoadingModList().getModFileById(modId).getFile().getFilePath();
         this.packsFolder = NAMED_FOLDERS.getOrDefault(type, type.getDirectory());
