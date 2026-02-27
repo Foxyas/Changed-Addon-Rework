@@ -8,15 +8,15 @@ import java.awt.*;
 
 public class InfoWidget extends Widget {
 
-    private Component title;
-    private Component description;
+    protected Component title;
+    protected Component description;
 
-    private float width;
-    private float height;
-    private float lineHeight;
-    private float lineWidth;
+    protected float width;
+    protected float height;
+    protected float lineHeight;
+    protected float lineWidth;
 
-    private Color lineColor = Color.WHITE; // Branco padrão
+    protected Color lineColor = Color.WHITE; // Branco padrão
 
     public InfoWidget() {
     }
@@ -84,7 +84,7 @@ public class InfoWidget extends Widget {
         guiGraphics.drawWordWrap(font, description, (int) x, (int) currentY, (int) width, 0xCCCCCC);
     }
 
-    private void drawLine(GuiGraphics guiGraphics, float x, float y, float width, float height, int color) {
+    protected void drawLine(GuiGraphics guiGraphics, float x, float y, float width, float height, int color) {
         guiGraphics.fill(
                 (int) x,
                 (int) y,

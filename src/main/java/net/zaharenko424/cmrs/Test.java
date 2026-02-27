@@ -43,8 +43,8 @@ public class Test {
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
         final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
-        final InfoWidget infoWidget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
-        final InfoWidget info2Widget = new InfoWidget().setSize(200, 50).setLineSize(200, 4);
+        final InfoWidget infoWidget = new InfoWidget().setSize(200, 100).setLineSize(200, 4);
+        final InfoWidget info2Widget = new InfoWidget().setSize(200, 100).setLineSize(200, 4);
 //        final ImageWidget screenBackGroundWidget = new ImageWidget().setOrigin(0, 0, 0)
 //                .setTex(ResourceLocation.parse("changed_addon:textures/screens/generatorgui.png"),
 //                0, 0, 200, 99, 200, 99).setSize(425, 256);
@@ -87,7 +87,7 @@ public class Test {
 
             infoWidget.setTextInfo(Component.literal("Some Cool Title"), Component.literal("Some Cool Description"));
             infoWidget.setLineColor(Color.GREEN);
-            infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y, modelWidget.getOrigin().z + 10);
+            infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y - 80, modelWidget.getOrigin().z + 10);
 
             info2Widget.setTextInfo(Component.literal("Some Cool Title2"), Component.literal("Some Cool Description2"));
             info2Widget.setLineColor(Color.GREEN);
@@ -96,6 +96,7 @@ public class Test {
             window.addWidget(displayBackGround);
             window.addWidget(button);
             window.addWidget(modelWidget);
+
             info.addWidget(infoWidget);
             info.addWidget(info2Widget);
             info.setOrigin(width / 2f, height / 2f, 10);
@@ -103,9 +104,23 @@ public class Test {
             info.setClickThrough(true);
             info.init();
             info.getScrollBar().setRoundingRadius(3);
+            info.getScrollBar().rebuildMesh();
+
             //window.addWidget(screenBackGroundWidget);
             window.addWidget(info);
             window.init();
+
+
+            float backGroundWidth = this.displayBackGround.getWidth();
+            float backGroundHeight = this.displayBackGround.getHeight();
+
+            for (Widget child : this.window.children()) {
+                if (child == displayBackGround) {
+                    continue;
+                }
+
+                child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+            }
         }
 
 
@@ -130,7 +145,7 @@ public class Test {
                 child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
             }
 
-            info.setActualHeight(100 * info.children().size());
+            info.setActualHeight(60f * info.children().size());
         }
 
         @Override
