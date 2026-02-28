@@ -382,10 +382,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         if (source.getMsgId().equals("witherSkull"))
             return false;
         if (source == DamageSource.IN_WALL) {
-            Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this))));
-            Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
-                    ? entitiesOfClass.toList().get(0)
-                    : this.getTarget());
+            List<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this)))).toList();
+            if (!entitiesOfClass.isEmpty()) {
+                Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
+                        ? entitiesOfClass.get(0)
+                        : this.getTarget());
+            }
             return false;
         }
 
@@ -793,7 +795,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             GearTier tier = getGearTier(target);
 
             switch (tier) {
-                case LOW -> event.setAmount(event.getAmount() * 0.6F);
+                case LOW -> event.setAmount(event.getAmount() * 0.75F);
                 case MID -> event.setAmount(event.getAmount());
                 case HIGH -> event.setAmount(event.getAmount() * 1.25F);
             }

@@ -6,7 +6,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 
@@ -45,18 +44,18 @@ public interface ICrawlAndSwimAbleEntity {
 
 
     default void crawlingSystem(ChangedEntity livingEntity, LivingEntity target) {
-        crawlingSystem(livingEntity, target, 0.015f);
+        crawlingSystem(livingEntity, target, (float) livingEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
     }
 
     default void crawlingSystem() {
         if (this instanceof ChangedEntity changedEntity) {
-            crawlingSystem(changedEntity, changedEntity.getTarget(), 0.015f);
+            crawlingSystem(changedEntity, changedEntity.getTarget(), (float) changedEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
         }
     }
 
     default void crawlingSystem(LivingEntity target) {
         if (this instanceof ChangedEntity changedEntity) {
-            crawlingSystem(changedEntity, target, 0.015f);
+            crawlingSystem(changedEntity, target, (float) changedEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
         }
     }
 
@@ -139,7 +138,7 @@ public interface ICrawlAndSwimAbleEntity {
             livingEntity.setSpeed(swimSpeed);
             livingEntity.setDeltaMovement(movementDir.scale(appliedSpeed));
 
-            float yaw = (float)(Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
+            float yaw = (float) (Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
             livingEntity.setYRot(Mth.rotLerp(0.2F, livingEntity.getYRot(), yaw));
             livingEntity.yBodyRot = livingEntity.getYRot();
         }
