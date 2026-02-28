@@ -43,12 +43,12 @@ public interface ICrawlAndSwimAbleEntity {
     }
 
     default void crawlingSystem(ChangedEntity livingEntity, LivingEntity target) {
-        crawlingSystem(livingEntity, target, 0.05f);
+        crawlingSystem(livingEntity, target, (float) livingEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
     }
 
     default void crawlingSystem(LivingEntity target) {
         if (this instanceof ChangedEntity changedEntity) {
-            crawlingSystem(changedEntity, target, 0.05f);
+            crawlingSystem(changedEntity, target, (float) changedEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
         }
     }
 
