@@ -54,6 +54,7 @@
     "mods.changed.ChangedMixin",
     "mods.changed.CommandTransfurMixin",
     "mods.changed.EmoteParticleOptionMixin",
+    "mods.changed.FacilityMixin",
     "mods.changed.FacilitySinglePieceAccessor",
     "mods.changed.FacilitySinglePieceInstanceAccessor",
     "mods.changed.HumanoidAnimatorMixin",

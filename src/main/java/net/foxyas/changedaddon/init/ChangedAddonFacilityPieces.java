@@ -5,12 +5,23 @@ import net.ltxprogrammer.changed.world.features.structures.facility.FacilityCorr
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityPieceCollectionBuilder;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilityRoomPiece;
 import net.ltxprogrammer.changed.world.features.structures.facility.GatherFacilityPiecesEvent;
+import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ChangedAddonFacilityPieces {
+
+    public static final ResourceLocation EXP_10_ROOM = ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp10room");
+    public static final ResourceLocation EXP_009_ROOM = ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp009room");
+    public static final List<ResourceLocation> BOSSES_ROOMS = Util.make(new ArrayList<>(), (list) -> {
+        list.add(EXP_009_ROOM);
+        list.add(EXP_10_ROOM);
+    });
 
     @SubscribeEvent
     public static void RegisterAddonFacilityPieces(GatherFacilityPiecesEvent event) {
@@ -34,10 +45,10 @@ public class ChangedAddonFacilityPieces {
 
     public static void registerAddonRooms(FacilityPieceCollectionBuilder builder) {
         builder.register(FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
-                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp009room"),
+                        new FacilityRoomPiece(EXP_009_ROOM,
                                 null))
                 .register(FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
-                        new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp10room"),
+                        new FacilityRoomPiece(EXP_10_ROOM,
                                 ResourceLocation.parse("changed_addon:chests/experiment_10_loot_op")))
                 .register(FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/luminar_crystal_room"),
