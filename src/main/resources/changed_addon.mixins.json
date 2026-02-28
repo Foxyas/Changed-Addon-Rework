@@ -59,6 +59,7 @@
     "items.LatexSyringeMixin",
     "level.storage.loot.LootTableAccessor",
     "mods.changed.ChangedMixin",
+    "mods.changed.FacilityMixin",
     "mods.changed.FacilitySinglePieceAccessor",
     "mods.changed.FacilitySinglePieceInstanceAccessor",
     "mods.changed.LatexTypeMixin",
