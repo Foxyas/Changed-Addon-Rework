@@ -1,6 +1,7 @@
 package net.zaharenko424.cmrs;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import net.foxyas.changedaddon.process.DEBUG;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.ChatFormatting;
@@ -87,7 +88,7 @@ public class Test {
 
             infoWidget.setTextInfo(Component.literal("Some Cool Title"), Component.literal("Some Cool Description"));
             infoWidget.setLineColor(Color.GREEN);
-            infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y - 80, modelWidget.getOrigin().z + 10);
+            infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y - DEBUG.HeadPosY, modelWidget.getOrigin().z + 10);
 
             info2Widget.setTextInfo(Component.literal("Some Cool Title2"), Component.literal("Some Cool Description2"));
             info2Widget.setLineColor(Color.GREEN);
