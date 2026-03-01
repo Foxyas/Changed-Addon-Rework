@@ -21,7 +21,7 @@ import net.zaharenko424.cmrs.client.gui.widget.*;
 import java.awt.*;
 import java.util.List;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT)
+//@Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class Test {
 
     @SubscribeEvent
