@@ -96,6 +96,10 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
         if (carriedEntity.hurtMarked) {
             dropPassenger(e);
         }
+
+        if (carriedEntity instanceof LivingEntity living && GrabEntityAbility.getGrabber(living) != null) {
+            dropPassenger(e);
+        }
     }
 
     private void dropPassenger(LivingEntity e) {
