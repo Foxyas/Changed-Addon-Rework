@@ -51,7 +51,7 @@ public interface IBestiaryEntityData {
             ChatFormatting color = diff > 0 ? ChatFormatting.GREEN : ChatFormatting.RED;
 
             Component line = Component.literal(
-                    "If transformed: ")
+                    "")
                     .append(Component.literal(valueString).withStyle(color).append(" ").append(Component.translatable(attribute.getDescriptionId()))
             );
 
