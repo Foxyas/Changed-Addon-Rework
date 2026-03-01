@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.client.gui;
 
+import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.process.DEBUG;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedEntities;
@@ -7,6 +8,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
@@ -21,7 +23,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
     static final float MaxBackGroundWidth = 425f;
     static final float MaxBackGroundHeight = 256f;
     final WidgetContainer window = new WidgetContainer().setSize(MaxBackGroundWidth, MaxBackGroundHeight);
-    final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(425, 100);
+    final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(425, 200);
     final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
     final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
             .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
@@ -58,7 +60,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
         displayBackGround.rebuildMesh();
 
         button.setOrigin(modelWidget.getOrigin().x, modelWidget.getOrigin().y + 70, modelWidget.getOrigin().z + 5);
-        java.util.List<String> list = List.of("Hi", "Hello", "Hai", "hi");
+        List<String> list = List.of("Hi", "Hello", "Hai", "hi");
         button.setOnClick((b, key) -> {
             Player player = Minecraft.getInstance().player;
             if (player == null) return false;
@@ -68,11 +70,11 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
         });
         button.rebuildMesh();
 
-        infoWidget.setTextInfo(Component.literal("Some Cool Title"), Component.literal("Some Cool Description"));
-        infoWidget.setLineColor(Color.GREEN);
+        infoWidget.setTextInfo(Component.literal("Info/Lore"), Component.literal("N/A"));
+        infoWidget.setLineColor(Color.YELLOW);
         infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y - DEBUG.HeadPosY, modelWidget.getOrigin().z + 10);
 
-        info2Widget.setTextInfo(Component.literal("Some Cool Title2"), Component.literal("Some Cool Description2"));
+        info2Widget.setTextInfo(Component.literal("Attributes"), Component.literal("???"));
         info2Widget.setLineColor(Color.GREEN);
         info2Widget.setOrigin(infoWidget.getOrigin().x, infoWidget.getOrigin().y + 40, infoWidget.getOrigin().z);
 
@@ -126,6 +128,23 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
             }
 
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+        }
+
+        if (modelWidget.getChangedEntity() != null) {
+
+            if (modelWidget.getChangedEntity() instanceof IBestiaryEntityData iBestiaryEntityData) {
+                infoWidget.setDescription(iBestiaryEntityData.getLore());
+            }
+
+            List<Component> attributePreview = IBestiaryEntityData.getAttributePreview(modelWidget.getChangedEntity());
+            if (!attributePreview.isEmpty()) {
+                MutableComponent mutableComponent = Component.empty();
+                attributePreview.forEach((component) -> {
+                    mutableComponent.append("\n").append(component);
+                    info.addHeight(40);
+                });
+                info2Widget.setDescription(mutableComponent);
+            }
         }
 
         info.setActualHeight(60f * info.children().size());

@@ -31,6 +31,14 @@ public class ScrollableContainer extends WidgetContainer {
         return actualHeight > getHeight();
     }
 
+    public float getActualHeight() {
+        return actualHeight;
+    }
+
+    public void addHeight(float toAdd) {
+        this.actualHeight += toAdd;
+    }
+
     @Override
     public void init() {
         super.init();

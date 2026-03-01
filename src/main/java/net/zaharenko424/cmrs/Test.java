@@ -23,7 +23,7 @@ import net.zaharenko424.cmrs.client.gui.widget.*;
 import java.awt.*;
 import java.util.List;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
+//@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
 public class Test {
 
     @SubscribeEvent
@@ -41,7 +41,7 @@ public class Test {
         static final float MaxBackGroundWidth = 425f;
         static final float MaxBackGroundHeight = 256f;
         final WidgetContainer window = new WidgetContainer().setSize(MaxBackGroundWidth, MaxBackGroundHeight);
-        final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(425, 100);
+        final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(425, 200);
         final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
         final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
                 .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
@@ -156,8 +156,11 @@ public class Test {
 
                 List<Component> attributePreview = IBestiaryEntityData.getAttributePreview(modelWidget.getChangedEntity());
                 if (!attributePreview.isEmpty()) {
-                    MutableComponent mutableComponent = Component.empty().append("\n");
-                    attributePreview.forEach((component) -> mutableComponent.append("\n").append(component));
+                    MutableComponent mutableComponent = Component.empty();
+                    attributePreview.forEach((component) -> {
+                        mutableComponent.append("\n").append(component);
+                        info.addHeight(40);
+                    });
                     info2Widget.setDescription(mutableComponent);
                 }
             }
