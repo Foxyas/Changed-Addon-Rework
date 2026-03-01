@@ -38,6 +38,9 @@ public abstract class LatexElytraLayerMixin<T extends ChangedEntity, M extends A
         super(renderer);
     }
 
+    // Copied from ElytraLayerMixin
+    // https://github.com/Vivecraft/VivecraftMod/blob/Multiloader-1.20/common/src/main/java/org/vivecraft/mixin/client/renderer/entity/layers/ElytraLayerMixin.java
+
     @WrapOperation(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V"))
     private void vivecraft$elytraPosition(
             PoseStack instance, double pX, double pY, double pZ, Operation<Void> original,
