@@ -104,6 +104,8 @@
     "mods.changed.AbstractRadialScreenMixin",
     "mods.changed.AccessoryLayerMixin",
     "mods.changed.ChangedClientMixin",
-    "mods.firstPerson.LogicHandleMixin"
+    "mods.firstPerson.LogicHandleMixin",
+    "mods.vivecraft.AdvancedHumanoidModelMixin",
+    "mods.vivecraft.AdvancedHumanoidRendererMixin"
   ]
 }

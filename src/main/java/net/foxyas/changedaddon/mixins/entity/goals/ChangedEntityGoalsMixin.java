@@ -39,7 +39,7 @@ public class ChangedEntityGoalsMixin {
 
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;addGoal(ILnet/minecraft/world/entity/ai/goal/Goal;)V", ordinal = 15), method = "registerGoals", remap = true)
     private void floatGoalHook(GoalSelector instance, int pPriority, Goal pGoal, Operation<Void> original) {
-        ChangedEntity self = getSelf();
+        ChangedEntity self = ChangedAddonChangedEntityGoalsMixin$getSelf();
         if (self instanceof ICrawlAndSwimAbleEntity) {
             var FloatGoal = new FloatGoal(self) {
                 @Override
@@ -79,7 +79,7 @@ public class ChangedEntityGoalsMixin {
         original.call(instance, pPriority, pGoal);
     }
 
-    private ChangedEntity getSelf() {
+    private ChangedEntity ChangedAddonChangedEntityGoalsMixin$getSelf() {
         var self = (ChangedEntity) (Object) this;
         return self;
     }

@@ -131,7 +131,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
     @ModifyReturnValue(method = "getDripRate", at = @At("RETURN"))
     private float modify(float original, @Local(argsOnly = true) float damage) {
-        LivingEntity selfOrPlayer = getSelf().maybeGetUnderlying();
+        LivingEntity selfOrPlayer = ChangedAddonChangedEntityMixin$getSelf().maybeGetUnderlying();
         if (selfOrPlayer.hasEffect(ChangedAddonMobEffects.PACIFIED.get())) {
             return 0f; // Never going to drip.
         }
@@ -160,13 +160,14 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
 
     @Inject(at = @At("TAIL"), method = "registerGoals", remap = true, cancellable = true)
     private void goalsHook(CallbackInfo ci) {
-        var self = getSelf();
+        var self = ChangedAddonChangedEntityMixin$getSelf();
         if (!(self instanceof WolfyEntity)) {
             this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, ChangedEntity.class, true, this::targetSelectorTest));
         }
     }
 
-    private ChangedEntity getSelf() {
+    @Unique
+    private ChangedEntity ChangedAddonChangedEntityMixin$getSelf() {
         var self = (ChangedEntity) (Object) this;
         return self;
     }
@@ -232,7 +233,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
             float amount,
             @Nullable List<TransfurVariant<?>> possibleMobFusions
     ) {
-        TransfurVariantEvents.OverrideSourceTransfurVariantEvent event = new TransfurVariantEvents.OverrideSourceTransfurVariantEvent(TransfurType.ABSORPTION, original, getSelf(), target, source, amount, possibleMobFusions);
+        TransfurVariantEvents.OverrideSourceTransfurVariantEvent event = new TransfurVariantEvents.OverrideSourceTransfurVariantEvent(TransfurType.ABSORPTION, original, ChangedAddonChangedEntityMixin$getSelf(), target, source, amount, possibleMobFusions);
         if (ChangedAddonMod.postEvent(event)) {
             return original;
         } else {
@@ -261,7 +262,7 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
         TransfurContext context = this.getReplicateContext();
         IAbstractChangedEntity source = context.source;
 
-        TransfurVariantEvents.OverrideSourceTransfurVariantEvent event = new TransfurVariantEvents.OverrideSourceTransfurVariantEvent(TransfurType.REPLICATION, original, getSelf(), target, source, amount, null);
+        TransfurVariantEvents.OverrideSourceTransfurVariantEvent event = new TransfurVariantEvents.OverrideSourceTransfurVariantEvent(TransfurType.REPLICATION, original, ChangedAddonChangedEntityMixin$getSelf(), target, source, amount, null);
         if (ChangedAddonMod.postEvent(event)) {
             return original;
         } else {
