@@ -106,6 +106,7 @@
     "mods.changed.ChangedClientMixin",
     "mods.firstPerson.LogicHandleMixin",
     "mods.vivecraft.AdvancedHumanoidModelMixin",
-    "mods.vivecraft.AdvancedHumanoidRendererMixin"
+    "mods.vivecraft.AdvancedHumanoidRendererMixin",
+    "mods.vivecraft.LatexElytraLayerMixin"
   ]
 }
