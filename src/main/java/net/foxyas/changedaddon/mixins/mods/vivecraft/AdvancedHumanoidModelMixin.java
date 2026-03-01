@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +28,7 @@ import org.vivecraft.client.render.VRPlayerRenderer;
 public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extends PlayerModel<T> {
 
 
-    @Shadow public abstract ModelPart getArm(HumanoidArm humanoidArm);
+    @Shadow public abstract @NotNull ModelPart getArm(@NotNull HumanoidArm humanoidArm);
 
     @Shadow public abstract ModelPart getLeg(HumanoidArm humanoidArm);
 
@@ -44,10 +45,21 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                     Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(clientPlayer);
 
             if (renderer instanceof VRPlayerRenderer vrPlayerRenderer) {
+
                 PlayerModel<AbstractClientPlayer> playerModel = vrPlayerRenderer.getModel();
+
                 if (playerModel instanceof VRPlayerModel<AbstractClientPlayer>) {
-                    playerModel.setupAnim(clientPlayer, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                    // ====== Mapear partes ======
+
+                    // Force the VR model to update its animation state
+                    // (includes HMD, controller tracking, body yaw logic, etc.)
+                    playerModel.setupAnim(clientPlayer,
+                            limbSwing,
+                            limbSwingAmount,
+                            ageInTicks,
+                            netHeadYaw,
+                            headPitch);
+
+                    // ===== Map self model parts =====
                     ModelPart selfHead = self.getHead();
                     ModelPart selfBody = self.getTorso();
                     ModelPart selfLeftArm = self.getArm(HumanoidArm.LEFT);
@@ -55,7 +67,7 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                     ModelPart selfLeftLeg = self.getLeg(HumanoidArm.LEFT);
                     ModelPart selfRightLeg = self.getLeg(HumanoidArm.RIGHT);
 
-                    // ====== Copiar Pose ======
+                    // ===== Copy final VR pose into transformed model =====
                     ChangedAddon$copyPart(playerModel.head, selfHead);
                     ChangedAddon$copyPart(playerModel.body, selfBody);
                     ChangedAddon$copyPart(playerModel.leftArm, selfLeftArm);
@@ -69,21 +81,35 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
         }
     }
 
+    /**
+     * Copies rotational, positional, scale, and visibility data
+     * from one ModelPart to another.
+     *
+     * We intentionally avoid using loadPose(), because it resets
+     * additional internal state that may conflict with VR tracking.
+     *
+     * Direct field copying ensures we preserve Vivecraft's final
+     * computed pose (including controller offsets and head tracking).
+     */
     @Unique
     private static void ChangedAddon$copyPart(ModelPart from, ModelPart to) {
-        // Em vez de loadPose (que reseta tudo), tente copiar os ângulos seletivamente
+
+        // Copy rotation (pitch, yaw, roll)
         to.xRot = from.xRot;
         to.yRot = from.yRot;
         to.zRot = from.zRot;
 
-        // Posição é crucial para o VR (posicionamento das mãos)
+        // Copy translation (critical for VR hand positioning)
         to.x = from.x;
         to.y = from.y;
         to.z = from.z;
 
+        // Copy scaling
         to.xScale = from.xScale;
         to.yScale = from.yScale;
         to.zScale = from.zScale;
+
+        // Copy visibility state
         to.visible = from.visible;
     }
 }

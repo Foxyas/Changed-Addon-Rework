@@ -21,6 +21,7 @@ import org.vivecraft.client_vr.ClientDataHolderVR;
 @RequiredMods("vivecraft")
 public class AdvancedHumanoidRendererMixin<T extends ChangedEntity> {
 
+    // Copied From VRPlayerRenderer$setupRotations
     @WrapMethod(method = "setupRotations(Lnet/ltxprogrammer/changed/entity/ChangedEntity;Lcom/mojang/blaze3d/vertex/PoseStack;FFF)V")
     private void hook(@NotNull T entity, PoseStack poseStack, float bob, float rotationYaw, float partialTicks, Operation<Void> original) {
         if (entity.getUnderlyingPlayer() instanceof AbstractClientPlayer player) {
