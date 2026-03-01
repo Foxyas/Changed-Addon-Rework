@@ -5,6 +5,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 
@@ -14,18 +15,14 @@ import java.util.List;
 public interface IBestiaryEntityData {
     Component getLore();
 
-    default List<Component> getAttributePreview() {
-        if (!(this instanceof ChangedEntity changedEntity)) {
-            return List.of();
-        }
-
+    static List<Component> getAttributePreview(LivingEntity livingEntity) {
         List<Component> previewList = new ArrayList<>();
 
         // Player base vanilla
         AttributeSupplier playerDefaults =
                 DefaultAttributes.getSupplier(EntityType.PLAYER);
 
-        AttributeMap transformedMap = changedEntity.getAttributes();
+        AttributeMap transformedMap = livingEntity.getAttributes();
 
         for (AttributeInstance transformedInstance : transformedMap.getSyncableAttributes()) {
             Attribute attribute = transformedInstance.getAttribute();

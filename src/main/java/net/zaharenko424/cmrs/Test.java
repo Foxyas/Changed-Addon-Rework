@@ -1,6 +1,7 @@
 package net.zaharenko424.cmrs;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.process.DEBUG;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedEntities;
@@ -8,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -86,11 +88,11 @@ public class Test {
             });
             button.rebuildMesh();
 
-            infoWidget.setTextInfo(Component.literal("Some Cool Title"), Component.literal("Some Cool Description"));
-            infoWidget.setLineColor(Color.GREEN);
+            infoWidget.setTextInfo(Component.literal("Info/Lore"), Component.literal("N/A"));
+            infoWidget.setLineColor(Color.YELLOW);
             infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y - DEBUG.HeadPosY, modelWidget.getOrigin().z + 10);
 
-            info2Widget.setTextInfo(Component.literal("Some Cool Title2"), Component.literal("Some Cool Description2"));
+            info2Widget.setTextInfo(Component.literal("Attributes"), Component.literal("???"));
             info2Widget.setLineColor(Color.GREEN);
             info2Widget.setOrigin(infoWidget.getOrigin().x, infoWidget.getOrigin().y + 40, infoWidget.getOrigin().z);
 
@@ -144,6 +146,20 @@ public class Test {
                 }
 
                 child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+            }
+
+            if (modelWidget.getChangedEntity() != null) {
+
+                if (modelWidget.getChangedEntity() instanceof IBestiaryEntityData iBestiaryEntityData) {
+                    infoWidget.setDescription(iBestiaryEntityData.getLore());
+                }
+
+                List<Component> attributePreview = IBestiaryEntityData.getAttributePreview(modelWidget.getChangedEntity());
+                if (!attributePreview.isEmpty()) {
+                    MutableComponent mutableComponent = Component.empty().append("\n");
+                    attributePreview.forEach((component) -> mutableComponent.append("\n").append(component));
+                    info2Widget.setDescription(mutableComponent);
+                }
             }
 
             info.setActualHeight(60f * info.children().size());

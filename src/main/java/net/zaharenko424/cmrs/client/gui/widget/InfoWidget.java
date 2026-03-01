@@ -66,6 +66,16 @@ public class InfoWidget extends Widget {
         return this;
     }
 
+    public InfoWidget setDescription(Component description) {
+        this.description = description;
+        return this;
+    }
+
+    public InfoWidget setTitle(Component title) {
+        this.title = title;
+        return this;
+    }
+
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         var font = Minecraft.getInstance().font;
 
