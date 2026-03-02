@@ -108,7 +108,6 @@
     "mods.vivecraft.AdvancedHumanoidModelMixin",
     "mods.vivecraft.AdvancedHumanoidRendererMixin",
     "mods.vivecraft.EntityRendererMixin",
-    "mods.vivecraft.LatexElytraLayerMixin",
-    "mods.vivecraft.VRPlayerModelMixin"
+    "mods.vivecraft.LatexElytraLayerMixin"
   ]
 }
