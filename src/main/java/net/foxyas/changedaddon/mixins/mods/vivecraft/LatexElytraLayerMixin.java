@@ -23,7 +23,7 @@ import org.vivecraft.client.ClientVRPlayers;
 import org.vivecraft.client.utils.ModelUtils;
 import org.vivecraft.common.utils.MathUtils;
 
-@Mixin(value = LatexElytraLayer.class, remap = false)
+@Mixin(value = LatexElytraLayer.class)
 @RequiredMods("vivecraft")
 public abstract class LatexElytraLayerMixin<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends RenderLayer<T, M> {
 
@@ -42,7 +42,7 @@ public abstract class LatexElytraLayerMixin<T extends ChangedEntity, M extends A
     // https://github.com/Vivecraft/VivecraftMod/blob/Multiloader-1.20/common/src/main/java/org/vivecraft/mixin/client/renderer/entity/layers/ElytraLayerMixin.java
 
     @WrapOperation(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V"))
-    private void vivecraft$elytraPosition(
+    private void ChangedAddon$elytraPosition(
             PoseStack instance, double pX, double pY, double pZ, Operation<Void> original,
             @Local(argsOnly = true) ChangedEntity changedEntity, @Local(argsOnly = true, ordinal = 2) float partialTick) {
 

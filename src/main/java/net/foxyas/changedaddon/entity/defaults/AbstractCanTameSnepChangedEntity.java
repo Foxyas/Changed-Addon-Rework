@@ -188,40 +188,45 @@ public abstract class AbstractCanTameSnepChangedEntity extends AbstractSnowLeopa
 
     }
 
-    @Override
+    public boolean hasFavorSystem() {
+        return false;
+    }
+
     protected @NotNull InteractionResult mobInteract(Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         Item item = itemstack.getItem();
+
+        if (hasFavorSystem()) {
+            return super.mobInteract(player, hand);
+        }
+
         if (this.level.isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (this.isTame()) {
-                if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                    itemstack.shrink(1);
-                    this.heal(2.0F);
-                    if (this.level instanceof ServerLevel _level) {
-                        _level.sendParticles(ParticleTypes.HEART, (this.getX()), (this.getY() + 1), (this.getZ()), 7, 0.3, 0.3, 0.3, 1); //Spawn Heal Particles
-                    }
-                    this.level().gameEvent(this, GameEvent.ENTITY_INTERACT, this.getEyePosition());
+        } else if (this.isTame()) {
+            if (this.isTame() && this.isTameItem(itemstack) && this.getHealth() < this.getMaxHealth()) {
+                itemstack.shrink(1);
+                this.heal(2.0F);
+                this.level().gameEvent(this, GameEvent.ENTITY_INTERACT, this.getEyePosition());
+                this.level.broadcastEntityEvent(this, (byte) 7);
+                return InteractionResult.SUCCESS;
+            } else {
+                InteractionResult interactionresult = super.mobInteract(player, hand);
+                if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
+                    boolean shouldFollow = !this.isFollowingOwner();
+                    this.setFollowOwner(shouldFollow);
+                    player.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
+                    this.jumping = false;
+                    this.navigation.stop();
+                    this.setTarget(null);
                     return InteractionResult.SUCCESS;
                 } else {
-                    InteractionResult interactionresult = super.mobInteract(player, hand);
-                    if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(player)) {
-                        boolean shouldFollow = !this.isFollowingOwner();
-                        this.setFollowOwner(shouldFollow);
-
-                        player.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", this.getDisplayName()), true);
-                        this.jumping = false;
-                        this.navigation.stop();
-                        this.setTarget(null);
-                        return InteractionResult.SUCCESS;
-                    }
+                    return interactionresult;
                 }
             }
+        } else {
+            return super.mobInteract(player, hand);
         }
-
-        return super.mobInteract(player, hand);
     }
 
     @Override

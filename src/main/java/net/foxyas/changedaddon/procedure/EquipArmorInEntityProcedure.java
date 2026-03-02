@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
+import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -29,6 +30,7 @@ public class EquipArmorInEntityProcedure {
             ItemStack itemStack = event.getItemStack();
             if (changedEntity instanceof DarkLatexWolfPup
                     || changedEntity instanceof LatexSnepEntity
+                    || changedEntity.getEntityShape() == EntityShape.FERAL
                     || (changedEntity instanceof AbstractCanTameSnepChangedEntity snepChanged && !snepChanged.isBiped())) {
                 return;
             }

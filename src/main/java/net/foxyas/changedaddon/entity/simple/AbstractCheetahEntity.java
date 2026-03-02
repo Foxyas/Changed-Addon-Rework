@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
@@ -30,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEntity {
+public abstract class AbstractCheetahEntity extends AbstractCanTameSnepChangedEntityFavors {
 
     public AbstractCheetahEntity(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);

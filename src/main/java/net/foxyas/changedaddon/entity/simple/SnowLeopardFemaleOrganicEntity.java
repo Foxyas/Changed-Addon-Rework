@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -34,7 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameSnepChangedEntity {
+public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameSnepChangedEntityFavors {
     public SnowLeopardFemaleOrganicEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.SNOW_LEOPARD_FEMALE_ORGANIC.get(), world);
     }
