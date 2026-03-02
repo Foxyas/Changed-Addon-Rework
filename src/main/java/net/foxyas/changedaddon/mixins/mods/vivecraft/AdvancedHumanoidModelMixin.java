@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.mixins.mods.vivecraft;
 
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.extension.RequiredMods;
@@ -31,6 +32,8 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
     @Shadow public abstract @NotNull ModelPart getArm(@NotNull HumanoidArm humanoidArm);
 
     @Shadow public abstract ModelPart getLeg(HumanoidArm humanoidArm);
+
+    @Shadow public abstract HumanoidAnimator<T, ?> getAnimator(T t);
 
     public AdvancedHumanoidModelMixin(ModelPart pRoot, boolean pSlim) {
         super(pRoot, pSlim);
@@ -68,12 +71,17 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                     ModelPart selfRightLeg = self.getLeg(HumanoidArm.RIGHT);
 
                     // ===== Copy final VR pose into transformed model =====
-                    ChangedAddon$copyPart(playerModel.head, selfHead);
-                    ChangedAddon$copyPart(playerModel.body, selfBody);
-                    ChangedAddon$copyPart(playerModel.leftArm, selfLeftArm);
-                    ChangedAddon$copyPart(playerModel.rightArm, selfRightArm);
-                    ChangedAddon$copyPart(playerModel.leftLeg, selfLeftLeg);
-                    ChangedAddon$copyPart(playerModel.rightLeg, selfRightLeg);
+
+                    if (entity.isSwimming() || entity.isVisuallySwimming() || entity.isVisuallyCrawling()) {
+                        return;
+                    } else {
+                        ChangedAddon$copyPart(playerModel.head, selfHead);
+                        ChangedAddon$copyPart(playerModel.body, selfBody);
+                        ChangedAddon$copyPart(playerModel.leftArm, selfLeftArm);
+                        ChangedAddon$copyPart(playerModel.rightArm, selfRightArm);
+                        ChangedAddon$copyPart(playerModel.leftLeg, selfLeftLeg);
+                        ChangedAddon$copyPart(playerModel.rightLeg, selfRightLeg);
+                    }
                 }
 
             }
