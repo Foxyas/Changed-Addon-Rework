@@ -26,7 +26,6 @@ import org.vivecraft.client.render.VRPlayerRenderer;
 @RequiredMods("vivecraft")
 public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extends PlayerModel<T> {
 
-
     @Shadow
     public abstract @NotNull ModelPart getArm(@NotNull HumanoidArm humanoidArm);
 
@@ -41,7 +40,7 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
     }
 
     @Inject(method = "setupAnim(Lnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFF)V", at = @At("TAIL"))
-    private void hook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
+    private void setupAnimHook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         var self = (AdvancedHumanoidModel<?>) (Object) this;
         Player player = entity.getUnderlyingPlayer();
         if (player instanceof AbstractClientPlayer clientPlayer) {
@@ -102,6 +101,9 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
      */
     @Unique
     private static void ChangedAddon$copyPart(ModelPart from, ModelPart to) {
+        if (from == null || to == null) {
+            return;
+        }
 
         // Copy rotation (pitch, yaw, roll)
         to.xRot = from.xRot;

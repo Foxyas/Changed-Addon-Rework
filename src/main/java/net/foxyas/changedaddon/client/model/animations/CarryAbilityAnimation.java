@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CarryAbilityAnimation<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends HumanoidAnimator.Animator<T, M> {
 
@@ -117,12 +118,19 @@ public class CarryAbilityAnimation<T extends ChangedEntity, M extends AdvancedHu
 
     private void liftArmIfFree(ChangedEntity entity, HumanoidArm arm) {
         if (isHandFree(entity, arm)) {
-            getArm(arm).xRot = (float) Math.PI;
+            ModelPart armPart = getArm(arm);
+            if (armPart == null) {
+                return;
+            }
+            armPart.xRot = (float) Math.PI;
         }
     }
 
     private void aimArm(HumanoidArm arm) {
         ModelPart part = getArm(arm);
+        if (part == null) {
+            return;
+        }
         part.xRot = -(float) Math.PI / 2F + head.xRot;
         part.yRot = (arm == HumanoidArm.LEFT ? 0.1F : -0.1F) + head.yRot;
     }
@@ -137,6 +145,8 @@ public class CarryAbilityAnimation<T extends ChangedEntity, M extends AdvancedHu
        ======= GETTERS =========
        ========================= */
 
+
+    @Nullable
     public ModelPart getArm(HumanoidArm arm) {
         return arm == HumanoidArm.LEFT ? leftArm : rightArm;
     }
