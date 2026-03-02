@@ -71,16 +71,15 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                     ModelPart selfRightLeg = self.getLeg(HumanoidArm.RIGHT);
 
                     // ===== Copy final VR pose into transformed model =====
+                    ChangedAddon$copyPart(playerModel.head, selfHead);
+                    ChangedAddon$copyPart(playerModel.body, selfBody);
+                    ChangedAddon$copyPart(playerModel.leftArm, selfLeftArm);
+                    ChangedAddon$copyPart(playerModel.rightArm, selfRightArm);
+                    ChangedAddon$copyPart(playerModel.leftLeg, selfLeftLeg);
+                    ChangedAddon$copyPart(playerModel.rightLeg, selfRightLeg);
 
                     if (entity.isSwimming() || entity.isVisuallySwimming() || entity.isVisuallyCrawling()) {
-                        return;
-                    } else {
-                        ChangedAddon$copyPart(playerModel.head, selfHead);
-                        ChangedAddon$copyPart(playerModel.body, selfBody);
-                        ChangedAddon$copyPart(playerModel.leftArm, selfLeftArm);
-                        ChangedAddon$copyPart(playerModel.rightArm, selfRightArm);
-                        ChangedAddon$copyPart(playerModel.leftLeg, selfLeftLeg);
-                        ChangedAddon$copyPart(playerModel.rightLeg, selfRightLeg);
+                        //TODO add offset for the model parts when swimming
                     }
                 }
 
