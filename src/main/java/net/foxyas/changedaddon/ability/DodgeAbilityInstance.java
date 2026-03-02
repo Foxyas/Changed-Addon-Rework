@@ -529,7 +529,6 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
     protected void addFadeParticle(ServerLevel level) {
         Vec3 particlePos = entity.getEntity().position().add(0, 1.425f, 0);
         EntityModelFadeParticleOptions particleOption = ChangedAddonParticleTypes.entityModelFade(entity.getEntity(), FADE_COLOR.getRGB(), 0.25f);
-        float duration = particleOption.duration();
         Vec3 motionOrDelta = new Vec3(0, 1, 0);
         ParticlesUtil.sendParticles(level, particleOption, particlePos, motionOrDelta, 0, 0.1f);
     }
