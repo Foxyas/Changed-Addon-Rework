@@ -90,11 +90,17 @@ public class PsychicGrabAbilityAnimation<T extends ChangedEntity, M extends Adva
     private void applyPsychicGrabPose(ChangedEntity entity, HumanoidArm arm) {
         float crouchOffset = entity.isCrouching() ? 0.2617994F : 0.0F;
 
-        getArm(arm).xRot =
-                getHead().xRot - (float) Math.PI / 2F - crouchOffset;
+        ModelPart armPart = getArm(arm);
+        ModelPart headPart = getHead();
+        if (armPart == null || headPart == null) {
+            return;
+        }
 
-        getArm(arm).yRot =
-                getHead().yRot;
+        armPart.xRot =
+                headPart.xRot - (float) Math.PI / 2F - crouchOffset;
+
+        armPart.yRot =
+                headPart.yRot;
     }
 
     /* =========================

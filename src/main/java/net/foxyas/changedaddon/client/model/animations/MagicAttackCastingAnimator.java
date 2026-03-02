@@ -6,6 +6,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Predicate;
 
@@ -60,22 +61,30 @@ public class MagicAttackCastingAnimator<T extends ChangedEntity, M extends Advan
 //        this.leftArm.yRot = 0.0F;
 
 
-        this.rightArm.z = 0.0F;
-        this.rightArm.x = -5.0F;
-        this.rightArm.y = -1;
-        this.leftArm.z = 0.0F;
-        this.leftArm.x = 5.0F;
-        this.leftArm.y = -1;
-        this.rightArm.xRot = (float) Math.toRadians(-180) + Mth.cos(ageInTicks * 0.6662F) * 0.25F;
-        this.leftArm.xRot = (float) Math.toRadians(-180) + Mth.cos(ageInTicks * 0.6662F) * 0.25F;
-        this.rightArm.zRot = (float) Math.toRadians(-45);
-        this.leftArm.zRot = (float) Math.toRadians(45);
-        this.rightArm.yRot = 0.0F;
-        this.leftArm.yRot = 0.0F;
+        if (this.rightArm != null) {
+            this.rightArm.z = 0.0F;
+            this.rightArm.x = -5.0F;
+            this.rightArm.y = -1;
+            this.rightArm.xRot = (float) Math.toRadians(-180) + Mth.cos(ageInTicks * 0.6662F) * 0.25F;
+            this.rightArm.zRot = (float) Math.toRadians(-45);
+            this.rightArm.yRot = 0.0F;
+        }
+        if (this.leftArm != null) {
+            this.leftArm.z = 0.0F;
+            this.leftArm.x = 5.0F;
+            this.leftArm.y = -1;
+            this.leftArm.xRot = (float) Math.toRadians(-180) + Mth.cos(ageInTicks * 0.6662F) * 0.25F;
+            this.leftArm.zRot = (float) Math.toRadians(45);
+            this.leftArm.yRot = 0.0F;
+        }
 
         if (entity.onGround()) {
-            this.rightLeg.zRot = (float) Math.toRadians(10);
-            this.leftLeg.zRot = (float) Math.toRadians(-10);
+            if (this.rightLeg != null) {
+                this.rightLeg.zRot = (float) Math.toRadians(10);
+            }
+            if (this.leftLeg != null) {
+                this.leftLeg.zRot = (float) Math.toRadians(-10);
+            }
         }
     }
 }
