@@ -9,18 +9,16 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix3f;
-import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.vivecraft.client.ClientVRPlayers;
 import org.vivecraft.client.render.VRPlayerModel;
 import org.vivecraft.client.render.VRPlayerRenderer;
 
@@ -29,21 +27,29 @@ import org.vivecraft.client.render.VRPlayerRenderer;
 public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extends PlayerModel<T> {
 
 
-    @Shadow public abstract @NotNull ModelPart getArm(@NotNull HumanoidArm humanoidArm);
+    @Shadow
+    public abstract @NotNull ModelPart getArm(@NotNull HumanoidArm humanoidArm);
 
-    @Shadow public abstract ModelPart getLeg(HumanoidArm humanoidArm);
+    @Shadow
+    public abstract ModelPart getLeg(HumanoidArm humanoidArm);
 
-    @Shadow public abstract HumanoidAnimator<T, ?> getAnimator(T t);
+    @Shadow
+    public abstract HumanoidAnimator<T, ?> getAnimator(T t);
 
     public AdvancedHumanoidModelMixin(ModelPart pRoot, boolean pSlim) {
         super(pRoot, pSlim);
     }
 
     @Inject(method = "setupAnim(Lnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFF)V", at = @At("TAIL"))
-    private void hook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci){
+    private void hook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         var self = (AdvancedHumanoidModel<?>) (Object) this;
         Player player = entity.getUnderlyingPlayer();
         if (player instanceof AbstractClientPlayer clientPlayer) {
+            if (!(ClientVRPlayers.getInstance().isVRPlayer(player))) {
+                return;
+            }
+
+
             EntityRenderer<?> renderer =
                     Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(clientPlayer);
 
@@ -51,17 +57,7 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
 
                 PlayerModel<AbstractClientPlayer> playerModel = vrPlayerRenderer.getModel();
 
-                if (playerModel instanceof VRPlayerModel<AbstractClientPlayer>) {
-
-                    // Force the VR model to update its animation state
-                    // (includes HMD, controller tracking, body yaw logic, etc.)
-                    playerModel.setupAnim(clientPlayer,
-                            limbSwing,
-                            limbSwingAmount,
-                            ageInTicks,
-                            netHeadYaw,
-                            headPitch);
-
+                if (playerModel instanceof VRPlayerModel<AbstractClientPlayer> vrPlayerModel) {
                     // ===== Map self model parts =====
                     ModelPart selfHead = self.getHead();
                     ModelPart selfBody = self.getTorso();
@@ -70,6 +66,16 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                     ModelPart selfLeftLeg = self.getLeg(HumanoidArm.LEFT);
                     ModelPart selfRightLeg = self.getLeg(HumanoidArm.RIGHT);
 
+                    // Force the VR model to update its animation state
+                    // (includes HMD, controller tracking, body yaw logic, etc.)
+                    playerModel.swimAmount = this.swimAmount;
+                    playerModel.setupAnim(clientPlayer,
+                            limbSwing,
+                            limbSwingAmount,
+                            ageInTicks,
+                            netHeadYaw,
+                            headPitch);
+
                     // ===== Copy final VR pose into transformed model =====
                     ChangedAddon$copyPart(playerModel.head, selfHead);
                     ChangedAddon$copyPart(playerModel.body, selfBody);
@@ -77,10 +83,6 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                     ChangedAddon$copyPart(playerModel.rightArm, selfRightArm);
                     ChangedAddon$copyPart(playerModel.leftLeg, selfLeftLeg);
                     ChangedAddon$copyPart(playerModel.rightLeg, selfRightLeg);
-
-                    if (entity.isSwimming() || entity.isVisuallySwimming() || entity.isVisuallyCrawling()) {
-                        //TODO add offset for the model parts when swimming
-                    }
                 }
 
             }
@@ -91,10 +93,10 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
     /**
      * Copies rotational, positional, scale, and visibility data
      * from one ModelPart to another.
-     *
+     * <p>
      * We intentionally avoid using loadPose(), because it resets
      * additional internal state that may conflict with VR tracking.
-     *
+     * <p>
      * Direct field copying ensures we preserve Vivecraft's final
      * computed pose (including controller offsets and head tracking).
      */
