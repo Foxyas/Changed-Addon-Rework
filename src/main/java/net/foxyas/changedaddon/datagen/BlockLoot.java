@@ -138,12 +138,15 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLoot {
         StackableCanBlock block = canBlock.get();
         LootTable.Builder table = LootTable.lootTable();
         LootPool.Builder pool = LootPool.lootPool();
+        var item = LootItem.lootTableItem(canItem.get());
+
         for (int i = 1; i < 5; i++) {
-            pool.add(LootItem.lootTableItem(canItem.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(i))
+            item.apply(SetItemCountFunction.setCount(ConstantValue.exactly(i))
                     .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(StackableCanBlock.CANS, i)))));
+                            .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(StackableCanBlock.CANS, i))));
         }
 
+        pool.add(item);
         table.withPool(pool);
         add(block, table);
     }

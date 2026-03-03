@@ -21,13 +21,7 @@
               ],
               "count": 1.0,
               "add": false
-            }
-          ],
-          "name": "changed_addon:snepsi"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+            },
             {
               "function": "minecraft:set_count",
               "conditions": [
@@ -41,13 +35,7 @@
               ],
               "count": 2.0,
               "add": false
-            }
-          ],
-          "name": "changed_addon:snepsi"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+            },
             {
               "function": "minecraft:set_count",
               "conditions": [
@@ -61,13 +49,7 @@
               ],
               "count": 3.0,
               "add": false
-            }
-          ],
-          "name": "changed_addon:snepsi"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+            },
             {
               "function": "minecraft:set_count",
               "conditions": [

@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.entity.goals.generic.attacks;
 
 import net.foxyas.changedaddon.util.DelayedTask;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -87,6 +89,13 @@ public class LeapDiveGoal extends Goal {
                 return player.isAlive();
             }
         }
+
+        IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(t);
+        if (grabber != null && grabber.getEntity().is(mob)) {
+            return false;
+        }
+
+
         return t != null && t.isAlive() && mob.isOnGround();
     }
 
