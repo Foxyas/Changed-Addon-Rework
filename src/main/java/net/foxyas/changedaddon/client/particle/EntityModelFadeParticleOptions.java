@@ -26,7 +26,7 @@ public record EntityModelFadeParticleOptions(int targetId, int color, float dura
 
         @Override
         public ParticleOptions fromNetwork(@NotNull ParticleType pParticleType, @NotNull FriendlyByteBuf buf) {
-            return new EntityModelFadeParticleOptions(buf.readInt(), buf.readInt(), buf.readInt());
+            return new EntityModelFadeParticleOptions(buf.readInt(), buf.readInt(), buf.readFloat());
         }
     };
 
