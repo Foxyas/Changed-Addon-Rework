@@ -76,15 +76,20 @@ repositories {
         url "https://cursemaven.com"
     }
 
+    maven {
+        name = "Changed"
+        url = "https://ltxprogrammer.github.io/maven/"
+    }
+
     //maven {
     //    name = "Changed"
     //    url = "https://raw.githubusercontent.com/foxyas/Changed-Minecraft-Mod/1.20.1-dev/mcmodsrepo/"
     //}
-
+    /*
     maven {
         name = "Changed_Local_file"
         url uri("${rootProject.projectDir}/libs")
-    }
+    }*/
 
 
   /* maven {
@@ -118,7 +123,7 @@ dependencies {
     }
 
   //implementation fg.deobf('net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14b') //Changed Local File
-    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.0") {
+    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.1") {
         changing = true
     }//Changed
 
