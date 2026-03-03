@@ -107,6 +107,7 @@ repositories {
 mixin {
     add sourceSets.main, "changed_addon.refmap.json"
     config "changed_addon.mixins.json"
+    config "changed_addon.compatibility.mixins.json"
     env {
         remapRefMap = true
     }
