@@ -64,11 +64,7 @@ public class DarkLatexWolfPupMixin extends AbstractDarkLatexEntity {
     )
     private void onWhiteLatexGooUse(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack stack = player.getItemInHand(hand);
-
-        if (player.isShiftKeyDown())
-            return;
-
-        if (this.isTameItem(stack)) {
+        if (this.isTameItem(stack) && this.isTame()) {
             DarkLatexWolfPup self = (DarkLatexWolfPup) (Object) this;
 
             if (!self.level.isClientSide) {

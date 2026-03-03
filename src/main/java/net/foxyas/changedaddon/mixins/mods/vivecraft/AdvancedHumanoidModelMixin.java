@@ -1,9 +1,16 @@
 package net.foxyas.changedaddon.mixins.mods.vivecraft;
 
+import net.ltxprogrammer.changed.client.renderer.accessory.WornExoskeletonRenderer;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.layers.AccessoryLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.client.renderer.model.ExoskeletonModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.foxyas.changedaddon.extension.RequiredMods;
+import net.ltxprogrammer.changed.entity.beast.LatexBenignOrca;
+import net.ltxprogrammer.changed.entity.robot.Exoskeleton;
+import net.ltxprogrammer.changed.entity.variant.EntityShape;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,6 +18,8 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -48,6 +57,13 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                 return;
             }
 
+            if (entity.getEntityShape() == EntityShape.FERAL) {
+                return; // Feral Forms Don't look well.
+            }
+
+            if (entity.getType().is(ChangedTags.EntityTypes.BENIGN_LATEXES) && !(entity instanceof LatexBenignOrca)) {
+                return;  // They can't move they arms or etc
+            }
 
             EntityRenderer<?> renderer =
                     Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(clientPlayer);
@@ -82,6 +98,15 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                     ChangedAddon$copyPart(playerModel.rightArm, selfRightArm);
                     ChangedAddon$copyPart(playerModel.leftLeg, selfLeftLeg);
                     ChangedAddon$copyPart(playerModel.rightLeg, selfRightLeg);
+
+                    //Attempt to give the Exoskeleton the same arms animations... it didn't work.
+                    //Exoskeleton.getEntityExoskeleton(entity).ifPresent((pair) -> AccessoryLayer.getRenderer(pair.getSecond()).ifPresent((accessoryRenderer) -> {
+                    //    if (accessoryRenderer instanceof WornExoskeletonRenderer exoRenderer) {
+                    //        ExoskeletonModel exoskeletonModel = exoRenderer.getModel();
+                    //        exoskeletonModel.matchWearersAnim(playerModel, pair.getFirst());
+                    //    }
+                    //
+                    //}));
                 }
 
             }

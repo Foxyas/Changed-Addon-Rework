@@ -102,6 +102,7 @@
     "mods.changed.AbilityRadialScreenMixin",
     "mods.changed.AbstractRadialScreenMixin",
     "mods.changed.AccessoryLayerMixin",
-    "mods.changed.ChangedClientMixin"
+    "mods.changed.ChangedClientMixin",
+    "mods.changed.ExoskeletonModelAccessor"
   ]
 }
