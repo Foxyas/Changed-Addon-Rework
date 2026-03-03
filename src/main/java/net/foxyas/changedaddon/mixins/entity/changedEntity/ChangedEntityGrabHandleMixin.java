@@ -121,13 +121,13 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     }
 
     @Override
-    public boolean canEntityGrab(EntityType<?> type, Level level) {
+    public boolean canEntityGrab(EntityType<?> selfType, Level level) {
         ChangedEntity self = (ChangedEntity) (Object) this;
         if (self.getEntityShape() == EntityShape.FERAL) {
             return false;
         }
 
-        return type.is(ChangedAddonTags.EntityTypes.CAN_GRAB) || isAbleToGrab();
+        return selfType.is(ChangedAddonTags.EntityTypes.CAN_GRAB) || isAbleToGrab();
     }
 
     @Override

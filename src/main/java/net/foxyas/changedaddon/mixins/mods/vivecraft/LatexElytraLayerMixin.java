@@ -8,7 +8,7 @@ import com.mojang.math.Axis;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexElytraLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.extension.RequiredMods;
+import net.foxyas.changedaddon.extension.RequiredMods;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;

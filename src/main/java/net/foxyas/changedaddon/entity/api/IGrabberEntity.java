@@ -15,6 +15,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -24,6 +25,11 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PacketDistributor;
 
 public interface IGrabberEntity {
+
+
+    interface IConditionalGrabber {
+        boolean canCauseGrabDamage();
+    }
 
     EntityDataAccessor<Boolean> CAN_USE_GRAB = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.BOOLEAN);
     EntityDataAccessor<Integer> GRAB_COOLDOWN = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.INT);
@@ -154,6 +160,8 @@ public interface IGrabberEntity {
         if (!(this instanceof LivingEntity living)) return false;
         GrabEntityAbilityInstance grabAbilityInstance = getGrabAbilityInstance();
         if (grabAbilityInstance == null) return false;
+
+        if (living instanceof IConditionalGrabber iConditionalGrabber) return iConditionalGrabber.canCauseGrabDamage();
         if (living instanceof IAlphaAbleEntity iAlphaAbleEntity && iAlphaAbleEntity.isAlpha()) return true;
 
         if (living.getType().is(ChangedAddonTags.EntityTypes.ALWAYS_CAUSE_GRAB_DAMAGE)) {
@@ -186,13 +194,13 @@ public interface IGrabberEntity {
 
     boolean isAbleToGrab();
 
-    default boolean canEntityGrab(EntityType<?> type, Level level) {
-        if (type.is(ChangedAddonTags.EntityTypes.CANT_USE_GRAB)) {
+    default boolean canEntityGrab(EntityType<?> selfType, Level level) {
+        if (selfType.is(ChangedAddonTags.EntityTypes.CANT_USE_GRAB)) {
             return false;
         }
         if (this instanceof ChangedEntity changedEntity) {
             if (changedEntity instanceof IAlphaAbleEntity alphaAbleEntity) return alphaAbleEntity.isAlpha();
         }
-        return type.is(ChangedAddonTags.EntityTypes.CAN_GRAB) || isAbleToGrab();
+        return selfType.is(ChangedAddonTags.EntityTypes.CAN_GRAB) || isAbleToGrab();
     }
 }

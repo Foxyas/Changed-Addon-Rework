@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "net.foxyas.changedaddon.mixins",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "changed_addon.refmap.json",
+  "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
+  "mixins": [
+    "mods.nean.AvaliElytraAnimationMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "mods.firstPerson.LogicHandleMixin",
+    "mods.vivecraft.AdvancedHumanoidModelMixin",
+    "mods.vivecraft.AdvancedHumanoidRendererMixin",
+    "mods.vivecraft.EntityRendererMixin",
+    "mods.vivecraft.LatexElytraLayerMixin"
+  ]
+}

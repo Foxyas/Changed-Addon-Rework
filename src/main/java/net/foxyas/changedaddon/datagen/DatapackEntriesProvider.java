@@ -65,8 +65,7 @@ public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
     private static void processorList(BootstapContext<StructureProcessorList> context) {
         context.register(GRAVITY, new StructureProcessorList(List.of(new GravityProcessor(Heightmap.Types.WORLD_SURFACE_WG, -11))));
         context.register(DAZED_METEOR_POLL, new StructureProcessorList(List.of(
-                new OffSetSpawnProcessor(0, -10, 0),
-                new DayTimeStructureProcessor(Optional.empty(), DayTimeStructureProcessor.DayPeriod.NIGHT)
+                new OffSetSpawnProcessor(0, -10, 0)
         )
         ));
     }
