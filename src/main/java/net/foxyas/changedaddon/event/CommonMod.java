@@ -168,6 +168,9 @@ public class CommonMod {
         ChangedAddonMod.addNetworkMessage(SyncGrabberEntity.class, SyncGrabberEntity::encode,
                 SyncGrabberEntity::new, SyncGrabberEntity::handle);
 
+        ChangedAddonMod.addNetworkMessage(SyncGrabControlState.class, SyncGrabControlState::encode,
+                SyncGrabControlState::new, SyncGrabControlState::handle);
+
         ChangedAddonMod.addNetworkMessage(C2SReleaseGrabbedEntity.class, C2SReleaseGrabbedEntity::encode,
                 C2SReleaseGrabbedEntity::new, C2SReleaseGrabbedEntity::handle);
 

@@ -239,6 +239,11 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
             this.inventory.load(listtag);
             this.inventory.selected = tag.getInt("SelectedItemSlot");
             this.grabEntityAbilityInstance = createGrabAbility();
+            if (tag.contains("grabAbility")) {
+                if (this.grabEntityAbilityInstance != null) {
+                    this.grabEntityAbilityInstance.readData(tag.getCompound("grabAbility"));
+                }
+            }
 
             LatexTargetType.fromSerial(tag.getString("TargetType")).result().ifPresent(this::setTargetType);
             LatexAttackType.fromSerial(tag.getString("AttackType")).result().ifPresent(this::setAttackType);
@@ -260,15 +265,17 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
             tag.put("Inventory", this.inventory.save(new ListTag()));
             tag.putInt("SelectedItemSlot", this.inventory.selected);
 
+            if (this.grabEntityAbilityInstance != null) {
+                CompoundTag grabAbilityTag = new CompoundTag();
+                this.grabEntityAbilityInstance.saveData(grabAbilityTag);
+                tag.put("grabAbility", grabAbilityTag);
+            }
+
             tag.putString("TargetType", getTargetType().getSerializedName());
             tag.putString("AttackType", getAttackType().getSerializedName());
             tag.putString("AttackCondition", getAttackCondition().getSerializedName());
             tag.putString("FavorToOwner", getCurrentFavor().getSerializedName());
         }
-    }
-
-    public boolean isMaskless() {
-        return false;
     }
 
     @Override
@@ -278,7 +285,6 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
             return false;
         if (owner != null && livingEntity instanceof TamableLatexEntity tamableLatexEntity && tamableLatexEntity.getOwner() == owner)
             return false;
-        // TODO: have npc DLs not target a player if that player has a tamed DL. Or a reputation system for the DLs.
 
         Predicate<LivingEntity> superPredicate = super::targetSelectorTest;
         if (owner != null) {
@@ -288,18 +294,6 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
                 case OWNER_IS_HOSTILE -> getTargetType().forEntity(this)
                         .and(target -> owner.tickCount - owner.getLastHurtMobTimestamp() < OWNER_HOSTILE_DURATION_TICKS);
             };
-        }
-
-        if (!this.isMaskless()) {// Check if masked DL can see entity
-            if (livingEntity.distanceToSqr(this) <= 1.0)
-                return superPredicate.test(livingEntity);
-            if (getLevelBrightnessAt(livingEntity.blockPosition()) >= 5)
-                return superPredicate.test(livingEntity);
-
-            var delta = livingEntity.getDeltaMovement();
-            var xyMovement = delta.subtract(0, delta.y, 0);
-            if (livingEntity.getPose() == Pose.CROUCHING || xyMovement.lengthSqr() < Mth.EPSILON)
-                return false;
         }
 
         return superPredicate.test(livingEntity);
@@ -721,6 +715,10 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
         return super.tryTransfurTarget(entity);
     }
 
+    public boolean forceOwnerGrabControl() {
+        return true;
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -732,7 +730,9 @@ public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCan
         if (grabEntityAbilityInstance != null) {
             grabEntityAbilityInstance.tickIdle();
             if (grabEntityAbilityInstance.grabbedEntity == this.getOwner() && grabEntityAbilityInstance.grabbedEntity != null) {
-                grabEntityAbilityInstance.grabbedHasControl = true;
+                if (forceOwnerGrabControl()) {
+                    grabEntityAbilityInstance.grabbedHasControl = true;
+                }
                 grabEntityAbilityInstance.suited = true;
             }
         }

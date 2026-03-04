@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
+import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
@@ -142,6 +143,11 @@ public class FengQIWolfEntity extends AbstractCanTameChangedEntityFavors impleme
         this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#e24340"));
         return retval;
 
+    }
+
+    @Override
+    public boolean canDoFavor(LatexFavor favor) {
+        return favor != LatexFavor.SUIT_OWNER && super.canDoFavor(favor);
     }
 
     @Override

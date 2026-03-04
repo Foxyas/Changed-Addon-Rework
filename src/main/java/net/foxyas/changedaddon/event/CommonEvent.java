@@ -203,6 +203,8 @@ public class CommonEvent {
         Player player = event.player;
         if (!player.isAlive()) return;
 
+        cleanAlphaAttributes(player);
+
         maskTransfur(player, player.level);
 
         tickUntransfur(player);
@@ -231,6 +233,25 @@ public class CommonEvent {
     @SubscribeEvent
     public static void onPlayerProgressTransfurTick(ProgressTransfurEvents.TickPlayerTransfurProgressEvent tickPlayerTransfurProgressEvent) {
         tickInfectionAndRes(tickPlayerTransfurProgressEvent);
+    }
+
+    private static void cleanAlphaAttributes(Player player) {
+        if (player.isDeadOrDying()) {
+            return;
+        }
+
+        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (transfurVariant != null) {
+            if (transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity) {
+                if (!iAlphaAbleEntity.isAlpha()) {
+                    IAlphaAbleEntity.applyOrRemoveAlphaModifiers(player, false, 0);
+                    return;
+                }
+            }
+            return;
+        }
+
+        IAlphaAbleEntity.applyOrRemoveAlphaModifiers(player, false, 0);
     }
 
     private static void maskTransfur(Player player, Level level) {

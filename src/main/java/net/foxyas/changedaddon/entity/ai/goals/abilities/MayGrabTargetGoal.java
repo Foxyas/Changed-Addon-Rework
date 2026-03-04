@@ -83,26 +83,26 @@ public class MayGrabTargetGoal extends Goal {
                 if (grabAbilityInstance != null) {
                     LivingEntity grabbedEntity = grabAbilityInstance.grabbedEntity;
                     if (grabbedEntity == null && GrabEntityAbility.getGrabber(target) == null) {
-                        grabAbilityInstance.grabEntity(target);
+                        if (grabAbilityInstance.grabEntity(target)) {
+                            Changed.PACKET_HANDLER.send(
+                                    PacketDistributor.TRACKING_ENTITY.with(grabber::asMob),
+                                    new GrabEntityPacket(grabber.asMob(), target, GrabEntityPacket.GrabType.ARMS)
+                            );
 
-                        Changed.PACKET_HANDLER.send(
-                                PacketDistributor.TRACKING_ENTITY.with(grabber::asMob),
-                                new GrabEntityPacket(grabber.asMob(), target, GrabEntityPacket.GrabType.ARMS)
-                        );
+                            ProcessTransfur.forceNearbyToRetarget(target.level(), target);
 
-                        ProcessTransfur.forceNearbyToRetarget(target.level(), target);
+                            grabber.asMob().setTarget(null);
 
-                        grabber.asMob().setTarget(null);
+                            // som (opcional, pode mudar)
+                            ChangedSounds.broadcastSound(
+                                    grabber.asMob(),
+                                    ChangedSounds.LATEX_GRAB_ENTITY,
+                                    1.0f,
+                                    1.0f
+                            );
 
-                        // som (opcional, pode mudar)
-                        ChangedSounds.broadcastSound(
-                                grabber.asMob(),
-                                ChangedSounds.LATEX_GRAB_ENTITY,
-                                1.0f,
-                                1.0f
-                        );
-
-                        grabber.applyGrabCooldown(0);
+                            grabber.applyGrabCooldown(0);
+                        }
                     }
                 }
             }

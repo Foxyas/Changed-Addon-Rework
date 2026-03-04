@@ -9,11 +9,20 @@ import net.foxyas.changedaddon.entity.api.SyncTrackMotion;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.mixins.mods.changed.FacilitySinglePieceInstanceAccessor;
 import net.foxyas.changedaddon.network.packet.RequestMovementCheckPacket;
+import net.foxyas.changedaddon.network.packet.SyncGrabControlState;
 import net.foxyas.changedaddon.process.features.LatexLanguageTranslator;
 import net.foxyas.changedaddon.util.*;
+import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.ability.GrabEntityAbility;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.Gender;
 import net.ltxprogrammer.changed.entity.GenderedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
+import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.world.features.structures.facility.FacilitySinglePiece;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
@@ -83,6 +92,109 @@ public class DEBUG {
     public static void debug(ServerChatEvent event) {
         if (!DEBUG) {
             return;
+        }
+
+        if (event.getMessage().getString().startsWith("test")) {
+            ServerPlayer player = event.getPlayer();
+            IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+            if (grabber != null) {
+                GrabEntityAbilityInstance abilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                    abilityInstance.grabbedHasControl = !abilityInstance.grabbedHasControl;
+                    abilityInstance.ability.setDirty(grabber);
+                }
+            } else {
+                TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+                if (transfurVariant != null) {
+                    GrabEntityAbilityInstance abilityInstance = transfurVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                    if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                        abilityInstance.grabbedHasControl = !abilityInstance.grabbedHasControl;
+                        abilityInstance.ability.setDirty(abilityInstance.entity);
+                    }
+                }
+            }
+
+
+        }
+
+        if (event.getMessage().getString().startsWith("test2")) {
+            ServerPlayer player = event.getPlayer();
+            IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+            if (grabber != null) {
+                GrabEntityAbilityInstance abilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                    if (abilityInstance.suitEntity(player)) {
+                        abilityInstance.grabbedHasControl = true;
+                        Changed.PACKET_HANDLER.send(
+                                PacketDistributor.TRACKING_ENTITY.with(grabber::getEntity),
+                                new GrabEntityPacket(grabber.getEntity(), player, GrabEntityPacket.GrabType.SUIT)
+                        );
+                    }
+                }
+            }
+        }
+
+        if (event.getMessage().getString().startsWith("test3")) {
+            ServerPlayer player = event.getPlayer();
+            IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+            if (grabber != null) {
+                GrabEntityAbilityInstance abilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                    if (abilityInstance.suitEntity(player)) {
+                        abilityInstance.grabbedHasControl = false;
+                        Changed.PACKET_HANDLER.send(
+                                PacketDistributor.TRACKING_ENTITY.with(grabber::getEntity),
+                                new GrabEntityPacket(grabber.getEntity(), player, GrabEntityPacket.GrabType.SUIT)
+                        );
+                    }
+                }
+            }
+        }
+
+        if (event.getMessage().getString().startsWith("test4")) {
+            ServerPlayer player = event.getPlayer();
+            IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+            if (grabber != null) {
+                GrabEntityAbilityInstance abilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                    ChangedAddonMod.PACKET_HANDLER.send(
+                            PacketDistributor.TRACKING_ENTITY_AND_SELF.with(grabber::getEntity),
+                            new SyncGrabControlState(grabber.getId(), abilityInstance.grabbedEntity.getId(), abilityInstance.grabbedHasControl)
+                    );
+                }
+            }
+        }
+
+        if (event.getMessage().getString().startsWith("test5:")) {
+            String id = event.getMessage().getString().replace("test5:", "");
+            ServerPlayer player = event.getPlayer();
+            IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+            if (grabber != null) {
+                GrabEntityAbilityInstance abilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                    ChangedAddonMod.PACKET_HANDLER.send(
+                            PacketDistributor.TRACKING_ENTITY_AND_SELF.with(grabber::getEntity),
+                            new SyncGrabControlState(grabber.getId(), abilityInstance.grabbedEntity.getId(), Boolean.parseBoolean(id))
+                    );
+                }
+            }
+        }
+
+        if (event.getMessage().getString().startsWith("test6:")) {
+            String id = event.getMessage().getString().replace("test6:", "");
+            ServerPlayer player = event.getPlayer();
+            IAbstractChangedEntity grabber = GrabEntityAbility.getGrabber(player);
+            if (grabber != null) {
+                GrabEntityAbilityInstance abilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                    boolean hasControl = Boolean.parseBoolean(id);
+                    abilityInstance.grabbedHasControl = hasControl;
+                    ChangedAddonMod.PACKET_HANDLER.send(
+                            PacketDistributor.TRACKING_ENTITY_AND_SELF.with(grabber::getEntity),
+                            new SyncGrabControlState(grabber.getId(), abilityInstance.grabbedEntity.getId(), hasControl)
+                    );
+                }
+            }
         }
 
         if (event.getMessage().getString().startsWith("FacilityHasPiece:")) {
