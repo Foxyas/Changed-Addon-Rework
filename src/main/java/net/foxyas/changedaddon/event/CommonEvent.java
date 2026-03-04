@@ -244,14 +244,14 @@ public class CommonEvent {
         if (transfurVariant != null) {
             if (transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity) {
                 if (!iAlphaAbleEntity.isAlpha()) {
-                    IAlphaAbleEntity.applyOrRemoveAlphaModifiers(player, false, 0);
+                    IAlphaAbleEntity.removeAlphaModifiers(player);
                     return;
                 }
             }
             return;
         }
 
-        IAlphaAbleEntity.applyOrRemoveAlphaModifiers(player, false, 0);
+        IAlphaAbleEntity.removeAlphaModifiers(player);
     }
 
     private static void maskTransfur(Player player, Level level) {
