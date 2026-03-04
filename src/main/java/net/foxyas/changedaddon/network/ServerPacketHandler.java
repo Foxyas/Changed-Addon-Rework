@@ -27,7 +27,7 @@ public class ServerPacketHandler {
 
             vars.consciousnessFightProgress += vars.FTKCminigameType.progressAmount;
 
-            if (vars.consciousnessFightProgress >= FightToKeepConsciousness.STRUGGLE_NEED) {
+            if (vars.consciousnessFightProgress >= FightToKeepConsciousness.getStruggleNeed()) {
                 player.level.playSound(null, player, ChangedSounds.TRANSFUR_BY_LATEX.get(), SoundSource.PLAYERS, 1, 1);
                 FightToKeepConsciousness.successFTKC(vars, player);
                 return;

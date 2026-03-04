@@ -36,7 +36,7 @@ public class AvaliElytraAnimationMixin {
             CallbackInfo ci
     ) {
         var tf = ProcessTransfur.getPlayerTransfurVariant(entity);
-        if (tf == null || !(tf.getChangedEntity() instanceof AvaliEntity) || !tf.is(ChangedAddonTransfurVariants.AVALI)) {
+        if (tf == null || !(tf.getChangedEntity() instanceof AvaliEntity)) {
             return;
         }
 

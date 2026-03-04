@@ -31,6 +31,8 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Double> ALPHA_SPAWN_HARDCORE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> CAN_GRABBY_ENTITIES_SPAWN;
     public static final ForgeConfigSpec.ConfigValue<WorldDifficulty> BEHEMOTH_CAN_USE_GRAB_IN_DIFFICULTY;
+    public static final ForgeConfigSpec.ConfigValue<Integer> FIGHT_TO_KEEP_CONSCIOUSNESS_TIMER;
+    public static final ForgeConfigSpec.ConfigValue<Double> FIGHT_TO_KEEP_CONSCIOUSNESS_STRUGGLE_NEED;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -82,6 +84,15 @@ public class ChangedAddonServerConfiguration {
         BUILDER.pop();
         BUILDER.push("Player Handle");
         ALLOW_SECOND_ABILITY_USE = BUILDER.comment("Allow the Player to use the second selected ability (similar to offhand and main hand)").define("Allow Second Ability use", false);
+
+        BUILDER.push("Fight To Keep Consciousness");
+        FIGHT_TO_KEEP_CONSCIOUSNESS_TIMER = BUILDER
+                .comment("Ticks before the fail or success check of the Fight to keep consciousness mine-game")
+                .defineInRange("Fight To Keep consciousness timer", 150, 0, Integer.MAX_VALUE);
+        FIGHT_TO_KEEP_CONSCIOUSNESS_STRUGGLE_NEED = BUILDER
+                .comment("Struggle need to success the Fight to keep consciousness mine-game")
+                .defineInRange("Fight To Keep consciousness timer", 30, 0f, Double.MAX_VALUE);
+        BUILDER.pop();
 
         BUILDER.push("Chat");
         {

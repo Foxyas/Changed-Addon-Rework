@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.qte;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -34,8 +35,13 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber
 public class FightToKeepConsciousness {
 
-    public static final int STRUGGLE_TIME = 150;
-    public static final int STRUGGLE_NEED = 30;
+    public static int getStruggleTime() {
+        return ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_TIMER.get();
+    }
+
+    public static double getStruggleNeed() {
+        return ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_STRUGGLE_NEED.get();
+    }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
@@ -73,9 +79,9 @@ public class FightToKeepConsciousness {
             return;
         }
 
-        if (instance.ageAsVariant >= STRUGGLE_TIME) {
+        if (instance.ageAsVariant >= getStruggleTime()) {
 
-            if (vars.consciousnessFightProgress >= STRUGGLE_NEED) {
+            if (vars.consciousnessFightProgress >= getStruggleNeed()) {
                 successFTKC(vars, player);
                 return;
             }

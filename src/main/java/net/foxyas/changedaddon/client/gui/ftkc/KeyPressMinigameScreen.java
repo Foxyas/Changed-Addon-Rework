@@ -17,8 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static net.foxyas.changedaddon.qte.FightToKeepConsciousness.STRUGGLE_NEED;
-import static net.foxyas.changedaddon.qte.FightToKeepConsciousness.STRUGGLE_TIME;
+import static net.foxyas.changedaddon.qte.FightToKeepConsciousness.*;
 
 public class KeyPressMinigameScreen extends Screen {
 
@@ -54,13 +53,13 @@ public class KeyPressMinigameScreen extends Screen {
     /* ----------------------------- STATIC METHODS ----------------------------- */
     public static String getProgressText(@NotNull Player entity) {
         return ChangedAddonVariables.ofOrDefault(entity)
-                .consciousnessFightProgress + "/" + STRUGGLE_NEED;
+                .consciousnessFightProgress + "/" + getStruggleNeed();
     }
 
     public static String getTimeRemaining(@NotNull Player player) {
         TransfurVariantInstance<?> transfurInstance = ProcessTransfur.getPlayerTransfurVariant(player);
 
-        return transfurInstance == null ? "" : Integer.toString(STRUGGLE_TIME - transfurInstance.ageAsVariant);
+        return transfurInstance == null ? "" : Integer.toString(getStruggleTime() - transfurInstance.ageAsVariant);
     }
 
     @Override
@@ -102,8 +101,8 @@ public class KeyPressMinigameScreen extends Screen {
         TransfurVariantInstance<?> tf = ProcessTransfur.getPlayerTransfurVariant(player);
 
         if (tf != null) {
-            float fightProgress = ChangedAddonVariables.nonNullOf(player).consciousnessFightProgress / FightToKeepConsciousness.STRUGGLE_NEED;
-            float loseProgress = Mth.lerp(partialTick, Math.max(0, tf.ageAsVariant - 1), tf.ageAsVariant) / FightToKeepConsciousness.STRUGGLE_TIME;
+            double fightProgress = ChangedAddonVariables.nonNullOf(player).consciousnessFightProgress / FightToKeepConsciousness.getStruggleNeed();
+            double loseProgress = Mth.lerp(partialTick, Math.max(0, tf.ageAsVariant - 1), tf.ageAsVariant) / FightToKeepConsciousness.getStruggleTime();
 
             int alpha = (int) (128 + 128 * (loseProgress - fightProgress));
 

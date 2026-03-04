@@ -45,7 +45,7 @@ public class AvaliFallFlyAnimator<T extends ChangedEntity, M extends AdvancedHum
         Player player = entity.getUnderlyingPlayer();
         if (player != null) {
             var tf = ProcessTransfur.getPlayerTransfurVariant(player);
-            if (tf == null || !(tf.getChangedEntity() instanceof AvaliEntity) || !tf.is(ChangedAddonTransfurVariants.AVALI)) {
+            if (tf == null || !(tf.getChangedEntity() instanceof AvaliEntity)) {
                 return;
             }
 
