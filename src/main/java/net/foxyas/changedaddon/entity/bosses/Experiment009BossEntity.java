@@ -533,7 +533,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Override
     protected float getWaterSlowDown() {
-        return 1;
+        return 0.98f;
     }
 
     private void knockbackNearbyEntities(LivingEntity source) {
