@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.datagen;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.datagen.ability_tree.AbilityTreeProviderImpl;
 import net.foxyas.changedaddon.datagen.lang.ENLanguageProvider;
 import net.foxyas.changedaddon.datagen.lang.HULanguageProvider;
@@ -50,6 +51,7 @@ public class GatherData {
         generator.addProvider(true, new LootTableProvider(packOutput));
 
         generator.addProvider(true, new BlockStateProvider(packOutput, helper));
+        generator.addProvider(true, new LatexCoverStateProvider(packOutput, helper, ChangedAddonMod.MODID));
         generator.addProvider(true, new ItemModelProvider(packOutput, helper));
         generator.addProvider(true, new AdvancementProvider(packOutput, lookup0, helper));
 
