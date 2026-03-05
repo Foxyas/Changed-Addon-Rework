@@ -41,7 +41,6 @@ public class LatexCoverStateProvider implements DataProvider {
     }
 
     protected void registerStatesAndModels() {
-        simpleNoModelBlock(ChangedAddonBlocks.FOXTA_CAN.get());
     }
 
     public CoverStateBuilder block(Block block) {
