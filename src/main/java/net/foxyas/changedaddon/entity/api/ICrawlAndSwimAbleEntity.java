@@ -122,16 +122,6 @@ public interface ICrawlAndSwimAbleEntity {
             movementDir = livingEntity.getDeltaMovement().normalize();
         }*/
 
-        if (target != null) {
-            if (!target.isInWater() && target.onGround()) {
-                movementDir = null;
-            }
-        }
-
-        if (!livingEntity.isSwimming()) {
-            movementDir = null;
-        }
-
         if (movementDir != null) {
             float appliedSpeed = livingEntity.isEyeInFluid(FluidTags.WATER)
                     ? speed
@@ -140,6 +130,7 @@ public interface ICrawlAndSwimAbleEntity {
             float swimSpeed = (float) (livingEntity.getMoveControl().getSpeedModifier() * livingEntity.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
             livingEntity.setSpeed(swimSpeed);
             livingEntity.setDeltaMovement(movementDir.scale(appliedSpeed));
+            livingEntity.getNavigation().stop();
 
             if (livingEntity.getTarget() == null) {
                 float yaw = (float) (Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
@@ -150,6 +141,10 @@ public interface ICrawlAndSwimAbleEntity {
         }
 
         if (livingEntity.isEyeInFluid(FluidTags.WATER)) {
+            livingEntity.setPose(Pose.SWIMMING);
+            livingEntity.setSwimming(true);
+            return true;
+        } else if (target != null && target.isAlive() && (target.isSwimming() || target.distanceToSqr(livingEntity) >= 6) && livingEntity.isInWater()) {
             livingEntity.setPose(Pose.SWIMMING);
             livingEntity.setSwimming(true);
             return true;

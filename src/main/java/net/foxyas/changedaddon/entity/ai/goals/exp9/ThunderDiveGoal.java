@@ -101,6 +101,9 @@ public class ThunderDiveGoal extends Goal {
 
     @Override
     public boolean canUse() {
+        if (mob.isInWater()) {
+            return false;
+        }
         LivingEntity t = mob.getTarget();
         if (cooldown > 0) {
             cooldown--;

@@ -66,12 +66,12 @@ public class SwimToTheTargetGoal extends Goal {
             this.mob.setSwimming(true); // Ativa a animação de nado
         } else {
             this.mob.setPose(Pose.STANDING);
-            this.mob.setSwimming(true); // Ativa a animação de nado
+            this.mob.setSwimming(false);
         }
 
         // Olha para o alvo enquanto nada
         this.mob.getLookControl().setLookAt(target, 90f, 90f);
-        this.mob.yBodyRotO = this.mob.getYHeadRot();
+        this.mob.setYBodyRot(this.mob.getYHeadRot());
 
         Vec3 movementDir = target
                 .position()
@@ -80,8 +80,7 @@ public class SwimToTheTargetGoal extends Goal {
 
         float appliedSpeed = mob.isEyeInFluid(FluidTags.WATER) ? speedModifier : speedModifier * 0.25F;
 
-        float swimSpeed = (float) (mob.getMoveControl().getSpeedModifier() * mob.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
-        mob.setSpeed(swimSpeed);
+        mob.setSpeed(speedModifier);
         mob.setDeltaMovement(movementDir.scale(appliedSpeed));
     }
 }
