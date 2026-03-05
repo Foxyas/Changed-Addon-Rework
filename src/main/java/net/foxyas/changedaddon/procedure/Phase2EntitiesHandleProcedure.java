@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.procedure;
 
-import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.foxyas.changedaddon.entity.bosses.Experiment10BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
@@ -13,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,7 +22,7 @@ import java.util.List;
 @Mod.EventBusSubscriber
 public class Phase2EntitiesHandleProcedure {
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onEntityAttacked(LivingHurtEvent event) {
         Entity entity = event.getEntity();
         if (!(entity instanceof LivingEntity livingEntity)) return;
@@ -32,24 +32,9 @@ public class Phase2EntitiesHandleProcedure {
         float currentHealth = livingEntity.getHealth();
         float maxHealth = livingEntity.getMaxHealth();
 
-        // ======== KetExperiment009BossEntity ============ \\
-        if (entity instanceof Experiment009BossEntity boss) {
-            if (boss.isPhase2()) {
-                float healthAfterDamage = currentHealth - damage;
-                float ratio = boss.computeHealthRatio();
-                if (healthAfterDamage <= maxHealth * 0.4f && ratio > 0.4f && !boss.isPhase3()) {
-                    boss.setPhase3(true);
-                    knockbackNearbyEntities(boss);
-                    playSound(level, entity.blockPosition().above(), "block.beacon.power_select", SoundSource.HOSTILE, 500, 0);
-                }
-            } else if (boss.getUnderlyingPlayer() == null && currentHealth - damage <= maxHealth * 0.75f) {
-                boss.setPhase2(true);
-                boss.SpawnThunderBolt(boss.position());
-                playSound(level, entity.blockPosition().above(), "block.beacon.power_select", SoundSource.HOSTILE, 500, 0);
-            }
 
-            // ======== Experiment10BossEntity ============ \\
-        } else if (entity instanceof Experiment10BossEntity boss) {
+        // ======== Experiment10BossEntity ============ \\
+        if (entity instanceof Experiment10BossEntity boss) {
             if (!boss.isPhase2() && boss.getUnderlyingPlayer() == null && currentHealth - damage <= maxHealth * 0.5f) {
                 boss.setPhase2(true);
                 playSound(level, entity.blockPosition().above(), "entity.player.attack.crit", SoundSource.HOSTILE, 1, 1);

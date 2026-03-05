@@ -119,8 +119,6 @@ public class ThunderStrikeGoal extends Goal {
             pathfinderMob.setDeltaMovement(Vec3.ZERO);
         }
 
-        if (tickCounter % 10 != 0) return;// a cada 1/2s lança um raio
-
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
         if (lightning == null) return;
 
@@ -138,7 +136,7 @@ public class ThunderStrikeGoal extends Goal {
 
         lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
         ParticlesUtil.sendParticles(pathfinderMob.level(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
-        DelayedTask.schedule(10, () -> {
+        DelayedTask.schedule(20, () -> {
             pathfinderMob.level().addFreshEntity(lightning);
             applyKnockBack(lightning);
             pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);

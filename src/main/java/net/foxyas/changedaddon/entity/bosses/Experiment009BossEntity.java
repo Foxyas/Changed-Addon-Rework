@@ -5,7 +5,10 @@ import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
-import net.foxyas.changedaddon.entity.api.*;
+import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
+import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.ColorUtil;
@@ -28,6 +31,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -37,6 +41,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.UniformFloat;
@@ -57,6 +62,7 @@ import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -69,7 +75,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
@@ -130,6 +135,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     public DamageSource getThunderDmg() {
+        DamageSource damageSource = this.level().damageSources().lightningBolt();
+        Holder<DamageType> pType = damageSource.typeHolder();
+        return new DamageSource(pType, this);
+    }
+
+    public DamageSource getShockDmg() {
         DamageSource damageSource = this.level().damageSources().lightningBolt();
         Holder<DamageType> pType = damageSource.typeHolder();
         return new DamageSource(pType, this);
@@ -232,6 +243,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        this.goalSelector.addGoal(15, new ElectrifyNearbyWater(this, UniformFloat.of(2, 6)));
         this.goalSelector.addGoal(20, new SimpleAntiFlyingAttack(this,
                 UniformInt.of(60, 100),
                 3,
@@ -343,6 +355,17 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     @Override
+    public boolean isInvulnerableTo(@NotNull DamageSource pSource) {
+        if (pSource.is(DamageTypes.LIGHTNING_BOLT))
+            return true;
+        if (pSource.is(ChangedDamageSources.ELECTROCUTION.key())) {
+            return true;
+        }
+
+        return super.isInvulnerableTo(pSource);
+    }
+
+    @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
             return false;
@@ -367,12 +390,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         if (source.getMsgId().equals("witherSkull"))
             return false;
         if (source.is(DamageTypes.IN_WALL)) {
-            List<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this)))).toList();
-            if (!entitiesOfClass.isEmpty()) {
-                Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
-                        ? entitiesOfClass.get(0)
-                        : this.getTarget());
-            }
+            teleportToNearLivingEntity();
             return false;
         }
 
@@ -382,10 +400,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             }
 
             if (this.getTarget() == null) {
-                Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this))));
-                Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
-                        ? entitiesOfClass.toList().get(0)
-                        : this.getTarget());
+                teleportToNearLivingEntity();
                 return false;
             }
         }
@@ -409,6 +424,15 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         }
 
         return super.hurt(source, amount);
+    }
+
+    private void teleportToNearLivingEntity() {
+        List<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this)))).toList();
+        if (!entitiesOfClass.isEmpty()) {
+            Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
+                    ? entitiesOfClass.get(0)
+                    : this.getTarget());
+        }
     }
 
     private void maybeSendReactionToPlayer(DamageSource source) {
@@ -456,16 +480,79 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         float currentHealth = this.getHealth();
         float healthRatio = currentHealth / maxHealth;
 
-        // Se estiver com menos de 40% da vida, simula que 40% é o "cheio" da barra
         if (healthRatio <= 0.4f) {
-            this.bossInfo.setProgress(healthRatio / 0.4f); // estica a barra
+
+            float progress = healthRatio / 0.4f;
+            this.bossInfo.setProgress(progress);
+
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
             }
-        } else {
-            this.bossInfo.setProgress(healthRatio);
+
+        } else if (healthRatio <= 0.75f) {
+
+            float progress = (healthRatio - 0.4f) / (0.75f - 0.4f);
+            this.bossInfo.setProgress(progress);
+
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
+            }
+
+        } else {
+
+            float progress = (healthRatio - 0.75f) / (1.0f - 0.75f);
+            this.bossInfo.setProgress(progress);
+
+            if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.PROGRESS) {
+                this.bossInfo.setOverlay(BossEvent.BossBarOverlay.PROGRESS);
+            }
+        }
+    }
+
+    @Override
+    protected void actuallyHurt(@NotNull DamageSource pDamageSource, float pDamageAmount) {
+        super.actuallyHurt(pDamageSource, pDamageAmount);
+
+        float currentHealth = this.getHealth();
+        float maxHealth = this.getMaxHealth();
+
+
+        if (this.isPhase2()) {
+            float ratio = this.computeHealthRatio();
+            if (currentHealth <= maxHealth * 0.4f && ratio >= 0.4f && !this.isPhase3()) {
+                this.setPhase3(true);
+                this.knockbackNearbyEntities(this);
+                level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
+            }
+        } else if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * 0.75f) {
+            this.setPhase2(true);
+            this.SpawnThunderBolt(this.position());
+            level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
+        }
+    }
+
+    @Override
+    protected float getWaterSlowDown() {
+        return 1;
+    }
+
+    private void knockbackNearbyEntities(LivingEntity source) {
+        AABB attackArea = source.getBoundingBox().inflate(6);
+        List<LivingEntity> nearby = source.level.getEntitiesOfClass(LivingEntity.class, attackArea);
+
+
+        for (LivingEntity target : nearby) {
+            if (target != source && source.canAttack(target)) {
+                double xForce = Mth.sin(source.getYRot() * ((float) Math.PI / 180F));
+                double zForce = -Mth.cos(source.getYRot() * ((float) Math.PI / 180F));
+                target.knockback(5, xForce, zForce);
+
+                if (target instanceof ServerPlayer serverPlayer) {
+                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                            serverPlayer.getId(),
+                            serverPlayer.getDeltaMovement())
+                    );
+                }
             }
         }
     }
