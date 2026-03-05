@@ -31,16 +31,30 @@ import java.util.stream.Collectors;
 
 public class LatexCoverStateProvider implements DataProvider {
     protected final PackOutput output;
+    protected final ExistingFileHelper helper;
     protected final String modid;
 
     private final Map<ResourceLocation, CoverStateBuilder> blocks = new HashMap<>();
 
     public LatexCoverStateProvider(PackOutput output, ExistingFileHelper helper, String modid) {
         this.output = output;
+        this.helper = helper;
         this.modid = modid;
     }
 
     protected void registerStatesAndModels() {
+    }
+
+    public String getModid() {
+        return modid;
+    }
+
+    public ExistingFileHelper getHelper() {
+        return helper;
+    }
+
+    public PackOutput getOutput() {
+        return output;
     }
 
     public CoverStateBuilder block(Block block) {
