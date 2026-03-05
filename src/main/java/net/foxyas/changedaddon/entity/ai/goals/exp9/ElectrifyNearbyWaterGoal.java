@@ -4,7 +4,9 @@ import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.init.ChangedAnimationEvents;
+import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntitySelector;
@@ -14,12 +16,12 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class ElectrifyNearbyWater extends Goal {
+public class ElectrifyNearbyWaterGoal extends Goal {
 
     protected final Experiment009BossEntity boss;
     protected final UniformFloat damageProvider;
 
-    public ElectrifyNearbyWater(Experiment009BossEntity experiment009BossEntity, UniformFloat damageProvider) {
+    public ElectrifyNearbyWaterGoal(Experiment009BossEntity experiment009BossEntity, UniformFloat damageProvider) {
         this.boss = experiment009BossEntity;
         this.damageProvider = damageProvider;
     }
@@ -56,6 +58,10 @@ public class ElectrifyNearbyWater extends Goal {
             if (connectedFluids.contains(nearbyEntity.blockPosition())) {
                 if (nearbyEntity.hurt(boss.getShockDmg(), damageProvider.sample(boss.getRandom()))) {
                     ChangedAnimationEvents.broadcastEntityAnimation(nearbyEntity, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
+                    level.playSound(null, nearbyEntity, ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1, 1);
+                    nearbyEntity.invulnerableTime = 40;
+                    nearbyEntity.hurtDuration = 10;
+                    nearbyEntity.hurtTime = nearbyEntity.hurtDuration;
                 }
             }
         }

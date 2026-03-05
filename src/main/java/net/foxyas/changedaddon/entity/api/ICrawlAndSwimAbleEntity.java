@@ -8,11 +8,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import org.jetbrains.annotations.Nullable;
 
 public interface ICrawlAndSwimAbleEntity {
 
     static boolean canEnterPose(ChangedEntity entity, Pose pose) {
         return (entity.overridePose == null || entity.overridePose == pose) && entity.level.noCollision(entity, entity.getBoundingBoxForPose(pose).deflate(1.0E-7D));
+    }
+
+    @Nullable(value = "Should only be null in a IllegalState")
+    default LivingEntity asEntity() {
+        return this instanceof LivingEntity livingEntity ? livingEntity : null;
     }
 
     default void crawlingSystem(ChangedEntity livingEntity, LivingEntity target, float swimSpeed) {
@@ -122,6 +128,10 @@ public interface ICrawlAndSwimAbleEntity {
             }
         }
 
+        if (!livingEntity.isSwimming()) {
+            movementDir = null;
+        }
+
         if (movementDir != null) {
             float appliedSpeed = livingEntity.isEyeInFluid(FluidTags.WATER)
                     ? speed
@@ -131,9 +141,12 @@ public interface ICrawlAndSwimAbleEntity {
             livingEntity.setSpeed(swimSpeed);
             livingEntity.setDeltaMovement(movementDir.scale(appliedSpeed));
 
-            float yaw = (float) (Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
-            livingEntity.setYRot(Mth.rotLerp(0.2F, livingEntity.getYRot(), yaw));
-            livingEntity.yBodyRot = livingEntity.getYRot();
+            if (livingEntity.getTarget() == null) {
+                float yaw = (float) (Mth.atan2(movementDir.z, movementDir.x) * (180F / Math.PI)) - 90.0F;
+                livingEntity.setYRot(Mth.rotLerp(0.2F, livingEntity.getYRot(), yaw));
+                livingEntity.yBodyRot = livingEntity.getYRot();
+            }
+
         }
 
         if (livingEntity.isEyeInFluid(FluidTags.WATER)) {

@@ -155,6 +155,7 @@ public class ThunderDiveGoal extends Goal {
         LivingEntity t = mob.getTarget();
         if (t != null) {
             mob.getLookControl().setLookAt(t, 90f, 90f);
+            mob.setYBodyRot(mob.yHeadRot);
         }
 
         switch (phase) {

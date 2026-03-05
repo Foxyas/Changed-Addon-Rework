@@ -77,7 +77,7 @@ public class DelayedTask {
 
     public void tick() {
         if (paused) return;
-        if (isCancelled()) {// Ensure the instance is removed correctly
+        if (isCancelledOrFinished()) {// Ensure the instance is removed correctly
             destroy();
             return;
         }
@@ -129,7 +129,7 @@ public class DelayedTask {
         return paused;
     }
 
-    public boolean isCancelled() {
+    public boolean isCancelledOrFinished() {
         return cancelled;
     }
 

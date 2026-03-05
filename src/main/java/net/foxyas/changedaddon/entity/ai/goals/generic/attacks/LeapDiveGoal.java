@@ -124,7 +124,8 @@ public class LeapDiveGoal extends Goal {
 
         LivingEntity t = mob.getTarget();
         if (t != null) {
-            mob.getLookControl().setLookAt(t, 30.0F, 30.0F);
+            mob.getLookControl().setLookAt(t, 90f, 90f);
+            mob.setYBodyRot(mob.yHeadRot);
         }
 
         switch (phase) {

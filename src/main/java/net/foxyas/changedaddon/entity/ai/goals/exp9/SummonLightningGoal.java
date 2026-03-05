@@ -159,6 +159,7 @@ public class SummonLightningGoal extends Goal {
             holder.setDeltaMovement(Vec3.ZERO);
             if (target == null) return;
             holder.getLookControl().setLookAt(target, 90f, 90f);
+            holder.setYBodyRot(holder.yHeadRot);
 
             if (holder.tickCount % 2 == 0) {
                 ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK,

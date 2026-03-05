@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.SwimToTheTargetGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
@@ -43,6 +44,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -243,7 +245,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(15, new ElectrifyNearbyWater(this, UniformFloat.of(2, 6)));
+        this.goalSelector.addGoal(20, new SwimToTheTargetGoal(this, (float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f));
+        this.goalSelector.addGoal(15, new ElectrifyNearbyWaterGoal(this, UniformFloat.of(2, 6)));
         this.goalSelector.addGoal(20, new SimpleAntiFlyingAttack(this,
                 UniformInt.of(60, 100),
                 3,
@@ -688,7 +691,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 removeStatModifiers();
             }
             setSpeed(this);
-            this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
+            //this.onlyCrawlingSystem();
         }
     }
 

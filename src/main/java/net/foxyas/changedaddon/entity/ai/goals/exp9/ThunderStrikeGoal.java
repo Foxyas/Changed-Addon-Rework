@@ -119,6 +119,8 @@ public class ThunderStrikeGoal extends Goal {
             pathfinderMob.setDeltaMovement(Vec3.ZERO);
         }
 
+        if (tickCounter % 20 != 0) return;
+
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
         if (lightning == null) return;
 
@@ -136,7 +138,17 @@ public class ThunderStrikeGoal extends Goal {
 
         lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
         ParticlesUtil.sendParticles(pathfinderMob.level(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
-        DelayedTask.schedule(20, () -> {
+        pathfinderMob.level().addFreshEntity(lightning);
+        applyKnockBack(lightning);
+        pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+
+
+
+        pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
+    }
+
+    private void oldSpawn(LightningBolt lightning) {
+        DelayedTask delayedTask = DelayedTask.schedule(20, () -> {
             pathfinderMob.level().addFreshEntity(lightning);
             applyKnockBack(lightning);
             pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
@@ -146,7 +158,6 @@ public class ThunderStrikeGoal extends Goal {
 //                pathfinderMob.push(dir.x, dir.y * 1.25f, dir.z);
 //            }
         });
-        pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
     }
 
     protected boolean isConductive(BlockState state) {
