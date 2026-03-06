@@ -96,7 +96,7 @@ public class ChangedAddonServerConfiguration {
 
         BUILDER.push("Chat");
         {
-            TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE = BUILDER.comment("The Chat of Transfured Players Should be affect by Latex Language?").define("Transfured Players Chat in Latex Language", false);
+            TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE = BUILDER.comment("The Chat of Transfured Players Should be affect by Latex Language?\nCareful when using this feature because it disable the chat report").define("Transfured Players Chat in Latex Language", false);
         }
         BUILDER.pop();
 

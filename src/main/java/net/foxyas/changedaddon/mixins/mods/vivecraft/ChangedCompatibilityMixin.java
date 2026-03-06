@@ -15,7 +15,7 @@ import org.vivecraft.client_vr.settings.VRSettings;
 @RequiredMods("vivecraft")
 public class ChangedCompatibilityMixin {
 
-    @ModifyReturnValue(method = "isFirstPersonRendering", at = @At("RETURN"))
+    /*@ModifyReturnValue(method = "isFirstPersonRendering", at = @At("RETURN"))
     private static boolean VRShowPlayerModelHook(boolean original) {
 
         LocalPlayer player = Minecraft.getInstance().player;
@@ -25,5 +25,5 @@ public class ChangedCompatibilityMixin {
         }
 
         return original;
-    }
+    }*/
 }

@@ -30,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.vivecraft.client.ClientVRPlayers;
 import org.vivecraft.client.render.VRPlayerModel;
 import org.vivecraft.client.render.VRPlayerRenderer;
+import org.vivecraft.client_vr.settings.VRSettings;
 
 @Mixin(value = AdvancedHumanoidModel.class, remap = false)
 @RequiredMods("vivecraft")
