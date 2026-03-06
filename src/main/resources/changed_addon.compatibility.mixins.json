@@ -12,6 +12,8 @@
     "defaultRequire": 1
   },
   "client": [
+    "mods.vivecraft.ChangedCompatibilityMixin",
+    "mods.vivecraft.AutoCalibrationMixin",
     "mods.firstPerson.LogicHandleMixin",
     "mods.vivecraft.AdvancedHumanoidModelMixin",
     "mods.vivecraft.AdvancedHumanoidRendererMixin",

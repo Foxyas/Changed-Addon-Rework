@@ -43,8 +43,8 @@ public class CatalyzerGuiMenu extends AbstractMenu {
         createPlayerHotbar(inv, 12, 4);
         createPlayerInventory(inv, 12, 4);
 
-        addSlot(new SlotItemHandler(internal, 0, 23, 44));
-        addSlot(new SlotItemHandler(internal, 1, 153, 44) {
+        addSlot(new SlotItemHandler(internal, 0, 23, 44)); // 36
+        addSlot(new SlotItemHandler(internal, 1, 153, 44) { // 37
 
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {

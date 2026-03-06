@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.util;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.util.Cacheable;
 import net.minecraft.Util;
@@ -116,7 +117,7 @@ public class TransfurVariantUtils {
     }
 
     private static ChangedEntity entity(TransfurVariant<?> variant, Level level) {
-        return variant == null ? null : variant.getEntityType().create(level);
+        return variant == null ? null : ChangedEntities.getCachedEntity(level, variant.getEntityType());
     }
 
     public static float GetLandSpeed(TransfurVariant<?> variant, Player player) {

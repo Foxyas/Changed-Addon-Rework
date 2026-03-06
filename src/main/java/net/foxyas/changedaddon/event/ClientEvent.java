@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer
 import net.foxyas.changedaddon.process.sounds.BossMusicHandler;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
@@ -26,6 +27,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static net.foxyas.changedaddon.event.ClientMod.changedAdditionsLoaded;

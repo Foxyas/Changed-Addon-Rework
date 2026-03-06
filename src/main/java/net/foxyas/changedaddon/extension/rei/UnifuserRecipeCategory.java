@@ -9,14 +9,17 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UnifuserRecipeCategory implements DisplayCategory<UnifuserRecipeDisplay> {
+    public final static ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/screens/jei_unifuser_screen");
 
     @Override
     public CategoryIdentifier<? extends UnifuserRecipeDisplay> getCategoryIdentifier() {
@@ -40,6 +43,11 @@ public class UnifuserRecipeCategory implements DisplayCategory<UnifuserRecipeDis
 
         // Fundo (Usando o slot padrão do REI ou sua textura)
         widgets.add(Widgets.createRecipeBase(bounds));
+        // Supondo que 200 ticks seja o tempo base e o progressSpeed aumente a velocidade
+        double duration = 100.0 / display.getProgressSpeed();
+
+        widgets.add(Widgets.createArrow(new Point(startPoint.x + 60, startPoint.y + 18))
+                .animationDurationTicks(duration));
 
         // Slots de Entrada (Baseado nas posições do seu JEI)
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 1, startPoint.y + 1)).entries(display.getInputEntries().get(0)).markInput());

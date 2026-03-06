@@ -38,7 +38,7 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         this.renderBackground(pGuiGraphics);
         super.render(pGuiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(pGuiGraphics, mouseX, mouseY);
-        if (menu.isSlotEmpty(36))
+        if (catalyzer.getItem(0).isEmpty())
             if (mouseX > leftPos + 18 && mouseX < leftPos + 42 && mouseY > topPos + 40 && mouseY < topPos + 64)
                 pGuiGraphics.renderTooltip(font, Component.translatable("gui.changed_addon.catalyzer_gui.tooltip_put_the_powders_or_syringe"), mouseX, mouseY);
     }

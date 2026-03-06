@@ -17,10 +17,7 @@ import net.ltxprogrammer.changed.entity.beast.AquaticEntity;
 import net.ltxprogrammer.changed.entity.variant.GenderedPair;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
-import net.ltxprogrammer.changed.init.ChangedRegistry;
-import net.ltxprogrammer.changed.init.ChangedSounds;
-import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
+import net.ltxprogrammer.changed.init.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.AbstractGolem;
@@ -695,12 +692,11 @@ public class ChangedAddonTransfurVariants {
         return null;
     }
 
+
     public static boolean isVariantOC(TransfurVariant<?> transfurVariant, @Nullable Level level) {
-        if (level != null && transfurVariant.getEntityType()
-                .create(level) instanceof PatronOC) {
+        if (level != null && ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType()) instanceof PatronOC) {
             return true;
-        } else if (level != null && transfurVariant.getEntityType()
-                .create(level) instanceof IOriginalCharacterEntity) {
+        } else if (level != null && ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType()) instanceof IOriginalCharacterEntity) {
             return true;
         } else return OCS.get().containsKey(transfurVariant);
     }

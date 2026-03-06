@@ -62,15 +62,15 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         this.renderBackground(pGuiGraphics);
         super.render(pGuiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(pGuiGraphics, mouseX, mouseY);
-        if (menu.isSlotEmpty(36))
+        if (menu.getTopSlot().getItem().isEmpty()) //(menu.isSlotEmpty(36))
             if (mouseX > leftPos + 10 && mouseX < leftPos + 34 && mouseY > topPos + 41 && mouseY < topPos + 65)
                 pGuiGraphics.renderTooltip(font, Component.translatable("gui.changed_addon.unifuser_gui.tooltip_place_the_powders"), mouseX, mouseY);
-        if (menu.isSlotEmpty(38))
-            if (mouseX > leftPos + 45 && mouseX < leftPos + 69 && mouseY > topPos + 53 && mouseY < topPos + 77)
-                pGuiGraphics.renderTooltip(font, Component.translatable("gui.changed_addon.unifuser_gui.tooltip_place_a_syringe_with_dna"), mouseX, mouseY);
-        if (menu.isSlotEmpty(39))
+        if (menu.getBottomSlot().getItem().isEmpty())
             if (mouseX > leftPos + 10 && mouseX < leftPos + 34 && mouseY > topPos + 65 && mouseY < topPos + 89)
                 pGuiGraphics.renderTooltip(font, Component.translatable("gui.changed_addon.unifuser_gui.tooltip_put_the_second_ingredient"), mouseX, mouseY);
+        if (menu.getSyringeSlot().getItem().isEmpty())
+            if (mouseX > leftPos + 45 && mouseX < leftPos + 69 && mouseY > topPos + 53 && mouseY < topPos + 77)
+                pGuiGraphics.renderTooltip(font, Component.translatable("gui.changed_addon.unifuser_gui.tooltip_place_a_syringe_with_dna"), mouseX, mouseY);
     }
 
     @Override

@@ -24,8 +24,8 @@ public class ChangedAddonBlockEntities {
     //Non generic Ones
     public static final RegistryObject<BlockEntityType<TimedKeypadBlockEntity>> TIMED_KEYPAD_BLOCK_ENTITY = REGISTRY.register("timed_keypad_block_entity", () -> BlockEntityType.Builder.of(TimedKeypadBlockEntity::new, ChangedAddonBlocks.TIMED_KEYPAD.get()).build(null));
 
-    public static final RegistryObject<BlockEntityType<?>> CATALYZER = registerGeneric("catalyzer_block_entity", ChangedAddonBlocks.CATALYZER, CatalyzerBlockEntity::new);
-    public static final RegistryObject<BlockEntityType<?>> UNIFUSER = registerGeneric("unifuser_block_entity", ChangedAddonBlocks.UNIFUSER, UnifuserBlockEntity::new);
+    public static final RegistryObject<BlockEntityType<CatalyzerBlockEntity>> CATALYZER = register("catalyzer_block_entity", ChangedAddonBlocks.CATALYZER, CatalyzerBlockEntity::new);
+    public static final RegistryObject<BlockEntityType<UnifuserBlockEntity>> UNIFUSER = register("unifuser_block_entity", ChangedAddonBlocks.UNIFUSER, UnifuserBlockEntity::new);
     public static final RegistryObject<BlockEntityType<?>> DARK_LATEX_PUDDLE = registerGeneric("dark_latex_puddle_block_entity", ChangedAddonBlocks.DARK_LATEX_PUDDLE, DarkLatexPuddleBlockEntity::new);
     public static final RegistryObject<BlockEntityType<SignalBlockEntity>> SIGNAL_BLOCK = register("signal_block_block_entity", ChangedAddonBlocks.SIGNAL_BLOCK, SignalBlockEntity::new);
     public static final RegistryObject<BlockEntityType<?>> ADVANCED_UNIFUSER = registerGeneric("advanced_unifuser_block_entity", ChangedAddonBlocks.ADVANCED_UNIFUSER, AdvancedUnifuserBlockEntity::new);

@@ -9,9 +9,11 @@ import me.shedaniel.rei.api.client.gui.widgets.Widgets;
 import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,12 @@ public class CatalyzerRecipeCategory implements DisplayCategory<CatalyzerRecipeD
 
         // Fundo da receita
         widgets.add(Widgets.createRecipeBase(bounds));
+
+        // Supondo que 200 ticks seja o tempo base e o progressSpeed aumente a velocidade
+        double duration = 100.0 / display.getProgressSpeed();
+
+        widgets.add(Widgets.createArrow(new Point(startPoint.x + 48, startPoint.y + 18))
+                .animationDurationTicks(duration));
 
         // Slot de Entrada (Coordenada x=12, y=18 no JEI)
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 12, startPoint.y + 18))
