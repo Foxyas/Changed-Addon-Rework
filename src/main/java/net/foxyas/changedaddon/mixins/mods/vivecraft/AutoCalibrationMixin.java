@@ -9,19 +9,28 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.vivecraft.client_vr.settings.AutoCalibration;
+import org.vivecraft.client.utils.ScaleHelper;
 
-@Mixin(value = AutoCalibration.class, remap = false)
+@Mixin(value = ScaleHelper.class, remap = false)
 @RequiredMods("vivecraft")
 public class AutoCalibrationMixin {
 
 
-    @ModifyReturnValue(method = "getPlayerHeight", at = @At("RETURN"))
-    private static float getPlayerHeightHook(float original) {
+    @ModifyReturnValue(method = "getEntityEyeHeightScale", at = @At("RETURN"))
+    private static float getEntityEyeHeightScaleHook(float original, LivingEntity entity, float partialTick) {
+        LivingEntity livingEntity = EntityUtil.maybeGetOverlaying(entity);
+        if (livingEntity instanceof IAlphaAbleEntity alphaAbleEntity && alphaAbleEntity.isAlpha()) {
+            return original + alphaAbleEntity.alphaAdditionalScale();
+        }
+        return original;
+    }
+
+    @ModifyReturnValue(method = "getEntityBbScale", at = @At("RETURN"))
+    private static float getEntityBbScaleHook(float original, LivingEntity entity, float partialTick) {
         LocalPlayer player = Minecraft.getInstance().player;
         LivingEntity livingEntity = EntityUtil.maybeGetOverlaying(player);
         if (livingEntity instanceof IAlphaAbleEntity alphaAbleEntity && alphaAbleEntity.isAlpha()) {
-            return original * alphaAbleEntity.alphaScaleForRender();
+            return original + alphaAbleEntity.alphaAdditionalScale();
         }
         return original;
     }
