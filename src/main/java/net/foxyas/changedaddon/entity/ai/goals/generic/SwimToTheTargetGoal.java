@@ -53,6 +53,11 @@ public class SwimToTheTargetGoal extends Goal {
     }
 
     @Override
+    public boolean isInterruptable() {
+        return false;
+    }
+
+    @Override
     public void tick() {
         LivingEntity target = this.mob.getTarget();
         if (target == null) return;
@@ -70,7 +75,7 @@ public class SwimToTheTargetGoal extends Goal {
         }
 
         // Olha para o alvo enquanto nada
-        this.mob.getLookControl().setLookAt(target, 90f, 90f);
+        this.mob.getLookControl().setLookAt(target, 180f, 180f);
         this.mob.setYBodyRot(this.mob.getYHeadRot());
 
         Vec3 movementDir = target
@@ -78,7 +83,7 @@ public class SwimToTheTargetGoal extends Goal {
                 .subtract(mob.position())
                 .normalize();
 
-        float appliedSpeed = mob.isEyeInFluid(FluidTags.WATER) ? speedModifier : speedModifier * 0.25F;
+        float appliedSpeed = mob.isEyeInFluid(FluidTags.WATER) ? speedModifier : speedModifier * 0.75F;
 
         mob.setSpeed(speedModifier);
         mob.setDeltaMovement(movementDir.scale(appliedSpeed));

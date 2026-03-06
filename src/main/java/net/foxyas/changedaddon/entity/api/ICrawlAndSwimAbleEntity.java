@@ -30,6 +30,10 @@ public interface ICrawlAndSwimAbleEntity {
     }
 
     private void switchToSafePose(ChangedEntity livingEntity) {
+        if (livingEntity.isSwimming() && livingEntity.hasPose(Pose.SWIMMING)) {
+            return;
+        }
+
         Pose currentPose = livingEntity.getPose();
         Pose safePose = currentPose;
 
@@ -109,17 +113,10 @@ public interface ICrawlAndSwimAbleEntity {
         if (!livingEntity.isInWater())
             return false;
 
-        Vec3 movementDir = null;
-
         LivingEntity target = livingEntity.getTarget();
-        if (target != null) {
-            movementDir = target
-                    .position()
-                    .subtract(livingEntity.position())
-                    .normalize();
-        }
 
-        if (movementDir != null) {
+        if (target != null) {
+            Vec3 movementDir = target.position().subtract(livingEntity.position()).normalize();
             float appliedSpeed = livingEntity.isEyeInFluid(FluidTags.WATER)
                     ? speed
                     : speed * 0.75F;
@@ -130,9 +127,18 @@ public interface ICrawlAndSwimAbleEntity {
             livingEntity.setDeltaMovement(scale);
             livingEntity.getNavigation().stop();
 
-            Vec3 add = livingEntity.position().add(scale);
-            livingEntity.getLookControl().setLookAt(add.x, add.y, add.z, 180, 180);
+            livingEntity.getLookControl().setLookAt(target, 180, 180);
             livingEntity.setYBodyRot(livingEntity.getYHeadRot());
+
+//            if (target != null) {
+//                Vec3 position = target.position();
+//                livingEntity.getLookControl().setLookAt(position.x, position.y, position.z, 180, 180);
+//                livingEntity.setYBodyRot(livingEntity.getYHeadRot());
+//             } else {
+//                Vec3 position = livingEntity.position().add(scale);
+//                livingEntity.getLookControl().setLookAt(position.x, position.y, position.z, 180, 180);
+//                livingEntity.setYBodyRot(livingEntity.getYHeadRot());
+//            }
 
         }
 
@@ -144,11 +150,7 @@ public interface ICrawlAndSwimAbleEntity {
             }
             livingEntity.setSwimming(true);
             return true;
-        } /* else if (livingEntity.isEyeInFluid(FluidTags.WATER)) {
-            livingEntity.setPose(Pose.SWIMMING);
-            livingEntity.setSwimming(true);
-            return true;
-        } */ else {
+        } else {
             livingEntity.setPose(Pose.STANDING);
             livingEntity.setSwimming(false);
             return false;

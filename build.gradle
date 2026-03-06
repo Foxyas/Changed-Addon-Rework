@@ -81,6 +81,8 @@ repositories {
         url = "https://ltxprogrammer.github.io/maven/"
     }
 
+    maven { url "https://maven.shedaniel.me/" }
+
     //maven {
     //    name = "Changed"
     //    url = "https://raw.githubusercontent.com/foxyas/Changed-Minecraft-Mod/1.20.1-dev/mcmodsrepo/"
@@ -134,6 +136,11 @@ dependencies {
 
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
+
+    implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:${reiVersion}")
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
+    implementation fg.deobf("dev.architectury:architectury-forge:${archVersion}")
 
     implementation fg.deobf("dev.tr7zw:notenoughanimations-forge-1.11.1-mc1.20.1:1.10.0")
     implementation fg.deobf("dev.tr7zw:firstperson-forge-2.4.9-mc1.20.1:2.4.9")

@@ -42,3 +42,10 @@ description="this is a §bremastered§r version of my mod addon hope you like it
     ordering="NONE"
     side="BOTH"
 
+[[dependencies.changed_addon]]
+    modId="roughlyenoughitems"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
+

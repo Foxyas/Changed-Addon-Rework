@@ -73,6 +73,10 @@ public class CatalyzerRecipe implements Recipe<SimpleContainer> {
         return output.copy();
     }
 
+    public @NotNull ItemStack getResultItem() {
+        return output.copy();
+    }
+
     public float getProgressSpeed() {
         return ProgressSpeed;
     }

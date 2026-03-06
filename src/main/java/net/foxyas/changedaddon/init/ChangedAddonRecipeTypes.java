@@ -6,13 +6,16 @@ import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.foxyas.changedaddon.recipe.special.HaydenTransfurRecipe;
 import net.foxyas.changedaddon.recipe.special.KeycardColorRecipe;
 import net.foxyas.changedaddon.recipe.special.LaserPointerColoringRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ChangedAddonRecipeTypes {
 
+    public static final DeferredRegister<RecipeType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, ChangedAddonMod.MODID);
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ChangedAddonMod.MODID);
 
     // Registrar suas receitas especiais
@@ -26,4 +29,19 @@ public class ChangedAddonRecipeTypes {
             SERIALIZERS.register("catalyzer", () -> CatalyzerRecipe.Serializer.INSTANCE);
     public static final RegistryObject<RecipeSerializer<UnifuserRecipe>> UNIFUSER_RECIPE =
             SERIALIZERS.register("unifuser", () -> UnifuserRecipe.Serializer.INSTANCE);
+
+    public static RegistryObject<RecipeType<UnifuserRecipe>> UNIFUSER_RECIPE_TYPE = register("unifuser", UnifuserRecipe.Type.INSTANCE);
+    public static RegistryObject<RecipeType<CatalyzerRecipe>> CATALYZER_RECIPE_TYPE = register("catalyzer", CatalyzerRecipe.Type.INSTANCE);
+
+    private static <T extends Recipe<?>> RegistryObject<RecipeType<T>> register(String name) {
+        return REGISTRY.register(name, () -> new RecipeType<T>() {
+            public String toString() {
+                return ChangedAddonMod.resourceLocString(name);
+            }
+        });
+    }
+
+    private static <T extends Recipe<?>> RegistryObject<RecipeType<T>> register(String name, RecipeType<T> recipeType) {
+        return REGISTRY.register(name, () -> recipeType);
+    }
 }
