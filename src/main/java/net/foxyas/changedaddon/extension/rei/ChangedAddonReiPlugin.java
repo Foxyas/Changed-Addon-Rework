@@ -21,11 +21,13 @@ import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -80,11 +82,11 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
             @Override
             public ApplicabilityResult checkApplicable(Context context) {
                 if (!(context.getMenu() instanceof CatalyzerGuiMenu)
-                        || !UNIFUSER.equals(context.getDisplay().getCategoryIdentifier())
+                        || !CATALYZER.equals(context.getDisplay().getCategoryIdentifier())
                         || context.getContainerScreen() == null) {
                     return ApplicabilityResult.createNotApplicable();
                 } else {
-                    return ApplicabilityResult.createApplicable();
+                    return new ApplicabilityResultImpl(true, Result.createFailedCustomButtonColor(Component.translatable("warn.rei.not.supported.move.items.but.right.container"), new Color(255, 244, 0, 255).getRGB()));
                 }
             }
 
@@ -143,7 +145,7 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
                         || context.getContainerScreen() == null) {
                     return ApplicabilityResult.createNotApplicable();
                 } else {
-                    return ApplicabilityResult.createApplicable();
+                    return new ApplicabilityResultImpl(true, Result.createFailedCustomButtonColor(Component.translatable("warn.rei.not.supported.move.items.but.right.container"), new Color(255, 244, 0, 255).getRGB()));
                 }
             }
 

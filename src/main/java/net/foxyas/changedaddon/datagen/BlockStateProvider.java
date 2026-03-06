@@ -75,7 +75,6 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         simpleBlock(DORMANT_DARK_LATEX);
         simpleBlock(DORMANT_WHITE_LATEX);
         stackableCan(FOXTA_CAN);
-        simpleBlock(GENERATOR);
         simpleBlock(GOO_CORE);
         horizontalBlock(INFORMANT_BLOCK);
         simpleBlock(IRIDIUM_BLOCK);

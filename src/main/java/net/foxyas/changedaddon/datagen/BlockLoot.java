@@ -127,7 +127,6 @@ public class BlockLoot extends net.minecraft.data.loot.BlockLootSubProvider {
                 )
         );
 
-        dropSelf(GENERATOR.get());
         dropStackableCan(FOXTA_CAN, ChangedAddonItems.FOXTA);
         dropStackableCan(SNEPSI_CAN, ChangedAddonItems.SNEPSI);
         dropSelf(HAND_SCANNER.get());

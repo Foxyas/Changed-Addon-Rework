@@ -30,7 +30,6 @@ public class ChangedAddonBlockEntities {
     public static final RegistryObject<BlockEntityType<SignalBlockEntity>> SIGNAL_BLOCK = register("signal_block_block_entity", ChangedAddonBlocks.SIGNAL_BLOCK, SignalBlockEntity::new);
     public static final RegistryObject<BlockEntityType<?>> ADVANCED_UNIFUSER = registerGeneric("advanced_unifuser_block_entity", ChangedAddonBlocks.ADVANCED_UNIFUSER, AdvancedUnifuserBlockEntity::new);
     public static final RegistryObject<BlockEntityType<?>> ADVANCED_CATALYZER = registerGeneric("advanced_catalyzer_block_entity", ChangedAddonBlocks.ADVANCED_CATALYZER, AdvancedCatalyzerBlockEntity::new);
-    public static final RegistryObject<BlockEntityType<?>> GENERATOR = registerGeneric("generator_block_entity", ChangedAddonBlocks.GENERATOR, GeneratorBlockEntity::new);
 
     public static final RegistryObject<BlockEntityType<SnepPlushyBlockEntity>> SNEP_PLUSHY = REGISTRY.register("snep_plushy_block_entity", () -> BlockEntityType.Builder.of(SnepPlushyBlockEntity::new, ChangedAddonBlocks.SNEP_PLUSHY.get()).build(null));
     public static final RegistryObject<BlockEntityType<WolfPlushyBlockEntity>> WOLF_PLUSHY = REGISTRY.register("wolf_plushy_block_entity", () -> BlockEntityType.Builder.of(WolfPlushyBlockEntity::new, ChangedAddonBlocks.WOLF_PLUSHY.get()).build(null));

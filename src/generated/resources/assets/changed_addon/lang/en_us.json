@@ -674,5 +674,6 @@
   "text.changed_addon.land_speed": "Land Speed = %s",
   "text.changed_addon.legs": "Amount of Legs = %s",
   "text.changed_addon.miningStrength": "Mining Strength: %s",
-  "text.changed_addon.swim_speed": "Swim Speed = %s"
+  "text.changed_addon.swim_speed": "Swim Speed = %s",
+  "warn.rei.not.supported.move.items.but.right.container": "Move Items is not supported with this kind of workstation"
 }

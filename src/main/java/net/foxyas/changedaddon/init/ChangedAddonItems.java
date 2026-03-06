@@ -155,7 +155,6 @@ public class ChangedAddonItems {
     public static final RegistryObject<Item> DARK_LATEX_SPRAY = REGISTRY.register("dark_latex_spray", () -> new SprayItem(ChangedLatexTypes.DARK_LATEX::get));
     public static final RegistryObject<Item> WHITE_LATEX_SPRAY = REGISTRY.register("white_latex_spray", () -> new SprayItem(ChangedLatexTypes.WHITE_LATEX::get));
     public static final RegistryObject<Item> LUNAR_ROSE = REGISTRY.register("lunar_rose", LunarRoseItem::new);
-    public static final RegistryObject<Item> GENERATOR = blockNoTab(ChangedAddonBlocks.GENERATOR);
     public static final RegistryObject<Item> CATALYZER_BLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("catalyzer_block_illustrative_item", CatalyzerBlockIllustrativeItemItem::new);
     public static final RegistryObject<Item> UNIFUSER_BLOCK_ILLUSTRATIVE_ITEM = REGISTRY.register("unifuser_block_illustrative_item", UnifuserBlockIllustrativeItemItem::new);
     public static final RegistryObject<Item> SNEP_ICON = REGISTRY.register("snep_icon", SnepIconItem::new);
@@ -302,7 +301,7 @@ public class ChangedAddonItems {
     }
 
     public static List<RegistryObject<Item>> getNoTabItems() {
-        return List.of(GENERATOR, SNEP_ICON, PAT_ICON, FRIENDLY_GOEY_ICON);
+        return List.of(SNEP_ICON, PAT_ICON, FRIENDLY_GOEY_ICON);
     }
 
 

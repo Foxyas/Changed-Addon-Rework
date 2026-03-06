@@ -75,7 +75,7 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
                 BLUE_WOLF_CRYSTAL_BLOCK.get(), ORANGE_WOLF_CRYSTAL_BLOCK.get(), YELLOW_WOLF_CRYSTAL_BLOCK.get(),
                 WHITE_WOLF_CRYSTAL_BLOCK.get(), LUMINAR_CRYSTAL_BLOCK.get(), LUMINAR_CRYSTAL_SMALL.get(), LUMINAR_CRYSTAL_LARGE.get(),
                 YELLOW_WOLF_CRYSTAL_SMALL.get(), BLUE_WOLF_CRYSTAL_SMALL.get(), ORANGE_WOLF_CRYSTAL_SMALL.get(),
-                WHITE_WOLF_CRYSTAL_SMALL.get(), GOO_CORE.get(), GENERATOR.get(), WOLF_CRYSTAL_PILLAR.get());
+                WHITE_WOLF_CRYSTAL_SMALL.get(), GOO_CORE.get(), WOLF_CRYSTAL_PILLAR.get());
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(DARK_LATEX_PUDDLE.get(), DORMANT_DARK_LATEX.get(), DORMANT_WHITE_LATEX.get());
     }
 }

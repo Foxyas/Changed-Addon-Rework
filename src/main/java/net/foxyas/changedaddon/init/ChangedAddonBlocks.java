@@ -62,7 +62,6 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<Block> BLUE_WOLF_CRYSTAL_SMALL = REGISTRY.register("blue_wolf_crystal_small", BlueWolfCrystalSmallBlock::new);
     public static final RegistryObject<Block> WHITE_WOLF_CRYSTAL_SMALL = REGISTRY.register("white_wolf_crystal_small", WhiteWolfCrystalSmallBlock::new);
     public static final RegistryObject<Block> GOO_CORE = REGISTRY.register("goo_core", GooCoreBlock::new);
-    public static final RegistryObject<Block> GENERATOR = REGISTRY.register("generator", GeneratorBlock::new);
     public static final RegistryObject<FoxtaCanBlock> FOXTA_CAN = REGISTRY.register("foxta_can", FoxtaCanBlock::new);
     public static final RegistryObject<SnepsiCanBlock> SNEPSI_CAN = REGISTRY.register("snepsi_can", SnepsiCanBlock::new);
     public static final RegistryObject<Block> TIMED_KEYPAD = REGISTRY.register("timed_keypad", TimedKeypadBlock::new);

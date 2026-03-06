@@ -21,7 +21,6 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DARK_LATEX_PUDDLE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_IRIDIUM_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_DARK_LATEX;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_WHITE_LATEX;
-import static net.foxyas.changedaddon.init.ChangedAddonBlocks.GENERATOR;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.GOO_CORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.HAND_SCANNER;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.INFORMANT_BLOCK;
@@ -144,7 +143,6 @@ public class ENLanguageProvider extends LanguageProvider {
         addBlock(FOXTA_CAN, "§bFoxta Can§r");
         addBlockFromId(HAND_SCANNER);
         addBlockFromId(PAWS_SCANNER);
-        addBlockFromId(GENERATOR);
         addBlockFromId(GOO_CORE);
         addBlockFromId(INFORMANT_BLOCK);
         addBlockFromId(IRIDIUM_BLOCK);
@@ -684,5 +682,7 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Pats received");
+
+        add("warn.rei.not.supported.move.items.but.right.container","Move Items is not supported with this kind of workstation");
     }
 }

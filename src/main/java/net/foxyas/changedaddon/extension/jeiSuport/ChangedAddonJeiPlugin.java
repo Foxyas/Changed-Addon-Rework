@@ -11,7 +11,6 @@ import mezz.jei.api.recipe.vanilla.IVanillaRecipeFactory;
 import mezz.jei.api.registration.*;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.FoxyasInventoryMenuScreen;
-import net.foxyas.changedaddon.client.gui.UnifuserGuiScreen;
 import net.foxyas.changedaddon.enchantment.TransfurAspectEnchantment;
 import net.foxyas.changedaddon.extension.jeiSuport.guisHandlers.FoxyasGuiContainerHandler;
 import net.foxyas.changedaddon.init.*;
@@ -89,6 +88,7 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+        registration.addRecipeTransferHandler(UnifuserGuiMenu.class, ChangedAddonMenus.UNIFUSER_GUI.get(), UNIFUSER_RECIPE_TYPE, 35, 4, 0, 35);
     }
 
     @Override

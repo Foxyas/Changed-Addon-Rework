@@ -20,7 +20,6 @@ import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DARK_LATEX_PUDDLE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DEEPSLATE_IRIDIUM_ORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_DARK_LATEX;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.DORMANT_WHITE_LATEX;
-import static net.foxyas.changedaddon.init.ChangedAddonBlocks.GENERATOR;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.GOO_CORE;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.HAND_SCANNER;
 import static net.foxyas.changedaddon.init.ChangedAddonBlocks.INFORMANT_BLOCK;
@@ -143,7 +142,6 @@ public class HULanguageProvider extends LanguageProvider {
         addBlock(FOXTA_CAN, "§bFoxtás doboz§r");
         addBlock(HAND_SCANNER, "Kézérzékelő");
         addBlock(PAWS_SCANNER, "Mancsérzékelő");
-        addBlock(GENERATOR, "Generátor");
         addBlock(GOO_CORE, "Ragacsmag");
         addBlock(INFORMANT_BLOCK, "Informátor blokk");
         addBlock(IRIDIUM_BLOCK, "Irídiumblokk");
