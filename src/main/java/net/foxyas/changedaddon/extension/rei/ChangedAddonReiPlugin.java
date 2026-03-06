@@ -8,32 +8,28 @@ import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry;
 import me.shedaniel.rei.api.client.registry.transfer.simple.SimpleTransferHandler;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import me.shedaniel.rei.api.common.entry.comparison.EntryComparator;
 import me.shedaniel.rei.api.common.entry.comparison.ItemComparatorRegistry;
+import me.shedaniel.rei.api.common.transfer.info.stack.SlotAccessor;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.forge.REIPluginClient;
-import me.shedaniel.rei.impl.Internals;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.CatalyzerGuiScreen;
 import net.foxyas.changedaddon.client.gui.UnifuserGuiScreen;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonRecipeTypes;
 import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
-import net.ltxprogrammer.changed.client.gui.InfuserScreen;
-import net.ltxprogrammer.changed.client.gui.PurifierScreen;
-import net.ltxprogrammer.changed.init.ChangedBlocks;
-import net.ltxprogrammer.changed.init.ChangedItems;
-import net.ltxprogrammer.changed.init.ChangedRecipeTypes;
-import net.ltxprogrammer.changed.recipe.InfuserRecipe;
-import net.ltxprogrammer.changed.recipe.PurifierRecipe;
-import net.ltxprogrammer.changed.world.inventory.InfuserMenu;
-import net.ltxprogrammer.changed.world.inventory.PurifierMenu;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @REIPluginClient
 public class ChangedAddonReiPlugin implements REIClientPlugin {
@@ -75,9 +71,125 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
 
     @Override
     public void registerTransferHandlers(TransferHandlerRegistry registry) {
-        registry.register(SimpleTransferHandler.create(UnifuserGuiMenu.class, UNIFUSER,
-                new SimpleTransferHandler.IntRange(36, 39)));
-        registry.register(SimpleTransferHandler.create(CatalyzerGuiMenu.class, CATALYZER,
-                new SimpleTransferHandler.IntRange(36, 36)));
+        registry.register(getUnifuserHandle());
+        registry.register(getCatalyzerHandle());
+    }
+
+    private @NotNull SimpleTransferHandler getCatalyzerHandle() {
+        return new SimpleTransferHandler() {
+            @Override
+            public ApplicabilityResult checkApplicable(Context context) {
+                if (!(context.getMenu() instanceof CatalyzerGuiMenu)
+                        || !UNIFUSER.equals(context.getDisplay().getCategoryIdentifier())
+                        || context.getContainerScreen() == null) {
+                    return ApplicabilityResult.createNotApplicable();
+                } else {
+                    return ApplicabilityResult.createApplicable();
+                }
+            }
+
+            @Override
+            public Iterable<SlotAccessor> getInputSlots(Context context) {
+                if (context.getMenu() instanceof CatalyzerGuiMenu menu) {
+                    return Stream.of(menu.getLeftSlot())
+                            .map(slot -> new SlotAccessor() {
+                                @Override
+                                public ItemStack getItemStack() {
+                                    return slot.getItem();
+                                }
+
+                                @Override
+                                public void setItemStack(ItemStack stack) {
+                                    slot.set(stack);
+                                }
+
+                                @Override
+                                public ItemStack takeStack(int amount) {
+                                    return slot.remove(amount);
+                                }
+
+                                @Override
+                                public boolean allowModification(Player player) {
+                                    return slot.allowModification(player);
+                                }
+
+                                @Override
+                                public boolean canPlace(ItemStack stack) {
+                                    return slot.mayPlace(stack);
+                                }
+                            })
+                            .collect(Collectors.toList());
+                }
+                return List.of();
+            }
+
+            @Override
+            public Iterable<SlotAccessor> getInventorySlots(Context context) {
+                LocalPlayer player = context.getMinecraft().player;
+                Inventory inventory = player.getInventory();
+                return IntStream.range(0, inventory.items.size())
+                        .mapToObj(index -> SlotAccessor.fromPlayerInventory(player, index))
+                        .collect(Collectors.toList());
+            }
+        };
+    }
+
+    private @NotNull SimpleTransferHandler getUnifuserHandle() {
+        return new SimpleTransferHandler() {
+            @Override
+            public ApplicabilityResult checkApplicable(Context context) {
+                if (!(context.getMenu() instanceof UnifuserGuiMenu)
+                        || !UNIFUSER.equals(context.getDisplay().getCategoryIdentifier())
+                        || context.getContainerScreen() == null) {
+                    return ApplicabilityResult.createNotApplicable();
+                } else {
+                    return ApplicabilityResult.createApplicable();
+                }
+            }
+
+            @Override
+            public Iterable<SlotAccessor> getInputSlots(Context context) {
+                if (context.getMenu() instanceof UnifuserGuiMenu menu) {
+                    return Stream.of(menu.getSyringeSlot(), menu.getBottomSlot(), menu.getTopSlot())
+                            .map(slot -> new SlotAccessor() {
+                                @Override
+                                public ItemStack getItemStack() {
+                                    return slot.getItem();
+                                }
+
+                                @Override
+                                public void setItemStack(ItemStack stack) {
+                                    slot.set(stack);
+                                }
+
+                                @Override
+                                public ItemStack takeStack(int amount) {
+                                    return slot.remove(amount);
+                                }
+
+                                @Override
+                                public boolean allowModification(Player player) {
+                                    return slot.allowModification(player);
+                                }
+
+                                @Override
+                                public boolean canPlace(ItemStack stack) {
+                                    return slot.mayPlace(stack);
+                                }
+                            })
+                            .collect(Collectors.toList());
+                }
+                return List.of();
+            }
+
+            @Override
+            public Iterable<SlotAccessor> getInventorySlots(Context context) {
+                LocalPlayer player = context.getMinecraft().player;
+                Inventory inventory = player.getInventory();
+                return IntStream.range(0, inventory.items.size())
+                        .mapToObj(index -> SlotAccessor.fromPlayerInventory(player, index))
+                        .collect(Collectors.toList());
+            }
+        };
     }
 }

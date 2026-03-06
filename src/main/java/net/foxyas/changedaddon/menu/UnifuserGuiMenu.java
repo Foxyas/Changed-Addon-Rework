@@ -10,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -26,10 +25,10 @@ public class UnifuserGuiMenu extends AbstractMenu {
     private final UnifuserBlockEntity unifuser;
     private final BlockPos blockPos;
 
-    protected final Slot slot1;
-    protected final Slot slot2;
-    protected final Slot slot3;
-    protected final Slot slot4;
+    protected final SlotItemHandler slot1;
+    protected final SlotItemHandler slot2;
+    protected final SlotItemHandler slot3;
+    protected final SlotItemHandler slot4;
 
     public UnifuserGuiMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         this(id, inv, extraData.readBlockPos());
@@ -71,7 +70,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
 
             @Override
             public boolean mayPlace(@NotNull ItemStack itemstack) {
-                return itemstack.getItem() == ChangedAddonItems.CATALYZED_DNA.get() || itemstack.is(ChangedItems.BLOOD_SYRINGE.get())
+                return itemstack.isEmpty() || itemstack.getItem() == ChangedAddonItems.CATALYZED_DNA.get() || itemstack.is(ChangedItems.BLOOD_SYRINGE.get())
                         || itemstack.is(ChangedItems.LATEX_SYRINGE.get());
             }
         };
@@ -107,19 +106,19 @@ public class UnifuserGuiMenu extends AbstractMenu {
         return blockPos;
     }
 
-    public Slot getOutputSlot() {
+    public SlotItemHandler getOutputSlot() {
         return slot4;
     }
 
-    public Slot getSyringeSlot() {
+    public SlotItemHandler getSyringeSlot() {
         return slot3;
     }
 
-    public Slot getBottomSlot() {
+    public SlotItemHandler getBottomSlot() {
         return slot2;
     }
 
-    public Slot getTopSlot() {
+    public SlotItemHandler getTopSlot() {
         return slot1;
     }
 }
