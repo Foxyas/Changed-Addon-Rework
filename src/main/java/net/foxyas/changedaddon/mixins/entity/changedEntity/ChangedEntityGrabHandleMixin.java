@@ -237,6 +237,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putBoolean("canUseGrab", this.canUseGrab());
         if (canEntityGrab(this.getType(), level)) {
             this.saveGrabAbilityInTag(tag);
         }
@@ -247,6 +248,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        if (tag.contains("canUseGrab")) setCanUseGrab(tag.getBoolean("canUseGrab"));
         if (canEntityGrab(this.getType(), level)) {
             this.readGrabAbilityInTag(tag);
         }

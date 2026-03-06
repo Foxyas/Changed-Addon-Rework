@@ -71,7 +71,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
@@ -382,12 +381,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         if (source.getMsgId().equals("witherSkull"))
             return false;
         if (source == DamageSource.IN_WALL) {
-            List<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this)))).toList();
-            if (!entitiesOfClass.isEmpty()) {
-                Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
-                        ? entitiesOfClass.get(0)
-                        : this.getTarget());
-            }
+            teleportToNearLivingEntity();
             return false;
         }
 
@@ -397,10 +391,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             }
 
             if (this.getTarget() == null) {
-                Stream<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this))));
-                Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
-                        ? entitiesOfClass.toList().get(0)
-                        : this.getTarget());
+                teleportToNearLivingEntity();
                 return false;
             }
         }
@@ -426,6 +417,15 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             }
         }
         return super.hurt(source, amount);
+    }
+
+    private void teleportToNearLivingEntity() {
+        List<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this)))).toList();
+        if (!entitiesOfClass.isEmpty()) {
+            Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
+                    ? entitiesOfClass.get(0)
+                    : this.getTarget());
+        }
     }
 
     private void maybeSendReactionToPlayer(DamageSource source) {
