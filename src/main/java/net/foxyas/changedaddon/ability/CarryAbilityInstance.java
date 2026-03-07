@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.*;
 import net.ltxprogrammer.changed.entity.beast.WhiteLatexCentaur;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -37,11 +38,24 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
     }
 
     public static @Nullable Entity carryTarget(Player player) {
+        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+        if (transfurVariant != null) {
+            GrabEntityAbilityInstance abilityInstance = transfurVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (abilityInstance != null && abilityInstance.grabbedEntity != null) {
+                return null;
+            }
+        }
         EntityHitResult hitResult = PlayerUtil.getEntityHitLookingAt(player, ((float) player.getEntityReach()), ClipContext.Block.OUTLINE);
         if (hitResult == null) {
             return null;
         }
-        return hitResult.getEntity();
+
+        Entity entity = hitResult.getEntity();
+        if (entity instanceof LivingEntity living && GrabEntityAbility.getGrabber(living) != null) {
+            return null;
+        }
+
+        return entity;
     }
 
     // === Helpers de rede (broadcast correto) ===
@@ -97,7 +111,9 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void onRemove() {
         super.onRemove();
-        Run(entity.getEntity());
+        if (this.carriedEntity != null) {
+            Run(entity.getEntity());
+        }
     }
 
     @Override

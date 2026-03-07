@@ -30,6 +30,7 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Double> ALPHA_SPAWN_HARD;
     public static final ForgeConfigSpec.ConfigValue<Double> ALPHA_SPAWN_HARDCORE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> CAN_GRABBY_ENTITIES_SPAWN;
+    public static final ForgeConfigSpec.ConfigValue<Double> GRABBY_ENTITIES_SPAWN_CHANCE;
     public static final ForgeConfigSpec.ConfigValue<WorldDifficulty> BEHEMOTH_CAN_USE_GRAB_IN_DIFFICULTY;
     public static final ForgeConfigSpec.ConfigValue<Integer> FIGHT_TO_KEEP_CONSCIOUSNESS_TIMER;
     public static final ForgeConfigSpec.ConfigValue<Double> FIGHT_TO_KEEP_CONSCIOUSNESS_STRUGGLE_NEED;
@@ -54,6 +55,9 @@ public class ChangedAddonServerConfiguration {
         CAN_GRABBY_ENTITIES_SPAWN = BUILDER
                 .comment("Allow Changed Entities to be able to spawn with the grab ability feature")
                 .define("Grabby Entities Spawn", false);
+        GRABBY_ENTITIES_SPAWN_CHANCE = BUILDER
+                .comment("Control the chance for the \"Grabby\" entities to spawn with the grab ability feature")
+                .define("Grabby Entities Spawn Chance", 0.005);
 
         BEHEMOTH_CAN_USE_GRAB_IN_DIFFICULTY = BUILDER
                 .comment("Defines which level of difficulty should allow behemoths to use the grab ability feature, if NONE then the behemoth will never use it")

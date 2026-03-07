@@ -78,7 +78,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             if (this.getSelfVariant() != null) {
                 List<? extends AbstractAbility<?>> listOfAbilities = this.getSelfVariant().abilities.stream().map((entityTypeFunction -> entityTypeFunction.apply(type))).toList();
                 if (listOfAbilities.contains(ChangedAbilities.GRAB_ENTITY_ABILITY.get())) {
-                    this.setCanUseGrab(level.getRandom().nextFloat() <= 0.005f); // Just for fail-safe
+                    this.setCanUseGrab(level.getRandom().nextFloat() <= ChangedAddonServerConfiguration.GRABBY_ENTITIES_SPAWN_CHANCE.get()); // Just for fail-safe
                 }
             }
         }

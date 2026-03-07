@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.mixins.entity.variant;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
+import net.foxyas.changedaddon.entity.api.ISafeChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -19,6 +20,8 @@ public class TransfurVariantMixin {
             return false;
         } else if (entity.getType().is(ChangedTags.EntityTypes.LATEX) && ChangedEntityExtension.of(entity).isPacified()) {
             return false;
+        } else if (entity instanceof ISafeChangedEntity safeChanged) {
+            return safeChanged.shouldScareVillagers(entity, villager);
         }
         return original;
     }
