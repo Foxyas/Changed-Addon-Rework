@@ -113,8 +113,6 @@ public class RoundedButton extends RoundedRectWidget {
 
         render(stack, guiGraphics, mouseX, mouseY, partialTick);
 
-        WidgetHelper.fill(stack, -width / 2f, -height / 2f, width / 2f, height / 2f, 0, -1);
-
         if(comp != null) {
             guiGraphics.bufferSource().endLastBatch();
             float textOffset;
