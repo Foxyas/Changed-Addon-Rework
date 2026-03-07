@@ -696,5 +696,7 @@ public class HULanguageProvider extends LanguageProvider {
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
+
+        add("warn.rei.not.supported.move.items.but.right.container","Az elemek áthelyezése nem támogatott ennél a munkaállomásnál");
     }
 }
