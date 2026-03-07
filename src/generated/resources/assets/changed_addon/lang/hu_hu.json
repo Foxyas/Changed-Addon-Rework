@@ -673,5 +673,6 @@
   "text.changed_addon.land_speed": "Szárazföldi sebesség = %s",
   "text.changed_addon.legs": "Lábak száma = %s",
   "text.changed_addon.miningStrength": "Bányászati erősség: %s",
-  "text.changed_addon.swim_speed": "Úszási sebesség = %s"
+  "text.changed_addon.swim_speed": "Úszási sebesség = %s",
+  "warn.rei.not.supported.move.items.but.right.container": "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál"
 }
