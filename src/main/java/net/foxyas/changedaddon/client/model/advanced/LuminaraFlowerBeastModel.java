@@ -14,8 +14,6 @@ import net.ltxprogrammer.changed.client.renderer.animate.AnimatorPresets;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.tail.DragonTailCreativeFlyAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -66,8 +64,9 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
     private final ModelPart LeftLowerLeg;
     private final ModelPart LeftFoot;
     private final ModelPart LeftPad;
-    private final HumanoidAnimator<LuminaraFlowerBeastEntity, LuminaraFlowerBeastModel> animatorNormalForm;
+    private final HumanoidAnimator<LuminaraFlowerBeastEntity, LuminaraFlowerBeastModel> animatorHyperWingedForm;
     private final HumanoidAnimator<LuminaraFlowerBeastEntity, LuminaraFlowerBeastModel> animatorWingedForm;
+    private final HumanoidAnimator<LuminaraFlowerBeastEntity, LuminaraFlowerBeastModel> animatorNormalForm;
     public boolean shouldHaveBigWings = false;
 
     public LuminaraFlowerBeastModel(ModelPart root) {
@@ -126,7 +125,7 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
                 RightPad)
         );
 
-        this.animatorWingedForm = HumanoidAnimator.of(this).hipOffset(-1.5F).addPreset(ChangedAddonAnimationsPresets.bigWingedDragonLike(this.Head,
+        this.animatorWingedForm = HumanoidAnimator.of(this).hipOffset(-1.5F).addPreset(AnimatorPresets.wingedDragonLike(this.Head,
                         this.Torso,
                         this.LeftArm,
                         this.RightArm,
@@ -170,6 +169,50 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
                         rightSecondaries,
                         rightTertiaries));
 
+
+        this.animatorHyperWingedForm = HumanoidAnimator.of(this).hipOffset(-1.5F).addPreset(ChangedAddonAnimationsPresets.bigWingedDragonLike(this.Head,
+                        this.Torso,
+                        this.LeftArm,
+                        this.RightArm,
+                        this.Tail,
+                        List.of(TailPrimary, TailSecondary, TailTertiary),
+                        this.LeftLeg,
+                        LeftLowerLeg,
+                        LeftFoot,
+                        LeftPad,
+                        this.RightLeg,
+                        RightLowerLeg,
+                        RightFoot,
+                        RightPad,
+                        leftWingRoot,
+                        leftSecondaries,
+                        leftTertiaries,
+                        rightWingRoot,
+                        rightSecondaries,
+                        rightTertiaries)
+                ).addPreset(
+                        dragonTail(BigTail, List.of(BigTailPrimary,
+                                BigTailSecondary,
+                                BigTailTertiary,
+                                BigTailQuaternary,
+                                TipFlowerTail,
+                                TipFlowerTailPrimary,
+                                TipFlowerTailSecondary,
+                                TipFlowerTailTertiary)))
+                .addAnimator(new DragonTailCreativeFlyAnimator<>(BigTail, List.of(BigTailPrimary,
+                        BigTailSecondary,
+                        BigTailTertiary,
+                        BigTailQuaternary,
+                        TipFlowerTail,
+                        TipFlowerTailPrimary,
+                        TipFlowerTailSecondary,
+                        TipFlowerTailTertiary))
+                ).addAnimator(new DragonBigWingCreativeFlyAnimator<>(leftWingRoot,
+                        leftSecondaries,
+                        leftTertiaries,
+                        rightWingRoot,
+                        rightSecondaries,
+                        rightTertiaries));
 
     }
 
@@ -516,13 +559,7 @@ public class LuminaraFlowerBeastModel extends AdvancedHumanoidModel<LuminaraFlow
     }
 
     @Override
-    public HumanoidAnimator<LuminaraFlowerBeastEntity, LuminaraFlowerBeastModel> getAnimator(LuminaraFlowerBeastEntity entity) {
-        if (entity.getUnderlyingPlayer() != null) {
-            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer());
-            if (transfurVariant.getChangedEntity() instanceof LuminaraFlowerBeastEntity luminaraFlowerBeastEntity) {
-                return luminaraFlowerBeastEntity.isAwakened() ? animatorWingedForm : animatorNormalForm;
-            }
-        }
-        return entity.isAwakened() ? animatorWingedForm : animatorNormalForm;
+    public HumanoidAnimator<LuminaraFlowerBeastEntity, LuminaraFlowerBeastModel> getAnimator(LuminaraFlowerBeastEntity luminaraFlowerBeastEntity) {
+        return luminaraFlowerBeastEntity.isHyperAwakened() ? animatorHyperWingedForm : luminaraFlowerBeastEntity.isAwakened() ? animatorWingedForm : animatorNormalForm;
     }
 }

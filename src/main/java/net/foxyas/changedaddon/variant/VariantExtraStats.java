@@ -68,6 +68,15 @@ public interface VariantExtraStats {
         return false;
     }
 
+    default boolean shouldTakeFallDamage() {
+
+        if (this.getFlyType().canFly()) {
+            return false;
+        }
+
+        return !this.getFlyType().canFly();
+    }
+
     enum FlyType {
         NONE,
         ONLY_FALL,

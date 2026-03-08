@@ -38,6 +38,7 @@ public class ArmorLuminaraFlowerBeastModel<T extends ChangedEntity> extends Late
     private final ModelPart Tail;
     private final ModelPart RightWing;
     private final ModelPart LeftWing;
+    private final HumanoidAnimator<T, ArmorLuminaraFlowerBeastModel<T>> animatorHyperWingedForm;
     private final HumanoidAnimator<T, ArmorLuminaraFlowerBeastModel<T>> animatorWingedForm;
     private final HumanoidAnimator<T, ArmorLuminaraFlowerBeastModel<T>> animatorNormalForm;
     public boolean shouldHaveBigWings = false;
@@ -69,7 +70,9 @@ public class ArmorLuminaraFlowerBeastModel<T extends ChangedEntity> extends Late
 
         this.animatorNormalForm = HumanoidAnimator.of(this).hipOffset(-1.5F).addPreset(AnimatorPresets.dragonLike(this.Head, this.Torso, this.LeftArm, this.RightArm, this.Tail, List.of(TailPrimary, TailSecondary), this.LeftLeg, LeftLowerLeg, LeftFoot, LeftPad, this.RightLeg, RightLowerLeg, RightFoot, RightPad));
 
-        this.animatorWingedForm = HumanoidAnimator.of(this).hipOffset(-1.5F).addPreset(ChangedAddonAnimationsPresets.bigWingedDragonLike(this.Head, this.Torso, this.LeftArm, this.RightArm, this.Tail, List.of(TailPrimary, TailSecondary), this.LeftLeg, LeftLowerLeg, LeftFoot, LeftPad, this.RightLeg, RightLowerLeg, RightFoot, RightPad, LeftWingRoot, LeftWingRoot.getChild("leftSecondaries"), LeftWingRoot.getChild("leftSecondaries").getChild("leftTertiaries"), RightWingRoot, RightWingRoot.getChild("rightSecondaries"), RightWingRoot.getChild("rightSecondaries").getChild("rightTertiaries")));
+        this.animatorWingedForm = HumanoidAnimator.of(this).hipOffset(-1.5F).addPreset(AnimatorPresets.wingedDragonLike(this.Head, this.Torso, this.LeftArm, this.RightArm, this.Tail, List.of(TailPrimary, TailSecondary), this.LeftLeg, LeftLowerLeg, LeftFoot, LeftPad, this.RightLeg, RightLowerLeg, RightFoot, RightPad, LeftWingRoot, LeftWingRoot.getChild("leftSecondaries"), LeftWingRoot.getChild("leftSecondaries").getChild("leftTertiaries"), RightWingRoot, RightWingRoot.getChild("rightSecondaries"), RightWingRoot.getChild("rightSecondaries").getChild("rightTertiaries")));
+
+        this.animatorHyperWingedForm = HumanoidAnimator.of(this).hipOffset(-1.5F).addPreset(ChangedAddonAnimationsPresets.bigWingedDragonLike(this.Head, this.Torso, this.LeftArm, this.RightArm, this.Tail, List.of(TailPrimary, TailSecondary), this.LeftLeg, LeftLowerLeg, LeftFoot, LeftPad, this.RightLeg, RightLowerLeg, RightFoot, RightPad, LeftWingRoot, LeftWingRoot.getChild("leftSecondaries"), LeftWingRoot.getChild("leftSecondaries").getChild("leftTertiaries"), RightWingRoot, RightWingRoot.getChild("rightSecondaries"), RightWingRoot.getChild("rightSecondaries").getChild("rightTertiaries")));
     }
 
     public static LayerDefinition createArmorLayer(ArmorModel layer) {
@@ -216,11 +219,11 @@ public class ArmorLuminaraFlowerBeastModel<T extends ChangedEntity> extends Late
         if (entity.getUnderlyingPlayer() != null) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(entity.getUnderlyingPlayer());
             if (transfurVariant.getChangedEntity() instanceof LuminaraFlowerBeastEntity luminaraFlowerBeastEntity) {
-                return luminaraFlowerBeastEntity.isAwakened() ? animatorWingedForm : animatorNormalForm;
+                return luminaraFlowerBeastEntity.isHyperAwakened() ? animatorHyperWingedForm : luminaraFlowerBeastEntity.isAwakened() ? animatorWingedForm : animatorNormalForm;
             }
         }
         if (entity instanceof LuminaraFlowerBeastEntity luminaraFlowerBeastEntity) {
-            return luminaraFlowerBeastEntity.isAwakened() ? animatorWingedForm : animatorNormalForm;
+            return luminaraFlowerBeastEntity.isHyperAwakened() ? animatorHyperWingedForm : luminaraFlowerBeastEntity.isAwakened() ? animatorWingedForm : animatorNormalForm;
         }
 
         return animatorNormalForm;

@@ -881,7 +881,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             GearTier tier = getGearTier(source);
 
             switch (tier) {
-                case LOW -> event.setAmount(event.getAmount() * 3.5F);
+                case LOW -> event.setAmount(event.getAmount() * 2.5F);
                 case MID, HIGH -> event.setAmount(event.getAmount());
             }
         }

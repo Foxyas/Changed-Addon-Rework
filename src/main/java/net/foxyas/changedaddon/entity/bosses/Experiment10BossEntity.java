@@ -527,8 +527,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
             GearTier tier = getGearTier(target);
 
             switch (tier) {
-                case LOW -> event.setAmount(event.getAmount() * 0.75F);
-                case MID -> event.setAmount(event.getAmount());
+                case LOW, MID -> event.setAmount(event.getAmount());
                 case HIGH -> event.setAmount(event.getAmount() * 1.25F);
             }
         }
@@ -541,7 +540,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
             GearTier tier = getGearTier(source);
 
             switch (tier) {
-                case LOW -> event.setAmount(event.getAmount() * 3.5F);
+                case LOW -> event.setAmount(event.getAmount() * 2F);
                 case MID, HIGH -> event.setAmount(event.getAmount());
             }
         }

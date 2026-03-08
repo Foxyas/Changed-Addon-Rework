@@ -17,26 +17,26 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = LocalPlayer.class, priority = 1001)
 public class LocalPlayerMixin {
 
-    @WrapOperation(
-            method = "aiStep",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/item/ItemStack;canElytraFly(Lnet/minecraft/world/entity/LivingEntity;)Z",
-                    remap = false
-            )
-    )
-    private boolean changedaddon$canElytraFlyRedirect(ItemStack instance, LivingEntity living, Operation<Boolean> original) {
-        Player self = (Player) (Object) this;
-        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(self));
-        if (transfurVariant == null) return original.call(instance, living);
-        if (instance.getItem() instanceof ElytraItem) {
-            return original.call(instance, living);
-        }
-
-        if (transfurVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-            return variantExtraStats.getFlyType().canGlide();
-        }
-
-        return original.call(instance, living);
-    }
+//    @WrapOperation(
+//            method = "aiStep",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/world/item/ItemStack;canElytraFly(Lnet/minecraft/world/entity/LivingEntity;)Z",
+//                    remap = false
+//            )
+//    )
+//    private boolean changedaddon$canElytraFlyRedirect(ItemStack instance, LivingEntity living, Operation<Boolean> original) {
+//        Player self = (Player) (Object) this;
+//        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(self));
+//        if (transfurVariant == null) return original.call(instance, living);
+//        if (instance.getItem() instanceof ElytraItem) {
+//            return original.call(instance, living);
+//        }
+//
+//        if (transfurVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
+//            return variantExtraStats.getFlyType().canGlide();
+//        }
+//
+//        return original.call(instance, living);
+//    } // Todo Delete this in 0.15.1
 }

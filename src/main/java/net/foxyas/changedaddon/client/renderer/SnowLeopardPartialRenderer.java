@@ -21,7 +21,7 @@ public class SnowLeopardPartialRenderer extends AdvancedHumanoidRenderer<SnowLeo
 
         var partialModel = new LatexPartialLayer<>(this, SnowLeopardPartialModel.latex(context.bakeLayer(getLatexLayerLocation(slim))), getTexture(slim));
         this.addLayer(partialModel);
-        this.addLayer(new LatexParticlesLayer<>(this).addModel(partialModel.getModel(), entity -> partialModel.getTexture()));
+        this.addLayer(new LatexParticlesLayer<>(this).addModel(partialModel.getModel(), partialModel.getTextureFunction()));
         this.addLayer(TransfurCapeLayer.normalCape(this, context.getModelSet()));
         this.addLayer(new DarkLatexMaskLayer<>(this, context.getModelSet()));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
