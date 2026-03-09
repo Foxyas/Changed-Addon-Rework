@@ -10,6 +10,7 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedDamageSources;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
@@ -355,8 +356,8 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     }
 
     @Override
-    public Component getLore() {
-        return Component.empty();
+    public BestiaryInfo getBasicLore() {
+        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("Made in a lab lol!"), 0);
     }
 
     @Override

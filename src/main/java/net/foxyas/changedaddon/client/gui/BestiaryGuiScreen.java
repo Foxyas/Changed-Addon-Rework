@@ -74,6 +74,11 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
         Vector3f modelOrigin = modelWidget.getOrigin();
         loreScroll.setOrigin(modelOrigin.x + 50, modelOrigin.y, 10);
+        loreScroll.init();
+        RoundedRectWidget scrollBar = loreScroll.getScrollBar();
+        scrollBar.setRoundingRadius(3);
+        scrollBar.rebuildMesh();
+
 
         /* TF LIST */
         List<TransfurVariant<?>> variants = List.of(
@@ -250,10 +255,6 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
 
             LayoutHelper.listLayout(loreScroll, infoWidgetList, 5, 1);
-            loreScroll.init();
-            RoundedRectWidget scrollBar = loreScroll.getScrollBar();
-            scrollBar.setRoundingRadius(3);
-            scrollBar.rebuildMesh();
             loreScroll.setActualHeight(60f * loreScroll.children().size());
         }
 

@@ -5,7 +5,6 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -16,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 public interface IBestiaryEntityData {
-    Component getLore();
 
     static List<Component> getAttributePreview(LivingEntity livingEntity) {
         List<Component> previewList = new ArrayList<>();
@@ -34,7 +32,7 @@ public interface IBestiaryEntityData {
             double playerBase = playerDefaults.getValue(attribute);
             double transformedBase = transformedInstance.getValue();
             if (attribute == Attributes.MOVEMENT_SPEED) {
-                transformedBase *=  0.1;
+                transformedBase *= 0.1;
             }
 
             double diff = transformedBase - playerBase;
@@ -89,11 +87,7 @@ public interface IBestiaryEntityData {
     }
 
     default List<BestiaryInfo> getBestiaryInfo() {
-        BestiaryInfo lore = new BestiaryInfo(
-                Component.literal("Lore"),
-                this.getLore(),
-                0
-        );
+        BestiaryInfo lore = getBasicLore();
 
         if (!(this instanceof LivingEntity livingEntity)) {
             return new ArrayList<>(Collections.singleton(lore));
@@ -110,12 +104,17 @@ public interface IBestiaryEntityData {
 
         BestiaryInfo attributeData = new BestiaryInfo(
                 Component.literal("Attributes"),
-                attributeText,
+                attributeText.withStyle(ChatFormatting.GREEN),
                 1
         );
 
         return new ArrayList<>(List.of(lore, attributeData));
     }
 
-    record BestiaryInfo(Component title, Component description, int order) {}
+    default BestiaryInfo getBasicLore() {
+        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"), 0);
+    }
+
+    record BestiaryInfo(Component title, Component description, int order) {
+    }
 }
