@@ -74,10 +74,6 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
         Vector3f modelOrigin = modelWidget.getOrigin();
         loreScroll.setOrigin(modelOrigin.x + 50, modelOrigin.y, 90);
-        loreScroll.init();
-        RoundedRectWidget scrollBar = loreScroll.getScrollBar();
-        scrollBar.setRoundingRadius(3);
-        scrollBar.rebuildMesh();
 
 
         /* TF LIST */
@@ -204,7 +200,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
         }
 
-        if (modelWidget.getChangedEntity() != null) {
+        if (modelWidget.getChangedEntity() != null && modelWidget.isVisible()) {
 
             List<Widget> children = new ArrayList<>(loreScroll.children());
 
@@ -227,16 +223,16 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                     int i = lineCount + lineBreaks;
 
                     int heightByLines = minecraft.font.lineHeight * i;
-                    InfoWidget infoWidget = new InfoWidget().setSize(200, Math.max(40, heightByLines)).setLineSize(200, 4);
+                    InfoWidget infoWidget = new InfoWidget().setSize(200, Math.max(20, heightByLines)).setLineSize(200, 4);
                     infoWidget.setTextInfo(tittle, description);
                     infoWidgetList.add(infoWidget);
                 }
             } else {
                 /* LORE */
-                loreWidget = new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+                loreWidget = new InfoWidget().setSize(200, 20).setLineSize(200, 4);
                 loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
                 /* ATTRIBUTES */
-                attributeWidget = new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+                attributeWidget = new InfoWidget().setSize(200, 20).setLineSize(200, 4);
                 attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));
 
                 infoWidgetList.addAll(List.of(loreWidget, attributeWidget));
@@ -255,7 +251,20 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
 
             LayoutHelper.listLayout(loreScroll, infoWidgetList, 5, 1);
+            loreScroll.init();
+            RoundedRectWidget scrollBar = loreScroll.getScrollBar();
+            scrollBar.setRoundingRadius(3);
+            scrollBar.rebuildMesh();
             loreScroll.setActualHeight(60f * loreScroll.children().size());
+            this.loreScroll.setVisible(true);
+            for (Widget child : this.loreScroll.children()) {
+                child.setVisible(true);
+            }
+        } else {
+            this.loreScroll.setVisible(false);
+            for (Widget child : this.loreScroll.children()) {
+                child.setVisible(false);
+            }
         }
 
     }
