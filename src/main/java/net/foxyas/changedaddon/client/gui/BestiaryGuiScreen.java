@@ -9,6 +9,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Pose;
 import net.zaharenko424.cmrs.client.gui.LayoutHelper;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
@@ -21,6 +22,7 @@ import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
@@ -38,16 +40,10 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                     .setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
 
     final ScrollableContainer loreScroll =
-            (ScrollableContainer) new ScrollableContainer().setSize(325, 200);
-
-    final InfoWidget loreWidget =
-            new InfoWidget().setSize(200, 40).setLineSize(200, 4);
-
-    final InfoWidget attributeWidget =
-            new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+            (ScrollableContainer) new ScrollableContainer().setSize(350, 200);
 
     final ScrollableContainer tfs =
-            (ScrollableContainer) new ScrollableContainer().setSize(100, 200);
+            (ScrollableContainer) new ScrollableContainer().setSize(100, 200).setOrigin(0, 0, 100);
 
     public BestiaryGuiScreen() {
         super(Component.literal("Bestiary"));
@@ -75,24 +71,11 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
             return false;
         });
 
-        /* LORE */
-
-        loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
-
-        /* ATTRIBUTES */
-
-        attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));
 
         Vector3f modelOrigin = modelWidget.getOrigin();
-        loreScroll.setOrigin(modelOrigin.x + 40, modelOrigin.y, 10);
-        LayoutHelper.listLayout(loreScroll, List.of(loreWidget, attributeWidget), 5, 1);
-        loreScroll.init();
-        RoundedRectWidget scrollBar = loreScroll.getScrollBar();
-        scrollBar.setRoundingRadius(3);
-        scrollBar.rebuildMesh();
+        loreScroll.setOrigin(modelOrigin.x + 50, modelOrigin.y, 10);
 
         /* TF LIST */
-
         List<TransfurVariant<?>> variants = List.of(
                 ChangedAddonTransfurVariants.PROTOTYPE.get(),
                 ChangedAddonTransfurVariants.EXPERIMENT_009.get(),
@@ -125,11 +108,17 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
         for (Widget child : this.window.children()) {
             if (child == displayBackGround) {
                 continue;
+            } else if (child == loreScroll) {
+                continue;
             }
 
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
         }
 
+        this.loreScroll.setVisible(false);
+        for (Widget child : this.loreScroll.children()) {
+            child.setVisible(false);
+        }
     }
 
     private @NotNull List<TFEntryWidget> getTfEntryWidgets(List<TransfurVariant<?>> variants) {
@@ -147,6 +136,13 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                         minecraft.level,
                         tf.getEntityType()
                 );
+
+                if (entity instanceof IBestiaryEntityData entityData) {
+                    Entity cachedEntity = ChangedEntities.getCachedEntity(minecraft.level, entityData.getReferencedEntityType());
+                    if (cachedEntity instanceof ChangedEntity changedEntity) {
+                        entity = changedEntity;
+                    }
+                }
 
                 modelWidget.setChangedEntity(entity);
 
@@ -194,25 +190,6 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
             displayBackGround.setSizeAndUpdate(backGroundWidth, dynamicHeight);
         }
 
-        if (modelWidget.getChangedEntity() != null) {
-
-            ChangedEntity entity = modelWidget.getChangedEntity();
-
-            if (entity instanceof IBestiaryEntityData data) {
-                loreWidget.setDescription(data.getLore());
-            }
-
-            List<Component> attributes = IBestiaryEntityData.getAttributePreview(entity);
-
-            if (!attributes.isEmpty()) {
-
-                MutableComponent text = Component.empty();
-
-                attributes.forEach(c -> text.append("\n").append(c));
-
-                attributeWidget.setDescription(text);
-            }
-        }
 
         for (Widget child : this.window.children()) {
             if (child == displayBackGround) {
@@ -220,6 +197,49 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
             }
 
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+        }
+
+        if (modelWidget.getChangedEntity() != null) {
+
+            ChangedEntity entity = modelWidget.getChangedEntity();
+            List<InfoWidget> infoWidgetList = new ArrayList<>();
+            InfoWidget loreWidget = null;
+            InfoWidget attributeWidget = null;
+
+            if (entity instanceof IBestiaryEntityData data) {
+                for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {
+                    InfoWidget infoWidget = new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+                    infoWidget.setTextInfo(bestiaryInfo.title(), bestiaryInfo.description());
+                    infoWidgetList.add(infoWidget);
+                }
+            } else {
+                /* LORE */
+                loreWidget = new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+                loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
+                /* ATTRIBUTES */
+                attributeWidget = new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+                attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));
+
+                infoWidgetList.addAll(List.of(loreWidget, attributeWidget));
+            }
+
+            List<Component> attributes = IBestiaryEntityData.getAttributePreview(entity);
+
+            if (!attributes.isEmpty() && attributeWidget != null) {
+
+                MutableComponent text = Component.empty();
+
+                attributes.forEach(c -> text.append("\n").append(c));
+
+                attributeWidget.setDescription(text);
+            } // Simple Fail Safe Check;
+
+
+            LayoutHelper.listLayout(loreScroll, infoWidgetList, 5, 1);
+            loreScroll.init();
+            RoundedRectWidget scrollBar = loreScroll.getScrollBar();
+            scrollBar.setRoundingRadius(3);
+            scrollBar.rebuildMesh();
         }
 
         loreScroll.setActualHeight(60f * loreScroll.children().size());

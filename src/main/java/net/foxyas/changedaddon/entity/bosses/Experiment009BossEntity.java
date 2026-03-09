@@ -5,10 +5,7 @@ import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
-import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
-import net.foxyas.changedaddon.entity.api.IGrabberEntity;
-import net.foxyas.changedaddon.entity.api.IHasBossMusic;
+import net.foxyas.changedaddon.entity.api.*;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.ColorUtil;
@@ -79,7 +76,7 @@ import java.util.*;
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment009BossEntity extends ChangedEntity implements CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber {
+public class Experiment009BossEntity extends ChangedEntity implements CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber, IBestiaryEntityData {
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
@@ -838,6 +835,21 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     @Override
     public boolean canCauseGrabDamage() {
         return true;
+    }
+
+    @Override
+    public Component getLore() {
+        return Component.literal("Created in laboratory");
+    }
+
+    @Override
+    public EntityType<?> getReferencedEntityType() {
+        return this.getType();
+    }
+
+    @Override
+    public List<BestiaryInfo> getBestiaryInfo() {
+        return IBestiaryEntityData.super.getBestiaryInfo();
     }
 
     private enum GearTier {

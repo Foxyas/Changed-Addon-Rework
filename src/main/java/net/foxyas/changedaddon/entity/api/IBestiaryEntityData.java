@@ -4,12 +4,15 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public interface IBestiaryEntityData {
@@ -26,11 +29,13 @@ public interface IBestiaryEntityData {
 
         for (AttributeInstance transformedInstance : transformedMap.getSyncableAttributes()) {
             Attribute attribute = transformedInstance.getAttribute();
-
             if (!playerDefaults.hasAttribute(attribute)) continue;
 
-            double playerBase = playerDefaults.getBaseValue(attribute);
-            double transformedBase = transformedInstance.getBaseValue();
+            double playerBase = playerDefaults.getValue(attribute);
+            double transformedBase = transformedInstance.getValue();
+            if (attribute == Attributes.MOVEMENT_SPEED) {
+                transformedBase *=  0.1;
+            }
 
             double diff = transformedBase - playerBase;
 
@@ -51,9 +56,9 @@ public interface IBestiaryEntityData {
             ChatFormatting color = diff > 0 ? ChatFormatting.GREEN : ChatFormatting.RED;
 
             Component line = Component.literal(
-                    "")
+                            "")
                     .append(Component.literal(valueString).withStyle(color).append(" ").append(Component.translatable(attribute.getDescriptionId()))
-            );
+                    );
 
             previewList.add(line);
         }
@@ -82,4 +87,35 @@ public interface IBestiaryEntityData {
 
         return true;
     }
+
+    default List<BestiaryInfo> getBestiaryInfo() {
+        BestiaryInfo lore = new BestiaryInfo(
+                Component.literal("Lore"),
+                this.getLore(),
+                0
+        );
+
+        if (!(this instanceof LivingEntity livingEntity)) {
+            return new ArrayList<>(Collections.singleton(lore));
+        }
+
+        List<Component> attributes = getAttributePreview(livingEntity);
+
+        if (attributes.isEmpty()) {
+            return new ArrayList<>(Collections.singleton(lore));
+        }
+
+        MutableComponent attributeText = Component.empty();
+        attributes.forEach(component -> attributeText.append("\n").append(component));
+
+        BestiaryInfo attributeData = new BestiaryInfo(
+                Component.literal("Attributes"),
+                attributeText,
+                1
+        );
+
+        return new ArrayList<>(List.of(lore, attributeData));
+    }
+
+    record BestiaryInfo(Component title, Component description, int order) {}
 }

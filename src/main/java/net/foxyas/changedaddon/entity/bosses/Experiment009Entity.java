@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
+import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
@@ -40,12 +41,13 @@ import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment009Entity extends ChangedEntity implements PowderSnowWalkable {
+public class Experiment009Entity extends ChangedEntity implements PowderSnowWalkable, IBestiaryEntityData {
     //private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean Phase2;
 
@@ -350,5 +352,22 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             lightning.moveTo(pos.x(), pos.y(), pos.z());
             this.level.addFreshEntity(lightning);
         }
+    }
+
+    @Override
+    public Component getLore() {
+        return Component.empty();
+    }
+
+    @Override
+    public EntityType<?> getReferencedEntityType() {
+        return this.getType();
+    }
+
+    @Override
+    public List<BestiaryInfo> getBestiaryInfo() {
+        List<BestiaryInfo> bestiaryInfo = new ArrayList<>(IBestiaryEntityData.super.getBestiaryInfo());
+        bestiaryInfo.add(new BestiaryInfo(Component.literal("Passive skills"), Component.literal("Cappable To Manipulate Electricity\nCareful when using metal around them"), 2));
+        return bestiaryInfo;
     }
 }
