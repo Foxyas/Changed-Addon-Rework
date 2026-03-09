@@ -40,7 +40,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                     .setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
 
     final ScrollableContainer loreScroll =
-            (ScrollableContainer) new ScrollableContainer().setSize(350, 200);
+            (ScrollableContainer) new ScrollableContainer().setSize(325, 200);
 
     final ScrollableContainer tfs =
             (ScrollableContainer) new ScrollableContainer().setSize(100, 200).setOrigin(0, 0, 100);
@@ -218,13 +218,19 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                 for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {
                     Component tittle = bestiaryInfo.title();
                     Component description = bestiaryInfo.description();
-                    int lineCount = this.minecraft.font.split(description, 200).size();
+                    int lineCount = this.minecraft.font.split(description, 170).size();
                     int lineBreaks = description.getString().split("\n", -1).length - 1;
 
                     int i = lineCount + lineBreaks;
+                    float heightAmount;
+                    if (i <= 3) {
+                        heightAmount = 40f;
+                    } else {
+                        int heightByLines = minecraft.font.lineHeight * i;
+                        heightAmount = 40f + heightByLines;
+                    }
 
-                    int heightByLines = minecraft.font.lineHeight * i;
-                    InfoWidget infoWidget = new InfoWidget().setSize(200,40).setLineSize(200, 4);
+                    InfoWidget infoWidget = new InfoWidget().setSize(170, heightAmount).setLineSize(200, 4);
                     infoWidget.setTextInfo(tittle, description);
                     infoWidgetList.add(infoWidget);
                 }

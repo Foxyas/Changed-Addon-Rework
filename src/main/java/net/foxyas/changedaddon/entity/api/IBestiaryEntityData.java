@@ -103,7 +103,15 @@ public interface IBestiaryEntityData {
         }
 
         MutableComponent attributeText = Component.empty();
-        attributes.forEach(component -> attributeText.append("\n").append(component));
+        int index = 0;
+        for (Component component : attributes) {
+            if (index == 0) {
+                attributeText.append(component);
+            } else {
+                attributeText.append("\n").append(component);
+            }
+            index++;
+        }
 
         BestiaryInfo attributeData = new BestiaryInfo(
                 Component.literal("Attributes"),
