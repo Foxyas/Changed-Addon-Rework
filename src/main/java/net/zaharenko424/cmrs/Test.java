@@ -177,7 +177,7 @@ public class Test {
             if (modelWidget.getChangedEntity() != null) {
 
                 if (modelWidget.getChangedEntity() instanceof IBestiaryEntityData iBestiaryEntityData) {
-                    infoWidget.setDescription(iBestiaryEntityData.getLore());
+                    infoWidget.setDescription(iBestiaryEntityData.getBasicLore().description());
                 }
 
                 List<Component> attributePreview = IBestiaryEntityData.getAttributePreview(modelWidget.getChangedEntity());

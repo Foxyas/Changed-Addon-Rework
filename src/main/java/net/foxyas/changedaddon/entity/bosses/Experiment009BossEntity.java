@@ -838,11 +838,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     @Override
-    public Component getLore() {
-        return Component.literal("Created in laboratory");
-    }
-
-    @Override
     public EntityType<?> getReferencedEntityType() {
         return this.getType();
     }
