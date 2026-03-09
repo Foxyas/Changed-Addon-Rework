@@ -45,7 +45,10 @@ public interface IBestiaryEntityData {
             String valueString;
 
             if (isPercent) {
-                double percent = diff * 100.0D;
+                double percentDiff = (transformedBase / playerBase) - 1;
+                if (percentDiff == 0) continue;
+
+                double percent = percentDiff * 100.0D;
                 valueString = String.format("%+.0f%%", percent);
             } else {
                 valueString = String.format("%+.2f", diff);

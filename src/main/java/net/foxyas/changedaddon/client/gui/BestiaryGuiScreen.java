@@ -73,7 +73,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
 
         Vector3f modelOrigin = modelWidget.getOrigin();
-        loreScroll.setOrigin(modelOrigin.x + 50, modelOrigin.y, 10);
+        loreScroll.setOrigin(modelOrigin.x + 50, modelOrigin.y, 90);
         loreScroll.init();
         RoundedRectWidget scrollBar = loreScroll.getScrollBar();
         scrollBar.setRoundingRadius(3);
