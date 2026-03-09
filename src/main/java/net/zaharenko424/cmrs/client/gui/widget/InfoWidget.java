@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 
 import java.awt.*;
 
-public class InfoWidget extends Widget {
+public class InfoWidget extends Widget implements SizedWidget {
 
     protected Component title;
     protected Component description;
@@ -102,5 +102,15 @@ public class InfoWidget extends Widget {
                 (int) (y + height),
                 color
         );
+    }
+
+    @Override
+    public float getWidth() {
+        return this.width;
+    }
+
+    @Override
+    public float getHeight() {
+        return this.height;
     }
 }

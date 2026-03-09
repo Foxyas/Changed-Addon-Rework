@@ -1,104 +1,127 @@
 package net.foxyas.changedaddon.client.gui;
 
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
-import net.foxyas.changedaddon.process.DEBUG;
+import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.player.Player;
+import net.zaharenko424.cmrs.client.gui.LayoutHelper;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
 import net.zaharenko424.cmrs.client.gui.widget.*;
+import org.apache.commons.lang3.function.ToBooleanBiFunction;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
     static final float MaxBackGroundWidth = 425f;
     static final float MaxBackGroundHeight = 256f;
+
     final WidgetContainer window = new WidgetContainer().setSize(MaxBackGroundWidth, MaxBackGroundHeight);
-    final ScrollableContainer info = (ScrollableContainer) new ScrollableContainer().setSize(425, 200);
-    final RoundedRectWidget displayBackGround = new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
-    final RoundedButton button = new RoundedButton().setRoundingRadius(5).setSize(50, 25).setText(Component.literal("Text").withStyle(ChatFormatting.AQUA))
-            .setOrigin(0, 0, 50).setRenderTransform(WidgetHelper.hoverAnim(.1f, 0.025f, 0.025f));
-    final ChangedEntityModelWidget modelWidget = new ChangedEntityModelWidget().setSize(100, 200).setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
-    final InfoWidget infoWidget = new InfoWidget().setSize(200, 100).setLineSize(200, 4);
-    final InfoWidget info2Widget = new InfoWidget().setSize(200, 100).setLineSize(200, 4);
-//        final ImageWidget screenBackGroundWidget = new ImageWidget().setOrigin(0, 0, 0)
-//                .setTex(ResourceLocation.parse("changed_addon:textures/screens/generatorgui.png"),
-//                0, 0, 200, 99, 200, 99).setSize(425, 256);
 
-    protected BestiaryGuiScreen() {
-        super(Component.literal("A"));
+    final RoundedRectWidget displayBackGround =
+            new RoundedRectWidget().setSize(1, 1).setInsideColorFunc(a -> Color.DARK_GRAY.getRGB());
 
-        //screenBackGroundWidget.setInteractable(false);
+    final ChangedEntityModelWidget modelWidget =
+            new ChangedEntityModelWidget().setSize(120, 200)
+                    .setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
+
+    final ScrollableContainer loreScroll =
+            (ScrollableContainer) new ScrollableContainer().setSize(325, 200);
+
+    final InfoWidget loreWidget =
+            new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+
+    final InfoWidget attributeWidget =
+            new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+
+    final ScrollableContainer tfs =
+            (ScrollableContainer) new ScrollableContainer().setSize(100, 200);
+
+    public BestiaryGuiScreen() {
+        super(Component.literal("Bestiary"));
+
+        displayBackGround.rebuildMesh();
+
+        /* MODEL */
 
         modelWidget.setInteractable(true);
-        modelWidget.setOrigin(-100 + (width / 2f), height / 2f, 40);
+        modelWidget.setOrigin((width / 2f) + -30, height / 2f, 40);
+
         modelWidget.setOnClick((modelRectWidget, integer) -> {
             if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
-                ChangedEntity changedEntity = changedEntityModelWidget.getChangedEntity();
-                if (changedEntity == null) return false;
+                ChangedEntity entity = changedEntityModelWidget.getChangedEntity();
+                if (entity == null) return false;
 
-                changedEntity.setPose(switch (changedEntity.getPose()) {
+                entity.setPose(switch (entity.getPose()) {
                     case STANDING -> Pose.CROUCHING;
                     case CROUCHING -> Pose.STANDING;
                     default -> Pose.STANDING;
                 });
+
                 return true;
             }
-
             return false;
         });
 
-        displayBackGround.rebuildMesh();
+        /* LORE */
 
-        button.setOrigin(modelWidget.getOrigin().x, modelWidget.getOrigin().y + 70, modelWidget.getOrigin().z + 5);
-        List<String> list = List.of("Hi", "Hello", "Hai", "hi");
-        button.setOnClick((b, key) -> {
-            Player player = Minecraft.getInstance().player;
-            if (player == null) return false;
+        loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
 
-            player.displayClientMessage(Component.literal(list.get(player.getRandom().nextInt(4))), true);
-            return true;
-        });
-        button.rebuildMesh();
+        /* ATTRIBUTES */
 
-        infoWidget.setTextInfo(Component.literal("Info/Lore"), Component.literal("N/A"));
-        infoWidget.setLineColor(Color.YELLOW);
-        infoWidget.setOrigin(modelWidget.getOrigin().x + 50, modelWidget.getOrigin().y - DEBUG.HeadPosY, modelWidget.getOrigin().z + 10);
+        attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));
 
-        info2Widget.setTextInfo(Component.literal("Attributes"), Component.literal("???"));
-        info2Widget.setLineColor(Color.GREEN);
-        info2Widget.setOrigin(infoWidget.getOrigin().x, infoWidget.getOrigin().y + 40, infoWidget.getOrigin().z);
+        Vector3f modelOrigin = modelWidget.getOrigin();
+        loreScroll.setOrigin(modelOrigin.x + 40, modelOrigin.y, 10);
+        LayoutHelper.listLayout(loreScroll, List.of(loreWidget, attributeWidget), 5, 1);
+        loreScroll.init();
+        RoundedRectWidget scrollBar = loreScroll.getScrollBar();
+        scrollBar.setRoundingRadius(3);
+        scrollBar.rebuildMesh();
+
+        /* TF LIST */
+
+        List<TransfurVariant<?>> variants = List.of(
+                ChangedAddonTransfurVariants.PROTOTYPE.get(),
+                ChangedAddonTransfurVariants.EXPERIMENT_009.get(),
+                ChangedAddonTransfurVariants.PROTOGEN_0SENIA0.get(),
+                ChangedAddonTransfurVariants.BOREALIS_FEMALE.get(),
+                ChangedAddonTransfurVariants.EXP1_MALE.get(),
+                ChangedAddonTransfurVariants.EXP6.get(),
+                ChangedAddonTransfurVariants.LATEX_CHEETAH_FEMALE.get(),
+                ChangedAddonTransfurVariants.EXP2_MALE.get(),
+                ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_FEMALE.get()
+        );
+
+        List<TFEntryWidget> entries = getTfEntryWidgets(variants);
+
+        LayoutHelper.listLayout(tfs, entries, 5, 5);
+        tfs.init();
+        tfs.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
+
+        /* WINDOW */
 
         window.addWidget(displayBackGround);
-        window.addWidget(button);
         window.addWidget(modelWidget);
+        window.addWidget(loreScroll);
+        window.addWidget(tfs);
 
-        info.addWidget(infoWidget);
-        info.addWidget(info2Widget);
-        info.setOrigin(width / 2f, height / 2f, 10);
-        info.setInteractable(false);
-        info.setClickThrough(true);
-        info.init();
-        info.getScrollBar().setRoundingRadius(3);
-        info.getScrollBar().rebuildMesh();
-
-        //window.addWidget(screenBackGroundWidget);
-        window.addWidget(info);
         window.init();
 
-
-        float backGroundWidth = this.displayBackGround.getWidth();
-        float backGroundHeight = this.displayBackGround.getHeight();
-
+        float backGroundWidth = displayBackGround.getWidth();
+        float backGroundHeight = displayBackGround.getHeight();
         for (Widget child : this.window.children()) {
             if (child == displayBackGround) {
                 continue;
@@ -106,62 +129,142 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
         }
+
     }
 
+    private @NotNull List<TFEntryWidget> getTfEntryWidgets(List<TransfurVariant<?>> variants) {
+        List<TFEntryWidget> entries = new ArrayList<>();
 
-    @Override
-    public void tick() {
-        super.tick();
-        float backGroundWidth = this.displayBackGround.getWidth();
-        float backGroundHeight = this.displayBackGround.getHeight();
-        if (backGroundWidth < MaxBackGroundWidth) {
-            float dynamicWidth = Math.min(backGroundWidth + 50, MaxBackGroundWidth);
-            this.displayBackGround.setSizeAndUpdate(dynamicWidth, backGroundHeight);
-        } else if (backGroundHeight < MaxBackGroundHeight) {
-            float dynamicHeight = Math.min(backGroundHeight + 50, MaxBackGroundHeight);
-            this.displayBackGround.setSizeAndUpdate(backGroundWidth, dynamicHeight);
+        for (TransfurVariant<?> tf : variants) {
+
+            TFEntryWidget entry = new TFEntryWidget(tf);
+
+            entry.setOnClickFunction((button, key) -> {
+
+                if (minecraft == null || minecraft.level == null) return false;
+
+                ChangedEntity entity = ChangedEntities.getCachedEntity(
+                        minecraft.level,
+                        tf.getEntityType()
+                );
+
+                modelWidget.setChangedEntity(entity);
+
+                return true;
+            });
+
+            entries.add(entry);
         }
-
-        for (Widget child : this.window.children()) {
-            if (child == displayBackGround) {
-                continue;
-            }
-
-            child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
-        }
-
-        if (modelWidget.getChangedEntity() != null) {
-
-            if (modelWidget.getChangedEntity() instanceof IBestiaryEntityData iBestiaryEntityData) {
-                infoWidget.setDescription(iBestiaryEntityData.getLore());
-            }
-
-            List<Component> attributePreview = IBestiaryEntityData.getAttributePreview(modelWidget.getChangedEntity());
-            if (!attributePreview.isEmpty()) {
-                MutableComponent mutableComponent = Component.empty();
-                attributePreview.forEach((component) -> {
-                    mutableComponent.append("\n").append(component);
-                    info.addHeight(40);
-                });
-                info2Widget.setDescription(mutableComponent);
-            }
-        }
-
-        info.setActualHeight(60f * info.children().size());
+        return entries;
     }
 
     @Override
     protected void init() {
+        tfs.setOrigin(-window.getWidth() / 3f, 0, 100);
         window.setOrigin(width / 2f, height / 2f, 0);
 
-        if (this.minecraft != null) {
-            modelWidget.setChangedEntity(ChangedEntities.getCachedEntity(this.minecraft.level, ChangedEntities.GAS_WOLF_MALE.get()));
+        if (minecraft != null) {
+            modelWidget.setChangedEntity(
+                    ChangedEntities.getCachedEntity(
+                            minecraft.level,
+                            ChangedEntities.GAS_WOLF_MALE.get()
+                    )
+            );
         }
+
         addRenderableWidget(window);
+    }
+
+    @Override
+    public void tick() {
+
+        super.tick();
+
+        float backGroundWidth = displayBackGround.getWidth();
+        float backGroundHeight = displayBackGround.getHeight();
+
+        if (backGroundWidth < MaxBackGroundWidth) {
+
+            float dynamicWidth = Math.min(backGroundWidth + 50, MaxBackGroundWidth);
+            displayBackGround.setSizeAndUpdate(dynamicWidth, backGroundHeight);
+
+        } else if (backGroundHeight < MaxBackGroundHeight) {
+
+            float dynamicHeight = Math.min(backGroundHeight + 50, MaxBackGroundHeight);
+            displayBackGround.setSizeAndUpdate(backGroundWidth, dynamicHeight);
+        }
+
+        if (modelWidget.getChangedEntity() != null) {
+
+            ChangedEntity entity = modelWidget.getChangedEntity();
+
+            if (entity instanceof IBestiaryEntityData data) {
+                loreWidget.setDescription(data.getLore());
+            }
+
+            List<Component> attributes = IBestiaryEntityData.getAttributePreview(entity);
+
+            if (!attributes.isEmpty()) {
+
+                MutableComponent text = Component.empty();
+
+                attributes.forEach(c -> text.append("\n").append(c));
+
+                attributeWidget.setDescription(text);
+            }
+        }
+
+        for (Widget child : this.window.children()) {
+            if (child == displayBackGround) {
+                continue;
+            }
+
+            child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+        }
+
+        loreScroll.setActualHeight(60f * loreScroll.children().size());
     }
 
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    /* ------------------------------------------------ */
+    /* TF ENTRY                                          */
+    /* ------------------------------------------------ */
+
+    public static class TFEntryWidget extends WidgetContainer {
+
+        protected final TransfurVariant<?> tf;
+
+        protected final RoundedButton button =
+                new RoundedButton().setRoundingRadius(0);
+
+        protected final RoundedTextField name =
+                new RoundedTextField().setOrigin(0, 0, 1);
+
+        public TFEntryWidget(TransfurVariant<?> tf) {
+
+            setSize(80, 20);
+
+            this.tf = tf;
+
+            button.setSize(getWidth(), getHeight());
+            button.rebuildMesh();
+
+            name.setSize(70, 12);
+            name.setDefText(Component.translatable(tf.getEntityType().getDescriptionId()));
+            name.setClickThrough(true);
+
+            addWidget(button);
+            addWidget(name);
+
+            init();
+        }
+
+        public void setOnClickFunction(@Nullable ToBooleanBiFunction<RoundedButton, Integer> onClick) {
+            button.setOnClick(onClick);
+        }
     }
 }
