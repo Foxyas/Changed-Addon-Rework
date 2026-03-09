@@ -1,17 +1,17 @@
 package net.foxyas.changedaddon.entity.advanced;
 
+import net.foxyas.changedaddon.entity.ai.LatexAttackType;
+import net.foxyas.changedaddon.entity.ai.LatexFavor;
 import net.foxyas.changedaddon.entity.ai.goals.prototype.*;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.EyeStyle;
-import net.ltxprogrammer.changed.entity.TransfurCause;
-import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -59,7 +59,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class PrototypeEntity extends AbstractCanTameChangedEntity implements MenuProvider, CustomPatReaction, IDynamicPawColor, ItemHandlerHolder {
+public class PrototypeEntity extends AbstractCanTameSnepChangedEntityFavors implements MenuProvider, CustomPatReaction, IDynamicPawColor, ItemHandlerHolder {
 
     // Constants
     public static final int MAX_HARVEST_TIMES = 32;
@@ -465,6 +465,24 @@ public class PrototypeEntity extends AbstractCanTameChangedEntity implements Men
     @Override
     public Color getPawBeansColor() {
         return Color.CYAN;
+    }
+
+    @Override
+    public Gender getGender() {
+        return Gender.MALE;
+    }
+
+    @Override
+    public boolean canDoFavor(LatexFavor favor) {
+        if (favor == LatexFavor.SUIT_OWNER) {
+            return false;
+        }
+        return super.canDoFavor(favor);
+    }
+
+    @Override
+    public LatexAttackType getAttackType() {
+        return LatexAttackType.ALWAYS_KILL;
     }
 
     // Enums
