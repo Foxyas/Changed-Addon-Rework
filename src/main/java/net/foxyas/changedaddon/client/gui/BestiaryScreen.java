@@ -73,7 +73,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             return false;
         });
 
-        loreScroll.setOrigin(window.getWidth() * DEBUG.HeadPosY, 0, 90);
+        loreScroll.setOrigin(window.getWidth() *  (0.315f + DEBUG.HeadPosY), 0, 90);
 
         /* TF LIST */
         List<TransfurVariant<?>> variants = List.of(
@@ -133,7 +133,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
     @Override
     protected void init() {
-        tfs.setOrigin(-window.getWidth() * DEBUG.HeadPosX, 0, 100);
+        tfs.setOrigin(-window.getWidth() * (0.395f + DEBUG.HeadPosX), 0, 100);
         window.setOrigin(width / 2f, height / 2f, 0);
 
         if (minecraft != null) {
