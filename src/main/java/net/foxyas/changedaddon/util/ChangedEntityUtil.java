@@ -85,58 +85,34 @@ public class ChangedEntityUtil {
      * Titles & state
      * ------------------------------------------------------------ */
     public static List<Component> getEntitySubtitle(ChangedEntity changedEntity) {
-
         if (changedEntity.getSelfVariant() == null) {
-            return List.of(Component.literal("N/A"));
+            return List.of(Component.literal("§7N/A"));
         }
 
         List<Component> subtitles = new ArrayList<>();
 
-        // Prefixo base
-        subtitles.add(Component.literal("§fYou are a"));
-
-        // ===============================
-        // Species / family
-        // ===============================
+        // Change "are a" to "is a" or use a cleaner "Species:" label
+        subtitles.add(Component.literal("§fClassification: "));
 
         List<MutableComponent> species = new ArrayList<>();
 
-        if (isCatTransfur(changedEntity)) {
-            species.add(Component.literal("§fCat"));
-        }
-
-        if (isFoxTransfur(changedEntity)) {
-            species.add(Component.literal("§fFox"));
-        }
-
-        if (isWolfTransfur(changedEntity)) {
-            species.add(Component.literal("§fCanine"));
-        }
-
-        if (isDragonTransfur(changedEntity)) {
-            species.add(Component.literal("§fDragon"));
-        }
-
-        if (isAquaticTransfur(changedEntity)) {
-            species.add(Component.literal("§fFish"));
-        }
-
-        if (isSpiderTransfur(changedEntity)) {
-            species.add(Component.literal("§fSpider"));
-        }
+        if (isCatTransfur(changedEntity)) species.add(Component.literal("§fCat"));
+        if (isFoxTransfur(changedEntity)) species.add(Component.literal("§fFox"));
+        if (isWolfTransfur(changedEntity)) species.add(Component.literal("§fCanine"));
+        if (isDragonTransfur(changedEntity)) species.add(Component.literal("§fDragon"));
+        if (isAquaticTransfur(changedEntity)) species.add(Component.literal("§fFish"));
+        if (isSpiderTransfur(changedEntity)) species.add(Component.literal("§fSpider"));
 
         if (species.isEmpty()) {
-            species.add(Component.literal("§7Unknown"));
+            species.add(Component.literal("§8Unknown"));
         }
 
+        // Joins the species (e.g., "Cat / Canine")
         subtitles.add(TransfurSoundsGuiScreen.joinWithSeparator(species, "§7 / "));
 
-        // ===============================
-        // Special traits
-        // ===============================
-
+        // Special traits on a new line or added to the list
         if (isApexPredator(changedEntity)) {
-            subtitles.add(Component.literal("§6Apex Predator"));
+            subtitles.add(Component.literal("§6[Apex Predator]"));
         }
 
         return subtitles;
