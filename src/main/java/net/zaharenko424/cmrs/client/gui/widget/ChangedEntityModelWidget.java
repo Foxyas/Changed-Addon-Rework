@@ -2,6 +2,7 @@ package net.zaharenko424.cmrs.client.gui.widget;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -88,7 +89,7 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
 
     @Override
     public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
-        this.holdingClick = !(pButton == InputConstants.MOUSE_BUTTON_LEFT);
+        this.holdingClick = !(pButton == InputConstants.MOUSE_BUTTON_LEFT || pButton == InputConstants.MOUSE_BUTTON_RIGHT || pButton == InputConstants.MOUSE_BUTTON_MIDDLE);
         return super.mouseReleased(pMouseX, pMouseY, pButton);
     }
 
@@ -111,19 +112,24 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
         return true;
     }
 
+    public void applyRenderStateForEntity(GuiGraphics guiGraphics) {
+        if (changedEntity instanceof IBestiaryEntityData bestiaryEntityData) {
+            bestiaryEntityData.applyBestiaryRenderState(changedEntity, guiGraphics);
+        }
+    }
+
     protected void renderModel(GuiGraphics guiGraphics) {
         super.renderModel(guiGraphics);
         if (changedEntity == null) return;
-        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        Minecraft minecraft = Minecraft.getInstance();
+        EntityRenderDispatcher entityRenderDispatcher = minecraft.getEntityRenderDispatcher();
 
         RenderSystem.setShaderLights(
                 new Vector3f(0F, 0F, -1F),
                 new Vector3f(0F, 0F, 1F)
         );
 
-        entityRenderDispatcher.setRenderShadow(true);
+        applyRenderStateForEntity(guiGraphics);
         entityRenderDispatcher.render(changedEntity, 0, 0, 0, 0, 1, guiGraphics.pose(), guiGraphics.bufferSource(), LightTexture.FULL_BRIGHT);
-        entityRenderDispatcher.setRenderShadow(false);
-
     }
 }

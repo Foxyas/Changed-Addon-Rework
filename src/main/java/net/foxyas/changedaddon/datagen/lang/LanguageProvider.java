@@ -43,6 +43,30 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
         add(toLanguageKey(attribute.getId(), "attribute"), value);
     }
 
+    protected void addStasisModify(String key, String value) {
+        add(modid + ".stasis.modify." + key, value);
+    }
+
+    protected void addStasisModifyForEntity(RegistryObject<? extends EntityType<?>> entityObject, String value) {
+        add(modid + ".stasis.modify." + entityObject.getId().getPath(), value);
+    }
+
+    protected void addStasisModifyForEntity(RegistryObject<? extends EntityType<?>> entityObject, String path, String value) {
+        add(modid + ".stasis.modify." + entityObject.getId().getPath() + "." + path, value);
+    }
+
+    protected void addStasisModifyToolTip(String key, String value) {
+        add(modid + ".stasis.modify." + key + ".tooltip", value);
+    }
+
+    protected void addStasisModifyToolTipForEntity(RegistryObject<? extends EntityType<?>> entityObject, String value) {
+        add(modid + ".stasis.modify." + entityObject.getId().getPath() + ".tooltip", value);
+    }
+
+    protected void addStasisModifyToolTipForEntity(RegistryObject<? extends EntityType<?>> entityObject, String path, String value) {
+        add(modid + ".stasis.modify." + entityObject.getId().getPath() + "." + path + ".tooltip", value);
+    }
+
     protected void addBlockFromId(RegistryObject<? extends Block> block) {
         addBlock(block, Arrays.stream(block.getId().getPath().split("_"))
                 .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1))

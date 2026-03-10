@@ -1,15 +1,22 @@
 package net.foxyas.changedaddon.entity.advanced;
 
+import com.google.common.collect.ImmutableMap;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.ModifiableEntity;
+import net.ltxprogrammer.changed.entity.ModificationVector;
+import net.ltxprogrammer.changed.entity.beast.CustomLatexEntity;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -23,17 +30,31 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats {
+public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, ModifiableEntity {
 
     protected static final EntityDataAccessor<Integer> PRIMARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> SECONDARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> STRIPES_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Float> SIZE_SCALE = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.FLOAT);
-    protected static final EntityDataAccessor<String> STYLE_OF_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.STRING);
-    public final Set<String> StyleTypes = Set.of("male", "female");
+
+    protected static final EntityDataAccessor<StyleType> STYLE_OF_COLOR = SynchedEntityData.defineId(AvaliEntity.class, ChangedAddonEntityDataSerializers.AVALI_STYLE_TYPE);
+    public final Set<String> StyleTypes = Set.of(StyleType.MALE.name().toLowerCase(), StyleType.FEMALE.name().toLowerCase());
+
+    public enum StyleType implements StringRepresentable {
+        MALE,
+        FEMALE;
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return name().toLowerCase();
+        }
+    }
+
+    protected final Map<String, ModificationVector> modificationVectors;
 
     public AvaliEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.AVALI.get(), world);
@@ -41,6 +62,9 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
 
     public AvaliEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
+        ImmutableMap.Builder<String, ModificationVector> builder = ImmutableMap.builder();
+        this.buildModificationVectors(builder);
+        this.modificationVectors = builder.build();
     }
 
     public boolean isColorful() {
@@ -73,7 +97,7 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
         this.entityData.define(SECONDARY_COLOR, Color3.WHITE.toInt());
         this.entityData.define(STRIPES_COLOR, Color3.WHITE.toInt());
         this.entityData.define(SIZE_SCALE, 0.8f);
-        this.entityData.define(STYLE_OF_COLOR, "male");
+        this.entityData.define(STYLE_OF_COLOR, StyleType.MALE);
     }
 
     public Color3 getDripColor() {
@@ -99,6 +123,10 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
         this.entityData.set(SIZE_SCALE, scale);
     }
 
+    public void setDimensionScale(double scale) {
+        this.setDimensionScale((float) scale);
+    }
+
     @Override
     public CompoundTag savePlayerVariantData() {
         CompoundTag tag = super.savePlayerVariantData();
@@ -122,7 +150,7 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
         tag.putInt("PrimaryColor", getPrimaryColor().toInt());
         tag.putInt("SecondaryColor", getSecondaryColor().toInt());
         tag.putInt("StripesColor", getStripesColor().toInt());
-        tag.putString("StyleOfColor", getStyleOfColor());
+        tag.putString("StyleOfColor", getStyleOfColor().getSerializedName());
         originalTag.put("TransfurColorData", tag);
         originalTag.putFloat("size_scale", getDimensionScale());
     }
@@ -151,7 +179,7 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
     }
 
     protected void failSafe() {
-        if (!getStyleOfColor().equals("male") && !getStyleOfColor().equals("female")) {
+        if (!getStyleOfColor().getSerializedName().equals("male") && !getStyleOfColor().getSerializedName().equals("female")) {
             this.setStyleOfColor("male");
         }
     }
@@ -214,15 +242,29 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
         this.entityData.set(STRIPES_COLOR, color.toInt());
     }
 
-    public String getStyleOfColor() {
+    public StyleType getStyleOfColor() {
         return this.entityData.get(STYLE_OF_COLOR);
     }
 
-    public void setStyleOfColor(String style) {
+    public void setStyleOfColor(StyleType style) {
         this.entityData.set(STYLE_OF_COLOR, style);
     }
 
-    public enum SizeScaling implements IExtensibleEnum {
+    public void setStyleOfColor(String style) {
+        this.setStyleOfColor(StyleType.valueOf(style.toUpperCase()));
+    }
+
+    @Override
+    public Map<String, ModificationVector> getModificationVectors() {
+        return this.modificationVectors;
+    }
+
+    protected void buildModificationVectors(ImmutableMap.Builder<String, ModificationVector> builder) {
+        builder.put("styleType", ModificationVector.simpleEnum(StyleType.class, this::getStyleOfColor, this::setStyleOfColor, "changed_addon.stasis.modify.avali.pattern_style"));
+        builder.put("sizeScale", ModificationVector.simpleLinear(0.8, 1, () -> (double) this.getDimensionScale(), this::setDimensionScale, "changed_addon.stasis.modify.avali.size_scaling"));
+    }
+
+    public enum SizeScaling implements StringRepresentable,IExtensibleEnum {
         NORMAL(0.8f),
         TALL(0.9f),
         VERY_TALL(1.0f);
@@ -239,6 +281,11 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
 
         public float getScale() {
             return scale;
+        }
+
+        @Override
+        public @NotNull String getSerializedName() {
+            return name().toLowerCase();
         }
     }
 }

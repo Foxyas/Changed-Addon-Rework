@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Exp6Entity extends AbstractCanTameSnepChangedEntityFavors {
-    public Exp6Entity(PlayMessages.SpawnEntity packet, Level world) {
+    public Exp6Entity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXP_6.get(), world);
     }
 

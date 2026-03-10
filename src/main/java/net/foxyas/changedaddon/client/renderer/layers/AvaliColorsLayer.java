@@ -44,7 +44,7 @@ public class AvaliColorsLayer<M extends AdvancedHumanoidModel<T>, T extends Chan
 
     private ResourceLocation getTextureStyle(AvaliEntity avaliEntity) {
         if (this.layerTexture.toString().contains("gender")) {
-            return ResourceLocation.parse(layerTexture.toString().replace("gender", avaliEntity.getStyleOfColor()));
+            return ResourceLocation.parse(layerTexture.toString().replace("gender", avaliEntity.getStyleOfColor().name().toLowerCase()));
         }
         return layerTexture;
     }

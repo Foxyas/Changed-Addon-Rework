@@ -51,7 +51,7 @@ public class TransfurSoundsGuiScreen extends Screen {
         this.player = Minecraft.getInstance().player;
     }
 
-    private static MutableComponent joinWithSeparator(List<MutableComponent> components, String separator) {
+    public static MutableComponent joinWithSeparator(List<MutableComponent> components, String separator) {
         MutableComponent result = components.get(0);
 
         for (int i = 1; i < components.size(); i++) {

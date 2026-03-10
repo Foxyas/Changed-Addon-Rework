@@ -338,6 +338,10 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addEntityFromId(AVALI);
         addEntityFromId(AVALI_ZERGODMASTER);
+        addStasisModifyForEntity(AVALI, "pattern_style", "Modify Feathers Style");
+        addStasisModifyToolTipForEntity(AVALI, "pattern_style", "Change the style of the feathers from your body.");
+        addStasisModifyForEntity(AVALI, "size_scaling", "Modify Size Scaling");
+        addStasisModifyToolTipForEntity(AVALI, "size_scaling", "Change the size scaling from your body.");
         addEntityFromId(BAGEL);
         addEntityFromId(BLUE_LIZARD);
         addEntityFromId(BOREALIS_FEMALE);
@@ -356,6 +360,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityFromId(EXP_6);
         addEntityFromId(EXPERIMENT_009);
         addEntityType(EXPERIMENT_009_BOSS, "Experiment 009");
+        addText("lore." + EXPERIMENT_009.getId().getPath(), "Created within the confines of a laboratory, it was never shown mercy or compassion by most of the scientists who studied it. Those few who dared to sympathize with the creature met tragic ends. After eventually being contained and fragmented into a strange orb of condensed DNA, it did not fade into silence. Instead, it endured—its mind filled with resentment. Now it seeks vengeance against humanity, and against any being that dares to resemble them.");
         addEntityFromId(EXPERIMENT_10);
         addEntityType(EXPERIMENT_10_BOSS, "Experiment 10");
         addEntityFromId(LUMINARCTIC_LEOPARD_FEMALE);

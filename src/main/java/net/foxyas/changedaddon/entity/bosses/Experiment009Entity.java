@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
@@ -11,10 +12,14 @@ import net.ltxprogrammer.changed.init.ChangedDamageSources;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -49,10 +54,8 @@ import java.util.Objects;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment009Entity extends ChangedEntity implements PowderSnowWalkable, IBestiaryEntityData {
-    //private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
-    private boolean Phase2;
 
-    private double AI;
+    private static final EntityDataAccessor<Boolean> PHASE2 = SynchedEntityData.defineId(Experiment009Entity.class, EntityDataSerializers.BOOLEAN);
 
     public Experiment009Entity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_009.get(), world);
@@ -64,8 +67,14 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         xpReward = 160;
         setNoAi(false);
         setPersistenceRequired();
+        applyDefaultBasicPlayerInfo();
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(PHASE2, false);
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
@@ -289,10 +298,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-        SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        return retval;
+        return super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
     }
 
     @Override
@@ -303,44 +309,42 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     @Override
     public void startSeenByPlayer(@NotNull ServerPlayer player) {
         super.startSeenByPlayer(player);
-        //this.bossInfo.addPlayer(player);
     }
 
     @Override
     public void stopSeenByPlayer(@NotNull ServerPlayer player) {
         super.stopSeenByPlayer(player);
-        //this.bossInfo.removePlayer(player);
     }
 
     @Override
     public void customServerAiStep() {
         super.customServerAiStep();
-        //this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
+    }
+
+    protected void applyDefaultBasicPlayerInfo() {
+        this.getBasicPlayerInfo().setSize(1f);
+        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
     }
 
     public boolean isPhase2() {
-        return this.Phase2;
+        return this.entityData.get(PHASE2);
     }
 
     public void setPhase2(boolean set) {
-        this.Phase2 = set;
+        this.entityData.set(PHASE2, set);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         if (tag.contains("Phase2"))
-            Phase2 = tag.getBoolean("Phase2");
-        if (tag.contains("AI"))
-            AI = tag.getDouble("AI");
+            setPhase2(tag.getBoolean("Phase2"));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Phase2", Phase2);
-        tag.putDouble("AI", AI);
+        tag.putBoolean("Phase2", isPhase2());
     }
-
 
     @Override
     public void baseTick() {
@@ -356,8 +360,16 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     }
 
     @Override
+    public void applyBestiaryRenderState(ChangedEntity changedEntity, GuiGraphics guiGraphics) {
+        if (changedEntity instanceof Experiment009Entity entity) {
+            entity.setPhase2(true);
+            entity.applyDefaultBasicPlayerInfo();
+        }
+    }
+
+    @Override
     public BestiaryInfo getBasicLore() {
-        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("Made in a lab lol!"), 0);
+        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.translatableWithFallback("text.changed_addon.lore.experiment_009","Unknown"), 0);
     }
 
     @Override
@@ -368,7 +380,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     @Override
     public List<BestiaryInfo> getBestiaryInfo() {
         List<BestiaryInfo> bestiaryInfo = new ArrayList<>(IBestiaryEntityData.super.getBestiaryInfo());
-        bestiaryInfo.add(new BestiaryInfo(Component.literal("Passive skills"), Component.literal("Cappable To Manipulate Electricity\nCareful when using metal around them"), 2));
+        bestiaryInfo.add(new BestiaryInfo(Component.literal("Passive skills").withStyle(ChatFormatting.AQUA), Component.literal("Cappable To Manipulate Electricity\nCareful when using metal around them"), 2));
         return bestiaryInfo;
     }
 }

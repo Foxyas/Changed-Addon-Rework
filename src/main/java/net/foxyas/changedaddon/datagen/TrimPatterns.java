@@ -17,10 +17,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Optional;
 
 public class TrimPatterns {
-    public static final ResourceKey<TrimPattern> TEST = registryKey("test");
 
     public static void bootstrap(BootstapContext<TrimPattern> pContext) {
-        register(pContext, Items.STICK, TEST);
     }
 
     public static Optional<Holder.Reference<TrimPattern>> getFromTemplate(RegistryAccess pRegistry, ItemStack pTemplate) {

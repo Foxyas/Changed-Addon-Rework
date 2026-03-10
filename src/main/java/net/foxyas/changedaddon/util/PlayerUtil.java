@@ -2,7 +2,9 @@ package net.foxyas.changedaddon.util;
 
 import com.google.common.base.Predicates;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
 import net.foxyas.changedaddon.entity.simple.AbstractSnowFoxEntity;
+import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
@@ -20,6 +22,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -38,6 +41,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -196,8 +201,6 @@ public class PlayerUtil {
         return entity instanceof AbstractAquaticEntity;
     }
 
-    //=================================================== LookingAt ==================================================//
-
     public static boolean isSpiderTransfur(Player player) {
         TransfurVariant<?> variant = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getParent();
         return variant.is(ChangedAddonTags.TransfurTypes.SPIDER_LIKE);
@@ -207,6 +210,88 @@ public class PlayerUtil {
         ChangedEntity entity = Objects.requireNonNull(ProcessTransfur.getPlayerTransfurVariant(player)).getChangedEntity();
         return entity.getType().is(ChangedAddonTags.EntityTypes.CAN_ROAR);
     }
+
+    public static boolean isApexPredator(Player player) {
+        if (!ProcessTransfur.isPlayerTransfurred(player))
+            return false;
+
+        ResourceLocation id =
+                ProcessTransfur.getPlayerTransfurVariant(player).getFormId();
+
+        if (id == null)
+            return false;
+
+        String path = id.toString();
+
+        return path.contains("lion")
+                || path.contains("tiger")
+                || path.startsWith("changed_addon:form_experiment009") || TransfurEvents.resolveChangedEntity(player).getType().is(ChangedAddonTags.EntityTypes.CAN_ROAR);
+    }
+
+
+    /* ------------------------------------------------------------
+     * Titles & state
+     * ------------------------------------------------------------ */
+    public static List<Component> getPlayerSubtitle(Player player) {
+
+        if (!ProcessTransfur.isPlayerTransfurred(player)) {
+            return List.of(Component.literal("§7Not Transfurred"));
+        }
+
+        List<Component> subtitles = new ArrayList<>();
+
+        // Prefixo base
+        subtitles.add(Component.literal("§fYou are a"));
+
+        // ===============================
+        // Species / family
+        // ===============================
+
+        List<MutableComponent> species = new ArrayList<>();
+
+        if (isCatTransfur(player)) {
+            species.add(Component.literal("§fCat"));
+        }
+
+        if (isFoxTransfur(player)) {
+            species.add(Component.literal("§fFox"));
+        }
+
+        if (isWolfTransfur(player)) {
+            species.add(Component.literal("§fCanine"));
+        }
+
+        if (isDragonTransfur(player)) {
+            species.add(Component.literal("§fDragon"));
+        }
+
+        if (isAquaticTransfur(player)) {
+            species.add(Component.literal("§fFish"));
+        }
+
+        if (isSpiderTransfur(player)) {
+            species.add(Component.literal("§fSpider"));
+        }
+
+        if (species.isEmpty()) {
+            species.add(Component.literal("§7Unknown"));
+        }
+
+        subtitles.add(TransfurSoundsGuiScreen.joinWithSeparator(species, "§7 / "));
+
+        // ===============================
+        // Special traits
+        // ===============================
+
+        if (isApexPredator(player)) {
+            subtitles.add(Component.literal("§6Apex Predator"));
+        }
+
+        return subtitles;
+    }
+
+    //=================================================== LookingAt ==================================================//
+
 
     @Nullable
     public static Entity getEntityLookingAt(Entity entity, float reach, @Nullable ClipContext.ShapeGetter testLineOfSight) {

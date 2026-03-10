@@ -40,20 +40,6 @@ public class Phase2EntitiesHandleProcedure {
                 playSound(level, entity.blockPosition().above(), "entity.player.attack.crit", SoundSource.HOSTILE, 1, 1);
             }
 
-            // ======== Experiment10Entity ============ \\
-        } else if (entity instanceof Experiment10Entity e10) {
-            if (!e10.isPhase2() && e10.getUnderlyingPlayer() == null && currentHealth - damage <= maxHealth * 0.5f) {
-                e10.setPhase2(true);
-                playSound(level, entity.blockPosition().above(), "entity.player.attack.crit", SoundSource.HOSTILE, 1, 1);
-            }
-
-            // ======== KetExperiment009Entity ============ \\
-        } else if (entity instanceof Experiment009Entity ket) {
-            if (!ket.isPhase2() && ket.getUnderlyingPlayer() == null && currentHealth - damage <= maxHealth * 0.8f) {
-                ket.setPhase2(true);
-                ket.SpawnThunderBolt(ket.position());
-                playSound(level, entity.blockPosition().above(), "block.beacon.power_select", SoundSource.HOSTILE, 500, 0);
-            }
         }
     }
 

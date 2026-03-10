@@ -3,6 +3,8 @@ package net.foxyas.changedaddon.entity.api;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.EntityType;
@@ -79,6 +81,9 @@ public interface IBestiaryEntityData {
 
     EntityType<?> getReferencedEntityType();
 
+    default void applyBestiaryRenderState(ChangedEntity changedEntity, GuiGraphics guiGraphics) {
+    }
+
     default boolean isUnlocked(Player player) {
         /*if (player instanceof ServerPlayer serverPlayer) {
             return serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(getReferencedEntityType())) >= 0;
@@ -116,8 +121,27 @@ public interface IBestiaryEntityData {
         BestiaryInfo attributeData = new BestiaryInfo(
                 Component.literal("Attributes"),
                 attributeText.withStyle(ChatFormatting.GREEN),
-                1
+                1,
+                -60
         );
+
+        if (livingEntity.level.isClientSide()) {
+            Minecraft minecraft = Minecraft.getInstance();
+            int lineCount = minecraft.font.split(attributeText, 180).size();
+            int lineBreaks = attributeText.getString().split("\n", -1).length - 1;
+
+            // Dynamic Stuff can be done here... not clue to HOW make it looks good...
+            // Most of the time it just get "too upwards"...
+
+            attributeData = new BestiaryInfo(
+                    Component.literal("Attributes"),
+                    attributeText.withStyle(ChatFormatting.GREEN),
+                    1,
+                    -60
+            );
+        }
+
+
 
         return new ArrayList<>(List.of(lore, attributeData));
     }
@@ -126,6 +150,42 @@ public interface IBestiaryEntityData {
         return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"), 0);
     }
 
-    record BestiaryInfo(Component title, Component description, int order) {
+    class BestiaryInfo {
+
+        public final Component title;
+        public final Component description;
+        public final int order;
+        public final int heightSizeOffset;
+
+        public BestiaryInfo(Component title, Component description, int order) {
+            this.title = title;
+            this.description = description;
+            this.order = order;
+            this.heightSizeOffset = 0;
+        }
+
+        public BestiaryInfo(Component title, Component description, int order, int heightSizeOffset) {
+            this.title = title;
+            this.description = description;
+            this.order = order;
+            this.heightSizeOffset = heightSizeOffset;
+        }
+
+
+        public Component title() {
+            return this.title;
+        }
+
+        public Component description() {
+            return this.description;
+        }
+
+        public int order() {
+            return order;
+        }
+
+        public int heightSizeOffset() {
+            return heightSizeOffset;
+        }
     }
 }

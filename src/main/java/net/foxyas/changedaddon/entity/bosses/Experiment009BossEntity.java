@@ -530,7 +530,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Override
     protected float getWaterSlowDown() {
-        return 0.98f;
+        return this.getTarget() != null ? 0.98f : super.getWaterSlowDown();
     }
 
     private void knockbackNearbyEntities(LivingEntity source) {
@@ -840,11 +840,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     @Override
     public EntityType<?> getReferencedEntityType() {
         return this.getType();
-    }
-
-    @Override
-    public List<BestiaryInfo> getBestiaryInfo() {
-        return IBestiaryEntityData.super.getBestiaryInfo();
     }
 
     private enum GearTier {

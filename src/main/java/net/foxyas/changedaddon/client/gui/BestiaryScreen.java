@@ -1,6 +1,9 @@
 package net.foxyas.changedaddon.client.gui;
 
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
+import net.foxyas.changedaddon.process.DEBUG;
+import net.foxyas.changedaddon.util.ChangedEntityUtil;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -26,7 +29,7 @@ import java.util.List;
 
 public class BestiaryScreen extends Screen implements MouseMoveListener {
 
-    static final float MaxBackGroundWidth = 425f;
+    static final float MaxBackGroundWidth = 525f;
     static final float MaxBackGroundHeight = 256f;
 
     final WidgetContainer window = new WidgetContainer().setSize(MaxBackGroundWidth, MaxBackGroundHeight);
@@ -52,7 +55,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         /* MODEL */
 
         modelWidget.setInteractable(true);
-        modelWidget.setOrigin((width / 2f) + -30, height / 2f, 40);
+        modelWidget.setOrigin(width * DEBUG.HeadPosZ, height / 2f, 80);
 
         modelWidget.setOnClick((modelRectWidget, integer) -> {
             if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
@@ -70,7 +73,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             return false;
         });
 
-        loreScroll.setOrigin(window.getWidth() / 4, 0, 90);
+        loreScroll.setOrigin(window.getWidth() * DEBUG.HeadPosY, 0, 90);
 
         /* TF LIST */
         List<TransfurVariant<?>> variants = List.of(
@@ -130,12 +133,21 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
     @Override
     protected void init() {
-        tfs.setOrigin(-window.getWidth() / 3f, 0, 100);
+        tfs.setOrigin(-window.getWidth() * DEBUG.HeadPosX, 0, 100);
         window.setOrigin(width / 2f, height / 2f, 0);
 
         if (minecraft != null) {
             selectTf(ChangedTransfurVariants.GAS_WOLF_MALE.get());
         }
+
+        float backGroundWidth = displayBackGround.getWidth();
+        float backGroundHeight = displayBackGround.getHeight();
+        for (Widget child : this.window.children()) {
+            if (child == displayBackGround) {
+                continue;
+            }
+            child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+        } // By default, everything should be invisible
 
         addRenderableWidget(window);
     }
@@ -160,8 +172,21 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             if (child == displayBackGround) {
                 continue;
             }
-
+            if (child == loreScroll)
+                continue;
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
+        }
+
+        if (!modelWidget.isVisible() || modelWidget.getChangedEntity() == null) {
+            this.loreScroll.setVisible(false);
+            for (Widget child : this.loreScroll.children()) {
+                child.setVisible(false);
+            }
+        } else {
+            this.loreScroll.setVisible(true);
+            for (Widget child : this.loreScroll.children()) {
+                child.setVisible(true);
+            }
         }
     }
 
@@ -206,6 +231,8 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
                     heightAmount = 40f + heightByLines;
                 }
 
+                heightAmount += bestiaryInfo.heightSizeOffset();
+
                 InfoWidget infoWidget = new InfoWidget().setSize(180, heightAmount).setLineSize(180, 4);
                 infoWidget.setTextInfo(tittle, description);
                 infoWidgetList.add(infoWidget);
@@ -214,7 +241,22 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             /* LORE */
             loreWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
             loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
-            // dont create lore widget if there is no lore?
+            // don't create lore widget if there is no lore?
+            // the lore stuff is supposed to be a "funny" Easter egg, having it to be N/A for generic entities is funnier then not having it.
+            List<Component> entitySubtitles = ChangedEntityUtil.getEntitySubtitle(entity);
+            MutableComponent subTiles = Component.empty();
+            int index = 0;
+            for (Component component : entitySubtitles) {
+                if (index == 0) {
+                    subTiles.append(component);
+                } else {
+                    subTiles.append("\n").append(component);
+                }
+                index++;
+            }
+
+            loreWidget.setDescription(subTiles);
+
             /* ATTRIBUTES */
             attributeWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
             attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));

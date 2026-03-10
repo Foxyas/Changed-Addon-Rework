@@ -21,10 +21,8 @@ import java.util.Optional;
 
 public class TrimMaterials {
 
-    public static final ResourceKey<TrimMaterial> IRIDIUM = registryKey("iridium");
 
     public static void bootstrap(BootstapContext<TrimMaterial> pContext) {
-        register(pContext, IRIDIUM, ChangedAddonItems.IRIDIUM.get(), Style.EMPTY.withColor(Color.WHITE.getRGB()), 1F);
     }
 
     public static Optional<Holder.Reference<TrimMaterial>> getFromIngredient(RegistryAccess pRegistryAccess, ItemStack pIngredient) {

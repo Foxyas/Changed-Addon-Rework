@@ -85,10 +85,24 @@ public class BreakBlocksAroundGoal extends Goal {
         }
 
         BlockPos mobPos = holder.blockPosition();
+        int horizontalRadius = 5;
+        int verticalRadius = 3;
+
         int suppedCooldown = 0;
         for (BlockPos pos : BlockPos.betweenClosedStream(
                 mobPos.offset(-3, 0, -3),
-                mobPos.offset(3, 3, 3)).map(BlockPos::immutable).toList()) {
+                mobPos.offset(3, 3, 3)).map(BlockPos::immutable).filter(pos -> {
+            int xi = pos.getX() - mobPos.getX();
+            int yi = pos.getY() - mobPos.getY();
+            int zi = pos.getZ() - mobPos.getZ();
+
+            double distanceSq =
+                    (xi * xi) / (double) (horizontalRadius * horizontalRadius) +
+                            (yi * yi) / (double) (verticalRadius * verticalRadius) +
+                            (zi * zi) / (double) (horizontalRadius * horizontalRadius);
+
+            return distanceSq <= 1.0;
+        }).toList()) {
 
             if (pos.equals(mobPos.below())) continue;
 

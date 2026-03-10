@@ -28,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.server.command.EnumArgument;
 
 public class ChangedAddonCommandRootCommand {
 
@@ -206,7 +207,8 @@ public class ChangedAddonCommandRootCommand {
                                                     if (IDynamicCoatColors.playerHasTransfurWithExtraColors(player)) {
                                                         TransfurVariantInstance<?> transfur = ProcessTransfur.getPlayerTransfurVariant(player);
                                                         if (transfur != null && transfur.getChangedEntity() instanceof AvaliEntity avaliEntity) {
-                                                            avaliEntity.setStyleOfColor(style);
+                                                            AvaliEntity.StyleType styleType = AvaliEntity.StyleType.valueOf(style.toUpperCase());
+                                                            avaliEntity.setStyleOfColor(styleType);
                                                             context.getSource().sendSuccess(() -> Component.literal("Set style to " + style), false);
                                                             return 1;
                                                         } else if (transfur != null && transfur.getChangedEntity() instanceof IDynamicCoatColors dynamicColor) {
