@@ -1,8 +1,13 @@
 package net.zaharenko424.cmrs.client.gui.widget;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.zaharenko424.cmrs.client.api.MatrixStack;
+import net.zaharenko424.cmrs.client.gui.WidgetHelper;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
@@ -76,15 +81,23 @@ public class InfoWidget extends Widget implements SizedWidget {
         return this;
     }
 
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        var font = Minecraft.getInstance().font;
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        if (!isVisible() || (title == null && description == null)) return;
 
-        float currentY = this.origin.y;
+        PoseStack stack = guiGraphics.pose();
+        MatrixStack.push(stack);
+        MatrixStack.translate(stack, origin);
+        MatrixStack.scale(stack, scale);
+
+        Font font = Minecraft.getInstance().font;
+
+        float currentY = -height/2 + font.lineHeight;
 
         // 🔹 Render Title
-        float x = this.origin.x;
-        guiGraphics.drawString(font, title.getVisualOrderText(), x, currentY, 0xFFFFFF, false);
-        currentY += font.lineHeight + 4;
+        float x = -width / 2;
+
+        WidgetHelper.drawCenteredComp(guiGraphics, font, title, 0, currentY, -1, false);
+        currentY += 4;
 
         // 🔹 Render Line
         drawLine(guiGraphics, x, currentY, lineWidth, lineHeight, lineColor.getRGB());
@@ -92,6 +105,8 @@ public class InfoWidget extends Widget implements SizedWidget {
 
         // 🔹 Render Description (quebra automática)
         guiGraphics.drawWordWrap(font, description, (int) x, (int) currentY, (int) width, 0xCCCCCC);
+
+        MatrixStack.pop(stack);
     }
 
     protected void drawLine(GuiGraphics guiGraphics, float x, float y, float width, float height, int color) {

@@ -3,11 +3,12 @@ package net.zaharenko424.cmrs.client.gui.widget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO why not use widgetContainer with list layout instead?
 public class MultiInfoWidget extends InfoWidget {
 
     public static class InfoEntry {
@@ -93,7 +94,7 @@ public class MultiInfoWidget extends InfoWidget {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         var font = Minecraft.getInstance().font;
 
         float currentY = this.origin.y;

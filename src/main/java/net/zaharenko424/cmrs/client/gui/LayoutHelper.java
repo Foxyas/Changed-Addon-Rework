@@ -9,20 +9,20 @@ import java.util.Collection;
 public class LayoutHelper {
 
     public static <W extends Widget & SizedWidget> void listLayout(ScrollableContainer container, Collection<W> widgets, float spacing){
-        listLayout(container, widgets, 0, spacing);
+        listLayout(container, widgets, 0, 0, spacing);
     }
 
-    public static <W extends Widget & SizedWidget> void listLayout(ScrollableContainer container, Collection<W> widgets, float topOffset, float spacing){
+    public static <W extends Widget & SizedWidget> void listLayout(ScrollableContainer container, Collection<W> widgets, float topX, float leftY, float spacing){
         if(widgets.isEmpty()){
             container.setActualHeight(0);
             return;
         }
 
         float top = -container.getHeight() / 2f;
-        float actualHeight = topOffset;
+        float actualHeight = leftY;
 
         for(W w : widgets){
-            w.setOrigin(0,  top + actualHeight + w.getHeight() / 2f, 0);
+            w.setOrigin(topX,  top + actualHeight + w.getHeight() / 2f, 0);
             container.addWidget(w);
 
             actualHeight += w.getHeight() + spacing;

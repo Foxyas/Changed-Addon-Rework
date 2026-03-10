@@ -1,7 +1,7 @@
 package net.zaharenko424.cmrs;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.foxyas.changedaddon.client.gui.BestiaryGuiScreen;
+import net.foxyas.changedaddon.client.gui.BestiaryScreen;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
@@ -41,7 +41,7 @@ public class Test {
         if (event.getKey() == InputConstants.KEY_I) {
             minecraft.setScreen(new TestScreen());
         } else {
-            minecraft.setScreen(new BestiaryGuiScreen());
+            minecraft.setScreen(new BestiaryScreen());
         }
     }
 
@@ -134,7 +134,7 @@ public class Test {
                 entries.add(new TFEntryWidget(tf));
             }
 
-            LayoutHelper.listLayout(tfs, entries, 5, 5);
+            LayoutHelper.listLayout(tfs, entries, 5);
             tfs.init();
             tfs.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
 

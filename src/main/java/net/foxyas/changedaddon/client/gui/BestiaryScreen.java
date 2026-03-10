@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
+public class BestiaryScreen extends Screen implements MouseMoveListener {
 
     static final float MaxBackGroundWidth = 425f;
     static final float MaxBackGroundHeight = 256f;
@@ -40,12 +40,12 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                     .setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
 
     final ScrollableContainer loreScroll =
-            (ScrollableContainer) new ScrollableContainer().setSize(325, 200);
+            (ScrollableContainer) new ScrollableContainer().setSize(200, 200);
 
     final ScrollableContainer tfs =
             (ScrollableContainer) new ScrollableContainer().setSize(100, 200).setOrigin(0, 0, 100);
 
-    public BestiaryGuiScreen() {
+    public BestiaryScreen() {
         super(Component.literal("Bestiary"));
 
         displayBackGround.rebuildMesh();
@@ -73,7 +73,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
 
         Vector3f modelOrigin = modelWidget.getOrigin();
-        loreScroll.setOrigin(modelOrigin.x + 50, modelOrigin.y, 90);
+        loreScroll.setOrigin(window.getWidth() / 4, 0, 90);
 
 
         /* TF LIST */
@@ -91,7 +91,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
 
         List<TFEntryWidget> entries = getTfEntryWidgets(variants);
 
-        LayoutHelper.listLayout(tfs, entries, 5, 5);
+        LayoutHelper.listLayout(tfs, entries, 5);
         tfs.init();
         tfs.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
 
@@ -201,7 +201,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
         }
 
         List<? extends Widget> children = loreScroll.children();
-        if (modelWidget.getChangedEntity() != null && modelWidget.isVisible()) {
+        if (modelWidget.getChangedEntity() != null && modelWidget.isVisible()) {//FIXME do not do this every tick...
 
             List<Widget> oldChildren = new ArrayList<>(children);
 
@@ -218,7 +218,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                 for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {
                     Component tittle = bestiaryInfo.title();
                     Component description = bestiaryInfo.description();
-                    int lineCount = this.minecraft.font.split(description, 170).size();
+                    int lineCount = this.minecraft.font.split(description, 180).size();
                     int lineBreaks = description.getString().split("\n", -1).length - 1;
 
                     int i = lineCount + lineBreaks;
@@ -230,16 +230,17 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
                         heightAmount = 40f + heightByLines;
                     }
 
-                    InfoWidget infoWidget = new InfoWidget().setSize(170, heightAmount).setLineSize(200, 4);
+                    InfoWidget infoWidget = new InfoWidget().setSize(180, heightAmount).setLineSize(180, 4);
                     infoWidget.setTextInfo(tittle, description);
                     infoWidgetList.add(infoWidget);
                 }
             } else {
                 /* LORE */
-                loreWidget = new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+                loreWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
                 loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
+                // dont create lore widget if there is no lore?
                 /* ATTRIBUTES */
-                attributeWidget = new InfoWidget().setSize(200, 40).setLineSize(200, 4);
+                attributeWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
                 attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));
 
                 infoWidgetList.addAll(List.of(loreWidget, attributeWidget));
@@ -257,11 +258,9 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
             } // Simple Fail Safe Check;
 
 
-            LayoutHelper.listLayout(loreScroll, infoWidgetList, 5, 1);
+            LayoutHelper.listLayout(loreScroll, infoWidgetList, -5, 0, 1);
             loreScroll.init();
-            RoundedRectWidget scrollBar = loreScroll.getScrollBar();
-            scrollBar.setRoundingRadius(3);
-            scrollBar.rebuildMesh();
+            loreScroll.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
 
             double sum = children.stream().mapToDouble((widget) -> widget != loreScroll.getScrollBar() && widget instanceof SizedWidget sizedWidget ? sizedWidget.getHeight() : 0).sum();
 
@@ -288,7 +287,7 @@ public class BestiaryGuiScreen extends Screen implements MouseMoveListener {
     /* TF ENTRY                                          */
     /* ------------------------------------------------ */
 
-    public static class TFEntryWidget extends WidgetContainer {
+    static class TFEntryWidget extends WidgetContainer {
 
         protected final TransfurVariant<?> tf;
 

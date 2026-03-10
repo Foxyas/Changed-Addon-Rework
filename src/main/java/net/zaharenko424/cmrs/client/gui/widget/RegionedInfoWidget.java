@@ -3,9 +3,10 @@ package net.zaharenko424.cmrs.client.gui.widget;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-
+//TODO why is this needed? remove?
 public class RegionedInfoWidget extends InfoWidget implements SizedWidget {
 
     protected final WidgetContainer region;
@@ -69,7 +70,7 @@ public class RegionedInfoWidget extends InfoWidget implements SizedWidget {
         return this;
     }
 
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         var font = Minecraft.getInstance().font;
 
         float currentY = this.origin.y;
