@@ -9,6 +9,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -176,7 +177,12 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
         }
 
-        loreScroll.setVisible(modelWidget.isVisible() && modelWidget.getChangedEntity() != null);
+        if (modelWidget.isVisible() && modelWidget.getChangedEntity() != null) {
+            loreScroll.setVisible(true);
+
+            assert Minecraft.getInstance().player != null;
+            modelWidget.getChangedEntity().tickCount = Minecraft.getInstance().player.tickCount;
+        } else loreScroll.setVisible(false);
     }
 
     protected TransfurVariant<?> selected;

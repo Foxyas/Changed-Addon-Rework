@@ -37,7 +37,7 @@ public abstract class ModelRectWidget extends ModelWidget {
     }
 
     @Override
-    protected void renderModel(GuiGraphics guiGraphics) {
+    protected void renderModel(GuiGraphics guiGraphics, float partialTick) {
         if(renderTransform != null) renderTransform.accept(this, guiGraphics.pose());
     }
 }

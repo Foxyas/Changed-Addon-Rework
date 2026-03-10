@@ -118,8 +118,8 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
         }
     }
 
-    protected void renderModel(GuiGraphics guiGraphics) {
-        super.renderModel(guiGraphics);
+    protected void renderModel(GuiGraphics guiGraphics, float partialTick) {
+        super.renderModel(guiGraphics, partialTick);
         if (changedEntity == null) return;
         Minecraft minecraft = Minecraft.getInstance();
         EntityRenderDispatcher entityRenderDispatcher = minecraft.getEntityRenderDispatcher();
@@ -130,6 +130,6 @@ public class ChangedEntityModelWidget extends ModelRectWidget {
         );
 
         applyRenderStateForEntity(guiGraphics);
-        entityRenderDispatcher.render(changedEntity, 0, 0, 0, 0, 1, guiGraphics.pose(), guiGraphics.bufferSource(), LightTexture.FULL_BRIGHT);
+        entityRenderDispatcher.render(changedEntity, 0, 0, 0, 0, partialTick, guiGraphics.pose(), guiGraphics.bufferSource(), LightTexture.FULL_BRIGHT);
     }
 }
