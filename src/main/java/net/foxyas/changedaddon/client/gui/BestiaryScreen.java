@@ -5,20 +5,19 @@ import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
+import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.zaharenko424.cmrs.client.gui.LayoutHelper;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
 import net.zaharenko424.cmrs.client.gui.widget.*;
-import org.apache.commons.lang3.function.ToBooleanBiFunction;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -71,10 +70,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             return false;
         });
 
-
-        Vector3f modelOrigin = modelWidget.getOrigin();
         loreScroll.setOrigin(window.getWidth() / 4, 0, 90);
-
 
         /* TF LIST */
         List<TransfurVariant<?>> variants = List.of(
@@ -126,32 +122,9 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         List<TFEntryWidget> entries = new ArrayList<>();
 
         for (TransfurVariant<?> tf : variants) {
-
-            TFEntryWidget entry = new TFEntryWidget(tf);
-
-            entry.setOnClickFunction((button, key) -> {
-
-                if (minecraft == null || minecraft.level == null) return false;
-
-                ChangedEntity entity = ChangedEntities.getCachedEntity(
-                        minecraft.level,
-                        tf.getEntityType()
-                );
-
-                if (entity instanceof IBestiaryEntityData entityData) {
-                    Entity cachedEntity = ChangedEntities.getCachedEntity(minecraft.level, entityData.getReferencedEntityType());
-                    if (cachedEntity instanceof ChangedEntity changedEntity) {
-                        entity = changedEntity;
-                    }
-                }
-
-                modelWidget.setChangedEntity(entity);
-
-                return true;
-            });
-
-            entries.add(entry);
+            entries.add(new TFEntryWidget(tf));
         }
+
         return entries;
     }
 
@@ -161,12 +134,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         window.setOrigin(width / 2f, height / 2f, 0);
 
         if (minecraft != null) {
-            modelWidget.setChangedEntity(
-                    ChangedEntities.getCachedEntity(
-                            minecraft.level,
-                            ChangedEntities.GAS_WOLF_MALE.get()
-                    )
-            );
+            selectTf(ChangedTransfurVariants.GAS_WOLF_MALE.get());
         }
 
         addRenderableWidget(window);
@@ -174,9 +142,6 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
     @Override
     public void tick() {
-
-        super.tick();
-
         float backGroundWidth = displayBackGround.getWidth();
         float backGroundHeight = displayBackGround.getHeight();
 
@@ -191,7 +156,6 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             displayBackGround.setSizeAndUpdate(backGroundWidth, dynamicHeight);
         }
 
-
         for (Widget child : this.window.children()) {
             if (child == displayBackGround) {
                 continue;
@@ -199,83 +163,88 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
         }
+    }
 
-        List<? extends Widget> children = loreScroll.children();
-        if (modelWidget.getChangedEntity() != null && modelWidget.isVisible()) {//FIXME do not do this every tick...
+    protected void selectTf(TransfurVariant<?> tf) {
+        ChangedEntity entity = ChangedEntities.getCachedEntity(minecraft.level, tf.getEntityType());
 
-            List<Widget> oldChildren = new ArrayList<>(children);
-
-            for (Widget child : oldChildren) {
-                loreScroll.removeWidget(child);
-            }
-
-            ChangedEntity entity = modelWidget.getChangedEntity();
-            List<InfoWidget> infoWidgetList = new ArrayList<>();
-            InfoWidget loreWidget = null;
-            InfoWidget attributeWidget = null;
-
-            if (entity instanceof IBestiaryEntityData data) {
-                for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {
-                    Component tittle = bestiaryInfo.title();
-                    Component description = bestiaryInfo.description();
-                    int lineCount = this.minecraft.font.split(description, 180).size();
-                    int lineBreaks = description.getString().split("\n", -1).length - 1;
-
-                    int i = lineCount + lineBreaks;
-                    float heightAmount;
-                    if (i <= 3) {
-                        heightAmount = 40f;
-                    } else {
-                        int heightByLines = minecraft.font.lineHeight * i;
-                        heightAmount = 40f + heightByLines;
-                    }
-
-                    InfoWidget infoWidget = new InfoWidget().setSize(180, heightAmount).setLineSize(180, 4);
-                    infoWidget.setTextInfo(tittle, description);
-                    infoWidgetList.add(infoWidget);
+        if (entity instanceof IBestiaryEntityData entityData) {
+            EntityType<?> type = entityData.getReferencedEntityType();
+            if (type != entity.getType()) {
+                Entity cachedEntity = ChangedEntities.getCachedEntity(minecraft.level, entityData.getReferencedEntityType());
+                if (cachedEntity instanceof ChangedEntity changedEntity) {
+                    entity = changedEntity;
                 }
-            } else {
-                /* LORE */
-                loreWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
-                loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
-                // dont create lore widget if there is no lore?
-                /* ATTRIBUTES */
-                attributeWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
-                attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));
-
-                infoWidgetList.addAll(List.of(loreWidget, attributeWidget));
-            }
-
-            List<Component> attributes = IBestiaryEntityData.getAttributePreview(entity);
-
-            if (!attributes.isEmpty() && attributeWidget != null) {
-
-                MutableComponent text = Component.empty();
-
-                attributes.forEach(c -> text.append("\n").append(c));
-
-                attributeWidget.setDescription(text);
-            } // Simple Fail Safe Check;
-
-
-            LayoutHelper.listLayout(loreScroll, infoWidgetList, -5, 0, 1);
-            loreScroll.init();
-            loreScroll.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
-
-            double sum = children.stream().mapToDouble((widget) -> widget != loreScroll.getScrollBar() && widget instanceof SizedWidget sizedWidget ? sizedWidget.getHeight() : 0).sum();
-
-            loreScroll.setActualHeight((float) (60f + sum));
-            this.loreScroll.setVisible(true);
-            for (Widget child : children) {
-                child.setVisible(true);
-            }
-        } else {
-            this.loreScroll.setVisible(false);
-            for (Widget child : children) {
-                child.setVisible(false);
             }
         }
 
+        modelWidget.setChangedEntity(entity);
+
+        if (!modelWidget.isVisible()) {
+            loreScroll.setVisible(false);
+        }
+
+        loreScroll.clearWidgets();
+
+        List<InfoWidget> infoWidgetList = new ArrayList<>();
+        InfoWidget loreWidget;
+        InfoWidget attributeWidget = null;
+
+        if (entity instanceof IBestiaryEntityData data) {
+            for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {
+                Component tittle = bestiaryInfo.title();
+                Component description = bestiaryInfo.description();
+                int lineCount = this.minecraft.font.split(description, 180).size();
+                int lineBreaks = description.getString().split("\n", -1).length - 1;
+
+                int i = lineCount + lineBreaks;
+                float heightAmount;
+                if (i <= 3) {
+                    heightAmount = 40f;
+                } else {
+                    int heightByLines = minecraft.font.lineHeight * i;
+                    heightAmount = 40f + heightByLines;
+                }
+
+                InfoWidget infoWidget = new InfoWidget().setSize(180, heightAmount).setLineSize(180, 4);
+                infoWidget.setTextInfo(tittle, description);
+                infoWidgetList.add(infoWidget);
+            }
+        } else {
+            /* LORE */
+            loreWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
+            loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
+            // dont create lore widget if there is no lore?
+            /* ATTRIBUTES */
+            attributeWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
+            attributeWidget.setTextInfo(Component.literal("Attributes").withStyle(ChatFormatting.GREEN), Component.literal("???"));
+
+            infoWidgetList.addAll(List.of(loreWidget, attributeWidget));
+        }
+
+        List<Component> attributes = IBestiaryEntityData.getAttributePreview(entity);
+
+        if (!attributes.isEmpty() && attributeWidget != null) {
+
+            MutableComponent text = Component.empty();
+
+            attributes.forEach(c -> text.append("\n").append(c));
+
+            attributeWidget.setDescription(text);
+        } // Simple Fail Safe Check;
+
+        LayoutHelper.listLayout(loreScroll, infoWidgetList, -5, 0, 1);
+        loreScroll.init();
+        loreScroll.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
+
+        List<? extends Widget> children = loreScroll.children();
+        double sum = children.stream().mapToDouble((widget) -> widget != loreScroll.getScrollBar() && widget instanceof SizedWidget sizedWidget ? sizedWidget.getHeight() : 0).sum();
+
+        loreScroll.setActualHeight((float) (60f + sum));
+        loreScroll.setVisible(true);
+        for (Widget child : children) {
+            child.setVisible(true);
+        }
     }
 
     @Override
@@ -287,7 +256,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
     /* TF ENTRY                                          */
     /* ------------------------------------------------ */
 
-    static class TFEntryWidget extends WidgetContainer {
+    class TFEntryWidget extends WidgetContainer {
 
         protected final TransfurVariant<?> tf;
 
@@ -298,12 +267,17 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
                 new RoundedTextField().setOrigin(0, 0, 1);
 
         public TFEntryWidget(TransfurVariant<?> tf) {
-
             setSize(80, 20);
 
             this.tf = tf;
 
-            button.setSize(getWidth(), getHeight());
+            button.setSize(getWidth(), getHeight())
+                    .setOnClick((button, key) -> {
+                        if (minecraft == null || minecraft.level == null) return false;
+
+                        selectTf(tf);
+                        return true;
+                    });
             button.rebuildMesh();
 
             name.setSize(70, 12);
@@ -314,10 +288,6 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             addWidget(name);
 
             init();
-        }
-
-        public void setOnClickFunction(@Nullable ToBooleanBiFunction<RoundedButton, Integer> onClick) {
-            button.setOnClick(onClick);
         }
     }
 }
