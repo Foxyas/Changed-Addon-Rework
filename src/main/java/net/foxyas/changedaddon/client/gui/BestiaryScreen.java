@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.client.gui;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.util.ChangedEntityUtil;
-import net.foxyas.changedaddon.util.PlayerUtil;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -45,7 +44,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             (ScrollableContainer) new ScrollableContainer().setSize(200, 200);
 
     final ScrollableContainer tfs =
-            (ScrollableContainer) new ScrollableContainer().setSize(100, 200).setOrigin(0, 0, 100);
+            (ScrollableContainer) new ScrollableContainer().setSize(120, 200).setOrigin(0, 0, 100);
 
     public BestiaryScreen() {
         super(Component.literal("Bestiary"));
@@ -90,7 +89,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
         List<TFEntryWidget> entries = getTfEntryWidgets(variants);
 
-        LayoutHelper.listLayout(tfs, entries, 5);
+        LayoutHelper.listLayout(tfs, entries, -2, 0, 5);
         tfs.init();
         tfs.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
 
@@ -133,7 +132,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
     @Override
     protected void init() {
-        tfs.setOrigin(-window.getWidth() * (0.395f + DEBUG.HeadPosX), 0, 100);
+        tfs.setOrigin(-window.getWidth() * (0.38f + DEBUG.HeadPosX), 0, 100);
         window.setOrigin(width / 2f, height / 2f, 0);
 
         if (minecraft != null) {
@@ -177,20 +176,16 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             child.setVisible(backGroundHeight >= MaxBackGroundHeight && backGroundWidth >= MaxBackGroundWidth);
         }
 
-        if (!modelWidget.isVisible() || modelWidget.getChangedEntity() == null) {
-            this.loreScroll.setVisible(false);
-            for (Widget child : this.loreScroll.children()) {
-                child.setVisible(false);
-            }
-        } else {
-            this.loreScroll.setVisible(true);
-            for (Widget child : this.loreScroll.children()) {
-                child.setVisible(true);
-            }
-        }
+        loreScroll.setVisible(modelWidget.isVisible() && modelWidget.getChangedEntity() != null);
     }
 
+    protected TransfurVariant<?> selected;
+
     protected void selectTf(TransfurVariant<?> tf) {
+        if (selected == tf) return;
+
+        selected = tf;
+
         ChangedEntity entity = ChangedEntities.getCachedEntity(minecraft.level, tf.getEntityType());
 
         if (entity instanceof IBestiaryEntityData entityData) {
@@ -205,10 +200,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
         modelWidget.setChangedEntity(entity);
 
-        if (!modelWidget.isVisible()) {
-            loreScroll.setVisible(false);
-        }
-
+        loreScroll.setVisible(modelWidget.isVisible());
         loreScroll.clearWidgets();
 
         List<InfoWidget> infoWidgetList = new ArrayList<>();
@@ -283,10 +275,6 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         double sum = children.stream().mapToDouble((widget) -> widget != loreScroll.getScrollBar() && widget instanceof SizedWidget sizedWidget ? sizedWidget.getHeight() : 0).sum();
 
         loreScroll.setActualHeight((float) (60f + sum));
-        loreScroll.setVisible(true);
-        for (Widget child : children) {
-            child.setVisible(true);
-        }
     }
 
     @Override
@@ -309,7 +297,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
                 new RoundedTextField().setOrigin(0, 0, 1);
 
         public TFEntryWidget(TransfurVariant<?> tf) {
-            setSize(80, 20);
+            setSize(100, 20);
 
             this.tf = tf;
 
@@ -322,7 +310,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
                     });
             button.rebuildMesh();
 
-            name.setSize(70, 12);
+            name.setSize(90, 12);
             name.setDefText(Component.translatable(tf.getEntityType().getDescriptionId()));
             name.setClickThrough(true);
 
