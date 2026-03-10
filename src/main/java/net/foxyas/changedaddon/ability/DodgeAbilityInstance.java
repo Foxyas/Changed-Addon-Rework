@@ -73,9 +73,9 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         return entity instanceof Player player && player.isSpectator();
     }
 
-    public static void executeRandomDodgeAnimation(LevelAccessor levelAccessor, LivingEntity dodger) {
+    public static void executeRandomDodgeAnimation(LivingEntity dodger) {
         ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
-        int randomValue = levelAccessor.getRandom().nextInt(6);
+        int randomValue = dodger.getRandom().nextInt(6);
         switch (randomValue) {
             case 0 ->
                     ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_LEFT.get(), DodgeAnimationParameters.INSTANCE);
@@ -243,7 +243,7 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         }
         if (this.getDodgeType() == DodgeType.WEAVE) {
             executeDodgeParticles(levelAccessor, dodger, attacker);
-            executeDodgeAnimations(levelAccessor, dodger);
+            executeDodgeAnimations(dodger);
         }
     }
 
@@ -256,10 +256,10 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         }
     }
 
-    public void executeDodgeAnimations(LevelAccessor levelAccessor, LivingEntity dodger) {
+    public void executeDodgeAnimations(LivingEntity dodger) {
         ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
         if (this.getDodgeType().shouldPlayDodgeAnimation(dodger)) {
-            int randomValue = levelAccessor.getRandom().nextInt(6);
+            int randomValue = dodger.getRandom().nextInt(6);
             switch (randomValue) {
                 case 0 ->
                         ChangedAnimationEvents.broadcastEntityAnimation(dodger, ChangedAddonAnimationEvents.DODGE_LEFT.get(), DodgeAnimationParameters.INSTANCE);

@@ -887,7 +887,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             this.getLookControl().setLookAt(entity.getEyePosition());
         }
         this.getNavigation().stop();
-        DodgeAbilityInstance.executeRandomDodgeAnimation(this.level, this);
+        DodgeAbilityInstance.executeRandomDodgeAnimation(this);
     }
 
     public void tickAttackTicks() {

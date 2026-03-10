@@ -33,7 +33,7 @@ public class CounterDodgeType extends DodgeType {
         if (event != null) {
             event.setCanceled(true);
         }
-        dodgeAbilityInstance.executeDodgeAnimations(levelAccessor, dodger);
+        dodgeAbilityInstance.executeDodgeAnimations(dodger);
         dodgeAbilityInstance.subDodgeAmount();
         if (dodger != null) {
             dodger.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 60, 2, true, true));

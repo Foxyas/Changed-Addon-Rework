@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.bosses;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
@@ -52,6 +53,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -388,6 +390,11 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             return false;
         if (source.is(DamageTypes.IN_WALL)) {
             teleportToNearLivingEntity();
+            return false;
+        }
+        if (source.getEntity() instanceof Warden warden) {
+            DodgeAbilityInstance.executeRandomDodgeAnimation(this);
+            this.navigation.stop();
             return false;
         }
 
@@ -853,9 +860,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         @SubscribeEvent
         public static void WhenAttack(LivingAttackEvent event) {
             LivingEntity target = event.getEntity();
-            Entity source = event.getSource().getEntity();
+            DamageSource damageSource = event.getSource();
+            Entity source = damageSource.getEntity();
+            if (source == target) return;
+
             if (source instanceof Experiment009BossEntity experiment009BossEntity) {
-                if (experiment009BossEntity.isPhase3() && !target.isDamageSourceBlocked(event.getSource())) {
+                if (experiment009BossEntity.isPhase3() && !target.isDamageSourceBlocked(damageSource) && !target.isInvulnerableTo(damageSource)) {
                     experiment009BossEntity.heal(0.5f);
                 }
             }
