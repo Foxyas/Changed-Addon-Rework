@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.client.gui;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.util.ChangedEntityUtil;
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
@@ -76,19 +75,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         loreScroll.setOrigin(window.getWidth() *  (0.315f + DEBUG.HeadPosY), 0, 90);
 
         /* TF LIST */
-        List<TransfurVariant<?>> variants = List.of(
-                ChangedAddonTransfurVariants.PROTOTYPE.get(),
-                ChangedAddonTransfurVariants.EXPERIMENT_009.get(),
-                ChangedAddonTransfurVariants.PROTOGEN_0SENIA0.get(),
-                ChangedAddonTransfurVariants.BOREALIS_FEMALE.get(),
-                ChangedAddonTransfurVariants.EXP1_MALE.get(),
-                ChangedAddonTransfurVariants.EXP6.get(),
-                ChangedAddonTransfurVariants.LATEX_CHEETAH_FEMALE.get(),
-                ChangedAddonTransfurVariants.EXP2_MALE.get(),
-                ChangedAddonTransfurVariants.LUMINARCTIC_LEOPARD_FEMALE.get()
-        );
-
-        List<TFEntryWidget> entries = getTfEntryWidgets(variants);
+        List<TFEntryWidget> entries = getTfEntryWidgets(TransfurVariant.getPublicTransfurVariants().sorted(Comparator.comparing(var -> var.getFormId().getPath())).toList());
 
         LayoutHelper.listLayout(tfs, entries, -2, 0, 5);
         tfs.init();

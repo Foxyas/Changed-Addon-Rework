@@ -4,7 +4,9 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
 import net.zaharenko424.cmrs.client.api.MatrixStack;
+import net.zaharenko424.cmrs.client.geom.Reusable;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class ScrollableContainer extends WidgetContainer {
@@ -79,7 +81,22 @@ public class ScrollableContainer extends WidgetContainer {
         mouseX = (int) scaleX(mouseX);
         mouseY = (int) scaleY(mouseY);
 
+        Vector3f vec = Reusable.VEC3F.get();
+        Matrix4f mat = stack.last().pose();
+        float halfHeight, topLeft;
         for(Widget widget : Lists.reverse(children)){
+
+            if (widget instanceof SizedWidget sized) {//avoid rendering non-visible widgets
+                halfHeight = sized.getHeight() / 2;
+                vec.set(widget.origin).sub(0, halfHeight, 0)
+                        .mulPosition(mat);
+                topLeft = vec.y;
+                vec.set(widget.origin).add(0, halfHeight, 0)
+                        .mulPosition(mat);
+
+                if (topLeft > v1.y || vec.y < v.y) continue; //check inside vertical bounds
+            }
+
             widget.render(guiGraphics, mouseX, mouseY, partialTick);
         }
 
@@ -147,7 +164,7 @@ public class ScrollableContainer extends WidgetContainer {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollY) {
         if(isScrollEnabled()) {
-            scroll -= (float) scrollY / 10;
+            scroll -= (float) scrollY / ((actualHeight - getHeight()) / 10);
             if (getFocused() == scrollBar) {
                 setFocused(null);
                 setDragging(false);
