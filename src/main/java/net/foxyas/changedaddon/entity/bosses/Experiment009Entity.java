@@ -53,7 +53,7 @@ import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment009Entity extends AbstractSemiAquaticEntity implements PowderSnowWalkable, IBestiaryEntityData {
+public class Experiment009Entity extends ChangedEntity implements PowderSnowWalkable, IBestiaryEntityData {
 
     private static final EntityDataAccessor<Boolean> PHASE2 = SynchedEntityData.defineId(Experiment009Entity.class, EntityDataSerializers.BOOLEAN);
 
