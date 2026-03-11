@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.mixins.entity.player;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.ability.ClawsAbility;
 import net.foxyas.changedaddon.client.renderer.items.HazardBodySuitClothingRenderer;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
@@ -7,6 +9,7 @@ import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.AbstractKatanaItem;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
@@ -25,12 +28,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
+import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -175,33 +180,13 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
         }));
     }
 
-//    @Inject(method = "tryToStartFallFlying", at = @At(value = "HEAD"), cancellable = true)
-//    private void tryToStartFallFlying(CallbackInfoReturnable<Boolean> ci) {
-//        Player player = (Player) (Object) this;
-//        TransfurVariantInstance<?> latexVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-//        if (latexVariant != null && latexVariant.getParent().canGlide) {
-//            if (latexVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
-//                if (variantExtraStats.getFlyType().canGlide()) {
-//                    if (ci.getReturnValue() != null && ci.getReturnValue() == false) {
-//                        if (!player.onGround() && !player.isFallFlying() && !player.isInWater() && !player.hasEffect(MobEffects.LEVITATION)) {
-//                            player.startFallFlying();
-//                            ci.setReturnValue(true);
-//                            ci.cancel();
-//                            //player.respawn();
-//                        }
-//                    }
-//                } else if (!variantExtraStats.getFlyType().canGlide()) {
-//                    if (!player.onGround() && !player.isFallFlying() && !player.isInWater() && !player.hasEffect(MobEffects.LEVITATION)) {
-//                        ItemStack itemstack = player.getItemBySlot(EquipmentSlot.CHEST);
-//                        if (itemstack.canElytraFly(player) || itemstack.isEmpty()) {
-//                            player.stopFallFlying();
-//                            ci.setReturnValue(false);
-//                            ci.cancel();
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
-//    }
+    @WrapOperation(method = "causeFallDamage", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Abilities;mayfly:Z", opcode = Opcodes.GETFIELD))
+    public boolean changed$shouldIgnoreFallDamage(Abilities instance, Operation<Boolean> original) {
+        var self = (Player) (Object) this;
+        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(self);
+        if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof VariantExtraStats variantExtraStats)
+            return original.call(instance) && !variantExtraStats.shouldTakeFallDamage();
+        return original.call(instance);
+    }
+
 }

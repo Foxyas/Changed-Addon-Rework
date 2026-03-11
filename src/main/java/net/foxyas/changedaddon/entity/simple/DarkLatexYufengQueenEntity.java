@@ -110,7 +110,7 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     }
 
     @Override
-    public float getFlySpeed() {
-        return defaultPlayerFlySpeed * 1.5f;
+    public float getFlyingSpeed() {
+        return super.getFlyingSpeed() * 1.5f;
     }
 }

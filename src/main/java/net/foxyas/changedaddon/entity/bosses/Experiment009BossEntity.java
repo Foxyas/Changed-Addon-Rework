@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.entity.bosses;
 
+import com.google.common.collect.Iterables;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
@@ -14,10 +15,9 @@ import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedAttributes;
-import net.ltxprogrammer.changed.init.ChangedDamageSources;
-import net.ltxprogrammer.changed.init.ChangedParticles;
+import net.ltxprogrammer.changed.init.*;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
@@ -58,6 +58,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -281,11 +282,11 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 8,
                 UniformFloat.of(4, 8))); //FloatProvider -> damage
 
-        this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
-                UniformInt.of(100, 150), //IntProvider -> cooldown
-                20,
-                UniformInt.of(60, 80), //IntProvider -> duration
-                UniformFloat.of(3, 5))); //FloatProvider -> damage
+//        this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
+//                UniformInt.of(100, 150), //IntProvider -> cooldown
+//                20,
+//                UniformInt.of(60, 80), //IntProvider -> duration
+//                UniformFloat.of(3, 5))); //FloatProvider -> damage
 
         this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(150, 200), //IntProvider -> cooldown,
@@ -865,8 +866,38 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
             if (source == target) return;
 
             if (source instanceof Experiment009BossEntity experiment009BossEntity) {
-                if (experiment009BossEntity.isPhase3() && !target.isDamageSourceBlocked(damageSource) && !target.isInvulnerableTo(damageSource)) {
+                if (target.isDamageSourceBlocked(damageSource) || target.isInvulnerableTo(damageSource)) {
+                    return;
+                }
+
+                if (experiment009BossEntity.isPhase3()) {
                     experiment009BossEntity.heal(0.5f);
+                }
+
+                Iterable<ItemStack> items = Iterables.concat(target.getHandSlots(), target.getArmorSlots());
+                float metal = 0f;
+                int slots = 0;
+                for (ItemStack stack : items) {
+                    slots++;
+                    if (stack.is(ChangedAddonTags.Items.METAL)) {
+                        metal++;
+                    } else if (stack.is(ChangedAddonTags.Items.PARTIAL_METAL)) {
+                        metal += 0.5f;
+                    }
+                }
+
+                if (metal == 0) return;
+
+                float metalPercentage = metal / slots;
+                if (metalPercentage <= 0.1f) return;
+
+                target.invulnerableTime = 0;
+                if (target.hurt(experiment009BossEntity.getShockDmg(), 4 * metalPercentage)) {
+                    ChangedAnimationEvents.broadcastEntityAnimation(target, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
+                    target.level.playSound(null, target, ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1, 1);
+                    target.invulnerableTime = 40;
+                    target.hurtDuration = 10;
+                    target.hurtTime = target.hurtDuration;
                 }
             }
         }

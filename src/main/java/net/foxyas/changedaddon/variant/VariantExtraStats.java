@@ -23,10 +23,6 @@ public interface VariantExtraStats {
         return this.extraBlockBreakSpeed() + 1;
     }
 
-    default float getFlySpeed() {
-        return 0;
-    }
-
     default TransfurVariant<?> getTransfurVariantFor(TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType transfurType) {
         if (this instanceof ChangedEntity changedEntity) {
             return changedEntity.getTransfurVariant();
