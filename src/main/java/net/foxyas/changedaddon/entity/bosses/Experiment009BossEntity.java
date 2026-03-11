@@ -7,10 +7,12 @@ import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
-import net.foxyas.changedaddon.entity.api.*;
+import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
+import net.foxyas.changedaddon.entity.api.IGrabberEntity;
+import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
 import net.foxyas.changedaddon.init.*;
-import net.foxyas.changedaddon.util.ColorUtil;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
@@ -18,7 +20,6 @@ import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.core.BlockPos;
@@ -79,7 +80,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
-import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment009BossEntity extends Experiment009Entity implements CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber {
 
@@ -704,8 +704,14 @@ public class Experiment009BossEntity extends Experiment009Entity implements Cust
                 removeStatModifiers();
             }
             setSpeed(this);
-            //this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
+            float speed = (float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f;
+            this.crawlingSystem(speed);
         }
+    }
+
+    @Override
+    public void updateStepSizeBasedInSwimState(boolean updateSwimmingMovement) {
+        this.setMaxUpStep(updateSwimmingMovement ? 1f : 0.7f);
     }
 
     public void removeStatModifiers() {

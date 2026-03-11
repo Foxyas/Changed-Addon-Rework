@@ -21,12 +21,18 @@ public interface ICrawlAndSwimAbleEntity {
     }
 
     default void crawlingSystem(ChangedEntity livingEntity, LivingEntity target, float swimSpeed) {
-        if (!updateSwimmingMovement(livingEntity, swimSpeed)) {
+        boolean updateSwimmingMovement = updateSwimmingMovement(livingEntity, swimSpeed);
+        updateStepSizeBasedInSwimState(updateSwimmingMovement);
+        if (!updateSwimmingMovement) {
             if (target != null) {
                 setCrawlingPoseIfNeeded(livingEntity, target);
                 crawlToTarget(livingEntity, target);
             } else switchToSafePose(livingEntity);
         }
+
+    }
+
+    default void updateStepSizeBasedInSwimState(boolean updateSwimmingMovement) {
     }
 
     private void switchToSafePose(ChangedEntity livingEntity) {
