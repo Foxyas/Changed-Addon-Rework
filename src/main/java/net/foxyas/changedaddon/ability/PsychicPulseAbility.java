@@ -9,7 +9,7 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -23,35 +23,6 @@ public class PsychicPulseAbility extends SimpleAbility {
             return player1.isSpectator();
         }
         return true;
-    }
-
-    public static void execute(LevelAccessor world, Entity IAbstractChangedEntity) {
-        if (IAbstractChangedEntity == null)
-            return;
-        if (IAbstractChangedEntity instanceof Player entity) {
-            {
-                final Vec3 _center = new Vec3((entity.getX()), (entity.getY()), (entity.getZ()));
-                List<Entity> _entfound = world.getEntitiesOfClass(Entity.class, new AABB(_center, _center).inflate(10 / 2d), e -> true).stream().sorted(Comparator.comparingDouble(_entcnd -> _entcnd.distanceToSqr(_center)))
-                        .toList();
-                for (Entity entityiterator : _entfound) {
-                    if (entityiterator != entity) {
-                        if (entityiterator instanceof FallingBlockEntity || entityiterator.getType().is(EntityTypeTags.IMPACT_PROJECTILES)) {
-                            if (PlayerUtil.isProjectileMovingTowardsEntity(entity, entityiterator)) {
-                                //if(!world.isClientSide()){}
-                                Vec3 NegativeMotion = new Vec3((-(entityiterator.getDeltaMovement().x())), (-(entityiterator.getDeltaMovement().y())), (-(entityiterator.getDeltaMovement().z())));
-                                Vec3 Motion = NegativeMotion.multiply(1.5, 1.5, 1.5);
-                                entityiterator.setDeltaMovement(Motion);
-                                entityiterator.hasImpulse = true;
-                                // Adicionar exaustão enquanto usa a habilidade
-                                if (!entity.isSpectator()) {
-                                    entity.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -86,12 +57,39 @@ public class PsychicPulseAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
-        //execute(entity.level(),entity.getEntity());
     }
 
     @Override
     public void tick(IAbstractChangedEntity entity) {
         super.tick(entity);
-        execute(entity.getLevel(), entity.getEntity());
+        if (entity.getEntity() instanceof Player player) {
+            final Vec3 position = player.position();
+            List<Entity> entities = player.level.getEntitiesOfClass(Entity.class,
+                            new AABB(position, position).inflate(10 / 2d),
+                            projectile -> projectile instanceof FallingBlockEntity || projectile.getType().is(EntityTypeTags.IMPACT_PROJECTILES))
+                    .stream()
+                    .sorted(Comparator.comparingDouble(target -> target.distanceToSqr(position)))
+                    .toList();
+            for (Entity projectile : entities) {
+                if (PlayerUtil.isProjectileMovingTowardsEntity(player, projectile)) {
+                    if (projectile instanceof AbstractHurtingProjectile abstractHurtingProjectile) {
+                        abstractHurtingProjectile.xPower *= -1.5;
+                        abstractHurtingProjectile.yPower *= -1.5;
+                        abstractHurtingProjectile.zPower *= -1.5;
+                    } else {
+                        Vec3 negativeMotion = projectile.getDeltaMovement().scale(-1);
+                        Vec3 motion = negativeMotion.multiply(1.5, 1.5, 1.5);
+                        projectile.setDeltaMovement(motion);
+                    }
+
+                    projectile.hasImpulse = true;
+                    projectile.hurtMarked = true;
+                    // Adicionar exaustão enquanto usa a habilidade
+                    if (!player.isSpectator()) {
+                        player.causeFoodExhaustion(0.025F); // Aumenta a exaustão do jogador enquanto usa a habilidade
+                    }
+                }
+            }
+        }
     }
 }

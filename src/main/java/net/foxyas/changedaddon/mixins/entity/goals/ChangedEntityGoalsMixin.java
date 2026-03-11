@@ -44,8 +44,7 @@ public class ChangedEntityGoalsMixin {
             var FloatGoal = new FloatGoal(self) {
                 @Override
                 public boolean canUse() {
-                    if (self.getTarget() == null) return super.canUse();
-                    if (!self.isInWater() || self.getTarget() != null) return false;
+                    if (self.getTarget() != null && self.getTarget().getY() <= self.getY()) return false;
                     return super.canUse();
                 }
             };

@@ -14,10 +14,7 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -143,7 +140,6 @@ public class ThunderStrikeGoal extends Goal {
         pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
 
 
-
         pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
     }
 
@@ -198,8 +194,8 @@ public class ThunderStrikeGoal extends Goal {
         var list = lightning.level
                 .getEntitiesOfClass(
                         LivingEntity.class,
-                        getBoundingBoxFromLightningBolt(lightning).inflate(4),
-                        (target) -> !target.is(lightning) && !target.is(pathfinderMob)
+                        getBoundingBoxFromLightningBolt(lightning).inflate(-0.5),
+                        (target) -> !target.is(lightning) && !target.is(pathfinderMob) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(target)
                 );
 
         for (LivingEntity livingEntity : list) {

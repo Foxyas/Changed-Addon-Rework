@@ -9,11 +9,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -177,23 +180,16 @@ public class PsychicGrab extends SimpleAbility {
             TargetID = lookingAt.getUUID();
         }
 
-        if (target instanceof Projectile projectile) {
-            if (projectile instanceof AbstractArrow arrow) {
-                if (arrow instanceof AbstractArrowAccessor arrowAccessor) {
-                    if (arrowAccessor.inGround()) {
-                        arrowAccessor.setInGround(false);
-                        arrow.setDeltaMovement((look.subtract(target.position())));
-                    }
-                }
-                /*CompoundTag tag = new CompoundTag();
-                arrow.addAdditionalSaveData(tag);
-                boolean inGround = tag.contains("inGround") && tag.getBoolean("inGround");
-                if (inGround){
-                    tag.putBoolean("inGround",false);
-                    arrow.readAdditionalSaveData(tag);
-                }*/
-            }
-        }
+//        if (target instanceof Projectile projectile) {
+//            if (projectile instanceof AbstractArrow arrow) {
+//                if (arrow instanceof AbstractArrowAccessor arrowAccessor) {
+//                    if (arrowAccessor.inGround()) {
+//                        arrowAccessor.setInGround(false);
+//                        arrow.setDeltaMovement((look.subtract(target.position())));
+//                    }
+//                }
+//            }
+//        }
         super.startUsing(entity);
     }
 
@@ -215,25 +211,20 @@ public class PsychicGrab extends SimpleAbility {
                     return;
                 }
             }
-            /*if (target instanceof Projectile projectile) {
-                if (projectile instanceof AbstractArrow arrow) {
-                    if (arrow instanceof AbstractArrowAccessor arrowAccessor) {
-                        if (arrowAccessor.inGround()) {
-                            arrowAccessor.setInGround(false);
-                        }
-                    }
-                    /*CompoundTag tag = new CompoundTag();
-                    arrow.addAdditionalSaveData(tag);
-                    boolean inGround = tag.contains("inGround") && tag.getBoolean("inGround");
-                    if (inGround){
-                        tag.putBoolean("inGround",false);
-                        arrow.readAdditionalSaveData(tag);
-                    }*\/
-                    target.setDeltaMovement((look.subtract(target.position())));
-                }
-            }*/
             look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
-            target.setDeltaMovement((look.subtract(target.position())).scale(0.1));
+            Vec3 scale = (look.subtract(target.position())).scale(0.1);
+            if (target instanceof AbstractArrow projectile) {
+                projectile.move(MoverType.PLAYER, scale);
+            } else {
+                target.setDeltaMovement(scale);
+            }
+            target.hurtMarked = true;
+            if (target instanceof ServerPlayer serverPlayer) {
+                serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                        serverPlayer.getId(),
+                        serverPlayer.getDeltaMovement())
+                );
+            }
         }
     }
 

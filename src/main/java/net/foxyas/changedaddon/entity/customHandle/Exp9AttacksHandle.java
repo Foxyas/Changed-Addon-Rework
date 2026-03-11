@@ -743,14 +743,13 @@ public class Exp9AttacksHandle {
         }
 
         public static void Teleport(Experiment009BossEntity boss, LivingEntity target) {
-            if (target == null) {
+            if (target == null || boss.level().isClientSide) {
                 return;
             }
             Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
             boss.teleportTo(targetPos.x, targetPos.y, targetPos.z);
             boss.getLookControl().setLookAt(target, 180, 180);
             target.hurt(boss.getThunderDmg(), 2);
-
         }
 
         @Override

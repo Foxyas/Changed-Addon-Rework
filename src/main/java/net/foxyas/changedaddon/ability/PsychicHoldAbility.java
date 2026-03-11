@@ -93,6 +93,7 @@ public class PsychicHoldAbility extends SimpleAbility {
                     projectile.setDeltaMovement(reducedMotion);
                 }
             }
+            projectile.hurtMarked = true;
         }
     }
 }

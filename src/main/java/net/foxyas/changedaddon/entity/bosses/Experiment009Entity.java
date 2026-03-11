@@ -1,9 +1,9 @@
 package net.foxyas.changedaddon.entity.bosses;
 
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
+import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.*;
@@ -53,7 +53,7 @@ import java.util.Objects;
 
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment009Entity extends ChangedEntity implements PowderSnowWalkable, IBestiaryEntityData {
+public class Experiment009Entity extends AbstractSemiAquaticEntity implements PowderSnowWalkable, IBestiaryEntityData {
 
     private static final EntityDataAccessor<Boolean> PHASE2 = SynchedEntityData.defineId(Experiment009Entity.class, EntityDataSerializers.BOOLEAN);
 
@@ -61,7 +61,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         this(ChangedAddonEntities.EXPERIMENT_009.get(), world);
     }
 
-    public Experiment009Entity(EntityType<Experiment009Entity> type, Level world) {
+    public Experiment009Entity(EntityType<? extends Experiment009Entity> type, Level world) {
         super(type, world);
         this.setAttributes(getAttributes());
         xpReward = 160;
@@ -73,7 +73,11 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(PHASE2, false);
+        this.entityData.define(getPhase2DataAccessor(), false);
+    }
+
+    protected EntityDataAccessor<Boolean> getPhase2DataAccessor() {
+        return PHASE2;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -93,15 +97,16 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         super.setAttributes(attributes);
 
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6));
-        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.MAX_HEALTH) + 20));
+        AttributeMap defaultPlayerAttributes = AttributesHandle.DefaultPlayerAttributes();
+        attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((defaultPlayerAttributes.getBaseValue(Attributes.MAX_HEALTH) + 20));
         attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(64.0);
         attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15);
         attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.125));
-        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_DAMAGE) + 5);
-        attributes.getInstance(Attributes.ARMOR).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR) + 4);
-        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ARMOR_TOUGHNESS));
-        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
-        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(AttributesHandle.DefaultPlayerAttributes().getBaseValue(Attributes.ATTACK_KNOCKBACK));
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(defaultPlayerAttributes.getBaseValue(Attributes.ATTACK_DAMAGE) + 5);
+        attributes.getInstance(Attributes.ARMOR).setBaseValue(defaultPlayerAttributes.getBaseValue(Attributes.ARMOR) + 4);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(defaultPlayerAttributes.getBaseValue(Attributes.ARMOR_TOUGHNESS));
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(defaultPlayerAttributes.getBaseValue(Attributes.KNOCKBACK_RESISTANCE));
+        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(defaultPlayerAttributes.getBaseValue(Attributes.ATTACK_KNOCKBACK));
         attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.35f);
         attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5F);
     }
@@ -182,19 +187,34 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     protected void registerGoals() {
         super.registerGoals();
 
+        addAbilitiesGoals();
+    }
+
+    protected void addAbilitiesGoals() {
         goalSelector.addGoal(5, new ThunderStrikeGoal(
                 this,
                 UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                 UniformInt.of(4, 8), //IntProvider -> damageProvider
                 1.5f,
-                200));
+                200) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !Experiment009Entity.this.isSwimming();
+            }
+        });
         goalSelector.addGoal(10, new ThunderDiveGoal(this,
-                UniformInt.of(60, 100), //IntProvider -> cooldownProvider
-                1.5f,
-                6f,
-                1f,
-                0.5f,
-                4));
+                        UniformInt.of(60, 100), //IntProvider -> cooldownProvider
+                        1.5f,
+                        6f,
+                        1f,
+                        0.5f,
+                        4) {
+                    @Override
+                    public boolean canUse() {
+                        return super.canUse() && !Experiment009Entity.this.isSwimming();
+                    }
+                }
+        );
 
         //Basically perfect, damn... well done 0senia0
         goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
@@ -202,26 +222,46 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
                 UniformInt.of(2, 4), //IntProvider -> lightningCount,
                 UniformInt.of(60, 100), //IntProvider -> castDuration,
                 UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-                ConstantFloat.of(10))); //FloatProvider -> damage
+                ConstantFloat.of(10)) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !Experiment009Entity.this.isSwimming();
+            }
+        }); //FloatProvider -> damage
 
         goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
                 UniformInt.of(75, 125), //IntProvider -> cooldown,
                 4,
                 UniformInt.of(30, 50), //IntProvider -> castDuration,
                 8,
-                UniformFloat.of(8, 12))); //FloatProvider -> damage
+                UniformFloat.of(8, 12)) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !Experiment009Entity.this.isSwimming();
+            }
+        }); //FloatProvider -> damage
 
         goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
                 UniformInt.of(100, 150), //IntProvider -> cooldown
                 20,
                 UniformInt.of(60, 80), //IntProvider -> duration
-                UniformFloat.of(3, 5))); //FloatProvider -> damage
+                UniformFloat.of(3, 5)) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !Experiment009Entity.this.isSwimming();
+            }
+        }); //FloatProvider -> damage
 
         goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(150, 200), //IntProvider -> cooldown,
                 UniformInt.of(3, 6), //IntProvider -> attackCount,
                 UniformInt.of(20, 40), //IntProvider -> castDuration,
-                UniformFloat.of(6, 8))); //FloatProvider -> damage)
+                UniformFloat.of(6, 8)) {
+            @Override
+            public boolean canUse() {
+                return super.canUse() && !Experiment009Entity.this.isSwimming();
+            }
+        }); //FloatProvider -> damage)
     }
 
     @Override
@@ -327,11 +367,11 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     }
 
     public boolean isPhase2() {
-        return this.entityData.get(PHASE2);
+        return this.entityData.get(getPhase2DataAccessor());
     }
 
     public void setPhase2(boolean set) {
-        this.entityData.set(PHASE2, set);
+        this.entityData.set(getPhase2DataAccessor(), set);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
@@ -369,7 +409,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     @Override
     public BestiaryInfo getBasicLore() {
-        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.translatableWithFallback("text.changed_addon.lore.experiment_009","Unknown"), 0);
+        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.translatableWithFallback("text.changed_addon.lore.experiment_009", "Unknown"), 0);
     }
 
     @Override

@@ -53,6 +53,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -79,7 +81,7 @@ import java.util.*;
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment009BossEntity extends ChangedEntity implements CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber, IBestiaryEntityData {
+public class Experiment009BossEntity extends Experiment009Entity implements CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber {
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
@@ -90,6 +92,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.BLUE, ServerBossEvent.BossBarOverlay.NOTCHED_6);
     private boolean shouldBleed;
+    protected final WaterBoundPathNavigation waterNavigation;
+    protected final GroundPathNavigation groundNavigation;
 
     public Experiment009BossEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_009_BOSS.get(), world);
@@ -102,6 +106,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         setNoAi(false);
         setPersistenceRequired();
         applyDefaultBasicPlayerInfo();
+        this.waterNavigation = new WaterBoundPathNavigation(this, world);
+        this.groundNavigation = new GroundPathNavigation(this, world);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -130,8 +136,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     protected void applyDefaultBasicPlayerInfo() {
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
+        super.applyDefaultBasicPlayerInfo();
     }
 
     public DamageSource getThunderDmg() {
@@ -149,9 +154,13 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(PHASE2, false);
         this.entityData.define(PHASE3, false);
         this.entityData.define(CASTING_ATTACK, false);
+    }
+
+    @Override
+    protected EntityDataAccessor<Boolean> getPhase2DataAccessor() {
+        return PHASE2;
     }
 
     public boolean isCastingAttack() {
@@ -180,6 +189,11 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
+    }
+
+    @Override
     public boolean startRiding(@NotNull Entity EntityIn, boolean force) {
         if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
             return false;
@@ -196,27 +210,27 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     public Color3 getHairColor(int i) {
-        return Color3.getColor("#F1F1F1");
+        return super.getHairColor(i);
     }
 
     @Override
     public int getTicksRequiredToFreeze() {
-        return 1000;
+        return super.getTicksRequiredToFreeze();
     }
 
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(ChangedTags.EntityTypes.HUMANOIDS);
+        return super.targetSelectorTest(livingEntity);
     }
 
     @Override
     public TransfurMode getTransfurMode() {
-        return TransfurMode.NONE;
+        return super.getTransfurMode();
     }
 
     @Override
     public HairStyle getDefaultHairStyle() {
-        return BALD.get();
+        return super.getDefaultHairStyle();
     }
 
     @Override
@@ -225,14 +239,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     }
 
     public Color3 getDripColor() {
-        return Color3.getColor("#E2E2E2");
+        return super.getDripColor();
     }
 
     @Override
     public Color3 getTransfurColor(TransfurCause cause) {
-        Color3 firstColor = Color3.WHITE;
-        Color3 secondColor = Color3.getColor("#E9E9E9");
-        return ColorUtil.lerpTFColor(firstColor, secondColor, this.getUnderlyingPlayer());
+        return super.getTransfurColor(cause);
     }
 
     @Override
@@ -243,6 +255,10 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     @Override
     protected void registerGoals() {
         super.registerGoals();
+    }
+
+    @Override
+    protected void addAbilitiesGoals() {
         this.goalSelector.addGoal(15, new ElectrifyNearbyWaterGoal(this, UniformFloat.of(2, 6)));
         this.goalSelector.addGoal(20, new SimpleAntiFlyingAttack(this,
                 UniformInt.of(60, 100),
@@ -331,12 +347,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Override
     public @NotNull MobType getMobType() {
-        return MobType.UNDEFINED;
+        return super.getMobType();
     }
 
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
+        return super.removeWhenFarAway(distanceToClosestPlayer);
     }
 
     @Override
@@ -346,12 +362,12 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Override
     public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
-        return SoundEvents.GENERIC_HURT;
+        return super.getHurtSound(ds);
     }
 
     @Override
     public @NotNull SoundEvent getDeathSound() {
-        return SoundEvents.GENERIC_DEATH;
+        return super.getDeathSound();
     }
 
     @Override
@@ -367,6 +383,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.OUTSIDE_BORDER) || source.is(DamageTypes.GENERIC_KILL))
+            return super.hurt(source, amount);
         if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
             return false;
         if (source.is(DamageTypeTags.IS_FALL))
@@ -400,10 +418,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         }
 
         if (source.getEntity() == null || source.getDirectEntity() == null) {
-            if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.OUTSIDE_BORDER)) {
-                return super.hurt(source, amount);
-            }
-
             if (this.getTarget() == null) {
                 teleportToNearLivingEntity();
                 return false;
@@ -462,7 +476,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Override
     public boolean canChangeDimensions() {
-        return false;
+        return super.canChangeDimensions();
     }
 
     @Override
@@ -580,8 +594,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("Phase2"))
-            setPhase2(tag.getBoolean("Phase2"));
         if (tag.contains("Phase3"))
             setPhase3(tag.getBoolean("Phase3"));
         if (tag.contains("Bleeding"))
@@ -593,7 +605,6 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Phase2", isPhase2());
         tag.putBoolean("Phase3", isPhase3());
         tag.putBoolean("Bleeding", shouldBleed);
         tag.putBoolean("casting", this.isCastingAttack());
@@ -693,7 +704,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 removeStatModifiers();
             }
             setSpeed(this);
-            this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
+            //this.crawlingSystem((float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
         }
     }
 

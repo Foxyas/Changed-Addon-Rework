@@ -40,6 +40,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.UniformFloat;
@@ -76,7 +77,7 @@ import java.util.UUID;
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
-public class Experiment10BossEntity extends ChangedEntity implements GenderedEntity, CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity {
+public class Experiment10BossEntity extends Experiment10Entity implements GenderedEntity, CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity {
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment10BossEntity.class, EntityDataSerializers.BOOLEAN);
@@ -121,17 +122,7 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
     }
 
     protected void applyDefaultBasicPlayerInfo() {
-        this.getBasicPlayerInfo().setSize(1f);
-        this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
-        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
-        this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(PHASE2, false);
+        super.applyDefaultBasicPlayerInfo();
     }
 
     @Override
@@ -327,6 +318,19 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         return super.hurt(source, amount);
     }
 
+    @Override
+    protected void actuallyHurt(DamageSource pDamageSource, float pDamageAmount) {
+        super.actuallyHurt(pDamageSource, pDamageAmount);
+
+        float currentHealth = this.getHealth();
+        float maxHealth = this.getMaxHealth();
+
+        if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * 0.75f) {
+            this.setPhase2(true);
+            level.playSound(null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 0);
+        }
+    }
+
     private void maybeSendReactionToPlayer(DamageSource source) {
         if (source.getEntity() instanceof Player player) {
             if (this.level().random.nextFloat() <= 0.25f) {
@@ -392,31 +396,14 @@ public class Experiment10BossEntity extends ChangedEntity implements GenderedEnt
         return Gender.FEMALE;
     }
 
-    public boolean isPhase2() {
-        return this.entityData.get(PHASE2);
-    }
-
-    public void setPhase2(boolean set) {
-        this.entityData.set(PHASE2, set);
-    }
-
-    public void readAdditionalSaveData(CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        if (tag.contains("Phase2")) {
-            setPhase2(tag.getBoolean("Phase2"));
-        }
-    }
-
     @Override
-    public void addAdditionalSaveData(CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean("Phase2", isPhase2());
+    protected EntityDataAccessor<Boolean> getPhase2DataAccessor() {
+        return PHASE2;
     }
 
     @Override
     public void baseTick() {
         super.baseTick();
-
         if (firstTick) {
             applyDefaultBasicPlayerInfo();
         }

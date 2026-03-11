@@ -69,16 +69,14 @@ public class ThunderDiveGoal extends Goal {
 
             int topY = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mth.floor(x), Mth.floor(z));
 
-            if (level.dimensionType().hasCeiling()) {
-                // Começa do teto e desce até achar espaço
-                int maxY = level.getHeight() - 1;
-                for (int y = maxY; y > 0; y--) {
-                    BlockPos checkPos = new BlockPos((int) x, y, (int) z);
-                    // Verifica se tem 2 blocos de espaço (ou mais, dependendo da entidade)
-                    if (level.isEmptyBlock(checkPos) && level.isEmptyBlock(checkPos.above())) {
-                        topY = y;
-                        break;
-                    }
+            // Começa do teto e desce até achar espaço
+            int minY = level.getMinBuildHeight() - 1;
+            for (int y = minY; y < (level.getMaxBuildHeight() - 1); y++) {
+                BlockPos checkPos = new BlockPos((int) x, y, (int) z);
+                // Verifica se tem 2 blocos de espaço (ou mais, dependendo da entidade)
+                if (level.isEmptyBlock(checkPos) && level.isEmptyBlock(checkPos.above())) {
+                    topY = y;
+                    break;
                 }
             }
 

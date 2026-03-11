@@ -42,14 +42,12 @@ public class SwimToTheTargetGoal extends Goal {
     public void start() {
         this.mob.setPose(Pose.SWIMMING);
         this.mob.setSwimming(true); // Ativa a animação de nado
-        this.mob.getNavigation().stop();
     }
 
     @Override
     public void stop() {
         this.mob.setPose(Pose.STANDING);
         this.mob.setSwimming(false);
-        this.mob.getNavigation().stop();
     }
 
     @Override
@@ -61,31 +59,6 @@ public class SwimToTheTargetGoal extends Goal {
     public void tick() {
         LivingEntity target = this.mob.getTarget();
         if (target == null) return;
-        this.mob.getNavigation().stop();
-
-        if ((target.isSwimming() || target.distanceToSqr(mob) >= 6)) {
-            this.mob.setPose(Pose.SWIMMING);
-            this.mob.setSwimming(true); // Ativa a animação de nado
-        } else if (mob.isUnderWater()) {
-            this.mob.setPose(Pose.SWIMMING);
-            this.mob.setSwimming(true); // Ativa a animação de nado
-        } else {
-            this.mob.setPose(Pose.STANDING);
-            this.mob.setSwimming(false);
-        }
-
-        // Olha para o alvo enquanto nada
-        this.mob.getLookControl().setLookAt(target, 180f, 180f);
-        this.mob.setYBodyRot(this.mob.getYHeadRot());
-
-        Vec3 movementDir = target
-                .position()
-                .subtract(mob.position())
-                .normalize();
-
-        float appliedSpeed = mob.isEyeInFluid(FluidTags.WATER) ? speedModifier : speedModifier * 0.75F;
-
-        mob.setSpeed(speedModifier);
-        mob.setDeltaMovement(movementDir.scale(appliedSpeed));
+        this.mob.getNavigation().moveTo(target, speedModifier);
     }
 }

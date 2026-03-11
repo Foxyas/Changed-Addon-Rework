@@ -11,6 +11,9 @@ import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -43,14 +46,15 @@ import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment10Entity extends ChangedEntity implements GenderedEntity, IDynamicPawColor, PowderSnowWalkable {
     //private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
-    private float TpCooldown;
-    private boolean Phase2;
+
+    private static final EntityDataAccessor<Boolean> PHASE2 =
+            SynchedEntityData.defineId(Experiment10Entity.class, EntityDataSerializers.BOOLEAN);
 
     public Experiment10Entity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.EXPERIMENT_10.get(), world);
     }
 
-    public Experiment10Entity(EntityType<Experiment10Entity> type, Level world) {
+    public Experiment10Entity(EntityType<? extends Experiment10Entity> type, Level world) {
         super(type, world);
         this.setAttributes(getAttributes());
         xpReward = 160;
@@ -58,6 +62,15 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         setPersistenceRequired();
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(getPhase2DataAccessor(), false);
+    }
+
+    protected EntityDataAccessor<Boolean> getPhase2DataAccessor() {
+        return PHASE2;
+    }
 
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
@@ -133,10 +146,8 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         if (mobEffectInstance.getEffect() == MobEffects.WITHER) {
             return false;
         }
-
         return super.canBeAffected(mobEffectInstance);
     }
-
 
     @Override
     public TransfurMode getTransfurMode() {
@@ -222,15 +233,17 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         return super.hurt(source, amount);
     }
 
-    @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-        SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
+    protected void applyDefaultBasicPlayerInfo() {
         this.getBasicPlayerInfo().setSize(1f);
         this.getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
-        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#edbd25"));
-        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#edbd25"));
+        this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
+        this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
         this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
-        return retval;
+    }
+
+    @Override
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+        return super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
     }
 
     @Override
@@ -239,50 +252,29 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
     }
 
     @Override
-    public void startSeenByPlayer(@NotNull ServerPlayer player) {
-        super.startSeenByPlayer(player);
-        //this.bossInfo.addPlayer(player);
-    }
-
-    @Override
-    public void stopSeenByPlayer(@NotNull ServerPlayer player) {
-        super.stopSeenByPlayer(player);
-        //this.bossInfo.removePlayer(player);
-    }
-
-    @Override
-    public void customServerAiStep() {
-        super.customServerAiStep();
-        //this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
-    }
-
-    @Override
     public Gender getGender() {
         return Gender.FEMALE;
     }
 
     public boolean isPhase2() {
-        return this.Phase2;
+        return this.entityData.get(getPhase2DataAccessor());
     }
 
     public void setPhase2(boolean set) {
-        this.Phase2 = set;
+        this.entityData.set(getPhase2DataAccessor(), set);
     }
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("Tp_Cooldown"))
-            TpCooldown = tag.getFloat("Tp_Cooldown");
         if (tag.contains("Phase2")) {
-            Phase2 = tag.getBoolean("Phase2");
+            setPhase2(tag.getBoolean("Phase2"));
         }
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putFloat("Tp_Cooldown", TpCooldown);
-        tag.putBoolean("Phase2", Phase2);
+        tag.putBoolean("Phase2", isPhase2());
     }
 
 

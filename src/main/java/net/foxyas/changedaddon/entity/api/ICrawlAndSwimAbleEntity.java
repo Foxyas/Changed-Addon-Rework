@@ -142,6 +142,12 @@ public interface ICrawlAndSwimAbleEntity {
 
         }
 
+        if (target != null && !target.isInWater() && target.distanceTo(livingEntity) <= 3.25f) {
+            livingEntity.setPose(Pose.STANDING);
+            livingEntity.setSwimming(false);
+            return false;
+        }
+
         if (target != null && target.isAlive() && (target.isSwimming() || target.distanceToSqr(livingEntity) >= 6) && livingEntity.isInWater()) {
             if (target.distanceToSqr(livingEntity) >= 6 || target.isSwimming()) {
                 livingEntity.setPose(Pose.SWIMMING);

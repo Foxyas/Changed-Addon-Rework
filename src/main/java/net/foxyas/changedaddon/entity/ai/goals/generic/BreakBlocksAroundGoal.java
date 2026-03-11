@@ -15,7 +15,7 @@ import net.minecraft.world.level.pathfinder.Path;
 import java.util.EnumSet;
 
 public class BreakBlocksAroundGoal extends Goal {
-    private static final int FRUSTRATION_THRESHOLD = 100;
+    private static final int FRUSTRATION_THRESHOLD = 100 * 0; //FIXME: remove *0 when tests are done
     private final Mob holder;
     protected int frustrationTicks = 0;
     private int breakCooldown = 0;
@@ -85,13 +85,13 @@ public class BreakBlocksAroundGoal extends Goal {
         }
 
         BlockPos mobPos = holder.blockPosition();
-        int horizontalRadius = 5;
+        int horizontalRadius = 3;
         int verticalRadius = 3;
 
         int suppedCooldown = 0;
         for (BlockPos pos : BlockPos.betweenClosedStream(
-                mobPos.offset(-3, 0, -3),
-                mobPos.offset(3, 3, 3)).map(BlockPos::immutable).filter(pos -> {
+                mobPos.offset(-horizontalRadius, 0, -horizontalRadius),
+                mobPos.offset(horizontalRadius, verticalRadius, horizontalRadius)).map(BlockPos::immutable).filter(pos -> {
             int xi = pos.getX() - mobPos.getX();
             int yi = pos.getY() - mobPos.getY();
             int zi = pos.getZ() - mobPos.getZ();
