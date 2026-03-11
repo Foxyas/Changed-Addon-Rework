@@ -40,38 +40,19 @@ public class ChangedEntityGoalsMixin {
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;addGoal(ILnet/minecraft/world/entity/ai/goal/Goal;)V", ordinal = 15), method = "registerGoals", remap = true)
     private void floatGoalHook(GoalSelector instance, int pPriority, Goal pGoal, Operation<Void> original) {
         ChangedEntity self = ChangedAddonChangedEntityGoalsMixin$getSelf();
-        if (self instanceof ICrawlAndSwimAbleEntity) {
+        if (self instanceof ICrawlAndSwimAbleEntity swimAbleEntity) {
             var FloatGoal = new FloatGoal(self) {
                 @Override
                 public boolean canUse() {
-                    if (self.getTarget() != null && self.getTarget().getY() <= self.getY()) return false;
-                    return super.canUse();
+                    return super.canUse() && swimAbleEntity.shouldFloat();
                 }
             };
 
             original.call(instance, pPriority, FloatGoal);
             return;
         } else if (self instanceof AbstractSemiAquaticEntity) {
-//            var FloatGoal = new FloatGoal(self) {
-//                @Override
-//                public boolean canUse() {
-//                    if (self.getTarget() != null) return false;
-//                    return super.canUse();
-//                }
-//            };
-
-            //original.call(instance, pPriority, FloatGoal);
             return;
         } else if (self instanceof AbstractSwimmableEntity) {
-//            var FloatGoal = new FloatGoal(self) {
-//                @Override
-//                public boolean canUse() {
-//                    if (self.getTarget() != null) return false;
-//                    return super.canUse();
-//                }
-//            };
-
-            //original.call(instance, pPriority, FloatGoal);
             return;
         }
 

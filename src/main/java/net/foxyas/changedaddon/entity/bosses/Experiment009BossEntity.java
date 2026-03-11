@@ -7,10 +7,7 @@ import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
-import net.foxyas.changedaddon.entity.api.CustomPatReaction;
-import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
-import net.foxyas.changedaddon.entity.api.IGrabberEntity;
-import net.foxyas.changedaddon.entity.api.IHasBossMusic;
+import net.foxyas.changedaddon.entity.api.*;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.FoxyasUtils;
@@ -68,7 +65,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -81,7 +77,7 @@ import java.util.*;
 
 import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 
-public class Experiment009BossEntity extends Experiment009Entity implements CustomPatReaction, PowderSnowWalkable, IHasBossMusic, ICrawlAndSwimAbleEntity, IGrabberEntity.IConditionalGrabber {
+public class Experiment009BossEntity extends Experiment009Entity implements IExp9Logic {
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment009BossEntity.class, EntityDataSerializers.BOOLEAN);
@@ -174,16 +170,16 @@ public class Experiment009BossEntity extends Experiment009Entity implements Cust
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
 
-        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6));
+        Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((6f));
         attributes.getInstance(Attributes.MAX_HEALTH).setBaseValue((425));
-        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(128.0f);
-        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15);
-        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1));
-        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(8);
+        attributes.getInstance(Attributes.FOLLOW_RANGE).setBaseValue(256f);
+        attributes.getInstance(Attributes.MOVEMENT_SPEED).setBaseValue(1.15f);
+        attributes.getInstance(ForgeMod.SWIM_SPEED.get()).setBaseValue((1.1f));
+        attributes.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(10f);
         attributes.getInstance(Attributes.ARMOR).setBaseValue(11f);
-        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(6.5f);
-        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.05);
-        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.85);
+        attributes.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(5f);
+        attributes.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.05f);
+        attributes.getInstance(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.85f);
         attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.5f);
         attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5F);
     }
@@ -867,57 +863,85 @@ public class Experiment009BossEntity extends Experiment009Entity implements Cust
         return this.getType();
     }
 
+    @Override
+    public void applyAlphaAttributesModifiers(LivingEntity entity, float normalized) {
+        IAlphaAbleEntity.apply(entity, Attributes.MAX_HEALTH, IAlphaAbleEntity.MAX_HEALTH, "Alpha Max Health", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, Attributes.ATTACK_DAMAGE, IAlphaAbleEntity.ATTACK_DAMAGE, "Alpha Attack Damage", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, Attributes.ARMOR, IAlphaAbleEntity.ARMOR, "Alpha Armor", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, Attributes.ARMOR_TOUGHNESS, IAlphaAbleEntity.ARMOR_TOUGHNESS, "Alpha Armor Toughness", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, ForgeMod.STEP_HEIGHT_ADDITION.get(), IAlphaAbleEntity.STEP_HEIGHT, "Alpha Step Height", normalized, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, ChangedAttributes.TRANSFUR_DAMAGE.get(), IAlphaAbleEntity.TRANSFUR_DAMAGE, "Alpha Transfur Damage", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, Attributes.ATTACK_KNOCKBACK, IAlphaAbleEntity.ATTACK_KNOCKBACK, "Alpha Knockback", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, Attributes.ATTACK_SPEED, IAlphaAbleEntity.ATTACK_SPEED, "Alpha Attack Speed", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, ForgeMod.ENTITY_REACH.get(), IAlphaAbleEntity.ENTITY_REACH, "Alpha Attack Reach", normalized * 0.5, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, ForgeMod.BLOCK_REACH.get(), IAlphaAbleEntity.BLOCK_REACH, "Alpha Block Reach", normalized * 0.5, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+        IAlphaAbleEntity.apply(entity, ChangedAttributes.JUMP_STRENGTH.get(), IAlphaAbleEntity.JUMP_STRENGTH, "Alpha Jump Strength", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+    }
+
     private enum GearTier {
         LOW,
         MID,
         HIGH
     }
 
+    public static float getMetalPercentage(LivingEntity target) {
+        float metalScore = 0f;
+        int totalSlots = 0;
+
+        Iterable<ItemStack> items = Iterables.concat(target.getHandSlots(), target.getArmorSlots());
+
+        for (ItemStack stack : items) {
+            totalSlots++;
+            if (stack.is(ChangedAddonTags.Items.METAL)) {
+                metalScore += 1.0f;
+            } else if (stack.is(ChangedAddonTags.Items.PARTIAL_METAL)) {
+                metalScore += 0.5f;
+            }
+        }
+
+        if (totalSlots == 0) return 0;
+        return metalScore / totalSlots;
+    }
+
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
 
         @SubscribeEvent
-        public static void onBossAttackPlayer(LivingAttackEvent event) {
+        public static void onBossHurtEntity(LivingHurtEvent event) {
             LivingEntity target = event.getEntity();
             DamageSource damageSource = event.getSource();
             Entity source = damageSource.getEntity();
-            if (source == target) return;
 
-            if (source instanceof Experiment009BossEntity experiment009BossEntity) {
-                if (target.isDamageSourceBlocked(damageSource) || target.isInvulnerableTo(damageSource)) {
-                    return;
+            if (source instanceof Experiment009BossEntity boss) {
+                if (boss.isPhase3()) {
+                    boss.heal(0.5f);
                 }
 
-                if (experiment009BossEntity.isPhase3()) {
-                    experiment009BossEntity.heal(0.5f);
-                }
+                float metalPercentage = getMetalPercentage(target);
+                if (metalPercentage == 0) return;
 
-                Iterable<ItemStack> items = Iterables.concat(target.getHandSlots(), target.getArmorSlots());
-                float metal = 0f;
-                int slots = 0;
-                for (ItemStack stack : items) {
-                    slots++;
-                    if (stack.is(ChangedAddonTags.Items.METAL)) {
-                        metal++;
-                    } else if (stack.is(ChangedAddonTags.Items.PARTIAL_METAL)) {
-                        metal += 0.5f;
+                if (metalPercentage > 0.1f) {
+                    float extraDamage = 5.0f * metalPercentage;
+                    event.setAmount(event.getAmount() + extraDamage);
+
+                    if (!target.level.isClientSide) {
+                        ChangedAnimationEvents.broadcastEntityAnimation(target, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
+                        target.level.playSound(null, target.getX(), target.getY(), target.getZ(),
+                                ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                     }
-                }
 
-                if (metal == 0) return;
-
-                float metalPercentage = metal / slots;
-                if (metalPercentage <= 0.1f) return;
-
-                target.invulnerableTime = 0;
-                target.hurtDuration = 0;
-                target.hurtTime = target.hurtDuration;
-                if (target.hurt(experiment009BossEntity.getShockDmg(), 4 * metalPercentage)) {
-                    ChangedAnimationEvents.broadcastEntityAnimation(target, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
-                    target.level.playSound(null, target, ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1, 1);
-                    target.invulnerableTime = 40;
+                    target.hurtTime = 10;
                     target.hurtDuration = 10;
-                    target.hurtTime = target.hurtDuration;
                 }
             }
         }

@@ -121,7 +121,8 @@ public class ThunderStrikeGoal extends Goal {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
         if (lightning == null) return;
 
-        lightning.setVisualOnly(true);
+        lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f);
+
         lightning.moveTo(target.position());
         if (pathfinderMob instanceof ChangedEntity changedEntity) {
             lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());

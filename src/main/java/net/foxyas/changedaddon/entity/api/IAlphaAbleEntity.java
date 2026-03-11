@@ -32,6 +32,11 @@ import java.util.UUID;
 
 public interface IAlphaAbleEntity {
 
+    interface CustomAlphaAttributes {
+
+        void applyAlphaAttributesModifiers(LivingEntity entity, float normalized);
+    }
+
     EntityDataAccessor<Boolean> IS_ALPHA = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.BOOLEAN);
     EntityDataAccessor<Float> ALPHA_SCALE = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.FLOAT);
 
@@ -81,6 +86,15 @@ public interface IAlphaAbleEntity {
 
         float normalized = alphaScale / 0.75f;
 
+        if (entity instanceof CustomAlphaAttributes alphaAttributes) {
+            alphaAttributes.applyAlphaAttributesModifiers(entity, normalized);
+        } else applyGenericAlphaAttributesModifiers(entity, normalized);
+
+
+        entity.setHealth(entity.getMaxHealth());
+    }
+
+    private static void applyGenericAlphaAttributesModifiers(LivingEntity entity, float normalized) {
         apply(entity, Attributes.MAX_HEALTH, MAX_HEALTH, "Alpha Max Health", normalized, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         apply(entity, Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE, "Alpha Attack Damage", normalized, AttributeModifier.Operation.MULTIPLY_TOTAL);
@@ -102,11 +116,9 @@ public interface IAlphaAbleEntity {
         apply(entity, ForgeMod.BLOCK_REACH.get(), BLOCK_REACH, "Alpha Block Reach", normalized * 0.5, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         apply(entity, ChangedAttributes.JUMP_STRENGTH.get(), JUMP_STRENGTH, "Alpha Jump Strength", normalized * 0.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
-
-        entity.setHealth(entity.getMaxHealth());
     }
 
-    private static void apply(LivingEntity entity, Attribute attribute, UUID uuid, String name, double value, AttributeModifier.Operation op) {
+    static void apply(LivingEntity entity, Attribute attribute, UUID uuid, String name, double value, AttributeModifier.Operation op) {
         AttributeInstance inst = entity.getAttribute(attribute);
         if (inst == null || value == 0) return;
         AttributeModifier pModifier = new AttributeModifier(uuid, name, value, op);

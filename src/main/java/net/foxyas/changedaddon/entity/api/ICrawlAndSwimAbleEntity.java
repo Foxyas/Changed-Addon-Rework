@@ -4,6 +4,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -116,7 +117,7 @@ public interface ICrawlAndSwimAbleEntity {
     }
 
     default boolean updateSwimmingMovement(ChangedEntity livingEntity, float speed) {
-        if (!livingEntity.isInWater())
+        if (!livingEntity.isInWater() || this.shouldFloat())
             return false;
 
         LivingEntity target = livingEntity.getTarget();
@@ -167,5 +168,17 @@ public interface ICrawlAndSwimAbleEntity {
             livingEntity.setSwimming(false);
             return false;
         }
+    }
+
+    default boolean shouldFloat() {
+        LivingEntity livingEntity = asEntity();
+        if (livingEntity == null) return true;
+
+        if (livingEntity instanceof PathfinderMob mob && mob.getTarget() == null) {
+            return true;
+        }
+
+        float airPercentage = (float) livingEntity.getAirSupply() / livingEntity.getMaxAirSupply();
+        return airPercentage <= 0.25F;
     }
 }
