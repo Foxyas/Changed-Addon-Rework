@@ -40,14 +40,10 @@ public class SwimToTheTargetGoal extends Goal {
 
     @Override
     public void start() {
-        this.mob.setPose(Pose.SWIMMING);
-        this.mob.setSwimming(true); // Ativa a animação de nado
     }
 
     @Override
     public void stop() {
-        this.mob.setPose(Pose.STANDING);
-        this.mob.setSwimming(false);
     }
 
     @Override
