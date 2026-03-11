@@ -15,7 +15,7 @@ import net.minecraft.world.level.pathfinder.Path;
 import java.util.EnumSet;
 
 public class BreakBlocksAroundGoal extends Goal {
-    private static final int FRUSTRATION_THRESHOLD = 100 * 0; //FIXME: remove *0 when tests are done
+    private static final int FRUSTRATION_THRESHOLD = 100;
     private final Mob holder;
     protected int frustrationTicks = 0;
     private int breakCooldown = 0;
