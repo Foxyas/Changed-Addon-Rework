@@ -56,7 +56,7 @@ public class ElectrifyNearbyWaterGoal extends Goal {
 
         for (LivingEntity nearbyEntity : nearbyEntities) {
             if (connectedFluids.contains(nearbyEntity.blockPosition())) {
-                if (nearbyEntity.hurt(boss.getShockDmg(), damageProvider.sample(boss.getRandom()))) {
+                if (nearbyEntity.hurt(boss.getShockDmg(), damageProvider.sample(boss.getRandom()) * boss.getPhase().getDamageModifier(nearbyEntity))) {
                     ChangedAnimationEvents.broadcastEntityAnimation(nearbyEntity, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
                     level.playSound(null, nearbyEntity, ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1, 1);
                     nearbyEntity.invulnerableTime = 40;

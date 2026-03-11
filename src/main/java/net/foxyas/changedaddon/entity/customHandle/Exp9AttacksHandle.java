@@ -707,7 +707,7 @@ public class Exp9AttacksHandle {
         @Override
         public void stop() {
             super.stop();
-            cooldown = cooldownProvider.sample(this.boss.getRandom());
+            cooldown = (int) (cooldownProvider.sample(this.boss.getRandom()) * boss.getPhase().getDamageModifier(boss.getTarget()));
         }
 
         private void thunderStorm() {

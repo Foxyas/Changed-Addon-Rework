@@ -134,7 +134,10 @@ public class ThunderStrikeGoal extends Goal {
             lightning.moveTo(random, 0, 0);
         }
 
-        lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
+        if (pathfinderMob instanceof Experiment009BossEntity boss) {
+            lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()) * boss.getPhase().getDamageModifier(target));
+        } else lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
+
         ParticlesUtil.sendParticles(pathfinderMob.level(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
         pathfinderMob.level().addFreshEntity(lightning);
         applyKnockBack(lightning);

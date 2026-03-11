@@ -101,6 +101,9 @@ public class LightningComboAttackGoal extends Goal {
     public void start() {
         attacks = attackCountProvider.sample(random);
         castDuration = castDurationProvider.sample(random);
+        if (holder instanceof Experiment009BossEntity boss) {
+            castDuration *= (int) boss.getPhase().getCastModifier();
+        }
         pickAttackPos();
 
         holder.getNavigation().stop();

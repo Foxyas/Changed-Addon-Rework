@@ -7,7 +7,7 @@ import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
-import net.foxyas.changedaddon.entity.api.*;
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.FoxyasUtils;
@@ -308,6 +308,35 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
         this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
+    }
+
+    public enum Exp9Phase {
+        PHASE1(1f, 1f),
+        PHASE2(2.5f, 0.5f),
+
+        PHASE3(1.5f, 0.20f);
+
+        private final float damageModifier;
+        private final float castModifier;
+
+        Exp9Phase(float damageModifier, float castModifier) {
+            this.damageModifier = damageModifier;
+            this.castModifier = castModifier;
+        }
+
+        public float getDamageModifier(LivingEntity target) {
+            return damageModifier; //Todo tweak this damage modifier to be less or more based on the player "metalic points". (Being a prototype/Protogen,using metal armor, etc).
+        }
+
+        public float getCastModifier() {
+            return castModifier;
+        }
+    }
+
+    public Exp9Phase getPhase() {
+        if (isPhase2()) return Exp9Phase.PHASE2;
+        if (isPhase3()) return Exp9Phase.PHASE3;
+        return Exp9Phase.PHASE1;
     }
 
     @Override

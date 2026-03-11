@@ -120,7 +120,11 @@ public class StaticDischargeGoal extends Goal {
                         if (holder instanceof Experiment009BossEntity bossEntity) {
                             pSource = bossEntity.getThunderDmg();
                         } else pSource = target.level().damageSources().lightningBolt();
-                        entity.hurt(pSource, damageProvider.sample(random));
+                        float sample = damageProvider.sample(random);
+                        if (holder instanceof Experiment009BossEntity experiment009BossEntity) {
+                            sample *= experiment009BossEntity.getPhase().getDamageModifier(holder);
+                        }
+                        entity.hurt(pSource, sample);
                         Vec3 direction = entity.position().subtract(holder.position());
 
                         direction = direction.normalize();
