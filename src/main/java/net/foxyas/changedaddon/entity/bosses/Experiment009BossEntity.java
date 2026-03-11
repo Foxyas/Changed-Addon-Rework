@@ -858,8 +858,9 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
+
         @SubscribeEvent
-        public static void WhenAttack(LivingAttackEvent event) {
+        public static void onBossAttackPlayer(LivingAttackEvent event) {
             LivingEntity target = event.getEntity();
             DamageSource damageSource = event.getSource();
             Entity source = damageSource.getEntity();
@@ -892,6 +893,8 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
                 if (metalPercentage <= 0.1f) return;
 
                 target.invulnerableTime = 0;
+                target.hurtDuration = 0;
+                target.hurtTime = target.hurtDuration;
                 if (target.hurt(experiment009BossEntity.getShockDmg(), 4 * metalPercentage)) {
                     ChangedAnimationEvents.broadcastEntityAnimation(target, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
                     target.level.playSound(null, target, ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1, 1);
@@ -903,7 +906,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         }
 
         @SubscribeEvent
-        public static void onBossDamagePlayer(LivingHurtEvent event) {
+        public static void onBossHurtPlayer(LivingHurtEvent event) {
             if (!(event.getSource().getEntity() instanceof Experiment009BossEntity source)) return;
             if (!(event.getEntity() instanceof Player target)) return;
 
@@ -917,7 +920,7 @@ public class Experiment009BossEntity extends ChangedEntity implements CustomPatR
         }
 
         @SubscribeEvent
-        public static void onPlayerDamageBoss(LivingHurtEvent event) {
+        public static void onPlayerHurtBoss(LivingHurtEvent event) {
             if (!(event.getSource().getEntity() instanceof Player source)) return;
             if (!(event.getEntity() instanceof Experiment009BossEntity target)) return;
 
