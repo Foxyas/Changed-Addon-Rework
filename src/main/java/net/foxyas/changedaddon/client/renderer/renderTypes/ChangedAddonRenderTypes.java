@@ -109,16 +109,15 @@ public final class ChangedAddonRenderTypes extends RenderType {
                             .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
                             .setOutputState(MAIN_TARGET)
                             .createCompositeState(IS_OUTLINE)));
-    public static final CullStateShard OUTLINE_CULL_STATE = new RenderStateShard.CullStateShard(true) { // culling invertido
+
+    public static final CullStateShard REVERSE_CULL_STATE = new RenderStateShard.CullStateShard(true) { // culling invertido
         @Override
         public void setupRenderState() {
-            RenderSystem.enableCull();
             GL11.glCullFace(GL11.GL_FRONT);
         }
 
         @Override
         public void clearRenderState() {
-            RenderSystem.disableCull();
             GL11.glCullFace(GL11.GL_BACK);
         }
     };
@@ -390,7 +389,7 @@ public final class ChangedAddonRenderTypes extends RenderType {
     }
 
     public static RenderType outlineWithDepth(ResourceLocation location) {
-        return OUTLINE_WITH_DEPTH.apply(location, OUTLINE_CULL_STATE);
+        return OUTLINE_WITH_DEPTH.apply(location, REVERSE_CULL_STATE);
     }
 
     public static RenderType outlineWithDepthFull(ResourceLocation location) {
