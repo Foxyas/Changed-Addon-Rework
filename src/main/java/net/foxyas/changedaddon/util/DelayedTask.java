@@ -10,6 +10,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Iterator;
+
 public class DelayedTask {
 
     public static final Logger LOGGER = LogManager.getLogger(DelayedTask.class);
@@ -42,8 +44,18 @@ public class DelayedTask {
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            activeTasks.values().forEach(DelayedTask::tick);
+        if (event.phase != TickEvent.Phase.END) return;
+
+        Iterator<DelayedTask> it = activeTasks.values().iterator();
+        DelayedTask task;
+        while (it.hasNext()) {
+            task = it.next();
+            if (task.isCancelledOrFinished()) {
+                it.remove();
+                continue;
+            }
+
+            task.tick();
         }
     }
 
@@ -81,7 +93,6 @@ public class DelayedTask {
     public void tick() {
         if (paused) return;
         if (isCancelledOrFinished()) {// Ensure the instance is removed correctly
-            destroy();
             return;
         }
 
@@ -103,13 +114,6 @@ public class DelayedTask {
      */
     public void cancel() {
         this.cancelled = true;
-    }
-
-    /**
-     * This is To Remove the DelayedTask from memory, Keep in Mind that this action can't be reversed
-     */
-    private void destroy() {
-        activeTasks.remove(id);
     }
 
     /**
