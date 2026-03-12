@@ -8,6 +8,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.Iterator;
+
 public class DelayedTask {
 
     private static final Int2ObjectOpenHashMap<DelayedTask> activeTasks = new Int2ObjectOpenHashMap<>();
@@ -39,8 +41,18 @@ public class DelayedTask {
 
     @SubscribeEvent
     public static void onServerTick(TickEvent.ServerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            activeTasks.values().forEach(DelayedTask::tick);
+        if (event.phase != TickEvent.Phase.END) return;
+
+        Iterator<DelayedTask> it = activeTasks.values().iterator();
+        DelayedTask task;
+        while (it.hasNext()) {
+            task = it.next();
+            if (task.isCancelled()) {
+                it.remove();
+                continue;
+            }
+
+            task.tick();
         }
     }
 
@@ -78,7 +90,6 @@ public class DelayedTask {
     public void tick() {
         if (paused) return;
         if (isCancelled()) {// Ensure the instance is removed correctly
-            destroy();
             return;
         }
 
@@ -89,7 +100,6 @@ public class DelayedTask {
             task.run();
         } catch (Exception e) {
             System.err.println("Error during the execution of the DelayedTask with ID: " + id + "\n " + e.getMessage());
-            //e.printStackTrace();
         } finally {
             cancel();// Automatically cancel after execution
         }
@@ -100,13 +110,6 @@ public class DelayedTask {
      */
     public void cancel() {
         this.cancelled = true;
-    }
-
-    /**
-     * This is To Remove the DelayedTask from memory, Keep in Mind that this action can't be reversed
-     */
-    private void destroy() {
-        activeTasks.remove(id);
     }
 
     /**
