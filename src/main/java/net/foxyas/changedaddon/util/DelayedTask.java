@@ -7,9 +7,12 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DelayedTask {
 
+    public static final Logger LOGGER = LogManager.getLogger(DelayedTask.class);
     private static final Int2ObjectOpenHashMap<DelayedTask> activeTasks = new Int2ObjectOpenHashMap<>();
     private static int nextId = 0;
 
@@ -88,7 +91,7 @@ public class DelayedTask {
         try {
             task.run();
         } catch (Exception e) {
-            System.err.println("Error during the execution of the DelayedTask with ID: " + id + "\n " + e.getMessage());
+            LOGGER.error("Error during the execution of the DelayedTask with ID: {}\n {}", id, e.getMessage()); //Using a Logger here cuz is more fancy :>
             //e.printStackTrace();
         } finally {
             cancel();// Automatically cancel after execution
