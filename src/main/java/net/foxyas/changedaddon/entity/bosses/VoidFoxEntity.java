@@ -13,6 +13,7 @@ import net.foxyas.changedaddon.entity.ai.goals.void_fox.VoidFoxAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.ai.goals.void_fox.VoidFoxDashAttack;
 import net.foxyas.changedaddon.entity.api.ICrawlAndSwimAbleEntity;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
+import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.projectile.AbstractVoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
@@ -82,7 +83,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.util.Objects;
 
-public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEntity, IHasBossMusic, SonarOutlineLayer.CustomSonarRenderable, IDynamicPawColor {
+public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEntity, IHasBossMusic, SonarOutlineLayer.CustomSonarRenderable, IDynamicPawColor, IDynamicRideOffsetEntity {
 
     private static final int MAX_1_COOLDOWN = 120;
     private static final int MAX_2_COOLDOWN = 120;
@@ -592,19 +593,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
             serverLevel.sendParticles(ParticleTypes.SWEEP_ATTACK, this.getX() + d0, this.getY(0.7), this.getZ() + d1, 0, d0, 0.0, d1, 0.0);
             this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1f, 0.75f);
         }
-    }
-
-    public double getTorsoYOffset(ChangedEntity self) {
-        float ageAdjusted = (float) self.tickCount * 0.33333334F * 0.25F * 0.15F;
-        float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
-        float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
-        float bpiSize = (self.getBasicPlayerInfo().getSize(this) - 1.0F) * 2.0F;
-        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
-    }
-
-    public double getTorsoYOffsetForFallFly(ChangedEntity self) {
-        float bpiSize = (self.getBasicPlayerInfo().getSize(this) - 1.0F) * 2.0F;
-        return 0.375 + bpiSize;
     }
 
     @Override

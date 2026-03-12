@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
@@ -58,7 +59,7 @@ import net.minecraftforge.network.PlayMessages;
 
 import java.util.List;
 
-public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, CustomPatReaction, PowderSnowWalkable {
+public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, CustomPatReaction, PowderSnowWalkable, IDynamicRideOffsetEntity {
 
     public static final CreatureDietsHandleProcedure.DietType LUMINARA_DIET = CreatureDietsHandleProcedure.DietType.create("LUMINARA", ChangedAddonTags.TransfurTypes.DRAGON_LIKE, ChangedAddonTags.Items.DRAGON_DIET, List.of(Items.CHORUS_FRUIT, ChangedItems.ORANGE.get()));
     private static final EntityDataAccessor<Boolean> AWAKENED = SynchedEntityData.defineId(LuminaraFlowerBeastEntity.class, EntityDataSerializers.BOOLEAN);
@@ -452,19 +453,6 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         Color3 firstColor = Color3.getColor("#f5d4ef");
         Color3 secondColor = Color3.getColor("#241942");
         return ColorUtil.lerpTFColor(firstColor, secondColor, getUnderlyingPlayer());
-    }
-
-    public double getTorsoYOffset(ChangedEntity self) {
-        float ageAdjusted = (float) self.tickCount * 0.33333334F * 0.25F * 0.15F;
-        float ageSin = Mth.sin(ageAdjusted * 3.1415927F * 0.5F);
-        float ageCos = Mth.cos(ageAdjusted * 3.1415927F * 0.5F);
-        float bpiSize = (self.getBasicPlayerInfo().getSize(this) - 1.0F) * 2.0F;
-        return Mth.lerp(Mth.lerp(1.0F - Mth.abs(Mth.positiveModulo(ageAdjusted, 2.0F) - 1.0F), ageSin * ageSin * ageSin * ageSin, 1.0F - ageCos * ageCos * ageCos * ageCos), 0.95F, 0.87F) + bpiSize;
-    }
-
-    public double getTorsoYOffsetForFallFly(ChangedEntity self) {
-        float bpiSize = (self.getBasicPlayerInfo().getSize(this) - 1.0F) * 2.0F;
-        return 0.375 + bpiSize;
     }
 
     @Override

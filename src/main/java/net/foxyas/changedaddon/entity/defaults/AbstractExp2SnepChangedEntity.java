@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.defaults;
 
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
+import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.ISafeChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
@@ -54,7 +55,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard implements ICoatLikeEntity, CustomPatReaction, ISafeChangedEntity {
+public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard implements ICoatLikeEntity, CustomPatReaction, ISafeChangedEntity, IDynamicRideOffsetEntity {
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNER_UUID_ID = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final EntityDataAccessor<Boolean> UNFUSED_FROM_HOST = SynchedEntityData.defineId(AbstractExp2SnepChangedEntity.class, EntityDataSerializers.BOOLEAN);
