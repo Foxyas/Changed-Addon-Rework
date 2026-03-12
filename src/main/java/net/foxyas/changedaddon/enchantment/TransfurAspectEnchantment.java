@@ -144,7 +144,7 @@ public class TransfurAspectEnchantment extends Enchantment {
             if (player == null) return;
 
             // Get the Transfur Aspect enchantment level from the item
-            int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(
+            int enchantLevel = EnchantmentHelper.getTagEnchantmentLevel(
                     ChangedAddonEnchantments.TRANSFUR_ASPECT.get(), event.getItemStack()
             );
             if (enchantLevel <= 0) return; // Exit if the item doesn't have the enchantment

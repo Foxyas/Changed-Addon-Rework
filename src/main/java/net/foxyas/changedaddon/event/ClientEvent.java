@@ -59,7 +59,7 @@ public class ClientEvent {
     }
 
     public static void showExtraTransfurInfo(@Nullable Player entity, ItemStack itemstack, List<Component> tooltip) {
-        if (entity == null || itemstack == null || tooltip == null) return;
+        if (entity == null || itemstack == null || tooltip == null || !Minecraft.getInstance().isSameThread()) return;
 
         if (!(itemstack.is(ChangedItems.LATEX_SYRINGE.get()) || itemstack.is(ChangedItems.LATEX_FLASK.get())
                 || itemstack.is(ChangedItems.LATEX_TIPPED_ARROW.get()))) return;

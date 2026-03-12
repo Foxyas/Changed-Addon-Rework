@@ -684,7 +684,7 @@ public class ChangedAddonTransfurVariants {
     @Nullable
     public static List<Component> getVariantComponentIfAny(TransfurVariant<?> transfurVariant, Level level) {
         if (isVariantOC(transfurVariant, level)) {
-            if (transfurVariant.getEntityType().create(level) instanceof IOriginalCharacterEntity iOriginalCharacterEntity) {
+            if (ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType()) instanceof IOriginalCharacterEntity iOriginalCharacterEntity) {
                 return iOriginalCharacterEntity.getOcVariantComponents();
             }
             return OCS.get().get(transfurVariant);
@@ -694,9 +694,10 @@ public class ChangedAddonTransfurVariants {
 
 
     public static boolean isVariantOC(TransfurVariant<?> transfurVariant, @Nullable Level level) {
-        if (level != null && ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType()) instanceof PatronOC) {
+        ChangedEntity cachedEntity = ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType());
+        if (level != null && cachedEntity instanceof PatronOC) {
             return true;
-        } else if (level != null && ChangedEntities.getCachedEntity(level, transfurVariant.getEntityType()) instanceof IOriginalCharacterEntity) {
+        } else if (level != null && cachedEntity instanceof IOriginalCharacterEntity) {
             return true;
         } else return OCS.get().containsKey(transfurVariant);
     }

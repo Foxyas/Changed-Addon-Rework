@@ -6,6 +6,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.Nullable;
@@ -34,6 +35,9 @@ public interface ICrawlAndSwimAbleEntity {
     }
 
     default void updateStepSizeBasedInSwimState(boolean updateSwimmingMovement) {
+        if (this instanceof LivingEntity livingEntity) {
+            livingEntity.setMaxUpStep(updateSwimmingMovement ? 1f : 0.7f);
+        }
     }
 
     private void switchToSafePose(ChangedEntity livingEntity) {
@@ -123,6 +127,13 @@ public interface ICrawlAndSwimAbleEntity {
         LivingEntity target = livingEntity.getTarget();
 
         if (target != null) {
+
+            if (!target.isInWater() && (livingEntity.getNavigation().isStuck() || livingEntity.horizontalCollision)) {
+                livingEntity.setPose(Pose.STANDING);
+                livingEntity.setSwimming(false);
+                return false;
+            }
+
             Vec3 movementDir = target.position().subtract(livingEntity.position()).normalize();
             float appliedSpeed = livingEntity.isEyeInFluid(FluidTags.WATER)
                     ? speed

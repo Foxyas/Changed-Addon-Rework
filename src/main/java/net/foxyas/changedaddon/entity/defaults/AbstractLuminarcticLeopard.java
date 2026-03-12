@@ -83,15 +83,13 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public int SuperAbilitiesTicksCooldown = 0;
     public int PassivesTicksCooldown = 0;
     public int DashingTicks = 0;
-    public DodgeAbilityInstance dodgeAbilityInstance = null;
     private boolean Aggro = false;
-    private boolean attributesApplied = false;
+    private boolean wasBoss = false;
 
     //public int DEVATTACKTESTTICK = 0;
     public AbstractLuminarcticLeopard(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
         this.setAttributes(this.getAttributes());
-        this.dodgeAbilityInstance = this.registerAbility((this::canDodge), new DodgeAbilityInstance(ChangedAddonAbilities.DODGE.get(), IAbstractChangedEntity.forEntity(this)));
     }
 
     public static <T extends AbstractLuminarcticLeopard> boolean canSpawnNear(EntityType<T> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, Random random) {
@@ -140,10 +138,6 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         attributes.getInstance(ChangedAttributes.AIR_CAPACITY.get()).setBaseValue(15);
         attributes.getInstance(ChangedAttributes.JUMP_STRENGTH.get()).setBaseValue(1.35F);
         attributes.getInstance(ChangedAttributes.FALL_RESISTANCE.get()).setBaseValue(2.5);
-    }
-
-    public boolean canDodge(DodgeAbilityInstance abilityInstance) {
-        return true;
     }
 
     public boolean isBoss() {
@@ -224,9 +218,9 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     public void variantTick(Level level) {
         super.variantTick(level);
 
-        if (this.isBoss() && !attributesApplied) {
+        if (this.isBoss() && !wasBoss) {
             handleBoss();
-        } else if (!this.isBoss() && attributesApplied) {
+        } else if (!this.isBoss() && wasBoss) {
             handleNonBoss();
         }
     }
@@ -242,17 +236,19 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     @Override
+    public void updateStepSizeBasedInSwimState(boolean updateSwimmingMovement) {
+        this.setMaxUpStep(updateSwimmingMovement ? 1f : 0.7f);
+    }
+
+    @Override
     public void baseTick() {
         super.baseTick();
-        if (this.isBoss() && !attributesApplied) {
+        if (this.isBoss() && !wasBoss) {
             handleBoss();
         }
 
         if (this.getUnderlyingPlayer() == null) {
             if (!this.isNoAi()) {
-                if (this.dodgeAbilityInstance != null && this.dodgeAbilityInstance.isDodgeActive()) {
-                    this.dodgeAbilityInstance.setDodgeActivate(false);
-                }
                 if (this.isBoss()) {
                     if (this.AbilitiesTicksCooldown <= 0) {
                         this.bossAbilitiesHandle.tick();
@@ -349,6 +345,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         }
 
         setBoss(tag.getBoolean("isBoss"));
+        this.wasBoss = tag.getBoolean("wasBoss");
     }
 
     @Override
@@ -361,12 +358,13 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         tag.putInt("DashingTicks", DashingTicks);
         tag.putInt("GlowStage", this.getGlowStage());
         tag.putBoolean("isBoss", this.isBoss());
+        tag.putBoolean("wasBoss", this.wasBoss);
         //tag.putInt("DEVATTACKTESTTICK", DEVATTACKTESTTICK);
     }
 
 
     public void handleBoss() {
-        attributesApplied = true;
+        wasBoss = true;
         Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).setBaseValue(500f);
         Objects.requireNonNull(this.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(17.5f);
         Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).setBaseValue(10f);
@@ -378,7 +376,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     }
 
     public void handleNonBoss() {
-        attributesApplied = false;
+        wasBoss = false;
         this.setAttributes(this.getAttributes());
         IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
     }
@@ -387,15 +385,12 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         return this.DashingTicks > 0;
     }
 
-    private void setDodging(Entity entity) {
+    private void playDodge(Entity entity) {
         if (entity != null) {
             this.lookAt(EntityAnchorArgument.Anchor.FEET, entity.getEyePosition());
         }
         this.getNavigation().stop();
-        if (this.dodgeAbilityInstance != null) {
-            this.dodgeAbilityInstance.executeDodgeEffects(this, this.getTarget());
-            this.dodgeAbilityInstance.setDodgeActivate(true);
-        }
+        DodgeAbilityInstance.executeRandomDodgeAnimation(this);
     }
 
     @Override
@@ -406,14 +401,14 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
         if (source.getDirectEntity() instanceof ThrowableItemProjectile throwableItemProjectile) {
             if (this.isBoss()) {
                 Entity attacker = throwableItemProjectile.getOwner() != null ? throwableItemProjectile.getOwner() : source.getEntity();
-                setDodging(attacker);
+                playDodge(attacker);
             }
         }
         if (source.is(DamageTypeTags.IS_PROJECTILE) && source.getDirectEntity() instanceof AbstractArrow abstractArrow && abstractArrow.getPierceLevel() <= 0 && this.isBoss()) {
             // Animação de esquiva e "ignorar" o dano
 
             Entity attacker = source.getDirectEntity() != null ? source.getDirectEntity() : source.getEntity();
-            setDodging(attacker);
+            playDodge(attacker);
             return false;
         } else if (source.is(DamageTypeTags.IS_PROJECTILE) && !this.isBoss()) {
             return super.hurt(source, amount);
@@ -455,13 +450,13 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             float reducedAmount = amount / 6f;
             if (reducedAmount > 2f) {
                 if (reducedAmount < 4f) {
-                    setDodging(attacker);
+                    playDodge(attacker);
                 }
                 return super.hurt(source, reducedAmount);
             } else {
                 // Animação de esquiva e "ignorar" o dano
 
-                setDodging(attacker);
+                playDodge(attacker);
                 return false;
             }
         }
@@ -478,7 +473,7 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
             CompoundTag spawnTag = spawnEvent.getSpawnTag();
             Mob entity = spawnEvent.getEntity();
             if (!(entity instanceof AbstractLuminarcticLeopard abstractLuminarcticLeopard)) return;
-            boolean attributesApplied = abstractLuminarcticLeopard.attributesApplied;
+            boolean attributesApplied = abstractLuminarcticLeopard.wasBoss;
 
             if (spawnTag != null && spawnTag.contains("isBoss") && spawnTag.getBoolean("isBoss")) {
                 if (!attributesApplied) {

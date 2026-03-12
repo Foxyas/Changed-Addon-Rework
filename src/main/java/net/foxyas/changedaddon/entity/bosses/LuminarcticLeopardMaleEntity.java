@@ -121,7 +121,7 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
     @Override
     public void baseTick() {
         super.baseTick();
-        crawlingSystem(this, this.getTarget());
+        crawlingSystem(this, (float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f);
     }
 
     @Override

@@ -362,6 +362,11 @@ public abstract class AbstractVoidFoxParticleProjectile extends ParriableProject
 
     @Override
     protected boolean canHitEntity(@NotNull Entity entity) {
+        if (entity instanceof AbstractGenericParticleProjectile genericParticleProjectile) {
+            if (genericParticleProjectile.getOwner() == this.getOwner()) {
+                return false;
+            }
+        }
         if (getOwner() instanceof Player player) {
             return !player.is(entity);
         } else if (getOwner() instanceof VoidFoxEntity voidFoxEntity && voidFoxEntity.is(entity)) {
