@@ -92,10 +92,10 @@ public class ChangedAddonServerConfiguration {
         BUILDER.push("Fight To Keep Consciousness");
         FIGHT_TO_KEEP_CONSCIOUSNESS_TIMER = BUILDER
                 .comment("Ticks before the fail or success check of the Fight to keep consciousness mine-game")
-                .defineInRange("Fight To Keep consciousness timer", 150, 0, Integer.MAX_VALUE);
+                .defineInRange("Duration", 150, 0, Integer.MAX_VALUE);
         FIGHT_TO_KEEP_CONSCIOUSNESS_STRUGGLE_NEED = BUILDER
                 .comment("Struggle need to success the Fight to keep consciousness mine-game")
-                .defineInRange("Fight To Keep consciousness timer", 30, 0f, Double.MAX_VALUE);
+                .defineInRange("Struggle Points Required", 30, 0f, Double.MAX_VALUE);
         BUILDER.pop();
 
         BUILDER.push("Chat");
