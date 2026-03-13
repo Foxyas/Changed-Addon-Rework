@@ -198,9 +198,14 @@ public class TransfurTotemItem extends Item {
     public boolean isFoil(@NotNull ItemStack itemstack) {
         String form = itemstack.getOrCreateTag().getString("form");
         if (form.isEmpty()) return false;
-        else if (form.startsWith("changed:form")) return true;
 
-        return form.startsWith("changed_addon:form") && ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get() == true;
+        ResourceLocation parse = ResourceLocation.parse(form);
+        TransfurVariant<?> value = ChangedRegistry.TRANSFUR_VARIANT.getValue(parse);
+        if (value != null) {
+            return parse.getNamespace().equals("changed") || ChangedAddonServerConfiguration.ACCEPT_ALL_VARIANTS.get();
+        }
+
+        return false;
     }
 
     @Override
