@@ -17,10 +17,7 @@ import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.foxyas.changedaddon.entity.projectile.AbstractVoidFoxParticleProjectile;
 import net.foxyas.changedaddon.entity.projectile.VoidFoxParticleProjectile;
-import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
-import net.foxyas.changedaddon.init.ChangedAddonItems;
-import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -28,7 +25,9 @@ import net.ltxprogrammer.changed.entity.EyeStyle;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -242,6 +241,18 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
                 knockBackBurstGoal.registerDamage(amount);
             }
         }));
+    }
+
+    @Override
+    public void variantTick(Level level) {
+        super.variantTick(level);
+        TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(this.getUnderlyingPlayer()));
+        if (transfurVariant != null) {
+            DodgeAbilityInstance abilityInstance = transfurVariant.getAbilityInstance(ChangedAddonAbilities.DODGE.get());
+            if (abilityInstance != null) {
+                abilityInstance.setMaxDodgeAmount(10);
+            }
+        }
     }
 
     @Override
