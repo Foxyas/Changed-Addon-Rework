@@ -337,6 +337,10 @@ public class HULanguageProvider extends LanguageProvider {
 
         addEntityFromId(AVALI);
         addEntityFromId(AVALI_ZERGODMASTER);
+        addStasisModifyForEntity(AVALI, "pattern_style", "Tollak stílusának módosítása");
+        addStasisModifyToolTipForEntity(AVALI, "pattern_style", "Változtasd meg a tollak stílusát a testeden.");
+        addStasisModifyForEntity(AVALI, "size_scaling", "Méretezés módosítása");
+        addStasisModifyToolTipForEntity(AVALI, "size_scaling", "Módosítsa a méretezést a testéről.");
         addEntityFromId(BAGEL);
         addEntityType(BLUE_LIZARD, "Kék gyík");
         addEntityType(BOREALIS_FEMALE, "Hím Borealis");
@@ -355,6 +359,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(EXP_6, "6-os kísérlet");
         addEntityType(EXPERIMENT_009, "009-es kísérlet");
         addEntityType(EXPERIMENT_009_BOSS, "009-es kísérlet");
+        addText("lore." + EXPERIMENT_009.getId().getPath(), "Egy laboratórium falai között létrehozva, a legtöbb tudós, aki tanulmányozta, soha nem mutatott irgalmat vagy együttérzést. Azok a kevesek, akik mertek szimpatizálni a lénnyel, tragikus véget értek. Miután végül bezárták és egy furcsa, sűrített DNS-gömbbé darabolták, nem némult el. Ehelyett fennmaradt – elméje tele volt nehezteléssel. Most bosszút áll az emberiségen, és minden olyan lényen, amely mer rájuk hasonlítani.");
         addEntityType(EXPERIMENT_10, "10-es kísérlet");
         addEntityType(EXPERIMENT_10_BOSS, "10-es kísérlet");
         addEntityType(LUMINARCTIC_LEOPARD_FEMALE, "Nőstény fénylő párduc");
