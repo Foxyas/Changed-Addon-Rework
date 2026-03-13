@@ -241,6 +241,10 @@
   "changed_addon.latex_totem.not_valid": "Totem §cnegatívan§r reagált a §bDNS§r-edre",
   "changed_addon.latex_totem.tittle.text_1": "§o§n§l§3⚡ A műtárgy rezonál ⚡",
   "changed_addon.latex_totem.tittle.text_2": "§o§l§3Megvédve elmédet, eszméleted visszahúzódik a szakadék széléről, nem hagyva, hogy a feledésbe merülj.",
+  "changed_addon.stasis.modify.avali.pattern_style": "Tollak stílusának módosítása",
+  "changed_addon.stasis.modify.avali.pattern_style.tooltip": "Változtasd meg a tollak stílusát a testeden.",
+  "changed_addon.stasis.modify.avali.size_scaling": "Méretezés módosítása",
+  "changed_addon.stasis.modify.avali.size_scaling.tooltip": "Módosítsa a méretezést a testéről.",
   "changed_addon.untransfur.Immune": "Engem nem érint",
   "changed_addon.untransfur.Immune.fluid": "Ez a folyadék nem hat rám",
   "changed_addon.untransfur.diffusion": "Elválsz a hozzád kapcsolódó latex lénytől. Lehet, hogy vissza akar kapcsolódni, úgyhogy jobb, ha FUTSZ.",
@@ -672,6 +676,7 @@
   "text.changed_addon.jumpStrength": "Ugrás erőssége = %s",
   "text.changed_addon.land_speed": "Szárazföldi sebesség = %s",
   "text.changed_addon.legs": "Lábak száma = %s",
+  "text.changed_addon.lore.experiment_009": "Egy laboratórium falai között létrehozva, a legtöbb tudós, aki tanulmányozta, soha nem mutatott irgalmat vagy együttérzést. Azok a kevesek, akik mertek szimpatizálni a lénnyel, tragikus véget értek. Miután végül bezárták és egy furcsa, sűrített DNS-gömbbé darabolták, nem némult el. Ehelyett fennmaradt – elméje tele volt nehezteléssel. Most bosszút áll az emberiségen, és minden olyan lényen, amely mer rájuk hasonlítani.",
   "text.changed_addon.miningStrength": "Bányászati erősség: %s",
   "text.changed_addon.swim_speed": "Úszási sebesség = %s",
   "warn.rei.not.supported.move.items.but.right.container": "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál"
