@@ -22,6 +22,7 @@ import static net.foxyas.changedaddon.entity.api.IAlphaAbleEntity.IS_ALPHA;
 
 @Mixin(value = LivingEntity.class)
 public abstract class LivingEntityChangedEntityMixin extends Entity {
+
     protected LivingEntityChangedEntityMixin(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -46,16 +47,17 @@ public abstract class LivingEntityChangedEntityMixin extends Entity {
 //        return original;
 //    }
 
-    @Inject(method = "onSyncedDataUpdated", at = @At("TAIL"), cancellable = false)
+    @Inject(method = "onSyncedDataUpdated", at = @At("TAIL"))
     private void changedEntityOnSyncedDataUpdatedHook(EntityDataAccessor<?> pKey, CallbackInfo ci) {
         LivingEntity self = ChangedAddon$selfMixin();
+        if (!(self instanceof ChangedEntity changedEntity)) return;
+
         if (self.isDeadOrDying()) return;
-        if (self instanceof ChangedEntity changedEntity) {
-            if (pKey == IS_ALPHA || pKey == ALPHA_SCALE) {
-                this.refreshDimensions();
-                IAlphaAbleEntity.applyOrRemoveAlphaModifiers(self, entityData.get(IS_ALPHA), entityData.get(ALPHA_SCALE));
-                IAbstractChangedEntity.forEitherSafe(changedEntity.maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
-            }
+
+        if (pKey == IS_ALPHA || pKey == ALPHA_SCALE) {
+            this.refreshDimensions();
+            IAlphaAbleEntity.applyOrRemoveAlphaModifiers(self, entityData.get(IS_ALPHA), entityData.get(ALPHA_SCALE));
+            IAbstractChangedEntity.forEitherSafe(changedEntity.maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
         }
     }
 
