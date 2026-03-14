@@ -42,7 +42,6 @@ public class PsychicGrab extends SimpleAbility {
     public Vec3 offset = Vec3.ZERO;
     public Vec3 look = Vec3.ZERO;
     public UUID TargetID = UUID.fromString("0-0-0-0-0"); //Fail Safe
-    private AbstractAbilityInstance abilityInstance;
 
     public static boolean isSpectator(Entity entity) {
         return entity instanceof Player player && player.isSpectator();
@@ -54,9 +53,7 @@ public class PsychicGrab extends SimpleAbility {
         if (entity.getEntity() instanceof Player player) {
             look = FoxyasUtils.getRelativePositionEyes(player, offset.scale(0.1));
         }
-        SimpleAbilityInstance simpleAbilityInstance = super.makeInstance(entity);
-        this.abilityInstance = simpleAbilityInstance;
-        return simpleAbilityInstance;
+        return super.makeInstance(entity);
     }
 
     @Nullable
@@ -196,14 +193,23 @@ public class PsychicGrab extends SimpleAbility {
     @Override
     public void tick(IAbstractChangedEntity entity) {
         super.tick(entity);
+        SimpleAbilityInstance thisAbilityInstance = entity.getAbilityInstance(this);
+        if (thisAbilityInstance == null) {
+            return;
+        }
+
+        if (entity.getLevel().isClientSide()) {
+            return;
+        }
         /*if (entity.getEntity() instanceof Player player) {
-            this.controller = abilityInstance.getController();
+            this.controller = thisAbilityInstance.getController();
             player.displayClientMessage(Component.literal("Hold Ticks:" + controller.getHoldTicks()), true);
         }*/ // it works
+
         Entity target = getTarget(entity.getLevel(), TargetID);
         if (target != null) {
             if (entity.getEntity().isShiftKeyDown()) {
-                if (entity.getAbilityInstance(this) != null && entity.getAbilityInstance(this).getController().getHoldTicks() <= 3) {
+                if (thisAbilityInstance.getController().getHoldTicks() <= 3) {
                     Entity lookingAt = PlayerUtil.getEntityLookingAt(entity.getEntity(), 6, PlayerUtil.BLOCK_COLLISION);
                     if (lookingAt != null && lookingAt != getTargetByID(entity.getLevel(), TargetID)) {
                         TargetID = lookingAt.getUUID();
@@ -212,10 +218,13 @@ public class PsychicGrab extends SimpleAbility {
                 }
             }
             look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
-            Vec3 scale = (look.subtract(target.position())).scale(0.1);
-            if (target instanceof AbstractArrow projectile) {
+            Vec3 scale = (look.subtract(target.position())).scale(0.25);
+            if (target instanceof AbstractArrow projectile && projectile instanceof AbstractArrowAccessor accessor && accessor.inGround()) {
                 projectile.move(MoverType.PLAYER, scale);
             } else {
+                if (target.position().distanceTo(look) <= 0.05) {
+                    target.setDeltaMovement(Vec3.ZERO);
+                }
                 target.setDeltaMovement(scale);
             }
             target.hurtMarked = true;
@@ -225,6 +234,9 @@ public class PsychicGrab extends SimpleAbility {
                         serverPlayer.getDeltaMovement())
                 );
             }
+        } else {
+            thisAbilityInstance.getController().deactivateAbility();
+            thisAbilityInstance.getController().forceCooldown(this.getCoolDown(entity));
         }
     }
 

@@ -36,6 +36,22 @@ public class ProcessTransfurMixin {
         }
     }
 
+    @Inject(method = "onAbsorbEntity", at = @At("HEAD"), cancellable = true)
+    private static void onAbsorbEntityHook(IAbstractChangedEntity source, CallbackInfo ci) {
+        ProgressTransfurEvents.onEntityAbsorbOther event = new ProgressTransfurEvents.onEntityAbsorbOther(source);
+        if (ChangedAddonMod.postEvent(event)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "onReplicateEntity", at = @At("HEAD"), cancellable = true)
+    private static void onReplicateEntityHook(IAbstractChangedEntity source, CallbackInfo ci) {
+        ProgressTransfurEvents.onEntityReplicateOther event = new ProgressTransfurEvents.onEntityReplicateOther(source);
+        if (ChangedAddonMod.postEvent(event)) {
+            ci.cancel();
+        }
+    }
+
     @Inject(method = "onNewlyTransfurred", at = @At("HEAD"), cancellable = true)
     private static void onNewlyTransfuredHook(IAbstractChangedEntity entity, CallbackInfo ci) {
         ProgressTransfurEvents.NewlyTransfurred event = new ProgressTransfurEvents.NewlyTransfurred(entity);

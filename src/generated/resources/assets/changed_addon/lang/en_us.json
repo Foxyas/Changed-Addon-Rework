@@ -655,6 +655,8 @@
   "painting.changed_addon.luminarctic_leopard_male_mad_selfie.title": "Selfie Male Luminarctic Leopard Mad",
   "painting.changed_addon.luminarctic_leopard_male_selfie.author": "@Smoopa",
   "painting.changed_addon.luminarctic_leopard_male_selfie.title": "Selfie Male Luminarctic Leopard",
+  "stat.changed_addon.entity_assimilated": "Entities assimilated while transfured",
+  "stat.changed_addon.entity_transfured": "Entities transfured while transfured",
   "stat.changed_addon.pats_given": "Pats given",
   "stat.changed_addon.pats_received": "Pats received",
   "subtitles.changed_addon.armor_equip": "Armor Equip",

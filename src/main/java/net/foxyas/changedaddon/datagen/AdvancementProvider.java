@@ -62,9 +62,13 @@ public class AdvancementProvider extends net.minecraft.data.advancements.Advance
     public static final AdvancementWriter advancementWrite = new AdvancementWriter();
 
     protected final PackOutput output;
+    protected final ExistingFileHelper fileHelperIn;
+    protected final CompletableFuture<HolderLookup.Provider> lookup;
 
     public AdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup, ExistingFileHelper fileHelperIn) {
         super(output, lookup, List.of(AdvancementProvider::generate));
+        this.lookup = lookup;
+        this.fileHelperIn = fileHelperIn;
         this.output = output;
     }
 

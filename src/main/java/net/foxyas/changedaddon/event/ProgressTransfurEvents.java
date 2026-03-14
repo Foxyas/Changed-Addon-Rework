@@ -198,4 +198,38 @@ public class ProgressTransfurEvents {
             return ogVariant;
         }
     }
+
+    public static class onEntityAbsorbOther extends Event {
+        private final IAbstractChangedEntity source;
+
+        public onEntityAbsorbOther(IAbstractChangedEntity source) {
+            this.source = source;
+        }
+
+        public IAbstractChangedEntity getSource() {
+            return source;
+        }
+
+        @Override
+        public boolean isCancelable() {
+            return true;
+        }
+    }
+
+    public static class onEntityReplicateOther extends Event {
+        private final IAbstractChangedEntity source;
+
+        public onEntityReplicateOther(IAbstractChangedEntity source) {
+            this.source = source;
+        }
+
+        public IAbstractChangedEntity getSource() {
+            return source;
+        }
+
+        @Override
+        public boolean isCancelable() {
+            return true;
+        }
+    }
 }
