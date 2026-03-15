@@ -27,6 +27,7 @@ import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
@@ -718,6 +719,9 @@ public class ChangedAddonTransfurVariants {
         return new ArrayList<>(humanForms.stream().map(Supplier::get).toList());
     }
 
+    // WHY THE F### isn't this working before?. IS A STATIC FINAL JAVA!.. IS SUPPOSED TO LOAD IN THE START-UP AHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+    // I HAD TO F###ING ADD THE ANNOTATION FOR IT TO WORK!!!!!
+    @Mod.EventBusSubscriber
     public static class Gendered {
         public static final GenderedPair<PuroKindMaleEntity, PuroKindFemaleEntity> PURO_KIND = registerPair(PURO_KIND_MALE, PURO_KIND_FEMALE);
         public static final GenderedPair<SnowLeopardMaleOrganicEntity, SnowLeopardFemaleOrganicEntity> ORGANIC_SNOW_LEOPARD = registerPair(ORGANIC_SNOW_LEOPARD_MALE, ORGANIC_SNOW_LEOPARD_FEMALE);
