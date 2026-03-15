@@ -701,7 +701,9 @@ public class HULanguageProvider extends LanguageProvider {
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
+        addStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED, "Entitások beolvaszva miközben transzfurált állapotban van");
+        addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURED, "Entitások transzfurálva miközben transzfurált állapotban van");
 
-        add("warn.rei.not.supported.move.items.but.right.container","Az elemek áthelyezése nem támogatott ennél a munkaállomásnál");
+        add("warn.rei.not.supported.move.items.but.right.container", "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál");
     }
 }
