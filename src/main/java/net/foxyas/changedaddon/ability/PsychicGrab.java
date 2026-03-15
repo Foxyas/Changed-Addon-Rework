@@ -241,6 +241,21 @@ public class PsychicGrab extends SimpleAbility {
     }
 
     @Override
+    public void stopUsing(IAbstractChangedEntity entity) {
+        super.stopUsing(entity);
+        SimpleAbilityInstance thisAbilityInstance = entity.getAbilityInstance(this);
+        if (thisAbilityInstance == null) {
+            return;
+        }
+
+        Entity target = getTarget(entity.getLevel(), TargetID);
+
+        if (target != null) {
+            target.resetFallDistance();
+        }
+    }
+
+    @Override
     public void saveData(CompoundTag tag, IAbstractChangedEntity entity) {
         ListTag offsetList = new ListTag();
         offsetList.add(DoubleTag.valueOf(offset.x()));
