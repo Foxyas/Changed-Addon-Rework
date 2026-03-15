@@ -48,6 +48,7 @@ public class DashAttack extends Goal {
     @Override
     public boolean canUse() {
         this.target = dasher.getTarget();
+        if (target == null || target.isRemoved() && target.isDeadOrDying()) return false;
         if (target instanceof Player player && (player.isCreative() || player.isSpectator())) return false;
         return target != null && target.isAlive() && target.distanceTo(dasher) >= 3.5f;
     }
@@ -104,6 +105,7 @@ public class DashAttack extends Goal {
         // Preparando o dash
         if (tickCount < PREPARE_TIME) {
             dasher.getNavigation().stop();
+            if (target.isRemoved() && target.isDeadOrDying()) return;
             dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
             dasher.level().playSound(null, dasher, SoundEvents.BEACON_AMBIENT, SoundSource.HOSTILE, 2, (float) tickCount / PREPARE_TIME);

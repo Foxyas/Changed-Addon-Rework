@@ -68,6 +68,22 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         this.entityData.define(getPhase2DataAccessor(), false);
     }
 
+    @Override
+    public void setYRot(float pYRot) {
+        if (!Float.isFinite(pYRot)) {
+            return;
+        }
+        super.setYRot(pYRot);
+    }
+
+    @Override
+    public void setXRot(float pXRot) {
+        if (!Float.isFinite(pXRot)) {
+            return;
+        }
+        super.setXRot(pXRot);
+    }
+
     protected EntityDataAccessor<Boolean> getPhase2DataAccessor() {
         return PHASE2;
     }
@@ -266,17 +282,31 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("Phase2")) {
-            setPhase2(tag.getBoolean("Phase2"));
-        }
+        if (tag.contains("isPhase2")) setPhase2(tag.getBoolean("isPhase2"));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Phase2", isPhase2());
+        tag.putBoolean("isPhase2", isPhase2());
     }
 
+    @Override
+    public void readPlayerVariantData(CompoundTag tag) {
+        super.readPlayerVariantData(tag);
+        if (tag.contains("isPhase2")) setPhase2(tag.getBoolean("isPhase2"));
+    }
+
+    @Override
+    public CompoundTag savePlayerVariantData() {
+        CompoundTag tag = super.savePlayerVariantData();
+        tag.putBoolean("isPhase2", isPhase2());
+        return tag;
+    }
+
+    public boolean shouldShowGlow() {
+        return isPhase2();
+    }
 
     @Override
     public void baseTick() {

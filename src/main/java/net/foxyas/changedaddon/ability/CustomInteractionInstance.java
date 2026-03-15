@@ -3,6 +3,8 @@ package net.foxyas.changedaddon.ability;
 import net.foxyas.changedaddon.entity.advanced.AvaliEntity;
 import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.advanced.LuminaraFlowerBeastEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
+import net.foxyas.changedaddon.entity.bosses.Experiment10Entity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.entity.simple.LatexKaylaSharkEntity;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -67,7 +69,15 @@ public class CustomInteractionInstance extends AbstractAbilityInstance {
         } else if (entity.getChangedEntity() instanceof LatexKaylaSharkEntity latexKaylaSharkEntity) {
             boolean value = !latexKaylaSharkEntity.getGlowingState();
             latexKaylaSharkEntity.setGlowingState(value);
-            entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.latex_kayla_shark.action", value), true);
+            entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.glow_layer.action", value), true);
+        } else if (entity.getChangedEntity() instanceof Experiment009Entity experiment009) {
+            boolean value = !experiment009.isPhase2();
+            experiment009.setPhase2(value);
+            entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.glow_layer.action", value), true);
+        } else if (entity.getChangedEntity() instanceof Experiment10Entity experiment10) {
+            boolean value = !experiment10.isPhase2();
+            experiment10.setPhase2(value);
+            entity.displayClientMessage(Component.translatable("ability.changed_addon.custom_interaction.have_interaction.glow_layer.action", value), true);
         }
     }
 

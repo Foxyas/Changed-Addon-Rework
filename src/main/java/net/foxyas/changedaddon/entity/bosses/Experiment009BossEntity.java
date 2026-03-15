@@ -8,7 +8,6 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.customHandle.Exp9AttacksHandle;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
@@ -262,7 +261,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 32,
                 8f,
                 10));
-        this.goalSelector.addGoal(10, new Exp9AttacksHandle.ThunderStorm(this, UniformInt.of(60, 100)));
+        this.goalSelector.addGoal(10, new ThunderStorm(this, UniformInt.of(60, 100)));
 
         //New AI
         this.goalSelector.addGoal(5, new ThunderStrikeGoal(
@@ -473,7 +472,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     private void teleportToNearLivingEntity() {
         List<LivingEntity> entitiesOfClass = this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(64f), (target) -> !target.is(this) && this.canAttack(target)).stream().sorted((Comparator.comparing((target) -> target.distanceTo(this)))).toList();
         if (!entitiesOfClass.isEmpty()) {
-            Exp9AttacksHandle.TeleportAttack.Teleport(this, this.getTarget() == null
+            teleport(this.getTarget() == null
                     ? entitiesOfClass.get(0)
                     : this.getTarget());
         }
@@ -489,6 +488,16 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 }
             }
         }
+    }
+
+    public void teleport(LivingEntity target) {
+        if (target == null || this.level().isClientSide) {
+            return;
+        }
+        Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
+        this.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+        this.getLookControl().setLookAt(target, 180, 180);
+        target.hurt(this.getThunderDmg(), 2);
     }
 
     @Override
@@ -619,8 +628,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("Phase3"))
-            setPhase3(tag.getBoolean("Phase3"));
+        if (tag.contains("isPhase3"))
+            setPhase3(tag.getBoolean("isPhase3"));
         if (tag.contains("Bleeding"))
             shouldBleed = tag.getBoolean("Bleeding");
         if (tag.contains("casting"))
@@ -630,9 +639,31 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Phase3", isPhase3());
+        tag.putBoolean("isPhase3", isPhase3());
         tag.putBoolean("Bleeding", shouldBleed);
         tag.putBoolean("casting", this.isCastingAttack());
+    }
+
+    @Override
+    public CompoundTag savePlayerVariantData() {
+        CompoundTag tag = super.savePlayerVariantData();
+        tag.putBoolean("isPhase2", isPhase2());
+        tag.putBoolean("isPhase3", isPhase3());
+        return tag;
+    }
+
+    @Override
+    public void readPlayerVariantData(CompoundTag tag) {
+        super.readPlayerVariantData(tag);
+        if (tag.contains("isPhase2"))
+            setPhase2(tag.getBoolean("isPhase2"));
+        if (tag.contains("isPhase3"))
+            setPhase3(tag.getBoolean("isPhase3"));
+    }
+
+    @Override
+    public boolean shouldShowGlow() {
+        return isPhase2() || isPhase3();
     }
 
     public boolean isBleeding() {
@@ -940,6 +971,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         if (totalSlots == 0) return 0;
         return metalScore / totalSlots;
+    }
+
+    public static boolean shouldAlwaysDamageEntity(LivingEntity target) {
+        return !(target instanceof Player player);
     }
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)

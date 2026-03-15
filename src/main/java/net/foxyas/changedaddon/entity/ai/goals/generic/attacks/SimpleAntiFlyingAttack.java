@@ -133,7 +133,7 @@ public class SimpleAntiFlyingAttack extends Goal {
             }
         } else {
             attacker.getNavigation().stop();
-            attacker.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            attacker.getLookControl().setLookAt(target, 180f, 180f);
             if (attacker.level() instanceof ServerLevel serverLevel) {
                 BlockState ground = attacker.getFeetBlockState();
                 BlockParticleOption dust = new BlockParticleOption(ParticleTypes.BLOCK, ground);

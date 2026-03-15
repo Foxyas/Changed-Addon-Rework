@@ -15,6 +15,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
@@ -154,8 +155,9 @@ public class ThunderDiveGoal extends Goal {
         ticks++;
 
         LivingEntity t = mob.getTarget();
+        LookControl lookControl = mob.getLookControl();
         if (t != null) {
-            mob.getLookControl().setLookAt(t, 90f, 90f);
+            lookControl.setLookAt(t, 90f, 90f);
             mob.setYBodyRot(mob.yHeadRot);
         }
 
@@ -189,13 +191,13 @@ public class ThunderDiveGoal extends Goal {
                 if (t != null) {
                     mob.setDeltaMovement(lateral.x, -Math.abs(diveSpeedY), lateral.z);
                     Vec3 position = mob.position().add(lateral.x, -Math.abs(diveSpeedY), lateral.z);
-                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 90f, 90f);
+                    lookControl.setLookAt(position.x, position.y, position.z, 90f, 90f);
                     affectNearbyEntities(lateral);
                 } else {
                     // sem alvo, só cai
                     mob.setDeltaMovement(0, -Math.abs(diveSpeedY), 0);
                     Vec3 position = mob.position().add(0, -Math.abs(diveSpeedY), 0);
-                    mob.getLookControl().setLookAt(position.x, position.y, position.z, 90f, 90f);
+                    lookControl.setLookAt(position.x, position.y, position.z, 90f, 90f);
                     affectNearbyEntities(new Vec3(0, -Math.abs(diveSpeedY), 0));
                 }
 

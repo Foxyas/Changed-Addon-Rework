@@ -110,7 +110,8 @@ public class ThunderStrikeGoal extends Goal {
         if (target == null) return;
 
         // olha para o alvo
-        pathfinderMob.getLookControl().setLookAt(target, 90f, 90f);
+        if (target.isRemoved() && target.isDeadOrDying()) return;
+        pathfinderMob.getLookControl().setLookAt(target, 180f, 180f);
         pathfinderMob.getNavigation().stop();
         if (tickCounter >= 60) {
             pathfinderMob.setDeltaMovement(Vec3.ZERO);
@@ -121,7 +122,7 @@ public class ThunderStrikeGoal extends Goal {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
         if (lightning == null) return;
 
-        lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f);
+        lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f || Experiment009BossEntity.shouldAlwaysDamageEntity(target));
 
         lightning.moveTo(target.position());
         if (pathfinderMob instanceof ChangedEntity changedEntity) {

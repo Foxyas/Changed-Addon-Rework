@@ -7,7 +7,7 @@
   "ability.changed_addon.custom_interaction.have_interaction": "Этот вариант §aимеет§r особые взаимодействия",
   "ability.changed_addon.custom_interaction.have_interaction.avali": "Этот вариант включает взаимодействие с изменением размера.",
   "ability.changed_addon.custom_interaction.have_interaction.avali.extra": "Масштаб выбранного: %s",
-  "ability.changed_addon.custom_interaction.have_interaction.latex_kayla_shark.action": "Состояние свечения установлено на %s",
+  "ability.changed_addon.custom_interaction.have_interaction.glow_layer.action": "Состояние свечения установлено на %s",
   "ability.changed_addon.custom_interaction.have_interaction.latex_snep": "Позволяет игроку принимать позу LOAF при приседании",
   "ability.changed_addon.custom_interaction.have_interaction.luminara_beast": "Этот вариант позволяет включать или выключать свечение частиц.",
   "ability.changed_addon.custom_interaction.have_interaction.luminara_beast.action": "Излучение частиц изменено на %s",

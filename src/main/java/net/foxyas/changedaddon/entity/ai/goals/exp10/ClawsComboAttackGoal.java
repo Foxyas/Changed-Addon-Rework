@@ -86,6 +86,7 @@ public class ClawsComboAttackGoal extends Goal {
         pickAttackPos();
 
         holder.getNavigation().stop();
+        if (target.isRemoved() && target.isDeadOrDying()) return;
         holder.getLookControl().setLookAt(target);
     }
 
@@ -98,7 +99,8 @@ public class ClawsComboAttackGoal extends Goal {
         if (attacks <= 0) return;
 
         if (target != null) {
-            holder.getLookControl().setLookAt(target, 30, 30);
+            if (target.isRemoved() && target.isDeadOrDying()) return;
+            holder.getLookControl().setLookAt(target, 180f, 180f);
         }
 
         if (wasBlocked > 0) {

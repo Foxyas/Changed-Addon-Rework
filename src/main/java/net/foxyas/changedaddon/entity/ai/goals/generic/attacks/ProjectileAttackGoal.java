@@ -56,6 +56,7 @@ public class ProjectileAttackGoal extends Goal {
         LivingEntity target = mob.getTarget();
         if (target == null) return;
 
+        if (target.isRemoved() && target.isDeadOrDying()) return;
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
 
         if (attackCooldown > 0) {

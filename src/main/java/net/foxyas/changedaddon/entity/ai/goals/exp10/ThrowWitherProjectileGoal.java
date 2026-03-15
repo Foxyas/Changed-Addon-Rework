@@ -85,7 +85,10 @@ public class ThrowWitherProjectileGoal extends Goal {
     }
 
     private @NotNull WitherParticleProjectile getWitherParticleProjectile(ServerLevel level, LivingEntity target) {
-        holder.getLookControl().setLookAt(target, 180f, 180f);
+        if (!target.isRemoved() && !target.isDeadOrDying()) {
+            holder.getLookControl().setLookAt(target, 180f, 180f);
+        }
+
         Vec3 motion = holder.getViewVector(1);
         WitherParticleProjectile witherParticleProjectile = new WitherParticleProjectile(ChangedAddonEntities.WITHER_PARTICLE_PROJECTILE.get(), level);
         witherParticleProjectile.setPos(holder.getEyePosition().add(motion));

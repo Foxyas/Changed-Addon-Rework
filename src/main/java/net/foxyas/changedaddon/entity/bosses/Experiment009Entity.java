@@ -34,6 +34,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -68,6 +69,29 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         setNoAi(false);
         setPersistenceRequired();
         applyDefaultBasicPlayerInfo();
+    }
+
+    @Override
+    public void setYRot(float pYRot) {
+        if (!Float.isFinite(pYRot)) {
+            super.setYRot(0);
+            return;
+        }
+        super.setYRot(pYRot);
+    }
+
+    @Override
+    public void setXRot(float pXRot) {
+        if (!Float.isFinite(pXRot)) {
+            super.setXRot(0);
+            return;
+        }
+        super.setXRot(pXRot);
+    }
+
+    @Override
+    public void setYBodyRot(float pOffset) {
+        super.setYBodyRot(pOffset);
     }
 
     @Override
@@ -376,14 +400,32 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.contains("Phase2"))
-            setPhase2(tag.getBoolean("Phase2"));
+        if (tag.contains("isPhase2"))
+            setPhase2(tag.getBoolean("isPhase2"));
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("Phase2", isPhase2());
+        tag.putBoolean("isPhase2", isPhase2());
+    }
+
+    @Override
+    public CompoundTag savePlayerVariantData() {
+        CompoundTag tag = super.savePlayerVariantData();
+        tag.putBoolean("isPhase2", isPhase2());
+        return tag;
+    }
+
+    @Override
+    public void readPlayerVariantData(CompoundTag tag) {
+        super.readPlayerVariantData(tag);
+        if (tag.contains("isPhase2"))
+            setPhase2(tag.getBoolean("isPhase2"));
+    }
+
+    public boolean shouldShowGlow() {
+        return isPhase2();
     }
 
     @Override

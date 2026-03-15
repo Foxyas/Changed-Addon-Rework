@@ -35,6 +35,7 @@ public class DashPunchGoal extends Goal {
         }
 
         target = mob.getTarget();
+        if (target == null || target.isRemoved() && target.isDeadOrDying()) return false;
         return target != null && target.isAlive() && mob.distanceTo(target) < 16 && mob.onGround();
     }
 
@@ -45,6 +46,7 @@ public class DashPunchGoal extends Goal {
         dashTicks = 0;
 
         mob.getNavigation().stop();
+        if (target.isRemoved() && target.isDeadOrDying()) return;
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
         if (mob.level instanceof ServerLevel server) {
