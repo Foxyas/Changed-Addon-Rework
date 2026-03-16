@@ -33,12 +33,12 @@ public class Exp10EmissiveBodyLayer<M extends AdvancedHumanoidModel<T>, T extend
     public void render(@NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         if (entity.shouldShowGlow()) {
 
-            ModList modList = ModList.get();
-            if (modList.isLoaded("oculus") || modList.isLoaded("embeddium")) {
-                VertexConsumer vertexconsumer = bufferSource.getBuffer(this.renderType2());
-                M parentModel = this.getParentModel();
-                parentModel.renderToBuffer(poseStack, vertexconsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-            }
+//            ModList modList = ModList.get();
+//            if (modList.isLoaded("oculus") || modList.isLoaded("embeddium")) {
+//                VertexConsumer vertexconsumer = bufferSource.getBuffer(this.renderType2());
+//                M parentModel = this.getParentModel();
+//                parentModel.renderToBuffer(poseStack, vertexconsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+//            } check FormRenderHandleMixin.java
 
             super.render(poseStack, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
         }
