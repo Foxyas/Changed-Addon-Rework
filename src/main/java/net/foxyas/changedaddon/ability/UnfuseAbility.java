@@ -116,6 +116,9 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
             if (transfurVariantInstance == null) {
                 return;
             }
+            if (!(entity.getLevel() instanceof ServerLevel serverLevel)) {
+                return;
+            }
 
 
             ChangedEntity changedEntity = transfurVariantInstance.getChangedEntity();
@@ -154,15 +157,13 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
                 changedEntityUnfused.setYBodyRot(host.yBodyRotO);
                 changedEntityUnfused.setYHeadRot(host.getYHeadRot());
 
-                if (host.level() instanceof ServerLevel serverLevel) {
-                    ForgeEventFactory.onFinalizeSpawn(changedEntityUnfused, serverLevel, serverLevel.getCurrentDifficultyAt(changedEntityUnfused.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
+                ForgeEventFactory.onFinalizeSpawn(changedEntityUnfused, serverLevel, serverLevel.getCurrentDifficultyAt(changedEntityUnfused.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
 
-                    if (changedEntity instanceof IAlphaAbleEntity original && entityUnfused instanceof IAlphaAbleEntity alphaAble) {
-                        alphaAble.setAlpha(original.isAlpha());
-                    }
-
-                    entitySpawned = serverLevel.addFreshEntity(changedEntityUnfused);
+                if (changedEntity instanceof IAlphaAbleEntity original && entityUnfused instanceof IAlphaAbleEntity alphaAble) {
+                    alphaAble.setAlpha(original.isAlpha());
                 }
+
+                entitySpawned = serverLevel.addFreshEntity(changedEntityUnfused);
             }
         }
 
