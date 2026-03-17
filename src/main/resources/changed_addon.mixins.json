@@ -64,6 +64,8 @@
     "mods.changed.ProcessTransfurMixin",
     "mods.changed.TransfurVariantMixin",
     "mods.changed.WhiteLatexTransportInterfaceMixin",
+    "mods.mekanism.LuminarCrystalLargeMixin",
+    "mods.mekanism.LuminarCrystalSmallMixin",
     "world.ConsumeItemTrigger",
     "world.DataFixTypesMixin",
     "world.LevelStorageAccessMixin",
