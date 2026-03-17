@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
 import net.foxyas.changedaddon.util.FoxyasUtils;
@@ -9,7 +10,6 @@ import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.client.AbilityColor;
 import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -133,9 +133,12 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
                 } else if (changedEntityUnfused instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
                     abstractExp2SnepChangedEntity.tame(host);
                     abstractExp2SnepChangedEntity.setIsUnfusedFromHost(true);
+                } else if (changedEntityUnfused instanceof TamableLatexEntityWithTameFunction tamableLatexEntityWithTameFunction) {
+                    tamableLatexEntityWithTameFunction.tameEntityForPlayer(host);
+                    iCoatLikeEntity.setIsUnfusedFromHost(true);
+                } else {
+                    iCoatLikeEntity.setIsUnfusedFromHost(true);
                 }
-
-                iCoatLikeEntity.setIsUnfusedFromHost(true);
 
                 changedEntityUnfused.setPos(host.position());
                 LivingEntity target = host.getLastHurtByMob();
