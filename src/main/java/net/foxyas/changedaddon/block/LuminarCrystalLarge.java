@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.block.NonLatexCoverableBlock;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -48,7 +49,7 @@ import java.util.Random;
 import static net.foxyas.changedaddon.block.LuminarCrystalBlock.moveOrTarget;
 import static net.foxyas.changedaddon.block.LuminarCrystalBlock.spawnParticleOnFace;
 
-public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedBlock, RenderLayerProvider {
+public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedBlock, RenderLayerProvider, NonLatexCoverableBlock {
 
     public static final VoxelShape SHAPE_UP = Block.box(1.0F, 0.0F, 1.0F, 15.0F, 16.0F, 15.0F);
     public static final VoxelShape SHAPE_DOWN = SHAPE_UP;

@@ -62,6 +62,8 @@
     "mods.changed.TransfurVariantMixin",
     "mods.changed.WhiteLatexTransportInterfaceMixin",
     "mods.firstPerson.LogicHandleMixin",
+    "mods.mekanism.LuminarCrystalLargeMixin",
+    "mods.mekanism.LuminarCrystalSmallMixin",
     "mods.nean.AvaliElytraAnimationMixin",
     "world.LevelStorageAccessMixin",
     "world.LevelStorageSourceMixin",

@@ -24,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.Random;
 
-
 public class LatexCoverBlock extends MultifaceBlock implements NonLatexCoverableBlock, RenderLayerProvider {
 
     private final LatexType latexType;
