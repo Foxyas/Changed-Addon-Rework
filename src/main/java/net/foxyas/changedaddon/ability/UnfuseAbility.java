@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractUnfuseableChangedEntity;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -126,21 +127,24 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
                 Player host = transfurVariantInstance.getHost();
                 entityUnfused = changedEntity.getType().create(host.level());
 
-                if (!(entityUnfused instanceof ChangedEntity changedEntityUnfused)) {
+                if (!(entityUnfused instanceof ChangedEntity changedEntityUnfused) || !(changedEntityUnfused instanceof ICoatLikeEntity coatLikeEntity)) {
                     return;
                 }
 
                 if (changedEntityUnfused instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
                     abstractTamableLatexEntity.tame(host);
-                    iCoatLikeEntity.setIsUnfusedFromHost(true);
+                    coatLikeEntity.setIsUnfusedFromHost(true);
                 } else if (changedEntityUnfused instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
                     abstractExp2SnepChangedEntity.tame(host);
                     abstractExp2SnepChangedEntity.setIsUnfusedFromHost(true);
+                } else if (changedEntityUnfused instanceof AbstractUnfuseableChangedEntity unfuseableChangedEntity) {
+                    unfuseableChangedEntity.tame(host);
+                    unfuseableChangedEntity.setIsUnfusedFromHost(true);
                 } else if (changedEntityUnfused instanceof TamableLatexEntityWithTameFunction tamableLatexEntityWithTameFunction) {
                     tamableLatexEntityWithTameFunction.tameEntityForPlayer(host);
-                    iCoatLikeEntity.setIsUnfusedFromHost(true);
+                    coatLikeEntity.setIsUnfusedFromHost(true);
                 } else {
-                    iCoatLikeEntity.setIsUnfusedFromHost(true);
+                    coatLikeEntity.setIsUnfusedFromHost(true);
                 }
 
                 changedEntityUnfused.setPos(host.position());
