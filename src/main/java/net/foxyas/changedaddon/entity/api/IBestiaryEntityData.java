@@ -5,8 +5,12 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
+import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -85,11 +89,20 @@ public interface IBestiaryEntityData {
     }
 
     default boolean isUnlocked(Player player) {
-        /*if (player instanceof ServerPlayer serverPlayer) {
-            return serverPlayer.getStats().getValue(Stats.ENTITY_KILLED.get(getReferencedEntityType())) >= 0;
-        }*/
+        StatsCounter stats = null;
+        if (player.level.isClientSide()) {
+            if (player instanceof LocalPlayer localPlayer) {
+                stats = localPlayer.getStats();
+            }
+        } else if (player instanceof ServerPlayer serverPlayer) {
+            stats = serverPlayer.getStats();
+        }
+
         //TODO MAYBE Make the player need to kill the entity to it to show in the bestiary?
         // this will make the player also have the option to see the boss entities info before fighting them by just putting they "spawn egg" into the block slot
+        if (stats != null) {
+            return stats.getValue(Stats.ENTITY_KILLED.get(getReferencedEntityType())) >= 5;
+        }
 
         return true;
     }

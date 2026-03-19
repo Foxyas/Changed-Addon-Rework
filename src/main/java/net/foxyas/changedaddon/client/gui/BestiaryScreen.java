@@ -72,7 +72,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             return false;
         });
 
-        loreScroll.setOrigin(window.getWidth() *  (0.315f + DEBUG.HeadPosY), 0, 90);
+        loreScroll.setOrigin(window.getWidth() * (0.315f + DEBUG.HeadPosY), 0, 90);
 
         /* TF LIST */
         List<TFEntryWidget> entries = getTfEntryWidgets(TransfurVariant.getPublicTransfurVariants().sorted(Comparator.comparing(var -> var.getFormId().getPath())).toList());
@@ -112,6 +112,13 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         List<TFEntryWidget> entries = new ArrayList<>();
 
         for (TransfurVariant<?> tf : variants) {
+            if (minecraft != null && minecraft.level != null && minecraft.player != null) {
+                ChangedEntity entity = ChangedEntities.getCachedEntity(minecraft.level, tf.getEntityType());
+                if (entity instanceof IBestiaryEntityData bestiaryEntityData && !bestiaryEntityData.isUnlocked(minecraft.player)) {
+                    continue;
+                }
+            }
+
             entries.add(new TFEntryWidget(tf));
         }
 

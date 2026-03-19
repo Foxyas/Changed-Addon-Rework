@@ -1,26 +1,11 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.mixins.entity.projectiles.AbstractArrowAccessor;
-import net.foxyas.changedaddon.util.FoxyasUtils;
-import net.foxyas.changedaddon.util.PlayerUtil;
-import net.ltxprogrammer.changed.ability.*;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.DoubleTag;
-import net.minecraft.nbt.ListTag;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
@@ -28,9 +13,8 @@ import org.lwjgl.glfw.GLFW;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
-import java.util.UUID;
 
-public class PsychicGrab extends SimpleAbility {
+public class PsychicGrab extends AbstractAbility<PsychicGrabInstance> {
 
     public static final Set<Integer> Keys = Set.of(
             GLFW.GLFW_KEY_UP,
@@ -39,21 +23,8 @@ public class PsychicGrab extends SimpleAbility {
             GLFW.GLFW_KEY_RIGHT
     );
 
-    public Vec3 offset = Vec3.ZERO;
-    public Vec3 look = Vec3.ZERO;
-    public UUID TargetID = UUID.fromString("0-0-0-0-0"); //Fail Safe
-
-    public static boolean isSpectator(Entity entity) {
-        return entity instanceof Player player && player.isSpectator();
-    }
-
-    @Override
-    public SimpleAbilityInstance makeInstance(IAbstractChangedEntity entity) {
-        offset = new Vec3(0, 0, 3);
-        if (entity.getEntity() instanceof Player player) {
-            look = FoxyasUtils.getRelativePositionEyes(player, offset.scale(0.1));
-        }
-        return super.makeInstance(entity);
+    public PsychicGrab() {
+        super(PsychicGrabInstance::new);
     }
 
     @Nullable
@@ -78,214 +49,27 @@ public class PsychicGrab extends SimpleAbility {
         return descriptions;
     }
 
-    public @Nullable Entity getTargetByID(Level level, UUID uuid) {
-        if (level instanceof ServerLevel serverLevel) {
-            return PlayerUtil.GlobalEntityUtil.getEntityByUUID(serverLevel, uuid.toString());
-        }
-        return null;
-    }
-
-    public @Nullable Entity getTargetByIDInClientSide(Level level, UUID uuid) {
-        if (level instanceof ClientLevel clientLevel) {
-            return PlayerUtil.GlobalEntityUtil.getEntityByUUID(clientLevel, uuid.toString());
-        }
-        return null;
-    }
-
-    public @Nullable Entity getTarget(Level level, UUID uuid) {
-        return PlayerUtil.GlobalEntityUtil.getEntityByUUID(level, uuid.toString());
-    }
-
-    @Override
-    public UseType getUseType(IAbstractChangedEntity entity) {
-        Entity target = getTarget(entity.getEntity().level(), TargetID);
-        return (target != null) ? UseType.HOLD : UseType.INSTANT;
-    }
-
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        Entity target = getTarget(entity.getLevel(), TargetID);
-        return (target == null) ? 15 : 0;
-    }
-
-    @Override
-    public boolean canUse(IAbstractChangedEntity entity) {
-        Entity target = getTarget(entity.getLevel(), TargetID);
-        LivingEntity self = entity.getEntity();
-
-        if (target != null) {
-            if (target instanceof LivingEntity livingTarget) {
-                IAbstractChangedEntity grabberOfTarget = GrabEntityAbility.getGrabber(livingTarget);
-                if (grabberOfTarget != null) {
-                    if (grabberOfTarget.getEntity().is(self)) {
-                        return false;
-                    }
-                    return false;
-                }
-            }
-            if (entity.getEntity().distanceTo(target) > 10) {
-                return self.isShiftKeyDown();
-            } else if (target instanceof Player player && isSpectator(player)) {
-                return false;
-            }
-            if (self.hurtTime > 0 && self.getLastHurtByMob() == target) {
-                return false;
-            }
-        }
-
-        return !isSpectator(entity.getEntity());
-    }
-
-    @Override
-    public boolean canKeepUsing(IAbstractChangedEntity entity) {
-        Entity target = getTarget(entity.getLevel(), TargetID);
-        LivingEntity self = entity.getEntity();
-        if (target != null) {
-            if (entity.getEntity().distanceTo(target) > 10) {
-                return false;
-            } else if (target instanceof Player player && isSpectator(player)) {
-                return false;
-            }
-            if (self.hurtTime > 0 && self.getLastHurtByMob() == target) {
-                return false;
-            }
-        }
-
-        return !isSpectator(entity.getEntity());
+        PsychicGrabInstance abilityInstance = entity.getAbilityInstance(this);
+        if (abilityInstance == null) return 0;
+        UseType useType = abilityInstance.getUseType();
+        return useType == UseType.INSTANT ? 15 : 0;
     }
 
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
-        if (entity.getLevel().isClientSide()) {
-            return;
-        }
-        Entity target = getTarget(entity.getLevel(), TargetID);
-        Entity lookingAt = PlayerUtil.getEntityLookingAt(entity.getEntity(), 6, PlayerUtil.BLOCK_COLLISION);
-        if (entity.getEntity().isShiftKeyDown() || getTargetByID(entity.getLevel(), TargetID) == null) {
-            if (lookingAt == null) {
-                return;
-            }
-            TargetID = lookingAt.getUUID();
-            super.startUsing(entity);
-            return;
-        }
-
-        if (!target.isAlive()) {
-            if (lookingAt == null) {
-                return;
-            }
-            TargetID = lookingAt.getUUID();
-        }
-
-//        if (target instanceof Projectile projectile) {
-//            if (projectile instanceof AbstractArrow arrow) {
-//                if (arrow instanceof AbstractArrowAccessor arrowAccessor) {
-//                    if (arrowAccessor.inGround()) {
-//                        arrowAccessor.setInGround(false);
-//                        arrow.setDeltaMovement((look.subtract(target.position())));
-//                    }
-//                }
-//            }
-//        }
         super.startUsing(entity);
     }
 
     @Override
     public void tick(IAbstractChangedEntity entity) {
         super.tick(entity);
-        SimpleAbilityInstance thisAbilityInstance = entity.getAbilityInstance(this);
-        if (thisAbilityInstance == null) {
-            return;
-        }
-
-        if (entity.getLevel().isClientSide()) {
-            return;
-        }
-        /*if (entity.getEntity() instanceof Player player) {
-            this.controller = thisAbilityInstance.getController();
-            player.displayClientMessage(Component.literal("Hold Ticks:" + controller.getHoldTicks()), true);
-        }*/ // it works
-
-        Entity target = getTarget(entity.getLevel(), TargetID);
-        if (target != null) {
-            if (entity.getEntity().isShiftKeyDown()) {
-                if (thisAbilityInstance.getController().getHoldTicks() <= 3) {
-                    Entity lookingAt = PlayerUtil.getEntityLookingAt(entity.getEntity(), 6, PlayerUtil.BLOCK_COLLISION);
-                    if (lookingAt != null && lookingAt != getTargetByID(entity.getLevel(), TargetID)) {
-                        TargetID = lookingAt.getUUID();
-                    }
-                    return;
-                }
-            }
-            look = FoxyasUtils.getRelativePositionEyes(entity.getEntity(), offset.add(0, 0, 2));
-            Vec3 scale = (look.subtract(target.position())).scale(0.25);
-            if (target instanceof AbstractArrow projectile && projectile instanceof AbstractArrowAccessor accessor && accessor.inGround()) {
-                projectile.move(MoverType.PLAYER, scale);
-            } else {
-                if (target.position().distanceTo(look) <= 0.05) {
-                    target.setDeltaMovement(Vec3.ZERO);
-                }
-                target.setDeltaMovement(scale);
-            }
-            target.hurtMarked = true;
-            if (target instanceof ServerPlayer serverPlayer) {
-                serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
-                        serverPlayer.getId(),
-                        serverPlayer.getDeltaMovement())
-                );
-            }
-        } else {
-            thisAbilityInstance.getController().deactivateAbility();
-            thisAbilityInstance.getController().forceCooldown(this.getCoolDown(entity));
-        }
     }
 
     @Override
     public void stopUsing(IAbstractChangedEntity entity) {
         super.stopUsing(entity);
-        SimpleAbilityInstance thisAbilityInstance = entity.getAbilityInstance(this);
-        if (thisAbilityInstance == null) {
-            return;
-        }
-
-        Entity target = getTarget(entity.getLevel(), TargetID);
-
-        if (target != null) {
-            target.resetFallDistance();
-        }
-    }
-
-    @Override
-    public void saveData(CompoundTag tag, IAbstractChangedEntity entity) {
-        ListTag offsetList = new ListTag();
-        offsetList.add(DoubleTag.valueOf(offset.x()));
-        offsetList.add(DoubleTag.valueOf(offset.y()));
-        offsetList.add(DoubleTag.valueOf(offset.z()));
-        tag.put("Offset", offsetList);
-        tag.putUUID("TargetUUID", TargetID);
-        super.saveData(tag, entity);
-    }
-
-    @Override
-    public void readData(CompoundTag tag, IAbstractChangedEntity entity) {
-        if (tag.contains("Offset", 9)) { // TAG_List
-            ListTag list = tag.getList("Offset", 6); // TAG_Double
-            if (list.size() == 3) {
-                this.offset = new Vec3(
-                        list.getDouble(0),
-                        list.getDouble(1),
-                        list.getDouble(2)
-                );
-            }
-        }
-        if (tag.hasUUID("TargetUUID")) {
-            this.TargetID = tag.getUUID("TargetUUID");
-        }
-        super.readData(tag, entity);
-    }
-
-    public void setOffset(Vec3 offset) {
-        this.offset = offset;
     }
 
     public void addOffset(int keyCode, Player player) {
@@ -308,8 +92,14 @@ public class PsychicGrab extends SimpleAbility {
             }
         }
 
+        IAbstractChangedEntity abstractChangedEntity = IAbstractChangedEntity.forEither(player);
+        if (abstractChangedEntity == null) return;
+        PsychicGrabInstance abilityInstance = abstractChangedEntity.getAbilityInstance(this);
+        if (abilityInstance == null) return;
+        Vec3 offset = abilityInstance.offset;
+
         Vec3 newOffset = offset.add(dx, dy, dz);
-        this.offset = new Vec3(
+        abilityInstance.offset = new Vec3(
                 Mth.clamp(newOffset.x, -3, 3),
                 Mth.clamp(newOffset.y, -3, 3),
                 Mth.clamp(newOffset.z, 0, 4)

@@ -1,19 +1,28 @@
 package net.foxyas.changedaddon.item;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.item.api.IBestiaryItemData;
+import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +45,28 @@ public class Experiment009SpawnerItem extends SpecialSpawnEggItem implements IBe
     @Override
     public boolean isFoil(@NotNull ItemStack itemstack) {
         return true;
+    }
+
+    @Override
+    public @NotNull InteractionResult useOn(UseOnContext context) {
+        return InteractionResult.PASS;
+    }
+
+    @Override
+    public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack pStack, @NotNull Player pPlayer, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand) {
+        if (!(pPlayer.level() instanceof ServerLevel serverLevel)) {
+            return super.interactLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
+        }
+        if (pInteractionTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS) && !(pInteractionTarget instanceof Player)) {
+            TransfurVariant<Experiment009BossEntity> exp9BossVariant = ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS.get();
+            IAbstractChangedEntity changedEntity = exp9BossVariant.replaceEntity(pInteractionTarget);
+            if (changedEntity != null) {
+                postSpawn(serverLevel, pPlayer, changedEntity.getEntity());
+            }
+            return InteractionResult.sidedSuccess(pPlayer.level().isClientSide());
+        }
+
+        return super.interactLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
     }
 
     @Override

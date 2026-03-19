@@ -624,7 +624,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return true;
+        return super.targetSelectorTest(livingEntity) || livingEntity instanceof ChangedEntity;
     }
 
     @Override

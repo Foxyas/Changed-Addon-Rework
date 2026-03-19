@@ -187,55 +187,6 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         return super.getMeleeAttackRangeSqr(target);
     }
 
-    public Color3 getHairColor(int i) {
-        return Color3.getColor("#1f1f1f");
-    }
-
-    @Override
-    public int getTicksRequiredToFreeze() {
-        return 1000;
-    }
-
-    protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return livingEntity instanceof Player || livingEntity instanceof ServerPlayer || livingEntity.getType().is(ChangedTags.EntityTypes.HUMANOIDS);
-    }
-
-    @Override
-    protected boolean shouldDespawnInPeaceful() {
-        return false;
-    }
-
-    @Override
-    public TransfurMode getTransfurMode() {
-        return TransfurMode.NONE;
-    }
-
-    @Override
-    public HairStyle getDefaultHairStyle() {
-        return BALD.get();
-    }
-
-    @Override
-    public @Nullable List<HairStyle> getValidHairStyles() {
-        return HairStyle.Collection.FEMALE.getStyles();
-    }
-
-    public Color3 getDripColor() {
-        return Color3.getColor("#181818");
-    }
-
-    @Override
-    public Color3 getTransfurColor(TransfurCause cause) {
-        Color3 firstColor = Color3.getColor("#181818");
-        Color3 secondColor = Color3.getColor("#ed1c24");
-        return ColorUtil.lerpTFColor(firstColor, secondColor, this.getUnderlyingPlayer());
-    }
-
-    @Override
-    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
     @Override
     protected void registerGoals() {
         super.registerGoals();
@@ -262,28 +213,8 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     }
 
     @Override
-    public @NotNull MobType getMobType() {
-        return MobType.UNDEFINED;
-    }
-
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return false;
-    }
-
-    @Override
     public double getMyRidingOffset() {
         return super.getMyRidingOffset();
-    }
-
-    @Override
-    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
-        return SoundEvents.GENERIC_HURT;
-    }
-
-    @Override
-    public @NotNull SoundEvent getDeathSound() {
-        return SoundEvents.GENERIC_DEATH;
     }
 
     @Override
@@ -348,11 +279,6 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         }
 
         return super.canBeAffected(mobEffectInstance);
-    }
-
-    @Override
-    public boolean canChangeDimensions() {
-        return false;
     }
 
     @Override

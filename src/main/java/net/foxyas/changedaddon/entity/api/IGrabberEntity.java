@@ -62,17 +62,17 @@ public interface IGrabberEntity {
                 grabAbilityInstance.tick();
             }
 
-            LivingEntity grabbed = grabAbilityInstance.grabbedEntity;
-            if (grabbed != null) {
-                IAbstractChangedEntity entity = grabAbilityInstance.entity;
-                int grabberId = entity.getEntity().getId();
-                if (!grabbed.level().isClientSide()) {
-                    ChangedAddonMod.PACKET_HANDLER.send(
-                            PacketDistributor.TRACKING_ENTITY.with(entity::getEntity),
-                            new S2CCheckGrabberEntity(grabberId, grabbed.getId())
-                    );
-                }
-            }
+//            LivingEntity grabbed = grabAbilityInstance.grabbedEntity;
+//            if (grabbed != null) {
+//                IAbstractChangedEntity entity = grabAbilityInstance.entity;
+//                int grabberId = entity.getEntity().getId();
+//                if (!grabbed.level().isClientSide()) {
+//                    ChangedAddonMod.PACKET_HANDLER.send(
+//                            PacketDistributor.TRACKING_ENTITY.with(entity::getEntity),
+//                            new S2CCheckGrabberEntity(grabberId, grabbed.getId())
+//                    );
+//                }
+//            }
 
         }
     }
