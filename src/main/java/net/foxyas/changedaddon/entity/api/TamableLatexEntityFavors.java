@@ -47,6 +47,8 @@ public interface TamableLatexEntityFavors extends TamableLatexEntity {
 
     LatexInventory getInventory();
 
+    void setInventory(LatexInventory latexInventory);
+
     LatexFavor getCurrentFavor();
 
     GrabEntityAbilityInstance getGrabAbility();

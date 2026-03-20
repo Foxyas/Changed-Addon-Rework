@@ -91,6 +91,11 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
         return inventory;
     }
 
+    @Override
+    public void setInventory(@Nullable LatexInventory inventory) {
+        this.inventory = inventory;
+    }
+
     public @Nullable GrabEntityAbilityInstance getGrabAbility() {
         return grabEntityAbilityInstance;
     }

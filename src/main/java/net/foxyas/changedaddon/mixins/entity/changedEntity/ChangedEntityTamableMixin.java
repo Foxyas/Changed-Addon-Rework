@@ -75,6 +75,11 @@ public abstract class ChangedEntityTamableMixin extends Monster implements Tamab
     }
 
     @Override
+    public void setInventory(@Nullable LatexInventory inventory) {
+        this.inventory = inventory;
+    }
+
+    @Override
     public LatexFavor getCurrentFavor() {
         if (this.entityData.get(DATA_FAVOR) == null) return LatexFavor.NONE;
         LatexFavor favor = this.entityData.get(DATA_FAVOR);

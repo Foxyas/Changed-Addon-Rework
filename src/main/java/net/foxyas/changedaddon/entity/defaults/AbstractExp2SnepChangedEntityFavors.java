@@ -93,6 +93,11 @@ public abstract class AbstractExp2SnepChangedEntityFavors extends AbstractExp2Sn
         return inventory;
     }
 
+    @Override
+    public void setInventory(@Nullable LatexInventory inventory) {
+        this.inventory = inventory;
+    }
+
     public @Nullable GrabEntityAbilityInstance getGrabAbility() {
         return grabEntityAbilityInstance;
     }

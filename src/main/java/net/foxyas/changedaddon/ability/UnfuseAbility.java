@@ -1,7 +1,9 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.entity.ai.LatexInventory;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
+import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
@@ -166,6 +168,12 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
                 if (changedEntity instanceof IAlphaAbleEntity original && entityUnfused instanceof IAlphaAbleEntity alphaAble) {
                     alphaAble.setAlpha(original.isAlpha());
                 }
+
+                if (changedEntity instanceof TamableLatexEntityFavors fusedEntity && changedEntityUnfused instanceof TamableLatexEntityFavors unfusedEntity) {
+                    LatexInventory fusedEntityInventory = fusedEntity.getInventory();
+                    unfusedEntity.setInventory(fusedEntityInventory);
+                }
+
 
                 entitySpawned = serverLevel.addFreshEntity(changedEntityUnfused);
             }
