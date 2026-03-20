@@ -22,7 +22,8 @@
           "items": [
             "changed_addon:latex_insulator"
           ]
-        }
+        },
+        "location": []
       }
     }
   },

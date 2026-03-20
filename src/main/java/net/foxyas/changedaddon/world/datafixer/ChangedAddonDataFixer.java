@@ -14,7 +14,6 @@ import net.minecraft.util.datafix.DataFixTypes;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -66,14 +65,11 @@ public class ChangedAddonDataFixer {
 
     private void fixPlayerData(CompoundTag tag) {
         this.updateTagNames(tag);
-        if (tag.contains("Inventory")) {
-            ListTag inv = tag.getList("Inventory", 10);
-            inv.forEach(i -> {
-                if (i instanceof CompoundTag itemTag) {
-                    this.updateItem(itemTag);
-                }
-            });
-        }
+
+        if (!tag.contains("Inventory")) return;
+
+        ListTag inv = tag.getList("Inventory", Tag.TAG_COMPOUND);
+        inv.forEach(itemTag -> updateItem((CompoundTag) itemTag));
     }
 
     private void fixLevelData(@NotNull CompoundTag rootTag) {
@@ -96,7 +92,7 @@ public class ChangedAddonDataFixer {
         if (!dataTag.contains("GameRules")) return;
         CompoundTag gameRules = dataTag.getCompound("GameRules");
 
-        for (String oldRule : new ArrayList<>(gameRules.getAllKeys())) {
+        for (String oldRule : gameRules.getAllKeys()) {
             String newRule = GAMERULES_REMAP.get(oldRule);
             if (newRule == null || newRule.equals(oldRule)) continue;
 
@@ -107,37 +103,23 @@ public class ChangedAddonDataFixer {
             gameRules.putString(newRule, value);
             gameRules.remove(oldRule);
         }
-
-        // Exemplo extra: normalizar booleanos (1/0 → true/false)
-        normalizeGameRuleValues(gameRules);
     }
-
-    private void normalizeGameRuleValues(@NotNull CompoundTag gameRules) {
-        for (String key : gameRules.getAllKeys()) {
-            String val = gameRules.getString(key);
-            if (val.equals("1")) {
-                gameRules.putString(key, "true");
-            } else if (val.equals("0")) {
-                gameRules.putString(key, "false");
-            }
-        }
-    }
-
 
     private void fixEnchantments(CompoundTag tag) {
-        if (!tag.contains("Enchantments", 9)) // 10 = tipo ListTag
-            return;
+        if (!tag.contains("Enchantments", Tag.TAG_LIST)) return;
 
-        ListTag enchantments = tag.getList("Enchantments", 10); // 10 = CompoundTag
+        ListTag enchantments = tag.getList("Enchantments", Tag.TAG_COMPOUND);
+        CompoundTag ench;
+        ResourceLocation oldId, newId;
         for (int i = 0; i < enchantments.size(); i++) {
-            CompoundTag ench = enchantments.getCompound(i);
+            ench = enchantments.getCompound(i);
             if (!ench.contains("id")) continue;
 
-            ResourceLocation oldId = ResourceLocation.tryParse(ench.getString("id"));
+            oldId = ResourceLocation.tryParse(ench.getString("id"));
             if (oldId == null) continue;
 
             if (ENCHANTMENT_REMAP.containsKey(oldId)) {
-                ResourceLocation newId = ENCHANTMENT_REMAP.get(oldId);
+                newId = ENCHANTMENT_REMAP.get(oldId);
                 ChangedAddonMod.LOGGER.info("[Changed Addon DataFix] Remapping enchantment {} → {}", oldId, newId);
                 ench.putString("id", newId.toString());
             }
@@ -145,17 +127,18 @@ public class ChangedAddonDataFixer {
     }
 
     private void updateTagNames(@NotNull CompoundTag tag) {
-        tag.getAllKeys().stream().toList().forEach((key) -> {
-            if (this.TAG_REMAP.containsKey(key)) {
-                String newKey = this.TAG_REMAP.get(key);
-                Tag subTag = tag.get(key);
-                if (subTag != null && !newKey.equals(key)) {
-                    tag.put(newKey, subTag);
-                    tag.remove(key);
-                }
-            }
+        String newKey;
+        Tag subTag;
+        for (String key : tag.getAllKeys()) {
+            if (!this.TAG_REMAP.containsKey(key)) continue;
 
-        });
+            newKey = this.TAG_REMAP.get(key);
+            subTag = tag.get(key);
+            if (subTag != null && !newKey.equals(key)) {
+                tag.put(newKey, subTag);
+                tag.remove(key);
+            }
+        }
     }
 
     private void updateID(@NotNull Map<ResourceLocation, ResourceLocation> remap, @NotNull CompoundTag tag, String idName) {
