@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.client.gui;
 
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
-import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.util.ChangedEntityUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -54,7 +53,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         /* MODEL */
 
         modelWidget.setInteractable(true);
-        modelWidget.setOrigin(width * DEBUG.HeadPosZ, height / 2f, 80);
+        modelWidget.setOrigin(width, height / 2f, 80);
 
         modelWidget.setOnClick((modelRectWidget, integer) -> {
             if (modelRectWidget instanceof ChangedEntityModelWidget changedEntityModelWidget) {
@@ -72,7 +71,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             return false;
         });
 
-        loreScroll.setOrigin(window.getWidth() * (0.315f + DEBUG.HeadPosY), 0, 90);
+        loreScroll.setOrigin(window.getWidth() * (0.315f), 0, 90);
 
         /* TF LIST */
         List<TFEntryWidget> entries = getTfEntryWidgets(TransfurVariant.getPublicTransfurVariants().sorted(Comparator.comparing(var -> var.getFormId().getPath())).toList());
@@ -127,7 +126,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
     @Override
     protected void init() {
-        tfs.setOrigin(-window.getWidth() * (0.38f + DEBUG.HeadPosX), 0, 100);
+        tfs.setOrigin(-window.getWidth() * (0.38f), 0, 100);
         window.setOrigin(width / 2f, height / 2f, 0);
 
         if (minecraft != null) {
