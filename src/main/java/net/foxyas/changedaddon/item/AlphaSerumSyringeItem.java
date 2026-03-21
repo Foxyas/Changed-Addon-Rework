@@ -54,7 +54,8 @@ public class AlphaSerumSyringeItem extends AbstractSyringeItem {
         }
 
         iAlphaAbleEntity.setAlpha(true);
-        iAlphaAbleEntity.setAlphaScale(Mth.map(player.getRandom().nextFloat(), 0, 1, 0.5f, 2.5f));
+        float rand = player.getRandom().nextFloat();
+        iAlphaAbleEntity.setAlphaScale(rand * rand * 2 + .5f);
     }
 
     private void failMessage(Player player) {

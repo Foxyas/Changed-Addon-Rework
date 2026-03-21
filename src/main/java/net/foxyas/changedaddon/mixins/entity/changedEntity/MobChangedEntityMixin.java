@@ -18,12 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = Mob.class)
 public abstract class MobChangedEntityMixin extends LivingEntity {
+
     protected MobChangedEntityMixin(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-
-    @Inject(method = "finalizeSpawn", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "finalizeSpawn", at = @At("RETURN"))
     private void spawnHook(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, SpawnGroupData pSpawnData, CompoundTag pDataTag, CallbackInfoReturnable<SpawnGroupData> cir) {
         if (!(ChangedAddon$selfMixin() instanceof ChangedEntity changedEntity)) return;
         if (changedEntity instanceof IAlphaAbleEntity iAlphaAbleEntity) {
@@ -33,6 +33,8 @@ public abstract class MobChangedEntityMixin extends LivingEntity {
             float chance = iAlphaAbleEntity.chanceToSpawnAsAlpha();
             if (random.nextFloat() <= chance) {
                 iAlphaAbleEntity.setAlpha(true);
+                float rand = random.nextFloat();
+                iAlphaAbleEntity.setAlphaScale(rand * rand * 2 + .5f);
             }
         }
 
