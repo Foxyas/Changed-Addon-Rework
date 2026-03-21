@@ -1,0 +1,38 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "place": {
+      "conditions": {
+        "location": [
+          {
+            "block": "changed_addon:latex_insulator",
+            "condition": "minecraft:block_state_property"
+          }
+        ]
+      },
+      "trigger": "minecraft:placed_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.latex_insulator_advancement.descr"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "changed_addon:snepsi"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.latex_insulator_advancement.title"
+    }
+  },
+  "requirements": [
+    [
+      "place"
+    ]
+  ],
+  "rewards": {},
+  "sends_telemetry_event": true
+}

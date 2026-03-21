@@ -12,6 +12,7 @@ import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.event.TransfurVariantEvents;
+import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
@@ -31,6 +32,7 @@ import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -39,6 +41,7 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -279,6 +282,17 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         }
 
         return this.canUseGrab() || isAlpha();
+    }
+
+
+
+    @Inject(method = "copyTraitsFrom", at = @At("TAIL"))
+    private void syncAlphaData(IAbstractChangedEntity entity, CallbackInfo ci) {
+        var self = (ChangedEntity) (Object) this;
+        if (self instanceof IAlphaAbleEntity to && entity.getChangedEntity() instanceof IAlphaAbleEntity from) {
+            to.setAlpha(from.isAlpha());
+            to.setAlphaScale(from.alphaAdditionalScale());
+        }
     }
 
     @ModifyReturnValue(method = "getAbilityInstance", at = @At("RETURN"))

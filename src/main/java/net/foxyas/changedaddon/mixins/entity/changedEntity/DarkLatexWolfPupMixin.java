@@ -1,21 +1,27 @@
 package net.foxyas.changedaddon.mixins.entity.changedEntity;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.beast.DarkLatexWolfPup;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -31,20 +37,16 @@ public class DarkLatexWolfPupMixin extends AbstractDarkLatexEntity {
         super(p_19870_, p_19871_);
     }
 
-    @Inject(method = "applyCustomizeToAged", at = @At("TAIL"))
-    private void syncAlphaData(AbstractDarkLatexEntity aged, CallbackInfo ci) {
-        DarkLatexWolfPup self = (DarkLatexWolfPup) (Object) this;
+    @WrapOperation(method = "variantTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;heal(F)V"))
+    private void syncAlphaData(LivingEntity instance, float healAmount, Operation<Void> original) {
+        original.call(instance, healAmount);
         if (level instanceof ServerLevel serverLevel) {
-            tryMakeItAlpha(serverLevel, aged);
-        }
-
-        if (self instanceof IAlphaAbleEntity selfAlpha && aged instanceof IAlphaAbleEntity agedAlpha) {
-            agedAlpha.setAlpha(selfAlpha.isAlpha());
-            agedAlpha.setAlphaScale(selfAlpha.alphaAdditionalScale());
+            ChangedAddon$tryMakeItAlpha(serverLevel, this);
         }
     }
 
-    private void tryMakeItAlpha(ServerLevelAccessor pLevel, ChangedEntity changedEntity) {
+    @Unique
+    private void ChangedAddon$tryMakeItAlpha(ServerLevelAccessor pLevel, ChangedEntity changedEntity) {
         if (changedEntity instanceof IAlphaAbleEntity iAlphaAbleEntity) {
             boolean gamerule = pLevel.getLevel().getGameRules().getBoolean(ChangedAddonGameRules.DO_ALPHAS_SPAWN);
             if (!gamerule) return;

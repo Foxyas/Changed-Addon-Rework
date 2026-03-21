@@ -155,6 +155,11 @@ public class PsychicGrabInstance extends AbstractAbilityInstance {
     @Override
     public void tick() {
         if (entity.getLevel().isClientSide()) {
+            if (entityCache != null && entityCache.getUUID() != targetID) {
+                entityCache = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), targetID);
+            } else if (entityCache == null && targetID != null) {
+                entityCache = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), targetID);
+            }
             return;
         }
 
@@ -189,10 +194,12 @@ public class PsychicGrabInstance extends AbstractAbilityInstance {
                 );
             }
             entity.causeFoodExhaustion(2f);
+            ability.setDirty(entity);
         } else {
             controller.deactivateAbility();
             int coolDown = this.ability.getCoolDown(entity);
             controller.forceCooldown(coolDown);
+            ability.setDirty(entity);
         }
     }
 
@@ -233,8 +240,8 @@ public class PsychicGrabInstance extends AbstractAbilityInstance {
             }
         }
         if (tag.hasUUID("targetUUID")) {
-            UUID targetUUID = tag.getUUID("targetUUID");
-            entityCache = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), targetUUID);
+            targetID = tag.getUUID("targetUUID");
+            entityCache = PlayerUtil.GlobalEntityUtil.getEntityByUUID(entity.getLevel(), targetID);
         }
         super.readData(tag);
     }
