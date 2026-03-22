@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level;
 public class SummonEntityProcedure {
 
     public static void execute(Level world, Player player) {
-        if (!player.level.isClientSide() || !(world instanceof ServerLevel level)) return;
+        if (player.level.isClientSide() || !(world instanceof ServerLevel level)) return;
 
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (instance == null) return;
