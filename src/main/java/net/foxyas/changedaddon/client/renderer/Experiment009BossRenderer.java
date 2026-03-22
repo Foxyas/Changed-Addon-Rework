@@ -20,8 +20,8 @@ public class Experiment009BossRenderer extends AdvancedHumanoidRenderer<Experime
     public Experiment009BossRenderer(EntityRendererProvider.Context context) {
         super(context, new Experiment009BossModel(context.bakeLayer(Experiment009BossModel.LAYER_LOCATION)),
                 ArmorLatexMaleWolfModel.MODEL_SET, 0.5f);
-        this.addLayer(new Exp9EmissiveBodyLayer<>(this, ChangedAddonMod.textureLoc("textures/entities/experiment_9/experiment_009_glow_layer")));
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+        this.addLayer(new Exp9EmissiveBodyLayer<>(this, ChangedAddonMod.textureLoc("textures/entities/experiment_9/experiment_009_glow_layer")));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer.fixedColorGlowing(Color3.parseHex("#8dcfff")), CustomEyesLayer::noRender, CustomEyesLayer::noRender));
     }

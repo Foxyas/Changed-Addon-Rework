@@ -19,8 +19,8 @@ public class Experiment10Renderer extends AdvancedHumanoidRenderer<Experiment10E
     public Experiment10Renderer(EntityRendererProvider.Context context) {
         super(context, new Experiment10Model(context.bakeLayer(Experiment10Model.LAYER_LOCATION)),
                 ArmorLatexFemaleCatModel.MODEL_SET, 0.5f);
-        this.addLayer(new Exp10EmissiveBodyLayer<>(this, ChangedAddonMod.textureLoc("textures/entities/experiment_10/experiment_10_glow.png")));
         this.addLayer(new LatexParticlesLayer<>(this, getModel()));
+        this.addLayer(new Exp10EmissiveBodyLayer<>(this, ChangedAddonMod.textureLoc("textures/entities/experiment_10/experiment_10_glow.png")));
         this.addLayer(new GasMaskLayer<>(this, context.getModelSet()));
         this.addLayer(new CustomEyesLayer<>(this, context.getModelSet(), CustomEyesLayer::scleraColor, CustomEyesLayer::glowingIrisColorLeft, CustomEyesLayer::glowingIrisColorRight, CustomEyesLayer::noRender, CustomEyesLayer::noRender));
         this.addLayer(new BloodLayer<>(this, ChangedAddonMod.textureLoc("textures/entities/experiment_10/experiment_10_phase2.png")));
