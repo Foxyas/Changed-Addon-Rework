@@ -37,7 +37,7 @@ public class DarkLatexWolfPupMixin extends AbstractDarkLatexEntity {
         super(p_19870_, p_19871_);
     }
 
-    @WrapOperation(method = "variantTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;heal(F)V"))
+    @WrapOperation(method = "variantTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;heal(F)V", remap = true))
     private void syncAlphaData(LivingEntity instance, float healAmount, Operation<Void> original) {
         original.call(instance, healAmount);
         if (level instanceof ServerLevel serverLevel) {
