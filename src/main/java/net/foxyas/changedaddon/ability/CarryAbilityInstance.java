@@ -128,6 +128,8 @@ public class CarryAbilityInstance extends AbstractAbilityInstance {
             }
         }
 
+        if (e.level().isClientSide()) return;
+
         if (carriedEntity == null) {
             //broadcastPassengers(e);
             return;

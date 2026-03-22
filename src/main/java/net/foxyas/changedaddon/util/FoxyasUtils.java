@@ -16,6 +16,7 @@ import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +38,19 @@ import java.util.stream.Stream;
 import static net.foxyas.changedaddon.util.DynamicClipContext.IGNORE_TRANSLUCENT;
 
 public class FoxyasUtils {
+
+    public static List<ItemStack> getAllItemsFromContainer(Container container) {
+        List<ItemStack> items = new ArrayList<>();
+
+        for (int i = 0; i < container.getContainerSize(); i++) {
+            ItemStack stack = container.getItem(i);
+            if (!stack.isEmpty()) { // opcional
+                items.add(stack);
+            }
+        }
+
+        return items;
+    }
 
     public static void sendPlayerLikeChat(Component chatComponent, LivingEntity talker, ServerPlayer player, boolean filtered) {
         OutgoingChatMessage chatMessage = new OutgoingChatMessage.Disguised(chatComponent);

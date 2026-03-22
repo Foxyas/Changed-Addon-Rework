@@ -1,5 +1,10 @@
 package net.foxyas.changedaddon.entity.api;
 
+import net.foxyas.changedaddon.entity.ai.LatexInventory;
+import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractUnfuseableChangedEntity;
+import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -7,12 +12,15 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import java.util.List;
 
 public interface ICoatLikeEntity extends TamableLatexEntity {
 
@@ -28,7 +36,38 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         if (instance != null || changedEntity.getSelfVariant() == null) return false;
 
-        ProcessTransfur.setPlayerTransfurVariant(player, changedEntity.getSelfVariant(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1f);
+        ProcessTransfur.setPlayerTransfurVariant(player, changedEntity.getSelfVariant(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1f, false, (transfurVariantInstance) -> {
+            Player host = transfurVariantInstance.getHost();
+            ChangedEntity variantInstanceChangedEntity = transfurVariantInstance.getChangedEntity();
+
+            if (changedEntity instanceof IAlphaAbleEntity original && variantInstanceChangedEntity instanceof IAlphaAbleEntity transfured) {
+                transfured.setAlpha(original.isAlpha());
+            }
+
+            /*
+            if (changedEntity instanceof TamableLatexEntityFavors original && variantInstanceChangedEntity instanceof TamableLatexEntityFavors transfured) {
+
+                if (variantInstanceChangedEntity instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
+                    abstractTamableLatexEntity.tame(host);
+                } else if (variantInstanceChangedEntity instanceof AbstractExp2SnepChangedEntity abstractExp2SnepChangedEntity) {
+                    abstractExp2SnepChangedEntity.tame(host);
+                } else if (variantInstanceChangedEntity instanceof AbstractUnfuseableChangedEntity unfuseableChangedEntity) {
+                    unfuseableChangedEntity.tame(host);
+                } else if (variantInstanceChangedEntity instanceof TamableLatexEntityWithTameFunction tamableLatexEntityWithTameFunction) {
+                    tamableLatexEntityWithTameFunction.tameEntityForPlayer(host);
+                }
+
+                LatexInventory originalInventory = original.getInventory();
+                if (originalInventory != null) {
+                    transfured.setInventory(originalInventory);
+                }
+                LatexInventory transfuredInventory = transfured.getInventory();
+//                if (originalInventory != null && transfuredInventory != null) {
+//                    transfuredInventory.load(originalInventory.save(new ListTag()));
+//                }
+            }
+            */
+        });
         ChangedSounds.broadcastSound(player, changedEntity.getSelfVariant().sound, 1, 1);
         if (changedEntity.level instanceof ServerLevel entityServerLevel) {
             player.teleportTo(entityServerLevel, changedEntity.getX(), changedEntity.getY(), changedEntity.getZ(), RelativeMovement.ALL, changedEntity.getViewYRot(0), changedEntity.getViewXRot(0));
@@ -52,8 +91,16 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
             }
         }
 
-        if (changedEntity instanceof IAlphaAbleEntity original && ProcessTransfur.getPlayerTransfurVariant(player).getChangedEntity() instanceof IAlphaAbleEntity alphaAble) {
-            alphaAble.setAlpha(original.isAlpha());
+        if (changedEntity instanceof TamableLatexEntityFavors latexEntityFavors) {
+            LatexInventory inventory = latexEntityFavors.getInventory();
+            if (inventory != null) {
+                NonNullList<ItemStack> items = NonNullList.create();
+                items.addAll(inventory.items);
+                items.addAll(inventory.offhand);
+                for (ItemStack item : items) {
+                    ItemHandlerHelper.giveItemToPlayer(player, item);
+                }
+            }
         }
 
         changedEntity.discard();

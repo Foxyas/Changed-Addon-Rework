@@ -20,6 +20,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -97,6 +98,8 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
     public static class Instance extends AbstractAbilityInstance {
 
         protected boolean entitySpawned = false;
+        //protected Container entityInventory = null;
+        //protected ChangedEntity unfusedEntity = null;
 
         public Instance(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
             super(ability, entity);
@@ -168,13 +171,13 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
                 if (changedEntity instanceof IAlphaAbleEntity original && entityUnfused instanceof IAlphaAbleEntity alphaAble) {
                     alphaAble.setAlpha(original.isAlpha());
                 }
-
-                if (changedEntity instanceof TamableLatexEntityFavors fusedEntity && changedEntityUnfused instanceof TamableLatexEntityFavors unfusedEntity) {
-                    LatexInventory fusedEntityInventory = fusedEntity.getInventory();
-                    unfusedEntity.setInventory(fusedEntityInventory);
-                }
+                changedEntityUnfused.copyTraitsFrom(IAbstractChangedEntity.forEither(changedEntity));
 
 
+//                if (changedEntity instanceof TamableLatexEntityFavors fusedEntity) {
+//                    this.entityInventory = fusedEntity.getInventory();
+//                }
+//                unfusedEntity = changedEntityUnfused;
                 entitySpawned = serverLevel.addFreshEntity(changedEntityUnfused);
             }
         }
@@ -186,7 +189,13 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
 
         @Override
         public void stopUsing() {
-            if (entity.getEntity() instanceof Player player && entitySpawned) {
+            LivingEntity livingEntity = entity.getEntity();
+//            if (unfusedEntity instanceof TamableLatexEntityFavors tamableLatexEntityFavors) {
+//                if (entityInventory instanceof LatexInventory latexInventory) {
+//                    tamableLatexEntityFavors.setInventory(latexInventory);
+//                }
+//            }
+            if (livingEntity instanceof Player player && entitySpawned) {
                 PlayerUtil.UnTransfurPlayerAndPlaySound(player, true);
             }
         }
