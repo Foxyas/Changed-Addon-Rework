@@ -1,10 +1,12 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.ltxprogrammer.changed.util.Color3;
+import org.jetbrains.annotations.Nullable;
 
 public interface IDynamicColors {
 
-    DynamicColorScheme getColor();
+    @Nullable("leave null if you want to keep the default color handle")
+    DynamicColorScheme getColorScheme();
 
     // Side Safe Version of AbstractRadialScreen.ColorScheme
     record DynamicColorScheme(Color3 background, Color3 foreground) {

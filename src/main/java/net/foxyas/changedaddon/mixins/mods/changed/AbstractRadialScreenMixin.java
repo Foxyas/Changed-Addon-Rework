@@ -43,8 +43,8 @@ public abstract class AbstractRadialScreenMixin<T extends AbstractContainerMenu>
 
     @ModifyReturnValue(method = "getColors", at = @At("RETURN"))
     private static ColorScheme getColorsHook(ColorScheme original, @Nullable TransfurVariantInstance<?> variant) {
-        if (variant != null && variant.getChangedEntity() instanceof IDynamicColors dynamicColors) {
-            return new ColorScheme(dynamicColors.getColor().background(), dynamicColors.getColor().foreground());
+        if (variant != null && variant.getChangedEntity() instanceof IDynamicColors dynamicColors && dynamicColors.getColorScheme() != null) {
+            return new ColorScheme(dynamicColors.getColorScheme().background(), dynamicColors.getColorScheme().foreground());
         }
 
         return original;

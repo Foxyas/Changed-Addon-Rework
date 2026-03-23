@@ -209,8 +209,9 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
     }
 
     @Override
-    public DynamicColorScheme getColor() {
-        return new DynamicColorScheme(this.getPrimaryColor(), this.getSecondaryColor()).setForegroundToBright();
+    public DynamicColorScheme getColorScheme() {
+        if (this.isColorful()) return new DynamicColorScheme(this.getPrimaryColor(), this.getSecondaryColor()).setForegroundToBright();
+        return null;
     }
 
     public Color3 getPrimaryColor() {
