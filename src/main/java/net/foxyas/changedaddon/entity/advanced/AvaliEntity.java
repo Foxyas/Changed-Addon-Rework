@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import com.google.common.collect.ImmutableMap;
+import net.foxyas.changedaddon.entity.api.IDynamicColors;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
@@ -8,12 +9,10 @@ import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.ModifiableEntity;
 import net.ltxprogrammer.changed.entity.ModificationVector;
-import net.ltxprogrammer.changed.entity.beast.CustomLatexEntity;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.StringRepresentable;
@@ -34,7 +33,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, ModifiableEntity {
+public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, ModifiableEntity, IDynamicColors {
 
     protected static final EntityDataAccessor<Integer> PRIMARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> SECONDARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
@@ -207,6 +206,11 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
             case 2 -> getStripesColor();
             default -> getPrimaryColor();
         };
+    }
+
+    @Override
+    public DynamicColorScheme getColor() {
+        return new DynamicColorScheme(this.getPrimaryColor(), this.getSecondaryColor()).setForegroundToBright();
     }
 
     public Color3 getPrimaryColor() {

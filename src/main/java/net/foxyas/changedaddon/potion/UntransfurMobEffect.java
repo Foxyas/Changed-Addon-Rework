@@ -69,7 +69,7 @@ public class UntransfurMobEffect extends MobEffect {
         }
 
         SummonDripParticlesProcedure.execute(player);
-        PlayerUtil.UnTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayer(player);
 
         vars.untransfurProgress = 0;
         vars.syncPlayerVariables(entity);

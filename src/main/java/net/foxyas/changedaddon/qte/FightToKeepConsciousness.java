@@ -103,7 +103,7 @@ public class FightToKeepConsciousness {
         vars.FTKCminigameType = null;
         vars.syncPlayerVariables(player);
 
-        PlayerUtil.UnTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayer(player);
     }
 
     private static void updatePlayerVariables(ChangedAddonVariables.PlayerVariables vars, MinigameType minigameType, int progress, Entity entity) {
@@ -124,7 +124,7 @@ public class FightToKeepConsciousness {
         player.displayClientMessage(Component.translatable("changed_addon.fight_conscience.fail"), true);
 
         SummonEntityProcedure.execute(player.level, player);
-        PlayerUtil.UnTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayer(player);
 
         DamageSource source = ChangedAddonDamageSources.CONSCIENCE_LOSE.source(player.level());
         player.hurt(new DamageSource(source.typeHolder()) {

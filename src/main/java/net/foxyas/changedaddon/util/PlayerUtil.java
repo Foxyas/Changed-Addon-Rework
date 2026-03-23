@@ -54,7 +54,7 @@ public class PlayerUtil {
     public static final ClipContext.ShapeGetter BLOCK_COLLISION = ClipContext.Block.COLLIDER;
     public static final Predicate<Entity> NON_SPECTATOR = entity -> !entity.isSpectator();
 
-    public static void TransfurPlayer(Player player, String id, float progress) {
+    public static void transfurPlayer(Player player, String id, float progress) {
         ResourceLocation form = ResourceLocation.tryParse(id);
         TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
         if (latexVariant == null) return;
@@ -62,7 +62,7 @@ public class PlayerUtil {
         ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
     }
 
-    public static void TransfurPlayerAndLoadData(Player player, String id, CompoundTag data, float progress) {
+    public static void transfurPlayerAndLoadData(Player player, String id, CompoundTag data, float progress) {
         ResourceLocation form = ResourceLocation.tryParse(id);
         TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
         if (latexVariant == null) return;
@@ -74,7 +74,27 @@ public class PlayerUtil {
         }
     }
 
-    public static void UnTransfurPlayer(Player player) {
+    public static void transfurPlayerAndLoadData(Player player, TransfurVariant<?> latexVariant, CompoundTag data, float progress) {
+        if (latexVariant == null) return;
+        var tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
+        if (tf != null) {
+            CompoundTag save = tf.save();
+            save.merge(data);
+            tf.load(save);
+        }
+    }
+
+    public static void transfurPlayerAndLoadData(Player player, TransfurVariant<?> latexVariant, TransfurContext transfurContext, CompoundTag data, float progress) {
+        if (latexVariant == null) return;
+        var tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, transfurContext, progress);
+        if (tf != null) {
+            CompoundTag save = tf.save();
+            save.merge(data);
+            tf.load(save);
+        }
+    }
+
+    public static void unTransfurPlayer(Player player) {
         if (player.level.isClientSide()) return;
 
         ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {
@@ -99,7 +119,7 @@ public class PlayerUtil {
         });
     }
 
-    public static void UnTransfurPlayer(Player player, boolean shouldApplyEffects) {
+    public static void unTransfurPlayer(Player player, boolean shouldApplyEffects) {
         if (player.level.isClientSide()) return;
 
         ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {
@@ -128,7 +148,7 @@ public class PlayerUtil {
         });
     }
 
-    public static void UnTransfurPlayerAndPlaySound(Player player, boolean shouldApplyEffects) {
+    public static void unTransfurPlayerAndPlaySound(Player player, boolean shouldApplyEffects) {
         if (player.level.isClientSide()) return;
 
         ProcessTransfur.ifPlayerTransfurred(player, (instance) -> {

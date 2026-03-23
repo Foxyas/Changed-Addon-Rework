@@ -56,7 +56,7 @@ public class LaethinSyringeItem extends AbstractSyringeItem implements Specializ
 
         // Visual feedback
         SummonDripParticlesProcedure.execute(player);
-        PlayerUtil.UnTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayer(player);
 
         // Optional: Reset advancement
         if (playerVars.resetTransfurAdvancements && player instanceof ServerPlayer sp) {

@@ -48,7 +48,7 @@ public class SyringeWithLitixCammoniaItem extends AbstractSyringeItem {
         }
 
         SummonDripParticlesProcedure.execute(player);
-        PlayerUtil.UnTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayer(player);
 
         if (getVars(player).resetTransfurAdvancements && player instanceof ServerPlayer sp) {
             resetAdvancement(sp, "minecraft:changed/transfur");

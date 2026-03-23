@@ -249,7 +249,7 @@ public class TransfurTotemItem extends Item {
 
         if (isTransfurred) {
             SummonDripParticlesProcedure.execute(player);
-            PlayerUtil.UnTransfurPlayer(player);
+            PlayerUtil.unTransfurPlayer(player);
             cooldown(player, stack, 100);
             visualActivate(level, player, ChangedAddonSoundEvents.UNTRANSFUR.get());
             grantAdvancement(player, "changed_addon:transfur_totem_advancement_1");
@@ -263,9 +263,9 @@ public class TransfurTotemItem extends Item {
 
         if (tag.contains("TransfurVariantData")) {
             CompoundTag data = tag.getCompound("TransfurVariantData");
-            PlayerUtil.TransfurPlayerAndLoadData(player, form, data, 0.85f);
+            PlayerUtil.transfurPlayerAndLoadData(player, form, data, 0.85f);
             // 0.85f to avoid issues with the transfur animation and because is design choice
-        } else PlayerUtil.TransfurPlayer(player, form, 0.85f);
+        } else PlayerUtil.transfurPlayer(player, form, 0.85f);
 
         activateVisuals(level, player, stack, "changed_addon:transfur_totem_advancement_1", 100, null);
         return InteractionResultHolder.consume(stack);
@@ -373,7 +373,7 @@ public class TransfurTotemItem extends Item {
             return;
 
         SummonDripParticlesProcedure.execute(entity);
-        PlayerUtil.UnTransfurPlayer(player);
+        PlayerUtil.unTransfurPlayer(player);
 
         level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.TOTEM_USE, SoundSource.NEUTRAL, 1, 1);
 

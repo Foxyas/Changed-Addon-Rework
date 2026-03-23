@@ -1,12 +1,16 @@
 package net.foxyas.changedaddon.mixins.mods.changed;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.entity.api.IDynamicColors;
 import net.foxyas.changedaddon.network.packet.VariantSecondAbilityActivate;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.client.gui.AbilityRadialScreen;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
+import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen.ColorScheme;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.player.LocalPlayer;
@@ -23,6 +27,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -35,6 +40,15 @@ public abstract class AbstractRadialScreenMixin<T extends AbstractContainerMenu>
 
     @Shadow
     public abstract Optional<Integer> getSectionAt(int mouseX, int mouseY);
+
+    @ModifyReturnValue(method = "getColors", at = @At("RETURN"))
+    private static ColorScheme getColorsHook(ColorScheme original, @Nullable TransfurVariantInstance<?> variant) {
+        if (variant != null && variant.getChangedEntity() instanceof IDynamicColors dynamicColors) {
+            return new ColorScheme(dynamicColors.getColor().background(), dynamicColors.getColor().foreground());
+        }
+
+        return original;
+    }
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), remap = true, cancellable = true)
     private void mouseClicked(double mouseX, double mouseY, int button, CallbackInfoReturnable<Boolean> cir) {

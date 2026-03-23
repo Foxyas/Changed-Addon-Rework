@@ -1,9 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.entity.ai.LatexInventory;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.ICoatLikeEntity;
-import net.foxyas.changedaddon.entity.api.TamableLatexEntityFavors;
 import net.foxyas.changedaddon.entity.api.TamableLatexEntityWithTameFunction;
 import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
@@ -20,7 +18,6 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -196,7 +193,7 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
 //                }
 //            }
             if (livingEntity instanceof Player player && entitySpawned) {
-                PlayerUtil.UnTransfurPlayerAndPlaySound(player, true);
+                PlayerUtil.unTransfurPlayerAndPlaySound(player, true);
             }
         }
     }
