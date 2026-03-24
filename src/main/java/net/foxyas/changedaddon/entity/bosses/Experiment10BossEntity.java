@@ -248,13 +248,13 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     }
 
     @Override
-    protected void actuallyHurt(DamageSource pDamageSource, float pDamageAmount) {
+    protected void actuallyHurt(@NotNull DamageSource pDamageSource, float pDamageAmount) {
         super.actuallyHurt(pDamageSource, pDamageAmount);
 
         float currentHealth = this.getHealth();
         float maxHealth = this.getMaxHealth();
 
-        if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * 0.75f) {
+        if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * 0.75f && !isPhase2()) {
             this.setPhase2(true);
             level.playSound(null, this.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE, 1, 0);
         }
