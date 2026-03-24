@@ -35,7 +35,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
     }
 
     public UnifuserGuiMenu(int id, Inventory inv, BlockPos pos) {
-        super(ChangedAddonMenus.UNIFUSER_GUI.get(), id);
+        super(ChangedAddonMenus.UNIFUSER_MENU.get(), id);
         this.entity = inv.player;
         this.level = inv.player.level;
 

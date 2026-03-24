@@ -30,7 +30,7 @@ public class CatalyzerGuiMenu extends AbstractMenu {
     }
 
     public CatalyzerGuiMenu(int id, Inventory inv, BlockPos pos) {
-        super(ChangedAddonMenus.CATALYZER_GUI.get(), id);
+        super(ChangedAddonMenus.CATALYZER_MENU.get(), id);
         this.entity = inv.player;
         this.level = inv.player.level;
 
@@ -42,19 +42,19 @@ public class CatalyzerGuiMenu extends AbstractMenu {
         catalyzer = be;
         IItemHandler internal = catalyzer.getCapability(ForgeCapabilities.ITEM_HANDLER, null).resolve().orElseThrow();
 
-        createPlayerHotbar(inv, 12, 4);
-        createPlayerInventory(inv, 12, 4);
+        createPlayerHotbar(inv, 0, 0);
+        createPlayerInventory(inv, 0, 0);
 
-        slot1 = new SlotItemHandler(internal, 0, 23, 44);
+        slot1 = new SlotItemHandler(internal, 0, 44, 44);
         addSlot(slot1); // 36
-        slot2 = new SlotItemHandler(internal, 1, 153, 44) { // 37
+        slot2 = new SlotItemHandler(internal, 1, 116, 44) {
 
             @Override
             public boolean mayPlace(@NotNull ItemStack stack) {
                 return false;
             }
         };
-        addSlot(slot2);
+        addSlot(slot2); // 37
     }
 
     public CatalyzerBlockEntity getCatalyzer() {

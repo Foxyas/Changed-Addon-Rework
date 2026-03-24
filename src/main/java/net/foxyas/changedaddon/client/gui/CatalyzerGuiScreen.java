@@ -8,15 +8,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 import static net.foxyas.changedaddon.client.gui.UnifuserGuiScreen.getMachineState;
-import static net.foxyas.changedaddon.client.gui.UnifuserGuiScreen.getRecipeState;
 
 public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu> {
 
-    private static final ResourceLocation texture = ResourceLocation.parse("changed_addon:textures/screens/catalyzer_gui_new.png");
+    private static final ResourceLocation BACKGROUND_TEXTURE = ResourceLocation.parse("changed_addon:textures/screens/catalyzer_gui_new.png");
 
     private final Level level;
     private final CatalyzerGuiMenu menu;
@@ -29,8 +32,8 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         menu = container;
         pos = menu.getBlockPos();
         catalyzer = menu.getCatalyzer();
-        this.imageWidth = 200;
-        this.imageHeight = 170;
+        this.imageWidth = 175;
+        this.imageHeight = 166;
     }
 
     @Override
@@ -38,49 +41,58 @@ public class CatalyzerGuiScreen extends AbstractContainerScreen<CatalyzerGuiMenu
         this.renderBackground(pGuiGraphics);
         super.render(pGuiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(pGuiGraphics, mouseX, mouseY);
-        if (catalyzer.getItem(0).isEmpty())
-            if (mouseX > leftPos + 18 && mouseX < leftPos + 42 && mouseY > topPos + 40 && mouseY < topPos + 64)
-                pGuiGraphics.renderTooltip(font, Component.translatable("gui.changed_addon.catalyzer_gui.tooltip_put_the_powders_or_syringe"), mouseX, mouseY);
+    }
+
+    @Override
+    protected void renderTooltip(@NotNull GuiGraphics pGuiGraphics, int pX, int pY) {
+        super.renderTooltip(pGuiGraphics, pX, pY);
+        if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && this.hoveredSlot == menu.getLeftSlot() && !this.hoveredSlot.hasItem()) {
+            ItemStack itemstack = this.hoveredSlot.getItem();
+            pGuiGraphics.renderTooltip(this.font, List.of(Component.translatable("gui.changed_addon.catalyzer_gui.tooltip_put_the_powders_or_syringe")), itemstack.getTooltipImage(), itemstack, pX, pY);
+        }
     }
 
     @Override
     protected void renderBg(@NotNull GuiGraphics guiGraphics, float partialTicks, int gx, int gy) {
         guiGraphics.setColor(1, 1, 1, 1);
-        guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, this.imageWidth + 30, this.imageHeight);
 
-        ResourceLocation texture2 = ResourceLocation.parse("changed_addon:textures/screens/empty_bar.png");
-        guiGraphics.blit(texture2, this.leftPos + 83, this.topPos + 46, 0, 0, 32, 12, 32, 12);
+        if (catalyzer.recipeProgress > 0) {
+            int recipeProgress = (int) (28 * (catalyzer.recipeProgress / 100));
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 76, this.topPos + 46, this.imageWidth + 1, 0, recipeProgress, 11, this.imageWidth + 30, this.imageHeight);
+        }
 
-        int progressInt = (int) (catalyzer.recipeProgress / 3.57);
-
-        ResourceLocation texture3 = ResourceLocation.parse("changed_addon:textures/screens/bar_full.png");
-        guiGraphics.blit(texture3, this.leftPos + 83 + 2, this.topPos + 46 + 2, 0, 0, progressInt, 8, progressInt, 8);
+        if (catalyzer.nitrogenPower > 0) {
+            int nitrogenProgress = (int) (18 * (catalyzer.nitrogenPower / 200));
+            guiGraphics.blit(BACKGROUND_TEXTURE, this.leftPos + 79, this.topPos + 35, this.imageWidth + 1, 12, nitrogenProgress, 4, this.imageWidth + 30, this.imageHeight);
+        }
 
         if (catalyzer.getItem(0).isEmpty()) {
             assert this.minecraft != null;
             assert this.minecraft.level != null;
             long gameTime = this.minecraft.level.getGameTime();
             int animationPeriod = 40; // ticks (2 segundos)
-            boolean showSyringe = (gameTime % animationPeriod) < (animationPeriod / 2);
+            boolean showingSyringe = (gameTime % animationPeriod) < (animationPeriod / 2);
 
-            ResourceLocation icon = showSyringe
+            ResourceLocation icon = showingSyringe
                     ? ResourceLocation.parse("changed_addon:textures/screens/syringes.png")
                     : ResourceLocation.parse("changed_addon:textures/screens/dusts.png");
 
-            int yOffset = showSyringe ? 44 : 45;
+            int yOffset = showingSyringe ? 0 : 1;
 
-            guiGraphics.blit(icon, this.leftPos + 23, this.topPos + yOffset, 0, 0, 16, 16, 16, 16);
+            SlotItemHandler leftSlot = menu.getLeftSlot();
+            guiGraphics.blit(icon, leftPos + leftSlot.x, topPos + leftSlot.y + yOffset, 0, 0, 16, 16, 16, 16);
         }
     }
 
     @Override
-    protected void renderLabels(GuiGraphics pGuiGraphics, int mouseX, int mouseY) {
-        pGuiGraphics.drawString(font, "Nitrogen % = " + catalyzer.nitrogenPower + "%", 6, 8, -12829636, false);
-        pGuiGraphics.drawString(font,
-                getMachineState(level, pos), 6, 20, -12829636, false);
-        if (catalyzer.isSlotFull(1))
-            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.catalyzer_gui.label_full"), 151, 65, -12829636, false);
-        pGuiGraphics.drawString(font,
-                getRecipeState(level, pos), 90, 34, -12829636, false);
+    protected void renderLabels(@NotNull GuiGraphics pGuiGraphics, int mouseX, int mouseY) {
+        super.renderLabels(pGuiGraphics, mouseX, mouseY);
+        pGuiGraphics.drawString(font, getMachineState(level, pos), titleLabelX, titleLabelY + 10, -12829636, false);
+        if (catalyzer.isSlotFull(1)) {
+            SlotItemHandler rightSlot = menu.getOutputSlot();
+            pGuiGraphics.drawString(font, Component.translatable("gui.changed_addon.catalyzer_gui.label_full"), rightSlot.x, rightSlot.y - 10, -12829636, false);
+        }
+        //pGuiGraphics.drawString(font, getRecipeState(level, pos), 90, 34, -12829636, false);
     }
 }

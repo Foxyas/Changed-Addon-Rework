@@ -17,8 +17,8 @@ public class ChangedAddonMenus {
     public static final DeferredRegister<MenuType<?>> REGISTRY = DeferredRegister.create(BuiltInRegistries.MENU.key(), ChangedAddonMod.MODID);
 
     public static final RegistryObject<MenuType<FoxyasInventoryMenu>> FOXYAS_INVENTORY_MENU = register("foxyas_inventory_menu", FoxyasInventoryMenu::new);
-    public static final RegistryObject<MenuType<CatalyzerGuiMenu>> CATALYZER_GUI = register("catalyzer_gui", CatalyzerGuiMenu::new);
-    public static final RegistryObject<MenuType<UnifuserGuiMenu>> UNIFUSER_GUI = register("unifuser_gui", UnifuserGuiMenu::new);
+    public static final RegistryObject<MenuType<CatalyzerGuiMenu>> CATALYZER_MENU = register("catalyzer_gui", CatalyzerGuiMenu::new);
+    public static final RegistryObject<MenuType<UnifuserGuiMenu>> UNIFUSER_MENU = register("unifuser_gui", UnifuserGuiMenu::new);
     public static final RegistryObject<MenuType<InformantGuiMenu>> INFORMANT_MENU = register("informant_gui", InformantGuiMenu::new);
     public static final RegistryObject<MenuType<PrototypeMenu>> PROTOTYPE_MENU = register("prototype_menu", PrototypeMenu::new);
     public static final RegistryObject<MenuType<CustomMerchantMenu>> MERCHANT_MENU = register("merchant_menu", CustomMerchantMenu::new);
