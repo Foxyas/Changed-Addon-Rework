@@ -53,7 +53,7 @@ public class ProcessTransfurMixin {
     }
 
     @Inject(method = "onNewlyTransfurred", at = @At("HEAD"), cancellable = true)
-    private static void onNewlyTransfuredHook(IAbstractChangedEntity entity, CallbackInfo ci) {
+    private static void onNewlyTransfurredHook(IAbstractChangedEntity entity, CallbackInfo ci) {
         ProgressTransfurEvents.NewlyTransfurred event = new ProgressTransfurEvents.NewlyTransfurred(entity);
         if (ChangedAddonMod.postEvent(event)) {
             ci.cancel();

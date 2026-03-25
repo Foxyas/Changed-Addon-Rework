@@ -490,14 +490,14 @@ public abstract class AbstractCanTameChangedEntityFavors extends AbstractTamable
                 if (!player.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-                boolean isTransfured = ProcessTransfur.isPlayerTransfurred(player);
+                boolean isTransfurred = ProcessTransfur.isPlayerTransfurred(player);
 
-                if (!isTransfured && this.random.nextInt(2) == 0) { // One in 2 chance
+                if (!isTransfurred && this.random.nextInt(2) == 0) { // One in 2 chance
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);
                     this.level.broadcastEntityEvent(this, (byte) 7);
-                } else if (isTransfured && this.random.nextInt(12) == 0) { //One in 12
+                } else if (isTransfurred && this.random.nextInt(12) == 0) { //One in 12
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget(null);

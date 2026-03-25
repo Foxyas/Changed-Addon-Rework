@@ -334,15 +334,15 @@ public class HazardBodySuitClothingRenderer implements AccessoryRenderer, Transi
                 return;
             }
 
-            if (mayRenderTransfuredArmModel(poseStack, renderLayerParent, renderTypeBuffer, light, arm, armPose, partialTicks, entity, texture, stack, color))
+            if (mayRenderTransfurredArmModel(poseStack, renderLayerParent, renderTypeBuffer, light, arm, armPose, partialTicks, entity, texture, stack, color))
                 return;
 
-            renderNonTransfuredArmModel(poseStack, renderLayerParent, renderTypeBuffer, light, arm, armPose, entity, texture, stack, color);
+            renderNonTransfurredArmModel(poseStack, renderLayerParent, renderTypeBuffer, light, arm, armPose, entity, texture, stack, color);
         }
 
     }
 
-    private <T extends LivingEntity, M extends EntityModel<T>> void renderNonTransfuredArmModel(PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, HumanoidArm arm, PartPose armPose, T entity, ResourceLocation texture, ItemStack stack, Color color) {
+    private <T extends LivingEntity, M extends EntityModel<T>> void renderNonTransfurredArmModel(PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, HumanoidArm arm, PartPose armPose, T entity, ResourceLocation texture, ItemStack stack, Color color) {
         EntityModel layer = renderLayerParent.getModel();
         if (layer instanceof HumanoidModel<?> baseModel) {
             this.playerClothingModel = getPlayerModelForFirstPerson(entity);
@@ -359,7 +359,7 @@ public class HazardBodySuitClothingRenderer implements AccessoryRenderer, Transi
         }
     }
 
-    private <T extends LivingEntity, M extends EntityModel<T>> boolean mayRenderTransfuredArmModel(PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, HumanoidArm arm, PartPose armPose, float partialTicks, T entity, ResourceLocation texture, ItemStack stack, Color color) {
+    private <T extends LivingEntity, M extends EntityModel<T>> boolean mayRenderTransfurredArmModel(PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, HumanoidArm arm, PartPose armPose, float partialTicks, T entity, ResourceLocation texture, ItemStack stack, Color color) {
         if (entity instanceof ChangedEntity changedEntity) {
             if (renderLayerParent instanceof AdvancedHumanoidRenderer advancedHumanoidRenderer) {
                 LatexHumanoidArmorLayer layer = advancedHumanoidRenderer.getArmorLayer();

@@ -116,7 +116,7 @@ public class FirstPersonRenderUtil {
 
     }
 
-    public static void renderOffHandWithMainHandStackIfTransfured(Player pPlayer, InteractionHand hand, PoseStack stack, MultiBufferSource buffer, int light, float partialTicks) {
+    public static void renderOffHandWithMainHandStackIfTransfurred(Player pPlayer, InteractionHand hand, PoseStack stack, MultiBufferSource buffer, int light, float partialTicks) {
         if (lock) return;
         if (!(pPlayer instanceof AbstractClientPlayer player)) return;
 

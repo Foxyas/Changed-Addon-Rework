@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 public class TransfurEvents {
 
     @SubscribeEvent
-    public static void WhenTransfured(ProcessTransfur.EntityVariantAssigned changedVariantEvent) {
+    public static void WhenTransfurred(ProcessTransfur.EntityVariantAssigned changedVariantEvent) {
         TransfurVariant<?> variant = changedVariantEvent.originalVariant;
         if (variant == null) return;
 
@@ -45,7 +45,7 @@ public class TransfurEvents {
 
 
     @SubscribeEvent
-    public static void WhenTransfuredByAlpha(ProgressTransfurEvents.NewlyTransfurred changedVariantEvent) {
+    public static void WhenTransfurredByAlpha(ProgressTransfurEvents.NewlyTransfurred changedVariantEvent) {
         TransfurVariantInstance<?> transfurVariantInstance = changedVariantEvent.getTransfurVariantInstance();
         if (transfurVariantInstance != null) {
             TransfurContext transfurContext = transfurVariantInstance.transfurContext;
@@ -62,7 +62,7 @@ public class TransfurEvents {
     }
 
     @SubscribeEvent
-    public static void WhenKilledAfterTransfuredByAlpha(TransfurVariantEvents.SpawnAtTransfurredEntityEvent spawnAtTransfurredEntityEvent) {
+    public static void WhenKilledAfterTransfurredByAlpha(TransfurVariantEvents.SpawnAtTransfurredEntityEvent spawnAtTransfurredEntityEvent) {
         LivingEntity toReplace = spawnAtTransfurredEntityEvent.spawnAt;
         ChangedEntity source = spawnAtTransfurredEntityEvent.changedEntity;
         if (resolveChangedEntity(toReplace) instanceof IAlphaAbleEntity toReplaceAlpha) {

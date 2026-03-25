@@ -40,12 +40,12 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
             Player host = transfurVariantInstance.getHost();
             ChangedEntity variantInstanceChangedEntity = transfurVariantInstance.getChangedEntity();
 
-            if (changedEntity instanceof IAlphaAbleEntity original && variantInstanceChangedEntity instanceof IAlphaAbleEntity transfured) {
-                transfured.setAlpha(original.isAlpha());
+            if (changedEntity instanceof IAlphaAbleEntity original && variantInstanceChangedEntity instanceof IAlphaAbleEntity transfurred) {
+                transfurred.setAlpha(original.isAlpha());
             }
 
             /*
-            if (changedEntity instanceof TamableLatexEntityFavors original && variantInstanceChangedEntity instanceof TamableLatexEntityFavors transfured) {
+            if (changedEntity instanceof TamableLatexEntityFavors original && variantInstanceChangedEntity instanceof TamableLatexEntityFavors transfurred) {
 
                 if (variantInstanceChangedEntity instanceof AbstractTamableLatexEntity abstractTamableLatexEntity) {
                     abstractTamableLatexEntity.tame(host);
@@ -59,11 +59,11 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
 
                 LatexInventory originalInventory = original.getInventory();
                 if (originalInventory != null) {
-                    transfured.setInventory(originalInventory);
+                    transfurred.setInventory(originalInventory);
                 }
-                LatexInventory transfuredInventory = transfured.getInventory();
-//                if (originalInventory != null && transfuredInventory != null) {
-//                    transfuredInventory.load(originalInventory.save(new ListTag()));
+                LatexInventory transfurredInventory = transfurred.getInventory();
+//                if (originalInventory != null && transfurredInventory != null) {
+//                    transfurredInventory.load(originalInventory.save(new ListTag()));
 //                }
             }
             */

@@ -211,7 +211,7 @@ public class CommonEvent {
     }
 
     @SubscribeEvent
-    public static void onFarmlandTrampleWhenTransfured(BlockEvent.FarmlandTrampleEvent event) {
+    public static void onFarmlandTrampleWhenTransfurred(BlockEvent.FarmlandTrampleEvent event) {
         if (event.getEntity() instanceof Player player) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
             if (transfurVariant != null && transfurVariant.is(ChangedAddonTransfurVariants.PROTOTYPE)) {

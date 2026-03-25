@@ -36,7 +36,7 @@ public class RespawnAsTransfurScreen extends Screen {
     private SuggestionHelper suggestionHelper;
 
     public RespawnAsTransfurScreen(DeathScreen previousDeathScreen) {
-        super(Component.literal("Spawn as Transfured"));
+        super(Component.literal("Spawn as Transfurred"));
         this.previousDeathScreen = previousDeathScreen;
     }
 
@@ -99,7 +99,7 @@ public class RespawnAsTransfurScreen extends Screen {
         // -----------------------------------------------------
         // Buttons
         // -----------------------------------------------------
-        this.addRenderableWidget(Button.builder(Component.literal("Spawn as Transfured"),
+        this.addRenderableWidget(Button.builder(Component.literal("Spawn as Transfurred"),
                         btn -> handleRespawnAsTransfur(true))
                 .bounds(centerX - 75, centerY - 10, 150, 20)
                 .build()

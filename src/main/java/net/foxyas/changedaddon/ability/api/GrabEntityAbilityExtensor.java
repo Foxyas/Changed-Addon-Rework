@@ -66,7 +66,7 @@ public interface GrabEntityAbilityExtensor {
         }
     }
 
-    void setAllowGrabTransfured(boolean value);
+    void setAllowGrabTransfurred(boolean value);
 
-    boolean allowGrabTransfured();
+    boolean allowGrabTransfurred();
 }

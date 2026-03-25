@@ -67,7 +67,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     // Right now it works but has a renderer bug. I don't recommend turning this to true
     @Unique
-    private boolean allowGrabTransfured = false;
+    private boolean allowGrabTransfurred = false;
 
     public GrabEntityAbilityInstanceMixin(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
@@ -75,28 +75,28 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     @Override
     @Unique
-    public void setAllowGrabTransfured(boolean canGrabTransfured) {
-        this.allowGrabTransfured = canGrabTransfured;
+    public void setAllowGrabTransfurred(boolean canGrabTransfurred) {
+        this.allowGrabTransfurred = canGrabTransfurred;
     }
 
     @Override
     @Unique
-    public boolean allowGrabTransfured() {
-        return allowGrabTransfured;
+    public boolean allowGrabTransfurred() {
+        return allowGrabTransfurred;
     }
 
     @Inject(method = "saveData", at = @At("TAIL"))
     private void injectCustomData(CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("safeMode", safeMode);
         tag.putBoolean("alreadySnuggledTight", alreadySnuggledTight);
-        tag.putBoolean("allowGrabTransfured", allowGrabTransfured);
+        tag.putBoolean("allowGrabTransfurred", allowGrabTransfurred);
     }
 
     @Inject(method = "readData", at = @At("TAIL"))
     private void readCustomData(CompoundTag tag, CallbackInfo ci) {
         if (tag.contains("safeMode")) safeMode = tag.getBoolean("safeMode");
         if (tag.contains("alreadySnuggledTight")) alreadySnuggledTight = tag.getBoolean("alreadySnuggledTight");
-        if (tag.contains("allowGrabTransfured")) allowGrabTransfured = tag.getBoolean("allowGrabTransfured");
+        if (tag.contains("allowGrabTransfurred")) allowGrabTransfurred = tag.getBoolean("allowGrabTransfurred");
     }
 
     @Unique
@@ -186,8 +186,8 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     @ModifyExpressionValue(method = "isGrabbedInvalid", at = @At(value = "INVOKE",
             target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;isTemporaryFromSuit()Z"))
-    private boolean allowGrabTransfuredPlayers(boolean original) {
-        if (this.allowGrabTransfured()) {
+    private boolean allowGrabTransfurredPlayers(boolean original) {
+        if (this.allowGrabTransfurred()) {
             return true;
         }
         return original;

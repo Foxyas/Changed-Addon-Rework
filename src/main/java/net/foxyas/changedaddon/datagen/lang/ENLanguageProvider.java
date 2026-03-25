@@ -449,7 +449,7 @@ public class ENLanguageProvider extends LanguageProvider {
         add("deathScreen.select_tf.hardcore", "Continue as a Transfur?");
         add("deathScreen.select_tf.confirm", "Are you sure that you want to respawn as transfur?");
         add("deathScreen.select_tf.confirm.info", "You will not be affected by any untransfur items anymore\nThis means that you will be stuck with whatever form that you respawn §bForever§r");
-        add("deathScreen.select_tf.spawn_as_infected", "Respawn as Transfured");
+        add("deathScreen.select_tf.spawn_as_infected", "Respawn as Transfurred");
         add("deathScreen.select_tf.cancel_spawn_as_infected", "On second Thought, Cancel");
 
         add("itemGroup.changed_addon_main_tab", "Changed Addon Plus");
@@ -688,8 +688,8 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Pats received");
-        addStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED, "Entities assimilated while transfured");
-        addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURED, "Entities transfured while transfured");
+        addStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED, "Entities assimilated while transfurred");
+        addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURED, "Entities transfurred while transfurred");
 
         add("warn.rei.not.supported.move.items.but.right.container", "Move Items is not supported with this kind of workstation");
     }
