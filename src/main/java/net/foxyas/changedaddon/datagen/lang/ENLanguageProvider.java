@@ -617,6 +617,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addItemFromId(PINK_CYAN_SKUNK_SPAWN_EGG);
         addItemFromId(PROTOGEN_SPAWN_EGG);
         addItemFromId(PROTOTYPE_SPAWN_EGG);
+        addItem(CRAFTABLE_PROTOTYPE_SPAWN_EGG, "Craftable Prototype Spawn Egg");
         addItemFromId(PROTOGEN_0SENIA0_SPAWN_EGG);
         addItemFromId(PURO_KIND_FEMALE_SPAWN_EGG);
         addItemFromId(PURO_KIND_MALE_SPAWN_EGG);

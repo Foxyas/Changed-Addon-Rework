@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public abstract class SpecialSpawnEggItem extends Item {
+public class SpecialSpawnEggItem extends Item {
 
     private final Supplier<? extends EntityType<?>> supplier;
 
