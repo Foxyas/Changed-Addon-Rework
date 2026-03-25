@@ -631,6 +631,7 @@ public class HULanguageProvider extends LanguageProvider {
         addItem(PINK_CYAN_SKUNK_SPAWN_EGG, "Rózsaszín-türkizkék borzot idéző tojás");
         addItem(PROTOGEN_SPAWN_EGG, "Protogenidéző tojás");
         addItem(PROTOTYPE_SPAWN_EGG, "Prototípusidéző tojás");
+        addItem(CRAFTABLE_PROTOTYPE_SPAWN_EGG, "Barkácsolható Prototípusidéző tojás");
         addItem(PROTOGEN_0SENIA0_SPAWN_EGG, "Protogen 0senia0-t idéző tojás");
         addItem(PURO_KIND_FEMALE_SPAWN_EGG, "Nőstény Puro-félét idéző tojás");
         addItem(PURO_KIND_MALE_SPAWN_EGG, "Hím Puro-félét idéző tojás");
