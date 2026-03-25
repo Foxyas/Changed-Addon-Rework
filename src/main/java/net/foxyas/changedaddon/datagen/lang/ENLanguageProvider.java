@@ -191,7 +191,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("custom_interaction.have_interaction.luminara_beast", "This variant allows toggling the emission of glowing particles.");
         addAbility("custom_interaction.have_interaction.luminara_beast.extra", "Particles emission is currently set to %s");
         addAbility("custom_interaction.have_interaction.luminara_beast.action", "Particles emission has been set to %s");
-        addAbility("custom_interaction.have_interaction.latex_kayla_shark.action", "The glowing state has been set to %s");
+        addAbility("custom_interaction.have_interaction.glow_layer.action", "The glowing state has been set to %s");
         addAbility("dissolve", "Dissolve Ability");
         addAbility("dissolve.warn.too_far", "You are too far from the place to teleport there");
         addAbility("dissolve.warn.wrong_dimension", "i can't find warp in this dimension");

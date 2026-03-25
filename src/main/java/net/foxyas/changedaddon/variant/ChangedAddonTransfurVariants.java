@@ -537,7 +537,8 @@ public class ChangedAddonTransfurVariants {
                     .abilities(List.of(
                                     entityType -> ChangedAddonAbilities.THUNDERBOLT.get(),
                                     entityType -> ChangedAddonAbilities.THUNDER_PATH.get(),
-                                    entityType -> ChangedAddonAbilities.SHOCKWAVE.get()
+                                    entityType -> ChangedAddonAbilities.SHOCKWAVE.get(),
+                                    entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
                             )
                     )
                     .transfurMode(TransfurMode.ABSORPTION)
@@ -551,7 +552,8 @@ public class ChangedAddonTransfurVariants {
                                     entityType -> ChangedAddonAbilities.WITHER_GRENADE.get(),
                                     entityType -> ChangedAbilities.HYPNOSIS.get(),
                                     entityType -> ChangedAddonAbilities.CLAWS.get(),
-                                    entityType -> ChangedAddonAbilities.LEAP.get()
+                                    entityType -> ChangedAddonAbilities.LEAP.get(),
+                                    entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
                             )
                     )
                     .transfurMode(TransfurMode.ABSORPTION)
@@ -571,7 +573,8 @@ public class ChangedAddonTransfurVariants {
                                     entityType -> ChangedAddonAbilities.THUNDERBOLT.get(),
                                     entityType -> ChangedAddonAbilities.THUNDER_PATH.get(),
                                     entityType -> ChangedAddonAbilities.SHOCKWAVE.get(),
-                                    entityType -> ChangedAddonAbilities.DODGE.get()
+                                    entityType -> ChangedAddonAbilities.DODGE.get(),
+                                    entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
                             )
                     )
                     .transfurMode(TransfurMode.ABSORPTION)
@@ -593,7 +596,8 @@ public class ChangedAddonTransfurVariants {
                                     entityType -> ChangedAddonAbilities.WITHER_GRENADE.get(),
                                     entityType -> ChangedAbilities.HYPNOSIS.get(),
                                     entityType -> ChangedAddonAbilities.CLAWS.get(),
-                                    entityType -> ChangedAddonAbilities.LEAP.get()
+                                    entityType -> ChangedAddonAbilities.LEAP.get(),
+                                    entityType -> ChangedAddonAbilities.CUSTOM_INTERACTION.get()
                             )
                     )
                     .transfurMode(TransfurMode.ABSORPTION)
