@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
-public abstract class SpecialSpawnEggItem extends Item {
+public class SpecialSpawnEggItem extends Item {
 
     private final Supplier<? extends EntityType<?>> supplier;
 
@@ -42,10 +42,10 @@ public abstract class SpecialSpawnEggItem extends Item {
         int x = pos.getX(), y = pos.getY(), z = pos.getZ();
 
         Entity entityToSpawn = supplier.get().create(level);
-        if(entityToSpawn == null) return InteractionResult.FAIL;//This shouldn't happen!
+        if (entityToSpawn == null) return InteractionResult.FAIL;//This shouldn't happen!
         float yRot = player.getRandom().nextFloat() * 360F;
 
-        switch (direction){
+        switch (direction) {
             case UP -> entityToSpawn.moveTo(x + 0.5, y + 1, z + 0.5, yRot, 0);
             case DOWN -> entityToSpawn.moveTo(x + 0.5, y - 1.5, z + 0.5, yRot, 0);
             case EAST -> entityToSpawn.moveTo(x + 1.5, y, z + 0.5, yRot, 0);

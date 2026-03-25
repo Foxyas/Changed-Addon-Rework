@@ -40,6 +40,8 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
                         ResourceLocation.fromNamespaceAndPath(KEYCARD_ITEM.getId().getNamespace(), "item/" + KEYCARD_ITEM.getId().getPath() + "_bottom")
                 )
         );
+
+        basicItem(CRAFTABLE_PROTOTYPE_SPAWN_EGG.get());
     }
 
     public ItemModelBuilder layeredItem(Item item, HashMap<Integer, ResourceLocation> layerTextures) {

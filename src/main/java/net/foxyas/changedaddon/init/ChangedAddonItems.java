@@ -184,11 +184,11 @@ public class ChangedAddonItems {
     public static final RegistryObject<BlockItem> WOLF_CRYSTAL_PILLAR = block(ChangedAddonBlocks.WOLF_CRYSTAL_PILLAR, ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB);
 
     // --- MOBS SPAWN EGGS ---
-    public static final RegistryObject<Item> ERIK_SPAWN_EGG = REGISTRY.register("erik_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.ERIK, -1, -1, new Item.Properties().tab(null)));
-    public static final RegistryObject<Item> SPAWNEGGOFFOXYAS = REGISTRY.register("spawneggoffoxyas", SpawnEggOfFoxyasItem::new);
-
+    public static final RegistryObject<Item> ERIK_SPAWN_EGG = REGISTRY.register("erik_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.ERIK, -1, -1, new Item.Properties()));
+    public static final RegistryObject<SpecialSpawnEggItem> SPAWNEGGOFFOXYAS = REGISTRY.register("spawneggoffoxyas", () -> new SpecialSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FOXYAS, new Item.Properties()));
     // --- CHANGED ENTITIES SPAWN EGGS ---
     public static final RegistryObject<Item> PROTOTYPE_SPAWN_EGG = REGISTRY.register("prototype_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.PROTOTYPE, new Color(-5325833).getRGB(), new Color(-9306113).getRGB(), new Item.Properties().tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)));
+    public static final RegistryObject<SpecialSpawnEggItem> CRAFTABLE_PROTOTYPE_SPAWN_EGG = REGISTRY.register("prototype_spawn_egg_c", () -> new SpecialSpawnEggItem(ChangedAddonEntities.PROTOTYPE, new Item.Properties().tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)));
     public static final RegistryObject<Item> LATEX_SNOW_FOX_MALE_SPAWN_EGG = REGISTRY.register("latex_snow_fox_male_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_MALE, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)));
     public static final RegistryObject<Item> LATEX_SNOW_FOX_FEMALE_SPAWN_EGG = REGISTRY.register("latex_snow_fox_female_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FEMALE, 0xFFFFFFF, 0xfD6DDF7, new Item.Properties().tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)));
     public static final RegistryObject<Item> FOXYAS_SPAWN_EGG = REGISTRY.register("latex_snow_fox_foxyas_spawn_egg", () -> new ForgeSpawnEggItem(ChangedAddonEntities.LATEX_SNOW_FOX_FOXYAS, -1, -26215, new Item.Properties().tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)));
