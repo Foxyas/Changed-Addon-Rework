@@ -8,12 +8,16 @@ import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
+import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
+import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.beast.AbstractAquaticEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.world.LatexCoverGetter;
@@ -41,10 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -65,32 +66,28 @@ public class PlayerUtil {
     public static void transfurPlayerAndLoadData(Player player, String id, CompoundTag data, float progress) {
         ResourceLocation form = ResourceLocation.tryParse(id);
         TransfurVariant<?> latexVariant = form == null ? null : ChangedRegistry.TRANSFUR_VARIANT.get().getValue(form);
-        if (latexVariant == null) return;
-        var tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
-        if (tf != null) {
-            CompoundTag save = tf.save();
-            save.merge(data);
-            tf.load(save);
-        }
+        transfurPlayerAndLoadData(player, latexVariant, data, progress);
     }
 
     public static void transfurPlayerAndLoadData(Player player, TransfurVariant<?> latexVariant, CompoundTag data, float progress) {
-        if (latexVariant == null) return;
-        var tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), progress);
-        if (tf != null) {
-            CompoundTag save = tf.save();
-            save.merge(data);
-            tf.load(save);
-        }
+        transfurPlayerAndLoadData(player, latexVariant, TransfurContext.hazard(TransfurCause.GRAB_REPLICATE), data, progress);
     }
 
     public static void transfurPlayerAndLoadData(Player player, TransfurVariant<?> latexVariant, TransfurContext transfurContext, CompoundTag data, float progress) {
-        if (latexVariant == null) return;
-        var tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, transfurContext, progress);
-        if (tf != null) {
+        if (latexVariant == null || player == null) return;
+
+        TransfurVariantInstance<?> tf = ProcessTransfur.setPlayerTransfurVariant(player, latexVariant, transfurContext, progress);
+
+        if (tf != null && data != null && !data.isEmpty()) {
             CompoundTag save = tf.save();
             save.merge(data);
             tf.load(save);
+            for (Map.Entry<AbstractAbility<?>, AbstractAbilityInstance> abstractAbilityAbstractAbilityInstanceEntry : tf.abilityInstances.entrySet()) {
+                IAbstractChangedEntity entity = IAbstractChangedEntity.forEither(tf.getHost());
+                if (entity == null) continue;
+
+                abstractAbilityAbstractAbilityInstanceEntry.getKey().setDirty(entity);
+            }
         }
     }
 
