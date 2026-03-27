@@ -15,7 +15,6 @@ public interface ICrawlAndSwimAbleEntity {
         if (!updateSwimmingMovement(livingEntity, swimSpeed)) {
             if (target != null) {
                 setCrawlingPoseIfNeeded(livingEntity, target);
-                crawlToTarget(livingEntity, target);
             } else switchToSafePose(livingEntity);
         }
     }
@@ -86,7 +85,6 @@ public interface ICrawlAndSwimAbleEntity {
     default void onlyCrawlingSystem(ChangedEntity livingEntity, LivingEntity target) {
         if (target != null) {
             setCrawlingPoseIfNeeded(livingEntity, target);
-            crawlToTarget(livingEntity, target);
         } else switchToSafePose(livingEntity);
     }
 
@@ -97,13 +95,6 @@ public interface ICrawlAndSwimAbleEntity {
             }
         } else {
             switchToSafePose(livingEntity);
-        }
-    }
-
-    default void crawlToTarget(LivingEntity livingEntity, LivingEntity target) {
-        if (target.getPose() == Pose.SWIMMING && livingEntity.getPose() == Pose.SWIMMING) {
-            Vec3 direction = target.position().subtract(livingEntity.position()).normalize();
-            livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().add(direction.scale(0.05)));
         }
     }
 
