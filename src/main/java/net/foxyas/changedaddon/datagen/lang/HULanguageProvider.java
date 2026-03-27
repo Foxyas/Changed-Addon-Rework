@@ -190,7 +190,7 @@ public class HULanguageProvider extends LanguageProvider {
         addAbility("custom_interaction.have_interaction.luminara_beast", "Ez a változat lehetővé teszi az izzó részecskék kibocsátásának ki-/bekapcsolását.");
         addAbility("custom_interaction.have_interaction.luminara_beast.extra", "Jelenlegi részecskekibocsátás: %s");
         addAbility("custom_interaction.have_interaction.luminara_beast.action", "Részecskekibocsátás átállítva %sra");
-        addAbility("custom_interaction.have_interaction.latex_kayla_shark.action", "Ragyogó állapot %sra lett beállítva");
+        addAbility("custom_interaction.have_interaction.glow_layer.action", "Ragyogó állapot %sra lett beállítva");
         addAbility("dissolve", "Oldódás");
         addAbility("dissolve.warn.too_far", "Túl messze vagy a helytől, hogy oda teleportálj");
         addAbility("dissolve.warn.wrong_dimension", "Nem találok iszapot ebben a dimenzióban");
