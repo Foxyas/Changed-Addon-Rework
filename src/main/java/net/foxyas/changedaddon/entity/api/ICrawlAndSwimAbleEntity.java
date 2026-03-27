@@ -102,7 +102,7 @@ public interface ICrawlAndSwimAbleEntity {
 
     default void setCrawlingPoseIfNeeded(ChangedEntity livingEntity, LivingEntity target) {
         if (target.getPose() == Pose.SWIMMING && livingEntity.getPose() != Pose.SWIMMING) {
-            if (target.getY() < livingEntity.getEyeY() && !target.level.getBlockState(new BlockPos((int) target.getX(), (int) target.getEyeY(), (int) target.getZ()).above()).isAir()) {
+            if (target.getY() < livingEntity.getEyeY() && !target.level.getBlockState(BlockPos.containing(target.getEyePosition()).above()).isAir()) {
                 livingEntity.setPose(Pose.SWIMMING);
             }
         } else {

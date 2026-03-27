@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.entity.advanced;
 
+import io.netty.buffer.Unpooled;
+import net.foxyas.changedaddon.entity.ai.advanced.AdvancedGroundPathNavigation;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LookAndFollowTradingPlayerSink;
 import net.foxyas.changedaddon.entity.ai.goals.generic.TradeWithPlayerGoal;
 import net.foxyas.changedaddon.entity.defaults.AbstractTraderChangedEntityWithInventory;
@@ -20,10 +22,15 @@ import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.debug.PathfindingRenderer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -35,6 +42,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -42,6 +50,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
@@ -119,6 +128,22 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
         super.registerGoals();
         this.goalSelector.addGoal(1, new TradeWithPlayerGoal(this));
         this.goalSelector.addGoal(3, new LookAndFollowTradingPlayerSink(this, 0.25f));
+    }
+
+    @Override
+    protected @NotNull PathNavigation createNavigation(@NotNull Level pLevel) {
+        return new AdvancedGroundPathNavigation(this, level);
+    }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        Path path = this.navigation.getPath();
+        if (path != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            PathfindingRenderer pathfindingRenderer = minecraft.debugRenderer.pathfindingRenderer;
+            pathfindingRenderer.addPath(getId(), path, 1f);
+        }
     }
 
     @Override
@@ -229,10 +254,5 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
                 }
             }
         });
-    }
-
-    @Override
-    public void baseTick() {
-        super.baseTick();
     }
 }
