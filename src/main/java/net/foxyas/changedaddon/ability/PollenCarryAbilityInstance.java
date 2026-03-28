@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.mixins.blocks.CropBlockAccess;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -94,7 +95,7 @@ public class PollenCarryAbilityInstance extends AbstractAbilityInstance {
 
     private boolean tryGrowCrop(ServerLevel level, BlockPos pos, BlockState state) {
         if (state.getBlock() instanceof CropBlock crop && !crop.isMaxAge(state)) {
-            IntegerProperty age = CropBlock.AGE;
+            IntegerProperty age = ((CropBlockAccess) crop).getAgeProp();
             level.setBlockAndUpdate(pos, state.setValue(age, state.getValue(age) + 1));
             return true;
         }

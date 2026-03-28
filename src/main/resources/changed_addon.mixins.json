@@ -12,6 +12,7 @@
     "blocks.BlockBehaviourMixin",
     "blocks.BlockMixin",
     "blocks.BlockStateBaseMixin",
+    "blocks.CropBlockAccess",
     "blocks.CrossCollisionBlockMixin",
     "blocks.DroppedSyringeMixin",
     "blocks.FluidsMixin",
