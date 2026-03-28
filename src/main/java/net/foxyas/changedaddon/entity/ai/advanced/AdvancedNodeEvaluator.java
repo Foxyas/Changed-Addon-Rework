@@ -27,27 +27,84 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
     static Pose[] poses = {Pose.CROUCHING, Pose.SWIMMING};
 
     @Override
-    public void prepare(PathNavigationRegion pLevel, Mob pMob) {
+    public void prepare(@NotNull PathNavigationRegion pLevel, @NotNull Mob pMob) {
         super.prepare(pLevel, pMob);
+        // Artificially reduce height during evaluation to allow nodes in tight spaces
         this.entityHeight /= 2;
     }
 
     @Override
     public @NotNull BlockPathTypes getBlockPathType(@NotNull BlockGetter level, int x, int y, int z, @NotNull Mob mob) {
-        BlockPathTypes type = super.getBlockPathType(level, x, y, z, mob);
-
-//        if (this.mob instanceof ChangedEntity changedMob && type == BlockPathTypes.BLOCKED) {
-//            BlockPos pos = new BlockPos(x, y, z);
-//
-//            for (Pose pose : poses) {
-//                if (AdvancedGroundPathNavigation.canEntityEnterPoseIn(changedMob, pose, Vec3.atBottomCenterOf(pos))) {
-//                    return BlockPathTypes.WALKABLE;
-//                }
-//            }
-//        }
-        return type;
+        return super.getBlockPathType(level, x, y, z, mob);
     }
 
+    @Override
+    public int getNeighbors(Node @NotNull [] pNeighborNodes, @NotNull Node pNode) {
+        int i = super.getNeighbors(pNeighborNodes, pNode);
+
+        // If the vanilla logic found neighbors (walking), we add the "jump" ones.
+        // Check 4 horizontal directions to see if a jump is possible across a gap.
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            Node jumpNode = this.getJumpNeighbor(pNode.x + direction.getStepX(), pNode.y, pNode.z + direction.getStepZ(), direction);
+            if (jumpNode != null && !jumpNode.closed && i < pNeighborNodes.length) {
+                pNeighborNodes[i++] = jumpNode;
+            }
+        }
+
+        return i;
+    }
+
+    @Nullable
+    protected Node getJumpNeighbor(int x, int y, int z, Direction dir) {
+        BlockPos gapPos = new BlockPos(x, y, z);
+        BlockState gapState = this.level.getBlockState(gapPos);
+
+        // 1. Is it a real gap? (The block ahead MUST be air and the block BELOW (and below of below) it must also be non-solid)
+        if (gapState.isAir() && !this.level.getBlockState(gapPos.below()).isSolidRender(this.level, gapPos.below()) && !this.level.getBlockState(gapPos.below(2)).isSolidRender(this.level, gapPos.below())) {
+
+            // 2. Look for a landing spot (up to 2 blocks away)
+            for (int distance = 1; distance <= 2; distance++) {
+                int jumpX = x + dir.getStepX() * distance;
+                int jumpZ = z + dir.getStepZ() * distance;
+                BlockPos landPos = new BlockPos(jumpX, y, jumpZ);
+
+                if (this.isWalkable(landPos)) {
+                    // 3. Vertical Clearance Check: Ensure no ceiling is blocking the jump arc
+                    if (!this.level.getBlockState(landPos.above()).isAir()) {
+                        continue;
+                    }
+
+                    // Create the virtual node
+                    Node node = this.getNode(jumpX, y, jumpZ);
+
+                    // Use a specific type or a VERY high penalty
+                    node.type = BlockPathTypes.WALKABLE;
+
+                    // 4. High Cost Penalty: Make jumping a "last resort"
+                    // If walking takes 10 blocks and jumping takes 2, the penalty of 20.0F makes walking preferable
+                    node.costMalus = this.mob.getPathfindingMalus(node.type) + 20f;
+
+                    if (node instanceof IAdvancedNode advancedNode) {
+                        advancedNode.setJumpNode(true);
+                    }
+                    return node;
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean isWalkable(BlockPos pos) {
+        // Reuse ChangedEntity logic to check if it fits (even in crawl pose)
+        /*
+        if (this.mob instanceof ChangedEntity ce) {
+            return AdvancedGroundPathNavigation.canEntityEnterPoseIn(ce, Pose.SWIMMING, Vec3.atBottomCenterOf(pos));
+        }
+        */
+        return this.getCachedBlockType(this.mob, pos.getX(), pos.getY(), pos.getZ()) == BlockPathTypes.WALKABLE;
+    }
+
+    @Override
     public @NotNull Node getStart() {
         if (!(mob instanceof ChangedEntity changedEntity)) {
             return super.getStart();
@@ -56,6 +113,8 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
         int i = this.mob.getBlockY();
         BlockState blockstate = this.level.getBlockState(blockpos$mutableblockpos.set(this.mob.getX(), i, this.mob.getZ()));
+
+        // --- Fluid and Ground Detection ---
         if (!this.mob.canStandOnFluid(blockstate.getFluidState())) {
             if (this.canFloat() && this.mob.isInWater()) {
                 while (true) {
@@ -63,7 +122,6 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
                         --i;
                         break;
                     }
-
                     ++i;
                     blockstate = this.level.getBlockState(blockpos$mutableblockpos.set(this.mob.getX(), i, this.mob.getZ()));
                 }
@@ -73,7 +131,6 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
                 BlockPos blockpos;
                 for (blockpos = this.mob.blockPosition(); (this.level.getBlockState(blockpos).isAir() || this.level.getBlockState(blockpos).isPathfindable(this.level, blockpos, PathComputationType.LAND)) && blockpos.getY() > this.mob.level().getMinBuildHeight(); blockpos = blockpos.below()) {
                 }
-
                 i = blockpos.above().getY();
             }
         } else {
@@ -81,25 +138,25 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
                 ++i;
                 blockstate = this.level.getBlockState(blockpos$mutableblockpos.set(this.mob.getX(), i, this.mob.getZ()));
             }
-
             --i;
         }
 
+        // --- Start Node Verification ---
         BlockPos blockpos1 = this.mob.blockPosition();
         if (!this.canStartAt(blockpos$mutableblockpos.set(blockpos1.getX(), i, blockpos1.getZ()))) {
+            // Check alternative poses if standing fails (allows starting inside ducts)
             AABB[] aabbs = Arrays.stream(poses).map(changedEntity::getBoundingBoxForPose).toArray(AABB[]::new);
             for (AABB aabb : aabbs) {
                 if (this.canStartAt(blockpos$mutableblockpos.set(aabb.minX, i, aabb.minZ)) || this.canStartAt(blockpos$mutableblockpos.set(aabb.minX, i, aabb.maxZ)) || this.canStartAt(blockpos$mutableblockpos.set(aabb.maxX, i, aabb.minZ)) || this.canStartAt(blockpos$mutableblockpos.set(aabb.maxX, i, aabb.maxZ))) {
                     return this.getStartNode(blockpos$mutableblockpos);
                 }
             }
-
-
         }
 
         return this.getStartNode(new BlockPos(blockpos1.getX(), i, blockpos1.getZ()));
     }
 
+    @Override
     protected boolean isDiagonalValid(@NotNull Node pRoot, @Nullable Node pXNode, @Nullable Node pZNode, @Nullable Node pDiagonal) {
         if (pDiagonal != null && pZNode != null && pXNode != null) {
             if (pDiagonal.closed) {
@@ -130,12 +187,15 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
         Node node = null;
         BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
         double d0 = this.getFloorLevel(blockpos$mutableblockpos.set(pX, pY, pZ));
+
+        // Jump height check
         if (d0 - pNodeFloorLevel > this.getMobJumpHeight()) {
             return null;
         } else {
             BlockPathTypes blockpathtypes = this.getCachedBlockType(this.mob, pX, pY, pZ);
             float f = this.mob.getPathfindingMalus(blockpathtypes);
             double d1 = (double) this.mob.getBbWidth() / 2.0D;
+
             if (f >= 0.0F) {
                 node = this.getNodeAndUpdateCostToMax(pX, pY, pZ, blockpathtypes, f);
             }
@@ -144,6 +204,7 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
                 node = null;
             }
 
+            // Pathfinding logic for verticality and obstacles
             if (blockpathtypes != BlockPathTypes.WALKABLE && (!this.isAmphibious() || blockpathtypes != BlockPathTypes.WATER)) {
                 if ((node == null || node.costMalus < 0.0F) && pVerticalDeltaLimit > 0 && (blockpathtypes != BlockPathTypes.FENCE || this.canWalkOverFences()) && blockpathtypes != BlockPathTypes.UNPASSABLE_RAIL && blockpathtypes != BlockPathTypes.TRAPDOOR && blockpathtypes != BlockPathTypes.POWDER_SNOW) {
                     node = this.findAcceptedNode(pX, pY + 1, pZ, pVerticalDeltaLimit - 1, pNodeFloorLevel, pDirection, pPathType);
@@ -158,43 +219,39 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
                     }
                 }
 
+                // Liquid handling
                 if (!this.isAmphibious() && blockpathtypes == BlockPathTypes.WATER && !this.canFloat()) {
                     if (this.getCachedBlockType(this.mob, pX, pY - 1, pZ) != BlockPathTypes.WATER) {
                         return node;
                     }
-
                     while (pY > this.mob.level().getMinBuildHeight()) {
                         --pY;
                         blockpathtypes = this.getCachedBlockType(this.mob, pX, pY, pZ);
                         if (blockpathtypes != BlockPathTypes.WATER) {
                             return node;
                         }
-
                         node = this.getNodeAndUpdateCostToMax(pX, pY, pZ, blockpathtypes, this.mob.getPathfindingMalus(blockpathtypes));
                     }
                 }
 
+                // Fall handling
                 if (blockpathtypes == BlockPathTypes.OPEN) {
                     int j = 0;
                     int i = pY;
-
                     while (blockpathtypes == BlockPathTypes.OPEN) {
                         --pY;
                         if (pY < this.mob.level().getMinBuildHeight()) {
                             return this.getBlockedNode(pX, i, pZ);
                         }
-
                         if (j++ >= this.mob.getMaxFallDistance()) {
                             return this.getBlockedNode(pX, pY, pZ);
                         }
-
                         blockpathtypes = this.getCachedBlockType(this.mob, pX, pY, pZ);
                         f = this.mob.getPathfindingMalus(blockpathtypes);
                         if (blockpathtypes != BlockPathTypes.OPEN && f >= 0.0F) {
                             node = this.getNodeAndUpdateCostToMax(pX, pY, pZ, blockpathtypes, f);
                             break;
                         }
-
                         if (f < 0.0F) {
                             return this.getBlockedNode(pX, pY, pZ);
                         }
@@ -207,37 +264,19 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
                     node.type = blockpathtypes;
                     node.costMalus = blockpathtypes.getMalus();
                 }
-
                 return node;
             } else {
                 return node;
             }
         }
-//        Node node = super.findAcceptedNode(x, y, z, verticalDeltaLimit, nodeFloorLevel, direction, pathType);
-//
-//        // Se o super retornou null (bloqueado), tentamos validar manualmente para o "crawl"
-//        if (node == null && this.mob instanceof ChangedEntity changedMob) {
-//            BlockPos pos = new BlockPos(x, y, z);
-//            BlockPathTypes typeAtPos = this.getCachedBlockType(this.mob, x, y, z);
-//
-//            // Se o bloco é fisicamente passável com rastejo
-//            if (AdvancedGroundPathNavigation.canEntityEnterPoseIn(changedMob, Pose.SWIMMING, Vec3.atBottomCenterOf(pos))) {
-//                node = this.getNode(x, y, z);
-//                node.type = typeAtPos;
-//                // Aumentamos o custo (malus) para rastejar, assim ele prefere caminhos abertos
-//                node.costMalus = Math.max(node.costMalus, this.mob.getPathfindingMalus(typeAtPos) + 1.5F);
-//            }
-//        }
-//
-//        return node;
     }
 
     @Override
     public boolean canReachWithoutCollision(@NotNull Node node) {
-        // Redefine a verificação de colisão final do pathfinding
+        // Redefine collision check for the pathfinding final validation
         if (this.mob instanceof ChangedEntity changedMob) {
             Vec3 target = Vec3.atBottomCenterOf(node.asBlockPos());
-            // Se ele cabe em qualquer pose (Standing, Crouching ou Swimming), o caminho é válido
+            // If the entity fits in ANY pose, consider it reachable
             for (Pose pose : poses) {
                 if (AdvancedGroundPathNavigation.canEntityEnterPoseIn(changedMob, pose, target)) {
                     return true;

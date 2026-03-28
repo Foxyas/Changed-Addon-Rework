@@ -36,17 +36,37 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
         Vec3 currentPos = this.mob.position();
         Vec3 nextNodePos = this.path.getNextEntityPos(this.mob);
 
-        // interpola um ponto à frente (lookahead)
-        Vec3 lookAhead = currentPos.lerp(nextNodePos, 0.5);
+        // Interpolate a point ahead (lookahead) for smoother pose transitions
+        Vec3 lookAhead = currentPos.lerp(nextNodePos, 1);
 
         if (mob instanceof ChangedEntity changedEntity) {
+
+            // --- JUMP SPRINT / GAP DETECTION ---
+            double horizontalDist = nextNodePos.subtract(currentPos).horizontalDistance();
+
+            // If the next node is more than 1.2 blocks away horizontally, it's likely a Gap Node
+            if (horizontalDist > 1.2D && (path.getNextNode() instanceof IAdvancedNode advancedNode && advancedNode.isJumpNode()) && this.mob.onGround()) {
+                this.mob.setSprinting(true);
+                this.mob.getJumpControl().jump();
+
+                // Apply a small velocity boost to ensure the entity crosses the gap
+                Vec3 velocity = this.mob.getDeltaMovement();
+                this.mob.setDeltaMovement(velocity.add(this.mob.getLookAngle().scale(0.1D)));
+                //advancedNode.setJumpNode(false);
+            } else {
+                this.mob.setSprinting(false);
+            }
+
+            // --- POSE MANAGEMENT ---
             Pose bestPose = getBestPoseForLocation(changedEntity, lookAhead);
 
+            // If the target pose is "taller" (less restrictive), check if we can stand up safely
             if (isLowerPose(changedEntity.getPose(), bestPose)) {
                 if (canEntityEnterPose(changedEntity, bestPose)) {
                     changedEntity.setPose(bestPose);
                 }
             } else {
+                // If the target pose is "shorter" (more restrictive), force it immediately to avoid collision
                 changedEntity.setPose(bestPose);
             }
         }
@@ -54,6 +74,9 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
         super.tick();
     }
 
+    /**
+     * Resets the entity to a safer (taller) pose when it stops moving or finishes path.
+     */
     private void maintainSafePose(ChangedEntity entity) {
         if (entity.getPose() != Pose.STANDING) {
             if (canEntityEnterPose(entity, Pose.STANDING)) {
@@ -64,15 +87,20 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
         }
     }
 
+    /**
+     * Finds the most efficient pose (from Standing to Swimming) for a specific target point.
+     */
     private Pose getBestPoseForLocation(ChangedEntity entity, Vec3 target) {
         if (canEntityEnterPoseIn(entity, Pose.STANDING, target)) return Pose.STANDING;
         if (canEntityEnterPoseIn(entity, Pose.CROUCHING, target)) return Pose.CROUCHING;
-        return Pose.SWIMMING; // Menor pose possível (Crawl)
+        return Pose.SWIMMING; // Smallest possible pose (Crawl)
     }
 
+    /**
+     * Helper to compare pose heights.
+     */
     private boolean isLowerPose(Pose current, Pose target) {
-        // No Minecraft: SWIMMING (0.6) < CROUCHING (1.5) < STANDING (1.8)
-        // Retorna true se a target for "mais alta" que a current
+        // Minecraft order: SWIMMING (0.6) < CROUCHING (1.5) < STANDING (1.8)
         return getPosePriority(target) > getPosePriority(current);
     }
 
@@ -86,6 +114,9 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
         return (entity.overridePose == null || entity.overridePose == pose) && entity.level.noCollision(entity, entity.getBoundingBoxForPose(pose).deflate(1.0E-7D));
     }
 
+    /**
+     * Checks if the entity's hitbox for a specific pose would collide at a target position.
+     */
     public static boolean canEntityEnterPoseIn(ChangedEntity entity, Pose pose, Vec3 targetPosition) {
         AABB boxAtTarget = entity.getBoundingBoxForPose(pose).move(targetPosition.subtract(entity.position()));
         AABB checkAt = boxAtTarget.deflate(1.0E-7D);
