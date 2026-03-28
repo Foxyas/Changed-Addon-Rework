@@ -55,6 +55,7 @@
     "items.ItemStackMixin",
     "items.LatexFlaskMixin",
     "items.LatexSyringeMixin",
+    "level.pathfinder.NodeMixin",
     "level.storage.loot.LootTableAccessor",
     "mods.changed.ChangedMixin",
     "mods.changed.FacilityMixin",
