@@ -49,12 +49,13 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
         // não permitimos que ele gere OUTRO nó de pulo como vizinho imediato.
         boolean isCurrentlyJumping = pNode instanceof IAdvancedNode advNode && advNode.isJumpNode();
 
-        if (!isCurrentlyJumping) {
-            for (Direction direction : Direction.Plane.HORIZONTAL) {
-                Node jumpNode = this.getJumpNeighbor(pNode.x + direction.getStepX(), pNode.y, pNode.z + direction.getStepZ(), direction);
-                if (jumpNode != null && !jumpNode.closed && i < pNeighborNodes.length) {
-                    pNeighborNodes[i++] = jumpNode;
+        for (Direction direction : Direction.values()) {
+            Node jumpNode = this.getJumpNeighbor(pNode.x + direction.getStepX(), pNode.y + direction.getStepY(), pNode.z + direction.getStepZ(), direction);
+            if (jumpNode != null && !jumpNode.closed && i < pNeighborNodes.length) {
+                if (isCurrentlyJumping) {
+                    jumpNode.costMalus *= 0.5f;
                 }
+                pNeighborNodes[i++] = jumpNode;
             }
         }
 

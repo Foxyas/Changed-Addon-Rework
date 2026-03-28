@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.ai.advanced;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -53,13 +52,26 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
 
             boolean isJumpNode = nextNode instanceof IAdvancedNode advancedNode && advancedNode.isJumpNode();
             if (isJumpNode && distance >= 2 && this.mob.onGround() && !this.mob.horizontalCollision) {
+                Vec3 velocity = this.mob.getDeltaMovement();
+                Vec3 lookAngle = this.mob.getLookAngle();
+                Vec3 directionToNode = nextNodePos.subtract(currentPos).normalize();
+
+                // Verifica o alinhamento entre o olhar da mob e o destino
+                double dot = lookAngle.dot(directionToNode);
+
                 this.mob.setSprinting(true);
                 this.mob.getJumpControl().jump();
+                if (dot >= 0.5f) {
+                    // Apply a small velocity boost to ensure the entity crosses the gap
+                    this.mob.setDeltaMovement(velocity.add(lookAngle.scale(0.15D)));
+                    //advancedNode.setJumpNode(false);
+                } else {
 
-                // Apply a small velocity boost to ensure the entity crosses the gap
-                Vec3 velocity = this.mob.getDeltaMovement();
-                this.mob.setDeltaMovement(velocity.add(this.mob.getLookAngle().scale(0.15D)));
-                //advancedNode.setJumpNode(false);
+                    // Apply a small velocity boost to ensure the entity crosses the gap
+                    this.mob.setDeltaMovement(velocity.add(directionToNode.scale(0.15D)));
+                    //advancedNode.setJumpNode(false);
+                }
+
             } else {
                 this.mob.setSprinting(false);
             }
