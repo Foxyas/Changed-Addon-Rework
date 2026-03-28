@@ -1,14 +1,14 @@
 package net.foxyas.changedaddon.entity.ai.advanced;
 
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,8 +47,12 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
             double distance = currentPos.distanceTo(nextNodePos);
 
             // If the next node is more than 1.2 blocks away horizontally, it's likely a Gap Node
-            boolean isJumpNode = path.getNextNode() instanceof IAdvancedNode advancedNode && advancedNode.isJumpNode();
-            if (isJumpNode && distance >= 2 && this.mob.onGround()) {
+            Node nextNode = path.getNextNode();
+
+            //nextNode = path.getNode(Mth.clamp(path.getNextNodeIndex() + 1, 0, path.getNodeCount() - 1));
+
+            boolean isJumpNode = nextNode instanceof IAdvancedNode advancedNode && advancedNode.isJumpNode();
+            if (isJumpNode && distance >= 2 && this.mob.onGround() && !this.mob.horizontalCollision) {
                 this.mob.setSprinting(true);
                 this.mob.getJumpControl().jump();
 
