@@ -45,7 +45,7 @@ public abstract class BlockStateBaseMixin {
         if (!above) return;
 
         Entity contextEntity = collisionContext.getEntity();
-        if (!(contextEntity instanceof LivingEntity livingEntity)) return;
+        if (!(contextEntity instanceof LivingEntity livingEntity) || livingEntity.isRemoved()) return;
 
         Optional<IAbstractChangedEntity> iAbstractChangedEntity = IAbstractChangedEntity.forEitherSafe(livingEntity);
 
