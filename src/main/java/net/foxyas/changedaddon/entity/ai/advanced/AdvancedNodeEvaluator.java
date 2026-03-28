@@ -30,7 +30,7 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
     public void prepare(@NotNull PathNavigationRegion pLevel, @NotNull Mob pMob) {
         super.prepare(pLevel, pMob);
         // Artificially reduce height during evaluation to allow nodes in tight spaces
-        this.entityHeight /= 2;
+        this.entityHeight =  Mth.floor(pMob.getDimensions(Pose.SWIMMING).height + 0.5f);
     }
 
     @Override
@@ -57,37 +57,37 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
     @Nullable
     protected Node getJumpNeighbor(int x, int y, int z, Direction dir) {
         BlockPos gapPos = new BlockPos(x, y, z);
-        BlockState gapState = this.level.getBlockState(gapPos);
 
-        // 1. Is it a real gap? (The block ahead MUST be air and the block BELOW (and below of below) it must also be non-solid)
-        if (gapState.isAir() && !this.level.getBlockState(gapPos.below()).isSolidRender(this.level, gapPos.below()) && !this.level.getBlockState(gapPos.below(2)).isSolidRender(this.level, gapPos.below())) {
+        // 1. Is it a real gap?
+        // Checks if the block ahead and the two blocks below are non-solid to confirm a deep hole/gap.
+        boolean isDeepGap = this.level.getBlockState(gapPos).isAir() &&
+                !this.level.getBlockState(gapPos.below()).isSolidRender(this.level, gapPos.below()) &&
+                !this.level.getBlockState(gapPos.below(2)).isSolidRender(this.level, gapPos.below(2));
 
-            // 2. Look for a landing spot (up to 2 blocks away)
-            for (int distance = 1; distance <= 2; distance++) {
-                int jumpX = x + dir.getStepX() * distance;
-                int jumpZ = z + dir.getStepZ() * distance;
+        if (isDeepGap) {
+            // 2. Look for a landing spot (Scanning from distance 2 to 4)
+            for (int distance = 2; distance <= 4; distance++) {
+                int jumpX = x + dir.getStepX() * (distance - 1);
+                int jumpZ = z + dir.getStepZ() * (distance - 1);
                 BlockPos landPos = new BlockPos(jumpX, y, jumpZ);
 
                 if (this.isWalkable(landPos)) {
-                    // 3. Vertical Clearance Check: Ensure no ceiling is blocking the jump arc
-                    if (!this.level.getBlockState(landPos.above()).isAir()) {
-                        continue;
+
+                    // 3. Triple-Clip Check (Start, Mid-Air, Landing)
+                    // We check if the entity's hitbox (based on current or swimming pose) fits throughout the jump.
+                    if (isPathClearForJump(gapPos, landPos, dir)) {
+
+                        Node node = this.getNode(landPos.getX(), landPos.getY(), landPos.getZ());
+                        node.type = BlockPathTypes.WALKABLE;
+
+                        // 4. High Cost Penalty: Jumping is expensive so AI prefers walking if a bridge exists.
+                        node.costMalus = this.mob.getPathfindingMalus(node.type) + 20.0f;
+
+                        if (node instanceof IAdvancedNode advancedNode) {
+                            advancedNode.setJumpNode(true);
+                        }
+                        return node;
                     }
-
-                    // Create the virtual node
-                    Node node = this.getNode(jumpX, y, jumpZ);
-
-                    // Use a specific type or a VERY high penalty
-                    node.type = BlockPathTypes.WALKABLE;
-
-                    // 4. High Cost Penalty: Make jumping a "last resort"
-                    // If walking takes 10 blocks and jumping takes 2, the penalty of 20.0F makes walking preferable
-                    node.costMalus = this.mob.getPathfindingMalus(node.type) + 20f;
-
-                    if (node instanceof IAdvancedNode advancedNode) {
-                        advancedNode.setJumpNode(true);
-                    }
-                    return node;
                 }
             }
         }
@@ -102,6 +102,43 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
         }
         */
         return this.getCachedBlockType(this.mob, pos.getX(), pos.getY(), pos.getZ()) == BlockPathTypes.WALKABLE;
+    }
+
+    /**
+     * Performs a 3-point clearance check to ensure the entity doesn't hit its head or a wall mid-jump.
+     */
+    private boolean isPathClearForJump(BlockPos start, BlockPos end, Direction dir) {
+        // Determine height to check based on the entity's smallest possible height (Crawl/Swim)
+        double checkHeight = this.mob.getDimensions(Pose.SWIMMING).height;
+
+        // Point 1: The Takeoff (Just above the gap)
+        if (!isSpaceEmpty(start, checkHeight)) return false;
+
+        // Point 2: The Mid-Point (The peak of the jump arc)
+        BlockPos midPoint = start.relative(dir);
+        // We check mid-point at y+1 because the entity arcs upward during a sprint jump
+        if (!isSpaceEmpty(midPoint.above(), checkHeight)) return false;
+
+        // Point 3: The Landing (Just above the destination)
+        if (!isSpaceEmpty(end, checkHeight)) return false;
+
+        return true;
+    }
+
+    /**
+     * Checks if the vertical space at a position is clear for the entity's height.
+     */
+    private boolean isSpaceEmpty(BlockPos pos, double height) {
+        int blocksToCheck = Mth.ceil(height);
+        for (int i = 0; i < blocksToCheck; i++) {
+            BlockPos checkPos = pos.above(i);
+            BlockState state = this.level.getBlockState(checkPos);
+            // If the block isn't air or a pathfindable non-solid block, the path is obstructed.
+            if (!state.isAir() && !state.isPathfindable(this.level, checkPos, PathComputationType.LAND)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

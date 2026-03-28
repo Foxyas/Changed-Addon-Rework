@@ -4,9 +4,11 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,7 +53,7 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
 
                 // Apply a small velocity boost to ensure the entity crosses the gap
                 Vec3 velocity = this.mob.getDeltaMovement();
-                this.mob.setDeltaMovement(velocity.add(this.mob.getLookAngle().scale(0.1D)));
+                this.mob.setDeltaMovement(velocity.add(this.mob.getLookAngle().scale(0.15D)));
                 //advancedNode.setJumpNode(false);
             } else {
                 this.mob.setSprinting(false);
@@ -72,6 +74,11 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
         }
 
         super.tick();
+    }
+
+    @Override
+    protected boolean canMoveDirectly(@NotNull Vec3 pPosVec31, @NotNull Vec3 pPosVec32) {
+        return super.canMoveDirectly(pPosVec31, pPosVec32);
     }
 
     /**
