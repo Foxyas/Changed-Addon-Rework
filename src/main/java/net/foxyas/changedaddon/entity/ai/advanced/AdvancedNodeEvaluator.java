@@ -45,12 +45,16 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
     public int getNeighbors(Node @NotNull [] pNeighborNodes, @NotNull Node pNode) {
         int i = super.getNeighbors(pNeighborNodes, pNode);
 
-        // If the vanilla logic found neighbors (walking), we add the "jump" ones.
-        // Check 4 horizontal directions to see if a jump is possible across a gap.
-        for (Direction direction : Direction.Plane.HORIZONTAL) {
-            Node jumpNode = this.getJumpNeighbor(pNode.x + direction.getStepX(), pNode.y, pNode.z + direction.getStepZ(), direction);
-            if (jumpNode != null && !jumpNode.closed && i < pNeighborNodes.length) {
-                pNeighborNodes[i++] = jumpNode;
+        // VERIFICAÇÃO: Se o nó atual onde estamos já for um nó de pulo,
+        // não permitimos que ele gere OUTRO nó de pulo como vizinho imediato.
+        boolean isCurrentlyJumping = pNode instanceof IAdvancedNode advNode && advNode.isJumpNode();
+
+        if (!isCurrentlyJumping) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
+                Node jumpNode = this.getJumpNeighbor(pNode.x + direction.getStepX(), pNode.y, pNode.z + direction.getStepZ(), direction);
+                if (jumpNode != null && !jumpNode.closed && i < pNeighborNodes.length) {
+                    pNeighborNodes[i++] = jumpNode;
+                }
             }
         }
 
