@@ -33,7 +33,7 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
     public void prepare(@NotNull PathNavigationRegion pLevel, @NotNull Mob pMob) {
         super.prepare(pLevel, pMob);
         // Artificially reduce height during evaluation to allow nodes in tight spaces
-        this.entityHeight = Mth.floor(pMob.getDimensions(Pose.SWIMMING).height + 0.5f);
+        this.entityHeight = Mth.floor(pMob.getDimensions(Pose.SWIMMING).height + 1);
     }
 
     @Override
@@ -59,33 +59,37 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
 
     @Nullable
     protected Node getJumpNeighbor(int x, int y, int z, Direction dir) {
-        BlockPos gapPos = new BlockPos(x, y, z);
+        for (int yOffset = 0; yOffset <= 1; yOffset++) {
+            BlockPos gapPos = new BlockPos(x, y + yOffset, z);
+            BlockState stateAhead = this.level.getBlockState(gapPos);
 
-        // 1. Is it a real gap?
-        // Checks if the block ahead and the two blocks below are non-solid to confirm a deep hole/gap.
-        boolean isDeepGap = this.level.getBlockState(gapPos).isAir() &&
-                !this.level.getBlockState(gapPos.below()).isSolidRender(this.level, gapPos.below()) &&
-                !this.level.getBlockState(gapPos.below(2)).isSolidRender(this.level, gapPos.below(2));
+            // AJUSTE 1: Só considera pulo se o bloco à frente for AR
+            // E o bloco abaixo dele (onde ela pisaria) NÃO for sólido.
 
-        if (isDeepGap) {
-            // 2. Look for a landing spot (Scanning from distance 2 to 4)
-            for (int distance = 2; distance <= 4; distance++) {
-                for (int yOffset = 0; yOffset < 1; yOffset++) {
-                    int jumpX = x + dir.getStepX() * (distance - 1);
-                    int jumpZ = z + dir.getStepZ() * (distance - 1);
+            Vec3 bottomCenterOfGap = Vec3.atBottomCenterOf(gapPos);
+            Vec3 bottomCenterOfBelowGap = Vec3.atBottomCenterOf(gapPos.below(5));
+            BlockHitResult clip = this.level.clip(new ClipContext(bottomCenterOfGap, bottomCenterOfBelowGap, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, mob));
+
+            boolean isActualGap = stateAhead.isAir() && clip.getLocation().distanceTo(bottomCenterOfGap) >= 1.5;
+
+            // || !stateAhead.isSolidRender(this.level, gapPos)
+            if (isActualGap) {
+                for (int distance = 2; distance <= 4; distance++) {
+                    int jumpX = x + dir.getStepX() * (distance);
+                    int jumpZ = z + dir.getStepZ() * (distance);
                     BlockPos landPos = new BlockPos(jumpX, y + yOffset, jumpZ);
+                    BlockState belowLandPoseState = this.level.getBlockState(landPos.below());
 
-                    if (this.isWalkable(landPos)) {
-
-                        // 3. Triple-Clip Check (Start, Mid-Air, Landing)
-                        // We check if the entity's hitbox (based on current or swimming pose) fits throughout the jump.
-                        if (isPathClearForJump(gapPos.relative(Direction.UP, yOffset), landPos, dir)) {
-
+                    if (this.isWalkable(landPos) && belowLandPoseState.isFaceSturdy(level, landPos.below(), Direction.UP)) {
+                        if (isPathClearForJump(gapPos, landPos, dir)) {
                             Node node = this.getNode(landPos.getX(), landPos.getY(), landPos.getZ());
                             node.type = BlockPathTypes.WALKABLE;
 
-                            // 4. High Cost Penalty: Jumping is expensive so AI prefers walking if a bridge exists.
-                            node.costMalus = this.mob.getPathfindingMalus(node.type) + 20.0f;
+
+                            // Isso faz com que um desvio de até 20 blocos caminhando seja
+                            // preferível a um único pulo arriscado.
+                            float verticalPenalty = yOffset > 0 ? 15.0f : 0.0f;
+                            node.costMalus = this.mob.getPathfindingMalus(node.type) + 20f + verticalPenalty;
 
                             if (node instanceof IAdvancedNode advancedNode) {
                                 advancedNode.setJumpNode(true);
@@ -100,24 +104,34 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
     }
 
     private boolean isWalkable(BlockPos pos) {
-        // Reuse ChangedEntity logic to check if it fits (even in crawl pose)
-        /*
-        if (this.mob instanceof ChangedEntity ce) {
-            return AdvancedGroundPathNavigation.canEntityEnterPoseIn(ce, Pose.SWIMMING, Vec3.atBottomCenterOf(pos));
+        BlockPathTypes type = this.getCachedBlockType(this.mob, pos.getX(), pos.getY(), pos.getZ());
+        // Aceita se for caminhável ou ar, desde que o chão abaixo seja sólido ou passável
+        if (type == BlockPathTypes.WALKABLE || type == BlockPathTypes.OPEN) {
+            // Verifica se o bloco dos pés está livre
+            BlockState state = this.level.getBlockState(pos);
+            return state.isAir() || !state.isSolidRender(this.level, pos);
         }
-        */
-        BlockPathTypes cachedBlockType = this.getCachedBlockType(this.mob, pos.getX(), pos.getY(), pos.getZ());
-        return cachedBlockType == BlockPathTypes.WALKABLE;
+        return false;
     }
 
     /**
      * Performs a 3-point clearance check to ensure the entity doesn't hit its head or a wall mid-jump.
      */
     private boolean isPathClearForJump(BlockPos start, BlockPos end, Direction dir) {
-        //boolean belowClear = isSpaceEmpty(start.getCenter(), Vec3.atBottomCenterOf(end));
-        //boolean middleClear = isSpaceEmpty(start.getCenter().relative(Direction.UP, 1), Vec3.atBottomCenterOf(end));
-        boolean topClear = isSpaceEmpty(start.getCenter().relative(Direction.UP, 2), Vec3.atBottomCenterOf(end));
-        return topClear;//belowClear && middleClear && topClear;
+        Vec3 startVec = Vec3.atCenterOf(start);
+        Vec3 endVec = Vec3.atCenterOf(end);
+
+        // Raycast para garantir que a trajetória está vazia
+        // Usamos o ClipContext para checar se há colisores no caminho
+        BlockHitResult hit = this.level.clip(new ClipContext(
+                startVec,
+                endVec,
+                ClipContext.Block.COLLIDER,
+                ClipContext.Fluid.NONE,
+                this.mob
+        ));
+
+        return hit.getType() == HitResult.Type.MISS;
     }
 
     /**

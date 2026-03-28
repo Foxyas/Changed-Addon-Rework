@@ -44,10 +44,11 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
         if (mob instanceof ChangedEntity changedEntity) {
 
             // --- JUMP SPRINT / GAP DETECTION ---
-            double horizontalDist = nextNodePos.subtract(currentPos).horizontalDistance();
+            double distance = currentPos.distanceTo(nextNodePos);
 
             // If the next node is more than 1.2 blocks away horizontally, it's likely a Gap Node
-            if (horizontalDist > 1.2D && (path.getNextNode() instanceof IAdvancedNode advancedNode && advancedNode.isJumpNode()) && this.mob.onGround()) {
+            boolean isJumpNode = path.getNextNode() instanceof IAdvancedNode advancedNode && advancedNode.isJumpNode();
+            if (isJumpNode && distance >= 2 && this.mob.onGround()) {
                 this.mob.setSprinting(true);
                 this.mob.getJumpControl().jump();
 
