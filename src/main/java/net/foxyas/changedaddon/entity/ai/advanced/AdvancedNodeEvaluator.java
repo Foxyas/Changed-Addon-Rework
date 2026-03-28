@@ -114,10 +114,10 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
      * Performs a 3-point clearance check to ensure the entity doesn't hit its head or a wall mid-jump.
      */
     private boolean isPathClearForJump(BlockPos start, BlockPos end, Direction dir) {
-        boolean belowClear = isSpaceEmpty(start.getCenter(), Vec3.atBottomCenterOf(end));
-        boolean middleClear = isSpaceEmpty(start.getCenter().relative(Direction.UP, 1), Vec3.atBottomCenterOf(end));
+        //boolean belowClear = isSpaceEmpty(start.getCenter(), Vec3.atBottomCenterOf(end));
+        //boolean middleClear = isSpaceEmpty(start.getCenter().relative(Direction.UP, 1), Vec3.atBottomCenterOf(end));
         boolean topClear = isSpaceEmpty(start.getCenter().relative(Direction.UP, 2), Vec3.atBottomCenterOf(end));
-        return belowClear && middleClear && topClear;
+        return topClear;//belowClear && middleClear && topClear;
     }
 
     /**
