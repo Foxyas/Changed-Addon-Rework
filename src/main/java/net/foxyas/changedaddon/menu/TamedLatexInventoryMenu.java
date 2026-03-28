@@ -35,7 +35,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
     public final Player owner;
     public final ChangedEntity tamedLatex;
     public final Inventory inventory;
-    public final LatexInventory dlInventory;
+    public final LatexInventory latexInventory;
     public final AccessorySlots accessorySlots;
     private final TamableLatexEntityFavors iTamedLatex;
     private final Map<Integer, Slot> customSlots = new HashMap<>();
@@ -46,7 +46,7 @@ public class TamedLatexInventoryMenu extends AbstractContainerMenu {
         this.tamedLatex = tamedLatex.getSelf();
         this.iTamedLatex = tamedLatex;
         this.inventory = owner.getInventory();
-        this.dlInventory = tamedLatex.getInventory();
+        this.latexInventory = tamedLatex.getInventory();
         this.accessorySlots = AccessorySlots.getForEntity(owner).orElseGet(AccessorySlots::new);
         this.createSlots(inventory, tamedLatex.getInventory());
     }
