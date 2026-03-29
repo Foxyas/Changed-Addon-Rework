@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.entity.ai.advanced;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
@@ -20,10 +21,12 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 
 public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
 
@@ -33,12 +36,33 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
     public void prepare(@NotNull PathNavigationRegion pLevel, @NotNull Mob pMob) {
         super.prepare(pLevel, pMob);
         // Artificially reduce height during evaluation to allow nodes in tight spaces
-        this.entityHeight = Mth.floor(pMob.getDimensions(Pose.SWIMMING).height + 1);
+        // this.entityHeight = Mth.floor(pMob.getDimensions(Pose.SWIMMING).height + 1);
     }
 
     @Override
     public @NotNull BlockPathTypes getBlockPathType(@NotNull BlockGetter level, int x, int y, int z, @NotNull Mob mob) {
         return super.getBlockPathType(level, x, y, z, mob);
+    }
+
+    public @NotNull BlockPathTypes getBlockPathTypes(@NotNull BlockGetter pLevel, int pXOffset, int pYOffset, int pZOffset, @NotNull EnumSet<BlockPathTypes> pOutput, @NotNull BlockPathTypes pFallbackPathType, @NotNull BlockPos pPos) {
+        for (int i = 0; i < this.entityWidth; ++i) {
+            for (int j = 0; j < this.entityHeight - 1; ++j) {
+                for (int k = 0; k < this.entityDepth; ++k) {
+                    int l = i + pXOffset;
+                    int i1 = j + pYOffset;
+                    int j1 = k + pZOffset;
+                    BlockPathTypes blockpathtypes = this.getBlockPathType(pLevel, l, i1, j1);
+                    blockpathtypes = this.evaluateBlockPathType(pLevel, pPos, blockpathtypes);
+                    if (i == 0 && j == 0 && k == 0) {
+                        pFallbackPathType = blockpathtypes;
+                    }
+
+                    pOutput.add(blockpathtypes);
+                }
+            }
+        }
+
+        return pFallbackPathType;
     }
 
     @Override
@@ -49,7 +73,7 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
         // não permitimos que ele gere OUTRO nó de pulo como vizinho imediato.
         boolean isCurrentlyJumping = pNode instanceof IAdvancedNode advNode && advNode.isJumpNode();
 
-        for (Direction direction : Direction.values()) {
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
             Node jumpNode = this.getJumpNeighbor(pNode.x + direction.getStepX(), pNode.y + direction.getStepY(), pNode.z + direction.getStepZ(), direction);
             if (jumpNode != null && !jumpNode.closed && i < pNeighborNodes.length) {
                 if (isCurrentlyJumping) {
@@ -88,7 +112,7 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
                     if (this.isWalkable(landPos) && belowLandPoseState.isFaceSturdy(level, landPos.below(), Direction.UP)) {
                         if (isPathClearForJump(gapPos, landPos, dir)) {
                             Node node = this.getNode(landPos.getX(), landPos.getY(), landPos.getZ());
-                            node.type = BlockPathTypes.WALKABLE;
+                            node.type = getBlockPathType(level, node.x, node.y, node.z);
 
 
                             // Isso faz com que um desvio de até 20 blocos caminhando seja
@@ -321,7 +345,7 @@ public class AdvancedNodeEvaluator extends WalkNodeEvaluator {
             Vec3 target = Vec3.atBottomCenterOf(node.asBlockPos());
             // If the entity fits in ANY pose, consider it reachable
             for (Pose pose : poses) {
-                if (AdvancedGroundPathNavigation.canEntityEnterPoseIn(changedMob, pose, target)) {
+                if (super.canReachWithoutCollision(node) || AdvancedGroundPathNavigation.canEntityEnterPoseIn(changedMob, pose, target)) {
                     return true;
                 }
             }

@@ -6,6 +6,8 @@
   "refmap": "changed_addon.refmap.json",
   "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
   "mixins": [
+    "entity.LivingEntityAccessor",
+    "level.pathfinder.PathNavigationAccessor",
     "mods.nean.AvaliElytraAnimationMixin"
   ],
   "injectors": {

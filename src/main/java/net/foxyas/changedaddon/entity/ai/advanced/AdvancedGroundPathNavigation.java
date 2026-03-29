@@ -51,6 +51,12 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
             //nextNode = path.getNode(Mth.clamp(path.getNextNodeIndex() + 1, 0, path.getNodeCount() - 1));
 
             boolean isJumpNode = nextNode instanceof IAdvancedNode advancedNode && advancedNode.isJumpNode();
+
+            if (isJumpNode && distance <= 2 && !this.mob.onGround()) {
+                this.mob.setSprinting(false);
+                this.mob.setDeltaMovement(this.mob.getDeltaMovement().scale(0.85));
+            }
+
             if (isJumpNode && distance >= 2 && this.mob.onGround() && !this.mob.horizontalCollision) {
                 Vec3 velocity = this.mob.getDeltaMovement();
                 Vec3 lookAngle = this.mob.getLookAngle();
@@ -91,11 +97,6 @@ public class AdvancedGroundPathNavigation extends GroundPathNavigation {
         }
 
         super.tick();
-    }
-
-    @Override
-    protected boolean canMoveDirectly(@NotNull Vec3 pPosVec31, @NotNull Vec3 pPosVec32) {
-        return super.canMoveDirectly(pPosVec31, pPosVec32);
     }
 
     /**

@@ -1,11 +1,15 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
+import net.foxyas.changedaddon.entity.ai.advanced.AdvancedGroundPathNavigation;
+import net.foxyas.changedaddon.entity.ai.advanced.CrawlLeaperGroundPathNavigation;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.debug.PathfindingRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -17,10 +21,12 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -124,6 +130,23 @@ public class FengQIWolfEntity extends AbstractCanTameChangedEntityFavors impleme
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
+
+    @Override
+    protected @NotNull PathNavigation createNavigation(@NotNull Level pLevel) {
+        return new CrawlLeaperGroundPathNavigation(this, level);
+    }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        Path path = this.navigation.getPath();
+        if (path != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            PathfindingRenderer pathfindingRenderer = minecraft.debugRenderer.pathfindingRenderer;
+            pathfindingRenderer.addPath(getId(), path, 1f);
+        }
+    }
+
 
     @Override
     protected void registerGoals() {
