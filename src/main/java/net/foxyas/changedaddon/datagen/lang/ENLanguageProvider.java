@@ -222,7 +222,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addAbility("wither_wave", "Wither Wave");
         addAbility("teleport", "Teleport");
         addAbility("unfuse", "Unfuse");
-        addAbility("unfuse.description.line1", "Allows the player to unfuse from the slime creature and summon it for battle");
+        addAbility("unfuse.description.line1", "Allows the player to unfuse from the latex creature and summon it for battle");
         addAbility("unfuse.description.line2", "The creature can be fused back by interacting while holding shift");
         addAbility("wind_control", "Wind Control");
         addAbility("wind_control.desc", "Allows The player to use the Wind to boost theyself or others");
