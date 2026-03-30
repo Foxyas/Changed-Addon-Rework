@@ -2,7 +2,6 @@ package net.zaharenko424.cmrs;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.foxyas.changedaddon.client.gui.BestiaryScreen;
-import net.foxyas.changedaddon.client.gui.ftkc.CircleHoverMinigameScreen;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.process.DEBUG;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
@@ -16,10 +15,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.zaharenko424.cmrs.client.gui.LayoutHelper;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
@@ -29,18 +26,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
+//@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
 public class Test {
 
     @SubscribeEvent
     public static void a(InputEvent.Key event) {
-        if (event.getKey() == InputConstants.KEY_M) {
-            Minecraft minecraft = Minecraft.getInstance();
-            minecraft.setScreen(new CircleHoverMinigameScreen());
-            if (minecraft.screen != null) return;
-            return;
-        }
-
         if (event.getKey() != InputConstants.KEY_I && event.getKey() != InputConstants.KEY_O) return;
 
         Minecraft minecraft = Minecraft.getInstance();
