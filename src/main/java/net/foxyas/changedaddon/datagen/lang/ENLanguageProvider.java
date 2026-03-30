@@ -685,6 +685,12 @@ public class ENLanguageProvider extends LanguageProvider {
         addCommand("alpha.get.fail", "Target does not support Alpha gene");
         addCommand("alpha_scale.set.success", "Alpha scale set to %s for %s entities");
         addCommand("alpha_scale.get.success", "Alpha scale: %s");
+        addCommand("ftkMinigame.set.success", "FTKC parameters successfully initialized for %s target(s).");
+        addCommand("ftkMinigame.set.fail", "Command execution failed: No eligible transfur subjects identified in selection.");
+        addCommand("ftkMinigame.get.has", "Active cognitive lock detected: %s.");
+        addCommand("ftkMinigame.get.hasnt", "No active FTKC state detected for the specified subject.");
+        addCommand("ftkMinigame.reset.success", "FTKC state has been purged for %s target(s).");
+        addCommand("ftkMinigame.reset.fail", "Command execution failed: No eligible transfur subjects identified in selection.");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Pats received");

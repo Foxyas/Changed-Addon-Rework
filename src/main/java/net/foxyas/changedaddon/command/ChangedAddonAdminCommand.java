@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -16,6 +17,7 @@ import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
+import net.foxyas.changedaddon.qte.FightToKeepConsciousness.MinigameType;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.data.AccessorySlots;
@@ -55,6 +57,9 @@ public class ChangedAddonAdminCommand {
 
     private static final int MAX_OUTPUT = 20; // max lines to show
 
+    public static final LiteralArgumentBuilder<CommandSourceStack> COMMAND_ROOT = Commands.literal("changed-addon-admin")
+            .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS));
+
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         ArgumentBuilder<CommandSourceStack, ?> untfImmunity = Commands.argument("target", EntityArgument.players())
                 .then(Commands.argument("value", BoolArgumentType.bool())
@@ -64,8 +69,83 @@ public class ChangedAddonAdminCommand {
                         )
                 );
 
-        LiteralCommandNode<CommandSourceStack> mainCommand = dispatcher.register(Commands.literal("changed-addon-admin")
-                .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS))
+
+        ArgumentBuilder<CommandSourceStack, ?> getFightToKeepConscience = Commands.argument("target", EntityArgument.player())
+                .executes(context -> {
+                    ServerPlayer target = EntityArgument.getPlayer(context, "target");
+                    ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.of(target);
+                    if (!ProcessTransfur.isPlayerTransfurred(target) || playerVariables == null || playerVariables.FTKCminigameType == null) {
+                        context.getSource().sendFailure(Component.translatable("commands.changed_addon.ftkMinigame.get.hasnt"));
+                        return 0;
+                    }
+                    MinigameType ftkCminigameType = playerVariables.FTKCminigameType;
+                    context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.ftkMinigame.get.has", ftkCminigameType), false);
+                    return 1;
+                });
+
+        ArgumentBuilder<CommandSourceStack, ?> setFightToKeepConscience = Commands.argument("targets", EntityArgument.players())
+                .then(Commands.argument("type", EnumArgument.enumArgument(MinigameType.class))
+                        .executes(context -> {
+                            Collection<ServerPlayer> targets = EntityArgument.getPlayers(context, "targets");
+                            MinigameType minigameType = context.getArgument("type", MinigameType.class);
+                            boolean single = targets.size() < 2;
+
+                            int resultInt = 0;
+
+                            for (ServerPlayer target : targets) {
+                                if (!ProcessTransfur.isPlayerTransfurred(target)) {
+                                    continue;
+                                }
+
+                                ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.of(target);
+                                if (playerVariables == null) {
+                                    continue;
+                                }
+
+                                playerVariables.FTKCminigameType = minigameType;
+                                playerVariables.syncPlayerVariables(target);
+                                resultInt++;
+                            }
+
+                            if (resultInt > 0) {
+                                int finalResultInt = resultInt;
+                                context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.ftkMinigame.set.success", finalResultInt), true);
+                            } else {
+                                context.getSource().sendFailure(Component.translatable("commands.changed_addon.ftkMinigame.set.fail"));
+                            }
+
+                            return resultInt;
+                        })
+                )
+                .then(Commands.literal("reset").executes(context -> {
+                    Collection<ServerPlayer> targets = EntityArgument.getPlayers(context, "targets");
+                    boolean single = targets.size() < 2;
+                    int resultInt = 0;
+                    for (ServerPlayer target : targets) {
+                        if (!ProcessTransfur.isPlayerTransfurred(target)) {
+                            continue;
+                        }
+
+                        ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.of(target);
+                        if (playerVariables == null) {
+                            continue;
+                        }
+
+                        playerVariables.FTKCminigameType = null;
+                        playerVariables.syncPlayerVariables(target);
+                        resultInt++;
+                    }
+
+                    if (resultInt > 0) {
+                        int finalResultInt = resultInt;
+                        context.getSource().sendSuccess(() -> Component.translatable("commands.changed_addon.ftkMinigame.reset.success", finalResultInt), true);
+                    } else {
+                        context.getSource().sendFailure(Component.translatable("commands.changed_addon.ftkMinigame.reset.success"));
+                    }
+
+                    return resultInt;
+                }));
+        LiteralCommandNode<CommandSourceStack> mainCommand = dispatcher.register(COMMAND_ROOT
                 .then(Commands.literal("alphaGene")
                         .then(Commands.literal("setEntityAlphaGene")
                                 .then(Commands.argument("targets", EntityArgument.entities())
@@ -268,11 +348,28 @@ public class ChangedAddonAdminCommand {
                 .then(Commands.literal("untfImmunity")
                         .then(untfImmunity)
                 )
+                .then(Commands.literal("FtkMinigame")
+                        .then(Commands.literal("set")
+                                .then(setFightToKeepConscience)
+                        )
+                        .then(Commands.literal("get")
+                                .then(getFightToKeepConscience)
+                        )
+                )
         );
 
         dispatcher.register(Commands.literal("alphaGeneHandle")
                 .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .redirect(mainCommand.getChild("alphaGene")));
+
+        dispatcher.register(Commands.literal("FtkMinigame")
+                .requires(s -> s.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .redirect(mainCommand.getChild("FtkMinigame"))
+        );
+    }
+
+    private static int setMinigameType(CommandSourceStack commandSourceStack) {
+        return 0;
     }
 
     private static int untfImmunity(CommandSourceStack stack, Collection<ServerPlayer> targets, boolean value, UntransfurEvent.UntransfurType type) {

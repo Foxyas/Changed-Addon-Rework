@@ -38,7 +38,11 @@ public class CircleHoverMinigameScreen extends CircleMinigameScreen {
 
         struggleProgressO = struggleProgress;
 
+        // Normal Mouse Offset happen each 2 ticks.
         if (player.tickCount % 2 == 0) cursor.add((player.getRandom().nextFloat() - .5f) * 16, (player.getRandom().nextFloat() - .5f) * 16);
+
+        // Heavy Offset happen each 80 ticks.
+        if (player.tickCount % 80 == 0) cursor.add((player.getRandom().nextFloat() - .5f) * 64, (player.getRandom().nextFloat() - .5f) * 64);
 
         float scale = circleScale();
         if (cursor.distanceSquared(circle) <= INTERACTION_RADIUS_SQR * scale * scale) {

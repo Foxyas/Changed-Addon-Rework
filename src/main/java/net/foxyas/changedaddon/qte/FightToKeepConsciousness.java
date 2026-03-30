@@ -10,10 +10,12 @@ import net.foxyas.changedaddon.procedure.SummonEntityProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
@@ -28,6 +30,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
@@ -129,7 +132,7 @@ public class FightToKeepConsciousness {
         DamageSource source = ChangedAddonDamageSources.CONSCIENCE_LOSE.source(player.level());
         player.hurt(new DamageSource(source.typeHolder()) {
             @Override
-            public boolean is(TagKey<DamageType> pDamageTypeKey) {
+            public boolean is(@NotNull TagKey<DamageType> pDamageTypeKey) {
                 if (pDamageTypeKey == DamageTypeTags.BYPASSES_ARMOR) return true;
                 return super.is(pDamageTypeKey);
             }
@@ -138,17 +141,45 @@ public class FightToKeepConsciousness {
     }
 
     public enum MinigameType {
-        MOUSE_PULL(3.5f, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_PULL()),
-        MOUSE_CIRCLE_PULL(4.5f, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_CIRCLE_PULL()),
+        MOUSE_PULL(3.5f, ChangedSounds.TRANSFUR_BY_LATEX.get(), FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_PULL()),
+        MOUSE_CIRCLE_PULL(4.5f, ChangedSounds.TRANSFUR_BY_LATEX.get(), FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_CIRCLE_PULL()),
         KEY_PRESS(1, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.KEY_PRESS()),
         CIRCLE_HOVER(0.5f, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.CIRCLE_HOVER());
 
         public final Supplier<Screen> screen;
         public final float progressAmount;
+        @Nullable
+        public final SoundEvent struggleSound;
+        @Nullable
+        public final SoundEvent successSound;
 
         MinigameType(float progressAmount, Supplier<Screen> supplier) {
             this.screen = supplier;
             this.progressAmount = progressAmount;
+            this.struggleSound = null;
+            this.successSound = null;
+        }
+
+        MinigameType(float progressAmount, @Nullable SoundEvent struggleSound, Supplier<Screen> supplier) {
+            this.screen = supplier;
+            this.progressAmount = progressAmount;
+            this.struggleSound = struggleSound;
+            this.successSound = struggleSound;
+        }
+
+        MinigameType(float progressAmount, @Nullable SoundEvent struggleSound, @Nullable SoundEvent successSound, Supplier<Screen> supplier) {
+            this.screen = supplier;
+            this.progressAmount = progressAmount;
+            this.struggleSound = struggleSound;
+            this.successSound = successSound;
+        }
+
+        public @Nullable SoundEvent getStruggleSound() {
+            return struggleSound;
+        }
+
+        public @Nullable SoundEvent getSuccessSound() {
+            return successSound;
         }
 
         public static MinigameType getRandom(RandomSource random) {
