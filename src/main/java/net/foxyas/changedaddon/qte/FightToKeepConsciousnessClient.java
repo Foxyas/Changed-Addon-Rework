@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.qte;
 
+import net.foxyas.changedaddon.client.gui.ftkc.CircleHoverMinigameScreen;
 import net.foxyas.changedaddon.client.gui.ftkc.KeyPressMinigameScreen;
 import net.foxyas.changedaddon.client.gui.ftkc.MouseCirclePullMinigameScreen;
 import net.foxyas.changedaddon.client.gui.ftkc.MousePullMinigameScreen;
@@ -21,5 +22,9 @@ public class FightToKeepConsciousnessClient {
 
     static Supplier<Screen> KEY_PRESS() {
         return KeyPressMinigameScreen::new;
+    }
+
+    static Supplier<Screen> CIRCLE_HOVER() {
+        return CircleHoverMinigameScreen::new;
     }
 }

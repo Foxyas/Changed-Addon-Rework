@@ -140,7 +140,8 @@ public class FightToKeepConsciousness {
     public enum MinigameType {
         MOUSE_PULL(3.5f, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_PULL()),
         MOUSE_CIRCLE_PULL(4.5f, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_CIRCLE_PULL()),
-        KEY_PRESS(1, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.KEY_PRESS());
+        KEY_PRESS(1, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.KEY_PRESS()),
+        CIRCLE_HOVER(0.5f, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.CIRCLE_HOVER());
 
         public final Supplier<Screen> screen;
         public final float progressAmount;
