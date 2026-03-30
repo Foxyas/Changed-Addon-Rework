@@ -27,6 +27,10 @@ import net.minecraftforge.network.PacketDistributor;
 public interface IGrabberEntity {
 
 
+    interface IGrabberCondition {
+        boolean isAffectedByGrab();
+    }
+
     interface IConditionalGrabber {
         boolean canCauseGrabDamage();
     }
@@ -199,6 +203,9 @@ public interface IGrabberEntity {
             return false;
         }
         if (this instanceof ChangedEntity changedEntity) {
+            if (changedEntity.getUnderlyingPlayer() != null) {
+                return false;
+            }
             if (changedEntity instanceof IAlphaAbleEntity alphaAbleEntity) return alphaAbleEntity.isAlpha();
         }
         return selfType.is(ChangedAddonTags.EntityTypes.CAN_GRAB) || isAbleToGrab();

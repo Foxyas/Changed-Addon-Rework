@@ -79,6 +79,11 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     private void initHook(EntityType<? extends Monster> type, Level level, CallbackInfo ci) {
         if (ChangedAddonServerConfiguration.CAN_GRABBY_ENTITIES_SPAWN.get()) {
             if (this.getSelfVariant() != null) {
+                ChangedEntity self = (ChangedEntity) (Object) this;
+                if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
+                    return;
+                }
+
                 List<? extends AbstractAbility<?>> listOfAbilities = this.getSelfVariant().abilities.stream().map((entityTypeFunction -> entityTypeFunction.apply(type))).toList();
                 if (listOfAbilities.contains(ChangedAbilities.GRAB_ENTITY_ABILITY.get())) {
                     this.setCanUseGrab(level.getRandom().nextFloat() <= ChangedAddonServerConfiguration.GRABBY_ENTITIES_SPAWN_CHANCE.get()); // Just for fail-safe
@@ -118,6 +123,10 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
     @Inject(at = @At("TAIL"), method = "registerGoals", remap = true, cancellable = true)
     private void goalsHook(CallbackInfo ci) {
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
+            return;
+        }
         this.goalSelector.addGoal(10, new MayDropGrabbedEntityGoal(this));
         this.goalSelector.addGoal(10, new MayGrabTargetGoal(this));
         this.goalSelector.addGoal(10, new MayCauseGrabDamageGoal(this));
@@ -126,7 +135,13 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
     @Override
     public boolean canEntityGrab(EntityType<?> selfType, Level level) {
         ChangedEntity self = (ChangedEntity) (Object) this;
+        if (self instanceof IGrabberCondition iGrabberCondition && !iGrabberCondition.isAffectedByGrab()) {
+            return false;
+        }
         if (self.getEntityShape() == EntityShape.FERAL) {
+            return false;
+        }
+        if (this.getUnderlyingPlayer() != null) {
             return false;
         }
 
@@ -297,7 +312,7 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 
     @ModifyReturnValue(method = "getAbilityInstance", at = @At("RETURN"))
     private <A extends AbstractAbilityInstance> A getAbilityInstanceHook(A original, AbstractAbility<A> ability) {
-        if (canEntityGrab(this.getType(), level))
+        if (canEntityGrab(this.getType(), level) && original == null)
             return (A) (this.grabEntityAbilityInstance != null && ability == this.grabEntityAbilityInstance.ability ? this.grabEntityAbilityInstance : original);
         return original;
     }

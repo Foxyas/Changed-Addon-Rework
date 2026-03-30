@@ -10,7 +10,6 @@ import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.AbstractKatanaItem;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
-import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.data.AccessorySlotType;
 import net.ltxprogrammer.changed.data.AccessorySlots;
@@ -138,7 +137,7 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
     }*/
 
     @Inject(method = "attack", at = @At("HEAD"))
-    private void CustomClawSweepAttack(Entity entity, CallbackInfo ci) {
+    private void customClawSweepAttack(Entity entity, CallbackInfo ci) {
         //System.out.println("O attack foi disparado!");
         Player player = (Player) (Object) this;
         //System.out.println("O ataque foi feito por um jogador: " + player.getName().getString());
@@ -148,8 +147,8 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
         ProcessTransfur.getPlayerTransfurVariantSafe(player).ifPresent((variantInstance -> {
             AbstractAbilityInstance abilityInstance = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get());
             if (abilityInstance != null) {
-                AbstractAbility<?> clawAbility = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get()).ability;
-                if (clawAbility instanceof ClawsAbility ability && ability.isActive && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                ClawsAbility.Data clawAbility = variantInstance.getAbilityInstance(ChangedAddonAbilities.CLAWS.get());
+                if (clawAbility.isActive && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
                     //System.out.println("Habilidade ativada!");
                     // ⚔ Área de efeito: Raio de 1.5 blocos ao redor do alvo
                     double radius = 1;
