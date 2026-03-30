@@ -6,9 +6,11 @@ import net.foxyas.changedaddon.init.ChangedAddonVillagerProfessions;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.common.BasicItemListing;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,16 +27,15 @@ public class ChangedAddonTrades {
     public static void registerTrades(VillagerTradesEvent event) {
         if (event.getType() != ChangedAddonVillagerProfessions.SCIENTIST.get()) return;
 
-        Random PriceRandom = new Random();
         Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
 
         // Level 1 Trades
         List<VillagerTrades.ItemListing> list = trades.get(1);
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 1), new ItemStack(ChangedAddonItems.LUMINARA_BLOOM.get(), 1 + PriceRandom.nextInt(3)), 8, 10, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 1), new ItemStack(ChangedAddonItems.LUMINARA_BLOOM.get(), 1 + random.nextInt(3)), 8, 10, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 1), new ItemStack(ChangedAddonItems.IMPURE_AMMONIA.get(), 1), new ItemStack(ChangedAddonItems.AMMONIA_PARTICLE.get(), 6), 8, 10, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 4), new ItemStack(ChangedAddonItems.ANTI_LATEX_BASE.get()), 12, 5, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 3 + PriceRandom.nextInt(3)), new ItemStack(ChangedItems.LATEX_BASE.get(), 1 + PriceRandom.nextInt(4)), 12, 5, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(ChangedItems.LATEX_BASE.get(), 2), new ItemStack(Items.EMERALD, 1 + PriceRandom.nextInt(3)), 12, 5, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 3 + random.nextInt(3)), new ItemStack(ChangedItems.LATEX_BASE.get(), 1 + random.nextInt(4)), 12, 5, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(ChangedItems.LATEX_BASE.get(), 2), new ItemStack(Items.EMERALD, 1 + random.nextInt(3)), 12, 5, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.IRON_INGOT, 1), new ItemStack(ChangedItems.SYRINGE.get(), 4), 12, 5, 0.02f));
         list.add(new BasicItemListing(new ItemStack(ChangedItems.SYRINGE.get(), 8), new ItemStack(Items.EMERALD, 1), 8, 5, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 4), new ItemStack(ChangedAddonItems.IMPURE_AMMONIA.get(), 2), 16, 15, 0.02f));
@@ -75,19 +76,19 @@ public class ChangedAddonTrades {
         DarkLaethinSyringe.setTag(darkLatexLaethin);
 
         list = trades.get(4);
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 12 + PriceRandom.nextInt(11)), Laethin, 8, 18, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 12 + PriceRandom.nextInt(11)), DarkLaethin, 8, 18, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 7 + PriceRandom.nextInt(11)), new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(), 1), 12, 25, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 10 + PriceRandom.nextInt(11)), LaethinSyringe, 8, 25, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 10 + PriceRandom.nextInt(11)), DarkLaethinSyringe, 8, 25, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 8 + PriceRandom.nextInt(11)), new ItemStack(Items.REDSTONE, 16 + PriceRandom.nextInt(6)), new ItemStack(ChangedAddonItems.UNIFUSER.get()), 8, 20, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 4 + PriceRandom.nextInt(11)), new ItemStack(Items.IRON_INGOT, 1 + PriceRandom.nextInt(6)), new ItemStack(ChangedBlocks.INFUSER.get().asItem()), 8, 20, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 8 + PriceRandom.nextInt(11)), new ItemStack(Items.REDSTONE, 8 + PriceRandom.nextInt(6)), new ItemStack(ChangedAddonItems.CATALYZER.get()), 8, 20, 0.02f));
-        list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 8 + PriceRandom.nextInt(11)), new ItemStack(Items.IRON_INGOT, 4 + PriceRandom.nextInt(6)), new ItemStack(ChangedBlocks.PURIFIER.get().asItem()), 8, 20, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 12 + random.nextInt(11)), Laethin, 8, 18, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 12 + random.nextInt(11)), DarkLaethin, 8, 18, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 7 + random.nextInt(11)), new ItemStack(ChangedAddonItems.SYRINGE_WITH_LITIX_CAMMONIA.get(), 1), 12, 25, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 10 + random.nextInt(11)), LaethinSyringe, 8, 25, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 10 + random.nextInt(11)), DarkLaethinSyringe, 8, 25, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 8 + random.nextInt(11)), new ItemStack(Items.REDSTONE, 16 + random.nextInt(6)), new ItemStack(ChangedAddonItems.UNIFUSER.get()), 8, 20, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 4 + random.nextInt(11)), new ItemStack(Items.IRON_INGOT, 1 + random.nextInt(6)), new ItemStack(ChangedBlocks.INFUSER.get().asItem()), 8, 20, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 8 + random.nextInt(11)), new ItemStack(Items.REDSTONE, 8 + random.nextInt(6)), new ItemStack(ChangedAddonItems.CATALYZER.get()), 8, 20, 0.02f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(Items.EMERALD, 8 + random.nextInt(11)), new ItemStack(Items.IRON_INGOT, 4 + random.nextInt(6)), new ItemStack(ChangedBlocks.PURIFIER.get().asItem()), 8, 20, 0.02f));
 
         // Level 5 Trades
         list = trades.get(5);
-        list.add(new BasicItemListing(new ItemStack(ChangedAddonItems.PAINITE.get()), new ItemStack(Items.EMERALD, 24 + PriceRandom.nextInt(10)), 6, 35, 0.15f));
+        list.add((entity, random) -> new MerchantOffer(new ItemStack(ChangedAddonItems.PAINITE.get()), new ItemStack(Items.EMERALD, 24 + random.nextInt(10)), 6, 35, 0.15f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD, 32), new ItemStack(ChangedAddonItems.SIGNAL_BLOCK.get()), 6, 10, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD), new ItemStack(ChangedAddonItems.DORMANT_DARK_LATEX.get()), 16, 20, 0.02f));
         list.add(new BasicItemListing(new ItemStack(Items.EMERALD), new ItemStack(ChangedAddonItems.DORMANT_WHITE_LATEX.get()), 16, 20, 0.02f));

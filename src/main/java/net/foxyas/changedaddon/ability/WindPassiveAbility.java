@@ -78,12 +78,12 @@ public class WindPassiveAbility extends SimpleAbility {
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
         if (!entity.getLevel().isClientSide()) {
-            TurnOnPassive(entity);
+            turnPassiveOn(entity);
             this.setDirty(entity);
         }
     }
 
-    public void TurnOnPassive(IAbstractChangedEntity entity) {
+    public void turnPassiveOn(IAbstractChangedEntity entity) {
         this.isActive = !this.isActive;
         entity.displayClientMessage(this.isActive ?
                         Component.translatable("ability.changed_addon.passive.toggle.on") :

@@ -1,10 +1,9 @@
 package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
-import net.foxyas.changedaddon.init.ChangedAddonTags;
+import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.ability.SimpleAbility;
 import net.ltxprogrammer.changed.client.AbilityColors;
 import net.ltxprogrammer.changed.client.gui.AbstractRadialScreen;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -17,11 +16,64 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-public class ClawsAbility extends SimpleAbility {
-    public boolean isActive = false;
+public class ClawsAbility extends AbstractAbility<ClawsAbility.Data> {
 
     public ClawsAbility() {
-        super();
+        super(Data::new);
+    }
+
+    public static class Data extends AbstractAbilityInstance {
+        public boolean isActive = false;
+
+        public Data(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
+            super(ability, entity);
+        }
+
+        @Override
+        public boolean canUse() {
+            return true;
+        }
+
+        @Override
+        public boolean canKeepUsing() {
+            return canUse();
+        }
+
+        @Override
+        public void startUsing() {
+            if (!entity.getLevel().isClientSide()) {
+                activateClaws();
+                this.ability.setDirty(entity);
+            }
+        }
+
+        public void activateClaws() {
+            this.isActive = !this.isActive;
+        }
+
+        @Override
+        public void tick() {
+
+        }
+
+        @Override
+        public void stopUsing() {
+
+        }
+
+        @Override
+        public void saveData(CompoundTag tag) {
+            super.saveData(tag);
+            tag.putBoolean("isActive", isActive);
+        }
+
+        @Override
+        public void readData(CompoundTag tag) {
+            super.readData(tag);
+            if (tag.contains("isActive")) {
+                this.isActive = tag.getBoolean("isActive");
+            }
+        }
     }
 
     public static Optional<Integer> getColor(AbstractAbilityInstance abilityInstance, int layer) {
@@ -67,20 +119,6 @@ public class ClawsAbility extends SimpleAbility {
         return Optional.empty();
     }
 
-    @Override
-    public void saveData(CompoundTag tag, IAbstractChangedEntity entity) {
-        super.saveData(tag, entity);
-        tag.putBoolean("isActive", isActive);
-    }
-
-    @Override
-    public void readData(CompoundTag tag, IAbstractChangedEntity entity) {
-        super.readData(tag, entity);
-        if (tag.contains("isActive")) {
-            this.isActive = tag.getBoolean("isActive");
-        }
-    }
-
     public ResourceLocation getTexture(IAbstractChangedEntity entity) {
         return ResourceLocation.parse("changed_addon:textures/screens/paw_with_claws.png");
     }
@@ -105,33 +143,5 @@ public class ClawsAbility extends SimpleAbility {
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
         return 2;
-    }
-
-    @Override
-    public boolean canUse(IAbstractChangedEntity entity) {
-        if (entity.getTransfurVariantInstance() == null) {
-            return false;
-        }
-        return entity.getTransfurVariantInstance().getParent().getEntityType().is(ChangedAddonTags.EntityTypes.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
-    }
-
-    @Override
-    public boolean canKeepUsing(IAbstractChangedEntity entity) {
-        if (entity.getTransfurVariantInstance() == null) {
-            return false;
-        }
-        return entity.getTransfurVariantInstance().getParent().getEntityType().is(ChangedAddonTags.EntityTypes.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.HAS_CLAWS) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.CAT_LIKE) || entity.getTransfurVariantInstance().getParent().is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
-    }
-
-    @Override
-    public void startUsing(IAbstractChangedEntity entity) {
-        if (!entity.getLevel().isClientSide()) {
-            TurnOnClaws();
-            this.setDirty(entity);
-        }
-    }
-
-    public void TurnOnClaws() {
-        this.isActive = !this.isActive;
     }
 }

@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen.worldgen;
 
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonFeatures;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
@@ -71,9 +72,8 @@ public class ConfiguredFeatureProvider {
                         ChangedAddonBlocks.DEEPSLATE_PAINITE_ORE.get().defaultBlockState()
                 )
         );
-
         register(context, PAINITE_ORE_CONFIG,
-                Feature.ORE,
+                ChangedAddonFeatures.PAINITE_ORE.get(),
                 new OreConfiguration(painiteTargets, 6, 1)
         );
 

@@ -2,11 +2,9 @@ package net.foxyas.changedaddon.ability;
 
 import net.foxyas.changedaddon.entity.advanced.LatexSnepEntity;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
@@ -23,7 +21,7 @@ public class LeapAbility extends SimpleAbility {
         super();
     }
 
-    private static void leapAbility(Entity entity, IAbstractChangedEntity iAbstractChangedEntity) {
+    private static void makeEntityLeap(Entity entity, IAbstractChangedEntity iAbstractChangedEntity) {
         if (!(entity instanceof Player player) || player.getFoodData().getFoodLevel() <= 6) {
             return;
         }
@@ -110,9 +108,7 @@ public class LeapAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        TransfurVariant<?> variant = entity.getChangedEntity().getSelfVariant();
-        return variant.is(ChangedAddonTags.TransfurTypes.CAT_LIKE) ||
-                variant.is(ChangedAddonTags.TransfurTypes.LEOPARD_LIKE);
+        return true;
     }
 
     @Override
@@ -135,6 +131,6 @@ public class LeapAbility extends SimpleAbility {
 
     @Override
     public void startUsing(IAbstractChangedEntity entity) {
-        leapAbility(entity.getEntity(), entity);
+        makeEntityLeap(entity.getEntity(), entity);
     }
 }
