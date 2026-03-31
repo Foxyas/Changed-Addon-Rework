@@ -480,7 +480,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     private void maybeSendReactionToPlayer(DamageSource source) {
         if (source.getEntity() instanceof Player player) {
-            if (this.level().random.nextFloat() <= 0.25f) {
+            if (this.random.nextFloat() <= 0.25f) {
                 if (source.is(DamageTypeTags.IS_PROJECTILE)) {
                     player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks"), true);
                 } else if (source.is(DamageTypeTags.IS_FIRE)) {

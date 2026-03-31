@@ -101,9 +101,9 @@ public abstract class AbstractTraderChangedEntityWithInventory extends AbstractT
                 if (!stack.isEmpty()) {
                     ItemEntity itemEntity = new ItemEntity(level, this.getX(), this.getY() + 0.5, this.getZ(), stack.copy());
                     itemEntity.setDeltaMovement(
-                            (level.random.nextDouble() - 0.5) * 0.2,
+                            (random.nextDouble() - 0.5) * 0.2,
                             0.2,
-                            (level.random.nextDouble() - 0.5) * 0.2
+                            (random.nextDouble() - 0.5) * 0.2
                     );
                     level.addFreshEntity(itemEntity);
                     this.setItemSlot(equipmentSlot, ItemStack.EMPTY);
@@ -239,9 +239,9 @@ public abstract class AbstractTraderChangedEntityWithInventory extends AbstractT
             if (!stack.isEmpty()) {
                 ItemEntity itemEntity = new ItemEntity(level, this.getX(), this.getY() + 0.5, this.getZ(), stack.copy());
                 itemEntity.setDeltaMovement(
-                        (level.random.nextDouble() - 0.5) * 0.2,
+                        (random.nextDouble() - 0.5) * 0.2,
                         0.2,
-                        (level.random.nextDouble() - 0.5) * 0.2
+                        (random.nextDouble() - 0.5) * 0.2
                 );
                 level.addFreshEntity(itemEntity);
                 this.inventory.setItem(i, ItemStack.EMPTY);

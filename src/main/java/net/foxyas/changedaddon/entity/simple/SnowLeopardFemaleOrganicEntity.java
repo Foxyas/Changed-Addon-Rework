@@ -119,7 +119,7 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameSnepChangedEn
 
     @Override
     public TransfurMode getTransfurMode() {
-        if (level.random.nextInt() > 5) {
+        if (random.nextInt() > 5) {
             return TransfurMode.ABSORPTION;
         }
         return TransfurMode.REPLICATION;
@@ -132,7 +132,7 @@ public class SnowLeopardFemaleOrganicEntity extends AbstractCanTameSnepChangedEn
 
     @Override
     public HairStyle getDefaultHairStyle() {
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             return HairStyle.LONG_MESSY.get();
         }
         return HairStyle.LONG_KEPT.get();

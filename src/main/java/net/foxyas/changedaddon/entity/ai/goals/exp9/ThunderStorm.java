@@ -29,7 +29,7 @@ public class ThunderStorm extends Goal {
         }
 
         if (!boss.getCombatTracker().takingDamage) {
-            return boss.level.random.nextFloat() <= 0.05f;
+            return boss.getRandom().nextFloat() <= 0.05f;
         }
 
         LivingEntity target = this.getTarget();
@@ -37,7 +37,7 @@ public class ThunderStorm extends Goal {
             double distance = this.boss.distanceTo(target);
             return distance <= 6;
         }
-        return boss.level.random.nextFloat() >= 0.6f;
+        return boss.getRandom().nextFloat() >= 0.6f;
     }
 
 

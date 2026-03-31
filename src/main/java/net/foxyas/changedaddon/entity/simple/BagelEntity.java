@@ -77,7 +77,7 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
 
     @Override
     public TransfurMode getTransfurMode() {
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             return TransfurMode.ABSORPTION;
         }
         return TransfurMode.REPLICATION;
@@ -86,7 +86,7 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
     @Override
     public HairStyle getDefaultHairStyle() {
         HairStyle Hair = BALD.get();
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             Hair = HairStyle.SHORT_MESSY.get();
         } else {
             Hair = BALD.get();
@@ -101,7 +101,7 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
 
     public Color3 getDripColor() {
         Color3 color = Color3.getColor("#ffffff");
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             color = Color3.getColor("#ffffff");
         } else {
             color = Color3.getColor("#e0e0e0");

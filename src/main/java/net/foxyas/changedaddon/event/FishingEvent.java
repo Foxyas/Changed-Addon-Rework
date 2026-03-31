@@ -105,7 +105,7 @@ public class FishingEvent {
                 float chance = 7.5F + enchantmentBonus; // Aumenta a chance de spawn com base no Luck e no encantamento
 
                 // Verifica se a chance de spawnar a entidade é suficiente
-                if (player.level.random.nextFloat() * 100 <= chance) {
+                if (player.getRandom().nextFloat() * 100 <= chance) {
                     if (world instanceof ServerLevel _level) {
                         // Cria a entidade
                         Entity entityToSpawn = getRandomEntity(entityList(_level));

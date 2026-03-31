@@ -170,7 +170,7 @@ public abstract class AbstractDazedEntity extends ChangedEntity {
     @Override
     public HairStyle getDefaultHairStyle() {
         HairStyle Hair;
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             Hair = HairStyle.SHORT_MESSY.get();
         } else {
             Hair = BALD.get();
@@ -185,7 +185,7 @@ public abstract class AbstractDazedEntity extends ChangedEntity {
 
     public Color3 getDripColor() {
         Color3 color;
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             color = Color3.getColor("#ffffff");
         } else {
             color = Color3.getColor("#CFCFCF");

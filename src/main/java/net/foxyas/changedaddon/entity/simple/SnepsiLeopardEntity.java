@@ -50,7 +50,7 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
 
     public Color3 getDripColor() {
         Color3 color = Color3.getColor("#ffffff");
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             color = Color3.getColor("#95D161");
         } else {
             color = Color3.getColor("#B5DF90");

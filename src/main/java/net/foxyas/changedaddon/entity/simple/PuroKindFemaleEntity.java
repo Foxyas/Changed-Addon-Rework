@@ -116,7 +116,7 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf implements IDyna
 
     public Color3 getDripColor() {
         Color3 color = Color3.getColor("#000000");
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             color = Color3.getColor("#393939");
         } else {
             color = Color3.getColor("#303030");

@@ -77,7 +77,7 @@ public class Exp1FemaleEntity extends ChangedEntity implements GenderedEntity, P
 
     @Override
     public TransfurMode getTransfurMode() {
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             return TransfurMode.ABSORPTION;
         }
         return TransfurMode.REPLICATION;
@@ -86,7 +86,7 @@ public class Exp1FemaleEntity extends ChangedEntity implements GenderedEntity, P
     @Override
     public HairStyle getDefaultHairStyle() {
         HairStyle Hair = HairStyle.LONG_KEPT.get();
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             Hair = HairStyle.LONG_MESSY.get();
         } else {
             Hair = HairStyle.LONG_KEPT.get();
@@ -101,7 +101,7 @@ public class Exp1FemaleEntity extends ChangedEntity implements GenderedEntity, P
 
     public Color3 getDripColor() {
         Color3 color = Color3.getColor("#ffffff");
-        if (level.random.nextInt(10) > 5) {
+        if (random.nextInt(10) > 5) {
             color = Color3.getColor("#ffffff");
         } else {
             color = Color3.getColor("#e0e0e0");

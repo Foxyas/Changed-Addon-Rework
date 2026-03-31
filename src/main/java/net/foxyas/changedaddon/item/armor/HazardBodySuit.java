@@ -269,7 +269,7 @@ public class HazardBodySuit extends ClothingItem implements AccessoryItemExtensi
                                 this.getBreakSound(itemStack),
                                 livingEntity.getSoundSource(),
                                 0.8F,
-                                0.8F + livingEntity.level().random.nextFloat() * 0.4F);
+                                0.8F + livingEntity.getRandom().nextFloat() * 0.4F);
                     }
 
                     //livingEntity.spawnItemParticles(pStack, 5);
