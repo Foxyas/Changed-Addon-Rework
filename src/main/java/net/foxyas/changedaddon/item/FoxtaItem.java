@@ -88,7 +88,7 @@ public class FoxtaItem extends BlockItem implements SpecializedItemRendering {
     @Override
     public @NotNull ItemStack finishUsingItem(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull LivingEntity entity) {
         ItemStack retval = super.finishUsingItem(itemstack, world, entity);
-        if (entity.level().random.nextFloat() <= 0.001f) {
+        if (entity.getRandom().nextFloat() <= 0.001f) {
             ProcessTransfur.progressTransfur(entity, 15, ChangedAddonTransfurVariants.FOXTA_FOXY.get(), TransfurContext.hazard(TransfurCause.FACE_HAZARD));
         }
         return retval;
