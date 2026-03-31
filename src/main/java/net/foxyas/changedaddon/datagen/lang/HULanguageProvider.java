@@ -699,6 +699,12 @@ public class HULanguageProvider extends LanguageProvider {
         addCommand("alpha.get.fail", "A célpont nem támogatja az alfa gént");
         addCommand("alpha_scale.set.success", "Alfa skála %sra állítva %s entitáshoz");
         addCommand("alpha_scale.get.success", "Alfa skála: %s");
+        addCommand("ftkMinigame.set.success", "FTKC paraméterek sikeresen kezdeményezve %s célpont(ok)hoz.");
+        addCommand("ftkMinigame.set.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
+        addCommand("ftkMinigame.get.has", "Aktív kognitív zár észlelve: %s.");
+        addCommand("ftkMinigame.get.hasnt", "Nem észlelhető aktív FTKC állapot a megadott alanynál.");
+        addCommand("ftkMinigame.reset.success", "Az FTKC állapot törölve lett %s célpont esetében.");
+        addCommand("ftkMinigame.reset.fail", "Parancs végrehajtása sikertelen: Nem azonosítottak alkalmas transzfur alanyokat a kiválasztás során.");
 
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Simogatások adva");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Simogatások fogadva");
