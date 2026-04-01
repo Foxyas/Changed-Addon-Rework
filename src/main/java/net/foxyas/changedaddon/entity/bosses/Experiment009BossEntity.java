@@ -18,6 +18,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
@@ -541,7 +542,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
             }
-
+            this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.AQUA)));
         } else if (healthRatio <= 0.75f) {
 
             float progress = (healthRatio - 0.4f) / (0.75f - 0.4f);
@@ -550,7 +551,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
             }
-
+            this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.DARK_AQUA)));
         } else {
 
             float progress = (healthRatio - 0.75f) / (1.0f - 0.75f);
@@ -559,7 +560,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.PROGRESS) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.PROGRESS);
             }
+            this.bossInfo.setName(this.getDisplayName());
         }
+
+        // Formula used: progress = (value - minValueOfPhase) / (maxValueOfPhase - minValueOfPhase)
     }
 
     @Override

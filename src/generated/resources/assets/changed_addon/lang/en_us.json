@@ -682,6 +682,7 @@
   "text.changed_addon.additionalHealth.Hearts": " Hearts",
   "text.changed_addon.canGlide/Fly": "Glide/Fly = %s",
   "text.changed_addon.display.hazard_body_suit.cant_have_helmet": "Mmph... it’s squishing my ears! Better not wear it.",
+  "text.changed_addon.item.vial.wrong_use": "Using this item in there will not work",
   "text.changed_addon.jumpStrength": "Jump Strength = %s",
   "text.changed_addon.land_speed": "Land Speed = %s",
   "text.changed_addon.legs": "Amount of Legs = %s",

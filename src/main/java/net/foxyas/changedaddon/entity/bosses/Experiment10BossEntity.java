@@ -24,6 +24,7 @@ import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -302,16 +303,18 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         float healthRatio = currentHealth / maxHealth;
 
         // Se estiver com menos de 50% da vida, simula que 50% é o "cheio" da barra
-        if (healthRatio <= 0.5f) {
-            this.bossInfo.setProgress(healthRatio / 0.5f);
+        if (healthRatio <= 0.75f) {
+            this.bossInfo.setProgress(healthRatio / 0.75f);
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_10) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_10);
             }
+            this.bossInfo.setName(bossInfo.getName().copy().withStyle(style -> style.withColor(ChatFormatting.DARK_RED)));
         } else {
             this.bossInfo.setProgress(healthRatio);
             if (this.bossInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_6) {
                 this.bossInfo.setOverlay(BossEvent.BossBarOverlay.NOTCHED_6);
             }
+            this.bossInfo.setName(this.getDisplayName());
         }
     }
 
@@ -404,6 +407,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         Component translatableComponent = translatableComponentList.get(this.getRandom().nextInt(translatableComponentList.size()));
         MutableComponent entityChat = Component.translatable("chat.type.text", this.getDisplayName(), translatableComponent);
 
+        this.playSound(SoundEvents.WITHER_AMBIENT, 0.05f, 2f);
         player.displayClientMessage(entityChat, false);
         applyRampage();
     }
