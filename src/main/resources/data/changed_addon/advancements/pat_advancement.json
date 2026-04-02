@@ -23,7 +23,7 @@
     }
   },
   "rewards": {
-    "experience": 10000
+    "experience": 1000
   },
   "parent": "changed_addon:advancements_root"
 }
