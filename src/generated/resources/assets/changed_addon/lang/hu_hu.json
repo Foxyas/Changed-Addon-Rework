@@ -682,6 +682,7 @@
   "text.changed_addon.additionalHealth.Hearts": " szív",
   "text.changed_addon.canGlide/Fly": "Surranás/repülés = %s",
   "text.changed_addon.display.hazard_body_suit.cant_have_helmet": "Mmph... Nyomja a fülem! Jobb, ha nem veszem fel.",
+  "text.changed_addon.item.vial.wrong_use": "Ennek a tárgynak a használata ott nem fog működni.",
   "text.changed_addon.jumpStrength": "Ugrás erőssége = %s",
   "text.changed_addon.land_speed": "Szárazföldi sebesség = %s",
   "text.changed_addon.legs": "Lábak száma = %s",
