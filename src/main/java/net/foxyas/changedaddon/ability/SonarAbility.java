@@ -48,7 +48,7 @@ public class SonarAbility extends SimpleAbility {
     public void startUsing(IAbstractChangedEntity entity) {
         super.startUsing(entity);
         if (entity.getEntity() instanceof ServerPlayer serverPlayer) {
-            TransfurVariant<?> transfurVariant = entity.getTransfurVariant();
+            TransfurVariant<?> transfurVariant = entity.getSelfVariant();
             if (transfurVariant == null) return;
 
             RenderMode mode = transfurVariant.visionType == VisionType.BLIND

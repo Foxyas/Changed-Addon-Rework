@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.entity.api.ExtraConditions;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 
@@ -18,10 +19,11 @@ public class ToggleClimbAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public boolean canUse() {
-        if (entity.getTransfurVariant() != null && entity.getTransfurVariant().canClimb && entity.getEntity() instanceof ExtraConditions.Climb extraConditions) {
+        TransfurVariant<?> transfurVariant = entity.getSelfVariant();
+        if (transfurVariant != null && transfurVariant.canClimb && entity.getEntity() instanceof ExtraConditions.Climb extraConditions) {
             return extraConditions.canClimb();
         }
-        return entity.getTransfurVariant() != null && entity.getTransfurVariant().canClimb;
+        return transfurVariant != null && transfurVariant.canClimb;
     }
 
     @Override

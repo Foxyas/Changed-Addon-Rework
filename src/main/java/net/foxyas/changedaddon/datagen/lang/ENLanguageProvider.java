@@ -697,7 +697,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addStat(ChangedAddonStatRegistry.PATS_GIVEN, "Pats given");
         addStat(ChangedAddonStatRegistry.PATS_RECEIVED, "Pats received");
         addStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED, "Entities assimilated while transfurred");
-        addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURED, "Entities transfurred while transfurred");
+        addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED, "Entities transfurred while transfurred");
 
         add("warn.rei.not.supported.move.items.but.right.container", "Move Items is not supported with this kind of workstation");
     }

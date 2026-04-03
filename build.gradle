@@ -127,7 +127,7 @@ dependencies {
     }
 
   //implementation fg.deobf('net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14b') //Changed Local File
-    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.2") {
+    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.3") {
         changing = true
     }//Changed
 

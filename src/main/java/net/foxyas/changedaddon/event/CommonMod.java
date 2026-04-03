@@ -101,6 +101,8 @@ public class CommonMod {
                 KeyPressPacket::new, KeyPressPacket::handle);
         ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode,
                 SyncTransfurVisionsPacket::new, SyncTransfurVisionsPacket::handle);
+        ChangedAddonMod.addNetworkMessage(SyncUntransfurImmunityPacket.class, SyncUntransfurImmunityPacket::encode, SyncUntransfurImmunityPacket::new, SyncUntransfurImmunityPacket::handle);
+        ChangedAddonMod.addNetworkMessage(SyncAllUntransfurImmunityPacket.class, SyncAllUntransfurImmunityPacket::encode, SyncAllUntransfurImmunityPacket::new, SyncAllUntransfurImmunityPacket::handle);
 
         ChangedAddonMod.addNetworkMessage(RequestMovementCheckPacket.class, RequestMovementCheckPacket::encode,
                 RequestMovementCheckPacket::new, RequestMovementCheckPacket::handle);

@@ -7,7 +7,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
 import net.foxyas.changedaddon.event.ProgressTransfurEvents;
-import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -27,38 +26,6 @@ import java.util.function.Consumer;
 
 @Mixin(value = ProcessTransfur.class, remap = false)
 public class ProcessTransfurMixin {
-
-    @Inject(method = "tickPlayerTransfurProgress", at = @At("HEAD"), cancellable = true)
-    private static void InjectTick(Player player, CallbackInfo ci) {
-        ProgressTransfurEvents.TickPlayerTransfurProgressEvent event = new ProgressTransfurEvents.TickPlayerTransfurProgressEvent(player);
-        if (ChangedAddonMod.postEvent(event)) {
-            ci.cancel();
-        }
-    }
-
-    @Inject(method = "onAbsorbEntity", at = @At("HEAD"), cancellable = true)
-    private static void onAbsorbEntityHook(IAbstractChangedEntity source, CallbackInfo ci) {
-        ProgressTransfurEvents.onEntityAbsorbOther event = new ProgressTransfurEvents.onEntityAbsorbOther(source);
-        if (ChangedAddonMod.postEvent(event)) {
-            ci.cancel();
-        }
-    }
-
-    @Inject(method = "onReplicateEntity", at = @At("HEAD"), cancellable = true)
-    private static void onReplicateEntityHook(IAbstractChangedEntity source, CallbackInfo ci) {
-        ProgressTransfurEvents.onEntityReplicateOther event = new ProgressTransfurEvents.onEntityReplicateOther(source);
-        if (ChangedAddonMod.postEvent(event)) {
-            ci.cancel();
-        }
-    }
-
-    @Inject(method = "onNewlyTransfurred", at = @At("HEAD"), cancellable = true)
-    private static void onNewlyTransfurredHook(IAbstractChangedEntity entity, CallbackInfo ci) {
-        ProgressTransfurEvents.NewlyTransfurred event = new ProgressTransfurEvents.NewlyTransfurred(entity);
-        if (ChangedAddonMod.postEvent(event)) {
-            ci.cancel();
-        }
-    }
 
     @Inject(method = "progressTransfur(Lnet/minecraft/world/entity/LivingEntity;FLnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;)Z", at = @At("RETURN"), cancellable = true)
     private static void progressTransfurEventHook(LivingEntity entity, float amount, TransfurVariant<?> transfurVariant, TransfurContext context, CallbackInfoReturnable<Boolean> cir) {
@@ -94,30 +61,6 @@ public class ProcessTransfurMixin {
             return null;
         }
         return call;
-    }
-
-    @WrapOperation(
-            method = "setPlayerTransfurVariant(Lnet/minecraft/world/entity/player/Player;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;FZLjava/util/function/Consumer;)Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"
-            )
-    )
-    private static void setPlayerTransfurVariantHook(Consumer<TransfurVariantInstance<?>> instance,
-                                                     Object object,
-                                                     Operation<Void> original,
-                                                     @Local(argsOnly = true) Player player,
-                                                     @Local(argsOnly = true) @Nullable TransfurVariant<?> ogVariant,
-                                                     @Local(argsOnly = true) @Nullable TransfurContext context,
-                                                     @Local(argsOnly = true) float progress,
-                                                     @Local(argsOnly = true) boolean temporaryFromSuit,
-                                                     @Local(argsOnly = true) Consumer<TransfurVariantInstance<?>> postProcess) {
-        if (object instanceof TransfurVariantInstance<?> transfurVariantInstance) {
-            ProgressTransfurEvents.onPostProcessPlayerTransfur event = new ProgressTransfurEvents.onPostProcessPlayerTransfur(player, ogVariant, context, progress, temporaryFromSuit, postProcess, transfurVariantInstance);
-            if (!ChangedAddonMod.postEvent(event)) {
-                original.call(instance, object);
-            }
-        }
     }
 
 

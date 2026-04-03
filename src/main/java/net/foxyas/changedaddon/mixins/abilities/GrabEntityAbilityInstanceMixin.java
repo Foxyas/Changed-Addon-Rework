@@ -14,6 +14,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
@@ -260,10 +261,10 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             method = "tickIdle",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;progressTransfur(Lnet/minecraft/world/entity/LivingEntity;FLnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;)Z"
+                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;progressTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/ai/LatexAssimilationDecision;)Z"
             )
     )
-    private boolean changedAddon$disableProgressTransfur(LivingEntity livingEntity, float amount, TransfurVariant<?> variant, TransfurContext context, Operation<Boolean> original) {
+    private boolean changedAddon$disableProgressTransfur(LivingEntity livingEntity, LatexAssimilationDecision<?> decision, Operation<Boolean> original) {
         if (safeMode && grabbedEntity != null) {
             // Safe mode -> nunca aplica transfur
             if (!isAlreadySnuggled()) {
@@ -272,7 +273,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             return false;
         }
         // comportamento normal
-        return original.call(livingEntity, amount, variant, context);
+        return original.call(livingEntity, decision);
     }
 
 

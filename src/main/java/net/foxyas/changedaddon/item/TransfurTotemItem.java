@@ -238,7 +238,8 @@ public class TransfurTotemItem extends Item {
                 return InteractionResultHolder.consume(stack);
             }
 
-            if (isTransfurred) return tryLinkForm(level, player, stack) ? InteractionResultHolder.consume(stack) : InteractionResultHolder.pass(stack);
+            if (isTransfurred)
+                return tryLinkForm(level, player, stack) ? InteractionResultHolder.consume(stack) : InteractionResultHolder.pass(stack);
             return InteractionResultHolder.pass(stack);
         }
 
@@ -324,7 +325,7 @@ public class TransfurTotemItem extends Item {
                 return InteractionResult.SUCCESS;
             }
         } else if (targetEntity instanceof ChangedEntity changedEntity) {
-            String string = changedEntity.getSelfVariant() != null ? changedEntity.getSelfVariant().getFormId().toString() : changedEntity.getTransfurVariant() != null ? changedEntity.getTransfurVariant().getFormId().toString() : "";
+            String string = changedEntity.getSelfVariant() != null ? changedEntity.getSelfVariant().getFormId().toString() : "";
 
             cooldown(player, totem, 20);
 

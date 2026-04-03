@@ -15,7 +15,7 @@ public class SoftenAbilityInstance extends AbstractAbilityInstance {
 
     @Override
     public boolean canUse() {
-        return entity.getTransfurVariant() != null && entity.getTransfurVariant().getEntityType().is(ChangedTags.EntityTypes.LATEX);
+        return entity.getSelfVariant() != null && entity.getSelfVariant().getEntityType().is(ChangedTags.EntityTypes.LATEX);
     }
 
     @Override

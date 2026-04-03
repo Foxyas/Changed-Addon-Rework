@@ -82,7 +82,7 @@ public class DarkLatexPuddleBlock extends HorizontalDirectionalBlock implements 
         // Atração de dark latex
         AABB area = AABB.ofSize(center, 20, 20, 20); // raio de 10 blocos
         level.getEntitiesOfClass(ChangedEntity.class, area, e ->
-                        e != entity && LatexType.getEntityLatexType(e) == ChangedLatexTypes.DARK_LATEX.get() && !e.getTransfurVariant().getFormId().toString().contains("puro_kind"))
+                        e != entity && LatexType.getEntityLatexType(e) == ChangedLatexTypes.DARK_LATEX.get() && !e.getSelfVariant().getFormId().toString().contains("puro_kind"))
                 .forEach(nearby -> nearby.getNavigation().moveTo(x, y, z, 0.3));
     }
 

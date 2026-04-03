@@ -54,10 +54,12 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.ltxprogrammer.changed.process.TransfurEvents;
 
 import java.util.List;
 
 import static net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal.hasValidAlphaSleepGoal;
+import static net.foxyas.changedaddon.event.TransfurEvents.resolveChangedEntity;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
 public class CommonEvent {
@@ -83,7 +85,7 @@ public class CommonEvent {
     @SubscribeEvent
     public static void modifyFallDamage(LivingFallEvent event) {
         LivingEntity livingEntity = event.getEntity();
-        Entity entity = TransfurEvents.resolveChangedEntity(livingEntity);
+        Entity entity = resolveChangedEntity(livingEntity);
         if (entity instanceof IAlphaAbleEntity iAlphaAbleEntity && iAlphaAbleEntity.isAlpha()) {
             event.setDistance(event.getDistance() * (1 - (0.25f * (IAlphaAbleEntity.getEntityAlphaScale(entity) / 0.75f))));
         }
@@ -234,17 +236,17 @@ public class CommonEvent {
     }
 
     @SubscribeEvent
-    public static void onEntityAbsorbOther(ProgressTransfurEvents.onEntityAbsorbOther event) {
-        IAbstractChangedEntity source = event.getSource();
+    public static void onEntityAbsorbOther(TransfurEvents.AbsorbedEntityEvent event) {
+        IAbstractChangedEntity source = event.entity;
         if (source.getEntity() instanceof Player player) {
             player.awardStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED.get());
         }
     }
     @SubscribeEvent
-    public static void onEntityReplicateOther(ProgressTransfurEvents.onEntityReplicateOther event) {
-        IAbstractChangedEntity source = event.getSource();
+    public static void onEntityReplicateOther(TransfurEvents.AssimilatedEntityEvent event) {
+        IAbstractChangedEntity source = event.entity;
         if (source.getEntity() instanceof Player player) {
-            player.awardStat(ChangedAddonStatRegistry.ENTITY_TRANSFURED.get());
+            player.awardStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED.get());
         }
     }
 

@@ -16,6 +16,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -101,15 +102,21 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
     }
 
     @Override
-    public boolean tryAbsorbTarget(LivingEntity target, IAbstractChangedEntity source, float amount, @Nullable List<TransfurVariant<?>> possibleMobFusions) {
-        boolean thisOrUnderlyingPlayerHasEffect = (
-                (this.getUnderlyingPlayer() != null && this.getUnderlyingPlayer().hasEffect(MobEffects.DAMAGE_BOOST)) || this.hasEffect(MobEffects.DAMAGE_BOOST)
-        );
+    public @Nullable LatexAssimilationDecision<?> makeLatexAssimilationDecision(TransfurCause cause, LivingEntity targetEntity) {
+        LatexAssimilationDecision<?> latexAssimilationDecision = super.makeLatexAssimilationDecision(cause, targetEntity);
 
-        if (thisOrUnderlyingPlayerHasEffect || target.hasEffect(ChangedAddonMobEffects.LATEX_EXPOSURE.get())) {
-            return super.tryAbsorbTarget(target, source, amount, possibleMobFusions);
+        if (latexAssimilationDecision != null && latexAssimilationDecision.method() == LatexAssimilationDecision.Method.ABSORPTION) {
+            boolean thisOrUnderlyingPlayerHasEffect = ((this.getUnderlyingPlayer() != null && this.getUnderlyingPlayer().hasEffect(MobEffects.DAMAGE_BOOST))
+                    || this.hasEffect(MobEffects.DAMAGE_BOOST));
+
+            if (thisOrUnderlyingPlayerHasEffect || targetEntity.hasEffect(ChangedAddonMobEffects.LATEX_EXPOSURE.get())) {
+                return latexAssimilationDecision;
+            } else {
+                return null;
+            }
         }
-        return false;
+
+        return latexAssimilationDecision;
     }
 
     @Override

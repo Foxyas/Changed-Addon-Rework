@@ -26,9 +26,9 @@ public class PollenCarryAbility extends AbstractAbility<PollenCarryAbilityInstan
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        if (entity.getEntity().isSpectator() || entity.getTransfurVariant() == null) return false;
+        if (entity.getEntity().isSpectator() || entity.getSelfVariant() == null) return false;
 
-        return entity.getTransfurVariant().is(ChangedTransfurVariants.LATEX_BEE);
+        return entity.getSelfVariant().is(ChangedTransfurVariants.LATEX_BEE);
     }
 
     public UseType getUseType(IAbstractChangedEntity entity) {

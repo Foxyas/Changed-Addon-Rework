@@ -54,7 +54,7 @@ public class FightToKeepConsciousness {
         @Nullable
         TransfurVariantInstance<?> oldVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
 
-        if (event.context.cause == TransfurCause.WHITE_LATEX && oldVariantInstance != null) {
+        if (event.context.cause() == TransfurCause.WHITE_LATEX && oldVariantInstance != null) {
             return;
         }
 

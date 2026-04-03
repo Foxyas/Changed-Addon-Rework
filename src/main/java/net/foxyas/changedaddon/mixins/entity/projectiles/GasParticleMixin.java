@@ -21,7 +21,7 @@ public class GasParticleMixin {
     @Inject(method = "onHitEntity",
             remap = true,
             at = @At(value = "INVOKE",
-                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;progressTransfur(Lnet/minecraft/world/entity/LivingEntity;FLnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;)Z",
+                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;progressTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/ai/NonLatexAssimilationDecision;)Z",
                     remap = false,
                     shift = At.Shift.BY
             ),

@@ -1,18 +1,12 @@
 package net.foxyas.changedaddon.mixins.entity.changedEntity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayCauseGrabDamageGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayDropGrabbedEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.abilities.MayGrabTargetGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
-import net.foxyas.changedaddon.event.TransfurVariantEvents;
-import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.world.gamerules.WorldDifficulty;
@@ -26,13 +20,9 @@ import net.ltxprogrammer.changed.entity.beast.boss.BehemothHand;
 import net.ltxprogrammer.changed.entity.beast.boss.BehemothHead;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedEntities;
-import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -41,7 +31,6 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -394,66 +383,66 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
 //        }
 //        return originalEntity;
 //    }
-
-    @WrapOperation(method = "tryFuseWithTarget",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
-                    ordinal = 0
-            )
-    )
-    private LivingEntity playerFuseWithOtherPlayer(LivingEntity player,
-                                                   TransfurVariant<?> fusionVariant,
-                                                   Operation<LivingEntity> original,
-                                                   @Local(argsOnly = true) LivingEntity target,
-                                                   @Local(argsOnly = true) IAbstractChangedEntity source,
-                                                   @Local(argsOnly = true) float amount) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        LivingEntity call = original.call(player, fusionVariant);
-        var event = new TransfurVariantEvents.OnPlayerFuseWithOther(target, player, self, fusionVariant);
-        ChangedAddonMod.postEvent(event);
-        return call;
-    }
-
-    @WrapOperation(method = "tryFuseWithTarget",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
-                    ordinal = 1
-            )
-    )
-    private LivingEntity playerFuseWithEntity(LivingEntity player,
-                                              TransfurVariant<?> fusionVariant,
-                                              Operation<LivingEntity> original,
-                                              @Local(argsOnly = true) LivingEntity target,
-                                              @Local(argsOnly = true) IAbstractChangedEntity source,
-                                              @Local(argsOnly = true) float amount) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        LivingEntity call = original.call(player, fusionVariant);
-        var event = new TransfurVariantEvents.OnPlayerFuseWithOther(target, player, self, fusionVariant);
-        ChangedAddonMod.postEvent(event);
-        return call;
-    }
-
-    @WrapOperation(method = "tryFuseWithTarget",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
-                    ordinal = 2
-            )
-    )
-    private LivingEntity entityFuseWithOther(LivingEntity target,
-                                             TransfurVariant<?> fusionVariant,
-                                             Operation<LivingEntity> original,
-                                             @Local(argsOnly = true) IAbstractChangedEntity source,
-                                             @Local(argsOnly = true) float amount) {
-        ChangedEntity self = (ChangedEntity) (Object) this;
-        TransfurVariantInstance<?> oldVariantInstance = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(target));
-        LivingEntity call = original.call(target, fusionVariant);
-        var event = new TransfurVariantEvents.OnEntityFuseWithOther(target, oldVariantInstance, self, fusionVariant);
-        ChangedAddonMod.postEvent(event);
-        return call;
-    }
+//
+//    @WrapOperation(method = "tryFuseWithTarget",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
+//                    ordinal = 0
+//            )
+//    )
+//    private LivingEntity playerFuseWithOtherPlayer(LivingEntity player,
+//                                                   TransfurVariant<?> fusionVariant,
+//                                                   Operation<LivingEntity> original,
+//                                                   @Local(argsOnly = true) LivingEntity target,
+//                                                   @Local(argsOnly = true) IAbstractChangedEntity source,
+//                                                   @Local(argsOnly = true) float amount) {
+//        ChangedEntity self = (ChangedEntity) (Object) this;
+//        LivingEntity call = original.call(player, fusionVariant);
+//        var event = new TransfurVariantEvents.OnPlayerFuseWithOther(target, player, self, fusionVariant);
+//        ChangedAddonMod.postEvent(event);
+//        return call;
+//    }
+//
+//    @WrapOperation(method = "tryFuseWithTarget",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
+//                    ordinal = 1
+//            )
+//    )
+//    private LivingEntity playerFuseWithEntity(LivingEntity player,
+//                                              TransfurVariant<?> fusionVariant,
+//                                              Operation<LivingEntity> original,
+//                                              @Local(argsOnly = true) LivingEntity target,
+//                                              @Local(argsOnly = true) IAbstractChangedEntity source,
+//                                              @Local(argsOnly = true) float amount) {
+//        ChangedEntity self = (ChangedEntity) (Object) this;
+//        LivingEntity call = original.call(player, fusionVariant);
+//        var event = new TransfurVariantEvents.OnPlayerFuseWithOther(target, player, self, fusionVariant);
+//        ChangedAddonMod.postEvent(event);
+//        return call;
+//    }
+//
+//    @WrapOperation(method = "tryFuseWithTarget",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;changeTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;)Lnet/minecraft/world/entity/LivingEntity;",
+//                    ordinal = 2
+//            )
+//    )
+//    private LivingEntity entityFuseWithOther(LivingEntity target,
+//                                             TransfurVariant<?> fusionVariant,
+//                                             Operation<LivingEntity> original,
+//                                             @Local(argsOnly = true) IAbstractChangedEntity source,
+//                                             @Local(argsOnly = true) float amount) {
+//        ChangedEntity self = (ChangedEntity) (Object) this;
+//        TransfurVariantInstance<?> oldVariantInstance = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(target));
+//        LivingEntity call = original.call(target, fusionVariant);
+//        var event = new TransfurVariantEvents.OnEntityFuseWithOther(target, oldVariantInstance, self, fusionVariant);
+//        ChangedAddonMod.postEvent(event);
+//        return call;
+//    }
 
     //    @Override
 //    public void onSyncedDataUpdated(@NotNull EntityDataAccessor<?> pKey) {

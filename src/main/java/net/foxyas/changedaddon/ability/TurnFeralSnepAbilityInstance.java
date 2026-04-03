@@ -129,7 +129,8 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void startUsing() {
         if (entity.getEntity() instanceof Player player) {
-            TransfurVariant<?> targetVariant = determineNextVariant(entity.getTransfurVariant());
+            TransfurVariant<?> transfurVariant = entity.getSelfVariant();
+            TransfurVariant<?> targetVariant = determineNextVariant(transfurVariant);
             TransfurVariantInstance<?> variantInstance = ProcessTransfur.setPlayerTransfurVariant(
                     player,
                     targetVariant,
@@ -138,7 +139,7 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
             );
             if (variantInstance != null) {
                 variantInstance.ifHasAbility(ChangedAddonAbilities.TURN_FERAL_SNEP.get(), abilityInstance ->
-                        abilityInstance.setOldVariant(entity.getTransfurVariant())
+                        abilityInstance.setOldVariant(transfurVariant)
                 );
                 entity.getEntity().level().playSound(null, entity.getEntity(), ChangedSounds.TRANSFUR_BY_LATEX.get(), SoundSource.PLAYERS, 1, 1);
             }

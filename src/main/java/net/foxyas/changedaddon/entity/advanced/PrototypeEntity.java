@@ -12,6 +12,7 @@ import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.*;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
@@ -245,8 +246,8 @@ public class PrototypeEntity extends AbstractCanTameSnepChangedEntityFavors impl
     }
 
     @Override
-    public boolean tryAbsorbTarget(LivingEntity target, IAbstractChangedEntity source, float amount, @Nullable List<TransfurVariant<?>> possibleMobFusions) {
-        return false;
+    public @Nullable LatexAssimilationDecision<?> makeLatexAssimilationDecision(TransfurCause cause, LivingEntity targetEntity) {
+        return null;
     }
 
     @Override

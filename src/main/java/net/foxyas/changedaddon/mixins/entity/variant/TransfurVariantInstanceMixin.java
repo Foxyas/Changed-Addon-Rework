@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
-import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
@@ -66,7 +65,8 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     @Shadow
     public abstract boolean isTemporaryFromSuit();
 
-    @Shadow public abstract boolean canCreativeFly();
+    @Shadow
+    public abstract Player getHost();
 
     @Override
     public boolean getUntransfurImmunity(UntransfurEvent.UntransfurType type) {
@@ -77,6 +77,7 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
     public void setUntransfurImmunity(UntransfurEvent.UntransfurType type, boolean value) {
         if (type == UntransfurEvent.UntransfurType.SURVIVAL) untransfurImmunity = value;
         if (type == UntransfurEvent.UntransfurType.COMMAND) untransfurImmunityCommand = value;
+        maySendDataUpdate();
     }
 
     @Override

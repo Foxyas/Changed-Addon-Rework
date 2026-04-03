@@ -18,7 +18,7 @@ public class ChangedAddonStatRegistry {
     public static final RegistryObject<ResourceLocation> PATS_GIVEN = register("pats_given");
     public static final RegistryObject<ResourceLocation> PATS_RECEIVED = register("pats_received");
     public static final RegistryObject<ResourceLocation> ENTITY_ASSIMILATED = register("entity_assimilated");
-    public static final RegistryObject<ResourceLocation> ENTITY_TRANSFURED = register("entity_transfurred");
+    public static final RegistryObject<ResourceLocation> ENTITY_TRANSFURRED = register("entity_transfurred");
 
     private static RegistryObject<ResourceLocation> register(String name) {
         return STATS.register(name, () -> ChangedAddonMod.resourceLoc(name));

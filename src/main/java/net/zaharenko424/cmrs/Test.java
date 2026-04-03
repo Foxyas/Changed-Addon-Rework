@@ -29,7 +29,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
+//@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
 public class Test {
 
     @SubscribeEvent

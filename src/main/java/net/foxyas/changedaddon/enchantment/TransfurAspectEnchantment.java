@@ -5,6 +5,7 @@ import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -93,14 +94,15 @@ public class TransfurAspectEnchantment extends Enchantment {
                 TransfurCause randomCause = causes[changedEntity.getRandom().nextInt(causes.length)];
 
                 // Build context with random cause
-                TransfurContext context = new TransfurContext(randomCause, iAbstractChangedEntity);
+                TransfurContext context = TransfurContext.latexHazard(iAbstractChangedEntity, randomCause);
 
                 // Calculate transfur damage
                 float transfurDamage = getTransfurDamage(changedEntity, livingEntity, pLevel);
                 if (transfurDamage <= 0) return;
 
                 // Apply transfur progress
-                ProcessTransfur.progressTransfur(livingEntity, transfurDamage, variant, context);
+                LatexAssimilationDecision<?> latexAssimilationDecision = LatexAssimilationDecision.strong(context.cause() == TransfurCause.GRAB_ABSORB ? LatexAssimilationDecision.Method.ABSORPTION : LatexAssimilationDecision.Method.REPLICATION, variant, context, transfurDamage);
+                ProcessTransfur.progressTransfur(livingEntity, latexAssimilationDecision);
                 return;
             }
             return;
@@ -125,14 +127,15 @@ public class TransfurAspectEnchantment extends Enchantment {
         TransfurCause randomCause = causes[player.getRandom().nextInt(causes.length)];
 
         // Build context with random cause
-        TransfurContext context = new TransfurContext(randomCause, changedEntity);
+        TransfurContext context = TransfurContext.latexHazard(changedEntity, randomCause);
 
         // Calculate transfur damage
         float transfurDamage = getTransfurDamage(player, livingEntity, pLevel);
         if (transfurDamage <= 0) return;
 
         // Apply transfur progress
-        ProcessTransfur.progressTransfur(livingEntity, transfurDamage, variant.getParent(), context);
+        LatexAssimilationDecision<?> latexAssimilationDecision = LatexAssimilationDecision.strong(context.cause() == TransfurCause.GRAB_ABSORB ? LatexAssimilationDecision.Method.ABSORPTION : LatexAssimilationDecision.Method.REPLICATION, variant.getParent(), context, transfurDamage);
+        ProcessTransfur.progressTransfur(livingEntity, latexAssimilationDecision);
     }
 
     @Mod.EventBusSubscriber

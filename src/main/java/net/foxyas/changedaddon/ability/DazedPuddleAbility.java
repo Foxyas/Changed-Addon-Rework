@@ -4,8 +4,10 @@ import net.foxyas.changedaddon.entity.advanced.AbstractDazedEntity;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbility;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -46,13 +48,15 @@ public class DazedPuddleAbility extends SimpleAbility {
         if (TransfurDmgAttribute == null) {
             return;
         }
-        float TransfurDmgAmount = (float) TransfurDmgAttribute.getValue();
+        float transfurDmgAmount = (float) TransfurDmgAttribute.getValue();
         entity.getLevel().getEntitiesOfClass(LivingEntity.class, entity.getChangedEntity().getBoundingBox().inflate(0.25, 0, 0.25)).forEach(caught -> {
             if (caught == entity.getEntity())
                 return;
             if (caught.getType().is(ChangedTags.EntityTypes.HUMANOIDS)) {
                 if (caught instanceof Player player && ProcessTransfur.getPlayerTransfurVariant(player) == null) {
-                    ProcessTransfur.progressTransfur(player, TransfurDmgAmount, entity.getTransfurVariant(), TransfurContext.hazard(TransfurCause.FLOOR_HAZARD));
+                    TransfurContext context = TransfurContext.hazard(TransfurCause.FLOOR_HAZARD);
+                    LatexAssimilationDecision<?> decision = LatexAssimilationDecision.strong(context.cause() == TransfurCause.GRAB_ABSORB ? LatexAssimilationDecision.Method.ABSORPTION : LatexAssimilationDecision.Method.REPLICATION, entity.getSelfVariant(), context, transfurDmgAmount);
+                    ProcessTransfur.progressTransfur(player, decision);
                     caught.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2, false, false, false));
                 }
             }
@@ -73,7 +77,7 @@ public class DazedPuddleAbility extends SimpleAbility {
 
     @Override
     public boolean canUse(IAbstractChangedEntity entity) {
-        TransfurVariant<?> var = entity.getTransfurVariant();
+        TransfurVariant<?> var = entity.getSelfVariant();
         if (var == null) return false;
 
         return var.is(ChangedAddonTransfurVariants.DAZED_LATEX) || var.is(ChangedAddonTransfurVariants.BUFF_DAZED_LATEX);

@@ -1,6 +1,5 @@
 package net.foxyas.changedaddon.entity.simple;
 
-import net.foxyas.changedaddon.entity.api.IConditionalFuseEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -9,8 +8,8 @@ import net.ltxprogrammer.changed.entity.AttributePresets;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurMode;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision.Method;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
-import net.ltxprogrammer.changed.entity.beast.DarkLatexYufeng;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
@@ -27,9 +26,7 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
 
-import static net.foxyas.changedaddon.event.TransfurVariantEvents.OverrideSourceTransfurVariantEvent.TransfurType;
-
-public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements IConditionalFuseEntity, VariantExtraStats {
+public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements VariantExtraStats {
     protected final SimpleAbilityInstance summonPups;
 
     public DarkLatexYufengQueenEntity(EntityType<? extends DarkLatexYufengQueenEntity> p_19870_, Level p_19871_) {
@@ -42,8 +39,8 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     }
 
     @Override
-    public TransfurVariant<?> getTransfurVariantFor(TransfurType transfurType) {
-        if (transfurType == TransfurType.ABSORPTION) {
+    protected TransfurVariant<?> getTransfurVariant(Method method) {
+        if (method == Method.ABSORPTION) {
             return super.getSelfVariant();
         }
 
@@ -84,24 +81,6 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     @Override
     public Color3 getTransfurColor(TransfurCause cause) {
         return Color3.fromInt(0x3d3d3d);
-    }
-
-    // Can the Queen fuse with X entity
-    @Override
-    public boolean tryFuseWithTarget(LivingEntity entity, IAbstractChangedEntity source, float amount) {
-        if (TransfurVariant.getEntityVariant(entity) == ChangedTransfurVariants.DARK_LATEX_YUFENG.get())
-            return false;
-
-        return super.tryFuseWithTarget(entity, source, amount);
-    }
-
-    // Can the Queen be fused by X entity
-    @Override
-    public boolean canBeFusedBy(LivingEntity targetToFuse, IAbstractChangedEntity source, float amount) {
-        if (targetToFuse instanceof DarkLatexYufengQueenEntity latexYufengQueenEntity && source.getChangedEntity() instanceof DarkLatexYufeng) {
-            return false;
-        }
-        return IConditionalFuseEntity.super.canBeFusedBy(targetToFuse, source, amount);
     }
 
     @Override

@@ -1,9 +1,14 @@
 package net.foxyas.changedaddon.variant;
 
 import net.foxyas.changedaddon.event.UntransfurEvent;
+import net.foxyas.changedaddon.network.packet.SyncAllUntransfurImmunityPacket;
+import net.foxyas.changedaddon.network.packet.utils.PacketsUtils;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.util.KeyStateTracker;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 public interface TransfurVariantInstanceExtensor {
 
@@ -25,4 +30,21 @@ public interface TransfurVariantInstanceExtensor {
 
     void setUntransfurImmunity(UntransfurEvent.UntransfurType type, boolean value);
 
+
+    default void maySendDataUpdate() {
+        if (!(this instanceof TransfurVariantInstance<?> variantInstance)) {
+            return;
+        }
+
+        Player player = variantInstance.getHost();
+        if (player == null) return;
+
+        if (!player.level().isClientSide) {
+            if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
+                boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL);
+                boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND);
+                PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(untransfurImmunityCommand, untransfurImmunitySurvival), serverPlayer);
+            }
+        }
+    }
 }
