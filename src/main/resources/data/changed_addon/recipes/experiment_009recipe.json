@@ -10,6 +10,7 @@
       "item": "minecraft:totem_of_undying"
     },
     "U": {
+      "type": "forge:nbt",
       "item": "changed:latex_syringe",
       "nbt": "{safe:1b}"
     },
