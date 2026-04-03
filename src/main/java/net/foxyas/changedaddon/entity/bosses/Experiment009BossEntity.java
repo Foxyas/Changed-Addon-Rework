@@ -9,6 +9,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
@@ -62,6 +63,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -578,13 +580,68 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             float ratio = this.computeHealthRatio();
             if (currentHealth <= maxHealth * 0.4f && ratio >= 0.4f && !this.isPhase3()) {
                 this.setPhase3(true);
-                this.knockbackNearbyEntities(this);
+                this.onPhaseChange(this.getPhase());
                 level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
             }
         } else if (this.getUnderlyingPlayer() == null && currentHealth <= maxHealth * 0.75f) {
             this.setPhase2(true);
-            this.SpawnThunderBolt(this.position());
+            this.onPhaseChange(this.getPhase());
             level.playSound(null, this.blockPosition().above(), SoundEvents.BEACON_POWER_SELECT, SoundSource.HOSTILE, 500, 0);
+        }
+    }
+
+    protected void onPhaseChange(Exp9Phase phase) {
+        switch (phase) {
+            case PHASE1 -> {
+            }
+            case PHASE2 -> {
+                this.spawnThunderBolt(this.position());
+                this.knockbackNearbyEntities(this);
+            }
+            case PHASE3 -> {
+                BlockPos center = this.blockPosition();
+                double ringRadius = 4;
+                int bolts = 8;
+                if (this.level() instanceof ServerLevel serverLevel) {
+                    spawnThunderCircle(serverLevel, center, ringRadius, bolts);
+                    DelayedTask.schedule(5, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.4, bolts * 2));
+                    DelayedTask.schedule(10, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.8, bolts * 3));
+                    DelayedTask.schedule(15, () -> spawnThunderCircle(serverLevel, center, ringRadius * 2.2, bolts * 4));
+                }
+                this.knockbackNearbyEntities(this);
+            }
+        }
+    }
+
+    public static void spawnThunderCircle(ServerLevel level, BlockPos center, double radius, int bolts) {
+        // garante que os strikes ocorram no topo do terreno naquele XZ
+        for (int i = 0; i < bolts; i++) {
+            double angle = (2 * Math.PI * i) / bolts;
+            double x = center.getX() + 0.5 + radius * Math.cos(angle);
+            double z = center.getZ() + 0.5 + radius * Math.sin(angle);
+
+            int topY = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mth.floor(x), Mth.floor(z));
+
+            // Começa do teto e desce até achar espaço
+            int minY = level.getMinBuildHeight() - 1;
+            for (int y = minY; y < (level.getMaxBuildHeight() - 1); y++) {
+                BlockPos checkPos = new BlockPos((int) x, y, (int) z);
+                // Verifica se tem 2 blocos de espaço (ou mais, dependendo da entidade)
+                if (level.isEmptyBlock(checkPos) && level.isEmptyBlock(checkPos.above())) {
+                    topY = y;
+                    break;
+                }
+            }
+
+            BlockPos strikePos = new BlockPos(Mth.floor(x), topY, Mth.floor(z));
+
+            LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
+            if (bolt != null) {
+                bolt.moveTo(strikePos.getX() + 0.5, strikePos.getY(), strikePos.getZ() + 0.5);
+                bolt.setVisualOnly(false); // true = só visual (sem dano/fogo)
+                bolt.setDamage(2f);
+                level.addFreshEntity(bolt);
+            }
         }
     }
 
@@ -594,6 +651,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     private void knockbackNearbyEntities(LivingEntity source) {
+        this.knockbackNearbyEntities(source, 5, Vec3.ZERO);
+    }
+
+    private void knockbackNearbyEntities(LivingEntity source, float force, Vec3 extraMotion) {
         AABB attackArea = source.getBoundingBox().inflate(6);
         List<LivingEntity> nearby = source.level.getEntitiesOfClass(LivingEntity.class, attackArea);
 
@@ -602,7 +663,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             if (target != source && source.canAttack(target)) {
                 double xForce = Mth.sin(source.getYRot() * ((float) Math.PI / 180F));
                 double zForce = -Mth.cos(source.getYRot() * ((float) Math.PI / 180F));
-                target.knockback(5, xForce, zForce);
+                target.knockback(force, xForce, zForce);
+                target.setDeltaMovement(target.getDeltaMovement().add(extraMotion));
 
                 if (target instanceof ServerPlayer serverPlayer) {
                     serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
@@ -840,7 +902,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
-    public void SpawnThunderBolt(BlockPos pos) {
+    public void spawnThunderBolt(BlockPos pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
         if (lightning != null) {
             lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
@@ -851,7 +913,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
-    public void SpawnThunderBolt(Vec3 pos) {
+    public void spawnThunderBolt(Vec3 pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
         if (lightning != null) {
             lightning.moveTo(pos.x(), pos.y(), pos.z());

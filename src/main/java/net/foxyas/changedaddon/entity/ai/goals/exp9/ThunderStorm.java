@@ -69,7 +69,7 @@ public class ThunderStorm extends Goal {
                     double offsetZ = boss.getRandom().nextGaussian() * 20;
                     BlockPos pos = new BlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
                     if (level.getBlockState(pos.below()).isAir()) return;
-                    this.boss.SpawnThunderBolt(pos);
+                    this.boss.spawnThunderBolt(pos);
                 }
             } else {
                 for (int i = 0; i < 12; i++) {
@@ -77,7 +77,7 @@ public class ThunderStorm extends Goal {
                     double offsetZ = boss.getRandom().nextGaussian() * 10;
                     BlockPos pos = new BlockPos((int) (this.boss.getX() + offsetX), (int) this.boss.getY(), (int) (this.boss.getZ() + offsetZ));
                     if (level.getBlockState(pos.below()).isAir()) return;
-                    this.boss.SpawnThunderBolt(pos);
+                    this.boss.spawnThunderBolt(pos);
                 }
             }
         }

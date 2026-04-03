@@ -59,12 +59,10 @@ public class UnifuserGuiMenu extends AbstractMenu {
             }
         };
 
-        this.slot1 = slot1;
-        addSlot(slot1);
+        this.slot1 = (SlotItemHandler) addSlot(slot1);
 
         SlotItemHandler slot2 = new SlotItemHandler(internal, 1, 15, 70);
-        this.slot2 = slot2;
-        addSlot(slot2); //37
+        this.slot2 = (SlotItemHandler) addSlot(slot2); //37
 
         SlotItemHandler slot3 = new SlotItemHandler(internal, 2, 50, 57) { //38
 
@@ -74,8 +72,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
                         || itemstack.is(ChangedItems.LATEX_SYRINGE.get());
             }
         };
-        this.slot3 = slot3;
-        addSlot(slot3);
+        this.slot3 = (SlotItemHandler) addSlot(slot3);
 
         SlotItemHandler slot4 = new SlotItemHandler(internal, 3, 155, 57) { //39
 
@@ -84,8 +81,7 @@ public class UnifuserGuiMenu extends AbstractMenu {
                 return false;
             }
         };
-        this.slot4 = slot4;
-        addSlot(slot4);
+        this.slot4 = (SlotItemHandler) addSlot(slot4);
 
     }
 

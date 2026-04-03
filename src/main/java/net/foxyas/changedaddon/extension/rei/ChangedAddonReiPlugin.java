@@ -73,8 +73,18 @@ public class ChangedAddonReiPlugin implements REIClientPlugin {
 
     @Override
     public void registerTransferHandlers(TransferHandlerRegistry registry) {
-        registry.register(getUnifuserHandle());
-        registry.register(getCatalyzerHandle());
+        //registry.register(getUnifuserHandle());
+        //registry.register(getCatalyzerHandle());
+        registry.register(SimpleTransferHandler.create(
+                UnifuserGuiMenu.class,
+                UNIFUSER,
+                new SimpleTransferHandler.IntRange(36, 3) // Input: Início no 36, tamanho 3
+        ));
+        registry.register(SimpleTransferHandler.create(
+                CatalyzerGuiMenu.class,
+                CATALYZER,
+                new SimpleTransferHandler.IntRange(36, 1) // Input: Início no 36, tamanho 1
+        ));
     }
 
     private @NotNull SimpleTransferHandler getCatalyzerHandle() {

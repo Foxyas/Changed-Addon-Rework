@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.entity.bosses;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
-import net.foxyas.changedaddon.entity.defaults.AbstractSemiAquaticEntity;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.*;
@@ -34,7 +33,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -433,7 +431,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         super.baseTick();
     }
 
-    public void SpawnThunderBolt(Vec3 pos) {
+    public void spawnThunderBolt(Vec3 pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
         if (lightning != null) {
             lightning.moveTo(pos.x(), pos.y(), pos.z());

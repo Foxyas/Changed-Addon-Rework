@@ -26,6 +26,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
+import static net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity.spawnThunderCircle;
+
 public class ThunderDiveGoal extends Goal {
 
     private static final int FAILSAFE_DIVING = 120;
@@ -59,38 +61,6 @@ public class ThunderDiveGoal extends Goal {
         this.diveSpeedY = diveSpeedY;
         this.ringRadius = ringRadius;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
-    }
-
-    public static void spawnThunderCircle(ServerLevel level, BlockPos center, double radius, int bolts) {
-        // garante que os strikes ocorram no topo do terreno naquele XZ
-        for (int i = 0; i < bolts; i++) {
-            double angle = (2 * Math.PI * i) / bolts;
-            double x = center.getX() + 0.5 + radius * Math.cos(angle);
-            double z = center.getZ() + 0.5 + radius * Math.sin(angle);
-
-            int topY = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mth.floor(x), Mth.floor(z));
-
-            // Começa do teto e desce até achar espaço
-            int minY = level.getMinBuildHeight() - 1;
-            for (int y = minY; y < (level.getMaxBuildHeight() - 1); y++) {
-                BlockPos checkPos = new BlockPos((int) x, y, (int) z);
-                // Verifica se tem 2 blocos de espaço (ou mais, dependendo da entidade)
-                if (level.isEmptyBlock(checkPos) && level.isEmptyBlock(checkPos.above())) {
-                    topY = y;
-                    break;
-                }
-            }
-
-            BlockPos strikePos = new BlockPos(Mth.floor(x), topY, Mth.floor(z));
-
-            LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-            if (bolt != null) {
-                bolt.moveTo(strikePos.getX() + 0.5, strikePos.getY(), strikePos.getZ() + 0.5);
-                bolt.setVisualOnly(false); // true = só visual (sem dano/fogo)
-                bolt.setDamage(2f);
-                level.addFreshEntity(bolt);
-            }
-        }
     }
 
     @Override
