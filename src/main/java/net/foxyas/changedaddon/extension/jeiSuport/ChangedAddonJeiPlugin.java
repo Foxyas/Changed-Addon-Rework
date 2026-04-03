@@ -88,7 +88,7 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(UnifuserGuiMenu.class, ChangedAddonMenus.UNIFUSER_MENU.get(), UNIFUSER_RECIPE_TYPE, 35, 4, 0, 35);
+        registration.addRecipeTransferHandler(UnifuserGuiMenu.class, ChangedAddonMenus.UNIFUSER_MENU.get(), UNIFUSER_RECIPE_TYPE, 36, 3, 0, 35);
     }
 
     @Override
