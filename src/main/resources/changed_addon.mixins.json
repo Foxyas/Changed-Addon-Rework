@@ -78,7 +78,8 @@
     "defaultRequire": 1
   },
   "client": [
-    "MinecraftMixin",
+    "client.MinecraftMixin",
+    "client.EventHandlerClientMixin",
     "client.DeathScreenMixin",
     "client.HumanoidModelMixin",
     "client.MouseHandlerAccessor",
