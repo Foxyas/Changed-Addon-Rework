@@ -110,14 +110,21 @@ public class DazedLatexEntity extends AbstractDazedEntity {
 
     @Override
     public @Nullable LatexAssimilationDecision<?> makeLatexAssimilationDecision(TransfurCause cause, LivingEntity targetEntity) {
-        LatexAssimilationDecision<?> decision = super.makeLatexAssimilationDecision(cause, targetEntity);
+        LatexAssimilationDecision<?> decision = super.makeLatexAssimilationDecision(cause, targetEntity); // Saves the original value just in case
 
-        AtomicReference<LatexAssimilationDecision<?>> decisionAtomicReference = new AtomicReference<>(decision);
+        AtomicReference<LatexAssimilationDecision<?>> decisionAtomicReference = new AtomicReference<>(decision); // A shut up for the compiler.
+        if (decision == null || decision.context() == null || decision.context().source() == null) {
+            return decision; // Fail Safe Stuff;
+        }
+
         Either<IAbstractChangedEntity, ILatexAssimilatedEntity> source = decision.context().source();
-        if (source == null) return decision;
+
         if (targetEntity.level().isClientSide()) return decision;
         source.ifLeft(sourceEntity -> {
+            // If entity is a Dazed Entity and the "method" is Absorption progress
             if (!(sourceEntity.getChangedEntity() instanceof DazedLatexEntity) || decision.method() != LatexAssimilationDecision.Method.ABSORPTION) return;
+
+            // If the entity is grabbing the target and wants to absorb -> make them into the "buffed" variant.
             sourceEntity.getAbilityInstanceSafe(ChangedAbilities.GRAB_ENTITY_ABILITY.get()).ifPresent(abilityInstance -> {
                 if (abilityInstance.grabbedEntity == targetEntity) {
                     decisionAtomicReference.set(decision.withTransfurVariant(ChangedAddonTransfurVariants.BUFF_DAZED_LATEX.get()));

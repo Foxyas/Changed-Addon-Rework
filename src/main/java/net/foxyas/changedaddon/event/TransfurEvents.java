@@ -159,6 +159,7 @@ public class TransfurEvents {
 
     }
 
+//  Foxyas: Keep this code as an Example code on how to use the new Event. check DazedLatexEntity$makeLatexAssimilationDecision to see how to use on a entity
 //    @SubscribeEvent
 //    public static void makeDazedLatexBuffAfterGrabAssimilation(LatexAssimilationDecisionEvent event) {
 //        LatexAssimilationDecision<?> decision = event.getDecision();
