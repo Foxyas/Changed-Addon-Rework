@@ -10,6 +10,7 @@ import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.minecraft.ChatFormatting;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -20,6 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.zaharenko424.cmrs.client.gui.LayoutHelper;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
@@ -29,11 +31,15 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
+@Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
 public class Test {
+
+    public static boolean SCREEN_TEST = SharedConstants.IS_RUNNING_IN_IDE || !FMLLoader.isProduction();
+
 
     @SubscribeEvent
     public static void a(InputEvent.Key event) {
+        if (!SCREEN_TEST) return;
         if (event.getKey() == InputConstants.KEY_M) {
             Minecraft minecraft = Minecraft.getInstance();
             minecraft.setScreen(new CircleHoverMinigameScreen());

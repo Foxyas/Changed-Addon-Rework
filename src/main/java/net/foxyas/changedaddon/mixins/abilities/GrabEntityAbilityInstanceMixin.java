@@ -68,7 +68,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     // Right now it works but has a renderer bug. I don't recommend turning this to true
     @Unique
-    private boolean allowGrabTransfurred = false;
+    private boolean allowGrabTransfurred = true;
 
     public GrabEntityAbilityInstanceMixin(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);

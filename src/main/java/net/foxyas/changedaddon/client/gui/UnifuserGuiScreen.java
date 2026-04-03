@@ -74,9 +74,9 @@ public class UnifuserGuiScreen extends AbstractContainerScreen<UnifuserGuiMenu> 
         if (menu.getSyringeSlot().getItem().isEmpty())
             if (mouseX > leftPos + 45 && mouseX < leftPos + 69 && mouseY > topPos + 53 && mouseY < topPos + 77)
                 pGuiGraphics.renderTooltip(font, Component.translatable("gui.changed_addon.unifuser_gui.tooltip_place_a_syringe_with_dna"), mouseX, mouseY);
-        for (Slot slot : menu.slots) {
-            pGuiGraphics.drawString(font, "" + slot.index, leftPos + slot.x, topPos + slot.y, Color.RED.getRGB(), false);
-        }
+//        for (Slot slot : menu.slots) {
+//            pGuiGraphics.drawString(font, "" + slot.index, leftPos + slot.x, topPos + slot.y, Color.RED.getRGB(), false);
+//        }
     }
 
     @Override
