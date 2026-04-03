@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -46,18 +47,23 @@ public abstract class InteractableSpecialSpawnEggItem extends SpecialSpawnEggIte
     }
 
     @Override
-    public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack pStack, @NotNull Player pPlayer, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand) {
+    public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player player, @NotNull LivingEntity pInteractionTarget, @NotNull InteractionHand pUsedHand) {
         if (shouldSpawnInLivingInteraction()) {
             if (pInteractionTarget.getType().is(ChangedTags.EntityTypes.HUMANOIDS) && !(pInteractionTarget instanceof Player)) {
+                if (!(player.level() instanceof ServerLevel level)) return InteractionResult.SUCCESS;
+
                 TransfurVariant<?> variant = transfurVariant.get();
                 IAbstractChangedEntity changedEntity = variant.replaceEntity(pInteractionTarget);
-                if (changedEntity != null && pPlayer.level() instanceof ServerLevel serverLevel) {
-                    postSpawn(serverLevel, pPlayer, changedEntity.getEntity());
+                if (changedEntity != null) {
+                    if (!player.isCreative() && !player.isSpectator()) stack.shrink(1);
+
+                    postSpawn(level, player, changedEntity.getEntity());
+                    level.gameEvent(player, GameEvent.ENTITY_PLACE, pInteractionTarget.position());
                 }
-                return InteractionResult.sidedSuccess(pPlayer.level().isClientSide());
+                return InteractionResult.SUCCESS;
             }
         }
 
-        return onFailInteractLivingEntity(pStack, pPlayer, pInteractionTarget, pUsedHand);
+        return onFailInteractLivingEntity(stack, player, pInteractionTarget, pUsedHand);
     }
 }
