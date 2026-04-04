@@ -155,6 +155,18 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
     }
 
 
+    protected void addBestiaryText(String key, String value) {
+        add("text." + modid + "." + "bestiary." + key, value);
+    }
+
+    protected void addBestiaryDesc(String key, String value) {
+        add("text." + modid + "." + "bestiary." + key + ".desc", value);
+    }
+
+    protected void addBestiaryTitle(String key, String value) {
+        add("text." + modid + "." + "bestiary." + key + ".title", value);
+    }
+
     protected void addAbility(String key, String value) {
         add("ability." + modid + "." + key, value);
     }

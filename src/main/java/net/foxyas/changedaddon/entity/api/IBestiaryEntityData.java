@@ -11,6 +11,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.stats.StatsCounter;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -43,7 +44,7 @@ public interface IBestiaryEntityData {
 
             double diff = transformedBase - playerBase;
 
-            if (diff == 0.0D) continue;
+            if (diff <= 0.0001D) continue;
 
             boolean isPercent = attribute == Attributes.MOVEMENT_SPEED
                     || attribute == Attributes.ATTACK_SPEED;
@@ -52,7 +53,7 @@ public interface IBestiaryEntityData {
 
             if (isPercent) {
                 double percentDiff = (transformedBase / playerBase) - 1;
-                if (percentDiff == 0) continue;
+                if (percentDiff <= 0.0001D) continue;
 
                 double percent = percentDiff * 100.0D;
                 valueString = String.format("%+.0f%%", percent);
@@ -83,7 +84,9 @@ public interface IBestiaryEntityData {
         return List.of();
     }
 
-    EntityType<?> getReferencedEntityType();
+    default EntityType<?> getReferencedEntityType() {
+        return this instanceof Entity entity ? entity.getType() : null;
+    }
 
     default void applyBestiaryRenderState(ChangedEntity changedEntity, GuiGraphics guiGraphics) {
     }

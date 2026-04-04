@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.ltxprogrammer.changed.client.ChangedClient;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexParticlesLayer;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -13,17 +13,13 @@ import org.spongepowered.asm.mixin.injection.At;
 public class ChangedClientMixin {
 
     @WrapOperation(
-            method = "addLatexParticleToEntity(Lnet/ltxprogrammer/changed/entity/ChangedEntity;)V",
+            method = {"addLatexParticleToChangedEntity", "addLatexParticleToAssimilatedEntity"},
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/ltxprogrammer/changed/client/renderer/layers/LatexParticlesLayer;createNewDripParticle(Lnet/ltxprogrammer/changed/entity/ChangedEntity;)V"
+                    target = "Lnet/ltxprogrammer/changed/client/renderer/layers/LatexParticlesLayer;createNewDripParticle(Lnet/minecraft/world/entity/LivingEntity;)V"
             )
     )
-    private static void applyParticleMultiplier(
-            LatexParticlesLayer<?, ?> instance,
-            ChangedEntity entity,
-            Operation<Void> original
-    ) {
+    private static void applyParticleMultiplier(LatexParticlesLayer<?, ?> instance, LivingEntity entity, Operation<Void> original) {
         int count = 1;
 
         if (entity instanceof ChangedEntityExtension extension) {

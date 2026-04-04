@@ -34,7 +34,7 @@ import java.util.List;
 @Mod.EventBusSubscriber(value = Dist.CLIENT) //TODO turn this on when tweaking.
 public class Test {
 
-    public static boolean SCREEN_TEST = SharedConstants.IS_RUNNING_IN_IDE || !FMLLoader.isProduction();
+    public static boolean SCREEN_TEST = false; // SharedConstants.IS_RUNNING_IN_IDE || !FMLLoader.isProduction();
 
 
     @SubscribeEvent

@@ -230,7 +230,8 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
             }
         } else {
             /* LORE */
-            loreWidget = new InfoWidget().setSize(180, 40).setLineSize(180, 4);
+            int loreHeight = 40; // To avoid Crazy scales
+            loreWidget = new InfoWidget().setSize(180, loreHeight).setLineSize(180, 4);
             loreWidget.setTextInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"));
             // don't create lore widget if there is no lore?
             // the lore stuff is supposed to be a "funny" Easter egg, having it to be N/A for generic entities is funnier then not having it.
@@ -244,6 +245,11 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
                     subTiles.append("\n").append(component);
                 }
                 index++;
+            }
+            if (index > 3) {
+                loreWidget.setSize(loreWidget.getWidth(), loreHeight + (font.lineHeight * entitySubtitles.size()));
+            } else if (index == 3) {
+                loreWidget.setSize(loreWidget.getWidth(), loreHeight + font.lineHeight); // It Looks better
             }
 
             loreWidget.setDescription(subTiles);

@@ -31,10 +31,7 @@ public class CircleHoverMinigameScreen extends CircleMinigameScreen {
 
     @Override
     public void tick() {
-        if (ChangedAddonVariables.ofOrDefault(player).FTKCminigameType == null) {
-            minecraft.setScreen(null);
-            return;
-        }
+        if (mayCloseScreenAndStopCode()) return;
 
         struggleProgressO = struggleProgress;
 

@@ -117,6 +117,7 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
 
         this.resetTicksSinceSecondAbilityActivity();
         AbstractAbilityInstance instance = this.abilityInstances.get(secondSelectedAbility);
+        if (instance == null) return;
         if (instance.getUseType() == AbstractAbility.UseType.MENU) return;
 
         if (this.secondSelectedAbility != secondSelectedAbility) {

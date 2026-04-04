@@ -360,7 +360,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityType(EXP_6, "Exp6");
         addEntityFromId(EXPERIMENT_009);
         addEntityType(EXPERIMENT_009_BOSS, "Experiment 009");
-        addText("lore." + EXPERIMENT_009.getId().getPath(), "Created within the confines of a laboratory, it was never shown mercy or compassion by most of the scientists who studied it. Those few who dared to sympathize with the creature met tragic ends. After eventually being contained and fragmented into a strange orb of condensed DNA, it did not fade into silence. Instead, it endured—its mind filled with resentment. Now it seeks vengeance against humanity, and against any being that dares to resemble them.");
+        addBestiaryText("lore." + EXPERIMENT_009.getId().getPath(), "Created within the confines of a laboratory, it was never shown mercy or compassion by most of the scientists who studied it. Those few who dared to sympathize with the creature met tragic ends. After eventually being contained and fragmented into a strange orb of condensed DNA, it did not fade into silence. Instead, it endured—its mind filled with resentment. Now it seeks vengeance against humanity, and against any being that dares to resemble them.");
         addEntityFromId(EXPERIMENT_10);
         addEntityType(EXPERIMENT_10_BOSS, "Experiment 10");
         addEntityFromId(LUMINARCTIC_LEOPARD_FEMALE);
@@ -389,6 +389,8 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityType(LATEX_WHITE_SNOW_LEOPARD_FEMALE, "Female Latex White Snow Leopard");
         addEntityType(LATEX_WHITE_SNOW_LEOPARD_MALE, "Male Latex White Snow Leopard");
         addEntityFromId(LUMINARA_FLOWER_BEAST);
+        addBestiaryTitle("transformation." + LUMINARA_FLOWER_BEAST.getId().getPath(), "Mutation Trigger");
+        addBestiaryText("transformation." + LUMINARA_FLOWER_BEAST.getId().getPath(), "This creature can mutate spontaneously when triggered by certain environmental factors.");
         addEntityFromId(LYNX);
         addEntityFromId(MIRROR_WHITE_TIGER);
         addEntityFromId(PROTOTYPE);

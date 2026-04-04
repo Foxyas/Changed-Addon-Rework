@@ -107,10 +107,7 @@ public abstract class CircleMinigameScreen extends Screen {
 
     @Override
     public void tick() {
-        if (ChangedAddonVariables.ofOrDefault(player).FTKCminigameType == null) {
-            minecraft.setScreen(null);
-            return;
-        }
+        if (mayCloseScreenAndStopCode()) return;
 
         struggleProgressO = struggleProgress;
         if (cursor.distanceSquared(circle) <= INTERACTION_RADIUS_SQR) {
@@ -126,6 +123,20 @@ public abstract class CircleMinigameScreen extends Screen {
         if (struggleProgress > 0) {
             struggleProgress = Math.max(0, struggleProgress - .1f);
         }
+    }
+
+    protected boolean mayCloseScreenAndStopCode() {
+        if (ChangedAddonVariables.ofOrDefault(player).FTKCminigameType == null && this.closeOnInvalidState()) {
+            minecraft.setScreen(null);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean shouldCloseOnInvalidState = true;
+
+    protected boolean closeOnInvalidState() {
+        return shouldCloseOnInvalidState;
     }
 
     protected abstract void increaseStruggle();

@@ -76,10 +76,10 @@ repositories {
         url "https://cursemaven.com"
     }
 
-    maven {
-        name = "Changed"
-        url = "https://ltxprogrammer.github.io/maven/"
-    }
+//    maven {
+//        name = "Changed"
+//        url = "https://ltxprogrammer.github.io/maven/"
+//    }
 
     maven { url "https://maven.shedaniel.me/" }
 
@@ -87,11 +87,11 @@ repositories {
     //    name = "Changed"
     //    url = "https://raw.githubusercontent.com/foxyas/Changed-Minecraft-Mod/1.20.1-dev/mcmodsrepo/"
     //}
-    /*
+
     maven {
         name = "Changed_Local_file"
         url uri("${rootProject.projectDir}/libs")
-    }*/
+    }
 
 
   /* maven {
