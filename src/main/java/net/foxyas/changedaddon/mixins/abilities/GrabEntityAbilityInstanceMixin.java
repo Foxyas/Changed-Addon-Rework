@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.mixins.abilities;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
@@ -13,6 +14,7 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -83,7 +85,8 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Override
     @Unique
     public boolean allowGrabTransfurred() {
-        return allowGrabTransfurred;
+        return true;
+        //return allowGrabTransfurred;// allowGrabTransfurred is loading false from old entities
     }
 
     @Inject(method = "saveData", at = @At("TAIL"))
@@ -192,6 +195,20 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             return true;
         }
         return original;
+    }
+
+    @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;isPlayerTransfurred(Lnet/minecraft/world/entity/player/Player;)Z"),
+            method = "getHoveredEntity")
+    private boolean allowTfedGrab(boolean original) {
+
+        return allowGrabTransfurred() ? false : original;
+    }
+
+    @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z"),
+            method = "getHoveredEntity")
+    private boolean ignoreTagCheck(boolean original, @Local(name = "livingEntity") LivingEntity livingEntity) {
+
+        return (livingEntity instanceof ChangedEntity && allowGrabTransfurred()) || original;
     }
 
     @Inject(

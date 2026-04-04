@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "changed_addon.refmap.json",
   "mixins": [
+    "GrabEntityPacketMixin",
     "abilities.AbilityControllerAccessor",
     "abilities.AbilityControllerMixin",
     "abilities.GrabEntityAbilityInstanceMixin",
@@ -78,10 +79,10 @@
     "defaultRequire": 1
   },
   "client": [
-    "client.MinecraftMixin",
-    "client.EventHandlerClientMixin",
     "client.DeathScreenMixin",
+    "client.EventHandlerClientMixin",
     "client.HumanoidModelMixin",
+    "client.MinecraftMixin",
     "client.MouseHandlerAccessor",
     "client.PlayerModelMixin",
     "client.PlayerRendererMixin",
