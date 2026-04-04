@@ -390,7 +390,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addEntityType(LATEX_WHITE_SNOW_LEOPARD_MALE, "Male Latex White Snow Leopard");
         addEntityFromId(LUMINARA_FLOWER_BEAST);
         addBestiaryTitle("transformation." + LUMINARA_FLOWER_BEAST.getId().getPath(), "Mutation Trigger");
-        addBestiaryText("transformation." + LUMINARA_FLOWER_BEAST.getId().getPath(), "This creature can mutate spontaneously when triggered by certain environmental factors.");
+        addBestiaryDesc("transformation." + LUMINARA_FLOWER_BEAST.getId().getPath(), "This creature can mutate spontaneously when triggered by certain environmental factors.");
         addEntityFromId(LYNX);
         addEntityFromId(MIRROR_WHITE_TIGER);
         addEntityFromId(PROTOTYPE);

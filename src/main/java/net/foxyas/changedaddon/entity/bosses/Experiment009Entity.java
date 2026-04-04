@@ -449,7 +449,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     @Override
     public BestiaryInfo getBasicLore() {
-        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.translatableWithFallback("text.changed_addon.lore.experiment_009", "Unknown"), 0);
+        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.translatableWithFallback("text.changed_addon.bestiary.lore.experiment_009", "Unknown"), 0);
     }
 
     @Override
