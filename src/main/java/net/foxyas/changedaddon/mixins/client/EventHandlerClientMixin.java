@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(EventHandlerClient.class)
+@Mixin(value = EventHandlerClient.class, remap = false)
 public abstract class EventHandlerClientMixin {
 
     @Inject(at = @At(value = "HEAD"), method = "lambda$onInputEvent$0", cancellable = true)

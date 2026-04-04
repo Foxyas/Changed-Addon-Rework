@@ -8,10 +8,10 @@ import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(GrabEntityPacket.class)
+@Mixin(value = GrabEntityPacket.class, remap = false)
 public abstract class GrabEntityPacketMixin {
 
-    @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z"),
+    @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z", remap = true),
             method = "lambda$handle$4")
     private boolean ignoreTagCheck(boolean original, @Local(name = "livingTarget") LivingEntity livingTarget) {
 

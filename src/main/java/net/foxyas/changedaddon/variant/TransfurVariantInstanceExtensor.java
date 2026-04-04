@@ -43,7 +43,7 @@ public interface TransfurVariantInstanceExtensor {
             if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
                 boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL);
                 boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND);
-                PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(untransfurImmunityCommand, untransfurImmunitySurvival), serverPlayer);
+                PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(serverPlayer.getId(), untransfurImmunityCommand, untransfurImmunitySurvival), serverPlayer);
             }
         }
     }

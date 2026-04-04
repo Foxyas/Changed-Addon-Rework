@@ -4,10 +4,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.data.BuiltinRepositorySource;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.menu.CustomMerchantMenu;
-import net.foxyas.changedaddon.network.ChangedAddonPackets;
-import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.network.ClientPacketHandler;
-import net.foxyas.changedaddon.network.ServerPacketHandler;
+import net.foxyas.changedaddon.network.*;
 import net.foxyas.changedaddon.network.packet.*;
 import net.foxyas.changedaddon.procedure.blocksHandle.LatexBonemealAndDispenserHandler;
 import net.foxyas.changedaddon.recipe.brewing.TransfurSicknessRecipeBrewingRecipe;
@@ -101,8 +98,14 @@ public class CommonMod {
                 KeyPressPacket::new, KeyPressPacket::handle);
         ChangedAddonMod.addNetworkMessage(SyncTransfurVisionsPacket.class, SyncTransfurVisionsPacket::encode,
                 SyncTransfurVisionsPacket::new, SyncTransfurVisionsPacket::handle);
-        ChangedAddonMod.addNetworkMessage(SyncUntransfurImmunityPacket.class, SyncUntransfurImmunityPacket::encode, SyncUntransfurImmunityPacket::new, SyncUntransfurImmunityPacket::handle);
-        ChangedAddonMod.addNetworkMessage(SyncAllUntransfurImmunityPacket.class, SyncAllUntransfurImmunityPacket::encode, SyncAllUntransfurImmunityPacket::new, SyncAllUntransfurImmunityPacket::handle);
+        ChangedAddonMod.addNetworkMessage(SyncUntransfurImmunityPacket.class,
+                SyncUntransfurImmunityPacket::encode,
+                SyncUntransfurImmunityPacket::new,
+                SafeClientPacketHandler::handleUntransfurImmunitySync);
+        ChangedAddonMod.addNetworkMessage(SyncAllUntransfurImmunityPacket.class,
+                SyncAllUntransfurImmunityPacket::encode,
+                SyncAllUntransfurImmunityPacket::new,
+                SafeClientPacketHandler::handleAllUntransfurImmunitySync);
 
         ChangedAddonMod.addNetworkMessage(RequestMovementCheckPacket.class, RequestMovementCheckPacket::encode,
                 RequestMovementCheckPacket::new, RequestMovementCheckPacket::handle);

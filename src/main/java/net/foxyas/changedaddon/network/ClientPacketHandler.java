@@ -2,12 +2,15 @@ package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
-import net.foxyas.changedaddon.network.packet.ClientboundOpenFTKCScreenPacket;
-import net.foxyas.changedaddon.network.packet.ClientboundSonarUpdatePacket;
-import net.foxyas.changedaddon.network.packet.SafeGrabSyncPacket;
+import net.foxyas.changedaddon.event.UntransfurEvent;
+import net.foxyas.changedaddon.network.packet.*;
+import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -67,6 +70,58 @@ public class ClientPacketHandler {
             variables.untransfurProgress = syncedVars.untransfurProgress;
             variables.Exp009TransfurAllowed = syncedVars.Exp009TransfurAllowed;
             variables.Exp10TransfurAllowed = syncedVars.Exp10TransfurAllowed;
+        });
+        context.setPacketHandled(true);
+    }
+
+    public static void handleUntransfurImmunitySync(SyncUntransfurImmunityPacket packet, Supplier<NetworkEvent.Context> supplier) {
+        NetworkEvent.Context context = supplier.get();
+        context.enqueueWork(() -> {
+            // No Cliente: Player é o Minecraft.getInstance().player
+            // No Servidor: Player é o context.getSender()
+            if (context.getSender() != null || context.getDirection().getReceptionSide().isServer()) {
+                return;
+            }
+
+            Entity player = null;
+            if (Minecraft.getInstance().level != null) {
+                player = Minecraft.getInstance().level.getEntity(packet.playerId);
+            }
+
+            if (player != null) {
+                TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(player));
+                if (variant instanceof TransfurVariantInstanceExtensor extensor) {
+                    extensor.setUntransfurImmunity(packet.type, packet.value);
+                }
+            }
+        });
+        context.setPacketHandled(true);
+    }
+
+    public static void handleAllUntransfurImmunitySync(SyncAllUntransfurImmunityPacket packet, Supplier<NetworkEvent.Context> supplier) {
+        NetworkEvent.Context context = supplier.get();
+        context.enqueueWork(() -> {
+            // No Cliente: Player é o Minecraft.getInstance().player
+            // No Servidor: Player é o context.getSender()
+            if (context.getSender() != null || context.getDirection().getReceptionSide().isServer()) {
+                return;
+            }
+
+            Entity player = null;
+            if (Minecraft.getInstance().level != null) {
+                player = Minecraft.getInstance().level.getEntity(packet.playerId);
+            }
+
+            if (player != null) {
+                TransfurVariantInstance<?> variant = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(player));
+                if (variant instanceof TransfurVariantInstanceExtensor extensor) {
+                    boolean survivalImmunity = packet.survivalImmunity;
+                    boolean commandImmunity = packet.commandImmunity;
+
+                    extensor.setUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL, survivalImmunity);
+                    extensor.setUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND, commandImmunity);
+                }
+            }
         });
         context.setPacketHandled(true);
     }

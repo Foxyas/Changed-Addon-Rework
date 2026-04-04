@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.NoSuchElementException;
 
-@Mixin(value = AdvancedHumanoidModel.class)
+@Mixin(value = AdvancedHumanoidModel.class, remap = false)
 public abstract class AdvancedHumanoidModelMixin <T extends ChangedEntity> {
 
     @Shadow
