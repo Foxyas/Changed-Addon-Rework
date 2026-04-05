@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.item;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.ltxprogrammer.changed.init.ChangedParticles;
@@ -59,9 +60,14 @@ public abstract class AbstractKatanaItem extends SwordItem implements Specialize
 
     @Override
     public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot pEquipmentSlot) {
-        Multimap<Attribute, AttributeModifier> defaultAttributeModifiers = super.getDefaultAttributeModifiers(pEquipmentSlot);
-        defaultAttributeModifiers.put(ForgeMod.ENTITY_REACH.get(), new AttributeModifier("Weapon modifier", 1, AttributeModifier.Operation.MULTIPLY_BASE));
-        return defaultAttributeModifiers;
+        Multimap<Attribute, AttributeModifier> baseModifiers = super.getDefaultAttributeModifiers(pEquipmentSlot);
+        Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create(baseModifiers);
+        if (pEquipmentSlot == EquipmentSlot.MAINHAND) {
+            modifiers.put(ForgeMod.ENTITY_REACH.get(),
+                    new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
+        }
+
+        return modifiers;
     }
 
     public void spawnElectricSwingParticle(LivingEntity source, float attackRange) {
