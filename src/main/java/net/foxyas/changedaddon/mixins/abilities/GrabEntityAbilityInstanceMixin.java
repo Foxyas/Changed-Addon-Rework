@@ -85,8 +85,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Override
     @Unique
     public boolean allowGrabTransfurred() {
-        return true;
-        //return allowGrabTransfurred;// allowGrabTransfurred is loading false from old entities
+        return allowGrabTransfurred;
     }
 
     @Inject(method = "saveData", at = @At("TAIL"))
@@ -199,16 +198,16 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;isPlayerTransfurred(Lnet/minecraft/world/entity/player/Player;)Z"),
             method = "getHoveredEntity")
-    private boolean allowTfedGrab(boolean original) {
+    private boolean allowTfedGrab(boolean original, @Local(name = "targetPlayer") Player player) {
 
-        return allowGrabTransfurred() ? false : original;
+        return this.canGrabEntity(player) ? false : original;
     }
 
-    @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z"),
+    @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z", remap = true),
             method = "getHoveredEntity")
     private boolean ignoreTagCheck(boolean original, @Local(name = "livingEntity") LivingEntity livingEntity) {
 
-        return (livingEntity instanceof ChangedEntity && allowGrabTransfurred()) || original;
+        return this.canGrabEntity(livingEntity) || original;
     }
 
     @Inject(

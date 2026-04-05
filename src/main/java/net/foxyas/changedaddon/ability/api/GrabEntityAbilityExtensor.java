@@ -2,7 +2,9 @@ package net.foxyas.changedaddon.ability.api;
 
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -69,4 +71,13 @@ public interface GrabEntityAbilityExtensor {
     void setAllowGrabTransfurred(boolean value);
 
     boolean allowGrabTransfurred();
+
+    default boolean canGrabEntity(LivingEntity livingTarget) {
+        if (!this.isSafeMode()) return false;
+
+        if (ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(livingTarget)) && allowGrabTransfurred()) {
+            return true;
+        }
+        return livingTarget instanceof ChangedEntity && allowGrabTransfurred();
+    };
 }
