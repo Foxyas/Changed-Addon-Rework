@@ -1,10 +1,8 @@
 package net.foxyas.changedaddon.mixins.commands;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.AssimilationBehavior;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.init.ChangedFusions;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -21,7 +19,8 @@ public class CommandTransfurMixin {
     private void stopCall(LivingEntity assimVictim,
                           TransfurContext transfurContext,
                           CallbackInfoReturnable<AssimilationBehavior> cir) {
-        if (transfurContext.source().left().get().isPlayer() && !ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(transfurContext.source().left().get().getEntity()))) {
+        if (transfurContext.source().left().map(IAbstractChangedEntity::isPlayer).orElse(false)
+                && !ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(transfurContext.source().left().map(IAbstractChangedEntity::getEntity).orElse(null)))) {
             cir.setReturnValue(null);
         }
     }
