@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.foxyas.changedaddon.client.gui.BestiaryScreen;
 import net.foxyas.changedaddon.client.gui.ftkc.CircleHoverMinigameScreen;
+import net.foxyas.changedaddon.client.gui.ftkc.CircleMinigameScreen;
 import net.foxyas.changedaddon.client.gui.ftkc.MouseCirclePullMinigameScreen;
 import net.foxyas.changedaddon.client.gui.ftkc.MousePullMinigameScreen;
 import net.minecraft.client.Minecraft;
@@ -70,14 +71,16 @@ public class ChangedAddonClientCommands {
             }
         });
 
-        private final Supplier<Screen> screenSupplier;
+        private final Supplier<CircleMinigameScreen> screenSupplier;
 
-        MinigameScreens(Supplier<Screen> screenSupplier) {
+        MinigameScreens(Supplier<CircleMinigameScreen> screenSupplier) {
             this.screenSupplier = screenSupplier;
         }
 
         public Screen createScreen() {
-            return screenSupplier.get();
+            CircleMinigameScreen screen = screenSupplier.get();
+            screen.shouldCloseOnInvalidState = false;
+            return screen;
         }
     }
 }
