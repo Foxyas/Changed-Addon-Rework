@@ -222,6 +222,11 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
                     heightAmount = 40f + heightByLines;
                 }
 
+                 if (bestiaryInfo.forceOffsetByLine) {
+                    int heightByLines = minecraft.font.lineHeight * i;
+                    heightAmount = 40f + heightByLines;
+                }
+
                 heightAmount += bestiaryInfo.heightSizeOffset();
 
                 InfoWidget infoWidget = new InfoWidget().setSize(180, heightAmount).setLineSize(180, 4);

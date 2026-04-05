@@ -2,26 +2,22 @@ package net.foxyas.changedaddon.mixins.entity.changedEntity;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
+import net.foxyas.changedaddon.entity.ai.advanced.AdvancedGroundPathNavigation;
 import net.foxyas.changedaddon.entity.api.ChangedEntityExtension;
 import net.foxyas.changedaddon.entity.api.IGrabberEntity;
 import net.foxyas.changedaddon.entity.simple.WolfyEntity;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.item.armor.DarkLatexCoatItem;
-import net.foxyas.changedaddon.item.armor.HazardBodySuit;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.GrabEntityAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.data.AccessorySlots;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
-import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
-import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision.Method;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
+import net.ltxprogrammer.changed.entity.beast.LatexSnowLeopardFemale;
+import net.ltxprogrammer.changed.entity.beast.LatexSnowLeopardMale;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
-import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +30,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -183,6 +178,14 @@ public abstract class ChangedEntityMixin extends Monster implements ChangedEntit
                     }
                 }
             }
+        }
+    }
+
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void changedAiPathNavigator(EntityType<?> type, Level level, CallbackInfo ci) {
+        ChangedEntity self = (ChangedEntity) (Object) this;
+        if (self instanceof LatexSnowLeopardMale || self instanceof LatexSnowLeopardFemale) {
+            this.navigation = new AdvancedGroundPathNavigation(this, level);
         }
     }
 

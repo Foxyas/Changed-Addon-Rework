@@ -469,7 +469,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
     @Override
     public List<BestiaryInfo> getBestiaryInfo() {
         List<BestiaryInfo> bestiaryInfo = new ArrayList<>(IBestiaryEntityData.super.getBestiaryInfo());
-        bestiaryInfo.add(new BestiaryInfo(Component.translatable("text.changed_addon.bestiary.transformation.luminara_flower_beast.title"), Component.translatable("text.changed_addon.bestiary.transformation.luminara_flower_beast.desc"), 2));
+        bestiaryInfo.add(new BestiaryInfo(Component.translatable("text.changed_addon.bestiary.transformation.luminara_flower_beast.title"), Component.translatable("text.changed_addon.bestiary.transformation.luminara_flower_beast.desc"), 2, 0, true));
         return bestiaryInfo;
     }
 

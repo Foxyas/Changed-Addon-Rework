@@ -6,6 +6,8 @@
   "refmap": "changed_addon.refmap.json",
   "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
   "mixins": [
+    "blocks.AbstractPuddleMixin",
+    "blocks.LatexWallSplotchMixin",
     "entity.LivingEntityAccessor",
     "level.pathfinder.PathNavigationAccessor",
     "mods.nean.AvaliElytraAnimationMixin"
@@ -14,7 +16,6 @@
     "defaultRequire": 1
   },
   "client": [
-    "client.renderer.DebugRendererMixin",
     "mods.firstPerson.LogicHandleMixin",
     "mods.vivecraft.AdvancedHumanoidModelMixin",
     "mods.vivecraft.AdvancedHumanoidRendererMixin",

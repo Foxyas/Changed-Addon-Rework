@@ -453,6 +453,12 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     }
 
     @Override
+    public BestiaryInfo getBasicAttributesInfo() {
+        BestiaryInfo basicAttributesInfo = IBestiaryEntityData.super.getBasicAttributesInfo();
+        return basicAttributesInfo.withHeightOffset(-60);
+    }
+
+    @Override
     public EntityType<?> getReferencedEntityType() {
         return this.getType();
     }

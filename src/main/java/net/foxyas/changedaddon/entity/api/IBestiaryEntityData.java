@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.entity.api;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
@@ -112,15 +111,45 @@ public interface IBestiaryEntityData {
 
     default List<BestiaryInfo> getBestiaryInfo() {
         BestiaryInfo lore = getBasicLore();
+        BestiaryInfo attributeData = getBasicAttributesInfo();
 
-        if (!(this instanceof LivingEntity livingEntity)) {
+        if (attributeData == null) {
             return new ArrayList<>(Collections.singleton(lore));
+        }
+
+//        if (livingEntity.level.isClientSide()) {
+//            Minecraft minecraft = Minecraft.getInstance();
+//            int lineCount = minecraft.font.split(attributeText, 180).size();
+//            int lineBreaks = attributeText.getString().split("\n", -1).length - 1;
+//
+//            // Dynamic Stuff can be done here... not clue to HOW make it looks good...
+//            // Most of the time it just get "too upwards"...
+//
+//            attributeData = new BestiaryInfo(
+//                    Component.literal("Attributes"),
+//                    attributeText.withStyle(ChatFormatting.GREEN),
+//                    1,
+//                    -60
+//            );
+//        }
+
+
+        return new ArrayList<>(List.of(lore, attributeData));
+    }
+
+    default BestiaryInfo getBasicLore() {
+        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"), 0);
+    }
+
+    default BestiaryInfo getBasicAttributesInfo() {
+        if (!(this instanceof LivingEntity livingEntity)) {
+            return null;
         }
 
         List<Component> attributes = getAttributePreview(livingEntity);
 
         if (attributes.isEmpty()) {
-            return new ArrayList<>(Collections.singleton(lore));
+            return null;
         }
 
         MutableComponent attributeText = Component.empty();
@@ -134,36 +163,12 @@ public interface IBestiaryEntityData {
             index++;
         }
 
-        BestiaryInfo attributeData = new BestiaryInfo(
+        return new BestiaryInfo(
                 Component.literal("Attributes"),
                 attributeText.withStyle(ChatFormatting.GREEN),
                 1,
-                -60
+                0
         );
-
-        if (livingEntity.level.isClientSide()) {
-            Minecraft minecraft = Minecraft.getInstance();
-            int lineCount = minecraft.font.split(attributeText, 180).size();
-            int lineBreaks = attributeText.getString().split("\n", -1).length - 1;
-
-            // Dynamic Stuff can be done here... not clue to HOW make it looks good...
-            // Most of the time it just get "too upwards"...
-
-            attributeData = new BestiaryInfo(
-                    Component.literal("Attributes"),
-                    attributeText.withStyle(ChatFormatting.GREEN),
-                    1,
-                    -60
-            );
-        }
-
-
-
-        return new ArrayList<>(List.of(lore, attributeData));
-    }
-
-    default BestiaryInfo getBasicLore() {
-        return new BestiaryInfo(Component.literal("Lore").withStyle(ChatFormatting.YELLOW), Component.literal("N/A"), 0);
     }
 
     class BestiaryInfo {
@@ -172,12 +177,14 @@ public interface IBestiaryEntityData {
         public final Component description;
         public final int order;
         public final int heightSizeOffset;
+        public final boolean forceOffsetByLine;
 
         public BestiaryInfo(Component title, Component description, int order) {
             this.title = title;
             this.description = description;
             this.order = order;
             this.heightSizeOffset = 0;
+            this.forceOffsetByLine = false;
         }
 
         public BestiaryInfo(Component title, Component description, int order, int heightSizeOffset) {
@@ -185,8 +192,20 @@ public interface IBestiaryEntityData {
             this.description = description;
             this.order = order;
             this.heightSizeOffset = heightSizeOffset;
+            this.forceOffsetByLine = false;
         }
 
+        public BestiaryInfo(Component title, Component description, int order, int heightSizeOffset, boolean forceOffsetByLine) {
+            this.title = title;
+            this.description = description;
+            this.order = order;
+            this.heightSizeOffset = heightSizeOffset;
+            this.forceOffsetByLine = forceOffsetByLine;
+        }
+
+        public BestiaryInfo withHeightOffset(int heightSizeOffset) {
+            return new BestiaryInfo(this.title, this.description, this.order, heightSizeOffset, this.forceOffsetByLine);
+        }
 
         public Component title() {
             return this.title;
