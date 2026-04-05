@@ -215,7 +215,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
                 int i = lineCount + lineBreaks;
                 float heightAmount;
-                if (i < 3) {
+                if (i <= 3) {
                     heightAmount = 40f;
                 } else {
                     int heightByLines = minecraft.font.lineHeight * i;
