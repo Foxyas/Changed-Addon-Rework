@@ -70,7 +70,7 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
 
     @Inject(method = "sweepAttack", at = @At("HEAD"), cancellable = true)
     private void customSweepAttackEffect(CallbackInfo ci) {
-        if (this.getItemBySlot(EquipmentSlot.MAINHAND).getItem() instanceof AbstractKatanaItem abstractKatanaItem) {
+        if (this.getItemInHand(InteractionHand.MAIN_HAND).getItem() instanceof AbstractKatanaItem abstractKatanaItem) {
             ci.cancel();
             abstractKatanaItem.spawnElectricSwingParticle((Player) (Object) this, 2);
         }

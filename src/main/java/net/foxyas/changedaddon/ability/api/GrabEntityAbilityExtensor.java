@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.ability.api;
 
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -73,11 +74,22 @@ public interface GrabEntityAbilityExtensor {
     boolean allowGrabTransfurred();
 
     default boolean canGrabEntity(LivingEntity livingTarget) {
+        GrabEntityAbilityInstance self = this instanceof GrabEntityAbilityInstance instance ? instance : null;
+        if (self != null && self.entity.getChangedEntity() instanceof IOverrideGrabAbilityTargetConditions overrideGrabAbilityTargetConditions) {
+            return overrideGrabAbilityTargetConditions.canGrabEntity(livingTarget); // For custom entities conditions
+        }
+
         if (!this.isSafeMode()) return false;
 
         if (ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(livingTarget)) && allowGrabTransfurred()) {
             return true;
         }
         return livingTarget instanceof ChangedEntity && allowGrabTransfurred();
-    };
+    }
+
+    interface IOverrideGrabAbilityTargetConditions {
+        default boolean canGrabEntity(LivingEntity target) {
+            return false;
+        }
+    }
 }

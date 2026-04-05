@@ -1,18 +1,22 @@
 package net.foxyas.changedaddon.entity.defaults;
 
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.entity.api.*;
 import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.ai.LatexFollowOwnerGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtByTargetGoal;
 import net.ltxprogrammer.changed.entity.ai.LatexOwnerHurtTargetGoal;
 import net.ltxprogrammer.changed.entity.beast.AbstractSnowLeopard;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedCriteriaTriggers;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -122,6 +126,40 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
     @Override
     public void startSleeping(@NotNull BlockPos blockPos) {
         super.startSleeping(blockPos);
+    }
+
+    @Override
+    public void variantTick(Level level) {
+        super.variantTick(level);
+        GrabEntityAbilityInstance grab = getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+
+        if (grab != null) {
+            if (grab instanceof GrabEntityAbilityExtensor extensor) extensor.setAllowGrabTransfurred(true);
+
+            if (grab.grabbedEntity != null) {
+                boolean isExp2 = getSelfVariant() != null &&
+                        (getSelfVariant().is(ChangedAddonTransfurVariants.Gendered.EXP2.getMaleVariant()) ||
+                                getSelfVariant().is(ChangedAddonTransfurVariants.Gendered.EXP2.getFemaleVariant()));
+
+                if (isExp2) {
+                    LivingEntity grabbed = grab.grabbedEntity;
+                    LivingEntity overlaying = EntityUtil.maybeGetOverlaying(grabbed);
+
+                    if (!(overlaying instanceof AbstractExp2SnepChangedEntity)) {
+
+                        if (grabbed.tickCount % 20 == 0) {
+                            grabbed.addEffect(new MobEffectInstance(
+                                    ChangedAddonMobEffects.TRANSFUR_SICKNESS.get(),
+                                    100,
+                                    0,
+                                    true,
+                                    true
+                            ));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public boolean isBiped() {
