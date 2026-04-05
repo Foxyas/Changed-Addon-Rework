@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.item.SpecializedItemRendering;
-import net.ltxprogrammer.changed.item.TscWeapon;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -20,9 +19,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
 
 public abstract class AbstractKatanaItem extends SwordItem implements SpecializedItemRendering {
 
@@ -64,7 +63,7 @@ public abstract class AbstractKatanaItem extends SwordItem implements Specialize
         Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create(baseModifiers);
         if (pEquipmentSlot == EquipmentSlot.MAINHAND) {
             modifiers.put(ForgeMod.ENTITY_REACH.get(),
-                    new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
+                    new AttributeModifier("Weapon modifier", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
         }
 
         return modifiers;
