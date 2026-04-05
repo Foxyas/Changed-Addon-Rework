@@ -359,7 +359,7 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(EXP_6, "6-os kísérlet");
         addEntityType(EXPERIMENT_009, "009-es kísérlet");
         addEntityType(EXPERIMENT_009_BOSS, "009-es kísérlet");
-        addText("lore." + EXPERIMENT_009.getId().getPath(), "Egy laboratórium falai között létrehozva, a legtöbb tudós, aki tanulmányozta, soha nem mutatott irgalmat vagy együttérzést. Azok a kevesek, akik mertek szimpatizálni a lénnyel, tragikus véget értek. Miután végül bezárták és egy furcsa, sűrített DNS-gömbbé darabolták, nem némult el. Ehelyett fennmaradt – elméje tele volt nehezteléssel. Most bosszút áll az emberiségen, és minden olyan lényen, amely mer rájuk hasonlítani.");
+        addBestiaryText("lore." + EXPERIMENT_009.getId().getPath(), "Egy laboratórium falai között létrehozva, a legtöbb tudós, aki tanulmányozta, soha nem mutatott irgalmat vagy együttérzést. Azok a kevesek, akik mertek szimpatizálni a lénnyel, tragikus véget értek. Miután végül bezárták és egy furcsa, sűrített DNS-gömbbé darabolták, nem némult el. Ehelyett fennmaradt – elméje tele volt nehezteléssel. Most bosszút áll az emberiségen, és minden olyan lényen, amely mer rájuk hasonlítani.");
         addEntityType(EXPERIMENT_10, "10-es kísérlet");
         addEntityType(EXPERIMENT_10_BOSS, "10-es kísérlet");
         addEntityType(LUMINARCTIC_LEOPARD_FEMALE, "Nőstény fénylő párduc");
@@ -388,6 +388,8 @@ public class HULanguageProvider extends LanguageProvider {
         addEntityType(LATEX_WHITE_SNOW_LEOPARD_FEMALE, "Nőstény latex fehér hópárduc");
         addEntityType(LATEX_WHITE_SNOW_LEOPARD_MALE, "Hím latex fehér hópárduc");
         addEntityType(LUMINARA_FLOWER_BEAST, "Luminara viráglény");
+        addBestiaryTitle("transformation." + LUMINARA_FLOWER_BEAST.getId().getPath(), "Mutációs kiváltó ok");
+        addBestiaryDesc("transformation." + LUMINARA_FLOWER_BEAST.getId().getPath(), "Ez a lény képes spontán mutációra, ha bizonyos környezeti tényezők kiváltják.");
         addEntityType(LYNX, "Hiúz");
         addEntityType(MIRROR_WHITE_TIGER, "Tükrös fehér tigris");
         addEntityType(PROTOTYPE, "Prototípus");
