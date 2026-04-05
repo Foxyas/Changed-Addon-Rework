@@ -66,10 +66,8 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
     @Unique
     private boolean alreadySnuggledTight = false;
 
-
-    // Right now it works but has a renderer bug. I don't recommend turning this to true
     @Unique
-    private boolean allowGrabTransfurred = true;
+    private boolean allowGrabTransfurred = false; // Default is false. it can be true using external code
 
     public GrabEntityAbilityInstanceMixin(AbstractAbility<?> ability, IAbstractChangedEntity entity) {
         super(ability, entity);
@@ -209,26 +207,26 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
         return this.canGrabEntity(livingEntity) || original;
     }
 
-    @Inject(
-            method = "releaseEntity",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;getEntity()Lnet/minecraft/world/entity/LivingEntity;",
-                    ordinal = 0
-            )
-    )
-    private void beforeAttemptToSendPacket(CallbackInfo ci) {
-        GrabEntityAbilityInstance self = getSelf();
-        IAbstractChangedEntity entity = self.entity;
-        if (!(entity.getEntity() instanceof Player) && grabbedEntity instanceof Player) {
-            if (!grabbedEntity.level().isClientSide()) {
-                Changed.PACKET_HANDLER.send(
-                        PacketDistributor.TRACKING_ENTITY.with(entity::getEntity),
-                        new GrabEntityPacket(entity.getEntity(), grabbedEntity, GrabEntityPacket.GrabType.RELEASE)
-                );
-            }
-        }
-    }
+//    @Inject(
+//            method = "releaseEntity",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/ltxprogrammer/changed/ability/IAbstractChangedEntity;getEntity()Lnet/minecraft/world/entity/LivingEntity;",
+//                    ordinal = 0
+//            )
+//    )
+//    private void beforeAttemptToSendPacket(CallbackInfo ci) {
+//        GrabEntityAbilityInstance self = getSelf();
+//        IAbstractChangedEntity entity = self.entity;
+//        if (!(entity.getEntity() instanceof Player) && grabbedEntity instanceof Player) {
+//            if (!grabbedEntity.level().isClientSide()) {
+//                Changed.PACKET_HANDLER.send(
+//                        PacketDistributor.TRACKING_ENTITY.with(entity::getEntity),
+//                        new GrabEntityPacket(entity.getEntity(), grabbedEntity, GrabEntityPacket.GrabType.RELEASE)
+//                );
+//            }
+//        }
+//    }
 
     @Override
     public boolean isAlreadySnuggled() {

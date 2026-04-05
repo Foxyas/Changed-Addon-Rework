@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.item;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedSounds;
@@ -11,9 +13,14 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractKatanaItem extends SwordItem implements SpecializedItemRendering {
@@ -48,6 +55,18 @@ public abstract class AbstractKatanaItem extends SwordItem implements Specialize
         boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
         applyShockEffect(entity, sourceentity);
         return retval;
+    }
+
+    @Override
+    public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot pEquipmentSlot) {
+        Multimap<Attribute, AttributeModifier> baseModifiers = super.getDefaultAttributeModifiers(pEquipmentSlot);
+        Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create(baseModifiers);
+        if (pEquipmentSlot == EquipmentSlot.MAINHAND) {
+            modifiers.put(ForgeMod.ENTITY_REACH.get(),
+                    new AttributeModifier("Weapon modifier", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
+        }
+
+        return modifiers;
     }
 
     public void spawnElectricSwingParticle(LivingEntity source, float attackRange) {
