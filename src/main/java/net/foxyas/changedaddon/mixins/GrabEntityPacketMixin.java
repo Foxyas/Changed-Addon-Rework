@@ -8,11 +8,8 @@ import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.EntityUtil;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,22 +24,15 @@ public abstract class GrabEntityPacketMixin {
 
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z", remap = true),
             method = "lambda$handle$4")
-    private boolean ignoreTagCheck(boolean original, @Local(name = "livingTarget") LivingEntity livingTarget, @Local(argsOnly = true) Level level) {
-        Entity entity = level.getEntity(sourceEntity);
-        if (entity instanceof LivingEntity sourceLiving) {
-            Player player = EntityUtil.playerOrNull(sourceLiving);
-            if (player != null && !ProcessTransfur.isPlayerTransfurred(player)) {
-                return original;
-            }
+    private boolean ignoreTagCheck(boolean original, @Local(name = "livingTarget") LivingEntity livingTarget, @Local(name = "sender") ServerPlayer sender) {
+        if (sender.getId() != sourceEntity) return original;
 
-            IAbstractChangedEntity iAbstractChangedEntity = IAbstractChangedEntity.forEither(sourceLiving);
-            if (iAbstractChangedEntity != null) {
-                GrabEntityAbilityInstance abilityInstance = iAbstractChangedEntity.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-                if (abilityInstance instanceof GrabEntityAbilityExtensor abilityExtensor) {
-                    return abilityExtensor.canGrabEntity(livingTarget) || original;//TODO add allowGrabTransfurred check?
-                }
-            }
-        }
-        return original;//TODO add allowGrabTransfurred check?
+        if (!ProcessTransfur.isPlayerTransfurred(sender)) return original;
+
+        IAbstractChangedEntity iAbstractChangedEntity = IAbstractChangedEntity.forPlayer(sender);
+        GrabEntityAbilityInstance abilityInstance = iAbstractChangedEntity.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+        if (abilityInstance == null) return original;
+
+        return ((GrabEntityAbilityExtensor)abilityInstance).canGrabEntity(livingTarget) || original;
     }
 }

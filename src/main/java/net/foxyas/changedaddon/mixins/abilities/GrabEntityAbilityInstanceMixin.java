@@ -14,7 +14,6 @@ import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -189,8 +188,8 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
 
     @ModifyExpressionValue(method = "isGrabbedInvalid", at = @At(value = "INVOKE",
             target = "Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;isTemporaryFromSuit()Z"))
-    private boolean allowGrabTransfurredPlayers(boolean original) {
-        if (this.allowGrabTransfurred()) {
+    private boolean allowGrabTransfurredPlayers(boolean original, @Local(name = "player") Player player) {
+        if (canGrabEntity(player)) {
             return true;
         }
         return original;
@@ -200,7 +199,7 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             method = "getHoveredEntity")
     private boolean allowTfedGrab(boolean original, @Local(name = "targetPlayer") Player player) {
 
-        return this.canGrabEntity(player) ? false : original;
+        return !this.canGrabEntity(player) && original;
     }
 
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;is(Lnet/minecraft/tags/TagKey;)Z", remap = true),
