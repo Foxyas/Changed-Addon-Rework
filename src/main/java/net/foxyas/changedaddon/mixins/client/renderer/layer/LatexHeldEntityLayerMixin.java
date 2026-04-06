@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
+import net.foxyas.changedaddon.client.ClientVars;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.client.LivingEntityRendererExtender;
@@ -13,6 +14,7 @@ import net.ltxprogrammer.changed.client.renderer.layers.LatexHeldEntityLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.util.EntityUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -36,6 +38,21 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
 
     public LatexHeldEntityLayerMixin(RenderLayerParent<T, M> pRenderer) {
         super(pRenderer);
+    }
+
+    @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", shift = At.Shift.BEFORE),
+            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V",
+            cancellable = true)
+    private void delaySameModel(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci, @Local(name = "ability") GrabEntityAbilityInstance ability) {
+        if (!((GrabEntityAbilityExtensor) ability).isSafeMode()) return;
+
+        EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        if (!dispatcher.getRenderer(entity).equals(dispatcher.getRenderer(ability.grabbedEntity))) return;
+
+        if (!ClientVars.delayedHeldEntityRender) {
+            ci.cancel();
+            ClientVars.delayedHeldEntityRender = true;
+        } else ClientVars.delayedHeldEntityRender = false;
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V", shift = At.Shift.AFTER),
@@ -79,5 +96,4 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
     private void mayGetUnderLyingEntityRender(LivingEntityRendererExtender<?, ?> instance, LivingEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light, Operation<Void> original) {
         original.call(instance, EntityUtil.maybeGetOverlaying(entity), yRot, partialTicks, poseStack, bufferSource, light);
     }
-
 }
