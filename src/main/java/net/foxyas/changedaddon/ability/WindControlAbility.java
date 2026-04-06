@@ -54,7 +54,13 @@ public class WindControlAbility extends SimpleAbility {
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        return entity.isCrouching() ? 40 : 20;
+        if (entity.isCrouching()) {
+            return 40;
+        }
+        if (entity.getEntity().isFallFlying()) {
+            return 120;
+        }
+        return 20;
     }
 
     @Override

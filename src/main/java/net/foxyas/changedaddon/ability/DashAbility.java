@@ -71,6 +71,9 @@ public class DashAbility extends SimpleAbility {
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
+        if (entity.getEntity().isFallFlying()) {
+            return 120;
+        }
         return 20;
     }
 
