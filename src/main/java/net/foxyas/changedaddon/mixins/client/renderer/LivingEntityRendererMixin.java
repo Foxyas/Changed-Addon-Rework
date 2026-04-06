@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.mixins.client.renderer;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.foxyas.changedaddon.client.renderer.layers.api.IDynamicRenderLayer;
@@ -98,29 +100,16 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
         }
     }
 
-    /* this eats fps... it is a cool feature but for performance’s sake I'm going to keep it disabled
+    // this may eat the fps... it is a cool feature but for performance’s sake I'm going to keep it based in a config
     @WrapOperation(method = "getRenderType", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;getTextureLocation(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/resources/ResourceLocation;"))
     private ResourceLocation injectDynamicTextures(LivingEntityRenderer<T, M> instance, Entity entity, Operation<ResourceLocation> original) {
         ResourceLocation location = original.call(instance, entity);
+        if (!ChangedAddonClientConfiguration.DYNAMIC_ALPHA_CHECKER.get()) return location;
 
         if (entity instanceof IAlphaAbleEntity alphaEntity && alphaEntity.isAlpha()) {
             // Multiplicamos por 100 para trabalhar com inteiros no nome do arquivo
-            int scale = (int) (alphaEntity.alphaAdditionalScale() * 100);
             String baseNamespace = location.getNamespace();
             String basePath = location.getPath().replace(".png", "");
-
-            // 1. Tenta a versão com Escala (Descendo do atual até 1)
-            for (int s = scale; s > 0; s--) {
-            }
-            s = scale
-            ResourceLocation scaleLoc = ResourceLocation.fromNamespaceAndPath(
-                    baseNamespace,
-                    basePath + "_alpha_" + s + ".png"
-            );
-
-            if (changed_Addon_Rework$resourceExists(scaleLoc)) {
-                return scaleLoc;
-            }
 
             // 2. Se não achou nenhuma escala, tenta a versão Alpha genérica
             ResourceLocation alphaLoc = ResourceLocation.fromNamespaceAndPath(
@@ -132,10 +121,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
                 return alphaLoc;
             }
         }
-
-        // Se não for Alpha ou não achar arquivos extras, retorna o original (normal)
         return location;
-    }*/
+    }
 
     @Unique
     private boolean changed_Addon_Rework$resourceExists(ResourceLocation loc) {
