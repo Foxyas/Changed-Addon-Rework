@@ -493,7 +493,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     @Override
     public List<BestiaryInfo> getBestiaryInfo() {
         List<BestiaryInfo> bestiaryInfo = new ArrayList<>(IBestiaryEntityData.super.getBestiaryInfo());
-        bestiaryInfo.add(new BestiaryInfo(Component.literal("Passive skills").withStyle(ChatFormatting.AQUA), Component.literal("Cappable To Manipulate Electricity\nCareful when using metal around them"), 2));
+        bestiaryInfo.add(new BestiaryInfo(Component.literal("Passive skills").withStyle(ChatFormatting.AQUA), Component.literal("Able to manipulate Electricity.\nNot recommended having anything metallic around them"), 2));
         return bestiaryInfo;
     }
 }
