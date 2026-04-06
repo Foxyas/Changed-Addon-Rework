@@ -6,15 +6,18 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
-import net.foxyas.changedaddon.client.ClientVars;
+import net.foxyas.changedaddon.client.renderer.layers.api.IDynamicRenderLayer;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.client.LivingEntityRendererExtender;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexHeldEntityLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.extension.ChangedCompatibility;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -24,6 +27,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,7 +35,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = LatexHeldEntityLayer.class, remap = false)
-public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends RenderLayer<T, M> {
+public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends RenderLayer<T, M> implements IDynamicRenderLayer<T> {
+
+    private boolean isLater = false;
 
     @Shadow
     public abstract void render(@NotNull PoseStack pose, @NotNull MultiBufferSource bufferSource, int packedLight, @NotNull T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch);
@@ -44,15 +50,38 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
             method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V",
             cancellable = true)
     private void delaySameModel(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci, @Local(name = "ability") GrabEntityAbilityInstance ability) {
-        if (!((GrabEntityAbilityExtensor) ability).isSafeMode()) return;
-
+        //if (!((GrabEntityAbilityExtensor) ability).isSafeMode()) return;
+        // lest just keep the "is same renderer" check for now.
         EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        if (!dispatcher.getRenderer(entity).equals(dispatcher.getRenderer(ability.grabbedEntity))) return;
-
-        if (!ClientVars.delayedHeldEntityRender) {
+        if (!dispatcher.getRenderer(entity).equals(dispatcher.getRenderer(ability.grabbedEntity))) // grabbedEntity is never null in this context you can safely ignore the "null point" warning
+            return;
+        if (!isLater) {
             ci.cancel();
-            ClientVars.delayedHeldEntityRender = true;
-        } else ClientVars.delayedHeldEntityRender = false;
+        }
+    }
+
+//    @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", shift = At.Shift.BEFORE),
+//            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V",
+//            cancellable = true)
+//    private void delaySameModel(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci, @Local(name = "ability") GrabEntityAbilityInstance ability) {
+//        if (!((GrabEntityAbilityExtensor) ability).isSafeMode()) return;
+//        EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+//        if (!dispatcher.getRenderer(entity).equals(dispatcher.getRenderer(ability.grabbedEntity))) return; // grabbedEntity is never null in this context you can safely ignore the "null point" warning
+//
+//        if (!ClientVars.delayedHeldEntityRender) {
+//        ci.cancel();
+//            ClientVars.delayedHeldEntityRender = true;
+//        } else ClientVars.delayedHeldEntityRender = false;
+//    }
+
+
+    // Small notice: this is a VERY risky method if the "isLater" is not false after the call it will generate a stackOverFlow error.
+    @Override
+    public void renderAfter(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.isLater = true;
+        // The call of this$render here is the correct way to handle due the other mixin injects.
+        this.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
+        this.isLater = false; // NEVER CHANGE THIS TO TRUE.
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V", shift = At.Shift.AFTER),
