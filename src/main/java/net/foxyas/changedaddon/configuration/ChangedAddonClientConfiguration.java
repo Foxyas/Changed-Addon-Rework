@@ -19,6 +19,7 @@ public class ChangedAddonClientConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> SMOOTH_LASER_MOVEMENT;
     public static final ForgeConfigSpec.ConfigValue<Boolean> PLANTOIDS_VISIBILITY;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALPHA_COMPATIBILITY_MODE_RENDER;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> DYNAMIC_ALPHA_CHECKER;
     public static final ForgeConfigSpec.ConfigValue<BossMusicHandler.FollowType> BOSS_MUSIC_LOCATION_TYPE;
 
     static {
@@ -27,6 +28,10 @@ public class ChangedAddonClientConfiguration {
         BUILDER.push("MusicPlayer");
         MUSIC_PLAYER = BUILDER.comment("allow the music player to play boss themes").define("Music Player", true);
         BOSS_MUSIC_LOCATION_TYPE = BUILDER.comment("define which entity the boss music will follow.").defineEnum("Boss Music Location Type", BossMusicHandler.FollowType.BOSS);
+        BUILDER.pop();
+
+        BUILDER.push("Alpha textures");
+        DYNAMIC_ALPHA_CHECKER = BUILDER.comment("Enables the dynamic alpha texture detector. This allows the mod to automatically identify generic alpha textures, but may cause performance drops (lag) during the render of alpha entities.").define("Enable dynamic alpha texture detector", true);
         BUILDER.pop();
 
         BUILDER.push("Custom Hair Color");
