@@ -6,6 +6,7 @@
   "refmap": "changed_addon.refmap.json",
   "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
   "mixins": [
+    "abilities.SwitchGenderAbilityMixin",
     "mods.nean.AvaliElytraAnimationMixin"
   ],
   "injectors": {
