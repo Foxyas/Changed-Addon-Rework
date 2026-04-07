@@ -79,7 +79,18 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 
     @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;popPose()V", shift = At.Shift.BEFORE),
             method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V")
-    private void injectDelayedHeldEntityLayer(T pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, CallbackInfo ci, @Local(name = "f5") float limbSwing, @Local(name = "f8") float limbSwingAmount, @Local(name = "pPartialTicks") float partialTicks, @Local(name = "f7") float ageInTicks, @Local(name = "f2") float netHeadYaw, @Local(name = "f6") float headPitch) {
+    private void injectDelayedHeldEntityLayer(T pEntity,
+                                              float pEntityYaw,
+                                              float partialTicks,
+                                              PoseStack pPoseStack,
+                                              MultiBufferSource pBuffer,
+                                              int pPackedLight,
+                                              CallbackInfo ci,
+                                              @Local(name = "f5") float limbSwing,
+                                              @Local(name = "f8") float limbSwingAmount,
+                                              @Local(name = "f7") float ageInTicks,
+                                              @Local(name = "f2") float netHeadYaw,
+                                              @Local(name = "f6") float headPitch) {
 //        if (!ClientVars.delayedHeldEntityRender) return;
 //
 //        LatexHeldEntityLayer<ChangedEntity, ?> layer = null;

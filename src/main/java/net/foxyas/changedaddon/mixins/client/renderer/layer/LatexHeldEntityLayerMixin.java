@@ -48,6 +48,7 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
 
     @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;pushPose()V", shift = At.Shift.BEFORE),
             method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V",
+            remap = true,
             cancellable = true)
     private void delaySameModel(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci, @Local(name = "ability") GrabEntityAbilityInstance ability) {
         //if (!((GrabEntityAbilityExtensor) ability).isSafeMode()) return;
