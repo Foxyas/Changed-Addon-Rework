@@ -19,8 +19,11 @@ public class CommandTransfurMixin {
     private void stopCall(LivingEntity assimVictim,
                           TransfurContext transfurContext,
                           CallbackInfoReturnable<AssimilationBehavior> cir) {
-        if (transfurContext.source().left().map(IAbstractChangedEntity::isPlayer).orElse(false)
-                && !ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(transfurContext.source().left().map(IAbstractChangedEntity::getEntity).orElse(null)))) {
+//        if (transfurContext.source().left().map(IAbstractChangedEntity::isPlayer).orElse(false)
+//                && !ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(transfurContext.source().left().map(IAbstractChangedEntity::getEntity).orElse(null)))) {
+//            cir.setReturnValue(null);
+//        }
+        if (transfurContext.source().left().map(IAbstractChangedEntity::getTransfurVariantInstance).orElse(null) == null) {
             cir.setReturnValue(null);
         }
     }
