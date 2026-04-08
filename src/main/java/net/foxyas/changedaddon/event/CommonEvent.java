@@ -131,7 +131,7 @@ public class CommonEvent {
                 GrabEntityAbilityInstance grabEntityAbilityInstance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
                 if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
                     if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
-                        sleeperDataExtensor.setSleepCounter(95);
+                        sleeperDataExtensor.setSleepCounter(Math.min(sleeper.getSleepTimer(), 98));
                     }
                 }
             });
