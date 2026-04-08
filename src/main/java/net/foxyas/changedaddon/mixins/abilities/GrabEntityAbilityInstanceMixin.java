@@ -129,6 +129,15 @@ public abstract class GrabEntityAbilityInstanceMixin extends AbstractAbilityInst
             ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY.with(entity::getEntity), new SafeGrabSyncPacket(entity.getEntity().getId(), safeMode));
     }
 
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/ability/GrabEntityAbilityInstance;releaseEntity(Z)V", ordinal = 1))
+    private void stopDebuffsIfFriendlyMode(GrabEntityAbilityInstance instance, boolean debuffs, Operation<Void> original) {
+        if (this.isSafeMode()) {
+            original.call(instance, false);
+            return;
+        }
+        original.call(instance, debuffs);
+    }
+
     @Inject(method = "tickIdle", at = @At(value = "HEAD"), cancellable = true)
     private void tickSnuggleCooldown(CallbackInfo ci) {
         if (!isSafeMode()) return;
