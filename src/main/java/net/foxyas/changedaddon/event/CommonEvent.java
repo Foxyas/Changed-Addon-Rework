@@ -2,24 +2,29 @@ package net.foxyas.changedaddon.event;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
 import net.foxyas.changedaddon.command.*;
 import net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.item.Syringe;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.process.TransfurEvents;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.commands.CommandBuildContext;
@@ -50,11 +55,11 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
+import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.ltxprogrammer.changed.process.TransfurEvents;
 
 import java.util.List;
 
@@ -98,6 +103,38 @@ public class CommonEvent {
             if (hasValidAlphaSleepGoal(mob)) {
                 event.setResult(Event.Result.ALLOW);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public static void allowPlayersToSleepAtAnyMomentWhenCuddling(SleepingTimeCheckEvent event) {
+        Player sleeper = event.getEntity();
+        ProcessTransfur.ifPlayerTransfurred(sleeper, (variant) -> {
+            GrabEntityAbilityInstance grabEntityAbilityInstance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+                if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
+                    event.setResult(Event.Result.ALLOW);
+                }
+            }
+        });
+    }
+
+    @SubscribeEvent
+    public static void forcePlayersToNeverSleepEnough(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            Player sleeper = event.player;
+            if (!sleeper.isSleeping()) return;
+            LivingEntityDataExtensor sleeperDataExtensor = LivingEntityDataExtensor.ofEntity(sleeper);
+            if (sleeperDataExtensor == null) return;
+
+            ProcessTransfur.ifPlayerTransfurred(sleeper, (variant) -> {
+                GrabEntityAbilityInstance grabEntityAbilityInstance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+                if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+                    if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
+                        sleeperDataExtensor.setSleepCounter(95);
+                    }
+                }
+            });
         }
     }
 
@@ -242,6 +279,7 @@ public class CommonEvent {
             player.awardStat(ChangedAddonStatRegistry.ENTITY_ASSIMILATED.get());
         }
     }
+
     @SubscribeEvent
     public static void onEntityReplicateOther(TransfurEvents.AssimilatedEntityEvent event) {
         IAbstractChangedEntity source = event.entity;

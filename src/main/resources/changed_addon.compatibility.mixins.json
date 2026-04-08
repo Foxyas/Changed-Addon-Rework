@@ -7,6 +7,7 @@
   "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
   "mixins": [
     "abilities.SwitchGenderAbilityMixin",
+    "entity.PlayerAccessor",
     "mods.nean.AvaliElytraAnimationMixin"
   ],
   "injectors": {

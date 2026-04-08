@@ -59,6 +59,8 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
     @Shadow
     public abstract @NotNull ItemStack getItemBySlot(@NotNull EquipmentSlot equipmentSlot);
 
+    @Shadow private int sleepCounter;
+
     @Override
     public boolean isInWater() {
         boolean inWater = super.isInWater();
@@ -74,6 +76,11 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
             ci.cancel();
             abstractKatanaItem.spawnElectricSwingParticle((Player) (Object) this, 2);
         }
+    }
+
+    @Override
+    public void setSleepCounter(int value) {
+        this.sleepCounter = value;
     }
 
     @Inject(method = "updateSwimming", at = @At("RETURN"))

@@ -20,6 +20,8 @@ public interface LivingEntityDataExtensor {
         return (entity instanceof LivingEntityDataExtensor livingEntityDataExtensor) ? livingEntityDataExtensor : null;
     }
 
+    default void setSleepCounter(int value) {}
+
     default AnimationState getCustomAnimationState(int id) {
         return null;
     }
