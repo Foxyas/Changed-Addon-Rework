@@ -13,11 +13,8 @@ import net.ltxprogrammer.changed.client.LivingEntityRendererExtender;
 import net.ltxprogrammer.changed.client.renderer.layers.LatexHeldEntityLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
-import net.ltxprogrammer.changed.extension.ChangedCompatibility;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -27,7 +24,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -111,9 +107,7 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
         if (entity instanceof IAlphaAbleEntity alpha && alpha.isAlpha() && alpha.alphaAdditionalScale() > 0) {
             float reduction = (1 / alpha.alphaScaleForRender());
             pose.scale(reduction, reduction, reduction);
-            if (alpha.alphaScalePercent() >= 1) {
-                pose.translate(0, 0.35, 0);
-            }
+            pose.translate(0, 0.3 * Math.min(1, alpha.alphaScalePercent()), 0);
         }
     }
 
