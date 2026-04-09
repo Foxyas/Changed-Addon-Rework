@@ -34,6 +34,9 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<WorldDifficulty> BEHEMOTH_CAN_USE_GRAB_IN_DIFFICULTY;
     public static final ForgeConfigSpec.ConfigValue<Integer> FIGHT_TO_KEEP_CONSCIOUSNESS_TIMER;
     public static final ForgeConfigSpec.ConfigValue<Double> FIGHT_TO_KEEP_CONSCIOUSNESS_STRUGGLE_NEED;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> FIGHT_TO_KEEP_CONSCIOUSNESS_DO_REPLAY;
+    public static final ForgeConfigSpec.DoubleValue FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE;
+    public static final ForgeConfigSpec.DoubleValue FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -96,6 +99,15 @@ public class ChangedAddonServerConfiguration {
         FIGHT_TO_KEEP_CONSCIOUSNESS_STRUGGLE_NEED = BUILDER
                 .comment("Struggle need to success the Fight to keep consciousness mine-game")
                 .defineInRange("Struggle Points Required", 30, 0f, Double.MAX_VALUE);
+        FIGHT_TO_KEEP_CONSCIOUSNESS_DO_REPLAY = BUILDER
+                .comment("If enabled, the 'Fight to Keep Consciousness' minigame can trigger again after being won.")
+                .define("fight_to_keep_consciousness_do_replay", true);
+        FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE = BUILDER
+                .comment("The probability that the minigame will replay after the delay has passed (0.0 = 0%, 1.0 = 100%).")
+                .defineInRange("fight_to_keep_consciousness_replay_chance", 0.5, 0.0, 1.0);
+        FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY = BUILDER
+                .comment("The delay (in ticks) before the minigame can attempt to replay after a successful win.")
+                .defineInRange("fight_to_keep_consciousness_replay_delay", 1200.0, 20.0, Double.MAX_VALUE);
         BUILDER.pop();
 
         BUILDER.push("Chat");

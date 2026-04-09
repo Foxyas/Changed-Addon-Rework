@@ -30,6 +30,10 @@ public interface TransfurVariantInstanceExtensor {
 
     void setUntransfurImmunity(UntransfurEvent.UntransfurType type, boolean value);
 
+    //TODO make this getters
+//    boolean wonFTK();
+//    int getTicksSinceWinningFTK();
+//    int getTicksFightingForConscience();
 
     default void maySendDataUpdate() {
         if (!(this instanceof TransfurVariantInstance<?> variantInstance)) {

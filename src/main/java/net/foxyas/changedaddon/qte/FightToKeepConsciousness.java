@@ -8,10 +8,12 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.ClientboundOpenFTKCScreenPacket;
 import net.foxyas.changedaddon.procedure.SummonEntityProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
+import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -115,11 +117,19 @@ public class FightToKeepConsciousness {
         vars.syncPlayerVariables(entity);
     }
 
+    private static void updatePlayerVariablesForWinning(ChangedAddonVariables.PlayerVariables vars, Entity entity) {
+        TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(entity));
+        if (transfurVariantInstance instanceof TransfurVariantInstanceExtensor transfurVariantInstanceExtensor) {
+            // TODO MAKE THE SYSTEM FOR REPLAY THE FIGHT TO KEEP CONSCIENCE
+        }
+    }
+
     @ApiStatus.Internal
     public static void successFTKC(ChangedAddonVariables.PlayerVariables vars, ServerPlayer player) {
         player.displayClientMessage(Component.translatable("changed_addon.fight_conscience.success"), true);
 
         updatePlayerVariables(vars, null, 0, player);
+        updatePlayerVariablesForWinning(vars, player);
     }
 
     @ApiStatus.Internal
