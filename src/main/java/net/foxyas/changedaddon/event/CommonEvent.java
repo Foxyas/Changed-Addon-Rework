@@ -119,24 +119,24 @@ public class CommonEvent {
         });
     }
 
-    @SubscribeEvent
-    public static void forcePlayersToNeverSleepEnough(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            Player sleeper = event.player;
-            if (!sleeper.isSleeping()) return;
-            LivingEntityDataExtensor sleeperDataExtensor = LivingEntityDataExtensor.ofEntity(sleeper);
-            if (sleeperDataExtensor == null) return;
-
-            ProcessTransfur.ifPlayerTransfurred(sleeper, (variant) -> {
-                GrabEntityAbilityInstance grabEntityAbilityInstance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-                if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
-                    if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
-                        sleeperDataExtensor.setSleepCounter(Math.min(sleeper.getSleepTimer(), 98));
-                    }
-                }
-            });
-        }
-    }
+//    @SubscribeEvent
+//    public static void forcePlayersToNeverSleepEnough(TickEvent.PlayerTickEvent event) {
+//        if (event.phase == TickEvent.Phase.END) {
+//            Player sleeper = event.player;
+//            if (!sleeper.isSleeping()) return;
+//            LivingEntityDataExtensor sleeperDataExtensor = LivingEntityDataExtensor.ofEntity(sleeper);
+//            if (sleeperDataExtensor == null) return;
+//
+//            ProcessTransfur.ifPlayerTransfurred(sleeper, (variant) -> {
+//                GrabEntityAbilityInstance grabEntityAbilityInstance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+//                if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+//                    if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
+//                        sleeperDataExtensor.setSleepCounter(Math.min(sleeper.getSleepTimer(), 98));
+//                    }
+//                }
+//            });
+//        }
+//    }
 
 
     @SubscribeEvent

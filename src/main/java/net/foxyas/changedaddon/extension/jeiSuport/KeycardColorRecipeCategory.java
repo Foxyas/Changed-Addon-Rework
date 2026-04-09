@@ -27,7 +27,7 @@ import java.util.List;
 public class KeycardColorRecipeCategory implements IRecipeCategory<KeycardColorRecipe> {
 
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ChangedAddonMod.MODID, "keycard_coloring");
-    private static final ResourceLocation TEX = ChangedAddonMod.textureLoc("textures/gui_vanilla");
+    private static final ResourceLocation TEX = ChangedAddonMod.textureLoc("textures/misc/gui_vanilla");
     private final IDrawable icon;
     private final IDrawable background;
 
