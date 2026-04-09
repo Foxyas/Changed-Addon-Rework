@@ -3,7 +3,8 @@ package net.foxyas.changedaddon.mixins.blocks;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.util.LevelUtil;
-import net.ltxprogrammer.changed.block.LatexWallSplotch;
+import net.ltxprogrammer.changed.block.LatexPupCrystal;
+import net.ltxprogrammer.changed.block.TransfurCrystalBlock;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,8 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(LatexWallSplotch.class)
-public abstract class LatexWallSplotchMixin {
+@Mixin(TransfurCrystalBlock.class)
+public abstract class TransfurCrystalBlockMixin {
 
     @WrapOperation(
             method = "entityInside",

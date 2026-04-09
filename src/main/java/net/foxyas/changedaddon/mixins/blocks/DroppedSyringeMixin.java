@@ -1,59 +1,33 @@
 package net.foxyas.changedaddon.mixins.blocks;
 
-import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import net.foxyas.changedaddon.util.LevelUtil;
+import net.ltxprogrammer.changed.block.DroppedSyringe;
 import net.ltxprogrammer.changed.block.entity.DroppedSyringeBlockEntity;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
-import net.minecraft.nbt.CompoundTag;
+import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-@Mixin(value = DroppedSyringeBlockEntity.class)
+@Mixin(DroppedSyringe.class)
 public abstract class DroppedSyringeMixin {
 
-    @Shadow(remap = false)
-    private TransfurVariant<?> variant;
-    @Unique
-    private boolean changed_Addon_Rework$AllowBosses = false;
+    @WrapOperation(
+            method = "lambda$entityInside$0",
+            at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;progressTransfur(Lnet/minecraft/world/entity/LivingEntity;Lnet/ltxprogrammer/changed/entity/ai/LatexAssimilationDecision;)Z", remap = false)
+    )
+    private boolean isEntityTouchingCheck(LivingEntity entity, LatexAssimilationDecision<?> decision, Operation<Boolean> original, @Local(argsOnly = true) DroppedSyringeBlockEntity blockEntity) {
+        boolean isTouching = LevelUtil.isTouchingBlockCollision(blockEntity.getLevel(), blockEntity.getBlockPos(), blockEntity.getBlockState(), entity);
 
-    @Inject(method = "getVariant", at = @At("RETURN"), cancellable = true, remap = false)
-    private void checkAllowBossTag(CallbackInfoReturnable<TransfurVariant<?>> cir) {
-        if (!changed_Addon_Rework$AllowBosses) {
-            if (this.variant == null || cir.getReturnValue() == null) {
-                return;
-            }
-            if (ChangedAddonTransfurVariants.getBossVariants().contains(this.variant)
-                    || ChangedAddonTransfurVariants.getVariantsRemovedFromSyringes().contains(this.variant)) {
-                List<TransfurVariant<?>> list = new ArrayList<>(TransfurVariant.getPublicTransfurVariants().toList());
-                list.removeIf(transfurVariant -> ChangedAddonTransfurVariants.getBossVariants().contains(transfurVariant));
-                TransfurVariant<?> transfurVariant = list.get(new Random().nextInt(list.size()));
-                if (transfurVariant == null) return;
-                this.variant = transfurVariant;
-                cir.setReturnValue(transfurVariant);
-            }
+        if (isTouching) {
+            return original.call(entity, decision);
         }
-    }
 
-    @Inject(method = "load", at = @At("HEAD"))
-    private void getDataMod(CompoundTag tag, CallbackInfo ci) {
-        if (tag.contains("AllowBosses")) {
-            this.changed_Addon_Rework$AllowBosses = tag.getBoolean("AllowBosses");
-        }
-    }
-
-    @Inject(method = "saveAdditional", at = @At("HEAD"))
-    private void AddDataMod(CompoundTag tag, CallbackInfo ci) {
-        if (this.variant != null && ChangedAddonTransfurVariants.getBossVariants().contains(this.variant)) {
-            tag.putBoolean("AllowBosses", changed_Addon_Rework$AllowBosses);
-        }
+        return false;
     }
 }
-

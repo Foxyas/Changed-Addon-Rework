@@ -21,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 @Mixin(value = ProcessTransfur.class, remap = false)
@@ -61,6 +60,12 @@ public class ProcessTransfurMixin {
             return null;
         }
         return call;
+    }
+
+    //TODO REMOVE THIS IN NEXT CHANGED UPDATE.
+    @WrapOperation(method = "tickPlayerTransfurProgress", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", ordinal = 1, remap = true))
+    private static float patchProgressTaxeRate(float a, float b, Operation<Float> original, @Local(name = "deltaTicks") int deltaTicks) {
+        return -original.call(deltaTicks * 0.001F, b);
     }
 
 
