@@ -155,6 +155,7 @@ public class UnfuseAbility extends AbstractAbility<Instance> {
 
                     if (changedEntity instanceof IAlphaAbleEntity original && entityUnfused instanceof IAlphaAbleEntity alphaAble) {
                         alphaAble.setAlpha(original.isAlpha());
+                        alphaAble.setAlphaScale(original.alphaAdditionalScale());
                     }
 
                     entitySpawned = serverLevel.addFreshEntity(changedEntityUnfused);

@@ -54,6 +54,7 @@ public class TransfurEvents {
                 if (wantAbsorption && transfurContext.cause != TransfurCause.GRAB_REPLICATE) {
                     if (source.getEntity() instanceof IAlphaAbleEntity alphaAbleEntity && transfurVariantInstance.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAble) {
                         iAlphaAble.setAlpha(alphaAbleEntity.isAlpha());
+                        iAlphaAble.setAlphaScale(alphaAbleEntity.alphaAdditionalScale());
                     }
                 }
             }
@@ -67,6 +68,7 @@ public class TransfurEvents {
         if (resolveChangedEntity(toReplace) instanceof IAlphaAbleEntity toReplaceAlpha) {
             if (source instanceof IAlphaAbleEntity alphaSource) {
                 alphaSource.setAlpha(toReplaceAlpha.isAlpha());
+                alphaSource.setAlphaScale(toReplaceAlpha.alphaAdditionalScale());
             }
         }
     }
@@ -160,10 +162,9 @@ public class TransfurEvents {
         }
 
         if (targetEntity instanceof IAlphaAbleEntity targetAlpha) {
-            targetAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
             targetAlpha.setAlpha(sourceAlpha.isAlpha());
+            targetAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
         }
-
     }
 
     @SubscribeEvent

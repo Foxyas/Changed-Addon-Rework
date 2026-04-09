@@ -54,6 +54,7 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
 
         if (changedEntity instanceof IAlphaAbleEntity original && ProcessTransfur.getPlayerTransfurVariant(player).getChangedEntity() instanceof IAlphaAbleEntity alphaAble) {
             alphaAble.setAlpha(original.isAlpha());
+            alphaAble.setAlphaScale(original.alphaAdditionalScale());
         }
 
         changedEntity.discard();
