@@ -226,4 +226,8 @@ public interface IAlphaAbleEntity {
         return 0f;
     }
 
+    default float alphaScalePercent() {
+        return this.alphaAdditionalScale() / 0.75f;
+    }
+
 }

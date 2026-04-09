@@ -108,10 +108,12 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
     private void scaleAfterPush(
             PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci
     ) {
-        if (entity instanceof IAlphaAbleEntity alpha && alpha.isAlpha()) {
+        if (entity instanceof IAlphaAbleEntity alpha && alpha.isAlpha() && alpha.alphaAdditionalScale() > 0) {
             float reduction = (1 / alpha.alphaScaleForRender());
             pose.scale(reduction, reduction, reduction);
-            pose.translate(0, 0.35, 0);
+            if (alpha.alphaScalePercent() >= 1) {
+                pose.translate(0, 0.35, 0);
+            }
         }
     }
 

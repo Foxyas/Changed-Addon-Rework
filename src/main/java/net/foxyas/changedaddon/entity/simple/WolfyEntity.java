@@ -238,7 +238,10 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
 
     @Override
     public <A extends AbstractAbilityInstance> A getAbilityInstance(AbstractAbility<A> ability) {
-        return (A) (this.grabEntityAbilityInstance != null && ability == this.grabEntityAbilityInstance.ability ? this.grabEntityAbilityInstance : super.getAbilityInstance(ability));
+        if (this.getUnderlyingPlayer() == null) {
+            return (A) (this.grabEntityAbilityInstance != null && ability == this.grabEntityAbilityInstance.ability ? this.grabEntityAbilityInstance : super.getAbilityInstance(ability));
+        }
+        return super.getAbilityInstance(ability);
     }
 
     @Override
