@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.projectile;
 
 import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -11,13 +10,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractGenericParticleProjectile extends ParriableProjectile {
+
     protected ParticleOptions particleOptions;
 
     public AbstractGenericParticleProjectile(EntityType<? extends AbstractGenericParticleProjectile> type, Level level) {
@@ -32,16 +29,6 @@ public abstract class AbstractGenericParticleProjectile extends ParriableProject
     @Override
     public boolean discardOnNoDmgImpact() {
         return true;
-    }
-
-    @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-    }
-
-    @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
     }
 
     @Override
@@ -66,11 +53,6 @@ public abstract class AbstractGenericParticleProjectile extends ParriableProject
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return new ClientboundAddEntityPacket(this);
-    }
-
-    @Override
-    protected void onHitEntity(@NotNull EntityHitResult pResult) {
-        super.onHitEntity(pResult);
     }
 
     @Override
@@ -102,15 +84,5 @@ public abstract class AbstractGenericParticleProjectile extends ParriableProject
     @Override
     public boolean isPickable() {
         return true;
-    }
-
-    @Override
-    protected void onHit(@NotNull HitResult pResult) {
-        super.onHit(pResult);
-    }
-
-    @Override
-    protected void onHitBlock(@NotNull BlockHitResult pResult) {
-        super.onHitBlock(pResult);
     }
 }

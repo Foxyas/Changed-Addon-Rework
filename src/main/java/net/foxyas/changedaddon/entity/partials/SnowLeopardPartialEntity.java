@@ -23,6 +23,7 @@ import net.minecraftforge.network.PlayMessages;
 import java.util.Objects;
 
 public class SnowLeopardPartialEntity extends AbstractSnowLeopard implements PowderSnowWalkable, ComplexRenderer {
+
     public SnowLeopardPartialEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.SNOW_LEOPARD_PARTIAL.get(), world);
     }

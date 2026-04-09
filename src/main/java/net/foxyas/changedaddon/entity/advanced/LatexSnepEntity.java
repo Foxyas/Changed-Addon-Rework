@@ -147,18 +147,13 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity implements
     }
 
     @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
-    }
-
-    @Override
     public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
-        return SoundEvents.OCELOT_HURT; //ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.hurt"));
+        return SoundEvents.OCELOT_HURT;
     }
 
     @Override
     public @NotNull SoundEvent getDeathSound() {
-        return SoundEvents.OCELOT_DEATH; //ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
+        return SoundEvents.OCELOT_DEATH;
     }
 
     @Override
@@ -186,32 +181,32 @@ public class LatexSnepEntity extends AbstractCanTameSnepChangedEntity implements
         if (this.level.isClientSide) {
             boolean flag = this.isOwnedBy(player) || this.isTame() || this.isTameItem(itemstack) && !this.isTame();
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (!this.isTame() && this.isTameItem(itemstack)) {
-                if (!player.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
-                boolean isTransfur = ProcessTransfur.isPlayerTransfurred(player);
+        }
 
-                if (!isTransfur && this.random.nextInt(3) == 0) { // One in 3 chance
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else if (isTransfur && this.random.nextInt(6) == 0) {
-                    this.tame(player);
-                    this.navigation.stop();
-                    this.setTarget(null);
-                    this.level.broadcastEntityEvent(this, (byte) 7);
-                } else {
-                    this.level.broadcastEntityEvent(this, (byte) 6);
-                }
+        if (!this.isTame() && this.isTameItem(itemstack)) {
+            if (!player.getAbilities().instabuild) {
+                itemstack.shrink(1);
+            }
+            boolean isTransfur = ProcessTransfur.isPlayerTransfurred(player);
 
-                return InteractionResult.SUCCESS;
+            if (!isTransfur && this.random.nextInt(3) == 0) { // One in 3 chance
+                this.tame(player);
+                this.navigation.stop();
+                this.setTarget(null);
+                this.level.broadcastEntityEvent(this, (byte) 7);
+            } else if (isTransfur && this.random.nextInt(6) == 0) {
+                this.tame(player);
+                this.navigation.stop();
+                this.setTarget(null);
+                this.level.broadcastEntityEvent(this, (byte) 7);
+            } else {
+                this.level.broadcastEntityEvent(this, (byte) 6);
             }
 
-            return super.mobInteract(player, hand);
+            return InteractionResult.SUCCESS;
         }
+
+        return super.mobInteract(player, hand);
     }
 
     @Override

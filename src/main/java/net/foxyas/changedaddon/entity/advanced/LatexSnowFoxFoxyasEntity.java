@@ -156,21 +156,6 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
     }
 
     @Override
-    protected void dropEquipment() {
-        super.dropEquipment();
-    }
-
-    @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-    }
-
-    @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-    }
-
-    @Override
     public @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
         if (getOffers().isEmpty() || player.isShiftKeyDown()) {
             if (level.isClientSide) return InteractionResult.SUCCESS;
@@ -229,10 +214,5 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
                 }
             }
         });
-    }
-
-    @Override
-    public void baseTick() {
-        super.baseTick();
     }
 }

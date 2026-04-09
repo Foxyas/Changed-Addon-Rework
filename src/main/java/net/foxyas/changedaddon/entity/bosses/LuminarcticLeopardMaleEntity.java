@@ -9,7 +9,6 @@ import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -34,7 +33,6 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
     public LuminarcticLeopardMaleEntity(EntityType<LuminarcticLeopardMaleEntity> type, Level world) {
         super(type, world);
         xpReward = XP_REWARD_HUGE;
-        setNoAi(false);
         setPersistenceRequired();
     }
 
@@ -77,6 +75,7 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
         if (this.getTarget() != null && (this.getTarget().getHealth() / this.getTarget().getMaxHealth() * 100) <= 15) {
             return TransfurMode.ABSORPTION;
         }
+
         return TransfurMode.NONE;
     }
 
@@ -91,11 +90,6 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
     }
 
     @Override
-    protected void registerGoals() {
-        super.registerGoals();
-    }
-
-    @Override
     public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
     }
@@ -106,15 +100,11 @@ public class LuminarcticLeopardMaleEntity extends AbstractLuminarcticLeopard {
     }
 
     @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
-    }
-
-    @Override
     public double getPassengersRidingOffset() {
         if (this.getPose() == Pose.STANDING || this.getPose() == Pose.CROUCHING) {
             return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
         }
+
         return getTorsoYOffsetForFallFly(this);
     }
 

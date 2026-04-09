@@ -1,10 +1,6 @@
 package net.foxyas.changedaddon.entity.api;
 
 import net.foxyas.changedaddon.entity.ai.LatexInventory;
-import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractTamableLatexEntity;
-import net.foxyas.changedaddon.entity.defaults.AbstractUnfuseableChangedEntity;
-import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TamableLatexEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -19,8 +15,6 @@ import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
-
-import java.util.List;
 
 public interface ICoatLikeEntity extends TamableLatexEntity {
 
@@ -37,11 +31,11 @@ public interface ICoatLikeEntity extends TamableLatexEntity {
         if (instance != null || changedEntity.getSelfVariant() == null) return false;
 
         ProcessTransfur.setPlayerTransfurVariant(player, changedEntity.getSelfVariant(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1f, false, (transfurVariantInstance) -> {
-            Player host = transfurVariantInstance.getHost();
             ChangedEntity variantInstanceChangedEntity = transfurVariantInstance.getChangedEntity();
 
             if (changedEntity instanceof IAlphaAbleEntity original && variantInstanceChangedEntity instanceof IAlphaAbleEntity transfurred) {
                 transfurred.setAlpha(original.isAlpha());
+                transfurred.setAlphaScale(original.alphaAdditionalScale());
             }
 
             /*

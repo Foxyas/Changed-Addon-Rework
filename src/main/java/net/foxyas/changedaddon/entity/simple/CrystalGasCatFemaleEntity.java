@@ -7,7 +7,6 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,12 +19,12 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class CrystalGasCatFemaleEntity extends LatexWatermelonCat implements GenderedEntity, PowderSnowWalkable {
+
     public CrystalGasCatFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.CRYSTAL_GAS_CAT_FEMALE.get(), world);
     }
@@ -33,7 +32,6 @@ public class CrystalGasCatFemaleEntity extends LatexWatermelonCat implements Gen
     public CrystalGasCatFemaleEntity(EntityType<CrystalGasCatFemaleEntity> type, Level world) {
         super(type, world);
         xpReward = 0;
-        setNoAi(false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -72,11 +70,6 @@ public class CrystalGasCatFemaleEntity extends LatexWatermelonCat implements Gen
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
     }
 
     public Color3 getDripColor() {

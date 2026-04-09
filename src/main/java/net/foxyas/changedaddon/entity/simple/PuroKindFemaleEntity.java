@@ -10,10 +10,8 @@ import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
@@ -25,7 +23,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -33,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class PuroKindFemaleEntity extends AbstractDarkLatexWolf implements IDynamicRideOffsetEntity {
+
     public PuroKindFemaleEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.PURO_KIND_FEMALE.get(), world);
     }
@@ -41,7 +39,6 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf implements IDyna
         super(type, world);
         xpReward = AbstractDarkLatexWolf.XP_REWARD_MEDIUM;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
         setPersistenceRequired();
     }
 
@@ -108,14 +105,8 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf implements IDyna
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-
-    }
-
     public Color3 getDripColor() {
-        Color3 color = Color3.getColor("#000000");
+        Color3 color;
         if (random.nextInt(10) > 5) {
             color = Color3.getColor("#393939");
         } else {
@@ -131,11 +122,6 @@ public class PuroKindFemaleEntity extends AbstractDarkLatexWolf implements IDyna
     @Override
     public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
     }
 
     @Override

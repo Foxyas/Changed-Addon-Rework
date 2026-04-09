@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,7 +18,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -29,6 +27,7 @@ import java.util.Objects;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
+
     public BagelEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.BAGEL.get(), world);
     }
@@ -37,7 +36,6 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
         super(type, world);
         xpReward = 5;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
     }
 
 
@@ -85,7 +83,7 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
 
     @Override
     public HairStyle getDefaultHairStyle() {
-        HairStyle Hair = BALD.get();
+        HairStyle Hair;
         if (random.nextInt(10) > 5) {
             Hair = HairStyle.SHORT_MESSY.get();
         } else {
@@ -100,7 +98,7 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
     }
 
     public Color3 getDripColor() {
-        Color3 color = Color3.getColor("#ffffff");
+        Color3 color;
         if (random.nextInt(10) > 5) {
             color = Color3.getColor("#ffffff");
         } else {
@@ -116,11 +114,6 @@ public class BagelEntity extends ChangedEntity implements PowderSnowWalkable {
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
     }
 
     @Override

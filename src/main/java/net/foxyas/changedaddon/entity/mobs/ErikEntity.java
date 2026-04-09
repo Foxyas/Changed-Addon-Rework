@@ -23,6 +23,7 @@ import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
 public class ErikEntity extends Monster {
+
     public ErikEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.ERIK.get(), world);
     }
@@ -30,7 +31,6 @@ public class ErikEntity extends Monster {
     public ErikEntity(EntityType<ErikEntity> type, Level world) {
         super(type, world);
         xpReward = 0;
-        setNoAi(false);
         setPersistenceRequired();
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
     }
@@ -95,10 +95,5 @@ public class ErikEntity extends Monster {
     @Override
     public @NotNull SoundEvent getDeathSound() {
         return SoundEvents.GENERIC_DEATH;
-    }
-
-    @Override
-    public void baseTick() {
-        super.baseTick();
     }
 }

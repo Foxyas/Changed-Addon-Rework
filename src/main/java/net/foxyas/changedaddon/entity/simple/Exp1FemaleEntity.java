@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,7 +19,6 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -39,7 +37,6 @@ public class Exp1FemaleEntity extends ChangedEntity implements GenderedEntity, P
         super(type, world);
         xpReward = 5;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
     }
 
     public static void init() {
@@ -85,7 +82,7 @@ public class Exp1FemaleEntity extends ChangedEntity implements GenderedEntity, P
 
     @Override
     public HairStyle getDefaultHairStyle() {
-        HairStyle Hair = HairStyle.LONG_KEPT.get();
+        HairStyle Hair;
         if (random.nextInt(10) > 5) {
             Hair = HairStyle.LONG_MESSY.get();
         } else {

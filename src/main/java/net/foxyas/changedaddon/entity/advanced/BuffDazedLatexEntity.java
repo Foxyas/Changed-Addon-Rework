@@ -43,7 +43,6 @@ public class BuffDazedLatexEntity extends AbstractDazedEntity {
         super(type, world);
         xpReward = 0;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
         setPersistenceRequired();
     }
 

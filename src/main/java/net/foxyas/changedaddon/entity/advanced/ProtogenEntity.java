@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ProtogenEntity extends AbstractBasicOrganicChangedEntity {
+
     public ProtogenEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
     }

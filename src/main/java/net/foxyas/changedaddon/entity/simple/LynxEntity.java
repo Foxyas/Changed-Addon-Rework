@@ -9,7 +9,6 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,10 +20,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public class LynxEntity extends AbstractSwimmableEntity implements PowderSnowWalkable, VariantExtraStats {
+
     public LynxEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.LYNX.get(), world);
     }
@@ -89,11 +88,6 @@ public class LynxEntity extends AbstractSwimmableEntity implements PowderSnowWal
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
     }
 
     @Override

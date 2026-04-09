@@ -27,6 +27,7 @@ import net.minecraftforge.common.ForgeMod;
 import java.util.Objects;
 
 public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements VariantExtraStats {
+
     protected final SimpleAbilityInstance summonPups;
 
     public DarkLatexYufengQueenEntity(EntityType<? extends DarkLatexYufengQueenEntity> p_19870_, Level p_19871_) {

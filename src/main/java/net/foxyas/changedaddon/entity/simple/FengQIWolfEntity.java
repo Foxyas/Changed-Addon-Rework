@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.entity.simple;
 
 import net.foxyas.changedaddon.entity.ai.LatexFavor;
-import net.foxyas.changedaddon.entity.ai.advanced.CrawlLeaperGroundPathNavigation;
 import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.ltxprogrammer.changed.entity.*;
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -44,7 +42,6 @@ public class FengQIWolfEntity extends AbstractCanTameChangedEntityFavors impleme
         super(type, world);
         xpReward = 5;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -125,17 +122,6 @@ public class FengQIWolfEntity extends AbstractCanTameChangedEntityFavors impleme
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    public void baseTick() {
-        super.baseTick();
-    }
-
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
     }
 
     @Override

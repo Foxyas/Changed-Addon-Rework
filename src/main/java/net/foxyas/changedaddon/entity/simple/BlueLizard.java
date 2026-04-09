@@ -30,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class BlueLizard extends AbstractBasicChangedEntity implements ExtraConditions.Climb, CustomPatReaction {
+
     public BlueLizard(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.BLUE_LIZARD.get(), world);
     }

@@ -20,6 +20,7 @@ import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
 public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
+
     public SnepsiLeopardEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.SNEPSI_LEOPARD.get(), world);
     }
@@ -29,7 +30,6 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
         xpReward = XP_REWARD_MEDIUM;
         this.setAttributes(getAttributes());
         setPersistenceRequired();
-        setNoAi(false);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -49,7 +49,7 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
     }
 
     public Color3 getDripColor() {
-        Color3 color = Color3.getColor("#ffffff");
+        Color3 color;
         if (random.nextInt(10) > 5) {
             color = Color3.getColor("#95D161");
         } else {
@@ -64,11 +64,6 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
     }
 
     @Override
-    protected void registerGoals() {
-        super.registerGoals();
-    }
-
-    @Override
     public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
     }
@@ -76,11 +71,6 @@ public class SnepsiLeopardEntity extends LatexSnowLeopardMale {
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
     }
 
     @Override

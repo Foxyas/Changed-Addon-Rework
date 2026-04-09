@@ -9,6 +9,7 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.FoxyasUtils;
 import net.foxyas.changedaddon.util.ParticlesUtil;
@@ -18,7 +19,6 @@ import net.ltxprogrammer.changed.entity.animation.StunAnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.*;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -36,7 +36,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -63,7 +62,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -76,8 +74,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-
-import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
 
 public class Experiment009BossEntity extends Experiment009Entity implements IExp9Logic {
 
@@ -196,6 +192,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
             return false;
         }
+
         return super.startRiding(EntityIn, force);
     }
 
@@ -204,31 +201,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         if (target.getEyeY() > this.getEyeY() + 1) {
             return super.getMeleeAttackRangeSqr(target) * 1.5D;
         }
+
         return super.getMeleeAttackRangeSqr(target);
-    }
-
-    public Color3 getHairColor(int i) {
-        return super.getHairColor(i);
-    }
-
-    @Override
-    public int getTicksRequiredToFreeze() {
-        return super.getTicksRequiredToFreeze();
-    }
-
-    @Override
-    protected boolean targetSelectorTest(LivingEntity livingEntity) {
-        return super.targetSelectorTest(livingEntity);
-    }
-
-    @Override
-    public TransfurMode getTransfurMode() {
-        return super.getTransfurMode();
-    }
-
-    @Override
-    public HairStyle getDefaultHairStyle() {
-        return super.getDefaultHairStyle();
     }
 
     @Override
@@ -236,23 +210,9 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         return HairStyle.Collection.MALE.getStyles();
     }
 
-    public Color3 getDripColor() {
-        return super.getDripColor();
-    }
-
-    @Override
-    public Color3 getTransfurColor(TransfurCause cause) {
-        return super.getTransfurColor(cause);
-    }
-
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
     }
 
     @Override
@@ -344,15 +304,16 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public void variantTick(Level level) {
         super.variantTick(level);
-        if (this.getUnderlyingPlayer() != null) {
-            Player playerInControl = this.getUnderlyingPlayer();
-            TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(playerInControl);
-            if (transfurVariantInstance != null) {
-                if (playerInControl.level().getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
-                    if (!getPlayerVars(playerInControl).Exp009TransfurAllowed) {
-                        ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_009.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
-                    }
-                }
+
+        Player playerInControl = this.getUnderlyingPlayer();
+        if (getUnderlyingPlayer() == null) return;
+
+        TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(playerInControl);
+        if (instance == null) return;
+
+        if (playerInControl.level().getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
+            if (!ChangedAddonVariables.ofOrDefault(playerInControl).Exp009TransfurAllowed) {
+                ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_009.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
             }
         }
     }
@@ -373,31 +334,6 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     @Override
-    public @NotNull MobType getMobType() {
-        return super.getMobType();
-    }
-
-    @Override
-    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-        return super.removeWhenFarAway(distanceToClosestPlayer);
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
-    }
-
-    @Override
-    public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
-        return super.getHurtSound(ds);
-    }
-
-    @Override
-    public @NotNull SoundEvent getDeathSound() {
-        return super.getDeathSound();
-    }
-
-    @Override
     public boolean isInvulnerableTo(@NotNull DamageSource pSource) {
         if (pSource.is(DamageTypes.LIGHTNING_BOLT))
             return true;
@@ -412,33 +348,45 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     public boolean hurt(DamageSource source, float amount) {
         if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.OUTSIDE_BORDER) || source.is(DamageTypes.GENERIC_KILL))
             return super.hurt(source, amount);
+
         if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
             return false;
+
         if (source.is(DamageTypeTags.IS_FALL))
             return false;
+
         if (source.is(DamageTypes.CACTUS))
             return false;
+
         if (source.is(DamageTypes.DROWN))
             return false;
+
         if (source.is(DamageTypes.LIGHTNING_BOLT))
             return false;
+
         if (source.getMsgId().equals("trident")) {
             maybeSendReactionToPlayer(source);
             return super.hurt(source, amount * 0.5f);
         }
+
         if (source.is(DamageTypes.FALLING_ANVIL))
             return false;
+
         if (source.is(DamageTypes.DRAGON_BREATH))
             return false;
+
         if (source.is(DamageTypes.WITHER))
             return false;
+
         if (source.getMsgId().equals("witherSkull"))
             return false;
+
         if (source.is(DamageTypes.IN_WALL)) {
             teleportToNearLivingEntity();
             return false;
         }
-        if (source.getEntity() instanceof Warden warden) {
+
+        if (source.getEntity() instanceof Warden) {
             DodgeAbilityInstance.executeRandomDodgeAnimation(this);
             this.navigation.stop();
             return false;
@@ -465,6 +413,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             maybeSendReactionToPlayer(source);
             return super.hurt(source, amount * 0f);
         }
+
         if (source.is(DamageTypes.THORNS)) {
             return super.hurt(source, 0);
         }
@@ -482,21 +431,20 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     private void maybeSendReactionToPlayer(DamageSource source) {
-        if (source.getEntity() instanceof Player player) {
-            if (this.random.nextFloat() <= 0.25f) {
-                if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                    player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks"), true);
-                } else if (source.is(DamageTypeTags.IS_FIRE)) {
-                    player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage"), true);
-                }
-            }
-        }
+        if (!(source.getEntity() instanceof Player player)) return;
+
+       if (this.random.nextFloat() <= 0.25f) {
+           if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+               player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks"), true);
+           } else if (source.is(DamageTypeTags.IS_FIRE)) {
+               player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage"), true);
+           }
+       }
     }
 
     public void teleport(LivingEntity target) {
-        if (target == null || this.level().isClientSide) {
-            return;
-        }
+        if (target == null || this.level().isClientSide) return;
+
         Vec3 targetPos = target.position().add(0, target.getEyeHeight() * 0.5, 0);
         this.teleportTo(targetPos.x, targetPos.y, targetPos.z);
         this.getLookControl().setLookAt(target, 180, 180);
@@ -505,9 +453,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public boolean isDamageSourceBlocked(@NotNull DamageSource pDamageSource) {
-        if (pDamageSource.is(ChangedDamageSources.ELECTROCUTION.key())) {
-            return true;
-        }
+        if (pDamageSource.is(ChangedDamageSources.ELECTROCUTION.key())) return true;
+
         return super.isDamageSourceBlocked(pDamageSource);
     }
 
@@ -592,56 +539,53 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected void onPhaseChange(Exp9Phase phase) {
         switch (phase) {
-            case PHASE1 -> {
-            }
+            case PHASE1 -> {}
             case PHASE2 -> {
                 this.spawnThunderBolt(this.position());
                 this.knockbackNearbyEntities(this);
             }
             case PHASE3 -> {
-                BlockPos center = this.blockPosition();
-                double ringRadius = 4;
-                int bolts = 8;
+                final BlockPos center = this.blockPosition();
+                final float ringRadius = 4;
+                final int bolts = 8;
                 if (this.level() instanceof ServerLevel serverLevel) {
                     spawnThunderCircle(serverLevel, center, ringRadius, bolts);
-                    DelayedTask.schedule(5, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.4, bolts * 2));
-                    DelayedTask.schedule(10, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.8, bolts * 3));
-                    DelayedTask.schedule(15, () -> spawnThunderCircle(serverLevel, center, ringRadius * 2.2, bolts * 4));
+                    DelayedTask.schedule(5, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.4f, bolts * 2));
+                    DelayedTask.schedule(10, () -> spawnThunderCircle(serverLevel, center, ringRadius * 1.8f, bolts * 3));
+                    DelayedTask.schedule(15, () -> spawnThunderCircle(serverLevel, center, ringRadius * 2.2f, bolts * 4));
                 }
                 this.knockbackNearbyEntities(this);
             }
         }
     }
 
-    public static void spawnThunderCircle(ServerLevel level, BlockPos center, double radius, int bolts) {
+    public static void spawnThunderCircle(ServerLevel level, BlockPos center, float radius, int bolts) {
         // garante que os strikes ocorram no topo do terreno naquele XZ
+        float angle, x, z;
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         for (int i = 0; i < bolts; i++) {
-            double angle = (2 * Math.PI * i) / bolts;
-            double x = center.getX() + 0.5 + radius * Math.cos(angle);
-            double z = center.getZ() + 0.5 + radius * Math.sin(angle);
-
-            int topY = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Mth.floor(x), Mth.floor(z));
+            angle = (2 * Mth.PI * i) / bolts;
+            x = center.getX() + 0.5f + radius * Mth.cos(angle);
+            z = center.getZ() + 0.5f + radius * Mth.sin(angle);
 
             // Começa do teto e desce até achar espaço
             int minY = level.getMinBuildHeight() - 1;
+            pos.set(x, minY, z);
             for (int y = minY; y < (level.getMaxBuildHeight() - 1); y++) {
-                BlockPos checkPos = new BlockPos((int) x, y, (int) z);
+                pos.setY(y);
                 // Verifica se tem 2 blocos de espaço (ou mais, dependendo da entidade)
-                if (level.isEmptyBlock(checkPos) && level.isEmptyBlock(checkPos.above())) {
-                    topY = y;
+                if (level.isEmptyBlock(pos) && level.isEmptyBlock(pos.above())) {
                     break;
                 }
             }
 
-            BlockPos strikePos = new BlockPos(Mth.floor(x), topY, Mth.floor(z));
-
             LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level);
-            if (bolt != null) {
-                bolt.moveTo(strikePos.getX() + 0.5, strikePos.getY(), strikePos.getZ() + 0.5);
-                bolt.setVisualOnly(false); // true = só visual (sem dano/fogo)
-                bolt.setDamage(2f);
-                level.addFreshEntity(bolt);
-            }
+            if (bolt == null) return;
+
+            bolt.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+            bolt.setVisualOnly(false); // true = só visual (sem dano/fogo)
+            bolt.setDamage(2f);
+            level.addFreshEntity(bolt);
         }
     }
 
@@ -658,20 +602,20 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         AABB attackArea = source.getBoundingBox().inflate(6);
         List<LivingEntity> nearby = source.level.getEntitiesOfClass(LivingEntity.class, attackArea);
 
-
+        float xForce, zForce;
         for (LivingEntity target : nearby) {
-            if (target != source && source.canAttack(target)) {
-                double xForce = Mth.sin(source.getYRot() * ((float) Math.PI / 180F));
-                double zForce = -Mth.cos(source.getYRot() * ((float) Math.PI / 180F));
-                target.knockback(force, xForce, zForce);
-                target.setDeltaMovement(target.getDeltaMovement().add(extraMotion));
+            if (target == source || !source.canAttack(target)) continue;
 
-                if (target instanceof ServerPlayer serverPlayer) {
-                    serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
-                            serverPlayer.getId(),
-                            serverPlayer.getDeltaMovement())
-                    );
-                }
+            xForce = Mth.sin(source.getYRot() * Mth.DEG_TO_RAD);
+            zForce = -Mth.cos(source.getYRot() * Mth.DEG_TO_RAD);
+            target.knockback(force, xForce, zForce);
+            target.setDeltaMovement(target.getDeltaMovement().add(extraMotion));
+
+            if (target instanceof ServerPlayer serverPlayer) {
+                serverPlayer.connection.send(new ClientboundSetEntityMotionPacket(
+                        serverPlayer.getId(),
+                        serverPlayer.getDeltaMovement())
+                );
             }
         }
     }
@@ -746,38 +690,44 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public void die(@NotNull DamageSource damageSource) {
-        if (damageSource.getDirectEntity() != null) {
-            this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1, 1);
-            for (int theta = 0; theta < 360; theta += 25) { // Ângulo horizontal
-                double angleTheta = Math.toRadians(theta);
-                for (int phi = 0; phi <= 180; phi += 25) { // Ângulo vertical
-                    double anglePhi = Math.toRadians(phi);
-                    double x = this.getX() + Math.sin(anglePhi) * Math.cos(angleTheta) * 4.0;
-                    double y = this.getY() + Math.cos(anglePhi) * 4.0;
-                    double z = this.getZ() + Math.sin(anglePhi) * Math.sin(angleTheta) * 4.0;
-                    Vec3 pos = new Vec3(x, y, z);
-                    ParticlesUtil.sendParticlesWithMotion(
-                            this,
-                            ParticleTypes.ELECTRIC_SPARK,
-                            new Vec3(0, 0, 0),
-                            this.position().subtract(pos),
-                            5, 0.025f
-                    );
-                }
-            }
-            this.playSound(SoundEvents.GENERIC_EXPLODE, 1, 1);
-            for (BlockPos pos : FoxyasUtils.betweenClosedStreamSphere(blockPosition(), 16, 16, 1).toList()) {
-                BlockState state = level.getBlockState(pos);
+        if (damageSource.getDirectEntity() == null) {
+            super.die(damageSource);
+            return;
+        }
 
-                if (state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)) {
-                    level.removeBlock(pos, false);
-                    level.levelEvent(1009, pos, 0); // Partículas e som de "extinguir fogo"
-                }
-            }
+        this.playSound(SoundEvents.PLAYER_ATTACK_CRIT, 1, 1);
 
-            if (damageSource.getEntity() instanceof LivingEntity living) {
-                FoxyasUtils.repairAllItems(living, 1000);
+        float angleTheta, anglePhi, x, y, z;
+        for (int theta = 0; theta < 360; theta += 25) { // Ângulo horizontal
+            angleTheta = Mth.DEG_TO_RAD * theta;
+
+            for (int phi = 0; phi <= 180; phi += 25) { // Ângulo vertical
+                anglePhi = Mth.DEG_TO_RAD * phi;
+                x = (float) getX() + Mth.sin(anglePhi) * Mth.cos(angleTheta) * 4.0f;
+                y = (float) getY() + Mth.cos(anglePhi) * 4.0f;
+                z = (float) getZ() + Mth.sin(anglePhi) * Mth.sin(angleTheta) * 4.0f;
+                ParticlesUtil.sendParticlesWithMotion(
+                        this,
+                        ParticleTypes.ELECTRIC_SPARK,
+                        Vec3.ZERO,
+                        this.position().subtract(x, y, z),
+                        5, 0.025f
+                );
             }
+        }
+
+        this.playSound(SoundEvents.GENERIC_EXPLODE, 1, 1);
+        for (BlockPos pos : FoxyasUtils.betweenClosedStreamSphere(blockPosition(), 16, 16, 1).toList()) {
+            BlockState state = level.getBlockState(pos);
+
+            if (state.is(Blocks.FIRE) || state.is(Blocks.SOUL_FIRE)) {
+                level.removeBlock(pos, false);
+                level.levelEvent(1009, pos, 0); // Partículas e som de "extinguir fogo"
+            }
+        }
+
+        if (damageSource.getEntity() instanceof LivingEntity living) {
+            FoxyasUtils.repairAllItems(living, 1000);
         }
 
         super.die(damageSource);
@@ -786,49 +736,49 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     @Override
     public void baseTick() {
         super.baseTick();
-        if (this.getUnderlyingPlayer() == null) {
-            if (firstTick) {
-                applyDefaultBasicPlayerInfo();
-            }
+        if (getUnderlyingPlayer() != null) return;
 
-            if (shouldBleed && (this.computeHealthRatio() / 0.4f) > 0.25f && this.tickCount % 4 == 0) {
-                this.setHealth(this.getHealth() - 0.25f);
-            }
+        if (firstTick) {
+            applyDefaultBasicPlayerInfo();
+        }
 
-            Random randomSource = new Random();
-            if (randomSource.nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
-                if (this.isPhase2()) {
-                    if (this.shouldBleed) {
-                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
-                        ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
-                    } else {
-                        if (randomSource.nextFloat() > 0.95) {
-                            ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
-                        }
-                        ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
-                    }
-                } else {
-                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
-                }
-            }
+        if (shouldBleed && (this.computeHealthRatio() / 0.4f) > 0.25f && this.tickCount % 4 == 0) {
+            this.setHealth(this.getHealth() - 0.25f);
+        }
 
-
+        Random randomSource = new Random();
+        if (randomSource.nextFloat() < 1 - Math.min(0.95, computeHealthRatio())) {
             if (this.isPhase2()) {
-                if (this.computeHealthRatio() <= 0.4f) {
-                    removeStatModifiers();
-                    applyStatModifierAllOutPhase();
-                    this.shouldBleed = true;
-                    setPhase3(true);
+                if (this.shouldBleed) {
+                    ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.01f);
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 15, 0.05f);
                 } else {
-                    applyStatModifier(this, 1.5);
+                    if (randomSource.nextFloat() > 0.95) {
+                        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.3f, 0.25f, 0.3f, 10, 0.01f);
+                    }
+                    ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 10, 1);
                 }
             } else {
-                removeStatModifiers();
+                ParticlesUtil.sendParticles(this.level(), ChangedAddonParticleTypes.thunderSpark(1), this.getEyePosition().subtract(0, randomSource.nextFloat(this.getEyeHeight()), 0), 0.25f, 0.25f, 0.25f, 5, 1);
             }
-            setSpeed(this);
-            float speed = (float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f;
-            this.crawlingSystem(speed);
         }
+
+        if (this.isPhase2()) {
+            if (this.computeHealthRatio() <= 0.4f) {
+                removeStatModifiers();
+                applyStatModifierAllOutPhase();
+                this.shouldBleed = true;
+                setPhase3(true);
+            } else {
+                applyStatModifier(this, 1.5);
+            }
+        } else {
+            removeStatModifiers();
+        }
+
+        setSpeed(this);
+        float speed = (float) this.getAttributeValue(ForgeMod.SWIM_SPEED.get()) * 0.35f;
+        this.crawlingSystem(speed);
     }
 
     @Override
@@ -844,34 +794,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         //removeModifierUUID(this, Attributes.MOVEMENT_SPEED, "a06083b0-291d-4a72-85de-73bd93ffb710");
     }
 
-    public void removeStatModifiers(LivingEntity entity) {
-        removeModifierUUID(entity, Attributes.ATTACK_DAMAGE, "AttackMultiplier");
-        removeModifierUUID(entity, Attributes.ARMOR, "ArmorMultiplier");
-        removeModifierUUID(entity, Attributes.ARMOR_TOUGHNESS, "ArmorToughnessMultiplier");
-        removeModifierUUID(entity, Attributes.KNOCKBACK_RESISTANCE, "KnockbackResistanceMultiplier");
-        //removeModifierUUID(entity, Attributes.MOVEMENT_SPEED, "SpeedMultiplier");
-    }
-
-    private void removeModifier(LivingEntity entity, Attribute attribute, String modifierName) {
+    private void removeModifierUUID(LivingEntity entity, Attribute attribute, String uuidStr) {
         AttributeInstance instance = entity.getAttribute(attribute);
-        if (instance != null) {
-            for (AttributeModifier modifier : instance.getModifiers()) {
-                if (modifier.getName().equals(modifierName)) {
-                    instance.removeModifier(modifier);
-                    break; // Remove apenas um, caso haja múltiplos com o mesmo nome
-                }
-            }
-        }
-    }
+        if (instance == null) return;
 
-    private void removeModifierUUID(LivingEntity entity, Attribute attribute, String uuid) {
-        AttributeInstance instance = entity.getAttribute(attribute);
-        if (instance != null) {
-            for (AttributeModifier modifier : instance.getModifiers()) {
-                if (modifier.getId().equals(UUID.fromString(uuid))) {
-                    instance.removeModifier(modifier);
-                    break; // Remove apenas um, caso haja múltiplos com o mesmo nome
-                }
+        UUID uuid = UUID.fromString(uuidStr);
+        for (AttributeModifier modifier : instance.getModifiers()) {
+            if (modifier.getId().equals(uuid)) {
+                instance.removeModifier(modifier);
+                break; // Remove apenas um, caso haja múltiplos com o mesmo nome
             }
         }
     }
@@ -904,23 +835,23 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     public void spawnThunderBolt(BlockPos pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
-        if (lightning != null) {
-            lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
-            lightning.setCause(null);
-            lightning.setDamage(6f);
-            this.level.addFreshEntity(lightning);
-            ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
-        }
+        if (lightning == null) return;
+
+        lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
+        lightning.setCause(null);
+        lightning.setDamage(6f);
+        this.level.addFreshEntity(lightning);
+        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
     }
 
     public void spawnThunderBolt(Vec3 pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
-        if (lightning != null) {
-            lightning.moveTo(pos.x(), pos.y(), pos.z());
-            lightning.setCause(null);
-            this.level.addFreshEntity(lightning);
-            ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
-        }
+        if (lightning == null) return;
+
+        lightning.moveTo(pos.x(), pos.y(), pos.z());
+        lightning.setCause(null);
+        this.level.addFreshEntity(lightning);
+        ParticlesUtil.sendParticles(this.level(), ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
     }
 
     public void setSpeed(Experiment009BossEntity entity) {
@@ -938,11 +869,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     @Override
     public void WhenPattedReaction(Player player, InteractionHand hand) {
-        if (!(player.level() instanceof ServerLevel serverLevel)) return;
+        if (!(player.level() instanceof ServerLevel)) return;
         if (player instanceof ServerPlayer serverPlayer) {
             ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.Trigger(serverPlayer, this, "pats_on_the_beast");
         }
-
 
         List<Component> translatableComponentList = new ArrayList<>();
         translatableComponentList.add(Component.translatable("entity_dialogues.changed_addon.exp9.pat.type_1"));
@@ -976,17 +906,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         } else {
             mobEffectInstance = new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20, 0, true, true, true);
         }
+
         this.addEffect(mobEffectInstance);
     }
 
     @Override
     public boolean canCauseGrabDamage() {
         return true;
-    }
-
-    @Override
-    public EntityType<?> getReferencedEntityType() {
-        return this.getType();
     }
 
     @Override
@@ -1040,7 +966,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     public static boolean shouldAlwaysDamageEntity(LivingEntity target) {
-        return !(target instanceof Player player);
+        return !(target instanceof Player);
     }
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
@@ -1048,37 +974,37 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
         @SubscribeEvent
         public static void onBossHurtEntity(LivingHurtEvent event) {
-            LivingEntity target = event.getEntity();
             DamageSource damageSource = event.getSource();
             Entity source = damageSource.getEntity();
 
-            if (source instanceof Experiment009BossEntity boss) {
-                if (boss.isPhase3()) {
-                    boss.heal(0.5f);
+            if (!(source instanceof Experiment009BossEntity boss)) return;
+
+            if (boss.isPhase3()) {
+                boss.heal(0.5f);
+            }
+
+            LivingEntity target = event.getEntity();
+            float metalPercentage = getMetalPercentage(target);
+            if (metalPercentage == 0) return;
+
+            if (metalPercentage > 0.1f) {
+                float extraDamage = 5.0f * metalPercentage;
+                event.setAmount(event.getAmount() + extraDamage);
+
+                if (!target.level.isClientSide) {
+                    ChangedAnimationEvents.broadcastEntityAnimation(target, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
+                    target.level.playSound(null, target.getX(), target.getY(), target.getZ(),
+                            ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
                 }
 
-                float metalPercentage = getMetalPercentage(target);
-                if (metalPercentage == 0) return;
-
-                if (metalPercentage > 0.1f) {
-                    float extraDamage = 5.0f * metalPercentage;
-                    event.setAmount(event.getAmount() + extraDamage);
-
-                    if (!target.level.isClientSide) {
-                        ChangedAnimationEvents.broadcastEntityAnimation(target, ChangedAnimationEvents.SHOCK_STUN.get(), StunAnimationParameters.INSTANCE);
-                        target.level.playSound(null, target.getX(), target.getY(), target.getZ(),
-                                ChangedSounds.TSC_WEAPON_SHOCK.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
-                    }
-
-                    target.hurtTime = 10;
-                    target.hurtDuration = 10;
-                }
+                target.hurtTime = 10;
+                target.hurtDuration = 10;
             }
         }
 
         @SubscribeEvent
         public static void onBossHurtPlayer(LivingHurtEvent event) {
-            if (!(event.getSource().getEntity() instanceof Experiment009BossEntity source)) return;
+            if (!(event.getSource().getEntity() instanceof Experiment009BossEntity)) return;
             if (!(event.getEntity() instanceof Player target)) return;
 
             GearTier tier = getGearTier(target);

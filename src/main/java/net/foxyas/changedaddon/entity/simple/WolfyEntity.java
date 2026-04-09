@@ -14,11 +14,9 @@ import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
-import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexWolf;
-import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedItems;
@@ -66,7 +64,6 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
         super(type, world);
         xpReward = 0;
         this.setAttributes(getAttributes());
-        setNoAi(false);
         setPersistenceRequired();
 
         if (this.grabEntityAbilityInstance == null) {
@@ -86,7 +83,6 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
         return builder;
     }
 
-    @SuppressWarnings("DataFlowIssue")
     protected void setAttributes(AttributeMap attributes) {
         super.setAttributes(attributes);
 
@@ -157,11 +153,6 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
     @Override
     public TransfurMode getTransfurMode() {
         return TransfurMode.NONE;
-    }
-
-    @Override
-    public boolean isAlliedTo(Entity entity) {
-        return super.isAlliedTo(entity);
     }
 
     @Override
@@ -286,7 +277,7 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
     }
 
     public Color3 getDripColor() {
-        Color3 color = Color3.getColor("#000000");
+        Color3 color;
         if (random.nextInt(10) > 5) {
             color = Color3.getColor("#393939");
         } else {

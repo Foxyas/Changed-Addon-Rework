@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.entity.beast.AbstractLatexShark;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,10 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public class LatexDragonSnowLeopardSharkEntity extends AbstractLatexShark {
+
     public LatexDragonSnowLeopardSharkEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.LATEX_DRAGON_SNOW_LEOPARD_SHARK.get(), world);
     }
@@ -47,11 +46,6 @@ public class LatexDragonSnowLeopardSharkEntity extends AbstractLatexShark {
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
     }
 
     @Override

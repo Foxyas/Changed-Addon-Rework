@@ -5,7 +5,6 @@ import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,7 +19,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -37,7 +35,6 @@ public class LatexSnowFoxFemaleEntity extends AbstractSnowFoxEntity {
         super(type, world);
         xpReward = 5;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -63,7 +60,7 @@ public class LatexSnowFoxFemaleEntity extends AbstractSnowFoxEntity {
 
     @Override
     public HairStyle getDefaultHairStyle() {
-        HairStyle Hair = HairStyle.LONG_KEPT.get();
+        HairStyle Hair;
         if (random.nextInt(10) > 5) {
             Hair = HairStyle.LONG_MESSY.get();
         } else {
@@ -78,7 +75,7 @@ public class LatexSnowFoxFemaleEntity extends AbstractSnowFoxEntity {
     }
 
     public Color3 getDripColor() {
-        Color3 color = Color3.getColor("#ffffff");
+        Color3 color;
         if (random.nextInt(10) > 5) {
             color = Color3.getColor("#ffffff");
         } else {

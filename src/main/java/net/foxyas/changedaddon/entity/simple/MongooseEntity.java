@@ -22,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PlayMessages;
 
 public class MongooseEntity extends AbstractBasicChangedEntity implements CustomPatReaction {
+
     public MongooseEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
     }

@@ -56,11 +56,11 @@ public class LuminarCrystalSpearEntity extends AbstractArrow implements ItemSupp
         super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), world);
     }
 
-    public LuminarCrystalSpearEntity(Level p_37569_, LivingEntity p_37570_, ItemStack p_37571_) {
-        super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), p_37570_, p_37569_);
-        this.SpearItem = p_37571_.copy();
-        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(p_37571_));
-        this.entityData.set(ID_FOIL, p_37571_.hasFoil());
+    public LuminarCrystalSpearEntity(Level level, LivingEntity shooter, ItemStack weapon) {
+        super(ChangedAddonEntities.LUMINAR_CRYSTAL_SPEAR.get(), shooter, level);
+        this.SpearItem = weapon.copy();
+        this.entityData.set(ID_LOYALTY, (byte) EnchantmentHelper.getLoyalty(weapon));
+        this.entityData.set(ID_FOIL, weapon.hasFoil());
     }
 
 

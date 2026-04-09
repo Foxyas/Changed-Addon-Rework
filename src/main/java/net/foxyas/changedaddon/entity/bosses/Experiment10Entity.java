@@ -19,7 +19,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -33,7 +32,6 @@ import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
@@ -47,7 +45,6 @@ import java.util.Objects;
 import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment10Entity extends ChangedEntity implements GenderedEntity, IDynamicPawColor, PowderSnowWalkable, IAlphaAbleEntity.CustomAlphaAttributes {
-    //private final ServerBossEvent bossInfo = new ServerBossEvent(this.getDisplayName(), ServerBossEvent.BossBarColor.RED, ServerBossEvent.BossBarOverlay.NOTCHED_6);
 
     private static final EntityDataAccessor<Boolean> PHASE2 =
             SynchedEntityData.defineId(Experiment10Entity.class, EntityDataSerializers.BOOLEAN);
@@ -75,6 +72,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         if (!Float.isFinite(pYRot)) {
             return;
         }
+
         super.setYRot(pYRot);
     }
 
@@ -83,6 +81,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         if (!Float.isFinite(pXRot)) {
             return;
         }
+
         super.setXRot(pXRot);
     }
 
@@ -151,6 +150,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
             return false;
         }
+
         return super.startRiding(EntityIn, force);
     }
 
@@ -159,6 +159,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         if (target.getEyeY() > this.getEyeY() + 1) {
             return super.getMeleeAttackRangeSqr(target) * 1.5D;
         }
+
         return super.getMeleeAttackRangeSqr(target);
     }
 
@@ -176,11 +177,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
     }
 
     @Override
-    public void checkDespawn() {
-        super.checkDespawn();
-    }
-
-    @Override
     protected boolean shouldDespawnInPeaceful() {
         return false;
     }
@@ -190,6 +186,7 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         if (mobEffectInstance.getEffect() == MobEffects.WITHER) {
             return false;
         }
+
         return super.canBeAffected(mobEffectInstance);
     }
 
@@ -225,11 +222,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
     }
 
     @Override
-    protected void registerGoals() {
-        super.registerGoals();
-    }
-
-    @Override
     public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
     }
@@ -237,11 +229,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
     @Override
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
     }
 
     @Override
@@ -283,11 +270,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
         this.getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#880015"));
         this.getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#880015"));
         this.getBasicPlayerInfo().setScleraColor(Color3.getColor("#edd725"));
-    }
-
-    @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-        return super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
     }
 
     @Override
@@ -334,11 +316,6 @@ public class Experiment10Entity extends ChangedEntity implements GenderedEntity,
 
     public boolean shouldShowGlow() {
         return isPhase2();
-    }
-
-    @Override
-    public void baseTick() {
-        super.baseTick();
     }
 
     @Override

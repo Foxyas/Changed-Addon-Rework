@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PlayMessages;
 
 public class AvaliZerGodMasterEntity extends AvaliEntity {
+
     public AvaliZerGodMasterEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         super(ChangedAddonEntities.AVALI_ZERGODMASTER.get(), world);
     }

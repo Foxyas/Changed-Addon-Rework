@@ -8,8 +8,8 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
@@ -20,12 +20,12 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class BunyEntity extends ChangedEntity {
+
     public BunyEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.BUNY.get(), world);
     }
@@ -34,10 +34,8 @@ public class BunyEntity extends ChangedEntity {
         super(type, world);
         xpReward = 0;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
         setPersistenceRequired();
     }
-
 
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
@@ -106,17 +104,12 @@ public class BunyEntity extends ChangedEntity {
     }
 
     @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
-    }
-
-    @Override
     public @NotNull SoundEvent getHurtSound(@NotNull DamageSource ds) {
-        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.rabbit.hurt"));
+        return SoundEvents.RABBIT_HURT;
     }
 
     @Override
     public @NotNull SoundEvent getDeathSound() {
-        return ForgeRegistries.SOUND_EVENTS.getValue(ResourceLocation.parse("entity.generic.death"));
+        return SoundEvents.RABBIT_DEATH;
     }
 }

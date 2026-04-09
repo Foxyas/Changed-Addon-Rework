@@ -10,26 +10,21 @@ import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.LeapSmashGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
-import net.foxyas.changedaddon.entity.api.*;
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonCriteriaTriggers;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
-import net.foxyas.changedaddon.util.ColorUtil;
+import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.entity.*;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
-import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -37,7 +32,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -63,7 +57,6 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
 
@@ -72,9 +65,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
-import static net.foxyas.changedaddon.event.TransfurEvents.getPlayerVars;
-import static net.ltxprogrammer.changed.entity.HairStyle.BALD;
 
 public class Experiment10BossEntity extends Experiment10Entity implements IExp10Logic {
 
@@ -120,22 +110,18 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         return GearTier.LOW;
     }
 
-    protected void applyDefaultBasicPlayerInfo() {
-        super.applyDefaultBasicPlayerInfo();
-    }
-
     @Override
     public void variantTick(Level level) {
         super.variantTick(level);
-        if (this.getUnderlyingPlayer() != null) {
-            Player playerInControl = this.getUnderlyingPlayer();
-            TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(playerInControl);
-            if (transfurVariantInstance != null) {
-                if (playerInControl.level().getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
-                    if (!getPlayerVars(playerInControl).Exp10TransfurAllowed) {
-                        ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_10.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
-                    }
-                }
+        if (getUnderlyingPlayer() == null) return;
+
+        Player playerInControl = this.getUnderlyingPlayer();
+        TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(playerInControl);
+        if (instance == null) return;
+
+        if (playerInControl.level().getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR)) {
+            if (!ChangedAddonVariables.ofOrDefault(playerInControl).Exp10TransfurAllowed) {
+                ProcessTransfur.setPlayerTransfurVariant(playerInControl, ChangedAddonTransfurVariants.EXPERIMENT_10.get(), TransfurContext.hazard(TransfurCause.GRAB_ABSORB), 1, false);
             }
         }
     }
@@ -177,6 +163,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
             return false;
         }
+
         return super.startRiding(EntityIn, force);
     }
 
@@ -185,6 +172,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         if (target.getEyeY() > this.getEyeY() + 1) {
             return super.getMeleeAttackRangeSqr(target) * 1.5D;
         }
+
         return super.getMeleeAttackRangeSqr(target);
     }
 
@@ -211,11 +199,6 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
         this.goalSelector.addGoal(10, new ThrowWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));
         this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
     }
 
     @Override
@@ -262,13 +245,13 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     }
 
     private void maybeSendReactionToPlayer(DamageSource source) {
-        if (source.getEntity() instanceof Player player) {
-            if (this.random.nextFloat() <= 0.25f) {
-                if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-                    player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.range_attacks"), true);
-                } else if (source.is(DamageTypeTags.IS_FIRE)) {
-                    player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.fire_damage"), true);
-                }
+        if (!(source.getEntity() instanceof Player player)) return;
+
+        if (this.random.nextFloat() <= 0.25f) {
+            if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.range_attacks"), true);
+            } else if (source.is(DamageTypeTags.IS_FIRE)) {
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp10.reaction.fire_damage"), true);
             }
         }
     }
@@ -466,7 +449,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
 
         @SubscribeEvent
         public static void onBossDamagePlayer(LivingHurtEvent event) {
-            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity source)) return;
+            if (!(event.getSource().getEntity() instanceof Experiment10BossEntity)) return;
             if (!(event.getEntity() instanceof Player target)) return;
 
             GearTier tier = getGearTier(target);
@@ -480,7 +463,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
         @SubscribeEvent
         public static void onPlayerDamageBoss(LivingHurtEvent event) {
             if (!(event.getSource().getEntity() instanceof Player source)) return;
-            if (!(event.getEntity() instanceof Experiment10BossEntity target)) return;
+            if (!(event.getEntity() instanceof Experiment10BossEntity)) return;
 
             GearTier tier = getGearTier(source);
 

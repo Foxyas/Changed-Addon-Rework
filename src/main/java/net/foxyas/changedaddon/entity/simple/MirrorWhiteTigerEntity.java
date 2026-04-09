@@ -6,7 +6,6 @@ import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,18 +24,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowWalkable, GenderedEntity {
 
-    private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(ResourceLocation.parse("taiga")/*, ResourceLocation.parse("icy") */);
+    //private static final Set<ResourceLocation> SPAWN_BIOMES = Set.of(ResourceLocation.parse("taiga")/*, ResourceLocation.parse("icy") */);
 
     public MirrorWhiteTigerEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.MIRROR_WHITE_TIGER.get(), world);
@@ -46,7 +43,6 @@ public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowW
         super(type, world);
         xpReward = ChangedEntity.XP_REWARD_MEDIUM;
         this.setAttributes(this.getAttributes());
-        setNoAi(false);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -121,19 +117,8 @@ public class MirrorWhiteTigerEntity extends ChangedEntity implements PowderSnowW
     }
 
     @Override
-    protected void registerGoals() {
-        super.registerGoals();
-
-    }
-
-    @Override
     public @NotNull MobType getMobType() {
         return MobType.UNDEFINED;
-    }
-
-    @Override
-    public double getMyRidingOffset() {
-        return super.getMyRidingOffset();
     }
 
     @Override

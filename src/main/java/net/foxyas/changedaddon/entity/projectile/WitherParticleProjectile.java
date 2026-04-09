@@ -6,7 +6,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class WitherParticleProjectile extends AbstractGenericParticleProjectile {
+
     public WitherParticleProjectile(EntityType<? extends AbstractGenericParticleProjectile> type, Level level) {
         super(type, level);
         this.particleOptions = ParticleTypes.DAMAGE_INDICATOR;
@@ -51,11 +51,6 @@ public class WitherParticleProjectile extends AbstractGenericParticleProjectile 
     @Override
     protected boolean ignoreBlock(@NotNull BlockState state) {
         return false;
-    }
-
-    @Override
-    protected boolean canHitEntity(@NotNull Entity target) {
-        return super.canHitEntity(target);
     }
 
     public void ApplyExplosionParticlesAndDamage() {

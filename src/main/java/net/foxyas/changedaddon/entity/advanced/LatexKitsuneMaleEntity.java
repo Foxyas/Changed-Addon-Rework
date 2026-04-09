@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PlayMessages;
 
 public class LatexKitsuneMaleEntity extends AbstractKitsuneEntity {
+
     public LatexKitsuneMaleEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
     }

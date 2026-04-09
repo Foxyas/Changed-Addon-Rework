@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.PlayMessages;
 
 public class LatexCalicoCatEntity extends AbstractBasicChangedEntity {
+
     public LatexCalicoCatEntity(EntityType<? extends ChangedEntity> type, Level level) {
         super(type, level);
     }

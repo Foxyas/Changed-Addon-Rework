@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class HaydenFennecFoxEntity extends AbstractBasicOrganicChangedEntity {
+
     public HaydenFennecFoxEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.HAYDEN_FENNEC_FOX.get(), world);
     }
@@ -24,7 +25,6 @@ public class HaydenFennecFoxEntity extends AbstractBasicOrganicChangedEntity {
     public HaydenFennecFoxEntity(EntityType<HaydenFennecFoxEntity> type, Level world) {
         super(type, world);
         xpReward = 0;
-        setNoAi(false);
         setPersistenceRequired();
     }
 

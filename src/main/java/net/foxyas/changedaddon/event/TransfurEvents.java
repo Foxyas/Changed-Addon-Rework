@@ -1,7 +1,6 @@
 package net.foxyas.changedaddon.event;
 
 import com.mojang.datafixers.util.Either;
-import net.foxyas.changedaddon.entity.advanced.DazedLatexEntity;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
 import net.foxyas.changedaddon.item.armor.HazardBodySuit;
@@ -17,7 +16,6 @@ import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedAccessorySlots;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
@@ -44,10 +42,10 @@ public class TransfurEvents {
         if (!entity.level.getLevelData().getGameRules().getBoolean(ChangedAddonGameRules.NEED_PERMISSION_FOR_BOSS_TRANSFUR))
             return;
 
-        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS) && !getPlayerVars(entity).Exp009TransfurAllowed) {
+        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS) && !getVarsIfPlayerOrDef(entity).Exp009TransfurAllowed) {
             changedVariantEvent.variant = ChangedAddonTransfurVariants.EXPERIMENT_009.get();
         }
-        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS) && !getPlayerVars(entity).Exp10TransfurAllowed) {
+        if (variant.is(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS) && !getVarsIfPlayerOrDef(entity).Exp10TransfurAllowed) {
             changedVariantEvent.variant = ChangedAddonTransfurVariants.EXPERIMENT_10.get();
         }
     }
@@ -58,45 +56,39 @@ public class TransfurEvents {
         event.appendTransfurListener(newEntity -> {
             TransfurVariantInstance<?> instance = newEntity.getTransfurVariantInstance();
 
-            if (instance != null && instance.transfurContext != null) {
-                TransfurContext context = instance.transfurContext;
-                Either<IAbstractChangedEntity, ILatexAssimilatedEntity> contextSource = context.source();
-                if (contextSource == null) {
-                    return;
+            if (instance == null || instance.transfurContext == null) return;
+
+            TransfurContext context = instance.transfurContext;
+            Either<IAbstractChangedEntity, ILatexAssimilatedEntity> contextSource = context.source();
+            if (contextSource == null) return;
+
+            contextSource.ifLeft(source -> {
+                if (!source.wantAbsorption() || context.cause() == TransfurCause.GRAB_REPLICATE) return;
+
+                if (source.getChangedEntity() instanceof IAlphaAbleEntity alphaSource && newEntity.getChangedEntity() instanceof IAlphaAbleEntity targetAlpha) {
+                    targetAlpha.setAlpha(alphaSource.isAlpha());
+                    targetAlpha.setAlphaScale(alphaSource.alphaAdditionalScale());
                 }
-
-                contextSource.ifLeft(source -> {
-                    if (source.wantAbsorption() && context.cause() != TransfurCause.GRAB_REPLICATE) {
-                        if (source.getChangedEntity() instanceof IAlphaAbleEntity alphaSource && newEntity.getChangedEntity() instanceof IAlphaAbleEntity targetAlpha) {
-                            targetAlpha.setAlpha(alphaSource.isAlpha());
-                            targetAlpha.setAlphaScale(alphaSource.alphaAdditionalScale());
-                        }
-                    }
-                });
-            }
-
+            });
         });
     }
 
     @SubscribeEvent
     public static void HazardSuitTryAbsorbTarget(LatexAssimilationDecisionEvent event) {
         LatexAssimilationDecision<?> original = event.getOriginalDecision();
-        LivingEntity livingEntity = event.getEntity();
-        LivingEntity sourceEntity = event.getSourceEntity();
-        if (original.method() != LatexAssimilationDecision.Method.ABSORPTION) {
-            return;
-        }
+        if (original.method() != LatexAssimilationDecision.Method.ABSORPTION) return;
 
+        LivingEntity sourceEntity = event.getSourceEntity();
         Optional<AccessorySlots> forEntity = AccessorySlots.getForEntity(EntityUtil.maybeGetUnderlying(sourceEntity));
-        if (forEntity.isPresent()) {
-            AccessorySlots accessorySlots = forEntity.get();
-            Optional<ItemStack> item = accessorySlots.getItem(ChangedAccessorySlots.FULL_BODY.get());
-            if (item.isPresent()) {
-                ItemStack stack = item.get();
-                if (stack.getItem() instanceof HazardBodySuit) {
-                    event.setCanceled(true);
-                }
-            }
+        if (forEntity.isEmpty()) return;
+
+        AccessorySlots accessorySlots = forEntity.get();
+        Optional<ItemStack> item = accessorySlots.getItem(ChangedAccessorySlots.FULL_BODY.get());
+        if (item.isEmpty()) return;
+
+        ItemStack stack = item.get();
+        if (stack.getItem() instanceof HazardBodySuit) {
+            event.setCanceled(true);
         }
     }
 
@@ -127,22 +119,22 @@ public class TransfurEvents {
         LivingEntity toReplace = event.getEntityToReplace();
         ChangedEntity replacement = event.getReplacementEntity();
 
-        if (resolveChangedEntity(toReplace) instanceof IAlphaAbleEntity toReplaceAlpha) {
-            if (replacement instanceof IAlphaAbleEntity alphaSource) {
-                alphaSource.setAlpha(toReplaceAlpha.isAlpha());
-                alphaSource.setAlphaScale(toReplaceAlpha.alphaAdditionalScale());
-            }
+        if (!(resolveChangedEntity(toReplace) instanceof IAlphaAbleEntity toReplaceAlpha)) return;
+
+        if (replacement instanceof IAlphaAbleEntity alphaSource) {
+            alphaSource.setAlpha(toReplaceAlpha.isAlpha());
+            alphaSource.setAlphaScale(toReplaceAlpha.alphaAdditionalScale());
         }
     }
 
     @SubscribeEvent
     public static void syncFusionFromAlphaState(LatexFusionEvent event) {
         LivingEntity source = EntityUtil.maybeGetOverlaying(event.getSourceEntity());
-        LivingEntity targetEntity = EntityUtil.maybeGetOverlaying(event.getTargetEntity());
         if (!(source instanceof IAlphaAbleEntity sourceAlpha)) {
             return;
         }
 
+        LivingEntity targetEntity = EntityUtil.maybeGetOverlaying(event.getTargetEntity());
         if (targetEntity instanceof Player player) {
             TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
             if (transfurVariant != null && transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity) {
@@ -153,10 +145,9 @@ public class TransfurEvents {
         }
 
         if (targetEntity instanceof IAlphaAbleEntity targetAlpha) {
-            targetAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
             targetAlpha.setAlpha(sourceAlpha.isAlpha());
+            targetAlpha.setAlphaScale(sourceAlpha.alphaAdditionalScale());
         }
-
     }
 
 //  Foxyas: Keep this code as an Example code on how to use the new Event. check DazedLatexEntity$makeLatexAssimilationDecision to see how to use on a entity
@@ -183,19 +174,19 @@ public class TransfurEvents {
                 return transfur.getChangedEntity();
             }
         }
+
         return entity;
     }
-
 
     @SubscribeEvent
     public static void CancelUntransfur(UntransfurEvent untransfurEvent) {
         Player player = untransfurEvent.getPlayer();
-        if (ProcessTransfur.getPlayerTransfurVariant(player) instanceof TransfurVariantInstanceExtensor transfurVariantInstanceExtensor) {
-            untransfurEvent.setCanceled(transfurVariantInstanceExtensor.getUntransfurImmunity(untransfurEvent.untransfurType));
+        if (ProcessTransfur.getPlayerTransfurVariant(player) instanceof TransfurVariantInstanceExtensor ext) {
+            untransfurEvent.setCanceled(ext.getUntransfurImmunity(untransfurEvent.untransfurType));
         }
     }
 
-    public static ChangedAddonVariables.PlayerVariables getPlayerVars(LivingEntity entity) {
+    public static ChangedAddonVariables.PlayerVariables getVarsIfPlayerOrDef(LivingEntity entity) {
         return entity.getCapability(ChangedAddonVariables.PLAYER_VARIABLES_CAPABILITY, null).orElse(new ChangedAddonVariables.PlayerVariables());
     }
 }

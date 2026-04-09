@@ -27,7 +27,6 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.valueproviders.ConstantFloat;
 import net.minecraft.util.valueproviders.UniformFloat;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
@@ -40,7 +39,6 @@ import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.network.NetworkHooks;
@@ -77,6 +75,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             super.setYRot(0);
             return;
         }
+
         super.setYRot(pYRot);
     }
 
@@ -86,6 +85,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             super.setXRot(0);
             return;
         }
+
         super.setXRot(pXRot);
     }
 
@@ -165,6 +165,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         if (EntityIn instanceof Boat || EntityIn instanceof Minecart) {
             return false;
         }
+
         return super.startRiding(EntityIn, force);
     }
 
@@ -173,6 +174,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
         if (target.getEyeY() > this.getEyeY() + 1) {
             return super.getMeleeAttackRangeSqr(target) * 1.5D;
         }
+
         return super.getMeleeAttackRangeSqr(target);
     }
 
@@ -342,14 +344,19 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     public boolean hurt(DamageSource source, float amount) {
         if (source.getDirectEntity() instanceof ThrownPotion || source.getDirectEntity() instanceof AreaEffectCloud)
             return false;
+
         if (source.is(DamageTypes.FALL))
             return false;
+
         if (source.is(DamageTypes.CACTUS))
             return false;
+
         if (source.is(DamageTypes.DROWN))
             return false;
+
         if (source.is(DamageTypes.LIGHTNING_BOLT))
             return false;
+
         if (source.getMsgId().equals("trident")) {
             if (this.random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
@@ -358,14 +365,19 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             }
             return super.hurt(source, amount * 0.5f);
         }
+
         if (source.is(DamageTypes.FALLING_ANVIL))
             return false;
+
         if (source.is(DamageTypes.DRAGON_BREATH))
             return false;
+
         if (source.is(DamageTypes.WITHER))
             return false;
+
         if (source.getMsgId().equals("witherSkull"))
             return false;
+
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
             if (this.random.nextFloat() <= 0.25f) {
                 if (source.getEntity() instanceof Player player) {
@@ -374,6 +386,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             }
             return super.hurt(source, amount * 0.5f);
         }
+
         return super.hurt(source, amount);
     }
 
@@ -383,11 +396,6 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             return true;
         }
         return super.isDamageSourceBlocked(pDamageSource);
-    }
-
-    @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor world, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
-        return super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
     }
 
     @Override
@@ -460,10 +468,10 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
 
     public void spawnThunderBolt(Vec3 pos) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(this.level);
-        if (lightning != null) {
-            lightning.moveTo(pos.x(), pos.y(), pos.z());
-            this.level.addFreshEntity(lightning);
-        }
+        if (lightning == null) return;
+
+        lightning.moveTo(pos.x(), pos.y(), pos.z());
+        this.level.addFreshEntity(lightning);
     }
 
     @Override
@@ -483,11 +491,6 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     public BestiaryInfo getBasicAttributesInfo() {
         BestiaryInfo basicAttributesInfo = IBestiaryEntityData.super.getBasicAttributesInfo();
         return basicAttributesInfo.withHeightOffset(-60);
-    }
-
-    @Override
-    public EntityType<?> getReferencedEntityType() {
-        return this.getType();
     }
 
     @Override

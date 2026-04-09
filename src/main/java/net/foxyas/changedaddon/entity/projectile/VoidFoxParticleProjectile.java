@@ -7,7 +7,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.EntityHitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class VoidFoxParticleProjectile extends AbstractVoidFoxParticleProjectile {
@@ -56,18 +55,8 @@ public class VoidFoxParticleProjectile extends AbstractVoidFoxParticleProjectile
     }
 
     @Override
-    protected void onHitEntity(@NotNull EntityHitResult result) {
-        super.onHitEntity(result);
-    }
-
-    @Override
     protected boolean ignoreBlock(@NotNull BlockState state) {
         return false;
-    }
-
-    @Override
-    public boolean isPickable() {
-        return super.isPickable();
     }
 
     @Override

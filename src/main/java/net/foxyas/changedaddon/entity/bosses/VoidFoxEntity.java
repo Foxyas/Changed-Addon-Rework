@@ -619,6 +619,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
         if (this.getPose() == Pose.STANDING || this.getPose() == Pose.CROUCHING) {
             return super.getPassengersRidingOffset() + this.getTorsoYOffset(this) + (this.isCrouching() ? 1.2 : 1.15);
         }
+
         return getTorsoYOffsetForFallFly(this);
     }
 
@@ -790,11 +791,6 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     }
 
     @Override
-    protected void actuallyHurt(@NotNull DamageSource pDamageSource, float pDamageAmount) {
-        super.actuallyHurt(pDamageSource, pDamageAmount);
-    }
-
-    @Override
     public void die(@NotNull DamageSource pDamageSource) {
         if (pDamageSource.getEntity() instanceof LivingEntity living) {
             FoxyasUtils.repairAllItems(living, 1000);
@@ -804,88 +800,86 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     }
 
     public boolean hurtDodgeHealth(@NotNull DamageSource damageSource, float damageAmount) {
-        if (!damageSource.is(DamageTypeTags.IS_FIRE)) {
+        if (damageSource.is(DamageTypeTags.IS_FIRE)) return false;
 
-            // Apply normal mitigations
-            damageAmount = this.getDamageAfterArmorAbsorb(damageSource, damageAmount);
-            damageAmount = this.getDamageAfterMagicAbsorb(damageSource, damageAmount);
+        // Apply normal mitigations
+        damageAmount = this.getDamageAfterArmorAbsorb(damageSource, damageAmount);
+        damageAmount = this.getDamageAfterMagicAbsorb(damageSource, damageAmount);
 
-            // Subtract from dodge health
-            this.subDodgeHealth(damageAmount);
+        // Subtract from dodge health
+        this.subDodgeHealth(damageAmount);
 
-            // Counter-attack trigger: solvent projectile
-            if (damageSource.is(DamageTypeTags.IS_PROJECTILE) && damageSource.getMsgId().contains(ChangedAddonDamageSources.LATEX_SOLVENT.source(this.level()).getMsgId())) {
-                Entity attacker = damageSource.getDirectEntity();
+        // Counter-attack trigger: solvent projectile
+        if (damageSource.is(DamageTypeTags.IS_PROJECTILE) && damageSource.getMsgId().contains(ChangedAddonDamageSources.LATEX_SOLVENT.source(this.level()).getMsgId())) {
+            Entity attacker = damageSource.getDirectEntity();
 
-                if (attacker != null) {
+            if (attacker != null) {
 
-                    /* =======================================================
-                     * 1) Teleport behind the attacker (or fallback into them)
-                     * ======================================================= */
+                /* =======================================================
+                 * 1) Teleport behind the attacker (or fallback into them)
+                 * ======================================================= */
 
-                    // Vector pointing BEHIND the attacker
-                    Vec3 behind = attacker.getViewVector(0).scale(-0.5);
+                // Vector pointing BEHIND the attacker
+                Vec3 behind = attacker.getViewVector(0).scale(-0.5);
 
-                    boolean teleportedBehind = this.randomTeleport(
-                            attacker.getX() + behind.x,
+                boolean teleportedBehind = this.randomTeleport(
+                        attacker.getX() + behind.x,
+                        attacker.getY(),
+                        attacker.getZ() + behind.z,
+                        true
+                );
+
+                if (!teleportedBehind) {
+                    // Fallback: teleport in front of the attacker
+                    Vec3 inFront = attacker.getViewVector(0).scale(0.25);
+                    boolean teleportedInFront = this.randomTeleport(
+                            attacker.getX() + inFront.x,
                             attacker.getY(),
-                            attacker.getZ() + behind.z,
+                            attacker.getZ() + inFront.z,
                             true
                     );
 
-                    if (!teleportedBehind) {
-                        // Fallback: teleport in front of the attacker
-                        Vec3 inFront = attacker.getViewVector(0).scale(0.25);
-                        boolean teleportedInFront = this.randomTeleport(
-                                attacker.getX() + inFront.x,
-                                attacker.getY(),
-                                attacker.getZ() + inFront.z,
-                                true
-                        );
-
-                        // Fallback: teleport directly on top of the attacker
-                        if (!teleportedInFront) {
-                            Vec3 pos = attacker.position();
-                            this.teleportToWithTicket(pos.x, pos.y, pos.z);
-                        }
+                    // Fallback: teleport directly on top of the attacker
+                    if (!teleportedInFront) {
+                        Vec3 pos = attacker.position();
+                        this.teleportToWithTicket(pos.x, pos.y, pos.z);
                     }
+                }
 
-                    /* =======================================================
-                     * 2) Apply a knockback burst to the attacker
-                     * ======================================================= */
+                /* =======================================================
+                 * 2) Apply a knockback burst to the attacker
+                 * ======================================================= */
 
-                    // Direction: mob → attacker
-                    double dx = attacker.getX() - this.getX();
-                    double dy = attacker.getY() - this.getY();
-                    double dz = attacker.getZ() - this.getZ();
-                    double distance = Math.max(0.2, Math.sqrt(dx * dx + dy * dy + dz * dz));
+                // Direction: mob → attacker
+                double dx = attacker.getX() - this.getX();
+                double dy = attacker.getY() - this.getY();
+                double dz = attacker.getZ() - this.getZ();
+                double distance = Math.max(0.2, Math.sqrt(dx * dx + dy * dy + dz * dz));
 
-                    double force = 1.25; // knockback force
+                double force = 1.25; // knockback force
 
-                    attacker.push(
-                            (dx / distance) * force,
-                            (dy / distance) * force,
-                            (dz / distance) * force
-                    );
+                attacker.push(
+                        (dx / distance) * force,
+                        (dy / distance) * force,
+                        (dz / distance) * force
+                );
 
-                    attacker.hurtMarked = true; // sync movement with the client
+                attacker.hurtMarked = true; // sync movement with the client
 
-                    // Apply cooldown to the player's item
-                    if (attacker instanceof Player player) {
-                        final Item laethinminator = ChangedAddonItems.LAETHINMINATOR.get();
-                        if (player.getUseItem().is(laethinminator)) {
-                            player.getCooldowns().addCooldown(laethinminator, 600);
-                            player.stopUsingItem();
-                        }
+                // Apply cooldown to the player's item
+                if (attacker instanceof Player player) {
+                    final Item laethinminator = ChangedAddonItems.LAETHINMINATOR.get();
+                    if (player.getUseItem().is(laethinminator)) {
+                        player.getCooldowns().addCooldown(laethinminator, 600);
+                        player.stopUsingItem();
                     }
                 }
             }
-
-            // Register dodge damage in combat tracker
-            this.getCombatTracker().recordDamage(damageSource, damageAmount);
-            return true;
         }
-        return false;
+
+        // Register dodge damage in combat tracker
+        this.getCombatTracker().recordDamage(damageSource, damageAmount);
+        return true;
     }
 
 
@@ -898,36 +892,36 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
     }
 
     public void tickAttackTicks() {
-        if (!this.isNoAi()) {
-            if (this.stunTicks > 0) {
-                this.stunTicks--;
-                return;
-            }
-            if (AttackInUse != 0) {
-                ticksInUse++;
-                if (ticksInUse > 260) {
-                    AttackInUse = 0;
-                    ticksInUse = 0;
-                }
-                return;
-            }
-            int value = isMoreOp() ? 3 : 1;
+        if (isNoAi()) return;
 
-            if (this.Attack1Cooldown < MAX_COOLDOWN) {
-                float delay = isMoreOp() ? 2 : 5;
-                if (this.tickCount % delay == 1) {
-                    this.Attack1Cooldown++;
-                }
+        if (this.stunTicks > 0) {
+            this.stunTicks--;
+            return;
+        }
+        if (AttackInUse != 0) {
+            ticksInUse++;
+            if (ticksInUse > 260) {
+                AttackInUse = 0;
+                ticksInUse = 0;
             }
-            if (this.Attack2Cooldown < MAX_1_COOLDOWN) {
-                this.Attack2Cooldown += value;
+            return;
+        }
+        int value = isMoreOp() ? 3 : 1;
+
+        if (this.Attack1Cooldown < MAX_COOLDOWN) {
+            float delay = isMoreOp() ? 2 : 5;
+            if (this.tickCount % delay == 1) {
+                this.Attack1Cooldown++;
             }
-            if (this.Attack3Cooldown < MAX_2_COOLDOWN) {
-                this.Attack3Cooldown += value;
-            }
-            if (this.Attack4Cooldown < MAX_COOLDOWN) {
-                this.Attack4Cooldown += value;
-            }
+        }
+        if (this.Attack2Cooldown < MAX_1_COOLDOWN) {
+            this.Attack2Cooldown += value;
+        }
+        if (this.Attack3Cooldown < MAX_2_COOLDOWN) {
+            this.Attack3Cooldown += value;
+        }
+        if (this.Attack4Cooldown < MAX_COOLDOWN) {
+            this.Attack4Cooldown += value;
         }
     }
 
@@ -1109,6 +1103,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
         if ((tag != null)) {
             setBoss(tag.getBoolean("isBoss"));
         }
+
         return super.finalizeSpawn(p_21434_, p_21435_, p_21436_, p_21437_, tag);
     }
 
@@ -1135,17 +1130,12 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     public void handleNonBoss() {
         this.setAttributes(this.getAttributes());
-        if (wasBoss()) {
-            this.setHealth(this.getMaxHealth());
-            this.setMaxDodgeHealth(3);
-            setWasBoss(false);
-            IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
-        }
-    }
+        if (!wasBoss()) return;
 
-    @Override
-    public void setTarget(@Nullable LivingEntity entity) {
-        super.setTarget(entity);
+        this.setHealth(this.getMaxHealth());
+        this.setMaxDodgeHealth(3);
+        setWasBoss(false);
+        IAbstractChangedEntity.forEitherSafe(maybeGetUnderlying()).map(IAbstractChangedEntity::getTransfurVariantInstance).ifPresent(TransfurVariantInstance::refreshAttributes);
     }
 
     // Don't know why but getId do not work fine with the BossMusicHandler
@@ -1211,27 +1201,28 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
     public static class WhenAttackAEntity {
+
         @SubscribeEvent
         public static void WhenAttack(LivingAttackEvent event) {
-            LivingEntity target = event.getEntity();
             Entity source = event.getSource().getEntity();
-            float amount = event.getAmount();
-
             if (source instanceof VoidFoxEntity voidFoxEntity) {
                 voidFoxEntity.RegisterHit();
-            } else if (target instanceof VoidFoxEntity voidFox) {
-                if (source != null && voidFox.computeHealthRatio() > 0.5f) {
-                    if (((voidFox.getHealth() - amount) / voidFox.getMaxHealth()) <= 0.5f) {
-                        if (source instanceof Player player) {
-                            player.displayClientMessage(Component.literal("I will hasten the arrival of your death").withStyle((style -> {
-                                Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
-                                returnStyle = returnStyle.withItalic(true);
-                                return returnStyle;
-                            })), true);
-                        }
+                return;
+            }
+
+            LivingEntity target = event.getEntity();
+            if (!(target instanceof VoidFoxEntity voidFox)) return;
+
+            if (source != null && voidFox.computeHealthRatio() > 0.5f) {
+                if (((voidFox.getHealth() - event.getAmount()) / voidFox.getMaxHealth()) <= 0.5f) {
+                    if (source instanceof Player player) {
+                        player.displayClientMessage(Component.literal("I will hasten the arrival of your death").withStyle((style -> {
+                            Style returnStyle = style.withColor(ChatFormatting.DARK_GRAY);
+                            returnStyle = returnStyle.withItalic(true);
+                            return returnStyle;
+                        })), true);
                     }
                 }
-
             }
         }
     }

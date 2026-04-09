@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class LatexSquidTigerSharkEntity extends AbstractAquaticEntity {
+
     public LatexSquidTigerSharkEntity(PlayMessages.SpawnEntity packet, Level world) {
         this(ChangedAddonEntities.LATEX_SQUID_TIGER_SHARK.get(), world);
     }

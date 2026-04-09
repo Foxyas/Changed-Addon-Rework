@@ -28,15 +28,15 @@ public abstract class AbstractProtogenEntity extends AbstractBasicOrganicChanged
     @Override
     public void variantTick(Level level) {
         super.variantTick(level);
-        if (isOrganic()) {
-            Player player = this.getUnderlyingPlayer();
-            if (player != null) {
-                TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-                GrabEntityAbilityInstance grabEntityAbilityInstance = transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-                if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor abilityExtensor) {
-                    abilityExtensor.setSafeMode(true);
-                }
-            }
+        if (!isOrganic()) return;
+
+        Player player = getUnderlyingPlayer();
+        if (player == null) return;
+
+        TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
+        GrabEntityAbilityInstance grabEntityAbilityInstance = transfurVariantInstance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+        if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor abilityExtensor) {
+            abilityExtensor.setSafeMode(true);
         }
     }
 }
