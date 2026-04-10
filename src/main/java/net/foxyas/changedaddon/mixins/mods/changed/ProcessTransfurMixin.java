@@ -62,12 +62,6 @@ public class ProcessTransfurMixin {
         return call;
     }
 
-    //TODO REMOVE THIS IN NEXT CHANGED UPDATE.
-    @WrapOperation(method = "tickPlayerTransfurProgress", at = @At(value = "INVOKE", target = "Ljava/lang/Math;max(FF)F", ordinal = 1, remap = true))
-    private static float patchProgressTaxeRate(float a, float b, Operation<Float> original, @Local(name = "deltaTicks") int deltaTicks) {
-        return -original.call(deltaTicks * 0.001F, b);
-    }
-
 
 //    @Inject(method = "removePlayerTransfurVariant", at = @At(value = "INVOKE", target = "Lnet/ltxprogrammer/changed/process/ProcessTransfur;setPlayerTransfurVariant(Lnet/minecraft/world/entity/player/Player;Lnet/ltxprogrammer/changed/entity/variant/TransfurVariant;Lnet/ltxprogrammer/changed/entity/TransfurContext;F)Lnet/ltxprogrammer/changed/entity/variant/TransfurVariantInstance;"), cancellable = true)
 //    private static void removePlayerTransfurVariantHook(Player player, CallbackInfo ci) {

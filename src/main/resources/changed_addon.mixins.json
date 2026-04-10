@@ -23,7 +23,6 @@
     "client.renderer.HumanoidAnimatorMixin",
     "client.renderer.WingFallFlyAnimationMixin",
     "client.renderer.WingFlyAnimationMixin",
-    "commands.CommandTransfurMixin",
     "enchantments.EnchantmentHelperMixin",
     "enchantments.EnchantmentMixin",
     "enchantments.InfinityEnchantmentMixin",
