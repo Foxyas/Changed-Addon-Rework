@@ -247,9 +247,8 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         super.actuallyHurt(pDamageSource, pDamageAmount);
     }
 
-    @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
+    @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
+    public void addAdditionalSaveDataHook(@NotNull CompoundTag tag, CallbackInfo ci) {
         tag.putBoolean("canUseGrab", this.canUseGrab());
         if (canEntityGrab(this.getType(), level)) {
             this.saveGrabAbilityInTag(tag);
@@ -258,9 +257,8 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
         tag.putFloat("alphaScale", alphaAdditionalScale());
     }
 
-    @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
+    @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
+    public void readAdditionalSaveDataHook(@NotNull CompoundTag tag, CallbackInfo ci) {
         if (tag.contains("canUseGrab")) setCanUseGrab(tag.getBoolean("canUseGrab"));
         if (canEntityGrab(this.getType(), level)) {
             this.readGrabAbilityInTag(tag);

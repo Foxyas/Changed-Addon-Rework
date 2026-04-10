@@ -6,7 +6,7 @@ import net.foxyas.changedaddon.entity.ai.goals.prototype.*;
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
 import net.foxyas.changedaddon.entity.api.IDynamicPawColor;
 import net.foxyas.changedaddon.entity.api.ItemHandlerHolder;
-import net.foxyas.changedaddon.entity.defaults.AbstractCanTameSnepChangedEntityFavors;
+import net.foxyas.changedaddon.entity.defaults.AbstractCanTameChangedEntityFavors;
 import net.foxyas.changedaddon.menu.PrototypeMenu;
 import net.foxyas.changedaddon.util.ColorUtil;
 import net.ltxprogrammer.changed.entity.*;
@@ -56,7 +56,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class PrototypeEntity extends AbstractCanTameSnepChangedEntityFavors implements MenuProvider, CustomPatReaction, IDynamicPawColor, ItemHandlerHolder {
+public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implements MenuProvider, CustomPatReaction, IDynamicPawColor, ItemHandlerHolder {
 
     // Constants
     public static final int MAX_HARVEST_TIMES = 32;
@@ -74,6 +74,7 @@ public class PrototypeEntity extends AbstractCanTameSnepChangedEntityFavors impl
         super(type, world);
         xpReward = 0;
         setPersistenceRequired();
+        setUpDefaultBPI();
     }
 
     // Static methods
@@ -217,6 +218,15 @@ public class PrototypeEntity extends AbstractCanTameSnepChangedEntityFavors impl
         } else if (tag.contains("DepositType")) {
             depositType = DepositType.valueOf(tag.getString("DepositType"));
         }
+
+        if (tag.contains("LocalVariantInfo")) {
+            BasicPlayerInfo basicPlayerInfo = new BasicPlayerInfo(tag.getCompound("LocalVariantInfo"));
+            this.setBasicPlayerInfo(basicPlayerInfo);
+        }
+    }
+
+    public void setBasicPlayerInfo(BasicPlayerInfo bpi) {
+        this.entityData.set(DATA_LOCAL_VARIANT_INFO, bpi);
     }
 
     @Override
@@ -255,10 +265,14 @@ public class PrototypeEntity extends AbstractCanTameSnepChangedEntityFavors impl
     public @Nullable SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor pLevel, @NotNull DifficultyInstance pDifficulty, @NotNull MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
         SpawnGroupData ret = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
 
+        setUpDefaultBPI();
+        return ret;
+    }
+
+    public void setUpDefaultBPI() {
         getBasicPlayerInfo().setEyeStyle(EyeStyle.TALL);
         getBasicPlayerInfo().setRightIrisColor(Color3.getColor("#59c5ff"));
         getBasicPlayerInfo().setLeftIrisColor(Color3.getColor("#59c5ff"));
-        return ret;
     }
 
     @Override
@@ -455,11 +469,6 @@ public class PrototypeEntity extends AbstractCanTameSnepChangedEntityFavors impl
     @Override
     public Color getPawBeansColor() {
         return Color.CYAN;
-    }
-
-    @Override
-    public Gender getGender() {
-        return Gender.MALE;
     }
 
     @Override

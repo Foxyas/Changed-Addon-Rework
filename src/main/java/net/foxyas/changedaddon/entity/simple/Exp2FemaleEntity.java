@@ -47,7 +47,6 @@ public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntityFavors {
         setPersistenceRequired();
     }
 
-
     public static AttributeSupplier.Builder createAttributes() {
         AttributeSupplier.Builder builder = ChangedEntity.createLatexAttributes();
         builder.add(ChangedAttributes.TRANSFUR_DAMAGE.get(), 0);
@@ -63,7 +62,6 @@ public class Exp2FemaleEntity extends AbstractExp2SnepChangedEntityFavors {
         super.setAttributes(attributes);
 
         Objects.requireNonNull(attributes.getInstance(ChangedAttributes.TRANSFUR_DAMAGE.get())).setBaseValue((3));
-        Objects.requireNonNull(attributes.getInstance(Attributes.MAX_HEALTH)).setBaseValue((30));
         Objects.requireNonNull(attributes.getInstance(Attributes.MAX_HEALTH)).setBaseValue((24));
         Objects.requireNonNull(attributes.getInstance(Attributes.FOLLOW_RANGE)).setBaseValue(40.0f);
         Objects.requireNonNull(attributes.getInstance(Attributes.MOVEMENT_SPEED)).setBaseValue(1.18F);

@@ -36,7 +36,7 @@ public class SpecialSpawnEggItem extends Item {
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
-        if (player == null || !(context.getLevel() instanceof ServerLevel level)) return InteractionResult.PASS;
+        if (player == null || !(context.getLevel() instanceof ServerLevel level)) return InteractionResult.CONSUME;
 
         Direction direction = context.getClickedFace();
         BlockPos pos = context.getClickedPos();
