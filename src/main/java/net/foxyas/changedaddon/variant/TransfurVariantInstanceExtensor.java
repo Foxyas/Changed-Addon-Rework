@@ -30,6 +30,14 @@ public interface TransfurVariantInstanceExtensor {
 
     void setUntransfurImmunity(UntransfurEvent.UntransfurType type, boolean value);
 
+    default boolean isTransfuredBySafeMethod() {
+        return true;
+    }
+
+    default void setTransfuredBySafeMethod(boolean value) {
+
+    }
+
     //TODO make this getters
 //    boolean wonFTK();
 //    int getTicksSinceWinningFTK();
@@ -48,6 +56,9 @@ public interface TransfurVariantInstanceExtensor {
                 boolean untransfurImmunitySurvival = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL);
                 boolean untransfurImmunityCommand = this.getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND);
                 PacketsUtils.sendToPlayer(new SyncAllUntransfurImmunityPacket(serverPlayer.getId(), untransfurImmunityCommand, untransfurImmunitySurvival), serverPlayer);
+
+                // TODO: maybe Change this to be just the packet below instead of a custom one?
+                //  Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> serverPlayer), SyncTransfurPacket.Builder.of(player));
             }
         }
     }
