@@ -5,9 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
-import net.foxyas.changedaddon.network.packet.PatKeyPacket;
-import net.foxyas.changedaddon.network.packet.TurnOffTransfurPacket;
-import net.foxyas.changedaddon.network.packet.VariantSecondAbilityActivate;
+import net.foxyas.changedaddon.network.packet.*;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.tutorial.ChangedTutorial;
@@ -28,7 +26,9 @@ import org.lwjgl.glfw.GLFW;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = {Dist.CLIENT})
 public class ChangedAddonKeyMappings {
 
-    public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
+    private static final String addonKeyCategory = "key.categories.changed_addon";
+
+    public static final KeyMapping OPEN_EXTRA_DETAILS = new KeyMapping("key.changed_addon.open_extra_details", GLFW.GLFW_KEY_UNKNOWN, addonKeyCategory) {
         private boolean isDownOld = false;
 
         @Override
@@ -53,7 +53,7 @@ public class ChangedAddonKeyMappings {
         }
     };
 
-    public static final KeyMapping TURN_OFF_TRANSFUR = new KeyMapping("key.changed_addon.turn_off_transfur", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
+    public static final KeyMapping TURN_OFF_TRANSFUR = new KeyMapping("key.changed_addon.turn_off_transfur", GLFW.GLFW_KEY_UNKNOWN, addonKeyCategory) {
         private boolean isDownOld = false;
 
         @Override
@@ -67,23 +67,21 @@ public class ChangedAddonKeyMappings {
         }
     };
 
-    public static final KeyMapping PAT_KEY = new KeyMapping("key.changed_addon.pat_key", GLFW.GLFW_KEY_UNKNOWN, "key.categories.changed_addon") {
-        //private boolean isDownOld = false;
-        // Foxyas here.. i'm going to allow the player to hold the key to Spam Pats, the packet is too small to cause any harm
+    public static final KeyMapping PAT_KEY = new KeyMapping("key.changed_addon.pat_key", GLFW.GLFW_KEY_UNKNOWN, addonKeyCategory) {
+
         @Override
         public void setDown(boolean isDown) {
             super.setDown(isDown);
-            if (isDown) {
-                Player player = Minecraft.getInstance().player;
-                if (player == null || player.isDeadOrDying()) return;
+            if (!isDown) return;
 
-                ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
-                if (vars.patCooldown) return;
+            Player player = Minecraft.getInstance().player;
+            if (player == null || player.isDeadOrDying()) return;
 
-                ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
-                PatKeyPacket.pressAction(Minecraft.getInstance().player, 0);
-            }
-            //isDownOld = isDown;
+            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(Minecraft.getInstance().player);
+            if (vars.patCooldown) return;
+
+            ChangedAddonMod.PACKET_HANDLER.sendToServer(new PatKeyPacket(0, 0));
+            PatKeyPacket.pressAction(Minecraft.getInstance().player, 0);
         }
     };
 
@@ -113,12 +111,15 @@ public class ChangedAddonKeyMappings {
         }
     };
 
+    public static final KeyMapping CUDDLE_KEY = new KeyMapping("key.changed_addon.cuddle", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_UNKNOWN, addonKeyCategory);
+
     @SubscribeEvent
     public static void registerKeyBindings(RegisterKeyMappingsEvent event) {
         event.register(OPEN_EXTRA_DETAILS);
         event.register(TURN_OFF_TRANSFUR);
         event.register(PAT_KEY);
         event.register(USE_SECOND_ABILITY);
+        event.register(CUDDLE_KEY);
     }
 
     @Mod.EventBusSubscriber({Dist.CLIENT})
@@ -131,6 +132,10 @@ public class ChangedAddonKeyMappings {
             OPEN_EXTRA_DETAILS.consumeClick();
             TURN_OFF_TRANSFUR.consumeClick();
             PAT_KEY.consumeClick();
+
+            if (CUDDLE_KEY.consumeClick()) {
+                ChangedAddonMod.PACKET_HANDLER.sendToServer(ServerboundSwitchCuddlePacket.INSTANCE);
+            }
         }
 
         @SubscribeEvent

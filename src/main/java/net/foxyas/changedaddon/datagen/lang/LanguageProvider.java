@@ -124,6 +124,10 @@ public abstract class LanguageProvider extends net.minecraftforge.common.data.La
         add(key.getName(), value);
     }
 
+    protected void addKey(KeyMapping key, String path, String value) {
+        add(key.getName() + "." + path, value);
+    }
+
     protected void addItemFromId(RegistryObject<? extends Item> item) {
         addItem(item, Arrays.stream(item.getId().getPath().split("_"))
                 .map(word -> word.substring(0, 1).toUpperCase(Locale.ROOT) + word.substring(1))

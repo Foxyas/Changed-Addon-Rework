@@ -87,6 +87,8 @@ public class ChangedAddonVariables {
         public boolean Exp009TransfurAllowed = false;
         public boolean Exp10TransfurAllowed = false;
 
+        public boolean isCuddling = false;
+
         public void syncPlayerVariables(Entity entity) {
             if (entity instanceof ServerPlayer serverPlayer)
                 ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new SyncPacket(this));
@@ -98,6 +100,7 @@ public class ChangedAddonVariables {
             other.untransfurProgress = untransfurProgress;
             other.Exp009TransfurAllowed = Exp009TransfurAllowed;
             other.Exp10TransfurAllowed = Exp10TransfurAllowed;
+            other.isCuddling = isCuddling;
             if (!wasDeath) {
                 other.consciousnessFightProgress = consciousnessFightProgress;
                 other.FTKCminigameType = FTKCminigameType;
@@ -120,6 +123,7 @@ public class ChangedAddonVariables {
             nbt.putDouble("UntransfurProgress", untransfurProgress);
             nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
             nbt.putBoolean("Exp10TransfurAllowed", Exp10TransfurAllowed);
+            nbt.putBoolean("isCuddling", isCuddling);
             return nbt;
         }
 
@@ -142,6 +146,22 @@ public class ChangedAddonVariables {
             untransfurProgress = nbt.getDouble("UntransfurProgress");
             Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
             Exp10TransfurAllowed = nbt.getBoolean("Exp10TransfurAllowed");
+            isCuddling = nbt.getBoolean("isCuddling");
+        }
+
+        public void copyFrom(PlayerVariables other) {
+            showWarns = other.showWarns;
+            consciousnessFightProgress = other.consciousnessFightProgress;
+            FTKCminigameType = other.FTKCminigameType;
+            resetTransfurAdvancements = other.resetTransfurAdvancements;
+            actCooldown = other.actCooldown;
+            patCooldown = other.patCooldown;
+            areDarkLatex = other.areDarkLatex;
+            LatexInfectionCooldown = other.LatexInfectionCooldown;
+            untransfurProgress = other.untransfurProgress;
+            Exp009TransfurAllowed = other.Exp009TransfurAllowed;
+            Exp10TransfurAllowed = other.Exp10TransfurAllowed;
+            isCuddling = other.isCuddling;
         }
     }
 

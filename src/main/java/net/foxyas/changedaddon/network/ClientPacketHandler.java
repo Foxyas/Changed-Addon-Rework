@@ -57,19 +57,7 @@ public class ClientPacketHandler {
             assert player != null;
             if (player.isDeadOrDying()) return;
 
-            ChangedAddonVariables.PlayerVariables variables = ChangedAddonVariables.nonNullOf(player);
-            ChangedAddonVariables.PlayerVariables syncedVars = message.data;
-            variables.showWarns = syncedVars.showWarns;
-            variables.consciousnessFightProgress = syncedVars.consciousnessFightProgress;
-            variables.FTKCminigameType = syncedVars.FTKCminigameType;
-            variables.resetTransfurAdvancements = syncedVars.resetTransfurAdvancements;
-            variables.actCooldown = syncedVars.actCooldown;
-            variables.patCooldown = syncedVars.patCooldown;
-            variables.areDarkLatex = syncedVars.areDarkLatex;
-            variables.LatexInfectionCooldown = syncedVars.LatexInfectionCooldown;
-            variables.untransfurProgress = syncedVars.untransfurProgress;
-            variables.Exp009TransfurAllowed = syncedVars.Exp009TransfurAllowed;
-            variables.Exp10TransfurAllowed = syncedVars.Exp10TransfurAllowed;
+            ChangedAddonVariables.nonNullOf(player).copyFrom(message.data);
         });
         context.setPacketHandled(true);
     }

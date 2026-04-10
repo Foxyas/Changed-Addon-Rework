@@ -1,9 +1,12 @@
 package net.foxyas.changedaddon.mixins.client;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.block.DarkLatexPuddleBlock;
 import net.foxyas.changedaddon.block.entity.DarkLatexPuddleBlockEntity;
+import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
@@ -11,6 +14,7 @@ import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.InBedChatScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,6 +38,11 @@ public abstract class MinecraftMixin {
     @Shadow
     @Nullable
     public LocalPlayer player;
+
+    @WrapOperation(at = @At(value = "NEW", target = "net/minecraft/client/gui/screens/InBedChatScreen"), method = "tick")
+    private InBedChatScreen stopSettingSleepScreenWhenCuddling(Operation<InBedChatScreen> original) {
+        return ChangedAddonVariables.ofOrDefault(player).isCuddling ? null : original.call();
+    }
 
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isHandsBusy()Z"),
             method = "startUseItem")

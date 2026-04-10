@@ -1,9 +1,10 @@
 package net.foxyas.changedaddon.network;
 
 import net.foxyas.changedaddon.network.packet.ServerboundProgressFTKCPacket;
+import net.foxyas.changedaddon.network.packet.ServerboundSwitchCuddlePacket;
 import net.foxyas.changedaddon.qte.FightToKeepConsciousness;
-import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -45,10 +46,20 @@ public class ServerPacketHandler {
     }
 
     private static void safeSoundPlay(Level level, @Nullable Player pPlayer, Entity pEntity, @Nullable SoundEvent soundEvent, SoundSource pCategory, float pVolume, float pPitch) {
-        if (soundEvent == null) {
-            return;
-        } else {
-            level.playSound(pPlayer, pEntity, soundEvent, pCategory, pVolume, pPitch);
-        }
+        if (soundEvent == null) return;
+
+        level.playSound(pPlayer, pEntity, soundEvent, pCategory, pVolume, pPitch);
+    }
+
+    public static void handleSwitchCuddlePacket(ServerboundSwitchCuddlePacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
+        context.enqueueWork(() -> {
+            ServerPlayer sender = context.getSender();
+            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(sender);
+            vars.isCuddling = !vars.isCuddling;
+            vars.syncPlayerVariables(sender);
+            sender.displayClientMessage(Component.translatable("key.changed_addon.cuddle.set", vars.isCuddling), true);
+        });
+        context.setPacketHandled(true);
     }
 }

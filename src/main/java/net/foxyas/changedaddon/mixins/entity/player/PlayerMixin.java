@@ -10,6 +10,7 @@ import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.item.AbstractKatanaItem;
+import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -90,15 +91,18 @@ public abstract class PlayerMixin extends LivingEntity implements LivingEntityDa
     @ModifyReturnValue(method = "isSleepingLongEnough", at = @At("RETURN"))
     private boolean isSleepingLongEnoughHook(boolean original) {
         Player self = ((Player) (Object) this);
+        if (!ChangedAddonVariables.ofOrDefault(self).isCuddling) return original;
+
         TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(self);
-        if (transfurVariant != null) {
-            GrabEntityAbilityInstance grabEntityAbilityInstance = transfurVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
-                if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
-                    return false;
-                }
+        if (transfurVariant == null) return original;
+
+        GrabEntityAbilityInstance grabAbilityInstance = transfurVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+        if (grabAbilityInstance instanceof GrabEntityAbilityExtensor ext) {
+            if (ext.isSafeMode()/* && grabAbilityInstance.grabbedEntity != null*/) {
+                return false;
             }
         }
+
         return original;
     }
 

@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.event;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.foxyas.changedaddon.ChangedAddonMod;
-import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
 import net.foxyas.changedaddon.command.*;
 import net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal;
@@ -13,13 +12,11 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
-import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
-import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.item.Syringe;
@@ -109,67 +106,61 @@ public class CommonEvent {
     @SubscribeEvent
     public static void allowPlayersToSleepAtAnyMomentWhenCuddling(SleepingTimeCheckEvent event) {
         Player sleeper = event.getEntity();
-        ProcessTransfur.ifPlayerTransfurred(sleeper, (variant) -> {
-            GrabEntityAbilityInstance grabEntityAbilityInstance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
-                if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
-                    event.setResult(Event.Result.ALLOW);
-                }
-            }
-        });
+        if (!ChangedAddonVariables.ofOrDefault(sleeper).isCuddling) return;
+
+        event.setResult(Event.Result.ALLOW);
     }
 
-//    @SubscribeEvent
-//    public static void forcePlayersToNeverSleepEnough(TickEvent.PlayerTickEvent event) {
-//        if (event.phase == TickEvent.Phase.END) {
-//            Player sleeper = event.player;
-//            if (!sleeper.isSleeping()) return;
-//            LivingEntityDataExtensor sleeperDataExtensor = LivingEntityDataExtensor.ofEntity(sleeper);
-//            if (sleeperDataExtensor == null) return;
-//
-//            ProcessTransfur.ifPlayerTransfurred(sleeper, (variant) -> {
-//                GrabEntityAbilityInstance grabEntityAbilityInstance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-//                if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
-//                    if (grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null) {
-//                        sleeperDataExtensor.setSleepCounter(Math.min(sleeper.getSleepTimer(), 98));
-//                    }
-//                }
-//            });
-//        }
-//    }
+    @SubscribeEvent
+    public static void forcePlayersToNeverSleepEnough(TickEvent.PlayerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END) return;
+
+        Player sleeper = event.player;
+        if (!sleeper.isSleeping()) return;
+
+        if (!ChangedAddonVariables.ofOrDefault(sleeper).isCuddling) return;
+
+        LivingEntityDataExtensor ext = LivingEntityDataExtensor.ofEntity(sleeper);
+        if (ext == null) return;
+
+        ext.setSleepCounter(1);
+    }
 
 
     @SubscribeEvent
     public static void sendAlphasAlert(VanillaGameEvent event) {
-        Entity cause = event.getCause();
         Level level = event.getLevel();
-        Vec3 eventPosition = event.getEventPosition();
         if (level.isClientSide()) return;
+
+        Entity cause = event.getCause();
         if (cause == null) return;
 
-        if (event.getVanillaEvent().is(ChangedAddonTags.GameEvents.CAN_WAKE_UP_ALPHAS)) {
-            List<PathfinderMob> entitiesOfClass = level.getEntitiesOfClass(PathfinderMob.class,
-                    new AABB(eventPosition, eventPosition).inflate(32),
-                    EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(target -> !target.is(cause)).and(target -> target instanceof PathfinderMob mob && mob.isSleeping() && hasAlphaSleepGoal(mob)));
+        if (!event.getVanillaEvent().is(ChangedAddonTags.GameEvents.CAN_WAKE_UP_ALPHAS)) return;
 
-            if (cause instanceof LivingEntity living && living.isSteppingCarefully()) {
-                return;
+        Vec3 eventPosition = event.getEventPosition();
+        List<PathfinderMob> entitiesOfClass = level.getEntitiesOfClass(PathfinderMob.class,
+                new AABB(eventPosition, eventPosition).inflate(32),
+                EntitySelector.NO_CREATIVE_OR_SPECTATOR.and(target -> !target.is(cause)).and(target -> target instanceof PathfinderMob mob && mob.isSleeping() && hasAlphaSleepGoal(mob)));
+
+        if (cause instanceof LivingEntity living && living.isSteppingCarefully()) {
+            return;
+        }
+
+        float dist;
+        int sleepDuration;
+        for (PathfinderMob target : entitiesOfClass) {
+            dist = cause.distanceTo(target);
+            List<AlphaSleepGoal> allSleepGoalsFromEntity = AlphaSleepGoal.getAllSleepGoalsFromEntity(target);
+            if (allSleepGoalsFromEntity.isEmpty()) continue;
+
+            for (AlphaSleepGoal alphaSleepGoal : allSleepGoalsFromEntity) {
+                sleepDuration = (int) (alphaSleepGoal.sleepDuration / dist);
+                alphaSleepGoal.sleepDuration -= sleepDuration;
+                alphaSleepGoal.sleepDuration = Math.max(0, alphaSleepGoal.sleepDuration);
             }
 
-            for (PathfinderMob target : entitiesOfClass) {
-                float distance = cause.distanceTo(target);
-                List<AlphaSleepGoal> allSleepGoalsFromEntity = AlphaSleepGoal.getAllSleepGoalsFromEntity(target);
-                if (allSleepGoalsFromEntity.isEmpty()) continue;
-
-                for (AlphaSleepGoal alphaSleepGoal : allSleepGoalsFromEntity) {
-                    int sleepDuration = (int) (alphaSleepGoal.sleepDuration / distance);
-                    alphaSleepGoal.sleepDuration -= sleepDuration;
-                    alphaSleepGoal.sleepDuration = Math.max(0, alphaSleepGoal.sleepDuration);
-                }
-
-                VibrationParticleOption vibrationParticleOption = new VibrationParticleOption(new EntityPositionSource(target, target.getEyeHeight()), 20);
-                ParticlesUtil.sendParticles(level, vibrationParticleOption, eventPosition, 0, 0, 0, 1, 0);
-            }
+            VibrationParticleOption vibrationParticleOption = new VibrationParticleOption(new EntityPositionSource(target, target.getEyeHeight()), 20);
+            ParticlesUtil.sendParticles(level, vibrationParticleOption, eventPosition, 0, 0, 0, 1, 0);
         }
     }
 
@@ -289,22 +280,12 @@ public class CommonEvent {
     }
 
     private static void cleanAlphaAttributes(Player player) {
-        if (player.isDeadOrDying()) {
-            return;
-        }
+        if (player.isDeadOrDying()) return;
 
         TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (transfurVariant != null) {
-            if (transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity) {
-                if (!iAlphaAbleEntity.isAlpha()) {
-                    IAlphaAbleEntity.removeAlphaModifiers(player);
-                    return;
-                }
-            }
-            return;
+        if (transfurVariant == null || (transfurVariant.getChangedEntity() instanceof IAlphaAbleEntity alphaAble && !alphaAble.isAlpha())) {
+            IAlphaAbleEntity.removeAlphaModifiers(player);
         }
-
-        IAlphaAbleEntity.removeAlphaModifiers(player);
     }
 
     private static void maskTransfur(Player player, Level level) {

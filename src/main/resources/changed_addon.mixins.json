@@ -6,6 +6,7 @@
   "refmap": "changed_addon.refmap.json",
   "mixins": [
     "GrabEntityPacketMixin",
+    "ServerGamePacketListenerMixin",
     "abilities.AbilityControllerAccessor",
     "abilities.AbilityControllerMixin",
     "abilities.GrabEntityAbilityInstanceMixin",
@@ -89,6 +90,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "client.gui.InBedChatScreenMixin",
     "client.DeathScreenMixin",
     "client.EventHandlerClientMixin",
     "client.HumanoidModelMixin",

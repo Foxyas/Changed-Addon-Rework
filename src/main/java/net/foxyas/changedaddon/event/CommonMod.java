@@ -181,5 +181,8 @@ public class CommonMod {
 
         ChangedAddonMod.addNetworkMessage(S2CCheckGrabberEntity.class, S2CCheckGrabberEntity::encode,
                 S2CCheckGrabberEntity::new, S2CCheckGrabberEntity::handle);
+
+        ChangedAddonMod.addNetworkMessage(ServerboundSwitchCuddlePacket.class, ServerboundSwitchCuddlePacket::encode,
+                (a) -> ServerboundSwitchCuddlePacket.INSTANCE, ServerPacketHandler::handleSwitchCuddlePacket);
     }
 }

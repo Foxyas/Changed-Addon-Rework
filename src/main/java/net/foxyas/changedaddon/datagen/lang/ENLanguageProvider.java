@@ -640,6 +640,8 @@ public class ENLanguageProvider extends LanguageProvider {
         add("key.changed_addon.turn_off_transfur.grab_safe_mode", "You set the Friendly Grab to %s");
         add("key.changed_addon.turn_off_transfur.safe_mode", "You set the Transfur Attack to %s");
         addKey(USE_SECOND_ABILITY, "Use Second Variant Ability");
+        addKey(CUDDLE_KEY, "Switch cuddle mode");
+        addKey(CUDDLE_KEY, "set", "Cuddle mode is set to %s");
 
         addSound(ARMOR_EQUIP, "Armor Equip");
         addSound(PLUSHY_SOUND, "Plush Squeezed");
@@ -702,5 +704,6 @@ public class ENLanguageProvider extends LanguageProvider {
         addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED, "Entities transfurred while transfurred");
 
         add("warn.rei.not.supported.move.items.but.right.container", "Move Items is not supported with this kind of workstation");
+        addText("cuddle_button", "Start cuddling");
     }
 }
