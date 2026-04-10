@@ -37,6 +37,9 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> FIGHT_TO_KEEP_CONSCIOUSNESS_DO_REPLAY;
     public static final ForgeConfigSpec.DoubleValue FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE;
     public static final ForgeConfigSpec.DoubleValue FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_TRANSFURED_PLAYERS_USE_BOWS;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_TRANSFURED_PLAYERS_USE_GUNS;
+
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -123,6 +126,20 @@ public class ChangedAddonServerConfiguration {
             ALLOW_PLAYERS_TO_SELECT_RESPAWN_TRANSFUR = BUILDER.comment("Allow the non admins Players to select a transfur to be transfurred when spawning").define("Allow Players to Select Respawn Transfur", false);
             APPLY_UNTRANSFUR_IMMUNITY_AFTER_RESPAWN_AS_TRANSFUR = BUILDER.comment("Apply Untransfur Immunity to the player after they respawn as a transfurred player").define("Apply Untransfur Immunity After Respawn as a Transfur", false);
             ALLOW_TRANSFURED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR = BUILDER.comment("Allow a already transfurred player to respawn as another transfur").define("Allow transfurred players to respawn as another transfur", false);
+        }
+        BUILDER.pop();
+
+        BUILDER.push("Transfured Players");
+        {
+            ALLOW_TRANSFURED_PLAYERS_USE_BOWS = BUILDER
+                    .comment("Can transfurred Players use bows and crossbows?")
+                    .define("Allow Transfurred Players to Use Bows", true);
+
+            ALLOW_TRANSFURED_PLAYERS_USE_GUNS = BUILDER
+                    .comment("Can transfurred Players use guns? [Only Compatible with TACZ and Just Enough Guns mod at this moment]")
+                    .define("Allow Transfurred Players to Use Guns", true);
+
+            // TODO: COMPATIBILITY EVENTS CHECKS FOR THIS
         }
         BUILDER.pop();
 
