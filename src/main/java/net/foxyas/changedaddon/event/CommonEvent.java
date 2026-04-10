@@ -4,12 +4,14 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
 import net.foxyas.changedaddon.command.*;
+import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
+import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
@@ -38,6 +40,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -48,6 +53,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.VanillaGameEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -73,6 +79,37 @@ public class CommonEvent {
         BlockState blockState = level.getBlockState(blockPos);
         if (blockState.getBlock() instanceof ConditionalLatexCoverableBlock conditionalLatexCoverableBlock) {
             event.setCanceled(!conditionalLatexCoverableBlock.canBeSpread(level, blockState, blockPos));
+        }
+    }
+
+    @SubscribeEvent
+    public static void denyUseBowItem(LivingEntityUseItemEvent.Start event) {
+        ItemStack itemStack = event.getItem();
+        LivingEntity entity = event.getEntity();
+
+        // Verificamos se é um Player (pois LivingEntity inclui mobs)
+        if (!(entity instanceof Player player)) {
+            return;
+        }
+
+        Item item = itemStack.getItem();
+
+        // Checa se o item é um arco ou besta
+        if (item instanceof BowItem || item instanceof CrossbowItem) {
+
+            // Sua lógica para verificar se o player está transformado
+            if (ProcessTransfur.isPlayerTransfurred(player)) {
+
+                // Checa a config que criamos
+                if (ChangedAddonServerConfiguration.STOP_TRANSFURRED_PLAYERS_USE_BOWS.get()) {
+
+                    // Cancela a ação de usar o item
+                    event.setCanceled(true);
+
+                    // Envia a mensagem aleatória (Action Bar)
+                    player.displayClientMessage(RPTransfurDenialMessages.getRandomBowDenial(), true);
+                }
+            }
         }
     }
 

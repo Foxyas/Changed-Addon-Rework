@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon;
 
+import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.world.datafixer.ChangedAddonDataFixer;
@@ -75,6 +76,7 @@ public class ChangedAddonMod {
 
         ChangedAddonTransfurVariants.REGISTRY.register(bus);
         dataFixer = new ChangedAddonDataFixer();
+        ChangedAddonModCompatEvents.registerOptionalEvents();
     }
 
     //Thanks :D

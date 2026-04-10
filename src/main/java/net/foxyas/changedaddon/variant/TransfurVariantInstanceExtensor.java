@@ -30,11 +30,11 @@ public interface TransfurVariantInstanceExtensor {
 
     void setUntransfurImmunity(UntransfurEvent.UntransfurType type, boolean value);
 
-    default boolean isTransfuredBySafeMethod() {
+    default boolean isTransfurredBySafeMethod() {
         return true;
     }
 
-    default void setTransfuredBySafeMethod(boolean value) {
+    default void setTransfurredBySafeMethod(boolean value) {
 
     }
 

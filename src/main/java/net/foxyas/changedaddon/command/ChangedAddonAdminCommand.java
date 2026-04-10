@@ -394,7 +394,7 @@ public class ChangedAddonAdminCommand {
 
     private static int getLatexLanguage(CommandContext<CommandSourceStack> context) {
         CommandSourceStack source = context.getSource();
-        Boolean value = ChangedAddonServerConfiguration.TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.get();
+        Boolean value = ChangedAddonServerConfiguration.TRANSFURRED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.get();
         source.sendSuccess(() -> Component.literal(String.format("The latex Language is set to %b", value)), true);
         return Command.SINGLE_SUCCESS;
     }
@@ -403,7 +403,7 @@ public class ChangedAddonAdminCommand {
         CommandSourceStack source = context.getSource();
         boolean value = BoolArgumentType.getBool(context, "set");
 
-        ChangedAddonServerConfiguration.TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.set(value);
+        ChangedAddonServerConfiguration.TRANSFURRED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.set(value);
         //ChangedAddonServerConfiguration.TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.save();
         return Command.SINGLE_SUCCESS;
 

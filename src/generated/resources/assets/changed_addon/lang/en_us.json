@@ -693,6 +693,14 @@
   "text.changed_addon.land_speed": "Land Speed = %s",
   "text.changed_addon.legs": "Amount of Legs = %s",
   "text.changed_addon.miningStrength": "Mining Strength: %s",
+  "text.changed_addon.rp.bow_and_crossbow_stop.claws_rip_string": "Your sharp claws would rip the bowstring to shreds!",
+  "text.changed_addon.rp.bow_and_crossbow_stop.clumsy_paws": "It's nearly impossible to nock an arrow with such clumsy paws!",
+  "text.changed_addon.rp.bow_and_crossbow_stop.crossbow_safety": "Your fingers are too thick to operate the crossbow's mechanism!",
+  "text.changed_addon.rp.bow_and_crossbow_stop.no_grip_strength": "Your paws can't maintain a steady grip on the bow!",
+  "text.changed_addon.rp.guns_compatibility.anatomical_error": "Your current form's hands aren't designed for firearms!",
+  "text.changed_addon.rp.guns_compatibility.claws_stuck": "Your claws are getting in the way of the safety switch!",
+  "text.changed_addon.rp.guns_compatibility.no_fingers_for_trigger": "You lack the finger dexterity to pull the trigger!",
+  "text.changed_addon.rp.guns_compatibility.paws_too_big": "Your paws are too bulky to fit in the trigger guard!",
   "text.changed_addon.swim_speed": "Swim Speed = %s",
   "warn.rei.not.supported.move.items.but.right.container": "Move Items is not supported with this kind of workstation"
 }

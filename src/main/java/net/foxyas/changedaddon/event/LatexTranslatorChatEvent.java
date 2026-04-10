@@ -56,7 +56,7 @@ public class LatexTranslatorChatEvent {
     @SubscribeEvent
     public static void onServerChat(ServerChatEvent event) {
 
-        if (!ChangedAddonServerConfiguration.TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.get())
+        if (!ChangedAddonServerConfiguration.TRANSFURRED_PLAYERS_CHAT_IN_LATEX_LANGUAGE.get())
             return;
 
         ServerPlayer sender = event.getPlayer();

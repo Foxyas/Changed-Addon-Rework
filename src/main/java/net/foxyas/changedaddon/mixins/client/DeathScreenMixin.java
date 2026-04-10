@@ -39,7 +39,7 @@ public abstract class DeathScreenMixin extends Screen {
         LocalPlayer player = this.minecraft.player;
         assert player != null;
         if (!ChangedAddonServerConfiguration.ALLOW_RESPAWN_AS_TRANSFUR.get()) return;
-        if (ProcessTransfur.isPlayerTransfurred(player) && !ChangedAddonServerConfiguration.ALLOW_TRANSFURED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR.get())
+        if (ProcessTransfur.isPlayerTransfurred(player) && !ChangedAddonServerConfiguration.ALLOW_TRANSFURRED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR.get())
             return;
 
         exitButtons.add(this.addRenderableWidget(

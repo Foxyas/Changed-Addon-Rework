@@ -673,6 +673,15 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addText("item.vial.wrong_use", "Using this item in there will not work");
 
+        addText("rp.guns_compatibility.paws_too_big", "Your paws are too bulky to fit in the trigger guard!");
+        addText("rp.guns_compatibility.no_fingers_for_trigger", "You lack the finger dexterity to pull the trigger!");
+        addText("rp.guns_compatibility.claws_stuck", "Your claws are getting in the way of the safety switch!");
+        addText("rp.guns_compatibility.anatomical_error", "Your current form's hands aren't designed for firearms!");
+        addText("rp.bow_and_crossbow_stop.claws_rip_string", "Your sharp claws would rip the bowstring to shreds!");
+        addText("rp.bow_and_crossbow_stop.no_grip_strength", "Your paws can't maintain a steady grip on the bow!");
+        addText("rp.bow_and_crossbow_stop.crossbow_safety", "Your fingers are too thick to operate the crossbow's mechanism!");
+        addText("rp.bow_and_crossbow_stop.clumsy_paws", "It's nearly impossible to nock an arrow with such clumsy paws!");
+
         addMessage("induction_coil_melt", "§4⚡ You brought metal to an electric fight. §cSuch Foolish Move. §6Your gear is melting from the heat!");
 
         addCommand("accessory.no_slots.single", "%s has no accessory slots.");

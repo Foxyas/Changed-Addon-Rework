@@ -96,16 +96,16 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         maySendDataUpdate();
     }
 
-    private boolean transfuredBySafeMethod = false;
+    private boolean transfurredBySafeMethod = false;
 
     @Override
-    public boolean isTransfuredBySafeMethod() {
-        return transfuredBySafeMethod;
+    public boolean isTransfurredBySafeMethod() {
+        return transfurredBySafeMethod;
     }
 
     @Override
-    public void setTransfuredBySafeMethod(boolean value) {
-        transfuredBySafeMethod = value;
+    public void setTransfurredBySafeMethod(boolean value) {
+        transfurredBySafeMethod = value;
     }
 
     @Override
@@ -251,7 +251,7 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
             stats.saveExtraData(returnValue);
         }
 
-        returnValue.putBoolean("transfuredBySafeMethod", isTransfuredBySafeMethod());
+        returnValue.putBoolean("transfurredBySafeMethod", isTransfurredBySafeMethod());
         returnValue.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL));
         if (!getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND)) {
             returnValue.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND));
@@ -263,8 +263,8 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         if (this.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
             variantExtraStats.readExtraData(tag);
         }
-        if (tag.contains("transfuredBySafeMethod"))
-            setTransfuredBySafeMethod(tag.getBoolean("transfuredBySafeMethod"));
+        if (tag.contains("transfurredBySafeMethod"))
+            setTransfurredBySafeMethod(tag.getBoolean("transfurredBySafeMethod"));
         if (tag.contains("untransfurImmunity"))
             setUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL, tag.getBoolean("untransfurImmunity"));
         if (tag.contains("untransfurImmunityCommand"))

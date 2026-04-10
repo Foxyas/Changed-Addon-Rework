@@ -22,8 +22,8 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> ALLOWED_RESPAWN_TRANSFURS;
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_PLAYERS_TO_SELECT_RESPAWN_TRANSFUR;
     public static final ForgeConfigSpec.ConfigValue<Boolean> APPLY_UNTRANSFUR_IMMUNITY_AFTER_RESPAWN_AS_TRANSFUR;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_TRANSFURED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_TRANSFURRED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> TRANSFURRED_PLAYERS_CHAT_IN_LATEX_LANGUAGE;
     public static final ForgeConfigSpec.ConfigValue<Double> ALPHA_SPAWN_PEACEFUL;
     public static final ForgeConfigSpec.ConfigValue<Double> ALPHA_SPAWN_EASY;
     public static final ForgeConfigSpec.ConfigValue<Double> ALPHA_SPAWN_NORMAL;
@@ -37,8 +37,8 @@ public class ChangedAddonServerConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> FIGHT_TO_KEEP_CONSCIOUSNESS_DO_REPLAY;
     public static final ForgeConfigSpec.DoubleValue FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE;
     public static final ForgeConfigSpec.DoubleValue FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_TRANSFURED_PLAYERS_USE_BOWS;
-    public static final ForgeConfigSpec.ConfigValue<Boolean> ALLOW_TRANSFURED_PLAYERS_USE_GUNS;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> STOP_TRANSFURRED_PLAYERS_USE_BOWS;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> STOP_TRANSFURRED_PLAYERS_USE_GUNS;
 
 
     static {
@@ -115,7 +115,7 @@ public class ChangedAddonServerConfiguration {
 
         BUILDER.push("Chat");
         {
-            TRANSFURED_PLAYERS_CHAT_IN_LATEX_LANGUAGE = BUILDER.comment("The Chat of Transfurred Players Should be affect by Latex Language?\nCareful when using this feature because it disable the chat report").define("Transfurred Players Chat in Latex Language", false);
+            TRANSFURRED_PLAYERS_CHAT_IN_LATEX_LANGUAGE = BUILDER.comment("The Chat of Transfurred Players Should be affect by Latex Language?\nCareful when using this feature because it disable the chat report").define("Transfurred Players Chat in Latex Language", false);
         }
         BUILDER.pop();
 
@@ -125,19 +125,19 @@ public class ChangedAddonServerConfiguration {
             ALLOWED_RESPAWN_TRANSFURS = BUILDER.comment("List of form ids, transfur variant tags or mod ids.\n(@modid, #tag:id, formId)").defineList("allowed Respawn Transfur Variants", List.of("changed:random"), RegistryElementPredicate::isValidSyntax);
             ALLOW_PLAYERS_TO_SELECT_RESPAWN_TRANSFUR = BUILDER.comment("Allow the non admins Players to select a transfur to be transfurred when spawning").define("Allow Players to Select Respawn Transfur", false);
             APPLY_UNTRANSFUR_IMMUNITY_AFTER_RESPAWN_AS_TRANSFUR = BUILDER.comment("Apply Untransfur Immunity to the player after they respawn as a transfurred player").define("Apply Untransfur Immunity After Respawn as a Transfur", false);
-            ALLOW_TRANSFURED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR = BUILDER.comment("Allow a already transfurred player to respawn as another transfur").define("Allow transfurred players to respawn as another transfur", false);
+            ALLOW_TRANSFURRED_PLAYERS_TO_RESPAWN_WAS_TRANSFUR = BUILDER.comment("Allow a already transfurred player to respawn as another transfur").define("Allow transfurred players to respawn as another transfur", false);
         }
         BUILDER.pop();
 
-        BUILDER.push("Transfured Players");
+        BUILDER.push("Transfurred Players");
         {
-            ALLOW_TRANSFURED_PLAYERS_USE_BOWS = BUILDER
+            STOP_TRANSFURRED_PLAYERS_USE_BOWS = BUILDER
                     .comment("Can transfurred Players use bows and crossbows?")
-                    .define("Allow Transfurred Players to Use Bows", true);
+                    .define("Stop Transfurred Players to Use Bows", false);
 
-            ALLOW_TRANSFURED_PLAYERS_USE_GUNS = BUILDER
+            STOP_TRANSFURRED_PLAYERS_USE_GUNS = BUILDER
                     .comment("Can transfurred Players use guns? [Only Compatible with TACZ and Just Enough Guns mod at this moment]")
-                    .define("Allow Transfurred Players to Use Guns", true);
+                    .define("Stop Transfurred Players to Use Guns", false);
 
             // TODO: COMPATIBILITY EVENTS CHECKS FOR THIS
         }

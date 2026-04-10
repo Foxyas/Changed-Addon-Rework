@@ -63,6 +63,11 @@ public interface VariantExtraStats {
         return !this.getFlyType().canFly();
     }
 
+    // Gun Mods Compatibility
+    default boolean canFireGuns() {
+        return true;
+    }
+
     enum FlyType {
         NONE,
         ONLY_FALL,

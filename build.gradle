@@ -76,10 +76,10 @@ repositories {
         url "https://cursemaven.com"
     }
 
-//    maven {
-//        name = "Changed"
-//        url = "https://ltxprogrammer.github.io/maven/"
-//    }
+    maven {
+        name = "Changed"
+        url = "https://ltxprogrammer.github.io/maven/"
+    }
 
     maven { url "https://maven.shedaniel.me/" }
 
@@ -127,7 +127,7 @@ dependencies {
     }
 
   //implementation fg.deobf('net.ltxprogrammer.changed:Changed-m1.18.2-f40.2.0:v0.14b') //Changed Local File
-    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.3") {
+    implementation fg.deobf("net.ltxprogrammer.changed:Changed-m1.20.1-f47.4.0:v0.15.4") {
         changing = true
     }//Changed
 
@@ -141,6 +141,11 @@ dependencies {
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:${reiVersion}")
     implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
     implementation fg.deobf("dev.architectury:architectury-forge:${archVersion}")
+
+    implementation fg.deobf("com.mrcrayfish.framework:framework-forge-1.20.1-0.8.0:0.8.0")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1-4.8.3:4.8.3")
+    implementation fg.deobf("ttv.migami.jeg:JustEnoughGuns-0.13.2-1.20.1:0.13.2")
+    implementation fg.deobf("com.tacz.guns:tacz-1.20.1-1.1.7-hotfix2:1.1.7")
 
     implementation fg.deobf("dev.tr7zw:notenoughanimations-forge-1.11.1-mc1.20.1:1.10.0")
     implementation fg.deobf("dev.tr7zw:firstperson-forge-2.4.9-mc1.20.1:2.4.9")
