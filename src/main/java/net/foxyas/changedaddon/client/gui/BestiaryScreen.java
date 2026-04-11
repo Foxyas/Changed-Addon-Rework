@@ -19,6 +19,7 @@ import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
 import net.zaharenko424.cmrs.client.gui.widget.*;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -38,18 +39,23 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
     final ChangedEntityModelWidget modelWidget =
             new ChangedEntityModelWidget().setSize(120, 200)
                     .setRenderTransform(WidgetHelper.hoverOrSelectedAnim(.1f, 0.025f, 0.025f));
+    final RoundedRectWidget modelBackGround = new RoundedRectWidget().setSize(120, 200).setInsideColorFunc(a -> Color.BLACK.getRGB());
 
     final ScrollableContainer loreScroll =
             (ScrollableContainer) new ScrollableContainer().setSize(200, 200);
 
     final ScrollableContainer tfs =
             (ScrollableContainer) new ScrollableContainer().setSize(120, 200).setOrigin(0, 0, 100);
-    final RoundedRectWidget tfsListBackGround = new RoundedRectWidget().setSize(120, 200).setOrigin(0, 0, 85);
+    final RoundedRectWidget tfsListBackGround = new RoundedRectWidget().setSize(120, 200).setInsideColorFunc(a -> Color.BLACK.getRGB());
 
     public BestiaryScreen() {
         super(Component.literal("Bestiary"));
 
         displayBackGround.rebuildMesh();
+        modelBackGround.rebuildMesh();
+        tfsListBackGround.rebuildMesh();
+        Vector3f displayBackGroundOrigin = displayBackGround.getOrigin();
+        modelBackGround.setOrigin(displayBackGroundOrigin.x, displayBackGroundOrigin.y, displayBackGroundOrigin.z + 10);
 
         /* MODEL */
 
@@ -80,13 +86,15 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         LayoutHelper.listLayout(tfs, entries, -2, 0, 5);
         tfs.init();
         tfs.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
+        Vector3f tfsOrigin = tfs.getOrigin();
+        tfsListBackGround.setOrigin(tfsOrigin.x, tfsOrigin.y, tfsOrigin.z + 10);
 
         /* WINDOW */
 
         window.addWidget(displayBackGround);
         window.addWidget(modelWidget);
         window.addWidget(loreScroll);
-        window.addWidget(tfsListBackGround);
+        window.addWidget(modelBackGround);
         window.addWidget(tfs);
 
         window.init();
