@@ -3,11 +3,15 @@ package net.foxyas.changedaddon.event;
 import com.mojang.brigadier.CommandDispatcher;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
+import net.foxyas.changedaddon.client.model.animations.CarryAbilityAnimation;
+import net.foxyas.changedaddon.client.model.animations.MagicAttackCastingAnimator;
+import net.foxyas.changedaddon.client.model.animations.PsychicGrabAbilityAnimation;
 import net.foxyas.changedaddon.command.*;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
@@ -15,6 +19,9 @@ import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
+import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
@@ -34,10 +41,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
@@ -71,6 +75,11 @@ import static net.foxyas.changedaddon.event.TransfurEvents.resolveChangedEntity;
 
 @Mod.EventBusSubscriber(modid = ChangedAddonMod.MODID)
 public class CommonEvent {
+
+    // to use this event we need to put exactly the entity that should get the animations.. which is not that ideal... soo we made a mixin to adds the animations in every humanoid animator.
+    //    @SubscribeEvent
+    //    public static void addCustomDefaultAnimators(HumanoidAnimator.GatherAnimatorsEvent<ChangedEntity, AdvancedHumanoidModel<ChangedEntity>> event) {
+    //    }
 
     @SubscribeEvent
     public static void denyBlockSpread(SpreadingLatexType.CoveringBlockEvent event) {
