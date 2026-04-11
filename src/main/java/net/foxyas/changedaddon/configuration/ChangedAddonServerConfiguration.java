@@ -95,7 +95,7 @@ public class ChangedAddonServerConfiguration {
         BUILDER.push("Player Handle");
         ALLOW_SECOND_ABILITY_USE = BUILDER.comment("Allow the Player to use the second selected ability (similar to offhand and main hand)").define("Allow Second Ability use", false);
 
-        BUILDER.push("Fight To Keep Consciousness");
+        BUILDER.push("Fight To Keep Consciousness [W.I.P]");
         FIGHT_TO_KEEP_CONSCIOUSNESS_TIMER = BUILDER
                 .comment("Ticks before the fail or success check of the Fight to keep consciousness mine-game")
                 .defineInRange("Duration", 150, 0, Integer.MAX_VALUE);
