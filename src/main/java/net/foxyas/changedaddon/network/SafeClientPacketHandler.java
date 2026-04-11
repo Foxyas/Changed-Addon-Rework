@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.network;
 
+import net.foxyas.changedaddon.network.packet.S2CPlayAnimationAfterParticleFade;
 import net.foxyas.changedaddon.network.packet.SyncAllUntransfurImmunityPacket;
 import net.foxyas.changedaddon.network.packet.SyncUntransfurImmunityPacket;
 import net.minecraftforge.network.NetworkEvent;
@@ -17,5 +18,9 @@ public class SafeClientPacketHandler {
 
     public static void handleAllUntransfurImmunitySync(SyncAllUntransfurImmunityPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
         ClientPacketHandler.handleAllUntransfurImmunitySync(packet, contextSupplier);
+    }
+
+    public static void handlePlayAnimationAfterParticleFade(S2CPlayAnimationAfterParticleFade<?> message, Supplier<NetworkEvent.Context> contextSupplier) {
+        ClientPacketHandler.handlePlayAnimationAfterParticleFade(message, contextSupplier);
     }
 }

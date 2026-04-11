@@ -184,5 +184,8 @@ public class CommonMod {
 
         ChangedAddonMod.addNetworkMessage(ServerboundSwitchCuddlePacket.class, ServerboundSwitchCuddlePacket::encode,
                 (a) -> ServerboundSwitchCuddlePacket.INSTANCE, ServerPacketHandler::handleSwitchCuddlePacket);
+
+        ChangedAddonMod.addNetworkMessage(S2CPlayAnimationAfterParticleFade.class, S2CPlayAnimationAfterParticleFade::encode,
+                S2CPlayAnimationAfterParticleFade::new, SafeClientPacketHandler::handlePlayAnimationAfterParticleFade);
     }
 }

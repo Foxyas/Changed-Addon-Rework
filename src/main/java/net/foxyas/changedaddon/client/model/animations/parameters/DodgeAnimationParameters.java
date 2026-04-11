@@ -26,7 +26,7 @@ public record DodgeAnimationParameters(float speed, float maxTimeSpam) implement
     @Override
     public boolean shouldEndAnimation(LivingEntity livingEntity, float totalTime) {
         // "Stop when entity is hurt"
-        if (livingEntity.hurtTime > 0 || livingEntity.hurtDuration > 0) {
+        if (livingEntity.hurtTime > 0) {
             return true;
         }
 

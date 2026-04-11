@@ -1,14 +1,24 @@
 package net.foxyas.changedaddon.init;
 
 import com.mojang.serialization.Codec;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.client.model.animations.parameters.PatReactionAnimationParameters;
+import net.foxyas.changedaddon.network.packet.S2CPlayAnimationAfterParticleFade;
+import net.ltxprogrammer.changed.entity.animation.AnimationCategory;
 import net.ltxprogrammer.changed.entity.animation.AnimationEvent;
 import net.ltxprogrammer.changed.entity.animation.AnimationParameters;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.List;
 
 public class ChangedAddonAnimationEvents {
 
@@ -24,5 +34,11 @@ public class ChangedAddonAnimationEvents {
 
     private static <T extends AnimationParameters> RegistryObject<AnimationEvent<T>> register(String name, Codec<T> parameters) {
         return REGISTRY.register(name, () -> new AnimationEvent<>(parameters));
+    }
+
+    public static <T extends AnimationParameters> void broadcastEntityAnimationWithFade(LivingEntity livingEntity, Color color, Vec3 pos, Vec3 motion, float speed, int count, AnimationEvent<T> event, @Nullable T parameters) {
+        if (!livingEntity.level().isClientSide) {
+            ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> livingEntity), new S2CPlayAnimationAfterParticleFade<T>(livingEntity, color, pos, motion, speed, count, event, null, parameters));
+        }
     }
 }

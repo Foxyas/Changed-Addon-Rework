@@ -3,20 +3,25 @@ package net.foxyas.changedaddon.network;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
 import net.foxyas.changedaddon.event.UntransfurEvent;
+import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.network.packet.*;
 import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.client.animations.AnimationAssociations;
+import net.ltxprogrammer.changed.entity.animation.AnimationParameters;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -112,5 +117,42 @@ public class ClientPacketHandler {
             }
         });
         context.setPacketHandled(true);
+    }
+
+
+
+    public static void handlePlayAnimationAfterParticleFade(S2CPlayAnimationAfterParticleFade<?> message, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
+        context.enqueueWork(() -> {
+            Level level = Minecraft.getInstance().level;
+            if (level != null) {
+                Entity entity = level.getEntity(message.entityId);
+                if (entity instanceof LivingEntity livingEntity) {
+
+                    // 1. Partículas
+                    var particleOption = ChangedAddonParticleTypes.entityModelFade(livingEntity, message.colorRGB, 0.25f);
+                    if (message.count <= 1) {
+                        level.addParticle(particleOption, message.pos.x, message.pos.y, message.pos.z,
+                                message.motion.x * message.speed, message.motion.y * message.speed, message.motion.z * message.speed);
+                    } else {
+                        for (int i = 0; i < message.count; i++) {
+                            level.addParticle(particleOption, message.pos.x, message.pos.y, message.pos.z,
+                                    message.motion.x * message.speed, message.motion.y * message.speed, message.motion.z * message.speed);
+                        }
+                    }
+
+                    // 2. Animação (Dispatch)
+                    // Como não passamos listas de itens/entidades extras no construtor simplificado, usamos listas vazias
+                    AnimationAssociations.dispatchAnimation(livingEntity, message.event, message.category, castParam(message.parameters), new ArrayList<>(), new ArrayList<>());
+                }
+            }
+        });
+        context.setPacketHandled(true);
+    }
+
+    // Helper para lidar com o Generics no handle
+    @SuppressWarnings("unchecked")
+    private static <T extends AnimationParameters> T castParam(Object param) {
+        return (T) param;
     }
 }
