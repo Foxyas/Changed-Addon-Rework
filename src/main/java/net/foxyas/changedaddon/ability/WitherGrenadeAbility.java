@@ -51,7 +51,7 @@ public class WitherGrenadeAbility extends SimpleAbility {
         projectile.setPos(livingEntity.getEyePosition().add(lookVector));
         Vec3 motion = lookVector.scale(1);
         projectile.shoot(motion.x, motion.y, motion.z, 3.5f, 0.0f);
-        livingEntity.swing(InteractionHand.MAIN_HAND);
+        livingEntity.swing(InteractionHand.MAIN_HAND, true);
 
         serverLevel.addFreshEntity(projectile);
     }

@@ -52,10 +52,9 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         super(Component.literal("Bestiary"));
 
         displayBackGround.rebuildMesh();
-        modelBackGround.rebuildMesh();
-        tfsListBackGround.rebuildMesh();
         Vector3f displayBackGroundOrigin = displayBackGround.getOrigin();
         modelBackGround.setOrigin(displayBackGroundOrigin.x, displayBackGroundOrigin.y, displayBackGroundOrigin.z + 10);
+        modelBackGround.rebuildMesh();
 
         /* MODEL */
 
@@ -88,6 +87,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         tfs.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
         Vector3f tfsOrigin = tfs.getOrigin();
         tfsListBackGround.setOrigin(tfsOrigin.x, tfsOrigin.y, tfsOrigin.z + 10);
+        tfsListBackGround.rebuildMesh();
 
         /* WINDOW */
 
