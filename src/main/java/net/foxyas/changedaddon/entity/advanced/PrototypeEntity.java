@@ -218,15 +218,6 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
         } else if (tag.contains("DepositType")) {
             depositType = DepositType.valueOf(tag.getString("DepositType"));
         }
-
-        if (tag.contains("LocalVariantInfo")) {
-            BasicPlayerInfo basicPlayerInfo = new BasicPlayerInfo(tag.getCompound("LocalVariantInfo"));
-            this.setBasicPlayerInfo(basicPlayerInfo);
-        }
-    }
-
-    public void setBasicPlayerInfo(BasicPlayerInfo bpi) {
-        this.entityData.set(DATA_LOCAL_VARIANT_INFO, bpi);
     }
 
     @Override

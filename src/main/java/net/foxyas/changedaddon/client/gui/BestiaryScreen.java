@@ -44,6 +44,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
 
     final ScrollableContainer tfs =
             (ScrollableContainer) new ScrollableContainer().setSize(120, 200).setOrigin(0, 0, 100);
+    final RoundedRectWidget tfsListBackGround = new RoundedRectWidget().setSize(120, 200).setOrigin(0, 0, 85);
 
     public BestiaryScreen() {
         super(Component.literal("Bestiary"));
@@ -85,6 +86,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         window.addWidget(displayBackGround);
         window.addWidget(modelWidget);
         window.addWidget(loreScroll);
+        window.addWidget(tfsListBackGround);
         window.addWidget(tfs);
 
         window.init();
@@ -222,7 +224,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
                     heightAmount = 40f + heightByLines;
                 }
 
-                 if (bestiaryInfo.forceOffsetByLine) {
+                if (bestiaryInfo.forceOffsetByLine) {
                     int heightByLines = minecraft.font.lineHeight * i;
                     heightAmount = 40f + heightByLines;
                 }
