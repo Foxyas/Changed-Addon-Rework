@@ -8,15 +8,12 @@ import net.ltxprogrammer.changed.world.features.structures.facility.*;
 import net.ltxprogrammer.changed.world.features.structures.facility.types.CorridorType;
 import net.ltxprogrammer.changed.world.features.structures.facility.types.PieceType;
 import net.ltxprogrammer.changed.world.features.structures.facility.types.RoomType;
-import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.Weight;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,10 +22,7 @@ public class ChangedAddonFacilityPieces {
 
     public static final ResourceLocation EXP_10_ROOM = ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp10room");
     public static final ResourceLocation EXP_009_ROOM = ResourceLocation.parse("changed_addon:facilities/facility_rooms/exp009room");
-    public static final List<ResourceLocation> BOSSES_ROOMS = Util.make(new ArrayList<>(), (list) -> {
-        list.add(EXP_009_ROOM);
-        list.add(EXP_10_ROOM);
-    });
+    public static final Set<ResourceLocation> BOSSES_ROOMS = Set.of(EXP_009_ROOM, EXP_10_ROOM);
 
     @SubscribeEvent
     public static void RegisterAddonFacilityPieces(GatherFacilityPiecesEvent event) {
@@ -55,27 +49,27 @@ public class ChangedAddonFacilityPieces {
     }
 
     public static void registerAddonRooms(FacilityPieceCollectionBuilder builder) {
-        builder.register(ChangedAddonMod.resourceLoc("exp009room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
+        builder.register(ChangedAddonMod.resourceLoc("exp009room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
                         new FacilityRoomPiece(EXP_009_ROOM,
                                 Optional.empty()))
 
-                .register(ChangedAddonMod.resourceLoc("exp10room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
+                .register(ChangedAddonMod.resourceLoc("exp10room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
                         new FacilityRoomPiece(EXP_10_ROOM,
                                 Optional.of(ResourceLocation.parse("changed_addon:chests/experiment_10_loot_op"))))
 
-                .register(ChangedAddonMod.resourceLoc("luminar_crystal_room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
+                .register(ChangedAddonMod.resourceLoc("luminar_crystal_room"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/luminar_crystal_room"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
-                .register(ChangedAddonMod.resourceLoc("luminarctic_leopards_cave"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
+                .register(ChangedAddonMod.resourceLoc("luminarctic_leopards_cave"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/luminarctic_leopards_cave"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
-                .register(ChangedAddonMod.resourceLoc("alpha_cave_snow_leopard"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
+                .register(ChangedAddonMod.resourceLoc("alpha_cave_snow_leopard"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/alpha_cave_snow_leopard"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
-                .register(ChangedAddonMod.resourceLoc("alpha_cave_tiger_shark"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON + 40,
+                .register(ChangedAddonMod.resourceLoc("alpha_cave_tiger_shark"), FacilityPieceCollectionBuilder.WEIGHT_UNCOMMON,
                         new FacilityRoomPiece(ResourceLocation.parse("changed_addon:facilities/facility_rooms/alpha_cave_tiger_shark"),
                                 Optional.of(ResourceLocation.parse("changed:chests/high_tier_lab"))))
 
