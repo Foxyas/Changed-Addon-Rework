@@ -3,6 +3,8 @@ package net.foxyas.changedaddon.mixins.client.gui;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.ServerboundSwitchCuddlePacket;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -36,6 +38,18 @@ public abstract class InBedChatScreenMixin extends Screen {
             minecraft.setScreen(null);
         }).bounds(this.width / 2 - 100, this.height - 70, 200, 20).build();
         addRenderableWidget(cuddleButton);
+    }
+
+    @Inject(at = @At("HEAD"), method = "render", cancellable = true)
+    private void hideButtonAndCloseIfCuddling(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick, CallbackInfo ci) {
+        if (!ChangedAddonVariables.ofOrDefault(minecraft.player).isCuddling) {
+            cuddleButton.visible = ProcessTransfur.getPlayerTransfurVariantSafe(minecraft.player).map(inst -> inst.hasAbility(ChangedAbilities.GRAB_ENTITY_ABILITY.get())).orElse(false);
+            return;
+        }
+
+        ci.cancel();
+        closeSilently = true;
+        minecraft.setScreen(null);
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/Button;render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V"),
