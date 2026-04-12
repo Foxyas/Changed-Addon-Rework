@@ -1,10 +1,12 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
@@ -129,13 +131,19 @@ public class TurnFeralSnepAbilityInstance extends AbstractAbilityInstance {
     @Override
     public void startUsing() {
         if (entity.getEntity() instanceof Player player) {
+            ChangedEntity changedEntity = entity.getChangedEntity();
             TransfurVariant<?> transfurVariant = entity.getSelfVariant();
             TransfurVariant<?> targetVariant = determineNextVariant(transfurVariant);
             TransfurVariantInstance<?> variantInstance = ProcessTransfur.setPlayerTransfurVariant(
                     player,
                     targetVariant,
                     TransfurContext.hazard(TransfurCause.GRAB_REPLICATE),
-                    1
+                    1, false, (instance) -> {
+                        if (instance.getChangedEntity() instanceof IAlphaAbleEntity afterAlpha && changedEntity instanceof IAlphaAbleEntity beforeAlpha) {
+                            afterAlpha.setAlphaScale(beforeAlpha.alphaAdditionalScale());
+                            afterAlpha.setAlpha(beforeAlpha.isAlpha());
+                        }
+                    }
             );
             if (variantInstance != null) {
                 variantInstance.ifHasAbility(ChangedAddonAbilities.TURN_FERAL_SNEP.get(), abilityInstance ->

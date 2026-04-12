@@ -1,5 +1,6 @@
 package net.foxyas.changedaddon.ability;
 
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.mixins.blocks.CropBlockAccess;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
@@ -23,6 +24,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec2;
+import org.joml.Vector2i;
 
 public class PollenCarryAbilityInstance extends AbstractAbilityInstance {
 
@@ -42,7 +45,7 @@ public class PollenCarryAbilityInstance extends AbstractAbilityInstance {
 
     public void startUsing() {
         LivingEntity livingEntity = entity.getEntity();
-        HitResult entityBlockHitLookingAt = livingEntity.pick(livingEntity instanceof Player player ? player.getEntityReach() : 4, 1, false);
+        HitResult entityBlockHitLookingAt = livingEntity.pick(livingEntity instanceof Player player ? player.getBlockReach() : 4, 1, false);
         if (entityBlockHitLookingAt.getType() != HitResult.Type.MISS && entityBlockHitLookingAt instanceof BlockHitResult blockHitResult) {
             Level level = livingEntity.level();
             BlockState blockState = level.getBlockState(blockHitResult.getBlockPos());
@@ -67,7 +70,11 @@ public class PollenCarryAbilityInstance extends AbstractAbilityInstance {
         if (level instanceof ServerLevel serverLevel) {
             if (livingEntity.tickCount % 10 == 0) {
                 ParticlesUtil.sendParticles(serverLevel, ParticleTypes.FALLING_NECTAR, livingEntity.position().add(0, 1, 0), 0.3f, 0.3f, 0.3f, 5, 1);
-                growNearbyCrops(serverLevel, livingEntity);
+                if (entity.getChangedEntity() instanceof IAlphaAbleEntity iAlphaAbleEntity && iAlphaAbleEntity.isAlpha()) {
+                    growNearbyCropsArea(serverLevel, livingEntity, new Vector2i(1, 1).mul(((int) iAlphaAbleEntity.alphaScalePercent())));
+                } else {
+                    growNearbyCrops(serverLevel, livingEntity);
+                }
                 withPollenTicks--;
             }
         }
@@ -89,6 +96,36 @@ public class PollenCarryAbilityInstance extends AbstractAbilityInstance {
 
             if (grown) {
                 serverLevel.levelEvent(2005, pos, 0); // Partículas tipo bone meal
+            }
+        }
+    }
+
+    private void growNearbyCropsArea(ServerLevel serverLevel, LivingEntity entity, Vector2i xzArea) {
+        BlockPos basePos = entity.blockPosition();
+
+        // Loop para o eixo X (-1, 0, 1) -> Total 3
+        for (int x = -xzArea.x; x <= xzArea.x; x++) {
+            // Loop para o eixo Z (-1, 0, 1) -> Total 3
+            for (int z = -xzArea.y(); z <= xzArea.y(); z++) {
+                // Loop para o eixo Y (mantendo sua lógica original de busca vertical)
+                for (int y = -1; y <= 2; y++) {
+
+                    BlockPos pos = basePos.offset(x, -y, z);
+                    // Nota: usei offset para facilitar a leitura das coordenadas relativas
+
+                    BlockState state = serverLevel.getBlockState(pos);
+
+                    if (!state.is(BlockTags.BEE_GROWABLES)) continue;
+
+                    boolean grown = tryGrowCrop(serverLevel, pos, state)
+                            || tryGrowStem(serverLevel, pos, state)
+                            || tryGrowBerryBush(serverLevel, pos, state)
+                            || tryGrowCaveVine(serverLevel, pos, state);
+
+                    if (grown) {
+                        serverLevel.levelEvent(2005, pos, 0); // Partículas de Bone Meal
+                    }
+                }
             }
         }
     }
