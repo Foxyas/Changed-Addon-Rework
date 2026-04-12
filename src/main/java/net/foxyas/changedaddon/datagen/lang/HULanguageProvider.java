@@ -654,6 +654,8 @@ public class HULanguageProvider extends LanguageProvider {
         add("key.changed_addon.turn_off_transfur.grab_safe_mode", "Barátságos megragadás beállítva: %s");
         add("key.changed_addon.turn_off_transfur.safe_mode", "Transzfur támadás beállítva: %s");
         addKey(USE_SECOND_ABILITY, "Változat második képességének használata");
+        addKey(CUDDLE_KEY, "Ölelkezési mód váltása");
+        addKey(CUDDLE_KEY, "set", "Ölelkezési mód beállítása: %s");
 
         addSound(ARMOR_EQUIP, "Páncél felvétele");
         addSound(PLUSHY_SOUND, "Plüss összenyomása");
@@ -684,6 +686,15 @@ public class HULanguageProvider extends LanguageProvider {
         addText("display.hazard_body_suit.cant_have_helmet", "Mmph... Nyomja a fülem! Jobb, ha nem veszem fel.");
 
         addText("item.vial.wrong_use", "Ennek a tárgynak a használata ott nem fog működni.");
+
+        addText("rp.guns_compatibility.paws_too_big", "Túl nagyok a mancsaid ahhoz, hogy beleférjenek a ravaszvédőbe!");
+        addText("rp.guns_compatibility.no_fingers_for_trigger", "Hiányzik az ujjügyességed a ravasz meghúzásához!");
+        addText("rp.guns_compatibility.claws_stuck", "A karmaid a biztonsági kapcsoló útjába kerülnek!");
+        addText("rp.guns_compatibility.anatomical_error", "A jelenlegi formád kezei nincsenek lőfegyverekhez tervezve!");
+        addText("rp.bow_and_crossbow_stop.claws_rip_string", "Éles karmaid cafatokra tépnék az íj idegét!");
+        addText("rp.bow_and_crossbow_stop.no_grip_strength", "A mancsaid nem tudják biztos fogást tartani az íjban!");
+        addText("rp.bow_and_crossbow_stop.crossbow_safety", "Túl vastagok az ujjaid ahhoz, hogy a számszeríj mechanizmusát kezeld!");
+        addText("rp.bow_and_crossbow_stop.clumsy_paws", "Ilyen ügyetlen mancsokkal szinte lehetetlen nyilat húzni!");
 
         addMessage("induction_coil_melt", "§4⚡ Fémet vittél egy elektromos harcba. §cMicsoda ostoba lépés. §6Olvad a felszerelésed a hőségtől!");
 
@@ -716,5 +727,6 @@ public class HULanguageProvider extends LanguageProvider {
         addStat(ChangedAddonStatRegistry.ENTITY_TRANSFURRED, "Entitások transzfurálva miközben transzfurált állapotban van");
 
         add("warn.rei.not.supported.move.items.but.right.container", "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál");
+        addText("cuddle_button", "Ölelkezés elkezdése");
     }
 }
