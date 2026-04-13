@@ -104,7 +104,7 @@ public class ChangedAddonServerConfiguration {
                 .defineInRange("Struggle Points Required", 30, 0f, Double.MAX_VALUE);
         FIGHT_TO_KEEP_CONSCIOUSNESS_DO_REPLAY = BUILDER
                 .comment("If enabled, the 'Fight to Keep Consciousness' minigame can trigger again after being won.")
-                .define("fight_to_keep_consciousness_do_replay", true);
+                .define("fight_to_keep_consciousness_do_replay", false);
         FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE = BUILDER
                 .comment("The probability that the minigame will replay after the delay has passed (0.0 = 0%, 1.0 = 100%).")
                 .defineInRange("fight_to_keep_consciousness_replay_chance", 0.5, 0.0, 1.0);
