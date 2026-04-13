@@ -97,8 +97,9 @@ public abstract class CircleMinigameScreen extends Screen {
             return;
         }
 
-        double fightProgress = ChangedAddonVariables.nonNullOf(player).consciousnessFightProgress / FightToKeepConsciousness.getStruggleNeed();
-        double loseProgress = Mth.lerp(partialTick, Math.max(0, tf.ageAsVariant - 1), tf.ageAsVariant) / FightToKeepConsciousness.getStruggleTime();
+        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
+        double fightProgress = vars.consciousnessFightProgress / FightToKeepConsciousness.getStruggleNeed();
+        double loseProgress = Mth.lerp(partialTick, Math.max(0, vars.ticksFightingForConsciousness - 1), vars.ticksFightingForConsciousness) / FightToKeepConsciousness.getStruggleTime();
 
         int alpha = (int) (128 + 128 * (loseProgress - fightProgress));
 

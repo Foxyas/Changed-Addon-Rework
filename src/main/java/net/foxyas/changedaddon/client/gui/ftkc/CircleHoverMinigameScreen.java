@@ -38,8 +38,8 @@ public class CircleHoverMinigameScreen extends CircleMinigameScreen {
         // Normal Mouse Offset happen each 2 ticks.
         if (player.tickCount % 2 == 0) cursor.add((player.getRandom().nextFloat() - .5f) * 16, (player.getRandom().nextFloat() - .5f) * 16);
 
-        // Heavy Offset happen each 80 ticks.
-        if (player.tickCount % 80 == 0) cursor.add((player.getRandom().nextFloat() - .5f) * 64, (player.getRandom().nextFloat() - .5f) * 64);
+        // Heavy Offset happen each 40 ticks.
+        if (player.tickCount % 40 == 0) cursor.add((player.getRandom().nextFloat() - .5f) * 128, (player.getRandom().nextFloat() - .5f) * 128);
 
         float scale = circleScale();
         if (cursor.distanceSquared(circle) <= INTERACTION_RADIUS_SQR * scale * scale) {
@@ -59,7 +59,8 @@ public class CircleHoverMinigameScreen extends CircleMinigameScreen {
 
     protected float circleScale() {
         TransfurVariantInstance<?> transfurInstance = ProcessTransfur.getPlayerTransfurVariant(player);
-        return Mth.clamp(FightToKeepConsciousness.getStruggleTime() - (transfurInstance == null ? 0 : transfurInstance.ageAsVariant) / FightToKeepConsciousness.getStruggleTime(), 0, 1) + 1;
+        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
+        return Mth.clamp(FightToKeepConsciousness.getStruggleTime() - (transfurInstance == null ? 0 : vars.ticksFightingForConsciousness) / FightToKeepConsciousness.getStruggleTime(), 0, 1) + 1;
     }
 
     protected void drawCircles(@NotNull GuiGraphics guiGraphics) {

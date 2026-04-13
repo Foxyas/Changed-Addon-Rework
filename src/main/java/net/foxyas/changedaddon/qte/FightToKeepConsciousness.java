@@ -62,8 +62,10 @@ public class FightToKeepConsciousness {
 
         event.shouldKeepConscious = true;
 
+        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
         MinigameType minigameType = MinigameType.getRandom(player.getRandom());
-        updatePlayerVariables(ChangedAddonVariables.ofOrDefault(player), minigameType, 0, player);
+        vars.isTransfuredBySafeMethod = false;
+        updatePlayerVariables(vars, minigameType, 0, player);
 
         ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new ClientboundOpenFTKCScreenPacket(minigameType));
     }
@@ -77,6 +79,25 @@ public class FightToKeepConsciousness {
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
 
+        if (instance != null && !vars.isTransfuredBySafeMethod) {
+            vars.timeAfterVictoryOfFTK++;
+            vars.syncPlayerVariables(player);
+        }
+
+        if (vars.timeAfterVictoryOfFTK > 0 && vars.FTKCminigameType == null) {
+            if (!vars.isTransfuredBySafeMethod) {
+                if (vars.timeAfterVictoryOfFTK % ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY.get() == 0) {
+                    if (player.getRandom().nextFloat() <= ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE.get()) {
+                        replayFTKC(player, vars);
+                    } else {
+                        warnAboutReplayOfFTKC(player, vars);
+                    }
+                }
+            } else {
+                resetTimeAfterVictory(player, vars);
+            }
+        }
+
         if (vars.FTKCminigameType == null) return;
 
         if (instance == null) {
@@ -84,7 +105,10 @@ public class FightToKeepConsciousness {
             return;
         }
 
-        if (instance.ageAsVariant >= getStruggleTime()) {
+        vars.ticksFightingForConsciousness++;
+        vars.syncPlayerVariables(player);
+
+        if (vars.ticksFightingForConsciousness >= getStruggleTime()) {
 
             if (vars.consciousnessFightProgress >= getStruggleNeed()) {
                 successFTKC(vars, player);
@@ -93,6 +117,11 @@ public class FightToKeepConsciousness {
 
             failFTKC(vars, player);
         }
+    }
+
+    private static void resetTimeAfterVictory(ServerPlayer player, ChangedAddonVariables.PlayerVariables vars) {
+        vars.timeAfterVictoryOfFTK = 0;
+        vars.syncPlayerVariables(player);
     }
 
     @SubscribeEvent
@@ -117,19 +146,30 @@ public class FightToKeepConsciousness {
         vars.syncPlayerVariables(entity);
     }
 
-    private static void updatePlayerVariablesForWinning(ChangedAddonVariables.PlayerVariables vars, Entity entity) {
-        TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(EntityUtil.playerOrNull(entity));
-        if (transfurVariantInstance instanceof TransfurVariantInstanceExtensor transfurVariantInstanceExtensor) {
-            // TODO MAKE THE SYSTEM FOR REPLAY THE FIGHT TO KEEP CONSCIENCE
-        }
+    @ApiStatus.Internal
+    private static void replayFTKC(ServerPlayer player, ChangedAddonVariables.PlayerVariables vars) {
+        player.displayClientMessage(Component.translatable("changed_addon.fight_conscience.retry"), true);
+        MinigameType minigameType = MinigameType.getRandom(player.getRandom());
+        updatePlayerVariables(ChangedAddonVariables.ofOrDefault(player), minigameType, 0, player);
+        ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new ClientboundOpenFTKCScreenPacket(minigameType));
+        resetTimeAfterVictory(player, vars);
+    }
+
+    @ApiStatus.Internal
+    private static void warnAboutReplayOfFTKC(ServerPlayer player, ChangedAddonVariables.PlayerVariables vars) {
+        player.displayClientMessage(Component.translatable("changed_addon.fight_conscience.retry.warn"), true);
+        MinigameType minigameType = MinigameType.getRandom(player.getRandom());
+        updatePlayerVariables(ChangedAddonVariables.ofOrDefault(player), minigameType, 0, player);
+        ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new ClientboundOpenFTKCScreenPacket(minigameType));
+        resetTimeAfterVictory(player, vars);
     }
 
     @ApiStatus.Internal
     public static void successFTKC(ChangedAddonVariables.PlayerVariables vars, ServerPlayer player) {
         player.displayClientMessage(Component.translatable("changed_addon.fight_conscience.success"), true);
 
+        vars.ticksFightingForConsciousness = 0;
         updatePlayerVariables(vars, null, 0, player);
-        updatePlayerVariablesForWinning(vars, player);
     }
 
     @ApiStatus.Internal

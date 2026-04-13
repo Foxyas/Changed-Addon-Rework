@@ -75,6 +75,9 @@ public class ChangedAddonVariables {
         public FightToKeepConsciousness.MinigameType FTKCminigameType = null;
 
         public float consciousnessFightProgress = 0;
+        public boolean isTransfuredBySafeMethod = true;
+        public int timeAfterVictoryOfFTK = 0;
+        public int ticksFightingForConsciousness = 0;
 
         public double LatexInfectionCooldown = 0.0;
         public double untransfurProgress = 0.0;
@@ -105,6 +108,9 @@ public class ChangedAddonVariables {
                 other.consciousnessFightProgress = consciousnessFightProgress;
                 other.FTKCminigameType = FTKCminigameType;
                 other.LatexInfectionCooldown = LatexInfectionCooldown;
+                other.isTransfuredBySafeMethod = isTransfuredBySafeMethod;
+                other.timeAfterVictoryOfFTK = timeAfterVictoryOfFTK;
+                other.ticksFightingForConsciousness = ticksFightingForConsciousness;
             }
         }
 
@@ -124,6 +130,9 @@ public class ChangedAddonVariables {
             nbt.putBoolean("Exp009TransfurAllowed", Exp009TransfurAllowed);
             nbt.putBoolean("Exp10TransfurAllowed", Exp10TransfurAllowed);
             nbt.putBoolean("isCuddling", isCuddling);
+            nbt.putBoolean("isTransfuredBySafeMethod", isTransfuredBySafeMethod);
+            nbt.putInt("timeAfterVictoryOfFTK", timeAfterVictoryOfFTK);
+            nbt.putInt("ticksFightingForConsciousness", ticksFightingForConsciousness);
             return nbt;
         }
 
@@ -147,6 +156,9 @@ public class ChangedAddonVariables {
             Exp009TransfurAllowed = nbt.getBoolean("Exp009TransfurAllowed");
             Exp10TransfurAllowed = nbt.getBoolean("Exp10TransfurAllowed");
             isCuddling = nbt.getBoolean("isCuddling");
+            isTransfuredBySafeMethod = nbt.getBoolean("isTransfuredBySafeMethod");
+            timeAfterVictoryOfFTK = nbt.getInt("timeAfterVictoryOfFTK");
+            ticksFightingForConsciousness = nbt.getInt("ticksFightingForConsciousness");
         }
 
         public void copyFrom(PlayerVariables other) {
@@ -162,6 +174,9 @@ public class ChangedAddonVariables {
             Exp009TransfurAllowed = other.Exp009TransfurAllowed;
             Exp10TransfurAllowed = other.Exp10TransfurAllowed;
             isCuddling = other.isCuddling;
+            isTransfuredBySafeMethod = other.isTransfuredBySafeMethod;
+            timeAfterVictoryOfFTK = other.timeAfterVictoryOfFTK;
+            ticksFightingForConsciousness = other.ticksFightingForConsciousness;
         }
     }
 

@@ -38,11 +38,6 @@ public interface TransfurVariantInstanceExtensor {
 
     }
 
-    //TODO make this getters
-//    boolean wonFTK();
-//    int getTicksSinceWinningFTK();
-//    int getTicksFightingForConscience();
-
     default void maySendDataUpdate() {
         if (!(this instanceof TransfurVariantInstance<?> variantInstance)) {
             return;

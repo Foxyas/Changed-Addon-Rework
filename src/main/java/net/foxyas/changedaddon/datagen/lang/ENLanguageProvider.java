@@ -305,6 +305,8 @@ public class ENLanguageProvider extends LanguageProvider {
         add(modid + ".latex_totem.tittle.text_2", "§o§l§3Shielding your mind, Your consciousness is pulled back from the brink, refusing to let you fall into oblivion.");
 
         add("changed_addon.fight_conscience.success", "You §2Maintained!!! §rYour Conscience Good Job");
+        add("changed_addon.fight_conscience.retry", "The creature fused with you claws at your mind, vying for control! Fight to keep your humanity!");
+        add("changed_addon.fight_conscience.retry.warn", "A cold shiver runs down your spine as the creature within stirs... but it fades. You managed to hold on, for now.");
         add("changed_addon.fight_conscience.fail", "You §4Lose §rYour Conscience");
 
         add("changed_addon.untransfur.fail", "the untransfur fail for some reason");
