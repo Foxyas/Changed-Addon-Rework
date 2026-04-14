@@ -235,6 +235,8 @@
   "changed_addon.compact_disc.content.experiment_009": "A 009-es kísérletet demolekularizálni kellett!! Nagyon erős, sose hagyja, hogy rossz kezekbe kerüljön. Látszólag nem tud megfertőzni, de megmutatja, hogy nem akarja. §n§4 Mindenkit meg akar ölni, aki az útjába kerül.§r",
   "changed_addon.compact_disc.title.experiment_009": "§n§4Demolekularizált §r§n§b kísérlet",
   "changed_addon.fight_conscience.fail": "§4Elvesztette §reszméletét",
+  "changed_addon.fight_conscience.retry": "A veled eggyé vált lény az elmédbe kapaszkodik, az irányításért verseng! Harcolj, hogy megőrizd emberséged!",
+  "changed_addon.fight_conscience.retry.warn": "Hideg borzongás fut végig a gerinceden, ahogy a benned rejlő lény megmozdul... de elmúlik. Egyelőre sikerült kitartanod.",
   "changed_addon.fight_conscience.success": "§2Megtartotta §reszméletét!!! Szép munka!",
   "changed_addon.info.is_patable": "Nyomja meg a(z) %1$s gombot a(z) %2$s entitás simogatásához",
   "changed_addon.latex_syringe.not_valid": "Habozol. Valami benned figyelmeztet, hogy ne engedd el, ami benne van.",
