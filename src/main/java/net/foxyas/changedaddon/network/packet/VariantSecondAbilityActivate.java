@@ -92,7 +92,7 @@ public class VariantSecondAbilityActivate {
                     }
                 });
             } else {
-                ProcessTransfur.ifPlayerTransfurred(UniversalDist.getLevel().getPlayerByUUID(this.uuid), (player, variant) -> {
+                ProcessTransfur.ifPlayerTransfurred(UniversalDist.getLevel(context).getPlayerByUUID(this.uuid), (player, variant) -> {
                     context.setPacketHandled(true);
                     if (variant instanceof TransfurVariantInstanceExtensor transfurVariantInstanceExtensor) {
                         if (variant.isTemporaryFromSuit()) {
