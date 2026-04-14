@@ -242,36 +242,38 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 0.5f,
                 4));
 
-        //Basically perfect, damn... well done 0senia0
-        this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
-                UniformInt.of(120, 240), //IntProvider -> cooldown,
-                UniformInt.of(2, 4), //IntProvider -> lightningCount,
-                UniformInt.of(80, 160), //IntProvider -> castDuration,
-                UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-                UniformFloat.of(5, 12))); //FloatProvider -> damage
-
-        this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
-                UniformInt.of(75, 125), //IntProvider -> cooldown,
-                4,
-                UniformInt.of(40, 80), //IntProvider -> castDuration,
-                8,
-                UniformFloat.of(4, 8))); //FloatProvider -> damage
-
-        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
-        //        UniformInt.of(100, 150), //IntProvider -> cooldown
-        //        20,
-        //        UniformInt.of(60, 80), //IntProvider -> duration
-        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
-
-        this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
-                UniformInt.of(150, 200), //IntProvider -> cooldown,
-                UniformInt.of(3, 6), //IntProvider -> attackCount,
-                UniformInt.of(20, 60), //IntProvider -> castDuration,
-                UniformFloat.of(6, 8))); //FloatProvider -> damage)
-
-        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
-        this.goalSelector.addGoal(15, new DashPunchGoal(this));
-        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
+        // ALL THE ABOVE DON'T CAUSE THE FREEZE BUG.
+//
+//        //Basically perfect, damn... well done 0senia0
+//        this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
+//                UniformInt.of(120, 240), //IntProvider -> cooldown,
+//                UniformInt.of(2, 4), //IntProvider -> lightningCount,
+//                UniformInt.of(80, 160), //IntProvider -> castDuration,
+//                UniformInt.of(80, 100), //IntProvider -> lightningDelay,
+//                UniformFloat.of(5, 12))); //FloatProvider -> damage
+//
+//        this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
+//                UniformInt.of(75, 125), //IntProvider -> cooldown,
+//                4,
+//                UniformInt.of(40, 80), //IntProvider -> castDuration,
+//                8,
+//                UniformFloat.of(4, 8))); //FloatProvider -> damage
+//
+//        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
+//        //        UniformInt.of(100, 150), //IntProvider -> cooldown
+//        //        20,
+//        //        UniformInt.of(60, 80), //IntProvider -> duration
+//        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
+//
+//        this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
+//                UniformInt.of(150, 200), //IntProvider -> cooldown,
+//                UniformInt.of(3, 6), //IntProvider -> attackCount,
+//                UniformInt.of(20, 60), //IntProvider -> castDuration,
+//                UniformFloat.of(6, 8))); //FloatProvider -> damage)
+//
+//        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
+//        this.goalSelector.addGoal(15, new DashPunchGoal(this));
+//        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
     }
 
     public enum Exp9Phase {
@@ -408,11 +410,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             } else {
                 DodgeAnimationParameters dodgeAnimationParameters = DodgeAnimationParameters.DEFAULT;
                 if (source.getDirectEntity() != null) {
-                    double length = source.getDirectEntity().getDeltaMovement().length();
+                    double length = Math.min(source.getDirectEntity().getDeltaMovement().length(), 2f);
                     dodgeAnimationParameters = new DodgeAnimationParameters((float) length, 1.1f);
                 }
                 DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
-                this.navigation.stop();
+                this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true, false));
                 return false;
             }
         }

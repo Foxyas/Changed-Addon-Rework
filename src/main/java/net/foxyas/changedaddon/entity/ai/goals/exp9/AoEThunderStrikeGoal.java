@@ -11,6 +11,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -112,7 +113,7 @@ public class AoEThunderStrikeGoal extends Goal {
         pathfinderMob.getNavigation().stop();
         Vec3 deltaMovement = pathfinderMob.getDeltaMovement();
         pathfinderMob.setDeltaMovement(deltaMovement.x, Math.max(0, deltaMovement.y), deltaMovement.z);
-        if (tickCounter % 20 != 0) return;
+        if (tickCounter % 10 != 0) return;
         thunderStorm();
         pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
         pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
@@ -121,23 +122,39 @@ public class AoEThunderStrikeGoal extends Goal {
 
     protected void thunderStorm() {
         Level level = pathfinderMob.level;
-        if (level instanceof ServerLevel) {
-            if (pathfinderMob.getTarget() == null) {
-                for (int i = 0; i < 7; i++) {
-                    double offsetX = pathfinderMob.getRandom().nextGaussian() * 20;
-                    double offsetZ = pathfinderMob.getRandom().nextGaussian() * 20;
-                    BlockPos pos = new BlockPos((int) (pathfinderMob.getX() + offsetX), (int) pathfinderMob.getY(), (int) (pathfinderMob.getZ() + offsetZ));
-                    if (level.getBlockState(pos.below()).isAir()) return;
-                    spawnThunderBolt(pos);
+        if (!(level instanceof ServerLevel serverLevel)) return;
+
+        boolean hasTarget = pathfinderMob.getTarget() != null;
+        int count = hasTarget ? 12 : 7;
+        double range = hasTarget ? 10.0 : 20.0;
+
+        for (int i = 0; i < count; i++) {
+            double offsetX = pathfinderMob.getRandom().nextGaussian() * range;
+            double offsetZ = pathfinderMob.getRandom().nextGaussian() * range;
+
+            int targetX = Mth.floor(pathfinderMob.getX() + offsetX);
+            int targetZ = Mth.floor(pathfinderMob.getZ() + offsetZ);
+
+            // Começamos a busca a partir da altura do mob + 5 blocos (para pegar tetos baixos)
+            // ou você pode usar serverLevel.getHeight() como ponto de partida se quiser que venha do céu.
+            int startY = Mth.floor(pathfinderMob.getY() + 5);
+            BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(targetX, startY, targetZ);
+
+            // Check manual descendo até achar o primeiro bloco sólido (o "teto" ou o "chão")
+            // O limite de 20 blocos para baixo evita loops infinitos no vazio
+            boolean foundSurface = false;
+            for (int y = startY; y > startY - 20; y--) {
+                mutablePos.setY(y);
+                if (!level.getBlockState(mutablePos).isAir()) {
+                    // Achamos um bloco sólido (pode ser o teto ou o chão)
+                    foundSurface = true;
+                    break;
                 }
-            } else {
-                for (int i = 0; i < 12; i++) {
-                    double offsetX = pathfinderMob.getRandom().nextGaussian() * 10;
-                    double offsetZ = pathfinderMob.getRandom().nextGaussian() * 10;
-                    BlockPos pos = new BlockPos((int) (pathfinderMob.getX() + offsetX), (int) pathfinderMob.getY(), (int) (pathfinderMob.getZ() + offsetZ));
-                    if (level.getBlockState(pos.below()).isAir()) return;
-                    spawnThunderBolt(pos);
-                }
+            }
+
+            if (foundSurface) {
+                // O raio spawna exatamente no bloco encontrado
+                spawnThunderBolt(mutablePos.immutable());
             }
         }
     }

@@ -19,11 +19,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.ToolAction;
-import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public abstract class AbstractKatanaItem extends SwordItem implements SpecializedItemRendering {
+    protected static final UUID BASE_ATTACK_RANG_UUID = UUID.fromString("CB3F55D3-645C-4F38-A497-9C13A33DB5DF");
 
     public AbstractKatanaItem(Tier tier, int pAttackDamageModifier, float pAttackSpeedModifier, Item.Properties pProperties) {
         super(tier, pAttackDamageModifier, pAttackSpeedModifier, pProperties);
@@ -63,7 +64,7 @@ public abstract class AbstractKatanaItem extends SwordItem implements Specialize
         Multimap<Attribute, AttributeModifier> modifiers = HashMultimap.create(baseModifiers);
         if (pEquipmentSlot == EquipmentSlot.MAINHAND) {
             modifiers.put(ForgeMod.ENTITY_REACH.get(),
-                    new AttributeModifier("Weapon modifier", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
+                    new AttributeModifier(BASE_ATTACK_RANG_UUID, "Weapon modifier", 1.0, AttributeModifier.Operation.MULTIPLY_BASE));
         }
 
         return modifiers;

@@ -26,7 +26,7 @@ public abstract class LevelStorageSourceMixin {
         if (!(tag instanceof CompoundTag rootTag)) return;
 
         if (ChangedAddonMod.dataFixer != null) {
-            ChangedAddonMod.dataFixer.updateCompoundTag(DataFixTypes.LEVEL, rootTag);
+            //ChangedAddonMod.dataFixer.updateCompoundTag(DataFixTypes.LEVEL, rootTag);
         }
     }
 }
