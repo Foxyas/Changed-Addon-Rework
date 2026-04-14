@@ -304,6 +304,8 @@ public class HULanguageProvider extends LanguageProvider {
         add(modid + ".latex_totem.tittle.text_2", "§o§l§3Megvédve elmédet, eszméleted visszahúzódik a szakadék széléről, nem hagyva, hogy a feledésbe merülj.");
 
         add("changed_addon.fight_conscience.success", "§2Megtartotta §reszméletét!!! Szép munka!");
+        add("changed_addon.fight_conscience.retry", "A veled eggyé vált lény az elmédbe kapaszkodik, az irányításért verseng! Harcolj, hogy megőrizd emberséged!");
+        add("changed_addon.fight_conscience.retry.warn", "Hideg borzongás fut végig a gerinceden, ahogy a benned rejlő lény megmozdul... de elmúlik. Egyelőre sikerült kitartanod.");
         add("changed_addon.fight_conscience.fail", "§4Elvesztette §reszméletét");
 
         add("changed_addon.untransfur.fail", "A visszatranszfur valamilyen oknál fogva nem sikerült");
