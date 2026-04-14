@@ -32,7 +32,11 @@ public class ServerPacketHandler {
                 return;
             }
 
-            vars.consciousnessFightProgress += ftkCminigameType.progressAmount;
+            vars.consciousnessFightProgress += ftkCminigameType.getProgressAmount();
+            int removalTicks = vars.FTKCminigameType.getRemovalTicks();
+            if (removalTicks > 0) {
+                vars.ticksFightingForConsciousness -= removalTicks;
+            }
 
             if (vars.consciousnessFightProgress >= FightToKeepConsciousness.getStruggleNeed()) {
                 safeSoundPlay(player.level(), null, player, ftkCminigameType.getSuccessSound(), SoundSource.PLAYERS, 1, 1);

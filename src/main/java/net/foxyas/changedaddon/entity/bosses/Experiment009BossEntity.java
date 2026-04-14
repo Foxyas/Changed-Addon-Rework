@@ -3,9 +3,10 @@ package net.foxyas.changedaddon.entity.bosses;
 import com.google.common.collect.Iterables;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
+import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
-import net.foxyas.changedaddon.entity.ai.goals.generic.BreakBlocksAroundGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
+import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.*;
@@ -227,7 +228,7 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         this.goalSelector.addGoal(10, new ThunderStorm(this, UniformInt.of(60, 100)));
 
         //New AI
-        this.goalSelector.addGoal(5, new ThunderStrikeGoal(
+        this.goalSelector.addGoal(5, new AoEThunderStrikeGoal(
                 this,
                 UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                 UniformInt.of(4, 8), //IntProvider -> damageProvider
@@ -256,11 +257,11 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 8,
                 UniformFloat.of(4, 8))); //FloatProvider -> damage
 
-//        this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
-//                UniformInt.of(100, 150), //IntProvider -> cooldown
-//                20,
-//                UniformInt.of(60, 80), //IntProvider -> duration
-//                UniformFloat.of(3, 5))); //FloatProvider -> damage
+        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
+        //        UniformInt.of(100, 150), //IntProvider -> cooldown
+        //        20,
+        //        UniformInt.of(60, 80), //IntProvider -> duration
+        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
 
         this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(150, 200), //IntProvider -> cooldown,
@@ -268,7 +269,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 UniformInt.of(20, 60), //IntProvider -> castDuration,
                 UniformFloat.of(6, 8))); //FloatProvider -> damage)
 
-        this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
+        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
+        this.goalSelector.addGoal(15, new DashPunchGoal(this));
         this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
     }
 
@@ -399,14 +401,20 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             }
         }
 
-        if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+        if (source.is(DamageTypeTags.IS_PROJECTILE) || source.getMsgId().contains("bullet") || source.getMsgId().contains("gun")) {
             maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0.5f);
-        }
-
-        if (source.getMsgId().contains("bullet") || source.getMsgId().contains("gun")) {
-            maybeSendReactionToPlayer(source);
-            return super.hurt(source, amount * 0.45f);
+            if (isVulnerableToProjectiles()) {
+                return super.hurt(source, amount * 0.5f);
+            } else {
+                DodgeAnimationParameters dodgeAnimationParameters = DodgeAnimationParameters.DEFAULT;
+                if (source.getDirectEntity() != null) {
+                    double length = source.getDirectEntity().getDeltaMovement().length();
+                    dodgeAnimationParameters = new DodgeAnimationParameters((float) length, 1.1f);
+                }
+                DodgeAbilityInstance.executeRandomDodgeAnimationWithFade(this, dodgeAnimationParameters);
+                this.navigation.stop();
+                return false;
+            }
         }
 
         if (source.is(DamageTypeTags.IS_FIRE)) {
@@ -430,16 +438,31 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
         }
     }
 
+    public boolean isVulnerableToProjectiles() {
+        return (isCastingAttack() && isPhase2()) || isPhase3();
+    }
+
     private void maybeSendReactionToPlayer(DamageSource source) {
         if (!(source.getEntity() instanceof Player player)) return;
 
-       if (this.random.nextFloat() <= 0.25f) {
-           if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-               player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks"), true);
-           } else if (source.is(DamageTypeTags.IS_FIRE)) {
-               player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage"), true);
-           }
-       }
+        float v = this.random.nextFloat();
+        if (source.is(DamageTypeTags.IS_FIRE) && v >= 0.25f) {
+            player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.fire_damage"), true);
+        }
+
+        if (source.is(DamageTypeTags.IS_PROJECTILE)) {
+            if (isVulnerableToProjectiles()) {
+                if (player.distanceTo(this) >= 3 && isPhase3()) {
+                    if (v >= 0.25f) {
+                        player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_at_distance"), true);
+                    }
+                } else if (v >= 0.25f) {
+                    player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.attack_when_vulnerable"), true);
+                }
+            } else { // Hints will always show up but "rage bait" reactions is a random.
+                player.displayClientMessage(Component.translatable("entity_dialogues.changed_addon.exp9.reaction.range_attacks.not_affect"), true);
+            }
+        }
     }
 
     public void teleport(LivingEntity target) {
@@ -539,7 +562,8 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
 
     protected void onPhaseChange(Exp9Phase phase) {
         switch (phase) {
-            case PHASE1 -> {}
+            case PHASE1 -> {
+            }
             case PHASE2 -> {
                 this.spawnThunderBolt(this.position());
                 this.knockbackNearbyEntities(this);

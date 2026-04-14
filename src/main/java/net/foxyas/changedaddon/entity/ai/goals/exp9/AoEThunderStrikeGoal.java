@@ -1,14 +1,15 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
-import net.foxyas.changedaddon.init.ChangedAddonParticleTypes;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-public class ThunderStrikeGoal extends Goal {
+public class AoEThunderStrikeGoal extends Goal {
     protected final IntProvider cooldownProvider;
     private final PathfinderMob pathfinderMob;
     private final IntProvider damageProvider;
@@ -40,7 +41,7 @@ public class ThunderStrikeGoal extends Goal {
     private BlockPos groundPos;
     private LivingEntity target;
 
-    public ThunderStrikeGoal(PathfinderMob pathfinderMob, IntProvider cooldownProvider, IntProvider damageProvider, double jumpPower, int duration) {
+    public AoEThunderStrikeGoal(PathfinderMob pathfinderMob, IntProvider cooldownProvider, IntProvider damageProvider, double jumpPower, int duration) {
         this.pathfinderMob = pathfinderMob;
         this.damageProvider = damageProvider;
         this.jumpPower = jumpPower;
@@ -111,20 +112,47 @@ public class ThunderStrikeGoal extends Goal {
 
         // olha para o alvo
         if (target.isRemoved() && target.isDeadOrDying()) return;
-        pathfinderMob.getLookControl().setLookAt(target, 180f, 180f);
+        Vec3 lookAt = pathfinderMob.getEyePosition().add(0, 1, 0);
+        pathfinderMob.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 90, 90);
         pathfinderMob.getNavigation().stop();
-        if (tickCounter >= 60) {
-            pathfinderMob.setDeltaMovement(Vec3.ZERO);
-        }
-
+        Vec3 deltaMovement = pathfinderMob.getDeltaMovement();
+        pathfinderMob.setDeltaMovement(deltaMovement.x, Math.max(0, deltaMovement.y), deltaMovement.z);
         if (tickCounter % 20 != 0) return;
+        thunderStorm();
+        pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
 
-        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
+    }
+
+    protected void thunderStorm() {
+        Level level = pathfinderMob.level;
+        if (level instanceof ServerLevel) {
+            if (pathfinderMob.getTarget() == null) {
+                for (int i = 0; i < 7; i++) {
+                    double offsetX = pathfinderMob.getRandom().nextGaussian() * 20;
+                    double offsetZ = pathfinderMob.getRandom().nextGaussian() * 20;
+                    BlockPos pos = new BlockPos((int) (pathfinderMob.getX() + offsetX), (int) pathfinderMob.getY(), (int) (pathfinderMob.getZ() + offsetZ));
+                    if (level.getBlockState(pos.below()).isAir()) return;
+                    spawnThunderBolt(pos);
+                }
+            } else {
+                for (int i = 0; i < 12; i++) {
+                    double offsetX = pathfinderMob.getRandom().nextGaussian() * 10;
+                    double offsetZ = pathfinderMob.getRandom().nextGaussian() * 10;
+                    BlockPos pos = new BlockPos((int) (pathfinderMob.getX() + offsetX), (int) pathfinderMob.getY(), (int) (pathfinderMob.getZ() + offsetZ));
+                    if (level.getBlockState(pos.below()).isAir()) return;
+                    spawnThunderBolt(pos);
+                }
+            }
+        }
+    }
+
+    public void spawnThunderBolt(BlockPos pos) {
+        Level level = pathfinderMob.level();
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
         if (lightning == null) return;
+        lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
 
-        lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f || Experiment009BossEntity.shouldAlwaysDamageEntity(target));
-
-        lightning.moveTo(target.position());
         if (pathfinderMob instanceof ChangedEntity changedEntity) {
             lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());
         }
@@ -139,13 +167,13 @@ public class ThunderStrikeGoal extends Goal {
             lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()) * boss.getPhase().getDamageModifier(target));
         } else lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
 
-        ParticlesUtil.sendParticles(pathfinderMob.level(), ChangedAddonParticleTypes.thunderSpark(5), lightning.getEyePosition(), 0.3f, 0.3f, 0.3f, 25, 0.25f);
-        pathfinderMob.level().addFreshEntity(lightning);
+        lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f || Experiment009BossEntity.shouldAlwaysDamageEntity(target));
+
+
+
+        level.addFreshEntity(lightning);
+        ParticlesUtil.sendParticles(level, ParticleTypes.ELECTRIC_SPARK, pos, 0.3f, 0.5f, 0.3f, 5, 1f);
         applyKnockBack(lightning);
-        pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-
-
-        pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
     }
 
     private void oldSpawn(LightningBolt lightning) {

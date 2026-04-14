@@ -1,26 +1,34 @@
 package net.foxyas.changedaddon.entity.ai.goals.generic.attacks;
 
+import com.mojang.datafixers.util.Pair;
+import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.init.ChangedEntities;
+import net.ltxprogrammer.changed.util.Color3;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 
 import java.util.EnumSet;
 
 public class DashPunchGoal extends Goal {
 
-    private final Mob mob;
-    private Phase phase = Phase.IDLE;
-    private int chargeTicks = 0;
-    private int dashTicks = 0;
-    private int cooldown = 0;
-    private LivingEntity target;
+    protected final Mob mob;
+    protected Phase phase = Phase.IDLE;
+    protected int chargeTicks = 0;
+    protected int dashTicks = 0;
+    protected int cooldown = 0;
+    protected LivingEntity target;
 
     public DashPunchGoal(Mob mob) {
         this.mob = mob;
@@ -75,24 +83,39 @@ public class DashPunchGoal extends Goal {
                 break;
             case DASHING:
                 handleDashing();
+                handleBlockBreaking();
                 break;
             default:
                 break;
         }
     }
 
-    private void handleCharging() {
+    protected void handleCharging() {
         chargeTicks++;
         mob.getNavigation().stop();
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
 
         // Charge particles
         if (mob.level instanceof ServerLevel server) {
-            server.sendParticles(
-                    ParticleTypes.ENTITY_EFFECT,
-                    mob.getX(), mob.getEyeY(), mob.getZ(),
-                    2, 0.2, 0.2, 0.2, 0.0
-            );
+            if (mob instanceof ChangedEntity changedEntity) {
+                Pair<Color3, Color3> entityColor = ChangedEntities.getEntityColor(changedEntity);
+                Color3 first = entityColor.getFirst();
+                Color3 second = entityColor.getSecond();
+                RandomSource randomSource = mob.getRandom();
+                server.sendParticles(
+                        ParticleTypes.ENTITY_EFFECT,
+                        mob.getX() + randomSource.nextGaussian() * 2, mob.getEyeY() + randomSource.nextGaussian() * 0.2, mob.getZ() + randomSource.nextGaussian() * 2, 0, first.red() / 255, first.green() / 255, first.blue() / 255, 0.0
+                );
+                server.sendParticles(
+                        ParticleTypes.ENTITY_EFFECT,
+                        mob.getX() + randomSource.nextGaussian() * 2, mob.getEyeY() + randomSource.nextGaussian() * 0.2, mob.getZ() + randomSource.nextGaussian() * 2, 0, second.red() / 255, second.green() / 255, second.blue() / 255, 0.0
+                );
+            } else {
+                server.sendParticles(
+                        ParticleTypes.ENTITY_EFFECT,
+                        mob.getX(), mob.getEyeY(), mob.getZ(), 0, 0.2, 0.2, 0.2, 0.0
+                );
+            }
         }
 
         if (chargeTicks >= 40) {
@@ -100,7 +123,7 @@ public class DashPunchGoal extends Goal {
         }
     }
 
-    private void beginDash() {
+    protected void beginDash() {
         phase = Phase.DASHING;
         dashTicks = 0;
 
@@ -109,7 +132,7 @@ public class DashPunchGoal extends Goal {
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.GOAT_LONG_JUMP, SoundSource.HOSTILE, 1.0F, 0.9F);
     }
 
-    private void handleDashing() {
+    protected void handleDashing() {
         dashTicks++;
         mob.getLookControl().setLookAt(target);
         Vec3 direction = mob.getDeltaMovement().add(target.position().subtract(mob.position()).normalize().scale(0.6));
@@ -128,7 +151,53 @@ public class DashPunchGoal extends Goal {
         }
     }
 
-    private void applyImpact() {
+    protected void handleBlockBreaking() {
+        if (!(mob.level() instanceof ServerLevel serverLevel)) return;
+
+        if (dashTicks % 5 != 0) return;
+
+        BlockPos mobPos = mob.blockPosition();
+        int horizontalRadius = 3;
+        int verticalRadius = 3;
+
+        BlockPos.betweenClosedStream(
+                        mobPos.offset(-horizontalRadius, 0, -horizontalRadius),
+                        mobPos.offset(horizontalRadius, verticalRadius, horizontalRadius))
+                .map(BlockPos::immutable)
+                .filter(pos -> {
+                    int xi = pos.getX() - mobPos.getX();
+                    int yi = pos.getY() - mobPos.getY();
+                    int zi = pos.getZ() - mobPos.getZ();
+                    double distanceSq = (xi * xi) / (double) (9) + (yi * yi) / (double) (9) + (zi * zi) / (double) (9);
+                    return distanceSq <= 1.0;
+                })
+                .forEach(pos -> {
+                    if (pos.equals(mobPos.below())) return;
+
+                    var state = serverLevel.getBlockState(pos);
+
+                    if (isIronTierOrLower(state, serverLevel, pos)) {
+                        serverLevel.destroyBlock(pos, true, mob);
+                    }
+                });
+    }
+
+    /**
+     * Verifica se o bloco é destrutível por ferramentas de ferro ou inferiores.
+     */
+    protected boolean isIronTierOrLower(BlockState state, ServerLevel serverLevel, BlockPos pos) {
+        if (state.isAir()) return false;
+        // 1. Evitar Bedrock e indestrutíveis (Dureza negativa)
+        if (state.getDestroySpeed(serverLevel, pos) < 0) return false;
+
+        if (state.is(Tags.Blocks.NEEDS_NETHERITE_TOOL)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected void applyImpact() {
         Level level = mob.level();
 
         // Reverse knockback on self
@@ -179,7 +248,7 @@ public class DashPunchGoal extends Goal {
         return true;
     }
 
-    private enum Phase {
+    protected enum Phase {
         IDLE,
         CHARGING,
         DASHING

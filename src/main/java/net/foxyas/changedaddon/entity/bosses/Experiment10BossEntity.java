@@ -196,7 +196,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
                 10));
         this.goalSelector.addGoal(10, new LeapSmashGoal(this));
         this.goalSelector.addGoal(15, new DashPunchGoal(this));
-        this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
+        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
         this.goalSelector.addGoal(10, new ThrowWitherProjectileGoal(this, UniformInt.of(60, 120), UniformInt.of(1, 8), 36));
         this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
     }

@@ -112,6 +112,63 @@ public class DodgeAbilityInstance extends AbstractAbilityInstance {
         }
     }
 
+    public static void executeRandomDodgeAnimationWithFade(LivingEntity dodger) {
+        ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
+        int randomValue = dodger.getRandom().nextInt(6);
+        final DodgeAnimationParameters animationParameters = DodgeAnimationParameters.DEFAULT;
+        Vec3 particlePos = dodger.position().add(0, 1.425f, 0);
+        Vec3 motionOrDelta = new Vec3(0, 1, 0);
+        switch (randomValue) {
+            case 0 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
+            }
+            case 1 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
+            }
+            case 2 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
+            }
+            case 3 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
+            }
+            case 4 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
+            }
+            case 5 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
+            }
+            //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
+        }
+    }
+
+    public static void executeRandomDodgeAnimationWithFade(LivingEntity dodger, DodgeAnimationParameters animationParameters) {
+        ChangedSounds.broadcastSound(dodger, ChangedSounds.CARDBOARD_BOX_OPEN, 2.5f, 1);
+        int randomValue = dodger.getRandom().nextInt(6);
+        Vec3 particlePos = dodger.position().add(0, 1.425f, 0);
+        Vec3 motionOrDelta = new Vec3(0, 1, 0);
+        switch (randomValue) {
+            case 0 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_LEFT.get(), animationParameters);
+            }
+            case 1 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_RIGHT.get(), animationParameters);
+            }
+            case 2 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_LEFT.get(), animationParameters);
+            }
+            case 3 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_WEAVE_RIGHT.get(), animationParameters);
+            }
+            case 4 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_LEFT.get(), animationParameters);
+            }
+            case 5 -> {
+                ChangedAddonAnimationEvents.broadcastEntityAnimationWithFade(dodger, FADE_COLOR, particlePos, motionOrDelta, 0.1f, 1, ChangedAddonAnimationEvents.DODGE_DOWN_RIGHT.get(), animationParameters);
+            }
+            //default -> ChangedAnimationEvents.broadcastEntityAnimation(player, ChangedAddonAnimationEvents.DODGE_LEFT.get(), null);
+        }
+    }
+
     private void dodgeAwayFromAttacker(Entity dodger, Entity attacker) {
         Vec3 attackerPosition = attacker.position();
         Vec3 dodgerPosition = dodger.position();

@@ -7,9 +7,11 @@ import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
+import net.ltxprogrammer.changed.entity.EntityColorProvider;
 import net.ltxprogrammer.changed.entity.ModifiableEntity;
 import net.ltxprogrammer.changed.entity.ModificationVector;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
+import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.IExtensibleEnum;
 import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +36,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, ModifiableEntity, IDynamicColors {
+public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements VariantExtraStats, ModifiableEntity, EntityColorProvider {
 
     protected static final EntityDataAccessor<Integer> PRIMARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<Integer> SECONDARY_COLOR = SynchedEntityData.defineId(AvaliEntity.class, EntityDataSerializers.INT);
@@ -209,10 +212,26 @@ public class AvaliEntity extends AbstractBasicOrganicChangedEntity implements Va
     }
 
     @Override
-    public DynamicColorScheme getColorScheme() {
-        if (this.isColorful()) return new DynamicColorScheme(this.getPrimaryColor(), this.getSecondaryColor()).setForegroundToBright();
-        return null;
+    public Color3 getFrontColor() {
+        if (!this.isColorful()) {
+            return ChangedEntities.getEntityColor(ForgeRegistries.ENTITY_TYPES.getKey(getType())).mapFirst(Color3::fromInt).getFirst();
+        }
+        return this.getPrimaryColor();
     }
+
+    @Override
+    public Color3 getBackColor() {
+        if (!this.isColorful()) {
+            return ChangedEntities.getEntityColor(ForgeRegistries.ENTITY_TYPES.getKey(getType())).mapSecond(Color3::fromInt).getSecond();
+        }
+        return this.getSecondaryColor();
+    }
+
+    //    @Override
+//    public DynamicColorScheme getColorScheme() {
+//        if (this.isColorful()) return new DynamicColorScheme(this.getPrimaryColor(), this.getSecondaryColor()).setForegroundToBright();
+//        return null;
+//    }
 
     public Color3 getPrimaryColor() {
         return Color3.fromInt(this.entityData.get(PRIMARY_COLOR));

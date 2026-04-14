@@ -242,7 +242,7 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
     }
 
     protected void addAbilitiesGoals() {
-        goalSelector.addGoal(5, new ThunderStrikeGoal(
+        goalSelector.addGoal(5, new AoEThunderStrikeGoal(
                 this,
                 UniformInt.of(80, 120), //IntProvider -> cooldownProvider
                 UniformInt.of(4, 8), //IntProvider -> damageProvider
@@ -358,11 +358,6 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             return false;
 
         if (source.getMsgId().equals("trident")) {
-            if (this.random.nextFloat() <= 0.25f) {
-                if (source.getEntity() instanceof Player player) {
-                    player.displayClientMessage(Component.literal("§l§o§3YOU'RE COWARD! Is distance all you can rely on? How PATHETIC!!!"), true);
-                }
-            }
             return super.hurt(source, amount * 0.5f);
         }
 
@@ -379,11 +374,6 @@ public class Experiment009Entity extends ChangedEntity implements PowderSnowWalk
             return false;
 
         if (source.is(DamageTypeTags.IS_PROJECTILE)) {
-            if (this.random.nextFloat() <= 0.25f) {
-                if (source.getEntity() instanceof Player player) {
-                    player.displayClientMessage(Component.literal("§l§o§4Coward! Is distance all you can rely on? How PATHETIC!!!"), true);
-                }
-            }
             return super.hurt(source, amount * 0.5f);
         }
 

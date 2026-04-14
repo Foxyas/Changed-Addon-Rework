@@ -191,11 +191,19 @@ public class FightToKeepConsciousness {
     }
 
     public enum MinigameType {
-        MOUSE_PULL(3.5f, ChangedSounds.TRANSFUR_BY_LATEX.get(), FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_PULL()),
-        MOUSE_CIRCLE_PULL(4.5f, ChangedSounds.TRANSFUR_BY_LATEX.get(), FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_CIRCLE_PULL()),
-        KEY_PRESS(1, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.KEY_PRESS()),
-        CIRCLE_HOVER(0.5f, FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.CIRCLE_HOVER());
+        MOUSE_PULL(3.5f,
+                ChangedSounds.TRANSFUR_BY_LATEX.get(),
+                FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_PULL()),
+        MOUSE_CIRCLE_PULL(4.5f,
+                10,
+                ChangedSounds.TRANSFUR_BY_LATEX.get(),
+                FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.MOUSE_CIRCLE_PULL()),
+        KEY_PRESS(1,
+                FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.KEY_PRESS()),
+        CIRCLE_HOVER(0.5f,
+                FMLLoader.getDist().isDedicatedServer() ? null : FightToKeepConsciousnessClient.CIRCLE_HOVER());
 
+        private int removalTicks;
         public final Supplier<Screen> screen;
         public final float progressAmount;
         @Nullable
@@ -206,6 +214,15 @@ public class FightToKeepConsciousness {
         MinigameType(float progressAmount, Supplier<Screen> supplier) {
             this.screen = supplier;
             this.progressAmount = progressAmount;
+            this.removalTicks = 0;
+            this.struggleSound = null;
+            this.successSound = null;
+        }
+
+        MinigameType(float progressAmount, int removalTicks, Supplier<Screen> supplier) {
+            this.screen = supplier;
+            this.progressAmount = progressAmount;
+            this.removalTicks = removalTicks;
             this.struggleSound = null;
             this.successSound = null;
         }
@@ -213,6 +230,14 @@ public class FightToKeepConsciousness {
         MinigameType(float progressAmount, @Nullable SoundEvent struggleSound, Supplier<Screen> supplier) {
             this.screen = supplier;
             this.progressAmount = progressAmount;
+            this.removalTicks = 0;
+            this.struggleSound = struggleSound;
+            this.successSound = struggleSound;
+        }
+        MinigameType(float progressAmount, int removalTicks, @Nullable SoundEvent struggleSound, Supplier<Screen> supplier) {
+            this.screen = supplier;
+            this.progressAmount = progressAmount;
+            this.removalTicks = removalTicks;
             this.struggleSound = struggleSound;
             this.successSound = struggleSound;
         }
@@ -220,8 +245,25 @@ public class FightToKeepConsciousness {
         MinigameType(float progressAmount, @Nullable SoundEvent struggleSound, @Nullable SoundEvent successSound, Supplier<Screen> supplier) {
             this.screen = supplier;
             this.progressAmount = progressAmount;
+            this.removalTicks = 0;
             this.struggleSound = struggleSound;
             this.successSound = successSound;
+        }
+
+        MinigameType(float progressAmount, int removalTicks, @Nullable SoundEvent struggleSound, @Nullable SoundEvent successSound, Supplier<Screen> supplier) {
+            this.screen = supplier;
+            this.progressAmount = progressAmount;
+            this.removalTicks = removalTicks;
+            this.struggleSound = struggleSound;
+            this.successSound = successSound;
+        }
+
+        public int getRemovalTicks() {
+            return removalTicks;
+        }
+
+        public float getProgressAmount() {
+            return progressAmount;
         }
 
         public @Nullable SoundEvent getStruggleSound() {
