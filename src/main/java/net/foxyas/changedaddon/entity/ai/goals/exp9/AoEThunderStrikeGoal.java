@@ -51,11 +51,6 @@ public class AoEThunderStrikeGoal extends Goal {
     }
 
     @Override
-    public boolean requiresUpdateEveryTick() {
-        return true;
-    }
-
-    @Override
     public boolean isInterruptable() {
         return false;
     }

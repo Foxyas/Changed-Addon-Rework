@@ -126,7 +126,9 @@ public class LightningComboAttackGoal extends Goal {
     public void tick() {
         if (attacks <= 0) return;
 
-        Level level = holder.level;
+        if (!(holder.level instanceof ServerLevel level)) {
+            return;
+        }
 
         if (target != null) {
             if (target.isRemoved() && target.isDeadOrDying()) return;
@@ -136,7 +138,7 @@ public class LightningComboAttackGoal extends Goal {
         if (wasBlocked > 0) {
             wasBlocked--;
 
-            ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK, holder.getX() - 1.5, holder.getY() - 1.5 + holder.getBbHeight() / 2, holder.getZ() - 1.5,
+            level.sendParticles(ParticleTypes.ELECTRIC_SPARK, holder.getX() - 1.5, holder.getY() - 1.5 + holder.getBbHeight() / 2, holder.getZ() - 1.5,
                     50 * wasBlocked / 30, 3, 3, 3, 0.5);
 
             if (wasBlocked == 0) pickAttackPos();
@@ -152,10 +154,10 @@ public class LightningComboAttackGoal extends Goal {
 
             if (holder.tickCount % 2 == 0) {
                 if (aboveWaterY != Integer.MAX_VALUE)
-                    ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK, attackPos.x - 1, aboveWaterY, attackPos.z - 1,
+                    level.sendParticles(ParticleTypes.ELECTRIC_SPARK, attackPos.x - 1, aboveWaterY, attackPos.z - 1,
                             50, 2, 0.2, 2, 0.5);
 
-                ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK, attackPos.x - 1, attackPos.y, attackPos.z - 1,
+                level.sendParticles(ParticleTypes.ELECTRIC_SPARK, attackPos.x - 1, attackPos.y, attackPos.z - 1,
                         50, 2, 0.2, 2, 0.5);
             }
 
@@ -167,7 +169,7 @@ public class LightningComboAttackGoal extends Goal {
         holder.teleportTo(attackPos.x, attackPos.y, attackPos.z);
         holder.swing(InteractionHand.MAIN_HAND);
 
-        SummonLightningGoal.lightning(holder.level, attackPos.x, attackPos.y, attackPos.z, 1);
+        SummonLightningGoal.lightning(level, attackPos.x, attackPos.y, attackPos.z, 1);
         if (attacks == 0) {
             SummonLightningGoal.lightning(level, attackPos.x + 0.75, attackPos.y, attackPos.z + 0.75, 0);
             SummonLightningGoal.lightning(level, attackPos.x + 0.75, attackPos.y, attackPos.z - 0.75, 0);

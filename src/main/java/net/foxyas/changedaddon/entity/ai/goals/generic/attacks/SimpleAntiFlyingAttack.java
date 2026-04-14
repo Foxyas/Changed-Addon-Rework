@@ -99,11 +99,6 @@ public class SimpleAntiFlyingAttack extends Goal {
     }
 
     @Override
-    public boolean requiresUpdateEveryTick() {
-        return true;
-    }
-
-    @Override
     protected int adjustedTickDelay(int delay) {
         return super.adjustedTickDelay(delay);
     }

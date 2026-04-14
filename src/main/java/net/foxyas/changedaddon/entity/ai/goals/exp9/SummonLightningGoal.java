@@ -58,7 +58,7 @@ public class SummonLightningGoal extends Goal {
         damageProvider = damage;
     }
 
-    public static void lightning(Level level, double x, double y, double z, float damage) {
+    public static void lightning(ServerLevel level, double x, double y, double z, float damage) {
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
         assert lightning != null;
         lightning.moveTo(x, y, z);
@@ -108,11 +108,6 @@ public class SummonLightningGoal extends Goal {
     }
 
     @Override
-    public boolean requiresUpdateEveryTick() {
-        return true;
-    }
-
-    @Override
     public boolean isInterruptable() {
         return false;
     }
@@ -155,7 +150,10 @@ public class SummonLightningGoal extends Goal {
     public void tick() {
         if (lightnings <= 0) return;
 
-        Level level = holder.level;
+        if (!(holder.level instanceof ServerLevel level)) {
+            return;
+        }
+
         if (castDuration > 0) {
             castDuration--;
 
@@ -165,7 +163,7 @@ public class SummonLightningGoal extends Goal {
             //holder.setYBodyRot(holder.yHeadRot);
 
             if (holder.tickCount % 2 == 0) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK,
+                level.sendParticles(ParticleTypes.ELECTRIC_SPARK,
                         holder.getX() - 0.5, holder.getY(), holder.getZ() - 0.5,
                         25, 1, 0.1, 1, 0.5);
             }
@@ -195,7 +193,7 @@ public class SummonLightningGoal extends Goal {
 
             int gameTime = holder.tickCount;
             if (gameTime % 2 == 0) {
-                ((ServerLevel) level).sendParticles(ParticleTypes.ELECTRIC_SPARK, strikePos.x - 1, aboveWaterPos != null ? aboveWaterPos.getY() : strikePos.y, strikePos.z - 1,
+                level.sendParticles(ParticleTypes.ELECTRIC_SPARK, strikePos.x - 1, aboveWaterPos != null ? aboveWaterPos.getY() : strikePos.y, strikePos.z - 1,
                         50, 2, 0.2, 2, 0.5);
             }
             if ((gameTime + 10) % 40 == 0)
