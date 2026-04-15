@@ -106,7 +106,7 @@ public class LightningComboAttackGoal extends Goal {
 
         holder.getNavigation().stop();
         if (target.isRemoved() && target.isDeadOrDying()) return;
-        if (target.distanceTo(target) > 0) {
+        if (target.distanceTo(holder) > 0) {
             holder.getLookControl().setLookAt(target, 180, 180);
         }
     }
@@ -132,7 +132,7 @@ public class LightningComboAttackGoal extends Goal {
 
         if (target != null) {
             if (target.isRemoved() && target.isDeadOrDying()) return;
-            if (target.distanceTo(target) > 0) {
+            if (target.distanceTo(holder) > 0) {
                 holder.getLookControl().setLookAt(target, 180, 180);
             }
         }
