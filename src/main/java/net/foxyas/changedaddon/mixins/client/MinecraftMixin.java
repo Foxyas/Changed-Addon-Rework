@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.mixins.client;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.block.DarkLatexPuddleBlock;
 import net.foxyas.changedaddon.block.entity.DarkLatexPuddleBlockEntity;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
@@ -15,11 +14,14 @@ import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.InBedChatScreen;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,6 +41,14 @@ public abstract class MinecraftMixin {
     @Nullable
     public LocalPlayer player;
 
+    @Shadow
+    @Nullable
+    public HitResult hitResult;
+
+    @Shadow
+    @Nullable
+    public ClientLevel level;
+
     @WrapOperation(at = @At(value = "NEW", target = "net/minecraft/client/gui/screens/InBedChatScreen"), method = "tick")
     private InBedChatScreen stopSettingSleepScreenWhenCuddling(Operation<InBedChatScreen> original) {
         return ChangedAddonVariables.ofOrDefault(player).isCuddling ? null : original.call();
@@ -47,13 +57,17 @@ public abstract class MinecraftMixin {
     @ModifyExpressionValue(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;isHandsBusy()Z"),
             method = "startUseItem")
     private boolean makeHandsNotBusyForCuddle(boolean original) {
+        if (!original) return false;
+
+        if (!ChangedAddonVariables.ofOrDefault(player).isCuddling) return true;
+
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
-        if (instance == null) return original;
+        if (instance == null) return true;
 
         GrabEntityAbilityInstance grab = instance.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-        if (grab == null || grab.grabbedEntity == null || !((GrabEntityAbilityExtensor)grab).isSafeMode()) return original;
+        if (grab == null || grab.grabbedEntity == null) return true;
 
-        return false;
+        return !(hitResult instanceof BlockHitResult result) || !level.getBlockState(result.getBlockPos()).isBed(level, result.getBlockPos(), player);
     }
 
     @Inject(method = "shouldEntityAppearGlowing", at = @At("HEAD"), cancellable = true)

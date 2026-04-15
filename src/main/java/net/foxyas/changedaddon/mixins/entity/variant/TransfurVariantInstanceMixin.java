@@ -2,7 +2,6 @@ package net.foxyas.changedaddon.mixins.entity.variant;
 
 import com.google.common.collect.ImmutableMap;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.event.UntransfurEvent;
@@ -81,7 +80,7 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         if (!level.getBlockState(pos).isBed(level, pos, variant.getHost())) return;
 
         GrabEntityAbilityInstance instance = variant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-        if (instance != null && instance.grabbedEntity != null && ((GrabEntityAbilityExtensor)instance).isSafeMode()) ci.cancel();
+        if (instance != null && instance.grabbedEntity != null) ci.cancel();
     }
 
     @Override

@@ -718,5 +718,6 @@ public class ENLanguageProvider extends LanguageProvider {
 
         add("warn.rei.not.supported.move.items.but.right.container", "Move Items is not supported with this kind of workstation");
         addText("cuddle_button", "Start cuddling");
+        addText("stop_cuddling", "Press %s to stop cuddling");
     }
 }
