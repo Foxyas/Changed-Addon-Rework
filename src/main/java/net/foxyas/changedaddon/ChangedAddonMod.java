@@ -2,6 +2,7 @@ package net.foxyas.changedaddon;
 
 import net.foxyas.changedaddon.compatibility.ChangedAddonModCompatEvents;
 import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.network.syncher.ChangedAddonEntityDataSerializers;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.world.datafixer.ChangedAddonDataFixer;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -50,6 +51,7 @@ public class ChangedAddonMod {
         ChangedAddonAttributes.ATTRIBUTES.register(bus);
         ChangedAddonItems.REGISTRY.register(bus);
         ChangedAddonMenus.REGISTRY.register(bus);
+        ChangedAddonEntityDataSerializers.SERIALIZERS.register(bus);
 
         ChangedAddonEntities.REGISTRY.register(bus);
         ChangedAddonAbilities.REGISTRY.register(bus);

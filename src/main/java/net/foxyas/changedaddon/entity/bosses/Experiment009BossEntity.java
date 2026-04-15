@@ -5,8 +5,6 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
-import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
-import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.DashPunchGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.*;
@@ -234,45 +232,38 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 UniformInt.of(4, 8), //IntProvider -> damageProvider
                 1.5f,
                 200));
-        this.goalSelector.addGoal(10, new ThunderDiveGoal(this,
-                UniformInt.of(60, 100), //IntProvider -> cooldownProvider
-                1.5f,
-                6f,
-                1f,
-                0.5f,
-                4));
 
+        //Basically perfect, damn... well done 0senia0
+        this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
+                UniformInt.of(120, 240), //IntProvider -> cooldown,
+                UniformInt.of(2, 4), //IntProvider -> lightningCount,
+                UniformInt.of(80, 160), //IntProvider -> castDuration,
+                UniformInt.of(80, 100), //IntProvider -> lightningDelay,
+                UniformFloat.of(5, 12))); //FloatProvider -> damage
+
+        this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
+                UniformInt.of(75, 125), //IntProvider -> cooldown,
+                4,
+                UniformInt.of(40, 80), //IntProvider -> castDuration,
+                8,
+                UniformFloat.of(4, 8))); //FloatProvider -> damage
+
+        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
+        //        UniformInt.of(100, 150), //IntProvider -> cooldown
+        //        20,
+        //        UniformInt.of(60, 80), //IntProvider -> duration
+        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
+
+        this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
+                UniformInt.of(150, 200), //IntProvider -> cooldown,
+                UniformInt.of(3, 6), //IntProvider -> attackCount,
+                UniformInt.of(20, 60), //IntProvider -> castDuration,
+                UniformFloat.of(6, 8)) //FloatProvider -> damage)
+        );
         // ALL THE ABOVE DON'T CAUSE THE FREEZE BUG.
-//
-//        //Basically perfect, damn... well done 0senia0
-//        this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
-//                UniformInt.of(120, 240), //IntProvider -> cooldown,
-//                UniformInt.of(2, 4), //IntProvider -> lightningCount,
-//                UniformInt.of(80, 160), //IntProvider -> castDuration,
-//                UniformInt.of(80, 100), //IntProvider -> lightningDelay,
-//                UniformFloat.of(5, 12))); //FloatProvider -> damage
-//
-//        this.goalSelector.addGoal(5, new StaticDischargeGoal(this,//PathfinderMob holder,
-//                UniformInt.of(75, 125), //IntProvider -> cooldown,
-//                4,
-//                UniformInt.of(40, 80), //IntProvider -> castDuration,
-//                8,
-//                UniformFloat.of(4, 8))); //FloatProvider -> damage
-//
-//        //this.goalSelector.addGoal(1, new InductionCoilGoal(this, //PathfinderMob -> holder
-//        //        UniformInt.of(100, 150), //IntProvider -> cooldown
-//        //        20,
-//        //        UniformInt.of(60, 80), //IntProvider -> duration
-//        //        UniformFloat.of(3, 5))); //FloatProvider -> damage
-//
-//        this.goalSelector.addGoal(5, new LightningComboAttackGoal(this, //PathfinderMob -> holder,
-//                UniformInt.of(150, 200), //IntProvider -> cooldown,
-//                UniformInt.of(3, 6), //IntProvider -> attackCount,
-//                UniformInt.of(20, 60), //IntProvider -> castDuration,
-//                UniformFloat.of(6, 8))); //FloatProvider -> damage)
+        this.goalSelector.addGoal(15, new ThunderDashAttack(this));
 //
 //        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
-//        this.goalSelector.addGoal(15, new DashPunchGoal(this));
 //        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
     }
 

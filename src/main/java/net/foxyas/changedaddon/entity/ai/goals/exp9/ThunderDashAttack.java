@@ -1,5 +1,7 @@
-package net.foxyas.changedaddon.entity.ai.goals.generic.attacks;
+package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
+import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -15,14 +17,14 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 import java.util.List;
 
-public class DashAttack extends Goal {
+public class ThunderDashAttack extends Goal {
 
     private static final int PREPARE_TIME = 60; // 3 seconds
     private static final int MAX_DASH_TICKS = 20;
     private static final double DETECTION_DISTANCE = 3.5D;
     private static final double KNOCKBACK_MULTIPLIER = 1.5;
 
-    private final Mob dasher;
+    private final Experiment009BossEntity dasher;
     private LivingEntity target;
 
     private int tickCount = 0;
@@ -32,9 +34,9 @@ public class DashAttack extends Goal {
     private float dashSpeed = 1.0f;
     private float strength = 1.0f;
 
-    public DashAttack(Mob dasher) {
+    public ThunderDashAttack(Experiment009BossEntity dasher) {
         this.dasher = dasher;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     public int getTickCount() {

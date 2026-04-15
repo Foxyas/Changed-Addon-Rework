@@ -88,7 +88,9 @@ public class VoidFoxDashAttack extends Goal {
         // Preparando o dash
         if (tickCount < PREPARE_TIME) {
             dasher.getNavigation().stop();
-            dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            if (target.distanceTo(dasher) > 0) {
+                dasher.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            }
             dashDirection = dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
             if (tickCount % 20 == 0) {
                 shootProjectile(target);
@@ -111,7 +113,9 @@ public class VoidFoxDashAttack extends Goal {
         if (tickCount <= PREPARE_TIME + MAX_DASH_TICKS) {
             // Aplica o movimento
             dasher.setDeltaMovement(dashDirection);
-            dasher.getLookControl().setLookAt(dasher.getEyePosition().add(dashDirection));
+            if (target.distanceTo(dasher) > 0) {
+                dasher.getLookControl().setLookAt(dasher.getEyePosition().add(dashDirection));
+            }
             if (dasher.horizontalCollision || dasher.minorHorizontalCollision) {
                 tickCount += 5;
             }
