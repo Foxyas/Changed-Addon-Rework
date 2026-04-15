@@ -83,7 +83,7 @@ public class ThunderDashAttack extends Goal {
             tickCount = 0;
         }
         isDashing = false;
-        dashDirection = Vec3.ZERO;
+        dasher.getViewVector(1).scale(strength).multiply(1, 0, 1);
     }
 
     public boolean isChargingDash() {

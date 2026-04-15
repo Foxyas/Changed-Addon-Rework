@@ -5,6 +5,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.foxyas.changedaddon.client.model.animations.parameters.DodgeAnimationParameters;
 import net.foxyas.changedaddon.entity.ai.goals.exp9.*;
+import net.foxyas.changedaddon.entity.ai.goals.generic.LatexPullEntityGoal;
 import net.foxyas.changedaddon.entity.ai.goals.generic.attacks.SimpleAntiFlyingAttack;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.init.*;
@@ -54,6 +55,7 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.Minecart;
@@ -62,8 +64,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -233,6 +238,15 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 1.5f,
                 200));
 
+        this.goalSelector.addGoal(10, new ThunderDiveGoal(this,
+                UniformInt.of(60, 100), //IntProvider -> cooldownProvider
+                1.5f,
+                6f,
+                1f,
+                0.5f,
+                4)
+        );
+
         //Basically perfect, damn... well done 0senia0
         this.goalSelector.addGoal(5, new SummonLightningGoal(this, //PathfinderMob -> holder,
                 UniformInt.of(120, 240), //IntProvider -> cooldown,
@@ -260,11 +274,10 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
                 UniformInt.of(20, 60), //IntProvider -> castDuration,
                 UniformFloat.of(6, 8)) //FloatProvider -> damage)
         );
-        // ALL THE ABOVE DON'T CAUSE THE FREEZE BUG.
+
         this.goalSelector.addGoal(15, new ThunderDashAttack(this));
-//
+        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
 //        //this.goalSelector.addGoal(10, new BreakBlocksAroundGoal(this));
-//        this.goalSelector.addGoal(10, new LatexPullEntityGoal(this, 32, 1));
     }
 
     public enum Exp9Phase {
@@ -1043,6 +1056,24 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
             switch (tier) {
                 case LOW -> event.setAmount(event.getAmount() * 2.5F);
                 case MID, HIGH -> event.setAmount(event.getAmount());
+            }
+        }
+
+        @SubscribeEvent
+        public static void onProjectileImpact(ProjectileImpactEvent event) {
+            Projectile self = event.getProjectile();
+            HitResult hitResult = event.getRayTraceResult();
+            if (!(hitResult instanceof EntityHitResult entityHitResult)) {
+                return;
+            }
+
+            Entity pTarget = entityHitResult.getEntity();
+            if (!pTarget.level.isClientSide()) {
+                if (pTarget instanceof Experiment009BossEntity experiment009BossEntity) {
+                    if (experiment009BossEntity.isVulnerableToProjectiles()) {
+                        event.setImpactResult(ProjectileImpactEvent.ImpactResult.SKIP_ENTITY);
+                    }
+                }
             }
         }
     }

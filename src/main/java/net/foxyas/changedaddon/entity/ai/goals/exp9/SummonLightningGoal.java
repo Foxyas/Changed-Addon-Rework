@@ -57,7 +57,7 @@ public class SummonLightningGoal extends Goal {
         castDurationProvider = castDuration;
         lightningDelayProvider = lightningDelay;
         damageProvider = damage;
-        setFlags(EnumSet.of(Flag.TARGET, Flag.LOOK));
+        setFlags(EnumSet.of(Flag.LOOK));
     }
 
     public static void lightning(ServerLevel level, double x, double y, double z, float damage) {

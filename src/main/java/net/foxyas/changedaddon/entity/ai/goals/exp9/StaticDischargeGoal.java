@@ -52,7 +52,7 @@ public class StaticDischargeGoal extends Goal {
         this.aoe = aoe;
         aoeSqr = aoe * aoe;
         damageProvider = damage;
-        this.setFlags(EnumSet.of(Flag.TARGET));
+        this.setFlags(EnumSet.of(Flag.LOOK));
     }
 
     @Override

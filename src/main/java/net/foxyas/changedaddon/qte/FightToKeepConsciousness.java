@@ -48,7 +48,7 @@ public class FightToKeepConsciousness {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
-        if (event.player instanceof ServerPlayer player && (event.shouldKeepConscious || !player.level.getGameRules().getBoolean(ChangedAddonGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS))) {
+        if (event.player instanceof ServerPlayer player && ((event.keepConscious || event.shouldKeepConscious) || !player.level.getGameRules().getBoolean(ChangedAddonGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS))) {
             ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
             if (!vars.isTransfuredBySafeMethod) {
                 vars.isTransfuredBySafeMethod = true;

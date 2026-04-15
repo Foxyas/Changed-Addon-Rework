@@ -53,7 +53,7 @@ public class LightningComboAttackGoal extends Goal {
         damageProvider = damage;
         adjustDamageSource(holder);
 
-        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
+        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     private DamageSource adjustDamageSource(PathfinderMob holder) {
