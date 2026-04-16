@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.ai.goals.exp9;
 
 import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
+import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -33,17 +34,17 @@ import java.util.List;
 
 public class AoEThunderStrikeGoal extends Goal {
     protected final IntProvider cooldownProvider;
-    private final PathfinderMob pathfinderMob;
-    private final IntProvider damageProvider;
-    private final double jumpPower;
-    private final int duration; // ticks de duração do ataque
+    protected final Experiment009Entity experiment009;
+    protected final IntProvider damageProvider;
+    protected final double jumpPower;
+    protected final int duration; // ticks de duração do ataque
     public int cooldown = 0;
-    private int tickCounter;
-    private BlockPos groundPos;
-    private LivingEntity target;
+    protected int tickCounter;
+    protected BlockPos groundPos;
+    protected LivingEntity target;
 
-    public AoEThunderStrikeGoal(PathfinderMob pathfinderMob, IntProvider cooldownProvider, IntProvider damageProvider, double jumpPower, int duration) {
-        this.pathfinderMob = pathfinderMob;
+    public AoEThunderStrikeGoal(Experiment009Entity experiment009, IntProvider cooldownProvider, IntProvider damageProvider, double jumpPower, int duration) {
+        this.experiment009 = experiment009;
         this.damageProvider = damageProvider;
         this.jumpPower = jumpPower;
         this.duration = duration;
@@ -62,28 +63,28 @@ public class AoEThunderStrikeGoal extends Goal {
             cooldown--;
             return false;
         }
-        LivingEntity target = pathfinderMob.getTarget();
-        return target != null && target.isAlive() && pathfinderMob.onGround();
+        LivingEntity target = experiment009.getTarget();
+        return target != null && target.isAlive() && experiment009.onGround();
     }
 
     @Override
     public void start() {
-        this.target = pathfinderMob.getTarget();
-        this.groundPos = pathfinderMob.blockPosition();
+        this.target = experiment009.getTarget();
+        this.groundPos = experiment009.blockPosition();
         this.tickCounter = 0;
 
         // Lança a entidade para cima
-        Vec3 velocity = pathfinderMob.position().vectorTo(target.position()).normalize().scale(0.5f);
-        pathfinderMob.setDeltaMovement(pathfinderMob.getDeltaMovement().add(velocity.x, jumpPower, velocity.z));
-        ChangedSounds.broadcastSound(pathfinderMob, ChangedSounds.CARDBOARD_BOX_OPEN, 1, 1);
+        Vec3 velocity = experiment009.position().vectorTo(target.position()).normalize().scale(0.5f);
+        experiment009.setDeltaMovement(experiment009.getDeltaMovement().add(velocity.x, jumpPower, velocity.z));
+        ChangedSounds.broadcastSound(experiment009, ChangedSounds.CARDBOARD_BOX_OPEN, 1, 1);
 
 
         // Slow falling para manter no ar
-        pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
+        experiment009.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
 
         // Evita que tente andar
-        pathfinderMob.getNavigation().stop();
-        if (pathfinderMob instanceof Experiment009BossEntity experiment009BossEntity) {
+        experiment009.getNavigation().stop();
+        if (experiment009 instanceof Experiment009BossEntity experiment009BossEntity) {
             experiment009BossEntity.setCastingAttack(true);
         }
     }
@@ -104,40 +105,39 @@ public class AoEThunderStrikeGoal extends Goal {
     public void tick() {
         tickCounter++;
 
-        if (target == null) return;
-
-        // olha para o alvo
-        if (target.isRemoved() && target.isDeadOrDying()) return;
-        Vec3 lookAt = pathfinderMob.getEyePosition().add(0, 1, 0);
-        pathfinderMob.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 90, 90);
-        pathfinderMob.getNavigation().stop();
-        Vec3 deltaMovement = pathfinderMob.getDeltaMovement();
-        pathfinderMob.setDeltaMovement(deltaMovement.x, Math.max(0, deltaMovement.y), deltaMovement.z);
+        Vec3 lookAt = experiment009.getEyePosition().add(0, 1, 0);
+        Vec3 deltaMovement = experiment009.getDeltaMovement();
+        experiment009.setDeltaMovement(deltaMovement.x, Math.max(0, deltaMovement.y), deltaMovement.z);
+        experiment009.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 90, 90);
+        //pathfinderMob.getNavigation().stop();
+        if (experiment009 instanceof Experiment009BossEntity experiment009BossEntity) {
+            experiment009BossEntity.setCastingAttack(true);
+        }
         if (tickCounter % 10 != 0) return;
         thunderStorm();
-        pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
-        pathfinderMob.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
+        //pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+        experiment009.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, duration + 40, 10, false, false));
 
     }
 
     protected void thunderStorm() {
-        Level level = pathfinderMob.level;
+        Level level = experiment009.level;
         if (!(level instanceof ServerLevel serverLevel)) return;
 
-        boolean hasTarget = pathfinderMob.getTarget() != null;
+        boolean hasTarget = experiment009.getTarget() != null;
         int count = hasTarget ? 12 : 7;
         double range = hasTarget ? 10.0 : 20.0;
 
         for (int i = 0; i < count; i++) {
-            double offsetX = pathfinderMob.getRandom().nextGaussian() * range;
-            double offsetZ = pathfinderMob.getRandom().nextGaussian() * range;
+            double offsetX = experiment009.getRandom().nextGaussian() * range;
+            double offsetZ = experiment009.getRandom().nextGaussian() * range;
 
-            int targetX = Mth.floor(pathfinderMob.getX() + offsetX);
-            int targetZ = Mth.floor(pathfinderMob.getZ() + offsetZ);
+            int targetX = Mth.floor(experiment009.getX() + offsetX);
+            int targetZ = Mth.floor(experiment009.getZ() + offsetZ);
 
             // Começamos a busca a partir da altura do mob + 5 blocos (para pegar tetos baixos)
             // ou você pode usar serverLevel.getHeight() como ponto de partida se quiser que venha do céu.
-            int startY = Mth.floor(pathfinderMob.getY() + 5);
+            int startY = Mth.floor(experiment009.getY() + 5);
             BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos(targetX, startY, targetZ);
 
             // Check manual descendo até achar o primeiro bloco sólido (o "teto" ou o "chão")
@@ -160,24 +160,21 @@ public class AoEThunderStrikeGoal extends Goal {
     }
 
     public void spawnThunderBolt(BlockPos pos) {
-        Level level = pathfinderMob.level();
+        Level level = experiment009.level();
         LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
         if (lightning == null) return;
         lightning.moveTo(pos.getX(), pos.getY(), pos.getZ());
+        lightning.setCause((ServerPlayer) experiment009.getUnderlyingPlayer());
 
-        if (pathfinderMob instanceof ChangedEntity changedEntity) {
-            lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());
-        }
-
-        List<BlockPos> conductiveBlocks = findConductiveBlocks(pathfinderMob.level(), lightning.getOnPos(), 16);
+        List<BlockPos> conductiveBlocks = findConductiveBlocks(experiment009.level(), lightning.getOnPos(), 16);
         if (!conductiveBlocks.isEmpty()) {
-            BlockPos random = Util.getRandom(conductiveBlocks, pathfinderMob.getRandom());
+            BlockPos random = Util.getRandom(conductiveBlocks, experiment009.getRandom());
             lightning.moveTo(random, 0, 0);
         }
 
-        if (pathfinderMob instanceof Experiment009BossEntity boss) {
-            lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()) * boss.getPhase().getDamageModifier(target));
-        } else lightning.setDamage(damageProvider.sample(pathfinderMob.getRandom()));
+        if (experiment009 instanceof Experiment009BossEntity boss) {
+            lightning.setDamage(damageProvider.sample(experiment009.getRandom()) * boss.getPhase().getDamageModifier(target));
+        } else lightning.setDamage(damageProvider.sample(experiment009.getRandom()));
 
         lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f || Experiment009BossEntity.shouldAlwaysDamageEntity(target));
 
@@ -188,11 +185,11 @@ public class AoEThunderStrikeGoal extends Goal {
         applyKnockBack(lightning);
     }
 
-    private void oldSpawn(LightningBolt lightning) {
+    protected void oldSpawn(LightningBolt lightning) {
         DelayedTask delayedTask = DelayedTask.schedule(20, () -> {
-            pathfinderMob.level().addFreshEntity(lightning);
+            experiment009.level().addFreshEntity(lightning);
             applyKnockBack(lightning);
-            pathfinderMob.swing(pathfinderMob.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+            experiment009.swing(experiment009.isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
             // recoil de knockback para trás
 //            if (target != null) {
 //                Vec3 dir = pathfinderMob.position().vectorTo(target.position()).normalize().scale(-0.5);
@@ -240,7 +237,7 @@ public class AoEThunderStrikeGoal extends Goal {
                 .getEntitiesOfClass(
                         LivingEntity.class,
                         getBoundingBoxFromLightningBolt(lightning).inflate(-0.5),
-                        (target) -> !target.is(lightning) && !target.is(pathfinderMob) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(target)
+                        (target) -> !target.is(lightning) && !target.is(experiment009) && EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(target)
                 );
 
         for (LivingEntity livingEntity : list) {
@@ -266,24 +263,22 @@ public class AoEThunderStrikeGoal extends Goal {
     @Override
     public void stop() {
         if (groundPos != null) {
-            pathfinderMob.teleportTo(groundPos.getX() + 0.5, groundPos.getY(), groundPos.getZ() + 0.5);
-            LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(pathfinderMob.level());
+            experiment009.teleportTo(groundPos.getX() + 0.5, groundPos.getY(), groundPos.getZ() + 0.5);
+            LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(experiment009.level());
             if (lightning != null) {
                 lightning.moveTo(groundPos.getX() + 0.5, groundPos.getY(), groundPos.getZ() + 0.5);
-                if (pathfinderMob instanceof ChangedEntity changedEntity) {
-                    lightning.setCause((ServerPlayer) changedEntity.getUnderlyingPlayer());
-                }
-                pathfinderMob.level().addFreshEntity(lightning);
+                lightning.setCause((ServerPlayer) experiment009.getUnderlyingPlayer());
+                experiment009.level().addFreshEntity(lightning);
             }
         }
 
         // Remove slow falling
-        pathfinderMob.removeEffect(MobEffects.SLOW_FALLING);
+        experiment009.removeEffect(MobEffects.SLOW_FALLING);
 
         this.target = null;
         this.groundPos = null;
-        this.cooldown = cooldownProvider.sample(this.pathfinderMob.getRandom());
-        if (pathfinderMob instanceof Experiment009BossEntity experiment009BossEntity) {
+        this.cooldown = cooldownProvider.sample(this.experiment009.getRandom());
+        if (experiment009 instanceof Experiment009BossEntity experiment009BossEntity) {
             experiment009BossEntity.setCastingAttack(false);
         }
     }

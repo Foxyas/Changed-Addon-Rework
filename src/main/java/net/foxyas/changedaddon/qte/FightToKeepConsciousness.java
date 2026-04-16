@@ -8,12 +8,10 @@ import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.ClientboundOpenFTKCScreenPacket;
 import net.foxyas.changedaddon.procedure.SummonEntityProcedure;
 import net.foxyas.changedaddon.util.PlayerUtil;
-import net.foxyas.changedaddon.variant.TransfurVariantInstanceExtensor;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
-import net.ltxprogrammer.changed.util.EntityUtil;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -50,8 +48,19 @@ public class FightToKeepConsciousness {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onPlayerTransfur(ProcessTransfur.KeepConsciousEvent event) {
+        if (event.player instanceof ServerPlayer player && ((event.keepConscious || event.shouldKeepConscious) || !player.level.getGameRules().getBoolean(ChangedAddonGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS))) {
+            ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
+            if (!vars.isTransfuredBySafeMethod) {
+                vars.isTransfuredBySafeMethod = true;
+                vars.syncPlayerVariables(player);
+            }
+            return;
+        }
+
         if (!(event.player instanceof ServerPlayer player) || event.shouldKeepConscious
-                || !player.level.getGameRules().getBoolean(ChangedAddonGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS)) return;
+                || !player.level.getGameRules().getBoolean(ChangedAddonGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS)) {
+            return;
+        }
 
         @Nullable
         TransfurVariantInstance<?> oldVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);
@@ -79,7 +88,7 @@ public class FightToKeepConsciousness {
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
 
-        if (instance != null && !vars.isTransfuredBySafeMethod) {
+        if (instance != null && !vars.isTransfuredBySafeMethod) {//FIXME make this bool be properly updated before re-enabling
             vars.timeAfterVictoryOfFTK++;
             vars.syncPlayerVariables(player);
         }
@@ -234,6 +243,7 @@ public class FightToKeepConsciousness {
             this.struggleSound = struggleSound;
             this.successSound = struggleSound;
         }
+
         MinigameType(float progressAmount, int removalTicks, @Nullable SoundEvent struggleSound, Supplier<Screen> supplier) {
             this.screen = supplier;
             this.progressAmount = progressAmount;

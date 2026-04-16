@@ -51,11 +51,9 @@ public class LightningComboAttackGoal extends Goal {
         attackCountProvider = attackCount;
         castDurationProvider = castDuration;
         damageProvider = damage;
-
-
         adjustDamageSource(holder);
 
-        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK, Flag.JUMP));
+        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     private DamageSource adjustDamageSource(PathfinderMob holder) {
@@ -108,7 +106,9 @@ public class LightningComboAttackGoal extends Goal {
 
         holder.getNavigation().stop();
         if (target.isRemoved() && target.isDeadOrDying()) return;
-        holder.getLookControl().setLookAt(target, 180, 180);
+        if (target.distanceTo(holder) > 0) {
+            holder.getLookControl().setLookAt(target, 180, 180);
+        }
     }
 
     protected void pickAttackPos() {
@@ -132,7 +132,9 @@ public class LightningComboAttackGoal extends Goal {
 
         if (target != null) {
             if (target.isRemoved() && target.isDeadOrDying()) return;
-            holder.getLookControl().setLookAt(target, 180, 180);
+            if (target.distanceTo(holder) > 0) {
+                holder.getLookControl().setLookAt(target, 180, 180);
+            }
         }
 
         if (wasBlocked > 0) {

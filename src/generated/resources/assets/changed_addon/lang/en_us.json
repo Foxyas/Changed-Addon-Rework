@@ -705,6 +705,7 @@
   "text.changed_addon.rp.guns_compatibility.claws_stuck": "Your claws are getting in the way of the safety switch!",
   "text.changed_addon.rp.guns_compatibility.no_fingers_for_trigger": "You lack the finger dexterity to pull the trigger!",
   "text.changed_addon.rp.guns_compatibility.paws_too_big": "Your paws are too bulky to fit in the trigger guard!",
+  "text.changed_addon.stop_cuddling": "Press %s to stop cuddling",
   "text.changed_addon.swim_speed": "Swim Speed = %s",
   "warn.rei.not.supported.move.items.but.right.container": "Move Items is not supported with this kind of workstation"
 }

@@ -41,6 +41,7 @@ public class LeapDiveGoal extends Goal {
     protected int ticks;
     protected BlockPos startGroundPos;
     protected Vec3 lateral = Vec3.ZERO;
+
     public LeapDiveGoal(PathfinderMob mob,
                         IntProvider cooldownProvider,
                         Vec3 followAscendMultiplier,
@@ -124,8 +125,10 @@ public class LeapDiveGoal extends Goal {
 
         LivingEntity t = mob.getTarget();
         if (t != null) {
-            mob.getLookControl().setLookAt(t, 90f, 90f);
-            mob.setYBodyRot(mob.yHeadRot);
+            if (t.distanceTo(mob) > 0) {
+                mob.getLookControl().setLookAt(t, 90f, 90f);
+                mob.setYBodyRot(mob.yHeadRot);
+            }
         }
 
         switch (phase) {
@@ -156,7 +159,9 @@ public class LeapDiveGoal extends Goal {
                             Vec3 dm = mob.position().vectorTo(t.position()).multiply(followAscendMultiplier.x, 0, followAscendMultiplier.z);
                             mob.setDeltaMovement(dm.x, dm.y, dm.z);
                         }
-                        mob.getLookControl().setLookAt(t, 90f, 90f);
+                        if (t.distanceTo(mob) > 0) {
+                            mob.getLookControl().setLookAt(t, 90f, 90f);
+                        }
                     }
                     mob.push(0, 1 * ascendSpeed, 0);
                 }

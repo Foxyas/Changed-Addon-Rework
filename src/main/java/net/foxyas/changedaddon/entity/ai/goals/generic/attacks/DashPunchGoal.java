@@ -13,8 +13,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
@@ -41,10 +39,11 @@ public class DashPunchGoal extends Goal {
             cooldown--;
             return false;
         }
-
         target = mob.getTarget();
-        if (target == null || target.isRemoved() && target.isDeadOrDying()) return false;
-        return target != null && target.isAlive() && mob.distanceTo(target) < 16 && mob.onGround();
+        // Fail-safe: Verificação de nulidade e estado da entidade
+        if (target == null || !target.isAlive() || target.isRemoved()) return false;
+
+        return mob.distanceTo(target) < 16 && mob.onGround();
     }
 
     @Override
@@ -53,21 +52,26 @@ public class DashPunchGoal extends Goal {
         chargeTicks = 0;
         dashTicks = 0;
 
+        // Para outros comportamentos de movimento para evitar conflitos físicos
         mob.getNavigation().stop();
-        if (target.isRemoved() && target.isDeadOrDying()) return;
-        mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+
+        // Efeitos visuais de início
+        if (mob.level() instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.EXPLOSION_EMITTER, mob.getX(), mob.getEyeY(), mob.getZ(), 1, 0, 0, 0, 0);
+
+            // Impacto inicial (Knockback em área)
+            for (LivingEntity living : mob.level().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(4),
+                    (e) -> e != mob && !e.isSpectator())) {
+
+                Vec3 delta = living.position().subtract(mob.position());
+                // Fail-safe: Se estiverem na mesma posição, empurra para frente da entidade
+                Vec3 knockDirection = delta.lengthSqr() < 1.0E-4D ? Vec3.directionFromRotation(0, mob.getYRot()) : delta.normalize();
+
+                living.push(knockDirection.x * 1.2, 0.5, knockDirection.z * 1.2);
+            }
+        }
+
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.0F, 1.0F);
-        if (mob.level instanceof ServerLevel server) {
-            server.sendParticles(
-                    ParticleTypes.EXPLOSION_EMITTER,
-                    mob.getX(), mob.getEyeY(), mob.getZ(),
-                    1, 0, 0, 0, 0
-            );
-        }
-        for (LivingEntity living : mob.level().getEntitiesOfClass(LivingEntity.class, mob.getBoundingBox().inflate(8), (livingEntity -> !livingEntity.isSpectator() && !livingEntity.is(mob)))) {
-            Vec3 knock = living.position().subtract(mob.position()).normalize().scale(1.2);
-            living.push(knock.x, knock.y * 1.25f, knock.z);
-        }
     }
 
     @Override
@@ -78,22 +82,20 @@ public class DashPunchGoal extends Goal {
         }
 
         switch (phase) {
-            case CHARGING:
-                handleCharging();
-                break;
-            case DASHING:
+            case CHARGING -> handleCharging();
+            case DASHING -> {
                 handleDashing();
                 handleBlockBreaking();
-                break;
-            default:
-                break;
+            }
         }
     }
 
     protected void handleCharging() {
         chargeTicks++;
         mob.getNavigation().stop();
-        mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        if (target.distanceTo(mob) > 0) {
+            mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        }
 
         // Charge particles
         if (mob.level instanceof ServerLevel server) {
@@ -126,127 +128,79 @@ public class DashPunchGoal extends Goal {
     protected void beginDash() {
         phase = Phase.DASHING;
         dashTicks = 0;
-
-        mob.getNavigation().stop();
-        mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         mob.level().playSound(null, mob.blockPosition(), SoundEvents.GOAT_LONG_JUMP, SoundSource.HOSTILE, 1.0F, 0.9F);
     }
 
     protected void handleDashing() {
         dashTicks++;
-        mob.getLookControl().setLookAt(target);
-        Vec3 direction = mob.getDeltaMovement().add(target.position().subtract(mob.position()).normalize().scale(0.6));
-        mob.setDeltaMovement(direction.x, direction.y, direction.z);
-        mob.hurtMarked = true;  // Forces client update
-
-        // Check for impact
-        if (mob.distanceTo(target) < 2.5) {
-            applyImpact();
-            stop();
+        if (target.distanceTo(mob) > 0) {
+            mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
         }
 
-        // Safety timeout
-        if (dashTicks > 25) {
+        Vec3 targetPos = target.position();
+        Vec3 mobPos = mob.position();
+        Vec3 relativeVec = targetPos.subtract(mobPos);
+        double distSq = relativeVec.lengthSqr();
+
+        // FAIL-SAFE CRÍTICO: Se a distância for quase zero, usa a rotação do mob para evitar NaN
+        Vec3 direction;
+        if (distSq < 1.0E-4D) {
+            direction = Vec3.directionFromRotation(0, mob.getYRot());
+        } else {
+            direction = relativeVec.normalize();
+        }
+
+        // Aplica o movimento
+        Vec3 movement = mob.getDeltaMovement().add(direction.scale(0.2)); // Escala menor para controle
+        if (movement.length() > 0.8) movement = movement.normalize().scale(0.8); // Limita velocidade máxima
+
+        mob.setDeltaMovement(movement.x, movement.y, movement.z);
+        mob.hurtMarked = true;
+
+        if (mob.distanceTo(target) < 2.0 || dashTicks > 30) {
+            if (mob.distanceTo(target) < 2.5) applyImpact();
             stop();
         }
     }
 
     protected void handleBlockBreaking() {
-        if (!(mob.level() instanceof ServerLevel serverLevel)) return;
+        if (!(mob.level() instanceof ServerLevel serverLevel) || dashTicks % 4 != 0) return;
 
-        if (dashTicks % 5 != 0) return;
-
-        BlockPos mobPos = mob.blockPosition();
-        int horizontalRadius = 3;
-        int verticalRadius = 3;
-
-        BlockPos.betweenClosedStream(
-                        mobPos.offset(-horizontalRadius, 0, -horizontalRadius),
-                        mobPos.offset(horizontalRadius, verticalRadius, horizontalRadius))
-                .map(BlockPos::immutable)
-                .filter(pos -> {
-                    int xi = pos.getX() - mobPos.getX();
-                    int yi = pos.getY() - mobPos.getY();
-                    int zi = pos.getZ() - mobPos.getZ();
-                    double distanceSq = (xi * xi) / (double) (9) + (yi * yi) / (double) (9) + (zi * zi) / (double) (9);
-                    return distanceSq <= 1.0;
-                })
-                .forEach(pos -> {
-                    if (pos.equals(mobPos.below())) return;
-
-                    var state = serverLevel.getBlockState(pos);
-
-                    if (isIronTierOrLower(state, serverLevel, pos)) {
-                        serverLevel.destroyBlock(pos, true, mob);
-                    }
-                });
-    }
-
-    /**
-     * Verifica se o bloco é destrutível por ferramentas de ferro ou inferiores.
-     */
-    protected boolean isIronTierOrLower(BlockState state, ServerLevel serverLevel, BlockPos pos) {
-        if (state.isAir()) return false;
-        // 1. Evitar Bedrock e indestrutíveis (Dureza negativa)
-        if (state.getDestroySpeed(serverLevel, pos) < 0) return false;
-
-        if (state.is(Tags.Blocks.NEEDS_NETHERITE_TOOL)) {
-            return false;
-        }
-
-        return true;
+        BlockPos center = mob.blockPosition().above();
+        // Reduzi o raio para 2 para melhorar performance e evitar "buracos" gigantes inúteis
+        BlockPos.betweenClosedStream(center.offset(-2, -1, -2), center.offset(2, 2, 2)).forEach(pos -> {
+            BlockState state = serverLevel.getBlockState(pos);
+            if (!state.isAir() && state.getDestroySpeed(serverLevel, pos) >= 0 && !state.is(Tags.Blocks.NEEDS_NETHERITE_TOOL)) {
+                serverLevel.destroyBlock(pos, true, mob);
+            }
+        });
     }
 
     protected void applyImpact() {
-        Level level = mob.level();
+        target.hurt(mob.damageSources().mobAttack(mob), 8.0F);
 
-        // Reverse knockback on self
-        Vec3 reverse = mob.position().subtract(target.position()).normalize().scale(2);
-        mob.setDeltaMovement(reverse.x, reverse.y * 1.25f, reverse.z);
-        mob.hurtMarked = true;
-        mob.hasImpulse = true;
+        Vec3 knock = target.position().subtract(mob.position());
+        Vec3 knockDir = knock.lengthSqr() < 1.0E-4D ? Vec3.directionFromRotation(0, mob.getYRot()) : knock.normalize();
 
-        // Knockback on target
-        Vec3 knock = target.position().subtract(mob.position()).normalize().scale(2);
-        target.push(knock.x, knock.y * 1.25f, knock.z);
-        // Damage
-        target.hurt(mob.damageSources().mobAttack(mob), 6.0F);
+        target.push(knockDir.x * 1.5, 0.4, knockDir.z * 1.5);
 
-        // Particles
-        if (level instanceof ServerLevel server) {
-            server.sendParticles(ParticleTypes.EXPLOSION, mob.getX(), mob.getEyeY(), mob.getZ(), 10, 0.5, 0.5, 0.5, 0.1);
+        if (mob.level() instanceof ServerLevel server) {
+            server.sendParticles(ParticleTypes.EXPLOSION, target.getX(), target.getY(), target.getZ(), 5, 0.2, 0.2, 0.2, 0.0);
         }
-
-        // Sound
-        level.playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.5F, 0.8F);
-        level.playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_KNOCKBACK, SoundSource.HOSTILE, 1.5F, 0.8F);
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        if (target.isSpectator() || target.isInvulnerable() || (target instanceof Player player && player.isCreative())) {
-            return false;
-        }
-        return phase != Phase.IDLE;
+        mob.level().playSound(null, mob.blockPosition(), SoundEvents.PLAYER_ATTACK_STRONG, SoundSource.HOSTILE, 1.0F, 1.0F);
     }
 
     @Override
     public void stop() {
         phase = Phase.IDLE;
-        cooldown = 40;
-        chargeTicks = 0;
-        dashTicks = 0;
+        cooldown = 50; // Aumentado um pouco o tempo de recarga
     }
 
     @Override
     public boolean isInterruptable() {
-        return false;
+        return false; // Mantém o dash até o fim ou timeout
     }
 
-    @Override
-    public boolean requiresUpdateEveryTick() {
-        return true;
-    }
 
     protected enum Phase {
         IDLE,

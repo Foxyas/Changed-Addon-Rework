@@ -2,33 +2,31 @@ package net.foxyas.changedaddon.event;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.block.interfaces.ConditionalLatexCoverableBlock;
-import net.foxyas.changedaddon.client.model.animations.CarryAbilityAnimation;
-import net.foxyas.changedaddon.client.model.animations.MagicAttackCastingAnimator;
-import net.foxyas.changedaddon.client.model.animations.PsychicGrabAbilityAnimation;
 import net.foxyas.changedaddon.command.*;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.entity.ai.goals.AlphaSleepGoal;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.LivingEntityDataExtensor;
-import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.foxyas.changedaddon.util.RPTransfurDenialMessages;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.ltxprogrammer.changed.Changed;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
-import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
-import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.item.Syringe;
+import net.ltxprogrammer.changed.network.packet.GrabEntityPacket;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.process.TransfurEvents;
 import net.minecraft.advancements.Advancement;
@@ -41,7 +39,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
@@ -51,8 +52,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.EntityPositionSource;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
@@ -61,12 +65,14 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.List;
 
@@ -172,6 +178,62 @@ public class CommonEvent {
         ext.setSleepCounter(1);
     }
 
+    @SubscribeEvent
+    public static void onBedInteract(PlayerInteractEvent.RightClickBlock event) {
+        Player player = event.getEntity();
+        if (player.isCrouching() || player.isSleeping() || !ChangedAddonVariables.ofOrDefault(player).isCuddling) return;
+
+        Level level = player.level;
+        BlockHitResult result = event.getHitVec();
+        BlockPos pos = result.getBlockPos();
+        BlockState state = level.getBlockState(pos);
+        if (!state.isBed(level, pos, player)) return;
+
+        if (state.hasProperty(BlockStateProperties.BED_PART) && state.getValue(BlockStateProperties.BED_PART) != BedPart.HEAD) {
+            //try find head pos
+            if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
+                BlockPos headPos = pos.relative(state.getValue(BlockStateProperties.HORIZONTAL_FACING));
+                BlockState head = level.getBlockState(headPos);
+                if (head.is(state.getBlock())
+                        && head.hasProperty(BlockStateProperties.BED_PART)
+                        && head.getValue(BlockStateProperties.BED_PART) == BedPart.HEAD) pos = headPos;
+            }
+        }
+
+        GrabEntityAbilityInstance selfGrab = ProcessTransfur.ifPlayerTransfurred(player, var -> var.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()), () -> null);
+        if (selfGrab != null && selfGrab.grabbedEntity != null) return;
+
+        List<Player> list = level.getEntitiesOfClass(Player.class, new AABB(pos), LivingEntity::isSleeping);
+        if (list.isEmpty()) return;
+
+        Player target = list.get(0);
+        if (!ChangedAddonVariables.ofOrDefault(target).isCuddling) return;
+
+        GrabEntityAbilityInstance targetGrab = ProcessTransfur.ifPlayerTransfurred(target, var -> var.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get()), () -> null);
+        if (targetGrab != null) {
+            if (targetGrab.grabbedEntity != null) return;
+
+            if (((GrabEntityAbilityExtensor)targetGrab).canGrabEntity(player) || !ProcessTransfur.isPlayerTransfurred(player)) {
+                if (targetGrab.grabEntity(player)) {
+                    Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> target), GrabEntityPacket.initialGrab(target, player));
+                    event.setCanceled(true);
+                }
+                return;
+            }
+        }
+
+        if (selfGrab == null) return;
+
+        if (((GrabEntityAbilityExtensor) selfGrab).canGrabEntity(target) || !ProcessTransfur.isPlayerTransfurred(target)) {
+            if (!selfGrab.grabEntity(target)) return;
+
+            BlockPos bed = target.getSleepingPos().get();
+            target.stopSleeping();
+            player.startSleepInBed(bed);
+            Changed.PACKET_HANDLER.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), GrabEntityPacket.initialGrab(player, target));
+            event.setCanceled(true);
+        }
+    }
 
     @SubscribeEvent
     public static void sendAlphasAlert(VanillaGameEvent event) {

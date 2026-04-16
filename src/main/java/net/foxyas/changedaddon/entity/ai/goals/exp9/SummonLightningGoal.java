@@ -28,6 +28,7 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
@@ -56,6 +57,7 @@ public class SummonLightningGoal extends Goal {
         castDurationProvider = castDuration;
         lightningDelayProvider = lightningDelay;
         damageProvider = damage;
+        setFlags(EnumSet.of(Flag.LOOK));
     }
 
     public static void lightning(ServerLevel level, double x, double y, double z, float damage) {
