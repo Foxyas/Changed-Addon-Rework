@@ -342,6 +342,29 @@ public final class ChangedAddonRenderTypes extends RenderType {
                             .setOutputState(OUTLINE_TARGET)
                             .createCompositeState(IS_OUTLINE)));
 
+    protected static final Function<Float, RenderStateShard.TransparencyStateShard> DYNAMIC_TRANSPARENCY = (alpha) -> new RenderStateShard.TransparencyStateShard(ChangedAddonMod.resourceLocString("dynamic_transparency"), () -> {
+        RenderSystem.enableBlend();
+        RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        RenderSystem.setShaderColor(1, 1, 1, alpha);
+    }, () -> {
+        RenderSystem.disableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+    });
+
+    private static final BiFunction<ResourceLocation, Float, RenderType> GLOW_DYNAMIC = Util.memoize((texture, alpha) -> {
+        RenderType.CompositeState rendertype$compositestate = RenderType.CompositeState.builder()
+                .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER)
+                .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
+                .setTransparencyState(DYNAMIC_TRANSPARENCY.apply(alpha))
+                .setCullState(CULL)
+                .setWriteMaskState(COLOR_DEPTH_WRITE)
+                .setOverlayState(OVERLAY)
+                .createCompositeState(true);
+
+        return create("glow_dynamic", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, rendertype$compositestate);
+    });
+
     // unused, just needed to extend RenderType for protected constants
     private ChangedAddonRenderTypes(String p_173178_, VertexFormat p_173179_, VertexFormat.Mode p_173180_, int p_173181_, boolean p_173182_, boolean p_173183_, Runnable p_173184_, Runnable p_173185_) {
         super(p_173178_, p_173179_, p_173180_, p_173181_, p_173182_, p_173183_, p_173184_, p_173185_);
@@ -402,6 +425,10 @@ public final class ChangedAddonRenderTypes extends RenderType {
 
     public static RenderType outlineWithTranslucencyCull(ResourceLocation location) {
         return OUTLINE_WITH_TRANSLUCENCY.apply(location, CULL);
+    }
+
+    public static RenderType glowDynamic(ResourceLocation location, float alpha) {
+        return GLOW_DYNAMIC.apply(location, alpha);
     }
 
     public static class ParticleRenderTypes {

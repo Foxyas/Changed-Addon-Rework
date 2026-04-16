@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.block;
 
+import net.foxyas.changedaddon.block.entity.LuminarCrystalSmallBlockEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
@@ -23,6 +25,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -41,7 +46,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
-public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleWaterloggedBlock {
+public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleWaterloggedBlock, EntityBlock {
 
     public static final BooleanProperty HEARTED = BooleanProperty.create("hearted");
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -67,6 +72,11 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
         this.registerDefaultState(this.stateDefinition.any().setValue(HEARTED, false).setValue(FACING, Direction.UP).setValue(WATERLOGGED, false));
 
     }
+
+//    @Override
+//    public @NotNull RenderShape getRenderShape(@NotNull BlockState pState) {
+//        return RenderShape.ENTITYBLOCK_ANIMATED;
+//    }
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
@@ -125,6 +135,23 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
         for (Direction direction : Direction.values()) {
             LuminarCrystalBlock.spawnParticleOnFace(serverLevel, pos, direction, 2, 0.01f);
         }
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
+        return new LuminarCrystalSmallBlockEntity(pPos, pState);
+    }
+
+    @Nullable
+    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> pServerType, BlockEntityType<E> pClientType, BlockEntityTicker<? super E> pTicker) {
+        return pClientType == pServerType ? (BlockEntityTicker<A>) pTicker : null;
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
+        return createTickerHelper(pBlockEntityType, ChangedAddonBlockEntities.LUMINAR_CRYSTAL_SMALL.get(), (level, pPos, state, blockEntity) -> {
+            blockEntity.tick(level, pPos, state);
+        });
     }
 
     @Override
