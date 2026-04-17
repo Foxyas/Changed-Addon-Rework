@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import net.foxyas.changedaddon.util.PlayerUtil;
 import net.ltxprogrammer.changed.Changed;
 import net.ltxprogrammer.changed.command.CommandTransfur;
 import net.ltxprogrammer.changed.entity.TransfurCause;
@@ -83,6 +84,9 @@ public class TransfurMe {
         }
 
         TransfurVariant<?> variant = ChangedRegistry.TRANSFUR_VARIANT.get().getValue(finalFormId);
+        if (ProcessTransfur.isPlayerTransfurred(player)) {
+            PlayerUtil.unTransfurPlayer(player);
+        }
 
         ProcessTransfur.transfur(player, ImmediateTransfurDecision.safe(variant, cause, newEntity -> {
             if (tag != null) {

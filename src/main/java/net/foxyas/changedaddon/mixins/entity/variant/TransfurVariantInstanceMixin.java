@@ -95,18 +95,6 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         maySendDataUpdate();
     }
 
-    private boolean transfurredBySafeMethod = false;
-
-    @Override
-    public boolean isTransfurredBySafeMethod() {
-        return transfurredBySafeMethod;
-    }
-
-    @Override
-    public void setTransfurredBySafeMethod(boolean value) {
-        transfurredBySafeMethod = value;
-    }
-
     @Override
     public KeyStateTracker getSecondAbilityKey() {
         return secondAbilityKey;
@@ -250,7 +238,6 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
             stats.saveExtraData(returnValue);
         }
 
-        returnValue.putBoolean("transfurredBySafeMethod", isTransfurredBySafeMethod());
         returnValue.putBoolean("untransfurImmunity", getUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL));
         if (!getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND)) {
             returnValue.putBoolean("untransfurImmunityCommand", getUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND));
@@ -262,8 +249,7 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         if (this.getChangedEntity() instanceof VariantExtraStats variantExtraStats) {
             variantExtraStats.readExtraData(tag);
         }
-        if (tag.contains("transfurredBySafeMethod"))
-            setTransfurredBySafeMethod(tag.getBoolean("transfurredBySafeMethod"));
+
         if (tag.contains("untransfurImmunity"))
             setUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL, tag.getBoolean("untransfurImmunity"));
         if (tag.contains("untransfurImmunityCommand"))

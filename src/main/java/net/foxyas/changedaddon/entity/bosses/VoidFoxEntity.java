@@ -1140,7 +1140,7 @@ public class VoidFoxEntity extends ChangedEntity implements ICrawlAndSwimAbleEnt
 
     // Don't know why but getId do not work fine with the BossMusicHandler
     @Override
-    public ResourceLocation getBossMusic() {
+    public ResourceLocation getBossMusicId() {
         if (!isBoss()) return null;
 
         if (this.isMoreOp()) {

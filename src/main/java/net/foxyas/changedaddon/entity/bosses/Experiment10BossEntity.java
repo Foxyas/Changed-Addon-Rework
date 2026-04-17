@@ -127,7 +127,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     }
 
     @Override
-    public @Nullable ResourceLocation getBossMusic() {
+    public @Nullable ResourceLocation getBossMusicId() {
         return ChangedAddonSoundEvents.EXP10_THEME.get().getLocation();
     }
 

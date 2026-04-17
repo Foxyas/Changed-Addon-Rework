@@ -4,12 +4,10 @@ import net.foxyas.changedaddon.entity.api.IHasBossMusic;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -17,7 +15,6 @@ import java.util.*;
 public class BossMusicHandler {
 
     private static final Minecraft mc = Minecraft.getInstance();
-    // Agora suportando vários bosses
     private static final Map<IHasBossMusic, FadingBossMusicSound> activeBosses = new HashMap<>();
 
     public static void tick(ClientLevel level) {
@@ -46,7 +43,7 @@ public class BossMusicHandler {
                         playMusic(boss);
                     }
                     // Se a música mudou (ex: fase nova)
-                    else if (sound.getLocation() != boss.getBossMusic()) {
+                    else if (sound.getLocation() != boss.getBossMusicId()) {
                         stopMusic(boss);
                         playMusic(boss);
                     }
@@ -54,7 +51,6 @@ public class BossMusicHandler {
             }
         }
 
-        // Agora vamos limpar bosses que não estão mais válidos
         Iterator<Map.Entry<IHasBossMusic, FadingBossMusicSound>> it = activeBosses.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<IHasBossMusic, FadingBossMusicSound> entry = it.next();
@@ -70,8 +66,7 @@ public class BossMusicHandler {
 
     private static void playMusic(IHasBossMusic boss) {
         if (boss == null) return;
-        ResourceLocation music = boss.getBossMusic();
-        SoundEvent event = ForgeRegistries.SOUND_EVENTS.getValue(music);
+        SoundEvent event = boss.getSoundForMusic();
         if (event == null) return;
 
         FadingBossMusicSound sound = new FadingBossMusicSound(event, boss.getSelf());
