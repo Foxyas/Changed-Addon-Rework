@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(LatexAssimilationDecision.class)
+@Mixin(value = LatexAssimilationDecision.class, remap = false)
 public abstract class LatexAssimilationDecisionMixin {
 
     @Shadow
     public abstract DamageSource getDamageSource(RegistryAccess registryAccess);
 
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;discard()V"),
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;discard()V", remap = true),
             method = "lambda$transfurByAbsorption$8")
     private void dropEquipment(LivingEntity target, IAbstractChangedEntity transfurSource, CallbackInfoReturnable<IAbstractChangedEntity> cir) {
         LivingEntityAccessor access = (LivingEntityAccessor) target;
