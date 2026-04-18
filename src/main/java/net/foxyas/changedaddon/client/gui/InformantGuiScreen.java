@@ -10,6 +10,7 @@ import net.foxyas.changedaddon.network.packet.InformantBlockGuiKeyPacket;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -141,13 +142,14 @@ public class InformantGuiScreen extends AbstractContainerScreen<InformantGuiMenu
             int centerY = topPos + imageHeight / 2;
             InventoryScreen.renderEntityInInventoryFollowsMouse(pGuiGraphics, centerX, centerY, 30, centerX - mouseX, centerY - (26 + 26) - mouseY, entity);
         }
+        TransfurVariantInstance<?> instance = TransfurVariantInstance.variantFor(tf, player);
 
-        float hp = TransfurVariantUtils.GetExtraHp(tf, player);
-        float swimSpeed = TransfurVariantUtils.GetSwimSpeed(tf, player);
-        float landSpeed = TransfurVariantUtils.GetLandSpeed(tf, player);
+        float hp = TransfurVariantUtils.getExtraHpOfVariantBasedOnPlayer(tf, player);
+        float swimSpeed = TransfurVariantUtils.getSwimSpeedOfVariantBasedOnPlayer(tf, player);
+        float landSpeed = TransfurVariantUtils.getLandSpeedOfVariantBasedOnPlayer(tf, player);
         float jumpStrength = TransfurVariantUtils.GetJumpStrength(tf, player);
-        boolean canFlyOrGlide = TransfurVariantUtils.CanGlideAndFly(tf);
-        String miningStrength = TransfurVariantUtils.getMiningStrength(tf);
+        boolean canFlyOrGlide = TransfurVariantUtils.canVariantGlide(instance);
+        String miningStrength = TransfurVariantUtils.getMiningStrengthOfVariant(tf, player);
         float extraHp = hp / 2f;
         float landSpeedPct = landSpeed == 0 ? 0 : (landSpeed - 1) * 100;
         float swimSpeedPct = swimSpeed == 0 ? 0 : (swimSpeed - 1) * 100;

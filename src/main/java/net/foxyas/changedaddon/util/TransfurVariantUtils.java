@@ -1,7 +1,9 @@
 package net.foxyas.changedaddon.util;
 
+import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedEntities;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
@@ -120,7 +122,7 @@ public class TransfurVariantUtils {
         return variant == null ? null : ChangedEntities.getCachedEntity(level, variant.getEntityType());
     }
 
-    public static float GetLandSpeed(TransfurVariant<?> variant, Player player) {
+    public static float getLandSpeedOfVariantBasedOnPlayer(TransfurVariant<?> variant, Player player) {
         ChangedEntity entity = entity(variant, player.level);
         if (entity == null) return 0;
 
@@ -128,7 +130,7 @@ public class TransfurVariantUtils {
         return (float) (entity.getAttributeBaseValue(Attributes.MOVEMENT_SPEED) * 0.1F / BASE_ATTRIBUTES.get().getBaseValue(Attributes.MOVEMENT_SPEED));
     }
 
-    public static float GetSwimSpeed(TransfurVariant<?> variant, Player player) {
+    public static float getSwimSpeedOfVariantBasedOnPlayer(TransfurVariant<?> variant, Player player) {
         ChangedEntity entity = entity(variant, player.level);
         if (entity == null) return 0;
 
@@ -136,7 +138,7 @@ public class TransfurVariantUtils {
         return (float) (entity.getAttributeBaseValue(ForgeMod.SWIM_SPEED.get()) / BASE_ATTRIBUTES.get().getBaseValue(ForgeMod.SWIM_SPEED.get()));
     }
 
-    public static float GetExtraHp(TransfurVariant<?> variant, Player player) {
+    public static float getExtraHpOfVariantBasedOnPlayer(TransfurVariant<?> variant, Player player) {
         ChangedEntity entity = entity(variant, player.level);
         if (entity == null) return 0;
 
@@ -144,7 +146,7 @@ public class TransfurVariantUtils {
         return entity.getMaxHealth() - Player.MAX_HEALTH;
     }
 
-    public static String getMiningStrength(TransfurVariant<?> variant) {
+    public static String getMiningStrengthOfVariant(TransfurVariant<?> variant, Player player) {
         return variant == null ? "unknown" : variant.miningStrength.name().toLowerCase();
     }
 
@@ -163,9 +165,14 @@ public class TransfurVariantUtils {
 //        }
 //    }
 
-    public static boolean CanGlideAndFly(TransfurVariant<?> variant) {
-        return variant != null && variant.canGlide;
+    public static boolean canVariantGlide(TransfurVariantInstance<?> variantInstance) {
+        return variantInstance != null && variantInstance.canElytraGlide();
     }
+
+    public static boolean canVariantFly(TransfurVariantInstance<?> variantInstance) {
+        return variantInstance != null && variantInstance.canCreativeFly();
+    }
+
 
     public static boolean CanClimb(TransfurVariant<?> variant) {
         return variant != null && variant.canClimb;

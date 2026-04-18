@@ -15,6 +15,8 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 public class CarryAbilityAnimation<T extends ChangedEntity, M extends AdvancedHumanoidModel<T>> extends HumanoidAnimator.Animator<T, M> {
 
     private final ModelPart head;
@@ -64,11 +66,21 @@ public class CarryAbilityAnimation<T extends ChangedEntity, M extends AdvancedHu
        ========================= */
 
     private boolean hasCarryAbilitySelected(ChangedEntity entity) {
-        return IAbstractChangedEntity.forEitherSafe(entity)
-                .map(IAbstractChangedEntity::getTransfurVariantInstance)
-                .map(TransfurVariantInstance::getSelectedAbility)
-                .map(a -> a.ability instanceof CarryAbility)
-                .orElse(false);
+        Optional<TransfurVariantInstance<?>> variantInstanceOptional;
+        try {
+            variantInstanceOptional = IAbstractChangedEntity.forEitherSafe(entity).map(IAbstractChangedEntity::getTransfurVariantInstance);
+        } catch (IllegalArgumentException e) {
+            variantInstanceOptional = Optional.empty();
+        }
+
+        if (variantInstanceOptional.isPresent()) {
+            return variantInstanceOptional
+                    .map(TransfurVariantInstance::getSelectedAbility)
+                    .map(a -> a.ability instanceof CarryAbility)
+                    .orElse(false);
+        }
+
+        return false;
     }
 
     private boolean hasPassenger(ChangedEntity entity) {

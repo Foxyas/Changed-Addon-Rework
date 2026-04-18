@@ -667,7 +667,8 @@ public class ENLanguageProvider extends LanguageProvider {
 
         addText("additionalHealth", "Additional Health = %s");
         addText("additionalHealth.Hearts", " Hearts");
-        addText("canGlide/Fly", "Glide/Fly = %s");
+        addText("canElytraGlide", "Elytra glide = %s");
+        addText("canCreativeFly", "Creative fly = %s");
         addText("jumpStrength", "Jump Strength = %s");
         addText("land_speed", "Land Speed = %s");
         addText("legs", "Amount of Legs = %s");

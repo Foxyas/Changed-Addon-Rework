@@ -522,7 +522,7 @@ public class CommonEvent {
         CompoundTag playerData = player.getPersistentData();
         if (playerData.contains("TransfurData")) {
             int ticks = playerData.getCompound("TransfurData").getInt("SlowSwimInWaterTicks");
-            if (TransfurVariantUtils.GetSwimSpeed(ProcessTransfur.getPlayerTransfurVariant(player).getParent(), player) > 0.95) {
+            if (TransfurVariantUtils.getSwimSpeedOfVariantBasedOnPlayer(ProcessTransfur.getPlayerTransfurVariant(player).getParent(), player) > 0.95) {
                 if (ticks != 0) {
                     playerData.getCompound("TransfurData").putInt("SlowSwimInWaterTicks", 0);
                 }
@@ -547,7 +547,7 @@ public class CommonEvent {
 
             playerData.getCompound("TransfurData").putInt("SlowSwimInWaterTicks", ticks);
         } else {
-            if (TransfurVariantUtils.GetSwimSpeed(ProcessTransfur.getPlayerTransfurVariant(player).getParent(), player) > 0.95) {
+            if (TransfurVariantUtils.getSwimSpeedOfVariantBasedOnPlayer(ProcessTransfur.getPlayerTransfurVariant(player).getParent(), player) > 0.95) {
                 if (playerData.contains("TransfurData")) {
                     playerData.remove("TransfurData");
                 }

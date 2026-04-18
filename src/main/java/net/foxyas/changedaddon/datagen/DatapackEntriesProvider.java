@@ -35,13 +35,13 @@ import java.util.concurrent.CompletableFuture;
 public class DatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
 
     public static final ResourceKey<StructureProcessorList> GRAVITY = ResourceKey.create(Registries.PROCESSOR_LIST, ChangedAddonMod.resourceLoc("gravity_rot"));
-    //.add(Registries.TRIM_PATTERN, TrimPatterns::bootstrap)//ArmorTrims::bootstrapPatterns)
-    //.add(Registries.TRIM_MATERIAL, TrimMaterials::bootstrap);//ArmorTrims::bootstrapMaterials);
     public static final ResourceKey<StructureProcessorList> DAZED_METEOR_POLL = ResourceKey.create(Registries.PROCESSOR_LIST, ChangedAddonMod.resourceLoc("dazed_meteor_rot"));
     private static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.BIOME, DatapackEntriesProvider::biome)
             .add(Registries.CONFIGURED_FEATURE, ConfiguredFeatureProvider::bootstrap)
             .add(Registries.PLACED_FEATURE, PlacedFeatureProvider::bootstrap)
+    //.add(Registries.TRIM_PATTERN, TrimPatterns::bootstrap)//ArmorTrims::bootstrapPatterns)
+    //.add(Registries.TRIM_MATERIAL, TrimMaterials::bootstrap);//ArmorTrims::bootstrapMaterials);
             .add(ForgeRegistries.Keys.BIOME_MODIFIERS, BiomeModifierProvider::bootstrap)
             .add(Registries.DAMAGE_TYPE, DatapackEntriesProvider::damageType)
             .add(Registries.PROCESSOR_LIST, DatapackEntriesProvider::processorList)
