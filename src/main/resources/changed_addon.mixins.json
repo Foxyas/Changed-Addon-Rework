@@ -67,6 +67,7 @@
     "mods.changed.FacilityMixin",
     "mods.changed.FacilitySinglePieceAccessor",
     "mods.changed.FacilitySinglePieceInstanceAccessor",
+    "mods.changed.LatexAssimilationDecisionMixin",
     "mods.changed.LatexTypeMixin",
     "mods.changed.ProcessTransfurMixin",
     "mods.changed.TransfurVariantMixin",
@@ -83,7 +84,6 @@
     "defaultRequire": 1
   },
   "client": [
-    "client.gui.InBedChatScreenMixin",
     "client.DeathScreenMixin",
     "client.EventHandlerClientMixin",
     "client.HumanoidModelMixin",
@@ -91,6 +91,7 @@
     "client.MouseHandlerAccessor",
     "client.PlayerModelMixin",
     "client.PlayerRendererMixin",
+    "client.gui.InBedChatScreenMixin",
     "client.gui.InventoryScreenMixin",
     "client.renderer.AdvancedHumanoidModelMixin",
     "client.renderer.AdvancedHumanoidRendererMixin",
