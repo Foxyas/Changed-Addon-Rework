@@ -220,11 +220,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         List<InfoWidget> infoWidgetList = new ArrayList<>();
         InfoWidget loreWidget;
         InfoWidget attributeWidget = null;
-        radial.clearPoints();
-        for (AttributeInstance attributeInstance : entity.getAttributes().getSyncableAttributes()) {
-            Attribute attribute = attributeInstance.getAttribute();
-            radial.addAttributePoint(attribute, Component.translatable(attribute.getDescriptionId()).getString(), attributeInstance.getValue());
-        }
+        radial.setComparator(entity);
 
         if (entity instanceof IBestiaryEntityData data) {
             for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {

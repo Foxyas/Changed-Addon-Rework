@@ -11,6 +11,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -18,176 +19,202 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DynamicRadialWidget extends Widget {
-    private final List<RadialData> points = new ArrayList<>();
+    private final List<AttributeDefinition> attributes = new ArrayList<>();
     private final int radius;
-    private final int color;
-    private LivingEntity targetEntity;
 
-    public DynamicRadialWidget(int radius, int color) {
+    private int mainColor;
+    private int comparatorColor = 0x60555555; // Semi-transparent gray
+    private int backgroundColor = 0x801A1A1A; // Default dark background
+
+    private LivingEntity reference;
+    private LivingEntity comparator;
+
+    public DynamicRadialWidget(int radius, int mainColor) {
         this.radius = radius;
-        this.color = color;
-        this.targetEntity = Minecraft.getInstance().player;
+        this.mainColor = mainColor;
+        this.reference = Minecraft.getInstance().player;
     }
 
-    public void setTargetEntity(LivingEntity entity) {
-        this.targetEntity = entity;
+    // --- Builder Methods ---
+
+    public DynamicRadialWidget setReference(LivingEntity entity) {
+        this.reference = entity;
+        return this;
     }
 
-    public void clearPoints() {
-        this.points.clear();
+    public DynamicRadialWidget setComparator(LivingEntity entity) {
+        this.comparator = entity;
+        return this;
+    }
+
+    public DynamicRadialWidget withMainColor(int color) {
+        this.mainColor = color;
+        return this;
+    }
+
+    public DynamicRadialWidget withComparatorColor(int color) {
+        this.comparatorColor = color;
+        return this;
+    }
+
+    /**
+     * Set the color for the background circular grid.
+     */
+    public DynamicRadialWidget withBackgroundColor(int color) {
+        this.backgroundColor = color;
+        return this;
+    }
+
+    public void addAttribute(Attribute attribute, String label, double maxValue) {
+        this.attributes.add(new AttributeDefinition(attribute, label, maxValue));
+    }
+
+    public void clearAttributes() {
+        this.attributes.clear();
     }
 
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-        if (points.size() < 3) return;
+        if (attributes.size() < 3) return;
 
-        float centerX = this.getOrigin().x + radius;
-        float centerY = this.getOrigin().y + radius;
-        float angleStep = (float) (Math.PI * 2) / points.size();
+        float cx = this.getOrigin().x + radius;
+        float cy = this.getOrigin().y + radius;
+        float step = (float) (Math.PI * 2) / attributes.size();
 
-        renderBackground(graphics, centerX, centerY, angleStep);
-        renderPolygon(graphics, centerX, centerY, angleStep);
-        renderLabelsAndHitboxes(graphics, centerX, centerY, angleStep, mouseX, mouseY);
-    }
-
-    public void addAttributePoint(Attribute attribute, String label, double maxValue) {
-        if (targetEntity == null) return;
-
-        AttributeInstance instance = targetEntity.getAttribute(attribute);
-        double current = 1;
-        double base = 1;
-        if (instance != null) {
-            current = instance.getValue();
-            base = instance.getBaseValue();
-        }
-        double ratio = Mth.clamp(current / maxValue, 0.0, 1.0);
-
-        double diff = ((current - base) / base) * 100.0;
-        String prefix = diff >= 0 ? "+" : "";
-
-        List<Component> tooltip = new ArrayList<>();
-        tooltip.add(Component.translatable(attribute.getDescriptionId()).append(": " + (int)current));
-        tooltip.add(Component.literal(String.format("Base: %.1f (%s%.1f%%)", base, prefix, diff)));
-
-        this.points.add(new RadialData(label, ratio, tooltip));
-    }
-
-    private void renderBackground(GuiGraphics graphics, float cx, float cy, float step) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.disableDepthTest();
 
+        // 1. Background Layer (Solid concentric circles)
+        renderBackgroundGrid(graphics, cx, cy, step);
+
+        // 2. Comparator Layer (Reference shadow)
+        if (comparator != null) {
+            renderEntityLayer(graphics, cx, cy, step, comparator, comparatorColor, 0.4f);
+        }
+
+        // 3. Target Layer (Main filled polygon)
+        renderEntityLayer(graphics, cx, cy, step, reference, mainColor, 0.8f);
+
+        // 4. Interaction Layer
+        renderLabelsAndInteraction(graphics, cx, cy, step, mouseX, mouseY);
+
+        RenderSystem.enableDepthTest();
+    }
+
+    private void renderBackgroundGrid(GuiGraphics graphics, float cx, float cy, float step) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
         Matrix4f matrix = graphics.pose().last().pose();
 
-        // 1. GRID FILLED
+        float a = (backgroundColor >> 24 & 255) / 255.0F;
+        float r = (backgroundColor >> 16 & 255) / 255.0F;
+        float g = (backgroundColor >> 8 & 255) / 255.0F;
+        float b = (backgroundColor & 255) / 255.0F;
+
         float[] levels = {1.0f, 0.75f, 0.5f, 0.25f};
-        for (int i = 0; i < levels.length; i++) {
-            float currentRadius = radius * levels[i];
-            float brightness = (i % 2 == 0) ? 0.12f : 0.08f;
-            float alpha = 0.6f; // Aumentado para melhor visibilidade
+        for (float level : levels) {
+            float currentRadius = radius * level;
+            RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
+            // Start TRIANGLE_FAN from center to ensure it is filled
             buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-            buffer.vertex(matrix, cx, cy, 0).color(brightness, brightness, brightness, alpha).endVertex();
+            buffer.vertex(matrix, cx, cy, 0).color(r, g, b, a).endVertex();
 
-            for (int j = 0; j <= points.size(); j++) {
-                float angle = (j % points.size()) * step - (float) Math.PI / 2;
+            for (int j = 0; j <= attributes.size(); j++) {
+                float angle = (j % attributes.size()) * step - (float) Math.PI / 2;
                 float vx = cx + (Mth.cos(angle) * currentRadius);
                 float vy = cy + (Mth.sin(angle) * currentRadius);
-                buffer.vertex(matrix, vx, vy, 0).color(brightness, brightness, brightness, alpha).endVertex();
+                buffer.vertex(matrix, vx, vy, 0).color(r, g, b, a).endVertex();
             }
             tesselator.end();
         }
-
-        // 2. GRID LINES (WEB)
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        buffer.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
-        for (int i = 0; i < points.size(); i++) {
-            float angle = i * step - (float) Math.PI / 2;
-            float x2 = cx + (Mth.cos(angle) * radius);
-            float y2 = cy + (Mth.sin(angle) * radius);
-
-            // Axis lines
-            buffer.vertex(matrix, cx, cy, 0).color(1f, 1f, 1f, 0.2f).endVertex();
-            buffer.vertex(matrix, x2, y2, 0).color(1f, 1f, 1f, 0.2f).endVertex();
-        }
-        tesselator.end();
     }
 
-    private void renderPolygon(GuiGraphics graphics, float cx, float cy, float step) {
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-
+    private void renderEntityLayer(GuiGraphics graphics, float cx, float cy, float step, LivingEntity entity, int colorInt, float alphaMult) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
         Matrix4f matrix = graphics.pose().last().pose();
 
-        float a = (float) (color >> 24 & 255) / 255.0F;
-        float r = (float) (color >> 16 & 255) / 255.0F;
-        float g = (float) (color >> 8 & 255) / 255.0F;
-        float b = (float) (color & 255) / 255.0F;
+        float a = ((colorInt >> 24 & 255) / 255.0F) * alphaMult;
+        float r = (colorInt >> 16 & 255) / 255.0F;
+        float g = (colorInt >> 8 & 255) / 255.0F;
+        float b = (colorInt & 255) / 255.0F;
 
-        // 1. POLYGON FILL
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+
+        // --- FILLED POLYGON ---
         buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
-        // Centro do polígono (levemente mais transparente para efeito de gradiente)
-        buffer.vertex(matrix, cx, cy, 0).color(r, g, b, a * 0.6f).endVertex();
+        // Center vertex ensures the polygon is "filled" (recheado)
+        buffer.vertex(matrix, cx, cy, 0).color(r, g, b, a * 0.5f).endVertex();
 
-        for (int i = 0; i <= points.size(); i++) {
-            int idx = i % points.size();
-            float angle = idx * step - (float) Math.PI / 2;
-            float val = (float) Mth.clamp(points.get(idx).value, 0.05, 1.0); // 0.05 min para não sumir no centro
+        for (int i = 0; i <= attributes.size(); i++) {
+            AttributeDefinition entry = attributes.get(i % attributes.size());
+            float ratio = getAttributeRatio(entity, entry);
+            float angle = (i % attributes.size()) * step - (float) Math.PI / 2;
 
-            float vx = cx + (Mth.cos(angle) * (radius * val));
-            float vy = cy + (Mth.sin(angle) * (radius * val));
+            float vx = cx + (Mth.cos(angle) * (radius * ratio));
+            float vy = cy + (Mth.sin(angle) * (radius * ratio));
             buffer.vertex(matrix, vx, vy, 0).color(r, g, b, a).endVertex();
         }
         tesselator.end();
 
-        // 2. POLYGON OUTLINE
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        // --- OUTLINE ---
         buffer.begin(VertexFormat.Mode.DEBUG_LINE_STRIP, DefaultVertexFormat.POSITION_COLOR);
-        for (int i = 0; i <= points.size(); i++) {
-            int idx = i % points.size();
-            float angle = idx * step - (float) Math.PI / 2;
-            float val = (float) Mth.clamp(points.get(idx).value, 0.05, 1.0);
+        for (int i = 0; i <= attributes.size(); i++) {
+            AttributeDefinition entry = attributes.get(i % attributes.size());
+            float ratio = getAttributeRatio(entity, entry);
+            float angle = (i % attributes.size()) * step - (float) Math.PI / 2;
 
-            float vx = cx + (Mth.cos(angle) * (radius * val));
-            float vy = cy + (Mth.sin(angle) * (radius * val));
+            float vx = cx + (Mth.cos(angle) * (radius * ratio));
+            float vy = cy + (Mth.sin(angle) * (radius * ratio));
             buffer.vertex(matrix, vx, vy, 0).color(r, g, b, 1.0f).endVertex();
         }
         tesselator.end();
     }
 
-    private void renderLabelsAndHitboxes(GuiGraphics graphics, float cx, float cy, float step, int mx, int my) {
+    private float getAttributeRatio(LivingEntity entity, AttributeDefinition entry) {
+        if (entity == null) return 0.05f;
+        AttributeInstance inst = entity.getAttribute(entry.attribute);
+        if (inst == null) return 0.05f;
+
+        double val = inst.getValue();
+        // Speed normalization for fair comparison
+        if (entry.attribute == Attributes.MOVEMENT_SPEED) val *= 10.0;
+
+        return (float) Mth.clamp(val / entry.maxValue, 0.05, 1.0);
+    }
+
+    private void renderLabelsAndInteraction(GuiGraphics graphics, float cx, float cy, float step, int mx, int my) {
         Font font = Minecraft.getInstance().font;
-        for (int i = 0; i < points.size(); i++) {
+        for (int i = 0; i < attributes.size(); i++) {
+            AttributeDefinition entry = attributes.get(i);
             float angle = i * step - (float) Math.PI / 2;
-            int lx = (int) (cx + (Mth.cos(angle) * (radius + 14)));
-            int ly = (int) (cy + (Mth.sin(angle) * (radius + 14)));
+            int lx = (int) (cx + (Mth.cos(angle) * (radius + 15)));
+            int ly = (int) (cy + (Mth.sin(angle) * (radius + 15)));
 
-            RadialData data = points.get(i);
-            Component text = Component.literal(data.label);
-            int width = font.width(text);
+            graphics.drawCenteredString(font, entry.label, lx, ly - 4, 0xFFFFFF);
 
-            graphics.drawCenteredString(font, text, lx, ly - 4, 0xFFFFFF);
-
+            int width = font.width(entry.label);
             if (mx >= lx - width / 2 && mx <= lx + width / 2 && my >= ly - 10 && my <= ly + 5) {
-                graphics.renderComponentTooltip(font, data.toolTip, mx, my);
+                List<Component> tooltip = new ArrayList<>();
+                tooltip.add(Component.translatable(entry.attribute.getDescriptionId()).append(": " + formatValue(reference, entry)));
+                if (comparator != null) {
+                    tooltip.add(Component.literal("Reference: " + formatValue(comparator, entry)).withStyle(s -> s.withColor(0xAAAAAA)));
+                }
+                graphics.renderComponentTooltip(font, tooltip, mx, my);
             }
         }
     }
 
-    public static class RadialData {
-        public final String label;
-        public final double value;
-        public final List<Component> toolTip;
-
-        public RadialData(String label, double value, List<Component> toolTip) {
-            this.label = label;
-            this.value = value;
-            this.toolTip = toolTip == null ? new ArrayList<>() : toolTip;
-        }
+    private String formatValue(LivingEntity entity, AttributeDefinition entry) {
+        if (entity == null) return "0.00";
+        AttributeInstance inst = entity.getAttribute(entry.attribute);
+        if (inst == null) return "0.00";
+        double val = inst.getValue();
+        if (entry.attribute == Attributes.MOVEMENT_SPEED) val *= 10.0;
+        return String.format("%.2f", val);
     }
+
+    private record AttributeDefinition(Attribute attribute, String label, double maxValue) {}
 }
