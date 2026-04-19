@@ -1,7 +1,10 @@
 package net.zaharenko424.cmrs.client.gui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -11,7 +14,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -19,10 +21,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * RPG-style Radial Widget that automatically compares attributes between two entities.
- * No manual lists required.
- */
 public class DynamicRadialWidget extends Widget {
     private final int radius;
     private int mainColor;
@@ -44,15 +42,19 @@ public class DynamicRadialWidget extends Widget {
         return this;
     }
 
+    public DynamicRadialWidget setComparator(LivingEntity comparator) {
+        this.comparator = comparator;
+        return this;
+    }
+
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         if (reference == null) return;
 
-        // Get all active attributes from the reference entity
+        // Filtra atributos que ambas as entidades possuem
         Collection<AttributeInstance> instances = reference.getAttributes().getSyncableAttributes();
         List<AttributeInstance> relevantAttrs = instances.stream()
-                .filter((i) -> comparator.getAttributes().hasAttribute(i.getAttribute()))
-                //.limit(8) // Limit to 8 to keep the RPG mesh readable
+                .filter((i) -> comparator != null && comparator.getAttributes().hasAttribute(i.getAttribute()))
                 .collect(Collectors.toList());
 
         int count = relevantAttrs.size();
@@ -64,72 +66,104 @@ public class DynamicRadialWidget extends Widget {
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.disableDepthTest();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
-        // 1. Background Mesh (Full Shape)
+        // 1. Background Mesh (Sempre valor 1.0 = Full Dot)
         renderMesh(graphics, cx, cy, step, null, bgColor, 1.0f, relevantAttrs, true);
+        renderBackground(graphics, cx, cy, step, count);
 
-        // 2. Comparator Mesh (Enemy/Reference)
+        // 2. Comparator Mesh
         if (comparator != null) {
             renderMesh(graphics, cx, cy, step, comparator, compColor, 0.5f, relevantAttrs, false);
         }
 
-        // 3. Reference Mesh (Player/Target)
+        // 3. Reference Mesh
         renderMesh(graphics, cx, cy, step, reference, mainColor, 0.8f, relevantAttrs, false);
 
-        // 4. Overlay (Dots, Names and Tooltips)
+        // 4. Overlay (Dots e Nomes)
         renderOverlay(graphics, cx, cy, step, mouseX, mouseY, relevantAttrs);
 
-        RenderSystem.enableDepthTest();
+        RenderSystem.disableBlend();
     }
 
-    private void renderMesh(GuiGraphics graphics, float cx, float cy, float step, LivingEntity entity,
-                            int color, float alpha, List<AttributeInstance> attrs, boolean isBg) {
+    private void renderBackground(GuiGraphics graphics, float cx, float cy, float step, int count) {
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
         Matrix4f matrix = graphics.pose().last().pose();
 
-        float a = ((color >> 24 & 255) / 255.0F) * alpha;
+        // 1. GRID FILLED
+        float[] levels = {1.0f, 0.75f, 0.5f, 0.25f};
+        for (int i = 0; i < levels.length; i++) {
+            float currentRadius = radius * levels[i];
+            float brightness = (i % 2 == 0) ? 0.12f : 0.08f;
+            float alpha = 0.6f; // Aumentado para melhor visibilidade
+
+            buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
+            buffer.vertex(matrix, cx, cy, 0).color(brightness, brightness, brightness, alpha).endVertex();
+
+            for (int j = 0; j <= count; j++) {
+                float angle = (j % count) * step - (float) Math.PI / 2;
+                float vx = cx + (Mth.cos(angle) * currentRadius);
+                float vy = cy + (Mth.sin(angle) * currentRadius);
+                buffer.vertex(matrix, vx, vy, 0).color(brightness, brightness, brightness, alpha).endVertex();
+            }
+            tesselator.end();
+        }
+
+        // 2. GRID LINES (WEB)
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        buffer.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+        for (int i = 0; i < count; i++) {
+            float angle = i * step - (float) Math.PI / 2;
+            float x2 = cx + (Mth.cos(angle) * radius);
+            float y2 = cy + (Mth.sin(angle) * radius);
+
+            // Axis lines
+            buffer.vertex(matrix, cx, cy, 0).color(1f, 1f, 1f, 0.2f).endVertex();
+            buffer.vertex(matrix, x2, y2, 0).color(1f, 1f, 1f, 0.2f).endVertex();
+        }
+        tesselator.end();
+    }
+
+    private void renderMesh(GuiGraphics graphics, float cx, float cy, float step, LivingEntity entity,
+                            int color, float alphaMult, List<AttributeInstance> attrs, boolean isBg) {
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder buffer = tesselator.getBuilder();
+        Matrix4f matrix = graphics.pose().last().pose();
+
+        float a = ((color >> 24 & 255) / 255.0F) * alphaMult;
         float r = (color >> 16 & 255) / 255.0F;
         float g = (color >> 8 & 255) / 255.0F;
         float b = (color & 255) / 255.0F;
 
+        // Garante que o shader de cor esteja ativo para este buffer
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
-        // Solid Fill
         buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
         buffer.vertex(matrix, cx, cy, 0).color(r, g, b, a).endVertex();
 
         for (int i = 0; i <= attrs.size(); i++) {
             int idx = i % attrs.size();
-            Attribute attr = attrs.get(idx).getAttribute();
-            // Use a dynamic max value based on the attribute's base or common RPG caps
-            double max = getDynamicMax(attr);
-            float ratio = isBg ? 1.0f : getRatio(entity, attr, max);
+            // Lógica de escala: 1.0 (ou valor do atributo) direto para o multiplicador do raio
+            float ratio = isBg ? 1.0f : getRawValue(entity, attrs.get(idx).getAttribute());
             float angle = idx * step - (float) Math.PI / 2;
 
-            buffer.vertex(matrix, cx + (Mth.cos(angle) * (radius * ratio)),
-                            cy + (Mth.sin(angle) * (radius * ratio)), 0)
-                    .color(r, g, b, a).endVertex();
+            float vx = cx + (Mth.cos(angle) * (radius * ratio));
+            float vy = cy + (Mth.sin(angle) * (radius * ratio));
+            buffer.vertex(matrix, vx, vy, 0).color(r, g, b, a).endVertex();
         }
         tesselator.end();
     }
 
-    private float getRatio(LivingEntity entity, Attribute attr, double max) {
-        if (entity == null) return 0.05f;
+    private float getRawValue(LivingEntity entity, Attribute attr) {
+        if (entity == null) return 0.0f;
         AttributeInstance inst = entity.getAttribute(attr);
-        if (inst == null) return 0.05f;
-        double val = inst.getValue();
-        if (attr == Attributes.MOVEMENT_SPEED) val *= 10.0;
-        return (float) Mth.clamp(val / max, 0.05, 1.0);
-    }
-
-    private double getDynamicMax(Attribute attr) {
-        if (attr == Attributes.MAX_HEALTH) return 40.0;
-        if (attr == Attributes.ARMOR) return 20.0;
-        if (attr == Attributes.ATTACK_DAMAGE) return 15.0;
-        if (attr == Attributes.MOVEMENT_SPEED) return 4.0; // Scaled
-        return 20.0; // Default RPG scale
+        // Retorna o valor bruto. Se for 1.0, encosta no dot. Se for 2.0, passa do dot.
+        return inst != null ? (float) inst.getValue() : 0.0f;
     }
 
     private void renderOverlay(GuiGraphics graphics, float cx, float cy, float step, int mx, int my, List<AttributeInstance> attrs) {
@@ -138,9 +172,10 @@ public class DynamicRadialWidget extends Widget {
             Attribute attr = attrs.get(i).getAttribute();
             float angle = i * step - (float) Math.PI / 2;
 
+            // Dots fixos na borda do "background" (raio 1.0)
             float dotX = cx + (Mth.cos(angle) * radius);
             float dotY = cy + (Mth.sin(angle) * radius);
-            graphics.fill((int)dotX - 1, (int)dotY - 1, (int)dotX + 1, (int)dotY + 1, 0xFFFFFFFF);
+            graphics.fill((int) dotX - 1, (int) dotY - 1, (int) dotX + 1, (int) dotY + 1, 0xFFFFFFFF);
 
             String name = Component.translatable(attr.getDescriptionId()).getString();
             int lx = (int) (cx + (Mth.cos(angle) * (radius + 18)));
@@ -155,18 +190,10 @@ public class DynamicRadialWidget extends Widget {
 
     private void renderTooltip(GuiGraphics graphics, Font font, int mx, int my, Attribute attr) {
         List<Component> lines = new java.util.ArrayList<>();
-        lines.add(Component.translatable(attr.getDescriptionId()).append(": " + getVal(reference, attr)));
+        lines.add(Component.translatable(attr.getDescriptionId()).append(": " + String.format("%.2f", getRawValue(reference, attr))));
         if (comparator != null) {
-            lines.add(Component.literal("Comparator: " + getVal(comparator, attr)).withStyle(s -> s.withColor(0x777777)));
+            lines.add(Component.literal("Comparator: " + String.format("%.2f", getRawValue(comparator, attr))).withStyle(s -> s.withColor(0x777777)));
         }
         graphics.renderComponentTooltip(font, lines, mx, my);
-    }
-
-    private String getVal(LivingEntity e, Attribute a) {
-        AttributeInstance i = e.getAttribute(a);
-        if (i == null) return "0.0";
-        double v = i.getValue();
-        if (a == Attributes.MOVEMENT_SPEED) v *= 10.0;
-        return String.format("%.1f", v);
     }
 }
