@@ -681,7 +681,8 @@ public class HULanguageProvider extends LanguageProvider {
 
         addText("additionalHealth", "További életerősség = %s");
         addText("additionalHealth.Hearts", " szív");
-        addText("canGlide/Fly", "Surranás/repülés = %s");
+        addText("canElytraGlide", "Kitinszárnyas siklórepülés = %s");
+        addText("canCreativeFly", "Kreatív repülés = %s");
         addText("jumpStrength", "Ugrás erőssége = %s");
         addText("land_speed", "Szárazföldi sebesség = %s");
         addText("legs", "Lábak száma = %s");
