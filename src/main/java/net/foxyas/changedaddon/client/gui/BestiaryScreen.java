@@ -14,6 +14,8 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.zaharenko424.cmrs.client.gui.LayoutHelper;
 import net.zaharenko424.cmrs.client.gui.WidgetHelper;
 import net.zaharenko424.cmrs.client.gui.screen.MouseMoveListener;
@@ -23,6 +25,7 @@ import org.joml.Vector3f;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -47,6 +50,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
     final ScrollableContainer tfs =
             (ScrollableContainer) new ScrollableContainer().setSize(120, 200).setOrigin(0, 0, 100);
     final RoundedRectWidget tfsListBackGround = new RoundedRectWidget().setSize(120, 200).setInsideColorFunc(a -> Color.BLACK.getRGB());
+    final DynamicRadialWidget radial = (DynamicRadialWidget) new DynamicRadialWidget(40, Color.ORANGE.getRGB()).setScale(40, 40, 1).setOrigin(0,0,100);
 
     public BestiaryScreen() {
         super(Component.literal("Bestiary"));
@@ -86,17 +90,17 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         tfs.init();
         tfs.getScrollBar().setRoundingRadius(4).setSizeAndUpdate(8, 50);
         Vector3f tfsOrigin = tfs.getOrigin();
-        tfsListBackGround.setOrigin(tfsOrigin.x - 120, tfsOrigin.y, displayBackGroundOrigin.z + 10);
+        tfsListBackGround.setOrigin(tfsOrigin.x - 240, tfsOrigin.y, displayBackGroundOrigin.z + 10);
         tfsListBackGround.rebuildMesh();
 
         /* WINDOW */
-
-        window.addWidget(displayBackGround);
-        window.addWidget(modelWidget);
-        window.addWidget(loreScroll);
-        window.addWidget(modelBackGround);
+        //window.addWidget(displayBackGround);
+        //window.addWidget(modelWidget);
+        //window.addWidget(loreScroll);
+        //window.addWidget(modelBackGround);
         window.addWidget(tfs);
         window.addWidget(tfsListBackGround);
+        window.addWidget(radial);
 
         window.init();
 
@@ -216,6 +220,11 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         List<InfoWidget> infoWidgetList = new ArrayList<>();
         InfoWidget loreWidget;
         InfoWidget attributeWidget = null;
+        radial.clearPoints();
+        for (AttributeInstance attributeInstance : entity.getAttributes().getSyncableAttributes()) {
+            Attribute attribute = attributeInstance.getAttribute();
+            radial.addAttributePoint(attribute, Component.translatable(attribute.getDescriptionId()).getString(), attributeInstance.getValue());
+        }
 
         if (entity instanceof IBestiaryEntityData data) {
             for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {
