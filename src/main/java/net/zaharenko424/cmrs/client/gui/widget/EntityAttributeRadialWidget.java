@@ -31,6 +31,36 @@ public class EntityAttributeRadialWidget extends Widget {
         this.reference = Minecraft.getInstance().player;
     }
 
+    public EntityAttributeRadialWidget setBackGroundColor(Color backGroundColor) {
+        this.backGroundColor = backGroundColor;
+        return this;
+    }
+
+    public EntityAttributeRadialWidget setReferenceColor(Color referenceColor) {
+        this.referenceColor = referenceColor;
+        return this;
+    }
+
+    public EntityAttributeRadialWidget setComparisonColor(Color comparisonColor) {
+        this.comparisonColor = comparisonColor;
+        return this;
+    }
+
+    public EntityAttributeRadialWidget setRadius(int radius) {
+        this.radius = radius;
+        return this;
+    }
+
+    public EntityAttributeRadialWidget setComparator(LivingEntity comparator) {
+        this.comparator = comparator;
+        return this;
+    }
+
+    public EntityAttributeRadialWidget setReference(LivingEntity reference) {
+        this.reference = reference;
+        return this;
+    }
+
     @Override
     public void render(@NotNull GuiGraphics graphics, int mx, int my, float partialTick) {
         if (reference == null || comparator == null) return;
