@@ -4,7 +4,6 @@ import net.foxyas.changedaddon.entity.bosses.Experiment009BossEntity;
 import net.foxyas.changedaddon.entity.bosses.Experiment009Entity;
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.foxyas.changedaddon.util.ParticlesUtil;
-import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -17,7 +16,10 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -105,7 +107,7 @@ public class AoEThunderStrikeGoal extends Goal {
     public void tick() {
         tickCounter++;
 
-        Vec3 lookAt = experiment009.getEyePosition().add(0, 1, 0);
+        Vec3 lookAt = target != null ? target.getEyePosition() : experiment009.getEyePosition().add(0, 1, 0);
         Vec3 deltaMovement = experiment009.getDeltaMovement();
         experiment009.setDeltaMovement(deltaMovement.x, Math.max(0, deltaMovement.y), deltaMovement.z);
         experiment009.getLookControl().setLookAt(lookAt.x, lookAt.y, lookAt.z, 90, 90);
@@ -177,7 +179,6 @@ public class AoEThunderStrikeGoal extends Goal {
         } else lightning.setDamage(damageProvider.sample(experiment009.getRandom()));
 
         lightning.setVisualOnly(Experiment009BossEntity.getMetalPercentage(target) <= 0.4f || Experiment009BossEntity.shouldAlwaysDamageEntity(target));
-
 
 
         level.addFreshEntity(lightning);
