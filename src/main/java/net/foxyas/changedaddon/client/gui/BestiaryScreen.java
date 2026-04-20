@@ -52,6 +52,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
     final RoundedRectWidget tfsListBackGround = new RoundedRectWidget().setSize(120, 200).setInsideColorFunc(a -> Color.BLACK.getRGB());
     final DynamicRadialWidget radial = (DynamicRadialWidget) new DynamicRadialWidget(40, Color.ORANGE.getRGB()).setScale(40, 40, 1).setOrigin(0,0,100);
     final DynamicMeshShapeWidget shapeWidget = (DynamicMeshShapeWidget) new DynamicMeshShapeWidget(40).setScale(40, 40, 1).setOrigin(0,0,100);
+    final EntityAttributeRadialWidget attributeRadialWidget = (EntityAttributeRadialWidget) new EntityAttributeRadialWidget(40).setScale(40, 40, 1).setOrigin(0,0,100);
 
     public BestiaryScreen() {
         super(Component.literal("Bestiary"));
@@ -101,7 +102,8 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         //window.addWidget(modelBackGround);
         window.addWidget(tfs);
         window.addWidget(tfsListBackGround);
-        window.addWidget(shapeWidget);
+        //window.addWidget(shapeWidget);
+        window.addWidget(attributeRadialWidget);
 
         window.init();
 
@@ -222,6 +224,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         InfoWidget loreWidget;
         InfoWidget attributeWidget = null;
         radial.setComparator(entity);
+        attributeRadialWidget.setComparator(entity);
 
         if (entity instanceof IBestiaryEntityData data) {
             for (IBestiaryEntityData.BestiaryInfo bestiaryInfo : data.getBestiaryInfo().stream().sorted(Comparator.comparingInt(IBestiaryEntityData.BestiaryInfo::order)).toList()) {
