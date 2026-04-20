@@ -1,7 +1,10 @@
 package net.zaharenko424.cmrs.client.gui.widget;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -10,6 +13,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -81,9 +86,9 @@ public class EntityAttributeRadialWidget extends Widget {
         RenderSystem.disableCull();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
-        renderRadialLayer(matrix, cx, cy, sharedAttrs, true, backGroundColor, 0.0f);
-        renderRadialLayer(matrix, cx, cy, sharedAttrs, false, referenceColor, 0.01f);
-        renderRadialLayer(matrix, cx, cy, sharedAttrs, false, comparisonColor, 0.02f);
+        renderRadialLayer(matrix, cx, cy, null, sharedAttrs, true, backGroundColor, 0.0f, 1f);
+        renderRadialLayer(matrix, cx, cy, reference, sharedAttrs, false, referenceColor, 0.01f, 0.5f);
+        renderRadialLayer(matrix, cx, cy, comparator, sharedAttrs, false, comparisonColor, 0.02f, 0.5f);
         renderRadialOutline(matrix, cx, cy, sharedAttrs, backGroundColor.brighter(), 0.03f);
 
         RenderSystem.enableCull();
@@ -127,7 +132,7 @@ public class EntityAttributeRadialWidget extends Widget {
 
             // Detecção de Mouse para Tooltip (No texto ou no Dot)
             int textWidth = font.width(label);
-            boolean hoveringText = mx >= lx - textWidth/2 && mx <= lx + textWidth/2 && my >= ly - 8 && my <= ly + 8;
+            boolean hoveringText = mx >= lx - textWidth / 2 && mx <= lx + textWidth / 2 && my >= ly - 8 && my <= ly + 8;
             boolean hoveringDot = mx >= dx - 3 && mx <= dx + 3 && my >= dy - 3 && my <= dy + 3;
 
             if (hoveringText || hoveringDot) {
@@ -142,7 +147,7 @@ public class EntityAttributeRadialWidget extends Widget {
     }
 
     // - Mantendo a lógica de renderização corrigida anteriormente
-    private void renderRadialLayer(Matrix4f matrix, float cx, float cy, List<AttributeInstance> attributes, boolean isBg, Color color, float zOffset) {
+    private void renderRadialLayer(Matrix4f matrix, float cx, float cy, LivingEntity toAttributes, List<AttributeInstance> refAttributes, boolean isBg, Color color, float zOffset, float rangeScale) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
         float r = color.getRed() / 255f, g = color.getGreen() / 255f, b = color.getBlue() / 255f, a = color.getAlpha() / 255f;
@@ -150,27 +155,43 @@ public class EntityAttributeRadialWidget extends Widget {
         buffer.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION_COLOR);
         buffer.vertex(matrix, cx, cy, zOffset).color(r, g, b, a).endVertex();
 
-        int size = attributes.size();
+        int size = refAttributes.size();
         float step = (float) (Math.PI * 2) / size;
         for (int i = 0; i <= size; i++) {
-            AttributeInstance attr = attributes.get(i % size);
-            float scale = isBg ? 1.0f : (float) Math.min(comparator.getAttributeValue(attr.getAttribute()) / attr.getValue(), 1.0f);
+            AttributeInstance attr = refAttributes.get(i % size);
+            float scaleValue = getScaleValue(toAttributes, refAttributes, rangeScale, attr, size);
+
+            float scale = isBg ? 1.0f : scaleValue;
             float angle = i * step - (float) Math.PI / 2;
             buffer.vertex(matrix, cx + (Mth.cos(angle) * (radius * scale)), cy + (Mth.sin(angle) * (radius * scale)), zOffset).color(r, g, b, a).endVertex();
         }
         tesselator.end();
     }
 
-    private void renderRadialOutline(Matrix4f matrix, float cx, float cy, List<AttributeInstance> attributes, Color color, float zOffset) {
+    private float getScaleValue(LivingEntity toAttributes, List<AttributeInstance> refAttributes, float rangeScale, AttributeInstance refAttribute, int size) {
+        if (toAttributes == null) return 1;
+        double comparatorAttribute = toAttributes.getAttributeValue(refAttribute.getAttribute());
+        double refValue = refAttribute.getValue();
+        if (refValue == 0) {
+            refValue = 1;
+        }
+        if (refAttribute.getAttribute() == Attributes.MOVEMENT_SPEED && toAttributes instanceof Player player) {
+            refValue *= 10f;
+        }
+
+        return (float) (comparatorAttribute / refValue) * rangeScale;
+    }
+
+    private void renderRadialOutline(Matrix4f matrix, float cx, float cy, List<AttributeInstance> refAttributes, Color color, float zOffset) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
         buffer.begin(VertexFormat.Mode.DEBUG_LINE_STRIP, DefaultVertexFormat.POSITION_COLOR);
-        int size = attributes.size();
+        int size = refAttributes.size();
         float step = (float) (Math.PI * 2) / size;
         for (int i = 0; i <= size; i++) {
             float angle = (i % size) * step - (float) Math.PI / 2;
             buffer.vertex(matrix, cx + (Mth.cos(angle) * radius), cy + (Mth.sin(angle) * radius), zOffset)
-                    .color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f, 1.0f).endVertex();
+                    .color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1.0f).endVertex();
         }
         tesselator.end();
     }
