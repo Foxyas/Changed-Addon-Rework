@@ -58,6 +58,7 @@ public class AdvancementProvider extends net.minecraft.data.advancements.Advance
     public static final String[] ADDON_FORM_RECIPES_JSON = Arrays.stream(ADDON_FORM_RECIPES).map(id -> id.endsWith(".json") ? id : id + ".json").toArray(String[]::new);
 
     public static final AdvancementWriter advancementWrite = new AdvancementWriter();
+    public static final ResourceLocation ADVANCEMENT_ROOT = ResourceLocation.fromNamespaceAndPath("changed_addon", "advancements_root");
 
     protected final PackOutput output;
     protected final ExistingFileHelper fileHelperIn;
@@ -123,7 +124,7 @@ public class AdvancementProvider extends net.minecraft.data.advancements.Advance
         advancementWrite.write(cache, output, ResourceLocation.parse("changed_addon:foxta_addictive"), foxtaBuilder);
 
         Advancement.Builder latexInsulatorAdvancement = Advancement.Builder.advancement()
-                .parent(ResourceLocation.fromNamespaceAndPath("changed_addon", "advancements_root"))
+                .parent(ADVANCEMENT_ROOT)
                 .display(
                         ChangedAddonItems.SNEPSI.get(),
                         Component.translatable("advancements.latex_insulator_advancement.title"),
@@ -158,6 +159,25 @@ public class AdvancementProvider extends net.minecraft.data.advancements.Advance
                 ResourceLocation.parse("changed_addon:latex_forms"),
                 formsRecipesGiver
         );
+
+        Advancement.Builder obtainImpureAmmonia = Advancement.Builder.advancement();
+        Advancement.Builder obtainAmmonia = Advancement.Builder.advancement();
+        Advancement.Builder obtainCompressedAmmonia = Advancement.Builder.advancement();
+        Advancement.Builder obtainAmmoniaParticles = Advancement.Builder.advancement();
+
+        obtainImpureAmmonia.parent(ADVANCEMENT_ROOT)
+                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.IMPURE_AMMONIA.get()));
+        obtainAmmonia.parent(ADVANCEMENT_ROOT)
+                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA.get()));
+        obtainCompressedAmmonia.parent(ADVANCEMENT_ROOT)
+                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA_COMPRESSED.get()));
+        obtainAmmoniaParticles.parent(ADVANCEMENT_ROOT)
+                .addCriterion("obtain_item", InventoryChangeTrigger.TriggerInstance.hasItems(ChangedAddonItems.AMMONIA_PARTICLE.get()));
+
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_impure_ammonia"), obtainImpureAmmonia);
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_ammonia"), obtainAmmonia);
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_compressed_ammonia"), obtainCompressedAmmonia);
+        advancementWrite.write(cache, output, ChangedAddonMod.resourceLoc("obtain_ammonia_particles"), obtainAmmoniaParticles);
 
 
         return CompletableFuture.allOf(advancementWrite.completableFutureList.toArray(CompletableFuture[]::new));

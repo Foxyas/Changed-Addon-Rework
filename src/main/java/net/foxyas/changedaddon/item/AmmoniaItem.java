@@ -13,19 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AmmoniaItem extends Item {
     public AmmoniaItem() {
-        super(new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
+        super(new Item.Properties()
                 .stacksTo(64).rarity(Rarity.COMMON));
-    }
-
-    @Override
-    public void onCraftedBy(@NotNull ItemStack itemstack, @NotNull Level world, @NotNull Player entity) {
-        if (entity instanceof ServerPlayer sPlayer) {
-            Advancement _adv = sPlayer.server.getAdvancements().getAdvancement(ResourceLocation.parse("changed_addon:obtain_ammonia"));
-            assert _adv != null;
-            AdvancementProgress _ap = sPlayer.getAdvancements().getOrStartProgress(_adv);
-            if (!_ap.isDone()) {
-                for (String s : _ap.getRemainingCriteria()) sPlayer.getAdvancements().award(_adv, s);
-            }
-        }
     }
 }
