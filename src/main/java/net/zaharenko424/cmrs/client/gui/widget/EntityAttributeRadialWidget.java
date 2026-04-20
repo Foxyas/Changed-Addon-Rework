@@ -107,6 +107,10 @@ public class EntityAttributeRadialWidget extends Widget {
             effectiveMax = absoluteMax;
         }
 
+        if (highestCurrent >= absoluteMax) {
+            effectiveMax = absoluteMax;
+        }
+
         if (effectiveMax <= 0) effectiveMax = 1.0;
 
         // 3. Tweaks e Clamping
@@ -115,6 +119,9 @@ public class EntityAttributeRadialWidget extends Widget {
 
         // Clamp de 0.1 para não sumir no centro e 1.0 para não sair do círculo
         return (float) Mth.clamp(tweakedCurrent / tweakedMax, 0.1, 1.0);
+
+        // This Code make the Radial Max Scale.
+        // this uses a math formula to make it never reach 100% unless if truly 100% of the attribute.
     }
 
     @Override
