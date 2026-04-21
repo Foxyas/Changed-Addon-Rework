@@ -73,12 +73,12 @@ public class ENLanguageProvider extends LanguageProvider {
         addAdvancement("big_one", "I Catch a Big One!", "You caught a big one! now enjoy your new fish friend");
         addAdvancement("catalyzer_advancement", "A Catalyzer?", "You craft or get a Catalyzer");
         addAdvancement("advancements_root", "Changed Addon", "You downloaded the Changed Addon by Foxyas");
-        addAdvancement("compressed_ammonia_advancement", "Compressed!!", "You craft an Ammonia Compressed");
+        addAdvancement("obtain_compressed_ammonia", "Compressed!!", "You craft an Ammonia Compressed");
         addAdvancement("crystal_adventurer", "Gooey Crystal Adventurer", "Obtain all possible gooey crystals");
         addAdvancement("crystal_collector", "Crystal Collector", "Hold Each Crystal Color in Your Inventory");
         addAdvancement("crystal_dyer", "Crystal Dyer!", "Dye a crystal block using some colorful dye");
         addAdvancement("crystals_addicted", "Addicted to crystals", "Your addiction to collecting ALL types of crystals is beyond comprehension.");
-        addAdvancement("impure_ammonia_craft", "DNA study is a fantastic thing", "You made one Impure Ammonia");
+        addAdvancement("obtain_impure_ammonia", "DNA study is a fantastic thing", "You made one Impure Ammonia");
         addAdvancement("drink_foxta", "Foxyas brand Fanta :3", "Drink foxta for the first time  ");
         addAdvancement("drink_snepsi", "Wait this isn't pepsi!", "Drink snepsi for the first time");
         addAdvancement("foxta_addictive", "Foxta Addictive!", "We take a big sippy, you drank 100 Foxtas!!!");

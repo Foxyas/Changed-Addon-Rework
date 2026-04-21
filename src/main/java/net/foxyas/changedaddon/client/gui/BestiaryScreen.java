@@ -50,8 +50,6 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
     final ScrollableContainer tfs =
             (ScrollableContainer) new ScrollableContainer().setSize(120, 200).setOrigin(0, 0, 100);
     final RoundedRectWidget tfsListBackGround = new RoundedRectWidget().setSize(120, 200).setInsideColorFunc(a -> Color.BLACK.getRGB());
-    final DynamicRadialWidget radial = (DynamicRadialWidget) new DynamicRadialWidget(40, Color.ORANGE.getRGB()).setScale(40, 40, 1).setOrigin(0,0,100);
-    final DynamicMeshShapeWidget shapeWidget = (DynamicMeshShapeWidget) new DynamicMeshShapeWidget(40).setScale(40, 40, 1).setOrigin(0,0,100);
     final EntityAttributeRadialWidget attributeRadialWidget = (EntityAttributeRadialWidget) new EntityAttributeRadialWidget(40).setScale(40, 40, 1).setOrigin(0,0,100);
 
     public BestiaryScreen() {
@@ -223,7 +221,6 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
         List<InfoWidget> infoWidgetList = new ArrayList<>();
         InfoWidget loreWidget;
         InfoWidget attributeWidget = null;
-        radial.setComparator(entity);
         attributeRadialWidget.setComparator(entity);
 
         if (entity instanceof IBestiaryEntityData data) {

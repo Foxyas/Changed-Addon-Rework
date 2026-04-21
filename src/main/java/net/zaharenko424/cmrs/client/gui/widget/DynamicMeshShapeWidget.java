@@ -9,18 +9,25 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DynamicMeshShapeWidget extends Widget {
+    private final List<Float> segments = new ArrayList<>();
     private final int radius;
 
     public DynamicMeshShapeWidget(int radius) {
         this.radius = radius;
     }
 
+    public void addSegments(Float... segments) {
+        this.segments.addAll(List.of(segments));
+    }
+
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderMesh(graphics, Color.BLACK.getRGB(), List.of(1f,1f,1f,1f,1f,1f), true, true);
+        this.renderMesh(graphics, Color.BLACK.getRGB(), segments, true, true);
     }
 
     public void renderMesh(@NotNull GuiGraphics graphics, int color, List<Float> segments, boolean fill, boolean drawOutline) {
