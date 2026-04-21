@@ -15,10 +15,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
-
+///is this even needed? the only direct use is {@link AbstractSpawnerVial}
 public abstract class InteractableSpecialSpawnEggItem extends SpecialSpawnEggItem {
 
-    private final Supplier<? extends TransfurVariant<?>> transfurVariant;
+    protected final Supplier<? extends TransfurVariant<?>> transfurVariant;
 
     public InteractableSpecialSpawnEggItem(Supplier<? extends TransfurVariant<?>> variant, Supplier<? extends EntityType<?>> entityType, Properties properties) {
         super(entityType, properties);

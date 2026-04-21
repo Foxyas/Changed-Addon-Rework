@@ -1,0 +1,23 @@
+{
+  "parent": "changed_addon:advancements_root",
+  "criteria": {
+    "obtain_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "changed_addon:impure_ammonia"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

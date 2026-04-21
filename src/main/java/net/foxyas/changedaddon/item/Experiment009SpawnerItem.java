@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Experiment009SpawnerItem extends AbstractSimpleSpawnerVial implements IBestiaryItemData {
+public class Experiment009SpawnerItem extends AbstractSpawnerVial implements IBestiaryItemData {
 
     public Experiment009SpawnerItem() {
         super(ChangedAddonTransfurVariants.EXPERIMENT_009_BOSS, ChangedAddonEntities.EXPERIMENT_009_BOSS, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)

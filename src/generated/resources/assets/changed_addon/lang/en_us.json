@@ -691,6 +691,7 @@
   "text.changed_addon.bestiary.transformation.luminara_flower_beast.title": "Mutation Trigger",
   "text.changed_addon.canCreativeFly": "Creative fly = %s",
   "text.changed_addon.canElytraGlide": "Elytra glide = %s",
+  "text.changed_addon.confirm_vial_use": "Are you sure? (Use while crouching to confirm)",
   "text.changed_addon.cuddle_button": "Start cuddling",
   "text.changed_addon.display.hazard_body_suit.cant_have_helmet": "Mmph... it’s squishing my ears! Better not wear it.",
   "text.changed_addon.item.vial.wrong_use": "Using this item in there will not work",

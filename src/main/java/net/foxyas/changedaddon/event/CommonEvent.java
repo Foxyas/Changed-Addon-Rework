@@ -70,6 +70,7 @@ import net.minecraftforge.event.entity.player.SleepingLocationCheckEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
@@ -176,6 +177,14 @@ public class CommonEvent {
         if (ext == null) return;
 
         ext.setSleepCounter(1);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void onInteract(PlayerInteractEvent event) {
+        if (!event.isCancelable() || event instanceof PlayerInteractEvent.RightClickItem) return;
+
+        Player player = event.getEntity();
+        if (player.isSleeping() && ChangedAddonVariables.ofOrDefault(player).isCuddling) event.setCanceled(true);
     }
 
     @SubscribeEvent

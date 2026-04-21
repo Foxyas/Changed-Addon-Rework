@@ -3,7 +3,6 @@ package net.foxyas.changedaddon.item;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.item.api.IBestiaryItemData;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
-import net.ltxprogrammer.changed.init.ChangedEffects;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -26,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class Experiment10SpawnerItem extends AbstractSimpleSpawnerVial implements IBestiaryItemData {
+public class Experiment10SpawnerItem extends AbstractSpawnerVial implements IBestiaryItemData {
 
     public Experiment10SpawnerItem() {
         super(ChangedAddonTransfurVariants.EXPERIMENT_10_BOSS, ChangedAddonEntities.EXPERIMENT_10_BOSS, new Item.Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)
