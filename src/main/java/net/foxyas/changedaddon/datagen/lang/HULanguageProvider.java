@@ -72,12 +72,12 @@ public class HULanguageProvider extends LanguageProvider {
         addAdvancement("big_one", "Elkaptam egy nagyot!", "Nagy halat fogott! Élvezze most új hal barátját");
         addAdvancement("catalyzer_advancement", "Egy katalizátor?", "Barkácsolj vagy szerezz egy katalizátort");
         addAdvancement("advancements_root", "Changed Addon", "Letöltötte a Foxyas Changed Addonját");
-        addAdvancement("compressed_ammonia_advancement", "Sűrített!!", "Barkácsolj egy sűrített ammóniát");
+        addAdvancement("obtain_compressed_ammonia", "Sűrített!!", "Barkácsolj egy sűrített ammóniát");
         addAdvancement("crystal_adventurer", "Ragacsos kristálykalandor", "Szerezze az összes lehetséges ragacsos kristályokat");
         addAdvancement("crystal_collector", "Kristálygyűjtő", "Tartsa meg minden színű kristályt a felszerelésében");
         addAdvancement("crystal_dyer", "Kristályfestő!", "Színes festékkel festse be egy kristályblokkot");
         addAdvancement("crystals_addicted", "Kristályfüggő", "Az ÖSSZES típusú kristály gyűjtése iránti szenvedélye meghaladja a felfoghatóság határait.");
-        addAdvancement("impure_ammonia_craft", "DNS-vizsgálat fantasztikus dolog", "Készíts egy szennyezett ammóniát");
+        addAdvancement("obtain_impure_ammonia", "DNS-vizsgálat fantasztikus dolog", "Készíts egy szennyezett ammóniát");
         addAdvancement("drink_foxta", "Foxyas márkájú Fanta :3", "Igyon Foxtát először");
         addAdvancement("drink_snepsi", "Várj, ez nem Pepsi!", "Igyon Snepsit először");
         addAdvancement("foxta_addictive", "Foxtafüggő!", "Nagy kortyot ittunk, te 100 Foxtát ittál!!!");
@@ -681,7 +681,8 @@ public class HULanguageProvider extends LanguageProvider {
 
         addText("additionalHealth", "További életerősség = %s");
         addText("additionalHealth.Hearts", " szív");
-        addText("canGlide/Fly", "Surranás/repülés = %s");
+        addText("canElytraGlide", "Kitinszárnyas siklórepülés = %s");
+        addText("canCreativeFly", "Kreatív repülés = %s");
         addText("jumpStrength", "Ugrás erőssége = %s");
         addText("land_speed", "Szárazföldi sebesség = %s");
         addText("legs", "Lábak száma = %s");
