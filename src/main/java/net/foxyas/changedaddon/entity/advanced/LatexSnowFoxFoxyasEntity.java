@@ -41,6 +41,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.network.NetworkHooks;
@@ -103,6 +104,22 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
 
     protected CustomMerchantOffers makeOffers() {
         return CustomMerchantUtil.makeOffers(this, buyOffers, buyOffers.size(), sellOffers, sellOffers.size());
+    }
+
+    @Override
+    public void notifyTrade(CustomMerchantOffer offer) {
+        super.notifyTrade(offer);
+        Player player = this.getUnderlyingPlayer();
+        if (player != null) {
+            Ingredient[] ingredients = {offer.getCostA(), offer.getCostB()};
+            for (Ingredient ingredient : ingredients) {
+                for (ItemStack item : ingredient.getItems()) {
+                    if (!player.addItem(item)) {
+                        player.drop(item, true);
+                    }
+                }
+            }
+        }
     }
 
     @Override
