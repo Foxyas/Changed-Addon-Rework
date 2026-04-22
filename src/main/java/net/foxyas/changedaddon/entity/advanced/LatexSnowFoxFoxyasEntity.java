@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.ai.goals.generic.LookAndFollowTradingPlayerSink;
 import net.foxyas.changedaddon.entity.ai.goals.generic.TradeWithPlayerGoal;
+import net.foxyas.changedaddon.entity.api.ISafeChangedEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractTraderChangedEntityWithInventory;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
@@ -53,7 +54,7 @@ import java.util.function.Function;
 
 import static net.foxyas.changedaddon.util.CustomMerchantUtil.*;
 
-public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInventory {
+public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInventory implements ISafeChangedEntity {
 
     public static final float FOXYAS_SCALE = 0.85f;
     private static final List<Function<LatexSnowFoxFoxyasEntity, CustomMerchantOffer>> buyOffers = List.of(
