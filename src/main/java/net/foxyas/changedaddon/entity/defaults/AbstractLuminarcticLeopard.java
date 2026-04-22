@@ -42,6 +42,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
@@ -50,6 +52,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.extensions.IForgeBoat;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
@@ -168,6 +171,17 @@ public abstract class AbstractLuminarcticLeopard extends AbstractSnowLeopard imp
     @Override
     protected boolean targetSelectorTest(LivingEntity livingEntity) {
         return this.isAggro() && !(livingEntity instanceof AbstractLuminarcticLeopard);
+    }
+
+    @Override
+    public boolean startRiding(@NotNull Entity pEntity, boolean pForce) {
+        if (pEntity instanceof Boat || pEntity instanceof Minecart) {
+            if (this.isBoss()) {
+                super.startRiding(pEntity, pForce);
+                return false;
+            }
+        }
+        return super.startRiding(pEntity, pForce);
     }
 
     @Override
