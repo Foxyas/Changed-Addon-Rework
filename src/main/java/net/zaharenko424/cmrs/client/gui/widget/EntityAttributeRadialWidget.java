@@ -9,7 +9,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -19,12 +22,16 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityAttributeRadialWidget extends Widget {
+public class EntityAttributeRadialWidget extends Widget implements SizedWidget {
+
+    protected float width = 100, height = 150;
+
     private int radius;
     private LivingEntity reference;
     private LivingEntity comparator;
@@ -32,6 +39,9 @@ public class EntityAttributeRadialWidget extends Widget {
     public Color backGroundColor = new Color(40, 40, 40, 150);
     public Color referenceColor = new Color(255, 255, 0, 180);
     public Color comparisonColor = new Color(0, 255, 150, 180);
+
+    public double maxValueScale = 1;
+    public boolean shouldUseMaxValues = false;
 
     public EntityAttributeRadialWidget(int radius) {
         this.radius = radius;
@@ -66,6 +76,56 @@ public class EntityAttributeRadialWidget extends Widget {
     public EntityAttributeRadialWidget setReference(LivingEntity reference) {
         this.reference = reference;
         return this;
+    }
+
+    public EntityAttributeRadialWidget setSize(int height, int width) {
+        this.height = height;
+        this.width = width;
+        return this;
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return height;
+    }
+
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        if (pButton == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+            shouldUseMaxValues = !shouldUseMaxValues;
+            if (!shouldUseMaxValues) this.maxValueScale = 1;
+            playClickSound(Minecraft.getInstance().getSoundManager());
+            return true;
+        }
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
+    }
+
+    public void playClickSound(SoundManager pHandler) {
+        pHandler.play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+    }
+
+    @Override
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double scrollY) {
+        if (shouldUseMaxValues) {
+            maxValueScale = Mth.clamp(scrollY * 0.01, 0.01, 4);
+            return true;
+        }
+        return super.mouseScrolled(pMouseX, pMouseY, scrollY);
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        if(isClickThrough()) return false;
+        float halfWidth = width / 2 * scale.x;
+        float halfHeight = height / 2 * scale.y;
+
+        return mouseX >= origin.x - halfWidth && mouseX <= origin.x + halfWidth
+                && mouseY >= origin.y - halfHeight && mouseY <= origin.y + halfHeight;
     }
 
     /**
@@ -109,6 +169,10 @@ public class EntityAttributeRadialWidget extends Widget {
 
         if (highestCurrent >= absoluteMax) {
             effectiveMax = absoluteMax;
+        }
+
+        if (this.shouldUseMaxValues) {
+            effectiveMax = absoluteMax * maxValueScale;
         }
 
         if (effectiveMax <= 0) effectiveMax = 1.0;

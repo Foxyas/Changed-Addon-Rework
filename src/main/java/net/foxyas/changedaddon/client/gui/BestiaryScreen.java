@@ -50,7 +50,7 @@ public class BestiaryScreen extends Screen implements MouseMoveListener {
     final ScrollableContainer tfs =
             (ScrollableContainer) new ScrollableContainer().setSize(120, 200).setOrigin(0, 0, 100);
     final RoundedRectWidget tfsListBackGround = new RoundedRectWidget().setSize(120, 200).setInsideColorFunc(a -> Color.BLACK.getRGB());
-    final EntityAttributeRadialWidget attributeRadialWidget = (EntityAttributeRadialWidget) new EntityAttributeRadialWidget(40).setScale(40, 40, 1).setOrigin(0,0,100);
+    final EntityAttributeRadialWidget attributeRadialWidget = (EntityAttributeRadialWidget) new EntityAttributeRadialWidget(40).setSize(120, 200).setScale(40, 40, 1).setOrigin(0,0,100);
 
     public BestiaryScreen() {
         super(Component.literal("Bestiary"));
