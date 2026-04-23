@@ -60,15 +60,13 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public abstract class AbstractCanTameSnepChangedEntityFavors extends AbstractCanTameSnepChangedEntity implements TamableLatexEntityFavors {
-    public static final int OWNER_HOSTILE_DURATION_TICKS = 600;
-    //protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.BYTE);
-    //protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(AbstractCanTameChangedEntityFavors.class, EntityDataSerializers.OPTIONAL_UUID);
     protected static final EntityDataAccessor<LatexTargetType> DATA_TARGET_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_TARGET_TYPE);
     protected static final EntityDataAccessor<LatexAttackType> DATA_ATTACK_TYPE_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_TYPE);
     protected static final EntityDataAccessor<LatexAttackCondition> DATA_ATTACK_CONDITION_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_ATTACK_CONDITION);
     protected static final EntityDataAccessor<LatexFavor> DATA_FAVOR_ID = SynchedEntityData.defineId(AbstractCanTameSnepChangedEntityFavors.class, ChangedAddonEntityDataSerializers.LATEX_FAVOR);
     protected @Nullable LatexInventory inventory; // Inventory doesn't exist until DL is tamed
     protected @Nullable GrabEntityAbilityInstance grabEntityAbilityInstance; // Grab doesn't exist until DL is tamed
+    public static final int OWNER_HOSTILE_DURATION_TICKS = 600;
 
     public AbstractCanTameSnepChangedEntityFavors(EntityType<? extends AbstractSnowLeopard> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
