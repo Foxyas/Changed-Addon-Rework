@@ -734,5 +734,6 @@ public class HULanguageProvider extends LanguageProvider {
         add("warn.rei.not.supported.move.items.but.right.container", "Az elemek áthelyezése nem támogatott ennél a munkaállomásnál");
         addText("cuddle_button", "Ölelkezés elkezdése");
         addText("stop_cuddling", "Nyomd meg a %s gombot az ölelkezés befejezéséhez");
+        addText("confirm_vial_use", "Biztos vagy benne? (Használja guggolás közben a megerősítéshez)");
     }
 }

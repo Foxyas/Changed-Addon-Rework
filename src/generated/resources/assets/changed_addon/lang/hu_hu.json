@@ -691,6 +691,7 @@
   "text.changed_addon.bestiary.transformation.luminara_flower_beast.title": "Mutációs kiváltó ok",
   "text.changed_addon.canCreativeFly": "Kreatív repülés = %s",
   "text.changed_addon.canElytraGlide": "Kitinszárnyas siklórepülés = %s",
+  "text.changed_addon.confirm_vial_use": "Biztos vagy benne? (Használja guggolás közben a megerősítéshez)",
   "text.changed_addon.cuddle_button": "Ölelkezés elkezdése",
   "text.changed_addon.display.hazard_body_suit.cant_have_helmet": "Mmph... Nyomja a fülem! Jobb, ha nem veszem fel.",
   "text.changed_addon.item.vial.wrong_use": "Ennek a tárgynak a használata ott nem fog működni.",
