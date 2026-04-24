@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.renderer.layers.api.IDynamicRenderLayer;
+import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
 import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.client.LivingEntityRendererExtender;
@@ -20,6 +21,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -28,6 +30,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = LatexHeldEntityLayer.class, remap = false)
@@ -79,6 +82,14 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
         // The call of this$render here is the correct way to handle due the other mixin injects.
         this.render(pose, bufferSource, packedLight, entity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch);
         this.isLater = false; // NEVER CHANGE THIS TO TRUE.
+    }
+
+    @ModifyArg(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V"), index = 2,
+            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V")
+    private double moveHeldEntityCloser(double z, @Local(name = "ability") GrabEntityAbilityInstance grab, @Local(argsOnly = true, ordinal = 2) float partialTick) {
+        if (!ChangedAddonClientConfiguration.SUIT_ANIM.get() || grab.suited || ((GrabEntityAbilityExtensor)grab).isSafeMode()) return z;
+
+        return Mth.lerp(grab.getSuitTransitionProgress(partialTick), -0.28125F, -0.05);
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V", shift = At.Shift.AFTER),

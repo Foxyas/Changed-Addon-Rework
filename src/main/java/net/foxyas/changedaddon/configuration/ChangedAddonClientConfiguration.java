@@ -21,6 +21,7 @@ public class ChangedAddonClientConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> ALPHA_COMPATIBILITY_MODE_RENDER;
     public static final ForgeConfigSpec.ConfigValue<Boolean> DYNAMIC_ALPHA_CHECKER;
     public static final ForgeConfigSpec.ConfigValue<BossMusicHandler.FollowType> BOSS_MUSIC_LOCATION_TYPE;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> SUIT_ANIM;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -56,6 +57,9 @@ public class ChangedAddonClientConfiguration {
         PLANTOIDS_VISIBILITY = BUILDER.comment("Turn off the Plantoids [Female Chest Features]").define("Turn Off the Plantoids", false);
         ALPHA_COMPATIBILITY_MODE_RENDER = BUILDER.comment("Turn the Compatibility Mode Render For Alpha Scales, turning this off may add some performance").define("Alpha Compatibility Render Mode", true);
         BUILDER.pop();
+
+        SUIT_ANIM = BUILDER.comment("Switches on/off the animation where held entity is rendered closer to grabber based on suit progress.")
+                .define("Suit Anim", true);
 
         SPEC = BUILDER.build();
     }
