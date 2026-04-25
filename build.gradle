@@ -199,7 +199,10 @@ tasks.named('processResources', ProcessResources).configure {
               mod_version         : mod_version,
 //            mod_authors         : mod_authors, mod_description: mod_description,
     ]
-    inputs.properties replaceProperties
+
+    replaceProperties.forEach { key, value ->
+        inputs.property(key, value)
+    }
 
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]

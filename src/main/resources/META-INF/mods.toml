@@ -4,6 +4,7 @@ license="MIT License"
 
 [[mods]]
 modId="changed_addon"
+#version="${mod_version}"
 version="${mod_version}"
 displayName="Changed Addon Plus"
 credits="0senia0 (Helper Dev)\nLTXProgrammer (Main Mod Dev)\nContributors : kjentytek303, brown_bakers, .doohickey, 25centeno., stardustedspeedway, voidcrawling, cae_swatttrue, n1troless (Dodge Animations :3)\nDonators : Nazaeura, Axivorn, BlockyBreaker9001, BRUH, Deathswordd, LostyBoy, Dawn The Shark, Márk Fazekas, fengqi, The_Snowwy_Snom Nom, Memenius, breadikals, Rosa Garcia Lobos, justin colburn"

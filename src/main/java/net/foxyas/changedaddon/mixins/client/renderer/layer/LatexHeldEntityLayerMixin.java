@@ -85,15 +85,18 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
     }
 
     @ModifyArg(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V"), index = 2,
-            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V")
+            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V",
+            remap = true)
     private double moveHeldEntityCloser(double z, @Local(name = "ability") GrabEntityAbilityInstance grab, @Local(argsOnly = true, ordinal = 2) float partialTick) {
-        if (!ChangedAddonClientConfiguration.SUIT_ANIM.get() || grab.suited || ((GrabEntityAbilityExtensor)grab).isSafeMode()) return z;
+        if (!ChangedAddonClientConfiguration.SUIT_ANIM.get() || grab.suited || ((GrabEntityAbilityExtensor) grab).isSafeMode())
+            return z;
 
         return Mth.lerp(grab.getSuitTransitionProgress(partialTick), -0.28125F, -0.05);
     }
 
     @Inject(at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V", shift = At.Shift.AFTER),
-            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V"
+            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFFF)V",
+            remap = true
     )
     private void flipHeldEntityForCuddle(PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci, @Local(name = "ability") GrabEntityAbilityInstance ability) {
         if (!((GrabEntityAbilityExtensor) ability).isSafeMode()) return;
@@ -110,7 +113,8 @@ public abstract class LatexHeldEntityLayerMixin<T extends ChangedEntity, M exten
                     value = "INVOKE",
                     target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V",
                     shift = At.Shift.AFTER
-            ), remap = true
+            ),
+            remap = true
     )
     private void scaleAfterPush(
             PoseStack pose, MultiBufferSource bufferSource, int packedLight, T entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci
