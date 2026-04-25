@@ -208,12 +208,20 @@ dependencies {
 //}
 
 tasks.named('processResources', ProcessResources).configure {
-    var currentVersion = mod_version.toString()
+    // Liste aqui as variáveis que você quer que o Gradle reconheça
+    def replacements = [
+            'mod_version': mod_version.toString(),
+    ]
+
+    inputs.properties(replacements)
 
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         filter { line ->
-            line.replace('version="${mod_version}"', "version=\"" + currentVersion + "\"")
-                    .replace('version=\'${mod_version}\'', "version=\"" + currentVersion + "\"")
+            replacements.each { key, value ->
+                // Procura por ${chave} e troca pelo valor
+                line = line.replace("\${${key}}", value)
+            }
+            line
         }
     }
 }
