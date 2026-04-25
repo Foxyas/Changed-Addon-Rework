@@ -40,6 +40,7 @@ public interface IAlphaAbleEntity {
     EntityDataAccessor<Boolean> IS_ALPHA = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.BOOLEAN);
     EntityDataAccessor<Float> ALPHA_SCALE = SynchedEntityData.defineId(ChangedEntity.class, EntityDataSerializers.FLOAT);
 
+    UUID FOLLOW_RANGE = UUID.fromString("8b8f5a1b-1c5c-4b9b-a001-01a01a01a000");
     UUID MAX_HEALTH = UUID.fromString("8b8f5a1b-1c5c-4b9b-a001-01a01a01a001");
     UUID ATTACK_DAMAGE = UUID.fromString("8b8f5a1b-1c5c-4b9b-a001-01a01a01a002");
     UUID ARMOR = UUID.fromString("8b8f5a1b-1c5c-4b9b-a001-01a01a01a003");
@@ -95,6 +96,8 @@ public interface IAlphaAbleEntity {
     }
 
     private static void applyGenericAlphaAttributesModifiers(LivingEntity entity, float normalized) {
+        apply(entity, Attributes.FOLLOW_RANGE, FOLLOW_RANGE, "Alpha Follow Range", normalized, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
         apply(entity, Attributes.MAX_HEALTH, MAX_HEALTH, "Alpha Max Health", normalized, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
         apply(entity, Attributes.ATTACK_DAMAGE, ATTACK_DAMAGE, "Alpha Attack Damage", normalized, AttributeModifier.Operation.MULTIPLY_TOTAL);

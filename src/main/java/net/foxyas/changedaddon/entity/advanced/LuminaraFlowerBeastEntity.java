@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.entity.advanced;
 
 import net.foxyas.changedaddon.entity.api.CustomPatReaction;
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
 import net.foxyas.changedaddon.entity.api.IBestiaryEntityData;
 import net.foxyas.changedaddon.entity.api.IDynamicRideOffsetEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractBasicOrganicChangedEntity;
@@ -298,8 +299,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
                         spawnHyperAwakenedParticles();
                     }
                 }
-
-                tryToPacifyNearbyEntities(128);
+                tryToPacifyNearbyEntities(128 * this.getScale());
             }
             if (this.isAwakened() && !attributesApplied) {
                 applyAwakenedBuffs();
@@ -312,7 +312,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
             if (attributeInstance != null) {
                 range = attributeInstance.getValue();
             }
-            tryToPacifyNearbyEntities(range);
+            tryToPacifyNearbyEntities(range * this.getScale());
         }
     }
 
@@ -358,7 +358,7 @@ public class LuminaraFlowerBeastEntity extends AbstractBasicOrganicChangedEntity
         if (attributeInstance != null) {
             range = attributeInstance.getValue();
         }
-        tryToPacifyNearbyEntities(range);
+        tryToPacifyNearbyEntities(range * this.getScale());
 
         if (this.isAwakened() && !attributesAppliedEntity) {
             this.setAttributesAwakened(this.getAttributes());
