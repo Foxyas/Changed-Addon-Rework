@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.entity.ai.goals.simple;
 
 import net.foxyas.changedaddon.util.DelayedTask;
 import net.ltxprogrammer.changed.block.entity.CardboardBoxTallBlockEntity;
+import net.ltxprogrammer.changed.entity.SeatEntity;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.PathfinderMob;
@@ -17,13 +18,14 @@ import java.util.EnumSet;
 public class HideInABoxGoal extends Goal {
 
     private static final int searchRange = 10;
+    private static final int maxInBoxTicks = 60 * 20;
 
     protected final PathfinderMob holder;
 
     protected boolean lock;
     protected BlockPos boxPos;
     protected int noPathTimeout;
-    protected boolean inBox;
+    protected int inBox;
 
     public HideInABoxGoal(PathfinderMob holder) {
         this.holder = holder;
@@ -35,7 +37,13 @@ public class HideInABoxGoal extends Goal {
     public boolean canUse() {
         if (lock) return false;
 
-        return holder.getTarget() == null && !inBox;
+        if (holder.getVehicle() instanceof SeatEntity seat) {//already in box?
+            inBox = 1;
+            boxPos = seat.blockPosition();//TODO test
+            return true;
+        }
+
+        return holder.getTarget() == null && inBox < maxInBoxTicks;
     }
 
     @Override
@@ -46,7 +54,7 @@ public class HideInABoxGoal extends Goal {
             return false;
         }
 
-        return holder.getTarget() == null && !inBox;
+        return holder.getTarget() == null && inBox < maxInBoxTicks;
     }
 
     @Override
@@ -58,8 +66,25 @@ public class HideInABoxGoal extends Goal {
     }
 
     @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
+    }
+
+    @Override
     public void tick() {
         Level level = holder.level();
+
+        if (inBox > 0) {
+            inBox++;
+
+            if (!(holder.getVehicle() instanceof SeatEntity)) {//box destroyed?
+                boxPos = null;
+                return;
+            }
+
+            return;
+        }
+
         PathNavigation navigation = holder.getNavigation();
         if (boxPos == null || isBlockInvalid(level, boxPos, level.getBlockState(boxPos))) {
             tryFindBox();
@@ -79,7 +104,7 @@ public class HideInABoxGoal extends Goal {
                 box.hideEntity(holder);
             }
 
-            inBox = true;//assume instanceof always true
+            inBox = 1;//assume instanceof always true
             return;
         }
 
@@ -120,6 +145,8 @@ public class HideInABoxGoal extends Goal {
         holder.getNavigation().stop();
         boxPos = null;
         noPathTimeout = 100;
-        inBox = false;
+        inBox = 0;
+
+        if (holder.getVehicle() instanceof SeatEntity) holder.stopRiding();
     }
 }

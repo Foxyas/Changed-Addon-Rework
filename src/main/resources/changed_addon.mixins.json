@@ -63,6 +63,7 @@
     "level.pathfinder.NodeMixin",
     "level.pathfinder.PathNavigationAccessor",
     "level.storage.loot.LootTableAccessor",
+    "mods.changed.CardboardBoxTallBlockEntityMixin",
     "mods.changed.ChangedMixin",
     "mods.changed.FacilityMixin",
     "mods.changed.FacilitySinglePieceAccessor",
