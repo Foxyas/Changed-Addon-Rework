@@ -207,7 +207,7 @@ dependencies {
 //}
 
 tasks.named('processResources', ProcessResources).configure {
-    // List here all the "variables" of the mods.toml and pack.mcmeta
+    // List here all the "variablesKeys" of the mods.toml and pack.mcmeta
     def replacements = [
             'mod_version': mod_version.toString(),
     ]
