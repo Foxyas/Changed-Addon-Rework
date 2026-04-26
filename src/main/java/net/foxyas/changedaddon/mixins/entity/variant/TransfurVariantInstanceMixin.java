@@ -253,6 +253,6 @@ public abstract class TransfurVariantInstanceMixin implements TransfurVariantIns
         if (tag.contains("untransfurImmunity"))
             setUntransfurImmunity(UntransfurEvent.UntransfurType.SURVIVAL, tag.getBoolean("untransfurImmunity"));
         if (tag.contains("untransfurImmunityCommand"))
-            setUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND, tag.getBoolean("untransfurImmunity"));
+            setUntransfurImmunity(UntransfurEvent.UntransfurType.COMMAND, tag.getBoolean("untransfurImmunityCommand"));
     }
 }
