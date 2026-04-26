@@ -709,5 +709,6 @@
   "text.changed_addon.rp.guns_compatibility.paws_too_big": "Your paws are too bulky to fit in the trigger guard!",
   "text.changed_addon.stop_cuddling": "Press %s to stop cuddling",
   "text.changed_addon.swim_speed": "Swim Speed = %s",
+  "trim_material.changed_addon.iridium": "Iridium Material",
   "warn.rei.not.supported.move.items.but.right.container": "Move Items is not supported with this kind of workstation"
 }
