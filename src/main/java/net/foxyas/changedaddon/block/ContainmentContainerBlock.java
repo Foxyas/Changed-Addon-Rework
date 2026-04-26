@@ -34,9 +34,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
@@ -158,6 +160,8 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 67);
             FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level, pos, state);
             fallingBlockEntity.blockData = blockData;
+            fallingBlockEntity.disableDrop();
+
             this.falling(fallingBlockEntity);
         }
         super.tick(state, level, pos, p_60465_);
@@ -304,6 +308,13 @@ public class ContainmentContainerBlock extends Block implements SimpleWaterlogge
             });
             level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
+    }
+
+    @Override
+    public void onBrokenAfterFall(Level pLevel, @NotNull BlockPos pPos, FallingBlockEntity pFallingBlock) {
+        Vec3 vec3 = pFallingBlock.getBoundingBox().getCenter();
+        pLevel.levelEvent(2001, BlockPos.containing(vec3), Block.getId(pFallingBlock.getBlockState()));
+        pLevel.gameEvent(pFallingBlock, GameEvent.BLOCK_DESTROY, vec3);
     }
 
     @Override
