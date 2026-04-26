@@ -9,17 +9,16 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class PulseCrystalBlockEntity extends BlockEntity {
+public abstract class AggedBlockEntity extends BlockEntity {
 
-    public int pulseTicks = 0;
+    public int age = 0;
 
-    public PulseCrystalBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+    public AggedBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
     }
 
     public void tick(Level level, BlockPos pPos, BlockState state) {
-        if (pulseTicks >= 256) pulseTicks = 0;
-        pulseTicks++;
+        age++;
         setChanged();
         level.sendBlockUpdated(pPos, state, state, 3);
     }
@@ -27,13 +26,13 @@ public abstract class PulseCrystalBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(@NotNull CompoundTag pTag) {
         super.saveAdditional(pTag);
-        pTag.putInt("pulseTicks", pulseTicks);
+        pTag.putInt("age", age);
     }
 
     @Override
     public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
-        if (pTag.contains("pulseTicks")) pulseTicks = pTag.getInt("pulseTicks");
+        if (pTag.contains("age")) age = pTag.getInt("age");
     }
 
     @Override

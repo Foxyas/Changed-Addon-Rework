@@ -38,7 +38,7 @@ public class ChangedAddonBlockEntities {
     public static final RegistryObject<BlockEntityType<InformantBlockEntity>> INFORMANT_BLOCK = REGISTRY.register("informant_block_block_entity", () -> BlockEntityType.Builder.of(InformantBlockEntity::new, ChangedAddonBlocks.INFORMANT_BLOCK.get()).build(null));
     public static final RegistryObject<BlockEntityType<ContainmentContainerBlockEntity>> CONTAINMENT_CONTAINER = REGISTRY.register("containment_container_block_entity", () -> BlockEntityType.Builder.of(ContainmentContainerBlockEntity::new, ChangedAddonBlocks.CONTAINMENT_CONTAINER.get()).build(null));
     public static final RegistryObject<BlockEntityType<StructureSpawnerBlockEntity>> STRUCTURE_SPAWNER = REGISTRY.register("structure_spawner", () -> BlockEntityType.Builder.of(StructureSpawnerBlockEntity::new, ChangedAddonBlocks.STRUCTURE_SPAWNER.get()).build(null));
-    public static final RegistryObject<BlockEntityType<LuminarCrystalSmallBlockEntity>> LUMINAR_CRYSTAL_SMALL = REGISTRY.register("luminar_crystal_small", () -> BlockEntityType.Builder.of(LuminarCrystalSmallBlockEntity::new, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get()).build(null));
+    public static final RegistryObject<BlockEntityType<LuminarCrystalHeartedBlockEntity>> LUMINAR_CRYSTAL_HEARTED = REGISTRY.register("luminar_crystal_hearted", () -> BlockEntityType.Builder.of(LuminarCrystalHeartedBlockEntity::new, ChangedAddonBlocks.LUMINAR_CRYSTAL_SMALL.get(), ChangedAddonBlocks.LUMINAR_CRYSTAL_LARGE.get()).build(null));
 
 
     //Stop breaking the lines on this code
@@ -58,7 +58,7 @@ public class ChangedAddonBlockEntities {
         event.registerBlockEntityRenderer(TIMED_KEYPAD_BLOCK_ENTITY.get(), TimedKeypadBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(INFORMANT_BLOCK.get(), InformantBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(SIGNAL_BLOCK.get(), SignalBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(LUMINAR_CRYSTAL_SMALL.get(), LuminaraCrystalSmallBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(LUMINAR_CRYSTAL_HEARTED.get(), LuminaraCrystalHeartedBlockEntityRenderer::new);
     }
 
 }

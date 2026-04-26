@@ -2,7 +2,7 @@
   "parent": "block/cross",
   "render_type": "cutout",
   "textures": {
-    "cross": "changed_addon:block/new_small_luminar_crystal_hearted",
-    "particle": "changed_addon:block/new_small_luminar_crystal_hearted"
+    "cross": "changed_addon:block/new_small_luminar_crystal_hearted_animated",
+    "particle": "changed_addon:block/new_small_luminar_crystal_hearted_animated"
   }
 }

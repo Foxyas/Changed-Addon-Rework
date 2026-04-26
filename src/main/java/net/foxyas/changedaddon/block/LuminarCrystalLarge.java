@@ -1,6 +1,8 @@
 package net.foxyas.changedaddon.block;
 
+import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
+import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonEntities;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
@@ -22,6 +24,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -45,7 +50,7 @@ import java.util.List;
 import static net.foxyas.changedaddon.block.LuminarCrystalBlock.moveOrTarget;
 import static net.foxyas.changedaddon.block.LuminarCrystalBlock.spawnParticleOnFace;
 
-public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedBlock {
+public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedBlock, EntityBlock {
 
     public static final VoxelShape SHAPE_UP = Block.box(1.0F, 0.0F, 1.0F, 15.0F, 16.0F, 15.0F);
     public static final VoxelShape SHAPE_DOWN = SHAPE_UP;
@@ -170,6 +175,33 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
             spawnParticleOnFace(serverLevel, pos, direction, 2, 0.01f);
         }
     }
+
+
+    @Nullable
+    protected static <E extends BlockEntity, A extends BlockEntity> BlockEntityTicker<A> createTickerHelper(BlockEntityType<A> pServerType, BlockEntityType<E> pClientType, BlockEntityTicker<? super E> pTicker) {
+        return pClientType == pServerType ? (BlockEntityTicker<A>) pTicker : null;
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
+        if (pState.getValue(HEARTED)) {
+            return createTickerHelper(pBlockEntityType, ChangedAddonBlockEntities.LUMINAR_CRYSTAL_HEARTED.get(), (level, pPos, state, blockEntity) -> {
+                blockEntity.tick(level, pPos, state);
+            });
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
+        if (pState.getValue(HEARTED) && pState.getValue(HALF) == Half.BOTTOM) {
+            return new LuminarCrystalHeartedBlockEntity(pPos, pState);
+        } else {
+            return null;
+        }
+    }
+
 
     @Override
     public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {

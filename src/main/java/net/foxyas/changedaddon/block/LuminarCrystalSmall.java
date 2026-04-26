@@ -1,6 +1,6 @@
 package net.foxyas.changedaddon.block;
 
-import net.foxyas.changedaddon.block.entity.LuminarCrystalSmallBlockEntity;
+import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
@@ -139,7 +139,11 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
     @Override
     public @Nullable BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
-        return new LuminarCrystalSmallBlockEntity(pPos, pState);
+        if (pState.getValue(HEARTED)) {
+            return new LuminarCrystalHeartedBlockEntity(pPos, pState);
+        } else {
+            return null;
+        }
     }
 
     @Nullable
@@ -149,9 +153,13 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level pLevel, @NotNull BlockState pState, @NotNull BlockEntityType<T> pBlockEntityType) {
-        return createTickerHelper(pBlockEntityType, ChangedAddonBlockEntities.LUMINAR_CRYSTAL_SMALL.get(), (level, pPos, state, blockEntity) -> {
-            blockEntity.tick(level, pPos, state);
-        });
+        if (pState.getValue(HEARTED)) {
+            return createTickerHelper(pBlockEntityType, ChangedAddonBlockEntities.LUMINAR_CRYSTAL_HEARTED.get(), (level, pPos, state, blockEntity) -> {
+                blockEntity.tick(level, pPos, state);
+            });
+        } else {
+            return null;
+        }
     }
 
     @Override

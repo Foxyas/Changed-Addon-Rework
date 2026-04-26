@@ -1,0 +1,9 @@
+{
+  "asset_name": "iridium",
+  "description": {
+    "color": "#FFE1EBEB",
+    "translate": "trim_material.changed_addon.iridium"
+  },
+  "ingredient": "changed_addon:iridium",
+  "item_model_index": 0.22
+}

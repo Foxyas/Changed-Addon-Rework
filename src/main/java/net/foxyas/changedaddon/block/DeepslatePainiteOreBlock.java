@@ -39,7 +39,7 @@ public class DeepslatePainiteOreBlock extends DropExperienceBlock {
     public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
         ItemStack selectedItem = player.getInventory().getSelected();
         if (selectedItem.getItem() instanceof TieredItem tieredItem && tieredItem.isCorrectToolForDrops(selectedItem, state)) {
-            return TierSortingRegistry.isCorrectTierForDrops(Tiers.NETHERITE, state) || tieredItem.getTier().getLevel() >= 4;
+            return TierSortingRegistry.isCorrectTierForDrops(tieredItem.getTier(), state);
         }
         return super.canHarvestBlock(state, world, pos, player);
     }
