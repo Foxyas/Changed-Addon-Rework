@@ -2,14 +2,17 @@ package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.ltxprogrammer.changed.init.ChangedItems;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SetPotionFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -101,6 +104,45 @@ public class ChestLoot implements LootTableSubProvider {
                 );
     }
 
+
+    private static LootTable.Builder randomDrinkAndFoodLoot() {
+        return LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(UniformGenerator.between(2, 5))
+
+                        // --- BEBIDAS (Changed) ---
+                        .add(LootItem.lootTableItem(ChangedItems.MUG_WITH_WATER.get()).setWeight(10))
+                        .add(LootItem.lootTableItem(ChangedItems.MUG_WITH_MILK.get()).setWeight(8))
+                        .add(LootItem.lootTableItem(ChangedItems.MUG_WITH_COFFEE.get()).setWeight(6))
+                        .add(LootItem.lootTableItem(ChangedItems.MUG_WITH_DARK_LATEX.get()).setWeight(2))
+                        .add(LootItem.lootTableItem(ChangedItems.MUG_WITH_WHITE_LATEX.get()).setWeight(2))
+
+                        // --- SISTEMA DE POÇÕES ALEATÓRIAS ---
+                        // Criamos várias entradas de poções com o mesmo peso para simular aleatoriedade
+                        .add(LootItem.lootTableItem(Items.POTION).setWeight(2)
+                                .apply(SetPotionFunction.setPotion(Potions.HEALING)))
+                        .add(LootItem.lootTableItem(Items.POTION).setWeight(2)
+                                .apply(SetPotionFunction.setPotion(Potions.REGENERATION)))
+                        .add(LootItem.lootTableItem(Items.POTION).setWeight(2)
+                                .apply(SetPotionFunction.setPotion(Potions.STRENGTH)))
+                        .add(LootItem.lootTableItem(Items.POTION).setWeight(2)
+                                .apply(SetPotionFunction.setPotion(Potions.SWIFTNESS)))
+                        .add(LootItem.lootTableItem(Items.POTION).setWeight(1) // Mais rara
+                                .apply(SetPotionFunction.setPotion(Potions.LONG_NIGHT_VISION)))
+
+                        // --- COMIDA ---
+                        .add(LootItem.lootTableItem(Items.COOKED_BEEF)
+                                .setWeight(5)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))))
+                        .add(LootItem.lootTableItem(Items.COOKED_PORKCHOP)
+                                .setWeight(5)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3))))
+                        .add(LootItem.lootTableItem(Items.APPLE)
+                                .setWeight(5)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 2))))
+                );
+    }
+
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> pOutput) {
 
@@ -117,6 +159,11 @@ public class ChestLoot implements LootTableSubProvider {
         pOutput.accept(
                 ChangedAddonMod.resourceLoc("chests/high_tier_archives"),
                 highBooksLoot()
+        );
+
+        pOutput.accept(
+                ChangedAddonMod.resourceLoc("chests/drinks_and_foods"),
+                randomDrinkAndFoodLoot()
         );
     }
 }
