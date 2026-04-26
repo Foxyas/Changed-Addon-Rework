@@ -202,6 +202,17 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
         }
     }
 
+    @Override
+    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
+        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
+        if (!pState.getValue(HEARTED)) {
+            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
+            if (blockEntity instanceof LuminarCrystalHeartedBlockEntity luminarCrystalHeartedBlock) {
+                luminarCrystalHeartedBlock.setRemoved();
+                pLevel.removeBlockEntity(pPos);
+            }
+        }
+    }
 
     @Override
     public void entityInside(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Entity entity) {

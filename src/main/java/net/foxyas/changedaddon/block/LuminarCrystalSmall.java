@@ -171,6 +171,18 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
     }
 
     @Override
+    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
+        super.onPlace(pState, pLevel, pPos, pOldState, pMovedByPiston);
+        if (!pState.getValue(HEARTED)) {
+            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
+            if (blockEntity instanceof LuminarCrystalHeartedBlockEntity luminarCrystalHeartedBlock) {
+                luminarCrystalHeartedBlock.setRemoved();
+                pLevel.removeBlockEntity(pPos);
+            }
+        }
+    }
+
+    @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof AbstractLuminarcticLeopard) return;
 

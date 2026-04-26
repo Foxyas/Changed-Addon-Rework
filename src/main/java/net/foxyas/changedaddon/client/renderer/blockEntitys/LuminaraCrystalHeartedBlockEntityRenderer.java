@@ -3,11 +3,13 @@ package net.foxyas.changedaddon.client.renderer.blockEntitys;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.foxyas.changedaddon.block.LuminarCrystalSmall;
 import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
@@ -22,13 +24,17 @@ public class LuminaraCrystalHeartedBlockEntityRenderer extends SimpleAggedBlockE
     @Override
     public void render(@NotNull LuminarCrystalHeartedBlockEntity pBlockEntity, float pPartialTick, @NotNull PoseStack pPoseStack, @NotNull MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
         super.render(pBlockEntity, pPartialTick, pPoseStack, pBuffer, pPackedLight, pPackedOverlay);
+        BlockState blockEntityBlockState = pBlockEntity.getBlockState();
+        if (!blockEntityBlockState.hasProperty(LuminarCrystalSmall.HEARTED) || !blockEntityBlockState.getValue(LuminarCrystalSmall.HEARTED)) {
+            return;
+        }
 
         float ageInTicks = pBlockEntity.getAgeTicks() + pPartialTick;
         float pulse = (float) (Math.sin(ageInTicks * 0.1F) * 0.5F + 0.5F);
 
         if (pulse > 0.1F) {
             // Pegamos a direção do bloco (assumindo que existe a propriedade FACING)
-            Direction facing = pBlockEntity.getBlockState().getValue(BlockStateProperties.FACING);
+            Direction facing = blockEntityBlockState.getValue(BlockStateProperties.FACING);
             renderCrystalBeams(pPoseStack, pBuffer, ageInTicks, pulse, facing);
         }
     }
