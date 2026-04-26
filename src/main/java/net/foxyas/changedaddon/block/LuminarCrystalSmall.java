@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
+import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
@@ -19,6 +20,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -46,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
-public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleWaterloggedBlock, EntityBlock {
+public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleWaterloggedBlock, EntityBlock, IBrushableBlock {
 
     public static final BooleanProperty HEARTED = BooleanProperty.create("hearted");
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -354,5 +356,10 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
 
         super.onRemove(oldState, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public void onBrush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack) {
+
     }
 }

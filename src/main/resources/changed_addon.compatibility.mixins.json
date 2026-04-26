@@ -6,7 +6,6 @@
   "refmap": "changed_addon.refmap.json",
   "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
   "mixins": [
-    "blocks.WolfCrystalSmallMixin",
     "mods.nean.AvaliElytraAnimationMixin"
   ],
   "injectors": {
