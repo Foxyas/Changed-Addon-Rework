@@ -155,7 +155,6 @@ dependencies {
     implementation fg.deobf("curse.maven:vivecraft-667903:7625923")
     //implementation fg.deobf("dev.tr7zw:firstperson-forge-2.3.2-mc1.18.2:2.3.2")
     //implementation fg.deobf("curse.maven:playeranimator-658587:4418152") // Forge 1.18.2 v1.0.2
-    //compileOnly
     //implementation fg.deobf("curse.maven:tinkers-construct-74072:5748362")
     //implementation fg.deobf("curse.maven:mantle-74924:5979027")
 
