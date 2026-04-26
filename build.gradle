@@ -137,10 +137,10 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common:${jeiVersion}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge:${jeiVersion}")
 
-    implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     compileOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-api-forge:${reiVersion}")
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
-    implementation fg.deobf("dev.architectury:architectury-forge:${archVersion}")
+    compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${clothVersion}")
+    compileOnly fg.deobf("dev.architectury:architectury-forge:${archVersion}")
 
     implementation fg.deobf("com.mrcrayfish.framework:framework-forge-1.20.1-0.8.0:0.8.0")
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1-4.8.3:4.8.3")
