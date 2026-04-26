@@ -207,7 +207,7 @@ dependencies {
 //}
 
 tasks.named('processResources', ProcessResources).configure {
-    // Liste aqui as variáveis que você quer que o Gradle reconheça
+    // List here all the "variables" of the mods.toml and pack.mcmeta
     def replacements = [
             'mod_version': mod_version.toString(),
     ]
@@ -217,7 +217,7 @@ tasks.named('processResources', ProcessResources).configure {
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         filter { line ->
             replacements.each { key, value ->
-                // Procura por ${chave} e troca pelo valor
+                // look for ${variableKey} and change for the value
                 line = line.replace("\${${key}}", value)
             }
             line
