@@ -4,6 +4,7 @@ import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.configuration.ChangedAddonServerConfiguration;
 import net.foxyas.changedaddon.init.ChangedAddonDamageSources;
 import net.foxyas.changedaddon.init.ChangedAddonGameRules;
+import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.ClientboundOpenFTKCScreenPacket;
 import net.foxyas.changedaddon.procedure.SummonEntityProcedure;
@@ -22,8 +23,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -88,23 +93,28 @@ public class FightToKeepConsciousness {
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
 
-        if (instance != null && !vars.isTransfuredBySafeMethod) {//FIXME make this bool be properly updated before re-enabling
-            vars.timeAfterVictoryOfFTK++;
-            vars.syncPlayerVariables(player);
-        }
-
-        if (vars.timeAfterVictoryOfFTK > 0 && vars.FTKCminigameType == null) {
-            if (!vars.isTransfuredBySafeMethod) {
-                if (vars.timeAfterVictoryOfFTK % ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY.get() == 0) {
-                    if (player.getRandom().nextFloat() <= ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE.get()) {
-                        replayFTKC(player, vars);
-                    } else {
-                        warnAboutReplayOfFTKC(player, vars);
-                    }
-                }
-            } else {
-                resetTimeAfterVictory(player, vars);
+        if (ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_DO_REPLAY.get()) {
+            if (instance != null && !vars.isTransfuredBySafeMethod) {
+                vars.timeAfterVictoryOfFTK++;
+                vars.syncPlayerVariables(player);
             }
+
+            if (vars.timeAfterVictoryOfFTK > 0 && vars.FTKCminigameType == null) {
+                if (!vars.isTransfuredBySafeMethod) {
+                    if (vars.timeAfterVictoryOfFTK % ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY.get() == 0) {
+                        if (player.getRandom().nextFloat() <= ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE.get()) {
+                            replayFTKC(player, vars);
+                        } else {
+                            warnAboutReplayOfFTKC(player, vars);
+                        }
+                    }
+                } else {
+                    resetTimeAfterVictory(player, vars);
+                }
+            }
+        } else {
+            vars.timeAfterVictoryOfFTK = 0;
+            vars.syncPlayerVariables(player);
         }
 
         if (vars.FTKCminigameType == null) return;
@@ -197,6 +207,32 @@ public class FightToKeepConsciousness {
             }
         }, Float.MAX_VALUE);
         updatePlayerVariables(vars, null, 0, player);
+    }
+
+    @SubscribeEvent
+    public static void retardReplayMinigameTicks(LivingEntityUseItemEvent.Finish event) {
+        ItemStack item = event.getItem();
+        LivingEntity livingEntity = event.getEntity();
+        ItemStack resultStack = event.getResultStack();
+        if (!(livingEntity instanceof Player player) || !ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_DO_REPLAY.get()) {
+            return;
+        }
+
+
+        ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.ofOrDefault(player);
+        if (playerVariables.isTransfuredBySafeMethod || playerVariables.timeAfterVictoryOfFTK <= 0) return;
+
+        double value = ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY.get() * 0.25;
+
+        if (item.is(ChangedAddonTags.Items.STABILIZER_TICKS)) {
+            playerVariables.timeAfterVictoryOfFTK -= (int) value;
+            playerVariables.syncPlayerVariables(player);
+        }
+
+        if (item.is(ChangedAddonTags.Items.MAKE_TRANSFUR_SAFE)) {
+            playerVariables.isTransfuredBySafeMethod = true;
+            playerVariables.syncPlayerVariables(player);
+        }
     }
 
     public enum MinigameType {

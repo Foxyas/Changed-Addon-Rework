@@ -359,7 +359,7 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
     }
 
     @Override
-    public void onBrush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack) {
+    public void onBrushTick(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack) {
         if (!level.isClientSide()) {
             if (player.getRandom().nextFloat() >= 0.05f) {
                 Block.popResource(level, pos, ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get().getDefaultInstance());

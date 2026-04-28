@@ -49,6 +49,9 @@ public final class ChangedAddonTags {
         public static final TagKey<Item> BLOOD_TYPE_SYRINGE = key("blood_type_syringe");
         public static final TagKey<Item> TAME_ITEM = key("tame_items");
 
+        public static final TagKey<Item> STABILIZER_TICKS = key("stabilizer_ticks");
+        public static final TagKey<Item> MAKE_TRANSFUR_SAFE = key("transfur_safe_mode");
+
         public static final TagKey<Item> AQUATIC_DIET = key("aquatic_diet_list");
         public static final TagKey<Item> SHARK_DIET = key("shark_diet_list");
         public static final TagKey<Item> CAT_DIET = key("cat_diet_list");

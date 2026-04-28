@@ -39,7 +39,7 @@ public abstract class BrushItemMixin {
                 BlockState state = level.getBlockState(pos);
 
                 if (state.getBlock() instanceof IBrushableBlock brushable) {
-                    brushable.onBrush(level, state, pos, player, blockHitResult.getDirection(), stack);
+                    brushable.onBrushTick(level, state, pos, player, blockHitResult.getDirection(), stack);
                 }
             }
         }

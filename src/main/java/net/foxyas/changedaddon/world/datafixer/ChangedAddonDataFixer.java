@@ -45,10 +45,10 @@ public class ChangedAddonDataFixer {
     private final Map<String, String> TAG_REMAP = Util.make(new HashMap<>(), map -> {
     });
     private final Map<String, String> GAMERULES_REMAP = Util.make(new HashMap<>(), map -> {
-        map.put("doLatexInfection", ChangedAddonGameRules.DO_LATEX_INFECTION.getId());
-        map.put("painiteGeneration", ChangedAddonGameRules.PAINITE_GENERATION.getId());
-        map.put("doDazedLatexBurn", ChangedAddonGameRules.DO_DAZED_LATEX_BURN.getId());
-        map.put("doDarkLatexMaskTransfur", ChangedAddonGameRules.TICKS_TO_DARK_LATEX_MASK_TRANSFUR.getId());
+//        map.put("doLatexInfection", ChangedAddonGameRules.DO_LATEX_INFECTION.getId());
+//        map.put("painiteGeneration", ChangedAddonGameRules.PAINITE_GENERATION.getId());
+//        map.put("doDazedLatexBurn", ChangedAddonGameRules.DO_DAZED_LATEX_BURN.getId());
+//        map.put("doDarkLatexMaskTransfur", ChangedAddonGameRules.TICKS_TO_DARK_LATEX_MASK_TRANSFUR.getId());
     });
 
     public ChangedAddonDataFixer() {

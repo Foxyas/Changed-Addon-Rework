@@ -12,7 +12,7 @@ public interface IBrushableBlock {
     /**
      * Chamado a cada "tique" de sucesso da flag (geralmente a cada 10 ticks de uso).
      */
-    void onBrush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack);
+    void onBrushTick(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack);
 
     /**
      * Opcional: Chamado quando o jogador termina de escovar o bloco completamente.
