@@ -179,9 +179,6 @@ public class FightToKeepConsciousness {
     @ApiStatus.Internal
     private static void warnAboutReplayOfFTKC(ServerPlayer player, ChangedAddonVariables.PlayerVariables vars) {
         player.displayClientMessage(Component.translatable("changed_addon.fight_conscience.retry.warn"), true);
-        MinigameType minigameType = MinigameType.getRandom(player.getRandom());
-        updatePlayerVariables(ChangedAddonVariables.ofOrDefault(player), minigameType, 0, player);
-        ChangedAddonMod.PACKET_HANDLER.send(PacketDistributor.PLAYER.with(() -> player), new ClientboundOpenFTKCScreenPacket(minigameType));
         resetTimeAfterVictory(player, vars);
     }
 
