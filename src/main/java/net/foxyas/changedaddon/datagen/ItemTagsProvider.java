@@ -43,6 +43,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
 
         tag(Tags.Items.STORAGE_BLOCKS).add(IRIDIUM_BLOCK.get());
         tag(forgeStorageBlocksIridium).add(IRIDIUM_BLOCK.get());
+        tag(ChangedAddonTags.Items.MAKE_TRANSFUR_SAFE).add(Items.ENCHANTED_GOLDEN_APPLE);
+        tag(ChangedAddonTags.Items.STABILIZER_TICKS).add(LUMINARA_BLOOM_PETALS.get());
 
 
         tag(ChangedTags.AccessoryItems.FULL_BODY)

@@ -46,7 +46,11 @@ public class KeyPressMinigameScreen extends Screen {
                 .build();
         button_give_up = Button.builder(
                         Component.translatable("gui.changed_addon.fight_to_keep_consciousness_minigame.button_give_up"),
-                        e -> minecraft.setScreen(null))
+                        e -> {
+                            if (getTicksFighting(minecraft.player) > 20) {
+                                minecraft.setScreen(null);
+                            }
+                        })
                 .pos(0, 0)
                 .size(166, 20)
                 .build();
@@ -64,6 +68,11 @@ public class KeyPressMinigameScreen extends Screen {
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
 
         return transfurInstance == null ? "" : Integer.toString(getStruggleTime() - vars.ticksFightingForConsciousness);
+    }
+
+    public static int getTicksFighting(Player player) {
+        ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.nonNullOf(player);
+        return vars.ticksFightingForConsciousness;
     }
 
     @Override
@@ -86,6 +95,7 @@ public class KeyPressMinigameScreen extends Screen {
 
         addRenderableWidget(button_fight);
         addRenderableWidget(button_give_up);
+        button_fight.setFocused(true);
     }
 
     @Override

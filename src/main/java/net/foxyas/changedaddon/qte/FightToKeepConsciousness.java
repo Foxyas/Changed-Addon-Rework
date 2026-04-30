@@ -102,10 +102,12 @@ public class FightToKeepConsciousness {
             if (vars.timeAfterVictoryOfFTK > 0 && vars.FTKCminigameType == null) {
                 if (!vars.isTransfuredBySafeMethod) {
                     if (vars.timeAfterVictoryOfFTK % ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_DELAY.get() == 0) {
-                        if (player.getRandom().nextFloat() <= ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE.get()) {
-                            replayFTKC(player, vars);
-                        } else {
-                            warnAboutReplayOfFTKC(player, vars);
+                        if (ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE.get() > 0) {
+                            if (player.getRandom().nextFloat() <= ChangedAddonServerConfiguration.FIGHT_TO_KEEP_CONSCIOUSNESS_REPLAY_CHANCE.get()) {
+                                replayFTKC(player, vars);
+                            } else {
+                                warnAboutReplayOfFTKC(player, vars);
+                            }
                         }
                     }
                 } else {
