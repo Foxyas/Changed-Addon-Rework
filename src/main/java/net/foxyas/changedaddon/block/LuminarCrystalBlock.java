@@ -1,7 +1,9 @@
 package net.foxyas.changedaddon.block;
 
+import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
 import net.foxyas.changedaddon.init.ChangedAddonBlocks;
+import net.foxyas.changedaddon.init.ChangedAddonItems;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.block.AbstractLatexIceBlock;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
@@ -20,8 +22,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,7 +46,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class LuminarCrystalBlock extends AbstractLatexIceBlock {
+public class LuminarCrystalBlock extends AbstractLatexIceBlock implements IBrushableBlock {
 
     public static final int MAX_AGE = 3;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
@@ -186,5 +190,17 @@ public class LuminarCrystalBlock extends AbstractLatexIceBlock {
                 level.setBlock(relative, smallCrystalStage, 3);
             }
         }
+    }
+
+    @Override
+    public boolean brush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack) {
+        if (!level.isClientSide()) {
+            if (player.getRandom().nextFloat() >= 0.05f) {
+                Block.popResource(level, pos, ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get().getDefaultInstance());
+                return true;
+            }
+        }
+
+        return false;
     }
 }

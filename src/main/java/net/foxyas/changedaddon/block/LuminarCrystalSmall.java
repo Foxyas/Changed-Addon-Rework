@@ -48,7 +48,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
-public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleWaterloggedBlock, EntityBlock, IBrushableBlock {
+public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleWaterloggedBlock, EntityBlock {
 
     public static final BooleanProperty HEARTED = BooleanProperty.create("hearted");
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -356,17 +356,5 @@ public class LuminarCrystalSmall extends TransfurCrystalBlock implements SimpleW
 
 
         super.onRemove(oldState, level, pos, newState, isMoving);
-    }
-
-    @Override
-    public boolean brush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack) {
-        if (!level.isClientSide()) {
-            if (player.getRandom().nextFloat() >= 0.05f) {
-                Block.popResource(level, pos, ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get().getDefaultInstance());
-                return true;
-            }
-        }
-
-        return false;
     }
 }
