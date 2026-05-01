@@ -2,6 +2,8 @@ package net.foxyas.changedaddon.block.interfaces;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -12,7 +14,7 @@ public interface IBrushableBlock {
     /**
      * Chamado a cada "tique" de sucesso da flag (geralmente a cada 10 ticks de uso).
      */
-    void onBrushTick(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack);
+    boolean brush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack);
 
     /**
      * Opcional: Chamado quando o jogador termina de escovar o bloco completamente.
@@ -26,5 +28,9 @@ public interface IBrushableBlock {
      */
     default boolean canBeBrushed(Level level, BlockPos pos, BlockState state) {
         return true;
+    }
+
+    default SoundEvent getBrushSound() {
+        return SoundEvents.BRUSH_GENERIC;
     }
 }
