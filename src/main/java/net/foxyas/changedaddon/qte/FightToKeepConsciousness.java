@@ -89,6 +89,7 @@ public class FightToKeepConsciousness {
         if (event.phase != TickEvent.Phase.END || !(event.player instanceof ServerPlayer player)) return;
 
         if (!player.isAlive()) return;
+        if (!player.level.getGameRules().getBoolean(ChangedAddonGameRules.FIGHT_TO_KEEP_CONSCIOUSNESS)) return;
 
         TransfurVariantInstance<?> instance = ProcessTransfur.getPlayerTransfurVariant(player);
         ChangedAddonVariables.PlayerVariables vars = ChangedAddonVariables.ofOrDefault(player);
@@ -209,7 +210,7 @@ public class FightToKeepConsciousness {
     }
 
     @SubscribeEvent
-    public static void retardReplayMinigameTicks(LivingEntityUseItemEvent.Finish event) {
+    public static void onPlayerFinishUsingItem(LivingEntityUseItemEvent.Finish event) {
         ItemStack item = event.getItem();
         LivingEntity livingEntity = event.getEntity();
         ItemStack resultStack = event.getResultStack();
