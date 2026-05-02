@@ -11,8 +11,8 @@
     "I": {
       "tag": "forge:ingots/iridium"
     },
-    "P": {
-      "item": "changed_addon:painite"
+    "L": {
+      "item": "changed_addon:luminar_crystal_shard"
     },
     "R": {
       "tag": "forge:dusts/redstone"
@@ -20,7 +20,7 @@
   },
   "pattern": [
     " ID",
-    "RPI",
+    "RLI",
     "BR "
   ],
   "result": {

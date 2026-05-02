@@ -39,9 +39,9 @@ public class ChangedAddonFacilityPieces {
         FacilityCorridorSection darkLatexPlushyHallway = new FacilityCorridorSection(ResourceLocation.parse("changed_addon:facilities/facility_hallways/dark_latex_plushy_hallway"), Optional.of(LootTables.LOW_TIER_LAB));
         FacilityCorridorSection closedMeteorInPool = new FacilityCorridorSection(ResourceLocation.parse("changed_addon:facilities/facility_hallways/closed_meteor_in_pool"), Optional.of(LootTables.HIGH_TIER_LAB));
 
-        ConfiguredFacilityPiece gardenContainmentFacilityPiece = new ConfiguredFacilityPiece(gardenContainment, gardenContainmentSpawnWeight, 1, 10, Set.of(ChangedFacilityZones.GREENHOUSE_ZONE.get(), ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
-        ConfiguredFacilityPiece darkLatexPlushyHallwayFacilityPiece = new ConfiguredFacilityPiece(darkLatexPlushyHallway, Weight.of(FacilityPieceCollectionBuilder.WEIGHT_COMMON), 0, 10, Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
-        ConfiguredFacilityPiece closedMeteorInPoolFacilityPiece = new ConfiguredFacilityPiece(closedMeteorInPool, closedMeteorInPoolSpawnWeight, 0, 10, Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
+        ConfiguredFacilityPiece gardenContainmentFacilityPiece = new ConfiguredFacilityPiece(gardenContainment, gardenContainmentSpawnWeight, 1, 4, Set.of(ChangedFacilityZones.GREENHOUSE_ZONE.get(), ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
+        ConfiguredFacilityPiece darkLatexPlushyHallwayFacilityPiece = new ConfiguredFacilityPiece(darkLatexPlushyHallway, Weight.of(FacilityPieceCollectionBuilder.WEIGHT_COMMON), 0, 2, Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
+        ConfiguredFacilityPiece closedMeteorInPoolFacilityPiece = new ConfiguredFacilityPiece(closedMeteorInPool, closedMeteorInPoolSpawnWeight, 0, 2, Set.of(ChangedFacilityZones.ENTRANCE_ZONE.get()), RegistryElementPredicate.forAll(ForgeRegistries.BIOMES));
 
         builder.register(gardenContainmentFacilityPiece.setName(ChangedAddonMod.resourceLoc("garden_containment")));
         builder.register(darkLatexPlushyHallwayFacilityPiece.setName(ChangedAddonMod.resourceLoc("dark_latex_plushy_hallway")));

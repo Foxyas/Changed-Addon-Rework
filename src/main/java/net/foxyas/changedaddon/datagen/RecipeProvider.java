@@ -55,11 +55,11 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ELECTRIC_KATANA.get())
                 .pattern(" ID")
-                .pattern("RPI")
+                .pattern("RLI")
                 .pattern("BR ")
                 .define('I', ItemTagsProvider.forgeIngotsIridium)
                 .define('D', Tags.Items.GEMS_DIAMOND)
-                .define('P', PAINITE.get())
+                .define('L', LUMINAR_CRYSTAL_SHARD.get())
                 .define('R', Tags.Items.DUSTS_REDSTONE)
                 .define('B', ChangedItems.TSC_BATON.get())
                 .unlockedBy(iridium, hasIridium)
