@@ -4,6 +4,7 @@
       "type": "minecraft:paletted_permutations",
       "palette_key": "minecraft:trims/color_palettes/trim_palette",
       "permutations": {
+        "goo_core": "changed_addon:trims/color_palettes/goo_core",
         "iridium": "changed_addon:trims/color_palettes/iridium"
       },
       "textures": [

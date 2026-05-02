@@ -10,12 +10,14 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,6 +25,7 @@ public class TrimMaterials {
 
     public static final ResourceKey<TrimMaterial> IRIDIUM_TRIM = registryKey("iridium");
     public static final ResourceKey<TrimMaterial> GOO_CORE_TRIM = registryKey("goo_core");
+    public static final HashMap<String, ResourceLocation> TRIMS = new HashMap<>();
 
 
     public static void bootstrap(BootstapContext<TrimMaterial> pContext) {
@@ -43,6 +46,8 @@ public class TrimMaterials {
 
     private static void register(BootstapContext<TrimMaterial> pContext, ResourceKey<TrimMaterial> pMaterialKey, Item pIngredient, Style pStyle, float pItemModelIndex, Map<ArmorMaterials, String> pOverrideArmorMaterials) {
         TrimMaterial trimmaterial = TrimMaterial.create(pMaterialKey.location().getPath(), pIngredient, pItemModelIndex, Component.translatable(Util.makeDescriptionId("trim_material", pMaterialKey.location())).withStyle(pStyle), pOverrideArmorMaterials);
+        ResourceLocation materialLocation = pMaterialKey.location();
+        TRIMS.putIfAbsent(materialLocation.getPath(), ResourceLocation.fromNamespaceAndPath(materialLocation.getNamespace(), "trims/color_palettes/" + materialLocation.getPath()));
         pContext.register(pMaterialKey, trimmaterial);
     }
 
