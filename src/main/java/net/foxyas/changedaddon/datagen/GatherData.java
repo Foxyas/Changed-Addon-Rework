@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.datagen.ability_tree.AbilityTreeProviderImpl;
+import net.foxyas.changedaddon.datagen.compatibility.ModTrimMapsProvider;
 import net.foxyas.changedaddon.datagen.lang.ENLanguageProvider;
 import net.foxyas.changedaddon.datagen.lang.HULanguageProvider;
 import net.foxyas.changedaddon.datagen.worldgen.FacilityPieceProvider;
@@ -55,6 +56,7 @@ public class GatherData {
         generator.addProvider(true, new ItemModelProvider(packOutput, helper));
         generator.addProvider(true, new AdvancementProvider(packOutput, lookup0, helper));
 
+        generator.addProvider(true, new ModTrimMapsProvider(packOutput));
         generator.addProvider(true, new AtlasProvider(packOutput, helper));
         generator.addProvider(true, new ENLanguageProvider(packOutput));
         generator.addProvider(true, new HULanguageProvider(packOutput));
