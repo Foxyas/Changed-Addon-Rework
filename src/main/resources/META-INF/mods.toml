@@ -28,7 +28,6 @@ description="this is a §bremastered§r version of my mod addon hope you like it
     ordering="NONE"
     side="BOTH"
 
-
 [[dependencies.changed_addon]]
     modId="changed"
     mandatory=true
@@ -50,3 +49,9 @@ description="this is a §bremastered§r version of my mod addon hope you like it
     ordering="NONE"
     side="BOTH"
 
+[[dependencies.changed_addon]]
+    modId="trimmed"
+    mandatory=false
+    versionRange="[2.1.4,)"
+    ordering="NONE"
+    side="BOTH"
