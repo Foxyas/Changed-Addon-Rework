@@ -722,6 +722,7 @@ public class ENLanguageProvider extends LanguageProvider {
         addText("stop_cuddling", "Press %s to stop cuddling");
         addText("confirm_vial_use", "Are you sure? (Use while crouching to confirm)");
 
-        add("trim_material.changed_addon.iridium", "Iridium Material");
+        addTrimMaterial("iridium", "Iridium Material");
+        addTrimMaterial("goo_core", "Goo Core Fragment Material");
     }
 }
