@@ -195,11 +195,11 @@ public class LuminarCrystalBlock extends AbstractLatexIceBlock implements IBrush
     @Override
     public boolean brush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack) {
         if (!level.isClientSide()) {
-            var age = state.getValue(AGE);
-            if (player.getRandom().nextFloat() <= 0.05f) {
-                if (age > 0) {
+            int age = state.getValue(AGE);
+            if (player.getRandom().nextFloat() <= 0.25f) {
+                if (age < 3) {
                     Block.popResource(level, pos, ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get().getDefaultInstance());
-                    level.setBlockAndUpdate(pos, state.setValue(AGE, age - 1));
+                    level.setBlockAndUpdate(pos, state.setValue(AGE, age + 1));
                     level.playSound(null,
                             pos,
                             this.soundType.getBreakSound(),
@@ -207,7 +207,7 @@ public class LuminarCrystalBlock extends AbstractLatexIceBlock implements IBrush
                             1,
                             1);
                 } else {
-                    level.removeBlock(pos, false);
+                    level.destroyBlock(pos, false, player);
                 }
                 return true;
             }

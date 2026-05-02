@@ -22,11 +22,13 @@ import java.util.Optional;
 public class TrimMaterials {
 
     public static final ResourceKey<TrimMaterial> IRIDIUM_TRIM = registryKey("iridium");
+    public static final ResourceKey<TrimMaterial> GOO_CORE_TRIM = registryKey("goo_core");
 
 
     public static void bootstrap(BootstapContext<TrimMaterial> pContext) {
 
         register(pContext, IRIDIUM_TRIM, ChangedAddonItems.IRIDIUM.get(), Style.EMPTY.withColor(new Color(225, 235, 235, 255).getRGB()), 0.22f);
+        register(pContext, GOO_CORE_TRIM, ChangedAddonItems.GOO_CORE_FRAGMENT.get(), Style.EMPTY.withColor(new Color(25, 23, 38, 255).getRGB()), 0.33f);
     }
 
     public static Optional<Holder.Reference<TrimMaterial>> getFromIngredient(RegistryAccess pRegistryAccess, ItemStack pIngredient) {

@@ -1,0 +1,9 @@
+{
+  "asset_name": "goo_core",
+  "description": {
+    "color": "#FF191726",
+    "translate": "trim_material.changed_addon.goo_core"
+  },
+  "ingredient": "changed_addon:goo_core_fragment",
+  "item_model_index": 0.33
+}

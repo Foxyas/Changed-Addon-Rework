@@ -155,6 +155,7 @@ dependencies {
     implementation fg.deobf("curse.maven:vivecraft-667903:7625923")
 
     implementation fg.deobf("curse.maven:thirst-was-taken-679270:6660408")
+    implementation fg.deobf("curse.maven:trimmed-857036:4845938")
     runtimeOnly fg.deobf("curse.maven:appleskin-248787:4770828")
     //implementation fg.deobf("dev.tr7zw:firstperson-forge-2.3.2-mc1.18.2:2.3.2")
     //implementation fg.deobf("curse.maven:playeranimator-658587:4418152") // Forge 1.18.2 v1.0.2

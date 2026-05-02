@@ -36,7 +36,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         tag(Tags.Items.RAW_MATERIALS).add(RAW_IRIDIUM.get());
         tag(forgeRawIridium).add(RAW_IRIDIUM.get());
-        tag(ItemTags.TRIM_MATERIALS).add(IRIDIUM.get());
+        tag(ItemTags.TRIM_MATERIALS).add(IRIDIUM.get(), GOO_CORE_FRAGMENT.get());
 
         tag(Tags.Items.INGOTS).add(IRIDIUM.get());
         tag(forgeIngotsIridium).add(IRIDIUM.get());
