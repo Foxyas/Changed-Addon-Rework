@@ -110,13 +110,15 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
     public void notifyTrade(CustomMerchantOffer offer) {
         super.notifyTrade(offer);
         Player player = this.getUnderlyingPlayer();
-        if (player != null) {
-            Ingredient[] ingredients = {offer.getCostA(), offer.getCostB()};
-            for (Ingredient ingredient : ingredients) {
-                for (ItemStack item : ingredient.getItems()) {
-                    if (!player.addItem(item)) {
-                        player.drop(item, true);
-                    }
+        if (player == null) {
+            return;
+        }
+
+        Ingredient[] ingredients = {offer.getCostA(), offer.getCostB()};
+        for (Ingredient ingredient : ingredients) {
+            for (ItemStack item : ingredient.getItems()) {
+                if (!player.addItem(item)) {
+                    player.drop(item, true);
                 }
             }
         }
