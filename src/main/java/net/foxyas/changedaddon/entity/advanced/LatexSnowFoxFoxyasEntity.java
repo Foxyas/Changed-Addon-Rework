@@ -60,7 +60,7 @@ public class LatexSnowFoxFoxyasEntity extends AbstractTraderChangedEntityWithInv
     public static final float FOXYAS_SCALE = 0.85f;
     private static final List<Function<LatexSnowFoxFoxyasEntity, CustomMerchantOffer>> buyOffers = List.of(
             (entity) ->
-                    new CustomMerchantOffer(withCount(ChangedItems.ORANGE, 3), single(Items.GLASS_BOTTLE), defStack(ChangedAddonItems.ORANGE_JUICE), 16)
+                    new CustomMerchantOffer(partialWithCount(ChangedItems.ORANGE, 3), single(Items.GLASS_BOTTLE), defStack(ChangedAddonItems.ORANGE_JUICE), 16)
     );
     private static final List<Function<LatexSnowFoxFoxyasEntity, CustomMerchantOffer>> sellOffers = List.of(
             (entity) ->

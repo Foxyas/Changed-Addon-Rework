@@ -2,12 +2,14 @@ package net.foxyas.changedaddon.util;
 
 import net.foxyas.changedaddon.menu.CustomMerchantOffer;
 import net.foxyas.changedaddon.menu.CustomMerchantOffers;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.CompoundIngredient;
+import net.minecraftforge.common.crafting.PartialNBTIngredient;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -73,5 +75,21 @@ public final class CustomMerchantUtil {
 
     public static Ingredient withCount(RegistryObject<? extends ItemLike> item, int count) {
         return StrictNBTIngredient.of(new ItemStack(item.get(), count));
+    }
+
+    public static Ingredient partialWithCount(ItemLike item, int count) {
+        CompoundTag tag = new CompoundTag();
+        tag.putByte("Count", (byte) count);
+        return PartialNBTIngredient.of(item, tag);
+    }
+
+    public static Ingredient partialPairWithCount(RegistryObject<? extends ItemLike> first, RegistryObject<? extends ItemLike> second, int count) {
+        return CompoundIngredient.of(partialWithCount(first, count), partialWithCount(second, count));
+    }
+
+    public static Ingredient partialWithCount(RegistryObject<? extends ItemLike> item, int count) {
+        CompoundTag tag = new CompoundTag();
+        tag.putByte("Count", (byte) count);
+        return PartialNBTIngredient.of(item.get(), tag);
     }
 }
