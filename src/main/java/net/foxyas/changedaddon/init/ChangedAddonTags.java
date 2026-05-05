@@ -20,6 +20,9 @@ public final class ChangedAddonTags {
         public static final TagKey<Block> LAB_BIG_DOORS = key("lab_big_doors");
         public static final TagKey<Block> LAB_DOORS = key("lab_doors");
         public static final TagKey<Block> PASSABLE_BLOCKS = key("passable_blocks");
+        public static final TagKey<Block> CAN_LUMINAR_CRYSTAL_SURVIVE = key("can_luminar_crystal_survive");
+        public static final TagKey<Block> CAN_SPAWN_LUMINARCTIC_LEOPARDS_ON_CRYSTAL_BREAK = key("can_spawn_luminarctic_leopards_on_crystal_break");
+        public static final TagKey<Block> DORMANT_LATEX_BLOCKS = key("dormant_latex_blocks");
 
         private static TagKey<Block> key(String path) {
             return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), ChangedAddonMod.resourceLoc(path));

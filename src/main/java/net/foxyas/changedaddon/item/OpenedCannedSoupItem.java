@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.item;
 
 import net.foxyas.changedaddon.init.ChangedAddonItems;
+import net.foxyas.changedaddon.item.api.IDrinkItem;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber
-public class OpenedCannedSoupItem extends AbstractCanItem {
+public class OpenedCannedSoupItem extends AbstractCanItem implements IDrinkItem {
 
     public OpenedCannedSoupItem() {
         super(new Properties()//.tab(ChangedAddonTabs.CHANGED_ADDON_MAIN_TAB)

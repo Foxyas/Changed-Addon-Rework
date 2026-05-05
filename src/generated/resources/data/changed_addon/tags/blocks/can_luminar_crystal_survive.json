@@ -1,0 +1,13 @@
+{
+  "values": [
+    "changed_addon:luminar_crystal_block",
+    "minecraft:crying_obsidian",
+    "minecraft:amethyst_block",
+    "minecraft:amethyst_cluster",
+    "minecraft:sea_lantern",
+    "minecraft:calcite",
+    "#changed_addon:dormant_latex_blocks",
+    "#minecraft:ice",
+    "#forge:storage_blocks/quartz"
+  ]
+}
