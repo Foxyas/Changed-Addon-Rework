@@ -6,6 +6,7 @@ import net.foxyas.changedaddon.util.GasAreaUtil;
 import net.foxyas.changedaddon.util.ParticlesUtil;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.latex.SpreadingLatexType;
+import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.init.ChangedParticles;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.ltxprogrammer.changed.item.SpecializedAnimations;
@@ -168,6 +169,11 @@ public abstract class FlamethrowerLike extends Item implements SpecializedAnimat
             LatexCoverState newState = state.setValue(faceProp, false).setValue(SpreadingLatexType.SATURATION, saturationValue);
 
             if (newState != state) {
+                var sides = SpreadingLatexType.FACES.values().stream().map((newState::getValue));
+                if (sides.noneMatch(value -> value)) {
+                    newState = ChangedLatexTypes.NONE.get().defaultCoverState();
+                }
+
                 LatexCoverState.setAtAndUpdate(level, pos, newState);
 
 
