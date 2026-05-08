@@ -6,13 +6,15 @@
   "refmap": "changed_addon.refmap.json",
   "plugin": "net.foxyas.changedaddon.mixins.compatibility.ChangedAddonMixinPlugin",
   "mixins": [
-    "mods.nean.AvaliElytraAnimationMixin"
+    "mods.nean.AvaliElytraAnimationMixin",
+    "mods.prototypeMod.PlayerHealthDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
     "mods.firstPerson.LogicHandleMixin",
+    "mods.prototypeMod.AdvancedHumanoidModelMixin",
     "mods.vivecraft.AdvancedHumanoidModelMixin",
     "mods.vivecraft.AdvancedHumanoidRendererMixin",
     "mods.vivecraft.AutoCalibrationMixin",

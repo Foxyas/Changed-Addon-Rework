@@ -22,6 +22,7 @@ public class ChangedAddonClientConfiguration {
     public static final ForgeConfigSpec.ConfigValue<Boolean> DYNAMIC_ALPHA_CHECKER;
     public static final ForgeConfigSpec.ConfigValue<BossMusicHandler.FollowType> BOSS_MUSIC_LOCATION_TYPE;
     public static final ForgeConfigSpec.ConfigValue<Boolean> SUIT_ANIM;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> SHOULD_CHECK_FOR_PLAYER_LIMBS_VISIBILITY;
 
     static {
         ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -56,6 +57,7 @@ public class ChangedAddonClientConfiguration {
         BUILDER.push("ModelsHandle");
         PLANTOIDS_VISIBILITY = BUILDER.comment("Turn off the Plantoids [Female Chest Features]").define("Turn Off the Plantoids", false);
         ALPHA_COMPATIBILITY_MODE_RENDER = BUILDER.comment("Turn the Compatibility Mode Render For Alpha Scales, turning this off may add some performance").define("Alpha Compatibility Render Mode", true);
+        SHOULD_CHECK_FOR_PLAYER_LIMBS_VISIBILITY = BUILDER.comment("Turn the transfur model limbs compatibility mode for mods that remove limbs of the player").define("Limbs compatibility layer", false);
         BUILDER.pop();
 
         SUIT_ANIM = BUILDER.comment("Switches on/off the animation where held entity is rendered closer to grabber based on suit progress.")
