@@ -1,10 +1,9 @@
 package net.foxyas.changedaddon.block;
 
 import net.foxyas.changedaddon.block.entity.LuminarCrystalHeartedBlockEntity;
+import net.foxyas.changedaddon.block.interfaces.IBrushableBlock;
 import net.foxyas.changedaddon.entity.defaults.AbstractLuminarcticLeopard;
-import net.foxyas.changedaddon.init.ChangedAddonBlockEntities;
-import net.foxyas.changedaddon.init.ChangedAddonBlocks;
-import net.foxyas.changedaddon.init.ChangedAddonEntities;
+import net.foxyas.changedaddon.init.*;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.core.BlockPos;
@@ -12,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -19,6 +19,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -50,7 +52,7 @@ import java.util.List;
 import static net.foxyas.changedaddon.block.LuminarCrystalBlock.moveOrTarget;
 import static net.foxyas.changedaddon.block.LuminarCrystalBlock.spawnParticleOnFace;
 
-public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedBlock, EntityBlock {
+public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedBlock, EntityBlock, IBrushableBlock {
 
     public static final VoxelShape SHAPE_UP = Block.box(1.0F, 0.0F, 1.0F, 15.0F, 16.0F, 15.0F);
     public static final VoxelShape SHAPE_DOWN = SHAPE_UP;
@@ -164,7 +166,9 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
             return blockStateOn.is(this) && blockStateOn.getValue(HALF) == Half.BOTTOM;
         }
 
-        return blockStateOn.getBlock() == ChangedAddonBlocks.LUMINAR_CRYSTAL_BLOCK.get();
+        if (!canSupportRigidBlock(level, blockPos.relative(oppositeDirection)))
+            return false;
+        return blockStateOn.is(ChangedAddonTags.Blocks.CAN_LUMINAR_CRYSTAL_SURVIVE);
     }
 
     @Override
@@ -285,81 +289,86 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
 
         // Leopardo já existente
         List<AbstractLuminarcticLeopard> nearbyLeopards = level.getEntitiesOfClass(AbstractLuminarcticLeopard.class, new AABB(pos).inflate(10));
-
         if (!nearbyLeopards.isEmpty()) {
             if (closestEntity != null) {
                 for (AbstractLuminarcticLeopard leopard : nearbyLeopards) {
                     if (!leopard.canAttack(closestEntity) || !leopard.hasLineOfSight(closestEntity)) continue;
 
-                    moveOrTarget(closestEntity, leopard);
+                    LuminarCrystalBlock.moveOrTarget(closestEntity, leopard);
                     level.playSound(null, pos, SoundEvents.ENDERMAN_SCREAM, SoundSource.MASTER, 1, 0);
                 }
             }
             super.onRemove(oldState, level, pos, newState, isMoving);
-            return;
-        }
-
-        EntityType<? extends AbstractLuminarcticLeopard> leopardType = level.random.nextBoolean()
-                ? ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE.get()
-                : ChangedAddonEntities.LUMINARCTIC_LEOPARD_MALE.get();
-
-        AbstractLuminarcticLeopard newLeopard = leopardType.create(serverLevel);
-        if (newLeopard == null) {
-            super.onRemove(oldState, level, pos, newState, isMoving);
-            return;
-        }
-
-        if (oldState.getValue(HEARTED)) {
-            newLeopard.setBoss(true);
-        }
-
-        BlockPos.MutableBlockPos spawnPos = pos.mutable();
-        Vec3 spawnVec = Vec3.atCenterOf(spawnPos);
-        newLeopard.setPos(spawnVec.x, spawnVec.y, spawnVec.z);
-        newLeopard.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
-        if (closestEntity != null) {
-            moveOrTarget(closestEntity, newLeopard);
-
-            boolean placed = false;
-            Vec3 backward, behind;
-            for (double dist = 0.5; dist <= 1.5; dist += 0.5) {
-                backward = Vec3.directionFromRotation(0, closestEntity.getYRot());
-                behind = closestEntity.position().subtract(backward.scale(dist));
-
-                BlockPos.MutableBlockPos candidate = BlockPos.containing(behind).mutable();
-
-                newLeopard.setPos(Vec3.atCenterOf(candidate));
-
-                if (level.noCollision(newLeopard)
-                        && level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP)
-                        && newLeopard.hasLineOfSight(closestEntity)) {
-
-                    spawnPos.set(candidate);
-                    placed = true;
-                    break;
-                }
-
-                BlockPos.MutableBlockPos moved = candidate.above().mutable();
-                if (level.noCollision(newLeopard)
-                        && level.getBlockState(moved.below()).isFaceSturdy(level, moved.below(), Direction.UP)
-                        && newLeopard.hasLineOfSight(closestEntity)) {
-
-                    spawnPos.set(moved);
-                    placed = true;
-                    break;
-                }
-            }
-
-            // fallback final
-            if (!placed) {
-                spawnPos.set(pos);
-                newLeopard.setPos(Vec3.atCenterOf(spawnPos));
+            if (!oldState.getValue(HEARTED)) {
+                return;
             }
         }
 
-        level.addFreshEntity(newLeopard);
-        newLeopard.playSound(SoundEvents.ENDERMAN_SCREAM, 1, 0);
+        Direction oppositeDirection = oldState.getValue(FACING).getOpposite();
+        BlockState blockStateOn = level.getBlockState(pos.relative(oppositeDirection));
+        if (blockStateOn.is(ChangedAddonTags.Blocks.CAN_SPAWN_LUMINARCTIC_LEOPARDS_ON_CRYSTAL_BREAK)) {
+            EntityType<? extends AbstractLuminarcticLeopard> leopardType = level.random.nextBoolean()
+                    ? ChangedAddonEntities.LUMINARCTIC_LEOPARD_FEMALE.get()
+                    : ChangedAddonEntities.LUMINARCTIC_LEOPARD_MALE.get();
 
+            AbstractLuminarcticLeopard newLeopard = leopardType.create(serverLevel);
+            if (newLeopard == null) {
+                super.onRemove(oldState, level, pos, newState, isMoving);
+                return;
+            }
+
+            if (oldState.getValue(HEARTED)) {
+                newLeopard.setBoss(true);
+            }
+
+            BlockPos.MutableBlockPos spawnPos = pos.mutable();
+            Vec3 spawnVec = Vec3.atCenterOf(spawnPos);
+            newLeopard.setPos(spawnVec.x, spawnVec.y, spawnVec.z);
+            newLeopard.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), MobSpawnType.MOB_SUMMONED, null, null);
+            if (closestEntity != null) {
+                LuminarCrystalBlock.moveOrTarget(closestEntity, newLeopard);
+
+                boolean placed = false;
+                Vec3 backward, behind;
+                for (double dist = 0.5; dist <= 1.5; dist += 0.5) {
+                    backward = Vec3.directionFromRotation(0, closestEntity.getYRot());
+                    behind = closestEntity.position().subtract(backward.scale(dist));
+
+                    BlockPos.MutableBlockPos candidate = BlockPos.containing(behind).mutable();
+
+                    newLeopard.setPos(Vec3.atCenterOf(candidate));
+
+                    if (level.noCollision(newLeopard)
+                            && level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP)
+                            && newLeopard.hasLineOfSight(closestEntity)) {
+
+                        spawnPos.set(candidate);
+                        placed = true;
+                        break;
+                    }
+
+                    BlockPos.MutableBlockPos moved = candidate.above().mutable();
+                    if (level.noCollision(newLeopard)
+                            && level.getBlockState(moved.below()).isFaceSturdy(level, moved.below(), Direction.UP)
+                            && newLeopard.hasLineOfSight(closestEntity)) {
+
+                        spawnPos.set(moved);
+                        placed = true;
+                        break;
+                    }
+                }
+
+                // fallback final
+                if (!placed) {
+                    spawnPos.set(pos);
+                    newLeopard.setPos(Vec3.atCenterOf(spawnPos));
+                }
+            }
+
+            level.addFreshEntity(newLeopard);
+            newLeopard.playSound(SoundEvents.ENDERMAN_SCREAM, 1, 0);
+
+        }
         super.onRemove(oldState, level, pos, newState, isMoving);
     }
 
@@ -384,5 +393,46 @@ public class LuminarCrystalLarge extends BushBlock implements SimpleWaterloggedB
     @Override
     public @NotNull BlockState mirror(BlockState state, Mirror mirrorIn) {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
+    }
+
+    @Override
+    public boolean brush(Level level, BlockState state, BlockPos pos, Player player, Direction side, ItemStack brushStack) {
+        if (!level.isClientSide()) {
+            RandomSource randomSource = player.getRandom();
+
+            // 1. Loot Level Logic (Makes it easier to get ANY crystal)
+            // Gets the Fortune level from the brush (you can change it to another enchantment if needed)
+            int lootLevel = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.BLOCK_FORTUNE, brushStack);
+
+            // Base Chance: 5% (0.05f). Each Loot level increases it by 2% (0.02f).
+            // Ex: Fortune 3 = 0.05 + (3 * 0.02) = 0.11 (11%)
+            float crystalChance = 0.05f + (lootLevel * 0.02f);
+
+            if (randomSource.nextFloat() <= crystalChance) {
+
+                // 2. Player Luck Logic (Makes it easier to get the Hearted Crystal)
+                float playerLuck = player.getLuck();
+
+                // Base Chance: 0.01% (0.0001f). Each point of luck adds 0.05% (0.0005f).
+                // We use Mth.clamp to ensure the chance is never less than 0.0f or greater than 1.0f.
+                float heartedChance = Mth.clamp(0.0001f + (playerLuck * 0.0005f), 0f, 1f);
+
+                if (randomSource.nextFloat() <= heartedChance) {
+                    Block.popResource(level, pos, ChangedAddonItems.LUMINAR_CRYSTAL_SHARD_HEARTED.get().getDefaultInstance());
+                } else {
+                    Block.popResource(level, pos, ChangedAddonItems.LUMINAR_CRYSTAL_SHARD.get().getDefaultInstance());
+                }
+
+                level.playSound(null,
+                        pos,
+                        this.soundType.getBreakSound(),
+                        SoundSource.BLOCKS,
+                        1,
+                        1);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

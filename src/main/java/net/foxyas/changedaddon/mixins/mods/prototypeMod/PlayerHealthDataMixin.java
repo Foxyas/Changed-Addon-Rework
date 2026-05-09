@@ -7,6 +7,7 @@ import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.server.level.ServerPlayer;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,8 +19,9 @@ import java.util.Map;
 
 @Mixin(value = PlayerHealthData.class, remap = false)
 @RequiredMods("casualties_cubed")
-public class PlayerHealthDataMixin {
+public abstract class PlayerHealthDataMixin {
 
+    @Final
     @Shadow
     private Map<Limb, LimbStatistics> limbStats;
 
@@ -38,6 +40,7 @@ public class PlayerHealthDataMixin {
 
     @Unique
     private void changedAddonRework$GrowAllLimbs() {
-        this.limbStats.values().forEach(limbStatistics -> limbStatistics.amputated = false);
+        PlayerHealthData self = (PlayerHealthData) (Object) this;
+        this.limbStats.keySet().forEach(limb -> self.setlimbAmputated(limb, false));
     }
 }

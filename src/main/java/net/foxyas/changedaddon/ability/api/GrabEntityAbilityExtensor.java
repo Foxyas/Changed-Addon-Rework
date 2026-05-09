@@ -76,7 +76,7 @@ public interface GrabEntityAbilityExtensor {
     default boolean canGrabEntity(LivingEntity livingTarget) {
         GrabEntityAbilityInstance self = this instanceof GrabEntityAbilityInstance instance ? instance : null;
         if (self != null && self.entity.getChangedEntity() instanceof IOverrideGrabAbilityTargetConditions overrideGrabAbilityTargetConditions) {
-            return overrideGrabAbilityTargetConditions.canGrabEntity(livingTarget); // For custom entities conditions
+            return overrideGrabAbilityTargetConditions.canGrabEntity(livingTarget, self); // For custom entities conditions
         }
 
         if (!this.isSafeMode()) return false;
@@ -88,8 +88,18 @@ public interface GrabEntityAbilityExtensor {
     }
 
     interface IOverrideGrabAbilityTargetConditions {
-        default boolean canGrabEntity(LivingEntity target) {
-            return false;
+        default boolean canGrabEntity(LivingEntity livingTarget, GrabEntityAbilityInstance grabEntityAbilityInstance) {
+            if (!(grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor)) {
+                return false;
+            }
+
+            // Uses the default behavior.
+            if (!grabEntityAbilityExtensor.isSafeMode()) return false;
+            boolean allowGrabTransfurred = grabEntityAbilityExtensor.allowGrabTransfurred();
+            if (ProcessTransfur.isPlayerTransfurred(EntityUtil.playerOrNull(livingTarget)) && allowGrabTransfurred) {
+                return true;
+            }
+            return livingTarget instanceof ChangedEntity && allowGrabTransfurred;
         }
     }
 }

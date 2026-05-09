@@ -1,7 +1,13 @@
 package net.foxyas.changedaddon.entity.simple;
 
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
+import net.foxyas.changedaddon.entity.api.IAlphaAbleEntity;
+import net.foxyas.changedaddon.entity.defaults.AbstractExp2SnepChangedEntity;
 import net.foxyas.changedaddon.init.ChangedAddonAbilities;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
+import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
+import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.ltxprogrammer.changed.ability.SimpleAbilityInstance;
 import net.ltxprogrammer.changed.entity.AttributePresets;
@@ -10,12 +16,16 @@ import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurMode;
 import net.ltxprogrammer.changed.entity.ai.LatexAssimilationDecision.Method;
 import net.ltxprogrammer.changed.entity.beast.AbstractDarkLatexEntity;
+import net.ltxprogrammer.changed.entity.beast.DarkLatexEntity;
 import net.ltxprogrammer.changed.entity.latex.LatexType;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedAttributes;
 import net.ltxprogrammer.changed.init.ChangedLatexTypes;
 import net.ltxprogrammer.changed.init.ChangedTransfurVariants;
 import net.ltxprogrammer.changed.util.Color3;
+import net.ltxprogrammer.changed.util.EntityUtil;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -26,7 +36,7 @@ import net.minecraftforge.common.ForgeMod;
 
 import java.util.Objects;
 
-public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements VariantExtraStats {
+public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implements VariantExtraStats, GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions {
 
     protected final SimpleAbilityInstance summonPups;
 
@@ -92,5 +102,38 @@ public class DarkLatexYufengQueenEntity extends AbstractDarkLatexEntity implemen
     @Override
     public float getFlyingSpeed() {
         return super.getFlyingSpeed() * 1.5f;
+    }
+
+//    @Override
+//    public void variantTick(Level level) {
+//        super.variantTick(level);
+//        GrabEntityAbilityInstance grab = getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+//
+//        if (grab != null) {
+//            if (grab instanceof GrabEntityAbilityExtensor extensor) extensor.setAllowGrabTransfurred(true);
+//        }
+//    }
+
+    @Override
+    public boolean canGrabEntity(LivingEntity livingTarget, GrabEntityAbilityInstance grabEntityAbilityInstance) {
+        boolean couldGrabEntity = GrabEntityAbilityExtensor.IOverrideGrabAbilityTargetConditions.super.canGrabEntity(livingTarget, grabEntityAbilityInstance);
+        if (!couldGrabEntity && EntityUtil.maybeGetOverlaying(livingTarget) instanceof ChangedEntity changedEntity && changedEntity instanceof DarkLatexEntity) {
+            if (changedEntity instanceof WolfyEntity) {
+                return false;
+            }
+
+            if (changedEntity instanceof IAlphaAbleEntity targetAlpha && this instanceof IAlphaAbleEntity selfAlpha) {
+                if (targetAlpha.isAlpha() && !selfAlpha.isAlpha()) {
+                    return false;
+                }
+                if (targetAlpha.isAlpha() && selfAlpha.isAlpha()) {
+                    return selfAlpha.alphaAdditionalScale() >= targetAlpha.alphaAdditionalScale();
+                }
+            }
+
+            return !(changedEntity instanceof DarkLatexYufengQueenEntity);
+        }
+
+        return couldGrabEntity;
     }
 }

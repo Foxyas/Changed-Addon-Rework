@@ -53,13 +53,12 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
     }
 
     @Inject(method = "setupAnim(Lnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFF)V", at = @At("TAIL"))
-    private void setupAnimHook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
+    private void prototypeAmputationSetupAnimHook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         AdvancedHumanoidModel<?> self = (AdvancedHumanoidModel<?>) (Object) this;
         if (self instanceof LatexHumanoidArmorModel<?, ?>) return;
 
         Player player = entity.getUnderlyingPlayer();
         if (player instanceof AbstractClientPlayer clientPlayer) {
-
             if (entity.getEntityShape() == EntityShape.FERAL) {
                 return;
             }
@@ -75,23 +74,39 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                         switch (limb) {
                             case RIGHT_LEG -> {
                                 boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
-                                self.getLeg(HumanoidArm.RIGHT).visible = !isVisible;
+                                ModelPart leg = self.getLeg(HumanoidArm.RIGHT);
+                                if (leg != null) {
+                                    leg.visible = !isVisible;
+                                }
                             }
                             case RIGHT_ARM -> {
                                 boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
-                                self.getArm(HumanoidArm.RIGHT).visible = !isVisible;
+                                ModelPart arm = self.getArm(HumanoidArm.RIGHT);
+                                if (arm != null) {
+                                    arm.visible = !isVisible;
+                                }
                             }
                             case LEFT_ARM -> {
                                 boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
-                                self.getArm(HumanoidArm.LEFT).visible = !isVisible;
+                                ModelPart arm = self.getArm(HumanoidArm.LEFT);
+                                if (arm != null) {
+                                    arm.visible = !isVisible;
+                                }
                             }
                             case LEFT_LEG -> {
                                 boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
-                                self.getLeg(HumanoidArm.LEFT).visible = !isVisible;
+                                ModelPart leg = self.getLeg(HumanoidArm.LEFT);
+                                if (leg != null) {
+                                    leg.visible = !isVisible;
+                                }
                             }
                             case HEAD -> {
                                 boolean isVisible = player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).map(h -> h.isAmputated(limb)).orElse(false);
-                                self.getHead().visible = !isVisible;
+                                ModelPart head = self.getHead();
+                                if (head != null) {
+                                    head.visible = !isVisible;
+                                }
+
                             }
                         }
                     }

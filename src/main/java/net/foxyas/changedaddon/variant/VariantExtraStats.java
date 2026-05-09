@@ -85,4 +85,8 @@ public interface VariantExtraStats {
             return this == ONLY_FLY || this == BOTH;
         }
     }
+
+    default int cuteLevel() {
+        return 0;
+    }
 }
