@@ -898,10 +898,13 @@ public class Experiment009BossEntity extends Experiment009Entity implements IExp
     }
 
     @Override
-    public void WhenPattedReaction(LivingEntity player, InteractionHand hand) {
-        if (!(player.level() instanceof ServerLevel)) return;
-        if (player instanceof ServerPlayer serverPlayer) {
+    public void WhenPattedReaction(LivingEntity patter, InteractionHand hand) {
+        if (!(patter.level() instanceof ServerLevel)) return;
+        if (patter instanceof ServerPlayer serverPlayer) {
             ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.Trigger(serverPlayer, this, "pats_on_the_beast");
+        }
+        if (!(patter instanceof Player player)) {
+            return;
         }
 
         List<Component> translatableComponentList = new ArrayList<>();
