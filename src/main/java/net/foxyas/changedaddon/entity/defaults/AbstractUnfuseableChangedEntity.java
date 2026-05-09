@@ -266,7 +266,7 @@ public abstract class AbstractUnfuseableChangedEntity extends ChangedEntity impl
     }
 
     @Override
-    public void WhenPattedReactionSpecific(Player patter, InteractionHand hand, Vec3 pattedLocation) {
+    public void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
         CustomPatReaction.super.WhenPattedReactionSpecific(patter, hand, pattedLocation);
     }
 

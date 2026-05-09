@@ -164,7 +164,7 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
     }
 
     @Override
-    public void WhenPattedReaction(Player patter, InteractionHand hand) {
+    public void WhenPattedReaction(LivingEntity patter, InteractionHand hand) {
         CustomPatReaction.super.WhenPattedReaction(patter, hand);
         if (patter.level().isClientSide) return;
 

@@ -10,10 +10,10 @@ public interface CustomPatReaction {
     default void WhenPattedReactionSimple() {
     }
 
-    default void WhenPattedReaction(Player patter, InteractionHand hand) {
+    default void WhenPattedReaction(LivingEntity patter, InteractionHand hand) {
     }
 
-    default void WhenPattedReactionSpecific(Player patter, InteractionHand hand, Vec3 pattedLocation) {
+    default void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
     }
 
     default void WhenPatEvent(LivingEntity patter, InteractionHand hand, LivingEntity patTarget) {

@@ -1,9 +1,12 @@
 package net.foxyas.changedaddon.variant;
 
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure.DietType;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
@@ -68,6 +71,16 @@ public interface VariantExtraStats {
         return true;
     }
 
+    default int cutenessLevel() {
+        if (this instanceof LivingEntity livingEntity) {
+            MobEffectInstance effect = livingEntity.getEffect(ChangedAddonMobEffects.PACIFIED.get());
+            if (effect != null) {
+                return effect.getAmplifier();
+            }
+        }
+        return 0;
+    }
+
     enum FlyType {
         NONE,
         ONLY_FALL,
@@ -84,9 +97,5 @@ public interface VariantExtraStats {
         public boolean canFly() {
             return this == ONLY_FLY || this == BOTH;
         }
-    }
-
-    default int cuteLevel() {
-        return 0;
     }
 }

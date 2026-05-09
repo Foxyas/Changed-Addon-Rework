@@ -365,7 +365,7 @@ public class Experiment10BossEntity extends Experiment10Entity implements IExp10
     }
 
     @Override
-    public void WhenPattedReaction(Player player, InteractionHand hand) {
+    public void WhenPattedReaction(LivingEntity player, InteractionHand hand) {
         if (!(player.level() instanceof ServerLevel)) return;
         if (player instanceof ServerPlayer serverPlayer) {
             ChangedAddonCriteriaTriggers.PAT_ENTITY_TRIGGER.Trigger(serverPlayer, this, "pats_on_the_beast");
