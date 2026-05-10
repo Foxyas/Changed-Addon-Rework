@@ -16,14 +16,14 @@ import java.util.NoSuchElementException;
 @Mixin(value = LatexHumanoidArmorModel.class)
 public class LatexHumanoidArmorModelMixin {
 
-    @Inject(method = "prepareVisibility", at = @At("RETURN"), remap = false)
-    private void TurnOffPlantoids(EquipmentSlot armorSlot, ItemStack item, CallbackInfo ci) {
-        var self = (AdvancedHumanoidModel<?>) (Object) this;
-        var torso = self.getTorso();
-        try {
-            ModelPart plantoidsPart = torso.getChild("Plantoids");
-            plantoidsPart.visible = !ChangedAddonClientConfiguration.PLANTOIDS_VISIBILITY.get();
-        } catch (NoSuchElementException ignored) {
-        }
-    }
+//    @Inject(method = "prepareVisibility", at = @At("RETURN"), remap = false)
+//    private void turnOffPlantoids(EquipmentSlot armorSlot, ItemStack item, CallbackInfo ci) {
+//        var self = (AdvancedHumanoidModel<?>) (Object) this;
+//        var torso = self.getTorso();
+//        try {
+//            ModelPart plantoidsPart = torso.getChild("Plantoids");
+//            plantoidsPart.visible = !ChangedAddonClientConfiguration.PLANTOIDS_VISIBILITY.get();
+//        } catch (NoSuchElementException ignored) {
+//        }
+//    }
 }

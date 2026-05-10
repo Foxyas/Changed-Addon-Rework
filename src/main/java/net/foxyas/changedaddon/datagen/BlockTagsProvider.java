@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.datagen;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.init.ChangedAddonBlocks;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.ltxprogrammer.changed.init.ChangedBlocks;
 import net.ltxprogrammer.changed.init.ChangedTags;
@@ -61,6 +62,9 @@ public class BlockTagsProvider extends net.minecraftforge.common.data.BlockTagsP
         tag(ChangedAddonTags.Blocks.LAB_BIG_DOORS).add(ChangedBlocks.LARGE_LIBRARY_DOOR.get(), ChangedBlocks.LARGE_LAB_DOOR.get(), ChangedBlocks.LARGE_MAINTENANCE_DOOR.get(), ChangedBlocks.LARGE_BLUE_LAB_DOOR.get());
         tag(ChangedAddonTags.Blocks.LAB_DOORS).add(ChangedBlocks.LIBRARY_DOOR.get(), ChangedBlocks.LAB_DOOR.get(), ChangedBlocks.MAINTENANCE_DOOR.get(), ChangedBlocks.BLUE_LAB_DOOR.get());
         tag(ChangedAddonTags.Blocks.PASSABLE_BLOCKS).addTags(BlockTags.FENCES, BlockTags.FENCE_GATES, BlockTags.TRAPDOORS).add(Blocks.ACACIA_DOOR, Blocks.IRON_BARS, ChangedBlocks.BLACK_RAILING.get());
+        tag(ChangedAddonTags.Blocks.DORMANT_LATEX_BLOCKS).add(DORMANT_DARK_LATEX.get()).add(DORMANT_WHITE_LATEX.get());
+        tag(ChangedAddonTags.Blocks.CAN_LUMINAR_CRYSTAL_SURVIVE).add(LUMINAR_CRYSTAL_BLOCK.get()).add(Blocks.CRYING_OBSIDIAN).add(Blocks.AMETHYST_BLOCK).add(Blocks.AMETHYST_CLUSTER).add(Blocks.SEA_LANTERN).add(Blocks.CALCITE).addTag(ChangedAddonTags.Blocks.DORMANT_LATEX_BLOCKS).addTag(BlockTags.ICE).addTag(Tags.Blocks.STORAGE_BLOCKS_QUARTZ);
+        tag(ChangedAddonTags.Blocks.CAN_SPAWN_LUMINARCTIC_LEOPARDS_ON_CRYSTAL_BREAK).add(LUMINAR_CRYSTAL_BLOCK.get());
 
         tag(Tags.Blocks.NEEDS_NETHERITE_TOOL).add(DEEPSLATE_PAINITE_ORE.get(), PAINITE_BLOCK.get());
 

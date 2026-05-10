@@ -131,6 +131,8 @@ dependencies {
         changing = true
     }//Changed
 
+    implementation fg.deobf("net.adinvas.casualties_cubed:casualties_cubed-1.0.0:1.0.0")
+
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-common-api:${jeiVersion}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraftVersion}-forge-api:${jeiVersion}")
 

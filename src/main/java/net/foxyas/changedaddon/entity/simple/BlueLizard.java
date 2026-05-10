@@ -16,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -104,7 +105,7 @@ public class BlueLizard extends AbstractBasicChangedEntity implements ExtraCondi
     }
 
     @Override
-    public void WhenPattedReactionSpecific(Player patter, InteractionHand hand, Vec3 pattedLocation) {
+    public void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
         CustomPatReaction.super.WhenPattedReactionSpecific(patter, hand, pattedLocation);
         this.level.playSound(null, this, ChangedAddonSoundEvents.GECKO_BEEP.get(), SoundSource.AMBIENT, 1, 1);
     }

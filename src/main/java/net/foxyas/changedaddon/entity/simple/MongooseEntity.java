@@ -14,6 +14,7 @@ import net.ltxprogrammer.changed.init.ChangedAnimationEvents;
 import net.ltxprogrammer.changed.util.Color3;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -55,7 +56,7 @@ public class MongooseEntity extends AbstractBasicChangedEntity implements Custom
     }
 
     @Override
-    public void WhenPattedReactionSpecific(Player patter, InteractionHand hand, Vec3 pattedLocation) {
+    public void WhenPattedReactionSpecific(LivingEntity patter, InteractionHand hand, Vec3 pattedLocation) {
         ChangedAnimationEvents.broadcastEntityAnimation(this, ChangedAddonAnimationEvents.PAT_REACTION.get(), PatReactionAnimationParameters.INSTANCE);
     }
 }

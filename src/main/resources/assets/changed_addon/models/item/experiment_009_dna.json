@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "changed_addon:item/experiment_009_dna"
+    "layer0": "changed_addon:item/dna_orbs/exp9_dna_orb"
   }
 }

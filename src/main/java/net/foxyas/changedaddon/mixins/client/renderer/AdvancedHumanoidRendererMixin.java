@@ -28,7 +28,7 @@ public abstract class AdvancedHumanoidRendererMixin {
 
     @Inject(method = "render(Lnet/ltxprogrammer/changed/entity/ChangedEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
             at = @At("TAIL"))
-    private void TurnOffPlantoids(ChangedEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, CallbackInfo ci) {
+    private void turnOffPlantoids(ChangedEntity entity, float yRot, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, CallbackInfo ci) {
         var torso = this.getModel(entity).getTorso();
         try {
             ModelPart plantoidsPart = torso.getChild("Plantoids");
@@ -40,10 +40,9 @@ public abstract class AdvancedHumanoidRendererMixin {
         if (this.armorLayer != null) {
             try {
                 var armorTorso = this.armorLayer.getArmorModel(entity, EquipmentSlot.CHEST).getTorso();
-                ModelPart armorPlantoidsPart = armorTorso.getChild("Plantoids"); // Aqui estava o problema
+                ModelPart armorPlantoidsPart = armorTorso.getChild("Plantoids");
                 armorPlantoidsPart.visible = !ChangedAddonClientConfiguration.PLANTOIDS_VISIBILITY.get();
-            } catch (NoSuchElementException e) {
-                // A parte "Plantoids" não existe na armadura, ignoramos
+            } catch (NoSuchElementException ignored) {
             }
         }
     }

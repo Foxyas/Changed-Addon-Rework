@@ -164,22 +164,25 @@ public class PrototypeEntity extends AbstractCanTameChangedEntityFavors implemen
     }
 
     @Override
-    public void WhenPattedReaction(Player patter, InteractionHand hand) {
+    public void WhenPattedReaction(LivingEntity patter, InteractionHand hand) {
         CustomPatReaction.super.WhenPattedReaction(patter, hand);
         if (patter.level().isClientSide) return;
-
-        if (!isTame()) {
-            tame(patter);
+        if (!(patter instanceof Player player)) {
             return;
         }
 
-        InteractionResult interactionresult = super.mobInteract(patter, hand);
+        if (!isTame()) {
+            tame(player);
+            return;
+        }
+
+        InteractionResult interactionresult = super.mobInteract(player, hand);
         if ((interactionresult.consumesAction() && !isBaby()) || !isOwnedBy(patter)) return;
 
         boolean shouldFollow = !isFollowingOwner();
         setFollowOwner(shouldFollow);
 
-        patter.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", getDisplayName()), false);
+        player.displayClientMessage(Component.translatable(shouldFollow ? "text.changed.tamed.follow" : "text.changed.tamed.wander", getDisplayName()), false);
         jumping = false;
         navigation.stop();
         setTarget(null);

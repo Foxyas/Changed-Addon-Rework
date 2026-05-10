@@ -1,14 +1,10 @@
 package net.foxyas.changedaddon.mixins.mods.vivecraft;
 
-import net.ltxprogrammer.changed.client.renderer.accessory.WornExoskeletonRenderer;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
-import net.ltxprogrammer.changed.client.renderer.layers.AccessoryLayer;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
-import net.ltxprogrammer.changed.client.renderer.model.ExoskeletonModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.entity.beast.LatexBenignOrca;
-import net.ltxprogrammer.changed.entity.robot.Exoskeleton;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
 import net.ltxprogrammer.changed.init.ChangedTags;
 import net.minecraft.client.Minecraft;
@@ -18,8 +14,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.vivecraft.client.ClientVRPlayers;
 import org.vivecraft.client.render.VRPlayerModel;
 import org.vivecraft.client.render.VRPlayerRenderer;
-import org.vivecraft.client_vr.settings.VRSettings;
 
 @Mixin(value = AdvancedHumanoidModel.class, remap = false)
 @RequiredMods("vivecraft")
@@ -50,7 +43,7 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
     }
 
     @Inject(method = "setupAnim(Lnet/ltxprogrammer/changed/entity/ChangedEntity;FFFFF)V", at = @At("TAIL"))
-    private void setupAnimHook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
+    private void viveCraftSetupAnimHook(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, CallbackInfo ci) {
         var self = (AdvancedHumanoidModel<?>) (Object) this;
         Player player = entity.getUnderlyingPlayer();
         if (player instanceof AbstractClientPlayer clientPlayer) {

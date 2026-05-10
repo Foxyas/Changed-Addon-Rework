@@ -342,7 +342,10 @@ public abstract class AbstractExp2SnepChangedEntity extends AbstractSnowLeopard 
     }
 
     @Override
-    public void WhenPattedReactionSpecific(Player patter, InteractionHand hand, Vec3 pattedLocation) {
+    public void WhenPattedReactionSpecific(LivingEntity patterLiving, InteractionHand hand, Vec3 pattedLocation) {
+        if (!(patterLiving instanceof Player patter)) {
+            return;
+        }
 
         boolean isPlayerTransfur = (ProcessTransfur.getPlayerTransfurVariant(patter) != null);
         boolean isPlayerTransfurInExp2 = (ProcessTransfur.getPlayerTransfurVariant(patter) != null

@@ -10,6 +10,7 @@ import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
 import net.foxyas.changedaddon.mixins.abilities.AbilityControllerAccessor;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
+import net.foxyas.changedaddon.variant.LavaSwimmableVariant;
 import net.foxyas.changedaddon.variant.VariantExtraStats;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
@@ -52,9 +53,10 @@ import java.util.Objects;
 
 import static net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure.DietType;
 
-public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraStats, IGrabberEntity {
+public class WolfyEntity extends AbstractDarkLatexWolf implements LavaSwimmableVariant, IGrabberEntity {
 
     public static final DietType WOLFY_DIET = DietType.create("WOLFY", ChangedAddonTags.TransfurTypes.WOLF_DIET, ChangedAddonTags.Items.WOLF_DIET, List.of(ChangedAddonItems.FOXTA.get(), ChangedItems.ORANGE.get()));
+    public GrabEntityAbilityInstance grabInstance = null;
 
     public WolfyEntity(PlayMessages.SpawnEntity ignoredPacket, Level world) {
         this(ChangedAddonEntities.WOLFY.get(), world);
@@ -65,10 +67,8 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
         xpReward = 0;
         this.setAttributes(getAttributes());
         setPersistenceRequired();
+        this.grabInstance = this.createGrabAbility();
 
-        if (this.grabEntityAbilityInstance == null) {
-            this.grabEntityAbilityInstance = this.createGrabAbility();
-        }
         this.setCanUseGrab(true);
     }
 
@@ -208,6 +208,11 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
     }
 
     @Override
+    public void tick() {
+        super.tick();
+    }
+
+    @Override
     public void baseTick() {
         super.baseTick();
         this.mayTickGrabAbility();
@@ -233,15 +238,19 @@ public class WolfyEntity extends AbstractDarkLatexWolf implements VariantExtraSt
 
     @Override
     public @Nullable GrabEntityAbilityInstance getGrabAbility() {
-        return this.grabEntityAbilityInstance;
+        if (this.getUnderlyingPlayer() == null) {
+            return this.grabInstance;
+        }
+        return null;
     }
 
     @Override
     public <A extends AbstractAbilityInstance> A getAbilityInstance(AbstractAbility<A> ability) {
-        if (this.getUnderlyingPlayer() == null) {
-            return (A) (this.grabEntityAbilityInstance != null && ability == this.grabEntityAbilityInstance.ability ? this.grabEntityAbilityInstance : super.getAbilityInstance(ability));
+        if (this.getUnderlyingPlayer() != null) {
+            return super.getAbilityInstance(ability);
         }
-        return super.getAbilityInstance(ability);
+
+        return (A) (this.grabInstance != null && ability == this.grabInstance.ability ? this.grabInstance : super.getAbilityInstance(ability));
     }
 
     @Override

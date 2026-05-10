@@ -1,9 +1,12 @@
 package net.foxyas.changedaddon.variant;
 
 import net.foxyas.changedaddon.entity.customHandle.AttributesHandle;
+import net.foxyas.changedaddon.init.ChangedAddonMobEffects;
 import net.foxyas.changedaddon.procedure.CreatureDietsHandleProcedure.DietType;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
@@ -66,6 +69,16 @@ public interface VariantExtraStats {
     // Gun Mods Compatibility
     default boolean canFireGuns() {
         return true;
+    }
+
+    default int cutenessLevel() {
+        if (this instanceof LivingEntity livingEntity) {
+            MobEffectInstance effect = livingEntity.getEffect(ChangedAddonMobEffects.PACIFIED.get());
+            if (effect != null) {
+                return effect.getAmplifier();
+            }
+        }
+        return 0;
     }
 
     enum FlyType {
