@@ -302,6 +302,31 @@ public class HazardBodySuitClothingRenderer implements AccessoryRenderer, Transi
         return false;
     }
 
+    private <T extends LivingEntity, M extends EntityModel<T>> boolean mayRenderNonHumanTransfurModelFullBody(PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, T entity, ItemStack stack, ResourceLocation texture, Color color) {
+        if (entity instanceof ChangedEntity changedEntity && !(changedEntity instanceof LatexHuman)) {
+            if (renderLayerParent instanceof AdvancedHumanoidRenderer advancedHumanoidRenderer) {
+                LatexHumanoidArmorLayer layer = advancedHumanoidRenderer.getArmorLayer();
+
+                for (EquipmentSlot slot : EquipmentSlot.values()) {
+                    if (slot.getType() != EquipmentSlot.Type.ARMOR) {
+                        continue;
+                    }
+
+                    LatexHumanoidArmorModel model = (LatexHumanoidArmorModel) layer.modelPicker.getModelSetForSlot(changedEntity, slot).get(ArmorModel.CLOTHING_INNER);
+                    AdvancedHumanoidModel other = advancedHumanoidRenderer.getModel(changedEntity);
+                    model.getAnimator(changedEntity).copyProperties(other.getAnimator(changedEntity));
+                    model.prepareMobModel(changedEntity, limbSwing, limbSwingAmount, partialTicks);
+                    model.setupAnim(changedEntity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+                    model.prepareVisibility(slot, stack);
+                    model.renderForSlot(changedEntity, advancedHumanoidRenderer, stack, slot, poseStack, ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(texture), false, stack.hasFoil()), light, OverlayTexture.NO_OVERLAY, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1);
+                }
+
+                return true;
+            }
+        }
+        return false;
+    }
+
     private <T extends LivingEntity, M extends EntityModel<T>> boolean mayRenderTransfuringModel(PoseStack poseStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, T entity, ResourceLocation texture, ItemStack stack, Color color) {
         if (entity instanceof AbstractClientPlayer player) {
             TransfurVariantInstance<?> transfurVariantInstance = ProcessTransfur.getPlayerTransfurVariant(player);

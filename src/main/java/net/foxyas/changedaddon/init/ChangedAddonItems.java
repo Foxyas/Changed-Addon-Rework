@@ -238,7 +238,7 @@ public class ChangedAddonItems {
     //public static final RegistryObject<Item> DYEABLE_SPORTS_BRA = REGISTRY.register("dyeable_sports_bra", DyeableSportsBra::new);
     public static final RegistryObject<TShirtClothingItem> DYEABLE_TSHIRT = REGISTRY.register("dyeable_tshirt", TShirtClothingItem::new);
     public static final RegistryObject<DyeableShortsItem> DYEABLE_SHORTS = REGISTRY.register("dyeable_shorts", DyeableShortsItem::new);
-    public static final RegistryObject<Item> HAZARD_BODY_SUIT = REGISTRY.register("hazard_body_suit", HazardBodySuit::new);
+    public static final RegistryObject<HazardBodySuit> HAZARD_BODY_SUIT = REGISTRY.register("hazard_body_suit", HazardBodySuit::new);
     public static final RegistryObject<KeycardItem> KEYCARD_ITEM = REGISTRY.register("keycard", KeycardItem::new);
     public static final RegistryObject<TimedKeypadItem> TIMED_KEYPAD = REGISTRY.register("timed_keypad", TimedKeypadItem::new);
     public static final RegistryObject<Item> HAND_SCANNER = RegisterBlockItem(REGISTRY, ChangedAddonBlocks.HAND_SCANNER);

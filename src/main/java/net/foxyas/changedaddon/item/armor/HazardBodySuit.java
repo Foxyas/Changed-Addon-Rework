@@ -404,6 +404,8 @@ public class HazardBodySuit extends ClothingItem implements AccessoryItemExtensi
                 return String.format("%s:textures/models/hazard_suit/%s_%s_tf.png", itemId.getNamespace(), itemId.getPath(), getHelmetState(stack));
             } else if (transfurVariant != null && ChangedAddonTransfurVariants.getHumanForms().contains(transfurVariant.getParent())) {
                 return String.format("%s:textures/models/hazard_suit/%s_%s_%s.png", itemId.getNamespace(), itemId.getPath(), getHelmetState(stack), getPlayerModelStyle(entity));
+            } else if (transfurVariant != null) {
+                return String.format("%s:textures/models/hazard_suit/%s_%s_tf.png", itemId.getNamespace(), itemId.getPath(), getHelmetState(stack));
             }
         }
 
