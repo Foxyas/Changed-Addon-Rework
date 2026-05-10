@@ -27,7 +27,7 @@ public class ChangedAddonAccessoryRenderers {
                                     new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_INNER, EquipmentSlot.CHEST),
                                     new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_INNER, EquipmentSlot.LEGS),
                                     new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.ARMOR_INNER, EquipmentSlot.FEET),
-                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_OUTER, EquipmentSlot.FEET)
+                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.ARMOR_OUTER, EquipmentSlot.FEET)
                             )
                     )
             );
