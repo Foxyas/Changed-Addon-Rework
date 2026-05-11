@@ -5,6 +5,7 @@ import net.adinvas.casualties_cubed.limbs.Limb;
 import net.adinvas.casualties_cubed.limbs.LimbStatistics;
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedSounds;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,6 +38,7 @@ public class TransfurVariantInstanceMixin {
         player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).ifPresent((self) -> {
             Map<Limb, LimbStatistics> limbStats = ((PlayerHealthDataAccessor) self).getLimbStats();
             limbStats.keySet().forEach(limb -> self.setlimbAmputated(limb, false));
+            player.playSound(ChangedSounds.TRANSFUR_BY_LATEX.get(), 1, 1);
         });
     }
 }
