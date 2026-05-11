@@ -1,8 +1,8 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
-import net.adinvas.casualties_cubed.PlayerHealthProvider;
-import net.adinvas.casualties_cubed.limbs.Limb;
-import net.adinvas.casualties_cubed.limbs.LimbStatistics;
+import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
+import net.zaharenko424.casualties_cubed.limbs.Limb;
+import net.zaharenko424.casualties_cubed.limbs.LimbStatistics;
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedSounds;

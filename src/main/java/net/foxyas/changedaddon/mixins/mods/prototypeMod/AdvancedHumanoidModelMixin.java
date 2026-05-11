@@ -1,7 +1,7 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
-import net.adinvas.casualties_cubed.PlayerHealthProvider;
-import net.adinvas.casualties_cubed.limbs.Limb;
+import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
+import net.zaharenko424.casualties_cubed.limbs.Limb;
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
