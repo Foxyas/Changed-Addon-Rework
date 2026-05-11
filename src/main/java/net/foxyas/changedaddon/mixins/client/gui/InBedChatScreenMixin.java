@@ -2,6 +2,7 @@ package net.foxyas.changedaddon.mixins.client.gui;
 
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
+import net.foxyas.changedaddon.init.ChangedAddonKeyMappings;
 import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.foxyas.changedaddon.network.packet.ServerboundSwitchCuddlePacket;
 import net.foxyas.changedaddon.util.PlayerUtil;
@@ -47,7 +48,6 @@ public abstract class InBedChatScreenMixin extends Screen {
             assert minecraft != null;
             minecraft.setScreen(null);
             LocalPlayer player = this.minecraft.player;
-            self.visible = PlayerUtil.canTurnCuddleModeOn(player);
         }).bounds(this.width / 2 - 100, 20, 200, 20).build();
         addRenderableWidget(cuddleButton);
     }
@@ -56,7 +56,7 @@ public abstract class InBedChatScreenMixin extends Screen {
     private void hideButtonAndCloseIfCuddling(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick, CallbackInfo ci) {
         if (this.minecraft == null || this.minecraft.player == null) return;
         LocalPlayer player = this.minecraft.player;
-        cuddleButton.visible = PlayerUtil.canTurnCuddleModeOn(player);
+        cuddleButton.visible = PlayerUtil.canTurnCuddleModeOn(player) && !ChangedAddonKeyMappings.CUDDLE_KEY.isUnbound();
         if (!ChangedAddonVariables.ofOrDefault(player).isCuddling) return;
 
         ci.cancel();

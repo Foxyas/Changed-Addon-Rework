@@ -56,6 +56,16 @@ public class PlayerUtil {
     public static final Predicate<Entity> NON_SPECTATOR = entity -> !entity.isSpectator();
 
     public static boolean canTurnCuddleModeOn(Player player) {
+        // Verifica se o jogador é a entidade variante agarrando alguém
+        Optional<IAbstractChangedEntity> optionalPlayerVariant = IAbstractChangedEntity.forEitherSafe(player);
+        if (optionalPlayerVariant.isPresent()) {
+            IAbstractChangedEntity playerVariant = optionalPlayerVariant.get();
+            GrabEntityAbilityInstance grabEntityAbilityInstance = playerVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+                return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null && !grabEntityAbilityInstance.suited;
+            }
+        }
+
         // Verifica se o jogador está a ser agarrado
         Optional<IAbstractChangedEntity> grabberSafe = GrabEntityAbility.getGrabberSafe(player);
         if (grabberSafe.isPresent()) {
@@ -63,16 +73,6 @@ public class PlayerUtil {
             GrabEntityAbilityInstance grabEntityAbilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
             if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
                 return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity == player && !grabEntityAbilityInstance.suited;
-            }
-        }
-
-        // Verifica se o jogador é a entidade variante agarrando alguém
-        Optional<IAbstractChangedEntity> optionalPlayerVariant = IAbstractChangedEntity.forEitherSafe(player);
-        if (optionalPlayerVariant.isPresent()) {
-            IAbstractChangedEntity playerVariant = optionalPlayerVariant.get();
-            GrabEntityAbilityInstance grabEntityAbilityInstance = playerVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
-                return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null && grabEntityAbilityInstance.suited;
             }
         }
 
