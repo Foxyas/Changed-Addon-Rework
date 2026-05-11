@@ -2,15 +2,14 @@ package net.foxyas.changedaddon.util;
 
 import com.google.common.base.Predicates;
 import net.foxyas.changedaddon.ChangedAddonMod;
+import net.foxyas.changedaddon.ability.api.GrabEntityAbilityExtensor;
 import net.foxyas.changedaddon.client.gui.TransfurSoundsGuiScreen;
 import net.foxyas.changedaddon.entity.simple.AbstractSnowFoxEntity;
 import net.foxyas.changedaddon.event.TransfurEvents;
 import net.foxyas.changedaddon.event.UntransfurEvent;
 import net.foxyas.changedaddon.init.ChangedAddonSoundEvents;
 import net.foxyas.changedaddon.init.ChangedAddonTags;
-import net.ltxprogrammer.changed.ability.AbstractAbility;
-import net.ltxprogrammer.changed.ability.AbstractAbilityInstance;
-import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
+import net.ltxprogrammer.changed.ability.*;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.TransfurCause;
 import net.ltxprogrammer.changed.entity.TransfurContext;
@@ -18,6 +17,7 @@ import net.ltxprogrammer.changed.entity.beast.AbstractAquaticEntity;
 import net.ltxprogrammer.changed.entity.beast.AbstractLatexWolf;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariant;
 import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.init.ChangedAbilities;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.ltxprogrammer.changed.world.LatexCoverGetter;
@@ -54,6 +54,30 @@ public class PlayerUtil {
 
     public static final ClipContext.ShapeGetter BLOCK_COLLISION = ClipContext.Block.COLLIDER;
     public static final Predicate<Entity> NON_SPECTATOR = entity -> !entity.isSpectator();
+
+    public static boolean canTurnCuddleModeOn(Player player) {
+        // Verifica se o jogador está a ser agarrado
+        Optional<IAbstractChangedEntity> grabberSafe = GrabEntityAbility.getGrabberSafe(player);
+        if (grabberSafe.isPresent()) {
+            IAbstractChangedEntity grabber = grabberSafe.get();
+            GrabEntityAbilityInstance grabEntityAbilityInstance = grabber.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+                return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity == player && !grabEntityAbilityInstance.suited;
+            }
+        }
+
+        // Verifica se o jogador é a entidade variante agarrando alguém
+        Optional<IAbstractChangedEntity> optionalPlayerVariant = IAbstractChangedEntity.forEitherSafe(player);
+        if (optionalPlayerVariant.isPresent()) {
+            IAbstractChangedEntity playerVariant = optionalPlayerVariant.get();
+            GrabEntityAbilityInstance grabEntityAbilityInstance = playerVariant.getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
+            if (grabEntityAbilityInstance instanceof GrabEntityAbilityExtensor grabEntityAbilityExtensor) {
+                return grabEntityAbilityExtensor.isSafeMode() && grabEntityAbilityInstance.grabbedEntity != null && grabEntityAbilityInstance.suited;
+            }
+        }
+
+        return false;
+    }
 
     public static void transfurPlayer(Player player, String id, float progress) {
         ResourceLocation form = ResourceLocation.tryParse(id);
