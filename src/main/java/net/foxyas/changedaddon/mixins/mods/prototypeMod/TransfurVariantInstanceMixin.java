@@ -1,5 +1,7 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
+import net.foxyas.changedaddon.util.EntityUtils;
+import net.foxyas.changedaddon.util.MathFormulasUtils;
 import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
 import net.zaharenko424.casualties_cubed.limbs.Limb;
 import net.zaharenko424.casualties_cubed.limbs.LimbStatistics;
@@ -37,8 +39,46 @@ public class TransfurVariantInstanceMixin {
     private void changedAddonRework$GrowAllLimbs(Player player) {
         player.getCapability(PlayerHealthProvider.PLAYER_HEALTH_DATA).ifPresent((self) -> {
             Map<Limb, LimbStatistics> limbStats = ((PlayerHealthDataAccessor) self).getLimbStats();
-            limbStats.keySet().forEach(limb -> self.setlimbAmputated(limb, false));
-            player.playSound(ChangedSounds.TRANSFUR_BY_LATEX.get(), 1, 1);
+
+            // --- Scaling ---
+            // Health/Blood: 0.0 a 1.0 (ex: 5/5 = 1.0)
+            float healthRatio = self.getBloodVolume() / 5f; //EntityUtils.getHealthRatio(player);
+            // Food: 0.0 a 1.0 (ex: 20/20 = 1.0)
+            float foodRatio = EntityUtils.getFoodRatio(player, null);
+
+            // Base de 100 ticks, escalada pela saúde e fome
+            // Se ambos estiverem no máximo, ganha 100. Se um estiver baixo, ganha menos.
+            float progressBonus = 100f * healthRatio * foodRatio;
+            MathFormulasUtils.lerpEase(healthRatio * foodRatio, 100, 300, MathFormulasUtils.EasingType.QUAD_IN);
+
+            // Valor máximo de regrow (20 ticks * 60 segundos = 1200)
+            float maxRegrow = 20 * 60;
+            // ------------------------
+
+            boolean playedSound = false;
+
+            for (Limb limb : limbStats.keySet()) {
+                if (!self.isAmputated(limb)) continue;
+
+                Limb root = limb.getConnectedTo();
+                Limb targetLimb = (root == null || !self.isAmputated(root)) ? limb : root;
+
+                LimbStatistics stats = limbStats.get(targetLimb);
+                float currentProgress = stats.getRegrowthProgress();
+
+                if (currentProgress < maxRegrow) {
+                    // Aplica o bônus escalonado, limitando ao máximo de 1200
+                    stats.setRegrowthProgress(Math.min(maxRegrow, currentProgress + progressBonus));
+                    playedSound = true;
+                    if (stats.getRegrowthProgress() >= maxRegrow) {
+                        self.setlimbAmputated(targetLimb, false);
+                    }
+                }
+            }
+
+            if (playedSound) {
+                player.playSound(ChangedSounds.TRANSFUR_BY_LATEX.get(), 1.0f, 1.0f);
+            }
         });
     }
 }
