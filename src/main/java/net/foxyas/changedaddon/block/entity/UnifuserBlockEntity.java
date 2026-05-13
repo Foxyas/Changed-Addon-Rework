@@ -41,7 +41,7 @@ import java.util.stream.IntStream;
 
 public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
 
-    protected final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+    protected final LazyOptional<? extends IItemHandler>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     public boolean startRecipe = true;
     public double recipeProgress = 0;
     public int tickCount;
@@ -303,33 +303,34 @@ public class UnifuserBlockEntity extends RandomizableContainerBlockEntity implem
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
-        return this.canPlaceItem(index, stack);
+        return this.canPlaceItem(index, stack) && index <= 2;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-        if (index == 0)
-            return false;
-        if (index == 1)
-            return false;
-        return index != 2;
+        return index >= 3;
     }
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
         if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-            return handlers[facing.ordinal()].cast();
+            return itemHandler[facing.ordinal()].cast();
         return super.getCapability(capability, facing);
     }
 
     @Override
     public void setRemoved() {
         super.setRemoved();
-        for (LazyOptional<? extends IItemHandler> handler : handlers)
+        for (LazyOptional<? extends IItemHandler> handler : itemHandler)
             handler.invalidate();
     }
 
     public SimpleContainer getContainer() {
         return new SimpleContainer(this.stacks.toArray(new ItemStack[0]));
+    }
+
+    @Override
+    public boolean canPlaceItem(int pIndex, @NotNull ItemStack pStack) {
+        return super.canPlaceItem(pIndex, pStack);
     }
 }
