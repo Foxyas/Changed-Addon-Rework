@@ -1,0 +1,30 @@
+{
+  "type": "botanypots:crop",
+  "categories": [
+    "latex_block",
+    "white_latex_block",
+    "dark_latex_block"
+  ],
+  "display": [
+    {
+      "block": "changed_addon:luminara_bloom",
+      "properties": {}
+    }
+  ],
+  "drops": [
+    {
+      "chance": 1.0,
+      "maxRolls": 1,
+      "minRolls": 1,
+      "output": {
+        "count": 1,
+        "item": "changed_addon:luminara_bloom"
+      }
+    }
+  ],
+  "growthTicks": 1200,
+  "lightLevel": 0,
+  "seed": {
+    "item": "changed_addon:luminara_bloom"
+  }
+}

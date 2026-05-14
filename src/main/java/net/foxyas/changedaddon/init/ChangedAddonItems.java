@@ -285,19 +285,19 @@ public class ChangedAddonItems {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    private static RegistryObject<Item> block(RegistryObject<Block> block, Item.Properties properties) {
+    private static RegistryObject<Item> block(RegistryObject<? extends Block> block, Item.Properties properties) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), properties));
     }
 
-    private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> registry, RegistryObject<Block> block) {
+    private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> registry, RegistryObject<? extends Block> block) {
         return registry.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> registry, String id, RegistryObject<Block> block) {
+    private static RegistryObject<Item> RegisterBlockItem(DeferredRegister<Item> registry, String id, RegistryObject<? extends Block> block) {
         return registry.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
-    private static RegistryObject<Item> RegisterBlockItem(RegistryObject<Block> block) {
+    private static RegistryObject<Item> RegisterBlockItem(RegistryObject<? extends Block> block) {
         return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));
     }
 

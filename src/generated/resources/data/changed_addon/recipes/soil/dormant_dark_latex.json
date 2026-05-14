@@ -1,0 +1,16 @@
+{
+  "type": "botanypots:soil",
+  "categories": [
+    "latex_block",
+    "dark_latex_block"
+  ],
+  "display": {
+    "block": "changed_addon:dormant_dark_latex",
+    "properties": {}
+  },
+  "growthModifier": 1.0,
+  "input": {
+    "item": "changed_addon:dormant_dark_latex"
+  },
+  "lightLevel": 0
+}
