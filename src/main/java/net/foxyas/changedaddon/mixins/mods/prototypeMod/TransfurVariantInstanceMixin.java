@@ -3,6 +3,7 @@ package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 import net.foxyas.changedaddon.util.EntityUtils;
 import net.foxyas.changedaddon.util.MathFormulasUtils;
 import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
+import net.zaharenko424.casualties_cubed.config.ServerConfig;
 import net.zaharenko424.casualties_cubed.limbs.Limb;
 import net.zaharenko424.casualties_cubed.limbs.LimbStatistics;
 import net.foxyas.changedaddon.extension.RequiredMods;
@@ -24,6 +25,8 @@ public class TransfurVariantInstanceMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickHook(CallbackInfo ci) {
+        if (!ServerConfig.LIMB_REGROWTH.get()) return;
+
         TransfurVariantInstance<?> self = (TransfurVariantInstance<?>) (Object) this;
         Player player = self.getHost();
         if (ProcessTransfur.isPlayerLatex(player)) {
