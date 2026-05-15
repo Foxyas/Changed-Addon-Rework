@@ -55,28 +55,25 @@ public class TransfurVariantInstanceMixin {
             float maxRegrow = 20 * 60;
             // ------------------------
 
-            boolean playedSound = false;
+            boolean playSound = false;
 
+            LimbStatistics stats;
             for (Limb limb : limbStats.keySet()) {
-                if (!self.isAmputated(limb)) continue;
+                if (!self.isAmputated(limb) || self.isAmputated(limb.getConnectedTo())) continue;
 
-                Limb root = limb.getConnectedTo();
-                Limb targetLimb = (root == null || !self.isAmputated(root)) ? limb : root;
+                stats = limbStats.get(limb);
 
-                LimbStatistics stats = limbStats.get(targetLimb);
-                float currentProgress = stats.getRegrowthProgress();
+                stats.setRegrowthProgress(stats.getRegrowthProgress() + progressBonus);
+                playSound = true;
 
-                if (currentProgress < maxRegrow) {
-                    // Aplica o bônus escalonado, limitando ao máximo de 1200
-                    stats.setRegrowthProgress(Math.min(maxRegrow, currentProgress + progressBonus));
-                    playedSound = true;
-                    if (stats.getRegrowthProgress() >= maxRegrow) {
-                        self.setlimbAmputated(targetLimb, false);
-                    }
+                // Aplica o bônus escalonado, limitando ao máximo de 1200
+                if (stats.getRegrowthProgress() >= maxRegrow) {
+                    stats.setAmputated(false);
+                    stats.setRegrowthProgress(0);
                 }
             }
 
-            if (playedSound) {
+            if (playSound) {
                 player.playSound(ChangedSounds.TRANSFUR_BY_LATEX.get(), 1.0f, 1.0f);
             }
         });
