@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class UnifuserRecipeCategory implements IRecipeCategory<UnifuserRecipe> {
 
-    public final static ResourceLocation UID = ChangedAddonMod.resourceLoc("jei_unifuser");
+    public final static ResourceLocation UID = ChangedAddonMod.resourceLoc("unifuser");
     public final static ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/screens/jei_unifuser_screen");
     private final IDrawable background;
     private final IDrawable icon;
