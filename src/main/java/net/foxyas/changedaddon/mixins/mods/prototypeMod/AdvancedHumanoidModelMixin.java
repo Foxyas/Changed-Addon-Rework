@@ -1,13 +1,15 @@
 package net.foxyas.changedaddon.mixins.mods.prototypeMod;
 
-import net.adinvas.casualties_cubed.PlayerHealthProvider;
-import net.adinvas.casualties_cubed.limbs.Limb;
+import net.zaharenko424.casualties_cubed.PlayerHealthProvider;
+import net.zaharenko424.casualties_cubed.limbs.Limb;
 import net.foxyas.changedaddon.extension.RequiredMods;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.model.AdvancedHumanoidModel;
 import net.ltxprogrammer.changed.client.renderer.model.armor.LatexHumanoidArmorModel;
 import net.ltxprogrammer.changed.entity.ChangedEntity;
 import net.ltxprogrammer.changed.entity.variant.EntityShape;
+import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
+import net.ltxprogrammer.changed.process.ProcessTransfur;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -62,9 +64,12 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
             if (entity.getEntityShape() == EntityShape.FERAL) {
                 return;
             }
+            TransfurVariantInstance<?> transfurVariant = ProcessTransfur.getPlayerTransfurVariant(player);
+            if (transfurVariant == null || transfurVariant.isTemporaryFromSuit()) return;
 
+            Minecraft minecraft = Minecraft.getInstance();
             EntityRenderer<?> renderer =
-                    Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(clientPlayer);
+                    minecraft.getEntityRenderDispatcher().getRenderer(clientPlayer);
 
             if (renderer instanceof PlayerRenderer playerRenderer) {
                 // PlayerModel<AbstractClientPlayer> playerModel = playerRenderer.getModel();
@@ -105,6 +110,13 @@ public abstract class AdvancedHumanoidModelMixin<T extends ChangedEntity> extend
                                 ModelPart head = self.getHead();
                                 if (head != null) {
                                     head.visible = !isVisible;
+                                    if (minecraft.player == player) {
+                                        if (minecraft.player.isSleeping()) {
+                                            if (head.visible && minecraft.options.getCameraType().isFirstPerson()) {
+                                                head.visible = false;
+                                            }
+                                        }
+                                    }
                                 }
 
                             }

@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class CatalyzerRecipeCategory implements IRecipeCategory<CatalyzerRecipe> {
-    public final static ResourceLocation UID = ChangedAddonMod.resourceLoc("jei_catalyzer");
+    public final static ResourceLocation UID = ChangedAddonMod.resourceLoc("catalyzer");
     public final static ResourceLocation TEXTURE = ChangedAddonMod.textureLoc("textures/screens/jei_catalyzer_screen");
     private final IDrawable background;
     private final IDrawable icon;

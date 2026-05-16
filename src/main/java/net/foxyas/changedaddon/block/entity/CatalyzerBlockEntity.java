@@ -41,7 +41,7 @@ import java.util.stream.IntStream;
 
 public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
 
-    protected final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+    protected final LazyOptional<? extends IItemHandler>[] itemHandler = SidedInvWrapper.create(this, Direction.values());
     public boolean startRecipe = true;
     public double nitrogenPower = 0;
     public double recipeProgress = 0;
@@ -281,25 +281,25 @@ public class CatalyzerBlockEntity extends RandomizableContainerBlockEntity imple
 
     @Override
     public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack stack, @Nullable Direction direction) {
-        return this.canPlaceItem(index, stack);
+        return this.canPlaceItem(index, stack) && index <= 0;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-        return index != 0;
+        return index >= 1;
     }
 
     @Override
     public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction facing) {
         if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-            return handlers[facing.ordinal()].cast();
+            return itemHandler[facing.ordinal()].cast();
         return super.getCapability(capability, facing);
     }
 
     @Override
     public void setRemoved() {
         super.setRemoved();
-        for (LazyOptional<? extends IItemHandler> handler : handlers)
+        for (LazyOptional<? extends IItemHandler> handler : itemHandler)
             handler.invalidate();
     }
 

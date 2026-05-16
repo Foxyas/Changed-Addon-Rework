@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.mixins.client.renderer;
 
 import net.foxyas.changedaddon.configuration.ChangedAddonClientConfiguration;
+import net.foxyas.changedaddon.network.ChangedAddonVariables;
 import net.ltxprogrammer.changed.ability.GrabEntityAbilityInstance;
 import net.ltxprogrammer.changed.client.renderer.animate.HumanoidAnimator;
 import net.ltxprogrammer.changed.client.renderer.animate.upperbody.HoldEntityAnimator;
@@ -39,7 +40,10 @@ public abstract class AdvancedHumanoidModelMixin <T extends ChangedEntity> {
         if (player == null || !player.isSleeping()) return;
 
         GrabEntityAbilityInstance ability = ProcessTransfur.getPlayerTransfurVariant(player).getAbilityInstance(ChangedAbilities.GRAB_ENTITY_ABILITY.get());
-        if (ability == null || ability.grabbedEntity == null) return;
+        if (ability == null || ability.grabbedEntity == null || ability.suited) return;
+        ChangedAddonVariables.PlayerVariables playerVariables = ChangedAddonVariables.of(player);
+        if (playerVariables == null || !playerVariables.isCuddling) return;
+
 
         HoldEntityAnimator<T,?> anim = (HoldEntityAnimator<T, ?>) getAnimator(entity).getAnimators(HumanoidAnimator.AnimateStage.FINAL).filter(a -> a instanceof HoldEntityAnimator<T,?>).findFirst().orElse(null);
         if (anim == null) return;

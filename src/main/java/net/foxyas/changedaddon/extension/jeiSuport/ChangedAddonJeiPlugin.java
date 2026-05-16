@@ -14,6 +14,7 @@ import net.foxyas.changedaddon.client.gui.FoxyasInventoryMenuScreen;
 import net.foxyas.changedaddon.enchantment.TransfurAspectEnchantment;
 import net.foxyas.changedaddon.extension.jeiSuport.guisHandlers.FoxyasGuiContainerHandler;
 import net.foxyas.changedaddon.init.*;
+import net.foxyas.changedaddon.menu.CatalyzerGuiMenu;
 import net.foxyas.changedaddon.menu.UnifuserGuiMenu;
 import net.foxyas.changedaddon.recipe.CatalyzerRecipe;
 import net.foxyas.changedaddon.recipe.UnifuserRecipe;
@@ -88,7 +89,8 @@ public class ChangedAddonJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(UnifuserGuiMenu.class, ChangedAddonMenus.UNIFUSER_MENU.get(), UNIFUSER_RECIPE_TYPE, 0, 3, 4, 36);
+        registration.addRecipeTransferHandler(UnifuserGuiMenu.class, ChangedAddonMenus.UNIFUSER_MENU.get(), UNIFUSER_RECIPE_TYPE, 36, 3, 0, 36);
+        registration.addRecipeTransferHandler(CatalyzerGuiMenu.class, ChangedAddonMenus.CATALYZER_MENU.get(), CATALYZER_RECIPE_TYPE, 36, 1, 0, 36);
     }
 
     @Override

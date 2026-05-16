@@ -64,11 +64,11 @@ public class ChangedAddonBlocks {
     public static final RegistryObject<Block> GOO_CORE = REGISTRY.register("goo_core", GooCoreBlock::new);
     public static final RegistryObject<FoxtaCanBlock> FOXTA_CAN = REGISTRY.register("foxta_can", FoxtaCanBlock::new);
     public static final RegistryObject<SnepsiCanBlock> SNEPSI_CAN = REGISTRY.register("snepsi_can", SnepsiCanBlock::new);
-    public static final RegistryObject<Block> TIMED_KEYPAD = REGISTRY.register("timed_keypad", TimedKeypadBlock::new);
-    public static final RegistryObject<Block> HAND_SCANNER = REGISTRY.register("hand_scanner", HandScanner::new);
-    public static final RegistryObject<Block> PAWS_SCANNER = REGISTRY.register("paws_scanner", PawsScanner::new);
-    public static final RegistryObject<Block> LUMINARA_BLOOM = REGISTRY.register("luminara_bloom", LuminaraBloomFlowerBlock::new);
-    public static final RegistryObject<Block> POTTED_LUMINARA_BLOOM = REGISTRY.register("potted_luminara_bloom", PottedLuminaraBloomFlowerBlock::new);
+    public static final RegistryObject<TimedKeypadBlock> TIMED_KEYPAD = REGISTRY.register("timed_keypad", TimedKeypadBlock::new);
+    public static final RegistryObject<HandScanner> HAND_SCANNER = REGISTRY.register("hand_scanner", HandScanner::new);
+    public static final RegistryObject<PawsScanner> PAWS_SCANNER = REGISTRY.register("paws_scanner", PawsScanner::new);
+    public static final RegistryObject<LuminaraBloomFlowerBlock> LUMINARA_BLOOM = REGISTRY.register("luminara_bloom", LuminaraBloomFlowerBlock::new);
+    public static final RegistryObject<PottedLuminaraBloomFlowerBlock> POTTED_LUMINARA_BLOOM = REGISTRY.register("potted_luminara_bloom", PottedLuminaraBloomFlowerBlock::new);
     public static final RegistryObject<MultifaceBlock> COVER_BLOCK = REGISTRY.register("cover_block", () -> new MultifaceBlock(BlockBehaviour.Properties.copy(Blocks.VINE).mapColor(MapColor.TERRACOTTA_BLACK)) {
         @Override
         public boolean skipRendering(@NotNull BlockState pState, @NotNull BlockState pAdjacentBlockState, @NotNull Direction pSide) {

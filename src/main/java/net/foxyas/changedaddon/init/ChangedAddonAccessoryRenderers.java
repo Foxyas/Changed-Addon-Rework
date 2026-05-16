@@ -22,12 +22,12 @@ public class ChangedAddonAccessoryRenderers {
             AccessoryLayer.registerRenderer(ChangedAddonItems.DYEABLE_TSHIRT.get(), SimpleColorfulClothingRenderer.of(ArmorModel.CLOTHING_INNER, EquipmentSlot.CHEST));
             AccessoryLayer.registerRenderer(ChangedAddonItems.DYEABLE_SHORTS.get(), SimpleColorfulClothingRenderer.of(ArmorModel.CLOTHING_INNER, EquipmentSlot.LEGS));
             AccessoryLayer.registerRenderer(ChangedAddonItems.HAZARD_BODY_SUIT.get(),
-                    HazardBodySuitClothingRenderer.of(ArmorModel.CLOTHING_MIDDLE,
+                    HazardBodySuitClothingRenderer.of(ArmorModel.CLOTHING_INNER,
                             Set.of(new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_INNER, EquipmentSlot.HEAD),
-                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_OUTER, EquipmentSlot.CHEST),
-                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_MIDDLE, EquipmentSlot.LEGS),
-                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_OUTER, EquipmentSlot.FEET),
-                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_INNER, EquipmentSlot.FEET)
+                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_INNER, EquipmentSlot.CHEST),
+                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.CLOTHING_INNER, EquipmentSlot.LEGS),
+                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.ARMOR_INNER, EquipmentSlot.FEET),
+                                    new HazardBodySuitClothingRenderer.ModelComponent(ArmorModel.ARMOR_OUTER, EquipmentSlot.FEET)
                             )
                     )
             );
