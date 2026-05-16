@@ -21,7 +21,7 @@ public class BakedModelShadeLayerFullbright extends BakedModelWrapper {
     }
 
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType renderType) {
+    public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand, @NotNull ModelData extraData, @Nullable RenderType renderType) {
         if (state == null) {
             return originalModel.getQuads(state, side, rand, extraData, renderType);
         }
