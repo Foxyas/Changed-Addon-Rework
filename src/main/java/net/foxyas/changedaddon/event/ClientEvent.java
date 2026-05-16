@@ -3,8 +3,9 @@ package net.foxyas.changedaddon.event;
 import com.mojang.brigadier.CommandDispatcher;
 import net.foxyas.changedaddon.ChangedAddonMod;
 import net.foxyas.changedaddon.client.gui.ChangedAdditionsModConflictWarningScreen;
+import net.foxyas.changedaddon.client.model.baked.BakedModelShadeLayerFullbright;
 import net.foxyas.changedaddon.client.renderer.layers.features.SonarOutlineLayer;
-import net.foxyas.changedaddon.command.*;
+import net.foxyas.changedaddon.command.ChangedAddonClientCommands;
 import net.foxyas.changedaddon.process.sounds.BossMusicHandler;
 import net.foxyas.changedaddon.util.TransfurVariantUtils;
 import net.foxyas.changedaddon.variant.ChangedAddonTransfurVariants;
@@ -13,6 +14,7 @@ import net.ltxprogrammer.changed.entity.variant.TransfurVariantInstance;
 import net.ltxprogrammer.changed.init.ChangedItems;
 import net.ltxprogrammer.changed.init.ChangedRegistry;
 import net.ltxprogrammer.changed.item.Syringe;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -24,6 +26,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ModelEvent.ModifyBakingResult;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.TickEvent;
@@ -32,6 +35,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static net.foxyas.changedaddon.event.ClientMod.changedAdditionsLoaded;
@@ -46,6 +50,27 @@ public class ClientEvent {
             if (changedAdditionsLoaded && !changedAdditionsWarningScreenShowed) {
                 event.setNewScreen(new ChangedAdditionsModConflictWarningScreen());
             }
+        }
+    }
+
+    private static final List<String> FULLBRIGHTS = Util.make(new ArrayList<>(), list -> {
+      // Add The list of models ids here;
+      // You can just leave the # in the end to tell "any layer".
+      // list.add(ChangedAddonMod.layerLocation("example", "main").toString());
+      // list.add("changed_addon:example#main");
+      // list.add("changed_addon:example#");
+    });
+
+    @SubscribeEvent
+    public static void bakeModels(ModifyBakingResult e) {
+        long time = System.currentTimeMillis();
+        for (ResourceLocation id : e.getModels().keySet()) {
+            if (FULLBRIGHTS.stream().anyMatch(str -> id.toString().startsWith(str))) {
+                e.getModels().put(id, new BakedModelShadeLayerFullbright(e.getModels().get(id)));
+            }
+        }
+        if (!FULLBRIGHTS.isEmpty()) {
+            ChangedAddonMod.LOGGER.info("Loaded emissive block models in {} ms", System.currentTimeMillis() - time);
         }
     }
 
