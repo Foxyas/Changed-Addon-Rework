@@ -54,6 +54,7 @@ public class GatherData {
         generator.addProvider(true, new BlockStateProvider(packOutput, helper));
         generator.addProvider(true, new LatexCoverStateProvider(packOutput, helper, ChangedAddonMod.MODID));
         generator.addProvider(true, new ItemModelProvider(packOutput, helper));
+        generator.addProvider(true, new BlockModelProvider(packOutput, helper));
         generator.addProvider(true, new AdvancementProvider(packOutput, lookup0, helper));
 
         generator.addProvider(true, new ModTrimMapsProvider(packOutput));
