@@ -42,8 +42,8 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
     public LuminaraBloomFlowerBlock() {
         super(ChangedAddonMobEffects.UNTRANSFUR, 60,
                 BlockBehaviour.Properties.copy(Blocks.POPPY)
-                        .emissiveRendering((state, blockGetter, blockPos) -> true)
-                        .hasPostProcess((state, blockGetter, blockPos) -> true)
+                        //.emissiveRendering((state, blockGetter, blockPos) -> true)
+                        //.hasPostProcess((state, blockGetter, blockPos) -> true)
                         .noCollission().dynamicShape().instabreak().sound(SoundType.GRASS));
     }
 
@@ -91,7 +91,8 @@ public class LuminaraBloomFlowerBlock extends FlowerBlock implements Bonemealabl
     @SuppressWarnings("deprecation")
     @Override
     public int getLightBlock(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos) {
-        return 3;
+//        return 3;
+        return 0;
     }
 
     @Override

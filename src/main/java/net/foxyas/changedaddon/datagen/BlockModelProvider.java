@@ -16,6 +16,7 @@ public class BlockModelProvider extends net.minecraftforge.client.model.generato
         generateEmissiveCrop();
 
         withExistingParent(ChangedAddonBlocks.LUMINARA_BLOOM.getId().getPath(), ChangedAddonMod.resourceLoc("customs/emissive_cross"))
+                .renderType("minecraft:cutout")
                 .texture("cross", ChangedAddonMod.resourceLoc("block/luminara_bloom"))
                 .texture("glow", ChangedAddonMod.resourceLoc("block/luminara_bloom_emissive"))
         ;
