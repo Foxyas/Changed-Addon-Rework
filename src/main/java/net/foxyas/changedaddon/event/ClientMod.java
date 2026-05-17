@@ -10,6 +10,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RegisterNamedRenderTypesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,6 +38,19 @@ public class ClientMod {
             MenuScreens.register(ChangedAddonMenus.TAMED_LATEX.get(), TamedLatexScreen::new);
             MenuScreens.register(ChangedAddonMenus.TAMED_LATEX_INVENTORY.get(), TamedLatexInventoryScreen::new);
         });
+    }
+
+    @SubscribeEvent
+    public static void onRegisterGeometryLoaders(ModelEvent.RegisterGeometryLoaders event) {
+//        event.register(
+//                "dynamic_light_loader",
+//                DynamicLightModelLoader.INSTANCE
+//        );
+    }
+
+    @SubscribeEvent
+    public static void onRegisterReloadListeners(RegisterClientReloadListenersEvent event) {
+//        event.registerReloadListener(new BlocksLightEmissionRegistry());
     }
 
     @SubscribeEvent

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BakedModelShadeLayerFullbright extends BakedModelWrapper {
+public class BakedModelShadeLayerFullbright extends BakedModelWrapper<BakedModel> {
 
     public BakedModelShadeLayerFullbright(BakedModel originalModel) {
         super(originalModel);
