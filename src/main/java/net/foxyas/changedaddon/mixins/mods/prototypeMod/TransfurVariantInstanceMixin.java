@@ -68,10 +68,12 @@ public class TransfurVariantInstanceMixin {
 
                 if (currentProgress < maxRegrow) {
                     // Aplica o bônus escalonado, limitando ao máximo de 1200
-                    stats.setRegrowthProgress(Math.min(maxRegrow, currentProgress + progressBonus));
-                    playedSound = true;
-                    if (stats.getRegrowthProgress() >= maxRegrow) {
-                        self.setlimbAmputated(targetLimb, false);
+                    if (stats instanceof LimbStatisticsExtensor limbStatisticsExtensor) {
+                        limbStatisticsExtensor.setRegrowthProgress(Math.min(maxRegrow, currentProgress + progressBonus));
+                        playedSound = true;
+                        if (stats.getRegrowthProgress() >= maxRegrow) {
+                            self.setlimbAmputated(targetLimb, false);
+                        }
                     }
                 }
             }

@@ -1,0 +1,109 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#down"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#east"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#north"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#south"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#up"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#west"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
+          "texture": "#emissive_down"
+        },
+        "east": {
+          "cullface": "east",
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
+          "texture": "#emissive_east"
+        },
+        "north": {
+          "cullface": "north",
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
+          "texture": "#emissive_north"
+        },
+        "south": {
+          "cullface": "south",
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
+          "texture": "#emissive_south"
+        },
+        "up": {
+          "cullface": "up",
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
+          "texture": "#emissive_up"
+        },
+        "west": {
+          "cullface": "west",
+          "forge_data": {
+            "ambient_occlusion": false,
+            "block_light": 15
+          },
+          "texture": "#emissive_west"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "shade": false,
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "#north"
+  }
+}
