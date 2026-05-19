@@ -29,6 +29,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -318,7 +319,6 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             this.refreshDimensions();
             refreshAttributes(self);
             refreshAttributesForHost(self);
-            this.setPersistenceRequired();
         }
     }
 
@@ -330,8 +330,12 @@ public abstract class ChangedEntityGrabHandleMixin extends Monster implements IG
             this.refreshDimensions();
             refreshAttributes(self);
             refreshAttributesForHost(self);
-            this.setPersistenceRequired();
         }
+    }
+
+    @Inject(method = "setTarget", at = @At("TAIL"))
+    private void makeAlphaNotDespawnWhenTargetAPlayer(LivingEntity target, CallbackInfo ci) {
+        if (target instanceof Player || target instanceof AbstractVillager) this.setPersistenceRequired();
     }
 
     @Inject(method = "savePlayerVariantData", at = @At("RETURN"), cancellable = true)

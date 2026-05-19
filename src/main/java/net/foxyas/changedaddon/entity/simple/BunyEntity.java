@@ -34,7 +34,6 @@ public class BunyEntity extends ChangedEntity {
         super(type, world);
         xpReward = 0;
         this.setAttributes(this.getAttributes());
-        setPersistenceRequired();
     }
 
     public static AttributeSupplier.Builder createAttributes() {

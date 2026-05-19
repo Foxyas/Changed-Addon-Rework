@@ -43,7 +43,6 @@ public class Exp6Entity extends AbstractCanTameSnepChangedEntityFavors {
         super(type, world);
         xpReward = ChangedEntity.XP_REWARD_LARGE;
         this.setAttributes(this.getAttributes());
-        setPersistenceRequired();
     }
 
 

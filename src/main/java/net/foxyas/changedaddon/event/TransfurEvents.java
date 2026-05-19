@@ -121,9 +121,9 @@ public class TransfurEvents {
 
         if (!(resolveChangedEntity(toReplace) instanceof IAlphaAbleEntity toReplaceAlpha)) return;
 
-        if (replacement instanceof IAlphaAbleEntity alphaSource) {
-            alphaSource.setAlpha(toReplaceAlpha.isAlpha());
-            alphaSource.setAlphaScale(toReplaceAlpha.alphaAdditionalScale());
+        if (replacement instanceof IAlphaAbleEntity alphaReplacement) {
+            alphaReplacement.setAlpha(toReplaceAlpha.isAlpha());
+            alphaReplacement.setAlphaScale(toReplaceAlpha.alphaAdditionalScale());
         }
     }
 
