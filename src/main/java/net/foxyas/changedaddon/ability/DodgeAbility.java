@@ -1,6 +1,7 @@
 package net.foxyas.changedaddon.ability;
 
-import net.foxyas.changedaddon.ability.handle.CounterDodgeType;
+import net.foxyas.changedaddon.ability.handle.dodgeTypes.DodgeType;
+import net.foxyas.changedaddon.ability.handle.dodgeTypes.CounterDodgeType;
 import net.ltxprogrammer.changed.ability.AbstractAbility;
 import net.ltxprogrammer.changed.ability.IAbstractChangedEntity;
 import net.minecraft.network.chat.Component;
@@ -8,29 +9,20 @@ import net.minecraft.resources.ResourceLocation;
 
 public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
 
-    private DodgeAbilityInstance instance = null;
-
     public DodgeAbility() {
         super(DodgeAbilityInstance::new);
     }
 
-    public DodgeAbility(int Dodges) {
-        super((ab, ia) -> new DodgeAbilityInstance(ab, ia, Dodges));
+    public DodgeAbility(int dodgeAmount) {
+        super((ab, ia) -> new DodgeAbilityInstance(ab, ia, dodgeAmount));
     }
 
-    public DodgeAbility(DodgeAbilityInstance.DodgeType dodgeType) {
+    public DodgeAbility(DodgeType dodgeType) {
         super((ab, ia) -> new DodgeAbilityInstance(ab, ia).withDodgeType(dodgeType));
     }
 
-    public DodgeAbility(int Dodges, DodgeAbilityInstance.DodgeType dodgeType) {
-        super((ab, ia) -> new DodgeAbilityInstance(ab, ia, Dodges).withDodgeType(dodgeType));
-    }
-
-    @Override
-    public DodgeAbilityInstance makeInstance(IAbstractChangedEntity entity) {
-        DodgeAbilityInstance dodgeAbilityInstance = super.makeInstance(entity);
-        this.instance = dodgeAbilityInstance;
-        return dodgeAbilityInstance;
+    public DodgeAbility(int dodgeAmount, DodgeType dodgeType) {
+        super((ab, ia) -> new DodgeAbilityInstance(ab, ia, dodgeAmount).withDodgeType(dodgeType));
     }
 
     @Override
@@ -44,7 +36,8 @@ public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
 
     @Override
     public UseType getUseType(IAbstractChangedEntity entity) {
-        if (this.instance != null && this.instance.getDodgeType() instanceof CounterDodgeType) {
+        DodgeAbilityInstance instance = entity.getAbilityInstance(this);
+        if (instance != null && instance.getDodgeType() instanceof CounterDodgeType) {
             return UseType.INSTANT;
         }
         return UseType.HOLD;
@@ -52,7 +45,8 @@ public class DodgeAbility extends AbstractAbility<DodgeAbilityInstance> {
 
     @Override
     public int getCoolDown(IAbstractChangedEntity entity) {
-        if (this.instance != null && this.instance.getDodgeType() instanceof CounterDodgeType) {
+        DodgeAbilityInstance instance = entity.getAbilityInstance(this);
+        if (instance != null && instance.getDodgeType() instanceof CounterDodgeType) {
             return 90;
         }
         return super.getCoolDown(entity);

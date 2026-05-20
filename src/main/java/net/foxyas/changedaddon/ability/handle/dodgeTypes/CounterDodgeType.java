@@ -1,4 +1,4 @@
-package net.foxyas.changedaddon.ability.handle;
+package net.foxyas.changedaddon.ability.handle.dodgeTypes;
 
 import net.foxyas.changedaddon.ability.DodgeAbilityInstance;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -9,8 +9,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import org.jetbrains.annotations.Nullable;
-
-import static net.foxyas.changedaddon.ability.DodgeAbilityInstance.DodgeType;
 
 public class CounterDodgeType extends DodgeType {
 
